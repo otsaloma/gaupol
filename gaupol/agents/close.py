@@ -154,7 +154,7 @@ class CloseAgent(aeidon.Delegate):
         if sum((len(self._need_confirmation(x)) for x in self.pages)) > 1:
             return self._confirm_close_multiple(tuple(self.pages))
         while self.pages:
-            self.close(self.pages[-1], False)
+            self.close(self.pages[-1])
 
     @aeidon.deco.export
     def close(self, page, confirm=True):

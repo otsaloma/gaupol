@@ -1,8 +1,12 @@
-Gaupol 0.17
-===========
+Gaupol 0.16.2
+=============
 
+ [D] Fix "Quit" and Close All" to ask to save unsaved changes
  [D] Update Russian translation (Алекс)
  [D] Update Hungarian translation (Andrássy László)
+
+Gaupol 0.17
+===========
 
  [ ] Fix unit tests to not overwrite configuration file
      - Set ConfigurationStore.path to None somewhere
