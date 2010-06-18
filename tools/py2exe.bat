@@ -5,7 +5,6 @@ rmdir /S /Q build dist
 set GTKDIR=%SYSTEMDRIVE%\gtk+
 set PYDIR=%SYSTEMDRIVE%\python26
 %PYDIR%\python.exe winsetup.py py2exe
-xcopy %GTKDIR%\bin\*.dll dist\bin /i /y
 xcopy %GTKDIR%\etc dist\etc /s /i /y
 xcopy %GTKDIR%\lib\*.dll dist\lib /s /i /y
 xcopy %GTKDIR%\lib\*.dll.a dist\lib /s /i /y
