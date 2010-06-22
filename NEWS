@@ -1,3 +1,10 @@
+Gaupol 0.16.2
+=============
+
+ * Fix "Quit" and Close All" to ask to save unsaved changes
+ * Update Russian translation (Алекс)
+ * Update Hungarian translation (Andrássy László)
+
 Gaupol 0.16.1
 =============
 
