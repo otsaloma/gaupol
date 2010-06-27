@@ -45,6 +45,7 @@ class MultiSaveDialog(gaupol.FileDialog):
         self._filechooser_button.set_size_request(width, -1)
         self._init_values()
         self.set_transient_for(parent)
+        self.set_default_response(gtk.RESPONSE_OK)
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
@@ -129,7 +130,7 @@ class MultiSaveDialog(gaupol.FileDialog):
         dialog = gaupol.QuestionDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
         dialog.add_button(_("_Replace"), gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_NO)
+        dialog.set_default_response(gtk.RESPONSE_YES)
         response = gaupol.util.flash_dialog(dialog)
         gaupol.util.raise_default(response != gtk.RESPONSE_YES)
 
