@@ -46,9 +46,11 @@ character encoding auto-detection. If aeidon is installed using the
 '--without-iso-codes' switch, then iso-codes is not optional, but
 rather required.
 
-gaupol requires Python [1] 2.6 or greater, PyGTK [2] 2.16 or greater
+gaupol requires Python [1] 2.6 or greater, PyGTK [5] 2.16 or greater
 and aeidon of the same version as gaupol. Optional dependencies
-include MPlayer [6] or VLC [7], which are recommended for preview.
+include PyGtkSpell (part of gnome-python-extras [5]), required for
+inline spell-checking and MPlayer [6] or VLC [7], which are
+recommended for preview.
 
  [1] http://www.python.org/
  [2] http://pyenchant.sourceforge.net/

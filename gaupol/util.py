@@ -99,6 +99,15 @@ def get_tree_view_size(tree_view):
     scroller.set_policy(*policy)
     return width, height
 
+@aeidon.deco.once
+def gtkspell_available():
+    """Return ``True`` if :mod:`gtkspell` module is available."""
+    try:
+        import gtkspell
+        return True
+    except Exception:
+        return False
+
 def install_module(name, obj):
     """Install `obj`'s module into the :mod:`gaupol` namespace.
 
@@ -123,7 +132,13 @@ def lines_to_px(nlines, font=None):
     return int(round(nlines * height))
 
 def prepare_text_view(text_view):
-    """Connect `text_view` to font and length margin updates."""
+    """Set spell-check, line-length margin and font properties."""
+    if gaupol.util.gtkspell_available():
+        import gtkspell
+        spell = gtkspell.Spell(text_view)
+        try: spell.set_language(gaupol.conf.spell_check.language)
+        except Exception: spell.detach()
+
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
         if gaupol.conf.editor.show_lengths_edit:

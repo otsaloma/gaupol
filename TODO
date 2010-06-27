@@ -3,21 +3,18 @@ Gaupol 0.17
 
  [D] Add "Save All As" (under the Projects menu) to save all open
      documents with selected properties (fixes #595685)
+ [D] Add an inline spell-check for editable multiline text fields (off
+     by default, can be activated in the preferences dialog)
+ [D] Add optional dependency of PyGtkSpell (part of
+     gnome-python-extras)
 
  [ ] Add gaupol.View.add_column, which creates a new model?
- [ ] Copy key-event hack from gedit for sidepane?
-     - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
- [ ] Use decorator module to preserve signatures in API documentation?
-     - http://pypi.python.org/pypi/decorator/
- [ ] Use gtk.InfoBar instead of gaupol.ErrorDialog
-     - PreviewAgent._show_*_error_dialog
  [ ] Add a Finnish translation?
 
 Gaupol 1.0
 ==========
 
  * Add a built-in GStreamer-based video player
- * Add an inline spell-check for text views
 
 Gaupol 3000
 ===========

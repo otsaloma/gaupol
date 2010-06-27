@@ -41,13 +41,16 @@ def _check_dependencies():
     try:
         import enchant
     except ImportError:
-        print "PyEnchant not found;"
-        print "spell-checking not possible."
+        print "PyEnchant not found; spell-checking not possible."
+    try:
+        import gtkspell
+    except ImportError:
+        print "PyGtkSpell not found; inline spell-checking not possible."
     try:
         import chardet
     except ImportError:
-        print "Universal Encoding Detector not found;"
-        print "character encoding auto-detection not possible."
+        print ("Universal Encoding Detector not found; "
+               "character encoding auto-detection not possible.")
 
 def _init_application(opts, args):
     """Initialize application and open files from `args`."""

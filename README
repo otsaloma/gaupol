@@ -19,11 +19,12 @@ Dependencies
 
 Gaupol requires Python [1] 2.6 or greater and PyGTK [2] 2.16 or
 greater. Optional dependencies include: PyEnchant [3] 1.4.0 or
-greater, required for spell-checking; iso-codes [4], used to translate
-language and country names; Universal Encoding Detector [5], required
-for character encoding auto-detection and MPlayer [6] or VLC [7],
-recommended for preview. For dependencies required only during
-installation, see the file "INSTALL".
+greater, required for spell-checking; PyGtkSpell (part of
+gnome-python-extras [2]), required for inline spell-checking;
+iso-codes [4], used to translate language and country names; Universal
+Encoding Detector [5], required for character encoding auto-detection
+and MPlayer [6] or VLC [7], recommended for preview. For dependencies
+required only during installation, see the file "INSTALL".
 
  [1] http://www.python.org/
  [2] http://www.pygtk.org/

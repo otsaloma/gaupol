@@ -35,7 +35,8 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
                 "editor_length_cell_check",
                 "editor_length_combo",
                 "editor_length_edit_check",
-                "editor_length_hbox")
+                "editor_length_hbox",
+                "editor_spell_check_check",)
 
     def __init__(self, master, application):
         """Initialize an :class:`EditorPage` object."""
@@ -76,6 +77,13 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
         self._length_cell_check.set_active(show_cell)
         self._length_edit_check.set_active(show_edit)
         self._length_combo.set_active(gaupol.conf.editor.length_unit)
+        if gaupol.util.gtkspell_available():
+            inline = gaupol.conf.spell_check.inline
+            self._spell_check_check.set_active(inline)
+            self._spell_check_check.set_sensitive(True)
+        else: # gtkspell not available
+            self._spell_check_check.set_active(False)
+            self._spell_check_check.set_sensitive(False)
 
     def _on_default_font_check_toggled(self, check_button):
         """Save default font usage."""
@@ -105,6 +113,10 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
         show_cell = gaupol.conf.editor.show_lengths_cell
         show_edit = gaupol.conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(show_cell or show_edit)
+
+    def _on_spell_check_check_toggled(self, check_button):
+        """Save inline spell-check use on text views."""
+        gaupol.conf.spell_check.inline = check_button.get_active()
 
 
 class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):

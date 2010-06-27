@@ -53,6 +53,11 @@ class TestEditorPage(gaupol.TestCase):
         self.page._length_edit_check.set_active(False)
         self.page._length_edit_check.set_active(True)
 
+    def test__on_spell_check_check_toggled(self):
+        self.page._spell_check_check.set_active(True)
+        self.page._spell_check_check.set_active(False)
+        self.page._spell_check_check.set_active(True)
+
 
 class TestExtensionPage(gaupol.TestCase):
 
