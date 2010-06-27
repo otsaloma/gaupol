@@ -258,17 +258,17 @@ class ConfigurationStore(gaupol.AttributeDictionary):
 
     :cvar _defaults: Dictionary of default values of options
     :cvar _enums: Dictionary of :class:`aeidon.Enumeration` instances
-    :cvar path: Path to user's local configuration file
+    :ivar path: Path to user's local configuration file
     """
 
     _defaults = config_defaults
     _enums = config_enums
-    path = os.path.join(aeidon.CONFIG_HOME_DIR, "gaupol.conf")
 
     def __init__(self):
         """Initialize a :class:`ConfigurationStore` object."""
         root = aeidon.util.copy_dict(self._defaults)
         gaupol.AttributeDictionary.__init__(self, root)
+        self.path = None
 
     def _flatten(self, values):
         """Return a flattened version of `values` dictionary."""

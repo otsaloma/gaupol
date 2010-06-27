@@ -79,8 +79,8 @@ def _init_application(opts, args):
 
 def _init_configuration(path):
     """Read configuration values from file at `path`."""
-    if path is not None:
-        gaupol.conf.path = path
+    path = path or os.path.join(aeidon.CONFIG_HOME_DIR, "gaupol.conf")
+    gaupol.conf.path = path
     gaupol.conf.read_from_file()
     atexit.register(gaupol.conf.write_to_file)
 
