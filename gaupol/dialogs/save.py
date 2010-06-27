@@ -80,12 +80,8 @@ class SaveDialog(gaupol.FileDialog):
         self.unselect_filename(path)
         dirname = os.path.dirname(path)
         basename = os.path.basename(path)
-        extensions = [x.extension for x in aeidon.formats]
-        if basename.endswith(tuple(extensions)):
-            index = basename.rfind(".")
-            basename = basename[:index]
         format = self.get_format()
-        basename += format.extension
+        basename = aeidon.util.replace_extension(basename, format)
         path = os.path.join(dirname, basename)
         self.set_current_name(basename)
         self.set_filename(path)

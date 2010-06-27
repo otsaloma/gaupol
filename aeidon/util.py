@@ -431,6 +431,13 @@ def readlines(path, encoding=None, fallback="utf_8"):
     text = text.replace("\r", "\n")
     return text.split("\n")
 
+def replace_extension(path, format):
+    """Replace possible extension in `path` with that of `format`."""
+    extensions = [x.extension for x in aeidon.formats]
+    if path.endswith(tuple(extensions)):
+        path = path[:path.rfind(".")]
+    return "".join((path, format.extension))
+
 def shell_quote(path):
     """Quote and escape `path` for shell use."""
     if sys.platform != "win32":

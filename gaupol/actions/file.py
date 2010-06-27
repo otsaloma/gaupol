@@ -237,6 +237,26 @@ class SaveAllDocumentsAction(gaupol.Action):
         aeidon.util.affirm(application.pages)
 
 
+class SaveAllDocumentsAsAction(gaupol.Action):
+
+    """Save all open documents with different properties."""
+
+    def __init__(self):
+        """Initialize a :class:`SaveAllDocumentsAsAction` object."""
+        gaupol.Action.__init__(self, "save_all_documents_as")
+        self.props.label = _("Save _All As\342\200\246")
+        self.props.stock_id = gtk.STOCK_SAVE_AS
+        self.props.tooltip = _("Save all open documents with "
+                               "different properties")
+
+        self.action_group = "main-safe"
+
+    def _affirm_doable(self, application, page):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm([x for x in application.pages
+                            if x.project.main_file is not None])
+
+
 class SaveMainDocumentAction(gaupol.Action):
 
     """Save the current main document."""

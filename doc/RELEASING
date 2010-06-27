@@ -22,11 +22,10 @@ Releasing a New Version
 
  * Upload tarballs to download.gna.org:/upload/gaupol/
 
- * Generate API documentation
+ * Generate and upload API documentation
    $ ./setup.py clean doc --format html
 
  * Send announcements and update web sites
-   - http://users.tkk.fi/~otsaloma/gaupol/doc/
    - http://home.gna.org/gaupol
    - http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
    - gaupol-announcements@gna.org

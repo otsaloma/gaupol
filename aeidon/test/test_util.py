@@ -252,6 +252,11 @@ class TestModule(aeidon.TestCase):
                     aeidon.util.readlines,
                     path, "ascii", None)
 
+    def test_replace_extension(self):
+        format = aeidon.formats.SUBRIP
+        value = aeidon.util.replace_extension("test.txt", format)
+        assert value == "test.srt"
+
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_shell_quote__unix(self):
         sys.platform = "linux2"

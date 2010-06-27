@@ -84,6 +84,7 @@ from gaupol.dialogs.insert import *
 from gaupol.dialogs.language import *
 from gaupol.dialogs.message import *
 from gaupol.dialogs.multiclose import *
+from gaupol.dialogs.multisave import *
 from gaupol.dialogs.preferences import *
 from gaupol.dialogs.previewerr import *
 from gaupol.dialogs.search import *

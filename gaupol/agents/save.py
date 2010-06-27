@@ -41,6 +41,13 @@ class SaveAgent(aeidon.Delegate):
         self.update_gui()
 
     @aeidon.deco.export
+    def _on_save_all_documents_as_activate(self, *args):
+        """Save all open documents with different properties."""
+        dialog = gaupol.MultiSaveDialog(self.window, self)
+        gaupol.util.flash_dialog(dialog)
+        self.update_gui()
+
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def _on_save_main_document_activate(self, *args):
         """Save the current main document."""
@@ -149,13 +156,15 @@ class SaveAgent(aeidon.Delegate):
         self.flash_message(_("Saved main document"))
 
     @aeidon.deco.export
-    def save_main_as(self, page):
+    def save_main_as(self, page, sfile=None):
         """Save the main document of `page` to a selected file.
 
+        If `sfile` is ``None`` show a filechooser dialog.
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        sfile = self._select_file(_("Save As"),
-                                  page.project.main_file)
+        if sfile is None:
+            sfile = self._select_file(_("Save As"),
+                                      page.project.main_file)
 
         self._save_document(page, aeidon.documents.MAIN, sfile)
         self.add_to_recent_files(page.project.main_file.path,
@@ -180,13 +189,15 @@ class SaveAgent(aeidon.Delegate):
         self.flash_message(_("Saved translation document"))
 
     @aeidon.deco.export
-    def save_translation_as(self, page):
+    def save_translation_as(self, page, sfile=None):
         """Save the translation document of `page` to a selected file.
 
+        If `sfile` is ``None`` show a filechooser dialog.
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        sfile = self._select_file(_("Save Translation As"),
-                                  page.project.tran_file)
+        if sfile is None:
+            sfile = self._select_file(_("Save Translation As"),
+                                      page.project.tran_file)
 
         self._save_document(page, aeidon.documents.TRAN, sfile)
         self.add_to_recent_files(page.project.tran_file.path,

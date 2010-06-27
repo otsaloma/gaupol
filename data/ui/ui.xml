@@ -165,6 +165,7 @@
     </placeholder>
     <menu name="projects" action="show_projects_menu">
       <menuitem name="save_all" action="save_all_documents"/>
+      <menuitem name="save_all_as" action="save_all_documents_as"/>
       <menuitem name="close_all" action="close_all_projects"/>
       <placeholder name="1">
       </placeholder>

@@ -1,6 +1,9 @@
 Gaupol 0.17
 ===========
 
+ [D] Add "Save All As" (under the Projects menu) to save all open
+     documents with selected properties (fixes #595685)
+
  [ ] Fix unit tests to not overwrite configuration file
      - Set ConfigurationStore.path to None somewhere
  [ ] Add gaupol.View.add_column, which creates a new model?
@@ -10,8 +13,6 @@ Gaupol 0.17
      - http://pypi.python.org/pypi/decorator/
  [ ] Use gtk.InfoBar instead of gaupol.ErrorDialog
      - PreviewAgent._show_*_error_dialog
- [ ] Batch convert multiple subtitles to an other file format
-     - https://bugzilla.gnome.org/show_bug.cgi?id=595685
  [ ] Add a Finnish translation?
 
 Gaupol 1.0
