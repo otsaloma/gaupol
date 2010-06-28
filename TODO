@@ -8,7 +8,6 @@ Gaupol 0.17
  [D] Add optional dependency of PyGtkSpell (part of
      gnome-python-extras)
 
- [ ] Add gaupol.View.add_column, which creates a new model?
  [ ] Add a Finnish translation?
 
 Gaupol 1.0

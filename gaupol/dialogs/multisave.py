@@ -36,7 +36,7 @@ class MultiSaveDialog(gaupol.FileDialog):
 
     def __init__(self, parent, application):
         """Initialize a :class:`MultiSaveDialog` object."""
-        gaupol.FileDialog.__init__(self, "save-all-as-dialog.ui")
+        gaupol.FileDialog.__init__(self, "multisave-dialog.ui")
         self.application = application
         self._init_format_combo()
         self._init_encoding_combo()
