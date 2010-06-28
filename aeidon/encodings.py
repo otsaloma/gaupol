@@ -47,7 +47,7 @@ _encodings = (
     ("cp855"          , "IBM855"          , _("Cyrillic")           ),
     ("cp856"          , "IBM856"          , _("Hebrew")             ),
     ("cp857"          , "IBM857"          , _("Turkish")            ),
-    ("cp860"          , "IBM860"          , _("Portugese")          ),
+    ("cp860"          , "IBM860"          , _("Portuguese")         ),
     ("cp861"          , "IBM861"          , _("Icelandic")          ),
     ("cp862"          , "IBM862"          , _("Hebrew")             ),
     ("cp863"          , "IBM863"          , _("Canadian")           ),
