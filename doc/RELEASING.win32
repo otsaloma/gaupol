@@ -1,3 +1,10 @@
+On Different Versions of Windows
+================================
+
+Empirical evidence suggests that a Windows installer should be built
+on an XP system to best ensure that it will work on all three current
+versions: XP, Vista and 7.
+
 Preparing to Build Windows Installers
 =====================================
 
