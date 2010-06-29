@@ -4,6 +4,7 @@ Gaupol is an editor for text-based subtitle files. See the [[http://home.gna.org
 
 == Getting Started ==
 
+ * [[/Preview|Custom Preview Commands]]
  * [[/SpellCheck|Adding Spell-Check Dictionaries]]
 
 == Third Party Components ==

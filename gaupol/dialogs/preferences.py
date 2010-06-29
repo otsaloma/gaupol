@@ -464,6 +464,8 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     """Dialog for editing preferences."""
 
+    _widgets = ("notebook",)
+
     def __init__(self, parent, application):
         """Initialize a :class:`PreferencesDialog` object."""
         gaupol.BuilderDialog.__init__(self,
@@ -475,9 +477,11 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self._file_page = FilePage(self, application)
         self._preview_page = PreviewPage(self, application)
         self._builder.connect_signals(self._get_callbacks())
+        self.connect("response", self._on_response)
+        aeidon.util.connect(self, "_notebook", "switch-page")
         self.set_transient_for(parent)
         self.set_default_response(gtk.RESPONSE_CLOSE)
-
+        self.set_response_sensitive(gtk.RESPONSE_HELP, False)
 
     def _get_callbacks(self):
         """Return a dictionary mapping names to callback methods."""
@@ -490,3 +494,14 @@ class PreferencesDialog(gaupol.BuilderDialog):
             for name in filter(lambda x: x.startswith("_on_"), dir(page)):
                 callbacks[name] = getattr(page, name)
         return callbacks
+
+    def _on_notebook_switch_page(self, notebook, page, index):
+        """Set sensitivity of the help button."""
+        # Use help on the preview page, which is the third.
+        self.set_response_sensitive(gtk.RESPONSE_HELP, index == 2)
+
+    def _on_response(self, dialog, response):
+        """Do not send response if browsing help."""
+        if response == gtk.RESPONSE_HELP:
+            gaupol.util.show_uri(gaupol.PREVIEW_HELP_URL)
+            self.stop_emission("response")

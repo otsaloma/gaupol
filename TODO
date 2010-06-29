@@ -5,10 +5,14 @@ Gaupol 0.17
      documents with selected properties (fixes #595685)
  [D] Add an inline spell-check for editable multiline text fields (off
      by default, can be activated in the preferences dialog)
+ [D] Add support for milliseconds (field $MILLISECONDS) in preview
+     commands (allows use of Media Player Classic for preview)
+ [D] Add help button in the preferences dialog, clickable in the
+     preview tab to launch web browser to view wiki documentation
  [D] Add optional dependency of PyGtkSpell (part of
      gnome-python-extras)
 
- [ ] Add a Finnish translation?
+ [?] Add a Finnish translation
 
 Gaupol 1.0
 ==========

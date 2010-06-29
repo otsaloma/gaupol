@@ -104,12 +104,12 @@ class PreviewAgent(aeidon.Delegate):
     def preview(self, position, doc, command, offset, encoding=None):
         """Start video player with `command` from `position`.
 
-        `command` should have variables ``$SECONDS``, ``$SUBFILE`` and
-        ``$VIDEOFILE``. `offset` should be the amount of seconds before
-        `position` to start, which can be used to take into account that video
-        player's can usually seek only to keyframes, which exist maybe ten
-        seconds or so apart. `encoding` can be specified if different from
-        `doc` file encoding.
+        `command` can have variables ``$MILLISECONDS``, ``$SECONDS``,
+        ``$SUBFILE`` and ``$VIDEOFILE``. `offset` should be the amount of
+        seconds before `position` to start, which can be used to take into
+        account that video player's can usually seek only to keyframes, which
+        exist maybe ten seconds or so apart. `encoding` can be specified if
+        different from `doc` file encoding.
 
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
@@ -121,10 +121,10 @@ class PreviewAgent(aeidon.Delegate):
         sub_path = self._get_subtitle_path(doc, encoding)
         output_path = aeidon.temp.create(".output")
         output_fd = aeidon.temp.get_handle(output_path)
-        seconds = self.calc.to_seconds(position)
-        seconds = "%.3f" % max(0.0, seconds - float(offset))
+        seconds = max(0, self.calc.to_seconds(position) - offset)
         command = string.Template(command).safe_substitute(
-            SECONDS=seconds,
+            MILLISECONDS=("%.0f" % (seconds * 1000)),
+            SECONDS=("%.3f" % seconds),
             SUBFILE=aeidon.util.shell_quote(sub_path),
             VIDEOFILE=aeidon.util.shell_quote(self.video_path))
 

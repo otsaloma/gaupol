@@ -23,6 +23,7 @@
 
 :var BUG_REPORT_URL: Web page where to submit new bug reports
 :var HOMEPAGE_URL: Web page of the Gaupol project
+:var PREVIEW_HELP_URL: Web page with documentation on the preview function
 :var REGEX_HELP_URL: Web page with documentation on regular expressions
 :var WIKI_URL: Web page with wiki documentation
 
