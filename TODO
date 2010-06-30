@@ -11,8 +11,8 @@ Gaupol 0.17
      preview tab to launch web browser to view wiki documentation
  [D] Add optional dependency of PyGtkSpell (part of
      gnome-python-extras)
+ [D] Add Finnish translation
 
- [W] Add Finnish translation
  [ ] Fix problems with extension configurations
  [ ] Add a --mandir option to setup.py (fixes #...)
 

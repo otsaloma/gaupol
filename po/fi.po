@@ -1,0 +1,2657 @@
+# Finnish translations for gaupol package.
+# Copyright (C) 2010 Osmo Salomaa
+# This file is distributed under the same license as the gaupol package.
+# Osmo Salomaa <otsaloma@cc.hut.fi>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gaupol 0.16.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-22 20:39+0300\n"
+"PO-Revision-Date: 2010-06-30 23:10+0300\n"
+"Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
+"Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:1
+msgid "Add Bookmark"
+msgstr "Lisää kirjanmerkki"
+
+#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:2
+msgid "_Description:"
+msgstr "Ku_vaus:"
+
+#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:3
+#: ../data/ui/transform-dialog.ui.h:11
+msgid "_Subtitle:"
+msgstr "_Kappale:"
+
+#: ../data/ui/debug-dialog.ui.h:1
+msgid "An unhandled exception occured"
+msgstr "Tapahtui käsittelemätön poikkeus"
+
+#: ../data/ui/debug-dialog.ui.h:2
+msgid ""
+"You have probably discovered a bug. Please report it by providing the above "
+"information and a description of what you were doing."
+msgstr ""
+"Olet luultavasti löytänyt ohjelmointivirheen. Voit ilmoittaa virheen "
+"antamalla yllä olevat tiedot ja kuvauksen siitä mitä olit tekemässä."
+
+#: ../data/ui/duration-dialog.ui.h:1
+msgid "Adj_ust selected subtitles"
+msgstr "Sää_dä valitut kappaleet"
+
+#: ../data/ui/duration-dialog.ui.h:2
+msgid "Adjus_t current project"
+msgstr "Säädä _nykyinen projekti"
+
+#: ../data/ui/duration-dialog.ui.h:3
+msgid "Adjust Durations"
+msgstr "Säädä kestoja"
+
+#: ../data/ui/duration-dialog.ui.h:4
+msgid "Adjust all open p_rojects"
+msgstr "Säädä ka_ikki avoimet projektit"
+
+#: ../data/ui/duration-dialog.ui.h:5
+#: ../data/ui/text-assistant/line-break-opts-page.ui.h:1
+msgid "Limits"
+msgstr "Rajat"
+
+#: ../data/ui/duration-dialog.ui.h:6
+msgid "Ma_ximum duration:"
+msgstr "M_aksimikesto:"
+
+#: ../data/ui/duration-dialog.ui.h:7
+msgid "Optimal"
+msgstr "Optimaalinen"
+
+#: ../data/ui/duration-dialog.ui.h:8 ../data/ui/framerate-dialog.ui.h:6
+#: ../data/ui/language-dialog.ui.h:7 ../data/ui/search-dialog.ui.h:13
+#: ../data/ui/shift-dialog.ui.h:6 ../data/ui/text-assistant/intro-page.ui.h:7
+#: ../data/ui/text-assistant/line-break-opts-page.ui.h:3
+#: ../data/ui/transform-dialog.ui.h:5
+msgid "Subtitles"
+msgstr "Kappaleet"
+
+#: ../data/ui/duration-dialog.ui.h:9
+msgid "_Adjust"
+msgstr "_Säädä"
+
+#: ../data/ui/duration-dialog.ui.h:10
+msgid "_Gap between subtitles:"
+msgstr "Kappaleiden _väli:"
+
+#: ../data/ui/duration-dialog.ui.h:11
+msgid "_Lengthen duration if shorter than optimal"
+msgstr "_Kasvata kestoa jos optimaalista lyhempi"
+
+#: ../data/ui/duration-dialog.ui.h:12
+msgid "_Minimum duration:"
+msgstr "_Minimikesto:"
+
+#: ../data/ui/duration-dialog.ui.h:13
+msgid "_Optimal duration:"
+msgstr "_Optimaalinen kesto:"
+
+#: ../data/ui/duration-dialog.ui.h:14
+msgid "_Shorten duration if longer than optimal"
+msgstr "_Lyhennä kestoa jos optimaalista pidempi"
+
+#: ../data/ui/duration-dialog.ui.h:15
+msgid "s_econds"
+msgstr "s_ekuntia"
+
+#: ../data/ui/duration-dialog.ui.h:16
+msgid "seco_nds"
+msgstr "sek_untia"
+
+#: ../data/ui/duration-dialog.ui.h:17
+msgid "secon_ds"
+msgstr "sekun_tia"
+
+#: ../data/ui/duration-dialog.ui.h:18
+msgid "seconds per character"
+msgstr "sekuntia per merkki"
+
+#: ../data/ui/encoding-dialog.ui.h:1 ../data/ui/preferences-dialog.ui.h:4
+msgid "Character Encodings"
+msgstr "Merkistökoodaukset"
+
+#: ../data/ui/framerate-dialog.ui.h:1
+msgid "Co_nvert"
+msgstr "_Muunna"
+
+#: ../data/ui/framerate-dialog.ui.h:2
+msgid "Convert Framerate"
+msgstr "Muunna ruutunopeus"
+
+#: ../data/ui/framerate-dialog.ui.h:3
+msgid "Convert _all open projects"
+msgstr "Muunna _kaikki avoimet projektit"
+
+#: ../data/ui/framerate-dialog.ui.h:4
+msgid "Convert c_urrent project"
+msgstr "Muunna _nykyinen projekti"
+
+#: ../data/ui/framerate-dialog.ui.h:5
+msgid "Framerate"
+msgstr "Ruutunopeus"
+
+#: ../data/ui/framerate-dialog.ui.h:7
+msgid "_Input:"
+msgstr "_Sisään:"
+
+#: ../data/ui/framerate-dialog.ui.h:8
+msgid "_Output:"
+msgstr "_Ulos:"
+
+#: ../data/ui/header-dialog.ui.h:1 ../gaupol/actions/edit.py:32
+msgid "Cl_ear"
+msgstr "_Tyhjennä"
+
+#: ../data/ui/header-dialog.ui.h:2
+msgid "Cle_ar"
+msgstr "Ty_hjennä"
+
+#: ../data/ui/header-dialog.ui.h:3
+msgid "Copy _Down"
+msgstr "Kopioi _alas"
+
+#: ../data/ui/header-dialog.ui.h:4
+msgid "Copy _Up"
+msgstr "Kopioi _ylös"
+
+#: ../data/ui/header-dialog.ui.h:5
+msgid "Headers"
+msgstr "Otsakkeet"
+
+#: ../data/ui/header-dialog.ui.h:6
+msgid "I_nsert Template"
+msgstr "L_isää malli"
+
+#: ../data/ui/header-dialog.ui.h:7
+msgid "In_sert Template"
+msgstr "Li_sää malli"
+
+#: ../data/ui/header-dialog.ui.h:8
+msgid "Re_vert"
+msgstr "Pala_uta"
+
+#: ../data/ui/header-dialog.ui.h:9
+msgid "_Main file:"
+msgstr "_Päätiedosto:"
+
+#: ../data/ui/header-dialog.ui.h:10
+msgid "_Revert"
+msgstr "Pa_lauta"
+
+#: ../data/ui/header-dialog.ui.h:11
+msgid "_Translation file:"
+msgstr "_Käännöstiedosto:"
+
+#: ../data/ui/insert-dialog.ui.h:1
+msgid "Insert Subtitles"
+msgstr "Lisää kappaleita"
+
+#: ../data/ui/insert-dialog.ui.h:2 ../data/ui/shift-dialog.ui.h:7
+msgid "_Amount:"
+msgstr "_Määrä:"
+
+#: ../data/ui/insert-dialog.ui.h:3
+msgid "_Insert"
+msgstr "_Lisää"
+
+#: ../data/ui/insert-dialog.ui.h:4
+msgid "_Position:"
+msgstr "_Sijainti:"
+
+#: ../data/ui/language-dialog.ui.h:1
+msgid "Check _all open projects"
+msgstr "Tarkista k_aikki avoimet projektit"
+
+#: ../data/ui/language-dialog.ui.h:2
+msgid "Check _main text column"
+msgstr "Tarkista _päätekstisarake"
+
+#: ../data/ui/language-dialog.ui.h:3
+msgid "Check _translation text column"
+msgstr "Tarkista _käännöstekstisarake"
+
+#: ../data/ui/language-dialog.ui.h:4
+msgid "Check c_urrent project"
+msgstr "Tarkista _nykyinen projekti"
+
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr "Oikoluvun asetukset"
+
+#: ../data/ui/language-dialog.ui.h:6
+msgid "Language"
+msgstr "Kieli"
+
+#: ../data/ui/multiclose-dialog.ui.h:1 ../gaupol/agents/close.py:52
+#: ../gaupol/agents/close.py:81
+msgid "Close _Without Saving"
+msgstr "_Sulje tallentamatta"
+
+#: ../data/ui/multiclose-dialog.ui.h:2 ../gaupol/agents/close.py:50
+#: ../gaupol/agents/close.py:79 ../gaupol/agents/open.py:347
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Jos et tallenna, muutokset hukataan pysyvästi."
+
+#: ../data/ui/multiclose-dialog.ui.h:3
+msgid "Save changes to documents before closing?"
+msgstr "Tallennetaanko muutokset asiakirjoihin ennen sulkemista?"
+
+#: ../data/ui/multiclose-dialog.ui.h:4
+msgid "Select the _main documents you want to save:"
+msgstr "Valitse pää_asiakirjat, jotka haluat tallentaa:"
+
+#: ../data/ui/multiclose-dialog.ui.h:5
+msgid "Select the _translation documents you want to save:"
+msgstr "Valitse _käännösasiakirjat, jotka haluat tallentaa:"
+
+#: ../data/ui/open-dialog.ui.h:1
+msgid "Align _method:"
+msgstr "_Tasausmenetelmä:"
+
+#: ../data/ui/open-dialog.ui.h:2 ../data/ui/save-dialog.ui.h:1
+msgid "Character _encoding:"
+msgstr "_Merkistökoodaus:"
+
+#: ../data/ui/preferences-dialog.ui.h:1
+msgid "A_vailable extensions:"
+msgstr "_Käytettävissä olevat laajennukset:"
+
+#: ../data/ui/preferences-dialog.ui.h:2
+msgid "Al_ways use UTF-8 character encoding"
+msgstr "Käytä aina _UTF-8 -merkistökoodausta"
+
+#: ../data/ui/preferences-dialog.ui.h:3
+msgid "Aut_o-detection"
+msgstr "A_utomaattitunnistus"
+
+#: ../data/ui/preferences-dialog.ui.h:5
+msgid "Co_mmand:"
+msgstr "_Komento:"
+
+#: ../data/ui/preferences-dialog.ui.h:6
+msgid "Curr_ent locale encoding"
+msgstr "_Nykyisen maa-asetuston koodaus"
+
+#: ../data/ui/preferences-dialog.ui.h:7
+msgid "Editor"
+msgstr "Muokkain"
+
+#: ../data/ui/preferences-dialog.ui.h:8
+msgid "Encoding specified in the open dialog will always be tried first."
+msgstr "Avaa -valintaikkunassa määriteltyä koodausta kokeillaan aina ensin."
+
+#: ../data/ui/preferences-dialog.ui.h:9
+msgid "Extensions"
+msgstr "Laajennukset"
+
+#: ../data/ui/preferences-dialog.ui.h:10
+msgid "Fields:"
+msgstr "Kentät:"
+
+#: ../data/ui/preferences-dialog.ui.h:11
+msgid "File"
+msgstr "Tiedosto"
+
+#: ../data/ui/preferences-dialog.ui.h:12
+msgid "Font"
+msgstr "Kirjasin"
+
+#: ../data/ui/preferences-dialog.ui.h:13
+msgid "Line Lengths"
+msgstr "Rivien pituudet"
+
+#: ../data/ui/preferences-dialog.ui.h:14
+msgid "Pick the Editor Font"
+msgstr "Valitse muokkaimen kirjasin"
+
+#: ../data/ui/preferences-dialog.ui.h:15
+msgid "Preferences"
+msgstr "Asetukset"
+
+#: ../data/ui/preferences-dialog.ui.h:16
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: ../data/ui/preferences-dialog.ui.h:17
+msgid "S_how line lengths in editable text fields"
+msgstr "N_äytä rivien pituudet muokattavissa tekstikentissä"
+
+#: ../data/ui/preferences-dialog.ui.h:18
+msgid "Start Position"
+msgstr "Aloitussijainti"
+
+#: ../data/ui/preferences-dialog.ui.h:19
+msgid "Use _default theme font"
+msgstr "_Käytä teeman oletuskirjasinta"
+
+#: ../data/ui/preferences-dialog.ui.h:20
+msgid "Video Player"
+msgstr "Videosoitin"
+
+#: ../data/ui/preferences-dialog.ui.h:21
+msgid "When opening files, try encodings in the following order:"
+msgstr "Tiedostoja avatessa, kokeile koodauksia seuraavassa järjestyksessä:"
+
+#: ../data/ui/preferences-dialog.ui.h:22
+msgid "_Application:"
+msgstr "So_vellus:"
+
+#: ../data/ui/preferences-dialog.ui.h:23
+msgid "_Editor font:"
+msgstr "_Muokkaimen kirjasin:"
+
+#: ../data/ui/preferences-dialog.ui.h:24
+msgid "_Fallback encodings:"
+msgstr "_Toissijaiset koodaukset:"
+
+#: ../data/ui/preferences-dialog.ui.h:25
+msgid "_Length unit:"
+msgstr "_Pituusyksikkö:"
+
+#: ../data/ui/preferences-dialog.ui.h:26
+msgid "_Offset:"
+msgstr "Sii_rtymä:"
+
+#: ../data/ui/preferences-dialog.ui.h:27
+msgid "_Show line lengths in list cells"
+msgstr "_Näytä rivien pituudet listan soluissa"
+
+#: ../data/ui/preferences-dialog.ui.h:28
+msgid "seconds before selection"
+msgstr "sekuntia ennen valintaa"
+
+#: ../data/ui/previewerr-dialog.ui.h:1
+msgid "O_utput:"
+msgstr "_Tuloste:"
+
+#: ../data/ui/previewerr-dialog.ui.h:2
+msgid "Preview in video player failed"
+msgstr "Esikatselu videosoittimessa epäonnistui"
+
+#: ../data/ui/save-dialog.ui.h:2
+msgid "For_mat:"
+msgstr "T_iedostomuoto:"
+
+#: ../data/ui/save-dialog.ui.h:3
+msgid "Ne_wlines:"
+msgstr "_Rivinvaihdot:"
+
+#: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
+msgid "Columns"
+msgstr "Sarakkeet"
+
+#: ../data/ui/search-dialog.ui.h:2 ../gaupol/actions/search.py:33
+msgid "Find"
+msgstr "Etsi"
+
+#: ../data/ui/search-dialog.ui.h:3
+msgid "Find And Replace"
+msgstr "Etsi ja korvaa"
+
+#: ../data/ui/search-dialog.ui.h:4 ../gaupol/actions/search.py:51
+msgid "Find _Next"
+msgstr "_Etsi seuraava"
+
+#: ../data/ui/search-dialog.ui.h:5
+msgid "Find _Previous"
+msgstr "E_tsi edellinen"
+
+#: ../data/ui/search-dialog.ui.h:6
+msgid "Find in _all open projects"
+msgstr "Etsi k_aikista avoimista projekteista"
+
+#: ../data/ui/search-dialog.ui.h:7
+msgid "Find in _main text column"
+msgstr "Etsi _päätekstisarakkeesta"
+
+#: ../data/ui/search-dialog.ui.h:8
+msgid "Find in _translation text column"
+msgstr "Etsi _käännöstekstisarakkeesta"
+
+#: ../data/ui/search-dialog.ui.h:9
+msgid "Find in c_urrent project"
+msgstr "Etsi _nykyisestä projektista"
+
+#: ../data/ui/search-dialog.ui.h:10
+msgid "R_egular expression"
+msgstr "S_äännöllinen lauseke"
+
+#: ../data/ui/search-dialog.ui.h:11
+msgid "Replace _All"
+msgstr "Korv_aa kaikki"
+
+#: ../data/ui/search-dialog.ui.h:12 ../data/ui/spellcheck-dialog.ui.h:8
+msgid "Replace _with:"
+msgstr "Ko_rvaa:"
+
+#: ../data/ui/search-dialog.ui.h:14
+msgid "Target"
+msgstr "Kohde"
+
+#: ../data/ui/search-dialog.ui.h:15
+msgid "_Ignore case"
+msgstr "_Jätä kirjainkoko huomiotta"
+
+#: ../data/ui/search-dialog.ui.h:16 ../data/ui/spellcheck-dialog.ui.h:12
+msgid "_Replace"
+msgstr "_Korvaa"
+
+#: ../data/ui/search-dialog.ui.h:17
+msgid "_Search for:"
+msgstr "Ets_i:"
+
+#: ../data/ui/shift-dialog.ui.h:1
+msgid "Shift"
+msgstr "Siirrä"
+
+#: ../data/ui/shift-dialog.ui.h:2
+msgid "Shift Positions"
+msgstr "Siirrä sijainteja"
+
+#: ../data/ui/shift-dialog.ui.h:3
+msgid "Shift all _open projects"
+msgstr "Siirrä _kaikki avoimet projektit"
+
+#: ../data/ui/shift-dialog.ui.h:4
+msgid "Shift c_urrent project"
+msgstr "Siirrä _nykyinen projekti"
+
+#: ../data/ui/shift-dialog.ui.h:5
+msgid "Shift s_elected subtitles"
+msgstr "Siirrä _valitut kappaleet"
+
+#: ../data/ui/shift-dialog.ui.h:8 ../data/ui/transform-dialog.ui.h:10
+msgid "_Preview Changes"
+msgstr "_Esikatsele muutoksia"
+
+#: ../data/ui/shift-dialog.ui.h:9
+msgid "_Shift"
+msgstr "_Siirrä"
+
+#: ../data/ui/spellcheck-dialog.ui.h:1
+msgid "<b>Language (Country)</b>"
+msgstr "<b>Kieli (Maa)</b>"
+
+#: ../data/ui/spellcheck-dialog.ui.h:2
+msgid "Check Spelling"
+msgstr "Tarkista oikeinkirjoitus"
+
+#: ../data/ui/spellcheck-dialog.ui.h:3
+msgid "Ig_nore All"
+msgstr "O_hita kaikki"
+
+#: ../data/ui/spellcheck-dialog.ui.h:4
+msgid "Join _Back"
+msgstr "Yhdistä _taakse"
+
+#: ../data/ui/spellcheck-dialog.ui.h:5
+msgid "Join _Forward"
+msgstr "Yhdistä _eteen"
+
+#: ../data/ui/spellcheck-dialog.ui.h:6
+msgid "Language:"
+msgstr "Kieli:"
+
+#: ../data/ui/spellcheck-dialog.ui.h:7
+msgid "Rep_lace All"
+msgstr "Ko_rvaa kaikki"
+
+#: ../data/ui/spellcheck-dialog.ui.h:9
+msgid "_Add"
+msgstr "_Lisää"
+
+#: ../data/ui/spellcheck-dialog.ui.h:10 ../gaupol/actions/menu.py:31
+msgid "_Edit"
+msgstr "_Muokkaa"
+
+#: ../data/ui/spellcheck-dialog.ui.h:11
+msgid "_Ignore"
+msgstr "_Ohita"
+
+#: ../data/ui/spellcheck-dialog.ui.h:13
+msgid "_Suggestions:"
+msgstr "Eh_dotukset:"
+
+#: ../data/ui/split-dialog.ui.h:1
+msgid "Split Project"
+msgstr "Jaa projekti"
+
+#: ../data/ui/split-dialog.ui.h:2
+msgid "_First subtitle of new project:"
+msgstr "_Uuden projektin ensimmäinen kappale:"
+
+#: ../data/ui/split-dialog.ui.h:3
+msgid "_Split"
+msgstr "_Jaa"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:1
+#: ../data/ui/text-assistant/common-error-page.ui.h:1
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:1
+#: ../data/ui/text-assistant/line-break-page.ui.h:1
+msgid "C_ountry:"
+msgstr "_Maa:"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:2
+msgid "S_elect parts to capitalize:"
+msgstr "_Valitse isolla kirjaimella alkavaksi muutettavat osat:"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:3
+#: ../data/ui/text-assistant/common-error-page.ui.h:6
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:3
+#: ../data/ui/text-assistant/join-split-page.ui.h:5
+#: ../data/ui/text-assistant/line-break-page.ui.h:3
+msgid "_Language:"
+msgstr "K_ieli:"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:4
+#: ../data/ui/text-assistant/common-error-page.ui.h:7
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:4
+#: ../data/ui/text-assistant/line-break-page.ui.h:4
+msgid "_Script:"
+msgstr "_Kirjoitusjärjestelmä:"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:2
+msgid "Error types:"
+msgstr "Virhetyypit:"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:3
+msgid "S_elect errors to correct:"
+msgstr "_Valitse korjattavat virheet:"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:4
+msgid "_Human errors"
+msgstr "I_hmisten virheet"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:5
+msgid "_Image recognition errors"
+msgstr "K_uvantunnistusvirheet"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:1
+msgid "Acc_ept, discard or edit changes:"
+msgstr "_Hyväksy, hylkää tai muokkaa muutoksia:"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:2
+msgid "_Mark All"
+msgstr "_Merkitse kaikki"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:3
+#: ../gaupol/actions/position.py:65
+msgid "_Preview"
+msgstr "_Esikatsele"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:4
+msgid "_Remove all blank subtitles"
+msgstr "P_oista kaikki tyhjät kappaleet"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:5
+msgid "_Unmark All"
+msgstr "_Poista merkinnät"
+
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:2
+msgid "S_elect parts to remove:"
+msgstr "_Valitse poistettavat osat:"
+
+#: ../data/ui/text-assistant/intro-page.ui.h:2
+msgid "Correct texts in _all open projects"
+msgstr "Korjaa k_aikkien avoimien projektien tekstit"
+
+#: ../data/ui/text-assistant/intro-page.ui.h:3
+msgid "Correct texts in _main text column"
+msgstr "Korjaa tekstit _pääsarakkeessa"
+
+#: ../data/ui/text-assistant/intro-page.ui.h:4
+msgid "Correct texts in _translation text column"
+msgstr "Korjaa tekstit _käännössarakkeessa"
+
+#: ../data/ui/text-assistant/intro-page.ui.h:5
+msgid "Correct texts in c_urrent project"
+msgstr "Korjaa _nykyisen projektin tekstit"
+
+#: ../data/ui/text-assistant/intro-page.ui.h:6
+msgid "Correct texts in s_elected subtitles"
+msgstr "Korjaa _valittujen kappaleiden tekstit"
+
+#: ../data/ui/text-assistant/intro-page.ui.h:8
+msgid "Tasks"
+msgstr "Tehtävät"
+
+#: ../data/ui/text-assistant/intro-page.ui.h:9
+msgid "_Select corrections to perform on texts:"
+msgstr "_Valitse suoritettavat korjaukset:"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:1
+msgid "(None)"
+msgstr "(Ei mitään)"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:2
+msgid "Corrections"
+msgstr "Korjaukset"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:3
+msgid "Spell-Check Dictionary"
+msgstr "Oikoluvun sanakirja"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:4
+msgid "_Join words not found in spell-check dictionary"
+msgstr "_Yhdistä sanat, joita ei löydy sanakirjasta"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:6
+msgid "_Split words not found in spell-check dictionary"
+msgstr "_Jaa sanat, joita ei löydy sanakirjasta"
+
+#: ../data/ui/text-assistant/line-break-opts-page.ui.h:2
+msgid "S_kip subtitles with maximum line amount of:"
+msgstr "O_hita kappaleet, joiden rivimäärä on korkeintaan:"
+
+#: ../data/ui/text-assistant/line-break-opts-page.ui.h:4
+msgid "_Maximum line length:"
+msgstr "_Rivipituuden maksimi:"
+
+#: ../data/ui/text-assistant/line-break-opts-page.ui.h:5
+msgid "_Preferred maximum amount of lines:"
+msgstr "_Mieluisin rivien maksimimäärä:"
+
+#: ../data/ui/text-assistant/line-break-opts-page.ui.h:6
+msgid "_Skip subtitles with maximum line length of:"
+msgstr "_Ohita kappaleet, joiden rivipituus on korkeintaan:"
+
+#: ../data/ui/text-assistant/line-break-page.ui.h:2
+msgid "S_elect preferred line-break points:"
+msgstr "_Valitse mieluisimmat rivinvaihtokohdat:"
+
+#: ../data/ui/transform-dialog.ui.h:1
+msgid "First Point"
+msgstr "Ensimmäinen piste"
+
+#: ../data/ui/transform-dialog.ui.h:2
+msgid "Pre_view Changes"
+msgstr "Es_ikatsele muutoksia:"
+
+#: ../data/ui/transform-dialog.ui.h:3
+msgid "Second Point"
+msgstr "Toinen piste"
+
+#: ../data/ui/transform-dialog.ui.h:4
+msgid "Su_btitle:"
+msgstr "K_appale:"
+
+#: ../data/ui/transform-dialog.ui.h:6
+msgid "Text:"
+msgstr "Teksti:"
+
+#: ../data/ui/transform-dialog.ui.h:7
+msgid "Transform Positions"
+msgstr "Muunna sijainnit"
+
+#: ../data/ui/transform-dialog.ui.h:8
+msgid "Transform c_urrent project"
+msgstr "Muunna _nykyinen projekti"
+
+#: ../data/ui/transform-dialog.ui.h:9
+msgid "Transform se_lected subtitles"
+msgstr "Muunna _valitut kappaleet"
+
+#: ../data/ui/transform-dialog.ui.h:12
+msgid "_Transform"
+msgstr "_Muunna"
+
+#: ../data/extensions/bookmarks/bookmarks.gaupol-extension.in.h:1
+#: ../data/extensions/bookmarks/bookmarks.py:496
+msgid "Bookmarks"
+msgstr "Kirjanmerkit"
+
+#: ../data/extensions/bookmarks/bookmarks.gaupol-extension.in.h:2
+msgid "Marking subtitles for easy navigation"
+msgstr "Kappaleiden merkintä selaamisen helpottamiseksi"
+
+#: ../data/extensions/side-pane/side-pane.gaupol-extension.in.h:1
+msgid "A side pane that can be used by other extensions"
+msgstr "Sivupaneeli, jota muut laajennukset voivat käyttää"
+
+#: ../data/extensions/side-pane/side-pane.gaupol-extension.in.h:2
+msgid "Side Pane"
+msgstr "Sivupaneeli"
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:1
+msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
+msgstr "Lisää piste lyhennetyn tittelin, kuten \"Mr\" ja \"Dr\", jälkeen"
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:2
+msgid "Period after title"
+msgstr "Piste tittelin jälkeen"
+
+#: ../data/patterns/Latn-en.capitalization.in.h:1
+msgid "Capitalize the first person pronoun \"I\""
+msgstr "Muunna ensimmäisen persoonan pronominin \"I\" kirjainkoko"
+
+#: ../data/patterns/Latn-en.capitalization.in.h:2
+msgid "First person pronoun"
+msgstr "Ensimmäisen persoonan pronomini"
+
+#: ../data/patterns/Latn-en.common-error.in.h:1
+msgid "Convert various two-letter spellings of okay to \"OK\""
+msgstr "Muunna useat eri okay:n kaksikirjaimiset kirjoitusasut muotoon \"OK\""
+
+#: ../data/patterns/Latn-en.common-error.in.h:2
+msgid "Letter \"I\" in a lower case word"
+msgstr "Kirjain \"I\" pienellä kirjoitetussa sanassa"
+
+#: ../data/patterns/Latn-en.common-error.in.h:3
+msgid "Letter \"l\" in an upper case word"
+msgstr "Kirjain \"l\" isolla kirjoitetussa sanassa"
+
+#: ../data/patterns/Latn-en.common-error.in.h:4
+msgid "Okay"
+msgstr "Okay"
+
+#: ../data/patterns/Latn-en.common-error.in.h:5
+msgid "Remove spaces around an apostrophe"
+msgstr "Poista välit heittomerkin ympäriltä"
+
+#: ../data/patterns/Latn-en.common-error.in.h:6
+msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
+msgstr "Korvaa kirjain \"I\" kirjaimella \"l\" pienellä kirjoitetussa sanassa"
+
+#: ../data/patterns/Latn-en.common-error.in.h:7
+msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
+msgstr "Korvaa kirjain \"l\" kirjaimella \"I\" isolla kirjoitetussa sanassa"
+
+#: ../data/patterns/Latn-en.common-error.in.h:8
+msgid "Replace zero with letter \"O\" in an upper case word"
+msgstr "Korvaa nolla kirjaimella \"O\" isolla kirjoitetussa sanassa"
+
+#: ../data/patterns/Latn-en.common-error.in.h:9
+msgid "Spaces around an apostrophe"
+msgstr "Välit heittomerkin ympärillä"
+
+#: ../data/patterns/Latn-en.common-error.in.h:10
+msgid "Zero in an upper case word"
+msgstr "Nolla isolla kirjoitetussa sanassa"
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:1
+msgid ""
+"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+msgstr ""
+"Korvaa isolla kirjoitettu puhujan nimi ennen kaksoispistettä "
+"vuoropuheluviivalla"
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:2
+msgid "Uppercase speaker before a colon"
+msgstr "Isolla kirjoitettu puhuja ennen kaksoispistettä"
+
+#: ../data/patterns/Latn-en.line-break.in.h:1
+#: ../data/patterns/Latn.line-break.in.h:1
+msgid "Break according to clauses terminated by a punctuation mark"
+msgstr "Katkaise välimerkkiin päättyvien virkkeiden mukaan"
+
+#: ../data/patterns/Latn-en.line-break.in.h:2
+#: ../data/patterns/Latn.line-break.in.h:3
+msgid "Clause"
+msgstr "Virke"
+
+#: ../data/patterns/Latn.capitalization.in.h:1
+msgid "Capitalize the first word of a sentence"
+msgstr "Kirjoita lauseen ensimmäinen sana isolla alkukirjaimella"
+
+#: ../data/patterns/Latn.capitalization.in.h:2
+msgid "Sentence"
+msgstr "Lause"
+
+#: ../data/patterns/Latn.common-error.in.h:1
+msgid "Add or remove space between a number and the associated unit"
+msgstr "Lisää tai poista väli luvun ja sen yksikön välistä"
+
+#: ../data/patterns/Latn.common-error.in.h:2
+msgid "Add or remove spaces around parantheses and square brackets"
+msgstr "Lisää tai poista välit kaari- ja hakasulkeiden ympäriltä"
+
+#: ../data/patterns/Latn.common-error.in.h:3
+msgid "Add space after a dialogue dash"
+msgstr "Lisää väli vuoropuheluviivan jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:4
+msgid "Add space after an ellipsis"
+msgstr "Lisää väli kolmen pisteen jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:5
+msgid "Add space after various punctuation marks"
+msgstr "Lisää väli useiden välimerkkien jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:6
+msgid "Change the various spellings 12-hour periods to \"a.m.\" and \"p.m.\""
+msgstr ""
+"Muuta useiden eri 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m."
+"\""
+
+#: ../data/patterns/Latn.common-error.in.h:7
+msgid "Double apostrophe"
+msgstr "Kaksoisheittomerkki"
+
+#: ../data/patterns/Latn.common-error.in.h:8
+msgid "Letter \"O\" in a number"
+msgstr "Kirjain \"O\" luvussa"
+
+#: ../data/patterns/Latn.common-error.in.h:9
+msgid "Multiple question- and exclamation marks"
+msgstr "Useat kysymys- ja huutomerkit"
+
+#: ../data/patterns/Latn.common-error.in.h:10
+msgid "Periods around a punctuation mark"
+msgstr "Pisteet välimerkin ympärillä"
+
+#: ../data/patterns/Latn.common-error.in.h:11
+msgid "Remove period before or after various punctuation marks"
+msgstr "Poista piste useiden välimerkkien edeltä tai jäljestä"
+
+#: ../data/patterns/Latn.common-error.in.h:12
+msgid "Remove space after a starting- and before an ending quotation mark"
+msgstr ""
+"Poista väli aloittavan lainausmerkin jälkeen ja ennen päättävää "
+"lainausmerkkiä"
+
+#: ../data/patterns/Latn.common-error.in.h:13
+msgid "Remove space after an ellipsis that starts a line"
+msgstr "Poista väli rivin aloittavan kolmen pisteen jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:14
+msgid "Remove space before various punctuation marks"
+msgstr "Poista väli ennen useita välimerkkejä"
+
+#: ../data/patterns/Latn.common-error.in.h:15
+msgid "Replace a double apostrophe with a quotation mark"
+msgstr "Korvaa kaksoisheittomerkki lainausmerkillä"
+
+#: ../data/patterns/Latn.common-error.in.h:16
+msgid "Replace a single clause-terminating dash with two dashes"
+msgstr "Korvaa yksi virkkeen päättävä viiva kahdella"
+
+#: ../data/patterns/Latn.common-error.in.h:17
+msgid "Replace letter \"O\" with a zero in a number"
+msgstr "Korvaa kirjain \"O\" nollalla luvussa"
+
+#: ../data/patterns/Latn.common-error.in.h:18
+msgid ""
+"Replace multiple consequtive question- and exclamation marks with only one"
+msgstr "Korvaa useat peräkkäiset kysymys- ja heittomerkit yhdellä"
+
+#: ../data/patterns/Latn.common-error.in.h:19
+msgid "Space after a dialogue dash"
+msgstr "Väli vuoropuheluviivan jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:20
+msgid "Space after a starting ellipsis"
+msgstr "Väli aloittavan kolmen pisteen jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:21
+msgid "Space after an ellipsis"
+msgstr "Väli kolmen pisteen jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:22
+msgid "Space after punctuation marks"
+msgstr "Väli välimerkkien jälkeen"
+
+#: ../data/patterns/Latn.common-error.in.h:23
+msgid "Space before punctuation marks"
+msgstr "Väli ennen välimerkkejä"
+
+#: ../data/patterns/Latn.common-error.in.h:24
+msgid "Space between number and unit"
+msgstr "Väli luvun ja yksikön välissä"
+
+#: ../data/patterns/Latn.common-error.in.h:25
+msgid "Spaces around a quotation mark"
+msgstr "Välit lainausmerkin ympärillä"
+
+#: ../data/patterns/Latn.common-error.in.h:26
+msgid "Spaces around brackets"
+msgstr "Välit sulkeiden ympärillä"
+
+#: ../data/patterns/Latn.common-error.in.h:27
+msgid "Spelling of a.m. and p.m."
+msgstr "a.m.:n ja p.m.:n kirjoitusasu"
+
+#: ../data/patterns/Latn.common-error.in.h:28
+msgid "Terminating double-dashes"
+msgstr "Päättävät kaksoisviivat"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:1
+msgid "One-line song lyrics between number signs"
+msgstr "Yksiriviset laulun sanat numeromerkkien välissä"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:2
+msgid "Remove description of a sound between parantheses"
+msgstr "Poista kaarisulkeissa oleva äänen kuvaus"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:3
+msgid "Remove description of a sound between square brackets"
+msgstr "Poista hakasulkeissa oleva äänen kuvaus"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:4
+msgid "Remove one-line song lyrics starting with or between number signs"
+msgstr ""
+"Poista yksiriviset laulun sanat alkaen numeromerkeillä tai niiden välissä"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:5
+msgid "Remove song lyrics starting with or between number signs"
+msgstr "Poista laulun sanat alkaen numeromerkeillä tai niiden välissä"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:6
+msgid "Replace the name of the speaker before a colon with a dialogue dash"
+msgstr "Korvaa puhujan nimi ennen kaksoispistettä vuoropuheluviivalla"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:7
+msgid "Song lyrics between number signs"
+msgstr "Laulun sanat numeromerkkien välissä"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:8
+msgid "Sound in brackets"
+msgstr "Ääni hakasulkeissa"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:9
+msgid "Sound in parantheses"
+msgstr "Ääni kaarisulkeissa"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:10
+msgid "Speaker before a colon"
+msgstr "Puhuja ennen kaksoispistettä"
+
+#: ../data/patterns/Latn.line-break.in.h:2
+msgid "Break according to dialogue separated by dashes"
+msgstr "Katkaise viivoilla erotetun vuoropuhelun mukaan"
+
+#: ../data/patterns/Latn.line-break.in.h:4
+msgid "Dialogue"
+msgstr "Vuoropuhelu"
+
+#: ../data/patterns/Zyyy.common-error.in.h:1
+msgid "Leading and trailing spaces"
+msgstr "Välit rivien päissä"
+
+#: ../data/patterns/Zyyy.common-error.in.h:2
+msgid "Multiple consecutive spaces"
+msgstr "Useat peräkkäiset välit"
+
+#: ../data/patterns/Zyyy.common-error.in.h:3
+msgid "Remove space between digits of a number"
+msgstr "Poista väli luvun numeroiden välissä"
+
+#: ../data/patterns/Zyyy.common-error.in.h:4
+msgid "Remove spaces from the beginning and end of lines"
+msgstr "Poista välit rivien alusta ja lopusta"
+
+#: ../data/patterns/Zyyy.common-error.in.h:5
+msgid "Replace multiple consecutive spaces with only one"
+msgstr "Korvaa useat peräkkäiset välit yhdellä"
+
+#: ../data/patterns/Zyyy.common-error.in.h:6
+msgid "Space between digits"
+msgstr "Väli numeroiden välissä"
+
+#: ../aeidon/agents/clipboard.py:61
+msgid "Cutting texts"
+msgstr "tekstien leikkaaminen"
+
+#: ../aeidon/agents/clipboard.py:85
+msgid "Pasting texts"
+msgstr "tekstien liittäminen"
+
+#: ../aeidon/agents/edit.py:59 ../aeidon/agents/edit.py:93
+msgid "Inserting subtitles"
+msgstr "kappaleiden lisääminen"
+
+#: ../aeidon/agents/edit.py:75
+msgid "Clearing texts"
+msgstr "tekstien tyhjentäminen"
+
+#: ../aeidon/agents/edit.py:118
+msgid "Merging subtitles"
+msgstr "kappaleiden yhdistäminen"
+
+#: ../aeidon/agents/edit.py:135
+msgid "Removing subtitles"
+msgstr "kappaleiden poistaminen"
+
+#: ../aeidon/agents/edit.py:157
+msgid "Replacing positions"
+msgstr "sijaintien korvaaminen"
+
+#: ../aeidon/agents/edit.py:178
+msgid "Replacing texts"
+msgstr "tekstien korvaaminen"
+
+#: ../aeidon/agents/edit.py:207
+msgid "Splitting subtitle"
+msgstr "kappaleen jakaminen"
+
+#: ../aeidon/agents/format.py:97
+msgid "Adding dialogue dashes"
+msgstr "vuoropuheluviivojen lisääminen"
+
+#: ../aeidon/agents/format.py:120
+msgid "Changing case"
+msgstr "kirjainkoon muuttaminen"
+
+#: ../aeidon/agents/format.py:139
+msgid "Italicizing"
+msgstr "kursivointi"
+
+#: ../aeidon/agents/format.py:159
+msgid "Removing dialogue dashes"
+msgstr "vuoropuheluviivojen lisääminen"
+
+#: ../aeidon/agents/format.py:201
+msgid "Unitalicizing"
+msgstr "kursivoinnin poistaminen"
+
+#: ../aeidon/agents/position.py:140
+msgid "Adjusting durations"
+msgstr "kestojen säätäminen"
+
+#: ../aeidon/agents/position.py:167
+msgid "Converting framerate"
+msgstr "ruutunopeuden muuntaminen"
+
+#: ../aeidon/agents/position.py:180
+msgid "Setting framerate"
+msgstr "ruutunopeuden asettaminen"
+
+#: ../aeidon/agents/position.py:204
+msgid "Shifting positions"
+msgstr "sijaintien siirtäminen"
+
+#: ../aeidon/agents/position.py:234
+msgid "Transforming positions"
+msgstr "sijaintien muuntaminen"
+
+#: ../aeidon/agents/search.py:257
+msgid "Replacing"
+msgstr "korvaaminen"
+
+#: ../aeidon/agents/search.py:285 ../aeidon/agents/search.py:287
+msgid "Replacing all"
+msgstr "kaikkien korvaaminen"
+
+#: ../aeidon/agents/set.py:62 ../aeidon/agents/set.py:85
+#: ../aeidon/agents/set.py:126
+msgid "Editing position"
+msgstr "sijainnin muokkaaminen"
+
+#: ../aeidon/agents/set.py:146
+msgid "Editing text"
+msgstr "tekstin muokkaaminen"
+
+#: ../aeidon/agents/text.py:201
+msgid "Breaking lines"
+msgstr "rivien katkaiseminen"
+
+#: ../aeidon/agents/text.py:244
+msgid "Capitalizing texts"
+msgstr "tekstien kirjainkokojen muuttaminen"
+
+#: ../aeidon/agents/text.py:280
+msgid "Correcting common errors"
+msgstr "yleisten virheiden korjaaminen"
+
+#: ../aeidon/agents/text.py:314
+msgid "Removing hearing impaired texts"
+msgstr "kuulovammaisten tekstien poistaminen"
+
+#: ../aeidon/agents/text.py:372
+msgid "Joining words by spell-check suggestions"
+msgstr "sanojen yhdistäminen oikoluvun ehdotusten mukaan"
+
+#: ../aeidon/agents/text.py:425
+msgid "Splitting words by spell-check suggestions"
+msgstr "sanojen jakaminen oikoluvun ehdotusten mukaan"
+
+#. Translators: Most of the character encoding descriptions are copied from
+#. gedit, which is translated to very many languages. Check the gedit .po
+#. files for a reference: <http://git.gnome.org/cgit/gedit/tree/po/>.
+#: ../aeidon/encodings.py:36 ../aeidon/encodings.py:39
+#: ../aeidon/encodings.py:41
+msgid "English"
+msgstr "Englanti"
+
+#: ../aeidon/encodings.py:37 ../aeidon/encodings.py:38
+#: ../aeidon/encodings.py:62
+msgid "Chinese traditional"
+msgstr "Kiina, perinteinen"
+
+#: ../aeidon/encodings.py:40 ../aeidon/encodings.py:48
+#: ../aeidon/encodings.py:52 ../aeidon/encodings.py:71
+#: ../aeidon/encodings.py:97
+msgid "Hebrew"
+msgstr "Heprea"
+
+#: ../aeidon/encodings.py:42 ../aeidon/encodings.py:45
+#: ../aeidon/encodings.py:65 ../aeidon/encodings.py:68
+#: ../aeidon/encodings.py:90 ../aeidon/encodings.py:102
+#: ../aeidon/encodings.py:110
+msgid "Western"
+msgstr "Länsimainen"
+
+#: ../aeidon/encodings.py:43 ../aeidon/encodings.py:57
+#: ../aeidon/encodings.py:59 ../aeidon/encodings.py:69
+#: ../aeidon/encodings.py:96 ../aeidon/encodings.py:107
+msgid "Greek"
+msgstr "Kreikka"
+
+#: ../aeidon/encodings.py:44 ../aeidon/encodings.py:73
+#: ../aeidon/encodings.py:93 ../aeidon/encodings.py:100
+msgid "Baltic"
+msgstr "Balttilainen"
+
+#: ../aeidon/encodings.py:46 ../aeidon/encodings.py:66
+#: ../aeidon/encodings.py:91 ../aeidon/encodings.py:109
+msgid "Central European"
+msgstr "Keski-Eurooppalainen"
+
+#: ../aeidon/encodings.py:47 ../aeidon/encodings.py:67
+#: ../aeidon/encodings.py:94 ../aeidon/encodings.py:106
+msgid "Cyrillic"
+msgstr "Kyrillinen"
+
+#: ../aeidon/encodings.py:49 ../aeidon/encodings.py:64
+#: ../aeidon/encodings.py:70 ../aeidon/encodings.py:98
+#: ../aeidon/encodings.py:111
+msgid "Turkish"
+msgstr "Turkki"
+
+#: ../aeidon/encodings.py:50
+msgid "Portugese"
+msgstr "Portugali"
+
+#: ../aeidon/encodings.py:51 ../aeidon/encodings.py:108
+msgid "Icelandic"
+msgstr "Islanti"
+
+#: ../aeidon/encodings.py:53
+msgid "Canadian"
+msgstr "Kanadalainen"
+
+#: ../aeidon/encodings.py:54 ../aeidon/encodings.py:72
+#: ../aeidon/encodings.py:95
+msgid "Arabic"
+msgstr "Arabia"
+
+#: ../aeidon/encodings.py:55 ../aeidon/encodings.py:99
+msgid "Nordic"
+msgstr "Pohjoismainen"
+
+#: ../aeidon/encodings.py:56 ../aeidon/encodings.py:104
+msgid "Russian"
+msgstr "Venäjä"
+
+#: ../aeidon/encodings.py:58
+msgid "Thai"
+msgstr "Thai"
+
+#: ../aeidon/encodings.py:60 ../aeidon/encodings.py:75
+#: ../aeidon/encodings.py:76 ../aeidon/encodings.py:77
+#: ../aeidon/encodings.py:83 ../aeidon/encodings.py:84
+#: ../aeidon/encodings.py:85 ../aeidon/encodings.py:86
+#: ../aeidon/encodings.py:87 ../aeidon/encodings.py:88
+#: ../aeidon/encodings.py:113 ../aeidon/encodings.py:114
+#: ../aeidon/encodings.py:115
+msgid "Japanese"
+msgstr "Japani"
+
+#: ../aeidon/encodings.py:61 ../aeidon/encodings.py:78
+#: ../aeidon/encodings.py:89 ../aeidon/encodings.py:103
+msgid "Korean"
+msgstr "Korea"
+
+#: ../aeidon/encodings.py:63
+msgid "Urdu"
+msgstr "Urdu"
+
+#: ../aeidon/encodings.py:74
+msgid "Vietnamese"
+msgstr "Vietnam"
+
+#: ../aeidon/encodings.py:79 ../aeidon/encodings.py:82
+msgid "Chinese simplified"
+msgstr "Kiina, yksinkertaistettu"
+
+#: ../aeidon/encodings.py:80 ../aeidon/encodings.py:81
+msgid "Chinese unified"
+msgstr "Kiina, yhdistetty"
+
+#: ../aeidon/encodings.py:92
+msgid "South European"
+msgstr "Eteläeurooppalainen"
+
+#: ../aeidon/encodings.py:101
+msgid "Celtic"
+msgstr "Kelttiläinen"
+
+#: ../aeidon/encodings.py:105
+msgid "Ukrainian"
+msgstr "Ukraina"
+
+#: ../aeidon/encodings.py:112
+msgid "Cyrillic Asian"
+msgstr "Aasian kyrillinen"
+
+#: ../aeidon/encodings.py:116 ../aeidon/encodings.py:117
+#: ../aeidon/encodings.py:118 ../aeidon/encodings.py:119
+#: ../aeidon/encodings.py:120 ../aeidon/encodings.py:121
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../aeidon/encodings.py:154
+#, python-format
+msgid "%(description)s (%(name)s)"
+msgstr "%(description)s (%(name)s)"
+
+#: ../aeidon/encodings.py:248
+#, python-format
+msgid "Current locale (%s)"
+msgstr "Nykyinen maa-asetusto (%s)"
+
+#: ../aeidon/enums/align.py:27 ../gaupol/enums/fields.py:30
+msgid "Subtitle number"
+msgstr "Kappaleen numero"
+
+#: ../aeidon/enums/align.py:32
+msgid "Subtitle position"
+msgstr "Kappaleen sijainti"
+
+#: ../aeidon/enums/framerates.py:27
+msgid "24 fps"
+msgstr "24 fps"
+
+#: ../aeidon/enums/framerates.py:34
+msgid "25 fps"
+msgstr "25 fps"
+
+#: ../aeidon/enums/framerates.py:41
+msgid "30 fps"
+msgstr "30 fps"
+
+#: ../aeidon/enums/newlines.py:27
+msgid "Mac (classic)"
+msgstr "Mac (klassinen)"
+
+#: ../aeidon/locales.py:66
+#, python-format
+msgid "%(language)s (%(country)s)"
+msgstr "%(language)s (%(country)s)"
+
+#. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
+#. of a tree view column that contains 16 pixels wide pixbufs.
+#: ../data/extensions/bookmarks/bookmarks.py:106
+#: ../data/extensions/bookmarks/bookmarks.py:111
+msgid "Bm."
+msgstr "Km."
+
+#: ../data/extensions/bookmarks/bookmarks.py:112
+msgid "Bookmark"
+msgstr "Kirjanmerkki"
+
+#: ../data/extensions/bookmarks/bookmarks.py:181
+msgid "_Bookmarks"
+msgstr "_Kirjanmerkit"
+
+#: ../data/extensions/bookmarks/bookmarks.py:182
+msgid "_Add…"
+msgstr "_Lisää…"
+
+#: ../data/extensions/bookmarks/bookmarks.py:183
+msgid "Add a bookmark for the current subtitle"
+msgstr "Lisää kirjanmerkki nykyiseen kappaleeseen"
+
+#: ../data/extensions/bookmarks/bookmarks.py:185
+msgid "_Edit Bookmarks"
+msgstr "_Muokkaa kirjanmerkkejä"
+
+#: ../data/extensions/bookmarks/bookmarks.py:188 ../gaupol/actions/view.py:31
+msgid "_Next"
+msgstr "_Seuraava"
+
+#: ../data/extensions/bookmarks/bookmarks.py:189
+msgid "Go to the next bookmarked subtitle"
+msgstr "Siirry seuraavaan kirjanmerkittyyn kappaleeseen"
+
+#: ../data/extensions/bookmarks/bookmarks.py:191 ../gaupol/actions/view.py:50
+msgid "_Previous"
+msgstr "_Edellinen"
+
+#: ../data/extensions/bookmarks/bookmarks.py:192
+msgid "Go to the previous bookmarked subtitle"
+msgstr "Siirry edelliseen kirjanmerkittyyn kappaleeseen"
+
+#: ../data/extensions/bookmarks/bookmarks.py:196
+msgid "_Bookmark"
+msgstr "Kirjan_merkki"
+
+#: ../data/extensions/bookmarks/bookmarks.py:197
+msgid "Show or hide the bookmark column"
+msgstr "Näytä tai piilota kirjanmerkkisarake"
+
+#: ../data/extensions/bookmarks/bookmarks.py:224
+msgid "Search:"
+msgstr "Etsi:"
+
+#: ../data/extensions/side-pane/side-pane.py:52
+msgid "(Empty)"
+msgstr "(Tyhjä)"
+
+#: ../data/extensions/side-pane/side-pane.py:294
+msgid "Si_de Pane"
+msgstr "S_ivupaneeli"
+
+#: ../data/extensions/side-pane/side-pane.py:295
+msgid "Show or hide the side pane"
+msgstr "Näytä tai piilota sivupaneeli"
+
+#: ../data/gaupol.desktop.in.h:1
+msgid "Edit subtitle files"
+msgstr "Muokkaa tekstitystiedostoja"
+
+#: ../data/gaupol.desktop.in.h:2
+msgid "Gaupol"
+msgstr "Gaupol"
+
+#: ../data/gaupol.desktop.in.h:3
+msgid "Gaupol Subtitle Editor"
+msgstr "Gaupol tekstitysmuokkain"
+
+#: ../data/gaupol.desktop.in.h:4
+msgid "Subtitle Editor"
+msgstr "Tekstitysmuokkain"
+
+#: ../gaupol/actions/edit.py:34
+msgid "Clear the selected texts"
+msgstr "Tyhjennä valitut tekstit"
+
+#: ../gaupol/actions/edit.py:54
+msgid "_Copy"
+msgstr "_Kopioi"
+
+#: ../gaupol/actions/edit.py:56
+msgid "Copy the selected texts to the clipboard"
+msgstr "Kopioi valitut tekstit leikepöydälle"
+
+#: ../gaupol/actions/edit.py:76
+msgid "Cu_t"
+msgstr "_Leikkaa"
+
+#: ../gaupol/actions/edit.py:78
+msgid "Cut the selected texts to the clipboard"
+msgstr "Leikkaa valitut tekstit leikepöydälle"
+
+#: ../gaupol/actions/edit.py:98
+msgid "_Preferences"
+msgstr "_Asetukset"
+
+#: ../gaupol/actions/edit.py:100
+msgid "Configure Gaupol"
+msgstr "Määritä Gaupolin asetukset"
+
+#: ../gaupol/actions/edit.py:111
+msgid "Edit _Next Cell"
+msgstr "M_uokkaa seuraavaa solua"
+
+#: ../gaupol/actions/edit.py:112
+msgid "Next"
+msgstr "Seuraava"
+
+#: ../gaupol/actions/edit.py:114
+msgid "Edit the focused column of the next subtitle"
+msgstr "Muokkaa seuraavan kappaleen kohdistettua saraketta"
+
+#: ../gaupol/actions/edit.py:138
+msgid "_Edit Cell"
+msgstr "_Muokkaa solua"
+
+#: ../gaupol/actions/edit.py:139
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: ../gaupol/actions/edit.py:141
+msgid "Edit the focused cell"
+msgstr "Muokkaa kohdistettua solua"
+
+#: ../gaupol/actions/edit.py:163
+msgid "Extend To _Beginning"
+msgstr "Laajenna _alkuun"
+
+#: ../gaupol/actions/edit.py:164
+msgid "Extend the current selection up to the first subtitle"
+msgstr "Laajenna nykyinen valinta ensimmäiseen kappaleeseen asti"
+
+#: ../gaupol/actions/edit.py:184
+msgid "Extend To _End"
+msgstr "Laajenna _loppuun"
+
+#: ../gaupol/actions/edit.py:185
+msgid "Extend the current selection up to the last subtitle"
+msgstr "Laajenna nykyinen valinta viimeiseen kappaleeseen asti"
+
+#: ../gaupol/actions/edit.py:205
+msgid "_Insert Subtitles…"
+msgstr "_Lisää kappaleita"
+
+#: ../gaupol/actions/edit.py:206
+msgid "Insert"
+msgstr "Lisää"
+
+#: ../gaupol/actions/edit.py:208
+msgid "Insert new subtitles"
+msgstr "Lisää uusia kappaleita"
+
+#: ../gaupol/actions/edit.py:226
+msgid "_Invert Selection"
+msgstr "_Käännä valinta"
+
+#: ../gaupol/actions/edit.py:227
+msgid "Invert the current selection"
+msgstr "Käännä nykyinen valinta"
+
+#: ../gaupol/actions/edit.py:244
+msgid "_Merge Subtitles"
+msgstr "_Yhdistä kappaleet"
+
+#: ../gaupol/actions/edit.py:245
+msgid "Merge the selected subtitles"
+msgstr "Yhdistä valitut kappaleet"
+
+#: ../gaupol/actions/edit.py:264
+msgid "_Paste"
+msgstr "L_iitä"
+
+#: ../gaupol/actions/edit.py:266
+msgid "Paste texts from the clipboard"
+msgstr "Liitä tekstit leikepöydältä"
+
+#: ../gaupol/actions/edit.py:289
+msgid "_Redo"
+msgstr "_Tee uudelleen"
+
+#: ../gaupol/actions/edit.py:291
+msgid "Redo the last undone action"
+msgstr "Tee uudestaan viimeisin kumottu toiminto"
+
+#: ../gaupol/actions/edit.py:309
+msgid "Rem_ove Subtitles"
+msgstr "_Poista kappaleet"
+
+#: ../gaupol/actions/edit.py:310
+msgid "Remove"
+msgstr "Poista"
+
+#: ../gaupol/actions/edit.py:312
+msgid "Remove the selected subtitles"
+msgstr "Poista valitut kappaleet"
+
+#: ../gaupol/actions/edit.py:329
+msgid "Select _All"
+msgstr "_Valitse kaikki"
+
+#: ../gaupol/actions/edit.py:331
+msgid "Select all subtitles"
+msgstr "Valitse kaikki kappaleet"
+
+#: ../gaupol/actions/edit.py:348
+msgid "Sele_ction"
+msgstr "_Valinta"
+
+#: ../gaupol/actions/edit.py:364
+msgid "_Split Subtitle"
+msgstr "_Jaa kappale"
+
+#: ../gaupol/actions/edit.py:365
+msgid "Split the selected subtitle"
+msgstr "Jaa valittu kappale"
+
+#: ../gaupol/actions/edit.py:385
+msgid "_Undo"
+msgstr "_Kumoa"
+
+#: ../gaupol/actions/edit.py:387
+msgid "Undo the last action"
+msgstr "Kumoa viimeisin toiminto"
+
+#: ../gaupol/actions/file.py:32
+msgid "_Append File…"
+msgstr "_Lisää tiedosto perään…"
+
+#: ../gaupol/actions/file.py:34
+msgid "Append subtitles from file to the current project"
+msgstr "Lisää nykyisen projektin perään kappaleet tiedostosta"
+
+#: ../gaupol/actions/file.py:51
+msgid "_Close All"
+msgstr "_Sulje kaikki"
+
+#: ../gaupol/actions/file.py:53
+msgid "Close all open projects"
+msgstr "Sulje kaikki avoimet projektit"
+
+#: ../gaupol/actions/file.py:69
+msgid "_Close"
+msgstr "_Sulje"
+
+#: ../gaupol/actions/file.py:71
+msgid "Close the current project"
+msgstr "Sulje nykyinen projekti"
+
+#: ../gaupol/actions/file.py:87
+msgid "_Headers"
+msgstr "_Otsakkeet"
+
+#: ../gaupol/actions/file.py:89
+msgid "Edit file headers"
+msgstr "Muokkaa tiedoston otsakkeita"
+
+#: ../gaupol/actions/file.py:113
+msgid "_New"
+msgstr "_Uusi"
+
+#: ../gaupol/actions/file.py:115
+msgid "Create a new project"
+msgstr "Luo uusi projekti"
+
+#: ../gaupol/actions/file.py:130 ../gaupol/actions/file.py:149
+msgid "_Open…"
+msgstr "_Avaa…"
+
+#: ../gaupol/actions/file.py:131 ../gaupol/actions/file.py:150
+#: ../gaupol/agents/open.py:139 ../gaupol/agents/open.py:147
+msgid "Open"
+msgstr "Avaa"
+
+#: ../gaupol/actions/file.py:133 ../gaupol/actions/file.py:152
+msgid "Open main files"
+msgstr "Avaa päätiedostoja"
+
+#: ../gaupol/actions/file.py:167
+msgid "Open _Recent"
+msgstr "Avaa v_iimeaikainen"
+
+#: ../gaupol/actions/file.py:181
+msgid "Open R_ecent Translation"
+msgstr "Avaa vii_meaikainen käännös"
+
+#: ../gaupol/actions/file.py:196
+msgid "Open _Translation…"
+msgstr "Avaa _käännös…"
+
+#: ../gaupol/actions/file.py:197 ../gaupol/agents/open.py:180
+msgid "Open Translation"
+msgstr "Avaa käännös"
+
+#: ../gaupol/actions/file.py:199
+msgid "Open a translation file"
+msgstr "Avaa käännöstiedosto"
+
+#: ../gaupol/actions/file.py:215
+msgid "_Quit"
+msgstr "_Lopeta"
+
+#: ../gaupol/actions/file.py:217
+msgid "Quit Gaupol"
+msgstr "Lopeta Gaupol"
+
+#: ../gaupol/actions/file.py:229
+msgid "_Save All"
+msgstr "_Tallenna kaikki"
+
+#: ../gaupol/actions/file.py:231
+msgid "Save all open documents"
+msgstr "Tallenna kaikki avoimet asiakirjat"
+
+#: ../gaupol/actions/file.py:248
+msgid "_Save"
+msgstr "_Tallenna"
+
+#: ../gaupol/actions/file.py:250
+msgid "Save the current main document"
+msgstr "Tallenna nykyinen pääasiakirja"
+
+#: ../gaupol/actions/file.py:266
+msgid "Save _As…"
+msgstr "Tall_enna nimellä…"
+
+#: ../gaupol/actions/file.py:267 ../gaupol/agents/save.py:157
+msgid "Save As"
+msgstr "Tallenna nimellä"
+
+#: ../gaupol/actions/file.py:269
+msgid "Save the current main document with a different name"
+msgstr "Tallenna nykyinen pääasiakirja eri nimellä"
+
+#: ../gaupol/actions/file.py:287
+msgid "Save Trans_lation"
+msgstr "Talle_nna käännös"
+
+#: ../gaupol/actions/file.py:289
+msgid "Save the current translation document"
+msgstr "Tallenna nykyinen käännösasiakirja"
+
+#: ../gaupol/actions/file.py:305
+msgid "Save Translat_ion As…"
+msgstr "Tallenna k_äännös nimellä"
+
+#: ../gaupol/actions/file.py:306 ../gaupol/agents/save.py:188
+msgid "Save Translation As"
+msgstr "Tallenna käännös nimellä"
+
+#: ../gaupol/actions/file.py:308
+msgid "Save the current translation document with a different name"
+msgstr "Tallenna nykyinen käännösasiakirja eri nimellä"
+
+#: ../gaupol/actions/file.py:326
+msgid "Select _Video…"
+msgstr "_Valitse video…"
+
+#: ../gaupol/actions/file.py:327
+msgid "Video"
+msgstr "Video"
+
+#: ../gaupol/actions/file.py:329
+msgid "Select a video file"
+msgstr "Valitse videotiedosto"
+
+#: ../gaupol/actions/file.py:346
+msgid "Spli_t Project…"
+msgstr "_Jaa projekti…"
+
+#: ../gaupol/actions/file.py:347
+msgid "Split the current project in two"
+msgstr "Jaa nykyinen projekti kahtia"
+
+#: ../gaupol/actions/format.py:32
+msgid "Ca_se"
+msgstr "Ki_rjainkoko"
+
+#: ../gaupol/actions/format.py:51
+msgid "_Dialogue"
+msgstr "_Vuoropuhelu"
+
+#: ../gaupol/actions/format.py:52
+msgid "Add or remove dialogue dashes on the selected texts"
+msgstr "Lisää tai poista valittujen tekstien vuoropuheluviivat"
+
+#: ../gaupol/actions/format.py:74
+msgid "_Italic"
+msgstr "K_ursiivi"
+
+#: ../gaupol/actions/format.py:76
+msgid "Italicize or unitalicize the selected texts"
+msgstr "Kursivoi tai poista kursivointi valituilta teksteiltä"
+
+#: ../gaupol/actions/format.py:100
+msgid "_Lower"
+msgstr "_Pieni"
+
+#: ../gaupol/actions/format.py:101
+msgid "Change the selected texts to lower case"
+msgstr "Muuta valittujen tekstien kirjainkoko pieneksi"
+
+#: ../gaupol/actions/format.py:120
+msgid "_Sentence"
+msgstr "_Lause"
+
+#: ../gaupol/actions/format.py:121
+msgid "Change the selected texts to sentence case"
+msgstr "Muuta valittujen tekstien kirjainkoko lauseeksi"
+
+#: ../gaupol/actions/format.py:140
+msgid "_Title"
+msgstr "_Otsikko"
+
+#: ../gaupol/actions/format.py:141
+msgid "Change the selected texts to title case"
+msgstr "Muuta valittujen tekstien kirjainkoko otsikoksi"
+
+#: ../gaupol/actions/format.py:160
+msgid "_Upper"
+msgstr "_Iso"
+
+#: ../gaupol/actions/format.py:161
+msgid "Change the selected texts to upper case"
+msgstr "Muuta valittujen tekstien kirjainkoko isoksi"
+
+#: ../gaupol/actions/help.py:32
+msgid "_Wiki Documentation"
+msgstr "Wiki-ohje"
+
+#: ../gaupol/actions/help.py:34
+msgid "Browse wiki documentation"
+msgstr "Selaa wiki-ohjetta"
+
+#: ../gaupol/actions/help.py:45
+msgid "_Report A Bug"
+msgstr "_Lähetä vikailmoitus"
+
+#: ../gaupol/actions/help.py:46
+msgid "Submit a bug report"
+msgstr "Lähetä vikailmoitus"
+
+#: ../gaupol/actions/help.py:57
+msgid "_About"
+msgstr "_Tietoja"
+
+#: ../gaupol/actions/help.py:59
+msgid "Show information about Gaupol"
+msgstr "Näytä tietoja Gaupolista"
+
+#: ../gaupol/actions/menu.py:42
+msgid "_File"
+msgstr "_Tiedosto"
+
+#: ../gaupol/actions/menu.py:53
+msgid "_Help"
+msgstr "_Ohje"
+
+#: ../gaupol/actions/menu.py:64
+msgid "_Projects"
+msgstr "_Projektit"
+
+#: ../gaupol/actions/menu.py:75
+msgid "_Text"
+msgstr "T_eksti"
+
+#: ../gaupol/actions/menu.py:86
+msgid "T_ools"
+msgstr "Ty_ökalut"
+
+#: ../gaupol/actions/menu.py:97
+msgid "_View"
+msgstr "_Näytä"
+
+#: ../gaupol/actions/position.py:32
+msgid "Adjust _Durations…"
+msgstr "S_äädä kestoja…"
+
+#: ../gaupol/actions/position.py:33
+msgid "Lengthen or shorten durations"
+msgstr "Pidennä tai lyhennä kestoja"
+
+#: ../gaupol/actions/position.py:48
+msgid "Convert _Framerate…"
+msgstr "M_uunna ruutunopeus…"
+
+#: ../gaupol/actions/position.py:49
+msgid "Change positions for a different framerate"
+msgstr "Muunna sijainnit eri ruutunopeudelle"
+
+#: ../gaupol/actions/position.py:67
+msgid "Preview from selected position with a video player"
+msgstr "Esikatsele valitusta sijainnista videosoittimella"
+
+#: ../gaupol/actions/position.py:93
+msgid "_Shift Positions…"
+msgstr "_Siirrä sijainteja…"
+
+#: ../gaupol/actions/position.py:94
+msgid "Make subtitles appear earlier or later"
+msgstr "Aseta kappaleet näkymään aikaisemmin tai myöhemmin"
+
+#: ../gaupol/actions/position.py:110
+msgid "_Transform Positions…"
+msgstr "_Muunna sijainteja…"
+
+#: ../gaupol/actions/position.py:111
+msgid "Change positions by linear two-point correction"
+msgstr "Muunna sijainteja lineaarisella kahden pisteen korjauksella"
+
+#: ../gaupol/actions/search.py:32
+msgid "_Find And Replace…"
+msgstr "_Etsi ja korvaa…"
+
+#: ../gaupol/actions/search.py:35
+msgid "Search for and replace text"
+msgstr "Etsi ja korvaa tekstiä"
+
+#: ../gaupol/actions/search.py:52
+msgid "Search forwards for same text"
+msgstr "Etsi eteenpäin samaa tekstiä"
+
+#: ../gaupol/actions/search.py:69
+msgid "Find Pre_vious"
+msgstr "Etsi e_dellinen"
+
+#: ../gaupol/actions/search.py:70
+msgid "Search backwards for same text"
+msgstr "Etsi taaksepäin samaa tekstiä"
+
+#: ../gaupol/actions/text.py:32
+msgid "Co_nfigure Spell-check…"
+msgstr "_Oikoluvun asetukset…"
+
+#: ../gaupol/actions/text.py:33
+msgid "Set language and spell-check target"
+msgstr "Aseta kieli ja oikoluvun kohde"
+
+#: ../gaupol/actions/text.py:48
+msgid "_Check Spelling"
+msgstr "_Tarkista oikeinkirjoitus"
+
+#: ../gaupol/actions/text.py:49
+msgid "Spelling"
+msgstr "Oikeinkirjoitus"
+
+#: ../gaupol/actions/text.py:51
+msgid "Check for incorrect spelling"
+msgstr "Tarkista asiakirja kirjoitusvirheiltä"
+
+#: ../gaupol/actions/text.py:69
+msgid "C_orrect Texts…"
+msgstr "_Korjaa tekstejä…"
+
+#: ../gaupol/actions/text.py:70
+msgid "Find and correct errors in texts"
+msgstr "Etsi ja korjaa virheitä teksteissä"
+
+#: ../gaupol/actions/view.py:32
+msgid "Activate the project in the next tab"
+msgstr "Vaihda edellisen välilehden projektiin"
+
+#: ../gaupol/actions/view.py:51
+msgid "Activate the project in the previous tab"
+msgstr "Vaihda seuraavan välilehden projektiin"
+
+#: ../gaupol/actions/view.py:68
+msgid "Move Tab _Left"
+msgstr "Siirrä välilehti _vasemmalle"
+
+#: ../gaupol/actions/view.py:69
+msgid "Move the current tab to the left"
+msgstr "Siirrä nykyinen välilehti vasemmalle"
+
+#: ../gaupol/actions/view.py:85
+msgid "Move Tab _Right"
+msgstr "Siirrä välilehti _oikealle"
+
+#: ../gaupol/actions/view.py:86
+msgid "Move the current tab to the right"
+msgstr "Siirrä nykyinen välilehti oikealle"
+
+#: ../gaupol/actions/view.py:102
+msgid "_Columns"
+msgstr "_Sarakkeet"
+
+#: ../gaupol/actions/view.py:119
+msgid "2_4 fps"
+msgstr "2_4 fps"
+
+#: ../gaupol/actions/view.py:120
+msgid "Calculate nonnative units with a framerate of 24 fps"
+msgstr "Laske vieraat yksiköt ruutunopeudella 24 fps"
+
+#: ../gaupol/actions/view.py:143
+msgid "2_5 fps"
+msgstr "2_5 fps"
+
+#: ../gaupol/actions/view.py:144
+msgid "Calculate nonnative units with a framerate of 25 fps"
+msgstr "Laske vieraat yksiköt ruutunopeudella 25 fps"
+
+#: ../gaupol/actions/view.py:167
+msgid "_30 fps"
+msgstr "_30 fps"
+
+#: ../gaupol/actions/view.py:168
+msgid "Calculate nonnative units with a framerate of 30 fps"
+msgstr "Laske vieraat yksiköt ruutunopeudella 30 fps"
+
+#: ../gaupol/actions/view.py:189
+msgid "F_ramerate"
+msgstr "Ruutu_nopeus"
+
+#: ../gaupol/actions/view.py:208
+msgid "_Frames"
+msgstr "_Ruudut"
+
+#: ../gaupol/actions/view.py:209
+msgid "Show positions as frames"
+msgstr "Näytä sijainnit ruutuina"
+
+#: ../gaupol/actions/view.py:230
+msgid "_Times"
+msgstr "_Ajat"
+
+#: ../gaupol/actions/view.py:231
+msgid "Show positions as times"
+msgstr "Näytä sijainnit aikoina"
+
+#: ../gaupol/actions/view.py:252
+msgid "_Duration"
+msgstr "_Kesto"
+
+#: ../gaupol/actions/view.py:253
+msgid "Show or hide the duration column"
+msgstr "Näytä tai piilota kestosarake"
+
+#: ../gaupol/actions/view.py:270
+msgid "_End"
+msgstr "_Loppu"
+
+#: ../gaupol/actions/view.py:271
+msgid "Show or hide the end column"
+msgstr "Näytä tai piilota loppusarake"
+
+#: ../gaupol/actions/view.py:288
+msgid "_Main Text"
+msgstr "_Pääteksti"
+
+#: ../gaupol/actions/view.py:289
+msgid "Show or hide the main text column"
+msgstr "Näytä tai piilota päätekstisarake"
+
+#: ../gaupol/actions/view.py:306
+msgid "_Main Toolbar"
+msgstr "_Päätyökalurivi"
+
+#: ../gaupol/actions/view.py:307
+msgid "Show or hide the main toolbar"
+msgstr "Näytä tai piilota päätyökalurivi"
+
+#: ../gaupol/actions/view.py:320
+msgid "_No."
+msgstr "_Nro."
+
+#: ../gaupol/actions/view.py:321
+msgid "Show or hide the number column"
+msgstr "Näytä tai piilota numerosarake"
+
+#: ../gaupol/actions/view.py:337
+msgid "_Output Window"
+msgstr "T_ulosteikkuna"
+
+#: ../gaupol/actions/view.py:338
+msgid "Show or hide the output window"
+msgstr "Näytä tai piilota tulosteikkuna"
+
+#: ../gaupol/actions/view.py:351
+msgid "_Start"
+msgstr "_Alku"
+
+#: ../gaupol/actions/view.py:352
+msgid "Show or hide the start column"
+msgstr "Näytä tai piilota alkusarake"
+
+#: ../gaupol/actions/view.py:368
+msgid "_Statusbar"
+msgstr "_Tilarivi"
+
+#: ../gaupol/actions/view.py:369
+msgid "Show or hide the statusbar"
+msgstr "Näytä tai piilota tilarivi"
+
+#: ../gaupol/actions/view.py:383
+msgid "_Translation Text"
+msgstr "K_äännösteksti"
+
+#: ../gaupol/actions/view.py:384
+msgid "Show or hide the translation text column"
+msgstr "Näytä tai piilota käännöstekstisarake"
+
+#: ../gaupol/actions/view.py:401
+msgid "_Video Toolbar"
+msgstr "_Videotyökalurivi"
+
+#: ../gaupol/actions/view.py:402
+msgid "Show or hide the video toolbar"
+msgstr "Näytä tai piilota videotyökalurivi"
+
+#: ../gaupol/agents/close.py:48
+#, python-format
+msgid "Save changes to main document \"%s\" before closing?"
+msgstr "Tallenna muutokset pääasiakirjaan \"%s\" ennen sulkemista?"
+
+#: ../gaupol/agents/close.py:77
+#, python-format
+msgid "Save changes to translation document \"%s\" before closing?"
+msgstr "Tallenna muutokset käännösasiakirjaan \"%s\" ennen sulkemista?"
+
+#: ../gaupol/agents/edit.py:173
+#, python-format
+msgid "Inserted %d subtitle to fit clipboard contents"
+msgid_plural "Inserted %d subtitles to fit clipboard contents"
+msgstr[0] "Lisättiin %d kappale leikepöydän sisällön mahduttamiseksi"
+msgstr[1] "Lisättiin %d kappaletta leikepöydän sisällön mahduttamiseksi"
+
+#: ../gaupol/agents/edit.py:280
+msgid "Use Shift+Return for line-break"
+msgstr "Käytä näppäimiä Shift+Return rivinvaihtoa varten"
+
+#: ../gaupol/agents/menu.py:50
+#, python-format
+msgid "Activate \"%s\""
+msgstr "Vaihda projektiin \"%s\""
+
+#: ../gaupol/agents/menu.py:76 ../gaupol/agents/update.py:157
+#, python-format
+msgid "Redo \"%s\""
+msgstr "Tee \"%s\" uudelleen"
+
+#: ../gaupol/agents/menu.py:146 ../gaupol/agents/update.py:153
+#, python-format
+msgid "Undo \"%s\""
+msgstr "Kumoa \"%s\""
+
+#: ../gaupol/agents/open.py:45
+msgid "Appending file"
+msgstr "tiedoston lisääminen perään"
+
+#: ../gaupol/agents/open.py:60
+#, python-format
+msgid "File \"%s\" is already open"
+msgstr "Tiedosto \"%s\" on jo auki"
+
+#: ../gaupol/agents/open.py:273
+#, python-format
+msgid "Failed to decode file \"%s\" with all attempted codecs"
+msgstr ""
+"Tiedoston \"%s\" purkaminen epäonnistui kaikilla kokeilluilla koodekeilla"
+
+#: ../gaupol/agents/open.py:275
+msgid "Please try to open the file with a different character encoding."
+msgstr "Yritä avata tiedosto eri merkistökoodauksella."
+
+#: ../gaupol/agents/open.py:283
+#, python-format
+msgid "Failed to recognize format of file \"%s\""
+msgstr "Tiedoston \"%s\" muodon tunnistus epäonnistui"
+
+#: ../gaupol/agents/open.py:284
+msgid ""
+"Please check that the file you are trying to open is a subtitle file of a "
+"format supported by Gaupol."
+msgstr ""
+"Tarkista että tiedosto, jota yrität avata on tekstitystiedosto, jonka muotoa "
+"Gaupol tukee."
+
+#: ../gaupol/agents/open.py:292
+#, python-format
+msgid "Failed to open file \"%s\""
+msgstr "Tiedoston \"%s\" avaaminen epäonnistui"
+
+#: ../gaupol/agents/open.py:293
+#, python-format
+msgid "%s."
+msgstr "%s."
+
+#: ../gaupol/agents/open.py:300
+#, python-format
+msgid "Failed to parse file \"%s\""
+msgstr "Tiedoston \"%s\" tulkinta epäonnistui"
+
+#: ../gaupol/agents/open.py:301
+#, python-format
+msgid ""
+"Please check, e.g. with a text editor, that the file you are trying open is "
+"a valid %s file. If you think it is, file a bug report and attach the file."
+msgstr ""
+"Tarkista, esimerkiksi tekstieditorilla, että tiedosto, jota yrität avata on "
+"kelvollinen %s tiedosto. Jos luulet että se on, lähetä vikailmoitus ja liitä "
+"tiedosto."
+
+#: ../gaupol/agents/open.py:313
+#, python-format
+msgid "Open abnormally large file \"%s\"?"
+msgstr "Avaa epätavallisen suuri tiedosto \"%s\"?"
+
+#: ../gaupol/agents/open.py:314
+#, python-format
+msgid ""
+"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"subtitle file. Please, check that you are not trying to open a binary file."
+msgstr ""
+"Tiedoston koko on %.1f Mt, mikä on epätavallisen suuri koko "
+"tekstimuotoiselle tekstitystiedostolle. Tarkista ettet yritä avata "
+"binääritiedostoa."
+
+#: ../gaupol/agents/open.py:329
+#, python-format
+msgid "Open unsorted file \"%s\"?"
+msgstr "Avaa lajittelematon tiedosto \"%s\"?"
+
+#: ../gaupol/agents/open.py:330
+#, python-format
+msgid ""
+"The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
+"file may be erroneously composed."
+msgstr ""
+"%d kappaleen järjestys täytyy muuttaa. Jos %d kuulostaa paljolta, tiedosto "
+"voi olla virheellisesti muodostettu."
+
+#: ../gaupol/agents/open.py:345
+#, python-format
+msgid "Save changes to translation document \"%s\" before opening a new one?"
+msgstr "Tallenna muutokset käännösasiakirjaan \"%s\" ennen uuden avaamista?"
+
+#: ../gaupol/agents/open.py:349
+msgid "Open _Without Saving"
+msgstr "_Avaa tallentamatta"
+
+#: ../gaupol/agents/open.py:442
+#, python-format
+msgid "Appended %(amount)d subtitles from \"%(basename)s\""
+msgstr "Lisättiin %(amount)d kappaletta perään tiedostosta \"%(basename)s\""
+
+#: ../gaupol/agents/open.py:481
+#, python-format
+msgid "Opened main file \"%s\""
+msgstr "Avattiin päätiedosto \"%s\""
+
+#: ../gaupol/agents/open.py:500
+#, python-format
+msgid "Opened translation file \"%s\""
+msgstr "Avattiin käännöstiedosto \"%s\""
+
+#: ../gaupol/agents/preview.py:50
+#, python-format
+msgid "Failed to encode subtitle file to temporary directory \"%s\""
+msgstr ""
+"Tekstitystiedoston koodaaminen väliaikaishakemistoon \"%s\" epäonnistui"
+
+#: ../gaupol/agents/preview.py:52
+msgid ""
+"Subtitle data could not be encoded to a temporary file for preview with the "
+"current character encoding. Please first save the subtitle file with a "
+"different character encoding."
+msgstr ""
+"Tekstitysdataa ei voitu koodata väliaikaistiedostoon esikatselua varten "
+"nykyisellä merkistökoodauksella. Tallenna tekstitystiedosto ensin eri "
+"merkistökoodauksella."
+
+#: ../gaupol/agents/preview.py:61
+#, python-format
+msgid "Failed to save subtitle file to temporary directory \"%s\""
+msgstr ""
+"Tekstitystiedoston tallentaminen väliaikaishakemistoon \"%s\" epäonnistui"
+
+#: ../gaupol/agents/preview.py:69
+msgid "Failed to launch video player"
+msgstr "Videosoittimen käynnistäminen epäonnistui"
+
+#: ../gaupol/agents/save.py:40
+msgid "Saved all open documents"
+msgstr "Tallennettiin kaikki avoimet asiakirjat"
+
+#: ../gaupol/agents/save.py:122
+#, python-format
+msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
+msgstr ""
+"Tiedoston \"%(basename)s\" koodaaminen koodekilla \"%(codec)s\" epäonnistui"
+
+#: ../gaupol/agents/save.py:124
+msgid "Please try to save the file with a different character encoding."
+msgstr "Yritä tallentaa tiedosto eri merkistökoodauksella."
+
+#: ../gaupol/agents/save.py:132
+#, python-format
+msgid "Failed to save file \"%s\""
+msgstr "Tiedoston \"%s\" tallentaminen epäonnistui"
+
+#: ../gaupol/agents/save.py:149
+msgid "Saved main document"
+msgstr "Tallennettiin pääasiakirja"
+
+#: ../gaupol/agents/save.py:165
+#, python-format
+msgid "Saved main document as \"%s\""
+msgstr "Tallennettiin pääasiakirja nimellä \"%s\""
+
+#: ../gaupol/agents/save.py:180
+msgid "Saved translation document"
+msgstr "Tallennettiin käännösasiakirja"
+
+#: ../gaupol/agents/save.py:196
+#, python-format
+msgid "Saved translation document as \"%s\""
+msgstr "Tallennettiin käännösasiakirja nimellä \"%s\""
+
+#: ../gaupol/application.py:171
+msgid "Framerate:"
+msgstr "Ruutunopeus:"
+
+#: ../gaupol/application.py:236
+msgid "Redo undone actions"
+msgstr "Tee uudelleen kumottuja toimintoja"
+
+#: ../gaupol/application.py:289
+msgid "Undo actions"
+msgstr "Kumoa toimintoja"
+
+#: ../gaupol/application.py:334
+msgid "Video file:"
+msgstr "Videotiedosto:"
+
+#: ../gaupol/assistants.py:101
+msgid "Select Tasks and Target"
+msgstr "Valitse tehtävät ja kohde"
+
+#: ../gaupol/assistants.py:362
+msgid "Other"
+msgstr "Muu"
+
+#: ../gaupol/assistants.py:433
+msgid "Capitalize texts written in lower case"
+msgstr "Muunna kokonaan pienellä kirjoitetun tekstin kirjainkoko"
+
+#: ../gaupol/assistants.py:435
+msgid "Select Capitalization Patterns"
+msgstr "Valitse kirjainkoon muunnoksen lausekkeet"
+
+#: ../gaupol/assistants.py:437
+msgid "Capitalize texts"
+msgstr "Muunna kirjainkoko"
+
+#: ../gaupol/assistants.py:461
+msgid "Correct common errors made by humans or image recognition software"
+msgstr ""
+"Korjaa joko ihmisten tai kuvantunnistusohjelmien tekemiä yleisiä virheitä"
+
+#: ../gaupol/assistants.py:465
+msgid "Select Common Error Patterns"
+msgstr "Valitse yleisten virheiden lausekkeet"
+
+#: ../gaupol/assistants.py:467
+msgid "Correct common errors"
+msgstr "Korjaa yleisiä virheitä"
+
+#: ../gaupol/assistants.py:520
+msgid "Remove explanatory texts meant for the hearing impaired"
+msgstr "Poista kuulovammaisille tarkoitetut selittävät tekstit"
+
+#: ../gaupol/assistants.py:524
+msgid "Select Hearing Impaired Patterns"
+msgstr "Valitse kuulovammaistekstien lausekkeet"
+
+#: ../gaupol/assistants.py:526
+msgid "Remove hearing impaired texts"
+msgstr "Poista kuulovammaistekstit"
+
+#: ../gaupol/assistants.py:552
+msgid ""
+"Use spell-check suggestions to fix whitespace detection errors of image "
+"recognition software"
+msgstr ""
+"Käytä oikoluvun ehdotuksia kuvantunnistusohjelmien tekemien "
+"välientunnistusvirheiden korjaamiseen"
+
+#: ../gaupol/assistants.py:556
+msgid "Set Options for Joining and Splitting Words"
+msgstr "Määritä sanojen yhdistämisen ja jakamisen asetukset"
+
+#: ../gaupol/assistants.py:558
+msgid "Join or Split Words"
+msgstr "Yhdistä tai jaa sanoja"
+
+#: ../gaupol/assistants.py:600 ../gaupol/dialogs/spellcheck.py:367
+#, python-format
+msgid "Failed to load dictionary for language \"%s\""
+msgstr "Sanakirjan lataaminen kielelle \"%s\" epäonnistui"
+
+#: ../gaupol/assistants.py:629
+msgid "Break text into lines of defined length"
+msgstr "Katkaise teksti määritellyn pituisiin riveihin"
+
+#: ../gaupol/assistants.py:631
+msgid "Select Line-Break Patterns"
+msgstr "Valitse rivien katkaisun lausekkeet"
+
+#: ../gaupol/assistants.py:633
+msgid "Break lines"
+msgstr "Katkaise rivejä"
+
+#: ../gaupol/assistants.py:689
+msgid "Set Line-Break Options"
+msgstr "Määritä rivien katkaisun asetukset"
+
+#: ../gaupol/assistants.py:774
+msgid "Correcting Texts"
+msgstr "Korjataan tekstejä"
+
+#: ../gaupol/assistants.py:780
+msgid "Each task is now being run on each project."
+msgstr "Jokaista tehtävää ajetaan nyt jokaiselle projektille."
+
+#: ../gaupol/assistants.py:804
+#, python-format
+msgid "%(current)d of %(total)d tasks complete"
+msgstr "%(current)d / %(total)d tehtävästä valmiina"
+
+#: ../gaupol/assistants.py:812
+#, python-format
+msgid "Project: %s"
+msgstr "Projekti: %s"
+
+#: ../gaupol/assistants.py:819
+#, python-format
+msgid "Task: %s"
+msgstr "Tehtävä: %s"
+
+#: ../gaupol/assistants.py:841
+msgid "Confirm Changes"
+msgstr "Vahvista muutokset"
+
+#: ../gaupol/assistants.py:886
+msgid "Accept"
+msgstr "Hyväksy"
+
+#: ../gaupol/assistants.py:889
+msgid "Original Text"
+msgstr "Alkuperäinen teksti"
+
+#: ../gaupol/assistants.py:890
+msgid "Corrected Text"
+msgstr "Korjattu teksti"
+
+#: ../gaupol/assistants.py:1017
+msgid "Correct Texts"
+msgstr "Korjaa tekstejä"
+
+#: ../gaupol/assistants.py:1045
+msgid "Correcting texts"
+msgstr "tekstien korjaaminen"
+
+#: ../gaupol/assistants.py:1061
+#, python-format
+msgid "Edited %(edits)d and removed %(removals)d subtitles"
+msgstr "Muokattiin %(edits)d ja poistettiin %(removals)d kappaletta"
+
+#: ../gaupol/assistants.py:1087
+#, python-format
+msgid "Confirm %d Change"
+msgid_plural "Confirm %d Changes"
+msgstr[0] "Vahvista %d muutos"
+msgstr[1] "Vahvista %d muutosta"
+
+#: ../gaupol/dialogs/about.py:48
+msgid "About Gaupol"
+msgstr "Tietoja Gaupolista"
+
+#: ../gaupol/dialogs/about.py:52
+msgid "Subtitle editor"
+msgstr "Tekstitysmuokkain"
+
+#: ../gaupol/dialogs/about.py:56
+msgid "Gaupol Website"
+msgstr "Gaupolin WWW-sivut"
+
+#. Translators: This is a special message that shouldn't be translated
+#. literally. It is used in the about dialog to give credits to the
+#. translators. Thus, you should translate it to your name and email
+#. address. You can also include other translators who have contributed
+#. to this translation; in that case, please write them on separate
+#. lines seperated by newlines (\n).
+#: ../gaupol/dialogs/about.py:67
+msgid "translator-credits"
+msgstr "Osmo Salomaa <otsaloma@cc.hut.fi>"
+
+#: ../gaupol/dialogs/append.py:33
+msgid "Append File"
+msgstr "Lisää tiedosto perään"
+
+#: ../gaupol/dialogs/duration.py:69
+#, python-format
+msgid "Adjusted duration of %d subtitle"
+msgid_plural "Adjusted durations of %d subtitles"
+msgstr[0] "Säädettiin %d kappaleen kesto"
+msgstr[1] "Säädettiin %d kappaleen kestot"
+
+#: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:100
+msgid "Description"
+msgstr "Kuvaus"
+
+#: ../gaupol/dialogs/encoding.py:63 ../gaupol/dialogs/encoding.py:105
+msgid "Encoding"
+msgstr "Koodaus"
+
+#: ../gaupol/dialogs/encoding.py:111
+msgid "Show in Menu"
+msgstr "Näytä valikossa"
+
+#: ../gaupol/dialogs/file.py:50 ../gaupol/dialogs/video.py:45
+msgid "All files"
+msgstr "Kaikki tiedostot"
+
+#: ../gaupol/dialogs/file.py:54
+msgid "All supported files"
+msgstr "Kaikki tuetut tiedostot"
+
+#: ../gaupol/dialogs/file.py:67
+#, python-format
+msgid "%(format)s (%(pattern)s)"
+msgstr "%(format)s (%(pattern)s)"
+
+#: ../gaupol/dialogs/file.py:109
+msgid "Auto-detected"
+msgstr "Automaattisesti tunnistettu"
+
+#: ../gaupol/dialogs/file.py:111
+msgid "Other…"
+msgstr "Muu…"
+
+#: ../gaupol/dialogs/header.py:191
+msgid "Invalid header"
+msgstr "Virheellinen otsake"
+
+#: ../gaupol/dialogs/header.py:192
+msgid ""
+"MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is "
+"any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
+msgstr ""
+"MPsub-otsakkeen täytyy sisältää rivi muotoa \"FORMAT=ARVO\", missä ARVO on "
+"joko \"TIME\", \"23.98\", \"25.00\" tai \"29.97\"."
+
+#: ../gaupol/dialogs/insert.py:46
+msgid "Above selection"
+msgstr "Valinnan yläpuolelle"
+
+#: ../gaupol/dialogs/insert.py:47
+msgid "Below selection"
+msgstr "Valinnan alapuolelle"
+
+#: ../gaupol/dialogs/language.py:94
+msgid "Set Language"
+msgstr "Aseta kieli"
+
+#: ../gaupol/dialogs/preferences.py:193
+#, python-format
+msgid "%s Extension Website"
+msgstr "%s laajennuksen WWW-sivut"
+
+#: ../gaupol/dialogs/preferences.py:221
+msgid "Cannot deactivate extension"
+msgstr "Laajennusta ei voida poistaa käytöstä"
+
+#: ../gaupol/dialogs/preferences.py:222
+#, python-format
+msgid "Extension \"%s\" is required by other extensions."
+msgstr "Muut laajennukset vaativat toimiakseen laajennuksen \"%s\"."
+
+#: ../gaupol/dialogs/preferences.py:406
+msgid "Custom"
+msgstr "Oma"
+
+#: ../gaupol/dialogs/search.py:354
+#, python-format
+msgid "\"%s\" not found"
+msgstr "Lauseketta \"%s\" ei löytynyt"
+
+#: ../gaupol/dialogs/search.py:411
+msgid "Error in regular expression pattern"
+msgstr "Virhe säännöllisessä lausekkeessa"
+
+#: ../gaupol/dialogs/search.py:418
+msgid "Error in regular expression replacement"
+msgstr "Virhe säännöllisen lausekkeen korvaajassa"
+
+#: ../gaupol/dialogs/search.py:539
+#, python-format
+msgid "Found and replaced %d occurence"
+msgid_plural "Found and replaced %d occurences"
+msgstr[0] "Löydettiin ja korvattiin %d esiintymä"
+msgstr[1] "Löydettiin ja korvattiin %d esiintymää"
+
+#: ../gaupol/dialogs/shift.py:138
+msgid "frames"
+msgstr "ruutua"
+
+#: ../gaupol/dialogs/shift.py:161
+msgid "seconds"
+msgstr "sekuntia"
+
+#: ../gaupol/dialogs/spellcheck.py:342
+msgid "Spell-checking"
+msgstr "oikeinkirjoituksen tarkistaminen"
+
+#: ../gaupol/dialogs/split.py:72
+msgid "Splitting project"
+msgstr "projektin jakaminen"
+
+#: ../gaupol/dialogs/split.py:99
+#, python-format
+msgid "Split %(amount)d subtitles to project \"%(name)s\""
+msgstr "Jaettiin %(amount)d kappaletta projektiin \"%(name)s\""
+
+#: ../gaupol/dialogs/video.py:33
+msgid "Select Video"
+msgstr "Valitse video"
+
+#: ../gaupol/dialogs/video.py:37
+msgid "_Select"
+msgstr "_Valitse"
+
+#: ../gaupol/dialogs/video.py:49
+msgid "Video files"
+msgstr "Videotiedostot"
+
+#: ../gaupol/enums/fields.py:29
+msgid "No."
+msgstr "Nro."
+
+#: ../gaupol/enums/fields.py:37
+msgid "Start"
+msgstr "Alku"
+
+#: ../gaupol/enums/fields.py:38
+msgid "Start position"
+msgstr "Alkusijainti"
+
+#: ../gaupol/enums/fields.py:45
+msgid "End"
+msgstr "Loppu"
+
+#: ../gaupol/enums/fields.py:46
+msgid "End position"
+msgstr "Loppusijainti"
+
+#. Translators: 'Dur.' is short for duration. It is used in the header of a
+#. tree view column that contains numbers five characters wide.
+#: ../gaupol/enums/fields.py:55
+msgid "Dur."
+msgstr "Kesto"
+
+#: ../gaupol/enums/fields.py:56
+msgid "Duration"
+msgstr "Kesto"
+
+#: ../gaupol/enums/fields.py:63
+msgid "Main Text"
+msgstr "Pääteksti"
+
+#: ../gaupol/enums/fields.py:64
+msgid "Main text"
+msgstr "Pääteksti"
+
+#: ../gaupol/enums/fields.py:71
+msgid "Translation Text"
+msgstr "Käännösteksti"
+
+#: ../gaupol/enums/fields.py:72
+msgid "Translation text"
+msgstr "Käännösteksti"
+
+#: ../gaupol/enums/units.py:27
+msgid "characters"
+msgstr "merkkiä"
+
+#: ../gaupol/enums/units.py:32
+msgid "ems"
+msgstr "em"
+
+#: ../gaupol/main.py:104
+msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
+msgstr "gaupol [VALITSIN...] [TIEDOSTO...] [+[NRO]]"
+
+#: ../gaupol/main.py:110
+msgid "show version number and exit"
+msgstr "näytä versionumero ja poistu"
+
+#: ../gaupol/main.py:116 ../gaupol/main.py:140 ../gaupol/main.py:159
+msgid "FILE"
+msgstr "TIEDOSTO"
+
+#: ../gaupol/main.py:119
+msgid "set the configuration file used"
+msgstr "aseta käytettävä asetustiedosto"
+
+#: ../gaupol/main.py:125
+msgid "ENCODING"
+msgstr "KOODAUS"
+
+#: ../gaupol/main.py:128
+msgid "set the character encoding used to open files"
+msgstr "aseta tiedostojen avaamiseen käytettävä merkistökoodaus"
+
+#: ../gaupol/main.py:134
+msgid "list all available character encodings"
+msgstr "luettele kaikki käytettävissä olevat merkistökoodaukset"
+
+#: ../gaupol/main.py:143
+msgid "open translation file"
+msgstr "avaa käännöstiedosto"
+
+#: ../gaupol/main.py:149
+msgid "METHOD"
+msgstr "MENETELMÄ"
+
+#: ../gaupol/main.py:152
+msgid "method used to align translation subtitles: 'number' or 'position'"
+msgstr ""
+"käännöksen kappaleiden tasaamiseen käytettävä menetelmä: 'number' (numero)"
+"tai 'position' (sijainti)"
+
+#: ../gaupol/main.py:162
+msgid "select video file"
+msgstr "valitse videotiedosto"
+
+#: ../gaupol/output.py:37
+msgid "Output"
+msgstr "Tuloste"
+
+#: ../gaupol/page.py:59
+#, python-format
+msgid "Untitled %d"
+msgstr "Nimetön %d"
+
+#: ../gaupol/page.py:123
+msgid "Close project"
+msgstr "Sulje projekti"
+
+#: ../gaupol/page.py:325
+#, python-format
+msgid "%s translation"
+msgstr "%s käännös"
