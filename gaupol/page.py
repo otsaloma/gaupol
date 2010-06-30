@@ -282,16 +282,13 @@ class Page(aeidon.Observable):
         """Update the text in the tab tooltip."""
         if self.project.main_file is None: return
         encoding = self.project.main_file.encoding
-        markup = ("<b>Path:</b> %s\n\n"
-                  "<b>Format:</b> %s\n"
-                  "<b>Character encoding:</b> %s\n"
-                  "<b>Newlines:</b> %s") % (
-            self.project.main_file.path,
-            self.project.main_file.format.label,
-            aeidon.encodings.code_to_long_name(encoding),
-            self.project.main_file.newline.label)
+        encoding = aeidon.encodings.code_to_long_name(encoding)
+        tooltip.set_markup("%s\n\n%s\n%s\n%s" % (
+            _("<b>Path:</b> %s") % self.project.main_file.path,
+            _("<b>Format:</b> %s") % self.project.main_file.format.label,
+            _("<b>Character encoding:</b> %s") % encoding,
+            _("<b>Newlines:</b> %s") % self.project.main_file.newline.label))
 
-        tooltip.set_markup(markup)
         return True # to show the tooltip.
 
     def _update_undo_limit(self):

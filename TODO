@@ -13,6 +13,8 @@ Gaupol 0.17
      gnome-python-extras)
 
  [W] Add Finnish translation
+ [ ] Fix problems with extension configurations
+ [ ] Add a --mandir option to setup.py (fixes #...)
 
 Gaupol 1.0
 ==========

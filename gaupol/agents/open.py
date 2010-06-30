@@ -290,7 +290,6 @@ class OpenAgent(aeidon.Delegate):
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to read file."""
         title = _('Failed to open file "%s"') % basename
-        message = _("%s.") % message
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         gaupol.util.flash_dialog(dialog)

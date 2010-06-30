@@ -4,7 +4,7 @@ Gaupol supports preview of subtitles with an arbitrary external video player. Vi
 
 Commands for two multiplatform video players -- [[http://www.mplayerhq.hu/|MPlayer]] and [[http://www.videolan.org/vlc/|VLC]] -- are predefined. For other video players you'll want to use a custom command. The following fields can be used in the command.
 
- * `$MILLISECONDS` (since 0.17)
+ * `$MILLISECONDS` (since Gaupol 0.17)
 
  * `$SECONDS`
 
