@@ -49,7 +49,7 @@ class SidePane(aeidon.Observable):
         self._conf = gaupol.conf.extensions.side_pane
         self._focus_handler_id = None
         self._has_focus = False
-        self._label = gtk.Label(_("(Empty)"))
+        self._label = gtk.Label("(Empty)")
         self._notebook = gtk.Notebook()
         self._paned = gtk.HPaned()
         self._toggle_button = gtk.ToggleButton()

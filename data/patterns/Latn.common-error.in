@@ -1,6 +1,6 @@
 [Common Error Pattern]
 _Name=Spelling of a.m. and p.m.
-_Description=Change the various spellings 12-hour periods to "a.m." and "p.m."
+_Description=Change the various spellings of 12-hour periods to "a.m." and "p.m."
 Classes=Human;OCR;
 Pattern=(\d)(\s*p\.? ?m\.?)(\W|$)
 Flags=DOTALL;MULTILINE;UNICODE;IGNORECASE;

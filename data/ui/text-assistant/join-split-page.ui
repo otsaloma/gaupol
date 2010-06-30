@@ -66,7 +66,7 @@
                             <child>
                               <object class="GtkLabel" id="label3">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">(None)</property>
+                                <property name="label">(None)</property>
                               </object>
                               <packing>
                                 <property name="position">0</property>
