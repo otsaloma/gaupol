@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gaupol 0.16.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-22 20:39+0300\n"
-"PO-Revision-Date: 2010-07-02 16:23+0300\n"
+"PO-Revision-Date: 2010-07-02 16:27+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
 "Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
 "Language: fi\n"
@@ -715,7 +715,7 @@ msgstr "Kirjanmerkit"
 
 #: ../data/extensions/bookmarks/bookmarks.gaupol-extension.in.h:2
 msgid "Marking subtitles for easy navigation"
-msgstr "Kappaleiden merkintä selaamisen helpottamiseksi"
+msgstr "Merkitse kappaleita selaamisen helpottamiseksi"
 
 #: ../data/extensions/side-pane/side-pane.gaupol-extension.in.h:1
 msgid "A side pane that can be used by other extensions"
