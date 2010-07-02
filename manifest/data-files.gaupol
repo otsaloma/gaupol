@@ -24,6 +24,3 @@ data/ui/*
 
 [share/gaupol/ui/text-assistant]
 data/ui/text-assistant/*
-
-[share/man/man1]
-doc/gaupol.1

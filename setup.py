@@ -66,7 +66,10 @@ if running_py2exe:
 ## Patch distribution class with new global options.
 ##
 
-user_options = (
+global_options = (
+    ("mandir=", None, ("relative installation directory for manpages "
+                       "(defaults to 'share/man')")),
+
     ("with-aeidon", None, "install the aeidon package"),
     ("without-aeidon", None, "don't install the aeidon package"),
     ("with-gaupol", None, "install the gaupol package"),
@@ -78,7 +81,7 @@ negative_opt = {"without-aeidon": "with-aeidon",
                 "without-gaupol": "with-gaupol",
                 "without-iso-codes": "with-iso-codes"}
 
-distribution.global_options.extend(user_options)
+distribution.global_options.extend(global_options)
 distribution.negative_opt.update(negative_opt)
 
 
@@ -144,6 +147,14 @@ class Distribution(distribution):
             self.data_files.append((dest, files))
         fobj.close()
 
+    def __find_man_pages(self):
+        """Find man pages to install."""
+        mandir = self.mandir
+        while mandir.endswith("/"):
+            mandir = mandir[:-1]
+        dest = "/".join((mandir, "man1"))
+        self.data_files.append((dest, ("doc/gaupol.1",)))
+
     def __find_packages(self, name):
         """Find Python packages to install for name."""
         for (root, dirs, files) in os.walk(name):
@@ -160,6 +171,7 @@ class Distribution(distribution):
 
     def __init__(self, attrs=None):
         """Initialize a Distribution object."""
+        self.mandir = "share/man"
         self.with_aeidon = True
         self.with_gaupol = True
         self.with_iso_codes = True
@@ -183,6 +195,7 @@ class Distribution(distribution):
                 self.__find_data_files("iso-codes")
         if self.with_gaupol:
             self.__find_data_files("gaupol")
+            self.__find_man_pages()
             self.__find_packages("gaupol")
             self.__find_scripts("gaupol")
         # Redefine name, version and requires metadata attributes. These are
