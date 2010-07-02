@@ -67,7 +67,7 @@ if running_py2exe:
 ##
 
 global_options = (
-    ("mandir=", None, ("relative installation directory for manpages "
+    ("mandir=", None, ("relative installation directory for man pages "
                        "(defaults to 'share/man')")),
 
     ("with-aeidon", None, "install the aeidon package"),
