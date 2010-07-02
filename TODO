@@ -6,7 +6,7 @@ Gaupol 0.17
  [D] Add an inline spell-check for editable multiline text fields (off
      by default, can be activated in the preferences dialog)
  [D] Add support for milliseconds (field $MILLISECONDS) in preview
-     commands (allows use of Media Player Classic for preview)
+     commands. Allows use of Media Player Classic for preview.
  [D] Add help button in the preferences dialog, clickable in the
      preview tab to launch web browser to view wiki documentation
  [D] Add optional dependency of PyGtkSpell (part of

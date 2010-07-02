@@ -133,7 +133,7 @@ def lines_to_px(nlines, font=None):
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
-    if gaupol.util.gtkspell_available():
+    if gaupol.util.gtkspell_available() and gaupol.conf.spell_check.inline:
         import gtkspell
         spell = gtkspell.Spell(text_view)
         try: spell.set_language(gaupol.conf.spell_check.language)
