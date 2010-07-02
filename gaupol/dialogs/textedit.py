@@ -16,8 +16,10 @@
 
 """Dialog for editing text of a single subtitle."""
 
+import aeidon
 import gaupol
 import gtk
+_ = aeidon.i18n._
 
 
 class TextEditDialog(gtk.Dialog):
@@ -41,6 +43,7 @@ class TextEditDialog(gtk.Dialog):
         self.set_transient_for(parent)
         self.set_border_width(6)
         self.set_modal(True)
+        self.set_title(_("Edit Text"))
 
     def _init_text_view(self):
         """Initialize the text view."""
