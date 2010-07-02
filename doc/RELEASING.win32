@@ -31,6 +31,12 @@ Preparing to Build Windows Installers
 
      [4.1] http://www.rfk.id.au/software/pyenchant/download.html
 
+    TODO: What about PyGtkSpell? No official packages exist. Check if
+    prebuilt packages from Pidgin [4.2] and/or GRAMPS [4.3] work.
+
+     [4.2] http://developer.pidgin.im/wiki/BuildingWinPidgin#GtkSpell
+     [4.3] http://gramps-project.org/wiki/index.php?title=Windows_installer
+
  5. Install GTK+. The easiest way seems to be to use the all-in-one
     bundle [5.1], although it may include some unnecessary files.
 
