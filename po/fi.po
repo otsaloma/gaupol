@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gaupol 0.16.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-22 20:39+0300\n"
-"PO-Revision-Date: 2010-06-30 23:10+0300\n"
+"PO-Revision-Date: 2010-07-02 15:44+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
 "Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
 "Language: fi\n"
@@ -291,7 +291,7 @@ msgstr "Muokkain"
 
 #: ../data/ui/preferences-dialog.ui.h:8
 msgid "Encoding specified in the open dialog will always be tried first."
-msgstr "Avaa -valintaikkunassa määriteltyä koodausta kokeillaan aina ensin."
+msgstr "Avausikkunassa määriteltyä koodausta kokeillaan aina ensin."
 
 #: ../data/ui/preferences-dialog.ui.h:9
 msgid "Extensions"
@@ -343,7 +343,7 @@ msgstr "Videosoitin"
 
 #: ../data/ui/preferences-dialog.ui.h:21
 msgid "When opening files, try encodings in the following order:"
-msgstr "Tiedostoja avatessa, kokeile koodauksia seuraavassa järjestyksessä:"
+msgstr "Tiedostoja avatessa, kokeile koodauksia järjestyksessä:"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "_Application:"
@@ -1645,7 +1645,7 @@ msgstr "Tallenna nykyinen käännösasiakirja"
 
 #: ../gaupol/actions/file.py:305
 msgid "Save Translat_ion As…"
-msgstr "Tallenna k_äännös nimellä"
+msgstr "Tallenna k_äännös nimellä…"
 
 #: ../gaupol/actions/file.py:306 ../gaupol/agents/save.py:188
 msgid "Save Translation As"
