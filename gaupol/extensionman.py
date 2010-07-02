@@ -57,7 +57,13 @@ class ExtensionManager(object):
                     path.endswith(".gaupol-extension.in"))
 
         for (root, dirs, files) in os.walk(directory):
-            for name in filter(is_metadata_file, files):
+            files = filter(is_metadata_file, files)
+            for name in [x for x in files if x.endswith(".in")]:
+                # If both untranslated and translated metadata files are found,
+                # load extension only from the translated one.
+                if name[:-3] in files:
+                    files.remove(name)
+            for name in files:
                 path = os.path.abspath(os.path.join(root, name))
                 self._parse_metadata(path)
 
