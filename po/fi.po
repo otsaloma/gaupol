@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gaupol 0.16.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-22 20:39+0300\n"
-"PO-Revision-Date: 2010-07-02 15:44+0300\n"
+"PO-Revision-Date: 2010-07-02 16:23+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
 "Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
 "Language: fi\n"
@@ -561,7 +561,7 @@ msgstr "K_ieli:"
 #: ../data/ui/text-assistant/hearing-impaired-page.ui.h:4
 #: ../data/ui/text-assistant/line-break-page.ui.h:4
 msgid "_Script:"
-msgstr "_Kirjoitusjärjestelmä:"
+msgstr "_Kirjoitusasu:"
 
 #: ../data/ui/text-assistant/common-error-page.ui.h:2
 msgid "Error types:"
@@ -785,7 +785,7 @@ msgstr "Nolla isolla kirjoitetussa sanassa"
 msgid ""
 "Replace the uppercase name of the speaker before a colon with a dialogue dash"
 msgstr ""
-"Korvaa isolla kirjoitettu puhujan nimi ennen kaksoispistettä "
+"Korvaa kokonaan isolla kirjoitettu puhujan nimi ennen kaksoispistettä "
 "vuoropuheluviivalla"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
@@ -921,7 +921,7 @@ msgstr "Välit sulkeiden ympärillä"
 
 #: ../data/patterns/Latn.common-error.in.h:27
 msgid "Spelling of a.m. and p.m."
-msgstr "a.m.:n ja p.m.:n kirjoitusasu"
+msgstr "Aamu- ja iltapäivien kirjoitusasu"
 
 #: ../data/patterns/Latn.common-error.in.h:28
 msgid "Terminating double-dashes"
@@ -1861,11 +1861,11 @@ msgstr "Etsi ja korjaa virheitä teksteissä"
 
 #: ../gaupol/actions/view.py:32
 msgid "Activate the project in the next tab"
-msgstr "Vaihda edellisen välilehden projektiin"
+msgstr "Vaihda seuraavan välilehden projektiin"
 
 #: ../gaupol/actions/view.py:51
 msgid "Activate the project in the previous tab"
-msgstr "Vaihda seuraavan välilehden projektiin"
+msgstr "Vaihda edellisen välilehden projektiin"
 
 #: ../gaupol/actions/view.py:68
 msgid "Move Tab _Left"

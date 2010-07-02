@@ -156,8 +156,15 @@ class PatternManager(object):
         if not os.path.isdir(directory): return
         extension = ".%s" % self.pattern_type
         extensions = (extension, "%s.in" % extension)
-        files = os.listdir(directory)
-        for name in (x for x in files if x.endswith(extensions)):
+        files = [x for x in os.listdir(directory)
+                 if x.endswith(extensions)]
+
+        for name in [x for x in files if x.endswith(".in")]:
+            # If both untranslated and translated pattern files are found,
+            # load patterns only from the translated one.
+            if name[:-3] in files:
+                files.remove(name)
+        for name in files:
             path = os.path.join(directory, name)
             self._read_patterns_from_file(path, encoding)
 
