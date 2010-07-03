@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -73,23 +73,44 @@ class PreviewAgent(aeidon.Delegate):
         without extension.
         """
         if self.main_file is None: return None
-        extensions = list(extensions or (
-            ".3ivx", ".asf", ".avi", ".divx", ".flv", ".m2v", ".mkv", ".mov",
-            ".mp4", ".mpeg", ".mpg", ".ogm", ".qt", ".rm", ".rmvb", ".swf",
-            ".vob", ".wmv",
+        extensions = list(extensions or (".3ivx",
+                                         ".asf",
+                                         ".avi",
+                                         ".divx",
+                                         ".flv",
+                                         ".m2v",
+                                         ".mkv",
+                                         ".mov",
+                                         ".mp4",
+                                         ".mpeg",
+                                         ".mpg",
+                                         ".ogm",
+                                         ".qt",
+                                         ".rm",
+                                         ".rmvb",
+                                         ".swf",
+                                         ".vob",
+                                         ".wmv",
             # Keep extensions that are used by other file types than videos at
             # the end of the list, so that if there are multiple matches, these
             # ambiguous extensions would not be the ones chosen.
-            ".ogg", ".dat"))
+                                         ".ogg",
+                                         ".dat"))
 
-        subroot = os.path.splitext(self.main_file.path)[0]
+        # Add upper-case versions of all extensions.
+        extensions = aeidon.util.flatten([[x, x.upper()] for x in extensions])
+
         dirname = os.path.dirname(self.main_file.path)
-        for filename in os.listdir(dirname):
-            filepath = os.path.join(dirname, filename)
-            fileroot, extension = os.path.splitext(filepath)
-            extension = extension.lower()
-            if (extension in extensions) and subroot.startswith(fileroot):
-                self.video_path = filepath
+        basename_sub = os.path.basename(self.main_file.path)
+        rootname_sub = os.path.splitext(basename_sub)[0]
+        for extension in extensions:
+            for video_path in filter(lambda x: x.endswith(extension),
+                                     os.listdir(dirname)):
+
+                basename_video = os.path.basename(video_path)
+                rootname_video = os.path.splitext(basename_video)[0]
+                if not rootname_sub.startswith(rootname_video): continue
+                self.video_path = os.path.join(dirname, basename_video)
                 return self.video_path
         return None
 
