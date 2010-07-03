@@ -249,6 +249,7 @@ class SidePane(aeidon.Observable):
         self._notebook.set_current_page(page_num)
         title = self._notebook.get_tab_label_text(child)
         self._label.set_text(title)
+        self._conf.page = child.get_data("side_pane_extension_name")
 
     def show(self):
         """Show the side pane in the application window."""
