@@ -33,7 +33,7 @@ class _TestPositionTransformDialog(gaupol.TestCase):
         page.project.video_path = self.new_subrip_file()
 
     def test__init____no(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         page = self.application.get_current_page()
         page.project.video_path = None
         page.project.main_file = None

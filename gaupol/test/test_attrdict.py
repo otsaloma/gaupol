@@ -19,7 +19,7 @@ import gaupol
 
 class TestAttrDict(gaupol.TestCase):
 
-    # pylint: disable-msg=E1101
+    # pylint: disable=E1101
 
     def setup_method(self, method):
         self.root = {"test": 1, "rest": 0}

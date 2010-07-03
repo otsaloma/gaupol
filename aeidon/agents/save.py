@@ -26,7 +26,7 @@ class SaveAgent(aeidon.Delegate):
 
     """Writing subtitle data to file."""
 
-    # pylint: disable-msg=E0203,E1101,W0201
+    # pylint: disable=E0203,E1101,W0201
 
     __metaclass__ = aeidon.Contractual
 

@@ -47,12 +47,12 @@ class TestModule(aeidon.TestCase):
         assert compare_versions("0.4"  , "0.5"  ) == -1
 
     def test_connect__private(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self._on_project_action_done = lambda *args: None
         aeidon.util.connect(self, "project", "action-done")
 
     def test_connect__public(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.on_project_action_done = lambda *args: None
         aeidon.util.connect(self, "project", "action-done")
 

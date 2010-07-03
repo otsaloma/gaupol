@@ -2,7 +2,7 @@
 
 """Print version numbers of dependencies."""
 
-# pylint: disable-msg=W0404
+# pylint: disable=W0404
 
 import sys
 

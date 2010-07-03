@@ -41,7 +41,7 @@ class TestHeaderDialog(gaupol.TestCase):
         self.dialog._show_mpsub_error_dialog()
 
     def setup_both(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.application = self.new_application()
         page = self.application.get_current_page()
         path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
@@ -54,7 +54,7 @@ class TestHeaderDialog(gaupol.TestCase):
         self.dialog.show()
 
     def setup_main(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.application = self.new_application()
         page = self.application.get_current_page()
         path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
@@ -68,7 +68,7 @@ class TestHeaderDialog(gaupol.TestCase):
         return self.setup_both()
 
     def setup_translation(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.application = self.new_application()
         page = self.application.get_current_page()
         path = self.new_temp_file(aeidon.formats.SUBRIP)

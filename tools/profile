@@ -5,7 +5,7 @@
 
 # Unless planning on lazy loading modules,
 # we're not interested in profiling imports.
-# pylint: disable-msg=W0404,W0611
+# pylint: disable=W0404,W0611
 import atexit
 import bisect
 import chardet

@@ -24,7 +24,7 @@ class OpenAgent(aeidon.Delegate):
 
     """Reading and parsing data from subtitle files."""
 
-    # pylint: disable-msg=E1101,W0201
+    # pylint: disable=E1101,W0201
 
     __metaclass__ = aeidon.Contractual
 

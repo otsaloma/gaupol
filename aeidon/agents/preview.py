@@ -26,7 +26,7 @@ class PreviewAgent(aeidon.Delegate):
 
     """Previewing subtitles with a video player."""
 
-    # pylint: disable-msg=W0201
+    # pylint: disable=W0201
 
     __metaclass__ = aeidon.Contractual
 

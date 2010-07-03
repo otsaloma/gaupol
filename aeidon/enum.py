@@ -35,7 +35,7 @@ class EnumerationItem(int):
     rest of the items should be left up to the parent list.
     """
 
-    # pylint: disable-msg=E1101
+    # pylint: disable=E1101
 
     def __bool__(self):
         """For consistency, always return True."""

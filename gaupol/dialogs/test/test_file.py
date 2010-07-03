@@ -20,7 +20,7 @@ import gtk
 
 class _TestFileDialog(gaupol.TestCase):
 
-    # pylint: disable-msg=E1101
+    # pylint: disable=E1101
 
     def run__dialog(self):
         self.dialog.run()

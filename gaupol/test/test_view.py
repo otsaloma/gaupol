@@ -43,7 +43,7 @@ class TestView(gaupol.TestCase):
         gtk.main()
 
     def setup_frame(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.view = gaupol.View(aeidon.modes.FRAME)
         store = self.view.get_model()
         self.project = self.new_project()
@@ -60,7 +60,7 @@ class TestView(gaupol.TestCase):
         self.conf = gaupol.conf.editor
 
     def setup_time(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.view = gaupol.View(aeidon.modes.TIME)
         store = self.view.get_model()
         self.project = self.new_project()

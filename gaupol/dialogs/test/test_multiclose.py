@@ -37,7 +37,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
         self.dialog.destroy()
 
     def setup_both(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.application = self.new_application()
         for page in self.application.pages:
             page.project.remove_subtitles((0,))
@@ -48,7 +48,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
         self.dialog.show()
 
     def setup_main(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.application = self.new_application()
         for page in self.application.pages:
             page.project.set_text(0, aeidon.documents.MAIN, "")
@@ -62,7 +62,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
         return self.setup_both()
 
     def setup_translation(self):
-        # pylint: disable-msg=W0201
+        # pylint: disable=W0201
         self.application = self.new_application()
         for page in self.application.pages:
             page.project.set_text(0, aeidon.documents.TRAN, "")

@@ -50,7 +50,7 @@ class RegisterAgent(aeidon.Delegate):
     :ivar _do_description: Original description of the action
     """
 
-    # pylint: disable-msg=E1101,W0201
+    # pylint: disable=E1101,W0201
 
     __metaclass__ = aeidon.Contractual
 
