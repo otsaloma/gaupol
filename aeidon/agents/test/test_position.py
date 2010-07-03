@@ -47,7 +47,7 @@ class TestPositionAgent(aeidon.TestCase):
         subtitles[1].end = "00:00:02.100"
         subtitles[1].main_text = "12345678901234567890"
         self.project.adjust_durations(None,
-                                      optimal=0.05,
+                                      speed=20,
                                       lengthen=True)
 
         assert subtitles[0].start == "00:00:01.000"
@@ -62,7 +62,7 @@ class TestPositionAgent(aeidon.TestCase):
         subtitles[1].start = "00:00:02.000"
         subtitles[1].end = "00:00:02.100"
         self.project.adjust_durations(None,
-                                      optimal=0.1,
+                                      speed=10,
                                       lengthen=True,
                                       maximum=0.5)
 
@@ -78,7 +78,7 @@ class TestPositionAgent(aeidon.TestCase):
         subtitles[1].start = "00:00:02.000"
         subtitles[1].end = "00:00:02.900"
         self.project.adjust_durations(None,
-                                      optimal=0.001,
+                                      speed=1000,
                                       shorten=True,
                                       minimum=0.5)
 
@@ -96,7 +96,7 @@ class TestPositionAgent(aeidon.TestCase):
         subtitles[1].end = "00:00:02.900"
         subtitles[1].main_text = "12345678901234567890"
         self.project.adjust_durations(None,
-                                      optimal=0.01,
+                                      speed=100,
                                       shorten=True)
 
         assert subtitles[0].start == "00:00:01.000"

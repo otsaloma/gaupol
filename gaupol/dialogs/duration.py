@@ -37,9 +37,9 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
                 "max_spin",
                 "min_check",
                 "min_spin",
-                "optimal_spin",
                 "selected_radio",
-                "shorten_check")
+                "shorten_check",
+                "speed_spin")
 
     def __init__(self, parent, application):
         """Initialize a :class:`DurationAdjustDialog` object."""
@@ -58,7 +58,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
             self.application.set_current_page(page)
             rows = page.project.adjust_durations(
                 indices=self.application.get_target_rows(target),
-                optimal=conf.optimal,
+                speed=conf.speed,
                 lengthen=conf.lengthen,
                 shorten=conf.shorten,
                 maximum=(conf.maximum if conf.use_maximum else None),
@@ -91,9 +91,9 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         self._max_spin.emit("value-changed")
         self._min_check.emit("toggled")
         self._min_spin.emit("value-changed")
-        self._optimal_spin.emit("value-changed")
         self._selected_radio.emit("toggled")
         self._shorten_check.emit("toggled")
+        self._speed_spin.emit("value-changed")
 
     def _init_values(self):
         """Intialize default values for widgets."""
@@ -105,8 +105,8 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         self._max_spin.set_value(conf.maximum)
         self._min_check.set_active(conf.use_minimum)
         self._min_spin.set_value(conf.minimum)
-        self._optimal_spin.set_value(conf.optimal)
         self._shorten_check.set_active(conf.shorten)
+        self._speed_spin.set_value(conf.speed)
         self._selected_radio.set_active(conf.target == gaupol.targets.SELECTED)
         self._current_radio.set_active(conf.target == gaupol.targets.CURRENT)
         self._all_radio.set_active(conf.target == gaupol.targets.ALL)
@@ -121,10 +121,10 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         self._gap_spin.set_sensitive(check_button.get_active())
 
     def _on_lengthen_check_toggled(self, *args):
-        """Set sensitivity of the optimal spin button."""
+        """Set sensitivity of the speed spin button."""
         lengthen = self._lengthen_check.get_active()
         shorten = self._shorten_check.get_active()
-        self._optimal_spin.set_sensitive(lengthen or shorten)
+        self._speed_spin.set_sensitive(lengthen or shorten)
 
     def _on_max_check_toggled(self, check_button):
         """Set sensitivity of the maximum spin button."""
@@ -141,7 +141,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         conf.lengthen = self._lengthen_check.get_active()
         conf.maximum = self._max_spin.get_value()
         conf.minimum = self._min_spin.get_value()
-        conf.optimal = self._optimal_spin.get_value()
+        conf.speed = self._speed_spin.get_value()
         conf.shorten = self._shorten_check.get_active()
         conf.target = self._get_target()
         conf.use_gap = self._gap_check.get_active()
@@ -151,7 +151,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
             self._adjust_durations()
 
     def _on_shorten_check_toggled(self, *args):
-        """Set sensitivity of the optimal spin button."""
+        """Set sensitivity of the speed spin button."""
         lengthen = self._lengthen_check.get_active()
         shorten = self._shorten_check.get_active()
-        self._optimal_spin.set_sensitive(lengthen or shorten)
+        self._speed_spin.set_sensitive(lengthen or shorten)

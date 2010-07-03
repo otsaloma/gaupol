@@ -55,7 +55,7 @@ config_defaults = {
         "lengthen": True,
         "maximum": 6.0,
         "minimum": 1.5,
-        "optimal": 0.07,
+        "speed": 15.0,
         "shorten": False,
         "target": gaupol.targets.CURRENT,
         "use_minimum": True,

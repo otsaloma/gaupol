@@ -86,7 +86,7 @@ class PositionAgent(aeidon.Delegate):
     @aeidon.deco.revertable
     def adjust_durations(self,
                          indices=None,
-                         optimal=None,
+                         speed=None,
                          lengthen=False,
                          shorten=False,
                          minimum=None,
@@ -95,10 +95,10 @@ class PositionAgent(aeidon.Delegate):
                          register=-1):
         """Lengthen or shorten durations by changing end positions.
 
-        `indices` can be ``None`` to process all subtitles. `optimal` is
-        duration per character in seconds. `lengthen` is ``True`` to increase
-        durations if shorter than optimal. `shorten` is ``True`` to decrease
-        durations if longer than optimal. `maximum` is the greatest allowed
+        `indices` can be ``None`` to process all subtitles. `speed` is reading
+        speed in seconds per character. `lengthen` is ``True`` to increase
+        durations to match reading speed. `shorten` is ``True`` to decrease
+        durations to match reading speed. `maximum` is the greatest allowed
         duration in seconds. `minimum` is the smallest allowed duration in
         seconds. `gap` is seconds to be left between consecutive subtitles.
         Using a gap of zero (or a bit more) is always a good idea if dealing
@@ -114,9 +114,9 @@ class PositionAgent(aeidon.Delegate):
             end_max = (self.subtitles[index + 1].start_seconds if
                        index < (len(self.subtitles) - 1) else 360000)
 
-            if (optimal is not None) and (lengthen or shorten):
+            if (speed is not None) and (lengthen or shorten):
                 length = self.get_text_length(index, aeidon.documents.MAIN)
-                optimal_duration = optimal * length
+                optimal_duration = length / float(speed)
                 if ((end - start) < optimal_duration) and lengthen:
                     end = start + optimal_duration
                 if ((end - start) > optimal_duration) and shorten:
