@@ -161,6 +161,18 @@ class TestModule(aeidon.TestCase):
         aeidon.util.makedirs(path)
         os.rmdir(path)
 
+    def test_normalize_newlines__mac(self):
+        value = aeidon.util.normalize_newlines("test\rtest\r")
+        assert value == "test\ntest\n"
+
+    def test_normalize_newlines__unix(self):
+        value = aeidon.util.normalize_newlines("test\ntest\n")
+        assert value == "test\ntest\n"
+
+    def test_normalize_newlines__windows(self):
+        value = aeidon.util.normalize_newlines("test\r\ntest\r\n")
+        assert value == "test\ntest\n"
+
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_path_to_uri__unix(self):
         sys.platform = "linux2"

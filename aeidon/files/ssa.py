@@ -136,15 +136,13 @@ class SubStationAlpha(aeidon.SubtitleFile):
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        fobj.write(self.header)
-        fobj.write(self.newline.value * 2)
-        fobj.write("[Events]")
-        fobj.write(self.newline.value)
-        fobj.write("Format: %s" % ", ".join(self.event_fields))
-        fobj.write(self.newline.value)
+        n = self.newline.value
+        header = self.header.replace("\n", n)
+        fobj.write("%s%s%s" % (header, n, n))
+        fobj.write("[Events]%s" % n)
+        fobj.write("Format: %s%s" % (", ".join(self.event_fields), n))
         for subtitle in subtitles:
             values = [self._encode_field(x, subtitle, doc)
                       for x in self.event_fields]
 
-            fobj.write("Dialogue: %s" % ",".join(values))
-            fobj.write(self.newline.value)
+            fobj.write("Dialogue: %s%s" % (",".join(values), n))

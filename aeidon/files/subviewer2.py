@@ -62,12 +62,13 @@ class SubViewer2(aeidon.SubtitleFile):
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        fobj.write(self.header)
-        fobj.write(self.newline.value)
+        n = self.newline.value
+        fobj.write(self.header.replace("\n", n))
+        fobj.write(n)
         for subtitle in subtitles:
-            fobj.write(self.newline.value)
+            fobj.write(n)
             start = subtitle.calc.round_time(subtitle.start_time, 2)[:-1]
             end = subtitle.calc.round_time(subtitle.end_time, 2)[:-1]
-            fobj.write("%s,%s%s" % (start, end, self.newline.value))
+            fobj.write("%s,%s%s" % (start, end, n))
             fobj.write(subtitle.get_text(doc).replace("\n", "[br]"))
-            fobj.write(self.newline.value)
+            fobj.write(n)

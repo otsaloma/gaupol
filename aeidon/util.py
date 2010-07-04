@@ -291,15 +291,23 @@ def get_template_header(format):
     Raise :exc:`IOError` if reading global header file fails.
     Raise :exc:`UnicodeError` if decoding global header file fails.
     """
+    header = None
     directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
     path = os.path.join(directory, format.name.lower())
     if os.path.isfile(path):
-        try: return read(path, None)
-        except (IOError, UnicodeError):
+        try: header = read(path, None).rstrip()
+        except IOError:
             print_read_io(sys.exc_info(), path)
-    directory = os.path.join(aeidon.DATA_DIR, "headers")
-    path = os.path.join(directory, format.name.lower())
-    return read(path, "ascii")
+        except UnicodeError:
+            print_read_unicode(sys.exc_info(),
+                               path,
+                               get_default_encoding())
+
+    if header is None:
+        directory = os.path.join(aeidon.DATA_DIR, "headers")
+        path = os.path.join(directory, format.name.lower())
+        header = read(path, "ascii").rstrip()
+    return normalize_newlines(header)
 
 def get_unique_ensure(value, lst, keep_last=False):
     for item in value:
@@ -360,6 +368,15 @@ def makedirs(directory):
     """
     if not os.path.isdir(directory):
         os.makedirs(directory)
+
+def normalize_newlines(text):
+    """Convert all newlines in `text` to Unix newlines.
+
+    >>> aeidon.util.normalize_newlines("one\\r\\ntwo")
+    'one\\ntwo'
+    """
+    re_newline_char = re.compile(r"\r\n?")
+    return re_newline_char.sub("\n", text)
 
 def path_to_uri(path):
     """Convert local filepath to URI."""

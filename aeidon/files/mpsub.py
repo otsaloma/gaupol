@@ -161,8 +161,9 @@ class MPsub(aeidon.SubtitleFile):
         Raise :exc:`UnicodeError` if encoding fails.
         """
         n = self.newline.value
+        header = self.header.replace("\n", n)
+        fobj.write("%s%s%s" % (header, n, n))
         starts, ends = self._get_positions(subtitles)
-        fobj.write("%s%s%s" % (self.header, n, n))
         for i, subtitle in enumerate(subtitles):
             if i > 0: fobj.write(n)
             fobj.write("%s %s%s" % (starts[i], ends[i], n))

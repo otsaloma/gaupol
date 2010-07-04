@@ -11,6 +11,7 @@ Gaupol 0.17
      preview tab to launch web browser to view wiki documentation
  [D] Use reading speed (characters per second) instead of optimal
      duration (seconds per character) in duration adjust dialog
+ [D] Fix writing subtitle file headers with chosen newlines
  [D] Fix reading and writing extension configurations
  [D] Fix minor i18n issues with individual strings
  [D] Add optional dependency of PyGtkSpell (part of
