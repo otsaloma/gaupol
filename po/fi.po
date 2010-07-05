@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.16.2\n"
+"Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-22 20:39+0300\n"
-"PO-Revision-Date: 2010-07-02 16:27+0300\n"
+"POT-Creation-Date: 2010-07-05 03:51+0300\n"
+"PO-Revision-Date: 2010-07-05 03:58+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
 "Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
 "Language: fi\n"
@@ -26,7 +26,7 @@ msgid "_Description:"
 msgstr "Ku_vaus:"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:3
-#: ../data/ui/transform-dialog.ui.h:11
+#: ../data/ui/transform-dialog.ui.h:13
 msgid "_Subtitle:"
 msgstr "_Kappale:"
 
@@ -55,8 +55,8 @@ msgid "Adjust Durations"
 msgstr "Säädä kestoja"
 
 #: ../data/ui/duration-dialog.ui.h:4
-msgid "Adjust all open p_rojects"
-msgstr "Säädä ka_ikki avoimet projektit"
+msgid "Adjust all _open projects"
+msgstr "Säädä ka_ikki avoimet projektit"
 
 #: ../data/ui/duration-dialog.ui.h:5
 #: ../data/ui/text-assistant/line-break-opts-page.ui.h:1
@@ -67,17 +67,17 @@ msgstr "Rajat"
 msgid "Ma_ximum duration:"
 msgstr "M_aksimikesto:"
 
-#: ../data/ui/duration-dialog.ui.h:7
-msgid "Optimal"
-msgstr "Optimaalinen"
-
-#: ../data/ui/duration-dialog.ui.h:8 ../data/ui/framerate-dialog.ui.h:6
+#: ../data/ui/duration-dialog.ui.h:7 ../data/ui/framerate-dialog.ui.h:6
 #: ../data/ui/language-dialog.ui.h:7 ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/shift-dialog.ui.h:6 ../data/ui/text-assistant/intro-page.ui.h:7
 #: ../data/ui/text-assistant/line-break-opts-page.ui.h:3
-#: ../data/ui/transform-dialog.ui.h:5
+#: ../data/ui/transform-dialog.ui.h:7
 msgid "Subtitles"
 msgstr "Kappaleet"
+
+#: ../data/ui/duration-dialog.ui.h:8
+msgid "Theoretic Duration"
+msgstr "Teoreettinen kesto"
 
 #: ../data/ui/duration-dialog.ui.h:9
 msgid "_Adjust"
@@ -88,36 +88,36 @@ msgid "_Gap between subtitles:"
 msgstr "Kappaleiden _väli:"
 
 #: ../data/ui/duration-dialog.ui.h:11
-msgid "_Lengthen duration if shorter than optimal"
-msgstr "_Kasvata kestoa jos optimaalista lyhempi"
+msgid "_Lengthen duration to match reading speed"
+msgstr "_Pidennä kesto vastaamaan lukunopeutta"
 
 #: ../data/ui/duration-dialog.ui.h:12
 msgid "_Minimum duration:"
 msgstr "_Minimikesto:"
 
 #: ../data/ui/duration-dialog.ui.h:13
-msgid "_Optimal duration:"
-msgstr "_Optimaalinen kesto:"
+msgid "_Reading speed:"
+msgstr "_Lukunopeus:"
 
 #: ../data/ui/duration-dialog.ui.h:14
-msgid "_Shorten duration if longer than optimal"
-msgstr "_Lyhennä kestoa jos optimaalista pidempi"
+msgid "_Shorten duration to match reading speed"
+msgstr "Ly_hennä kesto vastaamaan lukunopeutta"
 
 #: ../data/ui/duration-dialog.ui.h:15
+msgid "characters per second"
+msgstr "merkkiä sekunnissa"
+
+#: ../data/ui/duration-dialog.ui.h:16
 msgid "s_econds"
 msgstr "s_ekuntia"
 
-#: ../data/ui/duration-dialog.ui.h:16
+#: ../data/ui/duration-dialog.ui.h:17
 msgid "seco_nds"
 msgstr "sek_untia"
 
-#: ../data/ui/duration-dialog.ui.h:17
+#: ../data/ui/duration-dialog.ui.h:18
 msgid "secon_ds"
 msgstr "sekun_tia"
-
-#: ../data/ui/duration-dialog.ui.h:18
-msgid "seconds per character"
-msgstr "sekuntia per merkki"
 
 #: ../data/ui/encoding-dialog.ui.h:1 ../data/ui/preferences-dialog.ui.h:4
 msgid "Character Encodings"
@@ -241,7 +241,7 @@ msgid "Close _Without Saving"
 msgstr "_Sulje tallentamatta"
 
 #: ../data/ui/multiclose-dialog.ui.h:2 ../gaupol/agents/close.py:50
-#: ../gaupol/agents/close.py:79 ../gaupol/agents/open.py:347
+#: ../gaupol/agents/close.py:79 ../gaupol/agents/open.py:346
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Jos et tallenna, muutokset hukataan pysyvästi."
 
@@ -257,13 +257,34 @@ msgstr "Valitse pää_asiakirjat, jotka haluat tallentaa:"
 msgid "Select the _translation documents you want to save:"
 msgstr "Valitse _käännösasiakirjat, jotka haluat tallentaa:"
 
+#: ../data/ui/multisave-dialog.ui.h:1 ../data/ui/open-dialog.ui.h:2
+#: ../data/ui/save-dialog.ui.h:1
+msgid "Character _encoding:"
+msgstr "_Merkistökoodaus:"
+
+#: ../data/ui/multisave-dialog.ui.h:2 ../data/ui/save-dialog.ui.h:2
+msgid "For_mat:"
+msgstr "T_iedostomuoto:"
+
+#: ../data/ui/multisave-dialog.ui.h:3 ../data/ui/save-dialog.ui.h:3
+msgid "Ne_wlines:"
+msgstr "_Rivinvaihdot:"
+
+#: ../data/ui/multisave-dialog.ui.h:4
+msgid "Save All As"
+msgstr "Tallenna kaikki muodossa"
+
+#: ../data/ui/multisave-dialog.ui.h:5
+msgid "Save in _folder:"
+msgstr "Tallenna _kansioon:"
+
+#: ../data/ui/multisave-dialog.ui.h:6
+msgid "Select A Folder"
+msgstr "Valitse kansio"
+
 #: ../data/ui/open-dialog.ui.h:1
 msgid "Align _method:"
 msgstr "_Tasausmenetelmä:"
-
-#: ../data/ui/open-dialog.ui.h:2 ../data/ui/save-dialog.ui.h:1
-msgid "Character _encoding:"
-msgstr "_Merkistökoodaus:"
 
 #: ../data/ui/preferences-dialog.ui.h:1
 msgid "A_vailable extensions:"
@@ -278,28 +299,28 @@ msgid "Aut_o-detection"
 msgstr "A_utomaattitunnistus"
 
 #: ../data/ui/preferences-dialog.ui.h:5
+msgid "Chec_k spelling as you type"
+msgstr "_Tarkista oikeinkirjoitus kirjoittaessa"
+
+#: ../data/ui/preferences-dialog.ui.h:6
 msgid "Co_mmand:"
 msgstr "_Komento:"
 
-#: ../data/ui/preferences-dialog.ui.h:6
+#: ../data/ui/preferences-dialog.ui.h:7
 msgid "Curr_ent locale encoding"
 msgstr "_Nykyisen maa-asetuston koodaus"
 
-#: ../data/ui/preferences-dialog.ui.h:7
+#: ../data/ui/preferences-dialog.ui.h:8
 msgid "Editor"
 msgstr "Muokkain"
 
-#: ../data/ui/preferences-dialog.ui.h:8
+#: ../data/ui/preferences-dialog.ui.h:9
 msgid "Encoding specified in the open dialog will always be tried first."
 msgstr "Avausikkunassa määriteltyä koodausta kokeillaan aina ensin."
 
-#: ../data/ui/preferences-dialog.ui.h:9
+#: ../data/ui/preferences-dialog.ui.h:10
 msgid "Extensions"
 msgstr "Laajennukset"
-
-#: ../data/ui/preferences-dialog.ui.h:10
-msgid "Fields:"
-msgstr "Kentät:"
 
 #: ../data/ui/preferences-dialog.ui.h:11
 msgid "File"
@@ -330,46 +351,50 @@ msgid "S_how line lengths in editable text fields"
 msgstr "N_äytä rivien pituudet muokattavissa tekstikentissä"
 
 #: ../data/ui/preferences-dialog.ui.h:18
+msgid "Spell-Check"
+msgstr "Oikoluku"
+
+#: ../data/ui/preferences-dialog.ui.h:19
 msgid "Start Position"
 msgstr "Aloitussijainti"
 
-#: ../data/ui/preferences-dialog.ui.h:19
+#: ../data/ui/preferences-dialog.ui.h:20
 msgid "Use _default theme font"
 msgstr "_Käytä teeman oletuskirjasinta"
 
-#: ../data/ui/preferences-dialog.ui.h:20
+#: ../data/ui/preferences-dialog.ui.h:21
 msgid "Video Player"
 msgstr "Videosoitin"
 
-#: ../data/ui/preferences-dialog.ui.h:21
+#: ../data/ui/preferences-dialog.ui.h:22
 msgid "When opening files, try encodings in the following order:"
 msgstr "Tiedostoja avatessa, kokeile koodauksia järjestyksessä:"
 
-#: ../data/ui/preferences-dialog.ui.h:22
+#: ../data/ui/preferences-dialog.ui.h:23
 msgid "_Application:"
 msgstr "So_vellus:"
 
-#: ../data/ui/preferences-dialog.ui.h:23
+#: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Editor font:"
 msgstr "_Muokkaimen kirjasin:"
 
-#: ../data/ui/preferences-dialog.ui.h:24
+#: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Fallback encodings:"
 msgstr "_Toissijaiset koodaukset:"
 
-#: ../data/ui/preferences-dialog.ui.h:25
+#: ../data/ui/preferences-dialog.ui.h:26
 msgid "_Length unit:"
 msgstr "_Pituusyksikkö:"
 
-#: ../data/ui/preferences-dialog.ui.h:26
+#: ../data/ui/preferences-dialog.ui.h:27
 msgid "_Offset:"
 msgstr "Sii_rtymä:"
 
-#: ../data/ui/preferences-dialog.ui.h:27
+#: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Show line lengths in list cells"
 msgstr "_Näytä rivien pituudet listan soluissa"
 
-#: ../data/ui/preferences-dialog.ui.h:28
+#: ../data/ui/preferences-dialog.ui.h:29
 msgid "seconds before selection"
 msgstr "sekuntia ennen valintaa"
 
@@ -380,14 +405,6 @@ msgstr "_Tuloste:"
 #: ../data/ui/previewerr-dialog.ui.h:2
 msgid "Preview in video player failed"
 msgstr "Esikatselu videosoittimessa epäonnistui"
-
-#: ../data/ui/save-dialog.ui.h:2
-msgid "For_mat:"
-msgstr "T_iedostomuoto:"
-
-#: ../data/ui/save-dialog.ui.h:3
-msgid "Ne_wlines:"
-msgstr "_Rivinvaihdot:"
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
@@ -433,7 +450,7 @@ msgstr "S_äännöllinen lauseke"
 msgid "Replace _All"
 msgstr "Korv_aa kaikki"
 
-#: ../data/ui/search-dialog.ui.h:12 ../data/ui/spellcheck-dialog.ui.h:8
+#: ../data/ui/search-dialog.ui.h:12 ../data/ui/spellcheck-dialog.ui.h:7
 msgid "Replace _with:"
 msgstr "Ko_rvaa:"
 
@@ -445,7 +462,8 @@ msgstr "Kohde"
 msgid "_Ignore case"
 msgstr "_Jätä kirjainkoko huomiotta"
 
-#: ../data/ui/search-dialog.ui.h:16 ../data/ui/spellcheck-dialog.ui.h:12
+#: ../data/ui/search-dialog.ui.h:16 ../data/ui/spellcheck-dialog.ui.h:11
+#: ../gaupol/dialogs/multisave.py:132
 msgid "_Replace"
 msgstr "_Korvaa"
 
@@ -473,7 +491,7 @@ msgstr "Siirrä _nykyinen projekti"
 msgid "Shift s_elected subtitles"
 msgstr "Siirrä _valitut kappaleet"
 
-#: ../data/ui/shift-dialog.ui.h:8 ../data/ui/transform-dialog.ui.h:10
+#: ../data/ui/shift-dialog.ui.h:8 ../data/ui/transform-dialog.ui.h:12
 msgid "_Preview Changes"
 msgstr "_Esikatsele muutoksia"
 
@@ -482,46 +500,42 @@ msgid "_Shift"
 msgstr "_Siirrä"
 
 #: ../data/ui/spellcheck-dialog.ui.h:1
-msgid "<b>Language (Country)</b>"
-msgstr "<b>Kieli (Maa)</b>"
-
-#: ../data/ui/spellcheck-dialog.ui.h:2
 msgid "Check Spelling"
 msgstr "Tarkista oikeinkirjoitus"
 
-#: ../data/ui/spellcheck-dialog.ui.h:3
+#: ../data/ui/spellcheck-dialog.ui.h:2
 msgid "Ig_nore All"
 msgstr "O_hita kaikki"
 
-#: ../data/ui/spellcheck-dialog.ui.h:4
+#: ../data/ui/spellcheck-dialog.ui.h:3
 msgid "Join _Back"
 msgstr "Yhdistä _taakse"
 
-#: ../data/ui/spellcheck-dialog.ui.h:5
+#: ../data/ui/spellcheck-dialog.ui.h:4
 msgid "Join _Forward"
 msgstr "Yhdistä _eteen"
 
-#: ../data/ui/spellcheck-dialog.ui.h:6
+#: ../data/ui/spellcheck-dialog.ui.h:5
 msgid "Language:"
 msgstr "Kieli:"
 
-#: ../data/ui/spellcheck-dialog.ui.h:7
+#: ../data/ui/spellcheck-dialog.ui.h:6
 msgid "Rep_lace All"
 msgstr "Ko_rvaa kaikki"
 
-#: ../data/ui/spellcheck-dialog.ui.h:9
+#: ../data/ui/spellcheck-dialog.ui.h:8
 msgid "_Add"
 msgstr "_Lisää"
 
-#: ../data/ui/spellcheck-dialog.ui.h:10 ../gaupol/actions/menu.py:31
+#: ../data/ui/spellcheck-dialog.ui.h:9 ../gaupol/actions/menu.py:31
 msgid "_Edit"
 msgstr "_Muokkaa"
 
-#: ../data/ui/spellcheck-dialog.ui.h:11
+#: ../data/ui/spellcheck-dialog.ui.h:10
 msgid "_Ignore"
 msgstr "_Ohita"
 
-#: ../data/ui/spellcheck-dialog.ui.h:13
+#: ../data/ui/spellcheck-dialog.ui.h:12
 msgid "_Suggestions:"
 msgstr "Eh_dotukset:"
 
@@ -551,7 +565,7 @@ msgstr "_Valitse isolla kirjaimella alkavaksi muutettavat osat:"
 #: ../data/ui/text-assistant/capitalization-page.ui.h:3
 #: ../data/ui/text-assistant/common-error-page.ui.h:6
 #: ../data/ui/text-assistant/hearing-impaired-page.ui.h:3
-#: ../data/ui/text-assistant/join-split-page.ui.h:5
+#: ../data/ui/text-assistant/join-split-page.ui.h:4
 #: ../data/ui/text-assistant/line-break-page.ui.h:3
 msgid "_Language:"
 msgstr "K_ieli:"
@@ -633,22 +647,18 @@ msgid "_Select corrections to perform on texts:"
 msgstr "_Valitse suoritettavat korjaukset:"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:1
-msgid "(None)"
-msgstr "(Ei mitään)"
-
-#: ../data/ui/text-assistant/join-split-page.ui.h:2
 msgid "Corrections"
 msgstr "Korjaukset"
 
-#: ../data/ui/text-assistant/join-split-page.ui.h:3
+#: ../data/ui/text-assistant/join-split-page.ui.h:2
 msgid "Spell-Check Dictionary"
 msgstr "Oikoluvun sanakirja"
 
-#: ../data/ui/text-assistant/join-split-page.ui.h:4
+#: ../data/ui/text-assistant/join-split-page.ui.h:3
 msgid "_Join words not found in spell-check dictionary"
 msgstr "_Yhdistä sanat, joita ei löydy sanakirjasta"
 
-#: ../data/ui/text-assistant/join-split-page.ui.h:6
+#: ../data/ui/text-assistant/join-split-page.ui.h:5
 msgid "_Split words not found in spell-check dictionary"
 msgstr "_Jaa sanat, joita ei löydy sanakirjasta"
 
@@ -673,38 +683,46 @@ msgid "S_elect preferred line-break points:"
 msgstr "_Valitse mieluisimmat rivinvaihtokohdat:"
 
 #: ../data/ui/transform-dialog.ui.h:1
+msgid "C_orrection:"
+msgstr "K_orjaus:"
+
+#: ../data/ui/transform-dialog.ui.h:2
+msgid "Co_rrection:"
+msgstr "Ko_rjaus:"
+
+#: ../data/ui/transform-dialog.ui.h:3
 msgid "First Point"
 msgstr "Ensimmäinen piste"
 
-#: ../data/ui/transform-dialog.ui.h:2
+#: ../data/ui/transform-dialog.ui.h:4
 msgid "Pre_view Changes"
 msgstr "Es_ikatsele muutoksia:"
 
-#: ../data/ui/transform-dialog.ui.h:3
+#: ../data/ui/transform-dialog.ui.h:5
 msgid "Second Point"
 msgstr "Toinen piste"
 
-#: ../data/ui/transform-dialog.ui.h:4
+#: ../data/ui/transform-dialog.ui.h:6
 msgid "Su_btitle:"
 msgstr "K_appale:"
 
-#: ../data/ui/transform-dialog.ui.h:6
+#: ../data/ui/transform-dialog.ui.h:8
 msgid "Text:"
 msgstr "Teksti:"
 
-#: ../data/ui/transform-dialog.ui.h:7
+#: ../data/ui/transform-dialog.ui.h:9
 msgid "Transform Positions"
 msgstr "Muunna sijainnit"
 
-#: ../data/ui/transform-dialog.ui.h:8
+#: ../data/ui/transform-dialog.ui.h:10
 msgid "Transform c_urrent project"
 msgstr "Muunna _nykyinen projekti"
 
-#: ../data/ui/transform-dialog.ui.h:9
+#: ../data/ui/transform-dialog.ui.h:11
 msgid "Transform se_lected subtitles"
 msgstr "Muunna _valitut kappaleet"
 
-#: ../data/ui/transform-dialog.ui.h:12
+#: ../data/ui/transform-dialog.ui.h:14
 msgid "_Transform"
 msgstr "_Muunna"
 
@@ -831,7 +849,8 @@ msgid "Add space after various punctuation marks"
 msgstr "Lisää väli useiden välimerkkien jälkeen"
 
 #: ../data/patterns/Latn.common-error.in.h:6
-msgid "Change the various spellings 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid ""
+"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
 "Muuta useiden eri 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m."
 "\""
@@ -1171,7 +1190,7 @@ msgid "Turkish"
 msgstr "Turkki"
 
 #: ../aeidon/encodings.py:50
-msgid "Portugese"
+msgid "Portuguese"
 msgstr "Portugali"
 
 #: ../aeidon/encodings.py:51 ../aeidon/encodings.py:108
@@ -1346,15 +1365,11 @@ msgstr "Näytä tai piilota kirjanmerkkisarake"
 msgid "Search:"
 msgstr "Etsi:"
 
-#: ../data/extensions/side-pane/side-pane.py:52
-msgid "(Empty)"
-msgstr "(Tyhjä)"
-
-#: ../data/extensions/side-pane/side-pane.py:294
+#: ../data/extensions/side-pane/side-pane.py:295
 msgid "Si_de Pane"
 msgstr "S_ivupaneeli"
 
-#: ../data/extensions/side-pane/side-pane.py:295
+#: ../data/extensions/side-pane/side-pane.py:296
 msgid "Show or hide the side pane"
 msgstr "Näytä tai piilota sivupaneeli"
 
@@ -1615,63 +1630,71 @@ msgstr "_Tallenna kaikki"
 msgid "Save all open documents"
 msgstr "Tallenna kaikki avoimet asiakirjat"
 
-#: ../gaupol/actions/file.py:248
+#: ../gaupol/actions/file.py:247
+msgid "Save _All As…"
+msgstr "Tallenna _kaikki muodossa…"
+
+#: ../gaupol/actions/file.py:249
+msgid "Save all open documents with different properties"
+msgstr "Tallenna kaikki avoimet asiakirjat eri ominaisuuksilla"
+
+#: ../gaupol/actions/file.py:268
 msgid "_Save"
 msgstr "_Tallenna"
 
-#: ../gaupol/actions/file.py:250
+#: ../gaupol/actions/file.py:270
 msgid "Save the current main document"
 msgstr "Tallenna nykyinen pääasiakirja"
 
-#: ../gaupol/actions/file.py:266
+#: ../gaupol/actions/file.py:286
 msgid "Save _As…"
 msgstr "Tall_enna nimellä…"
 
-#: ../gaupol/actions/file.py:267 ../gaupol/agents/save.py:157
+#: ../gaupol/actions/file.py:287 ../gaupol/agents/save.py:166
 msgid "Save As"
 msgstr "Tallenna nimellä"
 
-#: ../gaupol/actions/file.py:269
+#: ../gaupol/actions/file.py:289
 msgid "Save the current main document with a different name"
 msgstr "Tallenna nykyinen pääasiakirja eri nimellä"
 
-#: ../gaupol/actions/file.py:287
+#: ../gaupol/actions/file.py:307
 msgid "Save Trans_lation"
 msgstr "Talle_nna käännös"
 
-#: ../gaupol/actions/file.py:289
+#: ../gaupol/actions/file.py:309
 msgid "Save the current translation document"
 msgstr "Tallenna nykyinen käännösasiakirja"
 
-#: ../gaupol/actions/file.py:305
+#: ../gaupol/actions/file.py:325
 msgid "Save Translat_ion As…"
 msgstr "Tallenna k_äännös nimellä…"
 
-#: ../gaupol/actions/file.py:306 ../gaupol/agents/save.py:188
+#: ../gaupol/actions/file.py:326 ../gaupol/agents/save.py:199
 msgid "Save Translation As"
 msgstr "Tallenna käännös nimellä"
 
-#: ../gaupol/actions/file.py:308
+#: ../gaupol/actions/file.py:328
 msgid "Save the current translation document with a different name"
 msgstr "Tallenna nykyinen käännösasiakirja eri nimellä"
 
-#: ../gaupol/actions/file.py:326
+#: ../gaupol/actions/file.py:346
 msgid "Select _Video…"
 msgstr "_Valitse video…"
 
-#: ../gaupol/actions/file.py:327
+#: ../gaupol/actions/file.py:347
 msgid "Video"
 msgstr "Video"
 
-#: ../gaupol/actions/file.py:329
+#: ../gaupol/actions/file.py:349
 msgid "Select a video file"
 msgstr "Valitse videotiedosto"
 
-#: ../gaupol/actions/file.py:346
+#: ../gaupol/actions/file.py:366
 msgid "Spli_t Project…"
 msgstr "_Jaa projekti…"
 
-#: ../gaupol/actions/file.py:347
+#: ../gaupol/actions/file.py:367
 msgid "Split the current project in two"
 msgstr "Jaa nykyinen projekti kahtia"
 
@@ -2084,17 +2107,12 @@ msgstr ""
 msgid "Failed to open file \"%s\""
 msgstr "Tiedoston \"%s\" avaaminen epäonnistui"
 
-#: ../gaupol/agents/open.py:293
-#, python-format
-msgid "%s."
-msgstr "%s."
-
-#: ../gaupol/agents/open.py:300
+#: ../gaupol/agents/open.py:299
 #, python-format
 msgid "Failed to parse file \"%s\""
 msgstr "Tiedoston \"%s\" tulkinta epäonnistui"
 
-#: ../gaupol/agents/open.py:301
+#: ../gaupol/agents/open.py:300
 #, python-format
 msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
@@ -2104,12 +2122,12 @@ msgstr ""
 "kelvollinen %s tiedosto. Jos luulet että se on, lähetä vikailmoitus ja liitä "
 "tiedosto."
 
-#: ../gaupol/agents/open.py:313
+#: ../gaupol/agents/open.py:312
 #, python-format
 msgid "Open abnormally large file \"%s\"?"
 msgstr "Avaa epätavallisen suuri tiedosto \"%s\"?"
 
-#: ../gaupol/agents/open.py:314
+#: ../gaupol/agents/open.py:313
 #, python-format
 msgid ""
 "Size of the file is %.1f MB, which is abnormally large for a text-based "
@@ -2119,12 +2137,12 @@ msgstr ""
 "tekstimuotoiselle tekstitystiedostolle. Tarkista ettet yritä avata "
 "binääritiedostoa."
 
-#: ../gaupol/agents/open.py:329
+#: ../gaupol/agents/open.py:328
 #, python-format
 msgid "Open unsorted file \"%s\"?"
 msgstr "Avaa lajittelematon tiedosto \"%s\"?"
 
-#: ../gaupol/agents/open.py:330
+#: ../gaupol/agents/open.py:329
 #, python-format
 msgid ""
 "The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
@@ -2133,26 +2151,26 @@ msgstr ""
 "%d kappaleen järjestys täytyy muuttaa. Jos %d kuulostaa paljolta, tiedosto "
 "voi olla virheellisesti muodostettu."
 
-#: ../gaupol/agents/open.py:345
+#: ../gaupol/agents/open.py:344
 #, python-format
 msgid "Save changes to translation document \"%s\" before opening a new one?"
 msgstr "Tallenna muutokset käännösasiakirjaan \"%s\" ennen uuden avaamista?"
 
-#: ../gaupol/agents/open.py:349
+#: ../gaupol/agents/open.py:348
 msgid "Open _Without Saving"
 msgstr "_Avaa tallentamatta"
 
-#: ../gaupol/agents/open.py:442
+#: ../gaupol/agents/open.py:441
 #, python-format
 msgid "Appended %(amount)d subtitles from \"%(basename)s\""
 msgstr "Lisättiin %(amount)d kappaletta perään tiedostosta \"%(basename)s\""
 
-#: ../gaupol/agents/open.py:481
+#: ../gaupol/agents/open.py:480
 #, python-format
 msgid "Opened main file \"%s\""
 msgstr "Avattiin päätiedosto \"%s\""
 
-#: ../gaupol/agents/open.py:500
+#: ../gaupol/agents/open.py:499
 #, python-format
 msgid "Opened translation file \"%s\""
 msgstr "Avattiin käännöstiedosto \"%s\""
@@ -2187,35 +2205,35 @@ msgstr "Videosoittimen käynnistäminen epäonnistui"
 msgid "Saved all open documents"
 msgstr "Tallennettiin kaikki avoimet asiakirjat"
 
-#: ../gaupol/agents/save.py:122
+#: ../gaupol/agents/save.py:129
 #, python-format
 msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
 msgstr ""
 "Tiedoston \"%(basename)s\" koodaaminen koodekilla \"%(codec)s\" epäonnistui"
 
-#: ../gaupol/agents/save.py:124
+#: ../gaupol/agents/save.py:131
 msgid "Please try to save the file with a different character encoding."
 msgstr "Yritä tallentaa tiedosto eri merkistökoodauksella."
 
-#: ../gaupol/agents/save.py:132
+#: ../gaupol/agents/save.py:139
 #, python-format
 msgid "Failed to save file \"%s\""
 msgstr "Tiedoston \"%s\" tallentaminen epäonnistui"
 
-#: ../gaupol/agents/save.py:149
+#: ../gaupol/agents/save.py:156
 msgid "Saved main document"
 msgstr "Tallennettiin pääasiakirja"
 
-#: ../gaupol/agents/save.py:165
+#: ../gaupol/agents/save.py:174
 #, python-format
 msgid "Saved main document as \"%s\""
 msgstr "Tallennettiin pääasiakirja nimellä \"%s\""
 
-#: ../gaupol/agents/save.py:180
+#: ../gaupol/agents/save.py:189
 msgid "Saved translation document"
 msgstr "Tallennettiin käännösasiakirja"
 
-#: ../gaupol/agents/save.py:196
+#: ../gaupol/agents/save.py:207
 #, python-format
 msgid "Saved translation document as \"%s\""
 msgstr "Tallennettiin käännösasiakirja nimellä \"%s\""
@@ -2467,21 +2485,35 @@ msgstr "Valinnan alapuolelle"
 msgid "Set Language"
 msgstr "Aseta kieli"
 
-#: ../gaupol/dialogs/preferences.py:193
+#: ../gaupol/dialogs/multisave.py:124
+#, python-format
+msgid "%d of the files to be saved already exist. Do you want to replace them?"
+msgstr "Tiedostoista %d on jo olemassa. Haluatko korvata ne?"
+
+#: ../gaupol/dialogs/multisave.py:127
+#, python-format
+msgid ""
+"The files already exist in \"%s\". Replacing them will overwrite their "
+"contents."
+msgstr ""
+"Tiedostot ovat jo olemassa kansiossa \"%s\". Tiedostojen korvaus "
+"ylikirjoittaa niiden sisällön."
+
+#: ../gaupol/dialogs/preferences.py:205
 #, python-format
 msgid "%s Extension Website"
 msgstr "%s laajennuksen WWW-sivut"
 
-#: ../gaupol/dialogs/preferences.py:221
+#: ../gaupol/dialogs/preferences.py:233
 msgid "Cannot deactivate extension"
 msgstr "Laajennusta ei voida poistaa käytöstä"
 
-#: ../gaupol/dialogs/preferences.py:222
+#: ../gaupol/dialogs/preferences.py:234
 #, python-format
 msgid "Extension \"%s\" is required by other extensions."
 msgstr "Muut laajennukset vaativat toimiakseen laajennuksen \"%s\"."
 
-#: ../gaupol/dialogs/preferences.py:406
+#: ../gaupol/dialogs/preferences.py:418
 msgid "Custom"
 msgstr "Oma"
 
@@ -2525,6 +2557,10 @@ msgstr "projektin jakaminen"
 #, python-format
 msgid "Split %(amount)d subtitles to project \"%(name)s\""
 msgstr "Jaettiin %(amount)d kappaletta projektiin \"%(name)s\""
+
+#: ../gaupol/dialogs/textedit.py:46
+msgid "Edit Text"
+msgstr "Muokkaa tekstiä"
 
 #: ../gaupol/dialogs/video.py:33
 msgid "Select Video"
@@ -2592,49 +2628,49 @@ msgstr "merkkiä"
 msgid "ems"
 msgstr "em"
 
-#: ../gaupol/main.py:104
+#: ../gaupol/main.py:107
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [VALITSIN...] [TIEDOSTO...] [+[NRO]]"
 
-#: ../gaupol/main.py:110
+#: ../gaupol/main.py:113
 msgid "show version number and exit"
 msgstr "näytä versionumero ja poistu"
 
-#: ../gaupol/main.py:116 ../gaupol/main.py:140 ../gaupol/main.py:159
+#: ../gaupol/main.py:119 ../gaupol/main.py:143 ../gaupol/main.py:162
 msgid "FILE"
 msgstr "TIEDOSTO"
 
-#: ../gaupol/main.py:119
+#: ../gaupol/main.py:122
 msgid "set the configuration file used"
 msgstr "aseta käytettävä asetustiedosto"
 
-#: ../gaupol/main.py:125
+#: ../gaupol/main.py:128
 msgid "ENCODING"
 msgstr "KOODAUS"
 
-#: ../gaupol/main.py:128
+#: ../gaupol/main.py:131
 msgid "set the character encoding used to open files"
 msgstr "aseta tiedostojen avaamiseen käytettävä merkistökoodaus"
 
-#: ../gaupol/main.py:134
+#: ../gaupol/main.py:137
 msgid "list all available character encodings"
 msgstr "luettele kaikki käytettävissä olevat merkistökoodaukset"
 
-#: ../gaupol/main.py:143
+#: ../gaupol/main.py:146
 msgid "open translation file"
 msgstr "avaa käännöstiedosto"
 
-#: ../gaupol/main.py:149
+#: ../gaupol/main.py:152
 msgid "METHOD"
 msgstr "MENETELMÄ"
 
-#: ../gaupol/main.py:152
+#: ../gaupol/main.py:155
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "käännöksen kappaleiden tasaamiseen käytettävä menetelmä: 'number' (numero)"
 "tai 'position' (sijainti)"
 
-#: ../gaupol/main.py:162
+#: ../gaupol/main.py:165
 msgid "select video file"
 msgstr "valitse videotiedosto"
 
@@ -2651,7 +2687,27 @@ msgstr "Nimetön %d"
 msgid "Close project"
 msgstr "Sulje projekti"
 
-#: ../gaupol/page.py:325
+#: ../gaupol/page.py:287
+#, python-format
+msgid "<b>Path:</b> %s"
+msgstr "<b>Polku:</b> %s"
+
+#: ../gaupol/page.py:288
+#, python-format
+msgid "<b>Format:</b> %s"
+msgstr "<b>Tiedostomuoto:</b> %s"
+
+#: ../gaupol/page.py:289
+#, python-format
+msgid "<b>Character encoding:</b> %s"
+msgstr "<b>Merkistökoodaus:</b> %s"
+
+#: ../gaupol/page.py:290
+#, python-format
+msgid "<b>Newlines:</b> %s"
+msgstr "<b>Rivinvaihdot:</b> %s"
+
+#: ../gaupol/page.py:322
 #, python-format
 msgid "%s translation"
 msgstr "%s käännös"

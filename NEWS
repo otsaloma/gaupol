@@ -1,3 +1,24 @@
+Gaupol 0.17
+===========
+
+ * Add "Save All As" (under the Projects menu) to save all open
+   documents with selected properties (fixes #595685)
+ * Add an inline spell-check for editable multiline text fields (off
+   by default, can be activated in the preferences dialog)
+ * Add support for milliseconds (field $MILLISECONDS) in preview
+   commands. Allows use of Media Player Classic for preview.
+ * Add help button in the preferences dialog, clickable in the
+   preview tab to launch web browser to view wiki documentation
+ * Use reading speed (characters per second) instead of optimal
+   duration (seconds per character) in duration adjust dialog
+ * Fix writing subtitle file headers with chosen newlines
+ * Fix reading and writing extension configurations
+ * Fix minor i18n issues with individual strings
+ * Add optional dependency of PyGtkSpell (part of gnome-python-extras)
+ * Add --mandir global option to setup.py to allow installation of man
+   pages to somewhere else than .../share/man (fixes #620665)
+ * Add Finnish translation
+
 Gaupol 0.16.2
 =============
 

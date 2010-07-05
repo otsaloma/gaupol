@@ -1,4 +1,3 @@
-[encoding: UTF-8]
 [type: gettext/glade]data/extensions/bookmarks/add-bookmark-dialog.ui
 [type: gettext/glade]data/ui/debug-dialog.ui
 [type: gettext/glade]data/ui/duration-dialog.ui
@@ -8,6 +7,7 @@
 [type: gettext/glade]data/ui/insert-dialog.ui
 [type: gettext/glade]data/ui/language-dialog.ui
 [type: gettext/glade]data/ui/multiclose-dialog.ui
+[type: gettext/glade]data/ui/multisave-dialog.ui
 [type: gettext/glade]data/ui/open-dialog.ui
 [type: gettext/glade]data/ui/preferences-dialog.ui
 [type: gettext/glade]data/ui/previewerr-dialog.ui
@@ -160,6 +160,7 @@ gaupol/dialogs/insert.py
 gaupol/dialogs/language.py
 gaupol/dialogs/message.py
 gaupol/dialogs/multiclose.py
+gaupol/dialogs/multisave.py
 gaupol/dialogs/open.py
 gaupol/dialogs/preferences.py
 gaupol/dialogs/previewerr.py

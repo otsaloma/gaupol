@@ -1,28 +1,8 @@
-Gaupol 0.17
-===========
-
- [D] Add "Save All As" (under the Projects menu) to save all open
-     documents with selected properties (fixes #595685)
- [D] Add an inline spell-check for editable multiline text fields (off
-     by default, can be activated in the preferences dialog)
- [D] Add support for milliseconds (field $MILLISECONDS) in preview
-     commands. Allows use of Media Player Classic for preview.
- [D] Add help button in the preferences dialog, clickable in the
-     preview tab to launch web browser to view wiki documentation
- [D] Use reading speed (characters per second) instead of optimal
-     duration (seconds per character) in duration adjust dialog
- [D] Fix writing subtitle file headers with chosen newlines
- [D] Fix reading and writing extension configurations
- [D] Fix minor i18n issues with individual strings
- [D] Add optional dependency of PyGtkSpell (part of
-     gnome-python-extras)
- [D] Add --mandir global option to setup.py (fixes #620665)
- [D] Add Finnish translation
-
 Gaupol 1.0
 ==========
 
  * Add a built-in GStreamer-based video player
+ * Add a GStreamer-based audio waveform display
 
 Gaupol 3000
 ===========

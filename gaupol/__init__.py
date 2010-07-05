@@ -44,7 +44,7 @@ import gobject
 import gtk
 import os
 
-__version__ = "0.16.2"
+__version__ = "0.17"
 
 COMBO_SEPARATOR = "<separator/>"
 
