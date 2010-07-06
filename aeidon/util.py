@@ -458,6 +458,8 @@ def replace_extension(path, format):
 def shell_quote(path):
     """Quote and escape `path` for shell use."""
     if sys.platform != "win32":
+        # Windows filenames can contain backslashes only as
+        # directory separators and cannot contain double quotes.
         path = path.replace("\\", "\\\\")
         path = path.replace('"', '\\"')
     return '"%s"' % path
@@ -469,6 +471,8 @@ def start_process(command, **kwargs):
     Raise :exc:`aeidon.ProcessError` if something goes wrong.
     Return :class:`subprocess.Popen` instance.
     """
+    # Use no environment on Windows due to a subprocess bug.
+    # https://bugzilla.gnome.org/show_bug.cgi?id=605805
     try:
         return subprocess.Popen(command,
                                 shell=(sys.platform != "win32"),
