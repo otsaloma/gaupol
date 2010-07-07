@@ -22,4 +22,4 @@ Gaupol does not include a preset command for Media Player Classic, since the pat
 "C:\Program Files\Combined Community Codec Pack\MPC\mpc-hc.exe" $VIDEOFILE /start $MILLISECONDS /sub $SUBFILE
 }}}
 
-With other versions of the player, the location and name of the executable can be different, but the arguments should be the same.
+With other versions of the player, the location and name of the executable can be different, but the arguments should be the same. Most users will probably want to uncheck the "Always use UTF-8 character encoding" option, since Media Player Classic has no option to specify subtitle file encoding.
