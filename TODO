@@ -1,6 +1,12 @@
+Gaupol 0.17.1
+=============
+
+ * Update Hungarian translation (Andrássy László)
+
 Gaupol 1.0
 ==========
 
+ * Set up a separate branch for translations
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
 
