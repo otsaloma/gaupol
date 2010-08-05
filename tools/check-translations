@@ -47,8 +47,8 @@ for name in sorted(glob.glob("*.po")):
         if "_" in msgid:
             if not "_" in msgstr:
                 print "%s:%d: missing accelerator in" % pos
-                print msgid.replace(" ", "~")
-                print msgstr.replace(" ", "~")
+                print '"%s"' % msgid
+                print '"%s"' % msgstr
                 print ""
 
         # Check that the translation of a label includes
@@ -56,8 +56,8 @@ for name in sorted(glob.glob("*.po")):
         if msgid.endswith(":"):
             if not msgstr.endswith(":"):
                 print "%s:%d: missing colon in" % pos
-                print msgid.replace(" ", "~")
-                print msgstr.replace(" ", "~")
+                print '"%s"' % msgid
+                print '"%s"' % msgstr
                 print ""
 
         # Check that the translation of a menu item includes
@@ -65,8 +65,8 @@ for name in sorted(glob.glob("*.po")):
         if "..." in msgid:
             if not "..." in msgstr:
                 print "%s:%d: missing ellipsis in" % pos
-                print msgid.replace(" ", "~")
-                print msgstr.replace(" ", "~")
+                print '"%s"' % msgid
+                print '"%s"' % msgstr
                 print ""
 
         # Check that the translation of a menu item includes
@@ -74,6 +74,6 @@ for name in sorted(glob.glob("*.po")):
         if u"…" in msgid:
             if not u"…" in msgstr:
                 print "%s:%d: missing ellipsis in" % pos
-                print msgid.replace(" ", "~")
-                print msgstr.replace(" ", "~")
+                print '"%s"' % msgid
+                print '"%s"' % msgstr
                 print ""
