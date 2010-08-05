@@ -22,6 +22,9 @@ for name in glob.glob("*.po"):
             msgid = "".join((msgid, line[1:-1]))
         if not msgid:
             continue
+        if line.startswith("msgstr["):
+            # Skip plural forms.
+            continue
         msgstr = line[8:-1]
         while True:
             try:
