@@ -4,9 +4,7 @@ Translating Gaupol
 Gaupol translations are available on the Transifex open translation
 web service. It is the best place to check the current status of
 translations and if you like, you can use the web UI to edit and
-submit a translation. Translations submitted via Transifex are sent to
-the maintainer's email and commited into the development repository by
-the maintainer.
+submit a translation.
 
     http://www.transifex.net/projects/p/gaupol/c/master/
 
@@ -25,4 +23,5 @@ default).
     msgfmt -cv po/XX.po -o locale/XX/LC_MESSAGES/gaupol.mo
     bin/gaupol
 
-When done, send your translation by email to <otsaloma@cc.hut.fi>.
+If you don't use Transifex, please send your translation by email to
+<otsaloma@cc.hut.fi>.
