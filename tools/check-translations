@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+# -*- coding: utf-8-unix -*-
+
+# Check translation files for common errors.
+
+import codecs
+import glob
+import os
+
+os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
+for name in glob.glob("*.po"):
+    fobj = codecs.open(name, "r", "utf_8")
+    for line in fobj:
+        line = line.strip()
+        if not line.startswith("msgid"):
+            continue
+        msgid = line[7:-1]
+        while True:
+            line = fobj.next().strip()
+            if line.startswith("msgstr"):
+                break
+            msgid = "".join((msgid, line[1:-1]))
+        if not msgid:
+            continue
+        msgstr = line[8:-1]
+        while True:
+            try:
+                line = fobj.next().strip()
+            except StopIteration:
+                break
+            if not line: break
+            msgstr = "".join((msgstr, line[1:-1]))
+        if not msgstr:
+            continue
+
+        # Check that the translation of a label includes
+        # a keyboard accelerator defined by an underscore.
+        if "_" in msgid:
+            if not "_" in msgstr:
+                print "%s: missing accelerator in" % name
+                print msgid.replace(" ", "~")
+                print msgstr.replace(" ", "~")
+                print ""
+
+        # Check that the translation of a label includes
+        # a terminating colon.
+        if msgid.endswith(":"):
+            if not msgstr.endswith(":"):
+                print "%s: missing colon in" % name
+                print msgid.replace(" ", "~")
+                print msgstr.replace(" ", "~")
+                print ""
+
+        # Check that the translation of a menu item includes
+        # an ellipsis defined by three dots.
+        if "..." in msgid:
+            if not "..." in msgstr:
+                print "%s: missing ellipsis in" % name
+                print msgid.replace(" ", "~")
+                print msgstr.replace(" ", "~")
+                print ""
+
+        # Check that the translation of a menu item includes
+        # an ellipsis defined by the Unicode character.
+        if u"…" in msgid:
+            if not u"…" in msgstr:
+                print "%s: missing ellipsis in" % name
+                print msgid.replace(" ", "~")
+                print msgstr.replace(" ", "~")
+                print ""
