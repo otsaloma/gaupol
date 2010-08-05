@@ -8,15 +8,18 @@ import glob
 import os
 
 os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
-for name in glob.glob("*.po"):
+for name in sorted(glob.glob("*.po")):
     fobj = codecs.open(name, "r", "utf_8")
+    lineno = 0
     for line in fobj:
+        lineno += 1
         line = line.strip()
         if not line.startswith("msgid"):
             continue
         msgid = line[7:-1]
         while True:
             line = fobj.next().strip()
+            lineno += 1
             if line.startswith("msgstr"):
                 break
             msgid = "".join((msgid, line[1:-1]))
@@ -25,22 +28,25 @@ for name in glob.glob("*.po"):
         if line.startswith("msgstr["):
             # Skip plural forms.
             continue
+        lineno_msgstr = lineno
         msgstr = line[8:-1]
         while True:
             try:
                 line = fobj.next().strip()
+                lineno += 1
             except StopIteration:
                 break
             if not line: break
             msgstr = "".join((msgstr, line[1:-1]))
         if not msgstr:
             continue
+        pos = (name, lineno_msgstr)
 
         # Check that the translation of a label includes
         # a keyboard accelerator defined by an underscore.
         if "_" in msgid:
             if not "_" in msgstr:
-                print "%s: missing accelerator in" % name
+                print "%s:%d: missing accelerator in" % pos
                 print msgid.replace(" ", "~")
                 print msgstr.replace(" ", "~")
                 print ""
@@ -49,7 +55,7 @@ for name in glob.glob("*.po"):
         # a terminating colon.
         if msgid.endswith(":"):
             if not msgstr.endswith(":"):
-                print "%s: missing colon in" % name
+                print "%s:%d: missing colon in" % pos
                 print msgid.replace(" ", "~")
                 print msgstr.replace(" ", "~")
                 print ""
@@ -58,7 +64,7 @@ for name in glob.glob("*.po"):
         # an ellipsis defined by three dots.
         if "..." in msgid:
             if not "..." in msgstr:
-                print "%s: missing ellipsis in" % name
+                print "%s:%d: missing ellipsis in" % pos
                 print msgid.replace(" ", "~")
                 print msgstr.replace(" ", "~")
                 print ""
@@ -67,7 +73,7 @@ for name in glob.glob("*.po"):
         # an ellipsis defined by the Unicode character.
         if u"…" in msgid:
             if not u"…" in msgstr:
-                print "%s: missing ellipsis in" % name
+                print "%s:%d: missing ellipsis in" % pos
                 print msgid.replace(" ", "~")
                 print msgstr.replace(" ", "~")
                 print ""
