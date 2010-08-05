@@ -249,11 +249,11 @@ msgstr ""
 
 #: ../data/ui/multiclose-dialog.ui.h:4
 msgid "Select the _main documents you want to save:"
-msgstr "Välj de _huvuddokument som du vill spara."
+msgstr "Välj de _huvuddokument som du vill spara:"
 
 #: ../data/ui/multiclose-dialog.ui.h:5
 msgid "Select the _translation documents you want to save:"
-msgstr "Välj de _översättningsdokument som du vill spara."
+msgstr "Välj de _översättningsdokument som du vill spara:"
 
 #: ../data/ui/multisave-dialog.ui.h:1 ../data/ui/open-dialog.ui.h:2
 #: ../data/ui/save-dialog.ui.h:1

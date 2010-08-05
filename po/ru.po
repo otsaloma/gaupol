@@ -391,7 +391,7 @@ msgstr "_Единицы длины:"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "_Offset:"
-msgstr "_Сдвиг на"
+msgstr "_Сдвиг на:"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Show line lengths in list cells"
@@ -1600,7 +1600,7 @@ msgstr "Открыть последний пере_вод"
 
 #: ../gaupol/actions/file.py:196
 msgid "Open _Translation…"
-msgstr "Открыть п_еревод"
+msgstr "Открыть п_еревод…"
 
 #: ../gaupol/actions/file.py:197 ../gaupol/agents/open.py:180
 msgid "Open Translation"
@@ -1852,7 +1852,7 @@ msgstr "Поиск предыдущего вхождения текста"
 
 #: ../gaupol/actions/text.py:32
 msgid "Co_nfigure Spell-check…"
-msgstr "Настройки проверки ор_фографии"
+msgstr "Настройки проверки ор_фографии…"
 
 #: ../gaupol/actions/text.py:33
 msgid "Set language and spell-check target"
@@ -1872,7 +1872,7 @@ msgstr "Проверка наличия слов с ошибками"
 
 #: ../gaupol/actions/text.py:69
 msgid "C_orrect Texts…"
-msgstr "Испра_вить текст..."
+msgstr "Испра_вить текст…"
 
 #: ../gaupol/actions/text.py:70
 msgid "Find and correct errors in texts"

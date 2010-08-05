@@ -1459,7 +1459,7 @@ msgstr "Laajenna nykyinen valinta viimeiseen kappaleeseen asti"
 
 #: ../gaupol/actions/edit.py:205
 msgid "_Insert Subtitles…"
-msgstr "_Lisää kappaleita"
+msgstr "_Lisää kappaleita…"
 
 #: ../gaupol/actions/edit.py:206
 msgid "Insert"
@@ -1752,7 +1752,7 @@ msgstr "Muuta valittujen tekstien kirjainkoko isoksi"
 
 #: ../gaupol/actions/help.py:32
 msgid "_Wiki Documentation"
-msgstr "Wiki-ohje"
+msgstr "_Wiki-ohje"
 
 #: ../gaupol/actions/help.py:34
 msgid "Browse wiki documentation"

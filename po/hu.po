@@ -699,11 +699,11 @@ msgstr "Pre_ferált sortördelési pont kiválasztása:"
 
 #: ../data/ui/transform-dialog.ui.h:1
 msgid "C_orrection:"
-msgstr "Korrekciók"
+msgstr "Korrekciók:"
 
 #: ../data/ui/transform-dialog.ui.h:2
 msgid "Co_rrection:"
-msgstr "Korrekciók"
+msgstr "Korrekciók:"
 
 #: ../data/ui/transform-dialog.ui.h:3
 msgid "First Point"
@@ -1909,7 +1909,7 @@ msgstr "Visszafelé keresés a szövegben"
 
 #: ../gaupol/actions/text.py:32
 msgid "Co_nfigure Spell-check…"
-msgstr "Helyesírás-elle_nőrző beállítása"
+msgstr "Helyesírás-elle_nőrző beállítása…"
 
 #: ../gaupol/actions/text.py:33
 msgid "Set language and spell-check target"

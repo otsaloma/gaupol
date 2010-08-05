@@ -23,7 +23,7 @@ msgstr "Lesezeichen hinzufügen"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:2
 msgid "_Description:"
-msgstr "_Beschreibung"
+msgstr "_Beschreibung:"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:3
 #: ../data/ui/transform-dialog.ui.h:13
@@ -1872,7 +1872,7 @@ msgstr "Rückwärts nach dem gleichen Text suchen"
 
 #: ../gaupol/actions/text.py:32
 msgid "Co_nfigure Spell-check…"
-msgstr "_Rechtschreibprüfung einrichten"
+msgstr "_Rechtschreibprüfung einrichten…"
 
 #: ../gaupol/actions/text.py:33
 msgid "Set language and spell-check target"

@@ -369,7 +369,7 @@ msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:23
 msgid "_Application:"
-msgstr "_Aplikacja"
+msgstr "_Aplikacja:"
 
 #: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Editor font:"
@@ -377,7 +377,7 @@ msgstr "Czcionka _edytora:"
 
 #: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Fallback encodings:"
-msgstr "_Używane kodowania"
+msgstr "_Używane kodowania:"
 
 #: ../data/ui/preferences-dialog.ui.h:26
 msgid "_Length unit:"
@@ -385,7 +385,7 @@ msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "_Offset:"
-msgstr "_Przesunięcie"
+msgstr "_Przesunięcie:"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Show line lengths in list cells"
