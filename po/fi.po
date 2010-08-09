@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:1
 msgid "Add Bookmark"
-msgstr "Lisää kirjanmerkkki"
+msgstr "Lisää kirjanmerkki"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:2
 msgid "_Description:"
