@@ -7,7 +7,7 @@ Gaupol 0.17.1
 Gaupol 1.0
 ==========
 
- * Add a built-in GStreamer-based video player
+ * Add a built-in GStreamer-based video playerrr
  * Add a GStreamer-based audio waveform display
  * GNOME Goal: Port your PyGTK to the new introspection-based bindings
    http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
