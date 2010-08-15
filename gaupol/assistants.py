@@ -846,7 +846,7 @@ class ConfirmationPage(BuilderPage):
     def _add_text_column(self, index, title):
         """Add a multiline text column to the tree view."""
         renderer = gaupol.MultilineCellRenderer()
-        renderer.set_show_lengths(False)
+        renderer.set_show_lengths(True)
         renderer.props.editable = (index == 4)
         renderer.props.ellipsize = pango.ELLIPSIZE_END
         renderer.props.font = gaupol.util.get_font()
