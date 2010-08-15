@@ -294,6 +294,7 @@ class SearchDialog(gaupol.BuilderDialog):
         """Replace the current match of pattern."""
         # Make sure the text view experiences a focus-out-event.
         self._replace_button.grab_focus()
+        self._replace_button.set_sensitive(False)
         self.replace()
 
     def _on_response(self, dialog, response):

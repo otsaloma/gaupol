@@ -1,6 +1,8 @@
 Gaupol 0.17.1
 =============
 
+ [D] Fix search dialog replace button to change sensitivity without
+     delay to avoid concurrent replacements (#626976)
  [D] Update Hungarian translation (Andrássy László)
  [D] Update Spanish translation (Carlos Mella)
 
