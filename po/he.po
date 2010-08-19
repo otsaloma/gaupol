@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaupol\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-05 20:00+0300\n"
-"PO-Revision-Date: 2010-08-19 03:56+0300\n"
+"PO-Revision-Date: 2010-08-19 04:20+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Gezer (Hebrew)\n"
 "Language: he\n"
@@ -786,120 +786,120 @@ msgstr "החלפת האות ״I״ באות ״l״ במילים באותיות ק�
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
-msgstr ""
+msgstr "החלפת האות ״l״ באות ״I״ במילים באותיות רשיות"
 
 #: ../data/patterns/Latn-en.common-error.in.h:8
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr ""
+msgstr "החלפת אפס באות ״O״ במילה הכתובה ברשיות"
 
 #: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Spaces around an apostrophe"
-msgstr ""
+msgstr "רווחים מסביב לאפוסטרוף"
 
 #: ../data/patterns/Latn-en.common-error.in.h:10
 msgid "Zero in an upper case word"
-msgstr ""
+msgstr "אפס במילה באותיות רשיות"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid ""
 "Replace the uppercase name of the speaker before a colon with a dialogue dash"
-msgstr ""
+msgstr "החלפת השם באותיות רשיות של הדובר לפני הנקודתיים במקף דו־שיח"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid "Uppercase speaker before a colon"
-msgstr ""
+msgstr "הגדלת שם הדובר לרשיות לפני נקודתיים"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 #: ../data/patterns/Latn.line-break.in.h:1
 msgid "Break according to clauses terminated by a punctuation mark"
-msgstr ""
+msgstr "שבירה בהתאם לסעיפים שנסגרים על ידי סימני פיסוק"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 #: ../data/patterns/Latn.line-break.in.h:3
 msgid "Clause"
-msgstr ""
+msgstr "סעיף"
 
 #: ../data/patterns/Latn.capitalization.in.h:1
 msgid "Capitalize the first word of a sentence"
-msgstr ""
+msgstr "הפיכת המילה הראשונה במשפט לרישית (הגדלת האות הראשונה)"
 
 #: ../data/patterns/Latn.capitalization.in.h:2
 msgid "Sentence"
-msgstr ""
+msgstr "משפט"
 
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Add or remove space between a number and the associated unit"
-msgstr ""
+msgstr "הוספה או הסרה של רווח בין המספר והיחידה המשויכת אליו"
 
 #: ../data/patterns/Latn.common-error.in.h:2
 msgid "Add or remove spaces around parantheses and square brackets"
-msgstr ""
+msgstr "הוספה או הסרה של רווחים מסביב לסוגריים וסוגריים מרובעים"
 
 #: ../data/patterns/Latn.common-error.in.h:3
 msgid "Add space after a dialogue dash"
-msgstr ""
+msgstr "הוספת רווח לאחר מקף דו־שיח"
 
 #: ../data/patterns/Latn.common-error.in.h:4
 msgid "Add space after an ellipsis"
-msgstr ""
+msgstr "הוספת רווח לאחר שלוש נקודות ההשמטה"
 
 #: ../data/patterns/Latn.common-error.in.h:5
 msgid "Add space after various punctuation marks"
-msgstr ""
+msgstr "הוספת רווח לאחר סימני פיסוק שונים"
 
 #: ../data/patterns/Latn.common-error.in.h:6
 msgid ""
 "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr ""
+msgstr "שינוי צורות האיות השונות של פרקי 12 השעות ל־״a.m.‎״ ו־״p.m.‎״"
 
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
-msgstr ""
+msgstr "אפוסטרוף כפול"
 
 #: ../data/patterns/Latn.common-error.in.h:8
 msgid "Letter \"O\" in a number"
-msgstr ""
+msgstr "האות ״O״ במספר"
 
 #: ../data/patterns/Latn.common-error.in.h:9
 msgid "Multiple question- and exclamation marks"
-msgstr ""
+msgstr "מספר סימני שאלה וקריאה"
 
 #: ../data/patterns/Latn.common-error.in.h:10
 msgid "Periods around a punctuation mark"
-msgstr ""
+msgstr "נקודות מסביב לסימני פיסוק"
 
 #: ../data/patterns/Latn.common-error.in.h:11
 msgid "Remove period before or after various punctuation marks"
-msgstr ""
+msgstr "הסרת נקודה לפני או אחרי סימני פיסוק שונים"
 
 #: ../data/patterns/Latn.common-error.in.h:12
 msgid "Remove space after a starting- and before an ending quotation mark"
-msgstr ""
+msgstr "הסרת רווח לאחר סימן קריאה סוגר ולפני פותח"
 
 #: ../data/patterns/Latn.common-error.in.h:13
 msgid "Remove space after an ellipsis that starts a line"
-msgstr ""
+msgstr "הסרת רווח לאחר שלוש נקודות להשמטה המתחילות שורה"
 
 #: ../data/patterns/Latn.common-error.in.h:14
 msgid "Remove space before various punctuation marks"
-msgstr ""
+msgstr "הסרת רווח לפני סימני פיסוק שונים"
 
 #: ../data/patterns/Latn.common-error.in.h:15
 msgid "Replace a double apostrophe with a quotation mark"
-msgstr ""
+msgstr "החלפת אפוסטרוף כפול בסימן ציטוט"
 
 #: ../data/patterns/Latn.common-error.in.h:16
 msgid "Replace a single clause-terminating dash with two dashes"
-msgstr ""
+msgstr "החלפת מקף סוף סעיף בשני מקפים"
 
 #: ../data/patterns/Latn.common-error.in.h:17
 msgid "Replace letter \"O\" with a zero in a number"
-msgstr ""
+msgstr "החלפת האות ״O״ באפס במספר"
 
 #: ../data/patterns/Latn.common-error.in.h:18
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
-msgstr ""
+msgstr "החלפת מספר סימני שאלה וסימני קריאה ברצף בסימנים יחידים"
 
 #: ../data/patterns/Latn.common-error.in.h:19
 msgid "Space after a dialogue dash"
@@ -939,23 +939,23 @@ msgstr "איות של a.m.‎ ו־p.m.‎"
 
 #: ../data/patterns/Latn.common-error.in.h:28
 msgid "Terminating double-dashes"
-msgstr ""
+msgstr "מקפים כפולים לסגירה"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:1
 msgid "One-line song lyrics between number signs"
-msgstr ""
+msgstr "מילות שירים בנות שורה אחת בין סולמיות"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:2
 msgid "Remove description of a sound between parantheses"
-msgstr ""
+msgstr "הסרת תיאורי צליל בסוגריים"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:3
 msgid "Remove description of a sound between square brackets"
-msgstr ""
+msgstr "הסרת תיאורי צליל בסוגריים מרובעים"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:4
 msgid "Remove one-line song lyrics starting with or between number signs"
-msgstr ""
+msgstr "הסרת מילות שירים בנות שורה אחת עם או בין סולמיות"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:5
 msgid "Remove song lyrics starting with or between number signs"
@@ -2024,11 +2024,11 @@ msgstr "הצגה או הסתרה של עמודת טקסט התרגום"
 
 #: ../gaupol/actions/view.py:401
 msgid "_Video Toolbar"
-msgstr ""
+msgstr "סרגל הכלים _וידאו"
 
 #: ../gaupol/actions/view.py:402
 msgid "Show or hide the video toolbar"
-msgstr ""
+msgstr "הצגה או הסתרה של סרגל הכלים וידאו"
 
 #: ../gaupol/agents/close.py:48
 #, python-format
@@ -2610,7 +2610,7 @@ msgstr "תווים"
 
 #: ../gaupol/enums/units.py:32
 msgid "ems"
-msgstr ""
+msgstr "ems"
 
 #: ../gaupol/main.py:107
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
