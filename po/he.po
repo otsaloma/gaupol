@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaupol\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-05 20:00+0300\n"
-"PO-Revision-Date: 2010-08-18 14:35+0300\n"
+"PO-Revision-Date: 2010-08-19 03:56+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Gezer (Hebrew)\n"
 "Language: he\n"
@@ -959,176 +959,176 @@ msgstr ""
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:5
 msgid "Remove song lyrics starting with or between number signs"
-msgstr ""
+msgstr "הסרת מילות שירים המתחילים עם או בין סולמיות"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:6
 msgid "Replace the name of the speaker before a colon with a dialogue dash"
-msgstr ""
+msgstr "החלפת שם הדובר שלפני הנקודתיים במקף דו־שיח"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:7
 msgid "Song lyrics between number signs"
-msgstr ""
+msgstr "מילות שירים בין סולמיות"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:8
 msgid "Sound in brackets"
-msgstr ""
+msgstr "צליל בסוגריים מרובעים"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:9
 msgid "Sound in parantheses"
-msgstr ""
+msgstr "צליל בסוגריים"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:10
 msgid "Speaker before a colon"
-msgstr ""
+msgstr "הדובר לפי הנקודתיים"
 
 #: ../data/patterns/Latn.line-break.in.h:2
 msgid "Break according to dialogue separated by dashes"
-msgstr ""
+msgstr "שבירה בהתאם לדו־שיח המופרד במקפים"
 
 #: ../data/patterns/Latn.line-break.in.h:4
 msgid "Dialogue"
-msgstr ""
+msgstr "דו־שיח"
 
 #: ../data/patterns/Zyyy.common-error.in.h:1
 msgid "Leading and trailing spaces"
-msgstr ""
+msgstr "רווחים מובילים ועוקבים"
 
 #: ../data/patterns/Zyyy.common-error.in.h:2
 msgid "Multiple consecutive spaces"
-msgstr ""
+msgstr "מספר רווחים עוקבים"
 
 #: ../data/patterns/Zyyy.common-error.in.h:3
 msgid "Remove space between digits of a number"
-msgstr ""
+msgstr "הסרת רווחים בין ספרות של מספר"
 
 #: ../data/patterns/Zyyy.common-error.in.h:4
 msgid "Remove spaces from the beginning and end of lines"
-msgstr ""
+msgstr "הסרת רווחים מתחילת ומסוף השורות"
 
 #: ../data/patterns/Zyyy.common-error.in.h:5
 msgid "Replace multiple consecutive spaces with only one"
-msgstr ""
+msgstr "החלפת מספר רווחים עוקבים באחד"
 
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Space between digits"
-msgstr ""
+msgstr "רווח בין ספרות"
 
 #: ../aeidon/agents/clipboard.py:61
 msgid "Cutting texts"
-msgstr ""
+msgstr "הטקסטים נגזרים"
 
 #: ../aeidon/agents/clipboard.py:85
 msgid "Pasting texts"
-msgstr ""
+msgstr "הטקסטים מודבקים"
 
 #: ../aeidon/agents/edit.py:59 ../aeidon/agents/edit.py:93
 msgid "Inserting subtitles"
-msgstr ""
+msgstr "הכתוביות נוספות"
 
 #: ../aeidon/agents/edit.py:75
 msgid "Clearing texts"
-msgstr ""
+msgstr "הטקסטים נמחקים"
 
 #: ../aeidon/agents/edit.py:118
 msgid "Merging subtitles"
-msgstr ""
+msgstr "הכתוביות מתמזגות"
 
 #: ../aeidon/agents/edit.py:135
 msgid "Removing subtitles"
-msgstr ""
+msgstr "הכתוביות מוסרות"
 
 #: ../aeidon/agents/edit.py:157
 msgid "Replacing positions"
-msgstr ""
+msgstr "המיקומים מוחלפים"
 
 #: ../aeidon/agents/edit.py:178
 msgid "Replacing texts"
-msgstr ""
+msgstr "הטקסטים מוחלפים"
 
 #: ../aeidon/agents/edit.py:207
 msgid "Splitting subtitle"
-msgstr ""
+msgstr "הכתובית מפוצלת"
 
 #: ../aeidon/agents/format.py:97
 msgid "Adding dialogue dashes"
-msgstr ""
+msgstr "מקפי הדו־שיח נוספים"
 
 #: ../aeidon/agents/format.py:120
 msgid "Changing case"
-msgstr ""
+msgstr "שינוי בין קטנות לרשיות"
 
 #: ../aeidon/agents/format.py:139
 msgid "Italicizing"
-msgstr ""
+msgstr "ההטיה מוחלת"
 
 #: ../aeidon/agents/format.py:159
 msgid "Removing dialogue dashes"
-msgstr ""
+msgstr "מקפי הדו־שיח מוסרים"
 
 #: ../aeidon/agents/format.py:201
 msgid "Unitalicizing"
-msgstr ""
+msgstr "ההטיה מבוטלת"
 
 #: ../aeidon/agents/position.py:140
 msgid "Adjusting durations"
-msgstr ""
+msgstr "פרקי הזמן מתואמים"
 
 #: ../aeidon/agents/position.py:167
 msgid "Converting framerate"
-msgstr ""
+msgstr "קצב השקופיות מומר"
 
 #: ../aeidon/agents/position.py:180
 msgid "Setting framerate"
-msgstr ""
+msgstr "הגדרת קצב השקופיות"
 
 #: ../aeidon/agents/position.py:204
 msgid "Shifting positions"
-msgstr ""
+msgstr "הזזת המקומות"
 
 #: ../aeidon/agents/position.py:234
 msgid "Transforming positions"
-msgstr ""
+msgstr "החלפת המקומות"
 
 #: ../aeidon/agents/search.py:257
 msgid "Replacing"
-msgstr ""
+msgstr "מתבצעת החלפה"
 
 #: ../aeidon/agents/search.py:285 ../aeidon/agents/search.py:287
 msgid "Replacing all"
-msgstr ""
+msgstr "הכול מוחלף"
 
 #: ../aeidon/agents/set.py:62 ../aeidon/agents/set.py:85
 #: ../aeidon/agents/set.py:126
 msgid "Editing position"
-msgstr ""
+msgstr "המיקום נערך"
 
 #: ../aeidon/agents/set.py:146
 msgid "Editing text"
-msgstr ""
+msgstr "הטקסט נערך"
 
 #: ../aeidon/agents/text.py:201
 msgid "Breaking lines"
-msgstr ""
+msgstr "השורות נשברות"
 
 #: ../aeidon/agents/text.py:244
 msgid "Capitalizing texts"
-msgstr ""
+msgstr "הרשיות בטקסטים מתואמות"
 
 #: ../aeidon/agents/text.py:280
 msgid "Correcting common errors"
-msgstr ""
+msgstr "שגיאות נפוצות מתוקנות"
 
 #: ../aeidon/agents/text.py:314
 msgid "Removing hearing impaired texts"
-msgstr ""
+msgstr "מוסרים טקסטים המותאמים ללקויי שמיעה"
 
 #: ../aeidon/agents/text.py:372
 msgid "Joining words by spell-check suggestions"
-msgstr ""
+msgstr "צירוף מילים לפי הצעות בדיקות איות"
 
 #: ../aeidon/agents/text.py:425
 msgid "Splitting words by spell-check suggestions"
-msgstr ""
+msgstr "פיצול מילים לפי הצעות בדיקת איות"
 
 #. Translators: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
@@ -1812,175 +1812,175 @@ msgstr "שינוי המיקומים עבור קצב שקופיות שונה"
 
 #: ../gaupol/actions/position.py:67
 msgid "Preview from selected position with a video player"
-msgstr ""
+msgstr "הצגה מקדימה מהמיקום הנבחר באמצעות נגן וידאו"
 
 #: ../gaupol/actions/position.py:93
 msgid "_Shift Positions…"
-msgstr ""
+msgstr "ה_זחת מקומות…"
 
 #: ../gaupol/actions/position.py:94
 msgid "Make subtitles appear earlier or later"
-msgstr ""
+msgstr "הזזת זמן ההופעה כדי שיופיעו מוקדם או מאוחר יותר"
 
 #: ../gaupol/actions/position.py:110
 msgid "_Transform Positions…"
-msgstr ""
+msgstr "הח_לפת מקומות…"
 
 #: ../gaupol/actions/position.py:111
 msgid "Change positions by linear two-point correction"
-msgstr ""
+msgstr "שינוי מיקומים על ידי תיקון שתי נקודות לינארי"
 
 #: ../gaupol/actions/search.py:32
 msgid "_Find And Replace…"
-msgstr ""
+msgstr "_חיפוש והחלפה…"
 
 #: ../gaupol/actions/search.py:35
 msgid "Search for and replace text"
-msgstr ""
+msgstr "חיפוש והחלפה של טקסט"
 
 #: ../gaupol/actions/search.py:52
 msgid "Search forwards for same text"
-msgstr ""
+msgstr "חיפוש קדימה אחר אותו טקסט"
 
 #: ../gaupol/actions/search.py:69
 msgid "Find Pre_vious"
-msgstr ""
+msgstr "חיפוש ה_קודם"
 
 #: ../gaupol/actions/search.py:70
 msgid "Search backwards for same text"
-msgstr ""
+msgstr "חיפוש לאחור אחר אותו הטקסט"
 
 #: ../gaupol/actions/text.py:32
 msgid "Co_nfigure Spell-check…"
-msgstr ""
+msgstr "ה_גדרת בדיקת איות…"
 
 #: ../gaupol/actions/text.py:33
 msgid "Set language and spell-check target"
-msgstr ""
+msgstr "הגדרת שפה ואת יעד בודק האיות"
 
 #: ../gaupol/actions/text.py:48
 msgid "_Check Spelling"
-msgstr ""
+msgstr "_בדיקת איות"
 
 #: ../gaupol/actions/text.py:49
 msgid "Spelling"
-msgstr ""
+msgstr "איות"
 
 #: ../gaupol/actions/text.py:51
 msgid "Check for incorrect spelling"
-msgstr ""
+msgstr "בדיקת איות שגוי"
 
 #: ../gaupol/actions/text.py:69
 msgid "C_orrect Texts…"
-msgstr ""
+msgstr "_תיקון הטקסטים…"
 
 #: ../gaupol/actions/text.py:70
 msgid "Find and correct errors in texts"
-msgstr ""
+msgstr "חיפוש ותיקון של שגיאות בטקסטים"
 
 #: ../gaupol/actions/view.py:32
 msgid "Activate the project in the next tab"
-msgstr ""
+msgstr "הפעלת המיזם שבלשונית הבאה"
 
 #: ../gaupol/actions/view.py:51
 msgid "Activate the project in the previous tab"
-msgstr ""
+msgstr "הפעלת המיזם שבלשונית הקודמת"
 
 #: ../gaupol/actions/view.py:68
 msgid "Move Tab _Left"
-msgstr ""
+msgstr "העברת הלשונית _שמאלה"
 
 #: ../gaupol/actions/view.py:69
 msgid "Move the current tab to the left"
-msgstr ""
+msgstr "העברת הלשונית הנוכחית לשמאל"
 
 #: ../gaupol/actions/view.py:85
 msgid "Move Tab _Right"
-msgstr ""
+msgstr "העברת הלשונית _ימינה"
 
 #: ../gaupol/actions/view.py:86
 msgid "Move the current tab to the right"
-msgstr ""
+msgstr "העברת הלשונית הנוכחית לימין"
 
 #: ../gaupol/actions/view.py:102
 msgid "_Columns"
-msgstr ""
+msgstr "_עמודות"
 
 #: ../gaupol/actions/view.py:119
 msgid "2_4 fps"
-msgstr ""
+msgstr "2_4 שקופיות לשנייה"
 
 #: ../gaupol/actions/view.py:120
 msgid "Calculate nonnative units with a framerate of 24 fps"
-msgstr ""
+msgstr "חישוב יחידות שאינן ייחודיות בקצב שקופיות של 24 שקופיות לשנייה"
 
 #: ../gaupol/actions/view.py:143
 msgid "2_5 fps"
-msgstr ""
+msgstr "2_5 שקופיות לשנייה"
 
 #: ../gaupol/actions/view.py:144
 msgid "Calculate nonnative units with a framerate of 25 fps"
-msgstr ""
+msgstr "חישוב יחידות שאינן ייחודיות בקצב שקופיות של 25 שקופיות לשנייה"
 
 #: ../gaupol/actions/view.py:167
 msgid "_30 fps"
-msgstr ""
+msgstr "_30 שקופיות לשנייה"
 
 #: ../gaupol/actions/view.py:168
 msgid "Calculate nonnative units with a framerate of 30 fps"
-msgstr ""
+msgstr "חישוב יחידות שאינן ייחודיות בקצב שקופיות של 30 שקופיות לשנייה"
 
 #: ../gaupol/actions/view.py:189
 msgid "F_ramerate"
-msgstr ""
+msgstr "_קצב שקופיות"
 
 #: ../gaupol/actions/view.py:208
 msgid "_Frames"
-msgstr ""
+msgstr "_שקופיות"
 
 #: ../gaupol/actions/view.py:209
 msgid "Show positions as frames"
-msgstr ""
+msgstr "הצגת מיקומים כשקופיות"
 
 #: ../gaupol/actions/view.py:230
 msgid "_Times"
-msgstr ""
+msgstr "_זמנים"
 
 #: ../gaupol/actions/view.py:231
 msgid "Show positions as times"
-msgstr ""
+msgstr "הצגת מיקומים כזמנים"
 
 #: ../gaupol/actions/view.py:252
 msgid "_Duration"
-msgstr ""
+msgstr "_פרק הזמן"
 
 #: ../gaupol/actions/view.py:253
 msgid "Show or hide the duration column"
-msgstr ""
+msgstr "הצגה או הסתרה של עמודת פרק הזמן"
 
 #: ../gaupol/actions/view.py:270
 msgid "_End"
-msgstr ""
+msgstr "_סוף"
 
 #: ../gaupol/actions/view.py:271
 msgid "Show or hide the end column"
-msgstr ""
+msgstr "הצגה או הסתרה של עמודת הסוף"
 
 #: ../gaupol/actions/view.py:288
 msgid "_Main Text"
-msgstr ""
+msgstr "טקסט _ראשי"
 
 #: ../gaupol/actions/view.py:289
 msgid "Show or hide the main text column"
-msgstr ""
+msgstr "הצגה או הסתרה של עמודת הטקסט הראשי"
 
 #: ../gaupol/actions/view.py:306
 msgid "_Main Toolbar"
-msgstr ""
+msgstr "סרגל כלים _ראשי"
 
 #: ../gaupol/actions/view.py:307
 msgid "Show or hide the main toolbar"
-msgstr ""
+msgstr "הצגה או הסתרה של סרגל הכלים הראשי"
 
 #: ../gaupol/actions/view.py:320
 msgid "_No."
@@ -2456,6 +2456,8 @@ msgid ""
 "MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is "
 "any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
 msgstr ""
+"כותרת ה־MPsub חייבת להכיל שורה מהצורה ״FORMAT=VALUE״ כאשר ה־VALUE חייב להיות "
+"כל אחד מהבאים: ״TIME״, ״23.98״, ״25.00״ או ״29.97״."
 
 #: ../gaupol/dialogs/insert.py:46
 msgid "Above selection"
@@ -2472,28 +2474,28 @@ msgstr "הגדרת שפה"
 #: ../gaupol/dialogs/multisave.py:124
 #, python-format
 msgid "%d of the files to be saved already exist. Do you want to replace them?"
-msgstr ""
+msgstr "%d מתוך הקבצים לשמירה כבר קיימים. האם ברצונך להחליף אותם?"
 
 #: ../gaupol/dialogs/multisave.py:127
 #, python-format
 msgid ""
 "The files already exist in \"%s\". Replacing them will overwrite their "
 "contents."
-msgstr ""
+msgstr "הקבצים כבר קיימים תחת ״%s״. החלפתם תשכתב על תוכנם."
 
 #: ../gaupol/dialogs/preferences.py:205
 #, python-format
 msgid "%s Extension Website"
-msgstr ""
+msgstr "אתר ההרחבות %s"
 
 #: ../gaupol/dialogs/preferences.py:233
 msgid "Cannot deactivate extension"
-msgstr ""
+msgstr "לא ניתן לפרוק את ההרחבה"
 
 #: ../gaupol/dialogs/preferences.py:234
 #, python-format
 msgid "Extension \"%s\" is required by other extensions."
-msgstr ""
+msgstr "ההרחבה ״%s״ נדרשת על ידי הרחבות אחרות."
 
 #: ../gaupol/dialogs/preferences.py:418
 msgid "Custom"
@@ -2510,14 +2512,14 @@ msgstr "שגיאה בתבנית הביטוי הרגולרי"
 
 #: ../gaupol/dialogs/search.py:418
 msgid "Error in regular expression replacement"
-msgstr ""
+msgstr "שגיאה בהחלפת הביטוי הרגולרי"
 
 #: ../gaupol/dialogs/search.py:539
 #, python-format
 msgid "Found and replaced %d occurence"
 msgid_plural "Found and replaced %d occurences"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "נמצא והוחלף מופע אחד"
+msgstr[1] "נמצאו והוחלפו %d מופעים"
 
 #: ../gaupol/dialogs/shift.py:138
 msgid "frames"
