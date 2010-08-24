@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-05 20:00+0300\n"
-"PO-Revision-Date: 2010-08-21 13:00+0300\n"
+"PO-Revision-Date: 2010-08-22 13:00+0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -281,7 +281,7 @@ msgstr "G_uardar en carpeta:"
 
 #: ../data/ui/multisave-dialog.ui.h:6
 msgid "Select A Folder"
-msgstr "Seleccionar una carpeta"
+msgstr "Seleccionar carpeta"
 
 #: ../data/ui/open-dialog.ui.h:1
 msgid "Align _method:"
@@ -759,7 +759,7 @@ msgstr ""
 
 #: ../data/patterns/Latn-en-US.common-error.in.h:2
 msgid "Period after title"
-msgstr "Punto después de un título personal"
+msgstr "Punto después de títulos personales"
 
 #: ../data/patterns/Latn-en.capitalization.in.h:1
 msgid "Capitalize the first person pronoun \"I\""
@@ -775,11 +775,11 @@ msgstr "Convierte varias formas abreviadas de la palabra «okay» a «OK»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:2
 msgid "Letter \"I\" in a lower case word"
-msgstr "Letra «I» en una palabra en minúsculas"
+msgstr "Letra «I» en palabras en minúsculas"
 
 #: ../data/patterns/Latn-en.common-error.in.h:3
 msgid "Letter \"l\" in an upper case word"
-msgstr "Letra «l» en una palabra en mayúsculas"
+msgstr "Letra «l» en palabras en mayúsculas"
 
 #: ../data/patterns/Latn-en.common-error.in.h:4
 msgid "Okay"
@@ -792,32 +792,32 @@ msgstr "Elimina espacios en blanco alrededor de un apóstrofe"
 #: ../data/patterns/Latn-en.common-error.in.h:6
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
 msgstr ""
-"Reemplaza la letra «I» con la letra «l» dentro de una palabra en minúsculas"
+"Reemplaza la letra «I» dentro de una palabra en minúsculas por la letra «l»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
 msgstr ""
-"Reemplaza la letra «l» con la letra «I» dentro de una palabra en mayúsculas"
+"Reemplaza la letra «l» dentro de una palabra en mayúsculas por la letra «I»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:8
 msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr ""
-"Reemplaza un cero con la letra «O» dentro de una palabra en mayúsculas"
+"Reemplaza un cero dentro de una palabra en mayúsculas por la letra «O»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Spaces around an apostrophe"
-msgstr "Espacio alrededor de un apóstrofe"
+msgstr "Espacios alrededor de apóstrofes"
 
 #: ../data/patterns/Latn-en.common-error.in.h:10
 msgid "Zero in an upper case word"
-msgstr "Cero en una palabra en mayúsculas"
+msgstr "Cero en palabras en mayúsculas"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid ""
 "Replace the uppercase name of the speaker before a colon with a dialogue dash"
 msgstr ""
-"Reemplaza el nombre (en mayúsculas) del hablante, seguido de dos puntos, por "
-"una raya de diálogo"
+"Reemplaza el nombre en mayúsculas del hablante antes de dos puntos por una "
+"raya de diálogo"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid "Uppercase speaker before a colon"
@@ -826,7 +826,7 @@ msgstr "Hablante en mayúsculas antes de dos puntos"
 #: ../data/patterns/Latn-en.line-break.in.h:1
 #: ../data/patterns/Latn.line-break.in.h:1
 msgid "Break according to clauses terminated by a punctuation mark"
-msgstr "Divide en base a las oraciones finalizadas por un signo de puntuación"
+msgstr "Divide en base a oraciones finalizadas por un signo de puntuación"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 #: ../data/patterns/Latn.line-break.in.h:3
@@ -844,7 +844,7 @@ msgstr "Frase"
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Add or remove space between a number and the associated unit"
 msgstr ""
-"Agrega o elimina espacios entre un número y la unidad de medida respectiva"
+"Agrega o elimina un espacio entre un número y la unidad de medida respectiva"
 
 #: ../data/patterns/Latn.common-error.in.h:2
 msgid "Add or remove spaces around parantheses and square brackets"
@@ -857,18 +857,17 @@ msgstr "Agrega un espacio en blanco después de una raya de diálogo"
 
 #: ../data/patterns/Latn.common-error.in.h:4
 msgid "Add space after an ellipsis"
-msgstr "Agrega un espacio en blanco a continuación de puntos suspensivos"
+msgstr "Agrega un espacio en blanco después de puntos suspensivos"
 
 #: ../data/patterns/Latn.common-error.in.h:5
 msgid "Add space after various punctuation marks"
-msgstr ""
-"Agrega un espacio en blanco a continuación de varios signos de puntuación"
+msgstr "Agrega un espacio en blanco después de distintos signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:6
 msgid ""
 "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
-"Convierte varias formas de escribir períodos en 12 horas a «a.m.» a «p.m.»"
+"Convierte varias formas de escribir períodos en 12 horas a «a.m.» y «p.m.»"
 
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
@@ -876,7 +875,7 @@ msgstr "Doble comilla simple"
 
 #: ../data/patterns/Latn.common-error.in.h:8
 msgid "Letter \"O\" in a number"
-msgstr "Letra «O» en un número"
+msgstr "Letra «O» en números"
 
 #: ../data/patterns/Latn.common-error.in.h:9
 msgid "Multiple question- and exclamation marks"
@@ -884,26 +883,26 @@ msgstr "Múltiples signos de exclamación e interrogación"
 
 #: ../data/patterns/Latn.common-error.in.h:10
 msgid "Periods around a punctuation mark"
-msgstr "Puntos alrededor de un signo de puntuación"
+msgstr "Puntos alrededor de signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:11
 msgid "Remove period before or after various punctuation marks"
-msgstr "Elimina un punto antes o después de varios signos de puntuación"
+msgstr "Elimina un punto antes o después de distintos signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:12
 msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr ""
-"Elimina un espacio en blanco a continuación de una comilla inicial y previo "
-"a una final"
+"Elimina espacios en blanco después de una comilla inicial y previo a una "
+"final"
 
 #: ../data/patterns/Latn.common-error.in.h:13
 msgid "Remove space after an ellipsis that starts a line"
 msgstr ""
-"Elimina espacios en blanco después de puntos suspensivos que inician una línea"
+"Elimina un espacio en blanco después de puntos suspensivos al inicio de línea"
 
 #: ../data/patterns/Latn.common-error.in.h:14
 msgid "Remove space before various punctuation marks"
-msgstr "Elimina un espacio en blanco antes de varios signos de puntuación"
+msgstr "Elimina un espacio en blanco antes de distintos signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:15
 msgid "Replace a double apostrophe with a quotation mark"
@@ -911,7 +910,7 @@ msgstr "Reemplaza dos comillas simples por una comilla doble"
 
 #: ../data/patterns/Latn.common-error.in.h:16
 msgid "Replace a single clause-terminating dash with two dashes"
-msgstr "Reemplaza una raya al fin de una oración por dos rayas"
+msgstr "Agrega una segunda raya al fin de una oración terminada por una raya"
 
 #: ../data/patterns/Latn.common-error.in.h:17
 msgid "Replace letter \"O\" with a zero in a number"
@@ -921,8 +920,7 @@ msgstr "Reemplaza la letra «O» encontrada en un número por un cero"
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr ""
-"Reduce múltiples signos consecutivos de interrogación o exclamación a sólo "
-"uno"
+"Reduce múltiples signos de interrogación o exclamación consecutivos a uno sólo"
 
 #: ../data/patterns/Latn.common-error.in.h:19
 msgid "Space after a dialogue dash"
@@ -954,11 +952,11 @@ msgstr "Espacios alrededor de comillas"
 
 #: ../data/patterns/Latn.common-error.in.h:26
 msgid "Spaces around brackets"
-msgstr "Espacios alrededor de corchetes cuadrados"
+msgstr "Espacios alrededor de paréntesis"
 
 #: ../data/patterns/Latn.common-error.in.h:27
 msgid "Spelling of a.m. and p.m."
-msgstr "Escritura de a.m. y p.m."
+msgstr "Escritura de «a.m.» y «p.m.»"
 
 #: ../data/patterns/Latn.common-error.in.h:28
 msgid "Terminating double-dashes"
@@ -966,21 +964,22 @@ msgstr "Finalizar oración con dos rayas"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:1
 msgid "One-line song lyrics between number signs"
-msgstr "Letra de canciones de una línea entre «#»"
+msgstr "Letras de canciones de una línea entre almohadillas"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:2
 msgid "Remove description of a sound between parantheses"
-msgstr "Elimina la descripción entre paréntesis de algún sonido"
+msgstr "Elimina la descripción entre paréntesis de un sonido"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:3
 msgid "Remove description of a sound between square brackets"
-msgstr "Elimina la descripción entre corchetes cuadrados de algún sonido"
+msgstr "Elimina la descripción entre corchetes cuadrados de un sonido"
 
+# Se ha forzado la división de líneas para presentar 
 #: ../data/patterns/Latn.hearing-impaired.in.h:4
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr ""
-"Elimina letras de canciones de una línea que comienzan o se encuentran "
-"entre almohadillas (#)"
+"Elimina letras de canciones de una línea que comienzan o se encuentran entre "
+"almohadillas (#)"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:5
 msgid "Remove song lyrics starting with or between number signs"
@@ -990,11 +989,11 @@ msgstr ""
 #: ../data/patterns/Latn.hearing-impaired.in.h:6
 msgid "Replace the name of the speaker before a colon with a dialogue dash"
 msgstr ""
-"Reemplaza el nombre del hablante, seguido de dos puntos, por una raya de diálogo"
+"Reemplaza el nombre del hablante antes de dos puntos por una raya de diálogo"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:7
 msgid "Song lyrics between number signs"
-msgstr "Letras de canciones entre «#»"
+msgstr "Letras de canciones entre almohadillas"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:8
 msgid "Sound in brackets"
@@ -1010,7 +1009,7 @@ msgstr "Hablante antes de dos puntos"
 
 #: ../data/patterns/Latn.line-break.in.h:2
 msgid "Break according to dialogue separated by dashes"
-msgstr "Divide de acuerdo a rayas separando diálogos"
+msgstr "Divide en base a rayas separando un diálogo"
 
 #: ../data/patterns/Latn.line-break.in.h:4
 msgid "Dialogue"
@@ -1026,11 +1025,11 @@ msgstr "Múltiples espacios en blanco"
 
 #: ../data/patterns/Zyyy.common-error.in.h:3
 msgid "Remove space between digits of a number"
-msgstr "Elimina los espacios entre dígitos en números"
+msgstr "Elimina un espacio en blanco entre dígitos de un número"
 
 #: ../data/patterns/Zyyy.common-error.in.h:4
 msgid "Remove spaces from the beginning and end of lines"
-msgstr "Elimina espacios en blanco al inicio y fin de líneas"
+msgstr "Elimina espacios en blanco al inicio y fin de una línea"
 
 #: ../data/patterns/Zyyy.common-error.in.h:5
 msgid "Replace multiple consecutive spaces with only one"
@@ -2175,8 +2174,8 @@ msgid ""
 "The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
 "file may be erroneously composed."
 msgstr ""
-"Es necesario corregir el orden de %d subtítulos. Si considera que %d es "
-"un valor alto, es posible que el archivo fue creado de forma incorrecta."
+"Es necesario corregir el orden de %d subtítulos. Si considera que %d es una "
+"gran cantidad, es posible que el archivo fuese creado de forma incorrecta."
 
 #: ../gaupol/agents/open.py:344
 #, python-format
@@ -2216,7 +2215,7 @@ msgid ""
 "different character encoding."
 msgstr ""
 "No fue posible codificar los subtítulos a un directorio temporal para "
-"previsualización usando la codificación de caracteres actual. Primero guarde "
+"previsualización usando la codificación de caracteres actual. Guarde antes "
 "el archivo de subtítulos con una codificación de caracteres diferente."
 
 #: ../gaupol/agents/preview.py:61
