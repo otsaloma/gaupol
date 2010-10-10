@@ -80,7 +80,7 @@ Releasing a New Version for Windows
 
  1. Generate translations on a Unix machine (or wherever you have
     gettext and intltool available) [1.1]. Skip this step while all
-    translations (Glade XML files, Python code, desktop-style files)
+    translations (GtkBuilder files, Python code, desktop-style files)
     do not work consistently, at least due to lacking mystic piles of
     code presented as solutions for pygtk bug #574520.
 
