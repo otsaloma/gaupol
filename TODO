@@ -3,13 +3,17 @@ Gaupol 0.17.1
 
  [D] Fix search dialog replace button to change sensitivity without
      delay to avoid concurrent replacements (#626976)
+ [ ] Save text assistant dialog size
+ [ ] Hopefully fix spell-check not working on Windows (#623864)
+ [D] Build Windows installer without UI translations to avoid a partly
+     translated mess (especially due to pygtk bug #574520)
  [D] Update Hungarian translation (Andrássy László)
  [D] Update Spanish translation (Carlos Mella)
 
 Gaupol 1.0
 ==========
 
- * Add a built-in GStreamer-based video playerrr
+ * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
  * GNOME Goal: Port your PyGTK to the new introspection-based bindings
    http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting

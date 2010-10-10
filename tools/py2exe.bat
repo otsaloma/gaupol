@@ -8,7 +8,9 @@ set PYDIR=%SYSTEMDRIVE%\python26
 xcopy %GTKDIR%\etc dist\etc /s /i /y
 xcopy %GTKDIR%\lib\*.dll dist\lib /s /i /y
 xcopy %GTKDIR%\share\icons\hicolor\*.theme dist\share\icons\hicolor /i /y
-xcopy %GTKDIR%\share\locale dist\share\locale /s /i /y
+:: While Gaupol's translations are not in order,
+:: let's not use translations from GTK+ and friends either.
+:: xcopy %GTKDIR%\share\locale dist\share\locale /s /i /y
 xcopy %GTKDIR%\share\themes dist\share\themes /s /i /y
 xcopy %PYDIR%\Lib\site-packages\enchant\libenchant*.dll dist /i /y
 xcopy %PYDIR%\Lib\site-packages\enchant\lib dist\lib /s /i /y
