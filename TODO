@@ -3,7 +3,7 @@ Gaupol 0.17.1
 
  [D] Fix search dialog replace button to change sensitivity without
      delay to avoid concurrent replacements (#626976)
- [ ] Save text assistant dialog size
+ [D] Save text assistant dialog size
  [ ] Hopefully fix spell-check not working on Windows (#623864)
  [D] Build Windows installer without UI translations to avoid a partly
      translated mess (especially due to pygtk bug #574520)

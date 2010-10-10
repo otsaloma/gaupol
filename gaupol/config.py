@@ -169,8 +169,10 @@ config_defaults = {
         },
     "text_assistant": {
         "field": gaupol.fields.MAIN_TEXT,
+        "maximized": False,
         "pages": [],
         "remove_blank": True,
+        "size": [gaupol.util.char_to_px(98), gaupol.util.lines_to_px(34)],
         "target": gaupol.targets.CURRENT,
         },
     }

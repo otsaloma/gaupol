@@ -967,7 +967,9 @@ class TextAssistant(gtk.Assistant):
         self.application = application
         self._init_properties()
         self._init_signal_handlers()
-        gaupol.util.scale_to_size(self, 98, 34, gaupol.util.get_font())
+        self.resize(*gaupol.conf.text_assistant.size)
+        if gaupol.conf.text_assistant.maximized:
+            self.maximize()
         self.set_modal(True)
         self.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
         self.set_transient_for(parent)
@@ -1032,6 +1034,7 @@ class TextAssistant(gtk.Assistant):
         aeidon.util.connect(self, self, "cancel")
         aeidon.util.connect(self, self, "close")
         aeidon.util.connect(self, self, "prepare")
+        aeidon.util.connect(self, self, "window-state-event")
 
     def _on_apply(self, *args):
         """Apply accepted changes to projects."""
@@ -1064,10 +1067,12 @@ class TextAssistant(gtk.Assistant):
 
     def _on_cancel(self, *args):
         """Destroy assistant."""
+        self._save_window_geometry()
         self.destroy()
 
     def _on_close(self, *args):
         """Destroy assistant."""
+        self._save_window_geometry()
         self.destroy()
 
     def _on_prepare(self, assistant, page):
@@ -1080,6 +1085,12 @@ class TextAssistant(gtk.Assistant):
         if page is self._progress_page:
             if previous_page is not self._confirmation_page:
                 return self._prepare_progress_page(pages)
+
+    def _on_window_state_event(self, window, event):
+        """Save window maximization."""
+        state = event.new_window_state
+        maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+        gaupol.conf.text_assistant.maximized = maximized
 
     def _prepare_confirmation_page(self, doc, changes):
         """Present `changes` and activate confirmation page."""
@@ -1108,6 +1119,11 @@ class TextAssistant(gtk.Assistant):
         self._progress_page.reset(0, True)
         self.set_page_complete(self._progress_page, False)
         gaupol.util.delay_add(10, self._correct_texts, pages)
+
+    def _save_window_geometry(self):
+        """Save the geometry of the assistant window."""
+        if not gaupol.conf.text_assistant.maximized:
+            gaupol.conf.text_assistant.size = list(self.get_size())
 
     def add_page(self, page):
         """Add `page` and configure its properties."""
