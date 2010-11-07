@@ -1,3 +1,17 @@
+Gaupol 0.17.1
+=============
+
+ * Fix search dialog replace button to change sensitivity without
+   delay to avoid concurrent replacements (#626976)
+ * Save text assistant window size
+ * Show line lengths in text assistant confirmation page
+ * Hopefully fix spell-check not working on Windows (#623864)
+ * Build Windows installer without UI translations to avoid a partly
+   translated mess (especially due to pygtk bug #574520)
+ * Add Hebrew translation (Yaron Shahrabani)
+ * Update Hungarian translation (Andrássy László)
+ * Update Spanish translation (Carlos Mella)
+
 Gaupol 0.17
 ===========
 

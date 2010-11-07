@@ -2,19 +2,19 @@
 # Copyright (C) 2010 Osmo Salomaa
 # This file is distributed under the same license as the gaupol package.
 # Osmo Salomaa <otsaloma@cc.hut.fi>, 2010.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-05 20:00+0300\n"
+"POT-Creation-Date: 2010-11-07 17:15+0200\n"
 "PO-Revision-Date: 2010-07-05 03:58+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
 "Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:1
@@ -35,8 +35,12 @@ msgid "An unhandled exception occured"
 msgstr "Tapahtui käsittelemätön poikkeus"
 
 #: ../data/ui/debug-dialog.ui.h:2
-msgid "You have probably discovered a bug. Please report it by providing the above information and a description of what you were doing."
-msgstr "Olet luultavasti löytänyt ohjelmointivirheen. Voit ilmoittaa virheen antamalla yllä olevat tiedot ja kuvauksen siitä mitä olit tekemässä."
+msgid ""
+"You have probably discovered a bug. Please report it by providing the above "
+"information and a description of what you were doing."
+msgstr ""
+"Olet luultavasti löytänyt ohjelmointivirheen. Voit ilmoittaa virheen "
+"antamalla yllä olevat tiedot ja kuvauksen siitä mitä olit tekemässä."
 
 #: ../data/ui/duration-dialog.ui.h:1
 msgid "Adj_ust selected subtitles"
@@ -459,7 +463,7 @@ msgid "_Ignore case"
 msgstr "_Jätä kirjainkoko huomiotta"
 
 #: ../data/ui/search-dialog.ui.h:16 ../data/ui/spellcheck-dialog.ui.h:11
-#: ../gaupol/dialogs/multisave.py:132
+#: ../gaupol/dialogs/multisave.py:131
 msgid "_Replace"
 msgstr "_Korvaa"
 
@@ -796,8 +800,11 @@ msgid "Zero in an upper case word"
 msgstr "Nolla isolla kirjoitetussa sanassa"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
-msgid "Replace the uppercase name of the speaker before a colon with a dialogue dash"
-msgstr "Korvaa kokonaan isolla kirjoitettu puhujan nimi ennen kaksoispistettä vuoropuheluviivalla"
+msgid ""
+"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+msgstr ""
+"Korvaa kokonaan isolla kirjoitettu puhujan nimi ennen kaksoispistettä "
+"vuoropuheluviivalla"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid "Uppercase speaker before a colon"
@@ -842,8 +849,11 @@ msgid "Add space after various punctuation marks"
 msgstr "Lisää väli useiden välimerkkien jälkeen"
 
 #: ../data/patterns/Latn.common-error.in.h:6
-msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr "Muuta useiden eri 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m.\""
+msgid ""
+"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgstr ""
+"Muuta useiden eri 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m."
+"\""
 
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
@@ -867,7 +877,9 @@ msgstr "Poista piste useiden välimerkkien edeltä tai jäljestä"
 
 #: ../data/patterns/Latn.common-error.in.h:12
 msgid "Remove space after a starting- and before an ending quotation mark"
-msgstr "Poista väli aloittavan lainausmerkin jälkeen ja ennen päättävää lainausmerkkiä"
+msgstr ""
+"Poista väli aloittavan lainausmerkin jälkeen ja ennen päättävää "
+"lainausmerkkiä"
 
 #: ../data/patterns/Latn.common-error.in.h:13
 msgid "Remove space after an ellipsis that starts a line"
@@ -890,7 +902,8 @@ msgid "Replace letter \"O\" with a zero in a number"
 msgstr "Korvaa kirjain \"O\" nollalla luvussa"
 
 #: ../data/patterns/Latn.common-error.in.h:18
-msgid "Replace multiple consequtive question- and exclamation marks with only one"
+msgid ""
+"Replace multiple consequtive question- and exclamation marks with only one"
 msgstr "Korvaa useat peräkkäiset kysymys- ja heittomerkit yhdellä"
 
 #: ../data/patterns/Latn.common-error.in.h:19
@@ -947,7 +960,8 @@ msgstr "Poista hakasulkeissa oleva äänen kuvaus"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:4
 msgid "Remove one-line song lyrics starting with or between number signs"
-msgstr "Poista yksiriviset laulun sanat alkaen numeromerkeillä tai niiden välissä"
+msgstr ""
+"Poista yksiriviset laulun sanat alkaen numeromerkeillä tai niiden välissä"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:5
 msgid "Remove song lyrics starting with or between number signs"
@@ -2068,7 +2082,8 @@ msgstr "Tiedosto \"%s\" on jo auki"
 #: ../gaupol/agents/open.py:273
 #, python-format
 msgid "Failed to decode file \"%s\" with all attempted codecs"
-msgstr "Tiedoston \"%s\" purkaminen epäonnistui kaikilla kokeilluilla koodekeilla"
+msgstr ""
+"Tiedoston \"%s\" purkaminen epäonnistui kaikilla kokeilluilla koodekeilla"
 
 #: ../gaupol/agents/open.py:275
 msgid "Please try to open the file with a different character encoding."
@@ -2080,8 +2095,12 @@ msgid "Failed to recognize format of file \"%s\""
 msgstr "Tiedoston \"%s\" muodon tunnistus epäonnistui"
 
 #: ../gaupol/agents/open.py:284
-msgid "Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol."
-msgstr "Tarkista että tiedosto, jota yrität avata on tekstitystiedosto, jonka muotoa Gaupol tukee."
+msgid ""
+"Please check that the file you are trying to open is a subtitle file of a "
+"format supported by Gaupol."
+msgstr ""
+"Tarkista että tiedosto, jota yrität avata on tekstitystiedosto, jonka muotoa "
+"Gaupol tukee."
 
 #: ../gaupol/agents/open.py:292
 #, python-format
@@ -2095,8 +2114,13 @@ msgstr "Tiedoston \"%s\" tulkinta epäonnistui"
 
 #: ../gaupol/agents/open.py:300
 #, python-format
-msgid "Please check, e.g. with a text editor, that the file you are trying open is a valid %s file. If you think it is, file a bug report and attach the file."
-msgstr "Tarkista, esimerkiksi tekstieditorilla, että tiedosto, jota yrität avata on kelvollinen %s tiedosto. Jos luulet että se on, lähetä vikailmoitus ja liitä tiedosto."
+msgid ""
+"Please check, e.g. with a text editor, that the file you are trying open is "
+"a valid %s file. If you think it is, file a bug report and attach the file."
+msgstr ""
+"Tarkista, esimerkiksi tekstieditorilla, että tiedosto, jota yrität avata on "
+"kelvollinen %s tiedosto. Jos luulet että se on, lähetä vikailmoitus ja liitä "
+"tiedosto."
 
 #: ../gaupol/agents/open.py:312
 #, python-format
@@ -2105,8 +2129,13 @@ msgstr "Avaa epätavallisen suuri tiedosto \"%s\"?"
 
 #: ../gaupol/agents/open.py:313
 #, python-format
-msgid "Size of the file is %.1f MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file."
-msgstr "Tiedoston koko on %.1f Mt, mikä on epätavallisen suuri koko tekstimuotoiselle tekstitystiedostolle. Tarkista ettet yritä avata binääritiedostoa."
+msgid ""
+"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"subtitle file. Please, check that you are not trying to open a binary file."
+msgstr ""
+"Tiedoston koko on %.1f Mt, mikä on epätavallisen suuri koko "
+"tekstimuotoiselle tekstitystiedostolle. Tarkista ettet yritä avata "
+"binääritiedostoa."
 
 #: ../gaupol/agents/open.py:328
 #, python-format
@@ -2115,8 +2144,12 @@ msgstr "Avaa lajittelematon tiedosto \"%s\"?"
 
 #: ../gaupol/agents/open.py:329
 #, python-format
-msgid "The order of %d subtitles needs to be changed. If %d sounds like a lot, the file may be erroneously composed."
-msgstr "%d kappaleen järjestys täytyy muuttaa. Jos %d kuulostaa paljolta, tiedosto voi olla virheellisesti muodostettu."
+msgid ""
+"The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
+"file may be erroneously composed."
+msgstr ""
+"%d kappaleen järjestys täytyy muuttaa. Jos %d kuulostaa paljolta, tiedosto "
+"voi olla virheellisesti muodostettu."
 
 #: ../gaupol/agents/open.py:344
 #, python-format
@@ -2145,16 +2178,24 @@ msgstr "Avattiin käännöstiedosto \"%s\""
 #: ../gaupol/agents/preview.py:50
 #, python-format
 msgid "Failed to encode subtitle file to temporary directory \"%s\""
-msgstr "Tekstitystiedoston koodaaminen väliaikaishakemistoon \"%s\" epäonnistui"
+msgstr ""
+"Tekstitystiedoston koodaaminen väliaikaishakemistoon \"%s\" epäonnistui"
 
 #: ../gaupol/agents/preview.py:52
-msgid "Subtitle data could not be encoded to a temporary file for preview with the current character encoding. Please first save the subtitle file with a different character encoding."
-msgstr "Tekstitysdataa ei voitu koodata väliaikaistiedostoon esikatselua varten nykyisellä merkistökoodauksella. Tallenna tekstitystiedosto ensin eri merkistökoodauksella."
+msgid ""
+"Subtitle data could not be encoded to a temporary file for preview with the "
+"current character encoding. Please first save the subtitle file with a "
+"different character encoding."
+msgstr ""
+"Tekstitysdataa ei voitu koodata väliaikaistiedostoon esikatselua varten "
+"nykyisellä merkistökoodauksella. Tallenna tekstitystiedosto ensin eri "
+"merkistökoodauksella."
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
 msgid "Failed to save subtitle file to temporary directory \"%s\""
-msgstr "Tekstitystiedoston tallentaminen väliaikaishakemistoon \"%s\" epäonnistui"
+msgstr ""
+"Tekstitystiedoston tallentaminen väliaikaishakemistoon \"%s\" epäonnistui"
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
@@ -2167,7 +2208,8 @@ msgstr "Tallennettiin kaikki avoimet asiakirjat"
 #: ../gaupol/agents/save.py:129
 #, python-format
 msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
-msgstr "Tiedoston \"%(basename)s\" koodaaminen koodekilla \"%(codec)s\" epäonnistui"
+msgstr ""
+"Tiedoston \"%(basename)s\" koodaaminen koodekilla \"%(codec)s\" epäonnistui"
 
 #: ../gaupol/agents/save.py:131
 msgid "Please try to save the file with a different character encoding."
@@ -2234,7 +2276,8 @@ msgstr "Muunna kirjainkoko"
 
 #: ../gaupol/assistants.py:461
 msgid "Correct common errors made by humans or image recognition software"
-msgstr "Korjaa joko ihmisten tai kuvantunnistusohjelmien tekemiä yleisiä virheitä"
+msgstr ""
+"Korjaa joko ihmisten tai kuvantunnistusohjelmien tekemiä yleisiä virheitä"
 
 #: ../gaupol/assistants.py:465
 msgid "Select Common Error Patterns"
@@ -2257,8 +2300,12 @@ msgid "Remove hearing impaired texts"
 msgstr "Poista kuulovammaistekstit"
 
 #: ../gaupol/assistants.py:552
-msgid "Use spell-check suggestions to fix whitespace detection errors of image recognition software"
-msgstr "Käytä oikoluvun ehdotuksia kuvantunnistusohjelmien tekemien välientunnistusvirheiden korjaamiseen"
+msgid ""
+"Use spell-check suggestions to fix whitespace detection errors of image "
+"recognition software"
+msgstr ""
+"Käytä oikoluvun ehdotuksia kuvantunnistusohjelmien tekemien "
+"välientunnistusvirheiden korjaamiseen"
 
 #: ../gaupol/assistants.py:556
 msgid "Set Options for Joining and Splitting Words"
@@ -2328,20 +2375,20 @@ msgstr "Alkuperäinen teksti"
 msgid "Corrected Text"
 msgstr "Korjattu teksti"
 
-#: ../gaupol/assistants.py:1017
+#: ../gaupol/assistants.py:1019
 msgid "Correct Texts"
 msgstr "Korjaa tekstejä"
 
-#: ../gaupol/assistants.py:1045
+#: ../gaupol/assistants.py:1048
 msgid "Correcting texts"
 msgstr "tekstien korjaaminen"
 
-#: ../gaupol/assistants.py:1061
+#: ../gaupol/assistants.py:1064
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr "Muokattiin %(edits)d ja poistettiin %(removals)d kappaletta"
 
-#: ../gaupol/assistants.py:1087
+#: ../gaupol/assistants.py:1098
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
@@ -2419,8 +2466,12 @@ msgid "Invalid header"
 msgstr "Virheellinen otsake"
 
 #: ../gaupol/dialogs/header.py:192
-msgid "MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
-msgstr "MPsub-otsakkeen täytyy sisältää rivi muotoa \"FORMAT=ARVO\", missä ARVO on joko \"TIME\", \"23.98\", \"25.00\" tai \"29.97\"."
+msgid ""
+"MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is "
+"any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
+msgstr ""
+"MPsub-otsakkeen täytyy sisältää rivi muotoa \"FORMAT=ARVO\", missä ARVO on "
+"joko \"TIME\", \"23.98\", \"25.00\" tai \"29.97\"."
 
 #: ../gaupol/dialogs/insert.py:46
 msgid "Above selection"
@@ -2434,15 +2485,19 @@ msgstr "Valinnan alapuolelle"
 msgid "Set Language"
 msgstr "Aseta kieli"
 
-#: ../gaupol/dialogs/multisave.py:124
+#: ../gaupol/dialogs/multisave.py:123
 #, python-format
 msgid "%d of the files to be saved already exist. Do you want to replace them?"
 msgstr "Tiedostoista %d on jo olemassa. Haluatko korvata ne?"
 
-#: ../gaupol/dialogs/multisave.py:127
+#: ../gaupol/dialogs/multisave.py:126
 #, python-format
-msgid "The files already exist in \"%s\". Replacing them will overwrite their contents."
-msgstr "Tiedostot ovat jo olemassa kansiossa \"%s\". Tiedostojen korvaus ylikirjoittaa niiden sisällön."
+msgid ""
+"The files already exist in \"%s\". Replacing them will overwrite their "
+"contents."
+msgstr ""
+"Tiedostot ovat jo olemassa kansiossa \"%s\". Tiedostojen korvaus "
+"ylikirjoittaa niiden sisällön."
 
 #: ../gaupol/dialogs/preferences.py:205
 #, python-format
@@ -2462,20 +2517,20 @@ msgstr "Muut laajennukset vaativat toimiakseen laajennuksen \"%s\"."
 msgid "Custom"
 msgstr "Oma"
 
-#: ../gaupol/dialogs/search.py:354
+#: ../gaupol/dialogs/search.py:355
 #, python-format
 msgid "\"%s\" not found"
 msgstr "Lauseketta \"%s\" ei löytynyt"
 
-#: ../gaupol/dialogs/search.py:411
+#: ../gaupol/dialogs/search.py:412
 msgid "Error in regular expression pattern"
 msgstr "Virhe säännöllisessä lausekkeessa"
 
-#: ../gaupol/dialogs/search.py:418
+#: ../gaupol/dialogs/search.py:419
 msgid "Error in regular expression replacement"
 msgstr "Virhe säännöllisen lausekkeen korvaajassa"
 
-#: ../gaupol/dialogs/search.py:539
+#: ../gaupol/dialogs/search.py:540
 #, python-format
 msgid "Found and replaced %d occurence"
 msgid_plural "Found and replaced %d occurences"
@@ -2611,7 +2666,9 @@ msgstr "MENETELMÄ"
 
 #: ../gaupol/main.py:155
 msgid "method used to align translation subtitles: 'number' or 'position'"
-msgstr "käännöksen kappaleiden tasaamiseen käytettävä menetelmä: 'number' (numero)tai 'position' (sijainti)"
+msgstr ""
+"käännöksen kappaleiden tasaamiseen käytettävä menetelmä: 'number' (numero)"
+"tai 'position' (sijainti)"
 
 #: ../gaupol/main.py:165
 msgid "select video file"

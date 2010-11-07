@@ -89,7 +89,7 @@ accessing the subtitles directly (via :attr:`aeidon.Project.subtitles`).
 import os
 import re
 
-__version__ = "0.17"
+__version__ = "0.17.1"
 
 debug = (bool(os.environ.get("AEIDON_DEBUG", "")) or
          bool(os.environ.get("GAUPOL_DEBUG", "")))

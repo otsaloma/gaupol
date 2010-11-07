@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-05 20:00+0300\n"
+"POT-Creation-Date: 2010-11-07 17:15+0200\n"
 "PO-Revision-Date: 2010-08-22 13:00+0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -40,8 +40,8 @@ msgid ""
 "You have probably discovered a bug. Please report it by providing the above "
 "information and a description of what you were doing."
 msgstr ""
-"Probablemente descubrió un error. Envíe un informe describiendo la tarea "
-"que se encontraba realizando, y adjunte la información aquí presentada."
+"Probablemente descubrió un error. Envíe un informe describiendo la tarea que "
+"se encontraba realizando, y adjunte la información aquí presentada."
 
 #: ../data/ui/duration-dialog.ui.h:1
 msgid "Adj_ust selected subtitles"
@@ -318,8 +318,8 @@ msgstr "Editor"
 #: ../data/ui/preferences-dialog.ui.h:9
 msgid "Encoding specified in the open dialog will always be tried first."
 msgstr ""
-"La codificación especificada en el diálogo Abrir será "
-"siempre la primera en usarse."
+"La codificación especificada en el diálogo Abrir será siempre la primera en "
+"usarse."
 
 #: ../data/ui/preferences-dialog.ui.h:10
 msgid "Extensions"
@@ -466,7 +466,7 @@ msgid "_Ignore case"
 msgstr "Ignorar _capitalización"
 
 #: ../data/ui/search-dialog.ui.h:16 ../data/ui/spellcheck-dialog.ui.h:11
-#: ../gaupol/dialogs/multisave.py:132
+#: ../gaupol/dialogs/multisave.py:131
 msgid "_Replace"
 msgstr "_Reemplazar"
 
@@ -801,8 +801,7 @@ msgstr ""
 
 #: ../data/patterns/Latn-en.common-error.in.h:8
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr ""
-"Reemplaza un cero dentro de una palabra en mayúsculas por la letra «O»"
+msgstr "Reemplaza un cero dentro de una palabra en mayúsculas por la letra «O»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Spaces around an apostrophe"
@@ -920,7 +919,8 @@ msgstr "Reemplaza la letra «O» encontrada en un número por un cero"
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr ""
-"Reduce múltiples signos de interrogación o exclamación consecutivos a uno sólo"
+"Reduce múltiples signos de interrogación o exclamación consecutivos a uno "
+"sólo"
 
 #: ../data/patterns/Latn.common-error.in.h:19
 msgid "Space after a dialogue dash"
@@ -984,7 +984,8 @@ msgstr ""
 #: ../data/patterns/Latn.hearing-impaired.in.h:5
 msgid "Remove song lyrics starting with or between number signs"
 msgstr ""
-"Elimina letras de canciones que comienzan o se encuentran entre almohadillas (#)"
+"Elimina letras de canciones que comienzan o se encuentran entre almohadillas "
+"(#)"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:6
 msgid "Replace the name of the speaker before a colon with a dialogue dash"
@@ -1839,8 +1840,7 @@ msgstr ""
 
 #: ../gaupol/actions/position.py:67
 msgid "Preview from selected position with a video player"
-msgstr ""
-"Previsualiza en un reproductor de vídeo desde la posición seleccionada"
+msgstr "Previsualiza en un reproductor de vídeo desde la posición seleccionada"
 
 #: ../gaupol/actions/position.py:93
 msgid "_Shift Positions…"
@@ -1940,8 +1940,7 @@ msgstr "2_4 fps"
 
 #: ../gaupol/actions/view.py:120
 msgid "Calculate nonnative units with a framerate of 24 fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de 24 fps"
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 24 fps"
 
 #: ../gaupol/actions/view.py:143
 msgid "2_5 fps"
@@ -1949,8 +1948,7 @@ msgstr "2_5 fps"
 
 #: ../gaupol/actions/view.py:144
 msgid "Calculate nonnative units with a framerate of 25 fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de 25 fps"
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 25 fps"
 
 #: ../gaupol/actions/view.py:167
 msgid "_30 fps"
@@ -1958,8 +1956,7 @@ msgstr "_30 fps"
 
 #: ../gaupol/actions/view.py:168
 msgid "Calculate nonnative units with a framerate of 30 fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de 30 fps"
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 30 fps"
 
 #: ../gaupol/actions/view.py:189
 msgid "F_ramerate"
@@ -2078,7 +2075,8 @@ msgid_plural "Inserted %d subtitles to fit clipboard contents"
 msgstr[0] ""
 "%d subtítulo nuevo insertado para coincidir con el contenido del portapapeles"
 msgstr[1] ""
-"%d subtítulos nuevos insertados para coincidir con el contenido del portapapeles"
+"%d subtítulos nuevos insertados para coincidir con el contenido del "
+"portapapeles"
 
 #: ../gaupol/agents/edit.py:280
 msgid "Use Shift+Return for line-break"
@@ -2127,8 +2125,8 @@ msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
-"Asegúrese que el archivo que intenta abrir es un archivo de subtítulos de "
-"un formato soportado por Gaupol."
+"Asegúrese que el archivo que intenta abrir es un archivo de subtítulos de un "
+"formato soportado por Gaupol."
 
 #: ../gaupol/agents/open.py:292
 #, python-format
@@ -2146,8 +2144,8 @@ msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
 "a valid %s file. If you think it is, file a bug report and attach the file."
 msgstr ""
-"Verifique que el archivo que intenta abrir es un archivo %s válido. "
-"Si es así, envíe un informe de error adjuntando dicho archivo."
+"Verifique que el archivo que intenta abrir es un archivo %s válido. Si es "
+"así, envíe un informe de error adjuntando dicho archivo."
 
 #: ../gaupol/agents/open.py:312
 #, python-format
@@ -2206,7 +2204,8 @@ msgstr "Archivo de traducción «%s» abierto"
 #, python-format
 msgid "Failed to encode subtitle file to temporary directory \"%s\""
 msgstr ""
-"No fue posible codificar el archivo de subtítulos en el directorio temporal «%s»"
+"No fue posible codificar el archivo de subtítulos en el directorio temporal "
+"«%s»"
 
 #: ../gaupol/agents/preview.py:52
 msgid ""
@@ -2222,7 +2221,8 @@ msgstr ""
 #, python-format
 msgid "Failed to save subtitle file to temporary directory \"%s\""
 msgstr ""
-"No fue posible guardar el archivo de subtítulos en el directorio temporal «%s»"
+"No fue posible guardar el archivo de subtítulos en el directorio temporal "
+"«%s»"
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
@@ -2235,8 +2235,7 @@ msgstr "Guardar todos los documentos abiertos"
 #: ../gaupol/agents/save.py:129
 #, python-format
 msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
-msgstr ""
-"No fue posible codificar el archivo «%(basename)s» usando «%(codec)s»"
+msgstr "No fue posible codificar el archivo «%(basename)s» usando «%(codec)s»"
 
 #: ../gaupol/agents/save.py:131
 msgid "Please try to save the file with a different character encoding."
@@ -2404,20 +2403,20 @@ msgstr "Texto original"
 msgid "Corrected Text"
 msgstr "Texto corregido"
 
-#: ../gaupol/assistants.py:1017
+#: ../gaupol/assistants.py:1019
 msgid "Correct Texts"
 msgstr "Corregir Texto"
 
-#: ../gaupol/assistants.py:1045
+#: ../gaupol/assistants.py:1048
 msgid "Correcting texts"
 msgstr "Corregir texto"
 
-#: ../gaupol/assistants.py:1061
+#: ../gaupol/assistants.py:1064
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr "%(edits)d subtítulos editados, %(removals)d eliminados"
 
-#: ../gaupol/assistants.py:1087
+#: ../gaupol/assistants.py:1098
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
@@ -2444,7 +2443,9 @@ msgstr "Sitio web de Gaupol"
 #. lines seperated by newlines (\n).
 #: ../gaupol/dialogs/about.py:67
 msgid "translator-credits"
-msgstr "Miguel Latorre <kuan@graffiti.net>\nCarlos Mella <cmellib@gmail.com>"
+msgstr ""
+"Miguel Latorre <kuan@graffiti.net>\n"
+"Carlos Mella <cmellib@gmail.com>"
 
 #: ../gaupol/dialogs/append.py:33
 msgid "Append File"
@@ -2514,19 +2515,19 @@ msgstr "Bajo la selección"
 msgid "Set Language"
 msgstr "Definir idioma"
 
-#: ../gaupol/dialogs/multisave.py:124
+#: ../gaupol/dialogs/multisave.py:123
 #, python-format
 msgid "%d of the files to be saved already exist. Do you want to replace them?"
-msgstr ""
-"%d de los archivos por guardarse ya existen. ¿Desea reemplazarlos?"
+msgstr "%d de los archivos por guardarse ya existen. ¿Desea reemplazarlos?"
 
-#: ../gaupol/dialogs/multisave.py:127
+#: ../gaupol/dialogs/multisave.py:126
 #, python-format
 msgid ""
 "The files already exist in \"%s\". Replacing them will overwrite their "
 "contents."
 msgstr ""
-"Los archivos ya existen en «%s». Al reemplazarlos sobreescribirá su contenido."
+"Los archivos ya existen en «%s». Al reemplazarlos sobreescribirá su "
+"contenido."
 
 #: ../gaupol/dialogs/preferences.py:205
 #, python-format
@@ -2546,20 +2547,20 @@ msgstr "El complemento «%s» es utilizado por otros complementos."
 msgid "Custom"
 msgstr "Personalizado"
 
-#: ../gaupol/dialogs/search.py:354
+#: ../gaupol/dialogs/search.py:355
 #, python-format
 msgid "\"%s\" not found"
 msgstr "No se encontró «%s»"
 
-#: ../gaupol/dialogs/search.py:411
+#: ../gaupol/dialogs/search.py:412
 msgid "Error in regular expression pattern"
 msgstr "Error con la expresión regular de búsqueda"
 
-#: ../gaupol/dialogs/search.py:418
+#: ../gaupol/dialogs/search.py:419
 msgid "Error in regular expression replacement"
 msgstr "Error con la expresión regular de reemplazo"
 
-#: ../gaupol/dialogs/search.py:539
+#: ../gaupol/dialogs/search.py:540
 #, python-format
 msgid "Found and replaced %d occurence"
 msgid_plural "Found and replaced %d occurences"
@@ -2698,7 +2699,8 @@ msgstr "MÉTODO"
 #: ../gaupol/main.py:155
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
-"método usado para ajustar subtítulos de traducción: según 'número' o 'posición'"
+"método usado para ajustar subtítulos de traducción: según 'número' o "
+"'posición'"
 
 #: ../gaupol/main.py:165
 msgid "select video file"

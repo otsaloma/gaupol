@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-05 03:51+0300\n"
+"POT-Creation-Date: 2010-11-07 17:15+0200\n"
 "PO-Revision-Date: 2009-09-23 22:11+GMT\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -465,7 +465,7 @@ msgid "_Ignore case"
 msgstr "Groß-/Kleinschreibung _ignorieren"
 
 #: ../data/ui/search-dialog.ui.h:16 ../data/ui/spellcheck-dialog.ui.h:11
-#: ../gaupol/dialogs/multisave.py:132
+#: ../gaupol/dialogs/multisave.py:131
 msgid "_Replace"
 msgstr "Erset_zen"
 
@@ -2396,20 +2396,20 @@ msgstr "Originaltext"
 msgid "Corrected Text"
 msgstr "Korrigierter Text"
 
-#: ../gaupol/assistants.py:1017
+#: ../gaupol/assistants.py:1019
 msgid "Correct Texts"
 msgstr "Texte korrigieren"
 
-#: ../gaupol/assistants.py:1045
+#: ../gaupol/assistants.py:1048
 msgid "Correcting texts"
 msgstr "Texte werden korrigiert"
 
-#: ../gaupol/assistants.py:1061
+#: ../gaupol/assistants.py:1064
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr "%(edits)d Untertitel bearbeitet und %(removals)d entfernt"
 
-#: ../gaupol/assistants.py:1087
+#: ../gaupol/assistants.py:1098
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
@@ -2506,12 +2506,12 @@ msgstr ""
 msgid "Set Language"
 msgstr "Sprache setzen"
 
-#: ../gaupol/dialogs/multisave.py:124
+#: ../gaupol/dialogs/multisave.py:123
 #, python-format
 msgid "%d of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
 
-#: ../gaupol/dialogs/multisave.py:127
+#: ../gaupol/dialogs/multisave.py:126
 #, python-format
 msgid ""
 "The files already exist in \"%s\". Replacing them will overwrite their "
@@ -2536,20 +2536,20 @@ msgstr "Erweiterung »%s« wird von anderen Erweiterungen benötigt."
 msgid "Custom"
 msgstr "Angepasst"
 
-#: ../gaupol/dialogs/search.py:354
+#: ../gaupol/dialogs/search.py:355
 #, python-format
 msgid "\"%s\" not found"
 msgstr "»%s« nicht gefunden"
 
-#: ../gaupol/dialogs/search.py:411
+#: ../gaupol/dialogs/search.py:412
 msgid "Error in regular expression pattern"
 msgstr "Fehler im regulären Ausdrucksmuster"
 
-#: ../gaupol/dialogs/search.py:418
+#: ../gaupol/dialogs/search.py:419
 msgid "Error in regular expression replacement"
 msgstr "Fehler in Ersetzung von regulärem Ausdruck"
 
-#: ../gaupol/dialogs/search.py:539
+#: ../gaupol/dialogs/search.py:540
 #, python-format
 msgid "Found and replaced %d occurence"
 msgid_plural "Found and replaced %d occurences"
