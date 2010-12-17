@@ -107,23 +107,23 @@ class ShowColumnsMenuAction(gaupol.MenuAction):
         aeidon.util.affirm(page is not None)
 
 
-class ShowFramerate24Action(gaupol.RadioAction):
+class ShowFramerate23976Action(gaupol.RadioAction):
 
-    """Calculate nonnative units with a framerate of 24 fps."""
+    """Calculate nonnative units with a framerate of 23.976 fps."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramerate24Action` object."""
-        gaupol.RadioAction.__init__(self, "show_framerate_24")
+        """Initialize a :class:`ShowFramerate23976Action` object."""
+        gaupol.RadioAction.__init__(self, "show_framerate_23_976")
         framerate = gaupol.conf.editor.framerate
-        self.props.active = (framerate == aeidon.framerates.FPS_24)
-        self.props.label = _("2_4 fps")
+        self.props.active = (framerate == aeidon.framerates.FPS_23_976)
+        self.props.label = _("2_3.976 fps")
         self.props.tooltip = _("Calculate nonnative units "
-                               "with a framerate of 24 fps")
+                               "with a framerate of 23.976 fps")
 
-        self.props.value = aeidon.framerates.FPS_24
+        self.props.value = aeidon.framerates.FPS_23_976
         self.action_group = "main-unsafe"
-        self.framerate = aeidon.framerates.FPS_24
-        self.group = "ShowFramerate24Action"
+        self.framerate = aeidon.framerates.FPS_23_976
+        self.group = "ShowFramerate23976Action"
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -131,23 +131,23 @@ class ShowFramerate24Action(gaupol.RadioAction):
         aeidon.util.affirm(page.project.main_file is not None)
 
 
-class ShowFramerate25Action(gaupol.RadioAction):
+class ShowFramerate24000Action(gaupol.RadioAction):
 
-    """Calculate nonnative units with a framerate of 25 fps."""
+    """Calculate nonnative units with a framerate of 24.000 fps."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramerate25Action` object."""
-        gaupol.RadioAction.__init__(self, "show_framerate_25")
+        """Initialize a :class:`ShowFramerate24000Action` object."""
+        gaupol.RadioAction.__init__(self, "show_framerate_24_000")
         framerate = gaupol.conf.editor.framerate
-        self.props.active = (framerate == aeidon.framerates.FPS_25)
-        self.props.label = _("2_5 fps")
+        self.props.active = (framerate == aeidon.framerates.FPS_24_000)
+        self.props.label = _("2_4.000 fps")
         self.props.tooltip = _("Calculate nonnative units "
-                               "with a framerate of 25 fps")
+                               "with a framerate of 24.000 fps")
 
-        self.props.value = aeidon.framerates.FPS_25
+        self.props.value = aeidon.framerates.FPS_24_000
         self.action_group = "main-unsafe"
-        self.framerate = aeidon.framerates.FPS_25
-        self.group = "ShowFramerate24Action"
+        self.framerate = aeidon.framerates.FPS_24_000
+        self.group = "ShowFramerate23976Action"
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -155,23 +155,47 @@ class ShowFramerate25Action(gaupol.RadioAction):
         aeidon.util.affirm(page.project.main_file is not None)
 
 
-class ShowFramerate30Action(gaupol.RadioAction):
+class ShowFramerate25000Action(gaupol.RadioAction):
 
-    """Calculate nonnative units with a framerate of 30 fps."""
+    """Calculate nonnative units with a framerate of 25.000 fps."""
+
+    def __init__(self):
+        """Initialize a :class:`ShowFramerate25000Action` object."""
+        gaupol.RadioAction.__init__(self, "show_framerate_25_000")
+        framerate = gaupol.conf.editor.framerate
+        self.props.active = (framerate == aeidon.framerates.FPS_25_000)
+        self.props.label = _("2_5.000 fps")
+        self.props.tooltip = _("Calculate nonnative units "
+                               "with a framerate of 25.000 fps")
+
+        self.props.value = aeidon.framerates.FPS_25_000
+        self.action_group = "main-unsafe"
+        self.framerate = aeidon.framerates.FPS_25_000
+        self.group = "ShowFramerate23976Action"
+
+    def _affirm_doable(self, application, page):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.main_file is not None)
+
+
+class ShowFramerate29970Action(gaupol.RadioAction):
+
+    """Calculate nonnative units with a framerate of 29.970 fps."""
 
     def __init__(self):
         """Initialize a :class:`ShowFramerate30Action` object."""
-        gaupol.RadioAction.__init__(self, "show_framerate_30")
+        gaupol.RadioAction.__init__(self, "show_framerate_29_970")
         framerate = gaupol.conf.editor.framerate
-        self.props.active = (framerate == aeidon.framerates.FPS_30)
-        self.props.label = _("_30 fps")
+        self.props.active = (framerate == aeidon.framerates.FPS_29_970)
+        self.props.label = _("2_9.970 fps")
         self.props.tooltip = _("Calculate nonnative units "
-                               "with a framerate of 30 fps")
+                               "with a framerate of 29.970 fps")
 
-        self.props.value = aeidon.framerates.FPS_30
+        self.props.value = aeidon.framerates.FPS_29_970
         self.action_group = "main-unsafe"
-        self.framerate = aeidon.framerates.FPS_30
-        self.group = "ShowFramerate24Action"
+        self.framerate = aeidon.framerates.FPS_29_970
+        self.group = "ShowFramerate23976Action"
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""

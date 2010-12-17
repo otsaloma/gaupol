@@ -109,12 +109,12 @@ class TestPositionAgent(aeidon.TestCase):
         self.project.subtitles[0].start = 100
         self.project.subtitles[1].start = 200
         self.project.convert_framerate(self.project.get_all_indices(),
-                                       aeidon.framerates.FPS_24,
-                                       aeidon.framerates.FPS_25)
+                                       aeidon.framerates.FPS_23_976,
+                                       aeidon.framerates.FPS_25_000)
 
-        assert self.project.framerate == aeidon.framerates.FPS_25
+        assert self.project.framerate == aeidon.framerates.FPS_25_000
         for subtitle in self.project.subtitles:
-            assert subtitle.framerate == aeidon.framerates.FPS_25
+            assert subtitle.framerate == aeidon.framerates.FPS_25_000
         assert self.project.subtitles[0].start == 104
         assert self.project.subtitles[1].start == 209
 
@@ -123,20 +123,20 @@ class TestPositionAgent(aeidon.TestCase):
         self.project.subtitles[0].start = "00:00:01.000"
         self.project.subtitles[1].start = "00:00:02.000"
         self.project.convert_framerate(None,
-                                       aeidon.framerates.FPS_24,
-                                       aeidon.framerates.FPS_25)
+                                       aeidon.framerates.FPS_23_976,
+                                       aeidon.framerates.FPS_25_000)
 
-        assert self.project.framerate == aeidon.framerates.FPS_25
+        assert self.project.framerate == aeidon.framerates.FPS_25_000
         for subtitle in self.project.subtitles:
-            assert subtitle.framerate == aeidon.framerates.FPS_25
+            assert subtitle.framerate == aeidon.framerates.FPS_25_000
         assert self.project.subtitles[0].start == "00:00:00.959"
         assert self.project.subtitles[1].start == "00:00:01.918"
 
     def test_set_framerate(self):
-        self.project.set_framerate(aeidon.framerates.FPS_25)
-        assert self.project.framerate == aeidon.framerates.FPS_25
+        self.project.set_framerate(aeidon.framerates.FPS_25_000)
+        assert self.project.framerate == aeidon.framerates.FPS_25_000
         for subtitle in self.project.subtitles:
-            assert subtitle.framerate == aeidon.framerates.FPS_25
+            assert subtitle.framerate == aeidon.framerates.FPS_25_000
 
     @aeidon.deco.reversion_test
     def test_shift_positions__frame(self):

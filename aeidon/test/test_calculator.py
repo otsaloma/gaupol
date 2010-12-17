@@ -20,7 +20,7 @@ import aeidon
 class TestCalculator(aeidon.TestCase):
 
     def setup_method(self, method):
-        self.calc = aeidon.Calculator(aeidon.framerates.FPS_24)
+        self.calc = aeidon.Calculator(aeidon.framerates.FPS_23_976)
 
     def test___new__(self):
         for framerate in aeidon.framerates:
@@ -69,7 +69,7 @@ class TestCalculator(aeidon.TestCase):
         assert compare("-00:00:00.001",  "00:00:00.001") == -1
 
     def test_frame_to_seconds(self):
-        calc = aeidon.Calculator(aeidon.framerates.FPS_25)
+        calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)
         assert calc.frame_to_seconds( 127) ==  5.08
         assert calc.frame_to_seconds(-127) == -5.08
 
@@ -143,7 +143,7 @@ class TestCalculator(aeidon.TestCase):
         assert time_to_seconds("-00:00:45.000") ==   -45.000
 
     def test_to_frame(self):
-        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25)
+        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)
         assert self.calc.to_frame("00:00:01.000") == 25
         assert self.calc.to_frame(25) == 25
         assert self.calc.to_frame(1.0) == 25
@@ -152,7 +152,7 @@ class TestCalculator(aeidon.TestCase):
         self.raises(ValueError, self.calc.to_frame, None)
 
     def test_to_seconds(self):
-        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25)
+        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)
         assert self.calc.to_seconds("00:00:01.000") == 1.0
         assert self.calc.to_seconds(25) == 1.0
         assert self.calc.to_seconds(1.0) == 1.0
@@ -161,7 +161,7 @@ class TestCalculator(aeidon.TestCase):
         self.raises(ValueError, self.calc.to_seconds, None)
 
     def test_to_time(self):
-        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25)
+        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)
         assert self.calc.to_time("00:00:01.000") == "00:00:01.000"
         assert self.calc.to_time(25) == "00:00:01.000"
         assert self.calc.to_time(1.0) == "00:00:01.000"

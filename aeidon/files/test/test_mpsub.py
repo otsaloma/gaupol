@@ -45,7 +45,7 @@ class TestMPsubTime(aeidon.TestCase):
     def test_set_header__frame(self):
         self.file.set_header("FORMAT=29.97")
         assert self.file.mode == aeidon.modes.FRAME
-        assert self.file.framerate == aeidon.framerates.FPS_30
+        assert self.file.framerate == aeidon.framerates.FPS_29_970
 
     def test_set_header__time(self):
         self.file.set_header("FORMAT=TIME")

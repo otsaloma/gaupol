@@ -37,12 +37,12 @@ class TestViewAgent(gaupol.TestCase):
         self.application.output_window.show()
         self.application.output_window.hide()
 
-    def test_on_show_framerate_24_changed__frames(self):
+    def test_on_show_framerate_23_976_changed__frames(self):
         self.application.get_action("show_frames").activate()
         for framerate in aeidon.framerates:
             self.application.get_framerate_action(framerate).activate()
 
-    def test_on_show_framerate_24_changed__times(self):
+    def test_on_show_framerate_23_976_changed__times(self):
         self.application.get_action("show_times").activate()
         for framerate in aeidon.framerates:
             self.application.get_framerate_action(framerate).activate()

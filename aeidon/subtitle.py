@@ -82,7 +82,7 @@ class Subtitle(object):
         self._main_text = ""
         self._tran_text = ""
         self._mode = mode or aeidon.modes.TIME
-        self._framerate = framerate or aeidon.framerates.FPS_24
+        self._framerate = framerate or aeidon.framerates.FPS_23_976
         self.calc = aeidon.Calculator(self._framerate)
 
     def _convert_position(self, value):

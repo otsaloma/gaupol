@@ -22,28 +22,36 @@ _ = aeidon.i18n._
 __all__ = ("framerates",)
 
 
-class Framerate24(aeidon.EnumerationItem):
+class Framerate23976(aeidon.EnumerationItem):
 
-    label = _("24 fps")
+    label = _("23.976 fps")
     mpsub = "23.98"
     value = 24 / 1.001
 
 
-class Framerate25(aeidon.EnumerationItem):
+class Framerate24000(aeidon.EnumerationItem):
 
-    label = _("25 fps")
+    label = _("24.000 fps")
+    mpsub = "24.00"
+    value = 24.0
+
+
+class Framerate25000(aeidon.EnumerationItem):
+
+    label = _("25.000 fps")
     mpsub = "25.00"
     value = 25.0
 
 
-class Framerate30(aeidon.EnumerationItem):
+class Framerate29970(aeidon.EnumerationItem):
 
-    label = _("30 fps")
+    label = _("29.970 fps")
     mpsub = "29.97"
     value = 30 / 1.001
 
 
 framerates = aeidon.Enumeration()
-framerates.FPS_24 = Framerate24()
-framerates.FPS_25 = Framerate25()
-framerates.FPS_30 = Framerate30()
+framerates.FPS_23_976 = Framerate23976()
+framerates.FPS_24_000 = Framerate24000()
+framerates.FPS_25_000 = Framerate25000()
+framerates.FPS_29_970 = Framerate29970()

@@ -48,7 +48,7 @@ class ViewAgent(aeidon.Delegate):
         action.set_active(output_window.props.visible)
 
     @aeidon.deco.export
-    def _on_show_framerate_24_changed(self, item, active_item):
+    def _on_show_framerate_23_976_changed(self, item, active_item):
         """Change the framerate with which nonnative units are calculated."""
         page = self.get_current_page()
         framerate = active_item.framerate

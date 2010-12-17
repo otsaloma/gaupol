@@ -113,7 +113,7 @@ class Project(aeidon.Observable):
     def __init__(self, framerate=None, undo_limit=None):
         """Initialize a :class:`Project` object."""
         aeidon.Observable.__init__(self)
-        framerate = framerate or aeidon.framerates.FPS_24
+        framerate = framerate or aeidon.framerates.FPS_23_976
         self._delegations = {}
         self.calc = aeidon.Calculator(framerate)
         self.clipboard = aeidon.Clipboard()

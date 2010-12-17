@@ -34,9 +34,10 @@ field_actions = {gaupol.fields.NUMBER:    "toggle_number_column",
                  gaupol.fields.MAIN_TEXT: "toggle_main_text_column",
                  gaupol.fields.TRAN_TEXT: "toggle_translation_text_column",}
 
-framerate_actions = {aeidon.framerates.FPS_24: "show_framerate_24",
-                     aeidon.framerates.FPS_25: "show_framerate_25",
-                     aeidon.framerates.FPS_30: "show_framerate_30",}
+framerate_actions = {aeidon.framerates.FPS_23_976: "show_framerate_23_976",
+                     aeidon.framerates.FPS_24_000: "show_framerate_24_000",
+                     aeidon.framerates.FPS_25_000: "show_framerate_25_000",
+                     aeidon.framerates.FPS_29_970: "show_framerate_29_970",}
 
 mode_actions = {aeidon.modes.TIME:  "show_times",
                 aeidon.modes.FRAME: "show_frames",}

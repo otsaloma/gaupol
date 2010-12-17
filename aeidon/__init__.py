@@ -26,7 +26,7 @@ Converting a file from the SubRip format to the MicroDVD format::
 
     project = aeidon.Project()
     project.open_main("/path/to/file.srt", "utf_8")
-    project.set_framerate(aeidon.framerates.FPS_24)
+    project.set_framerate(aeidon.framerates.FPS_23_976)
     project.save_main(aeidon.files.new(aeidon.formats.MICRODVD,
                                        "/path/to/file.sub",
                                        "utf_8"))

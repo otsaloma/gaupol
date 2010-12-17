@@ -35,12 +35,12 @@ class Calculator(object):
 
     def __init__(self, framerate=None):
         """Initialize a :class:`Calculator` object."""
-        framerate = framerate or aeidon.framerates.FPS_24
+        framerate = framerate or aeidon.framerates.FPS_23_976
         self._framerate = framerate.value
 
     def __new__(cls, framerate=None):
         """Return possibly existing instance for `framerate`."""
-        framerate = framerate or aeidon.framerates.FPS_24
+        framerate = framerate or aeidon.framerates.FPS_23_976
         if not framerate in cls._instances:
             cls._instances[framerate] = object.__new__(cls)
         return cls._instances[framerate]

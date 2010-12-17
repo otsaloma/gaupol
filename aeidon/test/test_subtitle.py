@@ -22,7 +22,7 @@ class TestSubtitle(aeidon.TestCase):
     def setup_method(self, method):
         self.tsub = aeidon.Subtitle()
         self.tsub.mode = aeidon.modes.TIME
-        self.tsub.framerate = aeidon.framerates.FPS_25
+        self.tsub.framerate = aeidon.framerates.FPS_25_000
         self.tsub.start = "00:00:01.000"
         self.tsub.end = "00:00:03.000"
         self.tsub.main_text = "main"
@@ -30,7 +30,7 @@ class TestSubtitle(aeidon.TestCase):
 
         self.fsub = aeidon.Subtitle()
         self.fsub.mode = aeidon.modes.FRAME
-        self.fsub.framerate = aeidon.framerates.FPS_25
+        self.fsub.framerate = aeidon.framerates.FPS_25_000
         self.fsub.start = 100
         self.fsub.end = 300
         self.fsub.main_text = "main"
@@ -96,8 +96,8 @@ class TestSubtitle(aeidon.TestCase):
         self.raises(ValueError, lambda: self.tsub.end_time)
 
     def test__get_framerate(self):
-        assert self.tsub.framerate == aeidon.framerates.FPS_25
-        assert self.fsub.framerate == aeidon.framerates.FPS_25
+        assert self.tsub.framerate == aeidon.framerates.FPS_25_000
+        assert self.fsub.framerate == aeidon.framerates.FPS_25_000
 
     def test__get_main_text(self):
         assert self.tsub.main_text == u"main"
@@ -172,9 +172,9 @@ class TestSubtitle(aeidon.TestCase):
         assert self.fsub.end_frame == 125
 
     def test__set_framerate(self):
-        FPS_30 = aeidon.framerates.FPS_30
-        self.tsub.framerate = FPS_30
-        assert self.tsub.framerate == FPS_30
+        FPS_29_970 = aeidon.framerates.FPS_29_970
+        self.tsub.framerate = FPS_29_970
+        assert self.tsub.framerate == FPS_29_970
 
     def test__set_main_text(self):
         self.tsub.main_text = "test"
@@ -215,7 +215,7 @@ class TestSubtitle(aeidon.TestCase):
     def test_convert_framerate__time(self):
         self.tsub.start = "00:00:01.000"
         self.tsub.end = "00:00:02.000"
-        framerate = aeidon.framerates.FPS_24
+        framerate = aeidon.framerates.FPS_23_976
         self.tsub.convert_framerate(framerate)
         assert self.tsub.framerate == framerate
         assert self.tsub.start == "00:00:01.043"
@@ -224,7 +224,7 @@ class TestSubtitle(aeidon.TestCase):
     def test_convert_framerate__frame(self):
         self.fsub.start = 100
         self.fsub.end = 200
-        framerate = aeidon.framerates.FPS_24
+        framerate = aeidon.framerates.FPS_23_976
         self.fsub.convert_framerate(framerate)
         assert self.fsub.framerate == framerate
         assert self.fsub.start == 96

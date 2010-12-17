@@ -80,9 +80,10 @@
       </placeholder>
       <separator/>
       <menu name="framerate" action="show_framerate_menu">
-        <menuitem name="24" action="show_framerate_24"/>
-        <menuitem name="25" action="show_framerate_25"/>
-        <menuitem name="30" action="show_framerate_30"/>
+        <menuitem name="23_976" action="show_framerate_23_976"/>
+        <menuitem name="24_000" action="show_framerate_24_000"/>
+        <menuitem name="25_000" action="show_framerate_25_000"/>
+        <menuitem name="29_970" action="show_framerate_29_970"/>
         <placeholder name="1">
         </placeholder>
       </menu>

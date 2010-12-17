@@ -26,6 +26,7 @@ class TestModule(aeidon.TestCase):
             assert hasattr(framerate, "value")
 
     def test_items(self):
-        assert hasattr(aeidon.framerates, "FPS_24")
-        assert hasattr(aeidon.framerates, "FPS_25")
-        assert hasattr(aeidon.framerates, "FPS_30")
+        assert hasattr(aeidon.framerates, "FPS_23_976")
+        assert hasattr(aeidon.framerates, "FPS_24_000")
+        assert hasattr(aeidon.framerates, "FPS_25_000")
+        assert hasattr(aeidon.framerates, "FPS_29_970")

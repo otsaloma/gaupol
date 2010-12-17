@@ -74,7 +74,7 @@ config_defaults = {
                         gaupol.fields.MAIN_TEXT,
                         gaupol.fields.TRAN_TEXT],
 
-        "framerate": aeidon.framerates.FPS_24,
+        "framerate": aeidon.framerates.FPS_23_976,
         "length_unit": gaupol.length_units.EM,
         "mode": aeidon.modes.TIME,
         "show_lengths_cell": True,
