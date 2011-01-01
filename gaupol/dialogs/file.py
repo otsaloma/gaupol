@@ -60,11 +60,12 @@ class FileDialog(gaupol.BuilderDialog):
         self.add_filter(file_filter)
         self.set_filter(file_filter)
         for format in aeidon.formats:
+            extension = format.extension
             pattern = "*."
-            for x in format.extension[1:]:
+            for x in extension[1:]:
                 pattern += "[%s%s]" % (x.upper(), x.lower())
             format = format.label
-            name = _("%(format)s (%(pattern)s)") % locals()
+            name = _("%(format)s (*%(extension)s)") % locals()
             file_filter = gtk.FileFilter()
             file_filter.set_name(name)
             file_filter.add_pattern(pattern)

@@ -3,6 +3,7 @@ Gaupol 0.18
 
  [D] Add framerate 24.0 fps found on Blu-rays and use three decimals
      for all framerates (fixes #580345)
+ [D] Fix names of filetype filters in open dialog
 
 Gaupol 1.0
 ==========
