@@ -60,7 +60,7 @@ Preparing to Build Windows Installers
 
      [6.1] http://www.freedesktop.org/wiki/Software/icon-theme
 
- 7. Install translations fro iso-codes [7.1] to 'share/locale' in the
+ 7. Install translations from iso-codes [7.1] to 'share/locale' in the
     GTK+ bundle. Only include iso_639.mo, iso_3166.mo and iso_15924.mo.
 
      [7.1] http://download.opensuse.org/repositories/windows:/mingw:/win32:/legacy/

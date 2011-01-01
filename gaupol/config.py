@@ -365,7 +365,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 value = value.strip()
                 enum = enums.get(option, None)
                 try: value = json.loads(value, cls=EnumDecoder, enum=enum)
-                except ValueError:
+                except (AttributeError, ValueError):
                     print ("Failed to parse value '%s' of option '%s.%s' "
                            "from configuration file '%s'." % (
                             value, "::".join(sections), option, self.path))
