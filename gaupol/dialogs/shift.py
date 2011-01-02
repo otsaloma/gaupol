@@ -47,9 +47,9 @@ class PositionShiftDialog(gaupol.BuilderDialog):
     def _get_preview_row(self):
         """Return row to start preview from."""
         target = self._get_target()
-        if target != gaupol.targets.SELECTED: return 0
         page = self.application.get_current_page()
-        return page.view.get_selected_rows()[0]
+        rows = page.view.get_selected_rows()
+        return (rows[0] if rows else 0)
 
     def _get_target(self):
         """Return the selected target."""
