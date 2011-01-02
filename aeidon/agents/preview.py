@@ -35,12 +35,12 @@ class PreviewAgent(aeidon.Delegate):
         aeidon.Delegate.__init__(self, master)
         aeidon.util.connect(self, self, "notify::main_file")
 
-    def _get_subtitle_path_require(self, doc, encoding=None):
+    def _get_subtitle_path_require(self, doc, encoding=None, temp=False):
         assert self.get_file(doc) is not None
         if encoding is not None:
             assert aeidon.encodings.is_valid_code(encoding)
 
-    def _get_subtitle_path(self, doc, encoding=None):
+    def _get_subtitle_path(self, doc, encoding=None, temp=False):
         """Return path to a file to preview, either real or temporary.
 
         Raise :exc:`IOError` if writing to temporary file fails.
@@ -50,10 +50,10 @@ class PreviewAgent(aeidon.Delegate):
             if encoding != self.get_file(doc).encoding:
                 return self.new_temp_file(doc, encoding)
         if doc == aeidon.documents.MAIN:
-            if not self.main_changed:
+            if not self.main_changed and not temp:
                 return self.main_file.path
         if doc == aeidon.documents.TRAN:
-            if not self.tran_changed:
+            if not self.tran_changed and not temp:
                 return self.tran_file.path
         return self.new_temp_file(doc)
 
@@ -114,7 +114,7 @@ class PreviewAgent(aeidon.Delegate):
                 return self.video_path
         return None
 
-    def preview_require(self, position, doc, command, offset, encoding=None):
+    def preview_require(self, position, doc, *args, **kwargs):
         assert self.get_file(doc) is not None
         assert self.video_path is not None
 
@@ -122,7 +122,14 @@ class PreviewAgent(aeidon.Delegate):
         assert os.path.isfile(value[2])
 
     @aeidon.deco.export
-    def preview(self, position, doc, command, offset, encoding=None):
+    def preview(self,
+                position,
+                doc,
+                command,
+                offset,
+                encoding=None,
+                temp=False):
+
         """Start video player with `command` from `position`.
 
         `command` can have variables ``$MILLISECONDS``, ``$SECONDS``,
@@ -130,7 +137,9 @@ class PreviewAgent(aeidon.Delegate):
         seconds before `position` to start, which can be used to take into
         account that video player's can usually seek only to keyframes, which
         exist maybe ten seconds or so apart. `encoding` can be specified if
-        different from `doc` file encoding.
+        different from `doc` file encoding. Use ``True`` for `temp` to always
+        use a temporary file for preview regardless of whether the file is
+        changed or not.
 
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
@@ -139,7 +148,7 @@ class PreviewAgent(aeidon.Delegate):
         Return a three tuple of :class:`subprocess.POpen` instance, command
         with variables expanded and process standard output and error path.
         """
-        sub_path = self._get_subtitle_path(doc, encoding)
+        sub_path = self._get_subtitle_path(doc, encoding, temp=temp)
         output_path = aeidon.temp.create(".output")
         output_fd = aeidon.temp.get_handle(output_path)
         seconds = max(0, self.calc.to_seconds(position) - offset)

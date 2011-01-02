@@ -86,7 +86,7 @@ class PreviewAgent(aeidon.Delegate):
         self.preview(page, position, doc)
 
     @aeidon.deco.export
-    def preview(self, page, position, doc):
+    def preview(self, page, position, doc, temp=False):
         """Preview from `position` with a video player."""
         command = gaupol.util.get_preview_command()
         offset = gaupol.conf.preview.offset
@@ -95,7 +95,8 @@ class PreviewAgent(aeidon.Delegate):
                                                                   doc,
                                                                   command,
                                                                   offset,
-                                                                  encoding)
+                                                                  encoding,
+                                                                  temp)
 
         except aeidon.ProcessError as message:
             return self._show_process_error_dialog(message)
@@ -121,6 +122,6 @@ class PreviewAgent(aeidon.Delegate):
         method(register=None, *(args or ()), **(kwargs or {}))
         position = page.project.subtitles[row].start
         page.project.unblock_all(blocked)
-        self.preview(page, position, doc)
+        self.preview(page, position, doc, temp=True)
         page.project.set_framerate(framerate, register=None)
         page.project.subtitles = subtitles
