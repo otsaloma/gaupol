@@ -1,11 +1,14 @@
 Gaupol 0.18
 ===========
 
+ [ ] Add ability to use arbitrary custom framerates defined in the
+     configuration file
  [D] Add framerate 24.0 fps found on Blu-rays and use three decimals
      for all framerates (fixes #580345)
  [D] Fix previewing of changes in position shift and transformation
      dialogs
  [D] Fix names of filetype filters in open dialog
+ [D] Add Turkish translation (Koray Löker and Çağlar Kilimci)
 
 Gaupol 1.0
 ==========
