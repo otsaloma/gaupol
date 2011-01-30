@@ -117,7 +117,7 @@ def copy_list(src):
             dst[i] = set(value)
     return dst
 
-def detect_format(path, encoding):
+def detect_format_require(path, encoding):
     assert aeidon.encodings.is_valid_code(encoding)
 
 @aeidon.deco.contractual
