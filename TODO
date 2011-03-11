@@ -7,6 +7,8 @@ Gaupol 0.18
      for all framerates (fixes #580345)
  [D] Fix previewing of changes in position shift and transformation
      dialogs
+ [D] Fix eternal loop when opening translation files and having
+     zero-duration existing subtitles
  [D] Fix names of filetype filters in open dialog
  [D] Add Turkish translation (Koray Löker and Çağlar Kilimci)
 

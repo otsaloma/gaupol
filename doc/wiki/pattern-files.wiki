@@ -10,8 +10,8 @@ Please use the following template to post your patterns. If you want to post the
 
 {{{
 === Name ===
-Description of the patterns
-Author: Your Name
+Description of the patterns<<BR>>
+Author: Your Name<<BR>>
 [[http://link.to.download.location/]]
 }}}
 

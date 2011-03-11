@@ -12,8 +12,8 @@ Please use the following template to post your extension. If you need to add scr
 
 {{{
 === Name of the Extension ===
-Description of the extension
-Author: Your Name
+Description of the extension<<BR>>
+Author: Your Name<<BR>>
 [[http://link.to.download.location/]]
 }}}
 

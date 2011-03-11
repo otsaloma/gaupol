@@ -37,32 +37,37 @@ class OpenAgent(aeidon.Delegate):
 
     def _align_translations_by_position(self, subtitles):
         """Add translation texts by aligning subtitle positions."""
-        m = t = 0
+        subtitles = [x.copy() for x in subtitles]
         mode = self.main_file.mode
-        while t < len(subtitles):
-            ts = subtitles[t].get_start(mode)
-            te = subtitles[t].get_end(mode)
-            tt = subtitles[t].main_text
+        i = 0
+        while subtitles:
+            # Examine subtitles to be added one-by-one by comparing
+            # their temporal middle positions with the start and end
+            # positions of existing subtitles.
+            ts = subtitles[0].get_start(mode)
+            te = subtitles[0].get_end(mode)
             tm = self.calc.get_middle(ts, te)
-            if m < len(self.subtitles):
-                ms = self.subtitles[m].get_start(mode)
-                me = self.subtitles[m].get_end(mode)
+            while True:
+                # Skip over existing subtitles when
+                # no suitable match found among translations.
+                if i == len(self.subtitles): break
+                ms = self.subtitles[i].get_start(mode)
+                me = self.subtitles[i].get_end(mode)
                 tm_cmp_ms = self.calc.compare(tm, ms)
                 tm_cmp_me = self.calc.compare(tm, me)
-            if (m == len(self.subtitles)) or (tm_cmp_ms == -1):
+                if tm_cmp_me <= 0: break
+                i += 1
+            if (i == len(self.subtitles)) or (tm_cmp_ms == -1):
+                # Add a new subtitle when no suitable match
+                # found among existing subtitles.
                 subtitle = self.new_subtitle()
-                subtitle.start = subtitles[t].start
-                subtitle.end = subtitles[t].end
-                subtitle.tran_text = tt
-                self.subtitles.insert(m, subtitle)
-                ms = subtitle.get_start(mode)
-                me = subtitle.get_end(mode)
-                tm_cmp_ms = self.calc.compare(tm, ms)
-                tm_cmp_me = self.calc.compare(tm, me)
-            elif (tm_cmp_ms == 1) and (tm_cmp_me == -1):
-                self.subtitles[m].tran_text = tt
-            if tm_cmp_me == -1: t += 1
-            if tm_cmp_ms ==  1: m += 1
+                subtitle.start = subtitles[0].start
+                subtitle.end = subtitles[0].end
+                self.subtitles.insert(i, subtitle)
+                continue
+            self.subtitles[i].tran_text = subtitles[0].main_text
+            subtitles.pop(0)
+            i += 1
 
     def _read_file(self, sfile):
         """Read `sfile` and return subtitles.
