@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010-2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -96,7 +96,7 @@ class MenuAction(Action):
             self.connect("activate", getattr(application, callback))
 
 
-class RecentAction(Action, gtk.RecentAction):
+class RecentAction(gtk.RecentAction, Action):
 
     """Base class for :class:`gtk.UIManager` recent file actions.
 
@@ -129,9 +129,13 @@ class RecentAction(Action, gtk.RecentAction):
         self.connect("item-activated", getattr(application, callback))
 
 
-class ToggleAction(Action, gtk.ToggleAction):
+class ToggleAction(gtk.ToggleAction, Action):
 
     """Base class for UI manager toggle actions."""
+
+    def __init__(self, name):
+        """Initialize an :class:`ToggleAction` object."""
+        gtk.ToggleAction.__init__(self, name, None, None, None)
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
@@ -149,7 +153,7 @@ class TopMenuAction(MenuAction):
         pass
 
 
-class RadioAction(ToggleAction, gtk.RadioAction):
+class RadioAction(gtk.RadioAction, Action):
 
     """Base class for :class:`gtk.UIManager` radio actions.
 
@@ -157,6 +161,10 @@ class RadioAction(ToggleAction, gtk.RadioAction):
     """
 
     group = NotImplementedError
+
+    def __init__(self, name):
+        """Initialize an :class:`RadioAction` object."""
+        gtk.RadioAction.__init__(self, name, None, None, None, 0)
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""

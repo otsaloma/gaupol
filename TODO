@@ -4,7 +4,9 @@ Gaupol 0.18
  [ ] Add ability to use arbitrary custom framerates defined in the
      configuration file
  [D] Add framerate 24.0 fps found on Blu-rays and use three decimals
-     for all framerates (fixes #580345)
+     for all framerates (#580345)
+ [D] Fix broken inheritance of action classes, which caused Gaupol to
+     fail to start with recent versions of (Py)GTK (#643958)
  [D] Fix previewing of changes in position shift and transformation
      dialogs
  [D] Fix eternal loop when opening translation files and having
