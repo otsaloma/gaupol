@@ -3,6 +3,7 @@ Gaupol 0.18
 
  [ ] Add ability to use arbitrary custom framerates
  [X] Add "Get more extensions" to the preferences dialog
+ [?] Relax subtitle file parsing in unambiguous cases (#634129)
 
 Gaupol 1.0
 ==========
