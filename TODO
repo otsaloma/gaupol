@@ -1,8 +1,8 @@
 Gaupol 0.18
 ===========
 
- * Add ability to use arbitrary custom framerates
- * Add "Get more extensions" to the preferences dialog
+ [ ] Add ability to use arbitrary custom framerates
+ [X] Add "Get more extensions" to the preferences dialog
 
 Gaupol 1.0
 ==========

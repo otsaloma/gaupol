@@ -125,6 +125,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     _widgets = ("extensions_about_button",
                 "extensions_help_button",
+                "extensions_link_button",
                 "extensions_preferences_button",
                 "extensions_tree_view")
 
@@ -171,6 +172,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _init_values(self):
         """Initialize default values for widgets."""
+        self._link_button.set_uri(gaupol.EXTENSIONS_URL)
         store = self._tree_view.get_model()
         extensions = []
         for module in self.manager.get_modules():

@@ -17,20 +17,30 @@
 """Website URLs.
 
 :var BUG_REPORT_URL: Web page where to submit new bug reports
+:var EXTENSIONS_URL: Web page listing third party extensions
 :var HOMEPAGE_URL: Web page of the Gaupol project
 :var PREVIEW_HELP_URL: Web page with documentation on the preview function
 :var REGEX_HELP_URL: Web page with documentation on regular expressions
 :var WIKI_URL: Web page with wiki documentation
 """
 
+import gaupol
+import gtk
+
 __all__ = ("BUG_REPORT_URL",
+           "EXTENSIONS_URL",
            "HOMEPAGE_URL",
            "PREVIEW_HELP_URL",
            "REGEX_HELP_URL",
            "WIKI_URL")
 
 BUG_REPORT_URL = "http://bugzilla.gnome.org/enter_bug.cgi?product=gaupol"
+EXTENSIONS_URL = "http://live.gnome.org/Gaupol/Extensions"
 HOMEPAGE_URL = "http://home.gna.org/gaupol/"
 PREVIEW_HELP_URL = "http://live.gnome.org/Gaupol/Preview"
 REGEX_HELP_URL = "http://docs.python.org/lib/re-syntax.html"
 WIKI_URL = "http://live.gnome.org/Gaupol"
+
+def _on_link_button_clicked(link_button, uri):
+    return gaupol.util.show_uri(uri)
+gtk.link_button_set_uri_hook(_on_link_button_clicked)
