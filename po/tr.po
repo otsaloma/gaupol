@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-07 17:15+0200\n"
+"POT-Creation-Date: 2011-04-10 17:31+0300\n"
 "PO-Revision-Date: 2011-01-18 15:04+0200\n"
 "Last-Translator: Çağlar Kilimci <ckilimci@pardus.org.tr>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -40,8 +40,8 @@ msgid ""
 "You have probably discovered a bug. Please report it by providing the above "
 "information and a description of what you were doing."
 msgstr ""
-"Programda hata keşfetmiş olabilirsiniz. Lütfen üstte gördüğünüz bilgileri "
-"ve hatanın hangi işlemi yaptığınız sırada meydana geldiğini raporlayın."
+"Programda hata keşfetmiş olabilirsiniz. Lütfen üstte gördüğünüz bilgileri ve "
+"hatanın hangi işlemi yaptığınız sırada meydana geldiğini raporlayın."
 
 #: ../data/ui/duration-dialog.ui.h:1
 msgid "Adj_ust selected subtitles"
@@ -1287,16 +1287,20 @@ msgid "Subtitle position"
 msgstr "Alt yazı durumu"
 
 #: ../aeidon/enums/framerates.py:27
-msgid "24 fps"
-msgstr "24 fps"
+msgid "23.976 fps"
+msgstr ""
 
 #: ../aeidon/enums/framerates.py:34
-msgid "25 fps"
-msgstr "25 fps"
+msgid "24.000 fps"
+msgstr ""
 
 #: ../aeidon/enums/framerates.py:41
-msgid "30 fps"
-msgstr "30 fps"
+msgid "25.000 fps"
+msgstr ""
+
+#: ../aeidon/enums/framerates.py:48
+msgid "29.970 fps"
+msgstr ""
 
 #: ../aeidon/enums/newlines.py:27
 msgid "Mac (classic)"
@@ -1908,126 +1912,134 @@ msgid "_Columns"
 msgstr "_Sütunlar"
 
 #: ../gaupol/actions/view.py:119
-msgid "2_4 fps"
-msgstr "2_4 fps"
+msgid "2_3.976 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:120
-msgid "Calculate nonnative units with a framerate of 24 fps"
-msgstr "Bilinmeyen birimleri 24 fps kare hızı ile hesapla"
+msgid "Calculate nonnative units with a framerate of 23.976 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:143
-msgid "2_5 fps"
-msgstr "2_5 fps"
+msgid "2_4.000 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:144
-msgid "Calculate nonnative units with a framerate of 25 fps"
-msgstr "Bilinmeyen birimleri 25 fps kare hızı ile hesapla"
+msgid "Calculate nonnative units with a framerate of 24.000 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:167
-msgid "_30 fps"
-msgstr "_30 fps"
+msgid "2_5.000 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:168
-msgid "Calculate nonnative units with a framerate of 30 fps"
-msgstr "Bilinmeyen birimleri 30 fps kare hızı ile hesapla"
+msgid "Calculate nonnative units with a framerate of 25.000 fps"
+msgstr ""
 
-#: ../gaupol/actions/view.py:189
+#: ../gaupol/actions/view.py:191
+msgid "2_9.970 fps"
+msgstr ""
+
+#: ../gaupol/actions/view.py:192
+msgid "Calculate nonnative units with a framerate of 29.970 fps"
+msgstr ""
+
+#: ../gaupol/actions/view.py:213
 msgid "F_ramerate"
 msgstr "Kare _Hızı"
 
-#: ../gaupol/actions/view.py:208
+#: ../gaupol/actions/view.py:232
 msgid "_Frames"
 msgstr "_Kare"
 
-#: ../gaupol/actions/view.py:209
+#: ../gaupol/actions/view.py:233
 msgid "Show positions as frames"
 msgstr "Durumu kare olarak göster"
 
-#: ../gaupol/actions/view.py:230
+#: ../gaupol/actions/view.py:254
 msgid "_Times"
 msgstr "_Tekrar"
 
-#: ../gaupol/actions/view.py:231
+#: ../gaupol/actions/view.py:255
 msgid "Show positions as times"
 msgstr "Durumu tekrar sayısı olarak göster"
 
-#: ../gaupol/actions/view.py:252
+#: ../gaupol/actions/view.py:276
 msgid "_Duration"
 msgstr "_Süreç"
 
-#: ../gaupol/actions/view.py:253
+#: ../gaupol/actions/view.py:277
 msgid "Show or hide the duration column"
 msgstr "Süreç sütununu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:270
+#: ../gaupol/actions/view.py:294
 msgid "_End"
 msgstr "Bi_tiş"
 
-#: ../gaupol/actions/view.py:271
+#: ../gaupol/actions/view.py:295
 msgid "Show or hide the end column"
 msgstr "Bitiş sütununu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:288
+#: ../gaupol/actions/view.py:312
 msgid "_Main Text"
 msgstr "_Ana Yazı"
 
-#: ../gaupol/actions/view.py:289
+#: ../gaupol/actions/view.py:313
 msgid "Show or hide the main text column"
 msgstr "Ana yazı sütununu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:306
+#: ../gaupol/actions/view.py:330
 msgid "_Main Toolbar"
 msgstr "_Ana Araç Çubuğu"
 
-#: ../gaupol/actions/view.py:307
+#: ../gaupol/actions/view.py:331
 msgid "Show or hide the main toolbar"
 msgstr "Ana araç çubuğunu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:320
+#: ../gaupol/actions/view.py:344
 msgid "_No."
 msgstr "_No."
 
-#: ../gaupol/actions/view.py:321
+#: ../gaupol/actions/view.py:345
 msgid "Show or hide the number column"
 msgstr "Numara sütununu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:337
+#: ../gaupol/actions/view.py:361
 msgid "_Output Window"
 msgstr "_Çıktı Penceresi"
 
-#: ../gaupol/actions/view.py:338
+#: ../gaupol/actions/view.py:362
 msgid "Show or hide the output window"
 msgstr "Çıktı penceresini göster ya da gizle"
 
-#: ../gaupol/actions/view.py:351
+#: ../gaupol/actions/view.py:375
 msgid "_Start"
 msgstr "_Başlangıç"
 
-#: ../gaupol/actions/view.py:352
+#: ../gaupol/actions/view.py:376
 msgid "Show or hide the start column"
 msgstr "Bağlangıç sütununu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:368
+#: ../gaupol/actions/view.py:392
 msgid "_Statusbar"
 msgstr "_Durum Çubuğu"
 
-#: ../gaupol/actions/view.py:369
+#: ../gaupol/actions/view.py:393
 msgid "Show or hide the statusbar"
 msgstr "Durum çubuğunu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:383
+#: ../gaupol/actions/view.py:407
 msgid "_Translation Text"
 msgstr "_Çeviri Yazısı"
 
-#: ../gaupol/actions/view.py:384
+#: ../gaupol/actions/view.py:408
 msgid "Show or hide the translation text column"
 msgstr "Çeviri yazısı sütununu göster ya da gizle"
 
-#: ../gaupol/actions/view.py:401
+#: ../gaupol/actions/view.py:425
 msgid "_Video Toolbar"
 msgstr "_Video Araç Çubuğu"
 
-#: ../gaupol/actions/view.py:402
+#: ../gaupol/actions/view.py:426
 msgid "Show or hide the video toolbar"
 msgstr "Video araç çubuğunu göster ya da gizle"
 
@@ -2113,9 +2125,9 @@ msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
 "a valid %s file. If you think it is, file a bug report and attach the file."
 msgstr ""
-"Açmaya çalıştığınız %s dosyası geçerli bir dosya gibi gözükmüyor."
-"Farklı bir metin düzenleyicisi bir programla açmayı deneyin. Eğer sorun "
-"devam ederse dosya ile birlikte hatayı bildirin."
+"Açmaya çalıştığınız %s dosyası geçerli bir dosya gibi gözükmüyor.Farklı bir "
+"metin düzenleyicisi bir programla açmayı deneyin. Eğer sorun devam ederse "
+"dosya ile birlikte hatayı bildirin."
 
 #: ../gaupol/agents/open.py:312
 #, python-format
@@ -2143,8 +2155,7 @@ msgid ""
 "file may be erroneously composed."
 msgstr ""
 "%d tane alt yazının sırası değişmesi gerekiyor. %d sayısı fazla gibi "
-"geldiyse "
-"dosya yanlışlıkla oluşmuş olabilir."
+"geldiyse dosya yanlışlıkla oluşmuş olabilir."
 
 #: ../gaupol/agents/open.py:344
 #, python-format
@@ -2184,8 +2195,7 @@ msgid ""
 "different character encoding."
 msgstr ""
 "Alt yazı ön izleme için kullanılan karakter kodlama ile geçici dosyaya "
-"kodlanamadı. "
-"Lütfen farklı bir karakter kodlama ile kaydedin."
+"kodlanamadı. Lütfen farklı bir karakter kodlama ile kaydedin."
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
@@ -2444,16 +2454,16 @@ msgstr "Bütün dosyalar"
 msgid "All supported files"
 msgstr "Bütün desteklenen dosyalar"
 
-#: ../gaupol/dialogs/file.py:67
+#: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (%(pattern)s)"
-msgstr "%(format)s (%(pattern)s)"
+msgid "%(format)s (*%(extension)s)"
+msgstr ""
 
-#: ../gaupol/dialogs/file.py:109
+#: ../gaupol/dialogs/file.py:110
 msgid "Auto-detected"
 msgstr "Otomatik algıla"
 
-#: ../gaupol/dialogs/file.py:111
+#: ../gaupol/dialogs/file.py:112
 msgid "Other…"
 msgstr "Diğer..."
 
@@ -2467,8 +2477,8 @@ msgid ""
 "any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
 msgstr ""
 "MPsub başlığı mutlaka \"FORMAT=DEĞER\" satırını içermelidir. DEĞER yazan "
-"yerde "
-"\"TIME\", \"23.98\", \"25.00\" veya \"29.97\" den birisi olması gerekir."
+"yerde \"TIME\", \"23.98\", \"25.00\" veya \"29.97\" den birisi olması "
+"gerekir."
 
 #: ../gaupol/dialogs/insert.py:46
 msgid "Above selection"
@@ -2708,4 +2718,32 @@ msgstr "<b>Yeni satırlar:</b> %s"
 msgid "%s translation"
 msgstr "%s çevirisi"
 
+#~ msgid "24 fps"
+#~ msgstr "24 fps"
 
+#~ msgid "25 fps"
+#~ msgstr "25 fps"
+
+#~ msgid "30 fps"
+#~ msgstr "30 fps"
+
+#~ msgid "2_4 fps"
+#~ msgstr "2_4 fps"
+
+#~ msgid "Calculate nonnative units with a framerate of 24 fps"
+#~ msgstr "Bilinmeyen birimleri 24 fps kare hızı ile hesapla"
+
+#~ msgid "2_5 fps"
+#~ msgstr "2_5 fps"
+
+#~ msgid "Calculate nonnative units with a framerate of 25 fps"
+#~ msgstr "Bilinmeyen birimleri 25 fps kare hızı ile hesapla"
+
+#~ msgid "_30 fps"
+#~ msgstr "_30 fps"
+
+#~ msgid "Calculate nonnative units with a framerate of 30 fps"
+#~ msgstr "Bilinmeyen birimleri 30 fps kare hızı ile hesapla"
+
+#~ msgid "%(format)s (%(pattern)s)"
+#~ msgstr "%(format)s (%(pattern)s)"

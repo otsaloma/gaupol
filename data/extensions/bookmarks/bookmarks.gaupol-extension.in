@@ -1,5 +1,5 @@
 [Gaupol Extension]
-GaupolVersion=0.17.1
+GaupolVersion=0.17.2
 Module=bookmarks
 Requires=side-pane;
 _Name=Bookmarks

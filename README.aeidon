@@ -39,18 +39,18 @@ Dependencies
 ============
 
 As separate packages, aeidon requires Python [1] 2.6 or greater.
-Optional dependencies include: PyEnchant [2] 1.4.0 or greater,
-required for spell-checking; iso-codes [3], used to translate language
-and country names; and Universal Encoding Detector [4], required for
-character encoding auto-detection. If aeidon is installed using the
-'--without-iso-codes' switch, then iso-codes is not optional, but
-rather required.
+Optional dependencies include: PyEnchant [2] 1.4.0 or greater --
+required for spell-checking; iso-codes [3] -- required to translate
+language and country names; and Universal Encoding Detector [4] --
+required for character encoding auto-detection. If aeidon is installed
+using the '--without-iso-codes' switch, then iso-codes is not
+optional, but rather required.
 
 gaupol requires Python [1] 2.6 or greater, PyGTK [5] 2.16 or greater
 and aeidon of the same version as gaupol. Optional dependencies
-include PyGtkSpell (part of gnome-python-extras [5]), required for
-inline spell-checking and MPlayer [6] or VLC [7], which are
-recommended for preview.
+include PyGtkSpell (part of gnome-python-extras [5]) -- required for
+inline spell-checking and MPlayer [6] or VLC [7] -- recommended for
+preview.
 
  [1] http://www.python.org/
  [2] http://pyenchant.sourceforge.net/

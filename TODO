@@ -1,21 +1,3 @@
-Gaupol 0.17.2
-=============
-
- [D] Add framerate 24.0 fps found on Blu-rays and use three decimals
-     for all framerates (#580345)
- [D] Fix broken inheritance of action classes, which caused Gaupol to
-     fail to start with recent versions of (Py)GTK (#643958)
- [D] Fix previewing of changes in position shift and transformation
-     dialogs
- [D] Fix eternal loop when opening translation files and having
-     zero-duration existing subtitles
- [D] Fix names of filetype filters in open dialog
- [D] Update author email address
- [D] Move development repository from Gitorious to GitHub
-     (https://github.com/otsaloma/gaupol)
- [D] Abandon use of Transifex for translations
- [D] Add Turkish translation (Koray Löker and Çağlar Kilimci)
-
 Gaupol 0.18
 ===========
 

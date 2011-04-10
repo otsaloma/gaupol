@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-07 17:15+0200\n"
+"POT-Creation-Date: 2011-04-10 17:31+0300\n"
 "PO-Revision-Date: 2009-09-23 22:11+GMT\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -1304,16 +1304,20 @@ msgid "Subtitle position"
 msgstr "Untertitelposition"
 
 #: ../aeidon/enums/framerates.py:27
-msgid "24 fps"
-msgstr "24 fps"
+msgid "23.976 fps"
+msgstr ""
 
 #: ../aeidon/enums/framerates.py:34
-msgid "25 fps"
-msgstr "25 fps"
+msgid "24.000 fps"
+msgstr ""
 
 #: ../aeidon/enums/framerates.py:41
-msgid "30 fps"
-msgstr "30 fps"
+msgid "25.000 fps"
+msgstr ""
+
+#: ../aeidon/enums/framerates.py:48
+msgid "29.970 fps"
+msgstr ""
 
 #: ../aeidon/enums/newlines.py:27
 msgid "Mac (classic)"
@@ -1927,126 +1931,134 @@ msgid "_Columns"
 msgstr "_Spalten"
 
 #: ../gaupol/actions/view.py:119
-msgid "2_4 fps"
-msgstr "2_4 fps"
+msgid "2_3.976 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:120
-msgid "Calculate nonnative units with a framerate of 24 fps"
+msgid "Calculate nonnative units with a framerate of 23.976 fps"
 msgstr ""
 
 #: ../gaupol/actions/view.py:143
-msgid "2_5 fps"
-msgstr "2_5 fps"
+msgid "2_4.000 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:144
-msgid "Calculate nonnative units with a framerate of 25 fps"
+msgid "Calculate nonnative units with a framerate of 24.000 fps"
 msgstr ""
 
 #: ../gaupol/actions/view.py:167
-msgid "_30 fps"
-msgstr "_30 fps"
-
-#: ../gaupol/actions/view.py:168
-msgid "Calculate nonnative units with a framerate of 30 fps"
+msgid "2_5.000 fps"
 msgstr ""
 
-#: ../gaupol/actions/view.py:189
+#: ../gaupol/actions/view.py:168
+msgid "Calculate nonnative units with a framerate of 25.000 fps"
+msgstr ""
+
+#: ../gaupol/actions/view.py:191
+msgid "2_9.970 fps"
+msgstr ""
+
+#: ../gaupol/actions/view.py:192
+msgid "Calculate nonnative units with a framerate of 29.970 fps"
+msgstr ""
+
+#: ../gaupol/actions/view.py:213
 msgid "F_ramerate"
 msgstr "F_ramerate"
 
-#: ../gaupol/actions/view.py:208
+#: ../gaupol/actions/view.py:232
 msgid "_Frames"
 msgstr "_Bilder"
 
-#: ../gaupol/actions/view.py:209
+#: ../gaupol/actions/view.py:233
 msgid "Show positions as frames"
 msgstr "Positionen als Bilder anzeigen"
 
-#: ../gaupol/actions/view.py:230
+#: ../gaupol/actions/view.py:254
 msgid "_Times"
 msgstr "_Zeiten"
 
-#: ../gaupol/actions/view.py:231
+#: ../gaupol/actions/view.py:255
 msgid "Show positions as times"
 msgstr "Positionen als Zeiten anzeigen"
 
-#: ../gaupol/actions/view.py:252
+#: ../gaupol/actions/view.py:276
 msgid "_Duration"
 msgstr "_Dauer"
 
-#: ../gaupol/actions/view.py:253
+#: ../gaupol/actions/view.py:277
 msgid "Show or hide the duration column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:270
+#: ../gaupol/actions/view.py:294
 msgid "_End"
 msgstr "_Ende"
 
-#: ../gaupol/actions/view.py:271
+#: ../gaupol/actions/view.py:295
 msgid "Show or hide the end column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:288
+#: ../gaupol/actions/view.py:312
 msgid "_Main Text"
 msgstr "_Haupttext"
 
-#: ../gaupol/actions/view.py:289
+#: ../gaupol/actions/view.py:313
 msgid "Show or hide the main text column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:306
+#: ../gaupol/actions/view.py:330
 msgid "_Main Toolbar"
 msgstr "Haupt_werkzeugleiste"
 
-#: ../gaupol/actions/view.py:307
+#: ../gaupol/actions/view.py:331
 msgid "Show or hide the main toolbar"
 msgstr "Die Hauptwerkzeugleiste anzeigen oder verstecken"
 
-#: ../gaupol/actions/view.py:320
+#: ../gaupol/actions/view.py:344
 msgid "_No."
 msgstr "_Nr."
 
-#: ../gaupol/actions/view.py:321
+#: ../gaupol/actions/view.py:345
 msgid "Show or hide the number column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:337
+#: ../gaupol/actions/view.py:361
 msgid "_Output Window"
 msgstr "_Ausgabefenster"
 
-#: ../gaupol/actions/view.py:338
+#: ../gaupol/actions/view.py:362
 msgid "Show or hide the output window"
 msgstr "Das Ausgabefenster anzeigen oder verstecken"
 
-#: ../gaupol/actions/view.py:351
+#: ../gaupol/actions/view.py:375
 msgid "_Start"
 msgstr "S_tart"
 
-#: ../gaupol/actions/view.py:352
+#: ../gaupol/actions/view.py:376
 msgid "Show or hide the start column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:368
+#: ../gaupol/actions/view.py:392
 msgid "_Statusbar"
 msgstr "Status_leiste"
 
-#: ../gaupol/actions/view.py:369
+#: ../gaupol/actions/view.py:393
 msgid "Show or hide the statusbar"
 msgstr "Die Statusleiste anzeigen oder verstecken"
 
-#: ../gaupol/actions/view.py:383
+#: ../gaupol/actions/view.py:407
 msgid "_Translation Text"
 msgstr "_Übersetzungstext"
 
-#: ../gaupol/actions/view.py:384
+#: ../gaupol/actions/view.py:408
 msgid "Show or hide the translation text column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:401
+#: ../gaupol/actions/view.py:425
 msgid "_Video Toolbar"
 msgstr "_Video-Werkzeugleiste"
 
-#: ../gaupol/actions/view.py:402
+#: ../gaupol/actions/view.py:426
 msgid "Show or hide the video toolbar"
 msgstr "Die Video-Werkzeugleiste anzeigen oder verstecken"
 
@@ -2469,16 +2481,16 @@ msgstr "Alle Dateien"
 msgid "All supported files"
 msgstr "Alle unterstützten Dateien"
 
-#: ../gaupol/dialogs/file.py:67
+#: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (%(pattern)s)"
-msgstr "%(format)s (%(pattern)s)"
+msgid "%(format)s (*%(extension)s)"
+msgstr ""
 
-#: ../gaupol/dialogs/file.py:109
+#: ../gaupol/dialogs/file.py:110
 msgid "Auto-detected"
 msgstr "Automatisch erkannt"
 
-#: ../gaupol/dialogs/file.py:111
+#: ../gaupol/dialogs/file.py:112
 msgid "Other…"
 msgstr "Andere…"
 
@@ -2730,6 +2742,27 @@ msgstr "<b>Zeilenumbrüche:</b> %s"
 #, python-format
 msgid "%s translation"
 msgstr "%s-Übersetzung"
+
+#~ msgid "24 fps"
+#~ msgstr "24 fps"
+
+#~ msgid "25 fps"
+#~ msgstr "25 fps"
+
+#~ msgid "30 fps"
+#~ msgstr "30 fps"
+
+#~ msgid "2_4 fps"
+#~ msgstr "2_4 fps"
+
+#~ msgid "2_5 fps"
+#~ msgstr "2_5 fps"
+
+#~ msgid "_30 fps"
+#~ msgstr "_30 fps"
+
+#~ msgid "%(format)s (%(pattern)s)"
+#~ msgstr "%(format)s (%(pattern)s)"
 
 #~ msgid "Adjust all open p_rojects"
 #~ msgstr "Alle _offenen Projekte anpassen"

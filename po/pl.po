@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-07 17:15+0200\n"
+"POT-Creation-Date: 2011-04-10 17:31+0300\n"
 "PO-Revision-Date: 2006-06-03 11:39+0200\n"
 "Last-Translator:  <nierozwazny@o2.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -1280,15 +1280,19 @@ msgid "Subtitle position"
 msgstr ""
 
 #: ../aeidon/enums/framerates.py:27
-msgid "24 fps"
-msgstr ""
+msgid "23.976 fps"
+msgstr "23.976 fps"
 
 #: ../aeidon/enums/framerates.py:34
-msgid "25 fps"
-msgstr "25 fps"
+msgid "24.000 fps"
+msgstr ""
 
 #: ../aeidon/enums/framerates.py:41
-msgid "30 fps"
+msgid "25.000 fps"
+msgstr ""
+
+#: ../aeidon/enums/framerates.py:48
+msgid "29.970 fps"
 msgstr ""
 
 #: ../aeidon/enums/newlines.py:27
@@ -1901,126 +1905,134 @@ msgid "_Columns"
 msgstr "_Kolumny"
 
 #: ../gaupol/actions/view.py:119
-msgid "2_4 fps"
-msgstr ""
+msgid "2_3.976 fps"
+msgstr "2_3.976 fps"
 
 #: ../gaupol/actions/view.py:120
-msgid "Calculate nonnative units with a framerate of 24 fps"
+msgid "Calculate nonnative units with a framerate of 23.976 fps"
 msgstr ""
 
 #: ../gaupol/actions/view.py:143
-msgid "2_5 fps"
-msgstr "2_5 fps"
+msgid "2_4.000 fps"
+msgstr ""
 
 #: ../gaupol/actions/view.py:144
-msgid "Calculate nonnative units with a framerate of 25 fps"
+msgid "Calculate nonnative units with a framerate of 24.000 fps"
 msgstr ""
 
 #: ../gaupol/actions/view.py:167
-msgid "_30 fps"
+msgid "2_5.000 fps"
 msgstr ""
 
 #: ../gaupol/actions/view.py:168
-msgid "Calculate nonnative units with a framerate of 30 fps"
+msgid "Calculate nonnative units with a framerate of 25.000 fps"
 msgstr ""
 
-#: ../gaupol/actions/view.py:189
+#: ../gaupol/actions/view.py:191
+msgid "2_9.970 fps"
+msgstr ""
+
+#: ../gaupol/actions/view.py:192
+msgid "Calculate nonnative units with a framerate of 29.970 fps"
+msgstr ""
+
+#: ../gaupol/actions/view.py:213
 msgid "F_ramerate"
 msgstr ""
 
-#: ../gaupol/actions/view.py:208
+#: ../gaupol/actions/view.py:232
 msgid "_Frames"
 msgstr ""
 
-#: ../gaupol/actions/view.py:209
+#: ../gaupol/actions/view.py:233
 msgid "Show positions as frames"
 msgstr "Pokazuj pozycję jako klatki"
 
-#: ../gaupol/actions/view.py:230
+#: ../gaupol/actions/view.py:254
 msgid "_Times"
 msgstr ""
 
-#: ../gaupol/actions/view.py:231
+#: ../gaupol/actions/view.py:255
 msgid "Show positions as times"
 msgstr "Pokazuj pozycję jako czasy"
 
-#: ../gaupol/actions/view.py:252
+#: ../gaupol/actions/view.py:276
 msgid "_Duration"
 msgstr "_Czas trwania"
 
-#: ../gaupol/actions/view.py:253
+#: ../gaupol/actions/view.py:277
 msgid "Show or hide the duration column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:270
+#: ../gaupol/actions/view.py:294
 msgid "_End"
 msgstr ""
 
-#: ../gaupol/actions/view.py:271
+#: ../gaupol/actions/view.py:295
 msgid "Show or hide the end column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:288
+#: ../gaupol/actions/view.py:312
 msgid "_Main Text"
 msgstr "_Główny tekst"
 
-#: ../gaupol/actions/view.py:289
+#: ../gaupol/actions/view.py:313
 msgid "Show or hide the main text column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:306
+#: ../gaupol/actions/view.py:330
 msgid "_Main Toolbar"
 msgstr "Pasek _narzędziowy"
 
-#: ../gaupol/actions/view.py:307
+#: ../gaupol/actions/view.py:331
 msgid "Show or hide the main toolbar"
 msgstr ""
 
-#: ../gaupol/actions/view.py:320
+#: ../gaupol/actions/view.py:344
 msgid "_No."
 msgstr "_Nr"
 
-#: ../gaupol/actions/view.py:321
+#: ../gaupol/actions/view.py:345
 msgid "Show or hide the number column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:337
+#: ../gaupol/actions/view.py:361
 msgid "_Output Window"
 msgstr "_Okno wyjścia"
 
-#: ../gaupol/actions/view.py:338
+#: ../gaupol/actions/view.py:362
 msgid "Show or hide the output window"
 msgstr ""
 
-#: ../gaupol/actions/view.py:351
+#: ../gaupol/actions/view.py:375
 msgid "_Start"
 msgstr ""
 
-#: ../gaupol/actions/view.py:352
+#: ../gaupol/actions/view.py:376
 msgid "Show or hide the start column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:368
+#: ../gaupol/actions/view.py:392
 msgid "_Statusbar"
 msgstr "Pasek _stanu"
 
-#: ../gaupol/actions/view.py:369
+#: ../gaupol/actions/view.py:393
 msgid "Show or hide the statusbar"
 msgstr ""
 
-#: ../gaupol/actions/view.py:383
+#: ../gaupol/actions/view.py:407
 msgid "_Translation Text"
 msgstr "Tekst _tłumaczenia"
 
-#: ../gaupol/actions/view.py:384
+#: ../gaupol/actions/view.py:408
 msgid "Show or hide the translation text column"
 msgstr ""
 
-#: ../gaupol/actions/view.py:401
+#: ../gaupol/actions/view.py:425
 msgid "_Video Toolbar"
 msgstr "Pasek _wideo"
 
-#: ../gaupol/actions/view.py:402
+#: ../gaupol/actions/view.py:426
 msgid "Show or hide the video toolbar"
 msgstr ""
 
@@ -2422,16 +2434,16 @@ msgstr "Wszystkie pliki"
 msgid "All supported files"
 msgstr ""
 
-#: ../gaupol/dialogs/file.py:67
+#: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (%(pattern)s)"
+msgid "%(format)s (*%(extension)s)"
 msgstr ""
 
-#: ../gaupol/dialogs/file.py:109
+#: ../gaupol/dialogs/file.py:110
 msgid "Auto-detected"
 msgstr "Automatyczne wykrywanie"
 
-#: ../gaupol/dialogs/file.py:111
+#: ../gaupol/dialogs/file.py:112
 msgid "Other…"
 msgstr ""
 
@@ -2679,6 +2691,12 @@ msgstr ""
 #, python-format
 msgid "%s translation"
 msgstr "%s tłumaczenie"
+
+#~ msgid "25 fps"
+#~ msgstr "25 fps"
+
+#~ msgid "2_5 fps"
+#~ msgstr "2_5 fps"
 
 #~ msgid "_Optimal duration:"
 #~ msgstr "_Optymalny czas trwania:"
@@ -3083,9 +3101,6 @@ msgstr "%s tłumaczenie"
 #~ msgid "_Framerate"
 #~ msgstr "_Klatki"
 
-#~ msgid "2_3.976 fps"
-#~ msgstr "2_3.976 fps"
-
 #~ msgid "Calculate unnative units with framerate 23.976 fps"
 #~ msgstr "Przelicza jednostki czasu przy 23.976 fps"
 
@@ -3261,9 +3276,6 @@ msgstr "%s tłumaczenie"
 
 #~ msgid "Fo_rmat:"
 #~ msgstr "Fo_rmat:"
-
-#~ msgid "23.976 fps"
-#~ msgstr "23.976 fps"
 
 #~ msgid "29.97 fps"
 #~ msgstr "29.97 fps"
