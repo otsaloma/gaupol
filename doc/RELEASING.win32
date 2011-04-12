@@ -79,10 +79,11 @@ Releasing a New Version for Windows
 ===================================
 
  1. Generate translations on a Unix machine (or wherever you have
-    gettext and intltool available) [1.1]. Skip this step while all
-    translations (GtkBuilder files, Python code, desktop-style files)
-    do not work consistently, at least due to lacking mystic piles of
-    code presented as solutions for pygtk bug #574520.
+    gettext and intltool available) [1.1]. While all translations
+    (GtkBuilder files, Python code, desktop-style files) do not work
+    consistently, at least due to lacking mystic piles of code
+    presented as solutions for pygtk bug #574520, delete all po-files
+    prior to running 'install_data'.
 
      [1.1] ./setup.py clean install_data -d /tmp
 
