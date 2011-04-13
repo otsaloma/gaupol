@@ -5,6 +5,7 @@ rmdir /S /Q build dist
 set GTKDIR=%SYSTEMDRIVE%\gtk+
 set PYDIR=%SYSTEMDRIVE%\python26
 %PYDIR%\python.exe winsetup.py py2exe
+pause
 xcopy %GTKDIR%\etc dist\etc /s /i /y
 xcopy %GTKDIR%\lib\*.dll dist\lib /s /i /y
 xcopy %GTKDIR%\share\icons\hicolor\*.theme dist\share\icons\hicolor /i /y

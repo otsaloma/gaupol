@@ -27,21 +27,21 @@ Preparing to Build Windows Installers
      [3.1] http://chardet.feedparser.org/
      [3.2] c:\python26\python.exe setup.py install_lib
 
- 4. Install PyEnchant and the enchant library [4.1].
+ 4. Install PyEnchant and the enchant library [4.1]. Install
+    PyGtkSpell from GRAMPS [4.2] and GtkSpell from Pidgin [4.3]. Make
+    a copy of the libenchant DLL shipped with PyEnchant [4.4] as [4.5]
+    (note the different basename!) so that it is available to GtkSpell.
 
      [4.1] http://www.rfk.id.au/software/pyenchant/download.html
-
-    TODO: PyGtkSpell is available from GRAMPS [4.2] and GtkSpell from
-    Pidgin [4.3], but as of writing this (20090707) they don't seem to
-    work with PyEnchant. PyEnchant provides libenchant-1.dll, while
-    GtkSpell expects libenchant.dll. Simply making a copy of the DLL
-    results in PyEnchant not finding any dictionaries.
-
      [4.2] http://gramps-project.org/wiki/index.php?title=Windows_installer
      [4.3] http://developer.pidgin.im/wiki/BuildingWinPidgin#GtkSpell
+     [4.5] c:\python26\...\libenchant-1.dll
+     [4.4] c:\gtk+\bin\libenchant.dll
 
  5. Install GTK+. The easiest way seems to be to use the all-in-one
     bundle [5.1], although it may include some unnecessary files.
+    Unpack to %SYSTEMDRIVE%\gtk+ and add %SYSTEMDRIVE%\gtk+\bin to
+    %PATH%.
 
      [5.1] http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/
 
@@ -90,16 +90,24 @@ Releasing a New Version for Windows
  2. Copy the whole top-level gaupol directory to a Windows machine, to
     %SYSTEMDRIVE%\gaupol-X.Y.Z.
 
- 3. Run the 'tools\py2exe.bat' installation script. This places a
-    whole lot of files under the 'dist' directory. You should be able
-    to run gaupol from 'gaupol.exe' in that directory. If you get a
-    missing DLL error, you will need to edit 'tools\py2exe.bat' to
-    copy the necessary DLLs from wherever to somewhere under 'dist'.
-    If you get a Python ImportError, you will need to edit
-    'winsetup.py' to include the missing module or package.
+ 3. Run the 'tools\py2exe.bat' installation script. If py2exe fails to
+    find some DLL, it is probably just lacking from the not so
+    all-in-one GTK+ bundle. Find the DLL from [3.1] or [3.2] and add
+    it to the GTK+ bundle directory.
+
+     [3.1] http://ftp.gnome.org/pub/GNOME/binaries/win32/
+     [3.2] http://ftp.gnome.org/pub/GNOME/binaries/win32/dependencies/
+
+    py2ece places a whole lot of files under the 'dist' directory. You
+    should be able to run gaupol from 'gaupol.exe' in that directory.
+    If you get a missing DLL error, you will need to edit
+    'tools\py2exe.bat' to copy the necessary DLLs from wherever to
+    somewhere under 'dist'. If you get a Python ImportError, you will
+    need to edit 'winsetup.py' to include the missing module or
+    package.
 
  4. Open 'tools\gaupol.iss' using Inno Setup. Update version numbers
-    and file names. Compile the installer. Run the installer and run
+    and filenames. Compile the installer. Run the installer and run
     the installed version of gaupol to make sure that they work. Check
     that extensions, pattern files, spell-check and encoding
     auto-detection work.
