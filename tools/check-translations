@@ -2,15 +2,23 @@
 # -*- coding: utf-8-unix -*-
 
 # Check translation files for common errors.
+# Usage: check-translations [XX[_YY[@ZZ]]...]
 
 import codecs
 import glob
 import os
+import sys
 
+args = tuple(sys.argv[1:])
+args = tuple("%s.po" % x for x in args)
 os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
 for name in sorted(glob.glob("*.po")):
+    if args and not name in args:
+        continue
     fobj = codecs.open(name, "r", "utf_8")
     lineno = 0
+    nbad = 0
+    ntotal = 0
     for line in fobj:
         lineno += 1
         line = line.strip()
@@ -41,11 +49,13 @@ for name in sorted(glob.glob("*.po")):
         if not msgstr:
             continue
         pos = (name, lineno_msgstr)
+        ntotal += 1
 
         # Check that the translation of a label includes
         # a keyboard accelerator defined by an underscore.
         if "_" in msgid:
             if not "_" in msgstr:
+                nbad += 1
                 print "%s:%d: missing accelerator in" % pos
                 print '"%s"' % msgid
                 print '"%s"' % msgstr
@@ -55,6 +65,7 @@ for name in sorted(glob.glob("*.po")):
         # a terminating colon.
         if msgid.endswith(":"):
             if not msgstr.endswith(":"):
+                nbad += 1
                 print "%s:%d: missing colon in" % pos
                 print '"%s"' % msgid
                 print '"%s"' % msgstr
@@ -64,6 +75,7 @@ for name in sorted(glob.glob("*.po")):
         # an ellipsis defined by three dots.
         if "..." in msgid:
             if not "..." in msgstr:
+                nbad += 1
                 print "%s:%d: missing ellipsis in" % pos
                 print '"%s"' % msgid
                 print '"%s"' % msgstr
@@ -73,7 +85,10 @@ for name in sorted(glob.glob("*.po")):
         # an ellipsis defined by the Unicode character.
         if u"…" in msgid:
             if not u"…" in msgstr:
+                nbad += 1
                 print "%s:%d: missing ellipsis in" % pos
                 print '"%s"' % msgid
                 print '"%s"' % msgstr
                 print ""
+
+    print "%s: %d bad, %d good messages" % (name, nbad, ntotal - nbad)

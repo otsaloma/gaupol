@@ -7,10 +7,20 @@ translations at the head of the master branch.
     https://github.com/otsaloma/gaupol/tree/master/po
 
 To try your translation in the source directory, you can compile it
-to the "locale" directory (which does not exist by default).
+to the "locale" directory (which does not exist by default). In
+addition to compiling the mo-file, the desktop-style data files need
+to be translated, which is most conveniently done using setup.py's
+install_data command.
 
     mkdir -p locale/XX/LC_MESSAGES
     msgfmt -cv po/XX.po -o locale/XX/LC_MESSAGES/gaupol.mo
+    ./setup.py install_data -d /tmp/gaupol
     bin/gaupol
+
+A script has been written to check translation files for some common
+potential errors. You can use it to check your translation using the
+following command.
+
+    tools/check-translations [XX...]
 
 When done, send your translation by email to <otsaloma@iki.fi>.
