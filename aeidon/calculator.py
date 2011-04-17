@@ -121,6 +121,24 @@ class Calculator(object):
                 0 <= seconds <= 59 and
                 0 <= mseconds <= 999)
 
+    def parse_time(self, time):
+        """Parse syntactically sloppy `time` to valid format.
+
+        >>> calc = aeidon.Calculator()
+        >>> calc.parse_time("1:2:3,4")
+        '01:02:03.400'
+        """
+        time = time.strip()
+        sign = ("-" if time.startswith("-") else "")
+        time = time.replace("-", "")
+        time = time.replace(",", ".")
+        hours, minutes, seconds = map(float, time.split(":"))
+        return "%s%02.0f:%02.0f:%02.0f.%03.0f" % (sign,
+                                                  hours,
+                                                  minutes,
+                                                  int(seconds),
+                                                  (seconds % 1) * 1000)
+
     def round_time(self, time, decimals):
         """Round `time` to amount of `decimals` in seconds."""
         seconds = self.time_to_seconds(time)

@@ -27,8 +27,12 @@ class SubRip(aeidon.SubtitleFile):
     """SubRip file."""
 
     _re_time_line = re.compile((
-            r"^(-?\d\d:\d\d:\d\d,\d\d\d) -->"
-            r" (-?\d\d:\d\d:\d\d,\d\d\d)"
+            # Techically all these fields should have fixed widths, but in the
+            # name of being liberal in accepting input, accept lesser widths
+            # assuming that they are just lacking zero-padding from the side
+            # that is further from the decimal point.
+            r"^(-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3}) -->"
+            r" (-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3})"
             r"(  X1:(\d+) X2:(\d+) Y1:(\d+) Y2:(\d+))?\s*$"))
 
     format = aeidon.formats.SUBRIP
@@ -62,8 +66,8 @@ class SubRip(aeidon.SubtitleFile):
                 subtitles[-1].main_text += line
                 continue
             subtitle = self._get_subtitle()
-            subtitle.start = match.group(1).replace(",", ".")
-            subtitle.end = match.group(2).replace(",", ".")
+            subtitle.start = subtitle.calc.parse_time(match.group(1))
+            subtitle.end = subtitle.calc.parse_time(match.group(2))
             if match.group(3) is not None:
                 subtitle.subrip.x1 = int(match.group(4))
                 subtitle.subrip.x2 = int(match.group(5))
