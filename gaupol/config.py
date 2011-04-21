@@ -33,7 +33,7 @@ config_defaults = {
         "show_main_toolbar": True,
         "show_statusbar": True,
         "show_video_toolbar": False,
-        "size": [600, 371],
+        "size": [700, 433],
         "toolbar_style": gaupol.toolbar_styles.DEFAULT,
         },
     "capitalization": {
@@ -172,7 +172,7 @@ config_defaults = {
         "maximized": False,
         "pages": [],
         "remove_blank": True,
-        "size": [gaupol.util.char_to_px(98), gaupol.util.lines_to_px(34)],
+        "size": [700, 433],
         "target": gaupol.targets.CURRENT,
         },
     }
