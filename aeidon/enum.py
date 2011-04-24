@@ -97,7 +97,8 @@ class Enumeration(list):
         fruits.MANGO.size = 15
 
     Note that there is no finalization of an enumeration. New items can always
-    be added just by assigning a new attribute to the enumeration.
+    be added just by assigning a new attribute to the enumeration. Likewise,
+    existing items can always be removed using :func:`delattr`.
     """
 
     NONE = None
@@ -109,6 +110,11 @@ class Enumeration(list):
         return list.__contains__(self, item)
 
     if not aeidon.debug: del __contains__
+
+    def __delattr__(self, name):
+        """Delete enumeration item and attribute."""
+        list.remove(self, getattr(self, name))
+        return object.__delattr__(self, name)
 
     def __delitem__(self, *args, **kwargs):
         raise NotImplementedError

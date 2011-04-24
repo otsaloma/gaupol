@@ -1,7 +1,12 @@
 Gaupol 0.18
 ===========
 
- [ ] Add ability to use arbitrary custom framerates
+ [ ] Add extension that allows use of custom framerates
+     - Restoring previous framerate upon startup in widgets that are
+       initialized before the extension is initialized (i.e. restore
+       in extension setup?)
+     - Separators in combo boxes?
+     - Preferences dialog
  [X] Add "Get more extensions" to the preferences dialog
  [X] Relax SubRip file parsing in unambiguous cases (#634129)
  [X] Add Brazilian Portuguese translation

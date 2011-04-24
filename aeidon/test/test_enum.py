@@ -64,6 +64,12 @@ class TestEnumeration(aeidon.TestCase):
         assert self.fruits.APPLE in self.fruits
         assert self.fruits.MANGO in self.fruits
 
+    def test___delattr__(self):
+        value = self.fruits.MANGO
+        delattr(self.fruits, "MANGO")
+        assert not hasattr(self.fruits, "MANGO")
+        assert not value in self.fruits
+
     def test___setattr__(self):
         assert self.fruits.APPLE == 0
         assert self.fruits.MANGO == 1

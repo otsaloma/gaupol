@@ -84,6 +84,7 @@
         <menuitem name="24_000" action="show_framerate_24_000"/>
         <menuitem name="25_000" action="show_framerate_25_000"/>
         <menuitem name="29_970" action="show_framerate_29_970"/>
+        <separator/>
         <placeholder name="1">
         </placeholder>
       </menu>
