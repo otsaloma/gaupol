@@ -23,6 +23,29 @@ import os
 _ = aeidon.i18n._
 
 
+class PreferencesDialog(gaupol.BuilderDialog):
+
+    """Dialog for editing list of custom framerates."""
+
+    _widgets = ("add_button", "remove_button", "tree_view")
+
+    def __init__(self, parent):
+        """Initialize a :class:`PreferencesDialog` object."""
+        directory = os.path.abspath(os.path.dirname(__file__))
+        ui_file_path = os.path.join(directory, "preferences-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, ui_file_path)
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+
+    def _on_add_button_clicked(self, *args):
+        """Add a new framerate."""
+        pass
+
+    def _on_remove_button_clicked(self, *args):
+        """Remove the selected framerate."""
+        pass
+
+
 class CustomFrameratesExtension(gaupol.Extension):
 
     """Using custom, non-standard framerates."""
@@ -90,6 +113,11 @@ class CustomFrameratesExtension(gaupol.Extension):
         self._conf = gaupol.conf.extensions.custom_framerates
         self.application = application
         self._init_framerates()
+
+    def show_preferences_dialog(self, parent):
+        """Show a dialog to edit list of custom framerates."""
+        dialog = PreferencesDialog(parent)
+        gaupol.util.flash_dialog(dialog)
 
     def teardown(self, application):
         """End use of extension with `application`."""
