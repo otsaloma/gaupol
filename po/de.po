@@ -1,14 +1,14 @@
 # Translation of gaupol to German
 # Copyright (C) 2005-2007 Osmo Salomaa.
 # This file is distributed under the same license as the gaupol package.
-# Chris Leick <c.leick@vollbio.de>, 2009.
+# Chris Leick <c.leick@vollbio.de>, 2009, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.15\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: gaupol 0.17.2-1\n"
+"Report-Msgid-Bugs-To: python-apps-team@lists.alioth.debian.org\n"
 "POT-Creation-Date: 2011-04-10 17:31+0300\n"
-"PO-Revision-Date: 2009-09-23 22:11+GMT\n"
+"PO-Revision-Date: 2011-05-02 21:39+0100\n"
 "Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -32,7 +32,7 @@ msgstr "U_ntertitel:"
 
 #: ../data/ui/debug-dialog.ui.h:1
 msgid "An unhandled exception occured"
-msgstr ""
+msgstr "Eine nicht behandelte Ausnahme ist aufgetreten."
 
 #: ../data/ui/debug-dialog.ui.h:2
 msgid ""
@@ -57,16 +57,16 @@ msgstr "Laufzeiten anpassen"
 
 #: ../data/ui/duration-dialog.ui.h:4
 msgid "Adjust all _open projects"
-msgstr ""
+msgstr "Alle _offenen Projekte anpassen"
 
 #: ../data/ui/duration-dialog.ui.h:5
 #: ../data/ui/text-assistant/line-break-opts-page.ui.h:1
 msgid "Limits"
-msgstr ""
+msgstr "Einschränkungen"
 
 #: ../data/ui/duration-dialog.ui.h:6
 msgid "Ma_ximum duration:"
-msgstr "Ma_ximale Dauer:"
+msgstr "Ma_ximale Laufzeit:"
 
 #: ../data/ui/duration-dialog.ui.h:7 ../data/ui/framerate-dialog.ui.h:6
 #: ../data/ui/language-dialog.ui.h:7 ../data/ui/search-dialog.ui.h:13
@@ -74,11 +74,11 @@ msgstr "Ma_ximale Dauer:"
 #: ../data/ui/text-assistant/line-break-opts-page.ui.h:3
 #: ../data/ui/transform-dialog.ui.h:7
 msgid "Subtitles"
-msgstr ""
+msgstr "Untertitel"
 
 #: ../data/ui/duration-dialog.ui.h:8
 msgid "Theoretic Duration"
-msgstr ""
+msgstr "Theoretische Laufzeit"
 
 #: ../data/ui/duration-dialog.ui.h:9
 msgid "_Adjust"
@@ -90,23 +90,23 @@ msgstr "A_bstand zwischen Untertiteln:"
 
 #: ../data/ui/duration-dialog.ui.h:11
 msgid "_Lengthen duration to match reading speed"
-msgstr ""
+msgstr "_Laufzeit zur Anpassung an Lesegeschwindigkeit verlängern"
 
 #: ../data/ui/duration-dialog.ui.h:12
 msgid "_Minimum duration:"
-msgstr "_Mindestdauer:"
+msgstr "_MindestLaufzeit:"
 
 #: ../data/ui/duration-dialog.ui.h:13
 msgid "_Reading speed:"
-msgstr ""
+msgstr "Lesegesch_windigkeit"
 
 #: ../data/ui/duration-dialog.ui.h:14
 msgid "_Shorten duration to match reading speed"
-msgstr ""
+msgstr "Lauf_zeit zur Anpassung an Lesegeschwindigkeit verkürzen"
 
 #: ../data/ui/duration-dialog.ui.h:15
 msgid "characters per second"
-msgstr ""
+msgstr "Zeichen pro Sekunde"
 
 #: ../data/ui/duration-dialog.ui.h:16
 msgid "s_econds"
@@ -118,7 +118,7 @@ msgstr "Seku_nden"
 
 #: ../data/ui/duration-dialog.ui.h:18
 msgid "secon_ds"
-msgstr "Sekun_den"
+msgstr "Se_kunden"
 
 #: ../data/ui/encoding-dialog.ui.h:1 ../data/ui/preferences-dialog.ui.h:4
 msgid "Character Encodings"
@@ -141,8 +141,9 @@ msgid "Convert c_urrent project"
 msgstr "Aktuelles _Projekt konvertieren"
 
 #: ../data/ui/framerate-dialog.ui.h:5
+# FIXME s/Framerate/Frame rate/
 msgid "Framerate"
-msgstr ""
+msgstr "Bildfrequenz"
 
 #: ../data/ui/framerate-dialog.ui.h:7
 msgid "_Input:"
@@ -206,7 +207,7 @@ msgstr "_Betrag:"
 
 #: ../data/ui/insert-dialog.ui.h:3
 msgid "_Insert"
-msgstr ""
+msgstr "_Einfügen"
 
 #: ../data/ui/insert-dialog.ui.h:4
 msgid "_Position:"
@@ -230,11 +231,11 @@ msgstr "A_ktuelles Projekt prüfen"
 
 #: ../data/ui/language-dialog.ui.h:5
 msgid "Configure Spell-Check"
-msgstr ""
+msgstr "Rechtschreibprüfung konfigurieren"
 
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: ../data/ui/multiclose-dialog.ui.h:1 ../gaupol/agents/close.py:52
 #: ../gaupol/agents/close.py:81
@@ -248,7 +249,7 @@ msgstr "Wenn Sie nicht speichern, sind die Änderungen für immer verloren."
 
 #: ../data/ui/multiclose-dialog.ui.h:3
 msgid "Save changes to documents before closing?"
-msgstr ""
+msgstr "Änderungen an Dokumenten vor dem Schließen speichern?"
 
 #: ../data/ui/multiclose-dialog.ui.h:4
 msgid "Select the _main documents you want to save:"
@@ -273,15 +274,15 @@ msgstr "Zeile_numbrüche:"
 
 #: ../data/ui/multisave-dialog.ui.h:4
 msgid "Save All As"
-msgstr ""
+msgstr "Alles speichern als"
 
 #: ../data/ui/multisave-dialog.ui.h:5
 msgid "Save in _folder:"
-msgstr ""
+msgstr "Speichern im _Ordner:"
 
 #: ../data/ui/multisave-dialog.ui.h:6
 msgid "Select A Folder"
-msgstr ""
+msgstr "Wählen Sie einen Ordner"
 
 #: ../data/ui/open-dialog.ui.h:1
 msgid "Align _method:"
@@ -297,11 +298,11 @@ msgstr "_Immer Zeichenkodierung UTF-8 verwenden"
 
 #: ../data/ui/preferences-dialog.ui.h:3
 msgid "Aut_o-detection"
-msgstr ""
+msgstr "Auto_matische Erkennung"
 
 #: ../data/ui/preferences-dialog.ui.h:5
 msgid "Chec_k spelling as you type"
-msgstr ""
+msgstr "Recht_schreibung während des Tippens prüfen"
 
 #: ../data/ui/preferences-dialog.ui.h:6
 msgid "Co_mmand:"
@@ -309,7 +310,7 @@ msgstr "_Befehl:"
 
 #: ../data/ui/preferences-dialog.ui.h:7
 msgid "Curr_ent locale encoding"
-msgstr "Aktuelle Locale-Kodierung"
+msgstr "_Aktuelle Locale-Kodierung"
 
 #: ../data/ui/preferences-dialog.ui.h:8
 msgid "Editor"
@@ -329,11 +330,11 @@ msgstr "Datei"
 
 #: ../data/ui/preferences-dialog.ui.h:12
 msgid "Font"
-msgstr ""
+msgstr "Schrift"
 
 #: ../data/ui/preferences-dialog.ui.h:13
 msgid "Line Lengths"
-msgstr ""
+msgstr "Zeilenlängen"
 
 #: ../data/ui/preferences-dialog.ui.h:14
 msgid "Pick the Editor Font"
@@ -353,19 +354,19 @@ msgstr "Zeilen_länge in bearbeitbaren Feldern anzeigen"
 
 #: ../data/ui/preferences-dialog.ui.h:18
 msgid "Spell-Check"
-msgstr ""
+msgstr "Rechtschreibprüfung"
 
 #: ../data/ui/preferences-dialog.ui.h:19
 msgid "Start Position"
-msgstr ""
+msgstr "Startposition"
 
 #: ../data/ui/preferences-dialog.ui.h:20
 msgid "Use _default theme font"
-msgstr "V_orgabeschriftthema benutzen"
+msgstr "_Vorgabeschriftthema benutzen"
 
 #: ../data/ui/preferences-dialog.ui.h:21
 msgid "Video Player"
-msgstr ""
+msgstr "Video-Spieler"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "When opening files, try encodings in the following order:"
@@ -394,7 +395,7 @@ msgstr "Ve_rsatz:"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Show line lengths in list cells"
-msgstr ""
+msgstr "_Zeilenlängen in Listenzellen anzeigen"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 msgid "seconds before selection"
@@ -406,11 +407,11 @@ msgstr "_Ausgabe:"
 
 #: ../data/ui/previewerr-dialog.ui.h:2
 msgid "Preview in video player failed"
-msgstr ""
+msgstr "Vorschau im Video-Spieler fehlgeschlagen"
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
-msgstr ""
+msgstr "Spalten"
 
 #: ../data/ui/search-dialog.ui.h:2 ../gaupol/actions/search.py:33
 msgid "Find"
@@ -475,7 +476,7 @@ msgstr "_Suchen nach:"
 
 #: ../data/ui/shift-dialog.ui.h:1
 msgid "Shift"
-msgstr ""
+msgstr "Verschieben"
 
 #: ../data/ui/shift-dialog.ui.h:2
 msgid "Shift Positions"
@@ -642,7 +643,7 @@ msgstr "Texte in ausge_wählten Untertiteln korrigieren"
 
 #: ../data/ui/text-assistant/intro-page.ui.h:8
 msgid "Tasks"
-msgstr ""
+msgstr "Aufgaben"
 
 #: ../data/ui/text-assistant/intro-page.ui.h:9
 msgid "_Select corrections to perform on texts:"
@@ -650,11 +651,11 @@ msgstr "K_orrekturen auswählen, die auf Texte angewandt werden:"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:1
 msgid "Corrections"
-msgstr ""
+msgstr "Korrekturen"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:2
 msgid "Spell-Check Dictionary"
-msgstr ""
+msgstr "Rechtschreibprüfungswörterbuch"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:3
 msgid "_Join words not found in spell-check dictionary"
@@ -690,15 +691,15 @@ msgstr "B_evorzugte Zeilenumbruchpunkte auswählen:"
 
 #: ../data/ui/transform-dialog.ui.h:1
 msgid "C_orrection:"
-msgstr ""
+msgstr "K_orrektur:"
 
 #: ../data/ui/transform-dialog.ui.h:2
 msgid "Co_rrection:"
-msgstr ""
+msgstr "Ko_rrektur:"
 
 #: ../data/ui/transform-dialog.ui.h:3
 msgid "First Point"
-msgstr ""
+msgstr "Erster Punkt"
 
 #: ../data/ui/transform-dialog.ui.h:4
 msgid "Pre_view Changes"
@@ -706,7 +707,7 @@ msgstr "_Änderungsvorschau"
 
 #: ../data/ui/transform-dialog.ui.h:5
 msgid "Second Point"
-msgstr ""
+msgstr "Zweiter Punkt"
 
 #: ../data/ui/transform-dialog.ui.h:6
 msgid "Su_btitle:"
@@ -843,6 +844,8 @@ msgstr "Satz"
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Add or remove space between a number and the associated unit"
 msgstr ""
+"Leerzeichen zwischen einer Zahl und der dazugehörigen Einheit hinzufügen oder "
+"entfernen"
 
 #: ../data/patterns/Latn.common-error.in.h:2
 msgid "Add or remove spaces around parantheses and square brackets"
@@ -864,6 +867,8 @@ msgstr "Leerzeichen hinter verschiedenen Satzzeichen hinzufügen"
 msgid ""
 "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
+"Die verschiedenen Schreibweisen von Perioden à 12 Stunden auf »a.m.« und "
+"»p.m.« ändern"
 
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
@@ -905,7 +910,7 @@ msgstr "Einen doppelten Apostroph durch ein Anführungszeichen ersetzen"
 
 #: ../data/patterns/Latn.common-error.in.h:16
 msgid "Replace a single clause-terminating dash with two dashes"
-msgstr ""
+msgstr "Einen einzelnen Satzende-Strich durch zwei Striche ersetzen"
 
 #: ../data/patterns/Latn.common-error.in.h:17
 msgid "Replace letter \"O\" with a zero in a number"
@@ -920,7 +925,7 @@ msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:19
 msgid "Space after a dialogue dash"
-msgstr "Leerzeichen nach einem Dialog-Halbgeviertstrich"
+msgstr "Leerzeichen nach einem Dialog-Bindestrich"
 
 #: ../data/patterns/Latn.common-error.in.h:20
 msgid "Space after a starting ellipsis"
@@ -940,7 +945,7 @@ msgstr "Leerzeichen vor Satzzeichen"
 
 #: ../data/patterns/Latn.common-error.in.h:24
 msgid "Space between number and unit"
-msgstr ""
+msgstr "Leerzeichen zwischen Zahl und Einheit"
 
 #: ../data/patterns/Latn.common-error.in.h:25
 msgid "Spaces around a quotation mark"
@@ -952,11 +957,11 @@ msgstr "Leerzeichen um Klammern"
 
 #: ../data/patterns/Latn.common-error.in.h:27
 msgid "Spelling of a.m. and p.m."
-msgstr ""
+msgstr "Schreibweise von a.m. und p.m."
 
 #: ../data/patterns/Latn.common-error.in.h:28
 msgid "Terminating double-dashes"
-msgstr ""
+msgstr "Abschließende Doppelbindestriche"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:1
 msgid "One-line song lyrics between number signs"
@@ -981,8 +986,8 @@ msgstr "Liedtexte entfernen, die mit oder zwischen Rauten beginnen"
 #: ../data/patterns/Latn.hearing-impaired.in.h:6
 msgid "Replace the name of the speaker before a colon with a dialogue dash"
 msgstr ""
-"Den Namen des Sprechers vor einem Doppelpunkt mit einem Dialog-"
-"Halbgeviertstrich ersetzen"
+"Den Namen des Sprechers vor einem Doppelpunkt mit einem Gedankenstrich "
+"ersetzen"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:7
 msgid "Song lyrics between number signs"
@@ -1071,7 +1076,7 @@ msgstr "Untertitel teilen"
 
 #: ../aeidon/agents/format.py:97
 msgid "Adding dialogue dashes"
-msgstr ""
+msgstr "Gedankenstriche hinzufügen"
 
 #: ../aeidon/agents/format.py:120
 msgid "Changing case"
@@ -1079,15 +1084,15 @@ msgstr "Groß-/Kleinschreibung ändern"
 
 #: ../aeidon/agents/format.py:139
 msgid "Italicizing"
-msgstr ""
+msgstr "Kursiv setzen"
 
 #: ../aeidon/agents/format.py:159
 msgid "Removing dialogue dashes"
-msgstr ""
+msgstr "Gedankenstriche entfernen"
 
 #: ../aeidon/agents/format.py:201
 msgid "Unitalicizing"
-msgstr ""
+msgstr "Schrift aufrichten"
 
 #: ../aeidon/agents/position.py:140
 msgid "Adjusting durations"
@@ -1205,7 +1210,7 @@ msgstr "Türkisch"
 
 #: ../aeidon/encodings.py:50
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugiesisch"
 
 #: ../aeidon/encodings.py:51 ../aeidon/encodings.py:108
 msgid "Icelandic"
@@ -1305,19 +1310,19 @@ msgstr "Untertitelposition"
 
 #: ../aeidon/enums/framerates.py:27
 msgid "23.976 fps"
-msgstr ""
+msgstr "23,976 fps"
 
 #: ../aeidon/enums/framerates.py:34
 msgid "24.000 fps"
-msgstr ""
+msgstr "24,000 fps"
 
 #: ../aeidon/enums/framerates.py:41
 msgid "25.000 fps"
-msgstr ""
+msgstr "25,000 fps"
 
 #: ../aeidon/enums/framerates.py:48
 msgid "29.970 fps"
-msgstr ""
+msgstr "29,970 fps"
 
 #: ../aeidon/enums/newlines.py:27
 msgid "Mac (classic)"
@@ -1345,7 +1350,7 @@ msgstr "_Lesezeichen"
 
 #: ../data/extensions/bookmarks/bookmarks.py:182
 msgid "_Add…"
-msgstr "_Hinzufügen…"
+msgstr "_Hinzufügen …"
 
 #: ../data/extensions/bookmarks/bookmarks.py:183
 msgid "Add a bookmark for the current subtitle"
@@ -1397,7 +1402,7 @@ msgstr "Untertiteldateien bearbeiten"
 
 #: ../data/gaupol.desktop.in.h:2
 msgid "Gaupol"
-msgstr ""
+msgstr "Gaupol"
 
 #: ../data/gaupol.desktop.in.h:3
 msgid "Gaupol Subtitle Editor"
@@ -1477,7 +1482,7 @@ msgstr "Die aktuelle Auswahl bis zum letzten Untertitel hinauf ausdehnen"
 
 #: ../gaupol/actions/edit.py:205
 msgid "_Insert Subtitles…"
-msgstr "_Untertitel einfügen…"
+msgstr "_Untertitel einfügen …"
 
 #: ../gaupol/actions/edit.py:206
 msgid "Insert"
@@ -1485,7 +1490,7 @@ msgstr "Einfügen"
 
 #: ../gaupol/actions/edit.py:208
 msgid "Insert new subtitles"
-msgstr ""
+msgstr "Neue Untertitel einfügen"
 
 #: ../gaupol/actions/edit.py:226
 msgid "_Invert Selection"
@@ -1561,7 +1566,7 @@ msgstr "Die letzte Aktion rückgängig machen"
 
 #: ../gaupol/actions/file.py:32
 msgid "_Append File…"
-msgstr "_Datei anhängen…"
+msgstr "_Datei anhängen …"
 
 #: ../gaupol/actions/file.py:34
 msgid "Append subtitles from file to the current project"
@@ -1601,7 +1606,7 @@ msgstr "Neues Projekt erstellen"
 
 #: ../gaupol/actions/file.py:130 ../gaupol/actions/file.py:149
 msgid "_Open…"
-msgstr "_Öffnen…"
+msgstr "_Öffnen …"
 
 #: ../gaupol/actions/file.py:131 ../gaupol/actions/file.py:150
 #: ../gaupol/agents/open.py:139 ../gaupol/agents/open.py:147
@@ -1614,7 +1619,7 @@ msgstr "Hauptdateien öffnen"
 
 #: ../gaupol/actions/file.py:167
 msgid "Open _Recent"
-msgstr "A_ktuelles öffnen"
+msgstr "Akt_uelles öffnen"
 
 #: ../gaupol/actions/file.py:181
 msgid "Open R_ecent Translation"
@@ -1622,7 +1627,7 @@ msgstr "Ak_tuelle Übersetzung öffnen"
 
 #: ../gaupol/actions/file.py:196
 msgid "Open _Translation…"
-msgstr "_Übersetzung öffnen…"
+msgstr "_Übersetzung öffnen …"
 
 #: ../gaupol/actions/file.py:197 ../gaupol/agents/open.py:180
 msgid "Open Translation"
@@ -1650,11 +1655,11 @@ msgstr "Alle offenen Dokumente speichern"
 
 #: ../gaupol/actions/file.py:247
 msgid "Save _All As…"
-msgstr ""
+msgstr "A_lle speichern als …"
 
 #: ../gaupol/actions/file.py:249
 msgid "Save all open documents with different properties"
-msgstr ""
+msgstr "Alle offenen Dokumente mit unterschiedlichen Eigenschaften speichern"
 
 #: ../gaupol/actions/file.py:268
 msgid "_Save"
@@ -1666,7 +1671,7 @@ msgstr "Das aktuelle Hauptdokument speichern"
 
 #: ../gaupol/actions/file.py:286
 msgid "Save _As…"
-msgstr "Sp_eichern als…"
+msgstr "Sp_eichern als …"
 
 #: ../gaupol/actions/file.py:287 ../gaupol/agents/save.py:166
 msgid "Save As"
@@ -1686,7 +1691,7 @@ msgstr "Das aktuelle Übersetzungsdokument speichern"
 
 #: ../gaupol/actions/file.py:325
 msgid "Save Translat_ion As…"
-msgstr "Übersetzun_g speichern als…"
+msgstr "Übersetzun_g speichern als …"
 
 #: ../gaupol/actions/file.py:326 ../gaupol/agents/save.py:199
 msgid "Save Translation As"
@@ -1698,7 +1703,7 @@ msgstr "Das aktuelle Übersetzungsdokument unter einem anderen Namen speichern"
 
 #: ../gaupol/actions/file.py:346
 msgid "Select _Video…"
-msgstr "_Video auswählen…"
+msgstr "_Video auswählen …"
 
 #: ../gaupol/actions/file.py:347
 msgid "Video"
@@ -1710,7 +1715,7 @@ msgstr "Eine Videodatei auswählen"
 
 #: ../gaupol/actions/file.py:366
 msgid "Spli_t Project…"
-msgstr "Pr_ojekt teilen…"
+msgstr "Pr_ojekt teilen …"
 
 #: ../gaupol/actions/file.py:367
 msgid "Split the current project in two"
@@ -1726,9 +1731,7 @@ msgstr "_Dialog"
 
 #: ../gaupol/actions/format.py:52
 msgid "Add or remove dialogue dashes on the selected texts"
-msgstr ""
-"In den ausgewählten Texten Dialog-Halbgeviertstriche hinzufügen oder "
-"entfernen"
+msgstr "In den ausgewählten Texten Gedankenstriche hinzufügen oder entfernen"
 
 #: ../gaupol/actions/format.py:74
 msgid "_Italic"
@@ -1772,11 +1775,11 @@ msgstr "Die ausgewählten Texte großschreiben"
 
 #: ../gaupol/actions/help.py:32
 msgid "_Wiki Documentation"
-msgstr ""
+msgstr "_Wiki-Dokumentation"
 
 #: ../gaupol/actions/help.py:34
 msgid "Browse wiki documentation"
-msgstr ""
+msgstr "Wiki-Dokumentation durchstöbern"
 
 #: ../gaupol/actions/help.py:45
 msgid "_Report A Bug"
@@ -1820,7 +1823,7 @@ msgstr "_Ansicht"
 
 #: ../gaupol/actions/position.py:32
 msgid "Adjust _Durations…"
-msgstr "_Laufzeiten anpassen…"
+msgstr "_Laufzeiten anpassen …"
 
 #: ../gaupol/actions/position.py:33
 msgid "Lengthen or shorten durations"
@@ -1828,7 +1831,7 @@ msgstr "Laufzeiten kürzen oder verlängern"
 
 #: ../gaupol/actions/position.py:48
 msgid "Convert _Framerate…"
-msgstr "Bildwiederhol_frequenz konvertieren…"
+msgstr "Bildwiederhol_frequenz konvertieren …"
 
 #: ../gaupol/actions/position.py:49
 msgid "Change positions for a different framerate"
@@ -1836,11 +1839,11 @@ msgstr "Postionen für eine unterschiedliche Bildwiederholfrequenz ändern"
 
 #: ../gaupol/actions/position.py:67
 msgid "Preview from selected position with a video player"
-msgstr "Vorschau von einer ausgewählten Position mit einem Video-Player"
+msgstr "Vorschau von einer ausgewählten Position mit einem Video-Spieler"
 
 #: ../gaupol/actions/position.py:93
 msgid "_Shift Positions…"
-msgstr "Positionen _verschieben…"
+msgstr "Positionen _verschieben …"
 
 #: ../gaupol/actions/position.py:94
 msgid "Make subtitles appear earlier or later"
@@ -1848,7 +1851,7 @@ msgstr "Untertitel früher oder später erscheinen lassen"
 
 #: ../gaupol/actions/position.py:110
 msgid "_Transform Positions…"
-msgstr "_Positionen umwandeln…"
+msgstr "_Positionen umwandeln …"
 
 #: ../gaupol/actions/position.py:111
 msgid "Change positions by linear two-point correction"
@@ -1856,7 +1859,7 @@ msgstr "Positionen durch eine lineare Zwei-Punkt-Korrektur ändern"
 
 #: ../gaupol/actions/search.py:32
 msgid "_Find And Replace…"
-msgstr "_Suchen und Ersetzen…"
+msgstr "_Suchen und Ersetzen …"
 
 #: ../gaupol/actions/search.py:35
 msgid "Search for and replace text"
@@ -1876,7 +1879,7 @@ msgstr "Rückwärts nach dem gleichen Text suchen"
 
 #: ../gaupol/actions/text.py:32
 msgid "Co_nfigure Spell-check…"
-msgstr "_Rechtschreibprüfung einrichten…"
+msgstr "_Rechtschreibprüfung einrichten …"
 
 #: ../gaupol/actions/text.py:33
 msgid "Set language and spell-check target"
@@ -1896,7 +1899,7 @@ msgstr "Auf falsche Rechtschreibung prüfen"
 
 #: ../gaupol/actions/text.py:69
 msgid "C_orrect Texts…"
-msgstr "_Texte korrigieren…"
+msgstr "_Texte korrigieren …"
 
 #: ../gaupol/actions/text.py:70
 msgid "Find and correct errors in texts"
@@ -1912,7 +1915,7 @@ msgstr "Das Projekt im vorherigen Reiter aktivieren"
 
 #: ../gaupol/actions/view.py:68
 msgid "Move Tab _Left"
-msgstr "Reiter nach links verschieben"
+msgstr "Reiter nach links _verschieben"
 
 #: ../gaupol/actions/view.py:69
 msgid "Move the current tab to the left"
@@ -1920,7 +1923,7 @@ msgstr "Den aktuellen Reiter nach links verschieben"
 
 #: ../gaupol/actions/view.py:85
 msgid "Move Tab _Right"
-msgstr "Reiter nach rechts verschieben"
+msgstr "Reiter nach rechts verschie_ben"
 
 #: ../gaupol/actions/view.py:86
 msgid "Move the current tab to the right"
@@ -1932,43 +1935,51 @@ msgstr "_Spalten"
 
 #: ../gaupol/actions/view.py:119
 msgid "2_3.976 fps"
-msgstr ""
+msgstr "2_3,976 fps"
 
 #: ../gaupol/actions/view.py:120
 msgid "Calculate nonnative units with a framerate of 23.976 fps"
 msgstr ""
+"Nicht native Einheiten mit einer Bildwiederholfrequenz von 23,976 fps "
+"berechnen"
 
 #: ../gaupol/actions/view.py:143
 msgid "2_4.000 fps"
-msgstr ""
+msgstr "2_4,000 fps"
 
 #: ../gaupol/actions/view.py:144
 msgid "Calculate nonnative units with a framerate of 24.000 fps"
 msgstr ""
+"Nicht native Einheiten mit einer Bildwiederholfrequenz von 24,000 fps "
+"berechnen"
 
 #: ../gaupol/actions/view.py:167
 msgid "2_5.000 fps"
-msgstr ""
+msgstr "2_5,000 fps"
 
 #: ../gaupol/actions/view.py:168
 msgid "Calculate nonnative units with a framerate of 25.000 fps"
 msgstr ""
+"Nicht native Einheiten mit einer Bildwiederholfrequenz von 25,000 fps "
+"berechnen"
 
 #: ../gaupol/actions/view.py:191
 msgid "2_9.970 fps"
-msgstr ""
+msgstr "2_9,970 fps"
 
 #: ../gaupol/actions/view.py:192
 msgid "Calculate nonnative units with a framerate of 29.970 fps"
 msgstr ""
+"Nicht native Einheiten mit einer Bildwiederholfrequenz von 29,970 fps "
+"berechnen"
 
 #: ../gaupol/actions/view.py:213
 msgid "F_ramerate"
-msgstr "F_ramerate"
+msgstr "Bildwiederholfre_quenz"
 
 #: ../gaupol/actions/view.py:232
 msgid "_Frames"
-msgstr "_Bilder"
+msgstr "Bil_der"
 
 #: ../gaupol/actions/view.py:233
 msgid "Show positions as frames"
@@ -1984,11 +1995,11 @@ msgstr "Positionen als Zeiten anzeigen"
 
 #: ../gaupol/actions/view.py:276
 msgid "_Duration"
-msgstr "_Dauer"
+msgstr "_Laufzeit"
 
 #: ../gaupol/actions/view.py:277
 msgid "Show or hide the duration column"
-msgstr ""
+msgstr "Spalte »Laufzeit« anzeigen oder verstecken"
 
 #: ../gaupol/actions/view.py:294
 msgid "_End"
@@ -1996,7 +2007,7 @@ msgstr "_Ende"
 
 #: ../gaupol/actions/view.py:295
 msgid "Show or hide the end column"
-msgstr ""
+msgstr "Spalte »Ende« anzeigen oder verstecken"
 
 #: ../gaupol/actions/view.py:312
 msgid "_Main Text"
@@ -2004,7 +2015,7 @@ msgstr "_Haupttext"
 
 #: ../gaupol/actions/view.py:313
 msgid "Show or hide the main text column"
-msgstr ""
+msgstr "Haupttextspalte anzeigen oder verstecken"
 
 #: ../gaupol/actions/view.py:330
 msgid "_Main Toolbar"
@@ -2020,7 +2031,7 @@ msgstr "_Nr."
 
 #: ../gaupol/actions/view.py:345
 msgid "Show or hide the number column"
-msgstr ""
+msgstr "Spalte »Nummer« anzeigen oder verstecken"
 
 #: ../gaupol/actions/view.py:361
 msgid "_Output Window"
@@ -2032,15 +2043,15 @@ msgstr "Das Ausgabefenster anzeigen oder verstecken"
 
 #: ../gaupol/actions/view.py:375
 msgid "_Start"
-msgstr "S_tart"
+msgstr "_Start"
 
 #: ../gaupol/actions/view.py:376
 msgid "Show or hide the start column"
-msgstr ""
+msgstr "Spalte »Start« anzeigen oder verstecken"
 
 #: ../gaupol/actions/view.py:392
 msgid "_Statusbar"
-msgstr "Status_leiste"
+msgstr "Stat_usleiste"
 
 #: ../gaupol/actions/view.py:393
 msgid "Show or hide the statusbar"
@@ -2052,11 +2063,11 @@ msgstr "_Übersetzungstext"
 
 #: ../gaupol/actions/view.py:408
 msgid "Show or hide the translation text column"
-msgstr ""
+msgstr "Übersetzungstextspalte anzeigen oder verstecken"
 
 #: ../gaupol/actions/view.py:425
 msgid "_Video Toolbar"
-msgstr "_Video-Werkzeugleiste"
+msgstr "Vide_o-Werkzeugleiste"
 
 #: ../gaupol/actions/view.py:426
 msgid "Show or hide the video toolbar"
@@ -2231,7 +2242,7 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
-msgstr "Starten des Video-Players fehlgeschlagen"
+msgstr "Starten des Video-Spielers fehlgeschlagen"
 
 #: ../gaupol/agents/save.py:40
 msgid "Saved all open documents"
@@ -2458,8 +2469,8 @@ msgstr "Datei anhängen"
 #, python-format
 msgid "Adjusted duration of %d subtitle"
 msgid_plural "Adjusted durations of %d subtitles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Laufzeit von %d Untertitel anpassen"
+msgstr[1] "Laufzeit von %d Untertiteln anpassen"
 
 #: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:100
 msgid "Description"
@@ -2484,7 +2495,7 @@ msgstr "Alle unterstützten Dateien"
 #: ../gaupol/dialogs/file.py:68
 #, python-format
 msgid "%(format)s (*%(extension)s)"
-msgstr ""
+msgstr "%(format)s (*%(extension)s)"
 
 #: ../gaupol/dialogs/file.py:110
 msgid "Auto-detected"
@@ -2492,7 +2503,7 @@ msgstr "Automatisch erkannt"
 
 #: ../gaupol/dialogs/file.py:112
 msgid "Other…"
-msgstr "Andere…"
+msgstr "Andere …"
 
 #: ../gaupol/dialogs/header.py:191
 msgid "Invalid header"
@@ -2508,11 +2519,11 @@ msgstr ""
 
 #: ../gaupol/dialogs/insert.py:46
 msgid "Above selection"
-msgstr ""
+msgstr "Auswahl oben"
 
 #: ../gaupol/dialogs/insert.py:47
 msgid "Below selection"
-msgstr ""
+msgstr "Auswahl unten"
 
 #: ../gaupol/dialogs/language.py:94
 msgid "Set Language"
@@ -2522,6 +2533,7 @@ msgstr "Sprache setzen"
 #, python-format
 msgid "%d of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
+"%d der zu speichernden Dateien existieren bereits. Möchten Sie sie ersetzen?"
 
 #: ../gaupol/dialogs/multisave.py:126
 #, python-format
@@ -2529,6 +2541,8 @@ msgid ""
 "The files already exist in \"%s\". Replacing them will overwrite their "
 "contents."
 msgstr ""
+"Die Dateien exisiteren bereits in »%s«. Sie zu ersetzen wird ihren Inhalt "
+"überschreiben."
 
 #: ../gaupol/dialogs/preferences.py:205
 #, python-format
@@ -2565,8 +2579,8 @@ msgstr "Fehler in Ersetzung von regulärem Ausdruck"
 #, python-format
 msgid "Found and replaced %d occurence"
 msgid_plural "Found and replaced %d occurences"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d Vorkommen gefunden und ersetzt"
+msgstr[1] "%d Vorkommen gefunden und ersetzt"
 
 #: ../gaupol/dialogs/shift.py:138
 msgid "frames"
@@ -2591,7 +2605,7 @@ msgstr "%(amount)d Untertitel zu Projekt »%(name)s« teilen"
 
 #: ../gaupol/dialogs/textedit.py:46
 msgid "Edit Text"
-msgstr ""
+msgstr "Text bearbeiten"
 
 #: ../gaupol/dialogs/video.py:33
 msgid "Select Video"
@@ -2629,11 +2643,11 @@ msgstr "Endposition"
 #. tree view column that contains numbers five characters wide.
 #: ../gaupol/enums/fields.py:55
 msgid "Dur."
-msgstr "Dauer"
+msgstr "Laufz"
 
 #: ../gaupol/enums/fields.py:56
 msgid "Duration"
-msgstr "Dauer"
+msgstr "Laufzeit"
 
 #: ../gaupol/enums/fields.py:63
 msgid "Main Text"
@@ -2681,7 +2695,7 @@ msgstr "KODIERUNG"
 
 #: ../gaupol/main.py:131
 msgid "set the character encoding used to open files"
-msgstr ""
+msgstr "Zeichenkodierung setzen, die beim Öffnen von Dateien benutzt wird"
 
 #: ../gaupol/main.py:137
 msgid "list all available character encodings"
@@ -2742,214 +2756,3 @@ msgstr "<b>Zeilenumbrüche:</b> %s"
 #, python-format
 msgid "%s translation"
 msgstr "%s-Übersetzung"
-
-#~ msgid "24 fps"
-#~ msgstr "24 fps"
-
-#~ msgid "25 fps"
-#~ msgstr "25 fps"
-
-#~ msgid "30 fps"
-#~ msgstr "30 fps"
-
-#~ msgid "2_4 fps"
-#~ msgstr "2_4 fps"
-
-#~ msgid "2_5 fps"
-#~ msgstr "2_5 fps"
-
-#~ msgid "_30 fps"
-#~ msgstr "_30 fps"
-
-#~ msgid "%(format)s (%(pattern)s)"
-#~ msgstr "%(format)s (%(pattern)s)"
-
-#~ msgid "Adjust all open p_rojects"
-#~ msgstr "Alle _offenen Projekte anpassen"
-
-#~ msgid "_Lengthen duration if shorter than optimal"
-#~ msgstr "_Verlängern der Dauer, wenn kürzer als optimal"
-
-#~ msgid "_Optimal duration:"
-#~ msgstr "O_ptimale Dauer:"
-
-#~ msgid "_Shorten duration if longer than optimal"
-#~ msgstr "Ver_kürzen der Dauer, wenn länger als optimal"
-
-#~ msgid "seconds per character"
-#~ msgstr "Sekunden pro Zeichen"
-
-#~ msgid "Fields:"
-#~ msgstr "Felder:"
-
-#~ msgid "<b>Language (Country)</b>"
-#~ msgstr "<b>Sprache (Land)</b>"
-
-#~ msgid "(None)"
-#~ msgstr "(Kein)"
-
-#~ msgid "Portugese"
-#~ msgstr "Portugiesisch"
-
-#~ msgid "(Empty)"
-#~ msgstr "(Leer)"
-
-#~ msgid "%s."
-#~ msgstr "%s."
-
-#~ msgid "<b>Columns</b>"
-#~ msgstr "<b>Spalten</b>"
-
-#~ msgid "<b>Subtitles</b>"
-#~ msgstr "<b>Untertitel</b>"
-
-#~ msgid "<b>Tasks</b>"
-#~ msgstr "<b>Prozesse</b>"
-
-#~ msgid "<b>Corrections</b>"
-#~ msgstr "<b>Korrekturen</b>"
-
-#~ msgid "<b>Spell-check Dictionary</b>"
-#~ msgstr "<b>Wörterbuch für Rechtschreibprüfung</b>"
-
-#~ msgid "<b>Limits</b>"
-#~ msgstr "<b>Beschränkungen</b>"
-
-#~ msgid "<big><b>An unhandled exception occured</b></big>"
-#~ msgstr "<big><b>Eine nicht behandelte Ausnahme ist aufgetreten</b></big>"
-
-#~ msgid "<b>Optimal</b>"
-#~ msgstr "<b>Optimal</b>"
-
-#~ msgid "<b>Framerate</b>"
-#~ msgstr "<b>Bildwiederholfrequenz</b>"
-
-#~ msgid ""
-#~ "Above selection\n"
-#~ "Below selection"
-#~ msgstr ""
-#~ "Auswahl darüber\n"
-#~ "Auswahl darunter"
-
-#~ msgid "<b>Language</b>"
-#~ msgstr "<b>Sprache</b>"
-
-#~ msgid "Configure Spell-check"
-#~ msgstr "Rechtschreibprüfung konfigurieren"
-
-#~ msgid ""
-#~ "<span weight=\"bold\" size=\"larger\">Save changes to documents before "
-#~ "closing?</span>"
-#~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">Änderungen an den Dokumenten vor "
-#~ "dem Schließen speichern?</span>"
-
-#~ msgid "<b>Character Encodings</b>"
-#~ msgstr "<b>Zeichenkodierungen</b>"
-
-#~ msgid "<b>Font</b>"
-#~ msgstr "<b>Schrift</b>"
-
-#~ msgid "<b>Line Lengths</b>"
-#~ msgstr "<b>Zeilenlänge</b>"
-
-#~ msgid "<b>Start Position</b>"
-#~ msgstr "<b>Startposition</b>"
-
-#~ msgid "<b>Video Player</b>"
-#~ msgstr "<b>Video-Player</b>"
-
-#~ msgid "Auto-detecti_on"
-#~ msgstr "_Automatische Erkennung"
-
-#~ msgid "_Show line lengths in list cells (slow)"
-#~ msgstr "_Zeilenlängen in Listenzellen anzeigen (langsam)"
-
-#~ msgid "gtk-about"
-#~ msgstr "gtk-about"
-
-#~ msgid "gtk-help"
-#~ msgstr "gtk-help"
-
-#~ msgid "gtk-preferences"
-#~ msgstr "gtk-preferences"
-
-#~ msgid "<big><b>Preview in video player failed</b></big>"
-#~ msgstr "<big><b>Vorschau im Video-Player fehlgeschlagen</b></big>"
-
-#~ msgid "<b>Shift</b>"
-#~ msgstr "<b>Verschieben</b>"
-
-#~ msgid "<b>First Point</b>"
-#~ msgstr "<b>Erster Punkt</b>"
-
-#~ msgid "<b>Second Point</b>"
-#~ msgstr "<b>Zweiter Punkt</b>"
-
-#~ msgid "One-line song lyrics between asterisks"
-#~ msgstr "Einzeilige Liedtexte zwischen Sternchen"
-
-#~ msgid "Remove one-line song lyrics starting with or between asterisks"
-#~ msgstr ""
-#~ "Einzeilige Liedtexte entfernen, die mit oder zwischen Sternchen beginnen"
-
-#~ msgid "Remove song lyrics starting with or between asterisks"
-#~ msgstr "Liedtexte entfernen, die mit oder zwischen Sternchen beginnen"
-
-#~ msgid "Song lyrics between asterisks"
-#~ msgstr "Liedtexte zwischen Sternchen"
-
-#~ msgid "Toggling dialogue dashes"
-#~ msgstr "Dialog-Halbgeviertstrich umschalten"
-
-#~ msgid "Toggling italicization"
-#~ msgstr "Kursivschreibung umschalten"
-
-#~ msgid "Insert subtitles"
-#~ msgstr "Untertitel einfügen"
-
-#~ msgid "Calculate nonnative units with framerate 24 fps"
-#~ msgstr ""
-#~ "Nicht systemeigene Einheiten mit Bildwiederholfrequenz von 24 fps "
-#~ "berechnen"
-
-#~ msgid "Calculate nonnative units with framerate 25 fps"
-#~ msgstr "Nicht systemeigene Einheiten mit 25 fps berechnen"
-
-#~ msgid "Calculate nonnative units with framerate 30 fps"
-#~ msgstr ""
-#~ "Nicht systemeigene Einheiten mit Bildwiederholfrequenz von 30 fps "
-#~ "berechnen"
-
-#~ msgid "Show or hide the \"Duration\" column"
-#~ msgstr "Die »Dauer«-Spalte anzeigen oder verstecken"
-
-#~ msgid "Show or hide the \"End\" column"
-#~ msgstr "Die »Ende«-Spalte anzeigen oder verstecken"
-
-#~ msgid "Show or hide the \"Main Text\" column"
-#~ msgstr "Die »Haupttext«-Spalte anzeigen oder verstecken"
-
-#~ msgid "Show or hide the \"No.\" column"
-#~ msgstr "Die »Nr.«-Spalte anzeigen oder verstecken"
-
-#~ msgid "Show or hide the \"Start\" column"
-#~ msgstr "Die »Start«-Spalte anzeigen oder verstecken"
-
-#~ msgid "Show or hide the \"Translation Text\" column"
-#~ msgstr "Die »Übersetzungstext«-Spalte anzeigen oder verstecken"
-
-#~ msgid "Open a recently used main file"
-#~ msgstr "Eine aktuell benutzte Datei öffnen"
-
-#~ msgid "_Append"
-#~ msgstr "_Anhängen"
-
-#~ msgid "Failed to open editor \"%s\""
-#~ msgstr "Öffnen des Editors »%s« fehlgeschlagen"
-
-#~ msgid "Found and replaced %d occurences"
-#~ msgstr "%d Vorkommen gefunden und ersetzt"
-
-#~ msgid "set the encoding used to open files"
-#~ msgstr "die Kodierung setzen, die zum Öffnen von Dateien benutzt wird"
