@@ -91,7 +91,9 @@ class SaveDialog(gaupol.FileDialog):
         gaupol.conf.file.encoding = self.get_encoding()
         gaupol.conf.file.format = self.get_format()
         gaupol.conf.file.newline = self.get_newline()
-        gaupol.conf.file.directory = self.get_current_folder()
+        directory = self.get_current_folder()
+        if directory is not None:
+            gaupol.conf.file.directory = directory
 
     def _on_save_button_event(self, button, event):
         """Ensure that the filename contains an extension."""

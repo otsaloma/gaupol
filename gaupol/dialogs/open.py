@@ -66,6 +66,8 @@ class OpenDialog(gaupol.FileDialog):
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
         gaupol.conf.file.encoding = self.get_encoding()
-        gaupol.conf.file.directory = self.get_current_folder()
+        directory = self.get_current_folder()
+        if directory is not None:
+            gaupol.conf.file.directory = directory
         index = self._align_combo.get_active()
         gaupol.conf.file.align_method = aeidon.align_methods[index]

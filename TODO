@@ -5,6 +5,8 @@ Gaupol 0.18
      - Preferences dialog
  [X] Add "Get more extensions" to the preferences dialog
  [X] Relax SubRip file parsing in unambiguous cases (#634129)
+ [X] Fix saving of last used directory in file dialogs with "paths
+     that cannot be represented as a local filename" (#649347)
  [X] Add Brazilian Portuguese translation
      (Átila Camurça, Darlildo Souza)
 
