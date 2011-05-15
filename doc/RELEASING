@@ -12,7 +12,7 @@ Releasing a New Version
    $ tools/update-translations
    $ $EDITOR NEWS TODO
    $ git commit -a -m "RELEASE X.Y.Z"
-   $ git tag -s X.Y.Z
+   $ git tag -s gaupol-X.Y.Z
    $ git push
    $ git push --tags
 
