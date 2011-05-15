@@ -5,6 +5,7 @@
   <object class="GtkDialog" id="dialog">
     <property name="border_width">6</property>
     <property name="title" translatable="yes">Configure Spell-Check</property>
+    <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
@@ -37,7 +38,6 @@
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow1">
-                    <property name="width_request">260</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">automatic</property>

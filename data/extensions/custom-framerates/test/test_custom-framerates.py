@@ -1,0 +1,150 @@
+# Copyright (C) 2011 Osmo Salomaa
+#
+# This file is part of Gaupol.
+#
+# Gaupol is free software: you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+#
+# Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
+
+import aeidon
+import gaupol
+import gtk
+import os
+import sys
+import traceback
+
+
+class TestAddFramerateDialog(gaupol.TestCase):
+
+    def run__dialog(self):
+        self.dialog.run()
+        self.dialog.destroy()
+
+    def setup_method(self, method):
+        directory = os.path.abspath(os.path.dirname(__file__))
+        directory = os.path.abspath(os.path.join(directory, ".."))
+        sys.path.insert(0, directory)
+        try: mobj = __import__("custom-framerates", {}, {}, [])
+        except ImportError:
+            return traceback.print_exc()
+        finally: sys.path.pop(0)
+        self.dialog = mobj.AddFramerateDialog(gtk.Window())
+        self.dialog.show()
+
+    def test__on_response__cancel(self):
+        self.dialog.response(gtk.RESPONSE_CANCEL)
+
+    def test__on_response__ok(self):
+        self.dialog.response(gtk.RESPONSE_OK)
+
+    def test_get_framerate(self):
+        assert self.dialog.get_framerate() == 0.0
+
+
+class TestPreferencesDialog(gaupol.TestCase):
+
+    def run__dialog(self):
+        self.dialog.run()
+        self.dialog.destroy()
+
+    def setup_method(self, method):
+        directory = os.path.abspath(os.path.dirname(__file__))
+        directory = os.path.abspath(os.path.join(directory, ".."))
+        sys.path.insert(0, directory)
+        try: mobj = __import__("custom-framerates", {}, {}, [])
+        except ImportError:
+            return traceback.print_exc()
+        finally: sys.path.pop(0)
+        self.framerates = (20.0, 21.0, 22.0, 23.0)
+        self.dialog = mobj.PreferencesDialog(self.framerates, gtk.Window())
+        self.dialog.show()
+
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_add_button_clicked(self):
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        orig_framerates = self.dialog.get_framerates()
+        self.dialog._add_button.emit("clicked")
+        framerates = self.dialog.get_framerates()
+        assert len(framerates) == len(orig_framerates) + 1
+        assert 0.0 in framerates
+
+    def test__on_remove_button_clicked(self):
+        orig_framerates = self.dialog.get_framerates()
+        selection = self.dialog._tree_view.get_selection()
+        selection.unselect_all()
+        selection.select_path(0)
+        self.dialog._remove_button.emit("clicked")
+        framerates = self.dialog.get_framerates()
+        assert len(framerates) == len(orig_framerates) - 1
+
+    def test__on_tree_view_selection_changed(self):
+        selection = self.dialog._tree_view.get_selection()
+        selection.unselect_all()
+        store = self.dialog._tree_view.get_model()
+        for i in range(len(store)):
+            selection.select_path(i)
+
+    def test_get_framerates(self):
+        framerates = self.dialog.get_framerates()
+        assert framerates == self.framerates
+
+
+class TestCustomFrameratesExtension(gaupol.TestCase):
+
+    def setup_method(self, method):
+        directory = os.path.abspath(os.path.dirname(__file__))
+        directory = os.path.abspath(os.path.join(directory, ".."))
+        sys.path.insert(0, directory)
+        try: mobj = __import__("custom-framerates", {}, {}, [])
+        except ImportError:
+            return traceback.print_exc()
+        finally: sys.path.pop(0)
+        self.extension = mobj.CustomFrameratesExtension()
+        self.application = self.new_application()
+
+    def test_setup(self):
+        self.extension.setup(self.application)
+        assert hasattr(aeidon.framerates, "FPS_48_000")
+        self.extension.teardown(self.application)
+
+    def test_setup__conf(self):
+        self.extension.setup(self.application)
+        assert hasattr(aeidon.framerates, "FPS_48_000")
+        self.extension.teardown(self.application)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test_show_preferences_dialog(self):
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_CLOSE
+        self.extension.setup(self.application)
+        self.extension.show_preferences_dialog(self.application.window)
+        self.extension.teardown(self.application)
+
+    def test_teardown(self):
+        self.extension.setup(self.application)
+        self.extension.teardown(self.application)
+        assert not hasattr(aeidon.framerates, "FPS_48_000")
+
+    def test_teardown__custom(self):
+        # pylint: disable=E1101
+        self.extension.setup(self.application)
+        page = self.application.get_current_page()
+        page.project.set_framerate(aeidon.framerates.FPS_48_000)
+        self.extension.teardown(self.application)
+
+    def test_teardown__custom_no_pages(self):
+        # pylint: disable=E1101
+        self.extension.setup(self.application)
+        page = self.application.get_current_page()
+        page.project.set_framerate(aeidon.framerates.FPS_48_000)
+        while self.application.pages:
+            page = self.application.get_current_page()
+            self.application.close(page, confirm=False)
+        self.extension.teardown(self.application)
