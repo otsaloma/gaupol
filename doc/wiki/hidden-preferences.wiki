@@ -1,0 +1,48 @@
+= Hidden Preferences =
+
+There are some preferences in Gaupol, which are not exposed in the user interface, but are changeable by editing a configuration file. Most users should have no need to change these, but for completeness, they are documented here. Gaupol's configuration file is an ini-style file with sections and options, where the values of options are JSON-strings and thus have strict syntactic rules. Gaupol's configuration file should usually be found at `~/.config/gaupol/gaupol.conf` on Unix or `C:\Documents and Settings\USERNAME\Application Data\Gaupol\gaupol.conf` on Windows XP or `C:\Users\USERNAME\AppData\Roaming\Gaupol\gaupol.conf` on Windows Vista and 7. The hidden preferences and their default values arranged by section are as follows.
+
+{{{
+[application_window]
+toolbar_style = DEFAULT
+}}}
+
+ * '''`toolbar_style`''' defines the style of the main toolbar, i.e. whether to display icons, text or both. Allowed values are `DEFAULT`, `ICONS`, `TEXT`, `BOTH` and `BOTH_HORIZ`. On GNOME, `DEFAULT` follows the desktop-wide preference, on other Unix desktops it will probably follow your GTK+ theme and on Windows `DEFAULT` is whatever Gaupol's Windows-packager decided to make the default.
+
+{{{
+[debug]
+text_editor = "gedit +$LINENO $FILE"
+}}}
+
+ * '''`text_editor`''' defines the text editor command to use when opening files from the "Unhandled Exception Occurred" dialog. At least `emacs` works here as well with the same arguments.
+
+{{{
+[editor]
+undo_limit = 50
+use_undo_limit = false
+}}}
+
+ * '''`undo_limit`''' defines the maximum amount of undoable (and redoable) actions if `use_undo_limit` is `true`.
+
+ * '''`use_undo_limit`''' allows limiting the amount of undoable actions. This might be useful for computers with very little memory, although it is not tested whether or not it has any actual relevant benefit -- probably not.
+
+{{{
+[file]
+max_recent = 10
+}}}
+
+ * '''`max_recent`''' defines the maximum amount of recent files to show in the file menu and the open button drop-down on the main toolbar.
+
+{{{
+[line_break]
+max_deviation = 0.16
+}}}
+
+ * '''`max_deviation`''' defines the maximum allowed relative standard deviation of line lengths of a subtitle with three or more lines when breaking lines according to dialogue or clauses. Lowering the value will result in falling back to breaking lines at word boudaries more often. Raising the value will keep dialogue or clause breaks more often, but may result in visually poor subtitles -- especially the long-short-long combination.
+
+{{{
+[search]
+max_history = 10
+}}}
+
+ * '''`max_history`''' defines the maximum amount of search history items to show in search dialog's pattern and replacement drop-down entries.

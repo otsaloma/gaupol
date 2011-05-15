@@ -1,13 +1,14 @@
 = Gaupol =
 
-Gaupol is an editor for text-based subtitle files. See the [[http://home.gna.org/gaupol/|homepage]] for more information.
+Gaupol is an editor for text-based subtitle files. See the [[http://home.gna.org/gaupol/|Gaupol homepage]] for more information.
 
-== Getting Started ==
+== Configuring Things ==
 
  * [[/Preview|Custom Preview Commands]]
  * [[/SpellCheck|Adding Spell-Check Dictionaries]]
+ * [[/HiddenPreferences|Hidden Preferences]]
 
-== Third Party Components ==
+== Third-Party Goodies ==
 
  * [[/Extensions|Extensions]]
  * [[/PatternFiles|Pattern Files]]

@@ -4,7 +4,7 @@
 
 This page contains a list of third party extensions. If you have written an extension that may be of interest for others, you can post a description of the extension and a link to where it can be downloaded from. If you have an idea for what would make an excellent extension, but cannot implement it yourself you can post that idea in the hope that someone would pick it up.
 
-To install one of the extensions, place the files in a directory under `~/.local/share/gaupol/extensions` on Unix or under `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or under `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista. The files should include at least a `.gaupol-extension` file and one or more `.py` files. To activate the extension, select ''Preferences'' from the ''Edit'' menu and go to the ''Extensions'' tab.
+To install one of the extensions, place the files in a directory under `~/.local/share/gaupol/extensions` on Unix or under `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or under `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista and 7. The files should include at least a `.gaupol-extension` file and one or more `.py` files. To activate the extension, select ''Preferences'' from the ''Edit'' menu and go to the ''Extensions'' tab.
 
 == Available Extensions ==
 
