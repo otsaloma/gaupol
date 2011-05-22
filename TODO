@@ -2,7 +2,6 @@ Gaupol 0.18
 ===========
 
  [X] Add extension that allows use of custom framerates (#637503)
- [ ] Add unit tests for extensions
  [X] Add "Get more extensions" button to the preferences dialog
  [X] Relax SubRip file parsing in unambiguous cases (#634129)
  [X] Fix saving of last used directory in file dialogs with "paths

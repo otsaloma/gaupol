@@ -109,42 +109,41 @@ class TestCustomFrameratesExtension(gaupol.TestCase):
         finally: sys.path.pop(0)
         self.extension = mobj.CustomFrameratesExtension()
         self.application = self.new_application()
+        self.extension.setup(self.application)
+
+    def teardown_method(self, method):
+        self.extension.teardown(self.application)
+        gaupol.TestCase.teardown_method(self, self.application)
 
     def test_setup(self):
-        self.extension.setup(self.application)
         assert hasattr(aeidon.framerates, "FPS_48_000")
-        self.extension.teardown(self.application)
 
     def test_setup__conf(self):
-        self.extension.setup(self.application)
         assert hasattr(aeidon.framerates, "FPS_48_000")
-        self.extension.teardown(self.application)
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test_show_preferences_dialog(self):
         gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_CLOSE
-        self.extension.setup(self.application)
         self.extension.show_preferences_dialog(self.application.window)
-        self.extension.teardown(self.application)
 
     def test_teardown(self):
-        self.extension.setup(self.application)
         self.extension.teardown(self.application)
         assert not hasattr(aeidon.framerates, "FPS_48_000")
+        self.extension.setup(self.application)
 
     def test_teardown__custom(self):
         # pylint: disable=E1101
-        self.extension.setup(self.application)
         page = self.application.get_current_page()
         page.project.set_framerate(aeidon.framerates.FPS_48_000)
         self.extension.teardown(self.application)
+        self.extension.setup(self.application)
 
     def test_teardown__custom_no_pages(self):
         # pylint: disable=E1101
-        self.extension.setup(self.application)
         page = self.application.get_current_page()
         page.project.set_framerate(aeidon.framerates.FPS_48_000)
         while self.application.pages:
             page = self.application.get_current_page()
             self.application.close(page, confirm=False)
         self.extension.teardown(self.application)
+        self.extension.setup(self.application)

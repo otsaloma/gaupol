@@ -86,7 +86,7 @@ class BookmarksExtension(gaupol.Extension):
         if not page in self._bookmarks:
             self._bookmarks[page] = {}
         dialog = AddBookmarkDialog(self.application.window, page)
-        response = dialog.run()
+        response = gaupol.util.run_dialog(dialog)
         row = dialog.get_row()
         description = dialog.get_description()
         dialog.destroy()

@@ -113,13 +113,16 @@ class TestSidePaneExtension(gaupol.TestCase):
         finally: sys.path.pop(0)
         self.extension = mobj.SidePaneExtension()
         self.application = self.new_application()
+        self.extension.setup(self.application)
+
+    def teardown_method(self, method):
+        self.extension.teardown(self.application)
+        gaupol.TestCase.teardown_method(self, self.application)
 
     def test_setup(self):
-        self.extension.setup(self.application)
         assert hasattr(self.application, "side_pane")
-        self.extension.teardown(self.application)
 
     def test_teardown(self):
-        self.extension.setup(self.application)
         self.extension.teardown(self.application)
         assert not hasattr(self.application, "side_pane")
+        self.extension.setup(self.application)
