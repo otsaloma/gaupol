@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010-2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -60,6 +60,13 @@ class DebugDialog(gaupol.BuilderDialog):
         text_buffer.create_tag("large", scale=pango.SCALE_LARGE)
         text_buffer.create_tag("monospace", family="monospace")
 
+    def _insert_environment(self):
+        """Insert environment information."""
+        map(self._insert_text,
+            ("Platform: %s\n" % platform.platform(True),
+             "Locale: %s\n" % aeidon.locales.get_system_code(),
+             "\n"))
+
     def _insert_link(self, path, lineno, *tags):
         """Insert `path` as a link into the text view."""
         text_buffer = self._text_view.get_buffer()
@@ -77,10 +84,6 @@ class DebugDialog(gaupol.BuilderDialog):
         tag_table = text_buffer.get_tag_table()
         tags = map(tag_table.lookup, tags + ("monospace",))
         text_buffer.insert_with_tags(itr, path, tag, *tags)
-
-    def _insert_platform(self):
-        """Insert platform information."""
-        self._insert_text("%s\n\n" % platform.platform(True))
 
     def _insert_text(self, text, *tags):
         """Insert `text` with `tags` to the text view."""
@@ -109,7 +112,8 @@ class DebugDialog(gaupol.BuilderDialog):
             self._insert_text("Line: %s\n" % str(tb.tb_lineno))
             self._insert_text("In: %s\n\n" % code.co_name)
             if line.strip():
-                self._insert_text("    %s\n\n" % line)
+                indent = "\302\240" * 4
+                self._insert_text("%s%s\n\n" % (indent, line))
             tb = tb.tb_next
         exception = traceback.format_exception_only(exctype, value)[0]
         exception, space, message = exception.partition(" ")
@@ -118,16 +122,15 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _insert_versions(self):
         """Insert version numbers of dependencies."""
-        self._insert_text("Aeidon: %s\n" % aeidon.__version__)
-        self._insert_text("Gaupol: %s\n" % gaupol.__version__)
-        self._insert_text("Python: %d.%d.%d\n" % sys.version_info[:3])
-        self._insert_text("GTK+: %d.%d.%d\n" % gtk.gtk_version)
-        self._insert_text("PyGTK: %d.%d.%d\n" % gtk.pygtk_version)
-        self._insert_text("PyEnchant: %s\n"
-                          % aeidon.util.get_enchant_version() or "N/A")
-
-        self._insert_text("Universal Encoding Detector: %s\n"
-                          % aeidon.util.get_chardet_version() or "N/A")
+        map(self._insert_text,
+            ("aeidon: %s\n" % aeidon.__version__,
+             "gaupol: %s\n" % gaupol.__version__,
+             "python: %d.%d.%d\n" % sys.version_info[:3],
+             "pygtk: %d.%d.%d\n" % gtk.pygtk_version,
+             "gtk+: %d.%d.%d\n" % gtk.gtk_version,
+             "pyenchant: %s\n" % aeidon.util.get_enchant_version(),
+             "chardet: %s\n" % aeidon.util.get_chardet_version(),
+             ))
 
     def _on_editor_exit(self, pid, return_value, command):
         """Print an error message if editor process failed."""
@@ -178,13 +181,13 @@ class DebugDialog(gaupol.BuilderDialog):
         """Set text from `tb` to the text view."""
         self._insert_title("Traceback")
         self._insert_traceback(exctype, value, tb)
-        self._insert_title("Platform")
-        self._insert_platform()
+        self._insert_title("Environment")
+        self._insert_environment()
         self._insert_title("Versions")
         self._insert_versions()
         gaupol.util.scale_to_content(self._text_view,
-                                     min_nchar=10,
+                                     min_nchar=20,
                                      min_nlines=5,
-                                     max_nchar=85,
+                                     max_nchar=100,
                                      max_nlines=35,
                                      font="monospace")
