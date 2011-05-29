@@ -6,19 +6,21 @@ Releasing a New Version
    $ py.test --tb=no aeidon
    $ py.test --tb=no gaupol
 
- * Make final edits to files, commit and tag
+ * Make final edits to files
    $ $EDITOR */__init__.py
    $ $EDITOR data/extensions/*/*.gaupol-extension.in
    $ tools/update-translations
    $ $EDITOR NEWS TODO
-   $ git commit -a -m "RELEASE X.Y.Z"
-   $ git tag -s gaupol-X.Y.Z
-   $ git push
-   $ git push --tags
 
  * Build tarballs and edit related files
    $ ./setup.py clean sdist_gna --formats bztar,gztar
    $ $EDITOR dist/*/*.news dist/*/*.changes
+
+ * Commit changes
+   $ git commit -a -m "RELEASE X.Y.Z"
+   $ git tag -s gaupol-X.Y.Z
+   $ git push
+   $ git push --tags
 
  * Upload tarballs to download.gna.org:/upload/gaupol/
 

@@ -26,6 +26,7 @@ Gaupol 3000
    - http://docs.python.org/dev/whatsnew/2.7.html
    - http://docs.python.org/dev/whatsnew/3.0.html
    - http://docs.python.org/dev/whatsnew/3.1.html
+   - http://docs.python.org/dev/whatsnew/3.2.html
    - http://diveintopython3.org/whats-new.html
  * Replace the headers-dialog with a more general properties-dialog
    with format-specific fields to fill (?)
