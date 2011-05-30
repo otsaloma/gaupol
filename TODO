@@ -1,15 +1,3 @@
-Gaupol 0.18
-===========
-
- [X] Add extension that allows use of custom framerates (#637503)
- [X] Add "Get more extensions" button to the preferences dialog
- [X] Relax SubRip file parsing in unambiguous cases (#634129)
- [X] Fix saving of last used directory in file dialogs with "paths
-     that cannot be represented as a local filename" (#649347)
- [X] Add Brazilian Portuguese translation
-     (Átila Camurça, Darlildo Souza)
- [X] Update German translation (Chris Leick)
-
 Gaupol 1.0
 ==========
 

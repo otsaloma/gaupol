@@ -8,7 +8,7 @@ cd "$DIRNAME/../po" || exit 1
 
 echo "Checking for missing source files..."
 intltool-update -m &> /dev/null
-[ -f missing ] && exit 1
+[ -f missing ] && echo "Check po/missing!" && exit 1
 
 echo "Updating gaupol.pot..."
 intltool-update -p -g gaupol

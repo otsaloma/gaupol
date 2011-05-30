@@ -1,16 +1,16 @@
 # Finnish translations for gaupol package.
 # Copyright (C) 2010 Osmo Salomaa
 # This file is distributed under the same license as the gaupol package.
-# Osmo Salomaa <otsaloma@iki.fi>, 2010.
+# Osmo Salomaa <otsaloma@cc.hut.fi>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-10 17:31+0300\n"
-"PO-Revision-Date: 2010-07-05 03:58+0300\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
-"Language-Team: Finnish <otsaloma@iki.fi>\n"
+"POT-Creation-Date: 2011-05-30 21:46+0300\n"
+"PO-Revision-Date: 2011-05-30 21:52+0300\n"
+"Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
+"Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,6 +29,27 @@ msgstr "Ku_vaus:"
 #: ../data/ui/transform-dialog.ui.h:13
 msgid "_Subtitle:"
 msgstr "_Kappale:"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
+msgid "Add Framerate"
+msgstr "Lisää ruutunopeus"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
+msgid "_Framerate:"
+msgstr "_Ruutunopeus:"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
+msgid "fps"
+msgstr "fps"
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr "Oikoluvun asetukset"
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
+msgid "_Framerates:"
+msgstr "_Ruutunopeudet:"
 
 #: ../data/ui/debug-dialog.ui.h:1
 msgid "An unhandled exception occured"
@@ -227,10 +248,6 @@ msgstr "Tarkista _käännöstekstisarake"
 msgid "Check c_urrent project"
 msgstr "Tarkista _nykyinen projekti"
 
-#: ../data/ui/language-dialog.ui.h:5
-msgid "Configure Spell-Check"
-msgstr "Oikoluvun asetukset"
-
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
 msgstr "Kieli"
@@ -331,70 +348,74 @@ msgid "Font"
 msgstr "Kirjasin"
 
 #: ../data/ui/preferences-dialog.ui.h:13
+msgid "Get more extensions"
+msgstr "Hae lisää laajennuksia"
+
+#: ../data/ui/preferences-dialog.ui.h:14
 msgid "Line Lengths"
 msgstr "Rivien pituudet"
 
-#: ../data/ui/preferences-dialog.ui.h:14
+#: ../data/ui/preferences-dialog.ui.h:15
 msgid "Pick the Editor Font"
 msgstr "Valitse muokkaimen kirjasin"
 
-#: ../data/ui/preferences-dialog.ui.h:15
+#: ../data/ui/preferences-dialog.ui.h:16
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: ../data/ui/preferences-dialog.ui.h:16
+#: ../data/ui/preferences-dialog.ui.h:17
 msgid "Preview"
 msgstr "Esikatselu"
 
-#: ../data/ui/preferences-dialog.ui.h:17
+#: ../data/ui/preferences-dialog.ui.h:18
 msgid "S_how line lengths in editable text fields"
 msgstr "N_äytä rivien pituudet muokattavissa tekstikentissä"
 
-#: ../data/ui/preferences-dialog.ui.h:18
+#: ../data/ui/preferences-dialog.ui.h:19
 msgid "Spell-Check"
 msgstr "Oikoluku"
 
-#: ../data/ui/preferences-dialog.ui.h:19
+#: ../data/ui/preferences-dialog.ui.h:20
 msgid "Start Position"
 msgstr "Aloitussijainti"
 
-#: ../data/ui/preferences-dialog.ui.h:20
+#: ../data/ui/preferences-dialog.ui.h:21
 msgid "Use _default theme font"
 msgstr "_Käytä teeman oletuskirjasinta"
 
-#: ../data/ui/preferences-dialog.ui.h:21
+#: ../data/ui/preferences-dialog.ui.h:22
 msgid "Video Player"
 msgstr "Videosoitin"
 
-#: ../data/ui/preferences-dialog.ui.h:22
+#: ../data/ui/preferences-dialog.ui.h:23
 msgid "When opening files, try encodings in the following order:"
 msgstr "Tiedostoja avatessa, kokeile koodauksia järjestyksessä:"
 
-#: ../data/ui/preferences-dialog.ui.h:23
+#: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Application:"
 msgstr "So_vellus:"
 
-#: ../data/ui/preferences-dialog.ui.h:24
+#: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Editor font:"
 msgstr "_Muokkaimen kirjasin:"
 
-#: ../data/ui/preferences-dialog.ui.h:25
+#: ../data/ui/preferences-dialog.ui.h:26
 msgid "_Fallback encodings:"
 msgstr "_Toissijaiset koodaukset:"
 
-#: ../data/ui/preferences-dialog.ui.h:26
+#: ../data/ui/preferences-dialog.ui.h:27
 msgid "_Length unit:"
 msgstr "_Pituusyksikkö:"
 
-#: ../data/ui/preferences-dialog.ui.h:27
+#: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Offset:"
 msgstr "Sii_rtymä:"
 
-#: ../data/ui/preferences-dialog.ui.h:28
+#: ../data/ui/preferences-dialog.ui.h:29
 msgid "_Show line lengths in list cells"
 msgstr "_Näytä rivien pituudet listan soluissa"
 
-#: ../data/ui/preferences-dialog.ui.h:29
+#: ../data/ui/preferences-dialog.ui.h:30
 msgid "seconds before selection"
 msgstr "sekuntia ennen valintaa"
 
@@ -639,10 +660,6 @@ msgid "Correct texts in s_elected subtitles"
 msgstr "Korjaa _valittujen kappaleiden tekstit"
 
 #: ../data/ui/text-assistant/intro-page.ui.h:8
-msgid "Tasks"
-msgstr "Tehtävät"
-
-#: ../data/ui/text-assistant/intro-page.ui.h:9
 msgid "_Select corrections to perform on texts:"
 msgstr "_Valitse suoritettavat korjaukset:"
 
@@ -1368,6 +1385,11 @@ msgstr "Näytä tai piilota kirjanmerkkisarake"
 #: ../data/extensions/bookmarks/bookmarks.py:224
 msgid "Search:"
 msgstr "Etsi:"
+
+#: ../data/extensions/custom-framerates/custom-framerates.py:153
+#, python-format
+msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgstr "Laske vieraat yksiköt ruutunopeudella %.3f fps"
 
 #: ../data/extensions/side-pane/side-pane.py:295
 msgid "Si_de Pane"
@@ -2511,21 +2533,21 @@ msgstr ""
 "Tiedostot ovat jo olemassa kansiossa \"%s\". Tiedostojen korvaus "
 "ylikirjoittaa niiden sisällön."
 
-#: ../gaupol/dialogs/preferences.py:205
+#: ../gaupol/dialogs/preferences.py:207
 #, python-format
 msgid "%s Extension Website"
 msgstr "%s laajennuksen WWW-sivut"
 
-#: ../gaupol/dialogs/preferences.py:233
+#: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
 msgstr "Laajennusta ei voida poistaa käytöstä"
 
-#: ../gaupol/dialogs/preferences.py:234
+#: ../gaupol/dialogs/preferences.py:236
 #, python-format
 msgid "Extension \"%s\" is required by other extensions."
 msgstr "Muut laajennukset vaativat toimiakseen laajennuksen \"%s\"."
 
-#: ../gaupol/dialogs/preferences.py:418
+#: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
 msgstr "Oma"
 

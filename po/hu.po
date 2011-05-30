@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-10 17:31+0300\n"
+"POT-Creation-Date: 2011-05-30 21:46+0300\n"
 "PO-Revision-Date: 2010-11-23 08:47+0100\n"
 "Last-Translator: Andrássy László <andrassy.laszlo@gmail.com>\n"
 "Language-Team: Hungarian\n"
@@ -29,6 +29,27 @@ msgstr "_Leírás:"
 #: ../data/ui/transform-dialog.ui.h:13
 msgid "_Subtitle:"
 msgstr "Feli_rat:"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
+msgid "Add Framerate"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
+msgid "_Framerate:"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
+msgid "fps"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr "Helyesírás-ellenőrző beállítása"
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
+msgid "_Framerates:"
+msgstr ""
 
 #: ../data/ui/debug-dialog.ui.h:1
 msgid "An unhandled exception occured"
@@ -227,10 +248,6 @@ msgstr "A fordítási s_zöveg oszlop ellenőrzése"
 msgid "Check c_urrent project"
 msgstr "Aktuális _projekt ellenőrzése"
 
-#: ../data/ui/language-dialog.ui.h:5
-msgid "Configure Spell-Check"
-msgstr "Helyesírás-ellenőrző beállítása"
-
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
 msgstr "Nyelv"
@@ -331,70 +348,74 @@ msgid "Font"
 msgstr "Betűtípus"
 
 #: ../data/ui/preferences-dialog.ui.h:13
+msgid "Get more extensions"
+msgstr ""
+
+#: ../data/ui/preferences-dialog.ui.h:14
 msgid "Line Lengths"
 msgstr "Sorhossz"
 
-#: ../data/ui/preferences-dialog.ui.h:14
+#: ../data/ui/preferences-dialog.ui.h:15
 msgid "Pick the Editor Font"
 msgstr "Betűtípus kiválasztása"
 
-#: ../data/ui/preferences-dialog.ui.h:15
+#: ../data/ui/preferences-dialog.ui.h:16
 msgid "Preferences"
 msgstr "Tulajdonságok"
 
-#: ../data/ui/preferences-dialog.ui.h:16
+#: ../data/ui/preferences-dialog.ui.h:17
 msgid "Preview"
 msgstr "Előnézet"
 
-#: ../data/ui/preferences-dialog.ui.h:17
+#: ../data/ui/preferences-dialog.ui.h:18
 msgid "S_how line lengths in editable text fields"
 msgstr "Sor_hossz megjelenítése a szerkeszthető szövegmezőkben"
 
-#: ../data/ui/preferences-dialog.ui.h:18
+#: ../data/ui/preferences-dialog.ui.h:19
 msgid "Spell-Check"
 msgstr "Helyesírás-ellenőrzés"
 
-#: ../data/ui/preferences-dialog.ui.h:19
+#: ../data/ui/preferences-dialog.ui.h:20
 msgid "Start Position"
 msgstr "Kezdő pozíció"
 
-#: ../data/ui/preferences-dialog.ui.h:20
+#: ../data/ui/preferences-dialog.ui.h:21
 msgid "Use _default theme font"
 msgstr "Ala_pértelmezett téma betűtípus használata"
 
-#: ../data/ui/preferences-dialog.ui.h:21
+#: ../data/ui/preferences-dialog.ui.h:22
 msgid "Video Player"
 msgstr "Videó lejátszó"
 
-#: ../data/ui/preferences-dialog.ui.h:22
+#: ../data/ui/preferences-dialog.ui.h:23
 msgid "When opening files, try encodings in the following order:"
 msgstr "Fájl megnyitásakor a karakterkódolást próbája az alábbi sorrendben:"
 
-#: ../data/ui/preferences-dialog.ui.h:23
+#: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Application:"
 msgstr "_Alkalmazás:"
 
-#: ../data/ui/preferences-dialog.ui.h:24
+#: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Editor font:"
 msgstr "_Szerkesztő betűtípusa:"
 
-#: ../data/ui/preferences-dialog.ui.h:25
+#: ../data/ui/preferences-dialog.ui.h:26
 msgid "_Fallback encodings:"
 msgstr "Elé_rhető kódolások:"
 
-#: ../data/ui/preferences-dialog.ui.h:26
+#: ../data/ui/preferences-dialog.ui.h:27
 msgid "_Length unit:"
 msgstr "_Hossz egység:"
 
-#: ../data/ui/preferences-dialog.ui.h:27
+#: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Offset:"
 msgstr "_Offset:"
 
-#: ../data/ui/preferences-dialog.ui.h:28
+#: ../data/ui/preferences-dialog.ui.h:29
 msgid "_Show line lengths in list cells"
 msgstr "_Sorhossz megjelenítése a mezőkben"
 
-#: ../data/ui/preferences-dialog.ui.h:29
+#: ../data/ui/preferences-dialog.ui.h:30
 msgid "seconds before selection"
 msgstr "kijelölés előtti másodpercek"
 
@@ -639,10 +660,6 @@ msgid "Correct texts in s_elected subtitles"
 msgstr "Javítás a k_ijelölt feliratokban"
 
 #: ../data/ui/text-assistant/intro-page.ui.h:8
-msgid "Tasks"
-msgstr "Feladatok"
-
-#: ../data/ui/text-assistant/intro-page.ui.h:9
 msgid "_Select corrections to perform on texts:"
 msgstr "Ja_vítási feladatok kijelölése és végrehajtása a szövegen:"
 
@@ -1371,6 +1388,11 @@ msgstr "Könyvjelző oszlop megjelenítése vagy elrejtése"
 #: ../data/extensions/bookmarks/bookmarks.py:224
 msgid "Search:"
 msgstr "Keres:"
+
+#: ../data/extensions/custom-framerates/custom-framerates.py:153
+#, python-format
+msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
 msgid "Si_de Pane"
@@ -2504,21 +2526,21 @@ msgid ""
 "contents."
 msgstr "A fájl már létezik \"%s\". Lecserélésével a tartalma felül lesz írva."
 
-#: ../gaupol/dialogs/preferences.py:205
+#: ../gaupol/dialogs/preferences.py:207
 #, python-format
 msgid "%s Extension Website"
 msgstr "%s Bővitmények Honlap"
 
-#: ../gaupol/dialogs/preferences.py:233
+#: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
 msgstr "Bővítmény kikapcsolása sikertelen"
 
-#: ../gaupol/dialogs/preferences.py:234
+#: ../gaupol/dialogs/preferences.py:236
 #, python-format
 msgid "Extension \"%s\" is required by other extensions."
 msgstr "A bővítmény »%s« szükséges egyéb bővítmény(ek)hez."
 
-#: ../gaupol/dialogs/preferences.py:418
+#: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
 msgstr "Egyéni"
 
@@ -2714,6 +2736,9 @@ msgstr "<b>Új s_or:</b> %s"
 #, python-format
 msgid "%s translation"
 msgstr "%s fordítás"
+
+#~ msgid "Tasks"
+#~ msgstr "Feladatok"
 
 #~ msgid "24 fps"
 #~ msgstr "24 fps"

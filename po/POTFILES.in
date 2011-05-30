@@ -1,4 +1,6 @@
 [type: gettext/glade]data/extensions/bookmarks/add-bookmark-dialog.ui
+[type: gettext/glade]data/extensions/custom-framerates/add-framerate-dialog.ui
+[type: gettext/glade]data/extensions/custom-framerates/preferences-dialog.ui
 [type: gettext/glade]data/ui/debug-dialog.ui
 [type: gettext/glade]data/ui/duration-dialog.ui
 [type: gettext/glade]data/ui/encoding-dialog.ui
@@ -113,6 +115,7 @@ aeidon/temp.py
 aeidon/unittest.py
 aeidon/util.py
 data/extensions/bookmarks/bookmarks.py
+data/extensions/custom-framerates/custom-framerates.py
 data/extensions/side-pane/side-pane.py
 data/gaupol.desktop.in
 gaupol/__init__.py

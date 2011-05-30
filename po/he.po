@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaupol\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-10 17:31+0300\n"
+"POT-Creation-Date: 2011-05-30 21:46+0300\n"
 "PO-Revision-Date: 2010-08-19 04:20+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Gezer (Hebrew)\n"
@@ -29,6 +29,27 @@ msgstr "_תיאור:"
 #: ../data/ui/transform-dialog.ui.h:13
 msgid "_Subtitle:"
 msgstr "_כתובית:"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
+msgid "Add Framerate"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
+msgid "_Framerate:"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
+msgid "fps"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr "הגדרת בדיקת איות"
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
+msgid "_Framerates:"
+msgstr ""
 
 #: ../data/ui/debug-dialog.ui.h:1
 msgid "An unhandled exception occured"
@@ -227,10 +248,6 @@ msgstr "בדיקת עמודת טקסט ה_תרגום"
 msgid "Check c_urrent project"
 msgstr "בדיקת ה_מיזם הנוכחי"
 
-#: ../data/ui/language-dialog.ui.h:5
-msgid "Configure Spell-Check"
-msgstr "הגדרת בדיקת איות"
-
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
 msgstr "שפה"
@@ -331,70 +348,74 @@ msgid "Font"
 msgstr "גופן"
 
 #: ../data/ui/preferences-dialog.ui.h:13
+msgid "Get more extensions"
+msgstr ""
+
+#: ../data/ui/preferences-dialog.ui.h:14
 msgid "Line Lengths"
 msgstr "אורך שורות"
 
-#: ../data/ui/preferences-dialog.ui.h:14
+#: ../data/ui/preferences-dialog.ui.h:15
 msgid "Pick the Editor Font"
 msgstr "בחירת גופן העורך"
 
-#: ../data/ui/preferences-dialog.ui.h:15
+#: ../data/ui/preferences-dialog.ui.h:16
 msgid "Preferences"
 msgstr "העדפות"
 
-#: ../data/ui/preferences-dialog.ui.h:16
+#: ../data/ui/preferences-dialog.ui.h:17
 msgid "Preview"
 msgstr "תצוגה מקדימה"
 
-#: ../data/ui/preferences-dialog.ui.h:17
+#: ../data/ui/preferences-dialog.ui.h:18
 msgid "S_how line lengths in editable text fields"
 msgstr "הצגת _אורך השורות בשדות הטקסט הניתנים לעריכה"
 
-#: ../data/ui/preferences-dialog.ui.h:18
+#: ../data/ui/preferences-dialog.ui.h:19
 msgid "Spell-Check"
 msgstr "בדיקת איות"
 
-#: ../data/ui/preferences-dialog.ui.h:19
+#: ../data/ui/preferences-dialog.ui.h:20
 msgid "Start Position"
 msgstr "נקודת ההתחלה"
 
-#: ../data/ui/preferences-dialog.ui.h:20
+#: ../data/ui/preferences-dialog.ui.h:21
 msgid "Use _default theme font"
 msgstr "שימוש בגופן בררת המחדל של _ערכת הנושא"
 
-#: ../data/ui/preferences-dialog.ui.h:21
+#: ../data/ui/preferences-dialog.ui.h:22
 msgid "Video Player"
 msgstr "נגן וידאו"
 
-#: ../data/ui/preferences-dialog.ui.h:22
+#: ../data/ui/preferences-dialog.ui.h:23
 msgid "When opening files, try encodings in the following order:"
 msgstr "בעת פתיחת קבצים, יש לנסות את הקידודים בסדר הבא:"
 
-#: ../data/ui/preferences-dialog.ui.h:23
+#: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Application:"
 msgstr "_יישום:"
 
-#: ../data/ui/preferences-dialog.ui.h:24
+#: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Editor font:"
 msgstr "גופן ה_עורך:"
 
-#: ../data/ui/preferences-dialog.ui.h:25
+#: ../data/ui/preferences-dialog.ui.h:26
 msgid "_Fallback encodings:"
 msgstr "קידוד ע_תודה:"
 
-#: ../data/ui/preferences-dialog.ui.h:26
+#: ../data/ui/preferences-dialog.ui.h:27
 msgid "_Length unit:"
 msgstr "יחידת ה_אורך:"
 
-#: ../data/ui/preferences-dialog.ui.h:27
+#: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Offset:"
 msgstr "הי_סט:"
 
-#: ../data/ui/preferences-dialog.ui.h:28
+#: ../data/ui/preferences-dialog.ui.h:29
 msgid "_Show line lengths in list cells"
 msgstr "הצגת אורך השורות בתאים ב_רשימה"
 
-#: ../data/ui/preferences-dialog.ui.h:29
+#: ../data/ui/preferences-dialog.ui.h:30
 msgid "seconds before selection"
 msgstr "שניות בטרם הבחירה"
 
@@ -639,10 +660,6 @@ msgid "Correct texts in s_elected subtitles"
 msgstr "תיקון טקסטים בכתוביות הנ_בחרות"
 
 #: ../data/ui/text-assistant/intro-page.ui.h:8
-msgid "Tasks"
-msgstr "משימות"
-
-#: ../data/ui/text-assistant/intro-page.ui.h:9
 msgid "_Select corrections to perform on texts:"
 msgstr "בחירת תיקונים להחלה על הטק_סטים:"
 
@@ -1362,6 +1379,11 @@ msgstr "הצגה או הסתרה של עמודת הסימנייה"
 #: ../data/extensions/bookmarks/bookmarks.py:224
 msgid "Search:"
 msgstr "חיפוש:"
+
+#: ../data/extensions/custom-framerates/custom-framerates.py:153
+#, python-format
+msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
 msgid "Si_de Pane"
@@ -2495,21 +2517,21 @@ msgid ""
 "contents."
 msgstr "הקבצים כבר קיימים תחת ״%s״. החלפתם תשכתב על תוכנם."
 
-#: ../gaupol/dialogs/preferences.py:205
+#: ../gaupol/dialogs/preferences.py:207
 #, python-format
 msgid "%s Extension Website"
 msgstr "אתר ההרחבות %s"
 
-#: ../gaupol/dialogs/preferences.py:233
+#: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
 msgstr "לא ניתן לפרוק את ההרחבה"
 
-#: ../gaupol/dialogs/preferences.py:234
+#: ../gaupol/dialogs/preferences.py:236
 #, python-format
 msgid "Extension \"%s\" is required by other extensions."
 msgstr "ההרחבה ״%s״ נדרשת על ידי הרחבות אחרות."
 
-#: ../gaupol/dialogs/preferences.py:418
+#: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
 msgstr "התאמה אישית"
 
@@ -2705,6 +2727,9 @@ msgstr "<b>שורות חדשות:</b> %s"
 #, python-format
 msgid "%s translation"
 msgstr "תרגום %s"
+
+#~ msgid "Tasks"
+#~ msgstr "משימות"
 
 #~ msgid "24 fps"
 #~ msgstr "24 שקופיות לשנייה"

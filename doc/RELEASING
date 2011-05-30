@@ -12,6 +12,7 @@ Releasing a New Version
    $ $EDITOR */__init__.py
    $ $EDITOR data/extensions/*/*.gaupol-extension.in
    $ tools/update-translations
+   $ gtranslator po/fi.po
    $ $EDITOR NEWS TODO
 
  * Build tarballs and edit related files

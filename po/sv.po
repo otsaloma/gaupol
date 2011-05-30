@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-10 17:31+0300\n"
+"POT-Creation-Date: 2011-05-30 21:46+0300\n"
 "PO-Revision-Date: 2007-01-13 18:52+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -29,6 +29,27 @@ msgstr ""
 #: ../data/ui/transform-dialog.ui.h:13
 msgid "_Subtitle:"
 msgstr "_Undertext:"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
+msgid "Add Framerate"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
+msgid "_Framerate:"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
+msgid "fps"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
+msgid "_Framerates:"
+msgstr ""
 
 #: ../data/ui/debug-dialog.ui.h:1
 msgid "An unhandled exception occured"
@@ -225,10 +246,6 @@ msgstr ""
 msgid "Check c_urrent project"
 msgstr "Kontrollera a_ktuellt projekt"
 
-#: ../data/ui/language-dialog.ui.h:5
-msgid "Configure Spell-Check"
-msgstr ""
-
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
 msgstr ""
@@ -329,70 +346,74 @@ msgid "Font"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:13
-msgid "Line Lengths"
+msgid "Get more extensions"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:14
+msgid "Line Lengths"
+msgstr ""
+
+#: ../data/ui/preferences-dialog.ui.h:15
 msgid "Pick the Editor Font"
 msgstr "Välj redigerartypsnitt"
 
-#: ../data/ui/preferences-dialog.ui.h:15
+#: ../data/ui/preferences-dialog.ui.h:16
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: ../data/ui/preferences-dialog.ui.h:16
+#: ../data/ui/preferences-dialog.ui.h:17
 msgid "Preview"
 msgstr "Förhandsvisa"
 
-#: ../data/ui/preferences-dialog.ui.h:17
+#: ../data/ui/preferences-dialog.ui.h:18
 msgid "S_how line lengths in editable text fields"
 msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:18
+#: ../data/ui/preferences-dialog.ui.h:19
 msgid "Spell-Check"
 msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:19
+#: ../data/ui/preferences-dialog.ui.h:20
 msgid "Start Position"
 msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:20
+#: ../data/ui/preferences-dialog.ui.h:21
 msgid "Use _default theme font"
 msgstr "Använd _standardtematypsnittet"
 
-#: ../data/ui/preferences-dialog.ui.h:21
+#: ../data/ui/preferences-dialog.ui.h:22
 msgid "Video Player"
 msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:22
+#: ../data/ui/preferences-dialog.ui.h:23
 msgid "When opening files, try encodings in the following order:"
 msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:23
+#: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Application:"
 msgstr "_Program:"
 
-#: ../data/ui/preferences-dialog.ui.h:24
+#: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Editor font:"
 msgstr "_Redigerartypsnitt:"
 
-#: ../data/ui/preferences-dialog.ui.h:25
+#: ../data/ui/preferences-dialog.ui.h:26
 msgid "_Fallback encodings:"
 msgstr "_Kodningar att falla tillbaka på:"
 
-#: ../data/ui/preferences-dialog.ui.h:26
+#: ../data/ui/preferences-dialog.ui.h:27
 msgid "_Length unit:"
 msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:27
+#: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Offset:"
 msgstr "_Position:"
 
-#: ../data/ui/preferences-dialog.ui.h:28
+#: ../data/ui/preferences-dialog.ui.h:29
 msgid "_Show line lengths in list cells"
 msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:29
+#: ../data/ui/preferences-dialog.ui.h:30
 msgid "seconds before selection"
 msgstr "sekunder innan markering"
 
@@ -637,10 +658,6 @@ msgid "Correct texts in s_elected subtitles"
 msgstr ""
 
 #: ../data/ui/text-assistant/intro-page.ui.h:8
-msgid "Tasks"
-msgstr ""
-
-#: ../data/ui/text-assistant/intro-page.ui.h:9
 msgid "_Select corrections to perform on texts:"
 msgstr ""
 
@@ -1358,6 +1375,11 @@ msgstr ""
 
 #: ../data/extensions/bookmarks/bookmarks.py:224
 msgid "Search:"
+msgstr ""
+
+#: ../data/extensions/custom-framerates/custom-framerates.py:153
+#, python-format
+msgid "Calculate nonnative units with a framerate of %.3f fps"
 msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
@@ -2485,21 +2507,21 @@ msgid ""
 "contents."
 msgstr ""
 
-#: ../gaupol/dialogs/preferences.py:205
+#: ../gaupol/dialogs/preferences.py:207
 #, python-format
 msgid "%s Extension Website"
 msgstr ""
 
-#: ../gaupol/dialogs/preferences.py:233
+#: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
 msgstr ""
 
-#: ../gaupol/dialogs/preferences.py:234
+#: ../gaupol/dialogs/preferences.py:236
 #, python-format
 msgid "Extension \"%s\" is required by other extensions."
 msgstr ""
 
-#: ../gaupol/dialogs/preferences.py:418
+#: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
 msgstr "Anpassad"
 
