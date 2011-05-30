@@ -19,6 +19,10 @@ Releasing a New Version
    $ ./setup.py clean sdist_gna --formats bztar,gztar
    $ $EDITOR dist/*/*.news dist/*/*.changes
 
+ * Extract tarball somwehere and install
+   $ sudo ./setup.py clean install --prefix=/usr/local
+   $ sudo ./setup.py clean
+
  * Commit changes
    $ git commit -a -m "RELEASE X.Y.Z"
    $ git tag -s gaupol-X.Y.Z
