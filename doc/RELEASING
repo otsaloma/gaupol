@@ -2,7 +2,9 @@ Releasing a New Version
 =======================
 
  * Do final quality checks
-   $ tools/pylint bin/gaupol aeidon/ gaupol/ *.py
+   $ tools/pylint bin/gaupol *.py
+   $ tools/pylint aeidon/
+   $ tools/pylint gaupol/
    $ py.test --tb=no aeidon
    $ py.test --tb=no gaupol
 

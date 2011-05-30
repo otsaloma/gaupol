@@ -4,5 +4,6 @@ DIRNAME=$(dirname "$0")
 cd "$DIRNAME/.." || exit 1
 
 pylint -f parseable "$@" \
+ | egrep -v ".*/enums/.* Attribute '[A-Z0-9_]*' defined outside __init__" \
  | egrep -v "Instance of 'ConfigurationStore' has no '[a-z_]*' member" \
  | egrep -v "Method '[a-z_]*' has no 'setter' member"
