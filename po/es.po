@@ -1,15 +1,15 @@
 # Spanish translation of gaupol.
-# Copyright (C) 2005-2010 Osmo Salomaa.
+# Copyright (C) 2005-2011 Osmo Salomaa.
 # This file is distributed under the same license as the gaupol package.
 # Miguel Latorre <kuan@graffiti.net>, 2006.
-# Carlos Mella <cmellib@gmail.com>, 2010.
+# Carlos Mella <cmellib@gmail.com>, 2010-2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.17\n"
+"Project-Id-Version: gaupol 0.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-30 21:46+0300\n"
-"PO-Revision-Date: 2010-08-22 13:00+0300\n"
+"PO-Revision-Date: 2011-05-31 13:00+0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -33,15 +33,15 @@ msgstr "_Subtítulo:"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
-msgstr ""
+msgstr "Añadir frecuencia de fotogramas"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
 msgid "_Framerate:"
-msgstr ""
+msgstr "_Frecuencia de fotogramas:"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
 msgid "fps"
-msgstr ""
+msgstr "fps"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
 #: ../data/ui/language-dialog.ui.h:5
@@ -50,7 +50,7 @@ msgstr "Configurar corrector ortográfico"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 msgid "_Framerates:"
-msgstr ""
+msgstr "_Frecuencias de fotogramas:"
 
 #: ../data/ui/debug-dialog.ui.h:1
 msgid "An unhandled exception occured"
@@ -155,11 +155,11 @@ msgstr "Cambiar framerate"
 
 #: ../data/ui/framerate-dialog.ui.h:3
 msgid "Convert _all open projects"
-msgstr "Cambiar _todos los proyectos abiertos"
+msgstr "Cambiar en _todos los proyectos abiertos"
 
 #: ../data/ui/framerate-dialog.ui.h:4
 msgid "Convert c_urrent project"
-msgstr "Cambiar proyecto act_ual"
+msgstr "Cambiar en el proyecto act_ual"
 
 #: ../data/ui/framerate-dialog.ui.h:5
 msgid "Framerate"
@@ -335,7 +335,7 @@ msgstr "Editor"
 #: ../data/ui/preferences-dialog.ui.h:9
 msgid "Encoding specified in the open dialog will always be tried first."
 msgstr ""
-"La codificación especificada en el diálogo Abrir será siempre la primera en "
+"La codificación especificada en el diálogo «Abrir» será siempre la primera en "
 "usarse."
 
 #: ../data/ui/preferences-dialog.ui.h:10
@@ -352,7 +352,7 @@ msgstr "Tipografía"
 
 #: ../data/ui/preferences-dialog.ui.h:13
 msgid "Get more extensions"
-msgstr ""
+msgstr "Obtén más complementos"
 
 #: ../data/ui/preferences-dialog.ui.h:14
 msgid "Line Lengths"
@@ -360,7 +360,7 @@ msgstr "Largo de líneas"
 
 #: ../data/ui/preferences-dialog.ui.h:15
 msgid "Pick the Editor Font"
-msgstr "Seleccionar tipografía del editor"
+msgstr "Seleccionar la tipografía del editor"
 
 #: ../data/ui/preferences-dialog.ui.h:16
 msgid "Preferences"
@@ -584,7 +584,7 @@ msgstr "_País:"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:2
 msgid "S_elect parts to capitalize:"
-msgstr "S_eleccione los casos en que desee capitalizar:"
+msgstr "S_eleccione los casos que quiera capitalizar:"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:3
 #: ../data/ui/text-assistant/common-error-page.ui.h:6
@@ -706,7 +706,7 @@ msgstr "_Ignorar subtítulos con un largo máximo por línea de:"
 
 #: ../data/ui/text-assistant/line-break-page.ui.h:2
 msgid "S_elect preferred line-break points:"
-msgstr "S_eleccione puntos de división de líneas preferentes:"
+msgstr "S_eleccione los puntos de división de líneas preferentes:"
 
 #: ../data/ui/transform-dialog.ui.h:1
 msgid "C_orrection:"
@@ -1329,19 +1329,19 @@ msgstr "Posición del subtítulo"
 
 #: ../aeidon/enums/framerates.py:27
 msgid "23.976 fps"
-msgstr ""
+msgstr "23,976 fps"
 
 #: ../aeidon/enums/framerates.py:34
 msgid "24.000 fps"
-msgstr ""
+msgstr "24,000 fps"
 
 #: ../aeidon/enums/framerates.py:41
 msgid "25.000 fps"
-msgstr ""
+msgstr "25,000 fps"
 
 #: ../aeidon/enums/framerates.py:48
 msgid "29.970 fps"
-msgstr ""
+msgstr "29,970 fps"
 
 #: ../aeidon/enums/newlines.py:27
 msgid "Mac (classic)"
@@ -1410,7 +1410,7 @@ msgstr "Buscar:"
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
 msgid "Calculate nonnative units with a framerate of %.3f fps"
-msgstr ""
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de %.3f fps"
 
 #: ../data/extensions/side-pane/side-pane.py:295
 msgid "Si_de Pane"
@@ -1594,7 +1594,7 @@ msgstr "_Agregar archivo…"
 
 #: ../gaupol/actions/file.py:34
 msgid "Append subtitles from file to the current project"
-msgstr "Agrega subtítulos al proyecto actual desde un archivo"
+msgstr "Agrega subtítulos desde un archivo al proyecto actual"
 
 #: ../gaupol/actions/file.py:51
 msgid "_Close All"
@@ -1618,7 +1618,7 @@ msgstr "_Encabezado"
 
 #: ../gaupol/actions/file.py:89
 msgid "Edit file headers"
-msgstr "Edita encabezado de archivos"
+msgstr "Edita el encabezado de los archivos"
 
 #: ../gaupol/actions/file.py:113
 msgid "_New"
@@ -1771,7 +1771,7 @@ msgstr "M_inúsculas"
 
 #: ../gaupol/actions/format.py:101
 msgid "Change the selected texts to lower case"
-msgstr "Cambia el texto a minúsculas en los subtítulos seleccionados"
+msgstr "cambia el texto a minúsculas en los subtítulos seleccionados"
 
 #: ../gaupol/actions/format.py:120
 msgid "_Sentence"
@@ -1797,7 +1797,7 @@ msgstr "M_ayúsculas"
 
 #: ../gaupol/actions/format.py:161
 msgid "Change the selected texts to upper case"
-msgstr "Cambia el texto a mayúsculas en los subtítulos seleccionados"
+msgstr "CAMBIA EL TEXTO A MAYÚSCULAS EN LOS SUBTÍTULOS SELECCIONADOS"
 
 #: ../gaupol/actions/help.py:32
 msgid "_Wiki Documentation"
@@ -1882,7 +1882,7 @@ msgstr "Ajustar po_siciones…"
 
 #: ../gaupol/actions/position.py:111
 msgid "Change positions by linear two-point correction"
-msgstr "Ajusta posiciones por aproximación lineal entre dos puntos"
+msgstr "Ajusta posiciones mediante una aproximación lineal entre dos puntos"
 
 #: ../gaupol/actions/search.py:32
 msgid "_Find And Replace…"
@@ -1962,35 +1962,35 @@ msgstr "_Columnas"
 
 #: ../gaupol/actions/view.py:119
 msgid "2_3.976 fps"
-msgstr ""
+msgstr "2_3,976 fps"
 
 #: ../gaupol/actions/view.py:120
 msgid "Calculate nonnative units with a framerate of 23.976 fps"
-msgstr ""
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 23,976 fps"
 
 #: ../gaupol/actions/view.py:143
 msgid "2_4.000 fps"
-msgstr ""
+msgstr "2_4,000 fps"
 
 #: ../gaupol/actions/view.py:144
 msgid "Calculate nonnative units with a framerate of 24.000 fps"
-msgstr ""
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 24,000 fps"
 
 #: ../gaupol/actions/view.py:167
 msgid "2_5.000 fps"
-msgstr ""
+msgstr "2_5,000 fps"
 
 #: ../gaupol/actions/view.py:168
 msgid "Calculate nonnative units with a framerate of 25.000 fps"
-msgstr ""
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 25,000 fps"
 
 #: ../gaupol/actions/view.py:191
 msgid "2_9.970 fps"
-msgstr ""
+msgstr "2_9,970 fps"
 
 #: ../gaupol/actions/view.py:192
 msgid "Calculate nonnative units with a framerate of 29.970 fps"
-msgstr ""
+msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 29,970 fps"
 
 #: ../gaupol/actions/view.py:213
 msgid "F_ramerate"
@@ -2478,8 +2478,8 @@ msgstr "Sitio web de Gaupol"
 #: ../gaupol/dialogs/about.py:67
 msgid "translator-credits"
 msgstr ""
-"Miguel Latorre <kuan@graffiti.net>\n"
-"Carlos Mella <cmellib@gmail.com>"
+"Carlos Mella <cmellib@gmail.com>\n"
+"Miguel Latorre <kuan@graffiti.net>"
 
 #: ../gaupol/dialogs/append.py:33
 msgid "Append File"
@@ -2515,7 +2515,7 @@ msgstr "Todos los archivos soportados"
 #: ../gaupol/dialogs/file.py:68
 #, python-format
 msgid "%(format)s (*%(extension)s)"
-msgstr ""
+msgstr "%(format)s (*%(extension)s)"
 
 #: ../gaupol/dialogs/file.py:110
 msgid "Auto-detected"
