@@ -1,7 +1,10 @@
-Gaupol 0.18.1
-=============
-
+Gaupol 0.18.1/0.19
+==================
+ 
+ [ ] Rename gaupol-* extensions?
+ [ ] Add characters per second column?
  [X] Update Spanish translation (Carlos Mella)
+ [X] Update Hungarian translation (Andrássy László)
 
 Gaupol 1.0
 ==========
