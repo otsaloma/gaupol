@@ -29,10 +29,11 @@ Releasing a New Version
    $ git push
    $ git push --tags
 
- * Upload tarballs to download.gna.org:/upload/gaupol/
-
- * Generate and upload API documentation
+ * Generate API documentation
    $ ./setup.py clean doc --format html
+
+ * Upload tarballs and API documentation to
+   download.gna.org:/upload/gaupol/
 
  * Send announcements and update web sites
    - http://home.gna.org/gaupol
