@@ -85,6 +85,7 @@ class PreviewAgent(aeidon.Delegate):
                                          ".mpeg",
                                          ".mpg",
                                          ".ogm",
+                                         ".ogv",
                                          ".qt",
                                          ".rm",
                                          ".rmvb",
