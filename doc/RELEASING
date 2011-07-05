@@ -1,6 +1,12 @@
 Releasing a New Version
 =======================
 
+ * Update translations, check and inform translators
+   $ tools/update-translations
+   $ gtranslator po/fi.po
+   - gaupol-i18n@gna.org
+   - Wait at least a week for translations
+
  * Do final quality checks
    $ tools/pylint bin/gaupol *.py
    $ tools/pylint aeidon/
@@ -11,8 +17,6 @@ Releasing a New Version
  * Make final edits to files
    $ $EDITOR */__init__.py
    $ $EDITOR data/extensions/*/*.gaupol-extension.in
-   $ tools/update-translations
-   $ gtranslator po/fi.po
    $ $EDITOR NEWS TODO
 
  * Build tarballs and edit related files
@@ -32,8 +36,8 @@ Releasing a New Version
  * Generate API documentation
    $ ./setup.py clean doc --format html
 
- * Upload tarballs and API documentation to
-   download.gna.org:/upload/gaupol/
+ * Upload tarballs and API documentation
+   - download.gna.org:/upload/gaupol/
 
  * Send announcements and update web sites
    - http://home.gna.org/gaupol
