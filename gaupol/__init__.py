@@ -24,9 +24,10 @@
 :var BUG_REPORT_URL: Web page where to submit new bug reports
 :var EXTENSIONS_URL: Web page listing third party extensions
 :var HOMEPAGE_URL: Web page of the Gaupol project
-:var PREVIEW_HELP_URL: Web page with documentation on the preview function
-:var REGEX_HELP_URL: Web page with documentation on regular expressions
-:var WIKI_URL: Web page with wiki documentation
+:var PREVIEW_HELP_URL: Documentation on the preview function
+:var REGEX_HELP_URL: Documentation on regular expressions
+:var SPEECH_RECOGNITION_HELP_URL: Documentation on speech recognition
+:var WIKI_URL: Wiki documentation
 
 :var fields: Enumerations for subtitle field types
 :var length_units: Enumerations for length unit types
@@ -41,14 +42,15 @@
 """
 
 import aeidon
+import glib
 import gobject
 import gtk
 import os
 
 __version__ = "0.18"
-
 COMBO_SEPARATOR = "<separator/>"
 
+glib.threads_init()
 gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
 
 from gaupol.urls import *
@@ -89,6 +91,7 @@ from gaupol.dialogs.multiclose import *
 from gaupol.dialogs.multisave import *
 from gaupol.dialogs.preferences import *
 from gaupol.dialogs.previewerr import *
+from gaupol.dialogs.recognition import *
 from gaupol.dialogs.search import *
 from gaupol.dialogs.shift import *
 from gaupol.dialogs.spellcheck import *

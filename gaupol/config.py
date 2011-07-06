@@ -158,6 +158,15 @@ config_defaults = {
         "regex": False,
         "target": gaupol.targets.CURRENT,
         },
+    "speech_recognition": {
+        "acoustic_model": "",
+        "advance_length": 100,
+        "lang_model": "",
+        "noise_level": 256,
+        "phonetic_dict": "",
+        "silence_length": 300,
+        "use_custom_models": False,
+        },
     "spell_check": {
         "field": gaupol.fields.MAIN_TEXT,
         "inline": False,
@@ -329,6 +338,18 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             method_name = method_name[1:]
         method = getattr(obj, method_name)
         container.disconnect(signal, method)
+
+    def query_default(self, sections, option):
+        """Return default value of configuration option.
+
+        Raise :exc:`KeyError` if section or option not found.
+        """
+        if isinstance(sections, basestring):
+            sections = (sections,)
+        container = self._defaults
+        for section in sections:
+            container = container[section]
+        return container[option]
 
     def read_from_file(self):
         """Read values of configuration options from file.

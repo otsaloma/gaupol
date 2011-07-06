@@ -100,6 +100,15 @@ def get_tree_view_size(tree_view):
     return width, height
 
 @aeidon.deco.once
+def gst_available():
+    """Return ``True`` if :mod:`gst` module is available."""
+    try:
+        import gst
+        return True
+    except Exception:
+        return False
+
+@aeidon.deco.once
 def gtkspell_available():
     """Return ``True`` if :mod:`gtkspell` module is available."""
     try:
@@ -130,6 +139,15 @@ def lines_to_px(nlines, font=None):
         set_label_font(label, font)
     height = label.get_layout().get_pixel_size()[1]
     return int(round(nlines * height))
+
+@aeidon.deco.once
+def pocketsphinx_available():
+    """Return ``True`` if `pocketsphinx` gstreamer plugin is available."""
+    try:
+        import gst
+        return gst.plugin_load_by_name("pocketsphinx") is not None
+    except Exception:
+        return False
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""

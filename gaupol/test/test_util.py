@@ -68,12 +68,19 @@ class TestModule(gaupol.TestCase):
         scroller.add(tree_view)
         gaupol.util.get_tree_view_size(tree_view)
 
+    def test_gst_available(self):
+        reload(gaupol.util)
+        assert gaupol.util.gst_available()
+
     def test_gtkspell_available(self):
         reload(gaupol.util)
         assert gaupol.util.gtkspell_available()
 
     def test_lines_to_px(self):
         assert gaupol.util.lines_to_px(1) > 0
+
+    def test_pocketsphinx_available(self):
+        gaupol.util.pocketsphinx_available()
 
     def test_prepare_text_view__hide_lengths(self):
         gaupol.util.prepare_text_view(gtk.TextView())

@@ -100,6 +100,25 @@ class ShiftPositionsAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
 
 
+class SpeechRecognitionAction(gaupol.Action):
+
+    """Generate subtitles by voice and speech recognition."""
+
+    def __init__(self):
+        """Initialize a :class:`SpeechRecognitionAction` object."""
+        gaupol.Action.__init__(self, "speech_recognition")
+        self.props.label = _("Sp_eech Recognition...")
+        self.props.tooltip = _("Generate subtitles by voice "
+                               "and speech recognition")
+
+        self.action_group = "main-safe"
+
+    def _affirm_doable(self, application, page):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(gaupol.util.gst_available())
+        aeidon.util.affirm(gaupol.util.pocketsphinx_available())
+
+
 class TransformPositionsAction(gaupol.Action):
 
     """Change positions by linear two-point correction."""

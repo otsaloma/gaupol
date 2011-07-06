@@ -49,6 +49,11 @@ class TestPositionAgent(gaupol.TestCase):
         self.application.get_action("shift_positions").activate()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_on_speech_recognition_activate(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_CLOSE
+        self.application.get_action("speech_recognition").activate()
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_on_transform_positions_activate__frame(self):
         gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_CANCEL
         page = self.application.get_current_page()

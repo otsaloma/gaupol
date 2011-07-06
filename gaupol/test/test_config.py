@@ -50,6 +50,11 @@ class TestConfigurationStore(gaupol.TestCase):
         self.conf.disconnect_notify("application_window", "size", puppet)
         self.conf.application_window.size = [100, 100]
 
+    def test_query_default(self):
+        assert not self.conf.query_default("application_window", "maximized")
+        self.conf.application_window.maximized = True
+        assert not self.conf.query_default("application_window", "maximized")
+
     def test_read_from_file(self):
         self.conf.write_to_file()
         self.conf.restore_defaults()

@@ -1,18 +1,20 @@
-Gaupol 0.18.1/0.19
-==================
- 
- [ ] Rename gaupol-* extensions?
- [ ] Add characters per second column?
+Gaupol 0.19
+===========
+
+ [ ] Add speech recognition to allow generating subtitles from video
+ [ ] Rename gaupol-* filename extensions?
+ [X] Add gaupol-i18n mailing list for translators
  [X] Update Spanish translation (Carlos Mella)
  [X] Update Hungarian translation (Andrássy László)
 
 Gaupol 1.0
 ==========
 
+ * GNOME Goal: Port your PyGTK to the new introspection-based bindings
+   - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
+   - http://developer.gnome.org/Gnome3PortingGuide/
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
- * GNOME Goal: Port your PyGTK to the new introspection-based bindings
-   http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
 
 Gaupol 3000
 ===========

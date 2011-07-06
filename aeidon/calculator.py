@@ -174,7 +174,6 @@ class Calculator(object):
                                   float(time[6:8]),
                                   float(time[9: ]) / 1000,))
 
-
     def to_frame(self, position):
         """Convert `position` to frame."""
         if isinstance(position, basestring):
