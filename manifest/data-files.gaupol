@@ -1,6 +1,9 @@
 [share/gaupol/extensions/bookmarks]
 data/extensions/bookmarks/*
 
+[share/gaupol/extensions/custom-framerates]
+data/extensions/custom-framerates/*
+
 [share/gaupol/extensions/side-pane]
 data/extensions/side-pane/*
 

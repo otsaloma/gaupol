@@ -2,7 +2,7 @@ Gaupol 0.19
 ===========
 
  [X] Add speech recognition to allow generating subtitles from video
- [ ] Fix installation of custom-framerates extension
+ [X] Fix installation of custom-framerates extension
  [ ] Rename gaupol-* filename extensions?
  [X] Add optional dependency on gst-python
      http://gstreamer.freedesktop.org/
