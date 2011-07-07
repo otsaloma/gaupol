@@ -10,44 +10,47 @@ import atexit
 import bisect
 import chardet
 import codecs
+import contextlib
 import copy
 import cPickle
 import cProfile
 import enchant
-import filecmp
 import functools
-import gc
 import gettext
 import glib
-import glob
 import gobject
+import gst
 import gtk
+import gtkspell
 import inspect
+import itertools
 import json
 import linecache
 import locale
+import math
+import optparse
 import os
 import pango
 import platform
 import pstats
+import random
 import re
 import shutil
 import string
 import subprocess
 import sys
-import tarfile
 import tempfile
-import textwrap
 import time
 import traceback
-import types
 import urllib
+import urllib2
 import urlparse
 import webbrowser
 
 file_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(file_dir, ".."))
 os.environ["GAUPOL_DEBUG"] = ""
+import aeidon
 import gaupol
 cProfile.run("gaupol.main.main(sys.argv[1:])", "gaupol.prof")
 stats = pstats.Stats("gaupol.prof")

@@ -38,19 +38,6 @@ def _check_dependencies():
     except ImportError:
         print "PyGTK 2.16 or greater is required to run Gaupol."
         raise SystemExit(1)
-    try:
-        import enchant
-    except ImportError:
-        print "PyEnchant not found; spell-checking not possible."
-    try:
-        import gtkspell
-    except ImportError:
-        print "PyGtkSpell not found; inline spell-checking not possible."
-    try:
-        import chardet
-    except ImportError:
-        print ("Universal Encoding Detector not found; "
-               "character encoding auto-detection not possible.")
 
 def _init_application(opts, args):
     """Initialize application and open files from `args`."""

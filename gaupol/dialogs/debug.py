@@ -67,6 +67,14 @@ class DebugDialog(gaupol.BuilderDialog):
              "Locale: %s\n" % aeidon.locales.get_system_code(),
              "\n"))
 
+    def _insert_library_versions(self):
+        """Insert version numbers of libraries."""
+        map(self._insert_text,
+            ("Python: %d.%d.%d\n" % sys.version_info[:3],
+             "GTK+: %d.%d.%d\n" % gtk.gtk_version,
+             "GStreamer: %s\n" % gaupol.util.get_gst_version(),
+             "\n"))
+
     def _insert_link(self, path, lineno, *tags):
         """Insert `path` as a link into the text view."""
         text_buffer = self._text_view.get_buffer()
@@ -84,6 +92,17 @@ class DebugDialog(gaupol.BuilderDialog):
         tag_table = text_buffer.get_tag_table()
         tags = map(tag_table.lookup, tags + ("monospace",))
         text_buffer.insert_with_tags(itr, path, tag, *tags)
+
+    def _insert_python_package_versions(self):
+        """Insert version numbers of Python packages."""
+        map(self._insert_text,
+            ("aeidon: %s\n" % aeidon.__version__,
+             "gaupol: %s\n" % gaupol.__version__,
+             "gtk: %d.%d.%d\n" % gtk.pygtk_version,
+             "gst: %s\n" % gaupol.util.get_pygst_version(),
+             "enchant: %s\n" % aeidon.util.get_enchant_version(),
+             "chardet: %s\n" % aeidon.util.get_chardet_version(),
+             ))
 
     def _insert_text(self, text, *tags):
         """Insert `text` with `tags` to the text view."""
@@ -119,18 +138,6 @@ class DebugDialog(gaupol.BuilderDialog):
         exception, space, message = exception.partition(" ")
         self._insert_text(exception, "bold")
         self._insert_text("%s%s\n" % (space, message))
-
-    def _insert_versions(self):
-        """Insert version numbers of dependencies."""
-        map(self._insert_text,
-            ("aeidon: %s\n" % aeidon.__version__,
-             "gaupol: %s\n" % gaupol.__version__,
-             "python: %d.%d.%d\n" % sys.version_info[:3],
-             "pygtk: %d.%d.%d\n" % gtk.pygtk_version,
-             "gtk+: %d.%d.%d\n" % gtk.gtk_version,
-             "pyenchant: %s\n" % aeidon.util.get_enchant_version(),
-             "chardet: %s\n" % aeidon.util.get_chardet_version(),
-             ))
 
     def _on_editor_exit(self, pid, return_value, command):
         """Print an error message if editor process failed."""
@@ -183,11 +190,13 @@ class DebugDialog(gaupol.BuilderDialog):
         self._insert_traceback(exctype, value, tb)
         self._insert_title("Environment")
         self._insert_environment()
-        self._insert_title("Versions")
-        self._insert_versions()
+        self._insert_title("Libraries")
+        self._insert_library_versions()
+        self._insert_title("Python Packages")
+        self._insert_python_package_versions()
         gaupol.util.scale_to_content(self._text_view,
-                                     min_nchar=20,
-                                     min_nlines=5,
+                                     min_nchar=72,
+                                     min_nlines=10,
                                      max_nchar=100,
-                                     max_nlines=35,
+                                     max_nlines=30,
                                      font="monospace")

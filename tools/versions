@@ -6,6 +6,7 @@
 
 import sys
 
+print "Libraries:"
 print "Python: %d.%d.%d" % sys.version_info[:3]
 
 try:
@@ -13,25 +14,55 @@ try:
     import gtk
     print "%d.%d.%d" % gtk.gtk_version
 except ImportError:
-    print "N/A"
+    print None
 
 try:
-    print "PyGTK:",
+    print "GStreamer:",
+    import gst
+    print ".".join(map(str, gst.version()))
+except ImportError:
+    print None
+
+print "Python Packages:"
+
+try:
+    print "aeidon:",
+    import aeidon
+    print aeidon.__version__
+except ImportError:
+    print None
+
+try:
+    print "gaupol:",
+    import gaupol
+    print gaupol.__version__
+except ImportError:
+    print None
+
+try:
+    print "gtk:",
     import gtk
     print "%d.%d.%d" % gtk.pygtk_version
 except ImportError:
-    print "N/A"
+    print None
 
 try:
-    print "PyEnchant:",
+    print "gst:",
+    import gst
+    print ".".join(map(str, gst.pygst_version))
+except ImportError:
+    print None
+
+try:
+    print "enchant:",
     import enchant
     print enchant.__version__
 except Exception:
-    print "N/A"
+    print None
 
 try:
-    print "Universal Encoding Detector:",
+    print "chardet:",
     import chardet
     print chardet.__version__
 except ImportError:
-    print "N/A"
+    print None

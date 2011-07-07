@@ -47,6 +47,10 @@ class TestModule(gaupol.TestCase):
         gaupol.conf.editor.custom_font = None
         assert gaupol.util.get_font() == ""
 
+    def test_get_gst_version(self):
+        reload(gaupol.util)
+        assert gaupol.util.get_gst_version()
+
     def test_get_preview_command(self):
         gaupol.conf.preview.use_custom_command = True
         gaupol.conf.preview.force_utf_8 = False
@@ -57,6 +61,10 @@ class TestModule(gaupol.TestCase):
         gaupol.conf.preview.use_custom_command = False
         gaupol.conf.preview.force_utf_8 = False
         gaupol.util.get_preview_command()
+
+    def test_get_pygst_version(self):
+        reload(gaupol.util)
+        assert gaupol.util.get_pygst_version()
 
     def test_get_text_view_size(self):
         text_view = gtk.TextView(gtk.TextBuffer())
