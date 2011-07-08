@@ -18,9 +18,9 @@ There are three parameters to control the voice recognition, i.e. the detection 
 
  * '''Noise level''' defines the noise volume level. Anything below that level will be considered noise and above it speech. Lowering this level will cause more possible speech detected and raising this level will cause less possible speech detected.
 
-  * '''Silence length''' in the minimum amount (in milliseconds) of silence required to terminate the current subtitle and start a new one. Decreasing this length will result in a large amount of short subtitles and increasing this length will result in a small amount of long subtitles.
+ * '''Silence length''' is the minimum amount (in milliseconds) of silence required to terminate the current subtitle and start a new one. Decreasing this length will result in a large amount of short subtitles and increasing this length will result in a small amount of long subtitles.
 
-  * '''Advance length''' is the amount (in milliseconds) by which detected subtitles are made to appear earlier (if the previous subtitle allows it). You might want subtitles to appear slightly before speech, since it takes a moment for the viewer to react to the appearance of a subtitle.
+ * '''Advance length''' is the amount (in milliseconds) by which detected subtitles are made to appear earlier (if the previous subtitle allows it). You might want subtitles to appear slightly before speech, since it takes a moment for the viewer to react to the appearance of a subtitle.
 
 === Speech Recognition ===
 
@@ -46,15 +46,15 @@ Detected voice is further detected into words by three models: an acoustic model
 
 The default English model might work for other languages as well if you're only interested in voice recognition. If, on the other hand, you're interested in speech recognition, you'll need language-specific models. But be warned, the models you can download from CMU Sphinx, might not work "out of the box".
 
-Last, but not least, you can make your models, tuned to your own recording conditions, your own voice or your own language. See the [[http://cmusphinx.sourceforge.net/wiki/|CMU Sphinx wiki]] for instructions.
+Last, but not least, you can make your own models, tuned to your own recording conditions, your own voice or your own language. See the [[http://cmusphinx.sourceforge.net/wiki/|CMU Sphinx wiki]] for instructions.
 
 == Tips ==
 
 Results will greatly depend on the cleanliness of the audio track you use. For something like conference presentations with very little background noise and the same person speaking the whole time to a good quality microphone you can expect fairly good results. When there are multiple speakers, different noise levels (e.g. different scenes of a film) or disturbing non-verbal audio (e.g. background music or sound effects) the results will be considerably worse.
 
-Gaupol's speech recognition dialog is designed to allow experimentation. You can start with default values for parameters and hit the "Start" button. If the results look bad, hit the "Stop" button, edit the parameters and start again. You'll probably want to set the noise level low rather than high and the silence length short rather than long, since it's easier to later delete and merge subtitles than it is to create or split subtitles. Once you find the right parameters to fit your particular video let it process all the way through and once done you can close the dialog. Among the results you'll see subtitles with no text -- only a number in square brackets. This means that voice was detected, but it could not be deciphered into words. These subtitles might often be non-verbal sounds or speech in a different language.
+Gaupol's speech recognition dialog is designed to allow experimentation. You can start with default values for parameters and hit the "Start" button. If the results look bad, hit the "Stop" button, edit the parameters and start again. You'll probably want to set the noise level low rather than high and the silence length short rather than long, since it's easier to later delete and merge subtitles than it is to create or split subtitles. Once you find the right parameters to fit your particular video, let it process all the way through and once done you can close the dialog. Among the results you'll see subtitles with no text -- only a number in square brackets. This means that voice was detected, but it could not be deciphered into words. These subtitles might often be non-verbal sounds or speech in a different language.
 
-Once you have the results of speech recognition, you might want to let Gaupol extend the durations of those subtitles, since subtitles will often disappear too soon if they disappear right when speaking ends. From Gaupol's "Tools" menu select "Adjust Durations" and set it to at least extend durations to match a reasonable reading speed.
+Once you have the results of speech recognition, you might want to let Gaupol extend the durations of those subtitles, since subtitles will often disappear too soon if they end right when speaking ends. From Gaupol's "Tools" menu select "Adjust Durations" and set it to at least extend durations to match a reasonable reading speed.
 
 After the automatic processing you'll need to manually go over the subtitles checking the times and typing the text. Gaupol does not yet have proper tools to help in that work. The external video player preview in Gaupol is useless, since video players can only seek at keyframe accuracy. Thus, you'll want to save your subtitle file and continue the manual processing in some other subtitle editor, one that allows especially video and audio playback of individual subtitles and possibly leading and trailing context at millisecond precision.
 
@@ -64,7 +64,7 @@ After the automatic processing you'll need to manually go over the subtitles che
 
 Speech recognition has been added in Gaupol version 0.19. If you have Gaupol 0.19 or later installed, but the "Speech Recognition" item in the "Tools" menu is grayed out, you're lacking some dependency.
 
-You need the [[http://gstreamer.freedesktop.org/|GStreamer]] multimedia framework and its Python bindings as well as GStreamer plugins to decode whatever video and audio formats you wish to use. To verify GStreamer is correctly installed and accessible from Python, you should be able to import the `gst` module at the Python prompt without error.
+You need the [[http://gstreamer.freedesktop.org/|GStreamer]] multimedia framework and its Python bindings, as well as GStreamer plugins to decode whatever video and audio formats you wish to use. To verify GStreamer is correctly installed and accessible from Python, you should be able to import the `gst` module at the Python prompt without error.
 
 {{{
 $ python
