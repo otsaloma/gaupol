@@ -2,6 +2,10 @@
 
 Gaupol is an editor for text-based subtitle files. See the [[http://home.gna.org/gaupol/|Gaupol homepage]] for more information.
 
+== Getting Specific Stuff Done ==
+
+ * [[/SpeechRecognition|Speech Recognition]]
+
 == Configuring Things ==
 
  * [[/Preview|Custom Preview Commands]]
