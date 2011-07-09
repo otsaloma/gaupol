@@ -107,7 +107,7 @@ class SpeechRecognitionAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SpeechRecognitionAction` object."""
         gaupol.Action.__init__(self, "speech_recognition")
-        self.props.label = _("Sp_eech Recognition...")
+        self.props.label = _("Sp_eech Recognition\342\200\246")
         self.props.tooltip = _("Generate subtitles by voice "
                                "and speech recognition")
 

@@ -4,6 +4,7 @@ Releasing a New Version
  * Update translations, check and inform translators
    $ tools/update-translations
    $ gtranslator po/fi.po
+   $ git commit -a -m "Update translations for X.Y.Z."
    - gaupol-i18n@gna.org
    - Wait at least a week for translations
 

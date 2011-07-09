@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaupol\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 05:56+0300\n"
+"POT-Creation-Date: 2011-07-09 06:13+0300\n"
 "PO-Revision-Date: 2010-08-19 04:20+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Gezer (Hebrew)\n"
@@ -1918,7 +1918,7 @@ msgid "Make subtitles appear earlier or later"
 msgstr "הזזת זמן ההופעה כדי שיופיעו מוקדם או מאוחר יותר"
 
 #: ../gaupol/actions/position.py:110
-msgid "Sp_eech Recognition..."
+msgid "Sp_eech Recognition…"
 msgstr ""
 
 #: ../gaupol/actions/position.py:111

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 05:56+0300\n"
+"POT-Creation-Date: 2011-07-09 06:13+0300\n"
 "PO-Revision-Date: 2011-01-18 15:04+0200\n"
 "Last-Translator: Çağlar Kilimci <ckilimci@pardus.org.tr>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -1919,7 +1919,7 @@ msgid "Make subtitles appear earlier or later"
 msgstr "Alt yazıyı daha erken ya da geç göster"
 
 #: ../gaupol/actions/position.py:110
-msgid "Sp_eech Recognition..."
+msgid "Sp_eech Recognition…"
 msgstr ""
 
 #: ../gaupol/actions/position.py:111

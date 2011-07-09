@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 05:56+0300\n"
+"POT-Creation-Date: 2011-07-09 06:13+0300\n"
 "PO-Revision-Date: 2011-06-22 12:31+0100\n"
 "Last-Translator: Andrássy László <andrassy.laszlo@gmail.com>\n"
 "Language-Team: Hungarian\n"
@@ -1926,7 +1926,7 @@ msgid "Make subtitles appear earlier or later"
 msgstr "Feliratok megjelenítése korábban vagy később"
 
 #: ../gaupol/actions/position.py:110
-msgid "Sp_eech Recognition..."
+msgid "Sp_eech Recognition…"
 msgstr ""
 
 #: ../gaupol/actions/position.py:111

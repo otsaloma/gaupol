@@ -1,16 +1,16 @@
 # Finnish translations for gaupol package.
-# Copyright (C) 2010 Osmo Salomaa
+# Copyright (C) 2010-2011 Osmo Salomaa
 # This file is distributed under the same license as the gaupol package.
-# Osmo Salomaa <otsaloma@cc.hut.fi>, 2010, 2011.
+# Osmo Salomaa <otsaloma@iki.fi>, 2010, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.17\n"
+"Project-Id-Version: gaupol 0.19\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 05:56+0300\n"
-"PO-Revision-Date: 2011-05-30 21:52+0300\n"
-"Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
-"Language-Team: Finnish <otsaloma@cc.hut.fi>\n"
+"POT-Creation-Date: 2011-07-09 06:13+0300\n"
+"PO-Revision-Date: 2011-07-09 06:20+0300\n"
+"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
+"Language-Team: Finnish <otsaloma@iki.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -429,72 +429,72 @@ msgstr "Esikatselu videosoittimessa epäonnistui"
 
 #: ../data/ui/recognition-dialog.ui.h:1
 msgid "A_dvance length:"
-msgstr ""
+msgstr "_Etuaika:"
 
 #: ../data/ui/recognition-dialog.ui.h:2
 msgid "S_tart"
-msgstr ""
+msgstr "_Aloita"
 
 #: ../data/ui/recognition-dialog.ui.h:3
 msgid "Select a Language Model File"
-msgstr ""
+msgstr "Valitse kielimallitiedosto"
 
 #: ../data/ui/recognition-dialog.ui.h:4
 msgid "Select a Phonetic Dictionary File"
-msgstr ""
+msgstr "Valitse foneettinen sanakirjatiedosto"
 
 #: ../data/ui/recognition-dialog.ui.h:5
 msgid "Select a Video or Audio File"
-msgstr ""
+msgstr "Valitse video- tai äänitiedosto"
 
 #: ../data/ui/recognition-dialog.ui.h:6
 msgid "Select an Acoustic Model Directory"
-msgstr ""
+msgstr "Valitse akustiikkamallihakemisto"
 
 #: ../data/ui/recognition-dialog.ui.h:7
 msgid "Sil_ence length:"
-msgstr ""
+msgstr "Hiljaisuu_den kesto:"
 
 #: ../data/ui/recognition-dialog.ui.h:8
 msgid "Speech Recognition"
-msgstr ""
+msgstr "Puheentunnistus"
 
 #: ../data/ui/recognition-dialog.ui.h:9
 msgid "Video or Audio Source"
-msgstr ""
+msgstr "Video- tai äänilähde"
 
 #: ../data/ui/recognition-dialog.ui.h:10
 msgid "Voice Recognition"
-msgstr ""
+msgstr "Äänentunnistus"
 
 #: ../data/ui/recognition-dialog.ui.h:11
 msgid "_Acoustic model:"
-msgstr ""
+msgstr "Ak_ustiikkamalli:"
 
 #: ../data/ui/recognition-dialog.ui.h:12
 msgid "_File:"
-msgstr ""
+msgstr "_Tiedosto:"
 
 #: ../data/ui/recognition-dialog.ui.h:13
 msgid "_Language model:"
-msgstr ""
+msgstr "_Kielimalli:"
 
 #: ../data/ui/recognition-dialog.ui.h:14
 msgid "_Noise level:"
-msgstr ""
+msgstr "_Melutaso:"
 
 #: ../data/ui/recognition-dialog.ui.h:15
 msgid "_Phonetic dictionary:"
-msgstr ""
+msgstr "_Foneettinen sanakirja:"
 
 #: ../data/ui/recognition-dialog.ui.h:16
 msgid "_Use default models"
-msgstr ""
+msgstr "Käytä _oletusmalleja"
 
 #. Milliseconds
 #: ../data/ui/recognition-dialog.ui.h:18
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
@@ -1922,12 +1922,12 @@ msgid "Make subtitles appear earlier or later"
 msgstr "Aseta kappaleet näkymään aikaisemmin tai myöhemmin"
 
 #: ../gaupol/actions/position.py:110
-msgid "Sp_eech Recognition..."
-msgstr ""
+msgid "Sp_eech Recognition…"
+msgstr "_Puheentunnistus…"
 
 #: ../gaupol/actions/position.py:111
 msgid "Generate subtitles by voice and speech recognition"
-msgstr ""
+msgstr "Generoi tekstitykset äänen- ja puheentunnistuksen avulla"
 
 #: ../gaupol/actions/position.py:129
 msgid "_Transform Positions…"

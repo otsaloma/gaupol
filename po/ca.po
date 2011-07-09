@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 05:56+0300\n"
+"POT-Creation-Date: 2011-07-09 06:13+0300\n"
 "PO-Revision-Date: 2006-01-24 12:28+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -1914,7 +1914,7 @@ msgid "Make subtitles appear earlier or later"
 msgstr ""
 
 #: ../gaupol/actions/position.py:110
-msgid "Sp_eech Recognition..."
+msgid "Sp_eech Recognition…"
 msgstr ""
 
 #: ../gaupol/actions/position.py:111
