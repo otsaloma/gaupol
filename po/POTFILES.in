@@ -13,6 +13,7 @@
 [type: gettext/glade]data/ui/open-dialog.ui
 [type: gettext/glade]data/ui/preferences-dialog.ui
 [type: gettext/glade]data/ui/previewerr-dialog.ui
+[type: gettext/glade]data/ui/recognition-dialog.ui
 [type: gettext/glade]data/ui/save-dialog.ui
 [type: gettext/glade]data/ui/search-dialog.ui
 [type: gettext/glade]data/ui/shift-dialog.ui

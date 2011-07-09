@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-30 21:46+0300\n"
+"POT-Creation-Date: 2011-07-09 05:56+0300\n"
 "PO-Revision-Date: 2011-05-31 13:00+0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -44,9 +44,9 @@ msgid "fps"
 msgstr "fps"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
-#: ../data/ui/language-dialog.ui.h:5
-msgid "Configure Spell-Check"
-msgstr "Configurar corrector ortográfico"
+#: ../data/ui/preferences-dialog.ui.h:16
+msgid "Preferences"
+msgstr "Preferencias"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 msgid "_Framerates:"
@@ -249,6 +249,10 @@ msgstr "Comprobar la columna de t_raducción"
 msgid "Check c_urrent project"
 msgstr "Comprobar el proyecto act_ual"
 
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr "Configurar corrector ortográfico"
+
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
 msgstr "Idioma"
@@ -335,8 +339,8 @@ msgstr "Editor"
 #: ../data/ui/preferences-dialog.ui.h:9
 msgid "Encoding specified in the open dialog will always be tried first."
 msgstr ""
-"La codificación especificada en el diálogo «Abrir» será siempre la primera en "
-"usarse."
+"La codificación especificada en el diálogo «Abrir» será siempre la primera "
+"en usarse."
 
 #: ../data/ui/preferences-dialog.ui.h:10
 msgid "Extensions"
@@ -361,10 +365,6 @@ msgstr "Largo de líneas"
 #: ../data/ui/preferences-dialog.ui.h:15
 msgid "Pick the Editor Font"
 msgstr "Seleccionar la tipografía del editor"
-
-#: ../data/ui/preferences-dialog.ui.h:16
-msgid "Preferences"
-msgstr "Preferencias"
 
 #: ../data/ui/preferences-dialog.ui.h:17
 msgid "Preview"
@@ -429,6 +429,75 @@ msgstr "S_alida:"
 #: ../data/ui/previewerr-dialog.ui.h:2
 msgid "Preview in video player failed"
 msgstr "Falló la previsualización con el reproductor de vídeo"
+
+#: ../data/ui/recognition-dialog.ui.h:1
+msgid "A_dvance length:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:2
+msgid "S_tart"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:3
+msgid "Select a Language Model File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:4
+msgid "Select a Phonetic Dictionary File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:5
+msgid "Select a Video or Audio File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:6
+msgid "Select an Acoustic Model Directory"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:7
+msgid "Sil_ence length:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:8
+msgid "Speech Recognition"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:9
+msgid "Video or Audio Source"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:10
+msgid "Voice Recognition"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:11
+msgid "_Acoustic model:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:12
+msgid "_File:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:13
+msgid "_Language model:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:14
+msgid "_Noise level:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:15
+msgid "_Phonetic dictionary:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:16
+msgid "_Use default models"
+msgstr ""
+
+#. Milliseconds
+#: ../data/ui/recognition-dialog.ui.h:18
+msgid "ms"
+msgstr ""
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
@@ -1410,7 +1479,8 @@ msgstr "Buscar:"
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
 msgid "Calculate nonnative units with a framerate of %.3f fps"
-msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de %.3f fps"
+msgstr ""
+"Calcula unidades no nativas con una frecuencia de fotogramas de %.3f fps"
 
 #: ../data/extensions/side-pane/side-pane.py:295
 msgid "Si_de Pane"
@@ -1877,10 +1947,18 @@ msgid "Make subtitles appear earlier or later"
 msgstr "Adelanta o retrasa subtítulos"
 
 #: ../gaupol/actions/position.py:110
+msgid "Sp_eech Recognition..."
+msgstr ""
+
+#: ../gaupol/actions/position.py:111
+msgid "Generate subtitles by voice and speech recognition"
+msgstr ""
+
+#: ../gaupol/actions/position.py:129
 msgid "_Transform Positions…"
 msgstr "Ajustar po_siciones…"
 
-#: ../gaupol/actions/position.py:111
+#: ../gaupol/actions/position.py:130
 msgid "Change positions by linear two-point correction"
 msgstr "Ajusta posiciones mediante una aproximación lineal entre dos puntos"
 
@@ -1966,7 +2044,8 @@ msgstr "2_3,976 fps"
 
 #: ../gaupol/actions/view.py:120
 msgid "Calculate nonnative units with a framerate of 23.976 fps"
-msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 23,976 fps"
+msgstr ""
+"Calcula unidades no nativas con una frecuencia de fotogramas de 23,976 fps"
 
 #: ../gaupol/actions/view.py:143
 msgid "2_4.000 fps"
@@ -1974,7 +2053,8 @@ msgstr "2_4,000 fps"
 
 #: ../gaupol/actions/view.py:144
 msgid "Calculate nonnative units with a framerate of 24.000 fps"
-msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 24,000 fps"
+msgstr ""
+"Calcula unidades no nativas con una frecuencia de fotogramas de 24,000 fps"
 
 #: ../gaupol/actions/view.py:167
 msgid "2_5.000 fps"
@@ -1982,7 +2062,8 @@ msgstr "2_5,000 fps"
 
 #: ../gaupol/actions/view.py:168
 msgid "Calculate nonnative units with a framerate of 25.000 fps"
-msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 25,000 fps"
+msgstr ""
+"Calcula unidades no nativas con una frecuencia de fotogramas de 25,000 fps"
 
 #: ../gaupol/actions/view.py:191
 msgid "2_9.970 fps"
@@ -1990,7 +2071,8 @@ msgstr "2_9,970 fps"
 
 #: ../gaupol/actions/view.py:192
 msgid "Calculate nonnative units with a framerate of 29.970 fps"
-msgstr "Calcula unidades no nativas con una frecuencia de fotogramas de 29,970 fps"
+msgstr ""
+"Calcula unidades no nativas con una frecuencia de fotogramas de 29,970 fps"
 
 #: ../gaupol/actions/view.py:213
 msgid "F_ramerate"
@@ -2692,51 +2774,51 @@ msgstr "caracteres"
 msgid "ems"
 msgstr "ems"
 
-#: ../gaupol/main.py:107
+#: ../gaupol/main.py:94
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPCIÓN...] [ARCHIVO...] [+[NUM]]"
 
-#: ../gaupol/main.py:113
+#: ../gaupol/main.py:100
 msgid "show version number and exit"
 msgstr "informar de la versión y salir"
 
-#: ../gaupol/main.py:119 ../gaupol/main.py:143 ../gaupol/main.py:162
+#: ../gaupol/main.py:106 ../gaupol/main.py:130 ../gaupol/main.py:149
 msgid "FILE"
 msgstr "ARCHIVO"
 
-#: ../gaupol/main.py:122
+#: ../gaupol/main.py:109
 msgid "set the configuration file used"
 msgstr "definir el archivo de configuración por usar"
 
-#: ../gaupol/main.py:128
+#: ../gaupol/main.py:115
 msgid "ENCODING"
 msgstr "CODIFICACIÓN"
 
-#: ../gaupol/main.py:131
+#: ../gaupol/main.py:118
 msgid "set the character encoding used to open files"
 msgstr "definir la codificación de caracteres de los archivos por abrir"
 
-#: ../gaupol/main.py:137
+#: ../gaupol/main.py:124
 msgid "list all available character encodings"
 msgstr ""
 "mostrar una lista de todas las opciones disponibles para la codificaciones "
 "de caracteres"
 
-#: ../gaupol/main.py:146
+#: ../gaupol/main.py:133
 msgid "open translation file"
 msgstr "abrir archivo de traducción"
 
-#: ../gaupol/main.py:152
+#: ../gaupol/main.py:139
 msgid "METHOD"
 msgstr "MÉTODO"
 
-#: ../gaupol/main.py:155
+#: ../gaupol/main.py:142
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "método usado para ajustar subtítulos de traducción: según 'número' o "
 "'posición'"
 
-#: ../gaupol/main.py:165
+#: ../gaupol/main.py:152
 msgid "select video file"
 msgstr "seleccionar archivo de vídeo"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-30 21:46+0300\n"
+"POT-Creation-Date: 2011-07-09 05:56+0300\n"
 "PO-Revision-Date: 2011-04-13 14:26-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
 "Language-Team: COMSOLiD <comsolid3@googlegroups.com>\n"
@@ -44,9 +44,9 @@ msgid "fps"
 msgstr ""
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
-#: ../data/ui/language-dialog.ui.h:5
-msgid "Configure Spell-Check"
-msgstr "Configurar Verificação Ortográfica"
+#: ../data/ui/preferences-dialog.ui.h:16
+msgid "Preferences"
+msgstr "Preferências"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 msgid "_Framerates:"
@@ -249,6 +249,10 @@ msgstr "Verificar coluna texto traduzido"
 msgid "Check c_urrent project"
 msgstr "Verificar projeto a_tual"
 
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr "Configurar Verificação Ortográfica"
+
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
 msgstr "Idioma"
@@ -361,10 +365,6 @@ msgstr "Tamanho das Linhas"
 msgid "Pick the Editor Font"
 msgstr "Escolha a Fonte do Editor"
 
-#: ../data/ui/preferences-dialog.ui.h:16
-msgid "Preferences"
-msgstr "Preferências"
-
 #: ../data/ui/preferences-dialog.ui.h:17
 msgid "Preview"
 msgstr "Visualizar"
@@ -428,6 +428,75 @@ msgstr "S_aída:"
 #: ../data/ui/previewerr-dialog.ui.h:2
 msgid "Preview in video player failed"
 msgstr "Pré-visualização no reprodutor de vídeo falhou"
+
+#: ../data/ui/recognition-dialog.ui.h:1
+msgid "A_dvance length:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:2
+msgid "S_tart"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:3
+msgid "Select a Language Model File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:4
+msgid "Select a Phonetic Dictionary File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:5
+msgid "Select a Video or Audio File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:6
+msgid "Select an Acoustic Model Directory"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:7
+msgid "Sil_ence length:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:8
+msgid "Speech Recognition"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:9
+msgid "Video or Audio Source"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:10
+msgid "Voice Recognition"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:11
+msgid "_Acoustic model:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:12
+msgid "_File:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:13
+msgid "_Language model:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:14
+msgid "_Noise level:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:15
+msgid "_Phonetic dictionary:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:16
+msgid "_Use default models"
+msgstr ""
+
+#. Milliseconds
+#: ../data/ui/recognition-dialog.ui.h:18
+msgid "ms"
+msgstr ""
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
@@ -1856,10 +1925,18 @@ msgid "Make subtitles appear earlier or later"
 msgstr "Fazer legendas aparecerem mais cedo ou mais tarde"
 
 #: ../gaupol/actions/position.py:110
+msgid "Sp_eech Recognition..."
+msgstr ""
+
+#: ../gaupol/actions/position.py:111
+msgid "Generate subtitles by voice and speech recognition"
+msgstr ""
+
+#: ../gaupol/actions/position.py:129
 msgid "_Transform Positions…"
 msgstr "_Transformar Posições…"
 
-#: ../gaupol/actions/position.py:111
+#: ../gaupol/actions/position.py:130
 msgid "Change positions by linear two-point correction"
 msgstr "Mudar posições pela correção de dois pontos lineares"
 
@@ -2668,47 +2745,47 @@ msgstr "caracteres"
 msgid "ems"
 msgstr "ems"
 
-#: ../gaupol/main.py:107
+#: ../gaupol/main.py:94
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPÇÃO...] [ARQUIVO...] [+[NÚM]]"
 
-#: ../gaupol/main.py:113
+#: ../gaupol/main.py:100
 msgid "show version number and exit"
 msgstr "mostrar número da versão e sair"
 
-#: ../gaupol/main.py:119 ../gaupol/main.py:143 ../gaupol/main.py:162
+#: ../gaupol/main.py:106 ../gaupol/main.py:130 ../gaupol/main.py:149
 msgid "FILE"
 msgstr "ARQUIVO"
 
-#: ../gaupol/main.py:122
+#: ../gaupol/main.py:109
 msgid "set the configuration file used"
 msgstr "definir o arquivo de configuração usado"
 
-#: ../gaupol/main.py:128
+#: ../gaupol/main.py:115
 msgid "ENCODING"
 msgstr "CODIFICAÇÃO"
 
-#: ../gaupol/main.py:131
+#: ../gaupol/main.py:118
 msgid "set the character encoding used to open files"
 msgstr "definir a codificação usada para abrir arquivos"
 
-#: ../gaupol/main.py:137
+#: ../gaupol/main.py:124
 msgid "list all available character encodings"
 msgstr "listar todas as codificações disponíveis"
 
-#: ../gaupol/main.py:146
+#: ../gaupol/main.py:133
 msgid "open translation file"
 msgstr "abrir arquivo de tradução"
 
-#: ../gaupol/main.py:152
+#: ../gaupol/main.py:139
 msgid "METHOD"
 msgstr "MÉTODO"
 
-#: ../gaupol/main.py:155
+#: ../gaupol/main.py:142
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr "método usado para alinhar legendas traduzidas: 'número' ou 'posição'"
 
-#: ../gaupol/main.py:165
+#: ../gaupol/main.py:152
 msgid "select video file"
 msgstr "selecione um arquivo de vídeo"
 

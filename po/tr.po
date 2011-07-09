@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-30 21:46+0300\n"
+"POT-Creation-Date: 2011-07-09 05:56+0300\n"
 "PO-Revision-Date: 2011-01-18 15:04+0200\n"
 "Last-Translator: Çağlar Kilimci <ckilimci@pardus.org.tr>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -44,9 +44,9 @@ msgid "fps"
 msgstr ""
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
-#: ../data/ui/language-dialog.ui.h:5
-msgid "Configure Spell-Check"
-msgstr "İmla denetimini yapılandır"
+#: ../data/ui/preferences-dialog.ui.h:16
+msgid "Preferences"
+msgstr "Tercihler"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 msgid "_Framerates:"
@@ -249,6 +249,10 @@ msgstr "Çeviri metn_ini kontrol et"
 msgid "Check c_urrent project"
 msgstr "Bu pro_jeyi kontrol et"
 
+#: ../data/ui/language-dialog.ui.h:5
+msgid "Configure Spell-Check"
+msgstr "İmla denetimini yapılandır"
+
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Language"
 msgstr "Dil"
@@ -360,10 +364,6 @@ msgstr "Satır uzunluğu"
 msgid "Pick the Editor Font"
 msgstr "Editörün yazı tipi"
 
-#: ../data/ui/preferences-dialog.ui.h:16
-msgid "Preferences"
-msgstr "Tercihler"
-
 #: ../data/ui/preferences-dialog.ui.h:17
 msgid "Preview"
 msgstr "İzleyerek dene"
@@ -427,6 +427,75 @@ msgstr "Çı_ktı:"
 #: ../data/ui/previewerr-dialog.ui.h:2
 msgid "Preview in video player failed"
 msgstr "Deneme filmi oynatılamadı"
+
+#: ../data/ui/recognition-dialog.ui.h:1
+msgid "A_dvance length:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:2
+msgid "S_tart"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:3
+msgid "Select a Language Model File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:4
+msgid "Select a Phonetic Dictionary File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:5
+msgid "Select a Video or Audio File"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:6
+msgid "Select an Acoustic Model Directory"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:7
+msgid "Sil_ence length:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:8
+msgid "Speech Recognition"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:9
+msgid "Video or Audio Source"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:10
+msgid "Voice Recognition"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:11
+msgid "_Acoustic model:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:12
+msgid "_File:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:13
+msgid "_Language model:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:14
+msgid "_Noise level:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:15
+msgid "_Phonetic dictionary:"
+msgstr ""
+
+#: ../data/ui/recognition-dialog.ui.h:16
+msgid "_Use default models"
+msgstr ""
+
+#. Milliseconds
+#: ../data/ui/recognition-dialog.ui.h:18
+msgid "ms"
+msgstr ""
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
@@ -1850,10 +1919,18 @@ msgid "Make subtitles appear earlier or later"
 msgstr "Alt yazıyı daha erken ya da geç göster"
 
 #: ../gaupol/actions/position.py:110
+msgid "Sp_eech Recognition..."
+msgstr ""
+
+#: ../gaupol/actions/position.py:111
+msgid "Generate subtitles by voice and speech recognition"
+msgstr ""
+
+#: ../gaupol/actions/position.py:129
 msgid "_Transform Positions…"
 msgstr "Durumları Dönüş_tür..."
 
-#: ../gaupol/actions/position.py:111
+#: ../gaupol/actions/position.py:130
 msgid "Change positions by linear two-point correction"
 msgstr "İki noktalı düzeltme kullanarak durumu değiştir"
 
@@ -2656,49 +2733,49 @@ msgstr "karakterler"
 msgid "ems"
 msgstr "ems"
 
-#: ../gaupol/main.py:107
+#: ../gaupol/main.py:94
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [SEÇENEK...] [DOSYA...] [+[NUM]]"
 
-#: ../gaupol/main.py:113
+#: ../gaupol/main.py:100
 msgid "show version number and exit"
 msgstr "versiyonunu göster ve çık"
 
-#: ../gaupol/main.py:119 ../gaupol/main.py:143 ../gaupol/main.py:162
+#: ../gaupol/main.py:106 ../gaupol/main.py:130 ../gaupol/main.py:149
 msgid "FILE"
 msgstr "DOSYA"
 
-#: ../gaupol/main.py:122
+#: ../gaupol/main.py:109
 msgid "set the configuration file used"
 msgstr "Kullanılan ayar dosyasını uygula"
 
-#: ../gaupol/main.py:128
+#: ../gaupol/main.py:115
 msgid "ENCODING"
 msgstr "KARAKTER KODLAMA"
 
-#: ../gaupol/main.py:131
+#: ../gaupol/main.py:118
 msgid "set the character encoding used to open files"
 msgstr "Açık olan dosya için karakter kodlamayı uygula"
 
-#: ../gaupol/main.py:137
+#: ../gaupol/main.py:124
 msgid "list all available character encodings"
 msgstr "Ulaşılabilir bütün karakter kodlamalarını listele"
 
-#: ../gaupol/main.py:146
+#: ../gaupol/main.py:133
 msgid "open translation file"
 msgstr "Açık çeviri dosyası"
 
-#: ../gaupol/main.py:152
+#: ../gaupol/main.py:139
 msgid "METHOD"
 msgstr "YÖNTEM"
 
-#: ../gaupol/main.py:155
+#: ../gaupol/main.py:142
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "Çeviri alt yazılarını hizaya sokmak için 'numara' ya da 'durum' yöntemini "
 "kullanın."
 
-#: ../gaupol/main.py:165
+#: ../gaupol/main.py:152
 msgid "select video file"
 msgstr "Video dosyası seçiniz"
 
