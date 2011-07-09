@@ -3,10 +3,10 @@ Gaupol 0.19
 
  [X] Add speech recognition to allow generating subtitles from video
  [X] Fix installation of custom-framerates extension
- [ ] Rename gaupol-* filename extensions?
-     - gaupol-extension
-     - gaupol-bookmarks
- [X] Add optional dependency on gst-python
+ [X] Add optional dependency on gst-python (this also implies a
+     dependency on one or more of gst-plugins-base, gst-plugins-good,
+     gst-plugins-ugly, gst-plugins-bad, gst-ffmpeg depending on what
+     video and audio formats are being used)
      http://gstreamer.freedesktop.org/
  [X] Add optional dependency on pocketsphinx
      http://cmusphinx.sourceforge.net/
