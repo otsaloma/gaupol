@@ -40,12 +40,10 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog):
                 "dict_button",
                 "lang_button",
                 "model_table",
-                "noise_adjustment",
                 "noise_spin",
                 "options_vbox",
                 "progressbar",
                 "revert_button",
-                "silence_adjustment",
                 "silence_spin",
                 "video_button",
                 )
