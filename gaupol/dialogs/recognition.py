@@ -65,6 +65,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog):
         self._text = None
         self._texts = []
         self._init_values()
+        self._init_sensitivities()
         width = gaupol.util.char_to_px(42)
         self._acoustic_button.set_size_request(width, -1)
         self._update_response_sensitivities()
@@ -127,6 +128,13 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog):
                 + "threshold=%.9f " % noise
                 + "run-length=%d " % silence
                 )
+
+    def _init_sensitivities(self):
+        """Initialize widget sensitivities."""
+        self.set_response_sensitive(gtk.RESPONSE_HELP, True)
+        self.set_response_sensitive(gtk.RESPONSE_CANCEL, False)
+        self.set_response_sensitive(gtk.RESPONSE_OK, False)
+        self.set_response_sensitive(gtk.RESPONSE_CLOSE, True)
 
     def _init_values(self):
         """Initialize default values for widgets."""
