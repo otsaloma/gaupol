@@ -30,6 +30,7 @@
 [type: gettext/glade]data/ui/text-assistant/progress-page.ui
 [type: gettext/glade]data/ui/transform-dialog.ui
 [type: gettext/ini]data/extensions/bookmarks/bookmarks.gaupol-extension.in
+[type: gettext/ini]data/extensions/custom-framerates/custom-framerates.gaupol-extension.in
 [type: gettext/ini]data/extensions/side-pane/side-pane.gaupol-extension.in
 [type: gettext/ini]data/patterns/Latn-en-US.common-error.in
 [type: gettext/ini]data/patterns/Latn-en.capitalization.in
