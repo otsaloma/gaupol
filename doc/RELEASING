@@ -34,14 +34,13 @@ Releasing a New Version
    $ git push
    $ git push --tags
 
- * Build final tarballs and edit related files
+ * Build final tarballs, edit related files and upload
    $ ./setup.py clean sdist_gna --formats bztar,gztar
    $ $EDITOR dist/*/*.news dist/*/*.changes
+   - download.gna.org:/upload/gaupol/
 
- * Generate API documentation
+ * Generate API documentation and upload
    $ ./setup.py clean doc --format html
-
- * Upload tarballs and API documentation
    - download.gna.org:/upload/gaupol/
 
  * Send announcements and update web sites
