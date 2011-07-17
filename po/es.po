@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.18\n"
+"Project-Id-Version: gaupol 0.19\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-09 06:13+0300\n"
-"PO-Revision-Date: 2011-05-31 13:00+0300\n"
+"PO-Revision-Date: 2011-07-16 13:00+0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -432,72 +432,72 @@ msgstr "Falló la previsualización con el reproductor de vídeo"
 
 #: ../data/ui/recognition-dialog.ui.h:1
 msgid "A_dvance length:"
-msgstr ""
+msgstr "Aparición pre_via:"
 
 #: ../data/ui/recognition-dialog.ui.h:2
 msgid "S_tart"
-msgstr ""
+msgstr "_Iniciar"
 
 #: ../data/ui/recognition-dialog.ui.h:3
 msgid "Select a Language Model File"
-msgstr ""
+msgstr "Seleccionar el modelo del lenguaje"
 
 #: ../data/ui/recognition-dialog.ui.h:4
 msgid "Select a Phonetic Dictionary File"
-msgstr ""
+msgstr "Seleccionar el diccionario fonético"
 
 #: ../data/ui/recognition-dialog.ui.h:5
 msgid "Select a Video or Audio File"
-msgstr ""
+msgstr "Seleccionar el archivo de audio o vídeo"
 
 #: ../data/ui/recognition-dialog.ui.h:6
 msgid "Select an Acoustic Model Directory"
-msgstr ""
+msgstr "Seleccionar el modelo acústico"
 
 #: ../data/ui/recognition-dialog.ui.h:7
 msgid "Sil_ence length:"
-msgstr ""
+msgstr "Sil_encio entre diálogos:"
 
 #: ../data/ui/recognition-dialog.ui.h:8
 msgid "Speech Recognition"
-msgstr ""
+msgstr "Reconocimiento de lenguaje"
 
 #: ../data/ui/recognition-dialog.ui.h:9
 msgid "Video or Audio Source"
-msgstr ""
+msgstr "Fuente de audio o vídeo"
 
 #: ../data/ui/recognition-dialog.ui.h:10
 msgid "Voice Recognition"
-msgstr ""
+msgstr "Reconocimiento de voz"
 
 #: ../data/ui/recognition-dialog.ui.h:11
 msgid "_Acoustic model:"
-msgstr ""
+msgstr "M_odelo acústico:"
 
 #: ../data/ui/recognition-dialog.ui.h:12
 msgid "_File:"
-msgstr ""
+msgstr "_Archivo:"
 
 #: ../data/ui/recognition-dialog.ui.h:13
 msgid "_Language model:"
-msgstr ""
+msgstr "Modelo del _lenguaje:"
 
 #: ../data/ui/recognition-dialog.ui.h:14
 msgid "_Noise level:"
-msgstr ""
+msgstr "_Nivel de ruido:"
 
 #: ../data/ui/recognition-dialog.ui.h:15
 msgid "_Phonetic dictionary:"
-msgstr ""
+msgstr "Diccionario _fonético:"
 
 #: ../data/ui/recognition-dialog.ui.h:16
 msgid "_Use default models"
-msgstr ""
+msgstr "_Usar modelos predeterminados"
 
 #. Milliseconds
 #: ../data/ui/recognition-dialog.ui.h:18
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
@@ -1644,7 +1644,7 @@ msgstr "_Selección"
 
 #: ../gaupol/actions/edit.py:364
 msgid "_Split Subtitle"
-msgstr "Di_vidir subtítulo"
+msgstr "D_ividir subtítulo"
 
 #: ../gaupol/actions/edit.py:365
 msgid "Split the selected subtitle"
@@ -1809,7 +1809,7 @@ msgstr "Selecciona un archivo de vídeo"
 
 #: ../gaupol/actions/file.py:366
 msgid "Spli_t Project…"
-msgstr "Di_vidir proyecto…"
+msgstr "D_ividir proyecto…"
 
 #: ../gaupol/actions/file.py:367
 msgid "Split the current project in two"
@@ -1948,11 +1948,11 @@ msgstr "Adelanta o retrasa subtítulos"
 
 #: ../gaupol/actions/position.py:110
 msgid "Sp_eech Recognition…"
-msgstr ""
+msgstr "Reconocimiento de _voz…"
 
 #: ../gaupol/actions/position.py:111
 msgid "Generate subtitles by voice and speech recognition"
-msgstr ""
+msgstr "Contruye subtítulos mediante reconocimiento de voz"
 
 #: ../gaupol/actions/position.py:129
 msgid "_Transform Positions…"
@@ -2710,7 +2710,7 @@ msgstr "Editar texto"
 
 #: ../gaupol/dialogs/video.py:33
 msgid "Select Video"
-msgstr "Seleccionar vídeo"
+msgstr "Seleccionar el archivo de vídeo"
 
 #: ../gaupol/dialogs/video.py:37
 msgid "_Select"
@@ -2859,39 +2859,3 @@ msgstr "<b>Salto de línea:</b> %s"
 #, python-format
 msgid "%s translation"
 msgstr "traducción %s"
-
-#~ msgid "Tasks"
-#~ msgstr "Tareas"
-
-#~ msgid "24 fps"
-#~ msgstr "24 fps"
-
-#~ msgid "25 fps"
-#~ msgstr "25 fps"
-
-#~ msgid "30 fps"
-#~ msgstr "30 fps"
-
-#~ msgid "2_4 fps"
-#~ msgstr "2_4 fps"
-
-#~ msgid "Calculate nonnative units with a framerate of 24 fps"
-#~ msgstr ""
-#~ "Calcula unidades no nativas con una frecuencia de fotogramas de 24 fps"
-
-#~ msgid "2_5 fps"
-#~ msgstr "2_5 fps"
-
-#~ msgid "Calculate nonnative units with a framerate of 25 fps"
-#~ msgstr ""
-#~ "Calcula unidades no nativas con una frecuencia de fotogramas de 25 fps"
-
-#~ msgid "_30 fps"
-#~ msgstr "_30 fps"
-
-#~ msgid "Calculate nonnative units with a framerate of 30 fps"
-#~ msgstr ""
-#~ "Calcula unidades no nativas con una frecuencia de fotogramas de 30 fps"
-
-#~ msgid "%(format)s (%(pattern)s)"
-#~ msgstr "%(format)s (%(pattern)s)"

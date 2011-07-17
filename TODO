@@ -14,25 +14,28 @@ Gaupol 0.19
  [X] Update Spanish translation (Carlos Mella)
  [X] Update Hungarian translation (Andrássy László)
 
+Gaupol 0.20
+===========
+
+ * Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
+   - http://docs.python.org/dev/whatsnew/3.0.html
+   - http://docs.python.org/dev/whatsnew/3.1.html
+   - http://docs.python.org/dev/whatsnew/3.2.html
+   - http://diveintopython3.org/whats-new.html
+   - http://developer.gnome.org/Gnome3PortingGuide/
+   - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
+ * Use Libpeas for extensions?
+   - http://live.gnome.org/Libpeas
+
 Gaupol 1.0
 ==========
 
- * GNOME Goal: Port your PyGTK to the new introspection-based bindings
-   - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
-   - http://developer.gnome.org/Gnome3PortingGuide/
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
 
 Gaupol 3000
 ===========
 
- * Bump Python dependency to something
-   - Remove imports from __future__
-   - http://docs.python.org/dev/whatsnew/2.7.html
-   - http://docs.python.org/dev/whatsnew/3.0.html
-   - http://docs.python.org/dev/whatsnew/3.1.html
-   - http://docs.python.org/dev/whatsnew/3.2.html
-   - http://diveintopython3.org/whats-new.html
  * Replace the headers-dialog with a more general properties-dialog
    with format-specific fields to fill (?)
    - SubRip: Write coordinates (extended SubRip format)
