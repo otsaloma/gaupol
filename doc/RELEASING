@@ -20,19 +20,23 @@ Releasing a New Version
    $ $EDITOR data/extensions/*/*.gaupol-extension.in
    $ $EDITOR NEWS TODO
 
- * Build tarballs and edit related files
+ * Check that tarballs can be built
    $ ./setup.py clean sdist_gna --formats bztar,gztar
-   $ $EDITOR dist/*/*.news dist/*/*.changes
 
- * Extract tarball somwehere and install
+ * Check that installation of above tarball works
    $ sudo ./setup.py clean install --prefix=/usr/local
    $ sudo ./setup.py clean
+   $ /usr/local/bin/gaupol
 
  * Commit changes
    $ git commit -a -m "RELEASE X.Y.Z"
    $ git tag -s gaupol-X.Y.Z
    $ git push
    $ git push --tags
+
+ * Build final tarballs and edit related files
+   $ ./setup.py clean sdist_gna --formats bztar,gztar
+   $ $EDITOR dist/*/*.news dist/*/*.changes
 
  * Generate API documentation
    $ ./setup.py clean doc --format html

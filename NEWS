@@ -1,3 +1,20 @@
+Gaupol 0.19
+===========
+
+ * Add speech recognition to allow generating subtitles from video
+   http://live.gnome.org/Gaupol/SpeechRecognition
+ * Fix installation of custom-framerates extension
+ * Add optional dependency on gst-python (this also implies a
+   dependency on one or more of gst-plugins-base, gst-plugins-good,
+   gst-plugins-ugly, gst-plugins-bad, gst-ffmpeg depending on what
+   video and audio formats are being used)
+   http://gstreamer.freedesktop.org/
+ * Add optional dependency on pocketsphinx
+   http://cmusphinx.sourceforge.net/
+ * Add gaupol-i18n mailing list for translators
+ * Update Spanish translation (Carlos Mella)
+ * Update Hungarian translation (Andrássy László)
+
 Gaupol 0.18
 ===========
 
