@@ -1,22 +1,24 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Russian translation of Gaupol
+# Copyright (C) 21011 Osmo Salomaa
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Алекс <davian818@gmail.com>, 2010.
+# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.15.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 06:13+0300\n"
-"PO-Revision-Date: 2010-06-12 19:23+0700\n"
-"Last-Translator: Алекс <davian818@gmail.com>\n"
-"Language-Team: ru <none>\n"
+"POT-Creation-Date: 2011-07-19 09:36+0400\n"
+"PO-Revision-Date: 2011-07-19 10:19+0400\n"
+"Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 :n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Content-Transfer-Encoding: UTF-8\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n"
+"%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 
@@ -35,24 +37,24 @@ msgstr "_Субтитр:"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
-msgstr ""
+msgstr "Добавить частоту кадров"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
 msgid "_Framerate:"
-msgstr ""
+msgstr "_Частота кадров:"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
 msgid "fps"
-msgstr ""
+msgstr "к/с"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
 #: ../data/ui/preferences-dialog.ui.h:16
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "Параметры"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 msgid "_Framerates:"
-msgstr ""
+msgstr "_Частоты кадров:"
 
 #: ../data/ui/debug-dialog.ui.h:1
 msgid "An unhandled exception occured"
@@ -76,16 +78,16 @@ msgstr "Тек_ущий проект"
 
 #: ../data/ui/duration-dialog.ui.h:3
 msgid "Adjust Durations"
-msgstr "Настроить длительность"
+msgstr "Скорректировать длительность"
 
 #: ../data/ui/duration-dialog.ui.h:4
 msgid "Adjust all _open projects"
-msgstr ""
+msgstr "_Все открытые проекты"
 
 #: ../data/ui/duration-dialog.ui.h:5
 #: ../data/ui/text-assistant/line-break-opts-page.ui.h:1
 msgid "Limits"
-msgstr "Границы"
+msgstr "Пределы"
 
 #: ../data/ui/duration-dialog.ui.h:6
 msgid "Ma_ximum duration:"
@@ -101,7 +103,7 @@ msgstr "Субтитры"
 
 #: ../data/ui/duration-dialog.ui.h:8
 msgid "Theoretic Duration"
-msgstr ""
+msgstr "Теоретическая длительность"
 
 #: ../data/ui/duration-dialog.ui.h:9
 msgid "_Adjust"
@@ -113,7 +115,7 @@ msgstr "_Задержка между субтитрами:"
 
 #: ../data/ui/duration-dialog.ui.h:11
 msgid "_Lengthen duration to match reading speed"
-msgstr ""
+msgstr "_Увеличить до совпадения со скоростью чтения"
 
 #: ../data/ui/duration-dialog.ui.h:12
 msgid "_Minimum duration:"
@@ -121,27 +123,27 @@ msgstr "_Минимальная длительность:"
 
 #: ../data/ui/duration-dialog.ui.h:13
 msgid "_Reading speed:"
-msgstr ""
+msgstr "Скорость _чтения:"
 
 #: ../data/ui/duration-dialog.ui.h:14
 msgid "_Shorten duration to match reading speed"
-msgstr ""
+msgstr "У_меньшить до совпадения со скоростью чтения"
 
 #: ../data/ui/duration-dialog.ui.h:15
 msgid "characters per second"
-msgstr ""
+msgstr "символов в секунду"
 
 #: ../data/ui/duration-dialog.ui.h:16
 msgid "s_econds"
-msgstr "_сек"
+msgstr "_секунд"
 
 #: ../data/ui/duration-dialog.ui.h:17
 msgid "seco_nds"
-msgstr "с_ек"
+msgstr "с_екунд"
 
 #: ../data/ui/duration-dialog.ui.h:18
 msgid "secon_ds"
-msgstr "се_к"
+msgstr "се_кунд"
 
 #: ../data/ui/encoding-dialog.ui.h:1 ../data/ui/preferences-dialog.ui.h:4
 msgid "Character Encodings"
@@ -157,7 +159,7 @@ msgstr "Частота кадров"
 
 #: ../data/ui/framerate-dialog.ui.h:3
 msgid "Convert _all open projects"
-msgstr "Преобразовать _открытые проекты"
+msgstr "Преобразовать все _открытые проекты"
 
 #: ../data/ui/framerate-dialog.ui.h:4
 msgid "Convert c_urrent project"
@@ -225,7 +227,7 @@ msgstr "Вставка субтитров"
 
 #: ../data/ui/insert-dialog.ui.h:2 ../data/ui/shift-dialog.ui.h:7
 msgid "_Amount:"
-msgstr "_Величина:"
+msgstr "_Количество:"
 
 #: ../data/ui/insert-dialog.ui.h:3
 msgid "_Insert"
@@ -324,7 +326,7 @@ msgstr "Авто_определение"
 
 #: ../data/ui/preferences-dialog.ui.h:5
 msgid "Chec_k spelling as you type"
-msgstr ""
+msgstr "Про_верять орфографию по мере набора текста"
 
 #: ../data/ui/preferences-dialog.ui.h:6
 msgid "Co_mmand:"
@@ -356,7 +358,7 @@ msgstr "Шрифт"
 
 #: ../data/ui/preferences-dialog.ui.h:13
 msgid "Get more extensions"
-msgstr ""
+msgstr "Скачать дополнительные"
 
 #: ../data/ui/preferences-dialog.ui.h:14
 msgid "Line Lengths"
@@ -376,7 +378,7 @@ msgstr "Показывать _длину строк в полях редакти
 
 #: ../data/ui/preferences-dialog.ui.h:19
 msgid "Spell-Check"
-msgstr ""
+msgstr "Проверка орфографии"
 
 #: ../data/ui/preferences-dialog.ui.h:20
 msgid "Start Position"
@@ -432,72 +434,72 @@ msgstr "Ошибка просмотра в видеоплеере"
 
 #: ../data/ui/recognition-dialog.ui.h:1
 msgid "A_dvance length:"
-msgstr ""
+msgstr "С_мещение от начала:"
 
 #: ../data/ui/recognition-dialog.ui.h:2
 msgid "S_tart"
-msgstr ""
+msgstr "_Начать"
 
 #: ../data/ui/recognition-dialog.ui.h:3
 msgid "Select a Language Model File"
-msgstr ""
+msgstr "Выберите файл языковой модели"
 
 #: ../data/ui/recognition-dialog.ui.h:4
 msgid "Select a Phonetic Dictionary File"
-msgstr ""
+msgstr "Выберите файл фонетического словаря"
 
 #: ../data/ui/recognition-dialog.ui.h:5
 msgid "Select a Video or Audio File"
-msgstr ""
+msgstr "Выберите видео- или звуковой файл"
 
 #: ../data/ui/recognition-dialog.ui.h:6
 msgid "Select an Acoustic Model Directory"
-msgstr ""
+msgstr "Выберите каталог с акустической моделью"
 
 #: ../data/ui/recognition-dialog.ui.h:7
 msgid "Sil_ence length:"
-msgstr ""
+msgstr "_Длительность тишины:"
 
 #: ../data/ui/recognition-dialog.ui.h:8
 msgid "Speech Recognition"
-msgstr ""
+msgstr "Распознавание речи"
 
 #: ../data/ui/recognition-dialog.ui.h:9
 msgid "Video or Audio Source"
-msgstr ""
+msgstr "Видео- или звуковой источник"
 
 #: ../data/ui/recognition-dialog.ui.h:10
 msgid "Voice Recognition"
-msgstr ""
+msgstr "Распознавание голоса"
 
 #: ../data/ui/recognition-dialog.ui.h:11
 msgid "_Acoustic model:"
-msgstr ""
+msgstr "_Акустическая модель:"
 
 #: ../data/ui/recognition-dialog.ui.h:12
 msgid "_File:"
-msgstr ""
+msgstr "_Файл:"
 
 #: ../data/ui/recognition-dialog.ui.h:13
 msgid "_Language model:"
-msgstr ""
+msgstr "_Модель языка:"
 
 #: ../data/ui/recognition-dialog.ui.h:14
 msgid "_Noise level:"
-msgstr ""
+msgstr "_Уровень шума:"
 
 #: ../data/ui/recognition-dialog.ui.h:15
 msgid "_Phonetic dictionary:"
-msgstr ""
+msgstr "Фо_нетический словарь:"
 
 #: ../data/ui/recognition-dialog.ui.h:16
 msgid "_Use default models"
-msgstr ""
+msgstr "_Использовать модели по умолчанию"
 
 #. Milliseconds
 #: ../data/ui/recognition-dialog.ui.h:18
 msgid "ms"
-msgstr ""
+msgstr "мс"
 
 #: ../data/ui/search-dialog.ui.h:1 ../data/ui/text-assistant/intro-page.ui.h:1
 msgid "Columns"
@@ -773,11 +775,11 @@ msgstr "В_ыберите места разрыва строк:"
 
 #: ../data/ui/transform-dialog.ui.h:1
 msgid "C_orrection:"
-msgstr ""
+msgstr "_Исправление:"
 
 #: ../data/ui/transform-dialog.ui.h:2
 msgid "Co_rrection:"
-msgstr ""
+msgstr "Ис_правление:"
 
 #: ../data/ui/transform-dialog.ui.h:3
 msgid "First Point"
@@ -823,6 +825,14 @@ msgstr "Закладки"
 #: ../data/extensions/bookmarks/bookmarks.gaupol-extension.in.h:2
 msgid "Marking subtitles for easy navigation"
 msgstr "Пометка субтитров для быстрого перехода"
+
+#: ../data/extensions/custom-framerates/custom-framerates.gaupol-extension.in.h:1
+msgid "Allow use of non-standard framerates"
+msgstr "Использовать нестандартные частоты кадров"
+
+#: ../data/extensions/custom-framerates/custom-framerates.gaupol-extension.in.h:2
+msgid "Custom Framerates"
+msgstr "Заказные частоты кадров"
 
 #: ../data/extensions/side-pane/side-pane.gaupol-extension.in.h:1
 msgid "A side pane that can be used by other extensions"
@@ -1273,7 +1283,7 @@ msgstr "Турецкая"
 
 #: ../aeidon/encodings.py:50
 msgid "Portuguese"
-msgstr ""
+msgstr "Португальская"
 
 #: ../aeidon/encodings.py:51 ../aeidon/encodings.py:108
 msgid "Icelandic"
@@ -1373,19 +1383,19 @@ msgstr "По позиции"
 
 #: ../aeidon/enums/framerates.py:27
 msgid "23.976 fps"
-msgstr ""
+msgstr "23,976 к/с"
 
 #: ../aeidon/enums/framerates.py:34
 msgid "24.000 fps"
-msgstr ""
+msgstr "24 к/с"
 
 #: ../aeidon/enums/framerates.py:41
 msgid "25.000 fps"
-msgstr ""
+msgstr "25 к/с"
 
 #: ../aeidon/enums/framerates.py:48
 msgid "29.970 fps"
-msgstr ""
+msgstr "29.970 к/с"
 
 #: ../aeidon/enums/newlines.py:27
 msgid "Mac (classic)"
@@ -1401,7 +1411,7 @@ msgstr "%(language)s (%(country)s)"
 #: ../data/extensions/bookmarks/bookmarks.py:106
 #: ../data/extensions/bookmarks/bookmarks.py:111
 msgid "Bm."
-msgstr "   "
+msgstr "Зкл"
 
 #: ../data/extensions/bookmarks/bookmarks.py:112
 msgid "Bookmark"
@@ -1502,7 +1512,7 @@ msgstr "Удалить текст, поместив его в буфер обм�
 
 #: ../gaupol/actions/edit.py:98
 msgid "_Preferences"
-msgstr "_Настройки"
+msgstr "_Параметры"
 
 #: ../gaupol/actions/edit.py:100
 msgid "Configure Gaupol"
@@ -1891,7 +1901,7 @@ msgstr "_Вид"
 
 #: ../gaupol/actions/position.py:32
 msgid "Adjust _Durations…"
-msgstr "Настроить _длительность…"
+msgstr "Скорректировать _длительность…"
 
 #: ../gaupol/actions/position.py:33
 msgid "Lengthen or shorten durations"
@@ -1919,11 +1929,11 @@ msgstr "Изменить время появления субтитров"
 
 #: ../gaupol/actions/position.py:110
 msgid "Sp_eech Recognition…"
-msgstr ""
+msgstr "_Распознавание речи…"
 
 #: ../gaupol/actions/position.py:111
 msgid "Generate subtitles by voice and speech recognition"
-msgstr ""
+msgstr "Создать субтитры с помощью распознавания речи"
 
 #: ../gaupol/actions/position.py:129
 msgid "_Transform Positions…"
@@ -2011,7 +2021,7 @@ msgstr "Стол_бцы"
 
 #: ../gaupol/actions/view.py:119
 msgid "2_3.976 fps"
-msgstr ""
+msgstr "2_3,976 к/с"
 
 #: ../gaupol/actions/view.py:120
 msgid "Calculate nonnative units with a framerate of 23.976 fps"
@@ -2019,7 +2029,7 @@ msgstr ""
 
 #: ../gaupol/actions/view.py:143
 msgid "2_4.000 fps"
-msgstr ""
+msgstr "2_4 к/с"
 
 #: ../gaupol/actions/view.py:144
 msgid "Calculate nonnative units with a framerate of 24.000 fps"
@@ -2027,7 +2037,7 @@ msgstr ""
 
 #: ../gaupol/actions/view.py:167
 msgid "2_5.000 fps"
-msgstr ""
+msgstr "2_5 к/с"
 
 #: ../gaupol/actions/view.py:168
 msgid "Calculate nonnative units with a framerate of 25.000 fps"
@@ -2035,7 +2045,7 @@ msgstr ""
 
 #: ../gaupol/actions/view.py:191
 msgid "2_9.970 fps"
-msgstr ""
+msgstr "2_9,970 к/с"
 
 #: ../gaupol/actions/view.py:192
 msgid "Calculate nonnative units with a framerate of 29.970 fps"
@@ -2794,17 +2804,17 @@ msgstr ""
 #: ../gaupol/page.py:288
 #, python-format
 msgid "<b>Format:</b> %s"
-msgstr ""
+msgstr "<b>Формат:</b> %s"
 
 #: ../gaupol/page.py:289
 #, python-format
 msgid "<b>Character encoding:</b> %s"
-msgstr ""
+msgstr "<b>Кодировка символов:</b> %s"
 
 #: ../gaupol/page.py:290
 #, python-format
 msgid "<b>Newlines:</b> %s"
-msgstr ""
+msgstr "<b>Новые строки:</b> %s"
 
 #: ../gaupol/page.py:322
 #, python-format
