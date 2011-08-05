@@ -451,7 +451,7 @@ class CommonErrorPage(LocalePage):
 
     """Page for correcting common human and OCR errors."""
 
-    _ui_file_basename = "common-error-page.ui"""
+    _ui_file_basename = "common-error-page.ui"
     _widgets = ("human_check", "ocr_check") + LocalePage._widgets
 
     def _init_attributes(self):
