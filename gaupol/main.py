@@ -19,6 +19,8 @@
 import aeidon
 import atexit
 import gaupol
+import gettext
+import locale
 import optparse
 import os
 import re
@@ -73,6 +75,17 @@ def _init_configuration(path):
     gaupol.conf.path = path
     gaupol.conf.read_from_file()
     atexit.register(gaupol.conf.write_to_file)
+
+def _init_gettext():
+    """Initialize translation settings."""
+    locale.setlocale(locale.LC_ALL, "")
+    try:
+        # Not available on all platforms.
+        locale.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
+        locale.textdomain("gaupol")
+    except AttributeError: pass
+    gettext.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
+    gettext.textdomain("gaupol")
 
 def _on_parser_list_encodings(*args):
     """List all available character encodings and exit."""
@@ -159,6 +172,7 @@ def main(args):
     aeidon.paths.xdg_copy_if_applicable()
     opts, args = _parse_args(args)
     sys.excepthook = gaupol.util.show_exception
+    _init_gettext()
     _init_configuration(opts.config_file)
     _init_application(opts, args)
     import gtk

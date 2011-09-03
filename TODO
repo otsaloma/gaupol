@@ -1,3 +1,10 @@
+Gaupol 0.19.1
+=============
+
+ [X] Fix gettext initialization in aeidon package to not make global
+     changes (Olivier Aubert, Osmo Salomaa, Debian bug #639668)
+ [X] Update Russian translation (Alexandre Prokoudine)
+
 Gaupol 0.20
 ===========
 
@@ -10,7 +17,6 @@ Gaupol 0.20
      - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
  [ ] Use Libpeas for extensions?
      - http://live.gnome.org/Libpeas
- [X] Update Russian translation (Alexandre Prokoudine)
 
 Gaupol 1.0
 ==========

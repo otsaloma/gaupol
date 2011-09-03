@@ -17,30 +17,20 @@
 """Internationalization functions.
 
 Functions defined in this module are convenience aliases for functions of the
-:mod:`gettext` module. More important than the aliases is that importing this
-module will set proper locale and domain values.
+:mod:`gettext` module with proper initialization and character encodings.
 """
 
 import aeidon
 import gettext
-import locale
 
 __all__ = ("_", "dgettext", "ngettext")
 
-locale.setlocale(locale.LC_ALL, "")
-try:
-    # Not available on all platforms.
-    locale.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
-    locale.textdomain("gaupol")
-except AttributeError: pass
-
-gettext.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
-gettext.textdomain("gaupol")
+_translation = gettext.translation("gaupol", aeidon.LOCALE_DIR, fallback=True)
 
 
 def _(message):
     """Return the localized translation of `message`."""
-    return gettext.gettext(unicode(message))
+    return _translation.gettext(unicode(message))
 
 def dgettext(domain, message):
     """Return the localized translation of `message` from `domain`."""
@@ -48,4 +38,4 @@ def dgettext(domain, message):
 
 def ngettext(singular, plural, n):
     """Return the localized translation of `singular` or `plural`."""
-    return gettext.ngettext(unicode(singular), unicode(plural), n)
+    return _translation.ngettext(unicode(singular), unicode(plural), n)
