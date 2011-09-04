@@ -3,6 +3,8 @@ Gaupol 0.19.1
 
  [X] Fix gettext initialization in aeidon package to not make global
      changes (Olivier Aubert, Osmo Salomaa, Debian bug #639668)
+ [X] Fix speech recognition advance length handling so that subtitles
+     don't start too early
  [X] Update Russian translation (Alexandre Prokoudine)
 
 Gaupol 0.20

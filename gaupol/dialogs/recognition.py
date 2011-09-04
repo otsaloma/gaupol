@@ -159,6 +159,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog):
         if index < 0:
             index += len(self._starts)
         advance = gaupol.conf.speech_recognition.advance_length
+        advance = float(advance / 1000) # ms to s
         subtitle = aeidon.Subtitle(mode=aeidon.modes.TIME)
         subtitle.start = max((self._stops[index - 1] if index > 0 else 0.0),
                              (self._starts[index] - advance))
