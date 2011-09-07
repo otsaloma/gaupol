@@ -71,7 +71,7 @@ class ExtensionManager(object):
         """Parse extension metadata file at `path`."""
         try: lines = aeidon.util.readlines(path, "utf_8", None)
         except UnicodeError: # Metadata file must be UTF-8.
-            return gaupol.util.print_read_unicode(sys.exc_info(),
+            return aeidon.util.print_read_unicode(sys.exc_info(),
                                                   path,
                                                   "utf_8")
 
