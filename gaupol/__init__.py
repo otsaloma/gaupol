@@ -47,7 +47,7 @@ import gobject
 import gtk
 import os
 
-__version__ = "0.19"
+__version__ = "0.19.1"
 COMBO_SEPARATOR = "<separator/>"
 
 glib.threads_init()
