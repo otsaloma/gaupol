@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""GTK+ user interface for the Gaupol subtitle editor.
+"""
+GTK+ user interface for the Gaupol subtitle editor.
 
 :var COMBO_SEPARATOR: String used as a separator for :class:`Gtk.ComboBox`
 

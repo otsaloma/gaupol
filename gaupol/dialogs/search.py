@@ -40,7 +40,8 @@ def page_changing(function):
 
 class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
-    """Dialog for searching for and replacing text.
+    """
+    Dialog for searching for and replacing text.
 
     :ivar _handle_page_changes: ``True`` to invalidate search on page changes
     :ivar _match_doc: :attr:`gaupol.documents` item of the last match
@@ -140,7 +141,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         return tuple(fields)
 
     def _get_position(self, next):
-        """Return current position of the search.
+        """
+        Return current position of the search.
 
         Raise :exc:`gaupol.Default` if no pages open.
         Return row, document, cursor offset.
@@ -354,7 +356,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self.application.flash_message(message)
 
     def _set_pattern(self, page):
-        """Set search pattern for `page`.
+        """
+        Set search pattern for `page`.
 
         Raise :exc:`gaupol.Default` if pattern empty or bad.
         """

@@ -29,7 +29,8 @@ __all__ = ("ExtensionManager", "ExtensionMetadata",)
 
 class ExtensionManager(object, metaclass=aeidon.Contractual):
 
-    """Finding activating, storing and deactivating extensions.
+    """
+    Finding activating, storing and deactivating extensions.
 
     :ivar _active: Dictionary mapping module names to extensions
     :ivar _metadata: Dictionary mapping module names to metadata items
@@ -142,7 +143,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         assert module in self._metadata
 
     def setup_extension(self, module, inferior=False):
-        """Import and setup extension by module name.
+        """
+        Import and setup extension by module name.
 
         `inferior` should be ``True`` if called just to satisfy a dependency of
         another extension. Setup also all modules required by `module`. Return
@@ -205,7 +207,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         assert module in self._metadata
 
     def teardown_extension(self, module, force=True):
-        """Teardown extension by module name.
+        """
+        Teardown extension by module name.
 
         If not using `force` (which should only be used with care), raise
         :exc:`gaupol.DependencyError` if module is required by other modules.

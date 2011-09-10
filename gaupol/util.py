@@ -39,7 +39,8 @@ def char_to_px(nchar, font=None):
     return int(round(nchar * (width / 13)))
 
 def delay_add(delay, function, *args, **kwargs):
-    """Call `function` with `args` and `kwargs` once after `delay` (ms).
+    """
+    Call `function` with `args` and `kwargs` once after `delay` (ms).
 
     Return integer ID of the event source from :func:`GObject.timeout_add`.
     """
@@ -57,7 +58,8 @@ def document_to_text_field(doc):
     raise ValueError("Invalid document: %s" % repr(doc))
 
 def flash_dialog(dialog):
-    """Run `dialog`, destroy it and return response.
+    """
+    Run `dialog`, destroy it and return response.
 
     This function is to be used always when a :class:`Gtk.Dialog` is run so
     that unit tests can monkey-patch this function with one that returns a
@@ -134,7 +136,8 @@ def gtkspell_available():
         return False
 
 def install_module(name, obj):
-    """Install `obj`'s module into the :mod:`gaupol` namespace.
+    """
+    Install `obj`'s module into the :mod:`gaupol` namespace.
 
     Typical call is of form::
 
@@ -201,7 +204,8 @@ def raise_default(expression):
         raise gaupol.Default
 
 def run_dialog(dialog):
-    """Run `dialog` and return response.
+    """
+    Run `dialog` and return response.
 
     This function is to be used always when a :class:`Gtk.Dialog` is run so
     that unit tests can monkey patch this function with one that returns a
@@ -288,7 +292,8 @@ def set_widget_font(widget, font):
     widget.modify_font(font_desc)
 
 def show_exception(exctype, value, tb):
-    """Show exception traceback in :class:`gaupol.DebugDialog`.
+    """
+    Show exception traceback in :class:`gaupol.DebugDialog`.
 
     This function can be set as a :func:`sys.excepthook`.
     """

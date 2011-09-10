@@ -23,7 +23,8 @@ __all__ = ("MPsub",)
 
 class MPsub(aeidon.Markup):
 
-    """Text markup for the MPsub format.
+    """
+    Text markup for the MPsub format.
 
     MPsub format is assumed to contain no markup.
     """

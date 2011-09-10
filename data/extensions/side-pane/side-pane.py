@@ -25,7 +25,8 @@ _ = aeidon.i18n._
 
 class SidePane(aeidon.Observable):
 
-    """A side pane object for the application window.
+    """
+    A side pane object for the application window.
 
     Side pane is installed as an attribute of :class:`gaupol.Application` and
     thus accessible to extensions as ``application.side_pane``.
@@ -118,7 +119,8 @@ class SidePane(aeidon.Observable):
             "set-focus", self._on_application_window_set_focus)
 
     def _on_application_window_set_focus(self, window, widget):
-        """Disable unsafe UI manager actions.
+        """
+        Disable unsafe UI manager actions.
 
         Disabling unsafe UI manager actions allows the side pane to contain any
         widgets that can have input focus and can have their own keybindings,
@@ -191,7 +193,8 @@ class SidePane(aeidon.Observable):
         menu.popup(None, None, self._position_header_menu, 1, event.time)
 
     def add_page(self, child, name, title):
-        """Add `child` as a page to the side pane.
+        """
+        Add `child` as a page to the side pane.
 
         `name` should be a unique string and is used internally for saving the
         active page name to the configuration file. Using the extension's
@@ -218,7 +221,8 @@ class SidePane(aeidon.Observable):
         self._paned.get_child1().hide()
 
     def remove(self):
-        """Remove the entire side pane from the application window.
+        """
+        Remove the entire side pane from the application window.
 
         Use :meth:`hide` unless you really know that you really want to remove
         the side pane. Usually this is used only once the side pane extension

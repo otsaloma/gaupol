@@ -66,7 +66,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             i += 1
 
     def _read_file(self, sfile):
-        """Read `sfile` and return subtitles.
+        """
+        Read `sfile` and return subtitles.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -89,7 +90,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             assert sorted_subtitles[i] <= sorted_subtitles[i + 1]
 
     def _sort_subtitles(self, subtitles):
-        """Sort and return `subtitles` and sort count.
+        """
+        Sort and return `subtitles` and sort count.
 
         `subtitles` are sorted according to their start positions. Sort count
         is the amount of subtitles that needed to be moved in order to arrange
@@ -107,7 +109,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def open(self, doc, path, encoding=None, *args, **kwargs):
-        """Read and parse subtitle data for `doc` from `path`.
+        """
+        Read and parse subtitle data for `doc` from `path`.
 
         `encoding` can be ``None`` to use the system default encoding.
         Raise :exc:`IOError` if reading fails.
@@ -136,7 +139,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.notify_frozen
     def open_main(self, path, encoding=None):
-        """Read and parse subtitle data for main file from `path`.
+        """
+        Read and parse subtitle data for main file from `path`.
 
         `encoding` can be ``None`` to use the system default encoding.
         Raise :exc:`IOError` if reading fails.
@@ -182,7 +186,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.notify_frozen
     def open_translation(self, path, encoding=None, align_method=None):
-        """Read and parse subtitle data for translation file from `path`.
+        """
+        Read and parse subtitle data for translation file from `path`.
 
         `encoding` can be ``None`` to use the system default encoding.
 

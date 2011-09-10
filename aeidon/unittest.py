@@ -24,7 +24,8 @@ __all__ = ("TestCase",)
 
 class TestCase(object, metaclass=aeidon.Contractual):
 
-    """Base class for unit test cases.
+    """
+    Base class for unit test cases.
 
     Unit tests are designed to be run with ``py.test``, ``nose`` or something
     compatible. Tests should use plain ``assert`` statements to allow multiple

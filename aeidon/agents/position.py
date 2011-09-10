@@ -30,7 +30,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         assert isinstance(value[1], int)
 
     def _get_frame_transform(self, p1, p2):
-        """Return a formula for linear transformation of positions.
+        """
+        Return a formula for linear transformation of positions.
 
         Return coefficient and constant, with which all subtitles
         should be scaled and shifted by to apply correction.
@@ -49,7 +50,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         assert isinstance(value[1], float)
 
     def _get_seconds_transform(self, p1, p2):
-        """Return a formula for linear transformation of positions.
+        """
+        Return a formula for linear transformation of positions.
 
         Return coefficient and constant, with which all subtitles should be
         scaled and shifted by to apply correction.
@@ -65,7 +67,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         return coefficient, constant
 
     def _get_time_transform(self, p1, p2):
-        """Return a formula for linear correction of positions.
+        """
+        Return a formula for linear correction of positions.
 
         Return coefficient and constant, with which all subtitles should be
         scaled and shifted by to apply correction.
@@ -89,7 +92,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                          maximum=None,
                          gap=None,
                          register=-1):
-        """Lengthen or shorten durations by changing end positions.
+        """
+        Lengthen or shorten durations by changing end positions.
 
         `indices` can be ``None`` to process all subtitles. `speed` is reading
         speed in seconds per character. `lengthen` is ``True`` to increase
@@ -147,7 +151,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                           framerate_in,
                           framerate_out,
                           register=-1):
-        """Set the value of framerate and convert subtitles to it.
+        """
+        Set the value of framerate and convert subtitles to it.
 
         `indices` can be ``None`` to process all subtitles.
         """
@@ -185,7 +190,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def shift_positions(self, indices, value, register=-1):
-        """Make subtitles appear earlier or later.
+        """
+        Make subtitles appear earlier or later.
 
         `indices` can be ``None`` to process all subtitles. `value` should be a
         string for time, a float for seconds or an integer for frames.
@@ -206,7 +212,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def transform_positions(self, indices, p1, p2, register=-1):
-        """Change positions by linear two-point corrections.
+        """
+        Change positions by linear two-point corrections.
 
         `indices` can be ``None`` to process all subtitles. `p1` and `p2`
         should be tuples of index, position, where position should be a string

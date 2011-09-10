@@ -41,7 +41,8 @@ def code_to_name_require(code):
 
 @aeidon.deco.contractual
 def code_to_name(code):
-    """Convert ISO 639 `code` to localized country name.
+    """
+    Convert ISO 639 `code` to localized country name.
 
     Raise :exc:`KeyError` if `code` not found.
     """

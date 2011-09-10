@@ -242,7 +242,8 @@ class EnumDecoder(json.JSONDecoder):
     """JSON decoder for enumerations of :mod:`aeidon` and :mod:`gaupol`."""
 
     def __init__(self, *args, **kwargs):
-        """Initialize a :class:`EnumDecoder` object.
+        """
+        Initialize a :class:`EnumDecoder` object.
 
         `kwargs` should contain an "enum" key with a value of ``None`` if not
         decoding an enumeration or the corresponding
@@ -266,7 +267,8 @@ class EnumDecoder(json.JSONDecoder):
 
 class ConfigurationStore(gaupol.AttributeDictionary):
 
-    """Reading, writing and storing configurations.
+    """
+    Reading, writing and storing configurations.
 
     :cvar _defaults: Dictionary of default values of options
     :cvar _enums: Dictionary of :class:`aeidon.Enumeration` instances
@@ -340,7 +342,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         container.disconnect(signal, method)
 
     def query_default(self, sections, option):
-        """Return default value of configuration option.
+        """
+        Return default value of configuration option.
 
         Raise :exc:`KeyError` if section or option not found.
         """
@@ -352,7 +355,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         return container[option]
 
     def read_from_file(self):
-        """Read values of configuration options from file.
+        """
+        Read values of configuration options from file.
 
         Raise :exc:`IOError` if reading file fails.
         Raise :exc:`UnicodeError` if decoding file fails.
@@ -402,7 +406,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 setattr(container, option, value)
 
     def register_extension(self, name, defaults, enums=None):
-        """Add section and options for extension.
+        """
+        Add section and options for extension.
 
         `name` should be preferrably the module name of the extension and it
         will appear in the section name as ``extensions::name``. `defaults`
@@ -419,7 +424,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         self.update(self._defaults)
 
     def write_to_file(self):
-        """Write values of configuration options to file.
+        """
+        Write values of configuration options to file.
 
         Raise :exc:`IOError` or :exc:`OSError` if unable to create
         configuration directory or unable to write configuration file.

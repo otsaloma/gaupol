@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Names and codes for locales and conversions between them.
+"""
+Names and codes for locales and conversions between them.
 
 Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
 ``BB`` a country code and ``Cccc`` a script. See :mod:`aeidon.languages`,
@@ -32,7 +33,8 @@ def code_to_country_require(code):
 
 @aeidon.deco.contractual
 def code_to_country(code):
-    """Convert locale `code` to localized country name or ``None``.
+    """
+    Convert locale `code` to localized country name or ``None``.
 
     Raise :exc:`KeyError` if `code` not found.
     """
@@ -44,7 +46,8 @@ def code_to_language_require(code):
 
 @aeidon.deco.contractual
 def code_to_language(code):
-    """Convert locale `code` to localized language name.
+    """
+    Convert locale `code` to localized language name.
 
     Raise :exc:`KeyError` if `code` not found.
     """
@@ -55,7 +58,8 @@ def code_to_name_require(code):
 
 @aeidon.deco.contractual
 def code_to_name(code):
-    """Convert locale `code` to localized name.
+    """
+    Convert locale `code` to localized name.
 
     Raise :exc:`KeyError` if `code` not found.
     Return localized ``LANGUAGE (COUNTRY)``.

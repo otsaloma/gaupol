@@ -24,7 +24,8 @@ __all__ = ("SubStationAlpha",)
 
 class SubStationAlpha(aeidon.Markup):
 
-    """Text markup for the Sub Station Alpha format.
+    """
+    Text markup for the Sub Station Alpha format.
 
     Sub Station Alpha format contains a lot of markup tags of which the
     following are of interest to us. The generic reset ``{\\r}`` is used to
@@ -75,7 +76,8 @@ class SubStationAlpha(aeidon.Markup):
         return self._pre_decode_color(text)
 
     def _pre_decode_break(self, text):
-        """Return `text` with combined markup tags separated.
+        """
+        Return `text` with combined markup tags separated.
 
         For example, ``{\\b1\\i1}`` is replaced with ``{\\b1}{\\i1}``.
         """
@@ -94,7 +96,8 @@ class SubStationAlpha(aeidon.Markup):
         assert regex.search(value) is None
 
     def _pre_decode_color(self, text):
-        """Return `text` with colors converted to standard hexadecimal form.
+        """
+        Return `text` with colors converted to standard hexadecimal form.
 
         Color tags are converted from ``{\\c&HBBGGRR&}`` to ``{\\c#RRGGBB}``.
         """
@@ -112,7 +115,8 @@ class SubStationAlpha(aeidon.Markup):
         assert regex.search(value) is None
 
     def _pre_decode_reset(self, text):
-        """Return `text` with all markup tags closed explicitly.
+        """
+        Return `text` with all markup tags closed explicitly.
 
         Tags of form ``{\\nameVALUE}`` are closed with ``{\\name\\}``.
         The returned text will not contain reset ``{\\r}`` tags.

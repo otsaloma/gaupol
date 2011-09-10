@@ -21,7 +21,8 @@ __all__ = ("Delegate",)
 
 class Delegate(object):
 
-    """Base class for objects that dispatch ``self``-lookups.
+    """
+    Base class for objects that dispatch ``self``-lookups.
 
     :ivar master: Object to where attribute calls are dispatched
     """

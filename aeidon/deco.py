@@ -38,7 +38,8 @@ def _hasattr_def(obj, name):
     return hasattr(obj, name)
 
 def _is_method(function, args):
-    """Return ``True`` if `function` to be decorated is a method.
+    """
+    Return ``True`` if `function` to be decorated is a method.
 
     Decorator is required to have set an `original` attribute on the wrapped
     method pointing to the original unwrapped function.
@@ -61,7 +62,8 @@ def benchmark(function):
     return wrapper
 
 def contractual(function):
-    """Decorator for module level functions with pre- and/or postconditions.
+    """
+    Decorator for module level functions with pre- and/or postconditions.
 
     `function` call will be wrapped around ``FUNCTION_NAME_require`` and
     ``FUNCTION_NAME_ensure`` calls if such functions exist. The require
@@ -107,7 +109,8 @@ def memoize(function):
     return wrapper
 
 def monkey_patch(obj, name):
-    """Decorator for functions that change `obj`'s `name` attribute.
+    """
+    Decorator for functions that change `obj`'s `name` attribute.
 
     Any changes done will be reverted after the function is run, i.e. `name`
     attribute is either restored to its original value or deleted, if it didn't
@@ -210,7 +213,8 @@ def revertable(function):
     return wrapper
 
 def silent(*exceptions):
-    """Decorator for ignoring `exceptions` raised  by function.
+    """
+    Decorator for ignoring `exceptions` raised  by function.
 
     If no exceptions specified, ignore :exc:`Exception`.
     Return ``None`` if an exception encountered.

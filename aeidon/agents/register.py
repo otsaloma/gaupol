@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Managing revertable actions.
+"""
+Managing revertable actions.
 
 To hook a method up with the undo/redo system, the following need to be done:
 
@@ -45,7 +46,8 @@ import aeidon
 
 class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
-    """Managing revertable actions.
+    """
+    Managing revertable actions.
 
     :ivar _do_description: Original description of the action
     """
@@ -60,7 +62,8 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         assert 0 <= index < len(stack)
 
     def _break_action_group(self, stack, index=0):
-        """Break the action group in `stack` into individual actions.
+        """
+        Break the action group in `stack` into individual actions.
 
         Return the amount of actions broken into.
         """

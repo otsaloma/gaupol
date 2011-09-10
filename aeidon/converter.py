@@ -26,7 +26,8 @@ class MarkupConverter(object):
     """Subtitle text markup converter."""
 
     def __init__(self, from_format, to_format):
-        """Initialize a :class:`MarkupConverter` instance.
+        """
+        Initialize a :class:`MarkupConverter` instance.
 
         `from_format` and `to_format` should be :attr:`aeidon.formats`
         enumeration items.

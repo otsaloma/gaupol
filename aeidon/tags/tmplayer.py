@@ -23,7 +23,8 @@ __all__ = ("TMPlayer",)
 
 class TMPlayer(aeidon.Markup):
 
-    """Text markup for the TMPlayer format.
+    """
+    Text markup for the TMPlayer format.
 
     TMPlayer format is assumed to contain no markup.
     """

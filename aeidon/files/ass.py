@@ -23,7 +23,8 @@ __all__ = ("AdvSubStationAlpha",)
 
 class AdvSubStationAlpha(aeidon.files.SubStationAlpha):
 
-    """Advanced Sub Station Alpha file.
+    """
+    Advanced Sub Station Alpha file.
 
     :ivar event_fields: Tuple of field names for the ``[Events]`` section
     """

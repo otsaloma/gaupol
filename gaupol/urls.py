@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Website URLs.
+"""
+Website URLs.
 
 :var BUG_REPORT_URL: Web page where to submit new bug reports
 :var EXTENSIONS_URL: Web page listing third party extensions

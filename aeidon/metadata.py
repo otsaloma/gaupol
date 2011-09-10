@@ -23,7 +23,8 @@ __all__ = ("MetadataItem",)
 
 class MetadataItem(object):
 
-    """Metadata store for one item in a desktop-style file.
+    """
+    Metadata store for one item in a desktop-style file.
 
     :ivar fields: Dictionary mapping field names to their string values
 

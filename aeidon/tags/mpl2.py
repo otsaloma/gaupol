@@ -25,7 +25,8 @@ __all__ = ("MPL2",)
 
 class MPL2(aeidon.tags.MicroDVD):
 
-    """Text markup for the MPL2 format.
+    """
+    Text markup for the MPL2 format.
 
     MPL2 contains the following markup tags, all of which appear at the
     beginning of the line and affect up to the end of the line. In addition,
@@ -54,7 +55,8 @@ class MPL2(aeidon.tags.MicroDVD):
         return aeidon.tags.MicroDVD._pre_decode(self, text)
 
     def _pre_decode_identify(self, text):
-        """Return `text` with all tags identified and closed.
+        """
+        Return `text` with all tags identified and closed.
 
         ``\\``, ``/`` and ``_`` characters at the beginnings of lines are
         identified as tags and replaced with artificial tags ``<\\>``, ``</>``

@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Lists of named constants with integer values.
+"""
+Lists of named constants with integer values.
 
 :class:`EnumerationItem`s are subclassed from :class:`int`, so they are actual
 integers. The string value of an item will be the name that it was defined with
@@ -28,7 +29,8 @@ __all__ = ("EnumerationItem", "Enumeration",)
 
 class EnumerationItem(int):
 
-    """Named constant with an integer value.
+    """
+    Named constant with an integer value.
 
     This class can be instantiated without any specified values and users need
     not bother with them. Instantiation with correct values harmonous with the
@@ -42,7 +44,8 @@ class EnumerationItem(int):
         return True
 
     def __cmp__(self, other):
-        """Compare enumeration item equality by value.
+        """
+        Compare enumeration item equality by value.
 
         If `other` is an integer, return integer comparison value. Raise
         :exc:`ValueError` if `other` is an :class:`EnumerationItem` of a
@@ -81,7 +84,8 @@ class EnumerationItem(int):
 
 class Enumeration(list):
 
-    """List of named constants with integer values.
+    """
+    List of named constants with integer values.
 
     This class is an actual :class:`list` where enumeration items are stored as
     both list items and instance attributes. New items should be added by

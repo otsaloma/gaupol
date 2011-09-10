@@ -29,7 +29,8 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def _insert_blank_subtitles(self, indices, register=-1):
-        """Insert new blank subtitles.
+        """
+        Insert new blank subtitles.
 
         Set sensible equal duration positions within given window or with 3
         second durations if window not limited.
@@ -76,7 +77,8 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def insert_subtitles(self, indices, subtitles=None, register=-1):
-        """Insert `subtitles` at indices.
+        """
+        Insert `subtitles` at indices.
 
         If `subtitles` is None, insert new blank subtitles at indices with
         sensible equal duration positions within given window or with 3 second

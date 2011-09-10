@@ -24,7 +24,8 @@ __all__ = ("SubRip",)
 
 class SubRip(aeidon.Markup):
 
-    """Text markup for the SubRip format.
+    """
+    Text markup for the SubRip format.
 
     SubRip format is assumed (based on the SubRip application GUI) to contain
     the following HTML-style tags, in either lower- or upper case.

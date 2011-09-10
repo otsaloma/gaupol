@@ -28,7 +28,8 @@ __all__ = ("View",)
 
 class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
 
-    """Widget to display subtitle data in the form of a list.
+    """
+    Widget to display subtitle data in the form of a list.
 
     :ivar columns: Enumeration for columns currently shown
 

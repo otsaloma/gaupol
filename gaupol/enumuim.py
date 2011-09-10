@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Dictionaries mapping enumeration items to UI manager action names.
+"""
+Dictionaries mapping enumeration items to UI manager action names.
 
 :var field_actions: Dictionary mapping :attr:`gaupol.formats` to actions
 :var framerate_actions: Dictionary mapping :attr:`aeidon.framerates` to actions

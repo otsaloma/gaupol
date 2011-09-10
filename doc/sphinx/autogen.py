@@ -25,7 +25,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-"""Walk module sources and autogenerate RST documentation files.
+"""
+Walk module sources and autogenerate RST documentation files.
 
 Usage: python autogen.py MODULE_NAME...
 

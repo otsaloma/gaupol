@@ -30,7 +30,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     """Opening subtitle files and creating new projects."""
 
     def _append_subtitles(self, from_page, to_page):
-        """Append subtitles in `from_page` to `to_page`.
+        """
+        Append subtitles in `from_page` to `to_page`.
 
         Return sequence of new indices in `to_page`.
         """
@@ -220,7 +221,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.update_gui()
 
     def _open_file(self, path, encodings, doc, check_open=True):
-        """Open file at `path` and return corresponding page if successful.
+        """
+        Open file at `path` and return corresponding page if successful.
 
         Raise :exc:`Default` if cancelled or file cannot be opened.
         """
@@ -247,7 +249,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         raise gaupol.Default
 
     def _select_files(self, title, doc):
-        """Show a :class:`gaupol.OpenDialog` to select files.
+        """
+        Show a :class:`gaupol.OpenDialog` to select files.
 
         Raise :exc:`gaupol.Default` if cancelled.
         """
@@ -303,7 +306,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         gaupol.util.flash_dialog(dialog)
 
     def _show_size_warning_dialog(self, basename, size):
-        """Show a warning dialog when trying to open a large file.
+        """
+        Show a warning dialog when trying to open a large file.
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
@@ -319,7 +323,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
     def _show_sort_warning_dialog(self, basename, count):
-        """Show a warning dialog when subtitles have been sorted.
+        """
+        Show a warning dialog when subtitles have been sorted.
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
@@ -335,7 +340,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
     def _show_translation_warning_dialog(self, page):
-        """Show a warning dialog if opening a new translation file.
+        """
+        Show a warning dialog if opening a new translation file.
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
@@ -353,7 +359,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         gaupol.util.raise_default(response != Gtk.ResponseType.NO)
 
     def _try_open_file(self, page, doc, path, encoding, **kwargs):
-        """Try to open file at `path` and return subtitle sort count.
+        """
+        Try to open file at `path` and return subtitle sort count.
 
         Raise :exc:`gaupol.Default` if reading or parsing fails.
         Raise :exc:`UnicodeError`if decoding fails.
@@ -420,7 +427,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def append_file(self, path, encoding=None):
-        """Append subtitles from file at `path` to the current project.
+        """
+        Append subtitles from file at `path` to the current project.
 
         Raise :exc:`gaupol.Default` if cancelled or something goes wrong.
         """
@@ -463,7 +471,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def open_main(self, path, encoding=None):
-        """Open file at `path` as a main file.
+        """
+        Open file at `path` as a main file.
 
         `path` can be a sequence of paths to open multiple files.
         """

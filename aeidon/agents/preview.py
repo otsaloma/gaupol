@@ -37,7 +37,8 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             assert aeidon.encodings.is_valid_code(encoding)
 
     def _get_subtitle_path(self, doc, encoding=None, temp=False):
-        """Return path to a file to preview, either real or temporary.
+        """
+        Return path to a file to preview, either real or temporary.
 
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
@@ -60,7 +61,8 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def find_video(self, extensions=None):
-        """Find and return the video file path based on main file's path.
+        """
+        Find and return the video file path based on main file's path.
 
         `extensions` should be a sequence of video filename extensions or
         ``None`` for defaults. The video file is searched for in the same
@@ -126,7 +128,8 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 encoding=None,
                 temp=False):
 
-        """Start video player with `command` from `position`.
+        """
+        Start video player with `command` from `position`.
 
         `command` can have variables ``$MILLISECONDS``, ``$SECONDS``,
         ``$SUBFILE`` and ``$VIDEOFILE``. `offset` should be the amount of

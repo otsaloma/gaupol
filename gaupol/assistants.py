@@ -32,7 +32,8 @@ __all__ = ("TextAssistant", "TextAssistantPage")
 
 class TextAssistantPage(Gtk.VBox):
 
-    """Baseclass for pages of :class:`TextAssistant`.
+    """
+    Baseclass for pages of :class:`TextAssistant`.
 
    :ivar description: One-line description used in the introduction page
    :ivar handle: Unique unlocalized name for internal references
@@ -1131,7 +1132,8 @@ class TextAssistant(Gtk.Assistant):
             self.set_page_complete(page, True)
 
     def add_pages(self, pages):
-        """Add associated `pages` and configure their properties.
+        """
+        Add associated `pages` and configure their properties.
 
         The first one of `pages` must have a "correct_texts" attribute.
         The visibilities of other pages are kept in sync with the first page.

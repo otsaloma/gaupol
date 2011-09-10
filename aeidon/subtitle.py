@@ -24,7 +24,8 @@ __all__ = ("Subtitle",)
 
 class Subtitle(object):
 
-    """Data store and basic position manipulation of a single subtitle.
+    """
+    Data store and basic position manipulation of a single subtitle.
 
     :ivar start: Start position in native units (read/write)
     :ivar start_time: Start time as string (read)
@@ -54,7 +55,8 @@ class Subtitle(object):
     """
 
     def __cmp__(self, other):
-        """Compare start positions in this subtitle's mode.
+        """
+        Compare start positions in this subtitle's mode.
 
         Return 1 if this subtitle appears later, 0 if they appear at the same
         time and -1 if `other` appears later.

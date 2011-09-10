@@ -24,7 +24,8 @@ __all__ = ("SubStationAlpha",)
 
 class SubStationAlpha(aeidon.SubtitleFile):
 
-    """Sub Station Alpha file.
+    """
+    Sub Station Alpha file.
 
     :ivar event_fields: Tuple of field names for the ``[Events]`` section
     """
@@ -107,7 +108,8 @@ class SubStationAlpha(aeidon.SubtitleFile):
             self.event_fields = tuple(other.event_fields)
 
     def read(self):
-        """Read file and return subtitles.
+        """
+        Read file and return subtitles.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -131,7 +133,8 @@ class SubStationAlpha(aeidon.SubtitleFile):
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write `subtitles` from `doc` to `fobj`.
+        """
+        Write `subtitles` from `doc` to `fobj`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

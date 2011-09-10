@@ -102,7 +102,8 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def change_case(self, indices, doc, method, register=-1):
-        """Change the case of texts with `method`.
+        """
+        Change the case of texts with `method`.
 
         `method` should be "title", "capitalize", "upper" or "lower", which
         correspond to the built-in Python string methods.

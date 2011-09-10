@@ -24,7 +24,8 @@ __all__ = ("MPsub",)
 
 class MPsub(aeidon.SubtitleFile):
 
-    """MPsub file.
+    """
+    MPsub file.
 
     :ivar framerate: :attr:`aeidon.framerates` item for current framerate
     :ivar mode: :attr:`aeidon.modes` item for current native mode
@@ -109,7 +110,8 @@ class MPsub(aeidon.SubtitleFile):
             self.framerate = other.framerate
 
     def read(self):
-        """Read file and return subtitles.
+        """
+        Read file and return subtitles.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -135,7 +137,8 @@ class MPsub(aeidon.SubtitleFile):
         return subtitles
 
     def set_header(self, header):
-        """Parse and set header, mode and framerate.
+        """
+        Parse and set header, mode and framerate.
 
         Raise :exc:`ValueError` if ``FORMAT`` line is invalid.
         """
@@ -155,7 +158,8 @@ class MPsub(aeidon.SubtitleFile):
         raise ValueError("Invalid FORMAT line: %s" % repr(header))
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write `subtitles` from `doc` to `fobj`.
+        """
+        Write `subtitles` from `doc` to `fobj`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

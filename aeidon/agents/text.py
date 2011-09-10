@@ -29,7 +29,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w", re.UNICODE)
 
     def _capitalize_first(self, parser, pos):
-        """Capitalize the first alphanumeric character from `pos`.
+        """
+        Capitalize the first alphanumeric character from `pos`.
 
         Return ``True`` if something was capitalized, ``False`` if not.
         """
@@ -43,7 +44,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         return match is not None
 
     def _capitalize_text(self, parser, pattern, cap_next):
-        """Capitalize all matches of `pattern` in `parser`'s text.
+        """
+        Capitalize all matches of `pattern` in `parser`'s text.
 
         Return ``True`` if the text of the next subtitle should be capitalized.
         """
@@ -61,7 +63,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         assert aeidon.util.enchant_available()
 
     def _get_enchant_checker(self, language):
-        """Return an enchant spell-checker for `language`.
+        """
+        Return an enchant spell-checker for `language`.
 
         Raise :exc:`enchant.error` if dictionary instatiation fails.
         """
@@ -137,7 +140,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                     max_skip_length=sys.maxsize,
                     max_skip_lines=sys.maxsize,
                     register=-1):
-        """Break lines to fit defined maximum line length and count.
+        """
+        Break lines to fit defined maximum line length and count.
 
         `indices` can be ``None`` to process all subtitles. `patterns` should
         be a sequence of instances of :class:`aeidon.Pattern`. `length_func`
@@ -205,7 +209,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def capitalize(self, indices, doc, patterns, register=-1):
-        """Capitalize texts as defined by `patterns`.
+        """
+        Capitalize texts as defined by `patterns`.
 
         `indices` can be ``None`` to process all subtitles. `patterns` should
         be a sequence of instances of :class:`aeidon.Pattern`. Raise
@@ -248,7 +253,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def correct_common_errors(self, indices, doc, patterns, register=-1):
-        """Correct common human and OCR errors in texts.
+        """
+        Correct common human and OCR errors in texts.
 
         `indices` can be ``None`` to process all subtitles. `patterns` should
         be a sequence of instances of :class:`aeidon.Pattern`. Raise
@@ -284,7 +290,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def remove_hearing_impaired(self, indices, doc, patterns, register=-1):
-        """Remove hearing impaired parts from subtitles.
+        """
+        Remove hearing impaired parts from subtitles.
 
         `indices` can be ``None`` to process all subtitles. `patterns` should
         be a sequence of instances of :class:`aeidon.Pattern`. Raise
@@ -326,7 +333,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def spell_check_join_words(self, indices, doc, language, register=-1):
-        """Join misspelled words based on spell-checker suggestions.
+        """
+        Join misspelled words based on spell-checker suggestions.
 
         Raise :exc:`enchant.Error` if dictionary instatiation fails.
         """
@@ -378,7 +386,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def spell_check_split_words(self, indices, doc, language, register=-1):
-        """Split misspelled words based on spell-checker suggestions.
+        """
+        Split misspelled words based on spell-checker suggestions.
 
         Using this is usually not a good idea unless you have an insane
         dictionary that contains all possible compound words in `language`.

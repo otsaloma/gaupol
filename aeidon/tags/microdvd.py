@@ -23,7 +23,8 @@ __all__ = ("MicroDVD",)
 
 class MicroDVD(aeidon.Markup):
 
-    """Text markup for the MicroDVD format.
+    """
+    Text markup for the MicroDVD format.
 
     The MicroDVD format contains a lot of markup tags, of which the following
     are of interest to us. Tags that start with a lower case letter end at the
@@ -61,7 +62,8 @@ class MicroDVD(aeidon.Markup):
         return self._pre_decode_close(text)
 
     def _pre_decode_break(self, text):
-        """Return `text` with combined markup tags separated.
+        """
+        Return `text` with combined markup tags separated.
 
         For example, ``{y:biu}`` is replaced with ``{y:b}{y:i}{y:u}``.
         """
@@ -78,7 +80,8 @@ class MicroDVD(aeidon.Markup):
         return self._pre_decode_break(text)
 
     def _pre_decode_close(self, text):
-        """Return `text` with all markup tags closed.
+        """
+        Return `text` with all markup tags closed.
 
         The artificial closing tags are of form ``{/X:VALUE}``.
         """
@@ -102,7 +105,8 @@ class MicroDVD(aeidon.Markup):
         assert regex.search(value) is None
 
     def _pre_decode_color(self, text):
-        """Return `text` with colors converted to standard hexadecimal form.
+        """
+        Return `text` with colors converted to standard hexadecimal form.
 
         Color tags are converted from ``{c:$BBGGRR}`` to ``{c:#RRGGBB}``.
         """

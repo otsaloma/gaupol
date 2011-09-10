@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Internationalization functions.
+"""
+Internationalization functions.
 
 Functions defined in this module are convenience aliases for functions of the
 :mod:`gettext` module with proper initialization and character encodings.

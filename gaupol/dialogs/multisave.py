@@ -116,7 +116,8 @@ class MultiSaveDialog(gaupol.FileDialog):
             self.application.save_main_as(page, files[i])
 
     def _show_overwrite_question_dialog(self, overwrite_count, path):
-        """Show a question dialog if about to overwrite files.
+        """
+        Show a question dialog if about to overwrite files.
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """

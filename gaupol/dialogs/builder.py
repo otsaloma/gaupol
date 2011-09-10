@@ -25,7 +25,8 @@ __all__ = ("BuilderDialog",)
 
 class BuilderDialog(object):
 
-    """Baseclass and wrapper for `Gtk.Builder` constructed dialogs.
+    """
+    Baseclass and wrapper for `Gtk.Builder` constructed dialogs.
 
     :cvar _widgets: List of names of widgets to be assigned as attributes
 

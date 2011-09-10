@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Codes, names and descriptions for character encodings.
+"""
+Codes, names and descriptions for character encodings.
 
 For functions dealing with character encodings, see also :mod:`aeidon.util`.
 """
@@ -127,7 +128,8 @@ _re_illegal = re.compile(r"[^a-z0-9_]")
 
 
 def code_to_description(code):
-    """Convert encoding `code` to localized description.
+    """
+    Convert encoding `code` to localized description.
 
     Raise :exc:`ValueError` if not found.
 
@@ -140,7 +142,8 @@ def code_to_description(code):
     raise ValueError("Code %s not found" % repr(code))
 
 def code_to_long_name(code):
-    """Convert encoding `code` to localized long name.
+    """
+    Convert encoding `code` to localized long name.
 
     Raise :exc:`ValueError` if not found.
     Return localized ``DESCRIPTION (DISPLAY NAME)``.
@@ -155,7 +158,8 @@ def code_to_long_name(code):
     raise ValueError("Code %s not found" % repr(code))
 
 def code_to_name(code):
-    """Convert encoding `code` to name.
+    """
+    Convert encoding `code` to name.
 
     Raise :exc:`ValueError` if not found.
 
@@ -173,7 +177,8 @@ def detect_ensure(value, path):
 
 @aeidon.deco.contractual
 def detect(path):
-    """Detect the encoding of file at `path` and return code or ``None``.
+    """
+    Detect the encoding of file at `path` and return code or ``None``.
 
     Raise :exc:`IOError` if reading fails.
     """
@@ -239,7 +244,8 @@ def get_locale_long_name_require():
 @aeidon.deco.once
 @aeidon.deco.contractual
 def get_locale_long_name():
-    """Return localized long name for locale encoding.
+    """
+    Return localized long name for locale encoding.
 
     Raise :exc:`ValueError` if not found.
     Return localized ``CURRENT LOCALE (NAME)``.
@@ -249,7 +255,8 @@ def get_locale_long_name():
 
 @aeidon.deco.once
 def get_valid():
-    """Return a sequence of valid encodings.
+    """
+    Return a sequence of valid encodings.
 
     Return a tuple of tuples of code, name, description.
     """
@@ -268,7 +275,8 @@ def is_valid_code(code):
     return True
 
 def name_to_code(name):
-    """Convert encoding `name` to code.
+    """
+    Convert encoding `name` to code.
 
     Raise :exc:`ValueError` if not found.
 
@@ -285,7 +293,8 @@ def translate_code_ensure(value, code):
 
 @aeidon.deco.contractual
 def translate_code(code):
-    """Translate weird encoding `code`.
+    """
+    Translate weird encoding `code`.
 
     Raise :exc:`ValueError` if not found.
     Return normalized encoding code.

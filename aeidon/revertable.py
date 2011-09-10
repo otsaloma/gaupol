@@ -24,7 +24,8 @@ __all__ = ("RevertableAction", "RevertableActionGroup",)
 
 class RevertableAction(object, metaclass=aeidon.Contractual):
 
-    """Action that can be reverted, i.e. undone and redone.
+    """
+    Action that can be reverted, i.e. undone and redone.
 
     :ivar description: Short one line description
     :ivar docs: Sequence of :attr:`aeidon.documents` items affected
@@ -35,7 +36,8 @@ class RevertableAction(object, metaclass=aeidon.Contractual):
     """
 
     def __init__(self, **kwargs):
-        """Initialize a :class:`RevertableAction` object.
+        """
+        Initialize a :class:`RevertableAction` object.
 
         `kwargs` can contain any of the names of public instance variables, of
         which :attr:`description`, :attr:`docs`, :attr:`register` and
@@ -75,14 +77,16 @@ class RevertableAction(object, metaclass=aeidon.Contractual):
 
 class RevertableActionGroup(object):
 
-    """Group of :class:`RevertableAction`.
+    """
+    Group of :class:`RevertableAction`.
 
     :ivar actions: Sequence of :class:`RevertableAction` in group
     :ivar description: Short one line description
     """
 
     def __init__(self, **kwargs):
-        """Initialize a :class:`RevertableAction` object.
+        """
+        Initialize a :class:`RevertableAction` object.
 
         `kwargs` can contain any of the names of public instance variables, of
         which :attr:`actions` and :attr:`description` are required to be set

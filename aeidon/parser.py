@@ -23,7 +23,8 @@ __all__ = ("Parser",)
 
 class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
 
-    """Text parser for markup-tag-aware text editing.
+    """
+    Text parser for markup-tag-aware text editing.
 
     :ivar _margins: Start tag, end tag that every line is wrapped in
     :ivar _tags: List of lists of markup tag, position
@@ -158,7 +159,8 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         return text
 
     def replace(self, next=True):
-        """Replace the current match of pattern.
+        """
+        Replace the current match of pattern.
 
         `next` should be ``True`` to finish at end of match, ``False`` for
         beginning. Raise :exc:`re.error` if bad replacement.
@@ -170,7 +172,8 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         self._shift_tags(a, shift, orig_text)
 
     def set_text(self, text, next=True):
-        """Set the target text to search in and parse it.
+        """
+        Set the target text to search in and parse it.
 
         `next` should be ``True`` to start at beginning, ``False`` for end.
         """

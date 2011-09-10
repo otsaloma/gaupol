@@ -52,7 +52,8 @@ def compare_versions_require(x, y):
 
 @aeidon.deco.contractual
 def compare_versions(x, y):
-    """Compare version strings `x` and `y`.
+    """
+    Compare version strings `x` and `y`.
 
     Used version number formats are ``MAJOR.MINOR``, ``MAJOR.MINOR.PATCH`` and
     ``MAJOR.MINOR.PATCH.{DATE/REVISION/...}``, where all items are integers.
@@ -67,7 +68,8 @@ def connect_require(observer, observable, signal, *args):
 
 @aeidon.deco.contractual
 def connect(observer, observable, signal, *args):
-    """Connect `observable`'s signal to `observer`'s callback method.
+    """
+    Connect `observable`'s signal to `observer`'s callback method.
 
     If `observable` is a string, it should be an attribute of `observer`.
     If `observable` is not a string it should be the same as `observer`.
@@ -122,7 +124,8 @@ def detect_format_require(path, encoding):
 
 @aeidon.deco.contractual
 def detect_format(path, encoding):
-    """Detect and return format of subtitle file at `path`.
+    """
+    Detect and return format of subtitle file at `path`.
 
     Raise :exc:`IOError` if reading fails.
     Raise :exc:`UnicodeError` if decoding fails.
@@ -162,7 +165,8 @@ def enchant_available():
         return False
 
 def flatten(lst):
-    """Return a shallow version of `lst`.
+    """
+    Return a shallow version of `lst`.
 
     >>> aeidon.util.flatten([1, 2, 3, [4, 5, [6]]])
     [1, 2, 3, 4, 5, 6]
@@ -252,7 +256,8 @@ def get_ranges_ensure(value, lst):
 
 @aeidon.deco.contractual
 def get_ranges(lst):
-    """Return a list of ranges in list of integers.
+    """
+    Return a list of ranges in list of integers.
 
     >>> aeidon.util.get_ranges([1, 2, 3, 5, 6, 7, 9, 11, 12])
     [[1, 2, 3], [5, 6, 7], [9], [11, 12]]
@@ -273,7 +278,8 @@ def get_sorted_unique_ensure(value, lst):
 
 @aeidon.deco.contractual
 def get_sorted_unique(lst):
-    """Return sorted `lst` with duplicates removed.
+    """
+    Return sorted `lst` with duplicates removed.
 
     >>> aeidon.util.get_sorted_unique([3, 2, 1, 2, 4, 4])
     [1, 2, 3, 4]
@@ -286,7 +292,8 @@ def get_sorted_unique(lst):
 
 @aeidon.deco.memoize
 def get_template_header(format):
-    """Read and return the template header for `format`.
+    """
+    Read and return the template header for `format`.
 
     Raise :exc:`IOError` if reading global header file fails.
     Raise :exc:`UnicodeError` if decoding global header file fails.
@@ -315,7 +322,8 @@ def get_unique_ensure(value, lst, keep_last=False):
 
 @aeidon.deco.contractual
 def get_unique(lst, keep_last=False):
-    """Return `lst` with duplicates removed.
+    """
+    Return `lst` with duplicates removed.
 
     Keep the last duplicate if `keep_last` is ``True``, else keep first.
 
@@ -337,7 +345,8 @@ def get_unique(lst, keep_last=False):
     return lst
 
 def install_module(name, obj):
-    """Install `obj`'s module into the :mod:`aeidon` namespace.
+    """
+    Install `obj`'s module into the :mod:`aeidon` namespace.
 
     Typical call is of form::
 
@@ -362,7 +371,8 @@ def makedirs_ensure(value, directory):
 
 @aeidon.deco.contractual
 def makedirs(directory):
-    """Recursively make `directory` if it does not exist.
+    """
+    Recursively make `directory` if it does not exist.
 
     Raise :exc:`OSError` if unsuccessful.
     """
@@ -370,7 +380,8 @@ def makedirs(directory):
         os.makedirs(directory)
 
 def normalize_newlines(text):
-    """Convert all newlines in `text` to Unix newlines.
+    """
+    Convert all newlines in `text` to Unix newlines.
 
     >>> aeidon.util.normalize_newlines("one\\r\\ntwo")
     'one\\ntwo'
@@ -414,7 +425,8 @@ def read_require(path, encoding=None, fallback="utf_8"):
 
 @aeidon.deco.contractual
 def read(path, encoding=None, fallback="utf_8"):
-    """Read file at `path` and return text.
+    """
+    Read file at `path` and return text.
 
     `fallback` should be ``None`` to not fall back to UTF-8.
     Raise :exc:`IOError` if reading fails.
@@ -437,7 +449,8 @@ def readlines_require(path, encoding=None, fallback="utf_8"):
 
 @aeidon.deco.contractual
 def readlines(path, encoding=None, fallback="utf_8"):
-    """Read file at `path` and return lines.
+    """
+    Read file at `path` and return lines.
 
     `fallback` should be ``None`` to not fall back to UTF-8.
     Raise :exc:`IOError` if reading fails.
@@ -465,7 +478,8 @@ def shell_quote(path):
     return '"%s"' % path
 
 def start_process(command, **kwargs):
-    """Start `command` as a new background subprocess.
+    """
+    Start `command` as a new background subprocess.
 
     `command` and `kwargs` are passed to :meth:`subprocess.Popen.__init__`.
     Raise :exc:`aeidon.ProcessError` if something goes wrong.
@@ -493,7 +507,8 @@ def title_to_lower_case_ensure(value, title_name):
 @aeidon.deco.memoize
 @aeidon.deco.contractual
 def title_to_lower_case(title_name):
-    """Convert title case name to lower case with underscores.
+    """
+    Convert title case name to lower case with underscores.
 
     >>> aeidon.util.title_to_lower_case("TitleCase")
     'title_case'
@@ -526,7 +541,8 @@ def write_ensure(value, path, text, encoding=None, fallback="utf_8"):
 
 @aeidon.deco.contractual
 def write(path, text, encoding=None, fallback="utf_8"):
-    """Write `text` to file at `path`.
+    """
+    Write `text` to file at `path`.
 
     `fallback` should be ``None`` to not fall back to UTF-8.
     Raise :exc:`IOError` if writing fails.
@@ -552,7 +568,8 @@ def writelines_ensure(value, path, lines, encoding=None, fallback="utf_8"):
 
 @aeidon.deco.contractual
 def writelines(path, lines, encoding=None, fallback="utf_8"):
-    """Write `lines` of text to file at `path`.
+    """
+    Write `lines` of text to file at `path`.
 
     `fallback` should be ``None`` to not fall back to UTF-8.
     Raise :exc:`IOError` if writing fails.

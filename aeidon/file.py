@@ -27,7 +27,8 @@ __all__ = ("SubtitleFile",)
 
 class SubtitleFile(object, metaclass=aeidon.Contractual):
 
-    """Base class for subtitle files.
+    """
+    Base class for subtitle files.
 
     :cvar format: :attr:`aeidon.formats` item corresponding to file format
     :cvar mode: :attr:`aeidon.modes` item corresponding to the native positions
@@ -63,7 +64,8 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
         assert aeidon.encodings.is_valid_code(self.encoding)
 
     def _read_lines(self):
-        """Read file to a unicoded list of lines.
+        """
+        Read file to a unicoded list of lines.
 
         All newlines are stripped.
         All blank lines from beginning and end are removed.
@@ -116,7 +118,8 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
         self.has_utf_16_bom = other.has_utf_16_bom
 
     def read(self):
-        """Read file and return subtitles.
+        """
+        Read file and return subtitles.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -127,7 +130,8 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
         assert self.newline is not None
 
     def write(self, subtitles, doc):
-        """Write `subtitles` from `doc` to file.
+        """
+        Write `subtitles` from `doc` to file.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
@@ -149,7 +153,8 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
         assert self.newline is not None
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write `subtitles` from `doc` to `fobj`.
+        """
+        Write `subtitles` from `doc` to `fobj`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

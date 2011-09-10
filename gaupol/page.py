@@ -29,7 +29,8 @@ __all__ = ("Page",)
 
 class Page(aeidon.Observable, metaclass=aeidon.Contractual):
 
-    """User interface container and controller for :class:`aeidon.Project`.
+    """
+    User interface container and controller for :class:`aeidon.Project`.
 
     :ivar edit_mode: :attr:`aeidon.modes` item corresponding to editing mode
     :ivar project: The associated :class:`aeidon.Project` instance

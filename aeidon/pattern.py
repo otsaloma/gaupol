@@ -24,7 +24,8 @@ __all__ = ("Pattern",)
 
 class Pattern(aeidon.MetadataItem):
 
-    """Regular expression substitution for subtitle text.
+    """
+    Regular expression substitution for subtitle text.
 
     :ivar enabled: ``True`` if pattern should be used, ``False`` if not
     :ivar fields: Dictionary of all data field names and values

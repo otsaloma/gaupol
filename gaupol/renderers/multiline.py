@@ -60,7 +60,8 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
 class MultilineCellRenderer(Gtk.CellRendererText):
 
-    """Cell renderer for multiline text data.
+    """
+    Cell renderer for multiline text data.
 
     If :attr:`gaupol.conf.editor.show_lengths_cell` is ``True``, line lengths
     are shown as superscripts at the end of each line.

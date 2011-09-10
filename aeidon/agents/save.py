@@ -83,7 +83,8 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         return False
 
     def _save(self, doc, sfile, keep_changes):
-        """Write subtitle data from `doc` to `sfile`.
+        """
+        Write subtitle data from `doc` to `sfile`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
@@ -105,7 +106,8 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         assert os.path.isfile(sfile.path)
 
     def _write_file(self, sfile, subtitles, doc):
-        """Write subtitle data to `sfile`.
+        """
+        Write subtitle data to `sfile`.
 
         Raise :exc.`IOError` if writing fails.
         Raise :exc.`UnicodeError` if encoding fails.
@@ -133,7 +135,8 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def save(self, doc, sfile=None, keep_changes=True):
-        """Write subtitle data from `doc` to `sfile`.
+        """
+        Write subtitle data from `doc` to `sfile`.
 
         `sfile` can be ``None`` to use existing file, i.e. :attr:`main_file`
         or :attr:`tran_file`.
@@ -152,7 +155,8 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def save_main(self, sfile=None, keep_changes=True):
-        """Write subtitle data from main document to `sfile`.
+        """
+        Write subtitle data from main document to `sfile`.
 
         `sfile` can be ``None`` to use :attr:`main_file`.
         Raise :exc:`IOError` if writing fails.
@@ -175,7 +179,8 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def save_translation(self, sfile=None, keep_changes=True):
-        """Write subtitle data from translation document to `sfile`.
+        """
+        Write subtitle data from translation document to `sfile`.
 
         `sfile` can be ``None`` to use :attr:`tran_file`.
         Raise :exc:`IOError` if writing fails.

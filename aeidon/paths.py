@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Paths to files and directories used.
+"""
+Paths to files and directories used.
 
 :var CONFIG_HOME_DIR: Path to the user's local configuration directory
 :var DATA_DIR: Path to the global data directory

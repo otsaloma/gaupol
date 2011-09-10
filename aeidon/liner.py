@@ -29,7 +29,8 @@ __all__ = ("Liner",)
 
 class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
-    """Breaker of text into lines according to preferred break points.
+    """
+    Breaker of text into lines according to preferred break points.
 
     :class:`Liner` operates by first joining all lines by spaces and then
     trying different breaks. Breaks are tried first from :attr:`break_points`
@@ -53,7 +54,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
     _re_multi_space = re.compile(r" {2,}")
 
     def __init__(self, re_tag=None, clean_func=None):
-        """Initialize a :class:`Liner` object.
+        """
+        Initialize a :class:`Liner` object.
 
         `re_tag` should be a regular expression object.
         """
@@ -66,7 +68,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         self.max_lines = 2
 
     def _break_on_pattern(self, max_lines, regex, replacement):
-        """Break the text into lines based on `regex`.
+        """
+        Break the text into lines based on `regex`.
 
         Return ``True`` if breaks made and result is elegant and legal.
         """
@@ -103,7 +106,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         assert 0 <= value <= len(lengths)
 
     def _get_break(self, lengths):
-        """Return index of break in two with minimum length difference.
+        """
+        Return index of break in two with minimum length difference.
 
         Index is brute forced within reason and the result is optimal.
         """
@@ -126,7 +130,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks(self, lengths, max_lines):
-        """Return indices of breaks with minimum length variance.
+        """
+        Return indices of breaks with minimum length variance.
 
         Indexes are brute forced within reason and the result is optimal if
         ``max_lines`` is less than six, otherwise result is (potentially) ugly.
@@ -145,7 +150,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_pretty(self, lengths, max_lines):
-        """Return indices of breaks with minimum length variance.
+        """
+        Return indices of breaks with minimum length variance.
 
         Indexes are brute forced within reason and the result is optimal.
         """
@@ -176,7 +182,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_ugly(self, lengths, max_lines):
-        """Return indices of breaks with minimum length variance.
+        """
+        Return indices of breaks with minimum length variance.
 
         Items are first broken into half of ``max_lines`` and then each these
         lines is further broken internally into two. The result is not optimal,
@@ -196,7 +203,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         assert 0 <= value <= len(lengths)
 
     def _get_start_index(self, lengths, max_lines):
-        """Return the index for the first break candidate for items.
+        """
+        Return the index for the first break candidate for items.
 
         The start index is determined based on the line length mean with the
         purpose to avoid brute forcing insanely small indices.
@@ -279,7 +287,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         self._space_length = func(" ")
 
     def set_text(self, text, next=True):
-        """Set the target text to search in and parse it.
+        """
+        Set the target text to search in and parse it.
 
         `next` should be ``True`` to start at beginning, ``False`` for end.
         """

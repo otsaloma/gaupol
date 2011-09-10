@@ -24,7 +24,8 @@ __all__ = ("Markup",)
 
 class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
 
-    """Base class for text markup.
+    """
+    Base class for text markup.
 
     Markup conversions between different formats are done via an internal
     format, which has the following BBcode-style tags with angle brackets.
@@ -51,7 +52,8 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         assert replacement.count("%s") == len(groups)
 
     def _decode_apply(self, text, regex, replacement, groups):
-        """Return `text` with all matches of `regex` replaced.
+        """
+        Return `text` with all matches of `regex` replaced.
 
         `replacement` may contain one or more of ``%s``, which are replaced
         with parts of the match as defined `groups`, a ``tuple`` numbers.
@@ -99,7 +101,8 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         return self._decode_apply(text, regex, "<u>%s</u>", (target,))
 
     def _encode_apply(self, text, regex, method, target, value=None):
-        """Return `text` with internal tags removed and `method` applied.
+        """
+        Return `text` with internal tags removed and `method` applied.
 
         `method` should be one the tagging methods, e.g. meth:`bolden`.
         `target` and `value` should be group numbers in `regex`.
@@ -180,7 +183,8 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         raise NotImplementedError
 
     def clean(self, text):
-        """Return `text` with less ugly markup.
+        """
+        Return `text` with less ugly markup.
 
         Subclasses can implement this to, for example, remove redundant markup,
         finetune tag positioning or to join or split tags, in general, whatever

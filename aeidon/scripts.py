@@ -41,7 +41,8 @@ def code_to_name_require(code):
 
 @aeidon.deco.contractual
 def code_to_name(code):
-    """Convert ISO 15924 `code` to localized script name.
+    """
+    Convert ISO 15924 `code` to localized script name.
 
     Raise :exc:`KeyError` if code not found.
     """

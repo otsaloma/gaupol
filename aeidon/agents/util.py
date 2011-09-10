@@ -49,7 +49,8 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def get_format(self, doc):
-        """Return format of the file corresponding to `doc`.
+        """
+        Return format of the file corresponding to `doc`.
 
         For translation file that is ``None``, return format of main file.
         If main file is ``None``, return ``None``.
@@ -149,7 +150,8 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def new_temp_file(self, doc, encoding=None):
-        """Return path to a new temporary file with subtitles from `doc`.
+        """
+        Return path to a new temporary file with subtitles from `doc`.
 
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.

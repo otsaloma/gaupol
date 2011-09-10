@@ -31,7 +31,8 @@ __all__ = ("Application",)
 
 class ApplicationMeta(aeidon.Contractual):
 
-    """Application metaclass with delegated methods added.
+    """
+    Application metaclass with delegated methods added.
 
     Public methods are added to the class dictionary during :meth:`__new__`
     in order to fool Sphinx (and perhaps other API documentation generators)
@@ -56,7 +57,8 @@ class ApplicationMeta(aeidon.Contractual):
 
 class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
-    """GTK+ user interface controller for :class:`aeidon.Project`.
+    """
+    GTK+ user interface controller for :class:`aeidon.Project`.
 
     :ivar _delegations: Dictionary mapping method names to agent methods
     :ivar clipboard: Instance of :class:`aeidon.Clipboard` used

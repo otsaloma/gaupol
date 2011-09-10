@@ -24,7 +24,8 @@ __all__ = ("Finder",)
 
 class Finder(object, metaclass=aeidon.Contractual):
 
-    """String and regular expression finder and replacer.
+    """
+    String and regular expression finder and replacer.
 
     :ivar ignore_case: ``True`` to ignore case when finding matches
     :ivar match: Regular expression object for the latest match of pattern
@@ -57,7 +58,8 @@ class Finder(object, metaclass=aeidon.Contractual):
             assert (0 <= pos <= len(self.text))
 
     def __next__(self):
-        """Find the next match of pattern.
+        """
+        Find the next match of pattern.
 
         Raise :exc:`StopIteration` if no next match found.
         Return tuple of match start, end position.
@@ -97,7 +99,8 @@ class Finder(object, metaclass=aeidon.Contractual):
             assert (0 <= pos <= len(self.text))
 
     def previous(self):
-        """Find the previous match of pattern.
+        """
+        Find the previous match of pattern.
 
         Raise :exc:`StopIteration` if no previous match found.
         Return tuple of match start, end position.
@@ -144,7 +147,8 @@ class Finder(object, metaclass=aeidon.Contractual):
         assert self.replacement is not None
 
     def replace(self, next=True):
-        """Replace the current match of pattern.
+        """
+        Replace the current match of pattern.
 
         `next` should be ``True`` to finish at end of match, ``False`` for
         beginning. Raise :exc:`re.error` if bad replacement.
@@ -169,7 +173,8 @@ class Finder(object, metaclass=aeidon.Contractual):
         assert self.replacement is not None
 
     def replace_all(self):
-        """Replace all occurences of pattern.
+        """
+        Replace all occurences of pattern.
 
         Raise :exc:`re.error` if bad replacement.
         Return the amount of substitutions made.
@@ -190,7 +195,8 @@ class Finder(object, metaclass=aeidon.Contractual):
         return count
 
     def set_regex(self, pattern, flags=0, default_flags=None):
-        """Set and use regular expression as pattern.
+        """
+        Set and use regular expression as pattern.
 
         If `default_flags` is ``None``, all of ``DOTALL``, ``MULTILINE`` and
         ``UNICODE`` are used. ``IGNORECASE`` is automatically added to flags if
@@ -205,7 +211,8 @@ class Finder(object, metaclass=aeidon.Contractual):
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text, next=True):
-        """Set the target text to search in and reset position.
+        """
+        Set the target text to search in and reset position.
 
         `next` should be ``True`` to start at beginning, ``False`` for end.
         """

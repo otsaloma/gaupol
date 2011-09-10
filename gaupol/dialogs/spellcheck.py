@@ -29,7 +29,8 @@ __all__ = ("SpellCheckDialog",)
 
 class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
-    """Dialog for checking and correcting spelling.
+    """
+    Dialog for checking and correcting spelling.
 
     :cvar _max_replacements: Maximum amount of replacements to save to file
     :cvar _personal_dir: Directory for user replacement files
@@ -65,7 +66,8 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         assert aeidon.util.enchant_available()
 
     def __init__(self, parent, application):
-        """Initialize a :class:`SpellCheckDialog` object.
+        """
+        Initialize a :class:`SpellCheckDialog` object.
 
         Raise :exc:`ValueError` if dictionary initialization fails.
         """
@@ -111,7 +113,8 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._set_done()
 
     def _advance_current(self):
-        """Advance to the next spelling error in the current text.
+        """
+        Advance to the next spelling error in the current text.
 
         Raise :exc:`StopIteration` when no more errors in the current text.
         """
@@ -138,7 +141,8 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._tree_view.grab_focus()
 
     def _advance_row(self):
-        """Advance to the next subtitle and feed its text to the spell-checker.
+        """
+        Advance to the next subtitle and feed its text to the spell-checker.
 
         Raise :exc:`StopIteration` when no more subtitles in the current page.
         """
@@ -164,7 +168,8 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             self._register_changes()
 
     def _init_checker(self):
-        """Initialize spell-checker and its dictionary.
+        """
+        Initialize spell-checker and its dictionary.
 
         Raise :exc:`ValueError` if dictionary initialization fails.
         """
@@ -201,7 +206,8 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._replace_button.set_sensitive(False)
 
     def _init_spell_check(self):
-        """Initialize spell-check components and related widgets.
+        """
+        Initialize spell-check components and related widgets.
 
         Raise :exc:`ValueError` if dictionary initialization fails.
         """

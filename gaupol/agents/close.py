@@ -28,7 +28,8 @@ class CloseAgent(aeidon.Delegate):
     """Closing pages and quitting Gaupol."""
 
     def _confirm_close(self, page):
-        """Close `page` after asking to save its documents.
+        """
+        Close `page` after asking to save its documents.
 
         Raise :exc:`gaupol.Default` if cancelled and `page` not closed.
         """
@@ -41,7 +42,8 @@ class CloseAgent(aeidon.Delegate):
             return self._confirm_close_translation(page)
 
     def _confirm_close_main(self, page):
-        """Close `page` after asking to save its main document.
+        """
+        Close `page` after asking to save its main document.
 
         Raise :exc:`gaupol.Default` if cancelled and page not closed.
         """
@@ -60,7 +62,8 @@ class CloseAgent(aeidon.Delegate):
             self.save_main(page)
 
     def _confirm_close_multiple(self, pages):
-        """Close `pages` after asking to save their documents.
+        """
+        Close `pages` after asking to save their documents.
 
         Raise :exc:`gaupol.Default` if cancelled and `pages` not closed.
         """
@@ -70,7 +73,8 @@ class CloseAgent(aeidon.Delegate):
             raise gaupol.Default
 
     def _confirm_close_translation(self, page):
-        """Close `page` after asking to save its translation document.
+        """
+        Close `page` after asking to save its translation document.
 
         Raise :exc:`gaupol.Default` if cancelled and page not closed.
         """
@@ -147,7 +151,8 @@ class CloseAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def close_all(self):
-        """Close all pages after asking to save their documents.
+        """
+        Close all pages after asking to save their documents.
 
         Raise :exc:`gaupol.Default` if cancelled and all pages not closed.
         """
@@ -158,7 +163,8 @@ class CloseAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def close(self, page, confirm=True):
-        """Close `page` after asking to save its documents.
+        """
+        Close `page` after asking to save its documents.
 
         If `confirm` is ``False`` do not ask to save documents.
         Raise :exc:`gaupol.Default` if cancelled and page was not closed.
@@ -176,7 +182,8 @@ class CloseAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def quit(self):
-        """Quit Gaupol.
+        """
+        Quit Gaupol.
 
         Raise :exc:`gaupol.Default` if cancelled.
         """

@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Reading, writing and manipulating text-based subtitle files.
+"""
+Reading, writing and manipulating text-based subtitle files.
 
 :mod:`aeidon` is a Python package that provides classes and functions for
 dealing with text-based subtitle files of many different formats. Functions

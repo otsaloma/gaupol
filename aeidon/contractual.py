@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Metaclass for design-by-contract_ pre- and postcondition checks.
+"""
+Metaclass for design-by-contract_ pre- and postcondition checks.
 
 .. _design-by-contract:
    http://www.eiffel.com/developers/design_by_contract.html
@@ -62,7 +63,8 @@ def _required(require_func):
 
 class Contractual(type):
 
-    """Metaclass for design-by-contract_ pre- and postcondition checks.
+    """
+    Metaclass for design-by-contract_ pre- and postcondition checks.
 
     Method calls are automatically wrapped in ``METHOD_NAME_require``
     precondition call, ``METHOD_NAME_ensure`` postcondition call and public

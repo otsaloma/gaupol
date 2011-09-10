@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Containers for additional format-specific subtitle attributes.
+"""
+Containers for additional format-specific subtitle attributes.
 
 Instances of containers must be able to gracefully survive a
 :func:`copy.deepcopy` operation. If the container is in some way complicated,
@@ -25,7 +26,8 @@ this.
 
 class SubRip(object):
 
-    """Subtitle box pixel coordinates for extended SubRip format.
+    """
+    Subtitle box pixel coordinates for extended SubRip format.
 
     :ivar x1: Subtitle corner X coordinate in pixels
     :ivar y1: Subtitle corner Y coordinate in pixels
@@ -38,7 +40,8 @@ class SubRip(object):
 
 class SubStationAlpha(object):
 
-    """Attributes for all versions of Sub Station Alpha formats.
+    """
+    Attributes for all versions of Sub Station Alpha formats.
 
     :ivar marked: 0 for not marked or 1 for marked (default 0)
     :ivar layer: Layer used by collusion detection (default 0)

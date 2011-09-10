@@ -42,7 +42,8 @@ def _blocked(function):
 
 class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
 
-    """Entry for time data in format ``[-]HH:MM:SS.SSS``.
+    """
+    Entry for time data in format ``[-]HH:MM:SS.SSS``.
 
     :ivar _delete_handler: Handler for "delete-text" signal
     :ivar _insert_handler: Handler for "insert-text" signal

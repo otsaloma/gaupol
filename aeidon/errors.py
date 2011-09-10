@@ -32,7 +32,8 @@ class Error(Exception):
 
 class AffirmationError(Error):
 
-    """Something expected to be ``True`` was ``False``.
+    """
+    Something expected to be ``True`` was ``False``.
 
     :exc:`AffirmationError` is by nature similar to the built-in
     :exc:`AssertionError`, but without the special reliance on
@@ -53,7 +54,8 @@ class FormatError(Error):
 
 class ParseError(Error):
 
-    """Failed to parse a subtitle file into positions and texts.
+    """
+    Failed to parse a subtitle file into positions and texts.
 
     :exc:`ParseError` is caused by either a syntax error in the file being
     parsed or a programming error in the code doing the parsing.

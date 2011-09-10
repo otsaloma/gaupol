@@ -31,7 +31,8 @@ __all__ = ("Action",
 
 class Action(Gtk.Action):
 
-    """Base classes for :class:`Gtk.UIManager` actions.
+    """
+    Base classes for :class:`Gtk.UIManager` actions.
 
     :ivar accelerator: Accelerator string or ``None``
 
@@ -98,7 +99,8 @@ class MenuAction(Action):
 
 class RecentAction(Gtk.RecentAction, Action):
 
-    """Base class for :class:`Gtk.UIManager` recent file actions.
+    """
+    Base class for :class:`Gtk.UIManager` recent file actions.
 
     :ivar group: Name of :class:`Gtk.RecentFilter` group
     """
@@ -155,7 +157,8 @@ class TopMenuAction(MenuAction):
 
 class RadioAction(Gtk.RadioAction, Action):
 
-    """Base class for :class:`Gtk.UIManager` radio actions.
+    """
+    Base class for :class:`Gtk.UIManager` radio actions.
 
     :ivar group: Class name of one action in the radio group
     """

@@ -26,7 +26,8 @@ _ = aeidon.i18n._
 
 class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
-    """Updating the application GUI.
+    """
+    Updating the application GUI.
 
     :ivar _message_id: A :class:`Gtk.Statusbar` message ID
     :ivar _message_tag: A timeout from :func:`GObject.timeout_add`

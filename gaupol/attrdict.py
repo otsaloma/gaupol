@@ -23,7 +23,8 @@ __all__ = ("AttributeDictionary",)
 
 class AttributeDictionary(aeidon.Observable):
 
-    """Observable dictionary with attribute access to keys.
+    """
+    Observable dictionary with attribute access to keys.
 
     :class:`AttributeDictionary` is initialized from a root dictionary, which
     is kept in sync with attribute values. This allows convenient attribute
@@ -32,7 +33,8 @@ class AttributeDictionary(aeidon.Observable):
     """
 
     def __init__(self, root):
-        """Initialize an AttributeDictionary object.
+        """
+        Initialize an AttributeDictionary object.
 
         All subdictionaries of `root` are initialized as instances of
         :class:`AttributeDictionary` as well.

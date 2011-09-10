@@ -24,7 +24,8 @@ __all__ = ("Observable",)
 
 class Observable(object, metaclass=aeidon.Contractual):
 
-    """Base class for observable objects.
+    """
+    Base class for observable objects.
 
     :cvar signals: Tuple of emittable signals added automatically
 
@@ -100,7 +101,8 @@ class Observable(object, metaclass=aeidon.Contractual):
         assert signal in self._signal_handlers
 
     def block(self, signal):
-        """Block all emissions of `signal`.
+        """
+    Block all emissions of `signal`.
 
         Return ``False`` if already blocked, otherwise ``True``.
         """
@@ -110,7 +112,8 @@ class Observable(object, metaclass=aeidon.Contractual):
         return False
 
     def block_all(self):
-        """Block all emissions of all signals.
+        """
+        Block all emissions of all signals.
 
         Return ``False`` if already blocked, otherwise ``True``.
         """
@@ -155,7 +158,8 @@ class Observable(object, metaclass=aeidon.Contractual):
                 method(*((self,) + args + data))
 
     def freeze_notify(self):
-        """Queue notify signals instead of emitting them.
+        """
+        Queue notify signals instead of emitting them.
 
         Return ``False`` if already frozen, otherwise ``True``.
         """
@@ -175,7 +179,8 @@ class Observable(object, metaclass=aeidon.Contractual):
         assert (not do) or (not self._notify_queue)
 
     def thaw_notify(self, do=True):
-        """Emit all queued notify signals and queue no more.
+        """
+        Emit all queued notify signals and queue no more.
 
         The optional `do` keyword argument should be the return value from
         :meth:`freeze_notify` to avoid problems with nested functions where
@@ -197,7 +202,8 @@ class Observable(object, metaclass=aeidon.Contractual):
         assert signal in self._signal_handlers
 
     def unblock(self, signal, do=True):
-        """Unblock all emissions of `signal`.
+        """
+        Unblock all emissions of `signal`.
 
         The optional `do` keyword argument should be the return value from
         :meth:`block` to avoid problems with nested functions where signals
@@ -212,7 +218,8 @@ class Observable(object, metaclass=aeidon.Contractual):
         return False
 
     def unblock_all(self, do=True):
-        """Unblock all emissions of all signals.
+        """
+        Unblock all emissions of all signals.
 
         The optional `do` keyword argument should be the return value from
         :meth:`block_all` to avoid problems with nested functions where signals

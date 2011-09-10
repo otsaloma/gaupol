@@ -46,7 +46,8 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def set_duration(self, index, value, register=-1):
-        """Set the value of duration position.
+        """
+        Set the value of duration position.
 
         `value` can be a string to set duration as time, an integer to set as
         frame or a float to set as seconds.
@@ -69,7 +70,8 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def set_end(self, index, value, register=-1):
-        """Set the value of end position.
+        """
+        Set the value of end position.
 
         `value` can be a string to set duration as time, an integer to set as
         frame or a float to set as seconds.
@@ -109,7 +111,8 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def set_start(self, index, value, register=-1):
-        """Set the value of start position.
+        """
+        Set the value of start position.
 
         `value` can be a string to set duration as time, an integer to set as
         frame or a float to set as seconds.

@@ -31,7 +31,8 @@ class MPL2(aeidon.SubtitleFile):
     mode = aeidon.modes.TIME
 
     def read(self):
-        """Read file and return subtitles.
+        """
+        Read file and return subtitles.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -48,7 +49,8 @@ class MPL2(aeidon.SubtitleFile):
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write `subtitles` from `doc` to `fobj`.
+        """
+        Write `subtitles` from `doc` to `fobj`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

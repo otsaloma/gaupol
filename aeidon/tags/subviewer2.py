@@ -23,7 +23,8 @@ __all__ = ("SubViewer2",)
 
 class SubViewer2(aeidon.tags.SubRip):
 
-    """Text markup for the SubViewer 2.0 format.
+    """
+    Text markup for the SubViewer 2.0 format.
 
     SubViewer 2.0 format is assumed to contain the same markup as SubRip.
     """

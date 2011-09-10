@@ -23,7 +23,8 @@ _ = aeidon.i18n._
 
 class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
-    """Building and updating menus.
+    """
+    Building and updating menus.
 
     :ivar _projects_id: :class:`Gtk.UIManager` merge ID for projects menu
     :ivar _redo_menu_items: Redo menu tool button menu items

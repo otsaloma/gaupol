@@ -26,7 +26,8 @@ from gi.repository import Pango
 
 class _Ruler(object):
 
-    """Measurer of line lengths in various units.
+    """
+    Measurer of line lengths in various units.
 
     The "sans" font (whatever it happens to be) is used for size calculations
     in em units, as subtitles are commonly shown in a some sans serif font.

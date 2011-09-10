@@ -25,7 +25,8 @@ __all__ = ("Calculator",)
 
 class Calculator(object):
 
-    """Time and frame calculator.
+    """
+    Time and frame calculator.
 
     Times are handled as strings, frames as integers and seconds as floats.
     Only one instance of :class:`Calculator` exists for a given framerate.
@@ -83,7 +84,8 @@ class Calculator(object):
         return y - x
 
     def get_middle(self, x, y):
-        """Return time or frame halfway between `x` and `y`.
+        """
+    Return time or frame halfway between `x` and `y`.
 
         >>> calc = aeidon.Calculator()
         >>> calc.get_middle(33, 77)
@@ -122,7 +124,8 @@ class Calculator(object):
                 0 <= mseconds <= 999)
 
     def parse_time(self, time):
-        """Parse syntactically sloppy `time` to valid format.
+        """
+        Parse syntactically sloppy `time` to valid format.
 
         >>> calc = aeidon.Calculator()
         >>> calc.parse_time("1:2:3,4")

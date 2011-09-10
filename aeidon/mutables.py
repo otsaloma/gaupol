@@ -35,7 +35,8 @@ def _mutation(function):
 
 class ObservableDict(dict, metaclass=aeidon.Contractual):
 
-    """Observable version of ``dict``.
+    """
+    Observable version of ``dict``.
 
     :ivar master: Master instance with a ``notify`` method
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
@@ -88,7 +89,8 @@ class ObservableDict(dict, metaclass=aeidon.Contractual):
 
 class ObservableList(list, metaclass=aeidon.Contractual):
 
-    """Observable version of ``list``.
+    """
+    Observable version of ``list``.
 
     :ivar master: Master instance with a ``notify`` method
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
@@ -165,7 +167,8 @@ class ObservableList(list, metaclass=aeidon.Contractual):
 
 class ObservableSet(set, metaclass=aeidon.Contractual):
 
-    """Observable version of ``set``.
+    """
+    Observable version of ``set``.
 
     :ivar master: Master instance with a ``notify`` method
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method

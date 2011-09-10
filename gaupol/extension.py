@@ -24,7 +24,8 @@ class Extension(object):
     """Separate object that can be activated and deactivated during runtime."""
 
     def setup(self, application):
-        """Setup extension for use with `application`.
+        """
+        Setup extension for use with `application`.
 
         This method is called every time the extension is associated with
         `application`, i.e. both when it is manually activated and also every
@@ -33,7 +34,8 @@ class Extension(object):
         pass
 
     def show_help(self):
-        """Show documentation on using extension.
+        """
+        Show documentation on using extension.
 
         Subclasses can override this to, for example, launch a web browser with
         :func:`gaupol.util.show_uri` to view HTML documentation.
@@ -41,14 +43,16 @@ class Extension(object):
         raise NotImplementedError
 
     def show_preferences_dialog(self, parent):
-        """Show a preferences dialog for configuring extension.
+        """
+        Show a preferences dialog for configuring extension.
 
         `parent` is the parent window that the dialog can be centered on.
         """
         raise NotImplementedError
 
     def teardown(self, application):
-        """End use of extension with `application`.
+        """
+        End use of extension with `application`.
 
         This method is called every time the extension is unassociated with
         `application`, i.e. both when it is manually deactivated and also every
@@ -57,7 +61,8 @@ class Extension(object):
         pass
 
     def update(self, application, page):
-        """Update state of extension for `application` and active `page`.
+        """
+        Update state of extension for `application` and active `page`.
 
         The main purpose of this method is to update sensitivities of UI
         manager actions associated with this extension.

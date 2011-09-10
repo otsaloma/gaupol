@@ -25,7 +25,8 @@ __all__ = ("AdvSubStationAlpha",)
 
 class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
 
-    """Text markup for the Advanced Sub Station Alpha format.
+    """
+    Text markup for the Advanced Sub Station Alpha format.
 
     In addition to the markup in Sub Station Alpha, Advanced Sub Station Alpha
     contains a whole lof of markup tags of which the following are of interest

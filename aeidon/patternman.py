@@ -26,7 +26,8 @@ __all__ = ("PatternManager",)
 
 class PatternManager(object, metaclass=aeidon.Contractual):
 
-    """Managing regular expression substitutions for subtitle texts.
+    """
+    Managing regular expression substitutions for subtitle texts.
 
     :ivar _patterns: Dictionary mapping codes to pattern lists
     :ivar pattern_type: String to indentify what the pattern matches
@@ -61,7 +62,8 @@ class PatternManager(object, metaclass=aeidon.Contractual):
             assert aeidon.countries.is_valid(country)
 
     def _filter_patterns(self, patterns):
-        """Return `patterns` with name-clashes resolved.
+        """
+        Return `patterns` with name-clashes resolved.
 
         Patterns with a more specific code replace those with a less specific
         code if they have the same name and the more specific pattern's policy
@@ -88,7 +90,8 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         self._assert_identifiers(script, language, country)
 
     def _get_codes(self, script=None, language=None, country=None):
-        """Return a sequence of all codes to be used by arguments.
+        """
+        Return a sequence of all codes to be used by arguments.
 
         ``Zyyy`` is the first code and the most specific one last.
         """

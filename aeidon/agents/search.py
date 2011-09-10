@@ -22,7 +22,8 @@ _ = aeidon.i18n._
 
 class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
-    """Searching for and replacing text.
+    """
+    Searching for and replacing text.
 
     :ivar _docs: Sequence of :attr:`aeidon.documents` items
     :ivar _finder: Instance of :class:`aeidon.Finder` used
@@ -54,7 +55,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.set_search_target()
 
     def _find(self, index, doc, pos, next):
-        """Find pattern starting from given location.
+        """
+        Find pattern starting from given location.
 
         `pos` can be ``None`` for beginning or end.
         `next` should be ``True`` to find next, ``False`` to find previous.
@@ -81,7 +83,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             pos = None
 
     def _get_document(self, doc, next):
-        """Return the document to proceed to.
+        """
+        Return the document to proceed to.
 
         `next` should be ``True`` to find next, ``False`` to find previous.
         Raise :exc:`StopIteration` if nowhere to proceed.
@@ -110,7 +113,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             assert 0 <= index < len(self.subtitles)
 
     def _next_in_document(self, index, doc, pos=None):
-        """Find the next match in `doc` starting from `pos`.
+        """
+        Find the next match in `doc` starting from `pos`.
 
         `pos` can be ``None`` to start from beginning.
         Raise :exc:`StopIteration` if no matches at all anywhere.
@@ -146,7 +150,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         raise ValueError("No more matches in document: %s" % repr(doc))
 
     def _previous_in_document(self, index, doc, pos=None):
-        """Find the previous match in `doc` starting from `pos`.
+        """
+        Find the previous match in `doc` starting from `pos`.
 
         `pos` can be ``None`` to start from end.
         Raise :exc:`StopIteration` if no matches at all anywhere.
@@ -194,7 +199,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def find_next(self, index=None, doc=None, pos=None):
-        """Find the next match starting from given location.
+        """
+        Find the next match starting from given location.
 
         `index`, `doc` and `pos` can be ``None`` to start from beginning.
         Raise :exc:`StopIteration` if no matches exist.
@@ -220,7 +226,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def find_previous(self, index=None, doc=None, pos=None):
-        """Find the previous match starting from given location.
+        """
+        Find the previous match starting from given location.
 
         `index`, `doc` and `pos` can be ``None`` to start from end.
         Raise :exc:`StopIteration` if no matches exist.
@@ -240,7 +247,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def replace(self, register=-1):
-        """Replace the current match of pattern.
+        """
+        Replace the current match of pattern.
 
         Raise :exc:`re.error` if bad replacement.
         """
@@ -257,7 +265,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.revertable
     def replace_all(self, register=-1):
-        """Replace all matches of pattern and return amount.
+        """
+        Replace all matches of pattern and return amount.
 
         Raise :exc:`re.error` if bad replacement.
         """
@@ -287,7 +296,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def set_search_regex(self, pattern, flags=0):
-        """Set the regular expression pattern to find.
+        """
+        Set the regular expression pattern to find.
 
         ``DOTALL``, ``MULTILINE`` and ``UNICODE`` are automatically added to
         flags. Raise :exc:`re.error` if bad pattern.
@@ -311,7 +321,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def set_search_target(self, indices=None, docs=None, wrap=True):
-        """Set the targets to search in.
+        """
+        Set the targets to search in.
 
         `indices` can be ``None`` to target all subtitles.
         `docs` can be ``None`` to target all documents.

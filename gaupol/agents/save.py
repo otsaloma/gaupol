@@ -80,7 +80,8 @@ class SaveAgent(aeidon.Delegate):
         self.update_gui()
 
     def _save_document(self, page, doc, sfile=None):
-        """Save `doc` of `page` to `sfile`.
+        """
+        Save `doc` of `page` to `sfile`.
 
         Raise :exc:`gaupol.Default` if saving failed.
         """
@@ -101,7 +102,8 @@ class SaveAgent(aeidon.Delegate):
         raise gaupol.Default
 
     def _select_file(self, title, sfile=None):
-        """Select a file and return a :class:`aeidon.SubtitleFile`.
+        """
+        Select a file and return a :class:`aeidon.SubtitleFile`.
 
         Raise :exc:`gaupol.Default` if cancelled.
         """
@@ -144,7 +146,8 @@ class SaveAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def save_main(self, page):
-        """Save the main document of `page`.
+        """
+        Save the main document of `page`.
 
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
@@ -158,7 +161,8 @@ class SaveAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def save_main_as(self, page, sfile=None):
-        """Save the main document of `page` to a selected file.
+        """
+        Save the main document of `page` to a selected file.
 
         If `sfile` is ``None`` show a filechooser dialog.
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
@@ -177,7 +181,8 @@ class SaveAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def save_translation(self, page):
-        """Save the translation document of `page`.
+        """
+        Save the translation document of `page`.
 
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
@@ -191,7 +196,8 @@ class SaveAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def save_translation_as(self, page, sfile=None):
-        """Save the translation document of `page` to a selected file.
+        """
+        Save the translation document of `page` to a selected file.
 
         If `sfile` is ``None`` show a filechooser dialog.
         Raise :exc:`gaupol.Default` if cancelled or saving failed.

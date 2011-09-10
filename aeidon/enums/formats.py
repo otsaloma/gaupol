@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Enumerations for subtitle file format types.
+"""
+Enumerations for subtitle file format types.
 
 Mime-types of subtitle file formats conform to those defined in
 freedesktop.org_'s shared-mime-info_ package. For all formats not included in

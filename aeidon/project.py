@@ -24,7 +24,8 @@ __all__ = ("Project",)
 
 class ProjectMeta(aeidon.Contractual):
 
-    """Project metaclass with delegated methods added.
+    """
+    Project metaclass with delegated methods added.
 
     Public methods are added to the class dictionary during :meth:`__new__`
     in order to fool Sphinx (and perhaps other API documentation generators)
@@ -49,7 +50,8 @@ class ProjectMeta(aeidon.Contractual):
 
 class Project(aeidon.Observable, metaclass=ProjectMeta):
 
-    """Model for subtitle data.
+    """
+    Model for subtitle data.
 
     :ivar _delegations: Dictionary mapping method names to agent methods
     :ivar calc: Instance of :class:`aeidon.Calculator` used
