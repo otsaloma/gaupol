@@ -62,10 +62,10 @@ gaupol.dialogs
 gaupol.assistants
 gaupol.action
 gaupol.actions
-gaupol.agents
-gaupol.application
 gaupol.extension
 gaupol.extensionman
+gaupol.agents
+gaupol.application
 gaupol.main
 gaupol.unittest
 gaupol.__init__
