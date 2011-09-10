@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("DurationAdjustDialog",)
@@ -48,7 +48,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         self._init_values()
         self._init_sensitivities()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _adjust_durations(self):
         """Adjust durations of subtitles."""
@@ -147,7 +147,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         conf.use_gap = self._gap_check.get_active()
         conf.use_maximum = self._max_check.get_active()
         conf.use_minimum = self._min_check.get_active()
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._adjust_durations()
 
     def _on_shorten_check_toggled(self, *args):

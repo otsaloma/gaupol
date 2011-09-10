@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
 
@@ -48,25 +48,25 @@ class MultiSaveDialog(gaupol.FileDialog):
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._format_combo.set_model(store)
         for name in (x.label for x in aeidon.formats):
             store.append((name,))
         view = self._format_combo.get_child()
         view.set_displayed_row(0)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._format_combo.pack_start(renderer, True)
         self._format_combo.add_attribute(renderer, "text", 0)
 
     def _init_newline_combo(self):
         """Initialize the newline combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._newline_combo.set_model(store)
         for name in (x.label for x in aeidon.newlines):
             store.append((name,))
         view = self._newline_combo.get_child()
         view.set_displayed_row(0)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._newline_combo.pack_start(renderer, True)
         self._newline_combo.add_attribute(renderer, "text", 0)
 
@@ -86,7 +86,7 @@ class MultiSaveDialog(gaupol.FileDialog):
         gaupol.conf.file.encoding = self.get_encoding()
         gaupol.conf.file.format = self.get_format()
         gaupol.conf.file.newline = self.get_newline()
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         gaupol.util.set_cursor_busy(self._dialog)
         self._save_all_documents_as()
         gaupol.util.set_cursor_normal(self._dialog)
@@ -127,11 +127,11 @@ class MultiSaveDialog(gaupol.FileDialog):
                     'Replacing them will overwrite their contents.') % path
 
         dialog = gaupol.QuestionDialog(self._dialog, title, message)
-        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
-        dialog.add_button(_("_Replace"), gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_YES)
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
+        dialog.add_button(_("_Replace"), Gtk.ResponseType.YES)
+        dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
-        gaupol.util.raise_default(response != gtk.RESPONSE_YES)
+        gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
     def get_format(self):
         """Return the selected format."""

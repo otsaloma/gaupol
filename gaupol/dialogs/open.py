@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 
 __all__ = ("OpenDialog",)
@@ -43,13 +43,13 @@ class OpenDialog(gaupol.FileDialog):
 
     def _init_align_combo(self):
         """Initialize the align method combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._align_combo.set_model(store)
         for align_method in aeidon.align_methods:
             store.append((align_method.label,))
         view = self._align_combo.get_child()
         view.set_displayed_row(0)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._align_combo.pack_start(renderer, True)
         self._align_combo.add_attribute(renderer, "text", 0)
 

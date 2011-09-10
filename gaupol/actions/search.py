@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
@@ -31,7 +31,7 @@ class FindAndReplaceAction(gaupol.Action):
         gaupol.Action.__init__(self, "find_and_replace")
         self.props.label = _("_Find And Replace\342\200\246")
         self.props.short_label = _("Find")
-        self.props.stock_id = gtk.STOCK_FIND_AND_REPLACE
+        self.props.stock_id = Gtk.STOCK_FIND_AND_REPLACE
         self.props.tooltip = _("Search for and replace text")
         self.accelerator = "<Control>F"
         self.action_group = "main-unsafe"

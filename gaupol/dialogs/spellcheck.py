@@ -18,9 +18,9 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
-import pango
+from gi.repository import Pango
 import sys
 _ = aeidon.i18n._
 
@@ -85,7 +85,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_widgets()
         self._init_sensitivities()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
         self._start()
 
     def _advance(self):
@@ -215,11 +215,11 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _init_tree_view(self):
         """Initialize the suggestion tree view."""
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._tree_view.set_model(store)
-        column = gtk.TreeViewColumn("", gtk.CellRendererText(), text=0)
+        column = Gtk.TreeViewColumn("", Gtk.CellRendererText(), text=0)
         self._tree_view.append_column(column)
 
     def _init_widgets(self):
@@ -230,7 +230,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         gaupol.util.set_widget_font(self._text_view, font)
         gaupol.util.set_widget_font(self._tree_view, font)
         text_buffer = self._text_view.get_buffer()
-        text_buffer.create_tag("misspelled", weight=pango.WEIGHT_BOLD)
+        text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
         gaupol.util.scale_to_size(self._text_view, 56, 5, font)
         gaupol.util.scale_to_size(self._tree_view, 20, 9, font)
         self._entry_handler = self._entry.connect("changed",
@@ -248,7 +248,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         response = gaupol.util.run_dialog(dialog)
         text = dialog.get_text()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         self._checker.set_text(str(text))
         self._advance()
 
@@ -365,7 +365,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         except LookupError: name = self._language
         title = _('Failed to load dictionary for language "%s"') % name
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _start(self):

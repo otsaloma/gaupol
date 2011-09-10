@@ -17,19 +17,19 @@
 """Enumerations for toolbar style types."""
 
 import aeidon
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("toolbar_styles",)
 
 
 class Both(aeidon.EnumerationItem):
 
-    value = gtk.TOOLBAR_BOTH
+    value = Gtk.TOOLBAR_BOTH
 
 
 class BothHoriz(aeidon.EnumerationItem):
 
-    value = gtk.TOOLBAR_BOTH_HORIZ
+    value = Gtk.TOOLBAR_BOTH_HORIZ
 
 
 class Default(aeidon.EnumerationItem):
@@ -39,12 +39,12 @@ class Default(aeidon.EnumerationItem):
 
 class Icons(aeidon.EnumerationItem):
 
-    value = gtk.TOOLBAR_ICONS
+    value = Gtk.TOOLBAR_ICONS
 
 
 class Text(aeidon.EnumerationItem):
 
-    value = gtk.TOOLBAR_TEXT
+    value = Gtk.TOOLBAR_TEXT
 
 
 toolbar_styles = aeidon.Enumeration()

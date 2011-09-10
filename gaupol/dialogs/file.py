@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("FileDialog",)
@@ -31,12 +31,12 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _init_encoding_combo(self):
         """Initialize the character encoding combo box."""
-        store = gtk.ListStore(str, str)
+        store = Gtk.ListStore(str, str)
         self._encoding_combo.set_model(store)
         self._populate_encoding_combo()
         view = self._encoding_combo.get_child()
         view.set_displayed_row(0)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._encoding_combo.pack_start(renderer, True)
         self._encoding_combo.add_attribute(renderer, "text", 1)
         function = gaupol.util.separate_combo
@@ -44,11 +44,11 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _init_filters(self):
         """Initialize file filters."""
-        file_filter = gtk.FileFilter()
+        file_filter = Gtk.FileFilter()
         file_filter.set_name(_("All files"))
         file_filter.add_pattern("*")
         self.add_filter(file_filter)
-        file_filter = gtk.FileFilter()
+        file_filter = Gtk.FileFilter()
         file_filter.set_name(_("All supported files"))
         for format in aeidon.formats:
             pattern = "*."
@@ -64,7 +64,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 pattern += "[%s%s]" % (x.upper(), x.lower())
             format = format.label
             name = _("%(format)s (*%(extension)s)") % locals()
-            file_filter = gtk.FileFilter()
+            file_filter = Gtk.FileFilter()
             file_filter.set_name(name)
             file_filter.add_pattern(pattern)
             self.add_filter(file_filter)
@@ -79,7 +79,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         visible = dialog.get_visible_encodings()
         dialog.destroy()
         self._encoding_combo.set_active(0)
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         gaupol.conf.encoding.visible = visible
         self._populate_encoding_combo(encoding)
         self.set_encoding(encoding)

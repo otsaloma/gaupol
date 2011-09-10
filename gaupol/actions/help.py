@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
@@ -30,7 +30,7 @@ class BrowseWikiDocumentationAction(gaupol.Action):
         """Initialize a :class:`BrowseWikiDocumentationAction` object."""
         gaupol.Action.__init__(self, "browse_wiki_documentation")
         self.props.label = _("_Wiki Documentation")
-        self.props.stock_id = gtk.STOCK_HELP
+        self.props.stock_id = Gtk.STOCK_HELP
         self.props.tooltip = _("Browse wiki documentation")
         self.action_group = "main-safe"
 
@@ -55,7 +55,7 @@ class ViewAboutDialogAction(gaupol.Action):
         """Initialize a :class:`ViewAboutDialogAction` object."""
         gaupol.Action.__init__(self, "view_about_dialog")
         self.props.label = _("_About")
-        self.props.stock_id = gtk.STOCK_ABOUT
+        self.props.stock_id = Gtk.STOCK_ABOUT
         self.props.tooltip = _("Show information about Gaupol")
         self.action_group = "main-safe"
 

@@ -17,34 +17,34 @@
 """Dialog for selecting a video file."""
 
 import aeidon
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("VideoDialog",)
 
 
-class VideoDialog(gtk.FileChooserDialog):
+class VideoDialog(Gtk.FileChooserDialog):
 
     """Dialog for selecting a video file."""
 
     def __init__(self, parent):
         """Initialize a :class:`VideoDialog` object."""
-        gtk.FileChooserDialog.__init__(self)
+        GObject.GObject.__init__(self)
         self.set_title(_("Select Video"))
         self.set_transient_for(parent)
-        self.set_action(gtk.FILE_CHOOSER_ACTION_OPEN)
-        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        self.add_button(_("_Select"), gtk.RESPONSE_OK)
-        self.set_default_response(gtk.RESPONSE_OK)
+        self.set_action(Gtk.FileChooserAction.OPEN)
+        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Select"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
         self._init_filters()
 
     def _init_filters(self):
         """Intialize the file filters."""
-        file_filter = gtk.FileFilter()
+        file_filter = Gtk.FileFilter()
         file_filter.add_pattern("*")
         file_filter.set_name(_("All files"))
         self.add_filter(file_filter)
-        file_filter = gtk.FileFilter()
+        file_filter = Gtk.FileFilter()
         file_filter.add_mime_type("video/*")
         file_filter.set_name(_("Video files"))
         self.add_filter(file_filter)

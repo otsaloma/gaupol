@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("FrameTransformDialog", "TimeTransformDialog")
@@ -51,7 +51,7 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         self._init_sensitivities()
         self._init_sizes()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _get_target(self):
         """Return the selected target."""
@@ -64,11 +64,11 @@ class PositionTransformDialog(gaupol.BuilderDialog):
     def _init_input_labels(self):
         """Initialize non-editable input entries."""
         style = self._correction_label_1.get_style()
-        text_color = style.fg[gtk.STATE_NORMAL]
-        base_color = style.bg[gtk.STATE_NORMAL]
+        text_color = style.fg[Gtk.StateType.NORMAL]
+        base_color = style.bg[Gtk.StateType.NORMAL]
         for entry in (self._input_entry_1, self._input_entry_2):
-            entry.modify_text(gtk.STATE_NORMAL, text_color)
-            entry.modify_base(gtk.STATE_NORMAL, base_color)
+            entry.modify_text(Gtk.StateType.NORMAL, text_color)
+            entry.modify_base(Gtk.StateType.NORMAL, base_color)
 
     def _init_sensitivities(self):
         """Initialize sensitivities of widgets."""
@@ -136,7 +136,7 @@ class PositionTransformDialog(gaupol.BuilderDialog):
     def _on_response(self, dialog, response):
         """Save target and transform positions."""
         gaupol.conf.position_transform.target = self._get_target()
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._transform_positions()
 
     def _transform_positions(self):
@@ -156,8 +156,8 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
     def __init__(self, parent, application):
         """Initialize a :class:`FrameTransformDialog` object."""
         PositionTransformDialog.__init__(self, parent, application)
-        self._output_spin_1 = gtk.SpinButton()
-        self._output_spin_2 = gtk.SpinButton()
+        self._output_spin_1 = Gtk.SpinButton()
+        self._output_spin_2 = Gtk.SpinButton()
         self._init_widgets()
         self._init_values()
 
@@ -188,8 +188,8 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
         self._output_spin_2.set_increments(1, 10)
         self._output_spin_1.set_range(0, 999999)
         self._output_spin_2.set_range(0, 999999)
-        self._correction_hbox_1.pack_start(self._output_spin_1)
-        self._correction_hbox_2.pack_start(self._output_spin_2)
+        self._correction_hbox_1.pack_start(self._output_spin_1, True, True, 0)
+        self._correction_hbox_2.pack_start(self._output_spin_2, True, True, 0)
         self._correction_hbox_1.show_all()
         self._correction_hbox_2.show_all()
         self._correction_label_1.set_mnemonic_widget(self._output_spin_1)
@@ -255,8 +255,8 @@ class TimeTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual)
         PositionTransformDialog._init_widgets(self)
         self._input_entry_1.set_width_chars(13)
         self._input_entry_2.set_width_chars(13)
-        self._correction_hbox_1.pack_start(self._output_entry_1)
-        self._correction_hbox_2.pack_start(self._output_entry_2)
+        self._correction_hbox_1.pack_start(self._output_entry_1, True, True, 0)
+        self._correction_hbox_2.pack_start(self._output_entry_2, True, True, 0)
         self._correction_hbox_1.show_all()
         self._correction_hbox_2.show_all()
         self._correction_label_1.set_mnemonic_widget(self._output_entry_1)

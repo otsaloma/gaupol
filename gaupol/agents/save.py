@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
 
@@ -119,7 +119,7 @@ class SaveAgent(aeidon.Delegate):
         encoding = dialog.get_encoding()
         newline = dialog.get_newline()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK:
+        if response != Gtk.ResponseType.OK:
             raise gaupol.Default
         gaupol.util.iterate_main()
         return aeidon.files.new(format, path, encoding, newline)
@@ -132,14 +132,14 @@ class SaveAgent(aeidon.Delegate):
         message = _("Please try to save the file with "
             "a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to write file."""
         title = _('Failed to save file "%s"') % basename
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export

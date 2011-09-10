@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("HeaderDialog",)
@@ -62,7 +62,7 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_values()
         self._init_sizes()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _get_main_header(self):
         """Return main header from text view."""
@@ -133,7 +133,7 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_response(self, dialog, response):
         """Save headers."""
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._save_headers()
 
     def _on_tran_clear_button_clicked(self, *args):
@@ -190,7 +190,7 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         msg = _('MPsub header must contain a line of form "FORMAT=VALUE", '
                 'where VALUE is any of "TIME", "23.98", "25.00" or "29.97".')
         dialog = gaupol.ErrorDialog(self._dialog, title, msg)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     @property

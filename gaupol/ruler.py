@@ -20,8 +20,8 @@
 
 import aeidon
 import gaupol
-import gtk
-import pango
+from gi.repository import Gtk
+from gi.repository import Pango
 
 
 class _Ruler(object):
@@ -49,9 +49,9 @@ class _Ruler(object):
 
     def _update_em_length(self):
         """Update the length of em based on font description size."""
-        self._layout = gtk.Label().get_layout().copy()
+        self._layout = Gtk.Label().get_layout().copy()
         font_desc = self._layout.get_context().get_font_description()
-        font_desc.merge(pango.FontDescription("sans"), True)
+        font_desc.merge(Pango.FontDescription("sans"), True)
         self._layout.set_font_description(font_desc)
         self._em_length = font_desc.get_size()
 
@@ -105,16 +105,16 @@ def _on_text_view_expose_event(text_view, event):
     text = text_buffer.get_text(*bounds)
     if not text: return
     lengths = get_lengths(text)
-    layout = pango.Layout(text_view.get_pango_context())
+    layout = Pango.Layout(text_view.get_pango_context())
     layout.set_markup("\n".join([str(x) for x in lengths]))
-    layout.set_alignment(pango.ALIGN_RIGHT)
+    layout.set_alignment(Pango.ALIGN_RIGHT)
     width = layout.get_pixel_size()[0]
-    text_view.set_border_window_size(gtk.TEXT_WINDOW_RIGHT, width + 4)
-    y = -text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_RIGHT, 2, 0)[1]
-    window = text_view.get_window(gtk.TEXT_WINDOW_RIGHT)
+    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
+    y = -text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 0)[1]
+    window = text_view.get_window(Gtk.TextWindowType.RIGHT)
     window.clear()
     text_view.style.paint_layout(window=window,
-                                 state_type=gtk.STATE_NORMAL,
+                                 state_type=Gtk.StateType.NORMAL,
                                  use_text=True,
                                  area=None,
                                  widget=text_view,
@@ -126,17 +126,17 @@ def _on_text_view_expose_event(text_view, event):
 def connect_text_view(text_view):
     """Connect `text_view` to show line lengths in the margin."""
     context = text_view.get_pango_context()
-    layout = pango.Layout(context)
+    layout = Pango.Layout(context)
     layout.set_text("8")
     width = layout.get_pixel_size()[0]
-    text_view.set_border_window_size(gtk.TEXT_WINDOW_RIGHT, width + 4)
+    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
     handler_id = text_view.connect("expose-event", _on_text_view_expose_event)
     text_view.set_data("ruler_handler_id", handler_id)
     return handler_id
 
 def disconnect_text_view(text_view):
     """Disconnect `text_view` from showing line lengths in the margin."""
-    text_view.set_border_window_size(gtk.TEXT_WINDOW_RIGHT, 0)
+    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, 0)
     handler_id = text_view.get_data("ruler_handler_id")
     if handler_id is None: return
     text_view.set_data("ruler_handler_id", None)

@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
@@ -63,7 +63,7 @@ class PreviewAction(gaupol.Action):
         """Initialize a :class:`PreviewAction` object."""
         gaupol.Action.__init__(self, "preview")
         self.props.label = _("_Preview")
-        self.props.stock_id = gtk.STOCK_MEDIA_PLAY
+        self.props.stock_id = Gtk.STOCK_MEDIA_PLAY
         self.props.tooltip = _("Preview from selected position "
                                "with a video player")
 

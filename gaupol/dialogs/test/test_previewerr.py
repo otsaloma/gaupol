@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestPreviewErrorDialog(gaupol.TestCase):
@@ -27,5 +27,5 @@ class TestPreviewErrorDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         output = self.get_sample_text(aeidon.formats.SUBRIP)
-        self.dialog = gaupol.PreviewErrorDialog(gtk.Window(), output)
+        self.dialog = gaupol.PreviewErrorDialog(Gtk.Window(), output)
         self.dialog.show()

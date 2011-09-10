@@ -20,7 +20,7 @@ import aeidon
 import functools
 import gaupol
 import glib
-import gtk
+from gi.repository import Gtk
 import re
 
 __all__ = ("TimeEntry",)
@@ -40,7 +40,7 @@ def _blocked(function):
     return wrapper
 
 
-class TimeEntry(gtk.Entry, metaclass=gaupol.ContractualGObject):
+class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
 
     """Entry for time data in format ``[-]HH:MM:SS.SSS``.
 
@@ -48,14 +48,14 @@ class TimeEntry(gtk.Entry, metaclass=gaupol.ContractualGObject):
     :ivar _insert_handler: Handler for "insert-text" signal
 
     This widget uses :func:`glib.idle_add` a lot, which means that clients may
-    need to call :func:`gtk.main_iteration` to ensure proper updating.
+    need to call :func:`Gtk.main_iteration` to ensure proper updating.
     """
     _re_digit = re.compile(r"\d")
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 
     def __init__(self):
         """Initialize a :class:`TimeEntry` object."""
-        gtk.Entry.__init__(self)
+        GObject.GObject.__init__(self)
         self._delete_handler = None
         self._insert_handler = None
         self.set_width_chars(13)
@@ -112,14 +112,14 @@ class TimeEntry(gtk.Entry, metaclass=gaupol.ContractualGObject):
 
     def _on_key_press_event(self, entry, event):
         """Change numbers to zero if ``BackSpace`` or ``Delete`` pressed."""
-        keys = (gtk.keysyms.BackSpace, gtk.keysyms.Delete)
+        keys = (Gdk.KEY_BackSpace, Gdk.KEY_Delete)
         if not event.keyval in keys: return
         self.stop_emission("key-press-event")
         if self.get_selection_bounds():
             glib.idle_add(self._zero_selection)
-        elif event.keyval == gtk.keysyms.BackSpace:
+        elif event.keyval == Gdk.KEY_BackSpace:
             glib.idle_add(self._zero_previous)
-        elif event.keyval == gtk.keysyms.Delete:
+        elif event.keyval == Gdk.KEY_Delete:
             glib.idle_add(self._zero_next)
 
     def _on_insert_text_ensure(self, *args, **kwargs):

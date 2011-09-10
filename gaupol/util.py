@@ -21,9 +21,9 @@
 import aeidon
 import gaupol
 import glib
-import gtk
+from gi.repository import Gtk
 import inspect
-import pango
+from gi.repository import Pango
 import sys
 import traceback
 import webbrowser
@@ -32,7 +32,7 @@ import webbrowser
 def char_to_px(nchar, font=None):
     """Convert characters to pixels."""
     if nchar < 0: return nchar
-    label = gtk.Label("etaoin shrdlu")
+    label = Gtk.Label(label="etaoin shrdlu")
     if font is not None:
         set_label_font(label, font)
     width = label.get_layout().get_pixel_size()[0]
@@ -41,12 +41,12 @@ def char_to_px(nchar, font=None):
 def delay_add(delay, function, *args, **kwargs):
     """Call `function` with `args` and `kwargs` once after `delay` (ms).
 
-    Return integer ID of the event source from :func:`glib.timeout_add`.
+    Return integer ID of the event source from :func:`GObject.timeout_add`.
     """
     def call_function(*args, **kwargs):
         function(*args, **kwargs)
         return False
-    return glib.timeout_add(delay, call_function, *args, **kwargs)
+    return GObject.timeout_add(delay, call_function, *args, **kwargs)
 
 def document_to_text_field(doc):
     """Return :attr:`gaupol.fields` item corresponding to `doc`."""
@@ -59,7 +59,7 @@ def document_to_text_field(doc):
 def flash_dialog(dialog):
     """Run `dialog`, destroy it and return response.
 
-    This function is to be used always when a :class:`gtk.Dialog` is run so
+    This function is to be used always when a :class:`Gtk.Dialog` is run so
     that unit tests can monkey-patch this function with one that returns a
     specified response without waiting for user input.
     """
@@ -102,7 +102,7 @@ def get_text_view_size(text_view, font=""):
     text_buffer = text_view.get_buffer()
     bounds = text_buffer.get_bounds()
     text = text_buffer.get_text(*bounds)
-    label = gtk.Label(text)
+    label = Gtk.Label(label=text)
     set_label_font(label, font)
     return label.size_request()
 
@@ -110,7 +110,7 @@ def get_tree_view_size(tree_view):
     """Return the width and height desired by `tree_view`."""
     scroller = tree_view.get_parent()
     policy = scroller.get_policy()
-    scroller.set_policy(gtk.POLICY_NEVER, gtk.POLICY_NEVER)
+    scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER)
     width, height = scroller.size_request()
     scroller.set_policy(*policy)
     return width, height
@@ -144,13 +144,13 @@ def install_module(name, obj):
 
 def iterate_main():
     """Iterate the GTK+ main loop while events are pending."""
-    while gtk.events_pending():
-        gtk.main_iteration()
+    while Gtk.events_pending():
+        Gtk.main_iteration()
 
 def lines_to_px(nlines, font=None):
     """Convert lines to pixels."""
     if nlines < 0: return nlines
-    label = gtk.Label("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    label = Gtk.Label(label="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     if font is not None:
         set_label_font(label, font)
     height = label.get_layout().get_pixel_size()[1]
@@ -203,7 +203,7 @@ def raise_default(expression):
 def run_dialog(dialog):
     """Run `dialog` and return response.
 
-    This function is to be used always when a :class:`gtk.Dialog` is run so
+    This function is to be used always when a :class:`Gtk.Dialog` is run so
     that unit tests can monkey patch this function with one that returns a
     specified response without waiting for user input.
     """
@@ -219,9 +219,9 @@ def scale_to_content(container,
     """Set `container`'s size by content, but limited by `min` and `max`."""
     # Vaguely account for possible scrollbars.
     bump = lambda x: x + 36
-    if isinstance(container, gtk.TextView):
+    if isinstance(container, Gtk.TextView):
         width, height = list(map(bump, get_text_view_size(container)))
-    elif isinstance(container, gtk.TreeView):
+    elif isinstance(container, Gtk.TreeView):
         width, height = list(map(bump, get_tree_view_size(container)))
     else:
         raise ValueError("Don't know what to do with container of type %s"
@@ -256,7 +256,7 @@ def set_cursor_busy_require(window):
 @aeidon.deco.contractual
 def set_cursor_busy(window):
     """Set cursor busy when above window."""
-    window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+    window.window.set_cursor(Gdk.Cursor.new(Gdk.WATCH))
     iterate_main()
 
 def set_cursor_normal_require(window):
@@ -265,17 +265,17 @@ def set_cursor_normal_require(window):
 @aeidon.deco.contractual
 def set_cursor_normal(window):
     """Set cursor normal when above window."""
-    window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.LEFT_PTR))
+    window.window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.LEFT_PTR))
     iterate_main()
 
 def set_label_font(label, font):
     """Use `font` for `label`."""
     context = label.get_pango_context()
     font_desc = context.get_font_description()
-    custom_font_desc = pango.FontDescription(font)
+    custom_font_desc = Pango.FontDescription(font)
     font_desc.merge(custom_font_desc, True)
-    attr = pango.AttrFontDesc(font_desc, 0, -1)
-    attr_list = pango.AttrList()
+    attr = Pango.AttrFontDesc(font_desc, 0, -1)
+    attr_list = Pango.AttrList()
     attr_list.insert(attr)
     label.set_attributes(attr_list)
 
@@ -283,7 +283,7 @@ def set_widget_font(widget, font):
     """Use `font` for `widget`."""
     context = widget.get_pango_context()
     font_desc = context.get_font_description()
-    custom_font_desc = pango.FontDescription(font)
+    custom_font_desc = Pango.FontDescription(font)
     font_desc.merge(custom_font_desc, True)
     widget.modify_font(font_desc)
 
@@ -299,7 +299,7 @@ def show_exception(exctype, value, tb):
         dialog.set_text(exctype, value, tb)
         response = dialog.run()
         dialog.destroy()
-        if response == gtk.RESPONSE_NO:
+        if response == Gtk.ResponseType.NO:
             raise SystemExit(1)
     except Exception:
         traceback.print_exc()
@@ -308,10 +308,10 @@ def show_uri(uri):
     """Open `uri` in default application."""
     if sys.platform == "win32":
         if uri.startswith(("http://", "https://")):
-            # gtk.show_uri (GTK+ 2.20) fails on Windows.
+            # Gtk.show_uri (GTK+ 2.20) fails on Windows.
             # GError: No application is registered as handling this file
             return webbrowser.open(uri)
-    return gtk.show_uri(None, uri, gtk.gdk.CURRENT_TIME)
+    return Gtk.show_uri(None, uri, Gdk.CURRENT_TIME)
 
 def text_field_to_document(field):
     """Return :attr:`aeidon.documents` item corresponding to `field`."""

@@ -18,12 +18,12 @@
 
 import aeidon
 import glib
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("FloatCellRenderer",)
 
 
-class FloatCellRenderer(gtk.CellRendererText):
+class FloatCellRenderer(Gtk.CellRendererText):
 
     """Cell renderer for float data with fixed precision."""
 
@@ -31,7 +31,7 @@ class FloatCellRenderer(gtk.CellRendererText):
 
     def __init__(self, format="%.3f"):
         """Initialize a :class:`FloatCellRenderer` object."""
-        gtk.CellRendererText.__init__(self)
+        GObject.GObject.__init__(self)
         self._format = format
         self._text = ""
         aeidon.util.connect(self, self, "notify::text")

@@ -17,7 +17,7 @@
 import aeidon
 import functools
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 
 
@@ -63,7 +63,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test___init____enchant_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         gaupol.conf.spell_check.language = "wo"
         self.raises(ValueError,
                     gaupol.SpellCheckDialog,
@@ -84,7 +84,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test__on_edit_button_clicked(self):
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._edit_button.emit("clicked")
 
     def test__on_entry_changed(self):
@@ -123,7 +123,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
 
     def test__on_response(self):
         self.dialog._replace_button.emit("clicked")
-        self.dialog.response(gtk.RESPONSE_CLOSE)
+        self.dialog.response(Gtk.ResponseType.CLOSE)
 
     def test__on_tree_view_selection_changed(self):
         store = self.dialog._tree_view.get_model()
@@ -133,5 +133,5 @@ class TestSpellCheckDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._show_error_dialog("test")

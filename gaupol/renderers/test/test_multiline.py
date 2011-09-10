@@ -15,27 +15,27 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestMultilineCellRenderer(gaupol.TestCase):
 
     def run__renderer(self):
-        tree_view = gtk.TreeView()
+        tree_view = Gtk.TreeView()
         tree_view.set_headers_visible(False)
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         store.append(("test\ntest test",))
         tree_view.set_model(store)
         self.renderer.props.editable = True
-        column = gtk.TreeViewColumn("", self.renderer, text=0)
+        column = Gtk.TreeViewColumn("", self.renderer, text=0)
         tree_view.append_column(column)
-        window = gtk.Window()
-        window.connect("delete-event", gtk.main_quit)
-        window.set_position(gtk.WIN_POS_CENTER)
+        window = Gtk.Window()
+        window.connect("delete-event", Gtk.main_quit)
+        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(240, 70)
         window.add(tree_view)
         window.show_all()
-        gtk.main()
+        Gtk.main()
 
     def setup_method(self, method):
         self.renderer = gaupol.MultilineCellRenderer()

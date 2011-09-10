@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-""":class:`gtk.UIManager` actions for :class:`gaupol.Application`."""
+""":class:`Gtk.UIManager` actions for :class:`gaupol.Application`."""
 
 import aeidon
 

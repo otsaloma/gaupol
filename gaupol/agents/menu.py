@@ -17,7 +17,7 @@
 """Building and updating dynamic menus."""
 
 import aeidon
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
@@ -25,7 +25,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Building and updating menus.
 
-    :ivar _projects_id: :class:`gtk.UIManager` merge ID for projects menu
+    :ivar _projects_id: :class:`Gtk.UIManager` merge ID for projects menu
     :ivar _redo_menu_items: Redo menu tool button menu items
     :ivar _undo_menu_items: Undo menu tool button menu items
     """
@@ -46,7 +46,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         label = "%d. %s" % (index + 1, label)
         label = ("_%s" % label if index < 9 else label)
         tooltip = _('Activate "%s"') % basename
-        action = gtk.RadioAction(name, label, tooltip, None, index)
+        action = Gtk.RadioAction(name, label, tooltip, None, index)
         action_group = self.get_action_group("projects")
         group = action_group.get_action("activate_project_0")
         if group is not None:
@@ -65,11 +65,11 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     def _on_redo_button_show_menu(self, *args):
         """Show a menu listing all redoable actions."""
-        menu = gtk.Menu()
+        menu = Gtk.Menu()
         self._redo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.redoables):
-            item = gtk.MenuItem(action.description, False)
+            item = Gtk.MenuItem(action.description, False)
             item.set_data("index", i)
             item.set_data("tooltip", _('Redo "%s"') % action.description)
             callback = self._on_redo_menu_item_activate
@@ -92,14 +92,14 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Show tooltip and select all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._redo_menu_items[:index]:
-            item.set_state(gtk.STATE_PRELIGHT)
+            item.set_state(Gtk.StateType.PRELIGHT)
         self.push_message(menu_item.get_data("tooltip"))
 
     def _on_redo_menu_item_leave_notify_event(self, menu_item, event):
         """Hide tooltip and unselect all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._redo_menu_items[:index]:
-            item.set_state(gtk.STATE_NORMAL)
+            item.set_state(Gtk.StateType.NORMAL)
         self.push_message(None)
 
     @aeidon.deco.export
@@ -135,11 +135,11 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):
         """Show a menu listing all undoable actions."""
-        menu = gtk.Menu()
+        menu = Gtk.Menu()
         self._undo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.undoables):
-            item = gtk.MenuItem(action.description, False)
+            item = Gtk.MenuItem(action.description, False)
             item.set_data("index", i)
             item.set_data("tooltip", _('Undo "%s"') % action.description)
             callback = self._on_undo_menu_item_activate
@@ -161,14 +161,14 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Show tooltip and select all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._undo_menu_items[:index]:
-            item.set_state(gtk.STATE_PRELIGHT)
+            item.set_state(Gtk.StateType.PRELIGHT)
         self.push_message(menu_item.get_data("tooltip"))
 
     def _on_undo_menu_item_leave_notify_event(self, menu_item, event):
         """Hide tooltip and unselect all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._undo_menu_items[:index]:
-            item.set_state(gtk.STATE_NORMAL)
+            item.set_state(Gtk.StateType.NORMAL)
         self.push_message(None)
 
     @aeidon.deco.export

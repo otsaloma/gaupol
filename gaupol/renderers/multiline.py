@@ -19,20 +19,20 @@
 import aeidon
 import gaupol
 import glib
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("MultilineCellRenderer",)
 
 
-class CellTextView(gtk.TextView, gtk.CellEditable):
+class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
-    """A :class:`gtk.TextView` suitable for cell renderer use."""
+    """A :class:`Gtk.TextView` suitable for cell renderer use."""
 
     __gtype_name__ = "CellTextView"
 
     def __init__(self, text_buffer=None):
         """Initialize a :class:`CellTextView` object."""
-        gtk.TextView.__init__(self, text_buffer)
+        GObject.GObject.__init__(self, text_buffer)
         gaupol.util.prepare_text_view(self)
 
     def do_editing_done(self, *args):
@@ -58,7 +58,7 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
         self.get_buffer().set_text(text)
 
 
-class MultilineCellRenderer(gtk.CellRendererText):
+class MultilineCellRenderer(Gtk.CellRendererText):
 
     """Cell renderer for multiline text data.
 
@@ -70,7 +70,7 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
     def __init__(self):
         """Initialize a MultilineCellRenderer object."""
-        gtk.CellRendererText.__init__(self)
+        GObject.GObject.__init__(self)
         self._in_editor_menu = False
         self._show_lengths = gaupol.conf.editor.show_lengths_cell
         self._text = ""
@@ -89,11 +89,11 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
     def _on_editor_key_press_event(self, editor, event):
         """End editing if ``Enter`` or ``Escape`` pressed."""
-        if event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK): return
-        if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
+        if event.get_state() & (Gdk.EventMask.SHIFT_MASK | Gdk.EventMask.CONTROL_MASK): return
+        if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())
-        if event.keyval == gtk.keysyms.Escape:
+        if event.keyval == Gdk.KEY_Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
 

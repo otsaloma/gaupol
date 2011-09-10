@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("FrameShiftDialog", "TimeShiftDialog")
@@ -42,7 +42,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         self._init_widgets()
         self._init_values()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _get_preview_row(self):
         """Return row to start preview from."""
@@ -85,7 +85,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
     def _on_amount_spin_value_changed(self, spin_button):
         """Set response sensitivity."""
         has_value = (spin_button.get_value() != 0.0)
-        self.set_response_sensitive(gtk.RESPONSE_OK, has_value)
+        self.set_response_sensitive(Gtk.ResponseType.OK, has_value)
 
     def _on_preview_button_clicked(self, *args):
         """Preview shift changes with a video player."""
@@ -101,7 +101,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
     def _on_response(self, dialog, response):
         """Save target and shift positions."""
         gaupol.conf.position_shift.target = self._get_target()
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._shift_positions()
 
     def _shift_positions(self):

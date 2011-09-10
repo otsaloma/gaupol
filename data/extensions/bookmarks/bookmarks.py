@@ -18,9 +18,9 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
-import pango
+from gi.repository import Pango
 _ = aeidon.i18n._
 
 
@@ -37,7 +37,7 @@ class AddBookmarkDialog(gaupol.BuilderDialog):
         gaupol.BuilderDialog.__init__(self, ui_file_path)
         self._init_values(page)
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _init_values(self, page):
         """Initialize default values for widgets."""
@@ -90,20 +90,20 @@ class BookmarksExtension(gaupol.Extension):
         row = dialog.get_row()
         description = dialog.get_description()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         self._bookmarks[page][row] = description
         self._update_tree_view()
         self.update(self.application, page)
 
     def _add_bookmark_column(self, page):
         """Add a bookmark column to the subtitle tree view of page."""
-        renderer = gtk.CellRendererPixbuf()
+        renderer = Gtk.CellRendererPixbuf()
         directory = os.path.abspath(os.path.dirname(__file__))
         pixbuf_path = os.path.join(directory, "bookmark.png")
-        pixbuf = gtk.gdk.pixbuf_new_from_file(pixbuf_path)
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file(pixbuf_path)
         # Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
         # of a tree view column that contains 16 pixels wide pixbufs.
-        column = gtk.TreeViewColumn(_("Bm."), renderer)
+        column = Gtk.TreeViewColumn(_("Bm."), renderer)
         column.set_clickable(True)
         column.set_resizable(False)
         column.set_reorderable(True)
@@ -179,7 +179,7 @@ class BookmarksExtension(gaupol.Extension):
         """Initialize UI manager actions."""
         self._action_group.add_actions((
             ("show_bookmarks_menu", None, _("_Bookmarks")),
-            ("add_bookmark", gtk.STOCK_ADD, _("_Add\342\200\246"),
+            ("add_bookmark", Gtk.STOCK_ADD, _("_Add\342\200\246"),
              "<Control>D", _("Add a bookmark for the current subtitle"),
              self._on_add_bookmark_activate),
             ("edit_bookmarks", None, _("_Edit Bookmarks"),
@@ -207,27 +207,27 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_attributes(self, application):
         """Initialize default values for attributes."""
-        self._action_group = gtk.ActionGroup("bookmarks")
+        self._action_group = Gtk.ActionGroup("bookmarks")
         self._bookmarks = {}
         self._conf = gaupol.conf.extensions.bookmarks
-        self._search_entry = gtk.Entry()
-        self._side_container = gtk.Alignment(0, 0, 1, 1)
-        self._side_vbox = gtk.VBox(False, 6)
-        self._tree_view = gtk.TreeView()
+        self._search_entry = Gtk.Entry()
+        self._side_container = Gtk.Alignment.new(0, 0, 1, 1)
+        self._side_vbox = Gtk.VBox(False, 6)
+        self._tree_view = Gtk.TreeView()
         self._uim_id = None
         self.application = application
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
         self._side_vbox.set_border_width(2)
-        hbox = gtk.HBox(False, 6)
-        label = gtk.Label(_("Search:"))
+        hbox = Gtk.HBox(False, 6)
+        label = Gtk.Label(label=_("Search:"))
         hbox.pack_start(label, False, False)
         hbox.pack_start(self._search_entry, True, True)
         self._side_vbox.pack_start(hbox, False, False)
-        scroller = gtk.ScrolledWindow()
-        scroller.set_policy(*((gtk.POLICY_AUTOMATIC,) * 2))
-        scroller.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
+        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._tree_view)
         self._side_vbox.pack_start(scroller, True, True)
         self._side_container.set_padding(0, 6, 2, 0)
@@ -244,7 +244,7 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_tree_view(self):
         """Initialize the side pane tree view."""
-        store = gtk.ListStore(bool, int, str)
+        store = Gtk.ListStore(bool, int, str)
         store_filter = store.filter_new()
         store_filter.set_visible_column(0)
         self._tree_view.set_model(store_filter)
@@ -252,18 +252,18 @@ class BookmarksExtension(gaupol.Extension):
         self._tree_view.set_rules_hint(True)
         self._tree_view.set_enable_search(False)
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         renderer.props.xalign = 1
-        column = gtk.TreeViewColumn("", renderer, text=1)
+        column = Gtk.TreeViewColumn("", renderer, text=1)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         renderer.props.xalign = 0
         renderer.props.editable = True
-        renderer.props.ellipsize = pango.ELLIPSIZE_END
+        renderer.props.ellipsize = Pango.EllipsizeMode.END
         renderer.connect("edited", self._on_tree_view_cell_edited)
-        column = gtk.TreeViewColumn("", renderer, text=2)
+        column = Gtk.TreeViewColumn("", renderer, text=2)
         self._tree_view.append_column(column)
 
     def _on_add_bookmark_activate(self, *args):
@@ -379,7 +379,7 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_tree_view_key_press_event(self, tree_view, event):
         """Remove selected bookmark if ``Delete`` key pressed."""
-        if event.keyval != gtk.keysyms.Delete: return
+        if event.keyval != Gdk.KEY_Delete: return
         selection = self._tree_view.get_selection()
         store, tree_iter = selection.get_selected()
         if tree_iter is None: return

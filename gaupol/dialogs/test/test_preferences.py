@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestEditorPage(gaupol.TestCase):
@@ -71,7 +71,7 @@ class TestExtensionPage(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__on_about_button_clicked(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_CLOSE
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CLOSE
         selection = self.page._tree_view.get_selection()
         selection.select_path(0)
         self.page._about_button.clicked()
@@ -112,7 +112,7 @@ class TestFilePage(gaupol.TestCase):
         def run_dialog(dialog):
             selection = dialog._tree_view.get_selection()
             selection.select_path(0)
-            return gtk.RESPONSE_OK
+            return Gtk.ResponseType.OK
         gaupol.util.run_dialog = run_dialog
         self.page._add_button.emit("clicked")
 

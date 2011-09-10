@@ -22,10 +22,10 @@
 import aeidon
 import gaupol
 import glib
-import gtk
+from gi.repository import Gtk
 import linecache
 import os
-import pango
+from gi.repository import Pango
 import platform
 import string
 import sys
@@ -46,7 +46,7 @@ class DebugDialog(gaupol.BuilderDialog):
         gaupol.BuilderDialog.__init__(self, "debug-dialog.ui")
         self._init_text_tags()
         self._init_signal_handlers()
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -56,8 +56,8 @@ class DebugDialog(gaupol.BuilderDialog):
     def _init_text_tags(self):
         """Initialize tags for the text buffer."""
         text_buffer = self._text_view.get_buffer()
-        text_buffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
-        text_buffer.create_tag("large", scale=pango.SCALE_LARGE)
+        text_buffer.create_tag("bold", weight=Pango.Weight.BOLD)
+        text_buffer.create_tag("large", scale=Pango.SCALE_LARGE)
         text_buffer.create_tag("monospace", family="monospace")
 
     def _insert_environment(self):
@@ -71,7 +71,7 @@ class DebugDialog(gaupol.BuilderDialog):
         """Insert version numbers of libraries."""
         list(map(self._insert_text,
             ("Python: %d.%d.%d\n" % sys.version_info[:3],
-             "GTK+: %d.%d.%d\n" % gtk.gtk_version,
+             "GTK+: %d.%d.%d\n" % Gtk.gtk_version,
              "GStreamer: %s\n" % gaupol.util.get_gst_version(),
              "\n")))
 
@@ -79,7 +79,7 @@ class DebugDialog(gaupol.BuilderDialog):
         """Insert `path` as a link into the text view."""
         text_buffer = self._text_view.get_buffer()
         tag = text_buffer.create_tag(None, foreground="blue")
-        tag.props.underline = pango.UNDERLINE_SINGLE
+        tag.props.underline = Pango.Underline.SINGLE
         tag.connect("event", self._on_text_view_link_tag_event)
         path = os.path.abspath(path)
         tag.set_data("path", path)
@@ -98,7 +98,7 @@ class DebugDialog(gaupol.BuilderDialog):
         list(map(self._insert_text,
             ("aeidon: %s\n" % aeidon.__version__,
              "gaupol: %s\n" % gaupol.__version__,
-             "gtk: %d.%d.%d\n" % gtk.pygtk_version,
+             "gtk: %d.%d.%d\n" % Gtk.pygtk_version,
              "gst: %s\n" % gaupol.util.get_pygst_version(),
              "enchant: %s\n" % aeidon.util.get_enchant_version(),
              "chardet: %s\n" % aeidon.util.get_chardet_version(),
@@ -147,13 +147,13 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
-        if response != gtk.RESPONSE_YES: return
+        if response != Gtk.ResponseType.YES: return
         gaupol.util.show_uri(gaupol.BUG_REPORT_URL)
         self.stop_emission("response")
 
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):
         """Open linked file in editor."""
-        if event.type != gtk.gdk.BUTTON_RELEASE: return
+        if event.type != Gdk.BUTTON_RELEASE: return
         if event.button != 1: return
         text_buffer = self._text_view.get_buffer()
         assert not text_buffer.get_selection_bounds()
@@ -163,14 +163,14 @@ class DebugDialog(gaupol.BuilderDialog):
         """Change mouse pointer when hovering over a link."""
         x = int(event.x)
         y = int(event.y)
-        window = gtk.TEXT_WINDOW_WIDGET
+        window = Gtk.TextWindowType.WIDGET
         x, y = text_view.window_to_buffer_coords(window, x, y)
-        window = text_view.get_window(gtk.TEXT_WINDOW_TEXT)
+        window = text_view.get_window(Gtk.TextWindowType.TEXT)
         for tag in text_view.get_iter_at_location(x, y).get_tags():
             if tag.get_data("path") is not None:
-                window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND2))
+                window.set_cursor(Gdk.Cursor.new(Gdk.HAND2))
                 return text_view.window.get_pointer()
-        window.set_cursor(gtk.gdk.Cursor(gtk.gdk.XTERM))
+        window.set_cursor(Gdk.Cursor.new(Gdk.XTERM))
         text_view.window.get_pointer()
 
     def _open_link(self, tag):

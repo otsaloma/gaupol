@@ -21,16 +21,16 @@
 import aeidon
 import gaupol
 import glib
-import gtk
+from gi.repository import Gtk
 import os
-import pango
+from gi.repository import Pango
 import sys
 _ = aeidon.i18n._
 
 __all__ = ("TextAssistant", "TextAssistantPage")
 
 
-class TextAssistantPage(gtk.VBox):
+class TextAssistantPage(Gtk.VBox):
 
     """Baseclass for pages of :class:`TextAssistant`.
 
@@ -41,12 +41,12 @@ class TextAssistantPage(gtk.VBox):
    :ivar title: Short title used in the introduction page
 
     Of these attributes, :attr:`description`, :attr:`handle` and :attr:`title`
-    are only required for pages of type :attr:`gtk.ASSISTANT_PAGE_CONTENT`.
+    are only required for pages of type :attr:`Gtk.AssistantPageType.CONTENT`.
     """
 
     def __init__(self, assistant):
         """Initialize a :class:`TextAssistantPage` object."""
-        gtk.VBox.__init__(self)
+        GObject.GObject.__init__(self)
         self.assistant = assistant
         self.description = None
         self.handle = None
@@ -70,7 +70,7 @@ class BuilderPage(TextAssistantPage):
                                     "text-assistant",
                                     basename)
 
-        self._builder = gtk.Builder()
+        self._builder = Gtk.Builder()
         self._builder.set_translation_domain("gaupol")
         self._builder.add_from_file(ui_file_path)
         self._builder.connect_signals(self)
@@ -99,25 +99,25 @@ class IntroductionPage(BuilderPage):
         """Initialize a :class:`IntroductionPage` object."""
         BuilderPage.__init__(self, assistant, "intro-page.ui")
         self.page_title = _("Select Tasks and Target")
-        self.page_type = gtk.ASSISTANT_PAGE_INTRO
+        self.page_type = Gtk.AssistantPageType.INTRO
         self._init_tree_view()
         self._init_values()
 
     def _init_tree_view(self):
         """Initialize the tree view of tasks."""
-        store = gtk.ListStore(object, bool, str)
+        store = Gtk.ListStore(object, bool, str)
         self._tree_view.set_model(store)
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
-        renderer = gtk.CellRendererToggle()
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
+        renderer = Gtk.CellRendererToggle()
         renderer.props.activatable = True
         renderer.props.xpad = 6
         renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = gtk.TreeViewColumn("", renderer, active=1)
+        column = Gtk.TreeViewColumn("", renderer, active=1)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
-        renderer.props.ellipsize = pango.ELLIPSIZE_END
-        column = gtk.TreeViewColumn("", renderer, markup=2)
+        renderer = Gtk.CellRendererText()
+        renderer.props.ellipsize = Pango.EllipsizeMode.END
+        column = Gtk.TreeViewColumn("", renderer, markup=2)
         self._tree_view.append_column(column)
 
     def _init_values(self):
@@ -266,9 +266,9 @@ class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
     def _init_combo(self, combo_box):
         """Initialize `combo_box` and populate with `items`."""
-        store = gtk.ListStore(str, str)
+        store = Gtk.ListStore(str, str)
         combo_box.set_model(store)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         combo_box.pack_start(renderer, True)
         combo_box.add_attribute(renderer, "text", 1)
         combo_box.set_row_separator_func(gaupol.util.separate_combo)
@@ -284,21 +284,21 @@ class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
     def _init_tree_view(self):
         """Initialize the tree view of individual corrections."""
-        store = gtk.ListStore(object, bool, bool, str)
+        store = Gtk.ListStore(object, bool, bool, str)
         store_filter = store.filter_new()
         store_filter.set_visible_column(1)
         self._tree_view.set_model(store_filter)
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
-        renderer = gtk.CellRendererToggle()
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
+        renderer = Gtk.CellRendererToggle()
         renderer.props.activatable = True
         renderer.props.xpad = 6
         renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = gtk.TreeViewColumn("", renderer, active=2)
+        column = Gtk.TreeViewColumn("", renderer, active=2)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
-        renderer.props.ellipsize = pango.ELLIPSIZE_END
-        column = gtk.TreeViewColumn("", renderer, markup=3)
+        renderer = Gtk.CellRendererText()
+        renderer.props.ellipsize = Pango.EllipsizeMode.END
+        column = Gtk.TreeViewColumn("", renderer, markup=3)
         self._tree_view.append_column(column)
 
     def _init_values(self):
@@ -431,7 +431,7 @@ class CapitalizationPage(LocalePage):
         self.description = _("Capitalize texts written in lower case")
         self.handle = "capitalization"
         self.page_title = _("Select Capitalization Patterns")
-        self.page_type = gtk.ASSISTANT_PAGE_CONTENT
+        self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Capitalize texts")
 
     def correct_texts(self, project, indices, doc):
@@ -461,7 +461,7 @@ class CommonErrorPage(LocalePage):
 
         self.handle = "common-error"
         self.page_title = _("Select Common Error Patterns")
-        self.page_type = gtk.ASSISTANT_PAGE_CONTENT
+        self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Correct common errors")
 
     def _filter_patterns(self, patterns):
@@ -520,7 +520,7 @@ class HearingImpairedPage(LocalePage):
 
         self.handle = "hearing-impaired"
         self.page_title = _("Select Hearing Impaired Patterns")
-        self.page_type = gtk.ASSISTANT_PAGE_CONTENT
+        self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Remove hearing impaired texts")
 
     def correct_texts(self, project, indices, doc):
@@ -550,7 +550,7 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
         self.handle = "join-split-words"
         self.page_title = _("Set Options for Joining and Splitting Words")
-        self.page_type = gtk.ASSISTANT_PAGE_CONTENT
+        self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Join or Split Words")
         self._init_values()
 
@@ -595,7 +595,7 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
         except LookupError: name = language
         title = _('Failed to load dictionary for language "%s"') % name
         dialog = gaupol.ErrorDialog(self.parent, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def correct_texts(self, project, indices, doc):
@@ -625,7 +625,7 @@ class LineBreakPage(LocalePage):
         self.description = _("Break text into lines of defined length")
         self.handle = "line-break"
         self.page_title = _("Select Line-Break Patterns")
-        self.page_type = gtk.ASSISTANT_PAGE_CONTENT
+        self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Break lines")
 
     @property
@@ -683,18 +683,18 @@ class LineBreakOptionsPage(BuilderPage):
         BuilderPage.__init__(self, assistant, "line-break-opts-page.ui")
         self.conf = gaupol.conf.line_break
         self.page_title = _("Set Line-Break Options")
-        self.page_type = gtk.ASSISTANT_PAGE_CONTENT
+        self.page_type = Gtk.AssistantPageType.CONTENT
         self._init_unit_combo(self._unit_combo)
         self._init_unit_combo(self._skip_unit_combo)
         self._init_values()
 
     def _init_unit_combo(self, combo_box):
         """Initialize line length unit `combo_box`."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         combo_box.set_model(store)
         for label in (x.label for x in gaupol.length_units):
             store.append((label,))
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         combo_box.pack_start(renderer, True)
         combo_box.add_attribute(renderer, "text", 0)
 
@@ -768,7 +768,7 @@ class ProgressPage(BuilderPage):
         self._current_task = None
         self._total_tasks = None
         self.page_title = _("Correcting Texts")
-        self.page_type = gtk.ASSISTANT_PAGE_PROGRESS
+        self.page_type = Gtk.AssistantPageType.PROGRESS
         self._init_values()
 
     def _init_values(self):
@@ -835,7 +835,7 @@ class ConfirmationPage(BuilderPage):
         self.conf = gaupol.conf.text_assistant
         self.doc = None
         self.page_title = _("Confirm Changes")
-        self.page_type = gtk.ASSISTANT_PAGE_CONFIRM
+        self.page_type = Gtk.AssistantPageType.CONFIRM
         self._init_tree_view()
         self._init_values()
 
@@ -844,10 +844,10 @@ class ConfirmationPage(BuilderPage):
         renderer = gaupol.MultilineCellRenderer()
         renderer.set_show_lengths(True)
         renderer.props.editable = (index == 4)
-        renderer.props.ellipsize = pango.ELLIPSIZE_END
+        renderer.props.ellipsize = Pango.EllipsizeMode.END
         renderer.props.font = gaupol.util.get_font()
         renderer.props.yalign = 0
-        column = gtk.TreeViewColumn(title, renderer, text=index)
+        column = Gtk.TreeViewColumn(title, renderer, text=index)
         column.set_resizable(True)
         column.props.expand = True
         self._tree_view.append_column(column)
@@ -870,16 +870,16 @@ class ConfirmationPage(BuilderPage):
     def _init_tree_view(self):
         """Initialize the tree view of corrections."""
         # page, index, accept, original tex, new text
-        store = gtk.ListStore(object, int, bool, str, str)
+        store = Gtk.ListStore(object, int, bool, str, str)
         self._tree_view.set_model(store)
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
-        renderer = gtk.CellRendererToggle()
+        renderer = Gtk.CellRendererToggle()
         renderer.props.activatable = True
         renderer.props.xpad = 6
         renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = gtk.TreeViewColumn(_("Accept"), renderer, active=2)
+        column = Gtk.TreeViewColumn(_("Accept"), renderer, active=2)
         column.set_resizable(True)
         self._tree_view.append_column(column)
         self._add_text_column(3, _("Original Text"))
@@ -949,13 +949,13 @@ class ConfirmationPage(BuilderPage):
         self._tree_view.get_selection().unselect_all()
 
 
-class TextAssistant(gtk.Assistant):
+class TextAssistant(Gtk.Assistant):
 
     """Assistant to guide through multiple text correction tasks."""
 
     def __init__(self, parent, application):
         """Initialize a TextAssistant object."""
-        gtk.Assistant.__init__(self)
+        GObject.GObject.__init__(self)
         self._confirmation_page = ConfirmationPage(self)
         self._introduction_page = IntroductionPage(self)
         self._previous_page = None
@@ -967,7 +967,7 @@ class TextAssistant(gtk.Assistant):
         if gaupol.conf.text_assistant.maximized:
             self.maximize()
         self.set_modal(True)
-        self.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
+        self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.set_transient_for(parent)
 
     def _copy_project(self, project):
@@ -1085,7 +1085,7 @@ class TextAssistant(gtk.Assistant):
     def _on_window_state_event(self, window, event):
         """Save window maximization."""
         state = event.new_window_state
-        maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+        maximized = bool(state & Gdk.WINDOW_STATE_MAXIMIZED)
         gaupol.conf.text_assistant.maximized = maximized
 
     def _prepare_confirmation_page(self, doc, changes):
@@ -1127,7 +1127,7 @@ class TextAssistant(gtk.Assistant):
         self.append_page(page)
         self.set_page_type(page, page.page_type)
         self.set_page_title(page, page.page_title)
-        if page.page_type != gtk.ASSISTANT_PAGE_PROGRESS:
+        if page.page_type != Gtk.AssistantPageType.PROGRESS:
             self.set_page_complete(page, True)
 
     def add_pages(self, pages):

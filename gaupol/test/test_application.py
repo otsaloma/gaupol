@@ -15,13 +15,13 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestApplication(gaupol.TestCase):
 
     def run__application(self):
-        gtk.main()
+        Gtk.main()
 
     def setup_method(self, method):
         self.application = gaupol.Application()

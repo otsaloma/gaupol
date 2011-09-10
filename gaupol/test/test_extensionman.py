@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestExtensionManager(gaupol.TestCase):
@@ -70,7 +70,7 @@ class TestExtensionManager(gaupol.TestCase):
         except NotImplementedError: pass
 
     def test_show_preferences_dialog(self):
-        try: self.manager.show_preferences_dialog("bookmarks", gtk.Window())
+        try: self.manager.show_preferences_dialog("bookmarks", Gtk.Window())
         except NotImplementedError: pass
 
     def test_teardown_extension(self):

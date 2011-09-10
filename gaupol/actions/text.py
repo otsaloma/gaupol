@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
@@ -47,7 +47,7 @@ class CheckSpellingAction(gaupol.Action):
         gaupol.Action.__init__(self, "check_spelling")
         self.props.label = _("_Check Spelling")
         self.props.short_label = _("Spelling")
-        self.props.stock_id = gtk.STOCK_SPELL_CHECK
+        self.props.stock_id = Gtk.STOCK_SPELL_CHECK
         self.props.tooltip = _("Check for incorrect spelling")
         self.accelerator = "F7"
         self.action_group = "main-unsafe"

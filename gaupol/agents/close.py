@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
 
@@ -49,14 +49,14 @@ class CloseAgent(aeidon.Delegate):
         title = title % page.get_main_basename()
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
-        dialog.add_button(_("Close _Without Saving"), gtk.RESPONSE_NO)
-        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_YES)
+        dialog.add_button(_("Close _Without Saving"), Gtk.ResponseType.NO)
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.YES)
+        dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
-        if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
+        if not response in (Gtk.ResponseType.YES, Gtk.ResponseType.NO):
             raise gaupol.Default
-        if response == gtk.RESPONSE_YES:
+        if response == Gtk.ResponseType.YES:
             self.save_main(page)
 
     def _confirm_close_multiple(self, pages):
@@ -66,7 +66,7 @@ class CloseAgent(aeidon.Delegate):
         """
         dialog = gaupol.MultiCloseDialog(self.window, self, pages)
         response = gaupol.util.flash_dialog(dialog)
-        if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
+        if not response in (Gtk.ResponseType.YES, Gtk.ResponseType.NO):
             raise gaupol.Default
 
     def _confirm_close_translation(self, page):
@@ -78,14 +78,14 @@ class CloseAgent(aeidon.Delegate):
         title = title % page.get_translation_basename()
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
-        dialog.add_button(_("Close _Without Saving"), gtk.RESPONSE_NO)
-        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_YES)
+        dialog.add_button(_("Close _Without Saving"), Gtk.ResponseType.NO)
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.YES)
+        dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
-        if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
+        if not response in (Gtk.ResponseType.YES, Gtk.ResponseType.NO):
             raise gaupol.Default
-        if response == gtk.RESPONSE_YES:
+        if response == Gtk.ResponseType.YES:
             self.save_translation(page)
 
     def _need_confirmation(self, page):
@@ -184,6 +184,6 @@ class CloseAgent(aeidon.Delegate):
         self.close_all()
         self.extension_manager.teardown_extensions()
         self._save_window_geometry()
-        try: gtk.main_quit()
+        try: Gtk.main_quit()
         except RuntimeError:
             raise SystemExit(1)

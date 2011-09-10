@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestLanguageDialog(gaupol.TestCase):
@@ -23,25 +23,25 @@ class TestLanguageDialog(gaupol.TestCase):
     def run__dialog__hide_target(self):
         # pylint: disable=W0201
         self.dialog.destroy()
-        self.dialog = gaupol.LanguageDialog(gtk.Window(), False)
+        self.dialog = gaupol.LanguageDialog(Gtk.Window(), False)
         self.dialog.run()
         self.dialog.destroy()
 
     def run__dialog__show_target(self):
         # pylint: disable=W0201
         self.dialog.destroy()
-        self.dialog = gaupol.LanguageDialog(gtk.Window(), True)
+        self.dialog = gaupol.LanguageDialog(Gtk.Window(), True)
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-        self.dialog = gaupol.LanguageDialog(gtk.Window())
+        self.dialog = gaupol.LanguageDialog(Gtk.Window())
         self.dialog.show()
 
     def test___init__(self):
         gaupol.conf.spell_check.language = "en"
-        gaupol.LanguageDialog(gtk.Window(), True)
-        gaupol.LanguageDialog(gtk.Window(), False)
+        gaupol.LanguageDialog(Gtk.Window(), True)
+        gaupol.LanguageDialog(Gtk.Window(), False)
 
     def test__on_all_radio_toggled(self):
         self.dialog._all_radio.set_active(True)

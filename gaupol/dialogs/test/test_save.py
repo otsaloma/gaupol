@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 
 from .test_file import _TestFileDialog
@@ -26,7 +26,7 @@ class TestSaveDialog(_TestFileDialog):
 
     def setup_method(self, method):
         gaupol.conf.file.directory = os.getcwd()
-        self.dialog = gaupol.SaveDialog(gtk.Window(), "test")
+        self.dialog = gaupol.SaveDialog(Gtk.Window(), "test")
         self.dialog.show()
 
     def test__on_format_combo_changed(self):
@@ -37,7 +37,7 @@ class TestSaveDialog(_TestFileDialog):
             self.dialog.set_format(format)
 
     def test__on_response(self):
-        self.dialog.response(gtk.RESPONSE_CANCEL)
+        self.dialog.response(Gtk.ResponseType.CANCEL)
 
     def test_get_format(self):
         for format in aeidon.formats:

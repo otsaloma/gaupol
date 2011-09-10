@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
@@ -30,7 +30,7 @@ class ClearTextsAction(gaupol.Action):
         """Initialize a :class:`ClearTextsAction` object."""
         gaupol.Action.__init__(self, "clear_texts")
         self.props.label = _("Cl_ear")
-        self.props.stock_id = gtk.STOCK_CLEAR
+        self.props.stock_id = Gtk.STOCK_CLEAR
         self.props.tooltip = _("Clear the selected texts")
         self.accelerator = "C"
         self.action_group = "main-unsafe"
@@ -52,7 +52,7 @@ class CopyTextsAction(gaupol.Action):
         """Initialize a :class:`CopyTextsAction` object."""
         gaupol.Action.__init__(self, "copy_texts")
         self.props.label = _("_Copy")
-        self.props.stock_id = gtk.STOCK_COPY
+        self.props.stock_id = Gtk.STOCK_COPY
         self.props.tooltip = _("Copy the selected texts to the clipboard")
         self.accelerator = "<Control>C"
         self.action_group = "main-unsafe"
@@ -74,7 +74,7 @@ class CutTextsAction(gaupol.Action):
         """Initialize a :class:`CutTextsAction` object."""
         gaupol.Action.__init__(self, "cut_texts")
         self.props.label = _("Cu_t")
-        self.props.stock_id = gtk.STOCK_CUT
+        self.props.stock_id = Gtk.STOCK_CUT
         self.props.tooltip = _("Cut the selected texts to the clipboard")
         self.accelerator = "<Control>X"
         self.action_group = "main-unsafe"
@@ -96,7 +96,7 @@ class EditPreferencesAction(gaupol.Action):
         """Initialize an :class:`EditPreferencesAction` object."""
         gaupol.Action.__init__(self, "edit_preferences")
         self.props.label = _("_Preferences")
-        self.props.stock_id = gtk.STOCK_PREFERENCES
+        self.props.stock_id = Gtk.STOCK_PREFERENCES
         self.props.tooltip = _("Configure Gaupol")
         self.action_group = "main-safe"
 
@@ -110,7 +110,7 @@ class EditNextValueAction(gaupol.Action):
         gaupol.Action.__init__(self, "edit_next_value")
         self.props.label = _("Edit _Next Cell")
         self.props.short_label = _("Next")
-        self.props.stock_id = gtk.STOCK_EDIT
+        self.props.stock_id = Gtk.STOCK_EDIT
         self.props.tooltip = _("Edit the focused column of the next subtitle")
         self.accelerator = "space"
         self.action_group = "main-unsafe"
@@ -124,7 +124,7 @@ class EditNextValueAction(gaupol.Action):
         column = page.view.get_column(col)
         renderer = column.get_cell_renderers()[0]
         mode = renderer.props.mode
-        aeidon.util.affirm(mode == gtk.CELL_RENDERER_MODE_EDITABLE)
+        aeidon.util.affirm(mode == Gtk.CellRendererMode.EDITABLE)
 
 
 class EditValueAction(gaupol.Action):
@@ -137,7 +137,7 @@ class EditValueAction(gaupol.Action):
         self.props.is_important = True
         self.props.label = _("_Edit Cell")
         self.props.short_label = _("Edit")
-        self.props.stock_id = gtk.STOCK_EDIT
+        self.props.stock_id = Gtk.STOCK_EDIT
         self.props.tooltip = _("Edit the focused cell")
         self.accelerator = "Return"
         self.action_group = "main-unsafe"
@@ -150,7 +150,7 @@ class EditValueAction(gaupol.Action):
         column = page.view.get_column(col)
         renderer = column.get_cell_renderers()[0]
         mode = renderer.props.mode
-        aeidon.util.affirm(mode == gtk.CELL_RENDERER_MODE_EDITABLE)
+        aeidon.util.affirm(mode == Gtk.CellRendererMode.EDITABLE)
 
 
 class ExtendSelectionToBeginningAction(gaupol.Action):
@@ -204,7 +204,7 @@ class InsertSubtitlesAction(gaupol.Action):
         gaupol.Action.__init__(self, "insert_subtitles")
         self.props.label = _("_Insert Subtitles\342\200\246")
         self.props.short_label = _("Insert")
-        self.props.stock_id = gtk.STOCK_ADD
+        self.props.stock_id = Gtk.STOCK_ADD
         self.props.tooltip = _("Insert new subtitles")
         self.accelerator = "Insert"
         self.action_group = "main-unsafe"
@@ -262,7 +262,7 @@ class PasteTextsAction(gaupol.Action):
         """Initialize a :class:`PasteTextsAction` object."""
         gaupol.Action.__init__(self, "paste_texts")
         self.props.label = _("_Paste")
-        self.props.stock_id = gtk.STOCK_PASTE
+        self.props.stock_id = Gtk.STOCK_PASTE
         self.props.tooltip = _("Paste texts from the clipboard")
         self.accelerator = "<Control>V"
         self.action_group = "main-unsafe"
@@ -287,11 +287,11 @@ class RedoActionAction(gaupol.Action):
         """Initialize a :class:`RedoActionAction` object."""
         gaupol.Action.__init__(self, "redo_action")
         self.props.label = _("_Redo")
-        self.props.stock_id = gtk.STOCK_REDO
+        self.props.stock_id = Gtk.STOCK_REDO
         self.props.tooltip = _("Redo the last undone action")
         self.accelerator = "<Shift><Control>Z"
         self.action_group = "main-unsafe"
-        self.set_tool_item_type(gtk.MenuToolButton)
+        self.set_tool_item_type(Gtk.MenuToolButton)
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -308,7 +308,7 @@ class RemoveSubtitlesAction(gaupol.Action):
         gaupol.Action.__init__(self, "remove_subtitles")
         self.props.label = _("Rem_ove Subtitles")
         self.props.short_label = _("Remove")
-        self.props.stock_id = gtk.STOCK_REMOVE
+        self.props.stock_id = Gtk.STOCK_REMOVE
         self.props.tooltip = _("Remove the selected subtitles")
         self.accelerator = "Delete"
         self.action_group = "main-unsafe"
@@ -327,7 +327,7 @@ class SelectAllAction(gaupol.Action):
         """Initialize a :class:`SelectAllAction` object."""
         gaupol.Action.__init__(self, "select_all")
         self.props.label = _("Select _All")
-        self.props.stock_id = gtk.STOCK_SELECT_ALL
+        self.props.stock_id = Gtk.STOCK_SELECT_ALL
         self.props.tooltip = _("Select all subtitles")
         self.accelerator = "<Control>A"
         self.action_group = "main-unsafe"
@@ -383,11 +383,11 @@ class UndoActionAction(gaupol.Action):
         gaupol.Action.__init__(self, "undo_action")
         self.props.is_important = True
         self.props.label = _("_Undo")
-        self.props.stock_id = gtk.STOCK_UNDO
+        self.props.stock_id = Gtk.STOCK_UNDO
         self.props.tooltip = _("Undo the last action")
         self.accelerator = "<Control>Z"
         self.action_group = "main-unsafe"
-        self.set_tool_item_type(gtk.MenuToolButton)
+        self.set_tool_item_type(Gtk.MenuToolButton)
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""

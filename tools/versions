@@ -11,8 +11,8 @@ print("Python: %d.%d.%d" % sys.version_info[:3])
 
 try:
     print("GTK+:", end=' ')
-    import gtk
-    print("%d.%d.%d" % gtk.gtk_version)
+    from gi.repository import Gtk
+    print("%d.%d.%d" % Gtk.gtk_version)
 except ImportError:
     print(None)
 
@@ -41,8 +41,8 @@ except ImportError:
 
 try:
     print("gtk:", end=' ')
-    import gtk
-    print("%d.%d.%d" % gtk.pygtk_version)
+    from gi.repository import Gtk
+    print("%d.%d.%d" % Gtk.pygtk_version)
 except ImportError:
     print(None)
 

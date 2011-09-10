@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestInsertDialog(gaupol.TestCase):
@@ -34,9 +34,9 @@ class TestInsertDialog(gaupol.TestCase):
         self.dialog.show()
 
     def test__on_response(self):
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__no_subtitles(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles(list(range(len(page.project.subtitles))))
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)

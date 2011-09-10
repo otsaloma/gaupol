@@ -18,9 +18,9 @@ import enchant
 import functools
 import gettext
 import glib
-import gobject
+from gi.repository import GObject
 import gst
-import gtk
+from gi.repository import Gtk
 import gtkspell
 import inspect
 import itertools
@@ -30,7 +30,7 @@ import locale
 import math
 import optparse
 import os
-import pango
+from gi.repository import Pango
 import platform
 import pstats
 import random

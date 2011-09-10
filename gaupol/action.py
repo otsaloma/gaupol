@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Base classes for :class:`gtk.UIManager` actions."""
+"""Base classes for :class:`Gtk.UIManager` actions."""
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("Action",
            "MenuAction",
@@ -29,14 +29,14 @@ __all__ = ("Action",
            )
 
 
-class Action(gtk.Action):
+class Action(Gtk.Action):
 
-    """Base classes for :class:`gtk.UIManager` actions.
+    """Base classes for :class:`Gtk.UIManager` actions.
 
     :ivar accelerator: Accelerator string or ``None``
 
        :attr:`accelerator` defines a string in the format understood by the
-       :func:`gtk.accelerator_parse`, ``None`` to use the stock accelerator or
+       :func:`Gtk.accelerator_parse`, ``None`` to use the stock accelerator or
        undefined to use a blank string.
 
     :ivar action_group: Name of action group to place action into
@@ -57,7 +57,7 @@ class Action(gtk.Action):
 
     def __init__(self, name):
         """Initialize an :class:`Action` object."""
-        gtk.Action.__init__(self, name, None, None, None)
+        GObject.GObject.__init__(self, name, None, None, None)
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -73,7 +73,7 @@ class Action(gtk.Action):
         """Set the sensitivity of action and all its widgets."""
         for widget in self.widgets:
             widget.set_sensitive(sensitive)
-        return gtk.Action.set_sensitive(self, sensitive)
+        return Gtk.Action.set_sensitive(self, sensitive)
 
     def update_sensitivity(self, application, page):
         """Update the sensitivity of action and all its widgets."""
@@ -96,23 +96,23 @@ class MenuAction(Action):
             self.connect("activate", getattr(application, callback))
 
 
-class RecentAction(gtk.RecentAction, Action):
+class RecentAction(Gtk.RecentAction, Action):
 
-    """Base class for :class:`gtk.UIManager` recent file actions.
+    """Base class for :class:`Gtk.UIManager` recent file actions.
 
-    :ivar group: Name of :class:`gtk.RecentFilter` group
+    :ivar group: Name of :class:`Gtk.RecentFilter` group
     """
 
     group = NotImplementedError
 
     def __init__(self, name):
         """Initialize an :class:`RecentAction` object."""
-        gtk.RecentAction.__init__(self, name, None, None, None)
+        GObject.GObject.__init__(self, name, None, None, None)
         self.set_show_numbers(False)
         self.set_show_not_found(False)
         self.set_show_tips(True)
-        self.set_sort_type(gtk.RECENT_SORT_MRU)
-        recent_filter = gtk.RecentFilter()
+        self.set_sort_type(Gtk.RECENT_SORT_MRU)
+        recent_filter = Gtk.RecentFilter()
         recent_filter.add_group(self.group)
         self.add_filter(recent_filter)
         self.set_filter(recent_filter)
@@ -129,13 +129,13 @@ class RecentAction(gtk.RecentAction, Action):
         self.connect("item-activated", getattr(application, callback))
 
 
-class ToggleAction(gtk.ToggleAction, Action):
+class ToggleAction(Gtk.ToggleAction, Action):
 
     """Base class for UI manager toggle actions."""
 
     def __init__(self, name):
         """Initialize an :class:`ToggleAction` object."""
-        gtk.ToggleAction.__init__(self, name, None, None, None)
+        GObject.GObject.__init__(self, name, None, None, None)
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
@@ -153,9 +153,9 @@ class TopMenuAction(MenuAction):
         pass
 
 
-class RadioAction(gtk.RadioAction, Action):
+class RadioAction(Gtk.RadioAction, Action):
 
-    """Base class for :class:`gtk.UIManager` radio actions.
+    """Base class for :class:`Gtk.UIManager` radio actions.
 
     :ivar group: Class name of one action in the radio group
     """
@@ -164,7 +164,7 @@ class RadioAction(gtk.RadioAction, Action):
 
     def __init__(self, name):
         """Initialize an :class:`RadioAction` object."""
-        gtk.RadioAction.__init__(self, name, None, None, None, 0)
+        GObject.GObject.__init__(self, name, None, None, None, 0)
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""

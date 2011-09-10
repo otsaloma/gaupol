@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 from ..assistants import CapitalizationPage
 from ..assistants import CommonErrorPage
@@ -32,7 +32,7 @@ from ..assistants import ProgressPage
 class TestTextAssistantPage(gaupol.TestCase):
 
     def setup_method(self, method):
-        self.page = gaupol.TextAssistantPage(gtk.Window())
+        self.page = gaupol.TextAssistantPage(Gtk.Window())
 
 
 class _TestBuilderPage(gaupol.TestCase):
@@ -41,16 +41,16 @@ class _TestBuilderPage(gaupol.TestCase):
 
     def run__page(self):
         self.window.add(self.page)
-        self.window.connect("delete-event", gtk.main_quit)
+        self.window.connect("delete-event", Gtk.main_quit)
         self.window.set_default_size(600, 400)
         self.window.show_all()
-        gtk.main()
+        Gtk.main()
 
 
 class TestIntroductionPage(_TestBuilderPage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = IntroductionPage(self.window)
         self.test_populate_tree_view()
@@ -118,8 +118,8 @@ class TestIntroductionPage(_TestBuilderPage):
         assert target == gaupol.targets.SELECTED
 
     def test_populate_tree_view(self):
-        self.page.populate_tree_view((CapitalizationPage(gtk.Window()),
-                                      CommonErrorPage(gtk.Window())))
+        self.page.populate_tree_view((CapitalizationPage(Gtk.Window()),
+                                      CommonErrorPage(Gtk.Window())))
 
 
 class _TestLocalePage(_TestBuilderPage):
@@ -165,7 +165,7 @@ class _TestLocalePage(_TestBuilderPage):
 class TestCapitalizationPage(_TestLocalePage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = CapitalizationPage(self.window)
 
@@ -173,7 +173,7 @@ class TestCapitalizationPage(_TestLocalePage):
 class TestCommonErrorPage(_TestLocalePage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = CommonErrorPage(self.window)
 
@@ -191,7 +191,7 @@ class TestCommonErrorPage(_TestLocalePage):
 class TestHearingImpairedPage(_TestLocalePage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = HearingImpairedPage(self.window)
 
@@ -203,7 +203,7 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.project = self.new_project()
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = JoinSplitWordsPage(self.window)
 
@@ -214,7 +214,7 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__on_language_button_clicked(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.page._language_button.clicked()
 
     def test_on_split_check_toggled(self):
@@ -224,7 +224,7 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.page._show_error_dialog("test")
 
     def test_correct_texts(self):
@@ -236,7 +236,7 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
 class TestLineBreakPage(_TestLocalePage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = LineBreakPage(self.window)
 
@@ -254,25 +254,25 @@ class TestLineBreakPage(_TestLocalePage):
 class TestLineBreakOptionsPage(_TestBuilderPage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = LineBreakOptionsPage(self.window)
 
     def test__on_max_length_spin_value_changed(self):
-        self.page._max_length_spin.spin(gtk.SPIN_STEP_FORWARD)
-        self.page._max_length_spin.spin(gtk.SPIN_STEP_BACKWARD)
+        self.page._max_length_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.page._max_length_spin.spin(Gtk.SPIN_STEP_BACKWARD)
 
     def test__on_max_lines_spin_value_changed(self):
-        self.page._max_lines_spin.spin(gtk.SPIN_STEP_FORWARD)
-        self.page._max_lines_spin.spin(gtk.SPIN_STEP_BACKWARD)
+        self.page._max_lines_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.page._max_lines_spin.spin(Gtk.SPIN_STEP_BACKWARD)
 
     def test__on_max_skip_length_spin_value_changed(self):
-        self.page._max_skip_length_spin.spin(gtk.SPIN_STEP_FORWARD)
-        self.page._max_skip_length_spin.spin(gtk.SPIN_STEP_BACKWARD)
+        self.page._max_skip_length_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.page._max_skip_length_spin.spin(Gtk.SPIN_STEP_BACKWARD)
 
     def test__on_max_skip_lines_spin_value_changed(self):
-        self.page._max_skip_lines_spin.spin(gtk.SPIN_STEP_FORWARD)
-        self.page._max_skip_lines_spin.spin(gtk.SPIN_STEP_BACKWARD)
+        self.page._max_skip_lines_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.page._max_skip_lines_spin.spin(Gtk.SPIN_STEP_BACKWARD)
 
     def test__on_skip_length_check_toggled(self):
         self.page._skip_length_check.set_active(True)
@@ -294,7 +294,7 @@ class TestLineBreakOptionsPage(_TestBuilderPage):
 class TestProgressPage(_TestBuilderPage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = ProgressPage(self.window)
         self.page.reset(100)
@@ -319,7 +319,7 @@ class TestProgressPage(_TestBuilderPage):
 class TestConfirmationPage(_TestBuilderPage):
 
     def setup_method(self, method):
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.show_all()
         self.page = ConfirmationPage(self.window)
         self.page.application = self.new_application()
@@ -388,8 +388,8 @@ class TestTextAssistant(gaupol.TestCase):
     def run__assistant(self):
         self.assistant.show()
         for signal in ("delete-event", "apply", "cancel"):
-            self.assistant.connect(signal, gtk.main_quit)
-        gtk.main()
+            self.assistant.connect(signal, Gtk.main_quit)
+        Gtk.main()
 
     def setup_method(self, method):
         gaupol.conf.editor.use_custom_font = True

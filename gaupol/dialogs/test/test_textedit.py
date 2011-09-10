@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+from gi.repository import Gtk
 import gaupol
 
 
@@ -25,7 +25,7 @@ class TestTextEditDialog(gaupol.TestCase):
         gaupol.conf.editor.custom_font = "monospace"
         gaupol.conf.editor.use_custom_font = True
         self.dialog.destroy()
-        self.dialog = gaupol.TextEditDialog(gtk.Window(), self.text)
+        self.dialog = gaupol.TextEditDialog(Gtk.Window(), self.text)
         self.dialog.run()
         self.dialog.destroy()
 
@@ -34,14 +34,14 @@ class TestTextEditDialog(gaupol.TestCase):
         gaupol.conf.editor.custom_font = "sans"
         gaupol.conf.editor.use_custom_font = True
         self.dialog.destroy()
-        self.dialog = gaupol.TextEditDialog(gtk.Window(), self.text)
+        self.dialog = gaupol.TextEditDialog(Gtk.Window(), self.text)
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
         gaupol.conf.editor.length_unit = gaupol.length_units.CHAR
         self.text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu etaoin shrdlu"
-        self.dialog = gaupol.TextEditDialog(gtk.Window(), self.text)
+        self.dialog = gaupol.TextEditDialog(Gtk.Window(), self.text)
         self.dialog.show()
 
     def test_get_text(self):

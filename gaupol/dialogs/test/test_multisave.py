@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 from .test_file import _TestFileDialog
 
@@ -27,11 +27,11 @@ class TestMultiSaveDialog(_TestFileDialog):
         self.application = self.new_application()
         self.application.add_page(self.new_page())
         self.application.add_page(self.new_page())
-        self.dialog = gaupol.MultiSaveDialog(gtk.Window(), self.application)
+        self.dialog = gaupol.MultiSaveDialog(Gtk.Window(), self.application)
         self.dialog.show()
 
     def test__on_response(self):
-        self.dialog.response(gtk.RESPONSE_CANCEL)
+        self.dialog.response(Gtk.ResponseType.CANCEL)
 
     def test_get_format(self):
         for format in aeidon.formats:

@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 import random
 
@@ -28,8 +28,8 @@ class TestOpenDialog(_TestFileDialog):
     def setup_method(self, method):
         gaupol.conf.file.directory = os.getcwd()
         doc = aeidon.documents[random.randint(0, 1)]
-        self.dialog = gaupol.OpenDialog(gtk.Window(), "test", doc)
+        self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
         self.dialog.show()
 
     def test__on_response(self):
-        self.dialog.response(gtk.RESPONSE_CANCEL)
+        self.dialog.response(Gtk.ResponseType.CANCEL)

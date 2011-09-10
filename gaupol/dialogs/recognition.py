@@ -20,7 +20,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import itertools
 import os
 
@@ -66,7 +66,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
         self._acoustic_button.set_size_request(width, -1)
         self._update_response_sensitivities()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
     def _clear_attributes(self):
         """Clear values of result attributes."""
@@ -127,10 +127,10 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
-        self.set_response_sensitive(gtk.RESPONSE_HELP, True)
-        self.set_response_sensitive(gtk.RESPONSE_CANCEL, False)
-        self.set_response_sensitive(gtk.RESPONSE_OK, False)
-        self.set_response_sensitive(gtk.RESPONSE_CLOSE, True)
+        self.set_response_sensitive(Gtk.ResponseType.HELP, True)
+        self.set_response_sensitive(Gtk.ResponseType.CANCEL, False)
+        self.set_response_sensitive(Gtk.ResponseType.OK, False)
+        self.set_response_sensitive(Gtk.ResponseType.CLOSE, True)
 
     def _init_values(self):
         """Initialize default values for widgets."""
@@ -257,13 +257,13 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
 
     def _on_response(self, dialog, response):
         """Handle responses without destroying dialog."""
-        if response == gtk.RESPONSE_HELP:
+        if response == Gtk.ResponseType.HELP:
             gaupol.util.show_uri(gaupol.SPEECH_RECOGNITION_HELP_URL)
             self.stop_emission("response")
-        if response == gtk.RESPONSE_CANCEL:
+        if response == Gtk.ResponseType.CANCEL:
             self._stop_speech_recognition()
             self.stop_emission("response")
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._recognize_speech()
             self.stop_emission("response")
 
@@ -346,18 +346,18 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
     def _set_sensitivities_start(self):
         """Set widget sensitivies for speech recognition start."""
         self._options_vbox.set_sensitive(False)
-        self.set_response_sensitive(gtk.RESPONSE_HELP, False)
-        self.set_response_sensitive(gtk.RESPONSE_CANCEL, True)
-        self.set_response_sensitive(gtk.RESPONSE_OK, False)
-        self.set_response_sensitive(gtk.RESPONSE_CLOSE, False)
+        self.set_response_sensitive(Gtk.ResponseType.HELP, False)
+        self.set_response_sensitive(Gtk.ResponseType.CANCEL, True)
+        self.set_response_sensitive(Gtk.ResponseType.OK, False)
+        self.set_response_sensitive(Gtk.ResponseType.CLOSE, False)
 
     def _set_sensitivities_stop(self):
         """Set widget sensitivies for speech recognition start."""
         self._options_vbox.set_sensitive(True)
-        self.set_response_sensitive(gtk.RESPONSE_HELP, True)
-        self.set_response_sensitive(gtk.RESPONSE_CANCEL, False)
-        self.set_response_sensitive(gtk.RESPONSE_OK, True)
-        self.set_response_sensitive(gtk.RESPONSE_CLOSE, True)
+        self.set_response_sensitive(Gtk.ResponseType.HELP, True)
+        self.set_response_sensitive(Gtk.ResponseType.CANCEL, False)
+        self.set_response_sensitive(Gtk.ResponseType.OK, True)
+        self.set_response_sensitive(Gtk.ResponseType.CLOSE, True)
 
     def _stop_speech_recognition(self):
         """Stop generating subtitles from video or audio file."""
@@ -374,4 +374,4 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
                          and self._dict_button.get_filename() is not None
                          and self._lang_button.get_filename() is not None)
 
-        self.set_response_sensitive(gtk.RESPONSE_OK, sensitive)
+        self.set_response_sensitive(Gtk.ResponseType.OK, sensitive)

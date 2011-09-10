@@ -34,8 +34,8 @@ def _check_dependencies():
         print("Python 2.6 or greater is required to run Gaupol.")
         raise SystemExit(1)
     try:
-        import gtk
-        if gtk.pygtk_version < (2, 16, 0):
+        from gi.repository import Gtk
+        if Gtk.pygtk_version < (2, 16, 0):
             raise ImportError
     except ImportError:
         print("PyGTK 2.16 or greater is required to run Gaupol.")
@@ -175,5 +175,5 @@ def main(args):
     _init_gettext()
     _init_configuration(opts.config_file)
     _init_application(opts, args)
-    import gtk
-    gtk.main()
+    from gi.repository import Gtk
+    Gtk.main()

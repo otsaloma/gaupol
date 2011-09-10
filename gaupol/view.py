@@ -18,15 +18,15 @@
 
 import aeidon
 import gaupol
-import gtk
-import pango
+from gi.repository import Gtk
+from gi.repository import Pango
 import re
 _ = aeidon.i18n._
 
 __all__ = ("View",)
 
 
-class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
+class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
 
     """Widget to display subtitle data in the form of a list.
 
@@ -35,12 +35,12 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
        The values of the enumeration items correspond to the column indices and
        are updated when columns are added, removed or reordered. Note that
        these indices are not necessarily the same as the column indices in the
-       underlying :class:`gtk.ListStore` data model.
+       underlying :class:`Gtk.ListStore` data model.
     """
 
     def __init__(self, edit_mode):
         """Initialize a :class:`View` object."""
-        gtk.TreeView.__init__(self)
+        GObject.GObject.__init__(self)
         self._active_attr = None
         self._active_col_name = ""
         self._calc = aeidon.Calculator()
@@ -54,7 +54,7 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
         """Initialize and return a new cell renderer for `field`."""
         font = gaupol.util.get_font()
         if field == gaupol.fields.NUMBER:
-            renderer = gtk.CellRendererText()
+            renderer = Gtk.CellRendererText()
             renderer.props.xalign = 1
         elif field.is_position:
             if edit_mode == aeidon.modes.TIME:
@@ -62,7 +62,7 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
                     renderer = gaupol.FloatCellRenderer()
                 else: renderer = gaupol.TimeCellRenderer()
             elif edit_mode == aeidon.modes.FRAME:
-                renderer = gtk.CellRendererText()
+                renderer = Gtk.CellRendererText()
             renderer.props.xalign = 1
         elif field.is_text:
             renderer = gaupol.MultilineCellRenderer()
@@ -82,12 +82,12 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
         column.set_cell_data_func(renderer, set_number)
 
     def _init_column_attributes(self):
-        """Initialize the column header :class:`pango.AttrList`."""
-        self._active_attr = pango.AttrList()
-        attr = pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1)
+        """Initialize the column header :class:`Pango.AttrList`."""
+        self._active_attr = Pango.AttrList()
+        attr = Pango.AttrWeight(Pango.Weight.BOLD, 0, -1)
         self._active_attr.insert(attr)
-        self._normal_attr = pango.AttrList()
-        attr = pango.AttrWeight(pango.WEIGHT_NORMAL, 0, -1)
+        self._normal_attr = Pango.AttrList()
+        attr = Pango.AttrWeight(Pango.Weight.NORMAL, 0, -1)
         self._normal_attr.insert(attr)
 
     def _init_columns(self, edit_mode):
@@ -95,7 +95,7 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
         visible_fields = gaupol.conf.editor.visible_fields
         for field in gaupol.conf.editor.field_order:
             renderer = self._get_renderer(field, edit_mode)
-            column = gtk.TreeViewColumn(field.label, renderer, text=field)
+            column = Gtk.TreeViewColumn(field.label, renderer, text=field)
             column.set_data("identifier", field.name.lower())
             self.append_column(column)
             column.set_clickable(True)
@@ -113,7 +113,7 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
             columns = (int, str, str, float, str, str)
         if edit_mode == aeidon.modes.FRAME:
             columns = (int, int, int, int, str, str)
-        store = gtk.ListStore(*columns)
+        store = Gtk.ListStore(*columns)
         self.set_model(store)
         self._init_columns(edit_mode)
         self._init_cell_data_functions()
@@ -121,7 +121,7 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
         self.set_rules_hint(True)
         self.set_rubber_banding(True)
         selection = self.get_selection()
-        selection.set_mode(gtk.SELECTION_MULTIPLE)
+        selection.set_mode(Gtk.SelectionMode.MULTIPLE)
         self._init_search()
 
     def _init_search(self):
@@ -191,8 +191,8 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
         """Handle various special-case key combinations."""
         # Disable Ctrl+PageUp/PageDown to allow them to be
         # used solely for navigation between notebook tabs.
-        if event.state & gtk.gdk.CONTROL_MASK:
-            if event.keyval in (gtk.keysyms.Page_Up, gtk.keysyms.Page_Down):
+        if event.get_state() & Gdk.EventMask.CONTROL_MASK:
+            if event.keyval in (Gdk.KEY_Page_Up, Gdk.KEY_Page_Down):
                 return widget.stop_emission("key-press-event")
         # Use interactive search for a subtitle number or time
         # only if valid string keys have been pressed.
@@ -269,7 +269,7 @@ class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
 
     def get_header_label(self, text):
         """Return a column header label that's wide enough."""
-        label = gtk.Label(text)
+        label = Gtk.Label(label=text)
         label.props.xalign = 0
         label.show()
         label.set_attributes(self._active_attr)

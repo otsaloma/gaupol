@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("SplitDialog",)
@@ -40,7 +40,7 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self.application = application
         self._init_subtitle_spin()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _init_subtitle_spin(self):
         """Initialize the subtitle spin button."""
@@ -58,7 +58,7 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_response(self, dialog, response):
         """Split the current project if OK'd."""
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._split_project()
 
     def _remove_from_source(self, page, index):

@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
@@ -72,7 +72,7 @@ class ToggleItalicizationAction(gaupol.Action):
         """Initialize a :class:`ToggleItalicizationAction` object."""
         gaupol.Action.__init__(self, "toggle_italicization")
         self.props.label = _("_Italic")
-        self.props.stock_id = gtk.STOCK_ITALIC
+        self.props.stock_id = Gtk.STOCK_ITALIC
         self.props.tooltip = _("Italicize or unitalicize the selected texts")
         self.accelerator = "I"
         self.action_group = "main-unsafe"

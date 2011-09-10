@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("MultiCloseDialog",)
 
@@ -38,7 +38,7 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         self._init_tran_tree_view()
         self._init_sizes()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_YES)
+        self._dialog.set_default_response(Gtk.ResponseType.YES)
 
     def _init_main_tree_view(self):
         """Initialize the main tree view."""
@@ -70,25 +70,25 @@ class MultiCloseDialog(gaupol.BuilderDialog):
 
     def _init_tree_view(self, tree_view):
         """Initialize `tree_view` and return its model."""
-        store = gtk.ListStore(object, bool, str)
+        store = Gtk.ListStore(object, bool, str)
         tree_view.set_model(store)
         selection = tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
-        renderer = gtk.CellRendererToggle()
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
+        renderer = Gtk.CellRendererToggle()
         renderer.props.activatable = True
         renderer.connect("toggled", self._on_tree_view_cell_toggled, store)
-        column = gtk.TreeViewColumn("", renderer, active=1)
+        column = Gtk.TreeViewColumn("", renderer, active=1)
         tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("", renderer, text=2)
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn("", renderer, text=2)
         tree_view.append_column(column)
         return store
 
     def _on_response(self, dialog, response):
         """Save the selected documents and close pages."""
-        if response == gtk.RESPONSE_YES:
+        if response == Gtk.ResponseType.YES:
             list(map(self._save_and_close_page, self.pages))
-        if response == gtk.RESPONSE_NO:
+        if response == Gtk.ResponseType.NO:
             list(map(lambda x: self.application.close(x, False), self.pages))
 
     def _on_tree_view_cell_toggled(self, renderer, row, store):
@@ -99,7 +99,7 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         store = self._tran_tree_view.get_model()
         trans = [x for x in store if x[1]]
         sensitive = bool(mains or trans)
-        self.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
+        self.set_response_sensitive(Gtk.ResponseType.YES, sensitive)
 
     @aeidon.deco.silent(gaupol.Default)
     def _save_and_close_page(self, page):

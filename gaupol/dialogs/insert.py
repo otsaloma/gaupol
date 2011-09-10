@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("InsertDialog",)
@@ -37,15 +37,15 @@ class InsertDialog(gaupol.BuilderDialog):
         self._init_position_combo()
         self._init_values()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _init_position_combo(self):
         """Initialize the position combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._position_combo.set_model(store)
         store.append((_("Above selection"),))
         store.append((_("Below selection"),))
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._position_combo.pack_start(renderer, True)
         self._position_combo.add_attribute(renderer, "text", 0)
 
@@ -75,5 +75,5 @@ class InsertDialog(gaupol.BuilderDialog):
         amount = self._amount_spin.get_value_as_int()
         above = (self._position_combo.get_active() == 0)
         gaupol.conf.subtitle_insert.above = above
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._insert_subtitles(amount, above)

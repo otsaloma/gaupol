@@ -18,8 +18,8 @@
 
 import aeidon
 import gaupol
-import gtk
-import pango
+from gi.repository import Gtk
+from gi.repository import Pango
 _ = aeidon.i18n._
 
 __all__ = ("PreferencesDialog",)
@@ -48,20 +48,20 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _get_custom_font(self):
         """Return custom font as string."""
-        context = gtk.Label().get_pango_context()
+        context = Gtk.Label().get_pango_context()
         font_desc = context.get_font_description()
         font = gaupol.conf.editor.custom_font
-        custom_font_desc = pango.FontDescription(font)
+        custom_font_desc = Pango.FontDescription(font)
         font_desc.merge(custom_font_desc, True)
         return font_desc.to_string()
 
     def _init_length_combo(self):
         """Initialize the line length combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         for label in (x.label for x in gaupol.length_units):
             store.append((label,))
         self._length_combo.set_model(store)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._length_combo.pack_start(renderer, True)
         self._length_combo.add_attribute(renderer, "text", 0)
 
@@ -154,20 +154,20 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _init_tree_view(self):
         """Initialize the tree view."""
-        store = gtk.ListStore(str, bool, str)
+        store = Gtk.ListStore(str, bool, str)
         self._tree_view.set_model(store)
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
-        renderer = gtk.CellRendererToggle()
+        renderer = Gtk.CellRendererToggle()
         renderer.props.activatable = True
         renderer.props.xpad = 6
         renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = gtk.TreeViewColumn("", renderer, active=1)
+        column = Gtk.TreeViewColumn("", renderer, active=1)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
-        renderer.props.ellipsize = pango.ELLIPSIZE_END
-        column = gtk.TreeViewColumn("", renderer, markup=2)
+        renderer = Gtk.CellRendererText()
+        renderer.props.ellipsize = Pango.EllipsizeMode.END
+        column = Gtk.TreeViewColumn("", renderer, markup=2)
         self._tree_view.append_column(column)
 
     def _init_values(self):
@@ -188,12 +188,12 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             store.append((module, active, markup))
 
     def _on_about_button_clicked(self, *args):
-        """Construct and show a :class:`gtk.AboutDialog` for extension."""
+        """Construct and show a :class:`Gtk.AboutDialog` for extension."""
         module = self._get_selected_module()
         metadata = self.manager.get_metadata(module)
-        dialog = gtk.AboutDialog()
+        dialog = Gtk.AboutDialog()
         dialog.set_transient_for(self._dialog)
-        gtk.about_dialog_set_url_hook(self._on_about_dialog_url_clicked)
+        Gtk.about_dialog_set_url_hook(self._on_about_dialog_url_clicked)
         dialog.set_program_name(metadata.get_name())
         dialog.set_comments(metadata.get_description())
         dialog.set_logo_icon_name("gaupol")
@@ -236,7 +236,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
                 message = _('Extension "%s" is required by other extensions.')
                 message = message % store[path][2]
                 dialog = gaupol.ErrorDialog(self._dialog, title, message)
-                dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+                dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
                 gaupol.util.flash_dialog(dialog)
             else: # Deactivation successful.
                 gaupol.conf.extensions.active.remove(module)
@@ -293,13 +293,13 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractu
     def _init_tree_view(self):
         """Initialize the fallback encoding tree view."""
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         update = lambda x, self: self._set_sensitivities()
         selection.connect("changed", update, self)
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._tree_view.set_model(store)
-        renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("", renderer, text=0)
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn("", renderer, text=0)
         self._tree_view.append_column(column)
 
     def _init_values(self):
@@ -315,7 +315,7 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractu
         response = gaupol.util.run_dialog(dialog)
         encoding = dialog.get_encoding()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         if encoding is None: return
         if encoding in gaupol.conf.encoding.fallback: return
         gaupol.conf.encoding.fallback.append(encoding)
@@ -410,13 +410,13 @@ class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _init_app_combo(self):
         """Initialize the application combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._app_combo.set_model(store)
         for label in (x.label for x in aeidon.players):
             store.append((label,))
         store.append((gaupol.COMBO_SEPARATOR,))
         store.append((_("Custom"),))
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._app_combo.pack_start(renderer, True)
         self._app_combo.add_attribute(renderer, "text", 0)
         self._app_combo.set_row_separator_func(gaupol.util.separate_combo)
@@ -480,8 +480,8 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self.connect("response", self._on_response)
         aeidon.util.connect(self, "_notebook", "switch-page")
         self.set_transient_for(parent)
-        self.set_default_response(gtk.RESPONSE_CLOSE)
-        self.set_response_sensitive(gtk.RESPONSE_HELP, False)
+        self.set_default_response(Gtk.ResponseType.CLOSE)
+        self.set_response_sensitive(Gtk.ResponseType.HELP, False)
 
     def _get_callbacks(self):
         """Return a dictionary mapping names to callback methods."""
@@ -498,10 +498,10 @@ class PreferencesDialog(gaupol.BuilderDialog):
     def _on_notebook_switch_page(self, notebook, page, index):
         """Set sensitivity of the help button."""
         # Use help on the preview page, which is the third.
-        self.set_response_sensitive(gtk.RESPONSE_HELP, index == 2)
+        self.set_response_sensitive(Gtk.ResponseType.HELP, index == 2)
 
     def _on_response(self, dialog, response):
         """Do not send response if browsing help."""
-        if response == gtk.RESPONSE_HELP:
+        if response == Gtk.ResponseType.HELP:
             gaupol.util.show_uri(gaupol.PREVIEW_HELP_URL)
             self.stop_emission("response")

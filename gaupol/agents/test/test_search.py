@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestSearchAgent(gaupol.TestCase):
@@ -26,7 +26,7 @@ class TestSearchAgent(gaupol.TestCase):
 
     def test__on_search_dialog_response(self):
         self.application.get_action("find_and_replace").activate()
-        self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
+        self.delegate._search_dialog.response(Gtk.ResponseType.CLOSE)
 
     def test_on_find_and_replace_activate(self):
         self.application.get_action("find_and_replace").activate()
@@ -37,7 +37,7 @@ class TestSearchAgent(gaupol.TestCase):
         self.delegate._search_dialog._pattern_entry.set_text("a")
         next(self.delegate._search_dialog)
         self.application.get_action("find_next").activate()
-        self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
+        self.delegate._search_dialog.response(Gtk.ResponseType.CLOSE)
         self.application.get_action("find_next").activate()
 
     def test_on_find_previous_activate(self):
@@ -46,5 +46,5 @@ class TestSearchAgent(gaupol.TestCase):
         self.delegate._search_dialog.previous()
         self.delegate._search_dialog.emit("delete-event", None)
         self.application.get_action("find_previous").activate()
-        self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
+        self.delegate._search_dialog.response(Gtk.ResponseType.CLOSE)
         self.application.get_action("find_previous").activate()

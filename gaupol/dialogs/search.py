@@ -19,7 +19,7 @@
 import aeidon
 import functools
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 import re
 _ = aeidon.i18n._
@@ -75,8 +75,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._match_page = None
         self._match_row = None
         self._match_span = None
-        self._pattern_entry = self._pattern_combo.child
-        self._replacement_entry = self._replacement_combo.child
+        self._pattern_entry = self._pattern_combo.get_child()
+        self._replacement_entry = self._replacement_combo.get_child()
         self._was_next = None
         self.application = application
         self.patterns = []
@@ -90,8 +90,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_signal_handlers()
         self._init_sensitivities()
         self._dialog.set_transient_for(None)
-        self._dialog.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_NORMAL)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.set_type_hint(Gdk.WindowTypeHint.NORMAL)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
     def _add_pattern_to_history(self):
         """Add current pattern to the pattern combo box."""
@@ -173,7 +173,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _init_pattern_combo(self):
         """Initialize the pattern combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._pattern_combo.set_model(store)
         for pattern in self.patterns:
             store.append((pattern,))
@@ -181,7 +181,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _init_replacement_combo(self):
         """Initialize the replacement combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._replacement_combo.set_model(store)
         for replacement in self.replacements:
             store.append((replacement,))
@@ -278,7 +278,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Save regular expression setting."""
         use_regex = check_button.get_active()
         gaupol.conf.search.regex = use_regex
-        self.set_response_sensitive(gtk.RESPONSE_HELP, use_regex)
+        self.set_response_sensitive(Gtk.ResponseType.HELP, use_regex)
 
     def _on_replace_all_button_clicked(self, *args):
         """Replace all matches of pattern."""
@@ -297,7 +297,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_response(self, dialog, response):
         """Do not send response if browsing help."""
-        if response == gtk.RESPONSE_HELP:
+        if response == Gtk.ResponseType.HELP:
             gaupol.util.show_uri(gaupol.REGEX_HELP_URL)
             self.stop_emission("response")
 
@@ -409,14 +409,14 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Show an error dialog if regex pattern failed to compile."""
         title = _('Error in regular expression pattern')
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_regex_error_dialog_replacement(self, message):
         """Show an error dialog if regex replacement is invalid."""
         title = _('Error in regular expression replacement')
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _update_search_targets(self):

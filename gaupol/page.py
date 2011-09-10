@@ -18,9 +18,9 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
-import pango
+from gi.repository import Pango
 import sys
 _ = aeidon.i18n._
 
@@ -33,7 +33,7 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
 
     :ivar edit_mode: :attr:`aeidon.modes` item corresponding to editing mode
     :ivar project: The associated :class:`aeidon.Project` instance
-    :ivar tab_label: :class:`gtk.Label` contained in :attr:`tab_widget`
+    :ivar tab_label: :class:`Gtk.Label` contained in :attr:`tab_widget`
     :ivar tab_widget: Widget that can be placed in a notebook tab
     :ivar untitle: Title used if the :attr:`project.main_file` is unsaved
     :ivar view: The associated :class:`gaupol.View` instance
@@ -107,11 +107,11 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
 
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
-        button = gtk.Button()
+        button = Gtk.Button()
         button.set_name("gaupol-tab-close-button")
-        image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+        image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE, Gtk.IconSize.MENU)
         button.add(image)
-        button.set_relief(gtk.RELIEF_NONE)
+        button.set_relief(Gtk.ReliefStyle.NONE)
         button.set_focus_on_click(False)
         width, height = image.size_request()
         padding = (6 if sys.platform == "win32" else 2)
@@ -164,13 +164,13 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
 
     def _init_widgets(self):
         """Initialize widgets to use in a notebook tab."""
-        self.tab_label = gtk.Label()
+        self.tab_label = Gtk.Label()
         self.tab_label.props.xalign = 0
-        self.tab_label.set_ellipsize(pango.ELLIPSIZE_END)
+        self.tab_label.set_ellipsize(Pango.EllipsizeMode.END)
         self.tab_label.set_max_width_chars(24)
         self.tab_label.set_tooltip_text(self.untitle)
         button = self._get_tab_close_button()
-        self.tab_widget = gtk.HBox(False, 4)
+        self.tab_widget = Gtk.HBox(False, 4)
         self.tab_widget.pack_start(self.tab_label, True, True, 0)
         self.tab_widget.pack_start(button, False, False, 0)
         self.tab_widget.set_data("button", button)

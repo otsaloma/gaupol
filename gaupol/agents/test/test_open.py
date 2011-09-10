@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 
 
@@ -56,7 +56,7 @@ class TestOpenAgent(gaupol.TestCase):
     def test__on_append_file_activate(self):
         get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("append_file").activate()
 
     def test__on_new_project_activate(self):
@@ -67,7 +67,7 @@ class TestOpenAgent(gaupol.TestCase):
     def test__on_open_main_files_activate(self):
         get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("open_main_files").activate()
 
     @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
@@ -75,7 +75,7 @@ class TestOpenAgent(gaupol.TestCase):
     def test__on_open_translation_file_activate(self):
         get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         self.application.get_action("open_translation_file").activate()
 
@@ -85,8 +85,8 @@ class TestOpenAgent(gaupol.TestCase):
     def test__on_open_translation_file_activate__changed(self):
         get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         self.application.get_action("open_translation_file").activate()
         page.project.set_text(0, aeidon.documents.TRAN, "")
@@ -97,14 +97,14 @@ class TestOpenAgent(gaupol.TestCase):
     def test__on_select_video_file_activate(self):
         get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         page.project.video_path = self.new_subrip_file()
         self.application.get_action("select_video_file").activate()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__on_split_project_activate(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         page.view.select_rows((3,))
         self.application.get_action("split_project").activate()
@@ -114,58 +114,58 @@ class TestOpenAgent(gaupol.TestCase):
     def test__on_video_button_clicked(self):
         get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.video_button.emit("clicked")
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_encoding_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_encoding_error_dialog("test")
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_format_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_format_error_dialog("test")
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_io_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_io_error_dialog("test", "test")
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_parse_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_parse_error_dialog("test", aeidon.formats.SUBRIP)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test__show_size_warning_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_size_warning_dialog("test", 2)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test__show_sort_warning_dialog__no(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_NO
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
         self.delegate._show_sort_warning_dialog("test", 3)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test__show_sort_warning_dialog__yes(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         self.delegate._show_sort_warning_dialog("test", 3)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test__show_translation_warning_dialog__no(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_NO
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
         page = self.application.get_current_page()
         self.delegate._show_translation_warning_dialog(page)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test__show_translation_warning_dialog__yes(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         page = self.application.get_current_page()
         self.delegate._show_translation_warning_dialog(page)
 
@@ -209,14 +209,14 @@ class TestOpenAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_open_main__format_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         path = self.new_subrip_file()
         open(path, "w").write("xxx\n")
         self.application.open_main(path)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_open_main__io_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         path = self.new_subrip_file()
         os.chmod(path, 0000)
         self.application.open_main(path)
@@ -230,7 +230,7 @@ class TestOpenAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_open_main__parse_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         path = self.new_microdvd_file()
         fobj = open(path, "w")
         fobj.write("{10}{20}Testing...\n")
@@ -242,7 +242,7 @@ class TestOpenAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_open_main__sort_warning(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         path = self.new_microdvd_file()
         fobj = open(path, "w")
         fobj.write("{30}{40}Testing...\n")

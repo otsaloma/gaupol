@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class _TestMessageDialog(gaupol.TestCase):
@@ -29,30 +29,30 @@ class _TestMessageDialog(gaupol.TestCase):
 class TestErrorDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-        self.dialog = gaupol.ErrorDialog(gtk.Window(), "test", "test")
-        self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog = gaupol.ErrorDialog(Gtk.Window(), "test", "test")
+        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         self.dialog.show()
 
 
 class TestInfoDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-        self.dialog = gaupol.InfoDialog(gtk.Window(), "test", "test")
-        self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog = gaupol.InfoDialog(Gtk.Window(), "test", "test")
+        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         self.dialog.show()
 
 
 class TestQuestionDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-        self.dialog = gaupol.QuestionDialog(gtk.Window(), "test", "test")
-        self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog = gaupol.QuestionDialog(Gtk.Window(), "test", "test")
+        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         self.dialog.show()
 
 
 class TestWarningDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-        self.dialog = gaupol.WarningDialog(gtk.Window(), "test", "test")
-        self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog = gaupol.WarningDialog(Gtk.Window(), "test", "test")
+        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         self.dialog.show()

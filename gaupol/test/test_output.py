@@ -16,14 +16,14 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestOutputWindow(gaupol.TestCase):
 
     def run__window(self):
-        self.window.connect("notify::visible", gtk.main_quit)
-        gtk.main()
+        self.window.connect("notify::visible", Gtk.main_quit)
+        Gtk.main()
 
     def setup_method(self, method):
         self.conf = gaupol.conf.output_window

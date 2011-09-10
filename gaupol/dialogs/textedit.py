@@ -18,17 +18,17 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 
-class TextEditDialog(gtk.Dialog):
+class TextEditDialog(Gtk.Dialog):
 
     """Dialog for editing text of a single subtitle."""
 
     def __init__(self, parent, text=""):
         """Initialize a :class:`TextEditDialog` object."""
-        gtk.Dialog.__init__(self)
+        GObject.GObject.__init__(self)
         self._text_view = None
         self._init_dialog(parent)
         self._init_text_view()
@@ -36,9 +36,9 @@ class TextEditDialog(gtk.Dialog):
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
-        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.set_default_response(gtk.RESPONSE_OK)
+        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
         self.set_has_separator(False)
         self.set_transient_for(parent)
         self.set_border_width(6)
@@ -47,18 +47,18 @@ class TextEditDialog(gtk.Dialog):
 
     def _init_text_view(self):
         """Initialize the text view."""
-        self._text_view = gtk.TextView()
+        self._text_view = Gtk.TextView()
         gaupol.util.prepare_text_view(self._text_view)
-        self._text_view.set_wrap_mode(gtk.WRAP_NONE)
+        self._text_view.set_wrap_mode(Gtk.WrapMode.NONE)
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
         font = gaupol.util.get_font()
         gaupol.util.scale_to_size(self._text_view, 70, 6, font)
-        scroller = gtk.ScrolledWindow()
+        scroller = Gtk.ScrolledWindow()
         scroller.set_border_width(6)
-        scroller.set_policy(*((gtk.POLICY_AUTOMATIC,) * 2))
-        scroller.set_shadow_type(gtk.SHADOW_IN)
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
+        scroller.set_shadow_type(Gtk.ShadowType.IN)
         scroller.add(self._text_view)
         vbox = self.get_child()
         vbox.add(scroller)

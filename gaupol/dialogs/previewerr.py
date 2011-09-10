@@ -17,7 +17,7 @@
 """Dialog for informing that preview failed."""
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class PreviewErrorDialog(gaupol.BuilderDialog):
@@ -37,7 +37,7 @@ class PreviewErrorDialog(gaupol.BuilderDialog):
                                      font="monospace")
 
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _init_data(self, output):
         """Initialize output text in the text view."""

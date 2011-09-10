@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("FramerateConvertDialog",)
 
@@ -37,7 +37,7 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
         self._init_output_combo()
         self._init_values()
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _convert_framerates(self):
         """Convert framerates in target projects."""
@@ -58,21 +58,21 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
 
     def _init_input_combo(self):
         """Initialize the input framerate combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._input_combo.set_model(store)
         for label in (x.label for x in aeidon.framerates):
             store.append((label,))
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._input_combo.pack_start(renderer, True)
         self._input_combo.add_attribute(renderer, "text", 0)
 
     def _init_output_combo(self):
         """Initialize the output framerate combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._output_combo.set_model(store)
         for label in (x.label for x in aeidon.framerates):
             store.append((label,))
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._output_combo.pack_start(renderer, True)
         self._output_combo.add_attribute(renderer, "text", 0)
 
@@ -90,17 +90,17 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
         index_in = self._input_combo.get_active()
         index_out = self._output_combo.get_active()
         sensitive = (index_in != index_out)
-        self._dialog.set_response_sensitive(gtk.RESPONSE_OK, sensitive)
+        self._dialog.set_response_sensitive(Gtk.ResponseType.OK, sensitive)
 
     def _on_output_combo_changed(self, *args):
         """Set response sensitivity."""
         index_in = self._input_combo.get_active()
         index_out = self._output_combo.get_active()
         sensitive = (index_in != index_out)
-        self._dialog.set_response_sensitive(gtk.RESPONSE_OK, sensitive)
+        self._dialog.set_response_sensitive(Gtk.ResponseType.OK, sensitive)
 
     def _on_response(self, dialog, response):
         """Save target and convert framerates."""
         gaupol.conf.framerate_convert.target = self._get_target()
-        if response == gtk.RESPONSE_OK:
+        if response == Gtk.ResponseType.OK:
             self._convert_framerates()

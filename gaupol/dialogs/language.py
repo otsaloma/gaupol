@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("LanguageDialog",)
@@ -53,19 +53,19 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                                      max_nlines=15)
 
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
-        store = gtk.ListStore(str, str)
+        store = Gtk.ListStore(str, str)
         self._populate_store(store)
-        store.set_sort_column_id(1, gtk.SORT_ASCENDING)
+        store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
         self._tree_view.set_model(store)
-        renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("", renderer, text=1)
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn("", renderer, text=1)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
 

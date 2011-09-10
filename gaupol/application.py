@@ -19,10 +19,10 @@
 import aeidon
 import atexit
 import gaupol
-import gtk
+from gi.repository import Gtk
 import itertools
 import os
-import pango
+from gi.repository import Pango
 import collections
 _ = aeidon.i18n._
 
@@ -62,18 +62,18 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar clipboard: Instance of :class:`aeidon.Clipboard` used
     :ivar counter: Iterator used for naming unsaved documents
     :ivar extension_manager: Instance of :class:`gaupol.ExtensionManager` used
-    :ivar framerate_combo: A :class:`gtk.ComboBox` used to select framerate
-    :ivar notebook: A :class:`gtk.Notebook` used to hold multiple projects
-    :ivar output_window: A :class:`gtk.Window` for external process output
+    :ivar framerate_combo: A :class:`Gtk.ComboBox` used to select framerate
+    :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
+    :ivar output_window: A :class:`Gtk.Window` for external process output
     :ivar pages: List of :class:`gaupol.Page` currently open
     :ivar pattern: Last used search pattern or blank if not used
-    :ivar recent_manager: Instance of :class:`gtk.RecentManager` used
+    :ivar recent_manager: Instance of :class:`Gtk.RecentManager` used
     :ivar replacement: Last used search replacement or blank if not used
-    :ivar statusbar: A :class:`gtk.Statusbar` used to hold messages
-    :ivar uim: Instance of :class:`gtk.UIManager` used
-    :ivar video_button: A :class:`gtk.Button` used to select a video file
-    :ivar video_toolbar: A :class:`gtk.Toolbar` for video actions
-    :ivar window: A :class:`gtk.Window` used to hold all the widgets
+    :ivar statusbar: A :class:`Gtk.Statusbar` used to hold messages
+    :ivar uim: Instance of :class:`Gtk.UIManager` used
+    :ivar video_button: A :class:`Gtk.Button` used to select a video file
+    :ivar video_toolbar: A :class:`Gtk.Toolbar` for video actions
+    :ivar window: A :class:`Gtk.Window` used to hold all the widgets
 
     Signals and their arguments for callback functions:
      * ``page-added``: application, page
@@ -109,14 +109,14 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.output_window = None
         self.pages = []
         self.pattern = ""
-        self.recent_manager = gtk.recent_manager_get_default()
+        self.recent_manager = Gtk.recent_manager_get_default()
         self.replacement = ""
         self.statusbar = None
         self.uim = None
         self.video_button = None
         self.video_toolbar = None
         self.window = None
-        self.x_clipboard = gtk.Clipboard()
+        self.x_clipboard = Gtk.Clipboard()
         self._init_delegations()
         self._init_gui()
         self.extension_manager.find_extensions()
@@ -155,27 +155,27 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_framerate_combo(self):
         """Intialize the framerate combo box on the video toolbar."""
-        self.framerate_combo = gtk.combo_box_new_text()
+        self.framerate_combo = Gtk.ComboBoxText()
         for name in (x.label for x in aeidon.framerates):
             self.framerate_combo.append_text(name)
         self.framerate_combo.set_active(gaupol.conf.editor.framerate)
         aeidon.util.connect(self, "framerate_combo", "changed")
-        tool_item = gtk.ToolItem()
+        tool_item = Gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.add(self.framerate_combo)
         self.video_toolbar.insert(tool_item, -1)
 
     def _init_framerate_label(self):
         """Intialize the framerate label on the video toolbar."""
-        label = gtk.Label(_("Framerate:"))
-        tool_item = gtk.ToolItem()
+        label = Gtk.Label(label=_("Framerate:"))
+        tool_item = Gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.add(label)
         self.video_toolbar.insert(tool_item, -1)
 
     def _init_gui(self):
         """Initialize the user interface."""
-        vbox = gtk.VBox()
+        vbox = Gtk.VBox()
         self._init_window()
         self._init_uim()
         self._init_menubar(vbox)
@@ -209,12 +209,12 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_notebook(self, vbox):
         """Initialize the notebook."""
-        self.notebook = gtk.Notebook()
+        self.notebook = Gtk.Notebook()
         self.notebook.set_scrollable(True)
         self.notebook.set_show_border(False)
-        self.notebook.drag_dest_set(gtk.DEST_DEFAULT_ALL,
+        self.Gtk.drag_dest_set(notebook, Gtk.DEST_DEFAULT_ALL,
                                     [("text/uri-list", 0, 0)],
-                                    gtk.gdk.ACTION_COPY)
+                                    Gdk.DragAction.COPY)
 
         aeidon.util.connect(self, "notebook", "drag-data-received")
         aeidon.util.connect(self, "notebook", "page-reordered")
@@ -231,7 +231,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""
         redo_button = self.get_tool_item("redo_action")
-        redo_button.set_menu(gtk.Menu())
+        redo_button.set_menu(Gtk.Menu())
         tip = _("Redo undone actions")
         redo_button.set_arrow_tooltip_text(tip)
         callback = self._on_redo_button_show_menu
@@ -239,15 +239,15 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_statusbar(self, vbox):
         """Initialize the statusbar."""
-        self.statusbar = gtk.Statusbar()
+        self.statusbar = Gtk.Statusbar()
         self.statusbar.set_has_resize_grip(True)
         vbox.pack_start(self.statusbar, False, False, 0)
 
     def _init_uim(self):
         """Initialize the UI manager."""
-        self.uim = gtk.UIManager()
-        safe_group = gtk.ActionGroup("main-safe")
-        unsafe_group = gtk.ActionGroup("main-unsafe")
+        self.uim = Gtk.UIManager()
+        safe_group = Gtk.ActionGroup("main-safe")
+        unsafe_group = Gtk.ActionGroup("main-unsafe")
         for name in gaupol.actions.__all__:
             action = getattr(gaupol.actions, name)()
             args = (action, action.accelerator)
@@ -259,21 +259,21 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_uim_radio_groups(unsafe_group)
         self.uim.insert_action_group(safe_group, 0)
         self.uim.insert_action_group(unsafe_group, 1)
-        action_group = gtk.ActionGroup("projects")
+        action_group = Gtk.ActionGroup("projects")
         self.uim.insert_action_group(action_group, -1)
         ui_xml_file = os.path.join(aeidon.DATA_DIR, "ui", "ui.xml")
         self.uim.add_ui_from_file(ui_xml_file)
         self.window.add_accel_group(self.uim.get_accel_group())
         path = os.path.join(aeidon.CONFIG_HOME_DIR, "accels.conf")
         if os.path.isfile(path):
-            gtk.accel_map_load(path)
-        atexit.register(gtk.accel_map_save, path)
+            Gtk.AccelMap.load(path)
+        atexit.register(Gtk.AccelMap.save, path)
         self.uim.ensure_update()
 
     def _init_uim_radio_groups(self, action_group):
         """Initialize the groups of radio actions in action group."""
         actions = action_group.list_actions()
-        actions = [x for x in actions if isinstance(x, gtk.RadioAction)]
+        actions = [x for x in actions if isinstance(x, Gtk.RadioAction)]
         for group in set((x.group for x in actions)):
             instance = None
             for action in (x for x in actions if x.group == group):
@@ -284,7 +284,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
         undo_button = self.get_tool_item("undo_action")
-        undo_button.set_menu(gtk.Menu())
+        undo_button.set_menu(Gtk.Menu())
         tip = _("Undo actions")
         undo_button.set_arrow_tooltip_text(tip)
         callback = self._on_undo_button_show_menu
@@ -300,29 +300,29 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_video_button(self):
         """Intialize the video button on the video toolbar."""
-        # Let's make this resemble a gtk.FileChooserButton,
+        # Let's make this resemble a Gtk.FileChooserButton,
         # but not actually be one, because they are slow to instantiate.
-        hbox = gtk.HBox(False, 4)
-        size = gtk.ICON_SIZE_MENU
-        image = gtk.image_new_from_stock(gtk.STOCK_FILE, size)
+        hbox = Gtk.HBox(False, 4)
+        size = Gtk.IconSize.MENU
+        image = Gtk.Image.new_from_stock(Gtk.STOCK_FILE, size)
         hbox.pack_start(image, False, False)
-        label = gtk.Label()
+        label = Gtk.Label()
         label.props.xalign = 0
-        label.set_ellipsize(pango.ELLIPSIZE_END)
+        label.set_ellipsize(Pango.EllipsizeMode.END)
         hbox.pack_start(label, True, True)
-        hbox.pack_start(gtk.VSeparator(), False, False)
-        image = gtk.image_new_from_stock(gtk.STOCK_OPEN, size)
+        hbox.pack_start(Gtk.VSeparator(, True, True, 0), False, False)
+        image = Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, size)
         hbox.pack_start(image, False, False)
-        self.video_button = gtk.Button()
+        self.video_button = Gtk.Button()
         self.video_button.add(hbox)
         self.video_button.set_data("label", label)
-        self.video_button.drag_dest_set(gtk.DEST_DEFAULT_ALL,
+        self.Gtk.drag_dest_set(video_button, Gtk.DEST_DEFAULT_ALL,
                                         [("text/uri-list", 0, 0)],
-                                        gtk.gdk.ACTION_COPY)
+                                        Gdk.DragAction.COPY)
 
         aeidon.util.connect(self, "video_button", "clicked")
         aeidon.util.connect(self, "video_button", "drag-data-received")
-        tool_item = gtk.ToolItem()
+        tool_item = Gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.set_expand(True)
         tool_item.add(self.video_button)
@@ -330,15 +330,15 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_video_label(self):
         """Intialize the video label on the video toolbar."""
-        label = gtk.Label(_("Video file:"))
-        tool_item = gtk.ToolItem()
+        label = Gtk.Label(label=_("Video file:"))
+        tool_item = Gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.add(label)
         self.video_toolbar.insert(tool_item, -1)
 
     def _init_video_toolbar(self, vbox):
         """Initialize the video toolbar."""
-        self.video_toolbar = gtk.Toolbar()
+        self.video_toolbar = Gtk.Toolbar()
         self._init_video_label()
         self._init_video_button()
         self._init_framerate_label()
@@ -347,9 +347,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_window(self):
         """Initialize the main window."""
-        self.window = gtk.Window()
+        self.window = Gtk.Window()
         self.window.set_icon_name("gaupol")
-        gtk.window_set_default_icon_name("gaupol")
+        Gtk.Window.set_default_icon_name("gaupol")
         self.window.resize(*gaupol.conf.application_window.size)
         self.window.move(*gaupol.conf.application_window.position)
         if gaupol.conf.application_window.maximized:

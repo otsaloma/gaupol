@@ -17,12 +17,12 @@
 """Cell renderer for time data in format ``[-]HH:MM:SS,SSS``."""
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("TimeCellRenderer",)
 
 
-class TimeCellRenderer(gtk.CellRendererText):
+class TimeCellRenderer(Gtk.CellRendererText):
 
     """Cell renderer for time data in format ``[-]HH:MM:SS.SSS``."""
 
@@ -30,7 +30,7 @@ class TimeCellRenderer(gtk.CellRendererText):
 
     def __init__(self):
         """Initialize a :class:`TimeCellRenderer` object."""
-        gtk.CellRendererText.__init__(self)
+        GObject.GObject.__init__(self)
         self._in_editor_menu = False
 
     def _on_editor_focus_out_event(self, editor, *args):
@@ -41,11 +41,11 @@ class TimeCellRenderer(gtk.CellRendererText):
 
     def _on_editor_key_press_event(self, editor, event):
         """End editing if ``Enter`` or ``Escape`` pressed."""
-        if event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK): return
-        if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
+        if event.get_state() & (Gdk.EventMask.SHIFT_MASK | Gdk.EventMask.CONTROL_MASK): return
+        if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())
-        if event.keyval == gtk.keysyms.Escape:
+        if event.keyval == Gdk.KEY_Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
 

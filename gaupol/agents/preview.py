@@ -19,7 +19,7 @@
 import aeidon
 import gaupol
 import glib
-import gtk
+from gi.repository import Gtk
 import tempfile
 _ = aeidon.i18n._
 
@@ -53,7 +53,7 @@ class PreviewAgent(aeidon.Delegate):
             "for preview with the current character encoding. Please first "
             "save the subtitle file with a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, message):
@@ -61,14 +61,14 @@ class PreviewAgent(aeidon.Delegate):
         title = _('Failed to save subtitle file to temporary '
                   'directory "%s"') % tempfile.gettempdir()
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_process_error_dialog(self, message):
         """Show an error dialog after failing to launch video player."""
         title = _("Failed to launch video player")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export
@@ -107,7 +107,7 @@ class PreviewAgent(aeidon.Delegate):
             return self._show_encoding_error_dialog()
         # glib.child_watch_add does not appear to work on Windows,
         # so let's watch the process by polling it at regular intervals.
-        glib.timeout_add(1000,
+        GObject.timeout_add(1000,
                          self._check_process_state,
                          page,
                          process,

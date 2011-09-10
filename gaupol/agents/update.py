@@ -19,7 +19,7 @@
 import aeidon
 import gaupol
 import glib
-import gtk
+from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
 
@@ -28,8 +28,8 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Updating the application GUI.
 
-    :ivar _message_id: A :class:`gtk.Statusbar` message ID
-    :ivar _message_tag: A timeout from :func:`glib.timeout_add`
+    :ivar _message_id: A :class:`Gtk.Statusbar` message ID
+    :ivar _message_tag: A timeout from :func:`GObject.timeout_add`
     """
 
     def __init__(self, master):
@@ -133,7 +133,7 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _on_window_window_state_event(self, window, event):
         """Save window maximization."""
         state = event.new_window_state
-        maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+        maximized = bool(state & Gdk.WINDOW_STATE_MAXIMIZED)
         gaupol.conf.application_window.maximized = maximized
 
     def _update_actions(self, page):
@@ -183,10 +183,10 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def push_message(self, message):
         """Show `message` in the statusbar."""
         if self._message_tag is not None:
-            glib.source_remove(self._message_tag)
+            GObject.source_remove(self._message_tag)
         if self._message_id is not None:
             self.statusbar.remove_message(0, self._message_id)
-        event_box = self.statusbar.get_ancestor(gtk.EventBox)
+        event_box = self.statusbar.get_ancestor(Gtk.EventBox)
         self.statusbar.set_tooltip_text(message)
         if message is not None:
             self._message_id = self.statusbar.push(0, message)

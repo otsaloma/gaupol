@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Baseclass and wrapper for :class:`gtk.Builder` constructed dialogs."""
+"""Baseclass and wrapper for :class:`Gtk.Builder` constructed dialogs."""
 
 import aeidon
-import gtk
+from gi.repository import Gtk
 import os
 
 __all__ = ("BuilderDialog",)
@@ -25,7 +25,7 @@ __all__ = ("BuilderDialog",)
 
 class BuilderDialog(object):
 
-    """Baseclass and wrapper for `gtk.Builder` constructed dialogs.
+    """Baseclass and wrapper for `Gtk.Builder` constructed dialogs.
 
     :cvar _widgets: List of names of widgets to be assigned as attributes
 
@@ -33,7 +33,7 @@ class BuilderDialog(object):
     with names preceded by a single underscore. All signals defined in the UI
     definition file are connected to ``self``. All :func:`getattr` calls not
     found in ``self`` are delegated to :attr:`self._dialog` allowing ``self``
-    to look and act like a :class:`gtk.Dialog`.
+    to look and act like a :class:`Gtk.Dialog`.
     """
 
     _widgets = ()
@@ -46,7 +46,7 @@ class BuilderDialog(object):
         """Initialize a :class:`BuilderDialog` object from `ui_file_path`."""
         if not os.path.isabs(ui_file_path):
             ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", ui_file_path)
-        self._builder = gtk.Builder()
+        self._builder = Gtk.Builder()
         self._builder.set_translation_domain("gaupol")
         self._builder.add_from_file(ui_file_path)
         if connect_signals:

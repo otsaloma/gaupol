@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+from gi.repository import Gtk
 import gaupol
 
 
 class TestBuilderDialog(gaupol.TestCase):
 
     def setup_method(self, method):
-        self.dialog = gaupol.LanguageDialog(gtk.Window())
+        self.dialog = gaupol.LanguageDialog(Gtk.Window())
         self.dialog.show()
 
     def test___getattr__(self):

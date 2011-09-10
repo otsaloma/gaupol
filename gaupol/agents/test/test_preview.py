@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import time
 
 
@@ -41,17 +41,17 @@ class TestPreviewAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_encoding_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_encoding_error_dialog()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_io_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_io_error_dialog("test")
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_process_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_process_error_dialog("test")
 
     def test_on_preview_activate__main(self):
@@ -71,7 +71,7 @@ class TestPreviewAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_preview__process_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         gaupol.conf.preview.custom_command = "xxxxx"
         page = self.application.get_current_page()
         doc = aeidon.documents.MAIN

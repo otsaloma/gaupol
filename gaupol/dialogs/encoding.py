@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 _ = aeidon.i18n._
 
 __all__ = ("EncodingDialog", "MenuEncodingDialog")
@@ -41,24 +41,24 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                                      max_nlines=30)
 
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
-        store = gtk.ListStore(str, str, str)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
+        store = Gtk.ListStore(str, str, str)
         for item in aeidon.encodings.get_valid():
             store.append((item[0], item[2], item[1]))
-        store.set_sort_column_id(1, gtk.SORT_ASCENDING)
+        store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
         self._tree_view.set_model(store)
-        renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Description"), renderer, text=1)
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(_("Description"), renderer, text=1)
         column.set_clickable(True)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
         column.set_clickable(True)
         column.set_sort_column_id(2)
         self._tree_view.append_column(column)
@@ -66,7 +66,7 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _on_tree_view_row_activated(self, *args):
         """Send response to select activated character encoding."""
         print("ACTIVATED")
-        self.response(gtk.RESPONSE_OK)
+        self.response(Gtk.ResponseType.OK)
 
     def get_encoding_ensure(self, value):
         if value is not None:
@@ -87,26 +87,26 @@ class MenuEncodingDialog(EncodingDialog):
     def _init_tree_view(self):
         """Initialize the tree view."""
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
-        store = gtk.ListStore(str, str, str, bool)
+        selection.set_mode(Gtk.SelectionMode.SINGLE)
+        store = Gtk.ListStore(str, str, str, bool)
         visible = gaupol.conf.encoding.visible
         for item in aeidon.encodings.get_valid():
             store.append((item[0], item[2], item[1], item[0] in visible))
-        store.set_sort_column_id(1, gtk.SORT_ASCENDING)
+        store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
         self._tree_view.set_model(store)
-        renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Description"), renderer, text=1)
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(_("Description"), renderer, text=1)
         column.set_clickable(True)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
         column.set_clickable(True)
         column.set_sort_column_id(2)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererToggle()
+        renderer = Gtk.CellRendererToggle()
         renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = gtk.TreeViewColumn(_("Show in Menu"), renderer, active=3)
+        column = Gtk.TreeViewColumn(_("Show in Menu"), renderer, active=3)
         column.set_sort_column_id(3)
         self._tree_view.append_column(column)
 

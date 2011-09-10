@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestHeaderDialog(gaupol.TestCase):
@@ -108,7 +108,7 @@ class TestHeaderDialog(gaupol.TestCase):
         assert value == self.dialog._main_file.header
 
     def test__on_response(self):
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_tran_clear_button_clicked(self):
         self.dialog._tran_clear_button.clicked()
@@ -129,5 +129,5 @@ class TestHeaderDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test___show_mpsub_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._show_mpsub_error_dialog()

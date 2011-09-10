@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestDurationAdjustDialog(gaupol.TestCase):
@@ -62,15 +62,15 @@ class TestDurationAdjustDialog(gaupol.TestCase):
 
     def test__on_response__all(self):
         self.dialog._all_radio.set_active(True)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__current(self):
         self.dialog._current_radio.set_active(True)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__selected(self):
         self.dialog._selected_radio.set_active(True)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_shorten_check_toggled(self):
         self.dialog._shorten_check.set_active(True)

@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
@@ -65,7 +65,7 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def get_menu_item(self, name):
         """Return menu item from UI manager by `name`."""
         widgets = self.get_action(name).get_proxies()
-        return [x for x in widgets if isinstance(x, gtk.MenuItem)][0]
+        return [x for x in widgets if isinstance(x, Gtk.MenuItem)][0]
 
     @aeidon.deco.export
     def get_mode_action(self, mode):
@@ -95,7 +95,7 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def get_tool_item(self, name):
         """Return tool item from UI manager by `name`."""
         widgets = self.get_action(name).get_proxies()
-        return [x for x in widgets if isinstance(x, gtk.ToolItem)][0]
+        return [x for x in widgets if isinstance(x, Gtk.ToolItem)][0]
 
     def set_current_page_require(self, page):
         assert page in self.pages

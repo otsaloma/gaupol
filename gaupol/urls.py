@@ -26,7 +26,7 @@
 """
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("BUG_REPORT_URL",
            "EXTENSIONS_URL",
@@ -46,4 +46,4 @@ WIKI_URL = "http://live.gnome.org/Gaupol"
 
 def _on_link_button_clicked(link_button, uri):
     return gaupol.util.show_uri(uri)
-gtk.link_button_set_uri_hook(_on_link_button_clicked)
+Gtk.link_button_set_uri_hook(_on_link_button_clicked)

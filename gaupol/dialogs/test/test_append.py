@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 from .test_open import TestOpenDialog
 
@@ -23,5 +23,5 @@ from .test_open import TestOpenDialog
 class TestAppendDialog(TestOpenDialog):
 
     def setup_method(self, method):
-        self.dialog = gaupol.AppendDialog(gtk.Window())
+        self.dialog = gaupol.AppendDialog(Gtk.Window())
         self.dialog.show()

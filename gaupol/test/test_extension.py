@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestExtension(gaupol.TestCase):
@@ -35,7 +35,7 @@ class TestExtension(gaupol.TestCase):
     def test_show_preferences_dialog(self):
         self.raises(NotImplementedError,
                     self.extension.show_preferences_dialog,
-                    gtk.Window())
+                    Gtk.Window())
 
     def test_teardown_method(self):
         self.extension.teardown(self.application)

@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 
 __all__ = ("SaveDialog",)
@@ -43,25 +43,25 @@ class SaveDialog(gaupol.FileDialog):
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._format_combo.set_model(store)
         for name in (x.label for x in aeidon.formats):
             store.append((name,))
         view = self._format_combo.get_child()
         view.set_displayed_row(0)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._format_combo.pack_start(renderer, True)
         self._format_combo.add_attribute(renderer, "text", 0)
 
     def _init_newline_combo(self):
         """Initialize the newline combo box."""
-        store = gtk.ListStore(str)
+        store = Gtk.ListStore(str)
         self._newline_combo.set_model(store)
         for name in (x.label for x in aeidon.newlines):
             store.append((name,))
         view = self._newline_combo.get_child()
         view.set_displayed_row(0)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         self._newline_combo.pack_start(renderer, True)
         self._newline_combo.add_attribute(renderer, "text", 0)
 

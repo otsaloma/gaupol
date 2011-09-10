@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestSplitDialog(gaupol.TestCase):
@@ -40,7 +40,7 @@ class TestSplitDialog(gaupol.TestCase):
 
         self.dialog.show()
         self.dialog._subtitle_spin.set_value(2)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__frame_positive(self):
         page = gaupol.Page()
@@ -51,7 +51,7 @@ class TestSplitDialog(gaupol.TestCase):
 
         self.dialog.show()
         self.dialog._subtitle_spin.set_value(5)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__time_negative(self):
         page = gaupol.Page()
@@ -62,7 +62,7 @@ class TestSplitDialog(gaupol.TestCase):
 
         self.dialog.show()
         self.dialog._subtitle_spin.set_value(2)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__time_positive(self):
         page = gaupol.Page()
@@ -73,4 +73,4 @@ class TestSplitDialog(gaupol.TestCase):
 
         self.dialog.show()
         self.dialog._subtitle_spin.set_value(5)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)

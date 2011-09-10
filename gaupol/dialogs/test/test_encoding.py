@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestEncodingDialog(gaupol.TestCase):
@@ -25,7 +25,7 @@ class TestEncodingDialog(gaupol.TestCase):
         self.dialog.destroy()
 
     def setup_method(self, method):
-        self.dialog = gaupol.EncodingDialog(gtk.Window())
+        self.dialog = gaupol.EncodingDialog(Gtk.Window())
         self.dialog.show()
 
     def test__on_tree_view_row_activated(self):
@@ -43,7 +43,7 @@ class TestEncodingDialog(gaupol.TestCase):
 class TestMenuEncodingDialog(TestEncodingDialog):
 
     def setup_method(self, method):
-        self.dialog = gaupol.MenuEncodingDialog(gtk.Window())
+        self.dialog = gaupol.MenuEncodingDialog(Gtk.Window())
         self.dialog.show()
 
     def test__on_tree_view_cell_toggled(self):

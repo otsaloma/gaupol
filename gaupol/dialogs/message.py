@@ -16,82 +16,82 @@
 
 """Message dialog classes."""
 
-import gtk
+from gi.repository import Gtk
 
 __all__ = ("ErrorDialog", "InfoDialog", "QuestionDialog", "WarningDialog")
 
 
-class ErrorDialog(gtk.MessageDialog):
+class ErrorDialog(Gtk.MessageDialog):
 
     """Base class for error dialogs."""
 
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`ErrorDialog` object."""
-        gtk.MessageDialog.__init__(self,
+        GObject.GObject.__init__(self,
                                    parent=parent,
-                                   flags=(gtk.DIALOG_MODAL |
-                                          gtk.DIALOG_DESTROY_WITH_PARENT),
+                                   flags=(Gtk.DialogFlags.MODAL |
+                                          Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
-                                   type=gtk.MESSAGE_ERROR,
-                                   buttons=gtk.BUTTONS_NONE,
+                                   type=Gtk.MessageType.ERROR,
+                                   buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)
 
         if message is not None:
             self.format_secondary_text(message)
 
 
-class InfoDialog(gtk.MessageDialog):
+class InfoDialog(Gtk.MessageDialog):
 
     """Base class for info dialogs."""
 
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`InfoDialog` object."""
-        gtk.MessageDialog.__init__(self,
+        GObject.GObject.__init__(self,
                                    parent=parent,
-                                   flags=(gtk.DIALOG_MODAL |
-                                          gtk.DIALOG_DESTROY_WITH_PARENT),
+                                   flags=(Gtk.DialogFlags.MODAL |
+                                          Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
 
-                                   type=gtk.MESSAGE_INFO,
-                                   buttons=gtk.BUTTONS_NONE,
+                                   type=Gtk.MessageType.INFO,
+                                   buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)
 
         if message is not None:
             self.format_secondary_text(message)
 
 
-class QuestionDialog(gtk.MessageDialog):
+class QuestionDialog(Gtk.MessageDialog):
 
     """Base class for question dialogs."""
 
     def __init__(self, parent, title, message=None):
         """Initialize a :class:`QuestionDialog` object."""
-        gtk.MessageDialog.__init__(self,
+        GObject.GObject.__init__(self,
                                    parent=parent,
-                                   flags=(gtk.DIALOG_MODAL |
-                                          gtk.DIALOG_DESTROY_WITH_PARENT),
+                                   flags=(Gtk.DialogFlags.MODAL |
+                                          Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
-                                   type=gtk.MESSAGE_QUESTION,
-                                   buttons=gtk.BUTTONS_NONE,
+                                   type=Gtk.MessageType.QUESTION,
+                                   buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)
 
         if message is not None:
             self.format_secondary_text(message)
 
 
-class WarningDialog(gtk.MessageDialog):
+class WarningDialog(Gtk.MessageDialog):
 
     """Base class for warning dialogs."""
 
     def __init__(self, parent, title, message=None):
         """Initialize a :class:`WarningDialog` object."""
-        gtk.MessageDialog.__init__(self,
+        GObject.GObject.__init__(self,
                                    parent=parent,
-                                   flags=(gtk.DIALOG_MODAL |
-                                          gtk.DIALOG_DESTROY_WITH_PARENT),
+                                   flags=(Gtk.DialogFlags.MODAL |
+                                          Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
-                                   type=gtk.MESSAGE_WARNING,
-                                   buttons=gtk.BUTTONS_NONE,
+                                   type=Gtk.MessageType.WARNING,
+                                   buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)
 
         if message is not None:

@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
 
@@ -35,7 +35,7 @@ class AddFramerateDialog(gaupol.BuilderDialog):
         ui_file_path = os.path.join(directory, "add-framerate-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
     def _on_response(self, *args):
         """Update spin button before dispatching response."""
@@ -66,7 +66,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
                                      max_nlines=16)
 
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
     def _get_selected_rows(self):
         """Return a sequence of the selected rows."""
@@ -76,16 +76,16 @@ class PreferencesDialog(gaupol.BuilderDialog):
     def _init_tree_view(self, framerates):
         """Initialize the tree view."""
         selection = self._tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_MULTIPLE)
+        selection.set_mode(Gtk.SelectionMode.MULTIPLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
-        store = gtk.ListStore(float)
+        store = Gtk.ListStore(float)
         for framerate in framerates:
             store.append((framerate,))
-        store.set_sort_column_id(0, gtk.SORT_ASCENDING)
+        store.set_sort_column_id(0, Gtk.SortType.ASCENDING)
         self._tree_view.set_model(store)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         renderer.props.xalign = 1
-        column = gtk.TreeViewColumn("", renderer, text=0)
+        column = Gtk.TreeViewColumn("", renderer, text=0)
         column.set_sort_column_id(0)
         def format_framerate(column, renderer, store, itr):
             renderer.props.text = "%.6f" % store.get_value(itr, 0)
@@ -98,7 +98,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
         response = gaupol.util.run_dialog(dialog)
         framerate = dialog.get_framerate()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         store = self._tree_view.get_model()
         store.append((framerate,))
 
@@ -148,7 +148,7 @@ class CustomFrameratesExtension(gaupol.Extension):
 
     def _add_framerates(self):
         """Add custom framerates and corresponding UI elements."""
-        self._action_group = gtk.ActionGroup("custom-framerates")
+        self._action_group = Gtk.ActionGroup("custom-framerates")
         self.application.uim.insert_action_group(self._action_group, -1)
         tooltip = _("Calculate nonnative units with a framerate of %.3f fps")
         directory = os.path.abspath(os.path.dirname(__file__))
@@ -168,7 +168,7 @@ class CustomFrameratesExtension(gaupol.Extension):
             framerate.value = float(value)
             self._framerates.append(framerate)
             action_name = name.replace("FPS", "show_framerate")
-            action = gtk.RadioAction(name=action_name,
+            action = Gtk.RadioAction(name=action_name,
                                      label=framerate.label,
                                      tooltip=(tooltip % value),
                                      stock_id=None,

@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestMultiCloseDialog(gaupol.TestCase):
@@ -76,10 +76,10 @@ class TestMultiCloseDialog(gaupol.TestCase):
         assert self.dialog.pages is not self.application.pages
 
     def test__on_response__no(self):
-        self.dialog.response(gtk.RESPONSE_NO)
+        self.dialog.response(Gtk.ResponseType.NO)
 
     def test__on_response__yes(self):
-        self.dialog.response(gtk.RESPONSE_YES)
+        self.dialog.response(Gtk.ResponseType.YES)
 
     def test__on_tree_view_cell_toggled__main(self):
         column = self.dialog._main_tree_view.get_columns()[0]

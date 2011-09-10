@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestEditAgent(gaupol.TestCase):
@@ -45,7 +45,7 @@ class TestEditAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_on_edit_headers_activate(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
         self.application.open_main(path)
         self.application.get_action("edit_headers").activate()
@@ -58,7 +58,7 @@ class TestEditAgent(gaupol.TestCase):
     def test_on_edit_preferences_activate(self):
         self.application.get_action("edit_preferences").activate()
         self.application.get_action("edit_preferences").activate()
-        self.delegate._pref_dialog.response(gtk.RESPONSE_CLOSE)
+        self.delegate._pref_dialog.response(Gtk.ResponseType.CLOSE)
 
     def test__on_edit_value_activate(self):
         page = self.application.get_current_page()
@@ -77,7 +77,7 @@ class TestEditAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_on_insert_subtitles_activate(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("insert_subtitles").activate()

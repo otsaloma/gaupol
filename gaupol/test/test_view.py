@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import random
 
 
@@ -24,23 +24,23 @@ class TestView(gaupol.TestCase):
 
     def run__view_frame(self):
         self.setup_time()
-        window = gtk.Window()
-        window.connect("delete-event", gtk.main_quit)
-        window.set_position(gtk.WIN_POS_CENTER)
+        window = Gtk.Window()
+        window.connect("delete-event", Gtk.main_quit)
+        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(200, 200)
         window.add(self.view)
         window.show_all()
-        gtk.main()
+        Gtk.main()
 
     def run__view_time(self):
         self.setup_frame()
-        window = gtk.Window()
-        window.connect("delete-event", gtk.main_quit)
-        window.set_position(gtk.WIN_POS_CENTER)
+        window = Gtk.Window()
+        window.connect("delete-event", Gtk.main_quit)
+        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(200, 200)
         window.add(self.view)
         window.show_all()
-        gtk.main()
+        Gtk.main()
 
     def setup_frame(self):
         # pylint: disable=W0201

@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestSpeechRecognitionDialog(gaupol.TestCase):
@@ -52,10 +52,10 @@ class TestSpeechRecognitionDialog(gaupol.TestCase):
         self.dialog._noise_spin.set_value(300)
 
     def test__on_response__close(self):
-        self.dialog.response(gtk.RESPONSE_CLOSE)
+        self.dialog.response(Gtk.ResponseType.CLOSE)
 
     def test__on_response__help(self):
-        self.dialog.response(gtk.RESPONSE_HELP)
+        self.dialog.response(Gtk.ResponseType.HELP)
 
     def test__on_revert_button_clicked__advance(self):
         self.dialog._advance_spin.set_value(100)

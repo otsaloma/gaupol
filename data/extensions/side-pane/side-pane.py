@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
 
@@ -49,17 +49,17 @@ class SidePane(aeidon.Observable):
         self._conf = gaupol.conf.extensions.side_pane
         self._focus_handler_id = None
         self._has_focus = False
-        self._label = gtk.Label("(Empty)")
-        self._notebook = gtk.Notebook()
-        self._paned = gtk.HPaned()
-        self._toggle_button = gtk.ToggleButton()
+        self._label = Gtk.Label(label="(Empty)")
+        self._notebook = Gtk.Notebook()
+        self._paned = Gtk.HPaned()
+        self._toggle_button = Gtk.ToggleButton()
         self.application = application
         self._init_gui()
         self._init_signal_handlers()
 
     def _init_gui(self):
         """Initialize all widgets."""
-        side_vbox = gtk.VBox(False, 0)
+        side_vbox = Gtk.VBox(False, 0)
         self._init_paned(side_vbox)
         self._init_header(side_vbox)
         self._init_notebook(side_vbox)
@@ -69,25 +69,25 @@ class SidePane(aeidon.Observable):
 
     def _init_header(self, side_vbox):
         """Initialize the side pane button header."""
-        header_hbox = gtk.HBox(False, 12)
+        header_hbox = Gtk.HBox(False, 12)
         header_hbox.set_border_width(1)
-        self._toggle_button.set_relief(gtk.RELIEF_NONE)
+        self._toggle_button.set_relief(Gtk.ReliefStyle.NONE)
         self._toggle_button.set_focus_on_click(False)
-        toggle_button_hbox = gtk.HBox(False, 6)
-        toggle_button_hbox.pack_start(self._label)
-        arrow = gtk.Arrow(gtk.ARROW_DOWN, gtk.SHADOW_NONE)
-        toggle_button_hbox.pack_start(arrow)
+        toggle_button_hbox = Gtk.HBox(False, 6)
+        toggle_button_hbox.pack_start(self._label, True, True, 0)
+        arrow = Gtk.Arrow(Gtk.ArrowType.DOWN, Gtk.ShadowType.NONE)
+        toggle_button_hbox.pack_start(arrow, True, True, 0)
         self._toggle_button.add(toggle_button_hbox)
         callback = self._on_header_toggle_button_button_press_event
         self._toggle_button.connect("button-press-event", callback)
         callback = self._on_header_toggle_button_key_press_event
         self._toggle_button.connect("key-press-event", callback)
         header_hbox.pack_start(self._toggle_button, False, False)
-        header_hbox.pack_start(gtk.Alignment(), True, True)
-        close_button = gtk.Button()
-        image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+        header_hbox.pack_start(Gtk.Alignment.new(, True, True, 0), True, True)
+        close_button = Gtk.Button()
+        image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE, Gtk.IconSize.MENU)
         close_button.add(image)
-        close_button.set_relief(gtk.RELIEF_NONE)
+        close_button.set_relief(Gtk.ReliefStyle.NONE)
         close_button.set_focus_on_click(False)
         callback = self._on_header_close_button_clicked
         close_button.connect("clicked", callback)
@@ -105,10 +105,10 @@ class SidePane(aeidon.Observable):
         main_vbox = self.application.window.get_children()[0]
         main_notebook = main_vbox.get_children()[2]
         self._paned.pack1(side_vbox, False, False)
-        main_notebook_vbox = gtk.VBox()
+        main_notebook_vbox = Gtk.VBox()
         main_notebook.reparent(main_notebook_vbox)
         self._paned.pack2(main_notebook_vbox, True, False)
-        main_vbox.pack_start(self._paned)
+        main_vbox.pack_start(self._paned, True, True, 0)
         main_vbox.reorder_child(self._paned, 2)
         self._paned.set_position(self._conf.width)
 
@@ -147,7 +147,7 @@ class SidePane(aeidon.Observable):
         self.set_current_page(child)
         self._toggle_button.set_active(False)
         parent = menu_item.get_parent()
-        while not isinstance(parent, gtk.Menu):
+        while not isinstance(parent, Gtk.Menu):
             parent = parent.get_parent()
         parent.destroy()
         self.emit("page-switched", child)
@@ -160,8 +160,8 @@ class SidePane(aeidon.Observable):
 
     def _on_header_toggle_button_key_press_event(self, key, event):
         """Show a menu listing all side pane pages."""
-        spaces = (gtk.keysyms.space, gtk.keysyms.KP_Space)
-        enters = (gtk.keysyms.Return, gtk.keysyms.KP_Enter)
+        spaces = (Gdk.KEY_space, Gdk.KEY_KP_Space)
+        enters = (Gdk.KEY_Return, Gdk.KEY_KP_Enter)
         if not event.keyval in (spaces + enters): return False
         self._show_header_menu(event)
         return True
@@ -177,11 +177,11 @@ class SidePane(aeidon.Observable):
 
     def _show_header_menu(self, event):
         """Show a menu listing all side pane pages."""
-        menu = gtk.Menu()
+        menu = Gtk.Menu()
         for i in range(self._notebook.get_n_pages()):
             child = self._notebook.get_nth_page(i)
             title = self._notebook.get_tab_label_text(child)
-            menu_item = gtk.MenuItem(title, False)
+            menu_item = Gtk.MenuItem(title, False)
             menu_item.set_data("child", child)
             menu_item.connect("activate", self._on_header_menu_item_activate)
             menu.append(menu_item)
@@ -290,7 +290,7 @@ class SidePaneExtension(gaupol.Extension):
 
         self._conf = gaupol.conf.extensions.side_pane
         application.side_pane = SidePane(application)
-        self._action_group = gtk.ActionGroup("side-pane")
+        self._action_group = Gtk.ActionGroup("side-pane")
         self._action_group.add_toggle_actions((
             ("toggle_side_pane", None, _("Si_de Pane"),
              None, _("Show or hide the side pane"),

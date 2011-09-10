@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestHelpAgent(gaupol.TestCase):
@@ -32,6 +32,6 @@ class TestHelpAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_on_view_about_dialog_activate(self):
-        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
+        respond = lambda *args: Gtk.ResponseType.DELETE_EVENT
         gaupol.util.flash_dialog = respond
         self.application.get_action("view_about_dialog").activate()

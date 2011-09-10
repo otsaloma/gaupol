@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class _TestFileDialog(gaupol.TestCase):
@@ -27,7 +27,7 @@ class _TestFileDialog(gaupol.TestCase):
         self.dialog.destroy()
 
     def test__on_encoding_combo_changed(self):
-        responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
+        responder = iter((Gtk.ResponseType.OK, Gtk.ResponseType.CANCEL))
         def run_dialog(dialog):
             selection = dialog._tree_view.get_selection()
             selection.select_path(0)

@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestFramerateConversionDialog(gaupol.TestCase):
@@ -44,10 +44,10 @@ class TestFramerateConversionDialog(gaupol.TestCase):
         self.dialog._all_radio.set_active(True)
         self.dialog._input_combo.set_active(0)
         self.dialog._output_combo.set_active(1)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__current(self):
         self.dialog._current_radio.set_active(True)
         self.dialog._input_combo.set_active(0)
         self.dialog._output_combo.set_active(1)
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)

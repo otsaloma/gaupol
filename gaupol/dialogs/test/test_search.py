@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 
 
 class TestSearchDialog(gaupol.TestCase):
@@ -93,7 +93,7 @@ class TestSearchDialog(gaupol.TestCase):
         self.dialog._replace_button.emit("clicked")
 
     def test__on_response(self):
-        self.dialog.response(gtk.RESPONSE_HELP)
+        self.dialog.response(Gtk.ResponseType.HELP)
 
     def test__on_show(self):
         self.dialog.show()
@@ -109,19 +109,19 @@ class TestSearchDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__set_pattern__re_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._regex_check.set_active(True)
         self.dialog._pattern_entry.set_text("*")
         next(self.dialog)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_regex_error_dialog_pattern(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._show_regex_error_dialog_pattern("test")
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_regex_error_dialog_replacement(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._show_regex_error_dialog_replacement("test")
 
     def test_next(self):
@@ -165,7 +165,7 @@ class TestSearchDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_replace__re_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._regex_check.set_active(True)
         self.dialog._pattern_entry.set_text(" ")
         self.dialog._replacement_entry.set_text("\\1")
@@ -180,7 +180,7 @@ class TestSearchDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_replace_all__re_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._regex_check.set_active(True)
         self.dialog._pattern_entry.set_text("^")
         self.dialog._replacement_entry.set_text("\\1")

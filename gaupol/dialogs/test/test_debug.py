@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 import sys
 
 
@@ -34,10 +34,10 @@ class TestDebugDialog(gaupol.TestCase):
         self.dialog.show()
 
     def test__on_response__close(self):
-        self.dialog.response(gtk.RESPONSE_CLOSE)
+        self.dialog.response(Gtk.ResponseType.CLOSE)
 
     def test__on_response__no(self):
-        self.dialog.response(gtk.RESPONSE_NO)
+        self.dialog.response(Gtk.ResponseType.NO)
 
     def test__on_response__yes(self):
-        self.dialog.response(gtk.RESPONSE_YES)
+        self.dialog.response(Gtk.ResponseType.YES)

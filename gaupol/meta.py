@@ -17,12 +17,12 @@
 """Metaclass for contractual GObjects."""
 
 import aeidon
-import gobject
+from gi.repository import GObject
 
 __all__ = ("ContractualGObject",)
 
 
-class ContractualGObject(gobject.GObjectMeta, aeidon.Contractual):
+class ContractualGObject(GObject.GObjectMeta, aeidon.Contractual):
 
     """Metaclass for contractual GObjects."""
 

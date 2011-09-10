@@ -16,7 +16,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 
 
@@ -34,12 +34,12 @@ class TestSaveAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_encoding_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_encoding_error_dialog("test", "ascii")
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_io_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_io_error_dialog("test", "test")
 
     def test__on_save_all_documents_activate(self):
@@ -53,7 +53,7 @@ class TestSaveAgent(gaupol.TestCase):
     def test__on_save_main_document_as_activate(self):
         get_filename = lambda *args: self.new_subrip_file()
         gaupol.SaveDialog.get_filename = get_filename
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("save_main_document_as").activate()
 
     def test__on_save_translation_document_activate(self):
@@ -64,7 +64,7 @@ class TestSaveAgent(gaupol.TestCase):
     def test__on_save_translation_document_as_activate(self):
         get_filename = lambda *args: self.new_subrip_file()
         gaupol.SaveDialog.get_filename = get_filename
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("save_translation_document_as").activate()
 
     def test_save_main(self):
@@ -73,7 +73,7 @@ class TestSaveAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_save_main__io_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         os.chmod(page.project.main_file.path, 0000)
         self.raises(gaupol.Default, self.application.save_main, page)
@@ -81,7 +81,7 @@ class TestSaveAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_save_main__unicode_error(self):
-        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         page.project.main_file.encoding = "ascii"
         page.project.set_text(0, aeidon.documents.MAIN, "\303\266")
@@ -92,7 +92,7 @@ class TestSaveAgent(gaupol.TestCase):
     def test_save_main__untitled(self):
         get_filename = lambda *args: self.new_subrip_file()
         gaupol.SaveDialog.get_filename = get_filename
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("new_project").activate()
         page = self.application.get_current_page()
         self.application.save_main(page)
@@ -102,13 +102,13 @@ class TestSaveAgent(gaupol.TestCase):
     def test_save_main_as(self):
         get_filename = lambda *args: self.new_subrip_file()
         gaupol.SaveDialog.get_filename = get_filename
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         self.application.save_main_as(page)
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test_save_main_as__cancel(self):
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.CANCEL
         page = self.application.get_current_page()
         self.raises(gaupol.Default, self.application.save_main_as, page)
 
@@ -121,7 +121,7 @@ class TestSaveAgent(gaupol.TestCase):
     def test_save_translation__untitled(self):
         get_filename = lambda *args: self.new_subrip_file()
         gaupol.SaveDialog.get_filename = get_filename
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("new_project").activate()
         page = self.application.get_current_page()
         self.application.save_translation(page)
@@ -131,6 +131,6 @@ class TestSaveAgent(gaupol.TestCase):
     def test_save_translation_as(self):
         get_filename = lambda *args: self.new_subrip_file()
         gaupol.SaveDialog.get_filename = get_filename
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         self.application.save_translation_as(page)

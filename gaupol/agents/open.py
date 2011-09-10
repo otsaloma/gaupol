@@ -20,7 +20,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
 
@@ -109,7 +109,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         paths = dialog.get_filenames()
         encoding = dialog.get_encoding()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         if not paths: return
         gaupol.util.iterate_main()
         self.append_file(paths[0], encoding)
@@ -194,7 +194,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         response = gaupol.util.run_dialog(dialog)
         path = dialog.get_filename()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK: return
+        if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
         self.update_gui()
 
@@ -262,7 +262,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         paths = dialog.get_filenames()
         encoding = dialog.get_encoding()
         dialog.destroy()
-        gaupol.util.raise_default(response != gtk.RESPONSE_OK)
+        gaupol.util.raise_default(response != Gtk.ResponseType.OK)
         gaupol.util.iterate_main()
         return paths, encoding
 
@@ -273,7 +273,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         message = _("Please try to open the file with a "
             "different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_format_error_dialog(self, basename):
@@ -282,14 +282,14 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         message = _("Please check that the file you are trying to open is a "
             "subtitle file of a format supported by Gaupol.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to read file."""
         title = _('Failed to open file "%s"') % basename
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_parse_error_dialog(self, basename, format):
@@ -299,7 +299,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             "are trying open is a valid %s file. If you think it is, file a "
             "bug report and attach the file.") % format.label
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_size_warning_dialog(self, basename, size):
@@ -312,11 +312,11 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             "for a text-based subtitle file. Please, check that you are not "
             "trying to open a binary file.") % size
         dialog = gaupol.WarningDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
-        dialog.add_button(gtk.STOCK_OPEN, gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_NO)
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
+        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.YES)
+        dialog.set_default_response(Gtk.ResponseType.NO)
         response = gaupol.util.flash_dialog(dialog)
-        gaupol.util.raise_default(response != gtk.RESPONSE_YES)
+        gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
     def _show_sort_warning_dialog(self, basename, count):
         """Show a warning dialog when subtitles have been sorted.
@@ -328,11 +328,11 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             "If %d sounds like a lot, the file may be erroneously composed.")
         message = message % (count, count)
         dialog = gaupol.WarningDialog(self.window, title, message)
-        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
-        dialog.add_button(gtk.STOCK_OPEN, gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_YES)
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
+        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.YES)
+        dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
-        gaupol.util.raise_default(response != gtk.RESPONSE_YES)
+        gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
     def _show_translation_warning_dialog(self, page):
         """Show a warning dialog if opening a new translation file.
@@ -343,14 +343,14 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             'opening a new one?') % page.get_translation_basename()
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
-        dialog.add_button(_("Open _Without Saving"), gtk.RESPONSE_NO)
-        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_YES)
+        dialog.add_button(_("Open _Without Saving"), Gtk.ResponseType.NO)
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.YES)
+        dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
-        if response == gtk.RESPONSE_YES:
+        if response == Gtk.ResponseType.YES:
             return self.save_translation(page)
-        gaupol.util.raise_default(response != gtk.RESPONSE_NO)
+        gaupol.util.raise_default(response != Gtk.ResponseType.NO)
 
     def _try_open_file(self, page, doc, path, encoding, **kwargs):
         """Try to open file at `path` and return subtitle sort count.
@@ -396,8 +396,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
-        scroller = gtk.ScrolledWindow()
-        scroller.set_policy(*((gtk.POLICY_AUTOMATIC,) * 2))
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
         scroller.add(page.view)
         self.notebook.append_page(scroller, page.tab_widget)
         self.notebook.set_tab_reorderable(scroller, True)
@@ -456,7 +456,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             renderer.connect("editing-started", callback, column)
             callback = self._on_view_renderer_editing_canceled
             renderer.connect("editing-canceled", callback, column)
-            button = column.get_widget().get_ancestor(gtk.Button)
+            button = column.get_widget().get_ancestor(Gtk.Button)
             callback = self._on_view_header_button_press_event
             button.connect("button-press-event", callback)
 
