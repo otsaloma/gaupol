@@ -321,7 +321,7 @@ class BookmarksExtension(gaupol.Extension):
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
         for irow in rows:
-            for crow in sorted(self._bookmarks[page].keys(), reverse=True):
+            for crow in sorted(list(self._bookmarks[page].keys()), reverse=True):
                 if crow < irow: continue
                 description = self._bookmarks[page][crow]
                 del self._bookmarks[page][crow]
@@ -333,7 +333,7 @@ class BookmarksExtension(gaupol.Extension):
         if not page in self._bookmarks: return
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
-        for crow in self._bookmarks[page].keys():
+        for crow in list(self._bookmarks[page].keys()):
             if crow in rows: del self._bookmarks[page][crow]
         for crow in sorted(self._bookmarks[page].keys()):
             count = sum(1 for x in rows if x < crow)
@@ -374,7 +374,7 @@ class BookmarksExtension(gaupol.Extension):
     def _on_tree_view_cell_edited(self, renderer, path, new_text):
         """Update description in the list store model of the tree view."""
         store = self._tree_view.get_model().get_model()
-        store[path][2] = unicode(new_text)
+        store[path][2] = str(new_text)
         page = self.application.get_current_page()
 
     def _on_tree_view_key_press_event(self, tree_view, event):

@@ -22,7 +22,7 @@ class TestSearchAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.delegate = self.application._on_find_next_activate.im_self
+        self.delegate = self.application._on_find_next_activate.__self__
 
     def test__on_search_dialog_response(self):
         self.application.get_action("find_and_replace").activate()
@@ -35,7 +35,7 @@ class TestSearchAgent(gaupol.TestCase):
     def test_on_find_next_activate(self):
         self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog._pattern_entry.set_text("a")
-        self.delegate._search_dialog.next()
+        next(self.delegate._search_dialog)
         self.application.get_action("find_next").activate()
         self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
         self.application.get_action("find_next").activate()

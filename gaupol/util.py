@@ -16,7 +16,7 @@
 
 """Miscellaneous functions and decorators."""
 
-from __future__ import division
+
 
 import aeidon
 import gaupol
@@ -220,9 +220,9 @@ def scale_to_content(container,
     # Vaguely account for possible scrollbars.
     bump = lambda x: x + 36
     if isinstance(container, gtk.TextView):
-        width, height = map(bump, get_text_view_size(container))
+        width, height = list(map(bump, get_text_view_size(container)))
     elif isinstance(container, gtk.TreeView):
-        width, height = map(bump, get_tree_view_size(container))
+        width, height = list(map(bump, get_tree_view_size(container)))
     else:
         raise ValueError("Don't know what to do with container of type %s"
                          % repr(type(container)))

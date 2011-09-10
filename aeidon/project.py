@@ -17,6 +17,7 @@
 """Model for subtitle data."""
 
 import aeidon
+import collections
 
 __all__ = ("Project",)
 
@@ -38,15 +39,15 @@ class ProjectMeta(aeidon.Contractual):
             agent_class = getattr(aeidon.agents, agent_class_name)
             def is_public_method(name):
                 return (not name.startswith("_") and
-                        callable(getattr(agent_class, name)))
+                        isinstance(getattr(agent_class, name), collections.Callable))
 
-            attr_names = filter(is_public_method, dir(agent_class))
+            attr_names = list(list(filter(is_public_method, dir(agent_class))))
             for attr_name in attr_names:
                 new_dict[attr_name] = getattr(agent_class, attr_name)
         return type.__new__(meta, class_name, bases, new_dict)
 
 
-class Project(aeidon.Observable):
+class Project(aeidon.Observable, metaclass=ProjectMeta):
 
     """Model for subtitle data.
 
@@ -89,8 +90,6 @@ class Project(aeidon.Observable):
      * ``translation-file-saved``: project, tran_file
      * ``translation-texts-changed``: project, indices
     """
-
-    __metaclass__ = ProjectMeta
 
     signals = ("action-done",
                "action-redone",
@@ -135,11 +134,11 @@ class Project(aeidon.Observable):
             agent = getattr(aeidon.agents, agent_class_name)(self)
             def is_delegate_method(name):
                 value = getattr(agent, name)
-                return (callable(value) and
+                return (isinstance(value, collections.Callable) and
                         hasattr(value, "export") and
                         value.export is True)
 
-            attr_names = filter(is_delegate_method, dir(agent))
+            attr_names = list(filter(is_delegate_method, dir(agent)))
             for attr_name in attr_names:
                 attr_value = getattr(agent, attr_name)
                 if attr_name in self._delegations:

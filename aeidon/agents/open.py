@@ -20,17 +20,13 @@ import aeidon
 import bisect
 
 
-class OpenAgent(aeidon.Delegate):
+class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Reading and parsing data from subtitle files."""
 
-    # pylint: disable=E1101,W0201
-
-    __metaclass__ = aeidon.Contractual
-
     def _align_translations_by_number(self, subtitles):
         """Add translation texts by aligning subtitle numbers."""
-        indices = range(len(self.subtitles), len(subtitles))
+        indices = list(range(len(self.subtitles), len(subtitles)))
         self.insert_subtitles(indices, register=None)
         for i, subtitle in enumerate(subtitles):
             self.subtitles[i].tran_text = subtitle.main_text

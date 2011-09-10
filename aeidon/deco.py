@@ -18,7 +18,7 @@
 
 import aeidon
 import copy
-import cPickle
+import pickle
 import functools
 import time
 
@@ -56,7 +56,7 @@ def benchmark(function):
         a = time.time()
         value = function(*args, **kwargs)
         z = time.time()
-        print "%.3f %s" % (z - a, function.__name__)
+        print("%.3f %s" % (z - a, function.__name__))
         return value
     return wrapper
 
@@ -74,12 +74,12 @@ def contractual(function):
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         name = "%s_require" % function.__name__
-        if name in function.func_globals:
-            function.func_globals[name](*args, **kwargs)
+        if name in function.__globals__:
+            function.__globals__[name](*args, **kwargs)
         value = function(*args, **kwargs)
         name = "%s_ensure" % function.__name__
-        if name in function.func_globals:
-            function.func_globals[name](value, *args, **kwargs)
+        if name in function.__globals__:
+            function.__globals__[name](value, *args, **kwargs)
         return value
     return wrapper
 
@@ -99,7 +99,7 @@ def memoize(function):
         params = (args, kwargs)
         if _is_method(function, args):
             params = (id(args[0]), args[1:], kwargs)
-        key = cPickle.dumps(params)
+        key = pickle.dumps(params)
         if not key in cache:
             cache[key] = function(*args, **kwargs)
         return cache[key]

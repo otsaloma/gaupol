@@ -76,4 +76,4 @@ class CorrectTextsAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
 
 
-__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))
+__all__ = tuple([x for x in dir() if x.endswith("Action")])

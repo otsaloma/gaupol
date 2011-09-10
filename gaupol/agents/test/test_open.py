@@ -49,7 +49,7 @@ class TestOpenAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.delegate = self.application.open_main.im_self
+        self.delegate = self.application.open_main.__self__
 
     @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
@@ -220,7 +220,7 @@ class TestOpenAgent(gaupol.TestCase):
         path = self.new_subrip_file()
         os.chmod(path, 0000)
         self.application.open_main(path)
-        os.chmod(path, 0777)
+        os.chmod(path, 0o777)
 
     def test_open_main__multiple(self):
         self.application.open_main((self.new_subrip_file(),

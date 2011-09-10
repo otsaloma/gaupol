@@ -27,7 +27,7 @@ import traceback
 __all__ = ("ExtensionManager", "ExtensionMetadata",)
 
 
-class ExtensionManager(object):
+class ExtensionManager(object, metaclass=aeidon.Contractual):
 
     """Finding activating, storing and deactivating extensions.
 
@@ -36,8 +36,6 @@ class ExtensionManager(object):
     :ivar _dependants: Dictionary mapping module names to a list of others
     :ivar _inferior: List of modules activated to satisfy a dependency
     """
-
-    __metaclass__ = aeidon.Contractual
     _global_dir = os.path.join(aeidon.DATA_DIR, "extensions")
     _local_dir = os.path.join(aeidon.DATA_HOME_DIR, "extensions")
     _re_comment = re.compile(r"#.*$")
@@ -57,7 +55,7 @@ class ExtensionManager(object):
                     path.endswith(".gaupol-extension.in"))
 
         for (root, dirs, files) in os.walk(directory):
-            files = filter(is_metadata_file, files)
+            files = list(filter(is_metadata_file, files))
             for name in [x for x in files if x.endswith(".in")]:
                 # If both untranslated and translated metadata files are found,
                 # load extension only from the translated one.
@@ -79,9 +77,9 @@ class ExtensionManager(object):
         lines = [x.strip() for x in lines]
         metadata = ExtensionMetadata()
         metadata.path = path
-        for line in filter(None, lines):
+        for line in [_f for _f in lines if _f]:
             if line.startswith("["): continue
-            name, value = unicode(line).split("=", 1)
+            name, value = str(line).split("=", 1)
             name = (name[1:] if name.startswith("_") else name)
             metadata.set_field(name, value)
         self._store_metadata(path, metadata)
@@ -89,8 +87,8 @@ class ExtensionManager(object):
     def _store_metadata(self, path, metadata):
         """Store metadata to instance variables after validation."""
         def discard_extension(name):
-            print ("Field '%s' missing in file '%s', dicarding extension"
-                   % (name, path))
+            print(("Field '%s' missing in file '%s', dicarding extension"
+                   % (name, path)))
 
         if not metadata.has_field("GaupolVersion"):
             return discard_extension("GaupolVersion")
@@ -114,7 +112,7 @@ class ExtensionManager(object):
 
     def get_modules(self):
         """Return a list of all extension module names."""
-        return self._metadata.keys()
+        return list(self._metadata.keys())
 
     def has_help_require(self, module):
         assert module in self._active
@@ -123,8 +121,8 @@ class ExtensionManager(object):
     def has_help(self, module):
         """Return ``True`` if extension can display documentation."""
         extension = self._active[module]
-        return (extension.show_help.im_func is not
-                gaupol.Extension.show_help.im_func)
+        return (extension.show_help.__func__ is not
+                gaupol.Extension.show_help.__func__)
 
     def has_preferences_dialog_require(self, module):
         assert module in self._active
@@ -133,8 +131,8 @@ class ExtensionManager(object):
     def has_preferences_dialog(self, module):
         """Return True if extension can display a preferences dialog."""
         extension = self._active[module]
-        return (extension.show_preferences_dialog.im_func is not
-                gaupol.Extension.show_preferences_dialog.im_func)
+        return (extension.show_preferences_dialog.__func__ is not
+                gaupol.Extension.show_preferences_dialog.__func__)
 
     def is_active(self, module):
         """Return ``True`` if extension is active, ``False`` if not."""
@@ -227,7 +225,7 @@ class ExtensionManager(object):
         extension.teardown(self.application)
         del self._active[module]
         del self._dependants[module]
-        for dependency in self._dependants.keys():
+        for dependency in list(self._dependants.keys()):
             # Teardown no longer used dependencies.
             if module in self._dependants[dependency]:
                 self._dependants[dependency].remove(module)
@@ -240,12 +238,12 @@ class ExtensionManager(object):
 
     def teardown_extensions(self):
         """Teardown all active extensions."""
-        for module in self._active.keys():
+        for module in list(self._active.keys()):
             self.teardown_extension(module, True)
 
     def update_extensions(self, page):
         """Call ``update`` on all active extensions."""
-        for name, extension in self._active.iteritems():
+        for name, extension in self._active.items():
             extension.update(self.application, page)
 
 

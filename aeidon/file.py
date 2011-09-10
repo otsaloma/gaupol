@@ -25,7 +25,7 @@ import re
 __all__ = ("SubtitleFile",)
 
 
-class SubtitleFile(object):
+class SubtitleFile(object, metaclass=aeidon.Contractual):
 
     """Base class for subtitle files.
 
@@ -42,8 +42,6 @@ class SubtitleFile(object):
     ``aeidon.DATA_DIR/headers`` or ``aeidon.DATA_HOME_DIR/headers``. If the
     read file contains a header, it will replace the template.
     """
-
-    __metaclass__ = aeidon.Contractual
     format = aeidon.formats.NONE
     mode = aeidon.modes.NONE
 
@@ -85,7 +83,7 @@ class SubtitleFile(object):
         if newline is not None:
             self.newline = newline
         if self.encoding == "utf_8":
-            bom = unicode(codecs.BOM_UTF8, "utf_8")
+            bom = str(codecs.BOM_UTF8, "utf_8")
             if lines and lines[0].startswith(bom):
                 # If a UTF-8 BOM (a.k.a. signature) is found, reread file with
                 # UTF-8-SIG encoding, which automatically strips the BOM when
@@ -97,7 +95,7 @@ class SubtitleFile(object):
             # when using UTF-16. If using UTF-16-BE or UTF-16-LE, the BOM is
             # kept at the beginning of the first line. It is read correctly, so
             # it should FE FF for both BE and LE.
-            bom = unicode(codecs.BOM_UTF16_BE, "utf_16_be")
+            bom = str(codecs.BOM_UTF16_BE, "utf_16_be")
             if lines and lines[0].startswith(bom):
                 self.has_utf_16_bom = True
                 lines[0] = lines[0].replace(bom, "")
@@ -141,9 +139,9 @@ class SubtitleFile(object):
             # UTF-16-BE and UTF-16-LE don't. For the latter two, add the BOM,
             # if it was originally read in the file.
             if self.has_utf_16_bom and (self.encoding == "utf_16_be"):
-                fobj.write(unicode(codecs.BOM_UTF16_BE, "utf_16_be"))
+                fobj.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
             if self.has_utf_16_bom and (self.encoding == "utf_16_le"):
-                fobj.write(unicode(codecs.BOM_UTF16_LE, "utf_16_le"))
+                fobj.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
             self.write_to_file(subtitles, doc, fobj)
 
     def write_to_file_require(self, subtitles, doc, fobj):

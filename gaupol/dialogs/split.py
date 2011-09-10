@@ -24,11 +24,9 @@ _ = aeidon.i18n._
 __all__ = ("SplitDialog",)
 
 
-class SplitDialog(gaupol.BuilderDialog):
+class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for splitting a project in two."""
-
-    __metaclass__ = aeidon.Contractual
     _widgets = ("subtitle_spin",)
 
     def __init___require(self, parent, application):
@@ -65,7 +63,7 @@ class SplitDialog(gaupol.BuilderDialog):
 
     def _remove_from_source(self, page, index):
         """Remove rows starting at `index` from `page`."""
-        indices = range(index, len(page.project.subtitles))
+        indices = list(range(index, len(page.project.subtitles)))
         page.project.block("action-done")
         page.project.remove_subtitles(indices)
         page.project.set_action_description(
@@ -75,7 +73,7 @@ class SplitDialog(gaupol.BuilderDialog):
     def _shift_destination(self, src, dst):
         """Shift subtitles in `dst` page."""
         amount = src.project.subtitles[-1].end
-        if isinstance(amount, basestring):
+        if isinstance(amount, str):
             amount = (amount[1:] if amount.startswith("-") else "-%s" % amount)
         if isinstance(amount, (int, float)):
             amount = -1 * amount
@@ -86,9 +84,9 @@ class SplitDialog(gaupol.BuilderDialog):
         gaupol.util.set_cursor_busy(self.application.window)
         index = self._subtitle_spin.get_value_as_int() - 1
         src = self.application.get_current_page()
-        dst = gaupol.Page(self.application.counter.next())
+        dst = gaupol.Page(next(self.application.counter))
         subtitles = [x.copy() for x in src.project.subtitles[index:]]
-        indices = range(len(subtitles))
+        indices = list(range(len(subtitles)))
         dst.project.insert_subtitles(indices, subtitles)
         dst.reload_view_all()
         self._remove_from_source(src, index)

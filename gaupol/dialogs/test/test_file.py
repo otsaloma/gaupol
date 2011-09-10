@@ -31,7 +31,7 @@ class _TestFileDialog(gaupol.TestCase):
         def run_dialog(dialog):
             selection = dialog._tree_view.get_selection()
             selection.select_path(0)
-            return responder.next()
+            return next(responder)
         gaupol.util.run_dialog = run_dialog
         store = self.dialog._encoding_combo.get_model()
         self.dialog._encoding_combo.set_active(len(store) - 1)

@@ -48,7 +48,7 @@ class AboutDialog(gtk.AboutDialog):
         self.set_title(_("About Gaupol"))
         self.set_program_name("Gaupol")
         self.set_version(gaupol.__version__)
-        self.set_copyright(u"Copyright \xa9 2005-2011 Osmo Salomaa")
+        self.set_copyright("Copyright \xa9 2005-2011 Osmo Salomaa")
         self.set_comments(_("Subtitle editor"))
         self.set_license(_license)
         self.set_wrap_license(True)

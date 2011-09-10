@@ -16,7 +16,7 @@
 
 """Breaker of text into lines according to preferred break points."""
 
-from __future__ import division
+
 
 import aeidon
 import copy
@@ -27,7 +27,7 @@ import sys
 __all__ = ("Liner",)
 
 
-class Liner(aeidon.Parser):
+class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
     """Breaker of text into lines according to preferred break points.
 
@@ -50,8 +50,6 @@ class Liner(aeidon.Parser):
     :ivar max_length: Maximum length of a line in units of :attr:`_length_func`
     :ivar max_lines: Maximum preferred amount of lines (may be exceeded)
     """
-
-    __metaclass__ = aeidon.Contractual
     _re_multi_space = re.compile(r" {2,}")
 
     def __init__(self, re_tag=None, clean_func=None):
@@ -110,7 +108,7 @@ class Liner(aeidon.Parser):
         Index is brute forced within reason and the result is optimal.
         """
         min_index = 0
-        min_diff = sys.maxint
+        min_diff = sys.maxsize
         start = self._get_start_index(lengths, 2)
         for i in range(start, len(lengths)):
             a = self._get_length(lengths[:i])
@@ -152,7 +150,7 @@ class Liner(aeidon.Parser):
         Indexes are brute forced within reason and the result is optimal.
         """
         min_indices = []
-        min_squares = sys.maxint
+        min_squares = sys.maxsize
         start = self._get_start_index(lengths, max_lines)
         for i in range(start, len(lengths) - max_lines + 2):
             indices = self._get_breaks(lengths[i:], max_lines - 1)

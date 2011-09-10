@@ -24,11 +24,9 @@ _ = aeidon.i18n._
 __all__ = ("FileDialog",)
 
 
-class FileDialog(gaupol.BuilderDialog):
+class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Base class for dialogs for selecting subtitle files."""
-
-    __metaclass__ = aeidon.Contractual
     _use_autodetection = False
 
     def _init_encoding_combo(self):

@@ -34,7 +34,7 @@ class TestCloseAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.delegate = self.application.close.im_self
+        self.delegate = self.application.close.__self__
 
     def test__save_window_geometry(self):
         self.delegate._save_window_geometry()

@@ -6,63 +6,63 @@
 
 import sys
 
-print "Libraries:"
-print "Python: %d.%d.%d" % sys.version_info[:3]
+print("Libraries:")
+print("Python: %d.%d.%d" % sys.version_info[:3])
 
 try:
-    print "GTK+:",
+    print("GTK+:", end=' ')
     import gtk
-    print "%d.%d.%d" % gtk.gtk_version
+    print("%d.%d.%d" % gtk.gtk_version)
 except ImportError:
-    print None
+    print(None)
 
 try:
-    print "GStreamer:",
+    print("GStreamer:", end=' ')
     import gst
-    print ".".join(map(str, gst.version()))
+    print(".".join(map(str, gst.version())))
 except ImportError:
-    print None
+    print(None)
 
-print "Python Packages:"
+print("Python Packages:")
 
 try:
-    print "aeidon:",
+    print("aeidon:", end=' ')
     import aeidon
-    print aeidon.__version__
+    print(aeidon.__version__)
 except ImportError:
-    print None
+    print(None)
 
 try:
-    print "gaupol:",
+    print("gaupol:", end=' ')
     import gaupol
-    print gaupol.__version__
+    print(gaupol.__version__)
 except ImportError:
-    print None
+    print(None)
 
 try:
-    print "gtk:",
+    print("gtk:", end=' ')
     import gtk
-    print "%d.%d.%d" % gtk.pygtk_version
+    print("%d.%d.%d" % gtk.pygtk_version)
 except ImportError:
-    print None
+    print(None)
 
 try:
-    print "gst:",
+    print("gst:", end=' ')
     import gst
-    print ".".join(map(str, gst.pygst_version))
+    print(".".join(map(str, gst.pygst_version)))
 except ImportError:
-    print None
+    print(None)
 
 try:
-    print "enchant:",
+    print("enchant:", end=' ')
     import enchant
-    print enchant.__version__
+    print(enchant.__version__)
 except Exception:
-    print None
+    print(None)
 
 try:
-    print "chardet:",
+    print("chardet:", end=' ')
     import chardet
-    print chardet.__version__
+    print(chardet.__version__)
 except ImportError:
-    print None
+    print(None)

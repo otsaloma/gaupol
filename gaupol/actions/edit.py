@@ -251,7 +251,7 @@ class MergeSubtitlesAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         rows = page.view.get_selected_rows()
         aeidon.util.affirm(len(rows) > 1)
-        aeidon.util.affirm(list(rows) == range(rows[0], rows[-1] + 1))
+        aeidon.util.affirm(list(rows) == list(range(rows[0], rows[-1] + 1)))
 
 
 class PasteTextsAction(gaupol.Action):
@@ -395,4 +395,4 @@ class UndoActionAction(gaupol.Action):
         aeidon.util.affirm(page.project.can_undo())
 
 
-__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))
+__all__ = tuple([x for x in dir() if x.endswith("Action")])

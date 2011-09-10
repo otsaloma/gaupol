@@ -87,13 +87,13 @@ class MicroDVD(aeidon.Markup):
         re_tag = self._get_regex(r"\{([cfsy]:.*?)\}")
         for i, line in enumerate(lines):
             matches = [x for x in re_tag.finditer(line)]
-            for j in reversed(range(len(matches))):
+            for j in reversed(list(range(len(matches)))):
                 lines[i] += "{/%s}" % matches[j].group(1)
         text = "\n".join(lines)
         # Add upper case closing tags to the end of the text.
         re_tag = self._get_regex(r"\{([CFSY]:.*?)\}")
         matches = [x for x in re_tag.finditer(text)]
-        for j in reversed(range(len(matches))):
+        for j in reversed(list(range(len(matches)))):
             text += "{/%s}" % matches[j].group(1)
         return text
 

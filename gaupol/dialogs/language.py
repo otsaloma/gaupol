@@ -24,11 +24,9 @@ _ = aeidon.i18n._
 __all__ = ("LanguageDialog",)
 
 
-class LanguageDialog(gaupol.BuilderDialog):
+class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for configuring spell-check."""
-
-    __metaclass__ = aeidon.Contractual
 
     _widgets = ("all_radio",
                 "current_radio",

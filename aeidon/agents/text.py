@@ -23,11 +23,9 @@ import sys
 _ = aeidon.i18n._
 
 
-class TextAgent(aeidon.Delegate):
+class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Automatic correcting of texts."""
-
-    __metaclass__ = aeidon.Contractual
     _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w", re.UNICODE)
 
     def _capitalize_first(self, parser, pos):
@@ -50,7 +48,7 @@ class TextAgent(aeidon.Delegate):
         Return ``True`` if the text of the next subtitle should be capitalized.
         """
         try:
-            a, z = parser.next()
+            a, z = next(parser)
         except StopIteration:
             return cap_next
         if pattern.get_field("Capitalize") == "Start":
@@ -81,7 +79,7 @@ class TextAgent(aeidon.Delegate):
 
     def _get_misspelled_indices(self, checker):
         """Return a list of misspelled indices in `checker`'s text."""
-        i = [range(x.wordpos, x.wordpos + len(x.word)) for x in checker]
+        i = [list(range(x.wordpos, x.wordpos + len(x.word))) for x in checker]
         return aeidon.util.flatten(i)
 
     def _get_substitutions_ensure(self, value, patterns):
@@ -136,8 +134,8 @@ class TextAgent(aeidon.Delegate):
                     max_lines,
                     max_deviation=None,
                     skip=False,
-                    max_skip_length=sys.maxint,
-                    max_skip_lines=sys.maxint,
+                    max_skip_length=sys.maxsize,
+                    max_skip_lines=sys.maxsize,
                     register=-1):
         """Break lines to fit defined maximum line length and count.
 
@@ -156,7 +154,7 @@ class TextAgent(aeidon.Delegate):
         """
         new_indices = []
         new_texts = []
-        patterns = filter(lambda x: x.enabled, patterns)
+        patterns = [x for x in patterns if x.enabled]
         patterns = self._get_substitutions(patterns)
         patterns = [(re.compile(x, y), z) for x, y, z in patterns]
         liner = self.get_liner(doc)
@@ -174,7 +172,7 @@ class TextAgent(aeidon.Delegate):
             if re_tag is not None:
                 plain_text = re_tag.sub("", plain_text)
             lines = plain_text.split("\n")
-            length = max(map(length_func, lines))
+            length = max(list(map(length_func, lines)))
             line_count = len(lines)
             if length <= max_skip_length:
                 if line_count <= max_skip_lines:
@@ -185,7 +183,7 @@ class TextAgent(aeidon.Delegate):
             if re_tag is not None:
                 plain_text = re_tag.sub("", text)
             lines = plain_text.split("\n")
-            length_down = max(map(length_func, lines)) < length
+            length_down = max(list(map(length_func, lines))) < length
             lines_down = len(lines) < line_count
             length_fixed = (length > max_skip_length) and length_down
             lines_fixed = (line_count > max_skip_lines) and lines_down
@@ -216,7 +214,7 @@ class TextAgent(aeidon.Delegate):
         new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
-        patterns = filter(lambda x: x.enabled, patterns)
+        patterns = [x for x in patterns if x.enabled]
         indices = indices or self.get_all_indices()
         for indices in aeidon.util.get_ranges(indices):
             cap_next = False
@@ -259,7 +257,7 @@ class TextAgent(aeidon.Delegate):
         new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
-        patterns = filter(lambda x: x.enabled, patterns)
+        patterns = [x for x in patterns if x.enabled]
         re_patterns = self._get_substitutions(patterns)
         repeats = [x.get_field_boolean("Repeat") for x in patterns]
         for index in indices or self.get_all_indices():
@@ -295,7 +293,7 @@ class TextAgent(aeidon.Delegate):
         new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
-        patterns = filter(lambda x: x.enabled, patterns)
+        patterns = [x for x in patterns if x.enabled]
         re_patterns = self._get_substitutions(patterns)
         for index in indices or self.get_all_indices():
             subtitle = self.subtitles[index]
@@ -341,9 +339,9 @@ class TextAgent(aeidon.Delegate):
             subtitle = self.subtitles[index]
             text = subtitle.get_text(doc)
             text = re_multispace.sub(" ", text)
-            checker.set_text(unicode(text))
+            checker.set_text(str(text))
             while True:
-                try: checker.next()
+                try: next(checker)
                 except StopIteration: break
                 text = checker.get_text()
                 a = checker.wordpos
@@ -363,7 +361,7 @@ class TextAgent(aeidon.Delegate):
                     checker.set_text(text[:a - 1] + text[a:])
                 if ok_with_next and not ok_with_prev:
                     checker.set_text(text[:z] + text[z + 1:])
-            new_text = unicode(checker.get_text())
+            new_text = str(checker.get_text())
             if new_text != text:
                 new_indices.append(index)
                 new_texts.append(new_text)
@@ -395,9 +393,9 @@ class TextAgent(aeidon.Delegate):
             subtitle = self.subtitles[index]
             text = subtitle.get_text(doc)
             text = re_multispace.sub(" ", text)
-            checker.set_text(unicode(text))
+            checker.set_text(str(text))
             while True:
-                try: checker.next()
+                try: next(checker)
                 except StopIteration: break
                 if checker.word.capitalize() == checker.word:
                     # Skip capitalized words, which are usually names
@@ -416,7 +414,7 @@ class TextAgent(aeidon.Delegate):
                 a = checker.wordpos
                 z = checker.wordpos + len(checker.word)
                 checker.set_text(text[:a] + suggestions[0] + text[z:])
-            new_text = unicode(checker.get_text())
+            new_text = str(checker.get_text())
             if new_text != text:
                 new_indices.append(index)
                 new_texts.append(new_text)

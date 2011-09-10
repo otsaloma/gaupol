@@ -16,17 +16,15 @@
 
 """Basic editing of entire subtitles."""
 
-from __future__ import division
+
 
 import aeidon
 _ = aeidon.i18n._
 
 
-class EditAgent(aeidon.Delegate):
+class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Basic editing of entire subtitles."""
-
-    __metaclass__ = aeidon.Contractual
 
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
@@ -100,7 +98,7 @@ class EditAgent(aeidon.Delegate):
         assert len(indices) > 1
         for index in indices:
             assert 0 <= index < len(self.subtitles)
-        assert list(indices) == range(indices[0], indices[-1] + 1)
+        assert list(indices) == list(range(indices[0], indices[-1] + 1))
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -110,9 +108,9 @@ class EditAgent(aeidon.Delegate):
         subtitle.start = self.subtitles[indices[0]].start
         subtitle.end = self.subtitles[indices[-1]].end
         main_texts = [self.subtitles[i].main_text for i in indices]
-        subtitle.main_text = "\n".join(filter(None, main_texts))
+        subtitle.main_text = "\n".join([_f for _f in main_texts if _f])
         tran_texts = [self.subtitles[x].tran_text for x in indices]
-        subtitle.tran_text = "\n".join(filter(None, tran_texts))
+        subtitle.tran_text = "\n".join([_f for _f in tran_texts if _f])
         self.remove_subtitles(indices, register=register)
         self.insert_subtitles([indices[0]], [subtitle], register=register)
         self.group_actions(register, 2, _("Merging subtitles"))

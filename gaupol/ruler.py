@@ -16,7 +16,7 @@
 
 """Functions to calculate line lengths and to show them in widgets."""
 
-from __future__ import division
+
 
 import aeidon
 import gaupol

@@ -24,7 +24,7 @@ class TestFinder(aeidon.TestCase):
             "one's survival depends on it.")
 
     def assert_find_cases(self, cases, regex, next):
-        advance = (self.finder.next if next else self.finder.previous)
+        advance = (self.finder.__next__ if next else self.finder.previous)
         for pattern, matches in cases:
             self.finder.set_text(self.text, next)
             if regex:
@@ -288,19 +288,19 @@ class TestFinder(aeidon.TestCase):
         self.finder.set_text(self.text)
         self.finder.pattern = "ne"
         self.finder.replacement = "--"
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "O-- only risks it, because\n"
             "one's survival depends on it.")
         assert self.finder.pos == 3
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "O-- only risks it, because\n"
             "o--'s survival depends on it.")
         assert self.finder.pos == 30
-        self.raises(StopIteration, self.finder.next)
+        self.raises(StopIteration, self.finder.__next__)
 
     def test_replace__equal_length_previous(self):
         self.finder.set_text(self.text, False)
@@ -324,19 +324,19 @@ class TestFinder(aeidon.TestCase):
         self.finder.set_text(self.text)
         self.finder.set_regex(r"$")
         self.finder.replacement = "--"
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "One only risks it, because--\n"
             "one's survival depends on it.")
         assert self.finder.pos == 28
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "One only risks it, because--\n"
             "one's survival depends on it.--")
         assert self.finder.pos == 60
-        self.raises(StopIteration, self.finder.next)
+        self.raises(StopIteration, self.finder.__next__)
 
     def test_replace__lengthen_regex_dollar_previous(self):
         self.finder.set_text(self.text, False)
@@ -360,19 +360,19 @@ class TestFinder(aeidon.TestCase):
         self.finder.set_text(self.text)
         self.finder.set_regex(r"^")
         self.finder.replacement = "--"
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "--One only risks it, because\n"
             "one's survival depends on it.")
         assert self.finder.pos == 2
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "--One only risks it, because\n"
             "--one's survival depends on it.")
         assert self.finder.pos == 31
-        self.raises(StopIteration, self.finder.next)
+        self.raises(StopIteration, self.finder.__next__)
 
     def test_replace__lengthen_regex_hat_previous(self):
         self.finder.set_text(self.text, False)
@@ -396,19 +396,19 @@ class TestFinder(aeidon.TestCase):
         self.finder.set_text(self.text)
         self.finder.pattern = "v"
         self.finder.replacement = "vv"
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "One only risks it, because\n"
             "one's survvival depends on it.")
         assert self.finder.pos == 38
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "One only risks it, because\n"
             "one's survvivval depends on it.")
         assert self.finder.pos == 41
-        self.raises(StopIteration, self.finder.next)
+        self.raises(StopIteration, self.finder.__next__)
 
     def test_replace__lengthen_string_match_previous(self):
         self.finder.set_text(self.text, False)
@@ -432,19 +432,19 @@ class TestFinder(aeidon.TestCase):
         self.finder.set_text(self.text)
         self.finder.set_regex(r"[.,]")
         self.finder.replacement = ""
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "One only risks it because\n"
             "one's survival depends on it.")
         assert self.finder.pos == 17
-        self.finder.next()
+        next(self.finder)
         self.finder.replace()
         assert self.finder.text == (
             "One only risks it because\n"
             "one's survival depends on it")
         assert self.finder.pos == 54
-        self.raises(StopIteration, self.finder.next)
+        self.raises(StopIteration, self.finder.__next__)
 
     def test_replace__shorten_regex_previous(self):
         self.finder.set_text(self.text, False)

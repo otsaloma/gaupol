@@ -16,19 +16,15 @@
 
 """Manipulating times and frames."""
 
-from __future__ import division
+
 
 import aeidon
 _ = aeidon.i18n._
 
 
-class PositionAgent(aeidon.Delegate):
+class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Manipulating times and frames."""
-
-    # pylint: disable=E0203,E1101,W0201
-
-    __metaclass__ = aeidon.Contractual
 
     def _get_frame_transform_ensure(self, value, p1, p2):
         assert isinstance(value[1], int)
@@ -216,7 +212,7 @@ class PositionAgent(aeidon.Delegate):
         should be tuples of index, position, where position should be a string
         for time, a float for seconds or an integer for frames.
         """
-        if isinstance(p1[1], basestring):
+        if isinstance(p1[1], str):
             method = self._get_time_transform
         if isinstance(p1[1], int):
             method = self._get_frame_transform

@@ -120,7 +120,7 @@ _encodings = (
     ("utf_8"          , "UTF-8"           , _("Unicode")            ),
     ("utf_8_sig"      , "UTF-8-SIG"       , _("Unicode")            ),)
 
-CODE, NAME, DESC = range(3)
+CODE, NAME, DESC = list(range(3))
 
 # Characters illegal in encoding codes.
 _re_illegal = re.compile(r"[^a-z0-9_]")

@@ -106,12 +106,12 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
-        self._text = text = unicode(self.props.text)
+        self._text = text = str(self.props.text)
         if not (text and self._show_lengths): return
         lengths = gaupol.ruler.get_lengths(text)
         text = glib.markup_escape_text(text)
         lines = text.split("\n")
-        for i, line in filter(lambda x: x[1], enumerate(lines)):
+        for i, line in [x for x in enumerate(lines) if x[1]]:
             lines[i] += " <sup>%d</sup>" % lengths[i]
         self.props.markup = "\n".join(lines)
 

@@ -21,7 +21,7 @@ import gtk
 _ = aeidon.i18n._
 
 
-class MenuAgent(aeidon.Delegate):
+class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Building and updating menus.
 
@@ -29,8 +29,6 @@ class MenuAgent(aeidon.Delegate):
     :ivar _redo_menu_items: Redo menu tool button menu items
     :ivar _undo_menu_items: Undo menu tool button menu items
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize a MenuAgent object."""

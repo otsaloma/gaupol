@@ -100,8 +100,8 @@ class TestSubtitle(aeidon.TestCase):
         assert self.fsub.framerate == aeidon.framerates.FPS_25_000
 
     def test__get_main_text(self):
-        assert self.tsub.main_text == u"main"
-        assert self.fsub.main_text == u"main"
+        assert self.tsub.main_text == "main"
+        assert self.fsub.main_text == "main"
 
     def test__get_mode(self):
         assert self.tsub.mode == aeidon.modes.TIME
@@ -132,8 +132,8 @@ class TestSubtitle(aeidon.TestCase):
         self.raises(ValueError, lambda: self.tsub.start_time)
 
     def test__get_tran_text(self):
-        assert self.tsub.tran_text == u"translation"
-        assert self.fsub.tran_text == u"translation"
+        assert self.tsub.tran_text == "translation"
+        assert self.fsub.tran_text == "translation"
 
     def test__set_duration__time(self):
         self.tsub.duration = "00:00:10.000"
@@ -178,7 +178,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__set_main_text(self):
         self.tsub.main_text = "test"
-        assert self.tsub.main_text == u"test"
+        assert self.tsub.main_text == "test"
 
     def test__set_mode__time(self):
         self.tsub.mode = aeidon.modes.TIME
@@ -210,7 +210,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__set_tran_text(self):
         self.tsub.tran_text = "test"
-        assert self.tsub.tran_text == u"test"
+        assert self.tsub.tran_text == "test"
 
     def test_convert_framerate__time(self):
         self.tsub.start = "00:00:01.000"

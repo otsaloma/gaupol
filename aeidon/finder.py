@@ -22,7 +22,7 @@ import re
 __all__ = ("Finder",)
 
 
-class Finder(object):
+class Finder(object, metaclass=aeidon.Contractual):
 
     """String and regular expression finder and replacer.
 
@@ -34,8 +34,6 @@ class Finder(object):
     :ivar replacement: Plain- or regular expression replacement string
     :ivar text: Target text to find matches of pattern in
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self):
         """Initialize a Finder object."""
@@ -58,13 +56,13 @@ class Finder(object):
         for pos in value:
             assert (0 <= pos <= len(self.text))
 
-    def next(self):
+    def __next__(self):
         """Find the next match of pattern.
 
         Raise :exc:`StopIteration` if no next match found.
         Return tuple of match start, end position.
         """
-        if isinstance(self.pattern, basestring):
+        if isinstance(self.pattern, str):
             text = self.text
             pattern = self.pattern
             if self.ignore_case:
@@ -84,7 +82,7 @@ class Finder(object):
                 if self.pos == len(self.text):
                     raise StopIteration
                 self.pos += 1
-                return self.next()
+                return next(self)
             self.match = match
             self.match_span = match.span()
 
@@ -104,7 +102,7 @@ class Finder(object):
         Raise :exc:`StopIteration` if no previous match found.
         Return tuple of match start, end position.
         """
-        if isinstance(self.pattern, basestring):
+        if isinstance(self.pattern, str):
             text = self.text
             pattern = self.pattern
             if self.ignore_case:
@@ -120,7 +118,7 @@ class Finder(object):
             match = None
             while True:
                 try:
-                    candidate = iterator.next()
+                    candidate = next(iterator)
                     if candidate.end() > self.pos:
                         raise StopIteration
                 except StopIteration:
@@ -154,7 +152,7 @@ class Finder(object):
         a, z = self.match_span
         orig_length = len(self.text)
         replacement = self.replacement
-        if not isinstance(self.pattern, basestring):
+        if not isinstance(self.pattern, str):
             replacement = self.match.expand(self.replacement)
         self.text = self.text[:a] + replacement + self.text[z:]
 
@@ -182,7 +180,7 @@ class Finder(object):
         count = 0
         while True:
             try:
-                self.next()
+                next(self)
             except StopIteration:
                 self.pos = len(self.text)
                 self.match_span = None

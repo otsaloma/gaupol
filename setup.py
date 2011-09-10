@@ -142,8 +142,8 @@ class Distribution(distribution):
             if line.startswith("["):
                 dest = line[1:-1]
                 continue
-            files = filter(fok, glob.glob(line))
-            files = filter(os.path.isfile, files)
+            files = list(filter(fok, glob.glob(line)))
+            files = list(filter(os.path.isfile, files))
             assert files
             self.data_files.append((dest, files))
         fobj.close()
@@ -220,7 +220,7 @@ class Distribution(distribution):
         strtobool = distutils.util.strtobool
         for option in ("with_aeidon", "with_gaupol", "with_iso_codes"):
             value = getattr(self, option)
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 setattr(self, option, strtobool(value))
         return value
 
@@ -412,7 +412,7 @@ class SDistGna(sdist):
             tobj.extract(member, temp_dir)
         log.info("comparing tarball (tmp) with working copy (../..)")
         os.system('diff -qr -x ".*" -x "*.pyc" ../.. %s' % test_dir)
-        response = raw_input("Are all files in the tarball [Y/n]? ")
+        response = input("Are all files in the tarball [Y/n]? ")
         if response.lower() == "n":
             raise SystemExit("Must edit MANIFEST.in")
         shutil.rmtree(test_dir)

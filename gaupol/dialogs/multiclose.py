@@ -43,7 +43,7 @@ class MultiCloseDialog(gaupol.BuilderDialog):
     def _init_main_tree_view(self):
         """Initialize the main tree view."""
         store = self._init_tree_view(self._main_tree_view)
-        for page in filter(lambda x: x.project.main_changed, self.pages):
+        for page in [x for x in self.pages if x.project.main_changed]:
             store.append((page, True, page.get_main_basename()))
         self._main_vbox.props.visible = (len(store) > 0)
 
@@ -64,7 +64,7 @@ class MultiCloseDialog(gaupol.BuilderDialog):
     def _init_tran_tree_view(self):
         """Initialize the translation tree view."""
         store = self._init_tree_view(self._tran_tree_view)
-        for page in filter(lambda x: x.project.tran_changed, self.pages):
+        for page in [x for x in self.pages if x.project.tran_changed]:
             store.append((page, True, page.get_translation_basename()))
         self._tran_vbox.props.visible = (len(store) > 0)
 
@@ -87,9 +87,9 @@ class MultiCloseDialog(gaupol.BuilderDialog):
     def _on_response(self, dialog, response):
         """Save the selected documents and close pages."""
         if response == gtk.RESPONSE_YES:
-            map(self._save_and_close_page, self.pages)
+            list(map(self._save_and_close_page, self.pages))
         if response == gtk.RESPONSE_NO:
-            map(lambda x: self.application.close(x, False), self.pages)
+            list(map(lambda x: self.application.close(x, False), self.pages))
 
     def _on_tree_view_cell_toggled(self, renderer, row, store):
         """Toggle save document check button value."""

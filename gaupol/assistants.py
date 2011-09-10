@@ -16,7 +16,7 @@
 
 """Assistant to guide through multiple text correction tasks."""
 
-from __future__ import division
+
 
 import aeidon
 import gaupol
@@ -195,11 +195,9 @@ class IntroductionPage(BuilderPage):
         self._tree_view.get_selection().unselect_all()
 
 
-class LocalePage(BuilderPage):
+class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
     """Page with script, language and coutry based pattern selection."""
-
-    __metaclass__ = gaupol.ContractualGObject
     _ui_file_basename = NotImplementedError
 
     _widgets = ("country_combo",
@@ -371,7 +369,7 @@ class LocalePage(BuilderPage):
         script = self._get_script()
         language = self._get_language()
         codes = self._manager.get_countries(script, language)
-        names = map(aeidon.countries.code_to_name, codes)
+        names = list(map(aeidon.countries.code_to_name, codes))
         items = [(codes[i], names[i]) for i in range(len(codes))]
         items.sort(key=lambda x: x[1])
         self._populate_combo(self._country_combo, items, self.conf.country)
@@ -380,7 +378,7 @@ class LocalePage(BuilderPage):
         """Populate the language combo box."""
         script = self._get_script()
         codes = self._manager.get_languages(script)
-        names = map(aeidon.languages.code_to_name, codes)
+        names = list(map(aeidon.languages.code_to_name, codes))
         items = [(codes[i], names[i]) for i in range(len(codes))]
         items.sort(key=lambda x: x[1])
         self._populate_combo(self._language_combo, items, self.conf.language)
@@ -388,7 +386,7 @@ class LocalePage(BuilderPage):
     def _populate_script_combo(self):
         """Populate the script combo box."""
         codes = self._manager.get_scripts()
-        names = map(aeidon.scripts.code_to_name, codes)
+        names = list(map(aeidon.scripts.code_to_name, codes))
         items = [(codes[i], names[i]) for i in range(len(codes))]
         items.sort(key=lambda x: x[1])
         self._populate_combo(self._script_combo, items, self.conf.script)
@@ -471,7 +469,7 @@ class CommonErrorPage(LocalePage):
         def use_pattern(pattern):
             classes = set(pattern.get_field_list("Classes"))
             return(bool(classes.intersection(set(self.conf.classes))))
-        return filter(use_pattern, patterns)
+        return list(filter(use_pattern, patterns))
 
     def _init_values(self):
         """Initialize default values for widgets."""
@@ -536,11 +534,9 @@ class HearingImpairedPage(LocalePage):
         project.remove_hearing_impaired(indices, doc, patterns)
 
 
-class JoinSplitWordsPage(BuilderPage):
+class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
     """Page for joining or splitting words based on spell-check suggestions."""
-
-    __metaclass__ = gaupol.ContractualGObject
     _widgets = ("language_button", "join_check", "split_check")
 
     def __init___require(self, assistant):
@@ -637,14 +633,14 @@ class LineBreakPage(LocalePage):
         """Return the maximum line length to skip."""
         if self.conf.use_skip_max_length:
             return self.conf.skip_max_length
-        return sys.maxint
+        return sys.maxsize
 
     @property
     def _max_skip_lines(self):
         """Return the maximum amount of lines to skip."""
         if self.conf.use_skip_max_lines:
             return self.conf.skip_max_lines
-        return sys.maxint
+        return sys.maxsize
 
     def correct_texts(self, project, indices, doc):
         """Correct texts in `project`."""
@@ -918,7 +914,7 @@ class ConfirmationPage(BuilderPage):
     def _on_tree_view_cell_edited(self, renderer, row, text):
         """Edit text in the corrected text column."""
         store = self._tree_view.get_model()
-        store[row][4] = unicode(text)
+        store[row][4] = str(text)
 
     def _on_tree_view_cell_toggled(self, renderer, row):
         """Toggle accept column value."""
@@ -1107,11 +1103,11 @@ class TextAssistant(gtk.Assistant):
     def _prepare_introduction_page(self):
         """Prepare introduction page content."""
         n = self.get_n_pages()
-        pages = map(self.get_nth_page, range(n))
+        pages = list(map(self.get_nth_page, list(range(n))))
         pages.remove(self._introduction_page)
         pages.remove(self._progress_page)
         pages.remove(self._confirmation_page)
-        pages = filter(lambda x: hasattr(x, "correct_texts"), pages)
+        pages = [x for x in pages if hasattr(x, "correct_texts")]
         self._introduction_page.populate_tree_view(pages)
 
     def _prepare_progress_page(self, pages):
@@ -1140,7 +1136,7 @@ class TextAssistant(gtk.Assistant):
         The first one of `pages` must have a "correct_texts" attribute.
         The visibilities of other pages are kept in sync with the first page.
         """
-        map(self.add_page, pages)
+        list(map(self.add_page, pages))
         def on_notify_visible(page, prop, pages):
             for page in pages[1:]:
                 page.props.visible = pages[0].props.visible

@@ -16,7 +16,7 @@
 
 """Opening subtitle files and creating new projects."""
 
-from __future__ import division
+
 
 import aeidon
 import gaupol
@@ -25,11 +25,9 @@ import os
 _ = aeidon.i18n._
 
 
-class OpenAgent(aeidon.Delegate):
+class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Opening subtitle files and creating new projects."""
-
-    __metaclass__ = aeidon.Contractual
 
     def _append_subtitles(self, from_page, to_page):
         """Append subtitles in `from_page` to `to_page`.
@@ -39,7 +37,7 @@ class OpenAgent(aeidon.Delegate):
         fp = from_page.project
         tp = to_page.project
         tn = len(tp.subtitles)
-        indices = range(tn, tn + len(fp.subtitles))
+        indices = list(range(tn, tn + len(fp.subtitles)))
         tp.block("action-done")
         tp.insert_subtitles(indices, fp.subtitles)
         tp.set_action_description(aeidon.registers.DO, _("Appending file"))
@@ -54,7 +52,7 @@ class OpenAgent(aeidon.Delegate):
         """Raise :exc:`gaupol.Default` if file at `path` already open."""
         for page in self.pages:
             files = (page.project.main_file, page.project.tran_file)
-            paths = [x.path for x in filter(None, files)]
+            paths = [x.path for x in [_f for _f in files if _f]]
             if not path in paths: continue
             self.set_current_page(page)
             message = _('File "%s" is already open')
@@ -80,7 +78,7 @@ class OpenAgent(aeidon.Delegate):
 
     def _get_encodings_ensure(self, value, first=None):
         assert value
-        for encoding in filter(lambda x: x != "auto", value):
+        for encoding in [x for x in value if x != "auto"]:
             assert aeidon.encodings.is_valid_code(encoding)
         if first is not None:
             assert value[0] == first
@@ -119,7 +117,7 @@ class OpenAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_new_project_activate(self, *args):
         """Create a new project."""
-        page = gaupol.Page(self.counter.next())
+        page = gaupol.Page(next(self.counter))
         page.project.insert_subtitles((0,), register=None)
         self.add_page(page)
 
@@ -128,7 +126,7 @@ class OpenAgent(aeidon.Delegate):
         self, notebook, context, x, y, selection_data, info, time):
         """Open main files from dragged URIs."""
         uris = selection_data.get_uris()
-        paths = map(aeidon.util.uri_to_path, uris)
+        paths = list(map(aeidon.util.uri_to_path, uris))
         self.open_main(paths)
 
     @aeidon.deco.export
@@ -369,7 +367,8 @@ class OpenAgent(aeidon.Delegate):
         except aeidon.FormatError:
             gaupol.util.set_cursor_normal(self.window)
             self._show_format_error_dialog(basename)
-        except IOError as (no, message):
+        except IOError as xxx_todo_changeme:
+            (no, message) = xxx_todo_changeme.args
             gaupol.util.set_cursor_normal(self.window)
             self._show_io_error_dialog(basename, message)
         except aeidon.ParseError:
@@ -469,7 +468,7 @@ class OpenAgent(aeidon.Delegate):
         `path` can be a sequence of paths to open multiple files.
         """
         if isinstance(path, (list, set, tuple)):
-            return map(lambda x: self.open_main(x, encoding), sorted(path))
+            return [self.open_main(x, encoding) for x in sorted(path)]
         encodings = self._get_encodings(encoding)
         page = self._open_file(path, encodings, aeidon.documents.MAIN)
         gaupol.util.set_cursor_busy(self.window)

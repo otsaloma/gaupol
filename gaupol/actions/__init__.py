@@ -28,4 +28,4 @@ from gaupol.actions.search import *
 from gaupol.actions.text import *
 from gaupol.actions.view import *
 
-__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))
+__all__ = tuple([x for x in dir() if x.endswith("Action")])

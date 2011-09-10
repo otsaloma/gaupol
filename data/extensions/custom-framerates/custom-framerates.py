@@ -159,7 +159,7 @@ class CustomFrameratesExtension(gaupol.Extension):
         for value in sorted(self._conf.framerates):
             name = "FPS_%s" % (("%.3f" % value).replace(".", "_"))
             if hasattr(aeidon.framerates, name):
-                print "Framerate %.3f already exists!" % value
+                print("Framerate %.3f already exists!" % value)
                 continue
             setattr(aeidon.framerates, name, aeidon.EnumerationItem())
             framerate = getattr(aeidon.framerates, name)

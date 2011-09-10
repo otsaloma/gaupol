@@ -87,7 +87,7 @@ class Subtitle(object):
 
     def _convert_position(self, value):
         """Return `value` of position in correct mode."""
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             if self._mode == aeidon.modes.TIME:
                 return value
             if self._mode == aeidon.modes.FRAME:
@@ -255,7 +255,7 @@ class Subtitle(object):
     @main_text.setter
     def main_text(self, value):
         """Set main text from `value`."""
-        self._main_text = unicode(value)
+        self._main_text = str(value)
 
     @property
     def mode(self):
@@ -291,7 +291,7 @@ class Subtitle(object):
 
     def shift_positions(self, value):
         """Add `value` to start and end positions."""
-        if isinstance(value, basestring):
+        if isinstance(value, str):
             start = self.calc.add_times(self.start_time, value)
             end = self.calc.add_times(self.end_time, value)
             self.start = start
@@ -349,4 +349,4 @@ class Subtitle(object):
     @tran_text.setter
     def tran_text(self, value):
         """Set translation text from `value`."""
-        self._tran_text = unicode(value)
+        self._tran_text = str(value)

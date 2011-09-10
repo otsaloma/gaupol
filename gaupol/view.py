@@ -26,7 +26,7 @@ _ = aeidon.i18n._
 __all__ = ("View",)
 
 
-class View(gtk.TreeView):
+class View(gtk.TreeView, metaclass=gaupol.ContractualGObject):
 
     """Widget to display subtitle data in the form of a list.
 
@@ -37,8 +37,6 @@ class View(gtk.TreeView):
        these indices are not necessarily the same as the column indices in the
        underlying :class:`gtk.ListStore` data model.
     """
-
-    __metaclass__ = gaupol.ContractualGObject
 
     def __init__(self, edit_mode):
         """Initialize a :class:`View` object."""

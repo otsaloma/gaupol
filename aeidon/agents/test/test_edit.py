@@ -48,7 +48,7 @@ class TestEditAgent(aeidon.TestCase):
     def test_insert_subtitles__blank_end(self):
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
-        indices = range(orig_length, orig_length + 10)
+        indices = list(range(orig_length, orig_length + 10))
         self.project.insert_subtitles(indices)
         assert len(subtitles) == orig_length + 10
         assert subtitles == sorted(subtitles)

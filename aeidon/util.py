@@ -16,7 +16,7 @@
 
 """Miscellaneous functions."""
 
-from __future__ import absolute_import
+
 
 import aeidon
 import codecs
@@ -27,8 +27,8 @@ import os
 import re
 import subprocess
 import sys
-import urllib
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
 
 
 def affirm(value):
@@ -58,8 +58,8 @@ def compare_versions(x, y):
     ``MAJOR.MINOR.PATCH.{DATE/REVISION/...}``, where all items are integers.
     Return 1 if `x` newer, 0 if equal or -1 if `y` newer.
     """
-    return cmp(map(int, x.split(".")),
-               map(int, y.split(".")))
+    return cmp(list(map(int, x.split("."))),
+               list(map(int, y.split("."))))
 
 def connect_require(observer, observable, signal, *args):
     if observer is not observable:
@@ -91,7 +91,7 @@ def copy_dict_ensure(src, value):
 def copy_dict(src):
     """Copy `src` dictionary recursively and return copy."""
     dst = src.copy()
-    for key, value in src.iteritems():
+    for key, value in src.items():
         if isinstance(src[key], dict):
             dst[key] = copy_dict(src[key])
         if isinstance(src[key], list):
@@ -178,7 +178,7 @@ def flatten(lst):
 def get_all(names, pattern=None):
     """Return a tuple of `names` filtered by pattern to use as ``__all__``."""
     import __future__
-    for i in reversed(range(len(names))):
+    for i in reversed(list(range(len(names)))):
         if ((names[i].startswith("_")) or
             (names[i].endswith("_require")) or
             (names[i].endswith("_ensure")) or
@@ -187,12 +187,12 @@ def get_all(names, pattern=None):
             names.pop(i)
     if pattern is not None:
         regex = re.compile(pattern, re.UNICODE)
-        names = filter(regex.search, names)
+        names = list(filter(regex.search, names))
     return tuple(names)
 
 def get_chardet_version_ensure(value):
     if value is not None:
-        assert isinstance(value, basestring)
+        assert isinstance(value, str)
 
 @aeidon.deco.contractual
 def get_chardet_version():
@@ -224,7 +224,7 @@ def get_default_newline():
 
 def get_enchant_version_ensure(value):
     if value is not None:
-        assert isinstance(value, basestring)
+        assert isinstance(value, str)
 
 @aeidon.deco.contractual
 def get_enchant_version():
@@ -248,7 +248,7 @@ def get_ranges_require(lst):
 
 def get_ranges_ensure(value, lst):
     for item in value:
-        assert item == range(item[0], item[-1] + 1)
+        assert item == list(range(item[0], item[-1] + 1))
 
 @aeidon.deco.contractual
 def get_ranges(lst):
@@ -279,7 +279,7 @@ def get_sorted_unique(lst):
     [1, 2, 3, 4]
     """
     lst = sorted(lst)
-    for i in reversed(range(1, len(lst))):
+    for i in reversed(list(range(1, len(lst)))):
         if lst[i] == lst[i - 1]:
             lst.pop(i)
     return lst
@@ -327,7 +327,7 @@ def get_unique(lst, keep_last=False):
     lst = lst[:]
     if keep_last:
         lst.reverse()
-    for i in reversed(range(len(lst))):
+    for i in reversed(list(range(len(lst)))):
         for j in range(0, i):
             if lst[j] == lst[i]:
                 lst.pop(i)
@@ -382,29 +382,29 @@ def path_to_uri(path):
     """Convert local filepath to URI."""
     if sys.platform == "win32":
         path = "/%s" % path.replace("\\", "/")
-    return "file://%s" % urllib.quote(path)
+    return "file://%s" % urllib.parse.quote(path)
 
 def print_read_io(exc_info, path):
     """Print :exc:`IOError` message to standard output."""
-    print "Failed to read file '%s': %s." % (path, exc_info[1].args[1])
+    print("Failed to read file '%s': %s." % (path, exc_info[1].args[1]))
 
 def print_read_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
-    print "Failed to decode file '%s' with codec '%s'." % (path, encoding)
+    print("Failed to decode file '%s' with codec '%s'." % (path, encoding))
 
 def print_remove_os(exc_info, path):
     """Print :exc:`OSError` message to standard output."""
-    print "Failed to remove file '%s': %s." % (path, exc_info[1].args[1])
+    print("Failed to remove file '%s': %s." % (path, exc_info[1].args[1]))
 
 def print_write_io(exc_info, path):
     """Print :exc:`IOError` message to standard output."""
-    print "Failed to write file '%s': %s." % (path, exc_info[1].args[1])
+    print("Failed to write file '%s': %s." % (path, exc_info[1].args[1]))
 
 def print_write_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
-    print "Failed to encode file '%s' with codec '%s'." % (path, encoding)
+    print("Failed to encode file '%s' with codec '%s'." % (path, encoding))
 
 def read_require(path, encoding=None, fallback="utf_8"):
     if encoding is not None:
@@ -483,7 +483,8 @@ def start_process(command, **kwargs):
                                 universal_newlines=True,
                                 **kwargs)
 
-    except OSError as (no, message):
+    except OSError as xxx_todo_changeme:
+        (no, message) = xxx_todo_changeme.args
         raise aeidon.ProcessError(message)
 
 def title_to_lower_case_ensure(value, title_name):
@@ -506,13 +507,13 @@ def title_to_lower_case(title_name):
 
 def uri_to_path(uri):
     """Convert `uri` to local filepath."""
-    uri = urllib.unquote(uri)
+    uri = urllib.parse.unquote(uri)
     if sys.platform == "win32":
-        path = urlparse.urlsplit(uri)[2]
+        path = urllib.parse.urlsplit(uri)[2]
         while path.startswith("/"):
             path = path[1:]
         return path.replace("/", "\\")
-    return urlparse.urlsplit(uri)[2]
+    return urllib.parse.urlsplit(uri)[2]
 
 def write_require(path, text, encoding=None, fallback="utf_8"):
     if encoding is not None:

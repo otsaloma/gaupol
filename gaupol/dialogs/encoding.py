@@ -24,11 +24,9 @@ _ = aeidon.i18n._
 __all__ = ("EncodingDialog", "MenuEncodingDialog")
 
 
-class EncodingDialog(gaupol.BuilderDialog):
+class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for selecting a character encoding."""
-
-    __metaclass__ = aeidon.Contractual
 
     _widgets = ("tree_view",)
 
@@ -67,7 +65,7 @@ class EncodingDialog(gaupol.BuilderDialog):
 
     def _on_tree_view_row_activated(self, *args):
         """Send response to select activated character encoding."""
-        print "ACTIVATED"
+        print("ACTIVATED")
         self.response(gtk.RESPONSE_OK)
 
     def get_encoding_ensure(self, value):

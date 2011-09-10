@@ -40,7 +40,7 @@ def _blocked(function):
     return wrapper
 
 
-class TimeEntry(gtk.Entry):
+class TimeEntry(gtk.Entry, metaclass=gaupol.ContractualGObject):
 
     """Entry for time data in format ``[-]HH:MM:SS.SSS``.
 
@@ -50,8 +50,6 @@ class TimeEntry(gtk.Entry):
     This widget uses :func:`glib.idle_add` a lot, which means that clients may
     need to call :func:`gtk.main_iteration` to ensure proper updating.
     """
-
-    __metaclass__ = gaupol.ContractualGObject
     _re_digit = re.compile(r"\d")
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 

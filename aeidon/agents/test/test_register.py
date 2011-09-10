@@ -24,7 +24,7 @@ class TestRegisterAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
-        self.delegate = self.project.undo.im_self
+        self.delegate = self.project.undo.__self__
 
     def test__on_notify_undo_limit(self):
         self.project.clear_texts((0,), MAIN)

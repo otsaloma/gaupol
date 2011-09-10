@@ -373,4 +373,4 @@ class SplitProjectAction(gaupol.Action):
         aeidon.util.affirm(len(page.project.subtitles) > 1)
 
 
-__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))
+__all__ = tuple([x for x in dir() if x.endswith("Action")])

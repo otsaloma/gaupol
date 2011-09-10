@@ -70,7 +70,7 @@ class TestSubtitleFile(aeidon.TestCase):
         with open(path, "r") as fobj:
             text = fobj.read()
         with codecs.open(path, "w", "utf_16_be") as fobj:
-            fobj.write(unicode(codecs.BOM_UTF16_BE, "utf_16_be"))
+            fobj.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
             fobj.write(text)
         sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_be")
         sfile.read()
@@ -80,7 +80,7 @@ class TestSubtitleFile(aeidon.TestCase):
         with open(path, "r") as fobj:
             text = fobj.read()
         with codecs.open(path, "w", "utf_16_le") as fobj:
-            fobj.write(unicode(codecs.BOM_UTF16_LE, "utf_16_le"))
+            fobj.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
             fobj.write(text)
         sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_le")
         sfile.read()

@@ -36,8 +36,8 @@ class ViewAgent(aeidon.Delegate):
         gaupol.conf.editor.framerate = framerate
         self.get_framerate_action(framerate).set_active(True)
         if page.edit_mode != page.project.main_file.mode:
-            rows = range(len(page.project.subtitles))
-            fields = filter(lambda x: x.is_position, gaupol.fields)
+            rows = list(range(len(page.project.subtitles)))
+            fields = [x for x in gaupol.fields if x.is_position]
             page.reload_view(rows, fields)
         gaupol.util.set_cursor_normal(self.window)
 
@@ -58,8 +58,8 @@ class ViewAgent(aeidon.Delegate):
         gaupol.conf.editor.framerate = framerate
         self.framerate_combo.set_active(framerate)
         if page.edit_mode != page.project.main_file.mode:
-            rows = range(len(page.project.subtitles))
-            fields = filter(lambda x: x.is_position, gaupol.fields)
+            rows = list(range(len(page.project.subtitles)))
+            fields = [x for x in gaupol.fields if x.is_position]
             page.reload_view(rows, fields)
         gaupol.util.set_cursor_normal(self.window)
 

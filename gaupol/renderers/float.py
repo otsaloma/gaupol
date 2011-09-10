@@ -38,7 +38,7 @@ class FloatCellRenderer(gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Cut decimals to fixed precision."""
-        self._text = text = unicode(self.props.text)
+        self._text = text = str(self.props.text)
         if not text: return
         has_comma = text.find(",") > 0
         text = text.replace(",", ".")

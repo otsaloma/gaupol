@@ -20,7 +20,7 @@ import aeidon
 _ = aeidon.i18n._
 
 
-class SearchAgent(aeidon.Delegate):
+class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Searching for and replacing text.
 
@@ -38,8 +38,6 @@ class SearchAgent(aeidon.Delegate):
     those texts to the finder and raising :exc:`StopIteration` when no more
     matches are found.
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize a :class:`SearchAgent` object."""
@@ -129,7 +127,7 @@ class SearchAgent(aeidon.Delegate):
             if pos is not None:
                 self._finder.pos = pos
             try:
-                match_span = self._finder.next()
+                match_span = next(self._finder)
             except StopIteration:
                 # Raise StopIteration if a full loop around all target
                 # documents and indices has been made with no matches.
@@ -156,7 +154,7 @@ class SearchAgent(aeidon.Delegate):
         Return tuple of index, document, match span.
         """
         indices = self._indices or self.get_all_indices()
-        for index in reversed(range(min(indices), index + 1)):
+        for index in reversed(list(range(min(indices), index + 1))):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:
@@ -283,7 +281,7 @@ class SearchAgent(aeidon.Delegate):
                                    register=register)
 
                 self.set_action_description(register, _("Replacing all"))
-        if (len(counts.keys()) == 2) and all(counts.values()):
+        if (len(list(counts.keys())) == 2) and all(counts.values()):
             self.group_actions(register, 2, _("Replacing all"))
         return sum(counts.values())
 
@@ -294,17 +292,17 @@ class SearchAgent(aeidon.Delegate):
         ``DOTALL``, ``MULTILINE`` and ``UNICODE`` are automatically added to
         flags. Raise :exc:`re.error` if bad pattern.
         """
-        self._finder.set_regex(unicode(pattern), flags)
+        self._finder.set_regex(str(pattern), flags)
 
     @aeidon.deco.export
     def set_search_replacement(self, replacement):
         """Set the replacement string."""
-        self._finder.replacement = unicode(replacement)
+        self._finder.replacement = str(replacement)
 
     @aeidon.deco.export
     def set_search_string(self, pattern, ignore_case=False):
         """Set the string pattern to find."""
-        self._finder.pattern = unicode(pattern)
+        self._finder.pattern = str(pattern)
         self._finder.ignore_case = ignore_case
 
     def set_search_target_require(self, indices=None, docs=None, wrap=True):

@@ -33,7 +33,7 @@ def _mutation(function):
     return wrapper
 
 
-class ObservableDict(dict):
+class ObservableDict(dict, metaclass=aeidon.Contractual):
 
     """Observable version of ``dict``.
 
@@ -41,14 +41,12 @@ class ObservableDict(dict):
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
 
-    __metaclass__ = aeidon.Contractual
-
     def __copy__(self):
-        dic = dict(copy.copy(x) for  x in self.items())
+        dic = dict(copy.copy(x) for  x in list(self.items()))
         return self.__class__(dic, self.master, self.name)
 
     def __deepcopy__(self, memo):
-        dic = dict(copy.deepcopy(x) for  x in self.items())
+        dic = dict(copy.deepcopy(x) for  x in list(self.items()))
         return self.__class__(dic, self.master, self.name)
 
     @_mutation
@@ -88,15 +86,13 @@ class ObservableDict(dict):
         return dict.update(self, *args, **kwargs)
 
 
-class ObservableList(list):
+class ObservableList(list, metaclass=aeidon.Contractual):
 
     """Observable version of ``list``.
 
     :ivar master: Master instance with a ``notify`` method
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __copy__(self):
         lst = list(copy.copy(x) for x in self)
@@ -167,15 +163,13 @@ class ObservableList(list):
         return list.sort(self, *args, **kwargs)
 
 
-class ObservableSet(set):
+class ObservableSet(set, metaclass=aeidon.Contractual):
 
     """Observable version of ``set``.
 
     :ivar master: Master instance with a ``notify`` method
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __copy__(self):
         zet = set(copy.copy(x) for x in self)

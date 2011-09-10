@@ -31,14 +31,14 @@ _ = aeidon.i18n._
 def _check_dependencies():
     """Check existance and versions of dependencies."""
     if sys.version_info[:3] < (2, 6, 0):
-        print "Python 2.6 or greater is required to run Gaupol."
+        print("Python 2.6 or greater is required to run Gaupol.")
         raise SystemExit(1)
     try:
         import gtk
         if gtk.pygtk_version < (2, 16, 0):
             raise ImportError
     except ImportError:
-        print "PyGTK 2.16 or greater is required to run Gaupol."
+        print("PyGTK 2.16 or greater is required to run Gaupol.")
         raise SystemExit(1)
 
 def _init_application(opts, args):
@@ -49,7 +49,7 @@ def _init_application(opts, args):
     for arg in filter(re_jump.match, args):
         jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
         args.remove(arg)
-    paths = map(os.path.abspath, args)
+    paths = list(map(os.path.abspath, args))
     if not opts.encoding in (None, "auto"):
         try: opts.encoding = aeidon.encodings.translate_code(opts.encoding)
         except ValueError:
@@ -92,12 +92,12 @@ def _on_parser_list_encodings(*args):
     encodings = [x[0] for x in aeidon.encodings.get_valid()]
     if aeidon.util.chardet_available():
         encodings.insert(0, "auto")
-    print "\n".join(encodings)
+    print("\n".join(encodings))
     raise SystemExit(0)
 
 def _on_parser_version(*args):
     """Show the version number and exit."""
-    print "gaupol %s" % gaupol.__version__
+    print("gaupol %s" % gaupol.__version__)
     raise SystemExit(0)
 
 def _parse_args(args):

@@ -22,13 +22,9 @@ import string
 import subprocess
 
 
-class PreviewAgent(aeidon.Delegate):
+class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Previewing subtitles with a video player."""
-
-    # pylint: disable=W0201
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize a :class:`aeidon.PreviewAgent` object."""
@@ -105,8 +101,7 @@ class PreviewAgent(aeidon.Delegate):
         basename_sub = os.path.basename(self.main_file.path)
         rootname_sub = os.path.splitext(basename_sub)[0]
         for extension in extensions:
-            for video_path in filter(lambda x: x.endswith(extension),
-                                     os.listdir(dirname)):
+            for video_path in [x for x in os.listdir(dirname) if x.endswith(extension)]:
 
                 basename_video = os.path.basename(video_path)
                 rootname_video = os.path.splitext(basename_video)[0]

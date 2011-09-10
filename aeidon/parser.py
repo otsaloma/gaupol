@@ -21,7 +21,7 @@ import aeidon
 __all__ = ("Parser",)
 
 
-class Parser(aeidon.Finder):
+class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
 
     """Text parser for markup-tag-aware text editing.
 
@@ -48,8 +48,6 @@ class Parser(aeidon.Finder):
     if no other tags are found in the text and if the text has at least two
     lines. Either margins or tags will always be empty.
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, re_tag=None, clean_func=None):
         """Initialize a :class:`Parser` object."""

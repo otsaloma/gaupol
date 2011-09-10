@@ -43,16 +43,12 @@ This way it will not be in any way processed by the undo/redo system.
 import aeidon
 
 
-class RegisterAgent(aeidon.Delegate):
+class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Managing revertable actions.
 
     :ivar _do_description: Original description of the action
     """
-
-    # pylint: disable=E1101,W0201
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize a :class:`RegisterAgent` object."""

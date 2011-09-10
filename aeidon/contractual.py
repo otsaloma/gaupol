@@ -22,6 +22,7 @@
 
 import aeidon
 import functools
+import collections
 
 __all__ = ("Contractual",)
 
@@ -85,8 +86,8 @@ class Contractual(type):
     def __new__(meta, class_name, bases, dic):
         """Return instance with method calls wrapped in condition calls."""
         new_dict = dic.copy()
-        for name, attr in dic.items():
-            if not callable(attr): continue
+        for name, attr in list(list(dic.items())):
+            if not isinstance(attr, collections.Callable): continue
 
             require_name = "%s_require" % name
             if name.startswith("__"):

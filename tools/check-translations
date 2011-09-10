@@ -56,39 +56,39 @@ for name in sorted(glob.glob("*.po")):
         if "_" in msgid:
             if not "_" in msgstr:
                 nbad += 1
-                print "%s:%d: missing accelerator in" % pos
-                print '"%s"' % msgid
-                print '"%s"' % msgstr
-                print ""
+                print("%s:%d: missing accelerator in" % pos)
+                print('"%s"' % msgid)
+                print('"%s"' % msgstr)
+                print("")
 
         # Check that the translation of a label includes
         # a terminating colon.
         if msgid.endswith(":"):
             if not msgstr.endswith(":"):
                 nbad += 1
-                print "%s:%d: missing colon in" % pos
-                print '"%s"' % msgid
-                print '"%s"' % msgstr
-                print ""
+                print("%s:%d: missing colon in" % pos)
+                print('"%s"' % msgid)
+                print('"%s"' % msgstr)
+                print("")
 
         # Check that the translation of a menu item includes
         # an ellipsis defined by three dots.
         if "..." in msgid:
             if not "..." in msgstr:
                 nbad += 1
-                print "%s:%d: missing ellipsis in" % pos
-                print '"%s"' % msgid
-                print '"%s"' % msgstr
-                print ""
+                print("%s:%d: missing ellipsis in" % pos)
+                print('"%s"' % msgid)
+                print('"%s"' % msgstr)
+                print("")
 
         # Check that the translation of a menu item includes
         # an ellipsis defined by the Unicode character.
-        if u"…" in msgid:
-            if not u"…" in msgstr:
+        if "…" in msgid:
+            if not "…" in msgstr:
                 nbad += 1
-                print "%s:%d: missing ellipsis in" % pos
-                print '"%s"' % msgid
-                print '"%s"' % msgstr
-                print ""
+                print("%s:%d: missing ellipsis in" % pos)
+                print('"%s"' % msgid)
+                print('"%s"' % msgstr)
+                print("")
 
-    print "%s: %d bad, %d good messages" % (name, nbad, ntotal - nbad)
+    print("%s: %d bad, %d good messages" % (name, nbad, ntotal - nbad))

@@ -24,11 +24,9 @@ _ = aeidon.i18n._
 __all__ = ("HeaderDialog",)
 
 
-class HeaderDialog(gaupol.BuilderDialog):
+class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for editing subtitle file headers."""
-
-    __metaclass__ = aeidon.Contractual
 
     _widgets = ("copy_down_button",
                 "copy_hbox",
@@ -155,11 +153,11 @@ class HeaderDialog(gaupol.BuilderDialog):
         """Save `header` for `sfile`."""
         if sfile.format == aeidon.formats.MPSUB:
             return self._save_header_mpsub(sfile, header)
-        sfile.header = unicode(header)
+        sfile.header = str(header)
 
     def _save_header_mpsub(self, sfile, header):
         """Save `header` for MPsub format `sfile`."""
-        try:  sfile.set_header(unicode(header))
+        try:  sfile.set_header(str(header))
         except ValueError:
             return self._show_mpsub_error_dialog()
         if sfile.framerate is None: return

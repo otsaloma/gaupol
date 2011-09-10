@@ -23,6 +23,7 @@ import gtk
 import itertools
 import os
 import pango
+import collections
 _ = aeidon.i18n._
 
 __all__ = ("Application",)
@@ -45,15 +46,15 @@ class ApplicationMeta(aeidon.Contractual):
             agent_class = getattr(gaupol.agents, agent_class_name)
             def is_public_method(name):
                 return (not name.startswith("_") and
-                        callable(getattr(agent_class, name)))
+                        isinstance(getattr(agent_class, name), collections.Callable))
 
-            attr_names = filter(is_public_method, dir(agent_class))
+            attr_names = list(list(filter(is_public_method, dir(agent_class))))
             for attr_name in attr_names:
                 new_dict[attr_name] = getattr(agent_class, attr_name)
         return type.__new__(meta, class_name, bases, new_dict)
 
 
-class Application(aeidon.Observable):
+class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     """GTK+ user interface controller for :class:`aeidon.Project`.
 
@@ -83,8 +84,6 @@ class Application(aeidon.Observable):
      * ``quit``: application
      * ``text-assistant-request-pages``: application, assistant
     """
-
-    __metaclass__ = ApplicationMeta
 
     signals = ("page-added",
                "page-changed",
@@ -138,11 +137,11 @@ class Application(aeidon.Observable):
             agent = getattr(gaupol.agents, agent_class_name)(self)
             def is_delegate_method(name):
                 value = getattr(agent, name)
-                return (callable(value) and
+                return (isinstance(value, collections.Callable) and
                         hasattr(value, "export") and
                         value.export is True)
 
-            attr_names = filter(is_delegate_method, dir(agent))
+            attr_names = list(filter(is_delegate_method, dir(agent)))
             for attr_name in attr_names:
                 attr_value = getattr(agent, attr_name)
                 if attr_name in self._delegations:

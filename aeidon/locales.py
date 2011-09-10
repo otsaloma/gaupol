@@ -76,8 +76,8 @@ def get_system_modifier():
     """Return the script modifier of system or ``None``."""
     import locale
     names = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
-    values = map(os.environ.get, names)
-    values = filter(None, values)
+    values = list(map(os.environ.get, names))
+    values = [_f for _f in values if _f]
     for value in (x for x in values if x.count("@")):
         return value[value.index("@") + 1:value.index("@") + 5]
     return None

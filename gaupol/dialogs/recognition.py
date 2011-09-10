@@ -16,7 +16,7 @@
 
 """Dialog for generating subtitles by voice and speech recognition."""
 
-from __future__ import division
+
 
 import aeidon
 import gaupol
@@ -27,11 +27,9 @@ import os
 __all__ = ("SpeechRecognitionDialog",)
 
 
-class SpeechRecognitionDialog(gaupol.BuilderDialog):
+class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for generating subtitles by voice and speech recognition."""
-
-    __metaclass__ = aeidon.Contractual
 
     _widgets = ("acoustic_button",
                 "advance_spin",
@@ -209,8 +207,8 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog):
             self._stops[-1] = stop
         if name == "text":
             text = message.structure["text"]
-            if not isinstance(text, unicode):
-                text = unicode(text, errors="replace")
+            if not isinstance(text, str):
+                text = str(text, errors="replace")
             self._text = text
 
     def _on_bus_message_eos(self, bus, message):
@@ -304,7 +302,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog):
     def _prepare_page(self):
         """Prepare page properties for speech recognition."""
         if self._page is None:
-            self._page = gaupol.Page(self.application.counter.next())
+            self._page = gaupol.Page(next(self.application.counter))
             self.application.add_page(self._page)
         video_path = self._video_button.get_filename()
         self._page.project.video_path = video_path
@@ -322,7 +320,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog):
 
         self._page.project.main_changed = 1
         if self._page.project.subtitles:
-            indices = range(len(self._page.project.subtitles))
+            indices = list(range(len(self._page.project.subtitles)))
             self._page.project.remove_subtitles(indices, register=None)
 
     def _recognize_speech(self):

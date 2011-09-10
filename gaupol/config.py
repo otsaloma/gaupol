@@ -288,7 +288,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         def flatten(deep, parent):
             flat_dict = {parent: {}}
             deep = aeidon.util.copy_dict(deep)
-            for key, value in deep.iteritems():
+            for key, value in deep.items():
                 if isinstance(value, dict):
                     key = "::".join((parent, key))
                     value = flatten(value, key)
@@ -300,7 +300,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             return flat_dict
         final_dict = {}
         values = aeidon.util.copy_dict(values)
-        for key, value in values.iteritems():
+        for key, value in values.items():
             if isinstance(value, dict):
                 final_dict.update(flatten(value, key))
             else: # Non-dictionary key.
@@ -309,7 +309,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
 
     def connect_notify(self, sections, option, obj, *args):
         """Connect `option`'s notify signal to `obj`'s callback method."""
-        if isinstance(sections, basestring):
+        if isinstance(sections, str):
             sections = (sections,)
         container = self
         for section in sections:
@@ -325,7 +325,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
 
     def disconnect_notify(self, sections, option, obj):
         """Disconnect `option`'s notify signal from `obj`'s callback method."""
-        if isinstance(sections, basestring):
+        if isinstance(sections, str):
             sections = (sections,)
         container = self
         for section in sections:
@@ -344,7 +344,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
 
         Raise :exc:`KeyError` if section or option not found.
         """
-        if isinstance(sections, basestring):
+        if isinstance(sections, str):
             sections = (sections,)
         container = self._defaults
         for section in sections:
@@ -368,8 +368,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         except UnicodeError:
             aeidon.util.print_read_unicode(sys.exc_info(), self.path, encoding)
             raise # UnicodeError
-        lines = map(lambda x: x.strip(), lines)
-        lines = filter(lambda x: x and not x.startswith("#"), lines)
+        lines = [x.strip() for x in lines]
+        lines = [x for x in lines if x and not x.startswith("#")]
         for line in lines:
             if line.startswith("[") and line.endswith("]"):
                 sections = line[1:-1].strip().split("::")
@@ -387,9 +387,9 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 enum = enums.get(option, None)
                 try: value = json.loads(value, cls=EnumDecoder, enum=enum)
                 except (AttributeError, ValueError):
-                    print ("Failed to parse value '%s' of option '%s.%s' "
+                    print(("Failed to parse value '%s' of option '%s.%s' "
                            "from configuration file '%s'." % (
-                            value, "::".join(sections), option, self.path))
+                            value, "::".join(sections), option, self.path)))
 
                     continue
                 if not hasattr(container, option):
@@ -457,8 +457,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                         fobj.write("# ")
                 try: fobj.write("%s = %s" % (option, json_value))
                 except UnicodeError:
-                    print ("Failed to write value '%s' of option '%s.%s' "
+                    print(("Failed to write value '%s' of option '%s.%s' "
                            "to configuration file '%s'." % (
-                            value, section, option, self.path))
+                            value, section, option, self.path)))
 
                 fobj.write(os.linesep)

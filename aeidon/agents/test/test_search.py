@@ -63,7 +63,7 @@ class TestSearchAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
-        self.delegate = self.project.find_next.im_self
+        self.delegate = self.project.find_next.__self__
         texts = (("God has promised you that\n"
                   "you will go to Heaven?"),
                  ("So you are certain of\n"
@@ -74,7 +74,7 @@ class TestSearchAgent(aeidon.TestCase):
         for i, text in enumerate(texts):
             self.project.subtitles[i].main_text = text
             self.project.subtitles[i].tran_text = text
-        indices = range(3, len(self.project.subtitles))
+        indices = list(range(3, len(self.project.subtitles)))
         self.project.remove_subtitles(indices, register=None)
 
     def test_find_next__1(self):

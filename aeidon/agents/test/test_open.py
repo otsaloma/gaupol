@@ -23,7 +23,7 @@ class TestOpenAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
-        self.delegate = self.project.open_main.im_self
+        self.delegate = self.project.open_main.__self__
 
     def test_open__main(self):
         for format in aeidon.formats:
@@ -70,7 +70,7 @@ class TestOpenAgent(aeidon.TestCase):
                     self.project.open_main,
                     path, "ascii")
 
-        os.chmod(path, 0777)
+        os.chmod(path, 0o777)
 
     @aeidon.deco.monkey_patch(aeidon, "debug")
     def test_open_main__parse_error(self):

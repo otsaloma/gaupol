@@ -118,8 +118,8 @@ class TestModule(aeidon.TestCase):
         assert aeidon.encodings.get_valid()
         for item in aeidon.encodings.get_valid():
             assert aeidon.encodings.is_valid_code(item[0])
-            assert isinstance(item[1], basestring)
-            assert isinstance(item[2], basestring)
+            assert isinstance(item[1], str)
+            assert isinstance(item[2], str)
 
     @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_code")
     def test_get_valid__invalid(self):

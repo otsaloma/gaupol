@@ -21,7 +21,7 @@ class TestSaveAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
-        self.delegate = self.project.save_main.im_self
+        self.delegate = self.project.save_main.__self__
 
     def test__copy_file(self):
         copy_file = self.delegate._copy_file

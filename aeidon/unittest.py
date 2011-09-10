@@ -22,7 +22,7 @@ import os
 __all__ = ("TestCase",)
 
 
-class TestCase(object):
+class TestCase(object, metaclass=aeidon.Contractual):
 
     """Base class for unit test cases.
 
@@ -30,8 +30,6 @@ class TestCase(object):
     compatible. Tests should use plain ``assert`` statements to allow multiple
     different tools to be used to run the tests.
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def get_sample_text_ensure(self, value, format, name=None):
         assert value.count("a") > 10

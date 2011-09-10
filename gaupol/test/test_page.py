@@ -49,7 +49,7 @@ class TestPage(gaupol.TestCase):
         self.page.project.shift_positions(None, 3.0)
 
     def test__on_project_subtitles_changed(self):
-        rows = range(len(self.page.project.subtitles))
+        rows = list(range(len(self.page.project.subtitles)))
         self.page._on_project_subtitles_changed(self.page.project, rows)
 
     def test__on_project_subtitles_inserted(self):
@@ -59,8 +59,8 @@ class TestPage(gaupol.TestCase):
         self.page.project.remove_subtitles((2, 3))
 
     def test__on_project_subtitles_removed__51(self):
-        self.page.project.insert_subtitles(range(0, 51))
-        self.page.project.remove_subtitles(range(0, 51))
+        self.page.project.insert_subtitles(list(range(0, 51)))
+        self.page.project.remove_subtitles(list(range(0, 51)))
 
     def test__on_project_translation_file_opened(self):
         path = self.new_subrip_file()
@@ -111,7 +111,7 @@ class TestPage(gaupol.TestCase):
         assert name == _("%s translation") % self.page.untitle
 
     def test_reload_view(self):
-        rows = range(len(self.page.project.subtitles))
+        rows = list(range(len(self.page.project.subtitles)))
         fields = [x for x in gaupol.fields]
         fields.remove(gaupol.fields.NUMBER)
         self.page.reload_view(rows, fields)

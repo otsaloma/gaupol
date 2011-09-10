@@ -263,11 +263,9 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             self._preferences_button.set_sensitive(False)
 
 
-class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
+class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """File preferences page."""
-
-    __metaclass__ = aeidon.Contractual
 
     _widgets = ("file_add_button",
                 "file_auto_check",
@@ -493,7 +491,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
                      self._file_page,
                      self._preview_page):
 
-            for name in filter(lambda x: x.startswith("_on_"), dir(page)):
+            for name in [x for x in dir(page) if x.startswith("_on_")]:
                 callbacks[name] = getattr(page, name)
         return callbacks
 

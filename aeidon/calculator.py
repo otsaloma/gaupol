@@ -16,7 +16,7 @@
 
 """Time and frame calculator."""
 
-from __future__ import division
+
 
 import aeidon
 
@@ -58,7 +58,7 @@ class Calculator(object):
 
     def compare(self, x, y):
         """Return 1 if `x` is greater, 0 if equal and -1 if `y` greater."""
-        if isinstance(x, basestring):
+        if isinstance(x, str):
             return self.compare_times(x, y)
         if isinstance(x, int):
             return cmp(x, y)
@@ -91,7 +91,7 @@ class Calculator(object):
         >>> calc.get_middle("00:00:00.123", "00:00:10,456")
         '00:00:05.289'
         """
-        if isinstance(x, basestring):
+        if isinstance(x, str):
             x = self.time_to_seconds(x)
             y = self.time_to_seconds(y)
             return self.seconds_to_time((x + y) / 2)
@@ -132,7 +132,7 @@ class Calculator(object):
         sign = ("-" if time.startswith("-") else "")
         time = time.replace("-", "")
         time = time.replace(",", ".")
-        hours, minutes, seconds = map(float, time.split(":"))
+        hours, minutes, seconds = list(map(float, time.split(":")))
         return "%s%02.0f:%02.0f:%02.0f.%03.0f" % (sign,
                                                   hours,
                                                   minutes,
@@ -176,7 +176,7 @@ class Calculator(object):
 
     def to_frame(self, position):
         """Convert `position` to frame."""
-        if isinstance(position, basestring):
+        if isinstance(position, str):
             return self.time_to_frame(position)
         if isinstance(position, int):
             return position
@@ -187,7 +187,7 @@ class Calculator(object):
 
     def to_seconds(self, position):
         """Convert `position` to secods."""
-        if isinstance(position, basestring):
+        if isinstance(position, str):
             return self.time_to_seconds(position)
         if isinstance(position, int):
             return self.frame_to_seconds(position)
@@ -198,7 +198,7 @@ class Calculator(object):
 
     def to_time(self, position):
         """Convert `position` to time."""
-        if isinstance(position, basestring):
+        if isinstance(position, str):
             return position
         if isinstance(position, int):
             return self.frame_to_time(position)

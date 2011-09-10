@@ -21,11 +21,9 @@ import bisect
 _ = aeidon.i18n._
 
 
-class SetAgent(aeidon.Delegate):
+class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Setting values of single subtitle fields."""
-
-    __metaclass__ = aeidon.Contractual
 
     def _move_if_needed_require(self, index):
         assert 0 <= index < len(self.subtitles)
@@ -136,7 +134,7 @@ class SetAgent(aeidon.Delegate):
     @aeidon.deco.revertable
     def set_text(self, index, doc, value, register=-1):
         """Set the value of `doc`'s text."""
-        value = unicode(value)
+        value = str(value)
         subtitle = self.subtitles[index]
         orig_value = subtitle.get_text(doc)
         if value == orig_value: return

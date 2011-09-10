@@ -24,15 +24,13 @@ import os
 _ = aeidon.i18n._
 
 
-class UpdateAgent(aeidon.Delegate):
+class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Updating the application GUI.
 
     :ivar _message_id: A :class:`gtk.Statusbar` message ID
     :ivar _message_tag: A timeout from :func:`glib.timeout_add`
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize an :class:`UpdateAgent` object."""

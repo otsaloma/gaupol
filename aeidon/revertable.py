@@ -17,11 +17,12 @@
 """Actions that can be reverted, i.e. undone and redone."""
 
 import aeidon
+import collections
 
 __all__ = ("RevertableAction", "RevertableActionGroup",)
 
 
-class RevertableAction(object):
+class RevertableAction(object, metaclass=aeidon.Contractual):
 
     """Action that can be reverted, i.e. undone and redone.
 
@@ -32,8 +33,6 @@ class RevertableAction(object):
     :ivar revert_function: Method called to revert this action
     :ivar revert_kwargs: Keyword arguments passed to the revert method
     """
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, **kwargs):
         """Initialize a :class:`RevertableAction` object.
@@ -49,7 +48,7 @@ class RevertableAction(object):
         self.revert_args = ()
         self.revert_function = None
         self.revert_kwargs = {}
-        for key, value in kwargs.items():
+        for key, value in list(list(kwargs.items())):
             setattr(self, key, value)
 
     def _get_reversion_register_require(self):
@@ -64,7 +63,7 @@ class RevertableAction(object):
         raise ValueError("Invalid register: %s" % repr(self.register))
 
     def revert_require(self):
-        assert callable(self.revert_function)
+        assert isinstance(self.revert_function, collections.Callable)
 
     def revert(self):
         """Call the reversion function."""
@@ -91,5 +90,5 @@ class RevertableActionGroup(object):
         """
         self.actions = None
         self.description = None
-        for key, value in kwargs.items():
+        for key, value in list(kwargs.items()):
             setattr(self, key, value)

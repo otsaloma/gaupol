@@ -21,11 +21,9 @@ import gaupol
 _ = aeidon.i18n._
 
 
-class EditAgent(aeidon.Delegate):
+class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Editing subtitle data."""
-
-    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize an :class:`EditAgent` object."""
@@ -116,7 +114,7 @@ class EditAgent(aeidon.Delegate):
         """Extend the selection up to the first subtitle."""
         page = self.get_current_page()
         row = page.view.get_selected_rows()[-1]
-        rows = range(0, row + 1)
+        rows = list(range(0, row + 1))
         page.view.select_rows(rows)
 
     @aeidon.deco.export
@@ -124,7 +122,7 @@ class EditAgent(aeidon.Delegate):
         """Extend the selection up to the last subtitle."""
         page = self.get_current_page()
         row = page.view.get_selected_rows()[0]
-        rows = range(row, len(page.project.subtitles))
+        rows = list(range(row, len(page.project.subtitles)))
         page.view.select_rows(rows)
 
     @aeidon.deco.export

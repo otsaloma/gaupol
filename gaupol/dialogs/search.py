@@ -38,7 +38,7 @@ def page_changing(function):
     return wrapper
 
 
-class SearchDialog(gaupol.BuilderDialog):
+class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for searching for and replacing text.
 
@@ -51,8 +51,6 @@ class SearchDialog(gaupol.BuilderDialog):
     :ivar patterns: List of patterns previously searched for
     :ivar replacements: List of replacements previously used
     """
-
-    __metaclass__ = aeidon.Contractual
 
     _widgets = ("all_radio",
                 "current_radio",
@@ -157,8 +155,8 @@ class SearchDialog(gaupol.BuilderDialog):
         doc = None
         if page.view.is_text_column(col):
             doc = page.text_column_to_document(col)
-        docs = map(gaupol.util.text_field_to_document,
-                   gaupol.conf.search.fields)
+        docs = list(map(gaupol.util.text_field_to_document,
+                   gaupol.conf.search.fields))
 
         if (doc is None) or (not doc in docs):
             doc = (docs[0] if next else docs[-1])
@@ -261,7 +259,7 @@ class SearchDialog(gaupol.BuilderDialog):
         """Find the next match of pattern."""
         # Make sure the text view experiences a focus-out-event.
         self._next_button.grab_focus()
-        self.next()
+        next(self)
 
     def _on_pattern_entry_changed(self, entry):
         """Update action sensitivities."""
@@ -423,8 +421,8 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _update_search_targets(self):
         """Update search targets in all pages."""
-        docs = map(gaupol.util.text_field_to_document,
-                   gaupol.conf.search.fields)
+        docs = list(map(gaupol.util.text_field_to_document,
+                   gaupol.conf.search.fields))
 
         wrap = (gaupol.conf.search.target != gaupol.targets.ALL)
         for page in self.application.pages:
@@ -517,7 +515,7 @@ class SearchDialog(gaupol.BuilderDialog):
             return self._show_regex_error_dialog_replacement(str(message))
         shift = (len(subtitle.get_text(self._match_doc)) - length)
         self._match_span[1] += shift
-        (self.next if self._was_next else self.previous)()
+        (self.__next__ if self._was_next else self.previous)()
 
     def replace_all_require(self):
         assert self._pattern_entry.get_text()

@@ -124,7 +124,7 @@ class SubStationAlpha(aeidon.SubtitleFile):
             subtitle = self._get_subtitle()
             line = line.replace("Dialogue:", "").lstrip()
             values = self._re_separator.split(line, max_split)
-            for name, index in indices.items():
+            for name, index in list(indices.items()):
                 self._decode_field(name, values[index], subtitle)
             subtitles.append(subtitle)
         self.event_fields = tuple(fields)

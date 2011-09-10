@@ -30,7 +30,7 @@ class TestSaveAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.delegate = self.application.save_main.im_self
+        self.delegate = self.application.save_main.__self__
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_encoding_error_dialog(self):
@@ -77,7 +77,7 @@ class TestSaveAgent(gaupol.TestCase):
         page = self.application.get_current_page()
         os.chmod(page.project.main_file.path, 0000)
         self.raises(gaupol.Default, self.application.save_main, page)
-        os.chmod(page.project.main_file.path, 0777)
+        os.chmod(page.project.main_file.path, 0o777)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_save_main__unicode_error(self):

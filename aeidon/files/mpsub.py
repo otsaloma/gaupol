@@ -48,11 +48,11 @@ class MPsub(aeidon.SubtitleFile):
         """Return MPsub-style start and end frames."""
         starts = [x.start_frame for x in subtitles]
         ends = [x.end_frame for x in subtitles]
-        for i in reversed(range(1, len(subtitles))):
+        for i in reversed(list(range(1, len(subtitles)))):
             ends[i] = ends[i] - starts[i]
             starts[i] = starts[i] - ends[i - 1]
         ends[0] = ends[0] - starts[0]
-        return map(str, starts), map(str, ends)
+        return list(map(str, starts)), list(map(str, ends))
 
     def _get_positions(self, subtitles):
         """Return MPsub-style start and end positions."""
@@ -69,7 +69,7 @@ class MPsub(aeidon.SubtitleFile):
         deviation = 0
         # Avoid cumulation of rounding errors by keeping track of deviations
         # and adjusting times so that the deviation stays close to zero.
-        for i in reversed(range(1, len(subtitles))):
+        for i in reversed(list(range(1, len(subtitles)))):
             real_diff = ends[i] - starts[i]
             ends[i] = round(real_diff - deviation, 2)
             deviation += (ends[i] - real_diff)
@@ -78,7 +78,7 @@ class MPsub(aeidon.SubtitleFile):
             deviation += (starts[i] - real_diff)
         ends[0] = ends[0] - starts[0]
         to_string = lambda x: ("%.2f" % x).replace("-0.00", "0.00")
-        return map(to_string, starts), map(to_string, ends)
+        return list(map(to_string, starts)), list(map(to_string, ends))
 
     def _read_header(self, lines):
         """Read header and remove its lines."""
@@ -148,7 +148,7 @@ class MPsub(aeidon.SubtitleFile):
             self.mode = aeidon.modes.TIME
             self.framerate = aeidon.framerates.NONE
             return setattr(self, "header", header)
-        if mode in framerates.keys():
+        if mode in list(framerates.keys()):
             self.mode = aeidon.modes.FRAME
             self.framerate = framerates[mode]
             return setattr(self, "header", header)

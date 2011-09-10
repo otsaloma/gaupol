@@ -21,11 +21,9 @@ import re
 _ = aeidon.i18n._
 
 
-class FormatAgent(aeidon.Delegate):
+class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Changing the appearance of texts."""
-
-    __metaclass__ = aeidon.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
     def _change_case_first(self, parser, method):

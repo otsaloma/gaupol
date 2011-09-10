@@ -27,7 +27,7 @@ _ = aeidon.i18n._
 __all__ = ("Page",)
 
 
-class Page(aeidon.Observable):
+class Page(aeidon.Observable, metaclass=aeidon.Contractual):
 
     """User interface container and controller for :class:`aeidon.Project`.
 
@@ -45,8 +45,6 @@ class Page(aeidon.Observable):
     This class represents one page in a notebook of user interfaces for
     projects. The view is updated automatically when project data changes.
     """
-
-    __metaclass__ = aeidon.Contractual
     signals = ("close-request", "view-created")
 
     def __init__(self, count=0):

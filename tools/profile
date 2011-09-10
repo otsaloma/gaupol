@@ -12,7 +12,7 @@ import chardet
 import codecs
 import contextlib
 import copy
-import cPickle
+import pickle
 import cProfile
 import enchant
 import functools
@@ -42,9 +42,9 @@ import sys
 import tempfile
 import time
 import traceback
-import urllib
-import urllib2
-import urlparse
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
+import urllib.parse
 import webbrowser
 
 file_dir = os.path.dirname(os.path.abspath(__file__))

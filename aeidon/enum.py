@@ -70,7 +70,7 @@ class EnumerationItem(int):
         instance.parent = parent
         return instance
 
-    def __nonzero__(self):
+    def __bool__(self):
         """For consistency, always return True."""
         return True
 

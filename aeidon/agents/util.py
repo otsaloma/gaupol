@@ -20,16 +20,14 @@ import aeidon
 import os
 
 
-class UtilityAgent(aeidon.Delegate):
+class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Miscellaneous helper methods."""
-
-    __metaclass__ = aeidon.Contractual
 
     @aeidon.deco.export
     def get_all_indices(self):
         """Return a list of all indices of subtitles."""
-        return range(len(self.subtitles))
+        return list(range(len(self.subtitles)))
 
     @aeidon.deco.export
     def get_changed(self, doc):

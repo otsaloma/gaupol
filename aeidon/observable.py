@@ -17,11 +17,12 @@
 """Base class for observable objects."""
 
 import aeidon
+import collections
 
 __all__ = ("Observable",)
 
 
-class Observable(object):
+class Observable(object, metaclass=aeidon.Contractual):
 
     """Base class for observable objects.
 
@@ -41,8 +42,6 @@ class Observable(object):
 
     .. _GObject: http://www.pygtk.org/docs/pygobject/class-gobject.html
     """
-
-    __metaclass__ = aeidon.Contractual
 
     __slots__ = ("_blocked_signals",
                  "_blocked_state",
@@ -122,7 +121,7 @@ class Observable(object):
 
     def connect_require(self, signal, method, *args):
         assert signal in self._signal_handlers
-        assert callable(method)
+        assert isinstance(method, collections.Callable)
 
     def connect(self, signal, method, *args):
         """Register to receive notifications of ``signal``."""
@@ -133,7 +132,7 @@ class Observable(object):
 
     def disconnect(self, signal, method):
         """Remove registration to receive notifications of ``signal``."""
-        for i in reversed(range(len(self._signal_handlers[signal]))):
+        for i in reversed(list(list(range(len(self._signal_handlers[signal]))))):
             if self._signal_handlers[signal][i][0] == method:
                 self._signal_handlers[signal].pop(i)
 

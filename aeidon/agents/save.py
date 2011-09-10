@@ -22,13 +22,9 @@ import shutil
 import sys
 
 
-class SaveAgent(aeidon.Delegate):
+class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Writing subtitle data to file."""
-
-    # pylint: disable=E0203,E1101,W0201
-
-    __metaclass__ = aeidon.Contractual
 
     def _convert_markup(self, doc, from_format, to_format):
         """Convert markup in texts and return changed indices."""

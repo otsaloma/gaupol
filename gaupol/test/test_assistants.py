@@ -285,10 +285,10 @@ class TestLineBreakOptionsPage(_TestBuilderPage):
         self.page._skip_lines_check.set_active(True)
 
     def test__on_skip_unit_combo_changed(self):
-        map(self.page._skip_unit_combo.set_active, gaupol.length_units)
+        list(map(self.page._skip_unit_combo.set_active, gaupol.length_units))
 
     def test__on_unit_combo_changed(self):
-        map(self.page._skip_unit_combo.set_active, gaupol.length_units)
+        list(map(self.page._skip_unit_combo.set_active, gaupol.length_units))
 
 
 class TestProgressPage(_TestBuilderPage):
@@ -406,11 +406,11 @@ class TestTextAssistant(gaupol.TestCase):
 
     def test__on_apply(self):
         count = self.assistant.get_n_pages()
-        indices = range(count)
+        indices = list(range(count))
         # Remove progress page, which is automatically switched
         # to the confirmation page once done with all.
         indices.remove(count - 2)
-        map(self.assistant.set_current_page, indices)
+        list(map(self.assistant.set_current_page, indices))
         page = self.assistant._confirmation_page
         store = page._tree_view.get_model()
         column = page._tree_view.get_column(2)

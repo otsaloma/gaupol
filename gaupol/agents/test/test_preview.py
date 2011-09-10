@@ -37,7 +37,7 @@ class TestPreviewAgent(gaupol.TestCase):
         self.application = self.new_application()
         page = self.application.get_current_page()
         page.project.video_path = self.new_subrip_file()
-        self.delegate = self.application.preview.im_self
+        self.delegate = self.application.preview.__self__
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_encoding_error_dialog(self):

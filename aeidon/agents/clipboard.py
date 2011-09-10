@@ -16,17 +16,15 @@
 
 """Storing text to the clipboard and pasting from it."""
 
-from __future__ import division
+
 
 import aeidon
 _ = aeidon.i18n._
 
 
-class ClipboardAgent(aeidon.Delegate):
+class ClipboardAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Storing text to the clipboard and pasting from it."""
-
-    __metaclass__ = aeidon.Contractual
 
     def copy_texts_require(self, indices, doc):
         for index in indices:
@@ -34,7 +32,7 @@ class ClipboardAgent(aeidon.Delegate):
 
     def copy_texts_ensure(self, value, indices, doc):
         texts = self.clipboard.get_texts()
-        assert len(texts) == len(range(indices[0], indices[-1] + 1))
+        assert len(texts) == len(list(range(indices[0], indices[-1] + 1)))
         while None in texts:
             texts.remove(None)
         assert len(texts) == len(indices)
@@ -72,7 +70,7 @@ class ClipboardAgent(aeidon.Delegate):
         length = len(self.subtitles)
         new_count = len(texts) - (length - index)
         if new_count > 0:
-            self.insert_subtitles(range(length, length + new_count),
+            self.insert_subtitles(list(range(length, length + new_count)),
                                   register=register)
 
         indices = [index + i for i in range(len(texts))

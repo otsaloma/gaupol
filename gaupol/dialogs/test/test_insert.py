@@ -38,5 +38,5 @@ class TestInsertDialog(gaupol.TestCase):
 
     def test__on_response__no_subtitles(self):
         page = self.application.get_current_page()
-        page.project.remove_subtitles(range(len(page.project.subtitles)))
+        page.project.remove_subtitles(list(range(len(page.project.subtitles))))
         self.dialog.response(gtk.RESPONSE_OK)

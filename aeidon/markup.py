@@ -22,7 +22,7 @@ import re
 __all__ = ("Markup",)
 
 
-class Markup(aeidon.Singleton):
+class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
 
     """Base class for text markup.
 
@@ -44,8 +44,6 @@ class Markup(aeidon.Singleton):
     not implement any markup. The caller of any tagging methods, e.g.
     :meth:`bolden`, must be prepared to handle :exc:`NotImplementedError`.
     """
-
-    __metaclass__ = aeidon.Contractual
     _flags = re.DOTALL | re.MULTILINE | re.UNICODE
     format = aeidon.formats.NONE
 

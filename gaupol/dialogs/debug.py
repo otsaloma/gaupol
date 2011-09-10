@@ -62,18 +62,18 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _insert_environment(self):
         """Insert environment information."""
-        map(self._insert_text,
+        list(map(self._insert_text,
             ("Platform: %s\n" % platform.platform(True),
              "Locale: %s\n" % aeidon.locales.get_system_code(),
-             "\n"))
+             "\n")))
 
     def _insert_library_versions(self):
         """Insert version numbers of libraries."""
-        map(self._insert_text,
+        list(map(self._insert_text,
             ("Python: %d.%d.%d\n" % sys.version_info[:3],
              "GTK+: %d.%d.%d\n" % gtk.gtk_version,
              "GStreamer: %s\n" % gaupol.util.get_gst_version(),
-             "\n"))
+             "\n")))
 
     def _insert_link(self, path, lineno, *tags):
         """Insert `path` as a link into the text view."""
@@ -90,19 +90,19 @@ class DebugDialog(gaupol.BuilderDialog):
             path = path.replace(os.sep, "", 1)
         itr = text_buffer.get_end_iter()
         tag_table = text_buffer.get_tag_table()
-        tags = map(tag_table.lookup, tags + ("monospace",))
+        tags = list(map(tag_table.lookup, tags + ("monospace",)))
         text_buffer.insert_with_tags(itr, path, tag, *tags)
 
     def _insert_python_package_versions(self):
         """Insert version numbers of Python packages."""
-        map(self._insert_text,
+        list(map(self._insert_text,
             ("aeidon: %s\n" % aeidon.__version__,
              "gaupol: %s\n" % gaupol.__version__,
              "gtk: %d.%d.%d\n" % gtk.pygtk_version,
              "gst: %s\n" % gaupol.util.get_pygst_version(),
              "enchant: %s\n" % aeidon.util.get_enchant_version(),
              "chardet: %s\n" % aeidon.util.get_chardet_version(),
-             ))
+             )))
 
     def _insert_text(self, text, *tags):
         """Insert `text` with `tags` to the text view."""
@@ -142,8 +142,8 @@ class DebugDialog(gaupol.BuilderDialog):
     def _on_editor_exit(self, pid, return_value, command):
         """Print an error message if editor process failed."""
         if return_value == 0: return
-        print ("Command '%s' failed with return value %d"
-               % (command, return_value))
+        print(("Command '%s' failed with return value %d"
+               % (command, return_value)))
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""

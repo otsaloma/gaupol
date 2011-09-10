@@ -63,7 +63,7 @@ class AttributeDictionary(aeidon.Observable):
 
     def extend(self, root):
         """Add new values from another root dictionary."""
-        for name, value in root.iteritems():
+        for name, value in root.items():
             if not hasattr(self, name):
                 self.add_attribute(name, value)
             else: # Extend current value.
@@ -83,7 +83,7 @@ class AttributeDictionary(aeidon.Observable):
 
     def update(self, root):
         """Update values from another root dictionary."""
-        for name, value in root.iteritems():
+        for name, value in root.items():
             if not hasattr(self, name):
                 self.add_attribute(name, value)
             else: # Update current value.

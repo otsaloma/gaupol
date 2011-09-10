@@ -24,7 +24,7 @@ import xml.etree.ElementTree as ET
 __all__ = ("PatternManager",)
 
 
-class PatternManager(object):
+class PatternManager(object, metaclass=aeidon.Contractual):
 
     """Managing regular expression substitutions for subtitle texts.
 
@@ -35,8 +35,6 @@ class PatternManager(object):
     "common-error", "capitalization" or "hearing-impaired". Codes are of form
     ``Script[-language-[COUNTRY]]`` using the corresponding ISO codes.
     """
-
-    __metaclass__ = aeidon.Contractual
     _re_comment = re.compile(r"^\s*#.*$")
 
     def __init___require(self, pattern_type):
@@ -129,7 +127,7 @@ class PatternManager(object):
         if not code in self._patterns: return
         patterns = self._patterns[code]
         for element in ET.parse(path).findall("pattern"):
-            name = unicode(element.get("name"))
+            name = str(element.get("name"))
             name = name.replace("&quot;", '"')
             name = name.replace("&amp;", "&")
             enabled = (element.get("enabled") == "true")
@@ -189,7 +187,7 @@ class PatternManager(object):
                 patterns.append(aeidon.Pattern())
                 patterns[-1].local = local
             else: # [_]KEY=VALUE
-                name, value = unicode(line).split("=", 1)
+                name, value = str(line).split("=", 1)
                 name = (name[1:] if name.startswith("_") else name)
                 patterns[-1].set_field(name, value)
 
@@ -217,7 +215,7 @@ class PatternManager(object):
 
     def get_countries(self, script, language):
         """Return a sequence of countries for which patterns exist."""
-        codes = self._patterns.keys()
+        codes = list(self._patterns.keys())
         start = "%s-%s-" % (script, language)
         codes = [x for x in codes if x.startswith(start)]
         countries = [x.split("-")[2] for x in codes]
@@ -225,7 +223,7 @@ class PatternManager(object):
 
     def get_languages(self, script):
         """Return a sequence of languages for which patterns exist."""
-        codes = self._patterns.keys()
+        codes = list(self._patterns.keys())
         start = "%s-" % script
         codes = [x for x in codes if x.startswith(start)]
         languages = [x.split("-")[1] for x in codes]
@@ -245,7 +243,7 @@ class PatternManager(object):
 
     def get_scripts(self):
         """Return a sequence of scripts for which patterns exist."""
-        codes = self._patterns.keys()
+        codes = list(self._patterns.keys())
         while "Zyyy" in codes:
             codes.remove("Zyyy")
         scripts = [x.split("-")[0] for x in codes]

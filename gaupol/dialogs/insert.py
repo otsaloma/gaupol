@@ -67,7 +67,7 @@ class InsertDialog(gaupol.BuilderDialog):
             if not above: index += 1
         else: # No subtitles in project.
             index = 0
-        indices = range(index, index + amount)
+        indices = list(range(index, index + amount))
         page.project.insert_subtitles(indices)
 
     def _on_response(self, dialog, response):

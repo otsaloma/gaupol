@@ -22,7 +22,7 @@ class TestPreviewAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
-        self.delegate = self.project.preview.im_self
+        self.delegate = self.project.preview.__self__
 
     def test_find_video__avi(self):
         video_path = aeidon.temp.create(".avi")

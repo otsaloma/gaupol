@@ -21,11 +21,9 @@ import gaupol
 import gtk
 
 
-class UtilityAgent(aeidon.Delegate):
+class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Miscellaneous helper methods."""
-
-    __metaclass__ = aeidon.Contractual
 
     def get_action_ensure(self, value, name):
         assert value is not None
