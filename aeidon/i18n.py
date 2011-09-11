@@ -31,12 +31,12 @@ _translation = gettext.translation("gaupol", aeidon.LOCALE_DIR, fallback=True)
 
 def _(message):
     """Return the localized translation of `message`."""
-    return _translation.gettext(str(message))
+    return _translation.gettext(message)
 
 def dgettext(domain, message):
     """Return the localized translation of `message` from `domain`."""
-    return gettext.dgettext(domain, str(message))
+    return gettext.dgettext(domain, message)
 
 def ngettext(singular, plural, n):
     """Return the localized translation of `singular` or `plural`."""
-    return _translation.ngettext(str(singular), str(plural), n)
+    return _translation.ngettext(singular, plural, n)
