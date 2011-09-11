@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2009 Osmo Salomaa
+# Copyright (C) 2006-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,8 +18,8 @@
 
 import aeidon
 import copy
-import pickle
 import functools
+import pickle
 import time
 
 
@@ -57,7 +57,7 @@ def benchmark(function):
         a = time.time()
         value = function(*args, **kwargs)
         z = time.time()
-        print("%.3f %s" % (z - a, function.__name__))
+        print("%4.3f %s" % (z - a, function.__name__))
         return value
     return wrapper
 
@@ -69,7 +69,7 @@ def contractual(function):
     ``FUNCTION_NAME_ensure`` calls if such functions exist. The require
     function receives the same arguments as function, the ensure function will
     in addition receive function's return value as its first argument. This is
-    a debug decorator that is in use only if :data:`aeidon.debug` is ``True``.
+    a debug decorator that does nothing if :data:`aeidon.debug` is ``False``.
     """
     if not aeidon.debug:
         return function
@@ -102,8 +102,9 @@ def memoize(function):
         if _is_method(function, args):
             params = (id(args[0]), args[1:], kwargs)
         key = pickle.dumps(params)
-        if not key in cache:
-            cache[key] = function(*args, **kwargs)
+        try: return cache[key]
+        except KeyError: pass
+        cache[key] = function(*args, **kwargs)
         return cache[key]
     wrapper.original = function
     return wrapper
@@ -125,22 +126,22 @@ def monkey_patch(obj, name):
         def test_do_something():
             sys.platform = "win32"
             do_something()
+
     """
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
-            has_attr_def = _hasattr_def(obj, name)
-            if has_attr_def:
+            if _hasattr_def(obj, name):
                 attr = getattr(obj, name)
                 setattr(obj, name, copy.deepcopy(attr))
-            try:
-                return function(*args, **kwargs)
-            finally:
-                if has_attr_def:
+                try: return function(*args, **kwargs)
+                finally:
                     setattr(obj, name, attr)
                     assert getattr(obj, name) == attr
                     assert getattr(obj, name) is attr
-                else:
+            else: # Attribute not defined.
+                try: return function(*args, **kwargs)
+                finally:
                     delattr(obj, name)
                     assert not _hasattr_def(obj, name)
         return inner_wrapper
@@ -151,9 +152,8 @@ def notify_frozen(function):
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         frozen = args[0].freeze_notify()
-        try: value = function(*args, **kwargs)
+        try: return function(*args, **kwargs)
         finally: args[0].thaw_notify(frozen)
-        return value
     return wrapper
 
 def once(function):
@@ -161,8 +161,9 @@ def once(function):
     cache = []
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        if not cache:
-            cache.append(function(*args, **kwargs))
+        try: return cache[0]
+        except IndexError: pass
+        cache.append(function(*args, **kwargs))
         return cache[0]
     return wrapper
 
