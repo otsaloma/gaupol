@@ -113,9 +113,9 @@ class Clean(clean):
     """Command to remove files and directories created."""
 
     def run(self):
-        """Remove files and directories listed in manifest/clean."""
+        """Remove files and directories listed in setup-files/clean."""
         clean.run(self)
-        fobj = open(os.path.join("manifest", "clean"), "r")
+        fobj = open(os.path.join("setup-files", "clean"), "r")
         for targets in (glob.glob(x.strip()) for x in fobj):
             for target in filter(os.path.isdir, targets):
                 log.info("removing '%s'" % target)
@@ -136,7 +136,7 @@ class Distribution(distribution):
         """Find data files to install for name."""
         fok = lambda x: not x.endswith((".in", ".pyc"))
         basename = "data-files.%s" % name
-        fobj = open(os.path.join("manifest", basename), "r")
+        fobj = open(os.path.join("setup-files", basename), "r")
         for line in (x.strip() for x in fobj):
             if not line: continue
             if line.startswith("["):
