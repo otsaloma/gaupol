@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -42,16 +42,16 @@ class TestCase(object, metaclass=aeidon.Contractual):
                              .format(repr(function),
                                      repr(exception)))
 
-    def get_sample_text_ensure(self, value, format, name=None):
+    def get_sample_text_ensure(self, value, form, name=None):
         assert value.count("a") > 10
 
     @aeidon.deco.memoize
-    def get_sample_text(self, format, name=None):
-        """Return sample text for subtitle file `format`."""
-        name = name or format.name.lower()
-        basename = "".join((name, format.extension))
+    def get_sample_text(self, form, name=None):
+        """Return sample text for subtitle file `form`."""
+        name = name or form.name.lower()
+        basename = "".join((name, form.extension))
         path = os.path.join(aeidon.DATA_DIR, "samples", basename)
-        with open(path, "r") as fobj:
+        with open(path, "r", encoding="ascii") as fobj:
             return fobj.read().strip()
 
     def new_microdvd_file_ensure(self, value):
@@ -78,15 +78,15 @@ class TestCase(object, metaclass=aeidon.Contractual):
         """Return path to a new temporary ``SubRip`` file."""
         return self.new_temp_file(aeidon.formats.SUBRIP)
 
-    def new_temp_file_ensure(self, value, format, name=None):
+    def new_temp_file_ensure(self, value, form, name=None):
         assert os.path.isfile(value)
 
-    def new_temp_file(self, format, name=None):
+    def new_temp_file(self, form, name=None):
         """Return path to a new temporary subtitle file."""
-        text = self.get_sample_text(format, name)
-        path = aeidon.temp.create(format.extension)
+        text = self.get_sample_text(form, name)
+        path = aeidon.temp.create(form.extension)
         aeidon.temp.close(path)
-        with open(path, "w") as fobj:
+        with open(path, "w", encoding="ascii") as fobj:
             fobj.write(text)
         return path
 
