@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2009 Osmo Salomaa
+# Copyright (C) 2006-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import aeidon
-import codecs
+import imp
 import os
 import sys
 import time
@@ -23,19 +23,16 @@ import time
 
 class TestModule(aeidon.TestCase):
 
-    def setup_method(self, method):
-        self.project = self.new_project()
-
     def test_affirm__false(self):
-        self.raises(aeidon.AffirmationError,
-                    aeidon.util.affirm,
-                    1 == 0)
+        self.assert_raises(aeidon.AffirmationError,
+                           aeidon.util.affirm,
+                           1 == 0)
 
     def test_affirm__true(self):
         aeidon.util.affirm(0 == 0)
 
     def test_chardet_available(self):
-        reload(aeidon.util)
+        imp.reload(aeidon.util)
         assert aeidon.util.chardet_available()
 
     def test_compare_versions(self):
@@ -47,12 +44,12 @@ class TestModule(aeidon.TestCase):
         assert compare_versions("0.4"  , "0.5"  ) == -1
 
     def test_connect__private(self):
-        # pylint: disable=W0201
+        self.project = self.new_project()
         self._on_project_action_done = lambda *args: None
         aeidon.util.connect(self, "project", "action-done")
 
     def test_connect__public(self):
-        # pylint: disable=W0201
+        self.project = self.new_project()
         self.on_project_action_done = lambda *args: None
         aeidon.util.connect(self, "project", "action-done")
 
@@ -67,21 +64,23 @@ class TestModule(aeidon.TestCase):
         aeidon.util.copy_list([1, 2, set((1, 2))])
 
     def test_detect_format(self):
-        for format in aeidon.formats:
-            path = self.new_temp_file(format)
-            assert aeidon.util.detect_format(path, "ascii") == format
+        for form in aeidon.formats:
+            path = self.new_temp_file(form)
+            assert aeidon.util.detect_format(path, "ascii") == form
 
     def test_detect_format__format_error(self):
         path = self.new_subrip_file()
         aeidon.util.write(path, "xxx\n", "ascii")
-        self.raises(aeidon.FormatError,
-                    aeidon.util.detect_format, path, "ascii")
+        self.assert_raises(aeidon.FormatError,
+                           aeidon.util.detect_format,
+                           path, "ascii")
 
     def test_detect_newlines(self):
-        aeidon.util.detect_newlines(self.new_subrip_file())
+        newlines = aeidon.util.detect_newlines(self.new_subrip_file())
+        assert newlines is not None
 
     def test_enchant_available(self):
-        reload(aeidon.util)
+        imp.reload(aeidon.util)
         assert aeidon.util.enchant_available()
 
     def test_flatten(self):
@@ -90,13 +89,11 @@ class TestModule(aeidon.TestCase):
         assert lst == [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     def test_get_all(self):
-        assert aeidon.util.get_all(dir()) == ("self",)
-        assert not aeidon.util.get_all(dir(), r"^[A-Z]")
         names = aeidon.util.get_all(dir(aeidon.util))
-        assert len(names) < len(dir(aeidon.util))
+        assert 0 < len(names) < len(dir(aeidon.util))
 
     def test_get_chardet_version(self):
-        reload(aeidon.util)
+        imp.reload(aeidon.util)
         assert aeidon.util.get_chardet_version()
 
     def test_get_default_encoding(self):
@@ -106,7 +103,7 @@ class TestModule(aeidon.TestCase):
         assert aeidon.util.get_default_newline()
 
     def test_get_enchant_version(self):
-        reload(aeidon.util)
+        imp.reload(aeidon.util)
         assert aeidon.util.get_enchant_version()
 
     def test_get_encoding_alias(self):
@@ -129,12 +126,12 @@ class TestModule(aeidon.TestCase):
     @aeidon.deco.monkey_patch(aeidon, "DATA_DIR")
     @aeidon.deco.monkey_patch(aeidon, "DATA_HOME_DIR")
     def test_get_template_header(self):
-        for format in [x for x in aeidon.formats if x.has_header]:
-            if format == aeidon.formats.MICRODVD: continue
-            assert aeidon.util.get_template_header(format)
+        for form in (x for x in aeidon.formats if x.has_header):
+            if form == aeidon.formats.MICRODVD: continue
+            assert aeidon.util.get_template_header(form)
             dirs = aeidon.DATA_DIR, aeidon.DATA_HOME_DIR
             aeidon.DATA_HOME_DIR, aeidon.DATA_DIR = dirs
-            assert aeidon.util.get_template_header(format)
+            assert aeidon.util.get_template_header(form)
 
     def test_get_unique__first(self):
         lst = [4, 1, 5, 5, 1, 1, 3, 6, 4, 4]
@@ -143,7 +140,7 @@ class TestModule(aeidon.TestCase):
 
     def test_get_unique__last(self):
         lst = [4, 1, 5, 5, 1, 1, 3, 6, 4, 4]
-        lst = aeidon.util.get_unique(lst, True)
+        lst = aeidon.util.get_unique(lst, keep_last=True)
         assert lst == [5, 1, 3, 6, 4]
 
     def test_is_command__false(self):
@@ -156,7 +153,7 @@ class TestModule(aeidon.TestCase):
         assert aeidon.util.last(iter((1, 2, 3))) == 3
 
     def test_makedirs(self):
-        path = "%s-%d" % (self.new_subrip_file(), time.time())
+        path = "{0}-{1:.0f}".format(self.new_subrip_file(), time.time())
         aeidon.util.makedirs(path)
         aeidon.util.makedirs(path)
         os.rmdir(path)
@@ -198,7 +195,7 @@ class TestModule(aeidon.TestCase):
     def test_print_read_unicode(self):
         try:
             path = self.new_subrip_file()
-            codecs.open(path, "r", "undefined").read()
+            open(path, "r", encoding="undefined").read()
             raise AssertionError
         except UnicodeError:
             aeidon.util.print_read_unicode(sys.exc_info(),
@@ -223,7 +220,8 @@ class TestModule(aeidon.TestCase):
     def test_print_write_unicode(self):
         try:
             path = self.new_subrip_file()
-            codecs.open(path, "r", "ascii").write("\xc3\xb6\n")
+            text = bytes("\xc3\xb6\n", "ascii")
+            open(path, "r", encoding="ascii").write(text)
             raise AssertionError
         except UnicodeError:
             aeidon.util.print_write_unicode(sys.exc_info(),
@@ -232,20 +230,20 @@ class TestModule(aeidon.TestCase):
 
     def test_read__basic(self):
         path = self.new_subrip_file()
-        text = codecs.open(path, "r", "ascii").read().strip()
+        text = open(path, "r", encoding="ascii").read().strip()
         assert aeidon.util.read(path) == text
 
     def test_read__fallback(self):
         path = self.new_subrip_file()
-        codecs.open(path, "w", "utf_8").write("\xc3\xb6\n")
+        open(path, "w", encoding="utf_8").write("\xc3\xb6\n")
         assert aeidon.util.read(path, "ascii") == "\xc3\xb6"
 
     def test_read__unicode_error(self):
         path = self.new_subrip_file()
-        codecs.open(path, "w", "latin1").write("\xc3\xb6\n")
-        self.raises(UnicodeError,
-                    aeidon.util.read,
-                    path, "ascii", None)
+        open(path, "w", encoding="latin1").write("\xc3\xb6\n")
+        self.assert_raises(UnicodeError,
+                           aeidon.util.read,
+                           path, "ascii", None)
 
     def test_readlines__basic(self):
         path = self.new_subrip_file()
@@ -254,19 +252,19 @@ class TestModule(aeidon.TestCase):
 
     def test_readlines__fallback(self):
         path = self.new_subrip_file()
-        codecs.open(path, "w", "utf_8").write("\xc3\xb6\n")
+        open(path, "w", encoding="utf_8").write("\xc3\xb6\n")
         assert aeidon.util.readlines(path, "ascii") == ["\xc3\xb6"]
 
     def test_readlines__unicode_error(self):
         path = self.new_subrip_file()
-        codecs.open(path, "w", "latin1").write("\xc3\xb6\n")
-        self.raises(UnicodeError,
-                    aeidon.util.readlines,
-                    path, "ascii", None)
+        open(path, "w", encoding="latin1").write("\xc3\xb6\n")
+        self.assert_raises(UnicodeError,
+                           aeidon.util.readlines,
+                           path, "ascii", None)
 
     def test_replace_extension(self):
-        format = aeidon.formats.SUBRIP
-        value = aeidon.util.replace_extension("test.txt", format)
+        form = aeidon.formats.SUBRIP
+        value = aeidon.util.replace_extension("test.txt", form)
         assert value == "test.srt"
 
     @aeidon.deco.monkey_patch(sys, "platform")
@@ -288,9 +286,8 @@ class TestModule(aeidon.TestCase):
         assert process.wait() == 0
 
     def test_title_to_lower_case(self):
-        to_lower = aeidon.util.title_to_lower_case
-        assert to_lower("Test") == "test"
-        assert to_lower("TestCase") == "test_case"
+        assert aeidon.util.title_to_lower_case("Test") == "test"
+        assert aeidon.util.title_to_lower_case("TestCase") == "test_case"
 
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_uri_to_path__unix(self):
@@ -310,38 +307,38 @@ class TestModule(aeidon.TestCase):
         text = "test\ntest\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text)
-        fobj = codecs.open(path, "r", "ascii")
+        fobj = open(path, "r", encoding="ascii")
         assert fobj.read() == text
 
     def test_write__fallback(self):
         text = "\xc3\xb6\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text, "ascii")
-        fobj = codecs.open(path, "r", "utf_8")
+        fobj = open(path, "r", encoding="utf_8")
         assert fobj.read() == text
 
     def test_write__unicode_error(self):
         path = self.new_subrip_file()
-        self.raises(UnicodeError,
-                    aeidon.util.write,
-                    path, "\xc3\xb6\n", "ascii", None)
+        self.assert_raises(UnicodeError,
+                           aeidon.util.write,
+                           path, "\xc3\xb6\n", "ascii", None)
 
     def test_writelines__basic(self):
         lines = ("test", "test")
         path = self.new_subrip_file()
         aeidon.util.writelines(path, lines)
-        fobj = codecs.open(path, "r", "ascii")
+        fobj = open(path, "r", encoding="ascii")
         assert fobj.read() == "test\ntest\n"
 
     def test_writelines__fallback(self):
         text = "\xc3\xb6"
         path = self.new_subrip_file()
         aeidon.util.writelines(path, (text,), "ascii")
-        fobj = codecs.open(path, "r", "utf_8")
+        fobj = open(path, "r", encoding="utf_8")
         assert fobj.read() == text + os.linesep
 
     def test_writelines__unicode_error(self):
         path = self.new_subrip_file()
-        self.raises(UnicodeError,
-                    aeidon.util.writelines,
-                    path, ("\xc3\xb6\n",), "ascii", None)
+        self.assert_raises(UnicodeError,
+                           aeidon.util.writelines,
+                           path, ("\xc3\xb6\n",), "ascii", None)

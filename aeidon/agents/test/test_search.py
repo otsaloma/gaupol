@@ -31,7 +31,7 @@ class TestSearchAgent(aeidon.TestCase):
         pos = None
         for match in matches:
             if match is StopIteration:
-                self.raises(StopIteration,
+                self.assert_raises(StopIteration,
                             self.project.find_next,
                             index, doc, pos)
 
@@ -50,7 +50,7 @@ class TestSearchAgent(aeidon.TestCase):
         pos = None
         for match in matches:
             if match is StopIteration:
-                self.raises(StopIteration,
+                self.assert_raises(StopIteration,
                             self.project.find_previous,
                             index, doc, pos)
 

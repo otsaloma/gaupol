@@ -55,7 +55,7 @@ class TestCalculator(aeidon.TestCase):
         assert compare(-1,  1) == -1
 
     def test_compare__value_error(self):
-        self.raises(ValueError, self.calc.compare, None, None)
+        self.assert_raises(ValueError, self.calc.compare, None, None)
 
     def test_compare_times(self):
         compare = self.calc.compare_times
@@ -97,7 +97,7 @@ class TestCalculator(aeidon.TestCase):
             assert self.calc.get_middle(x, y) == z
 
     def test_get_middle__value_error(self):
-        self.raises(ValueError, self.calc.get_middle, None, None)
+        self.assert_raises(ValueError, self.calc.get_middle, None, None)
 
     def test_get_time_duration(self):
         for x, y, z in (( "00:01:22.500",  "00:01:45.100",  "00:00:22.600"),
@@ -155,7 +155,7 @@ class TestCalculator(aeidon.TestCase):
         assert self.calc.to_frame(1.0) == 25
 
     def test_to_frame__value_error(self):
-        self.raises(ValueError, self.calc.to_frame, None)
+        self.assert_raises(ValueError, self.calc.to_frame, None)
 
     def test_to_seconds(self):
         self.calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)
@@ -164,7 +164,7 @@ class TestCalculator(aeidon.TestCase):
         assert self.calc.to_seconds(1.0) == 1.0
 
     def test_to_seconds__value_error(self):
-        self.raises(ValueError, self.calc.to_seconds, None)
+        self.assert_raises(ValueError, self.calc.to_seconds, None)
 
     def test_to_time(self):
         self.calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)
@@ -173,4 +173,4 @@ class TestCalculator(aeidon.TestCase):
         assert self.calc.to_time(1.0) == "00:00:01.000"
 
     def test_to_time__value_error(self):
-        self.raises(ValueError, self.calc.to_time, None)
+        self.assert_raises(ValueError, self.calc.to_time, None)

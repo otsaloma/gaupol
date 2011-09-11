@@ -65,7 +65,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
     def test___init____enchant_error(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         gaupol.conf.spell_check.language = "wo"
-        self.raises(ValueError,
+        self.assert_raises(ValueError,
                     gaupol.SpellCheckDialog,
                     self.application.window,
                     self.application)

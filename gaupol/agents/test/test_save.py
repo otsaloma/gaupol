@@ -76,7 +76,7 @@ class TestSaveAgent(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         os.chmod(page.project.main_file.path, 0000)
-        self.raises(gaupol.Default, self.application.save_main, page)
+        self.assert_raises(gaupol.Default, self.application.save_main, page)
         os.chmod(page.project.main_file.path, 0o777)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
@@ -85,7 +85,7 @@ class TestSaveAgent(gaupol.TestCase):
         page = self.application.get_current_page()
         page.project.main_file.encoding = "ascii"
         page.project.set_text(0, aeidon.documents.MAIN, "\303\266")
-        self.raises(gaupol.Default, self.application.save_main, page)
+        self.assert_raises(gaupol.Default, self.application.save_main, page)
 
     @aeidon.deco.monkey_patch(gaupol.SaveDialog, "get_filename")
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
@@ -110,7 +110,7 @@ class TestSaveAgent(gaupol.TestCase):
     def test_save_main_as__cancel(self):
         gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.CANCEL
         page = self.application.get_current_page()
-        self.raises(gaupol.Default, self.application.save_main_as, page)
+        self.assert_raises(gaupol.Default, self.application.save_main_as, page)
 
     def test_save_translation(self):
         page = self.application.get_current_page()

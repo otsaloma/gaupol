@@ -34,7 +34,7 @@ class TestFinder(aeidon.TestCase):
             for match in matches:
                 assert advance() == match
                 assert self.finder.pos == match[next]
-            self.raises(StopIteration, advance)
+            self.assert_raises(StopIteration, advance)
 
     def assert_replace_all_cases(self, cases, regex):
         for pattern, replacement, count, text in cases:
@@ -300,7 +300,7 @@ class TestFinder(aeidon.TestCase):
             "O-- only risks it, because\n"
             "o--'s survival depends on it.")
         assert self.finder.pos == 30
-        self.raises(StopIteration, self.finder.__next__)
+        self.assert_raises(StopIteration, self.finder.__next__)
 
     def test_replace__equal_length_previous(self):
         self.finder.set_text(self.text, False)
@@ -318,7 +318,7 @@ class TestFinder(aeidon.TestCase):
             "O-- only risks it, because\n"
             "o--'s survival depends on it.")
         assert self.finder.pos == 1
-        self.raises(StopIteration, self.finder.previous)
+        self.assert_raises(StopIteration, self.finder.previous)
 
     def test_replace__lengthen_regex_dollar_next(self):
         self.finder.set_text(self.text)
@@ -336,7 +336,7 @@ class TestFinder(aeidon.TestCase):
             "One only risks it, because--\n"
             "one's survival depends on it.--")
         assert self.finder.pos == 60
-        self.raises(StopIteration, self.finder.__next__)
+        self.assert_raises(StopIteration, self.finder.__next__)
 
     def test_replace__lengthen_regex_dollar_previous(self):
         self.finder.set_text(self.text, False)
@@ -354,7 +354,7 @@ class TestFinder(aeidon.TestCase):
             "One only risks it, because--\n"
             "one's survival depends on it.--")
         assert self.finder.pos == 26
-        self.raises(StopIteration, self.finder.previous)
+        self.assert_raises(StopIteration, self.finder.previous)
 
     def test_replace__lengthen_regex_hat_next(self):
         self.finder.set_text(self.text)
@@ -372,7 +372,7 @@ class TestFinder(aeidon.TestCase):
             "--One only risks it, because\n"
             "--one's survival depends on it.")
         assert self.finder.pos == 31
-        self.raises(StopIteration, self.finder.__next__)
+        self.assert_raises(StopIteration, self.finder.__next__)
 
     def test_replace__lengthen_regex_hat_previous(self):
         self.finder.set_text(self.text, False)
@@ -390,7 +390,7 @@ class TestFinder(aeidon.TestCase):
             "--One only risks it, because\n"
             "--one's survival depends on it.")
         assert self.finder.pos == 0
-        self.raises(StopIteration, self.finder.previous)
+        self.assert_raises(StopIteration, self.finder.previous)
 
     def test_replace__lengthen_string_match_next(self):
         self.finder.set_text(self.text)
@@ -408,7 +408,7 @@ class TestFinder(aeidon.TestCase):
             "One only risks it, because\n"
             "one's survvivval depends on it.")
         assert self.finder.pos == 41
-        self.raises(StopIteration, self.finder.__next__)
+        self.assert_raises(StopIteration, self.finder.__next__)
 
     def test_replace__lengthen_string_match_previous(self):
         self.finder.set_text(self.text, False)
@@ -426,7 +426,7 @@ class TestFinder(aeidon.TestCase):
             "One only risks it, because\n"
             "one's survvivval depends on it.")
         assert self.finder.pos == 36
-        self.raises(StopIteration, self.finder.previous)
+        self.assert_raises(StopIteration, self.finder.previous)
 
     def test_replace__shorten_regex_next(self):
         self.finder.set_text(self.text)
@@ -444,7 +444,7 @@ class TestFinder(aeidon.TestCase):
             "One only risks it because\n"
             "one's survival depends on it")
         assert self.finder.pos == 54
-        self.raises(StopIteration, self.finder.__next__)
+        self.assert_raises(StopIteration, self.finder.__next__)
 
     def test_replace__shorten_regex_previous(self):
         self.finder.set_text(self.text, False)
@@ -462,7 +462,7 @@ class TestFinder(aeidon.TestCase):
             "One only risks it because\n"
             "one's survival depends on it")
         assert self.finder.pos == 17
-        self.raises(StopIteration, self.finder.previous)
+        self.assert_raises(StopIteration, self.finder.previous)
 
     def test_replace_all__regex(self):
         cases = ((r"e", r"-", 6,

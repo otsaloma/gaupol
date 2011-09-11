@@ -2,14 +2,10 @@ Gaupol 0.20
 ===========
 
  [ ] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     - http://docs.python.org/dev/whatsnew/3.0.html
-     - http://docs.python.org/dev/whatsnew/3.1.html
-     - http://docs.python.org/dev/whatsnew/3.2.html
-     - http://diveintopython3.org/whats-new.html
-     - http://developer.gnome.org/Gnome3PortingGuide/
-     - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
+     * Fix remaining exceptions 'xxx_todo_changeme'
+     * Fix remaining string formatting '%'
  [ ] Use Libpeas for extensions?
-     - http://live.gnome.org/Libpeas
+     * http://live.gnome.org/Libpeas
  [X] Rename manifest directory in source tarball to avoid clashes with
      MANIFEST file on case-insensitive filesystems
 

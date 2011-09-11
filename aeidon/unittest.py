@@ -32,6 +32,16 @@ class TestCase(object, metaclass=aeidon.Contractual):
     different tools to be used to run the tests.
     """
 
+    def assert_raises(self, exception, function, *args, **kwargs):
+        """Assert that calling `function` raises `exception`."""
+        try:
+            function(*args, **kwargs)
+        except exception:
+            return
+        raise AssertionError("{0} failed to raise {1}"
+                             .format(repr(function),
+                                     repr(exception)))
+
     def get_sample_text_ensure(self, value, format, name=None):
         assert value.count("a") > 10
 
@@ -79,15 +89,6 @@ class TestCase(object, metaclass=aeidon.Contractual):
         with open(path, "w") as fobj:
             fobj.write(text)
         return path
-
-    def raises(self, exception, function, *args, **kwargs):
-        """Assert that calling `function` raises `exception`."""
-        try:
-            function(*args, **kwargs)
-        except exception:
-            return
-        raise AssertionError("Function '%s' failed to raise exception '%s'"
-                             % (repr(function), repr(exception)))
 
     def setUp(self):
         """Compatibility alias for :meth:`setup_method`."""

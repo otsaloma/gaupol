@@ -44,7 +44,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test___cmp____value_error(self):
         self.tsub._mode = None
-        self.raises(ValueError, lambda x: x < x, self.tsub)
+        self.assert_raises(ValueError, lambda x: x < x, self.tsub)
 
     def test___getattr__(self):
         assert "ssa" not in dir(self.tsub)
@@ -57,7 +57,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__get_duration__value_error(self):
         self.tsub._mode = None
-        self.raises(ValueError, lambda: self.tsub.duration)
+        self.assert_raises(ValueError, lambda: self.tsub.duration)
 
     def test__get_duration_frame(self):
         assert self.tsub.duration_frame == 50
@@ -81,7 +81,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__get_end_frame__value_error(self):
         self.tsub._mode = None
-        self.raises(ValueError, lambda: self.tsub.end_frame)
+        self.assert_raises(ValueError, lambda: self.tsub.end_frame)
 
     def test__get_end_seconds(self):
         assert self.tsub.end_seconds == 3.0
@@ -93,7 +93,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__get_end_time__value_error(self):
         self.tsub._mode = None
-        self.raises(ValueError, lambda: self.tsub.end_time)
+        self.assert_raises(ValueError, lambda: self.tsub.end_time)
 
     def test__get_framerate(self):
         assert self.tsub.framerate == aeidon.framerates.FPS_25_000
@@ -117,7 +117,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__get_start_frame__value_error(self):
         self.tsub._mode = None
-        self.raises(ValueError, lambda: self.tsub.start_frame)
+        self.assert_raises(ValueError, lambda: self.tsub.start_frame)
 
     def test__get_start_seconds(self):
         assert self.tsub.start_seconds == 1.0
@@ -129,7 +129,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__get_start_time__value_error(self):
         self.tsub._mode = None
-        self.raises(ValueError, lambda: self.tsub.start_time)
+        self.assert_raises(ValueError, lambda: self.tsub.start_time)
 
     def test__get_tran_text(self):
         assert self.tsub.tran_text == "translation"
@@ -153,7 +153,7 @@ class TestSubtitle(aeidon.TestCase):
 
     def test__set_end__value_error(self):
         def function(x): self.tsub.end = x
-        self.raises(ValueError, function, ())
+        self.assert_raises(ValueError, function, ())
 
     def test__set_end__time(self):
         self.tsub.end = "00:00:10.000"
@@ -253,7 +253,7 @@ class TestSubtitle(aeidon.TestCase):
         assert self.fsub.get_duration(FRAME) == 200
 
     def test_get_duration__value_error(self):
-        self.raises(ValueError, self.tsub.get_duration, None)
+        self.assert_raises(ValueError, self.tsub.get_duration, None)
 
     def test_get_end(self):
         TIME = aeidon.modes.TIME
@@ -264,7 +264,7 @@ class TestSubtitle(aeidon.TestCase):
         assert self.fsub.get_end(FRAME) == 300
 
     def test_get_end__value_error(self):
-        self.raises(ValueError, self.tsub.get_end, None)
+        self.assert_raises(ValueError, self.tsub.get_end, None)
 
     def test_get_start(self):
         TIME = aeidon.modes.TIME
@@ -275,7 +275,7 @@ class TestSubtitle(aeidon.TestCase):
         assert self.fsub.get_start(FRAME) == 100
 
     def test_get_start__value_error(self):
-        self.raises(ValueError, self.tsub.get_start, None)
+        self.assert_raises(ValueError, self.tsub.get_start, None)
 
     def test_get_text(self):
         MAIN = aeidon.documents.MAIN
@@ -284,7 +284,7 @@ class TestSubtitle(aeidon.TestCase):
         assert self.tsub.get_text(TRAN) == "translation"
 
     def test_get_text__value_error(self):
-        self.raises(ValueError, self.tsub.get_text, None)
+        self.assert_raises(ValueError, self.tsub.get_text, None)
 
     def test_has_container(self):
         assert not self.tsub.has_container("subrip")

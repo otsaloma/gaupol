@@ -29,11 +29,11 @@ class TestExtension(gaupol.TestCase):
         self.extension.setup(self.application)
 
     def test_show_help(self):
-        self.raises(NotImplementedError,
+        self.assert_raises(NotImplementedError,
                     self.extension.show_help)
 
     def test_show_preferences_dialog(self):
-        self.raises(NotImplementedError,
+        self.assert_raises(NotImplementedError,
                     self.extension.show_preferences_dialog,
                     Gtk.Window())
 

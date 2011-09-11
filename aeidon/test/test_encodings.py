@@ -29,7 +29,7 @@ class TestModule(aeidon.TestCase):
 
     def test_code_to_description__value_error(self):
         code_to_description = aeidon.encodings.code_to_description
-        self.raises(ValueError, code_to_description, "xxxxx")
+        self.assert_raises(ValueError, code_to_description, "xxxxx")
 
     def test_code_to_long_name(self):
         code, name, description = ("cp1140", "IBM1140", _("Western"))
@@ -37,7 +37,7 @@ class TestModule(aeidon.TestCase):
         assert long_name == _("%(description)s (%(name)s)") % locals()
 
     def test_code_to_long_name__value_error(self):
-        self.raises(ValueError, aeidon.encodings.code_to_long_name, "xxxxx")
+        self.assert_raises(ValueError, aeidon.encodings.code_to_long_name, "xxxxx")
 
     def test_code_to_name(self):
         code_to_name = aeidon.encodings.code_to_name
@@ -47,7 +47,7 @@ class TestModule(aeidon.TestCase):
 
     def test_code_to_name__value_error(self):
         code_to_name = aeidon.encodings.code_to_name
-        self.raises(ValueError, code_to_name, "xxxxx")
+        self.assert_raises(ValueError, code_to_name, "xxxxx")
 
     def test_detect(self):
         name = aeidon.encodings.detect(self.new_subrip_file())
@@ -140,7 +140,7 @@ class TestModule(aeidon.TestCase):
 
     def test_name_to_code__value_error(self):
         name_to_code = aeidon.encodings.name_to_code
-        self.raises(ValueError, name_to_code, "XXXXX")
+        self.assert_raises(ValueError, name_to_code, "XXXXX")
 
     def test_translate_code(self):
         translate_code = aeidon.encodings.translate_code
@@ -150,4 +150,4 @@ class TestModule(aeidon.TestCase):
 
     def test_translate_code__value_error(self):
         translate_code = aeidon.encodings.translate_code
-        self.raises(ValueError, translate_code, "xxxxx")
+        self.assert_raises(ValueError, translate_code, "xxxxx")

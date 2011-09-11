@@ -28,4 +28,4 @@ class TestModule(aeidon.TestCase):
         assert isinstance(file, aeidon.files.SubRip)
 
     def test_new__value_error(self):
-        self.raises(ValueError, aeidon.files.new, None, "", "ascii")
+        self.assert_raises(ValueError, aeidon.files.new, None, "", "ascii")

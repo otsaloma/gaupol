@@ -81,7 +81,7 @@ class TestPage(gaupol.TestCase):
         assert col == self.page.view.columns.TRAN_TEXT
 
     def test_document_to_text_column__value_error(self):
-        self.raises(ValueError, self.page.document_to_text_column, None)
+        self.assert_raises(ValueError, self.page.document_to_text_column, None)
 
     def test_get_main_basename(self):
         self.page.project.main_file.path = "/tmp/root.srt"
@@ -130,7 +130,7 @@ class TestPage(gaupol.TestCase):
         assert doc == aeidon.documents.TRAN
 
     def test_text_column_to_document__value_error(self):
-        self.raises(ValueError, self.page.text_column_to_document, None)
+        self.assert_raises(ValueError, self.page.text_column_to_document, None)
 
     def test_update_tab_label(self):
         title = self.page.update_tab_label()

@@ -103,7 +103,7 @@ class TestModule(gaupol.TestCase):
         gaupol.conf.editor.custom_font = ""
 
     def test_raise_default(self):
-        self.raises(gaupol.Default, gaupol.util.raise_default, True)
+        self.assert_raises(gaupol.Default, gaupol.util.raise_default, True)
         gaupol.util.raise_default(False)
 
     def test_scale_to_content__text_view(self):

@@ -66,7 +66,7 @@ class TestOpenAgent(aeidon.TestCase):
     def test_open_main__io_error(self):
         path = self.new_subrip_file()
         os.chmod(path, 0000)
-        self.raises(IOError,
+        self.assert_raises(IOError,
                     self.project.open_main,
                     path, "ascii")
 
@@ -80,12 +80,12 @@ class TestOpenAgent(aeidon.TestCase):
         fobj.write("00:00:01,000 --> 00:00:02,000\n\n")
         fobj.write("00:00:03,000 <-- 00:00:04,000\n\n")
         fobj.close()
-        self.raises(aeidon.ParseError,
+        self.assert_raises(aeidon.ParseError,
                     self.project.open_main,
                     path, "ascii")
 
     def test_open_main__unicode_error(self):
-        self.raises(UnicodeError,
+        self.assert_raises(UnicodeError,
                     self.project.open_main,
                     self.new_subrip_file(), "punycode")
 

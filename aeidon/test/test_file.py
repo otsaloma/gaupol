@@ -53,7 +53,7 @@ class TestSubtitleFile(aeidon.TestCase):
         assert new_file.header == "test"
 
     def test_read(self):
-        self.raises(NotImplementedError,
+        self.assert_raises(NotImplementedError,
                     self.file.read)
 
     def test_read__utf_16(self):
@@ -95,11 +95,11 @@ class TestSubtitleFile(aeidon.TestCase):
         sfile.read()
 
     def test_write(self):
-        self.raises(NotImplementedError,
+        self.assert_raises(NotImplementedError,
                     self.file.write,
                     (), aeidon.documents.MAIN)
 
     def test_write_to_file(self):
-        self.raises(NotImplementedError,
+        self.assert_raises(NotImplementedError,
                     self.file.write_to_file,
                     (), aeidon.documents.MAIN, sys.stdout)

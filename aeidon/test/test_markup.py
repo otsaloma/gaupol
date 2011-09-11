@@ -27,7 +27,7 @@ class TestMarkup(aeidon.TestCase):
 
     def test_bolden(self):
         args = (self.markup.bolden, self.text)
-        self.raises(NotImplementedError, *args)
+        self.assert_raises(NotImplementedError, *args)
 
     def test_clean(self):
         text = self.markup.clean(self.text)
@@ -35,7 +35,7 @@ class TestMarkup(aeidon.TestCase):
 
     def test_colorize(self):
         args = (self.markup.colorize, self.text, "ff00ff")
-        self.raises(NotImplementedError, *args)
+        self.assert_raises(NotImplementedError, *args)
 
     def test_decode(self):
         text = self.markup.decode(self.text)
@@ -73,22 +73,22 @@ class TestMarkup(aeidon.TestCase):
 
     def test_fontify(self):
         args = (self.markup.fontify, self.text, "sans")
-        self.raises(NotImplementedError, *args)
+        self.assert_raises(NotImplementedError, *args)
 
     def test_italic_tag(self):
         assert self.markup.italic_tag is None
 
     def test_italicize(self):
         args = (self.markup.italicize, self.text)
-        self.raises(NotImplementedError, *args)
+        self.assert_raises(NotImplementedError, *args)
 
     def test_scale(self):
         args = (self.markup.scale, self.text, 12)
-        self.raises(NotImplementedError, *args)
+        self.assert_raises(NotImplementedError, *args)
 
     def test_tag(self):
         assert self.markup.tag is None
 
     def test_underline(self):
         args = (self.markup.underline, self.text)
-        self.raises(NotImplementedError, *args)
+        self.assert_raises(NotImplementedError, *args)

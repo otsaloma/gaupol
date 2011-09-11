@@ -179,4 +179,4 @@ class TestCloseAgent(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
         for page in self.application.pages:
             page.project.remove_subtitles((0,))
-        self.raises(gaupol.Default, self.application.quit)
+        self.assert_raises(gaupol.Default, self.application.quit)

@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2009 Osmo Salomaa
+# Copyright (C) 2006-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,19 +16,16 @@
 
 """Miscellaneous functions."""
 
-
-
 import aeidon
-import codecs
-import contextlib
 import inspect
 import locale
 import os
 import re
 import subprocess
 import sys
-import urllib.request, urllib.parse, urllib.error
+import urllib.error
 import urllib.parse
+import urllib.request
 
 
 def affirm(value):
@@ -52,15 +49,15 @@ def compare_versions_require(x, y):
 
 @aeidon.deco.contractual
 def compare_versions(x, y):
-    """
-    Compare version strings `x` and `y`.
+    """Compare version strings `x` and `y`.
 
     Used version number formats are ``MAJOR.MINOR``, ``MAJOR.MINOR.PATCH`` and
-    ``MAJOR.MINOR.PATCH.{DATE/REVISION/...}``, where all items are integers.
+    ``MAJOR.MINOR.PATCH.DATE/REVISION``, where all items are integers.
     Return 1 if `x` newer, 0 if equal or -1 if `y` newer.
     """
-    return cmp(list(map(int, x.split("."))),
-               list(map(int, y.split("."))))
+    compare = lambda a, b: (a > b) - (a < b)
+    return compare(list(map(int, x.split("."))),
+                   list(map(int, y.split("."))))
 
 def connect_require(observer, observable, signal, *args):
     if observer is not observable:
@@ -76,8 +73,8 @@ def connect(observer, observable, signal, *args):
     """
     method_name = signal.replace("-", "_").replace("::", "_")
     if observer is not observable:
-        method_name = "%s_%s" % (observable, method_name)
-    method_name = ("_on_%s" % method_name).replace("__", "_")
+        method_name = "_".join((observable, method_name))
+    method_name = ("_on_{0}".format(method_name)).replace("__", "_")
     if not hasattr(observer, method_name):
         method_name = method_name[1:]
     method = getattr(observer, method_name)
@@ -133,19 +130,18 @@ def detect_format(path, encoding):
     Return an :attr:`aeidon.formats` enumeration item.
     """
     re_ids = [(x, re.compile(x.identifier)) for x in aeidon.formats]
-    args = (path, "r", encoding)
-    with contextlib.closing(codecs.open(*args)) as fobj:
+    with open(path, "r", encoding=encoding) as fobj:
         for line in fobj:
             for format, re_id in re_ids:
                 if re_id.search(line) is not None:
                     return format
-    raise aeidon.FormatError("Failed to detect format of file %s"
-                             % repr(path))
+    raise aeidon.FormatError("Failed to detect format of file {0}"
+                             .format(repr(path)))
 
 def detect_newlines(path):
     """Detect and return the newline type of file at `path` or ``None``."""
     try:
-        fobj = open(path, "rU")
+        fobj = open(path, "r")
         fobj.read()
         chars = fobj.newlines
     except Exception:
@@ -187,8 +183,8 @@ def get_all(names, pattern=None):
             (names[i].endswith("_require")) or
             (names[i].endswith("_ensure")) or
             (names[i] in sys.modules) or
-            (names[i] in dir(__future__))):
-            names.pop(i)
+            (names[i] in dir(__future__))): names.pop(i)
+
     if pattern is not None:
         regex = re.compile(pattern, re.UNICODE)
         names = list(filter(regex.search, names))
@@ -208,7 +204,7 @@ def get_chardet_version():
         return None
 
 def get_default_encoding_ensure(value):
-    codecs.lookup(value)
+    assert aeidon.encodings.is_valid_code(value)
 
 @aeidon.deco.once
 @aeidon.deco.contractual
@@ -291,16 +287,16 @@ def get_sorted_unique(lst):
     return lst
 
 @aeidon.deco.memoize
-def get_template_header(format):
+def get_template_header(form):
     """
-    Read and return the template header for `format`.
+    Read and return the template header for `form`.
 
     Raise :exc:`IOError` if reading global header file fails.
     Raise :exc:`UnicodeError` if decoding global header file fails.
     """
     header = None
     directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
-    path = os.path.join(directory, format.name.lower())
+    path = os.path.join(directory, form.name.lower())
     if os.path.isfile(path):
         try: header = read(path, None).rstrip()
         except IOError:
@@ -312,7 +308,7 @@ def get_template_header(format):
 
     if header is None:
         directory = os.path.join(aeidon.DATA_DIR, "headers")
-        path = os.path.join(directory, format.name.lower())
+        path = os.path.join(directory, form.name.lower())
         header = read(path, "ascii").rstrip()
     return normalize_newlines(header)
 
@@ -392,36 +388,46 @@ def normalize_newlines(text):
 def path_to_uri(path):
     """Convert local filepath to URI."""
     if sys.platform == "win32":
-        path = "/%s" % path.replace("\\", "/")
-    return "file://%s" % urllib.parse.quote(path)
+        path = "/{0}".format(path.replace("\\", "/"))
+    return "file://{0}".format(urllib.parse.quote(path))
 
 def print_read_io(exc_info, path):
     """Print :exc:`IOError` message to standard output."""
-    print("Failed to read file '%s': %s." % (path, exc_info[1].args[1]))
+    print("Failed to read file '{0}': {1}"
+          .format(path, exc_info[1].args[1]),
+          file=sys.stderr)
 
 def print_read_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
-    print("Failed to decode file '%s' with codec '%s'." % (path, encoding))
+    print("Failed to decode file '{0}' with codec '{1}'"
+          .format(path, encoding),
+          file=sys.stderr)
 
 def print_remove_os(exc_info, path):
     """Print :exc:`OSError` message to standard output."""
-    print("Failed to remove file '%s': %s." % (path, exc_info[1].args[1]))
+    print("Failed to remove file '{0}': {1}"
+          .format(path, exc_info[1].args[1]),
+          file=sys.stderr)
 
 def print_write_io(exc_info, path):
     """Print :exc:`IOError` message to standard output."""
-    print("Failed to write file '%s': %s." % (path, exc_info[1].args[1]))
+    print("Failed to write file '{0}': {1}"
+          .format(path, exc_info[1].args[1]),
+          file=sys.stderr)
 
 def print_write_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
-    print("Failed to encode file '%s' with codec '%s'." % (path, encoding))
+    print("Failed to encode file '{0}' with codec '{1}'"
+          .format(path, encoding),
+          file=sys.stderr)
 
 def read_require(path, encoding=None, fallback="utf_8"):
     if encoding is not None:
-        codecs.lookup(encoding)
+        assert aeidon.encodings.is_valid_code(encoding)
     if fallback is not None:
-        codecs.lookup(fallback)
+        assert aeidon.encodings.is_valid_code(fallback)
 
 @aeidon.deco.contractual
 def read(path, encoding=None, fallback="utf_8"):
@@ -434,7 +440,7 @@ def read(path, encoding=None, fallback="utf_8"):
     """
     encoding = encoding or get_default_encoding()
     try:
-        with contextlib.closing(codecs.open(path, "r", encoding)) as fobj:
+        with open(path, "r", encoding=encoding) as fobj:
             return fobj.read().strip()
     except UnicodeError:
         if not fallback in (encoding, None, ""):
@@ -443,9 +449,9 @@ def read(path, encoding=None, fallback="utf_8"):
 
 def readlines_require(path, encoding=None, fallback="utf_8"):
     if encoding is not None:
-        codecs.lookup(encoding)
+        assert aeidon.encodings.is_valid_code(encoding)
     if fallback is not None:
-        codecs.lookup(fallback)
+        assert aeidon.encodings.is_valid_code(fallback)
 
 @aeidon.deco.contractual
 def readlines(path, encoding=None, fallback="utf_8"):
@@ -475,7 +481,7 @@ def shell_quote(path):
         # directory separators and cannot contain double quotes.
         path = path.replace("\\", "\\\\")
         path = path.replace('"', '\\"')
-    return '"%s"' % path
+    return '"{0}"'.format(path)
 
 def start_process(command, **kwargs):
     """
@@ -492,14 +498,14 @@ def start_process(command, **kwargs):
                                 shell=(sys.platform != "win32"),
                                 cwd=os.getcwd(),
                                 env=(os.environ.copy()
-                                     if sys.platform != "win32" else None),
+                                     if sys.platform != "win32"
+                                     else None),
 
                                 universal_newlines=True,
                                 **kwargs)
 
-    except OSError as xxx_todo_changeme:
-        (no, message) = xxx_todo_changeme.args
-        raise aeidon.ProcessError(message)
+    except OSError as error:
+        raise aeidon.ProcessError(error.args[1])
 
 def title_to_lower_case_ensure(value, title_name):
     assert value.islower()
@@ -510,7 +516,7 @@ def title_to_lower_case(title_name):
     """
     Convert title case name to lower case with underscores.
 
-    >>> aeidon.util.title_to_lower_case("TitleCase")
+    >>> aeidon.util.title_to_lower_case('TitleCase')
     'title_case'
     """
     lower_name = ""
@@ -532,9 +538,9 @@ def uri_to_path(uri):
 
 def write_require(path, text, encoding=None, fallback="utf_8"):
     if encoding is not None:
-        codecs.lookup(encoding)
+        assert aeidon.encodings.is_valid_code(encoding)
     if fallback is not None:
-        codecs.lookup(fallback)
+        assert aeidon.encodings.is_valid_code(fallback)
 
 def write_ensure(value, path, text, encoding=None, fallback="utf_8"):
     assert os.path.isfile(path)
@@ -550,7 +556,7 @@ def write(path, text, encoding=None, fallback="utf_8"):
     """
     encoding = encoding or get_default_encoding()
     try:
-        with contextlib.closing(codecs.open(path, "w", encoding)) as fobj:
+        with open(path, "w", encoding=encoding) as fobj:
             return fobj.write(text)
     except UnicodeError:
         if not fallback in (encoding, None, ""):
@@ -559,9 +565,9 @@ def write(path, text, encoding=None, fallback="utf_8"):
 
 def writelines_require(path, lines, encoding=None, fallback="utf_8"):
     if encoding is not None:
-        codecs.lookup(encoding)
+        assert aeidon.encodings.is_valid_code(encoding)
     if fallback is not None:
-        codecs.lookup(fallback)
+        assert aeidon.encodings.is_valid_code(fallback)
 
 def writelines_ensure(value, path, lines, encoding=None, fallback="utf_8"):
     assert os.path.isfile(path)

@@ -33,8 +33,8 @@ class TestEnumerationItem(aeidon.TestCase):
     def test___cmp____value_error(self):
         if not aeidon.debug: return
         other = aeidon.EnumerationItem(0, "rest", object())
-        self.raises(ValueError, cmp, self.item, other)
-        self.raises(ValueError, cmp, self.item, "xxx")
+        self.assert_raises(ValueError, cmp, self.item, other)
+        self.assert_raises(ValueError, cmp, self.item, "xxx")
 
     def test___str__(self):
         assert str(self.item) == "test"
@@ -85,4 +85,4 @@ class TestEnumeration(aeidon.TestCase):
 
     def test_find_item__value_error(self):
         find_item = self.fruits.find_item
-        self.raises(ValueError, find_item, "size", 20)
+        self.assert_raises(ValueError, find_item, "size", 20)

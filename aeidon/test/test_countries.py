@@ -26,7 +26,7 @@ class TestModule(aeidon.TestCase):
         assert aeidon.countries.code_to_name("YE") == name
 
     def test_code_to_name__key_error(self):
-        self.raises(KeyError, aeidon.countries.code_to_name, "XX")
+        self.assert_raises(KeyError, aeidon.countries.code_to_name, "XX")
 
     def test_is_valid(self):
         assert aeidon.countries.is_valid("RU")

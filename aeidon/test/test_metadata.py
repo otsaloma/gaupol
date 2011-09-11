@@ -55,7 +55,7 @@ class TestMetadataItem(aeidon.TestCase):
     def test_get_field_boolean__value_error(self):
         self.item.set_field("Test", "Xxxx")
         function = self.item.get_field_boolean
-        self.raises(ValueError, function, "Test")
+        self.assert_raises(ValueError, function, "Test")
 
     def test_get_field_list(self):
         assert self.item.get_field("Xxxx") is None

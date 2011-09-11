@@ -36,7 +36,7 @@ class TestUtilityAgent(aeidon.TestCase):
         assert changed == self.project.tran_changed
 
     def test_get_changed__value_error(self):
-        self.raises(ValueError, self.project.get_changed, None)
+        self.assert_raises(ValueError, self.project.get_changed, None)
 
     def test_get_file__main(self):
         sfile = self.project.get_file(aeidon.documents.MAIN)
@@ -47,7 +47,7 @@ class TestUtilityAgent(aeidon.TestCase):
         assert sfile is self.project.tran_file
 
     def test_get_file__value_error(self):
-        self.raises(ValueError, self.project.get_file, None)
+        self.assert_raises(ValueError, self.project.get_file, None)
 
     def test_get_format__main(self):
         format = self.project.get_format(aeidon.documents.MAIN)
@@ -68,7 +68,7 @@ class TestUtilityAgent(aeidon.TestCase):
         assert format == self.project.main_file.format
 
     def test_get_format__value_error(self):
-        self.raises(ValueError, self.project.get_format, None)
+        self.assert_raises(ValueError, self.project.get_format, None)
 
     def test_get_liner(self):
         doc = aeidon.documents.MAIN
@@ -133,7 +133,7 @@ class TestUtilityAgent(aeidon.TestCase):
         assert signal == "translation-texts-changed"
 
     def test_get_text_signal__value_error(self):
-        self.raises(ValueError, self.project.get_text_signal, None)
+        self.assert_raises(ValueError, self.project.get_text_signal, None)
 
     def test_new_revertable_action(self):
         register = aeidon.registers.DO

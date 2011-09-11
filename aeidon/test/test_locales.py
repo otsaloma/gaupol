@@ -26,7 +26,7 @@ class TestModule(aeidon.TestCase):
         assert aeidon.locales.code_to_country("af") is None
 
     def test_code_to_country__key_error(self):
-        self.raises(KeyError, aeidon.locales.code_to_country, "xx_XX")
+        self.assert_raises(KeyError, aeidon.locales.code_to_country, "xx_XX")
 
     def test_code_to_language(self):
         language = aeidon.i18n.dgettext("iso_639", "Icelandic")
@@ -34,8 +34,8 @@ class TestModule(aeidon.TestCase):
         assert aeidon.locales.code_to_language("is") == language
 
     def test_code_to_language__key_error(self):
-        self.raises(KeyError, aeidon.locales.code_to_language, "xx_XX")
-        self.raises(KeyError, aeidon.locales.code_to_language, "xx")
+        self.assert_raises(KeyError, aeidon.locales.code_to_language, "xx_XX")
+        self.assert_raises(KeyError, aeidon.locales.code_to_language, "xx")
 
     def test_code_to_name(self):
         language = aeidon.i18n.dgettext("iso_639", "Mongolian")
@@ -45,8 +45,8 @@ class TestModule(aeidon.TestCase):
         assert aeidon.locales.code_to_name("mn") == language
 
     def test_code_to_name__key_error(self):
-        self.raises(KeyError, aeidon.locales.code_to_name, "xx_XX")
-        self.raises(KeyError, aeidon.locales.code_to_name, "xx")
+        self.assert_raises(KeyError, aeidon.locales.code_to_name, "xx_XX")
+        self.assert_raises(KeyError, aeidon.locales.code_to_name, "xx")
 
     def test_get_system_code(self):
         aeidon.locales.get_system_code()

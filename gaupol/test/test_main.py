@@ -37,10 +37,10 @@ class TestModule(gaupol.TestCase):
         gaupol.main._init_configuration(path)
 
     def test__on_parser_list_encodings(self):
-        self.raises(SystemExit, gaupol.main._on_parser_list_encodings)
+        self.assert_raises(SystemExit, gaupol.main._on_parser_list_encodings)
 
     def test__on_parser_version(self):
-        self.raises(SystemExit, gaupol.main._on_parser_version)
+        self.assert_raises(SystemExit, gaupol.main._on_parser_version)
 
     def test__parse_args(self):
         gaupol.main._parse_args([])

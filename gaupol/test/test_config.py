@@ -81,5 +81,5 @@ class TestConfigurationStore(gaupol.TestCase):
 
     def test_write_to_file__io_error(self):
         os.chmod(self.directory, 0000)
-        self.raises(IOError, self.conf.write_to_file)
+        self.assert_raises(IOError, self.conf.write_to_file)
         os.chmod(self.directory, 0o777)

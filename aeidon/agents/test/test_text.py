@@ -83,7 +83,7 @@ class TestTextAgent(aeidon.TestCase):
 
     def test_spell_check_join_words__enchant_error(self):
         import enchant
-        self.raises(enchant.Error,
+        self.assert_raises(enchant.Error,
                     self.project.spell_check_join_words,
                     None, aeidon.documents.MAIN, "xx")
 
@@ -97,6 +97,6 @@ class TestTextAgent(aeidon.TestCase):
 
     def test_spell_check_split_words__enchant_error(self):
         import enchant
-        self.raises(enchant.Error,
+        self.assert_raises(enchant.Error,
                     self.project.spell_check_split_words,
                     None, aeidon.documents.MAIN, "xx")

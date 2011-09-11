@@ -50,7 +50,7 @@ class TestSaveAgent(aeidon.TestCase):
         self.project.save(aeidon.documents.TRAN)
 
     def test_save__value_error(self):
-        self.raises(ValueError, self.project.save, None)
+        self.assert_raises(ValueError, self.project.save, None)
 
     def test_save_main(self):
         for format in aeidon.formats:
@@ -65,12 +65,12 @@ class TestSaveAgent(aeidon.TestCase):
 
     def test_save_main__io_error(self):
         sfile = aeidon.files.new(aeidon.formats.SUBRIP, "/////", "ascii")
-        self.raises(IOError, self.project.save_main, sfile)
+        self.assert_raises(IOError, self.project.save_main, sfile)
 
     def test_save_main__unicode_error(self):
         path = self.project.main_file.path
         sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "undefined")
-        self.raises(UnicodeError, self.project.save_main, sfile)
+        self.assert_raises(UnicodeError, self.project.save_main, sfile)
 
     def test_save_translation(self):
         for format in aeidon.formats:
