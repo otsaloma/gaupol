@@ -23,7 +23,6 @@ Metaclass for design-by-contract_ pre- and postcondition checks.
 
 import aeidon
 import functools
-import collections
 
 __all__ = ("Contractual",)
 
@@ -89,8 +88,7 @@ class Contractual(type):
         """Return instance with method calls wrapped in condition calls."""
         new_dict = dic.copy()
         for name, attr in list(list(dic.items())):
-            if not isinstance(attr, collections.Callable): continue
-
+            if not callable(attr): continue
             require_name = "%s_require" % name
             if name.startswith("__"):
                 require_name = "_%s%s" % (class_name, require_name)
@@ -105,7 +103,6 @@ class Contractual(type):
                         require_func = getattr(base, require_name)
                         attr = _required(require_func)(attr)
                         break
-
             ensure_name = "%s_ensure" % name
             if name.startswith("__"):
                 ensure_name = "_%s%s" % (class_name, ensure_name)
@@ -118,7 +115,6 @@ class Contractual(type):
                     if hasattr(base, ensure_name):
                         ensure_func = getattr(base, ensure_name)
                         attr = _ensured(ensure_func)(attr)
-
             invariant_name = "_invariant"
             if invariant_name in dic:
                 invariant_func = dic[invariant_name]
@@ -128,9 +124,7 @@ class Contractual(type):
                 if hasattr(base, invariant_name):
                     invariant_func = getattr(base, invariant_name)
                     attr = _invariated(invariant_func)(attr)
-
             new_dict[name] = attr
-
         return type.__new__(meta, class_name, bases, new_dict)
 
     if not aeidon.debug: del __new__

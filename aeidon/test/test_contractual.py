@@ -55,9 +55,6 @@ class PuppetClassNotImplemented(PuppetBaseClass):
 
 class TestContractual(aeidon.TestCase):
 
-    def setup_method(self, method):
-        self.contractual = PuppetClassImplemented()
-
     def test___new____implemented(self):
         self.contractual = PuppetClassImplemented()
         self.contractual.do()
