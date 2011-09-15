@@ -100,7 +100,7 @@ Releasing a New Version for Windows
      [3.1] http://ftp.gnome.org/pub/GNOME/binaries/win32/
      [3.2] http://ftp.gnome.org/pub/GNOME/binaries/win32/dependencies/
 
-    py2ece places a whole lot of files under the 'dist' directory. You
+    py2exe places a whole lot of files under the 'dist' directory. You
     should be able to run gaupol from 'gaupol.exe' in that directory.
     If you get a missing DLL error, you will need to edit
     'tools\py2exe.bat' to copy the necessary DLLs from wherever to
