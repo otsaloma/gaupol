@@ -110,6 +110,8 @@ class RecentAction(Gtk.RecentAction, Action):
     def __init__(self, name):
         """Initialize an :class:`RecentAction` object."""
         GObject.GObject.__init__(self, name, None, None, None)
+        if sys.platform == "win32":
+            self.set_show_icons(False)
         self.set_show_numbers(False)
         self.set_show_not_found(False)
         self.set_show_tips(True)
