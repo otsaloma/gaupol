@@ -19,6 +19,7 @@
 import aeidon
 import gaupol
 import gtk
+import sys
 
 __all__ = ("Action",
            "MenuAction",
