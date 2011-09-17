@@ -64,9 +64,9 @@ class TestModule(aeidon.TestCase):
         aeidon.util.copy_list([1, 2, set((1, 2))])
 
     def test_detect_format(self):
-        for form in aeidon.formats:
-            path = self.new_temp_file(form)
-            assert aeidon.util.detect_format(path, "ascii") == form
+        for format in aeidon.formats:
+            path = self.new_temp_file(format)
+            assert aeidon.util.detect_format(path, "ascii") == format
 
     def test_detect_format__format_error(self):
         path = self.new_subrip_file()
@@ -126,12 +126,12 @@ class TestModule(aeidon.TestCase):
     @aeidon.deco.monkey_patch(aeidon, "DATA_DIR")
     @aeidon.deco.monkey_patch(aeidon, "DATA_HOME_DIR")
     def test_get_template_header(self):
-        for form in (x for x in aeidon.formats if x.has_header):
-            if form == aeidon.formats.MICRODVD: continue
-            assert aeidon.util.get_template_header(form)
+        for format in (x for x in aeidon.formats if x.has_header):
+            if format == aeidon.formats.MICRODVD: continue
+            assert aeidon.util.get_template_header(format)
             dirs = aeidon.DATA_DIR, aeidon.DATA_HOME_DIR
             aeidon.DATA_HOME_DIR, aeidon.DATA_DIR = dirs
-            assert aeidon.util.get_template_header(form)
+            assert aeidon.util.get_template_header(format)
 
     def test_get_unique__first(self):
         lst = [4, 1, 5, 5, 1, 1, 3, 6, 4, 4]
@@ -263,8 +263,8 @@ class TestModule(aeidon.TestCase):
                            path, "ascii", None)
 
     def test_replace_extension(self):
-        form = aeidon.formats.SUBRIP
-        value = aeidon.util.replace_extension("test.txt", form)
+        format = aeidon.formats.SUBRIP
+        value = aeidon.util.replace_extension("test.txt", format)
         assert value == "test.srt"
 
     @aeidon.deco.monkey_patch(sys, "platform")

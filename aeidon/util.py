@@ -287,16 +287,16 @@ def get_sorted_unique(lst):
     return lst
 
 @aeidon.deco.memoize
-def get_template_header(form):
+def get_template_header(format):
     """
-    Read and return the template header for `form`.
+    Read and return the template header for `format`.
 
     Raise :exc:`IOError` if reading global header file fails.
     Raise :exc:`UnicodeError` if decoding global header file fails.
     """
     header = None
     directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
-    path = os.path.join(directory, form.name.lower())
+    path = os.path.join(directory, format.name.lower())
     if os.path.isfile(path):
         try: header = read(path, None).rstrip()
         except IOError:
@@ -308,7 +308,7 @@ def get_template_header(form):
 
     if header is None:
         directory = os.path.join(aeidon.DATA_DIR, "headers")
-        path = os.path.join(directory, form.name.lower())
+        path = os.path.join(directory, format.name.lower())
         header = read(path, "ascii").rstrip()
     return normalize_newlines(header)
 
