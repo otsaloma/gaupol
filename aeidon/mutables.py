@@ -109,10 +109,6 @@ class ObservableList(list, metaclass=aeidon.Contractual):
         return list.__delitem__(self, *args, **kwargs)
 
     @_mutation
-    def __delslice__(self, *args, **kwargs):
-        return list.__delslice__(self, *args, **kwargs)
-
-    @_mutation
     def __iadd__(self, *args, **kwargs):
         return list.__iadd__(self, *args, **kwargs)
 
@@ -131,10 +127,6 @@ class ObservableList(list, metaclass=aeidon.Contractual):
     @_mutation
     def __setitem__(self, *args, **kwargs):
         return list.__setitem__(self, *args, **kwargs)
-
-    @_mutation
-    def __setslice__(self, *args, **kwargs):
-        return list.__setslice__(self, *args, **kwargs)
 
     @_mutation
     def append(self, *args, **kwargs):

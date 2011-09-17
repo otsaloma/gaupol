@@ -100,9 +100,6 @@ class TestObservableList(_TestObservable):
     def test___delitem__(self):
         del self.obs[0]
 
-    def test___delslice__(self):
-        del self.obs[0:2]
-
     def test___iadd__(self):
         self.obs += [4, 5]
 
@@ -111,9 +108,6 @@ class TestObservableList(_TestObservable):
 
     def test___setitem__(self):
         self.obs[0] = 2
-
-    def test___setslice__(self):
-        self.obs[0:2] = [2, 3]
 
     def test_append(self):
         self.obs.append(4)
