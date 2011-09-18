@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -41,6 +41,7 @@ _encodings = (
     ("cp424"          , "IBM242"          , _("Hebrew")             ),
     ("cp437"          , "IBM437"          , _("English")            ),
     ("cp500"          , "IBM500"          , _("Western")            ),
+    ("cp720"          , "IBM720"          , _("Arabic")             ),
     ("cp737"          , "IBM737"          , _("Greek")              ),
     ("cp775"          , "IBM775"          , _("Baltic")             ),
     ("cp850"          , "IBM850"          , _("Western")            ),
@@ -114,6 +115,9 @@ _encodings = (
     ("shift_jis"      , "Shift_JIS"       , _("Japanese")           ),
     ("shift_jis_2004" , "Shift_JIS-2004"  , _("Japanese")           ),
     ("shift_jisx0213" , "Shift_JISX0213"  , _("Japanese")           ),
+    ("utf_32"         , "UTF-32"          , _("Unicode")            ),
+    ("utf_32_be"      , "UTF-32BE"        , _("Unicode")            ),
+    ("utf_32_le"      , "UTF-32LE"        , _("Unicode")            ),
     ("utf_16"         , "UTF-16"          , _("Unicode")            ),
     ("utf_16_be"      , "UTF-16BE"        , _("Unicode")            ),
     ("utf_16_le"      , "UTF-16LE"        , _("Unicode")            ),
@@ -123,7 +127,7 @@ _encodings = (
 
 CODE, NAME, DESC = list(range(3))
 
-# Characters illegal in encoding codes.
+# Illegal characters in encoding codes.
 _re_illegal = re.compile(r"[^a-z0-9_]")
 
 
@@ -139,7 +143,8 @@ def code_to_description(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[DESC]
-    raise ValueError("Code %s not found" % repr(code))
+    raise ValueError("Code {0} not found"
+                     .format(repr(code)))
 
 def code_to_long_name(code):
     """
@@ -153,9 +158,12 @@ def code_to_long_name(code):
     """
     for item in _encodings:
         if item[CODE] == code:
-            name, description = item[NAME], item[DESC]
-            return _("%(description)s (%(name)s)") % locals()
-    raise ValueError("Code %s not found" % repr(code))
+            return (_("{description} ({name})")
+                    .format(name=item[NAME],
+                            description=item[DESC]))
+
+    raise ValueError("Code {0} not found"
+                     .format(repr(code)))
 
 def code_to_name(code):
     """
@@ -169,7 +177,11 @@ def code_to_name(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[NAME]
-    raise ValueError("Code %s not found" % repr(code))
+    raise ValueError("Code {0} not found"
+                     .format(repr(code)))
+
+def detect_require(path):
+    assert aeidon.util.chardet_available()
 
 def detect_ensure(value, path):
     if value is not None:
@@ -182,9 +194,13 @@ def detect(path):
 
     Raise :exc:`IOError` if reading fails.
     """
+    bom_encoding = detect_bom(path)
+    if bom_encoding is not None:
+        return bom_encoding
     from chardet import universaldetector
     detector = universaldetector.UniversalDetector()
-    with open(path, "r") as fobj:
+    with open(path, "rb") as fobj:
+        detector.reset()
         for line in fobj:
             detector.feed(line)
             if detector.done: break
@@ -206,7 +222,7 @@ def detect_bom_ensure(value, path):
 @aeidon.deco.contractual
 def detect_bom(path):
     """Return corresponding encoding if BOM found, else ``None``."""
-    line = open(path, "r").readline()
+    line = open(path, "rb").readline()
     if (line.startswith(codecs.BOM_UTF32_BE) and
         is_valid_code("utf_32_be")):
         return "utf_32_be"
@@ -251,7 +267,7 @@ def get_locale_long_name():
     Return localized ``CURRENT LOCALE (NAME)``.
     """
     name = code_to_name(get_locale_code())
-    return _("Current locale (%s)") % name
+    return _("Current locale ({0})").format(name)
 
 @aeidon.deco.once
 def get_valid():
@@ -286,7 +302,8 @@ def name_to_code(name):
     for item in _encodings:
         if item[NAME] == name:
             return item[CODE]
-    raise ValueError("Name %s not found" % repr(name))
+    raise ValueError("Name {0} not found"
+                     .format(repr(name)))
 
 def translate_code_ensure(value, code):
     assert is_valid_code(value)
@@ -307,4 +324,5 @@ def translate_code(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[CODE]
-    raise ValueError("Code %s not found" % repr(code))
+    raise ValueError("Code {0} not found"
+                     .format(repr(code)))

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -28,16 +28,19 @@ class TestModule(aeidon.TestCase):
         assert code_to_description("shift_jis") == _("Japanese")
 
     def test_code_to_description__value_error(self):
-        code_to_description = aeidon.encodings.code_to_description
-        self.assert_raises(ValueError, code_to_description, "xxxxx")
+        self.assert_raises(ValueError,
+                           aeidon.encodings.code_to_description,
+                           "xxxxx")
 
     def test_code_to_long_name(self):
         code, name, description = ("cp1140", "IBM1140", _("Western"))
         long_name = aeidon.encodings.code_to_long_name(code)
-        assert long_name == _("%(description)s (%(name)s)") % locals()
+        assert long_name == _("{description} ({name})").format(**locals())
 
     def test_code_to_long_name__value_error(self):
-        self.assert_raises(ValueError, aeidon.encodings.code_to_long_name, "xxxxx")
+        self.assert_raises(ValueError,
+                           aeidon.encodings.code_to_long_name,
+                           "xxxxx")
 
     def test_code_to_name(self):
         code_to_name = aeidon.encodings.code_to_name
@@ -46,8 +49,9 @@ class TestModule(aeidon.TestCase):
         assert code_to_name("mac_roman") == "MacRoman"
 
     def test_code_to_name__value_error(self):
-        code_to_name = aeidon.encodings.code_to_name
-        self.assert_raises(ValueError, code_to_name, "xxxxx")
+        self.assert_raises(ValueError,
+                           aeidon.encodings.code_to_name,
+                           "xxxxx")
 
     def test_detect(self):
         name = aeidon.encodings.detect(self.new_subrip_file())
@@ -64,45 +68,50 @@ class TestModule(aeidon.TestCase):
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding is None
 
-    def test_detect_bom__utf_8(self):
-        path = self.new_subrip_file()
-        text = open(path, "r").read()
-        open(path, "w").write(codecs.BOM_UTF8 + text)
-        encoding = aeidon.encodings.detect_bom(path)
-        if aeidon.encodings.is_valid_code("utf_8_sig"):
-            assert encoding == "utf_8_sig"
-
+    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
     def test_detect_bom__utf_16_be(self):
+        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
-        text = open(path, "r").read()
-        open(path, "w").write(codecs.BOM_UTF16_BE + text)
+        blob = open(path, "rb").read()
+        open(path, "wb").write(codecs.BOM_UTF16_BE + blob)
         encoding = aeidon.encodings.detect_bom(path)
-        if aeidon.encodings.is_valid_code("utf_16_be"):
-            assert encoding == "utf_16_be"
+        assert encoding == "utf_16_be"
 
+    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
     def test_detect_bom__utf_16_le(self):
+        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
-        text = open(path, "r").read()
-        open(path, "w").write(codecs.BOM_UTF16_LE + text)
+        blob = open(path, "rb").read()
+        open(path, "wb").write(codecs.BOM_UTF16_LE + blob)
         encoding = aeidon.encodings.detect_bom(path)
-        if aeidon.encodings.is_valid_code("utf_16_le"):
-            assert encoding == "utf_16_le"
+        assert encoding == "utf_16_le"
 
+    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
     def test_detect_bom__utf_32_be(self):
+        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
-        text = open(path, "r").read()
-        open(path, "w").write(codecs.BOM_UTF32_BE + text)
+        blob = open(path, "rb").read()
+        open(path, "wb").write(codecs.BOM_UTF32_BE + blob)
         encoding = aeidon.encodings.detect_bom(path)
-        if aeidon.encodings.is_valid_code("utf_32_be"):
-            assert encoding == "utf_32_be"
+        assert encoding == "utf_32_be"
 
+    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
     def test_detect_bom__utf_32_le(self):
+        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
-        text = open(path, "r").read()
-        open(path, "w").write(codecs.BOM_UTF32_LE + text)
+        blob = open(path, "rb").read()
+        open(path, "wb").write(codecs.BOM_UTF32_LE + blob)
         encoding = aeidon.encodings.detect_bom(path)
-        if aeidon.encodings.is_valid_code("utf_32_le"):
-            assert encoding == "utf_32_le"
+        assert encoding == "utf_32_le"
+
+    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
+    def test_detect_bom__utf_8_sig(self):
+        aeidon.encodings.is_valid_encoding = lambda x: True
+        path = self.new_subrip_file()
+        blob = open(path, "rb").read()
+        open(path, "wb").write(codecs.BOM_UTF8 + blob)
+        encoding = aeidon.encodings.detect_bom(path)
+        assert encoding == "utf_8_sig"
 
     def test_get_locale_code(self):
         code = aeidon.encodings.get_locale_code()
@@ -112,7 +121,7 @@ class TestModule(aeidon.TestCase):
         long_name = aeidon.encodings.get_locale_long_name()
         code = aeidon.encodings.get_locale_code()
         name = aeidon.encodings.code_to_name(code)
-        assert long_name == _("Current locale (%s)") % name
+        assert long_name == _("Current locale ({0})").format(name)
 
     def test_get_valid(self):
         assert aeidon.encodings.get_valid()
@@ -139,8 +148,9 @@ class TestModule(aeidon.TestCase):
         assert name_to_code("PTCP154") == "ptcp154"
 
     def test_name_to_code__value_error(self):
-        name_to_code = aeidon.encodings.name_to_code
-        self.assert_raises(ValueError, name_to_code, "XXXXX")
+        self.assert_raises(ValueError,
+                           aeidon.encodings.name_to_code,
+                           "XXXXX")
 
     def test_translate_code(self):
         translate_code = aeidon.encodings.translate_code
@@ -149,5 +159,6 @@ class TestModule(aeidon.TestCase):
         assert translate_code("ISO-8859-1") == "latin_1"
 
     def test_translate_code__value_error(self):
-        translate_code = aeidon.encodings.translate_code
-        self.assert_raises(ValueError, translate_code, "xxxxx")
+        self.assert_raises(ValueError,
+                           aeidon.encodings.translate_code,
+                           "xxxxx")

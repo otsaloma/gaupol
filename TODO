@@ -4,8 +4,11 @@ Gaupol 0.20
  [ ] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
      * Fix remaining exceptions 'xxx_todo_changeme'
      * Fix remaining string formatting '%'
+     * Test encoding auto-detection
  [ ] Use Libpeas for extensions?
      * http://live.gnome.org/Libpeas
+ [X] Add support for Arabic CP720 character encoding
+ [X] Add support for Unicode UTF-32 character encodings
  [X] Rename manifest directory in source tarball to avoid clashes with
      MANIFEST file on case-insensitive filesystems
 
