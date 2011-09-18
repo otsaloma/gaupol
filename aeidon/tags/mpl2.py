@@ -21,7 +21,6 @@ import aeidon
 __all__ = ("MPL2",)
 
 
-# pylint: disable=E1101,W0232
 
 class MPL2(aeidon.tags.MicroDVD):
 

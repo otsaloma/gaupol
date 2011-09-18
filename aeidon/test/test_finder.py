@@ -514,14 +514,12 @@ class TestFinder(aeidon.TestCase):
         self.assert_replace_all_cases(cases, False)
 
     def test_set_regex(self):
-        # pylint: disable=E1103
         flags = re.DOTALL | re.MULTILINE | re.UNICODE
         self.finder.set_regex("test")
         assert self.finder.pattern.pattern == "test"
         assert self.finder.pattern.flags == flags
 
     def test_set_regex__ignore_case(self):
-        # pylint: disable=E1103
         flags = re.DOTALL | re.MULTILINE | re.UNICODE
         self.finder.set_regex("test", re.IGNORECASE)
         assert self.finder.pattern.pattern == "test"

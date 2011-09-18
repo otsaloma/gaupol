@@ -2,7 +2,6 @@
 
 """py2exe installation routines built on top of normal setup.py."""
 
-# pylint: disable=W0614
 from setup import *
 
 includes = ("aeidon",

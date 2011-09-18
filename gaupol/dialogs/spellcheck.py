@@ -107,7 +107,6 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             # in the sequence of target pages or end when all pages checked.
             try: self._advance_row()
             except StopIteration:
-                # pylint: disable=E1101
                 try: next(self._pager)
                 except StopIteration: break
         self._set_done()

@@ -292,7 +292,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_next_bookmark_activate(self, *args):
         """Go to the next bookmarked subtitle."""
-        # pylint: disable=W0631
         page = self.application.get_current_page()
         row = page.view.get_selected_rows()[0]
         bookmarks = sorted(self._bookmarks[page].keys())
@@ -345,7 +344,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_previous_bookmark_activate(self, *args):
         """Go to the previous bookmarked subtitle."""
-        # pylint: disable=W0631
         page = self.application.get_current_page()
         row = page.view.get_selected_rows()[0]
         bookmarks = sorted(self._bookmarks[page].keys())

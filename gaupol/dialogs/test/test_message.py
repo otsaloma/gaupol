@@ -21,7 +21,6 @@ from gi.repository import Gtk
 class _TestMessageDialog(gaupol.TestCase):
 
     def run__dialog(self):
-        # pylint: disable=E1101
         self.dialog.run()
         self.dialog.destroy()
 

@@ -19,8 +19,6 @@ import gaupol
 
 class TestAttrDict(gaupol.TestCase):
 
-    # pylint: disable=E1101
-
     def setup_method(self, method):
         self.root = {"test": 1, "rest": 0}
         self.attr_dict = gaupol.AttributeDictionary(self.root)

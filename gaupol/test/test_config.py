@@ -22,8 +22,6 @@ import shutil
 
 class TestConfigurationStore(gaupol.TestCase):
 
-    # pylint: disable=E1101
-
     def setup_method(self, method):
         self.conf = gaupol.ConfigurationStore()
         self.directory = aeidon.temp.create_directory()

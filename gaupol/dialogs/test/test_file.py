@@ -20,8 +20,6 @@ from gi.repository import Gtk
 
 class _TestFileDialog(gaupol.TestCase):
 
-    # pylint: disable=E1101
-
     def run__dialog(self):
         self.dialog.run()
         self.dialog.destroy()

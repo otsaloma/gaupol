@@ -170,7 +170,6 @@ class SidePane(aeidon.Observable):
 
     def _position_header_menu(self, menu):
         """Return coordinates for ``menu.popup`` below the toggle button."""
-        # pylint: disable=E1101
         x, y, = self._toggle_button.window.get_origin()
         allocation = self._toggle_button.get_allocation()
         x += allocation.x

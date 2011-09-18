@@ -19,7 +19,6 @@ import codecs
 import sys
 
 
-# pylint: disable=W0223
 class PuppetSubtitleFile(aeidon.SubtitleFile):
 
     format = aeidon.formats.SUBVIEWER2

@@ -253,7 +253,6 @@ class EnumDecoder(json.JSONDecoder):
         del kwargs["enum"]
         json.JSONDecoder.__init__(self, *args, **kwargs)
 
-    # pylint: disable=W0221
     def decode(self, string):
         """Return Python object matching JSON `string`."""
         if self.enum is None:
@@ -286,7 +285,6 @@ class ConfigurationStore(gaupol.AttributeDictionary):
 
     def _flatten(self, values):
         """Return a flattened version of `values` dictionary."""
-        # pylint: disable=W0631
         def flatten(deep, parent):
             flat_dict = {parent: {}}
             deep = aeidon.util.copy_dict(deep)

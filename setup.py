@@ -59,7 +59,6 @@ sdist = distutils.command.sdist.sdist
 if running_py2exe:
     # py2exe patches the Distribution class, so we need to import py2exe here
     # and subclass the patched Distribution class ourselves.
-    # pylint: disable=F0401
     import py2exe
     distribution = py2exe.Distribution
 

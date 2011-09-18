@@ -48,7 +48,6 @@ class TestCase(aeidon.TestCase):
 
     def teardown_method(self, method):
         """Remove state set for executing tests in `method`."""
-        # pylint: disable=E1101
         gaupol.util.iterate_main()
         for name in ("assistant", "dialog", "window"):
             if hasattr(self, name):

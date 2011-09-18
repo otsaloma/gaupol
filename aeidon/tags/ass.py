@@ -21,8 +21,6 @@ import aeidon
 __all__ = ("AdvSubStationAlpha",)
 
 
-# pylint: disable=E1101,W0232
-
 class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
 
     """

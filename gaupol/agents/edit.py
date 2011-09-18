@@ -249,7 +249,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return page.project.set_end(row, value)
         if col ==  page.view.columns.DURATION:
             if page.edit_mode == aeidon.modes.TIME:
-                # pylint: disable=E1103
                 value = value.replace(",", ".")
                 try: value = float(value)
                 except ValueError: return

@@ -37,8 +37,6 @@ class TestTextAssistantPage(gaupol.TestCase):
 
 class _TestBuilderPage(gaupol.TestCase):
 
-    # pylint: disable=E1101
-
     def run__page(self):
         self.window.add(self.page)
         self.window.connect("delete-event", Gtk.main_quit)
@@ -123,8 +121,6 @@ class TestIntroductionPage(_TestBuilderPage):
 
 
 class _TestLocalePage(_TestBuilderPage):
-
-    # pylint: disable=E1101
 
     def test__on_country_combo_changed(self):
         store = self.page._country_combo.get_model()

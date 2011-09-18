@@ -132,14 +132,12 @@ class TestCustomFrameratesExtension(gaupol.TestCase):
         self.extension.setup(self.application)
 
     def test_teardown__custom(self):
-        # pylint: disable=E1101
         page = self.application.get_current_page()
         page.project.set_framerate(aeidon.framerates.FPS_48_000)
         self.extension.teardown(self.application)
         self.extension.setup(self.application)
 
     def test_teardown__custom_no_pages(self):
-        # pylint: disable=E1101
         page = self.application.get_current_page()
         page.project.set_framerate(aeidon.framerates.FPS_48_000)
         while self.application.pages:
