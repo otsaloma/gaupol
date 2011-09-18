@@ -38,8 +38,8 @@ class AffirmationError(Error):
     :exc:`AffirmationError` is by nature similar to the built-in
     :exc:`AssertionError`, but without the special reliance on
     :const:`__debug__` and given optimization options. :exc:`AffirmationError`
-    is used to provide essential checks of boolean values instead of optional
-    debug checks.
+    can be used to provide essential checks of boolean values instead of
+    optional debug checks.
     """
 
     pass

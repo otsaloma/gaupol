@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -32,39 +32,72 @@ class EnumerationItem(int):
     """
     Named constant with an integer value.
 
-    This class can be instantiated without any specified values and users need
-    not bother with them. Instantiation with correct values harmonous with the
-    rest of the items should be left up to the parent list.
+    :cls:`EnumerationItem` can be instantiated without any specified values and
+    users need not bother with them. Instantiation with correct values
+    harmonous with the rest of the items should be left up to the parent list.
     """
 
-    # pylint: disable=E1101
-
     def __bool__(self):
-        """For consistency, always return True."""
+        """For consistency, always return ``True``."""
         return True
 
-    def __cmp__(self, other):
-        """
-        Compare enumeration item equality by value.
-
-        If `other` is an integer, return integer comparison value. Raise
-        :exc:`ValueError` if `other` is an :class:`EnumerationItem` of a
-        different parent. If `other` is not an integer, return -1. This is a
-        debug method that exists only if :data:`aeidon.debug` is ``True``.
-        """
+    def __eq__(self, other):
+        """Compare enumeration item equality by value."""
         if isinstance(other, int):
             if isinstance(other, EnumerationItem):
                 if self.parent is not other.parent:
-                    raise ValueError("Cannot compare %s with %s"
-                                     % (repr(self), repr(other)))
-
-            return int.__cmp__(int(self), int(other))
+                    raise NotImplementedError
+            return int.__eq__(int(self), int(other))
         if other is None:
-            return -1
-        raise ValueError("Cannot compare %s with %s"
-                         % (repr(self), repr(other)))
+            return False
+        raise NotImplementedError
 
-    if not aeidon.debug: del __cmp__
+    def __ge__(self, other):
+        """Compare enumeration item equality by value."""
+        if isinstance(other, int):
+            if isinstance(other, EnumerationItem):
+                if self.parent is not other.parent:
+                    raise NotImplementedError
+            return int.__ge__(int(self), int(other))
+        raise NotImplementedError
+
+    def __gt__(self, other):
+        """Compare enumeration item equality by value."""
+        if isinstance(other, int):
+            if isinstance(other, EnumerationItem):
+                if self.parent is not other.parent:
+                    raise NotImplementedError
+            return int.__gt__(int(self), int(other))
+        raise NotImplementedError
+
+    def __le__(self, other):
+        """Compare enumeration item equality by value."""
+        if isinstance(other, int):
+            if isinstance(other, EnumerationItem):
+                if self.parent is not other.parent:
+                    raise NotImplementedError
+            return int.__le__(int(self), int(other))
+        raise NotImplementedError
+
+    def __lt__(self, other):
+        """Compare enumeration item equality by value."""
+        if isinstance(other, int):
+            if isinstance(other, EnumerationItem):
+                if self.parent is not other.parent:
+                    raise NotImplementedError
+            return int.__lt__(int(self), int(other))
+        raise NotImplementedError
+
+    def __ne__(self, other):
+        """Compare enumeration item equality by value."""
+        if isinstance(other, int):
+            if isinstance(other, EnumerationItem):
+                if self.parent is not other.parent:
+                    raise NotImplementedError
+            return int.__ne__(int(self), int(other))
+        if other is None:
+            return True
+        raise NotImplementedError
 
     def __new__(cls, value=0, name="", parent=None):
         """Return integer instance with additional attributes."""
@@ -73,13 +106,17 @@ class EnumerationItem(int):
         instance.parent = parent
         return instance
 
-    def __bool__(self):
-        """For consistency, always return True."""
-        return True
-
     def __str__(self):
         """Return name as the string representation."""
         return self.name
+
+    if not aeidon.debug:
+        del __eq__
+        del __ge__
+        del __gt__
+        del __le__
+        del __lt__
+        del __ne__
 
 
 class Enumeration(list):
@@ -87,18 +124,18 @@ class Enumeration(list):
     """
     List of named constants with integer values.
 
-    This class is an actual :class:`list` where enumeration items are stored as
-    both list items and instance attributes. New items should be added by
-    setting an instance attribute. Data-changing list methods raise
+    :cls:`Enumeration` is an actual :class:`list` where enumeration items are
+    stored as both list items and instance attributes. New items should be
+    added by setting an instance attribute. Data-changing list methods raise
     :exc:`NotImplementedError`.
 
     Typical use to create a new enumeration would be something like::
 
         fruits = aeidon.Enumeration()
         fruits.APPLE = aeidon.EnumerationItem()
-        fruits.APPLE.size = 10
         fruits.MANGO = aeidon.EnumerationItem()
-        fruits.MANGO.size = 15
+        fruits.APPLE.size = 10
+        fruits.MANGO.size = 20
 
     Note that there is no finalization of an enumeration. New items can always
     be added just by assigning a new attribute to the enumeration. Likewise,
@@ -113,17 +150,12 @@ class Enumeration(list):
                 return False
         return list.__contains__(self, item)
 
-    if not aeidon.debug: del __contains__
-
     def __delattr__(self, name):
         """Delete enumeration item and attribute."""
         list.remove(self, getattr(self, name))
         return object.__delattr__(self, name)
 
     def __delitem__(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def __delslice__(self, *args, **kwargs):
         raise NotImplementedError
 
     def __iadd__(self, *args, **kwargs):
@@ -142,9 +174,6 @@ class Enumeration(list):
     def __setitem__(self, *args, **kwargs):
         raise NotImplementedError
 
-    def __setslice__(self, *args, **kwargs):
-        raise NotImplementedError
-
     def append(self, *args, **kwargs):
         raise NotImplementedError
 
@@ -156,7 +185,8 @@ class Enumeration(list):
         for item in self:
             if getattr(item, name) == value:
                 return item
-        raise ValueError("Name %s not found" % repr(name))
+        raise ValueError("Name {0} not found"
+                         .format(repr(name)))
 
     def insert(self, *args, **kwargs):
         raise NotImplementedError
@@ -172,3 +202,6 @@ class Enumeration(list):
 
     def sort(self, *args, **kwargs):
         raise NotImplementedError
+
+    if not aeidon.debug:
+        del __contains__

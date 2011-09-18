@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,24 +20,48 @@ import aeidon
 class TestEnumerationItem(aeidon.TestCase):
 
     def setup_method(self, method):
-        self.item = aeidon.EnumerationItem(0, "test", object())
+        self.parent = object()
+        self.item_0 = aeidon.EnumerationItem(0, "a", self.parent)
+        self.item_1 = aeidon.EnumerationItem(1, "b", self.parent)
+        self.item_2 = aeidon.EnumerationItem(2, "c", self.parent)
 
     def test___bool__(self):
-        assert self.item
+        assert self.item_0
+        assert self.item_1
+        assert self.item_2
 
-    def test___cmp____equal(self):
-        if not aeidon.debug: return
-        assert self.item == self.item
-        assert self.item == 0
+    def test___eq__(self):
+        assert self.item_0 == self.item_0
+        assert self.item_0 == 0
 
-    def test___cmp____value_error(self):
-        if not aeidon.debug: return
-        other = aeidon.EnumerationItem(0, "rest", object())
-        self.assert_raises(ValueError, cmp, self.item, other)
-        self.assert_raises(ValueError, cmp, self.item, "xxx")
+    def test___ge__(self):
+        assert self.item_1 >= self.item_0
+        assert self.item_1 >= self.item_1
+        assert self.item_1 >= 0
+        assert self.item_1 >= 1
+
+    def test___gt__(self):
+        assert self.item_2 > self.item_1
+        assert self.item_2 > 1
+
+    def test___le__(self):
+        assert self.item_1 <= self.item_2
+        assert self.item_1 <= self.item_1
+        assert self.item_1 <= 2
+        assert self.item_1 <= 1
+
+    def test___lt__(self):
+        assert self.item_0 < self.item_1
+        assert self.item_0 < 1
+
+    def test___ne__(self):
+        assert self.item_0 != self.item_1
+        assert self.item_0 != 1
 
     def test___str__(self):
-        assert str(self.item) == "test"
+        assert str(self.item_0) == "a"
+        assert str(self.item_1) == "b"
+        assert str(self.item_2) == "c"
 
 
 class TestEnumeration(aeidon.TestCase):
@@ -45,24 +69,19 @@ class TestEnumeration(aeidon.TestCase):
     def setup_method(self, method):
         self.fruits = aeidon.Enumeration()
         self.fruits.APPLE = aeidon.EnumerationItem()
-        self.fruits.APPLE.size = 10
         self.fruits.MANGO = aeidon.EnumerationItem()
-        self.fruits.MANGO.size = 15
+        self.fruits.APPLE.size = 10
+        self.fruits.MANGO.size = 20
 
-    def test___contains____different(self):
-        if not aeidon.debug: return
+    def test___contains____false(self):
         item = aeidon.EnumerationItem(0, "test", object())
         assert not item in self.fruits
 
-    def test___contains____int(self):
-        if not aeidon.debug: return
-        assert 0 in self.fruits
-        assert 1 in self.fruits
-
-    def test___contains____item(self):
-        if not aeidon.debug: return
+    def test___contains____true(self):
         assert self.fruits.APPLE in self.fruits
         assert self.fruits.MANGO in self.fruits
+        assert 0 in self.fruits
+        assert 1 in self.fruits
 
     def test___delattr__(self):
         value = self.fruits.MANGO
@@ -76,13 +95,14 @@ class TestEnumeration(aeidon.TestCase):
         assert self.fruits.APPLE.name == "APPLE"
         assert self.fruits.MANGO.name == "MANGO"
         assert self.fruits.APPLE.size == 10
-        assert self.fruits.MANGO.size == 15
+        assert self.fruits.MANGO.size == 20
 
     def test_find_item(self):
-        find_item = self.fruits.find_item
-        assert find_item("size", 10) == self.fruits.APPLE
-        assert find_item("size", 15) == self.fruits.MANGO
+        assert self.fruits.find_item("size", 10) == self.fruits.APPLE
+        assert self.fruits.find_item("size", 20) == self.fruits.MANGO
 
     def test_find_item__value_error(self):
-        find_item = self.fruits.find_item
-        self.assert_raises(ValueError, find_item, "size", 20)
+        self.assert_raises(ValueError,
+                           self.fruits.find_item,
+                           "size",
+                           30)
