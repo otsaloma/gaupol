@@ -17,7 +17,6 @@
 """Base class for observable objects."""
 
 import aeidon
-import collections
 
 __all__ = ("Observable",)
 
@@ -30,18 +29,19 @@ class Observable(object, metaclass=aeidon.Contractual):
     :cvar signals: Tuple of emittable signals added automatically
 
     In addition to the signals defined in :attr:`signals`, all public instance
-    variables will have a ``notify::NAME`` signal generated automatically based
-    on the ``NAME`` of the variable. ``notify::NAME`` signals will be emitted
+    variables have a ``notify::NAME`` signal generated automatically based on
+    the ``NAME`` of the variable. ``notify::NAME`` signals will be emitted
     whenever the value of the corresponding instance variable changes.
 
     Notify signals will be emitted for mutable variables as well, which means
-    that care should be taken not to emit thousands of signals when appending
-    one-by-one to a large list. :meth:`freeze_notify` and :meth:`thaw_notify`
-    will queue notify signals and emit only one of each once thawed.
+    that care should be taken not to emit thousands of signals when e.g.
+    appending one-by-one to a large list. :meth:`freeze_notify` and
+    :meth:`thaw_notify` will queue notify signals and emit only one of each
+    once thawed.
 
     The Observable philosophy and API is highly inspired by GObject_.
 
-    .. _GObject: http://www.pygtk.org/docs/pygobject/class-gobject.html
+    .. _GObject: http://developer.gnome.org/gobject/
     """
 
     __slots__ = ("_blocked_signals",
@@ -59,7 +59,6 @@ class Observable(object, metaclass=aeidon.Contractual):
         self._notify_frozen = False
         self._notify_queue = []
         self._signal_handlers = {}
-
         for signal in self.signals:
             self._add_signal(signal)
 
@@ -68,7 +67,7 @@ class Observable(object, metaclass=aeidon.Contractual):
         if (name in self.__slots__) or name.startswith("_"):
             return object.__setattr__(self, name, value)
         value = self._validate(name, value)
-        signal = "notify::%s" % name
+        signal = "notify::{0}".format(name)
         if not signal in self._signal_handlers:
             self._add_signal(signal)
             return object.__setattr__(self, name, value)
@@ -102,7 +101,7 @@ class Observable(object, metaclass=aeidon.Contractual):
 
     def block(self, signal):
         """
-    Block all emissions of `signal`.
+        Block all emissions of `signal`.
 
         Return ``False`` if already blocked, otherwise ``True``.
         """
@@ -124,7 +123,7 @@ class Observable(object, metaclass=aeidon.Contractual):
 
     def connect_require(self, signal, method, *args):
         assert signal in self._signal_handlers
-        assert isinstance(method, collections.Callable)
+        assert callable(method)
 
     def connect(self, signal, method, *args):
         """Register to receive notifications of ``signal``."""
@@ -135,7 +134,7 @@ class Observable(object, metaclass=aeidon.Contractual):
 
     def disconnect(self, signal, method):
         """Remove registration to receive notifications of ``signal``."""
-        for i in reversed(list(list(range(len(self._signal_handlers[signal]))))):
+        for i in reversed(range(len(self._signal_handlers[signal]))):
             if self._signal_handlers[signal][i][0] == method:
                 self._signal_handlers[signal].pop(i)
 
@@ -148,7 +147,6 @@ class Observable(object, metaclass=aeidon.Contractual):
             if not signal in self._notify_queue:
                 self._notify_queue.append(signal)
             return
-
         if ((not self._blocked_state) and
             (not signal in self._blocked_signals)):
             if signal.startswith("notify::"):
@@ -173,7 +171,7 @@ class Observable(object, metaclass=aeidon.Contractual):
 
     def notify(self, name):
         """Emit notification signal for variable."""
-        return self.emit("notify::%s" % name)
+        return self.emit("notify::{0}".format(name))
 
     def thaw_notify_ensure(self, value, do=True):
         assert (not do) or (not self._notify_queue)
