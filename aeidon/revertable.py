@@ -17,7 +17,6 @@
 """Actions that can be reverted, i.e. undone and redone."""
 
 import aeidon
-import collections
 
 __all__ = ("RevertableAction", "RevertableActionGroup",)
 
@@ -65,7 +64,7 @@ class RevertableAction(object, metaclass=aeidon.Contractual):
         raise ValueError("Invalid register: %s" % repr(self.register))
 
     def revert_require(self):
-        assert isinstance(self.revert_function, collections.Callable)
+        assert callable(self.revert_function)
 
     def revert(self):
         """Call the reversion function."""

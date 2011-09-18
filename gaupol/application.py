@@ -23,7 +23,6 @@ from gi.repository import Gtk
 import itertools
 import os
 from gi.repository import Pango
-import collections
 _ = aeidon.i18n._
 
 __all__ = ("Application",)
@@ -47,7 +46,7 @@ class ApplicationMeta(aeidon.Contractual):
             agent_class = getattr(gaupol.agents, agent_class_name)
             def is_public_method(name):
                 return (not name.startswith("_") and
-                        isinstance(getattr(agent_class, name), collections.Callable))
+                        callable(getattr(agent_class, name)))
 
             attr_names = list(list(filter(is_public_method, dir(agent_class))))
             for attr_name in attr_names:
@@ -139,7 +138,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             agent = getattr(gaupol.agents, agent_class_name)(self)
             def is_delegate_method(name):
                 value = getattr(agent, name)
-                return (isinstance(value, collections.Callable) and
+                return (callable(value) and
                         hasattr(value, "export") and
                         value.export is True)
 
