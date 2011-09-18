@@ -9,6 +9,8 @@ Gaupol 0.20
      * http://live.gnome.org/Libpeas
  [X] Add support for Arabic CP720 character encoding
  [X] Add support for Unicode UTF-32 character encodings
+ [X] Fix IndexError when speech recognition finished with no speech
+     detected (#659411)
  [X] Rename manifest directory in source tarball to avoid clashes with
      MANIFEST file on case-insensitive filesystems
 

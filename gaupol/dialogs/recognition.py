@@ -218,7 +218,8 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
             self._texts[-1] = self._text
             self._text = None
         self._progressbar.set_fraction(1)
-        self._append_subtitle(-1)
+        if self._starts:
+            self._append_subtitle(-1)
         self._stop_speech_recognition()
 
     def _on_default_model_check_toggled(self, toggle_button):
