@@ -10,6 +10,8 @@ Gaupol 0.20
      - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
  [ ] Use Libpeas for extensions?
      - http://live.gnome.org/Libpeas
+ [X] Fix IndexError when speech recognition finished with no speech
+     detected (#659411)
  [X] Rename manifest directory in source tarball to avoid clashes with
      MANIFEST file on case-insensitive filesystems
 
