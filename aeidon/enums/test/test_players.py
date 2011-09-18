@@ -15,6 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import aeidon
+import imp
 import sys
 
 
@@ -23,7 +24,7 @@ class TestModule(aeidon.TestCase):
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_attributes__unix(self):
         sys.platform = "linux2"
-        reload(aeidon)
+        imp.reload(aeidon)
         for player in aeidon.players:
             assert hasattr(player, "command")
             assert hasattr(player, "command_utf_8")
@@ -32,7 +33,7 @@ class TestModule(aeidon.TestCase):
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_attributes__windows(self):
         sys.platform = "win32"
-        reload(aeidon)
+        imp.reload(aeidon)
         for player in aeidon.players:
             assert hasattr(player, "command")
             assert hasattr(player, "command_utf_8")
