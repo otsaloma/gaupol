@@ -67,7 +67,7 @@ def code_to_name(code):
     language = code_to_language(code)
     country = code_to_country(code)
     if country is None: return language
-    return _("%(language)s (%(country)s)") % locals()
+    return _("{language} ({country})").format(**locals())
 
 @aeidon.deco.once
 def get_system_code():
@@ -78,10 +78,9 @@ def get_system_code():
 @aeidon.deco.once
 def get_system_modifier():
     """Return the script modifier of system or ``None``."""
-    import locale
     names = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
     values = list(map(os.environ.get, names))
-    values = [_f for _f in values if _f]
+    values = [x for x in values if x]
     for value in (x for x in values if x.count("@")):
         return value[value.index("@") + 1:value.index("@") + 5]
     return None
