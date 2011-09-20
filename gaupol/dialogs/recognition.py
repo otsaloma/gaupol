@@ -218,7 +218,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
             self._texts[-1] = self._text
             self._text = None
         self._progressbar.set_fraction(1)
-        if self._starts:
+        if self._starts and self._stops[-1] is not None:
             self._append_subtitle(-1)
         self._stop_speech_recognition()
 
