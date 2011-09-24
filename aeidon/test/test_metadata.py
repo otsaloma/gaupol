@@ -21,29 +21,31 @@ class TestMetadataItem(aeidon.TestCase):
 
     @aeidon.deco.monkey_patch(aeidon.locales, "get_system_code")
     @aeidon.deco.monkey_patch(aeidon.locales, "get_system_modifier")
-    def assert_name_in_locale(self, code, modifier=None):
+    def assert_name_in_locale(self, code, modifier):
         aeidon.locales.get_system_code = lambda: code
         aeidon.locales.get_system_modifier = lambda: modifier
         self.item.set_field("Name", "system")
-        key = (code if modifier is None else "%s@%s" % (code, modifier))
-        self.item.set_field("Name[%s]" % key, "local")
-        assert self.item.get_name() == "local"
+        key = code
+        if modifier is not None:
+            key = "{0}@{1}".format(key, modifier)
+        self.item.set_field("Name[{0}]".format(key), "local")
+        assert self.item.get_name(localize=True) == "local"
 
     def setup_method(self, method):
         self.item = aeidon.MetadataItem()
 
     def test_get_description(self):
         self.item.set_field("Description", "test")
-        assert self.item.get_description(False) == "test"
-        assert self.item.get_description(True) == "test"
+        assert self.item.get_description(localize=False) == "test"
+        assert self.item.get_description(localize=True) == "test"
 
     def test_get_field(self):
-        assert self.item.get_field("Xxxx") is None
+        assert self.item.get_field("Test") is None
         self.item.set_field("Test", "test")
         assert self.item.get_field("Test") == "test"
 
     def test_get_field_boolean(self):
-        assert self.item.get_field("Xxxx") is None
+        assert self.item.get_field("Test") is None
         self.item.set_field("Test", "True")
         assert self.item.get_field_boolean("Test") is True
         self.item.set_field("Test", "False")
@@ -54,23 +56,24 @@ class TestMetadataItem(aeidon.TestCase):
 
     def test_get_field_boolean__value_error(self):
         self.item.set_field("Test", "Xxxx")
-        function = self.item.get_field_boolean
-        self.assert_raises(ValueError, function, "Test")
+        self.assert_raises(ValueError,
+                           self.item.get_field_boolean,
+                           "Test")
 
     def test_get_field_list(self):
-        assert self.item.get_field("Xxxx") is None
+        assert self.item.get_field("Test") is None
         self.item.set_field("Test", "Yee;Haw")
         assert self.item.get_field_list("Test") == ["Yee", "Haw"]
         self.item.set_field("Test", "Yee;Haw;")
         assert self.item.get_field_list("Test") == ["Yee", "Haw"]
 
     def test_get_field_list__fallback(self):
-        assert self.item.get_field("Xxxx", []) == []
+        assert self.item.get_field("Xxxx", [3]) == [3]
 
     def test_get_name(self):
         self.item.set_field("Name", "test")
-        assert self.item.get_name(False) == "test"
-        assert self.item.get_name(True) == "test"
+        assert self.item.get_name(localize=False) == "test"
+        assert self.item.get_name(localize=True) == "test"
 
     def test_get_name__localize(self):
         self.assert_name_in_locale("en_US", "Latn")
