@@ -78,7 +78,6 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
             line = line[z:]
         if not start_tag: return
         if not all([x.startswith(start_tag) for x in lines]): return
-
         end_tag = ""
         while True:
             iterator = self.re_tag.finditer(line)
@@ -89,11 +88,9 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
             end_tag = line[a:z] + end_tag
             line = line[:a]
         if not all([x.endswith(end_tag) for x in lines]): return
-
         for line in (x[len(start_tag):-len(end_tag)] for x in lines):
             # Ensure that no other tags exists on any of the lines.
             if self.re_tag.search(line) is not None: return
-
         self._margins = [start_tag, end_tag]
 
     def _set_tags_require(self, text):
@@ -107,10 +104,8 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
 
     def _shift_tags(self, pos, shift, orig_text):
         """Shift all markup tags after `pos`."""
-
         if not shift: return
         if not self._tags: return
-
         # Try to determine whether a tag at position pos would be an opening
         # or a closing tag, i.e. attached to the next or the previous word.
         opening = True
@@ -120,7 +115,6 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         elif pos == len(orig_text):
             opening = False
         closing = not opening
-
         # Get length of tags *before* position. Try to add strings (positive
         # shift) inside tags and remove strings (negative shift) after tags.
         pos_with_tags = pos
@@ -130,7 +124,6 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
                     pos_with_tags += len(tag)
             elif tag_pos <= pos_with_tags:
                 pos_with_tags += len(tag)
-
         between_length = 0
         for i, (tag_pos, tag) in enumerate(self._tags):
             orig_end = pos_with_tags - shift + between_length
@@ -152,7 +145,7 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         for pos, tag in self._tags:
             text = text[:pos] + tag + text[pos:]
         if self._margins:
-            text = text.replace("\n", "%s\n%s" % tuple(self._margins[::-1]))
+            text = text.replace("\n", "{1}\n{0}".format(*self._margins))
             text = self._margins[0] + text + self._margins[1]
         if self.clean_func is not None:
             text = self.clean_func(text)
