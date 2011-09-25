@@ -2,6 +2,7 @@ Module Dependency Order
 =======================
 
 aeidon.paths
+aeidon.position
 aeidon.deco
 aeidon.i18n
 aeidon.util

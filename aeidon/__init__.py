@@ -98,6 +98,7 @@ debug = (bool(os.environ.get("AEIDON_DEBUG", "")) or
 re_any_tag = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
 
 from aeidon.paths import *
+from aeidon.position import *
 from aeidon import deco
 from aeidon import i18n
 from aeidon import util
