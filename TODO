@@ -5,6 +5,9 @@ Gaupol 0.20
      * Fix remaining exceptions 'xxx_todo_changeme'
      * Fix remaining string formatting '%'
      * Test encoding auto-detection
+     * Add naming verbosity of modules not a part of external
+       interface, e.g. rename recognition to speech_recognition
+       in gaupol.dialogs
  [ ] Use Libpeas for extensions?
      * http://live.gnome.org/Libpeas
  [X] Add support for Arabic CP720 character encoding

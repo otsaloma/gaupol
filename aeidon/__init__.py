@@ -109,7 +109,7 @@ from aeidon.mutables import *
 from aeidon.observable import *
 from aeidon.errors import *
 from aeidon.enum import *
-from aeidon.enums.align import *
+from aeidon.enums.align_methods import *
 from aeidon.enums.documents import *
 from aeidon.enums.formats import *
 from aeidon.enums.framerates import *
