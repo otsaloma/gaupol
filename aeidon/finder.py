@@ -57,7 +57,7 @@ class Finder(object, metaclass=aeidon.Contractual):
         for pos in value:
             assert (0 <= pos <= len(self.text))
 
-    def __next__(self):
+    def next(self):
         """
         Find the next match of pattern.
 
@@ -84,10 +84,9 @@ class Finder(object, metaclass=aeidon.Contractual):
                 if self.pos == len(self.text):
                     raise StopIteration
                 self.pos += 1
-                return next(self)
+                return self.next()
             self.match = match
             self.match_span = match.span()
-
         self.pos = self.match_span[1]
         return self.match_span
 
@@ -137,7 +136,6 @@ class Finder(object, metaclass=aeidon.Contractual):
                 return self.previous()
             self.match = match
             self.match_span = match.span()
-
         self.pos = self.match_span[0]
         return self.match_span
 
@@ -159,12 +157,10 @@ class Finder(object, metaclass=aeidon.Contractual):
         if not isinstance(self.pattern, str):
             replacement = self.match.expand(self.replacement)
         self.text = self.text[:a] + replacement + self.text[z:]
-
         shift = len(self.text) - orig_length
         self.pos = ((z + shift) if next else a)
-
-        # Adapt match span to new text length
-        # to avoid getting stuck with zero-length regular expressions.
+        # Adapt match span to new text length to avoid
+        # getting stuck with zero-length regular expressions.
         if next and (self.match_span[0] == self.match_span[1]):
             self.match_span = (self.pos, self.pos)
 
@@ -185,7 +181,7 @@ class Finder(object, metaclass=aeidon.Contractual):
         count = 0
         while True:
             try:
-                next(self)
+                self.next()
             except StopIteration:
                 self.pos = len(self.text)
                 self.match_span = None
