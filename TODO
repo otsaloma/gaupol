@@ -8,6 +8,7 @@ Gaupol 0.20
      * Add naming verbosity of modules not a part of external
        interface, e.g. rename recognition to speech_recognition
        in gaupol.dialogs
+     * Check API documentation on aeidon.as_* and aeidon.is_*
  [ ] Use Libpeas for extensions?
      * http://live.gnome.org/Libpeas
  [X] Add support for Arabic CP720 character encoding

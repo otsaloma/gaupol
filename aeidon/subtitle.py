@@ -63,6 +63,7 @@ class Subtitle(object):
         """
         if self._mode == aeidon.modes.TIME:
             times = (self._start, other.start_time)
+            # XXX: No more compare in calc!
             return self.calc.compare_times(*times)
         if self._mode == aeidon.modes.FRAME:
             return cmp(self._start, other.start_frame)

@@ -49,6 +49,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 if i == len(self.subtitles): break
                 ms = self.subtitles[i].get_start(mode)
                 me = self.subtitles[i].get_end(mode)
+                # XXX: No more compare in calc!
                 tm_cmp_ms = self.calc.compare(tm, ms)
                 tm_cmp_me = self.calc.compare(tm, me)
                 if tm_cmp_me <= 0: break

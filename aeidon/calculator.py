@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -15,7 +15,6 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Time and frame calculator."""
-
 
 
 import aeidon
@@ -41,34 +40,16 @@ class Calculator(object):
 
     def __new__(cls, framerate=None):
         """Return possibly existing instance for `framerate`."""
-        framerate = framerate or aeidon.framerates.FPS_23_976
+        framerate = int(framerate or aeidon.framerates.FPS_23_976)
         if not framerate in cls._instances:
             cls._instances[framerate] = object.__new__(cls)
         return cls._instances[framerate]
-
-    def add_seconds_to_time(self, time, seconds):
-        """Add amount of `seconds` to `time`."""
-        seconds = self.time_to_seconds(time) + seconds
-        return self.seconds_to_time(seconds)
 
     def add_times(self, x, y):
         """Add time `y` to time `x`."""
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
         return self.seconds_to_time(x + y)
-
-    def compare(self, x, y):
-        """Return 1 if `x` is greater, 0 if equal and -1 if `y` greater."""
-        if isinstance(x, str):
-            return self.compare_times(x, y)
-        if isinstance(x, int):
-            return cmp(x, y)
-        raise ValueError("Invalid type for x: %s" % repr(type(x)))
-
-    def compare_times(self, x, y):
-        """Return 1 if `x` is greater, 0 if equal and -1 if `y` greater."""
-        negative = (x.startswith("-") and y.startswith("-"))
-        return (negative * -2 + 1) * cmp(x, y)
 
     def frame_to_seconds(self, frame):
         """Convert `frame` to seconds."""
@@ -79,53 +60,72 @@ class Calculator(object):
         seconds = self.frame_to_seconds(frame)
         return self.seconds_to_time(seconds)
 
-    def get_frame_duration(self, x, y):
-        """Return duration from frame `x` to frame `y`."""
-        return y - x
-
     def get_middle(self, x, y):
         """
-    Return time or frame halfway between `x` and `y`.
+        Return time, frame or seconds halfway between `x` and `y`.
 
         >>> calc = aeidon.Calculator()
-        >>> calc.get_middle(33, 77)
-        55
-        >>> calc.get_middle("00:00:00.123", "00:00:10,456")
-        '00:00:05.289'
+        >>> calc.get_middle(0, 100)
+        50
+        >>> calc.get_middle("00:00:00.000", "00:00:10.000")
+        '00:00:05.000'
         """
-        if isinstance(x, str):
+        if aeidon.is_time(x):
             x = self.time_to_seconds(x)
             y = self.time_to_seconds(y)
             return self.seconds_to_time((x + y) / 2)
-        if isinstance(x, int):
-            return int(round((x + y) / 2, 0))
-        raise ValueError("Invalid type for x: %s" % repr(type(x)))
+        if aeidon.is_frame(x):
+            return round((x + y) / 2, 0)
+        if aeidon.is_seconds(x):
+            return ((x + y) / 2)
+        raise ValueError("Invalid type for x: {0}"
+                         .format(repr(type(x))))
 
-    def get_time_duration(self, x, y):
-        """Return duration from time `x` to time `y`."""
-        x = self.time_to_seconds(x)
-        y = self.time_to_seconds(y)
-        return self.seconds_to_time(y - x)
+    def is_earlier(self, x, y):
+        """Return ``True`` if `x` is earlier than `y`."""
+        if aeidon.is_time(x):
+            return self.is_earlier(self.time_to_seconds(x),
+                                   self.time_to_seconds(y))
+
+        if aeidon.is_frame(x):
+            return (x < y)
+        if aeidon.is_seconds(x):
+            return (x < y)
+        raise ValueError("Invalid type for x: {0}"
+                         .format(repr(type(x))))
+
+    def is_later(self, x, y):
+        """Return ``True`` if `x` is later than `y`."""
+        if aeidon.is_time(x):
+            return self.is_later(self.time_to_seconds(x),
+                                 self.time_to_seconds(y))
+
+        if aeidon.is_frame(x):
+            return (x > y)
+        if aeidon.is_seconds(x):
+            return (x > y)
+        raise ValueError("Invalid type for x: {0}"
+                         .format(repr(type(x))))
 
     def is_valid_time(self, time):
         """Return ``True`` if `time` is a valid time string."""
         if time.startswith("-"):
             time = time[1:]
         try:
-            hours = int(time[:2])
-            minutes = int(time[3:5])
-            seconds = int(time[6:8])
-            mseconds = int(time[9:])
+            hours    = int(time[ :2])
+            minutes  = int(time[3:5])
+            seconds  = int(time[6:8])
+            mseconds = int(time[9: ])
         except ValueError:
             return False
-        return (0 <= hours <= 99 and
-                0 <= minutes <= 59 and
-                0 <= seconds <= 59 and
+        return (0 <= hours    <=  99 and
+                0 <= minutes  <=  59 and
+                0 <= seconds  <=  59 and
                 0 <= mseconds <= 999)
 
     def parse_time(self, time):
         """
-        Parse syntactically sloppy `time` to valid format.
+        Parse `time` to valid format.
 
         >>> calc = aeidon.Calculator()
         >>> calc.parse_time("1:2:3,4")
@@ -135,12 +135,13 @@ class Calculator(object):
         sign = ("-" if time.startswith("-") else "")
         time = time.replace("-", "")
         time = time.replace(",", ".")
-        hours, minutes, seconds = list(map(float, time.split(":")))
-        return "%s%02.0f:%02.0f:%02.0f.%03.0f" % (sign,
-                                                  hours,
-                                                  minutes,
-                                                  int(seconds),
-                                                  (seconds % 1) * 1000)
+        hours, minutes, seconds = time.split(":")
+        return ("{0}{1:02.0f}:{2:02.0f}:{3:02.0f}.{4:03.0f}"
+                .format(sign,
+                        int(hours),
+                        int(minutes),
+                        int(float(seconds)),
+                        (float(seconds) % 1) * 1000))
 
     def round_time(self, time, decimals):
         """Round `time` to amount of `decimals` in seconds."""
@@ -157,11 +158,13 @@ class Calculator(object):
         sign = ("-" if seconds < 0 else "")
         seconds = abs(round(seconds, 3))
         if seconds > 359999.999:
-            return "%s99:59:59.999" % sign
-        return "%s%02.0f:%02.0f:%02.0f.%03.0f" % (sign, seconds // 3600,
-                                                  (seconds % 3600) // 60,
-                                                  int(seconds % 60),
-                                                  (seconds % 1) * 1000)
+            return "{0}99:59:59.999".format(sign)
+        return ("{0}{1:02.0f}:{2:02.0f}:{3:02.0f}.{4:03.0f}"
+                .format(sign,
+                        seconds // 3600,
+                        (seconds % 3600) // 60,
+                        int(seconds % 60),
+                        (seconds % 1) * 1000))
 
     def time_to_frame(self, time):
         """Convert `time` to frame."""
@@ -177,35 +180,35 @@ class Calculator(object):
                                   float(time[6:8]),
                                   float(time[9: ]) / 1000,))
 
-    def to_frame(self, position):
-        """Convert `position` to frame."""
-        if isinstance(position, str):
-            return self.time_to_frame(position)
-        if isinstance(position, int):
-            return position
-        if isinstance(position, float):
-            return self.seconds_to_frame(position)
-        raise ValueError("Invalid type for position: %s"
-                         % repr(type(position)))
+    def to_frame(self, pos):
+        """Convert `pos` to frame."""
+        if aeidon.is_time(pos):
+            return self.time_to_frame(pos)
+        if aeidon.is_frame(pos):
+            return pos
+        if aeidon.is_seconds(pos):
+            return self.seconds_to_frame(pos)
+        raise ValueError("Invalid type for pos: {0}"
+                         .format(repr(type(pos))))
 
-    def to_seconds(self, position):
-        """Convert `position` to secods."""
-        if isinstance(position, str):
-            return self.time_to_seconds(position)
-        if isinstance(position, int):
-            return self.frame_to_seconds(position)
-        if isinstance(position, float):
-            return position
-        raise ValueError("Invalid type for position: %s"
-                         % repr(type(position)))
+    def to_seconds(self, pos):
+        """Convert `pos` to secods."""
+        if aeidon.is_time(pos):
+            return self.time_to_seconds(pos)
+        if aeidon.is_frame(pos):
+            return self.frame_to_seconds(pos)
+        if aeidon.is_seconds(pos):
+            return pos
+        raise ValueError("Invalid type for pos: {0}"
+                         .format(repr(type(pos))))
 
-    def to_time(self, position):
-        """Convert `position` to time."""
-        if isinstance(position, str):
-            return position
-        if isinstance(position, int):
-            return self.frame_to_time(position)
-        if isinstance(position, float):
-            return self.seconds_to_time(position)
-        raise ValueError("Invalid type for position: %s"
-                         % repr(type(position)))
+    def to_time(self, pos):
+        """Convert `pos` to time."""
+        if aeidon.is_time(pos):
+            return pos
+        if aeidon.is_frame(pos):
+            return self.frame_to_time(pos)
+        if aeidon.is_seconds(pos):
+            return self.seconds_to_time(pos)
+        raise ValueError("Invalid type for pos: {0}"
+                         .format(repr(type(pos))))
