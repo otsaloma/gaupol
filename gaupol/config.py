@@ -361,7 +361,15 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         if self.path is None: return
         if not os.path.isfile(self.path): return
         encoding = aeidon.util.get_default_encoding()
-        try: lines = codecs.open(self.path, "r", encoding).readlines()
+        try:
+            # Ignore all decoding errors, since all keys and all standard
+            # values are all ASCII. This will only mangle recent etc.
+            # filenames, which are always checked for existance anyway.
+            lines = codecs.open(self.path,
+                                "r",
+                                encoding,
+                                errors="ignore").readlines()
+
         except IOError:
             aeidon.util.print_read_io(sys.exc_info(), self.path)
             raise # IOError
