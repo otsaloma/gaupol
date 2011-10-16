@@ -16,6 +16,8 @@ Gaupol 0.20
      subtitle
  [X] Fix UnicodeDecodeError when reading configuration file (#661123)
  [X] Allow preview of unsaved documents (#661242)
+ [X] Fix mplayer preview command to work if gaupol was started as a
+     background process (&) from a terminal window (#660035)
  [X] Rename manifest directory in source tarball to avoid clashes with
      MANIFEST file on case-insensitive filesystems
 
