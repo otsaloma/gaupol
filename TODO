@@ -15,6 +15,7 @@ Gaupol 0.20
  [X] Fix TypeError when speech recognition stopped in the middle of a
      subtitle
  [X] Fix UnicodeDecodeError when reading configuration file (#661123)
+ [X] Allow preview of unsaved documents (#661242)
  [X] Rename manifest directory in source tarball to avoid clashes with
      MANIFEST file on case-insensitive filesystems
 

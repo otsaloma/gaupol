@@ -36,7 +36,6 @@ class PreviewAgent(aeidon.Delegate):
         aeidon.util.connect(self, self, "notify::main_file")
 
     def _get_subtitle_path_require(self, doc, encoding=None, temp=False):
-        assert self.get_file(doc) is not None
         if encoding is not None:
             assert aeidon.encodings.is_valid_code(encoding)
 
@@ -46,9 +45,9 @@ class PreviewAgent(aeidon.Delegate):
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
         """
-        if encoding is not None:
-            if encoding != self.get_file(doc).encoding:
-                return self.new_temp_file(doc, encoding)
+        sfile = self.get_file(doc)
+        if sfile is None or encoding != sfile.encoding:
+            return self.new_temp_file(doc)
         if doc == aeidon.documents.MAIN:
             if not self.main_changed and not temp:
                 return self.main_file.path
@@ -115,8 +114,7 @@ class PreviewAgent(aeidon.Delegate):
                 return self.video_path
         return None
 
-    def preview_require(self, position, doc, *args, **kwargs):
-        assert self.get_file(doc) is not None
+    def preview_require(self, *args, **kwargs):
         assert self.video_path is not None
 
     def preview_ensure(self, value, *args, **kwargs):

@@ -157,10 +157,20 @@ class UtilityAgent(aeidon.Delegate):
         Raise :exc:`UnicodeError` if encoding temporary file fails.
         """
         sfile = self.get_file(doc)
-        sfile = aeidon.files.new(sfile.format,
-                                 aeidon.temp.create(sfile.format.extension),
-                                 encoding or sfile.encoding)
-
-        sfile.copy_from(self.get_file(doc))
+        if sfile is None and doc == aeidon.documents.TRAN:
+            # For an unsaved translation document,
+            # fall back to main document's properties.
+            sfile = self.get_file(aeidon.documents.MAIN)
+        if sfile is not None:
+            path = aeidon.temp.create(sfile.format.extension)
+            encoding = encoding or sfile.encoding
+            sfile = aeidon.files.new(sfile.format, path, encoding)
+            sfile.copy_from(self.get_file(doc))
+        else:
+            # If no saved document to pull properties from,
+            # fall back to SubRip format and UTF-8 encoding.
+            path = aeidon.temp.create(aeidon.formats.SUBRIP.extension)
+            encoding = encoding or "utf_8"
+            sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, encoding)
         self.save(doc, sfile, False)
         return sfile.path

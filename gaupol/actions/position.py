@@ -76,11 +76,6 @@ class PreviewAction(gaupol.Action):
         aeidon.util.affirm(page.project.video_path is not None)
         if gaupol.conf.preview.use_custom_command:
             aeidon.util.affirm(gaupol.conf.preview.custom_command)
-        col = page.view.get_focus()[1]
-        if col == page.view.columns.TRAN_TEXT:
-            aeidon.util.affirm(page.project.tran_file is not None)
-        else: # Any other column previews the main file.
-            aeidon.util.affirm(page.project.main_file is not None)
 
 
 class ShiftPositionsAction(gaupol.Action):
