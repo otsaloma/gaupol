@@ -64,7 +64,9 @@ class DebugDialog(gaupol.BuilderDialog):
         """Insert environment information."""
         map(self._insert_text,
             ("Platform: %s\n" % platform.platform(True),
-             "Locale: %s\n" % aeidon.locales.get_system_code(),
+             "Locale: %s.%s\n" % (aeidon.locales.get_system_code(),
+                                  aeidon.encodings.get_locale_code()),
+
              "\n"))
 
     def _insert_library_versions(self):
