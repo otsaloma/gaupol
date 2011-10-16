@@ -49,6 +49,11 @@ class MPlayer(aeidon.EnumerationItem):
                         "-sub $SUBFILE",
                         "$VIDEOFILE",))
 
+    if sys.platform != "win32":
+        # Required for mplayer to work if gaupol was started
+        # as a background process (&) from a terminal window.
+        # http://www.mplayerhq.hu/DOCS/HTML/en/faq.html#idp11051520
+        command = "%s < /dev/null" % command
     command_utf_8 = " ".join((_get_mplayer_executable(),
                               "-identify",
                               "-osdlevel 2",
@@ -59,6 +64,11 @@ class MPlayer(aeidon.EnumerationItem):
                               "-utf8",
                               "$VIDEOFILE",))
 
+    if sys.platform != "win32":
+        # Required for mplayer to work if gaupol was started
+        # as a background process (&) from a terminal window.
+        # http://www.mplayerhq.hu/DOCS/HTML/en/faq.html#idp11051520
+        command_utf_8 = "%s < /dev/null" % command_utf_8
     label = "MPlayer"
 
 
