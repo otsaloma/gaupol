@@ -402,6 +402,16 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                             value, "::".join(sections), option, self.path)))
 
                     continue
+                if hasattr(container, option) and value is None:
+                    # Discard a None-value for all non-extension options.
+                    # None-values are not used for any options, but might
+                    # accidentally bet set in some corner or error cases.
+                    # By discarding them here, we ensure a clean start.
+                    print ("Discarding value '%s' of option '%s.%s' "
+                           "from configuration file '%s'." % (
+                            value, "::".join(sections), option, self.path))
+
+                    continue
                 if not hasattr(container, option):
                     # Add attribute if it does not exist in container, which
                     # has been initialized from config_defaults. This is needed
