@@ -455,6 +455,7 @@
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
+                            <signal name="toggled" handler="_on_selected_radio_toggled"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>

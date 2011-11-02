@@ -99,6 +99,7 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         if (not rows) and (target == gaupol.targets.SELECTED):
             self._current_radio.set_active(True)
         self._selected_radio.set_sensitive(bool(rows))
+        self._selected_radio.emit("toggled")
 
     def _init_widgets(self):
         """Initialize properties of widgets."""
@@ -138,6 +139,21 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         gaupol.conf.position_transform.target = self._get_target()
         if response == gtk.RESPONSE_OK:
             self._transform_positions()
+
+    def _on_selected_radio_toggled(self, *args):
+        """Set subtitle values from selection."""
+        page = self.application.get_current_page()
+        rows = page.view.get_selected_rows()
+        ranges = aeidon.util.get_ranges(rows)
+        if (self._selected_radio.get_active()
+            and len(rows) > 1
+            and len(ranges) == 1
+            and not self._output_edited()):
+            self._subtitle_spin_1.set_value(rows[ 0] + 1)
+            self._subtitle_spin_2.set_value(rows[-1] + 1)
+        elif not self._output_edited():
+            self._subtitle_spin_1.set_value(1)
+            self._subtitle_spin_2.set_value(len(page.project.subtitles))
 
     def _transform_positions(self):
         """Transform positions in subtitles."""
@@ -223,6 +239,13 @@ class FrameTransformDialog(PositionTransformDialog):
         self._text_label_2.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_1.props.adjustment.props.upper = row
 
+    def _output_edited(self):
+        """Return ``True`` if output of either point has been edited."""
+        in_1 = int(self._input_entry_1.get_text())
+        in_2 = int(self._input_entry_2.get_text())
+        out_1 = self._output_spin_1.get_value_as_int()
+        out_2 = self._output_spin_2.get_value_as_int()
+        return (out_1 != in_1 or out_2 != in_2)
 
 class TimeTransformDialog(PositionTransformDialog):
 
@@ -295,3 +318,11 @@ class TimeTransformDialog(PositionTransformDialog):
         self._subtitle_spin_1.props.adjustment.props.upper = row
         # Allow the glib.idle_add-using TimeEntry to update.
         gaupol.util.iterate_main()
+
+    def _output_edited(self):
+        """Return ``True`` if output of either point has been edited."""
+        in_1 = self._input_entry_1.get_text()
+        in_2 = self._input_entry_2.get_text()
+        out_1 = self._output_entry_1.get_text()
+        out_2 = self._output_entry_2.get_text()
+        return (out_1 != in_1 or out_2 != in_2)
