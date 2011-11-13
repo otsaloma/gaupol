@@ -16,8 +16,6 @@
 
 """Breaker of text into lines according to preferred break points."""
 
-
-
 import aeidon
 import copy
 import math
@@ -69,7 +67,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
     def _break_on_pattern(self, max_lines, regex, replacement):
         """
-        Break the text into lines based on `regex`.
+        Break text into lines based on `regex`.
 
         Return ``True`` if breaks made and result is elegant and legal.
         """
@@ -90,7 +88,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         return False
 
     def _break_on_words(self, max_lines):
-        """Break the text into lines based on words."""
+        """Break text into lines based on words."""
         self.text = self.text.replace(" ", "\n")
         self.text = self.text.replace("\n-\n", "\n- ")
         self._join_even(max_lines)
@@ -268,7 +266,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         return self.get_text()
 
     def is_legal(self):
-        """Return ``True`` if the text does not violate :attr:`max_length`."""
+        """Return ``True`` if text does not violate :attr:`max_length`."""
         for line in self.text.split("\n"):
             length = self._length_func(line)
             if (" " in line) and (length > self.max_length):
