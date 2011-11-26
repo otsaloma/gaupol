@@ -10,18 +10,6 @@ Gaupol 0.20
      - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
  [ ] Use Libpeas for extensions?
      - http://live.gnome.org/Libpeas
- [X] Fix IndexError when speech recognition finished with no speech
-     detected (#659411)
- [X] Fix TypeError when speech recognition stopped in the middle of a
-     subtitle
- [X] Fix UnicodeDecodeError when reading configuration file (#661123)
- [X] Allow preview of unsaved documents (#661242)
- [X] Fix mplayer preview command to work if gaupol was started as a
-     background process (&) from a terminal window (#660035)
- [X] Use subtitles from selected range if applicable in the Transform
-     Positions dialog (#663158)
- [X] Rename manifest directory in source tarball to avoid clashes with
-     MANIFEST file on case-insensitive filesystems
 
 Gaupol 1.0
 ==========

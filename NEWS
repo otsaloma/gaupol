@@ -1,3 +1,19 @@
+Gaupol 0.19.2
+=============
+
+ * Allow preview of unsaved documents (#661242)
+ * Use subtitles from selected range if applicable in the Transform
+   Positions dialog (#663158)
+ * Fix mplayer preview command to work if gaupol was started as a
+   background process (with &) from a terminal window (#660035)
+ * Fix TypeError when speech recognition stopped in the middle of a
+   subtitle
+ * Fix IndexError when speech recognition finished with no speech
+   detected (#659411)
+ * Fix UnicodeDecodeError when reading configuration file (#661123)
+ * Rename manifest directory in source tarball to avoid clashes with
+   MANIFEST file on case-insensitive filesystems
+
 Gaupol 0.19.1
 =============
 

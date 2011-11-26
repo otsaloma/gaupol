@@ -4,8 +4,8 @@ include doc/MODULES
 include doc/RELEASING
 include doc/RELEASING.win32
 include doc/wiki/*
-include manifest/*
 include po/*
+include setup-files/*
 include tools/*
 recursive-include aeidon *.py
 recursive-include data *
