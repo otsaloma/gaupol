@@ -10,21 +10,7 @@ Gaupol 0.20
        in gaupol.dialogs
      * Check API documentation on aeidon.as_* and aeidon.is_*
  [ ] Use Libpeas for extensions?
-     * http://live.gnome.org/Libpeas
- [X] Add support for Arabic CP720 character encoding
- [X] Add support for Unicode UTF-32 character encodings
- [X] Fix IndexError when speech recognition finished with no speech
-     detected (#659411)
- [X] Fix TypeError when speech recognition stopped in the middle of a
-     subtitle
- [X] Fix UnicodeDecodeError when reading configuration file (#661123)
- [X] Allow preview of unsaved documents (#661242)
- [X] Fix mplayer preview command to work if gaupol was started as a
-     background process (&) from a terminal window (#660035)
- [X] Use subtitles from selected range if applicable in the Transform
-     Positions dialog (#663158)
- [X] Rename manifest directory in source tarball to avoid clashes with
-     MANIFEST file on case-insensitive filesystems
+     - http://live.gnome.org/Libpeas
 
 Gaupol 1.0
 ==========
