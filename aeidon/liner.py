@@ -16,6 +16,8 @@
 
 """Breaker of text into lines according to preferred break points."""
 
+## TODO: Rewrite using a suitable modification of Knuth-Plass.
+
 import aeidon
 import copy
 import math
