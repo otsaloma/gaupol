@@ -2,7 +2,6 @@ Gaupol 0.20
 ===========
 
  [ ] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     * Fix remaining exceptions 'xxx_todo_changeme'
      * Fix remaining string formatting '%'
      * Test encoding auto-detection
      * Add naming verbosity of modules not a part of external

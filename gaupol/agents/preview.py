@@ -100,8 +100,8 @@ class PreviewAgent(aeidon.Delegate):
 
         except aeidon.ProcessError as message:
             return self._show_process_error_dialog(message)
-        except (IOError, OSError) as xxx_todo_changeme:
-            (no, message) = xxx_todo_changeme.args
+        except (IOError, OSError) as error:
+            (no, message) = error.args
             return self._show_io_error_dialog(message)
         except UnicodeError:
             return self._show_encoding_error_dialog()
