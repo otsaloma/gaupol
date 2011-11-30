@@ -69,4 +69,5 @@ def new(name):
         return SubStationAlpha()
     if name == "subrip":
         return SubRip()
-    raise ValueError("Invalid name: %s" % repr(name))
+    raise ValueError("Invalid name: {0}"
+                     .format(repr(name)))
