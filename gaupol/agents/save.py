@@ -129,8 +129,8 @@ class SaveAgent(aeidon.Delegate):
     def _show_encoding_error_dialog(self, basename, codec):
         """Show an error dialog after failing to encode file."""
         codec = aeidon.encodings.code_to_name(codec)
-        title = _('Failed to encode file "%(basename)s" '
-            'with codec "%(codec)s"') % locals()
+        title = _('Failed to encode file "{basename}" '
+            'with codec "{codec}"').format(**locals())
         message = _("Please try to save the file with "
             "a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
@@ -139,7 +139,7 @@ class SaveAgent(aeidon.Delegate):
 
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to write file."""
-        title = _('Failed to save file "%s"') % basename
+        title = _('Failed to save file "{}"').format(basename)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -176,8 +176,8 @@ class SaveAgent(aeidon.Delegate):
                                  page.project.main_file.format,
                                  aeidon.documents.MAIN)
 
-        self.flash_message(_('Saved main document as "%s"')
-                           % os.path.basename(page.project.main_file.path))
+        self.flash_message(_('Saved main document as "{}"')
+                           .format(os.path.basename(page.project.main_file.path)))
 
     @aeidon.deco.export
     def save_translation(self, page):
@@ -211,5 +211,5 @@ class SaveAgent(aeidon.Delegate):
                                  page.project.tran_file.format,
                                  aeidon.documents.TRAN)
 
-        self.flash_message(_('Saved translation document as "%s"')
-                           % os.path.basename(page.project.tran_file.path))
+        self.flash_message(_('Saved translation document as "{}"')
+                           .format(os.path.basename(page.project.tran_file.path)))

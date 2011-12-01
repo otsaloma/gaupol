@@ -105,8 +105,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             raise StopIteration
         if (not next) and (doc == aeidon.documents.TRAN):
             return aeidon.documents.MAIN
-        raise ValueError("Invalid document: %s or invalid next: %s"
-                         % (repr(doc), repr(next)))
+        raise ValueError("Invalid document: {} or invalid next: {}"
+                         .format(repr(doc), repr(next)))
 
     def _invariant(self):
         for index in self._indices or ():
@@ -147,7 +147,7 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError("No more matches in document: %s" % repr(doc))
+        raise ValueError("No more matches in document: {}".format(repr(doc)))
 
     def _previous_in_document(self, index, doc, pos=None):
         """
@@ -184,7 +184,7 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError("No more matches in document: %s" % repr(doc))
+        raise ValueError("No more matches in document: {}".format(repr(doc)))
 
     def find_next_require(self, index=None, doc=None, pos=None):
         assert 0 <= (index or 0) < len(self.subtitles)

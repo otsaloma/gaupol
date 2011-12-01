@@ -88,7 +88,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
         column = Gtk.TreeViewColumn("", renderer, text=0)
         column.set_sort_column_id(0)
         def format_framerate(column, renderer, store, itr):
-            renderer.props.text = "%.6f" % store.get_value(itr, 0)
+            renderer.props.text = "{:.6f}".format(store.get_value(itr, 0))
         column.set_cell_data_func(renderer, format_framerate)
         self._tree_view.append_column(column)
 
@@ -150,27 +150,27 @@ class CustomFrameratesExtension(gaupol.Extension):
         """Add custom framerates and corresponding UI elements."""
         self._action_group = Gtk.ActionGroup("custom-framerates")
         self.application.uim.insert_action_group(self._action_group, -1)
-        tooltip = _("Calculate nonnative units with a framerate of %.3f fps")
+        tooltip = _("Calculate nonnative units with a framerate of {:.3f} fps")
         directory = os.path.abspath(os.path.dirname(__file__))
         ui_file_path = os.path.join(directory, "custom-framerates.ui.xml")
         ui_xml_template = open(ui_file_path, "r").read()
         self._framerates = []
         self._uim_ids = []
         for value in sorted(self._conf.framerates):
-            name = "FPS_%s" % (("%.3f" % value).replace(".", "_"))
+            name = "FPS_{}".format(("{:.3f}".format(value)).replace(".", "_"))
             if hasattr(aeidon.framerates, name):
-                print("Framerate %.3f already exists!" % value)
+                print("Framerate {:.3f} already exists!".format(value))
                 continue
             setattr(aeidon.framerates, name, aeidon.EnumerationItem())
             framerate = getattr(aeidon.framerates, name)
-            framerate.label = "%.3f fps" % value
-            framerate.mpsub = "%.2f" % value
+            framerate.label = "{:.3f} fps".format(value)
+            framerate.mpsub = "{:.2f}".format(value)
             framerate.value = float(value)
             self._framerates.append(framerate)
             action_name = name.replace("FPS", "show_framerate")
             action = Gtk.RadioAction(name=action_name,
                                      label=framerate.label,
-                                     tooltip=(tooltip % value),
+                                     tooltip=(tooltip.format(value)),
                                      stock_id=None,
                                      value=int(framerate))
 
@@ -178,8 +178,8 @@ class CustomFrameratesExtension(gaupol.Extension):
             action.set_group(self.application.get_action(group))
             action.framerate = framerate
             self._action_group.add_action(action)
-            ui_xml = ui_xml_template % (name.replace("FPS_", ""),
-                                        action.get_name())
+            ui_xml = ui_xml_template.format(name.replace("FPS_", ""),
+                                            action.get_name())
 
             uim_id = self.application.uim.add_ui_from_string(ui_xml)
             self._uim_ids.append(uim_id)
@@ -222,7 +222,7 @@ class CustomFrameratesExtension(gaupol.Extension):
             ## remove the custom framerate from its enumeration.
             store.remove(store.get_iter(framerate))
             del gaupol.framerate_actions[framerate]
-            name = "FPS_%s" % (("%.3f" % framerate.value).replace(".", "_"))
+            name = "FPS_{}".format(("{:.3f}".format(framerate.value)).replace(".", "_"))
             delattr(aeidon.framerates, name)
         for uim_id in self._uim_ids:
             self.application.uim.remove_ui(uim_id)

@@ -29,7 +29,7 @@ class FloatCellRenderer(Gtk.CellRendererText):
 
     __gtype_name__ = "FloatCellRenderer"
 
-    def __init__(self, format="%.3f"):
+    def __init__(self, format="{:.3f}"):
         """Initialize a :class:`FloatCellRenderer` object."""
         GObject.GObject.__init__(self)
         self._format = format
@@ -42,6 +42,6 @@ class FloatCellRenderer(Gtk.CellRendererText):
         if not text: return
         has_comma = text.find(",") > 0
         text = text.replace(",", ".")
-        text = self._format % float(text)
+        text = self._format.format(float(text))
         text = (text.replace(".", ",") if has_comma else text)
         self.props.markup = glib.markup_escape_text(text)

@@ -53,7 +53,7 @@ def _init_application(opts, args):
     if not opts.encoding in (None, "auto"):
         try: opts.encoding = aeidon.encodings.translate_code(opts.encoding)
         except ValueError:
-            raise SystemExit("Unrecognized encoding: %s" % repr(opts.encoding))
+            raise SystemExit("Unrecognized encoding: {}".format(repr(opts.encoding)))
     application.open_main(paths, opts.encoding)
     page = application.get_current_page()
     if (page is not None) and opts.translation_file:
@@ -97,7 +97,7 @@ def _on_parser_list_encodings(*args):
 
 def _on_parser_version(*args):
     """Show the version number and exit."""
-    print("gaupol %s" % gaupol.__version__)
+    print("gaupol {}".format(gaupol.__version__))
     raise SystemExit(0)
 
 def _parse_args(args):

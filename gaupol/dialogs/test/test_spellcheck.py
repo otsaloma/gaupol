@@ -71,7 +71,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
                     self.application)
 
     def test___init____replacements(self):
-        basename = "%s.repl" % gaupol.conf.spell_check.language
+        basename = "{}.repl".format(gaupol.conf.spell_check.language)
         path = os.path.join(self.dialog._personal_dir, basename)
         open(path, "w").write("a|b\nc|d\n")
         gaupol.SpellCheckDialog(self.application.window,

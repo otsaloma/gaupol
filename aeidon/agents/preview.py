@@ -150,8 +150,8 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         output_fd = aeidon.temp.get_handle(output_path)
         seconds = max(0, self.calc.to_seconds(position) - offset)
         command = string.Template(command).safe_substitute(
-            MILLISECONDS=("%.0f" % (seconds * 1000)),
-            SECONDS=("%.3f" % seconds),
+            MILLISECONDS=("{:.0f}".format(seconds * 1000)),
+            SECONDS=("{:.3f}".format(seconds)),
             SUBFILE=aeidon.util.shell_quote(sub_path),
             VIDEOFILE=aeidon.util.shell_quote(self.video_path))
 

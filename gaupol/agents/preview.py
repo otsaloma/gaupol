@@ -38,7 +38,7 @@ class PreviewAgent(aeidon.Delegate):
         """Handle output of finished `process`."""
         with open(output_path, "r") as fobj:
             output = fobj.read()
-        output = "$ %s\n\n%s" % (command, output)
+        output = "$ {}\n\n{}".format(command, output)
         aeidon.temp.remove(output_path)
         self.output_window.set_output(output)
         if process.returncode == 0: return
@@ -48,7 +48,7 @@ class PreviewAgent(aeidon.Delegate):
     def _show_encoding_error_dialog(self):
         """Show an error dialog after failing to encode file."""
         title = _('Failed to encode subtitle file to temporary '
-                  'directory "%s"') % tempfile.gettempdir()
+                  'directory "{}"').format(tempfile.gettempdir())
         message = _("Subtitle data could not be encoded to a temporary file "
             "for preview with the current character encoding. Please first "
             "save the subtitle file with a different character encoding.")
@@ -59,7 +59,7 @@ class PreviewAgent(aeidon.Delegate):
     def _show_io_error_dialog(self, message):
         """Show an error dialog after failing to write file."""
         title = _('Failed to save subtitle file to temporary '
-                  'directory "%s"') % tempfile.gettempdir()
+                  'directory "{}"').format(tempfile.gettempdir())
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)

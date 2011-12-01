@@ -89,9 +89,9 @@ class Contractual(type):
         new_dict = dic.copy()
         for name, attr in list(list(dic.items())):
             if not callable(attr): continue
-            require_name = "%s_require" % name
+            require_name = "{}_require".format(name)
             if name.startswith("__"):
-                require_name = "_%s%s" % (class_name, require_name)
+                require_name = "_{}{}".format(class_name, require_name)
             if require_name in dic:
                 require_func = dic[require_name]
                 attr = _required(require_func)(attr)
@@ -103,9 +103,9 @@ class Contractual(type):
                         require_func = getattr(base, require_name)
                         attr = _required(require_func)(attr)
                         break
-            ensure_name = "%s_ensure" % name
+            ensure_name = "{}_ensure".format(name)
             if name.startswith("__"):
-                ensure_name = "_%s%s" % (class_name, ensure_name)
+                ensure_name = "_{}{}".format(class_name, ensure_name)
             if ensure_name in dic:
                 ensure_func = dic[ensure_name]
                 attr = _ensured(ensure_func)(attr)

@@ -242,7 +242,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
             minutes = int(match.group(2))
             try: seconds = float(match.group(3) or "00.000")
             except ValueError: return False
-        time_key = "%02d:%02d:%06.3f" % (hours, minutes, seconds)
+        time_key = "{:02d}:{:02d}:{:06.3f}".format(hours, minutes, seconds)
         if not self._calc.is_valid_time(time_key): return False
         time_iter = store[row][col]
         if not ":" in time_iter: return False

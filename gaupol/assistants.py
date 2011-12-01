@@ -82,7 +82,7 @@ class BuilderPage(TextAssistantPage):
         """Assign all names in `widgets` as attributes of `self`."""
         for name in widgets:
             widget = self._builder.get_object(name)
-            setattr(self, "_%s" % name, widget)
+            setattr(self, "_{}".format(name, widget))
 
 
 class IntroductionPage(BuilderPage):
@@ -190,7 +190,7 @@ class IntroductionPage(BuilderPage):
         for page in content_pages:
             title = glib.markup_escape_text(page.title)
             description = glib.markup_escape_text(page.description)
-            markup = "<b>%s</b>\n%s" % (title, description)
+            markup = "<b>{}</b>\n{}".format(title, description)
             page.props.visible = (page.handle in pages)
             store.append((page, page.handle in pages, markup))
         self._tree_view.get_selection().unselect_all()
@@ -410,7 +410,7 @@ class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
             name = glib.markup_escape_text(name)
             description = pattern.get_description()
             description = glib.markup_escape_text(description)
-            markup = "<b>%s</b>\n%s" % (name, description)
+            markup = "<b>{}</b>\n{}".format(name, description)
             store.append((pattern, visible, pattern.enabled, markup))
         self._tree_view.get_selection().unselect_all()
 
@@ -594,7 +594,7 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
         language = gaupol.conf.spell_check.language
         try: name = aeidon.locales.code_to_name(language)
         except LookupError: name = language
-        title = _('Failed to load dictionary for language "%s"') % name
+        title = _('Failed to load dictionary for language "{}"').format(name)
         dialog = gaupol.ErrorDialog(self.parent, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -798,24 +798,24 @@ class ProgressPage(BuilderPage):
         total = total or self._total_tasks
         fraction = (current / total if total > 0 else 0)
         self._progress_bar.set_fraction(fraction)
-        text = _("%(current)d of %(total)d tasks complete")
-        self._progress_bar.set_text(text % locals())
+        text = _("{current:d} of {total:d} tasks complete")
+        self._progress_bar.set_text(text.format(**locals()))
         self._current_task = current
         self._total_tasks = total
         gaupol.util.iterate_main()
 
     def set_project_name(self, name):
         """Set `name` as the currently checked project."""
-        text = _("Project: %s") % name
+        text = _("Project: {}").format(name)
         text = glib.markup_escape_text(text)
-        self._status_label.set_markup("<i>%s</i>" % text)
+        self._status_label.set_markup("<i>{}</i>".format(text))
         gaupol.util.iterate_main()
 
     def set_task_name(self, name):
         """Set `name` as the currently performed task."""
-        text = _("Task: %s") % name
+        text = _("Task: {}").format(name)
         text = glib.markup_escape_text(text)
-        self._task_label.set_markup("<i>%s</i>" % text)
+        self._task_label.set_markup("<i>{}</i>".format(text))
         gaupol.util.iterate_main()
 
 
@@ -1058,8 +1058,8 @@ class TextAssistant(Gtk.Assistant):
                 removals += len(indices)
             page.view.columns_autosize()
         edits = edits - removals
-        message = _("Edited %(edits)d and removed %(removals)d subtitles")
-        self.application.flash_message(message % locals())
+        message = _("Edited {edits:d} and removed {removals:d} subtitles")
+        self.application.flash_message(message.format(**locals()))
         gaupol.util.set_cursor_normal(self)
 
     def _on_cancel(self, *args):
@@ -1092,8 +1092,8 @@ class TextAssistant(Gtk.Assistant):
     def _prepare_confirmation_page(self, doc, changes):
         """Present `changes` and activate confirmation page."""
         count = len(changes)
-        title = aeidon.i18n.ngettext("Confirm %d Change",
-                                     "Confirm %d Changes", count) % count
+        title = aeidon.i18n.ngettext("Confirm {:d} Change",
+                                     "Confirm {:d} Changes", count).format(count)
 
         self.set_page_title(self._confirmation_page, title)
         self._confirmation_page.application = self.application

@@ -88,8 +88,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
     def _store_metadata(self, path, metadata):
         """Store metadata to instance variables after validation."""
         def discard_extension(name):
-            print(("Field '%s' missing in file '%s', dicarding extension"
-                   % (name, path)))
+            print(("Field '{}' missing in file '{}', dicarding extension"
+                   .format(name, path)))
 
         if not metadata.has_field("GaupolVersion"):
             return discard_extension("GaupolVersion")
@@ -219,8 +219,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         if self._dependants[module]:
             if not force:
                 raise gaupol.DependencyError(
-                    "Module %s is required by other modules"
-                    % repr(module))
+                    "Module {} is required by other modules"
+                   .format(repr(module)))
 
             for user in self._dependants[module]:
                 self.teardown_extension(user)

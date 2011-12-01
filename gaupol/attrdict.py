@@ -61,7 +61,7 @@ class AttributeDictionary(aeidon.Observable):
         if isinstance(value, dict):
             value = AttributeDictionary(value)
         setattr(self, name, value)
-        self.connect("notify::%s" % name, self._on_notify, name)
+        self.connect("notify::{}".format(name), self._on_notify, name)
 
     def extend(self, root):
         """Add new values from another root dictionary."""
@@ -78,7 +78,7 @@ class AttributeDictionary(aeidon.Observable):
 
     def remove_attribute(self, name):
         """Remove instance attribute and corresponding root dictionary key."""
-        self.disconnect("notify::%s" % name, self._on_notify)
+        self.disconnect("notify::{}".format(name), self._on_notify)
         delattr(self, name)
         if name in self._root:
             del self._root[name]

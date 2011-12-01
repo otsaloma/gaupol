@@ -87,10 +87,10 @@ class SubRip(aeidon.SubtitleFile):
         n = self.newline.value
         for i, subtitle in enumerate(subtitles):
             if i > 0: fobj.write(n)
-            fobj.write("%d%s" % ((i + 1), n))
+            fobj.write("{:d}{}".format((i + 1), n))
             start = subtitle.start_time.replace(".", ",")
             end = subtitle.end_time.replace(".", ",")
-            fobj.write("%s --> %s" % (start, end))
+            fobj.write("{} --> {}".format(start, end))
             # Write Extended SubRip coordinates only if the container
             # has been initialized and the coordinates make some sense.
             if subtitle.has_container("subrip"):
@@ -99,7 +99,7 @@ class SubRip(aeidon.SubtitleFile):
                 y1 = subtitle.subrip.y1
                 y2 = subtitle.subrip.y2
                 if not (x1 == x2 == y1 == y2 == 0):
-                    fobj.write("  X1:%03d X2:%03d" % (x1, x2))
-                    fobj.write( " Y1:%03d Y2:%03d" % (y1, y2))
+                    fobj.write("  X1:{:03d} X2:{:03d}".format(x1, x2))
+                    fobj.write( " Y1:{:03d} Y2:{:03d}".format(y1, y2))
             text = subtitle.get_text(doc).replace("\n", n)
-            fobj.write("%s%s%s" % (n, text, n))
+            fobj.write("{}{}{}".format(n, text, n))

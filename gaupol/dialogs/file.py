@@ -53,7 +53,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         for format in aeidon.formats:
             pattern = "*."
             for x in format.extension[1:]:
-                pattern += "[%s%s]" % (x.upper(), x.lower())
+                pattern += "[{}{}]".format(x.upper(), x.lower())
             file_filter.add_pattern(pattern)
         self.add_filter(file_filter)
         self.set_filter(file_filter)
@@ -61,9 +61,9 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             extension = format.extension
             pattern = "*."
             for x in extension[1:]:
-                pattern += "[%s%s]" % (x.upper(), x.lower())
+                pattern += "[{}{}]".format(x.upper(), x.lower())
             format = format.label
-            name = _("%(format)s (*%(extension)s)") % locals()
+            name = _("{format} (*{extension})").format(**locals())
             file_filter = Gtk.FileFilter()
             file_filter.set_name(name)
             file_filter.add_pattern(pattern)

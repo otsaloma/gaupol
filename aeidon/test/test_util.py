@@ -153,7 +153,7 @@ class TestModule(aeidon.TestCase):
         assert aeidon.util.last(iter((1, 2, 3))) == 3
 
     def test_makedirs(self):
-        path = "{0}-{1:.0f}".format(self.new_subrip_file(), time.time())
+        path = "{}-{:.0f}".format(self.new_subrip_file(), time.time())
         aeidon.util.makedirs(path)
         aeidon.util.makedirs(path)
         os.rmdir(path)

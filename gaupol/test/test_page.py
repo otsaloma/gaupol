@@ -102,13 +102,13 @@ class TestPage(gaupol.TestCase):
         self.page.project.main_file.path = "/tmp/root.srt"
         self.page.project.tran_file = None
         name = self.page.get_translation_basename()
-        assert name == _("%s translation") % "root"
+        assert name == _("{} translation").format("root")
 
     def test_get_translation_basename__untitle_translation(self):
         self.page.project.main_file = None
         self.page.project.tran_file = None
         name = self.page.get_translation_basename()
-        assert name == _("%s translation") % self.page.untitle
+        assert name == _("{} translation").format(self.page.untitle)
 
     def test_reload_view(self):
         rows = list(range(len(self.page.project.subtitles)))
@@ -139,4 +139,4 @@ class TestPage(gaupol.TestCase):
     def test_update_tab_label__changed(self):
         self.page.project.remove_subtitles([1])
         title = self.page.update_tab_label()
-        assert title == "*%s" % self.page.get_main_basename()
+        assert title == "*{}".format(self.page.get_main_basename())

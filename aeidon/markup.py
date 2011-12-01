@@ -49,20 +49,20 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
     format = aeidon.formats.NONE
 
     def _decode_apply_require(self, text, regex, replacement, groups):
-        assert replacement.count("%s") == len(groups)
+        assert replacement.count("{}") == len(groups)
 
     def _decode_apply(self, text, regex, replacement, groups):
         """
         Return `text` with all matches of `regex` replaced.
 
-        `replacement` may contain one or more of ``%s``, which are replaced
+        `replacement` may contain one or more of ``{}``, which are replaced
         with parts of the match as defined `groups`, a ``tuple`` numbers.
         """
         orig_text = text
         match = regex.search(text)
         if match is None: return text
         a, z = match.span()
-        new = replacement % tuple(map(match.group, groups))
+        new = replacement.format(*tuple(map(match.group, groups)))
         text = "".join((text[:a], new, text[z:]))
         if text == orig_text: return text
         return self._decode_apply(text, regex, replacement, groups)
@@ -70,35 +70,35 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
     def _decode_b(self, text, pattern, target, flags=0):
         """Return `text` with bold markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        return self._decode_apply(text, regex, "<b>%s</b>", (target,))
+        return self._decode_apply(text, regex, "<b>{}</b>", (target,))
 
     def _decode_c(self, text, pattern, value, target, flags=0):
         """Return `text` with color markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        replacement = "<color=#%s>%s</color>"
+        replacement = "<color=#{}>{}</color>"
         return self._decode_apply(text, regex, replacement, (value, target))
 
     def _decode_f(self, text, pattern, value, target, flags=0):
         """Return `text` with font markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        replacement = "<font=%s>%s</font>"
+        replacement = "<font={}>{}</font>"
         return self._decode_apply(text, regex, replacement, (value, target))
 
     def _decode_i(self, text, pattern, target, flags=0):
         """Return `text` with italic markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        return self._decode_apply(text, regex, "<i>%s</i>", (target,))
+        return self._decode_apply(text, regex, "<i>{}</i>", (target,))
 
     def _decode_s(self, text, pattern, value, target, flags=0):
         """Return `text` with size markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        replacement = "<size=%s>%s</size>"
+        replacement = "<size={}>{}</size>"
         return self._decode_apply(text, regex, replacement, (value, target))
 
     def _decode_u(self, text, pattern, target, flags=0):
         """Return `text` with underline markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        return self._decode_apply(text, regex, "<u>%s</u>", (target,))
+        return self._decode_apply(text, regex, "<u>{}</u>", (target,))
 
     def _encode_apply(self, text, regex, method, target, value=None):
         """
@@ -110,7 +110,7 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         orig_text = text
         match = regex.search(text)
         if match is None: return text
-        text = regex.sub(r"\%s" % target, text, 1)
+        text = regex.sub(r"\{}".format(target), text, 1)
         a = match.start()
         z = a + len(match.group(target))
         args = (text, (a, z))

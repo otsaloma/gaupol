@@ -55,7 +55,7 @@ def document_to_text_field(doc):
         return gaupol.fields.MAIN_TEXT
     if doc == aeidon.documents.TRAN:
         return gaupol.fields.TRAN_TEXT
-    raise ValueError("Invalid document: %s" % repr(doc))
+    raise ValueError("Invalid document: {}".format(repr(doc)))
 
 def flash_dialog(dialog):
     """
@@ -228,8 +228,8 @@ def scale_to_content(container,
     elif isinstance(container, Gtk.TreeView):
         width, height = list(map(bump, get_tree_view_size(container)))
     else:
-        raise ValueError("Don't know what to do with container of type %s"
-                         % repr(type(container)))
+        raise ValueError("Don't know what to do with container of type {}"
+                        .format(repr(type(container))))
 
     if min_nchar is not None:
         min_width = char_to_px(min_nchar, font)
@@ -324,4 +324,4 @@ def text_field_to_document(field):
         return aeidon.documents.MAIN
     if field == gaupol.fields.TRAN_TEXT:
         return aeidon.documents.TRAN
-    raise ValueError("Invalid field: %s" % repr(field))
+    raise ValueError("Invalid field: {}".format(repr(field)))

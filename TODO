@@ -2,14 +2,11 @@ Gaupol 0.20
 ===========
 
  [ ] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     * Fix remaining string formatting '%'
      * Test encoding auto-detection
      * Add naming verbosity of modules not a part of external
        interface, e.g. rename recognition to speech_recognition
        in gaupol.dialogs
      * Check API documentation on aeidon.as_* and aeidon.is_*
- [ ] Use Libpeas for extensions?
-     - http://live.gnome.org/Libpeas
 
 Gaupol 1.0
 ==========

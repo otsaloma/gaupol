@@ -82,7 +82,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
     def _get_filesrc_definition(self):
         """Return ``filesrc`` definition for :func:`gst.parse_launch`."""
         path = self._video_button.get_filename()
-        return 'filesrc location="%s" ' % path
+        return 'filesrc location="{}" '.format(path)
 
     def _get_pipeline_definition(self):
         """Return pipeline definition for :func:`gst.parse_launch`."""
@@ -106,7 +106,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
         definition = "! pocketsphinx name=pocketsphinx "
         if self._default_model_check.get_active():
             return definition
-        return definition + 'hmm="%s" dict="%s" lm="%s" ' % (
+        return definition + 'hmm="{}" dict="{}" lm="{}" '.format(
             self._acoustic_button.get_current_folder(),
             self._dict_button.get_filename(),
             self._lang_button.get_filename())
@@ -121,8 +121,8 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
         return ("! vader "
                 + "name=vader "
                 + "auto-threshold=false "
-                + "threshold=%.9f " % noise
-                + "run-length=%d " % silence
+                + "threshold={:.9f} ".format(noise)
+                + "run-length={:d} ".format(silence)
                 )
 
     def _init_sensitivities(self):
@@ -164,7 +164,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
 
         subtitle.start = float(start)
         subtitle.end = float(self._stops[index])
-        subtitle.main_text = self._texts[index] or ("[%d]" % (index + 1))
+        subtitle.main_text = self._texts[index] or ("[{:d}]".format(index + 1))
         indices = (len(self._page.project.subtitles),)
         self._page.project.insert_subtitles(indices,
                                             (subtitle,),
@@ -313,7 +313,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual
         # directory, but without risk of overwriting anything.
         base = video_path[:video_path.rfind(".")]
         for i in itertools.count(1):
-            path = "%s.%d.srt" % (base, i)
+            path = "{}.{:d}.srt".format(base, i)
             if not os.path.isfile(path): break
         self._page.project.main_file = aeidon.files.new(aeidon.formats.SUBRIP,
                                                         path,

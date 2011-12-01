@@ -334,7 +334,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _read_history(self, name):
         """Read history from file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
-        path = os.path.join(directory, "%s.history" % name)
+        path = os.path.join(directory, "{}.history".format(name))
         if not os.path.isfile(path): return
         history = aeidon.util.readlines(path)
         setattr(self, name, history)
@@ -352,7 +352,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Set search properties for failure to find a match."""
         self._reset_properties()
         pattern = self._pattern_entry.get_text()
-        message = _('"%s" not found') % pattern
+        message = _('"{}" not found').format(pattern)
         self.application.flash_message(message)
 
     def _set_pattern(self, page):
@@ -436,7 +436,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
         try: aeidon.util.makedirs(directory)
         except OSError: return
-        path = os.path.join(directory, "%s.history" % name)
+        path = os.path.join(directory, "{}.history".format(name))
         history = getattr(self, name)
         text = os.linesep.join(history) + os.linesep
         aeidon.util.write(path, text)
@@ -538,6 +538,6 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 break
         self._reset_properties()
         self.application.flash_message(aeidon.i18n.ngettext(
-                "Found and replaced %d occurence",
-                "Found and replaced %d occurences",
-                count) % count)
+                "Found and replaced {:d} occurence",
+                "Found and replaced {:d} occurences",
+                count).format(count))

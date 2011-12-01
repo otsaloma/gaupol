@@ -66,9 +66,9 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
                 gap=(conf.gap if conf.use_gap else None))
 
             self.application.flash_message(aeidon.i18n.ngettext(
-                    "Adjusted duration of %d subtitle",
-                    "Adjusted durations of %d subtitles",
-                    len(rows)) % len(rows))
+                    "Adjusted duration of {:d} subtitle",
+                    "Adjusted durations of {:d} subtitles",
+                    len(rows)).format(len(rows)))
 
     def _get_target(self):
         """Return the selected target."""

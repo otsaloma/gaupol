@@ -56,8 +56,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             paths = [x.path for x in [_f for _f in files if _f]]
             if not path in paths: continue
             self.set_current_page(page)
-            message = _('File "%s" is already open')
-            self.flash_message(message % os.path.basename(path))
+            message = _('File "{}" is already open')
+            self.flash_message(message.format(os.path.basename(path)))
             raise gaupol.Default
 
     def _check_file_size(self, path):
@@ -271,8 +271,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     def _show_encoding_error_dialog(self, basename):
         """Show an error dialog after failing to decode file."""
-        title = _('Failed to decode file "%s" with all '
-            'attempted codecs') % basename
+        title = _('Failed to decode file "{}" with all '
+            'attempted codecs').format(basename)
         message = _("Please try to open the file with a "
             "different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
@@ -281,7 +281,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     def _show_format_error_dialog(self, basename):
         """Show an error dialog after failing to recognize file format."""
-        title = _('Failed to recognize format of file "%s"') % basename
+        title = _('Failed to recognize format of file "{}"').format(basename)
         message = _("Please check that the file you are trying to open is a "
             "subtitle file of a format supported by Gaupol.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
@@ -290,17 +290,17 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to read file."""
-        title = _('Failed to open file "%s"') % basename
+        title = _('Failed to open file "{}"').format(basename)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_parse_error_dialog(self, basename, format):
         """Show an error dialog after failing to parse file."""
-        title = _('Failed to parse file "%s"') % basename
+        title = _('Failed to parse file "{}"').format(basename)
         message = _("Please check, e.g. with a text editor, that the file you "
-            "are trying open is a valid %s file. If you think it is, file a "
-            "bug report and attach the file.") % format.label
+            "are trying open is a valid {} file. If you think it is, file a "
+            "bug report and attach the file.").format(format.label)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -311,10 +311,10 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
-        title = _('Open abnormally large file "%s"?') % basename
-        message = _("Size of the file is %.1f MB, which is abnormally large "
+        title = _('Open abnormally large file "{}"?').format(basename)
+        message = _("Size of the file is {:.1f} MB, which is abnormally large "
             "for a text-based subtitle file. Please, check that you are not "
-            "trying to open a binary file.") % size
+            "trying to open a binary file.").format(size)
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
         dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.YES)
@@ -328,10 +328,10 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
-        title = _('Open unsorted file "%s"?') % basename
-        message = _("The order of %d subtitles needs to be changed. "
-            "If %d sounds like a lot, the file may be erroneously composed.")
-        message = message % (count, count)
+        title = _('Open unsorted file "{}"?').format(basename)
+        message = _("The order of {:d} subtitles needs to be changed. "
+            "If {:d} sounds like a lot, the file may be erroneously composed.")
+        message = message.format(count, count)
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
         dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.YES)
@@ -345,8 +345,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
-        title = _('Save changes to translation document "%s" before '
-            'opening a new one?') % page.get_translation_basename()
+        title = _('Save changes to translation document "{}" before '
+            'opening a new one?').format(page.get_translation_basename())
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("Open _Without Saving"), Gtk.ResponseType.NO)
@@ -445,8 +445,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         current.view.select_rows(rows)
         current.view.scroll_to_row(rows[0])
         basename = temp.get_main_basename()
-        message = _('Appended %(amount)d subtitles from "%(basename)s"')
-        self.flash_message(message % locals())
+        message = _('Appended {amount:d} subtitles from "{basename}"')
+        self.flash_message(message.format(**locals()))
         gaupol.util.set_cursor_normal(self.window)
 
     @aeidon.deco.export
@@ -485,7 +485,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         format = page.project.main_file.format
         self.add_to_recent_files(path, format, aeidon.documents.MAIN)
         basename = page.get_main_basename()
-        self.flash_message(_('Opened main file "%s"') % basename)
+        self.flash_message(_('Opened main file "{}"').format(basename))
         gaupol.util.iterate_main()
         gaupol.util.set_cursor_normal(self.window)
 
@@ -504,5 +504,5 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         format = page.project.tran_file.format
         self.add_to_recent_files(path, format, aeidon.documents.TRAN)
         basename = page.get_translation_basename()
-        self.flash_message(_('Opened translation file "%s"') % basename)
+        self.flash_message(_('Opened translation file "{}"').format(basename))
         gaupol.util.set_cursor_normal(self.window)

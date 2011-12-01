@@ -63,8 +63,8 @@ class DebugDialog(gaupol.BuilderDialog):
     def _insert_environment(self):
         """Insert environment information."""
         list(map(self._insert_text,
-            ("Platform: %s\n" % platform.platform(True),
-             "Locale: %s.%s\n" % (aeidon.locales.get_system_code(),
+            ("Platform: {}\n".format(platform.platform(True)),
+             "Locale: {}.{}\n".format(aeidon.locales.get_system_code(),
                                   aeidon.encodings.get_locale_code()),
 
              "\n")))
@@ -72,9 +72,9 @@ class DebugDialog(gaupol.BuilderDialog):
     def _insert_library_versions(self):
         """Insert version numbers of libraries."""
         list(map(self._insert_text,
-            ("Python: %d.%d.%d\n" % sys.version_info[:3],
-             "GTK+: %d.%d.%d\n" % Gtk.gtk_version,
-             "GStreamer: %s\n" % gaupol.util.get_gst_version(),
+            ("Python: {:d}.{:d}.{:d}\n".format(sys.version_info[:3]),
+             "GTK+: {:d}.{:d}.{:d}\n".format(Gtk.gtk_version),
+             "GStreamer: {}\n".format(gaupol.util.get_gst_version()),
              "\n")))
 
     def _insert_link(self, path, lineno, *tags):
@@ -98,12 +98,12 @@ class DebugDialog(gaupol.BuilderDialog):
     def _insert_python_package_versions(self):
         """Insert version numbers of Python packages."""
         list(map(self._insert_text,
-            ("aeidon: %s\n" % aeidon.__version__,
-             "gaupol: %s\n" % gaupol.__version__,
-             "gtk: %d.%d.%d\n" % Gtk.pygtk_version,
-             "gst: %s\n" % gaupol.util.get_pygst_version(),
-             "enchant: %s\n" % aeidon.util.get_enchant_version(),
-             "chardet: %s\n" % aeidon.util.get_chardet_version(),
+            ("aeidon: {}\n".format(aeidon.__version__),
+             "gaupol: {}\n".format(gaupol.__version__),
+             "gtk: {:d}.{:d}.{:d}\n".format(Gtk.pygtk_version),
+             "gst: {}\n".format(gaupol.util.get_pygst_version()),
+             "enchant: {}\n".format(aeidon.util.get_enchant_version()),
+             "chardet: {}\n".format(aeidon.util.get_chardet_version()),
              )))
 
     def _insert_text(self, text, *tags):
@@ -130,22 +130,22 @@ class DebugDialog(gaupol.BuilderDialog):
             self._insert_text("File: ")
             self._insert_link(code.co_filename, tb.tb_lineno)
             self._insert_text("\n")
-            self._insert_text("Line: %s\n" % str(tb.tb_lineno))
-            self._insert_text("In: %s\n\n" % code.co_name)
+            self._insert_text("Line: {}\n".format(str(tb.tb_lineno)))
+            self._insert_text("In: {}\n\n".format(code.co_name))
             if line.strip():
                 indent = "\302\240" * 4
-                self._insert_text("%s%s\n\n" % (indent, line))
+                self._insert_text("{}{}\n\n".format(indent, line))
             tb = tb.tb_next
         exception = traceback.format_exception_only(exctype, value)[0]
         exception, space, message = exception.partition(" ")
         self._insert_text(exception, "bold")
-        self._insert_text("%s%s\n" % (space, message))
+        self._insert_text("{}{}\n".format(space, message))
 
     def _on_editor_exit(self, pid, return_value, command):
         """Print an error message if editor process failed."""
         if return_value == 0: return
-        print(("Command '%s' failed with return value %d"
-               % (command, return_value)))
+        print(("Command '{}' failed with return value {:d}"
+               .format(command, return_value)))
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""

@@ -173,7 +173,7 @@ class BookmarksExtension(gaupol.Extension):
         path = main_file.path
         if path.endswith(main_file.format.extension):
             path = path[:-len(main_file.format.extension)]
-        return "%s.gaupol-bookmarks" % path
+        return "{}.gaupol-bookmarks".format(path)
 
     def _init_actions(self):
         """Initialize UI manager actions."""
@@ -474,7 +474,7 @@ class BookmarksExtension(gaupol.Extension):
             return
         lines = []
         for row in sorted(self._bookmarks[page].keys()):
-            lines.append("%d %s" % (row + 1, self._bookmarks[page][row]))
+            lines.append("{:d} {}".format(row + 1, self._bookmarks[page][row]))
         text = os.linesep.join(lines) + os.linesep
         encoding = page.project.main_file.encoding
         aeidon.util.write(path, text, encoding)

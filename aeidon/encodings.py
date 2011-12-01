@@ -143,7 +143,7 @@ def code_to_description(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[DESC]
-    raise ValueError("Code {0} not found"
+    raise ValueError("Code {} not found"
                      .format(repr(code)))
 
 def code_to_long_name(code):
@@ -162,7 +162,7 @@ def code_to_long_name(code):
                     .format(name=item[NAME],
                             description=item[DESC]))
 
-    raise ValueError("Code {0} not found"
+    raise ValueError("Code {} not found"
                      .format(repr(code)))
 
 def code_to_name(code):
@@ -177,7 +177,7 @@ def code_to_name(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[NAME]
-    raise ValueError("Code {0} not found"
+    raise ValueError("Code {} not found"
                      .format(repr(code)))
 
 def detect_require(path):
@@ -267,7 +267,7 @@ def get_locale_long_name():
     Return localized ``CURRENT LOCALE (NAME)``.
     """
     name = code_to_name(get_locale_code())
-    return _("Current locale ({0})").format(name)
+    return _("Current locale ({})").format(name)
 
 @aeidon.deco.once
 def get_valid():
@@ -302,7 +302,7 @@ def name_to_code(name):
     for item in _encodings:
         if item[NAME] == name:
             return item[CODE]
-    raise ValueError("Name {0} not found"
+    raise ValueError("Name {} not found"
                      .format(repr(name)))
 
 def translate_code_ensure(value, code):
@@ -324,5 +324,5 @@ def translate_code(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[CODE]
-    raise ValueError("Code {0} not found"
+    raise ValueError("Code {} not found"
                      .format(repr(code)))

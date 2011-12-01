@@ -57,7 +57,7 @@ def benchmark(function):
         a = time.time()
         value = function(*args, **kwargs)
         z = time.time()
-        print("{0:7.3f} {1}".format(z - a, function.__name__))
+        print("{:7.3f} {}".format(z - a, function.__name__))
         return value
     return wrapper
 
@@ -75,11 +75,11 @@ def contractual(function):
         return function
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        name = "{0}_require".format(function.__name__)
+        name = "{}_require".format(function.__name__)
         if name in function.__globals__:
             function.__globals__[name](*args, **kwargs)
         value = function(*args, **kwargs)
-        name = "{0}_ensure".format(function.__name__)
+        name = "{}_ensure".format(function.__name__)
         if name in function.__globals__:
             function.__globals__[name](value, *args, **kwargs)
         return value

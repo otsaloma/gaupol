@@ -88,9 +88,9 @@ class TMPlayer(aeidon.SubtitleFile):
         """
         for subtitle in subtitles:
             start = subtitle.calc.round_time(subtitle.start_time, 0)
-            fobj.write("%s:" % (start[:-4] if self.two_digit_hour
-                                else "-" + start[2:-4] if start.startswith("-")
-                                else start[1:-4]))
+            fobj.write("{}:".format(start[:-4] if self.two_digit_hour
+                                     else "-" + start[2:-4] if start.startswith("-")
+                                     else start[1:-4]))
 
             fobj.write(subtitle.get_text(doc).replace("\n", "|"))
             fobj.write(self.newline.value)

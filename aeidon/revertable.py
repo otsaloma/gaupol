@@ -61,7 +61,7 @@ class RevertableAction(object, metaclass=aeidon.Contractual):
             return aeidon.registers.UNDO
         if self.register.shift == -1:
             return aeidon.registers.REDO
-        raise ValueError("Invalid register: %s" % repr(self.register))
+        raise ValueError("Invalid register: {}".format(repr(self.register)))
 
     def revert_require(self):
         assert callable(self.revert_function)

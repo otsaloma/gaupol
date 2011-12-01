@@ -124,7 +124,7 @@ class TestSearchAgent(aeidon.TestCase):
         matches = ((0, TRAN, (32, 34)),
                    StopIteration,)
 
-        self._test_find_next(r"l{2}", (TRAN,), False, matches)
+        self._test_find_next(r"l{}", (TRAN,), False, matches)
 
     def test_find_next__6(self):
         matches = (StopIteration,)
@@ -181,7 +181,7 @@ class TestSearchAgent(aeidon.TestCase):
         matches = ((0, TRAN, (32, 34)),
                    StopIteration,)
 
-        self._test_find_previous(r"l{2}", (TRAN,), False, matches)
+        self._test_find_previous(r"l{}", (TRAN,), False, matches)
 
     def test_find_previous__6(self):
         matches = (StopIteration,)

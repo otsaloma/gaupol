@@ -62,7 +62,7 @@ class MicroDVD(aeidon.SubtitleFile):
             fobj.write(self.header.replace("\n", n))
             fobj.write(n)
         for subtitle in subtitles:
-            fobj.write("{%d}" % subtitle.start_frame)
-            fobj.write("{%d}" % subtitle.end_frame)
+            fobj.write("{:d}".format(subtitle.start_frame))
+            fobj.write("{:d}".format(subtitle.end_frame))
             fobj.write(subtitle.get_text(doc).replace("\n", "|"))
             fobj.write(n)

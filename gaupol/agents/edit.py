@@ -168,9 +168,9 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         count = len(page.project.subtitles) - length
         if count <= 0: return
         self.flash_message(aeidon.i18n.ngettext(
-                "Inserted %d subtitle to fit clipboard contents",
-                "Inserted %d subtitles to fit clipboard contents",
-                count) % count)
+                "Inserted {:d} subtitle to fit clipboard contents",
+                "Inserted {:d} subtitles to fit clipboard contents",
+                count).format(count))
 
     @aeidon.deco.export
     def _on_project_action_done(self, *args):

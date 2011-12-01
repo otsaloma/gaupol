@@ -51,4 +51,4 @@ class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
     def underline(self, text, bounds=None):
         """Return underlined `text`."""
         a, z = bounds or (0, len(text))
-        return "".join((text[:a], "{\\u1}%s{\\u0}" % text[a:z], text[z:]))
+        return "".join((text[:a], "{\\u1}{}{\\u0}".format(text[a:z]), text[z:]))

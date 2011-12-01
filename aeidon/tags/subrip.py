@@ -50,7 +50,7 @@ class SubRip(aeidon.Markup):
     def bolden(self, text, bounds=None):
         """Return bolded `text`."""
         a, z = bounds or (0, len(text))
-        return "".join((text[:a], "<b>%s</b>" % text[a:z], text[z:]))
+        return "".join((text[:a], "<b>{}</b>".format(text[a:z]), text[z:]))
 
     def clean(self, text):
         """Return `text` with less ugly markup."""
@@ -66,7 +66,7 @@ class SubRip(aeidon.Markup):
     def colorize(self, text, color, bounds=None):
         """Return `text` colorized to hexadecimal value."""
         a, z = bounds or (0, len(text))
-        target = '<font color="#%s">%s</font>' % (color, text[a:z])
+        target = '<font color="#{}">{}</font>'.format(color, text[a:z])
         return "".join((text[:a], target, text[z:]))
 
     @property
@@ -77,7 +77,7 @@ class SubRip(aeidon.Markup):
     def italicize(self, text, bounds=None):
         """Return italicized `text`."""
         a, z = bounds or (0, len(text))
-        return "".join((text[:a], "<i>%s</i>" % text[a:z], text[z:]))
+        return "".join((text[:a], "<i>{}</i>".format(text[a:z]), text[z:]))
 
     @property
     def tag(self):
@@ -87,4 +87,4 @@ class SubRip(aeidon.Markup):
     def underline(self, text, bounds=None):
         """Return underlined `text`."""
         a, z = bounds or (0, len(text))
-        return "".join((text[:a], "<u>%s</u>" % text[a:z], text[z:]))
+        return "".join((text[:a], "<u>{}</u>".format(text[a:z]), text[z:]))

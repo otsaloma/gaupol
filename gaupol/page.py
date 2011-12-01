@@ -55,7 +55,7 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         self.project = None
         self.tab_label = None
         self.tab_widget = None
-        self.untitle = _("Untitled %d") % count
+        self.untitle = _("Untitled {:d}").format(count)
         self.view = gaupol.View(self.edit_mode)
         self._init_project()
         self._init_widgets()
@@ -99,12 +99,12 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
                 return subtitle.duration_seconds
             if mode == aeidon.modes.FRAME:
                 return subtitle.duration_frame
-            raise ValueError("Invalid mode: %s" % repr(mode))
+            raise ValueError("Invalid mode: {}".format(repr(mode)))
         if field == gaupol.fields.MAIN_TEXT:
             return subtitle.main_text
         if field == gaupol.fields.TRAN_TEXT:
             return subtitle.tran_text
-        raise ValueError("Invalid field: %s" % repr(field))
+        raise ValueError("Invalid field: {}".format(repr(field)))
 
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
@@ -282,11 +282,11 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         if self.project.main_file is None: return
         encoding = self.project.main_file.encoding
         encoding = aeidon.encodings.code_to_long_name(encoding)
-        tooltip.set_markup("%s\n\n%s\n%s\n%s" % (
-            _("<b>Path:</b> %s") % self.project.main_file.path,
-            _("<b>Format:</b> %s") % self.project.main_file.format.label,
-            _("<b>Character encoding:</b> %s") % encoding,
-            _("<b>Newlines:</b> %s") % self.project.main_file.newline.label))
+        tooltip.set_markup("{}\n\n{}\n{}\n{}".format(
+            _("<b>Path:</b> {}").format(self.project.main_file.path),
+            _("<b>Format:</b> {}").format(self.project.main_file.format.label),
+            _("<b>Character encoding:</b> {}").format(encoding),
+            _("<b>Newlines:</b> {}").format(self.project.main_file.newline.label)))
 
         return True # to show the tooltip.
 
@@ -301,7 +301,7 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
             return self.view.columns.MAIN_TEXT
         if doc == aeidon.documents.TRAN:
             return self.view.columns.TRAN_TEXT
-        raise ValueError("Invalid document: %s" % repr(doc))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     def get_main_basename(self):
         """Return basename of the main document."""
@@ -318,7 +318,7 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
             extension = self.project.main_file.format.extension
             if basename.endswith(extension):
                 basename = basename[:-len(extension)]
-        return _("%s translation") % basename
+        return _("{} translation").format(basename)
 
     def reload_view_ensure(self, value, rows, fields):
         self._assert_store(fields)
@@ -358,12 +358,12 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
             return aeidon.documents.MAIN
         if col == self.view.columns.TRAN_TEXT:
             return aeidon.documents.TRAN
-        raise ValueError("Invalid column: %s" % repr(col))
+        raise ValueError("Invalid column: {}".format(repr(col)))
 
     def update_tab_label(self):
         """Update the notebook tab label and return title."""
         title = self.get_main_basename()
         if self.project.main_changed or self.project.tran_changed:
-            title = "*%s" % title
+            title = "*{}".format(title)
         self.tab_label.set_text(title)
         return title

@@ -75,7 +75,7 @@ class MicroDVD(aeidon.Markup):
         replacement = ""
         for m in ("b", "i", "u"):
             if m in match.group(2):
-                replacement += "{%s:%s}" % (y, m)
+                replacement += "{{}:{}}".format(y, m)
         text = regex.sub(replacement, text, 1)
         return self._pre_decode_break(text)
 
@@ -91,17 +91,17 @@ class MicroDVD(aeidon.Markup):
         for i, line in enumerate(lines):
             matches = [x for x in re_tag.finditer(line)]
             for j in reversed(list(range(len(matches)))):
-                lines[i] += "{/%s}" % matches[j].group(1)
+                lines[i] += "{/{}}".format(matches[j].group(1))
         text = "\n".join(lines)
         # Add upper case closing tags to the end of the text.
         re_tag = self._get_regex(r"\{([CFSY]:.*?)\}")
         matches = [x for x in re_tag.finditer(text)]
         for j in reversed(list(range(len(matches)))):
-            text += "{/%s}" % matches[j].group(1)
+            text += "{/{}}".format(matches[j].group(1))
         return text
 
     def _pre_decode_color_ensure(self, value, text):
-        regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{6})\}")
+        regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{})\}")
         assert regex.search(value) is None
 
     def _pre_decode_color(self, text):
@@ -110,12 +110,12 @@ class MicroDVD(aeidon.Markup):
 
         Color tags are converted from ``{c:$BBGGRR}`` to ``{c:#RRGGBB}``.
         """
-        regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{6})\}")
+        regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{})\}")
         match = regex.search(text)
         if match is None: return text
         color = match.group(2)
-        color = "%s%s%s" % (color[4:], color[2:4], color[:2])
-        text = regex.sub(r"{\1#%s}" % color, text, 1)
+        color = "{}{}{}".format(color[4:], color[2:4], color[:2])
+        text = regex.sub(r"{\1#{}}".format(color), text, 1)
         return self._pre_decode_color(text)
 
     def _style(self, text, upper, lower, value, bounds=None):
@@ -129,10 +129,10 @@ class MicroDVD(aeidon.Markup):
         if re_alpha.search(prefix): return text
         if re_alpha.search(suffix): return text
         if (not "\n" in text) or ("\n" in text[a:z]):
-            tag = "{%s:%s}" % (upper, value)
+            tag = "{{}:{}}".format(upper, value)
         else: # Single line marked in a multiline subtitle.
-            tag = "{%s:%s}" % (lower, value)
-        return "".join((text[:a], "%s%s" % (tag, text[a:])))
+            tag = "{{}:{}}".format(lower, value)
+        return "".join((text[:a], "{}{}".format(tag, text[a:])))
 
     def bolden(self, text, bounds=None):
         """Return bolded `text`."""
@@ -141,7 +141,7 @@ class MicroDVD(aeidon.Markup):
     def colorize(self, text, color, bounds=None):
         """Return `text` colorized to hexadecimal value."""
         # Reverse the color value from RRGGBB to BBGGRR.
-        color = "$%s%s%s" % (color[4:], color[2:4], color[:2])
+        color = "${}{}{}".format(color[4:], color[2:4], color[:2])
         return self._style(text, "C", "c", color, bounds)
 
     def fontify(self, text, font, bounds=None):

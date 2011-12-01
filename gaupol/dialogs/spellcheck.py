@@ -182,13 +182,13 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             (message,) = error.args
             self._show_error_dialog(message)
             raise ValueError("Dictionary initialization failed "
-                             "for language %s" % repr(self._language))
+                             "for language {}".format(repr(self._language)))
 
         self._checker = enchant.checker.SpellChecker(dictionary, "")
 
     def _init_replacements(self):
         """Read misspelled words and their replacements from file."""
-        basename = "%s.repl" % gaupol.conf.spell_check.language
+        basename = "{}.repl".format(gaupol.conf.spell_check.language)
         path = os.path.join(self._personal_dir, basename)
         if not os.path.isfile(path): return
         try: lines = aeidon.util.readlines(path)
@@ -215,7 +215,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_replacements()
         try: name = aeidon.locales.code_to_name(self._language)
         except LookupError: name = self._language
-        self._language_label.set_markup("<b>%s</b>" % name)
+        self._language_label.set_markup("<b>{}</b>".format(name))
 
     def _init_tree_view(self):
         """Initialize the suggestion tree view."""
@@ -368,7 +368,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Show an error dialog after failing to load dictionary."""
         try: name = aeidon.locales.code_to_name(self._language)
         except LookupError: name = self._language
-        title = _('Failed to load dictionary for language "%s"') % name
+        title = _('Failed to load dictionary for language "{}"').format(name)
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -383,7 +383,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Write misspelled words and their replacements to file."""
         if not self._replacements: return
         self._replacements = aeidon.util.get_unique(self._replacements, True)
-        basename = "%s.repl" % self._language
+        basename = "{}.repl".format(self._language)
         path = os.path.join(self._personal_dir, basename)
         if len(self._replacements) > self._max_replacements:
             # Discard the oldest of replacements.

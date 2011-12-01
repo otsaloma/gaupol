@@ -78,7 +78,7 @@ class Calculator(object):
             return round((x + y) / 2, 0)
         if aeidon.is_seconds(x):
             return ((x + y) / 2)
-        raise ValueError("Invalid type for x: {0}"
+        raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
     def is_earlier(self, x, y):
@@ -91,7 +91,7 @@ class Calculator(object):
             return (x < y)
         if aeidon.is_seconds(x):
             return (x < y)
-        raise ValueError("Invalid type for x: {0}"
+        raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
     def is_later(self, x, y):
@@ -104,7 +104,7 @@ class Calculator(object):
             return (x > y)
         if aeidon.is_seconds(x):
             return (x > y)
-        raise ValueError("Invalid type for x: {0}"
+        raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
     def is_valid_time(self, time):
@@ -136,7 +136,7 @@ class Calculator(object):
         time = time.replace("-", "")
         time = time.replace(",", ".")
         hours, minutes, seconds = time.split(":")
-        return ("{0}{1:02.0f}:{2:02.0f}:{3:02.0f}.{4:03.0f}"
+        return ("{}{:02.0f}:{:02.0f}:{:02.0f}.{:03.0f}"
                 .format(sign,
                         int(hours),
                         int(minutes),
@@ -158,8 +158,8 @@ class Calculator(object):
         sign = ("-" if seconds < 0 else "")
         seconds = abs(round(seconds, 3))
         if seconds > 359999.999:
-            return "{0}99:59:59.999".format(sign)
-        return ("{0}{1:02.0f}:{2:02.0f}:{3:02.0f}.{4:03.0f}"
+            return "{}99:59:59.999".format(sign)
+        return ("{}{:02.0f}:{:02.0f}:{:02.0f}.{:03.0f}"
                 .format(sign,
                         seconds // 3600,
                         (seconds % 3600) // 60,
@@ -188,7 +188,7 @@ class Calculator(object):
             return pos
         if aeidon.is_seconds(pos):
             return self.seconds_to_frame(pos)
-        raise ValueError("Invalid type for pos: {0}"
+        raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))
 
     def to_seconds(self, pos):
@@ -199,7 +199,7 @@ class Calculator(object):
             return self.frame_to_seconds(pos)
         if aeidon.is_seconds(pos):
             return pos
-        raise ValueError("Invalid type for pos: {0}"
+        raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))
 
     def to_time(self, pos):
@@ -210,5 +210,5 @@ class Calculator(object):
             return self.frame_to_time(pos)
         if aeidon.is_seconds(pos):
             return self.seconds_to_time(pos)
-        raise ValueError("Invalid type for pos: {0}"
+        raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))

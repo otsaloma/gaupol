@@ -178,7 +178,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         for module in self.manager.get_modules():
             metadata = self.manager.get_metadata(module)
             if metadata.get_field_boolean("Hidden", False): continue
-            markup = "<b>%s</b>\n%s" % (metadata.get_name(),
+            markup = "<b>{}</b>\n{}".format(metadata.get_name(),
                                         metadata.get_description())
 
             extensions.append((module, markup))
@@ -204,7 +204,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             dialog.set_copyright(copyright)
         if metadata.has_field("Website"):
             dialog.set_website(metadata.get_field("Website"))
-            label = _("%s Extension Website") %  metadata.get_name()
+            label = _("{} Extension Website").format(metadata.get_name())
             dialog.set_website_label(label)
         if metadata.has_field("Authors"):
             dialog.set_authors(metadata.get_field_list("Authors"))
@@ -233,8 +233,8 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             try: self.manager.teardown_extension(module)
             except gaupol.DependencyError:
                 title = _("Cannot deactivate extension")
-                message = _('Extension "%s" is required by other extensions.')
-                message = message % store[path][2]
+                message = _('Extension "{}" is required by other extensions.')
+                message = message.format(store[path][2])
                 dialog = gaupol.ErrorDialog(self._dialog, title, message)
                 dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
                 gaupol.util.flash_dialog(dialog)

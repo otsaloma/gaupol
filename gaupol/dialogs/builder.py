@@ -61,7 +61,7 @@ class BuilderDialog(object):
             widget = self._builder.get_object(name)
             if (prefix is not None) and (name.startswith(prefix)):
                 name = name.replace(prefix, "")
-            setattr(self, "_%s" % name, widget)
+            setattr(self, "_{}".format(name), widget)
 
     def run(self):
         """Show the dialog, run it and return response."""

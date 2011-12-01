@@ -42,17 +42,17 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Add an action to the "projects" action group for `page`."""
         index = self.pages.index(page)
         basename = page.get_main_basename()
-        name = "activate_project_%d" % index
+        name = "activate_project_{:d}".format(index)
         label = page.tab_label.get_text().replace("_", "__")
-        label = "%d. %s" % (index + 1, label)
-        label = ("_%s" % label if index < 9 else label)
-        tooltip = _('Activate "%s"') % basename
+        label = "{:d}. {}".format(index + 1, label)
+        label = ("_{}".format(label)if index < 9 else label)
+        tooltip = _('Activate "{}"').format(basename)
         action = Gtk.RadioAction(name, label, tooltip, None, index)
         action_group = self.get_action_group("projects")
         group = action_group.get_action("activate_project_0")
         if group is not None:
             action.set_group(group)
-        accel = ("<alt>%d" % (index + 1) if index < 9 else None)
+        accel = ("<alt>{:d}".format(index + 1) if index < 9 else None)
         action_group.add_action_with_accel(action, accel)
         action.connect("changed", self._on_projects_action_changed)
         action.set_active(page is self.get_current_page())
@@ -72,7 +72,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         for i, action in enumerate(page.project.redoables):
             item = Gtk.MenuItem(action.description, False)
             item.set_data("index", i)
-            item.set_data("tooltip", _('Redo "%s"') % action.description)
+            item.set_data("tooltip", _('Redo "{}"').format(action.description))
             callback = self._on_redo_menu_item_activate
             item.connect("activate", callback)
             callback = self._on_redo_menu_item_enter_notify_event
@@ -118,7 +118,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         ui += '<placeholder name="open">'
         for i, page in enumerate(self.pages):
             name = self._add_project_action(page)
-            ui += '<menuitem name="%d" action="%s"/>' % (i, name)
+            ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
         ui += '</placeholder></menu></menubar></ui>'
         self._projects_id = self.uim.add_ui_from_string(ui)
         self.uim.ensure_update()
@@ -142,7 +142,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         for i, action in enumerate(page.project.undoables):
             item = Gtk.MenuItem(action.description, False)
             item.set_data("index", i)
-            item.set_data("tooltip", _('Undo "%s"') % action.description)
+            item.set_data("tooltip", _('Undo "{}"').format(action.description))
             callback = self._on_undo_menu_item_activate
             item.connect("activate", callback)
             callback = self._on_undo_menu_item_enter_notify_event

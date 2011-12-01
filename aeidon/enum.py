@@ -185,7 +185,7 @@ class Enumeration(list):
         for item in self:
             if getattr(item, name) == value:
                 return item
-        raise ValueError("Name {0} not found"
+        raise ValueError("Name {} not found"
                          .format(repr(name)))
 
     def insert(self, *args, **kwargs):

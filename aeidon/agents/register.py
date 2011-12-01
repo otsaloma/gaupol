@@ -78,7 +78,7 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.undoables
         if register.shift == -1:
             return self.redoables
-        raise ValueError("Invalid register: %s" % repr(register))
+        raise ValueError("Invalid register: {}".format(repr(register)))
 
     def _get_source_stack(self, register):
         """Return the stack where the action to register is taken from."""
@@ -86,7 +86,7 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.redoables
         if register.shift == -1:
             return self.undoables
-        raise ValueError("Invalid register: %s" % repr(register))
+        raise ValueError("Invalid register: {}".format(repr(register)))
 
     def _on_notify_undo_limit(self, *args):
         """Cut reversion stacks if limit set."""

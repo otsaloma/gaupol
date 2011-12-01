@@ -70,7 +70,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         import enchant.checker
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
-        path = os.path.join(directory, "%s.dict" % language)
+        path = os.path.join(directory, "{}.dict".format(language))
         try: dictionary = enchant.DictWithPWL(str(language), str(path))
         except IOError:
             aeidon.util.print_write_io(sys.exc_info(), path)

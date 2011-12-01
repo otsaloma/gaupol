@@ -76,7 +76,7 @@ class SubStationAlpha(aeidon.SubtitleFile):
     def _encode_field(self, field_name, subtitle, doc):
         """Return value of field as string to be written to file."""
         if field_name == "Marked":
-            return "Marked=%d" % subtitle.ssa.marked
+            return "Marked={:d}".format(subtitle.ssa.marked)
         if field_name == "Start":
             value = subtitle.calc.round_time(subtitle.start_time, 2)
             return self._re_subtitle_time.sub(r"\1\2", value)
@@ -88,7 +88,7 @@ class SubStationAlpha(aeidon.SubtitleFile):
             return value.replace("\n", "\\N")
         if field_name in ("MarginL", "MarginR", "MarginV"):
             name = aeidon.util.title_to_lower_case(field_name)
-            return "%04d" % getattr(subtitle.ssa, name)
+            return "{:04d}".format(getattr(subtitle.ssa, name))
         # Return plain string container attribute value.
         name = aeidon.util.title_to_lower_case(field_name)
         return getattr(subtitle.ssa, name)
@@ -141,11 +141,11 @@ class SubStationAlpha(aeidon.SubtitleFile):
         """
         n = self.newline.value
         header = self.header.replace("\n", n)
-        fobj.write("%s%s%s" % (header, n, n))
-        fobj.write("[Events]%s" % n)
-        fobj.write("Format: %s%s" % (", ".join(self.event_fields), n))
+        fobj.write("{}{}{}".format(header, n, n))
+        fobj.write("[Events]{}".format(n))
+        fobj.write("Format: {}{}".format(", ".join(self.event_fields), n))
         for subtitle in subtitles:
             values = [self._encode_field(x, subtitle, doc)
                       for x in self.event_fields]
 
-            fobj.write("Dialogue: %s%s" % (",".join(values), n))
+            fobj.write("Dialogue: {}{}".format(",".join(values), n))

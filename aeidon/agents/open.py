@@ -80,8 +80,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             raise
         except Exception:
             if not aeidon.debug:
-                raise aeidon.ParseError("Failed to parse sfile %s"
-                                        % repr(sfile))
+                raise aeidon.ParseError("Failed to parse sfile {}"
+                                        .format(repr(sfile)))
 
             raise
 
@@ -126,7 +126,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.open_main(path, encoding, *args, **kwargs)
         if doc == aeidon.documents.TRAN:
             return self.open_translation(path, encoding, *args, **kwargs)
-        raise ValueError("Invalid document: %s" % repr(doc))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     def open_main_require(self, path, encoding):
         assert aeidon.encodings.is_valid_code(encoding)

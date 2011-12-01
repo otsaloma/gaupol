@@ -121,7 +121,7 @@ class TestModule(aeidon.TestCase):
         long_name = aeidon.encodings.get_locale_long_name()
         code = aeidon.encodings.get_locale_code()
         name = aeidon.encodings.code_to_name(code)
-        assert long_name == _("Current locale ({0})").format(name)
+        assert long_name == _("Current locale ({})").format(name)
 
     def test_get_valid(self):
         assert aeidon.encodings.get_valid()

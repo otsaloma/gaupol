@@ -113,7 +113,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         text = glib.markup_escape_text(text)
         lines = text.split("\n")
         for i, line in [x for x in enumerate(lines) if x[1]]:
-            lines[i] += " <sup>%d</sup>" % lengths[i]
+            lines[i] += " <sup>{:d}</sup>".format(lengths[i])
         self.props.markup = "\n".join(lines)
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):

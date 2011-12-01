@@ -69,7 +69,7 @@ class MPL2(aeidon.tags.MicroDVD):
             if match is None: continue
             lines[i] = match.group(2)
             for tag in reversed(match.group(1)):
-                lines[i] = "<%s>%s</%s>" % (tag, lines[i], tag)
+                lines[i] = "<{}>{}</{}>".format(tag, lines[i], tag)
         return "\n".join(lines)
 
     def _style_mpl2(self, text, tag, bounds=None):
@@ -82,7 +82,7 @@ class MPL2(aeidon.tags.MicroDVD):
         # subtitle and thus cannot be marked without side-effects.
         if re_alpha.search(prefix): return text
         if re_alpha.search(suffix): return text
-        styled_text = text[a:z].replace("\n", "\n%s" % tag)
+        styled_text = text[a:z].replace("\n", "\n{}".format(tag))
         return "".join((text[:a], tag, styled_text, text[z:]))
 
     def bolden(self, text, bounds=None):

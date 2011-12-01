@@ -149,11 +149,11 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if page is None: return
         if page.project.can_undo():
             action = self.get_action("undo_action")
-            action.props.tooltip = _('Undo "%s"') % (
+            action.props.tooltip = _('Undo "{}"').format(
                 page.project.undoables[0].description)
         if page.project.can_redo():
             action = self.get_action("redo_action")
-            action.props.tooltip = _('Redo "%s"') % (
+            action.props.tooltip = _('Redo "{}"').format(
                 page.project.redoables[0].description)
 
     def _update_widgets(self, page):

@@ -98,13 +98,13 @@ def get_gaupol_version():
 def run_command_or_exit(command):
     """Run command in shell and raise SystemExit if it fails."""
     if os.system(command) != 0:
-        log.error("command %s failed" % repr(command))
+        log.error("command {} failed".format(repr(command)))
         raise SystemExit(1)
 
 def run_command_or_warn(command):
     """Run command in shell and raise SystemExit if it fails."""
     if os.system(command) != 0:
-        log.warn("command %s failed" % repr(command))
+        log.warn("command {} failed".format(repr(command)))
 
 
 class Clean(clean):
@@ -117,11 +117,11 @@ class Clean(clean):
         fobj = open(os.path.join("setup-files", "clean"), "r")
         for targets in (glob.glob(x.strip()) for x in fobj):
             for target in filter(os.path.isdir, targets):
-                log.info("removing '%s'" % target)
+                log.info("removing '{}'".format(target))
                 if not self.dry_run:
                     shutil.rmtree(target)
             for target in filter(os.path.isfile, targets):
-                log.info("removing '%s'" % target)
+                log.info("removing '{}'".format(target))
                 if not self.dry_run:
                     os.remove(target)
         fobj.close()
@@ -134,7 +134,7 @@ class Distribution(distribution):
     def __find_data_files(self, name):
         """Find data files to install for name."""
         fok = lambda x: not x.endswith((".in", ".pyc"))
-        basename = "data-files.%s" % name
+        basename = "data-files.{}".format(name)
         fobj = open(os.path.join("setup-files", basename), "r")
         for line in (x.strip() for x in fobj):
             if not line: continue
@@ -247,10 +247,10 @@ class Documentation(distutils.cmd.Command):
         os.chdir(os.path.join("doc", "sphinx"))
         if not self.dry_run:
             run_command_or_exit("make clean")
-            run_command_or_exit("python%d.%d autogen.py aeidon gaupol"
-                                % sys.version_info[:2])
+            run_command_or_exit("python{:d}.{:d} autogen.py aeidon gaupol"
+                                .format(sys.version_info[:2]))
 
-            run_command_or_exit("make %s" % self.format)
+            run_command_or_exit("make {}".format(self.format))
 
 
 class Install(install):
@@ -267,8 +267,8 @@ class Install(install):
             # Assume we're actually installing if --root was not given.
             if (root is not None) or (data_dir is None): return
             directory = os.path.join(data_dir, "share", "applications")
-            log.info("updating desktop database in '%s'" % directory)
-            run_command_or_warn('update-desktop-database "%s"' % directory)
+            log.info("updating desktop database in '{}'".format(directory))
+            run_command_or_warn('update-desktop-database "{}"'.format(directory))
 
 
 class InstallData(install_data):
@@ -282,14 +282,14 @@ class InstallData(install_data):
         optimize = get_command_obj("install_lib").optimize
         data_dir = get_command_obj("install_data").install_dir
         data_dir = os.path.join(data_dir, "share", "gaupol")
-        files = glob.glob("%s/extensions/*/*.py" % data_dir)
+        files = glob.glob("{}/extensions/*/*.py".format(data_dir))
         distutils.util.byte_compile(files, optimize, self.force, self.dry_run)
 
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
         if not running_py2exe:
-            command = "intltool-merge -d po %s.in %s" % (path, path)
+            command = "intltool-merge -d po {}.in {}".format(path, path)
             run_command_or_exit(command)
         return ("share/applications", (path,))
 
@@ -298,22 +298,22 @@ class InstallData(install_data):
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
         if not running_py2exe:
-            command = "intltool-merge -d po %s.in %s" % (path, path)
+            command = "intltool-merge -d po {}.in {}".format(path, path)
             run_command_or_exit(command)
-        return ("share/gaupol/extensions/%s" % extension, (path,))
+        return ("share/gaupol/extensions/{}".format(extension), (path,))
 
     def __get_mo_file(self, po_file):
         """Return a tuple for compiled .mo file."""
         locale = os.path.basename(po_file[:-3])
         mo_dir = os.path.join("locale", locale, "LC_MESSAGES")
         if not os.path.isdir(mo_dir):
-            log.info("creating %s" % mo_dir)
+            log.info("creating {}".format(mo_dir))
             os.makedirs(mo_dir)
         mo_file = os.path.join(mo_dir, "gaupol.mo")
         dest_dir = os.path.join("share", mo_dir)
         if not running_py2exe:
-            log.info("compiling '%s'" % mo_file)
-            command = "msgfmt %s -o %s" % (po_file, mo_file)
+            log.info("compiling '{}'".format(mo_file))
+            command = "msgfmt {} -o {}".format(po_file, mo_file)
             run_command_or_exit(command)
         return (dest_dir, (mo_file,))
 
@@ -322,7 +322,7 @@ class InstallData(install_data):
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
         if not running_py2exe:
-            command = "intltool-merge -d po %s.in %s" % (path, path)
+            command = "intltool-merge -d po {}.in {}".format(path, path)
             run_command_or_exit(command)
         return ("share/gaupol/patterns", (path,))
 
@@ -335,8 +335,8 @@ class InstallData(install_data):
                 self.data_files.append(self.__get_pattern_file(pattern_file))
         if self.distribution.with_gaupol:
             for extension in os.listdir("data/extensions"):
-                pattern = "data/extensions/%s/*.gaupol-extension.in"
-                pattern = pattern % extension
+                pattern = "data/extensions/{}/*.gaupol-extension.in"
+                pattern = pattern.format(extension)
                 for extension_file in glob.glob(pattern):
                     t = self.__get_extension_file(extension, extension_file)
                     self.data_files.append(t)
@@ -365,11 +365,11 @@ class InstallLib(install_lib):
         path = os.path.join(self.build_dir, "aeidon", "paths.py")
         text = open(path, "r").read()
         patt = "DATA_DIR = get_data_directory()"
-        repl = "DATA_DIR = %s" % repr(data_dir)
+        repl = "DATA_DIR = {}".format(repr(data_dir))
         text = text.replace(patt, repl)
         assert text.count(repr(data_dir)) > 0
         patt = "LOCALE_DIR = get_locale_directory()"
-        repl = "LOCALE_DIR = %s" % repr(locale_dir)
+        repl = "LOCALE_DIR = {}".format(repr(locale_dir))
         text = text.replace(patt, repl)
         assert text.count(repr(locale_dir)) > 0
         open(path, "w").write(text)
@@ -400,7 +400,7 @@ class SDistGna(sdist):
         assert os.path.isfile("ChangeLog")
         assert open("ChangeLog", "r").read().strip()
         sdist.run(self)
-        basename = "gaupol-%s" % version
+        basename = "gaupol-{}".format(version)
         tarballs = os.listdir(self.dist_dir)
         os.chdir(self.dist_dir)
         # Compare tarball contents with working copy.
@@ -410,27 +410,27 @@ class SDistGna(sdist):
         for member in tobj.getmembers():
             tobj.extract(member, temp_dir)
         log.info("comparing tarball (tmp) with working copy (../..)")
-        os.system('diff -qr -x ".*" -x "*.pyc" ../.. %s' % test_dir)
+        os.system('diff -qr -x ".*" -x "*.pyc" ../.. {}'.format(test_dir))
         response = input("Are all files in the tarball [Y/n]? ")
         if response.lower() == "n":
             raise SystemExit("Must edit MANIFEST.in")
         shutil.rmtree(test_dir)
         # Create extra distribution files.
         log.info("calculating md5sums")
-        run_command_or_exit("md5sum * > %s.md5sum" % basename)
-        log.info("creating '%s.changes'" % basename)
+        run_command_or_exit("md5sum * > {}.md5sum".format(basename))
+        log.info("creating '{}.changes'".format(basename))
         source = os.path.join("..", "..", "ChangeLog")
-        shutil.copyfile(source, "%s.changes" % basename)
-        log.info("creating '%s.news'" % basename)
+        shutil.copyfile(source, "{}.changes".format(basename))
+        log.info("creating '{}.news'".format(basename))
         source = os.path.join("..", "..", "NEWS")
-        shutil.copyfile(source, "%s.news" % basename)
+        shutil.copyfile(source, "{}.news".format(basename))
         for tarball in tarballs:
-            log.info("signing '%s'" % tarball)
-            run_command_or_exit("gpg --detach %s" % tarball)
+            log.info("signing '{}'".format(tarball))
+            run_command_or_exit("gpg --detach {}".format(tarball))
         os.chdir("..")
         log.info("creating 'latest.txt'")
         with open("latest.txt", "w") as fobj:
-            fobj.write("%s\n" % version)
+            fobj.write("{}\n".format(version))
 
 
 setup_kwargs = dict(

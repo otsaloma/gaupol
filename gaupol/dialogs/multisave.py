@@ -121,11 +121,11 @@ class MultiSaveDialog(gaupol.FileDialog):
 
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
-        title = _("%d of the files to be saved already exist. "
-                  "Do you want to replace them?") % overwrite_count
+        title = _("{:d} of the files to be saved already exist. "
+                  "Do you want to replace them?").format(overwrite_count)
 
-        message = _('The files already exist in "%s". '
-                    'Replacing them will overwrite their contents.') % path
+        message = _('The files already exist in "{}". '
+                    'Replacing them will overwrite their contents.').format(path)
 
         dialog = gaupol.QuestionDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)

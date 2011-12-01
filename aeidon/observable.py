@@ -67,7 +67,7 @@ class Observable(object, metaclass=aeidon.Contractual):
         if (name in self.__slots__) or name.startswith("_"):
             return object.__setattr__(self, name, value)
         value = self._validate(name, value)
-        signal = "notify::{0}".format(name)
+        signal = "notify::{}".format(name)
         if not signal in self._signal_handlers:
             self._add_signal(signal)
             return object.__setattr__(self, name, value)
@@ -171,7 +171,7 @@ class Observable(object, metaclass=aeidon.Contractual):
 
     def notify(self, name):
         """Emit notification signal for variable."""
-        return self.emit("notify::{0}".format(name))
+        return self.emit("notify::{}".format(name))
 
     def thaw_notify_ensure(self, value, do=True):
         assert (not do) or (not self._notify_queue)

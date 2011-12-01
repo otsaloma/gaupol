@@ -74,7 +74,7 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Shift subtitles in `dst` page."""
         amount = src.project.subtitles[-1].end
         if isinstance(amount, str):
-            amount = (amount[1:] if amount.startswith("-") else "-%s" % amount)
+            amount = (amount[1:] if amount.startswith("-") else "-{}".format(amount))
         if isinstance(amount, (int, float)):
             amount = -1 * amount
         dst.project.shift_positions(None, amount, register=None)
@@ -94,6 +94,6 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self.application.add_page(dst)
         amount = len(dst.project.subtitles)
         name = dst.untitle
-        message = _('Split %(amount)d subtitles to project "%(name)s"')
-        self.application.flash_message(message % locals())
+        message = _('Split {amount:d} subtitles to project "{name}"')
+        self.application.flash_message(message.format(**locals()))
         gaupol.util.set_cursor_normal(self.application.window)

@@ -47,8 +47,8 @@ class CloseAgent(aeidon.Delegate):
 
         Raise :exc:`gaupol.Default` if cancelled and page not closed.
         """
-        title = _('Save changes to main document "%s" before closing?')
-        title = title % page.get_main_basename()
+        title = _('Save changes to main document "{}" before closing?')
+        title = title.format(page.get_main_basename())
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("Close _Without Saving"), Gtk.ResponseType.NO)
@@ -78,8 +78,8 @@ class CloseAgent(aeidon.Delegate):
 
         Raise :exc:`gaupol.Default` if cancelled and page not closed.
         """
-        title = _('Save changes to translation document "%s" before closing?')
-        title = title % page.get_translation_basename()
+        title = _('Save changes to translation document "{}" before closing?')
+        title = title.format(page.get_translation_basename())
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("Close _Without Saving"), Gtk.ResponseType.NO)

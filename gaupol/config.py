@@ -314,8 +314,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         container = self
         for section in sections:
             container = getattr(container, section)
-        signal = "notify::%s" % option
-        method_name = "_on_conf_%s_%s" % ("_".join(sections),
+        signal = "notify::{}".format(option)
+        method_name = "_on_conf_{}_{}".format("_".join(sections),
                                           signal.replace("::", "_"))
 
         if not hasattr(obj, method_name):
@@ -330,8 +330,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         container = self
         for section in sections:
             container = getattr(container, section)
-        signal = "notify::%s" % option
-        method_name = "_on_conf_%s_%s" % ("_".join(sections),
+        signal = "notify::{}".format(option)
+        method_name = "_on_conf_{}_{}".format("_".join(sections),
                                           signal.replace("::", "_"))
 
         if not hasattr(obj, method_name):
@@ -397,8 +397,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 enum = enums.get(option, None)
                 try: value = json.loads(value, cls=EnumDecoder, enum=enum)
                 except (AttributeError, ValueError):
-                    print(("Failed to parse value '%s' of option '%s.%s' "
-                           "from configuration file '%s'." % (
+                    print(("Failed to parse value '{}' of option '{}.{}' "
+                           "from configuration file '{}'.".format(
                             value, "::".join(sections), option, self.path)))
 
                     continue
@@ -407,8 +407,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                     # None-values are not used for any options, but might
                     # accidentally bet set in some corner or error cases.
                     # By discarding them here, we ensure a clean start.
-                    print ("Discarding value '%s' of option '%s.%s' "
-                           "from configuration file '%s'." % (
+                    print ("Discarding value '{}' of option '{}.{}' "
+                           "from configuration file '{}'.".format(
                             value, "::".join(sections), option, self.path))
 
                     continue
@@ -463,7 +463,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         defaults = self._flatten(self._defaults)
         for section in sorted(root):
             fobj.write(os.linesep)
-            fobj.write("[%s]" % section)
+            fobj.write("[{}]".format(section))
             fobj.write(os.linesep)
             for option in sorted(root[section]):
                 value = root[section][option]
@@ -477,10 +477,10 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 if (section in defaults) and (option in defaults[section]):
                     if value == defaults[section][option]:
                         fobj.write("# ")
-                try: fobj.write("%s = %s" % (option, json_value))
+                try: fobj.write("{} = {}".format(option, json_value))
                 except UnicodeError:
-                    print(("Failed to write value '%s' of option '%s.%s' "
-                           "to configuration file '%s'." % (
+                    print(("Failed to write value '{}' of option '{}.{}' "
+                           "to configuration file '{}'.".format(
                             value, section, option, self.path)))
 
                 fobj.write(os.linesep)

@@ -36,7 +36,7 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.main_changed
         if doc == aeidon.documents.TRAN:
             return self.tran_changed
-        raise ValueError("Invalid document: %s" % repr(doc))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     @aeidon.deco.export
     def get_file(self, doc):
@@ -45,7 +45,7 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.main_file
         if doc == aeidon.documents.TRAN:
             return self.tran_file
-        raise ValueError("Invalid document: %s" % repr(doc))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     @aeidon.deco.export
     def get_format(self, doc):
@@ -63,7 +63,7 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             if self.tran_file is not None:
                 return self.tran_file.format
             return self.get_format(aeidon.documents.MAIN)
-        raise ValueError("Invalid document: %s" % repr(doc))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     @aeidon.deco.export
     def get_liner(self, doc):
@@ -126,7 +126,7 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return "main-texts-changed"
         if doc == aeidon.documents.TRAN:
             return "translation-texts-changed"
-        raise ValueError("Invalid document: %s" % repr(doc))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     @aeidon.deco.export
     def new_revertable_action(self, register):

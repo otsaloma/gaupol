@@ -53,7 +53,7 @@ class MPlayer(aeidon.EnumerationItem):
         # Required for mplayer to work if gaupol was started
         # as a background process (&) from a terminal window.
         # http://www.mplayerhq.hu/DOCS/HTML/en/faq.html#idp11051520
-        command = "%s < /dev/null" % command
+        command = "{} < /dev/null".format(command)
     command_utf_8 = " ".join((_get_mplayer_executable(),
                               "-identify",
                               "-osdlevel 2",
@@ -68,7 +68,7 @@ class MPlayer(aeidon.EnumerationItem):
         # Required for mplayer to work if gaupol was started
         # as a background process (&) from a terminal window.
         # http://www.mplayerhq.hu/DOCS/HTML/en/faq.html#idp11051520
-        command_utf_8 = "%s < /dev/null" % command_utf_8
+        command_utf_8 = "{} < /dev/null".format(command_utf_8)
     label = "MPlayer"
 
 

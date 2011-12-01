@@ -99,10 +99,10 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         if script is not None:
             codes.append(script)
         if language is not None:
-            code = "%s-%s" % (script, language)
+            code = "{}-{}".format(script, language)
             codes.append(code)
         if country is not None:
-            code = "%s-%s" % (code, country)
+            code = "{}-{}".format(code, country)
             codes.append(code)
         return tuple(codes)
 
@@ -112,7 +112,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
     def _read_config_from_directory(self, directory, encoding):
         """Read configurations from files in `directory`."""
         if not os.path.isdir(directory): return
-        extension = ".%s.conf" % self.pattern_type
+        extension = ".{}.conf".format(self.pattern_type)
         files = os.listdir(directory)
         for name in (x for x in files if x.endswith(extension)):
             path = os.path.join(directory, name)
@@ -125,7 +125,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         """Read configurations from file at `path`."""
         if not os.path.isfile(path): return
         basename = os.path.basename(path)
-        extension = ".%s.conf" % self.pattern_type
+        extension = ".{}.conf".format(self.pattern_type)
         code = basename.replace(extension, "")
         if not code in self._patterns: return
         patterns = self._patterns[code]
@@ -155,8 +155,8 @@ class PatternManager(object, metaclass=aeidon.Contractual):
     def _read_patterns_from_directory(self, directory, encoding):
         """Read all patterns from files in `directory`."""
         if not os.path.isdir(directory): return
-        extension = ".%s" % self.pattern_type
-        extensions = (extension, "%s.in" % extension)
+        extension = ".{}".format(self.pattern_type)
+        extensions = (extension, "{}.in".format(extension))
         files = [x for x in os.listdir(directory)
                  if x.endswith(extensions)]
 
@@ -176,9 +176,9 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         """Read all patterns from file at `path`."""
         if not os.path.isfile(path): return
         basename = os.path.basename(path)
-        extension = ".%s" % self.pattern_type
+        extension = ".{}".format(self.pattern_type)
         if basename.endswith(".in"):
-            extension = ".%s.in" % self.pattern_type
+            extension = ".{}.in".format(self.pattern_type)
         code = basename.replace(extension, "")
         local = path.startswith(aeidon.DATA_HOME_DIR)
         patterns = self._patterns.setdefault(code, [])
@@ -198,10 +198,10 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         """Write configurations of all patterns to file."""
         local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
         if not os.path.isdir(local_dir): return
-        basename = "%s.%s.conf" % (code, self.pattern_type)
+        basename = "{}.{}.conf".format(code, self.pattern_type)
         path = os.path.join(local_dir, basename)
         text = '<?xml version="1.0" encoding="utf-8"?>'
-        text += '%s<patterns>%s' % (os.linesep, os.linesep)
+        text += '{}<patterns>{}'.format(os.linesep, os.linesep)
         written_names = set(())
         for pattern in self._patterns[code]:
             name = pattern.get_name(False)
@@ -210,16 +210,16 @@ class PatternManager(object, metaclass=aeidon.Contractual):
             name = name.replace("&", "&amp;")
             name = name.replace('"', "&quot;")
             enabled = ("true" if pattern.enabled else "false")
-            text += '  <pattern name="%s" ' % name
-            text += 'enabled="%s"/>' % enabled
+            text += '  <pattern name="{}" '.format(name)
+            text += 'enabled="{}"/>'.format(enabled)
             text += os.linesep
-        text += "</patterns>%s" % os.linesep
+        text += "</patterns>{}".format(os.linesep)
         aeidon.util.write(path, text, encoding)
 
     def get_countries(self, script, language):
         """Return a sequence of countries for which patterns exist."""
         codes = list(self._patterns.keys())
-        start = "%s-%s-" % (script, language)
+        start = "{}-{}-".format(script, language)
         codes = [x for x in codes if x.startswith(start)]
         countries = [x.split("-")[2] for x in codes]
         return tuple(aeidon.util.get_unique(countries))
@@ -227,7 +227,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
     def get_languages(self, script):
         """Return a sequence of languages for which patterns exist."""
         codes = list(self._patterns.keys())
-        start = "%s-" % script
+        start = "{}-".format(script)
         codes = [x for x in codes if x.startswith(start)]
         languages = [x.split("-")[1] for x in codes]
         return tuple(aeidon.util.get_unique(languages))

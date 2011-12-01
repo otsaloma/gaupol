@@ -77,7 +77,7 @@ class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
         pos = self.get_position()
         text = self.get_text()
         if (pos == 0) and value.startswith("-"):
-            text = (text if text.startswith("-") else "-%s" % text)
+            text = (text if text.startswith("-") else "-{}".format(text))
         length = len(value)
         text = text[:pos] + value + text[pos + length:]
         text = text.replace(",", ".")

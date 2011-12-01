@@ -27,8 +27,8 @@ class TestMetadataItem(aeidon.TestCase):
         self.item.set_field("Name", "system")
         key = code
         if modifier is not None:
-            key = "{0}@{1}".format(key, modifier)
-        self.item.set_field("Name[{0}]".format(key), "local")
+            key = "{}@{}".format(key, modifier)
+        self.item.set_field("Name[{}]".format(key), "local")
         assert self.item.get_name(localize=True) == "local"
 
     def setup_method(self, method):

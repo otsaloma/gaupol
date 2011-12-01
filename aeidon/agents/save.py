@@ -147,7 +147,7 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.save_main(sfile, keep_changes)
         if doc == aeidon.documents.TRAN:
             return self.save_translation(sfile, keep_changes)
-        raise ValueError("Invalid document: %s" % repr(doc))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     def save_main_ensure(self, value, sfile=None, keep_changes=True):
         assert self.main_file is not None

@@ -74,7 +74,7 @@ def connect(observer, observable, signal, *args):
     method_name = signal.replace("-", "_").replace("::", "_")
     if observer is not observable:
         method_name = "_".join((observable, method_name))
-    method_name = ("_on_{0}".format(method_name)).replace("__", "_")
+    method_name = ("_on_{}".format(method_name)).replace("__", "_")
     if not hasattr(observer, method_name):
         method_name = method_name[1:]
     method = getattr(observer, method_name)
@@ -135,7 +135,7 @@ def detect_format(path, encoding):
             for format, re_id in re_ids:
                 if re_id.search(line) is not None:
                     return format
-    raise aeidon.FormatError("Failed to detect format of file {0}"
+    raise aeidon.FormatError("Failed to detect format of file {}"
                              .format(repr(path)))
 
 def detect_newlines(path):
@@ -388,38 +388,38 @@ def normalize_newlines(text):
 def path_to_uri(path):
     """Convert local filepath to URI."""
     if sys.platform == "win32":
-        path = "/{0}".format(path.replace("\\", "/"))
-    return "file://{0}".format(urllib.parse.quote(path))
+        path = "/{}".format(path.replace("\\", "/"))
+    return "file://{}".format(urllib.parse.quote(path))
 
 def print_read_io(exc_info, path):
     """Print :exc:`IOError` message to standard output."""
-    print("Failed to read file '{0}': {1}"
+    print("Failed to read file '{}': {}"
           .format(path, exc_info[1].args[1]),
           file=sys.stderr)
 
 def print_read_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
-    print("Failed to decode file '{0}' with codec '{1}'"
+    print("Failed to decode file '{}' with codec '{}'"
           .format(path, encoding),
           file=sys.stderr)
 
 def print_remove_os(exc_info, path):
     """Print :exc:`OSError` message to standard output."""
-    print("Failed to remove file '{0}': {1}"
+    print("Failed to remove file '{}': {}"
           .format(path, exc_info[1].args[1]),
           file=sys.stderr)
 
 def print_write_io(exc_info, path):
     """Print :exc:`IOError` message to standard output."""
-    print("Failed to write file '{0}': {1}"
+    print("Failed to write file '{}': {}"
           .format(path, exc_info[1].args[1]),
           file=sys.stderr)
 
 def print_write_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
-    print("Failed to encode file '{0}' with codec '{1}'"
+    print("Failed to encode file '{}' with codec '{}'"
           .format(path, encoding),
           file=sys.stderr)
 
@@ -481,7 +481,7 @@ def shell_quote(path):
         # directory separators and cannot contain double quotes.
         path = path.replace("\\", "\\\\")
         path = path.replace('"', '\\"')
-    return '"{0}"'.format(path)
+    return '"{}"'.format(path)
 
 def start_process(command, **kwargs):
     """
