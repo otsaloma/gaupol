@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2009 Osmo Salomaa
+# Copyright (C) 2007-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -54,21 +54,6 @@ class Subtitle(object):
     instantiation and excessive memory use when handling simpler formats.
     """
 
-    def __cmp__(self, other):
-        """
-        Compare start positions in this subtitle's mode.
-
-        Return 1 if this subtitle appears later, 0 if they appear at the same
-        time and -1 if `other` appears later.
-        """
-        if self._mode == aeidon.modes.TIME:
-            times = (self._start, other.start_time)
-            # XXX: No more compare in calc!
-            return self.calc.compare_times(*times)
-        if self._mode == aeidon.modes.FRAME:
-            return cmp(self._start, other.start_frame)
-        raise ValueError("Invalid mode: {}".format(repr(self._mode)))
-
     def __getattr__(self, name):
         """Return lazily instantiated format-specific attribute container."""
         if name in (x.container for x in aeidon.formats):
@@ -76,47 +61,91 @@ class Subtitle(object):
             container = aeidon.containers.new(name)
             object.__setattr__(self, name, container)
             return container
-        raise AttributeError("Invalid container name: {}".format(repr(name)))
+        raise AttributeError("Invalid container name: {}"
+                             .format(repr(name)))
+
+    def __ge__(self, other):
+        """Compare start positions."""
+        if self._mode == aeidon.modes.TIME:
+            return (self.start_seconds >= other.start_seconds)
+        if self._mode == aeidon.modes.FRAME:
+            return (self.start_frame >= other.start_frame)
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
+
+    def __gt__(self, other):
+        """Compare start positions."""
+        if self._mode == aeidon.modes.TIME:
+            return (self.start_seconds > other.start_seconds)
+        if self._mode == aeidon.modes.FRAME:
+            return (self.start_frame > other.start_frame)
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
 
     def __init__(self, mode=None, framerate=None):
         """Initialize a :class:`Subtitle` object."""
-        self._start = "00:00:00.000"
-        self._end = "00:00:00.000"
+        self._start = None
+        self._end = None
         self._main_text = ""
         self._tran_text = ""
         self._mode = mode or aeidon.modes.TIME
         self._framerate = framerate or aeidon.framerates.FPS_23_976
         self.calc = aeidon.Calculator(self._framerate)
+        self.start = "00:00:00.000"
+        self.end = "00:00:00.000"
+
+    def __le__(self, other):
+        """Compare start positions."""
+        if self._mode == aeidon.modes.TIME:
+            return (self.start_seconds <= other.start_seconds)
+        if self._mode == aeidon.modes.FRAME:
+            return (self.start_frame <= other.start_frame)
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
+
+    def __lt__(self, other):
+        """Compare start positions."""
+        if self._mode == aeidon.modes.TIME:
+            return (self.start_seconds < other.start_seconds)
+        if self._mode == aeidon.modes.FRAME:
+            return (self.start_frame < other.start_frame)
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
 
     def _convert_position(self, value):
         """Return `value` of position in correct mode."""
-        if isinstance(value, str):
+        if aeidon.is_time(value):
             if self._mode == aeidon.modes.TIME:
                 return value
             if self._mode == aeidon.modes.FRAME:
                 return self.calc.time_to_frame(value)
-        if isinstance(value, int):
+        if aeidon.is_frame(value):
             if self._mode == aeidon.modes.TIME:
                 return self.calc.frame_to_time(value)
             if self._mode == aeidon.modes.FRAME:
                 return value
-        if isinstance(value, float):
+        if aeidon.is_seconds(value):
             if self._mode == aeidon.modes.TIME:
                 return self.calc.seconds_to_time(value)
             if self._mode == aeidon.modes.FRAME:
                 return self.calc.seconds_to_frame(value)
-        raise ValueError("Invalid type for value: {}".format(repr(type(value))))
+        raise ValueError("Invalid type for value: {}"
+                         .format(repr(type(value))))
 
     def convert_framerate(self, framerate):
         """Set framerate and convert positions to it."""
         coefficient = framerate.value / self._framerate.value
-        self.framerate = framerate
         if self._mode == aeidon.modes.TIME:
-            self.start = self.start_seconds / coefficient
-            self.end = self.end_seconds / coefficient
+            start = self.start_seconds / coefficient
+            end = self.end_seconds / coefficient
+            self.start = aeidon.as_seconds(start)
+            self.end = aeidon.as_seconds(end)
         if self._mode == aeidon.modes.FRAME:
-            self.start = int(round(coefficient * self.start_frame, 0))
-            self.end = int(round(coefficient * self.end_frame, 0))
+            start = round(coefficient * self.start_frame, 0)
+            end = round(coefficient * self.end_frame, 0)
+            self.start = aeidon.as_frame(start)
+            self.end = aeidon.as_frame(end)
+        self.framerate = framerate
 
     def copy(self):
         """Return a new subtitle instance with the same values."""
@@ -139,7 +168,8 @@ class Subtitle(object):
             return self.duration_time
         if self._mode == aeidon.modes.FRAME:
             return self.duration_frame
-        raise ValueError("Invalid mode: {}".format(repr(self._mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
 
     @duration.setter
     def duration(self, value):
@@ -154,20 +184,18 @@ class Subtitle(object):
     @property
     def duration_frame(self):
         """Return duration as frames."""
-        bounds = (self.start_frame, self.end_frame)
-        return self.calc.get_frame_duration(*bounds)
+        return self.end_frame - self.start_frame
 
     @property
     def duration_seconds(self):
         """Return duration as seconds."""
-        time = self.duration_time
-        return self.calc.time_to_seconds(time)
+        return self.end_seconds - self.start_seconds
 
     @property
     def duration_time(self):
         """Return duration as time."""
-        bounds = (self.start_time, self.end_time)
-        return self.calc.get_time_duration(*bounds)
+        seconds = self.duration_seconds
+        return self.calc.seconds_to_time(seconds)
 
     @property
     def end(self):
@@ -186,7 +214,8 @@ class Subtitle(object):
             return self.calc.time_to_frame(self._end)
         if self._mode == aeidon.modes.FRAME:
             return self._end
-        raise ValueError("Invalid mode: {}".format(repr(self._mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
 
     @property
     def end_seconds(self):
@@ -201,7 +230,8 @@ class Subtitle(object):
             return self._end
         if self._mode == aeidon.modes.FRAME:
             return self.calc.frame_to_time(self._end)
-        raise ValueError("Invalid mode: {}".format(repr(self._mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
 
     @property
     def framerate(self):
@@ -220,7 +250,8 @@ class Subtitle(object):
             return self.duration_time
         if mode == aeidon.modes.FRAME:
             return self.duration_frame
-        raise ValueError("Invalid mode: {}".format(repr(mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(mode)))
 
     def get_end(self, mode):
         """Return end position in `mode`."""
@@ -228,7 +259,8 @@ class Subtitle(object):
             return self.end_time
         if mode == aeidon.modes.FRAME:
             return self.end_frame
-        raise ValueError("Invalid mode: {}".format(repr(mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(mode)))
 
     def get_start(self, mode):
         """Return start position in `mode`."""
@@ -236,7 +268,8 @@ class Subtitle(object):
             return self.start_time
         if mode == aeidon.modes.FRAME:
             return self.start_frame
-        raise ValueError("Invalid mode: {}".format(repr(mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(mode)))
 
     def get_text(self, doc):
         """Return text corresponding to `doc`."""
@@ -244,7 +277,8 @@ class Subtitle(object):
             return self._main_text
         if doc == aeidon.documents.TRAN:
             return self._tran_text
-        raise ValueError("Invalid document: {}".format(repr(doc)))
+        raise ValueError("Invalid document: {}"
+                         .format(repr(doc)))
 
     def has_container(self, name):
         """Return ``True`` if container has been instantiated."""
@@ -279,11 +313,15 @@ class Subtitle(object):
     def scale_positions(self, value):
         """Multiply start and end positions by `value`."""
         if self._mode == aeidon.modes.TIME:
-            self.start = self.start_seconds * value
-            self.end = self.end_seconds * value
+            start = self.start_seconds * value
+            end = self.end_seconds * value
+            self.start = aeidon.as_seconds(start)
+            self.end = aeidon.as_seconds(end)
         if self._mode == aeidon.modes.FRAME:
-            self.start = int(round(self._start * value, 0))
-            self.end = int(round(self._end * value, 0))
+            start = round(self._start * value, 0)
+            end = round(self._end * value, 0)
+            self.start = aeidon.as_frame(start)
+            self.end = aeidon.as_frame(end)
 
     def set_text(self, doc, value):
         """Set text corresponding to `doc` to `value`."""
@@ -294,21 +332,24 @@ class Subtitle(object):
 
     def shift_positions(self, value):
         """Add `value` to start and end positions."""
-        if isinstance(value, str):
+        if aeidon.is_time(value):
             start = self.calc.add_times(self.start_time, value)
             end = self.calc.add_times(self.end_time, value)
-            self.start = start
-            self.end = end
-        elif isinstance(value, int):
+            self.start = aeidon.as_time(start)
+            self.end = aeidon.as_time(end)
+        elif aeidon.is_frame(value):
             start = self.start_frame + value
             end = self.end_frame + value
-            self.start = start
-            self.end = end
-        elif isinstance(value, float):
+            self.start = aeidon.as_frame(start)
+            self.end = aeidon.as_frame(end)
+        elif aeidon.is_seconds(value):
             start = self.start_seconds + value
             end = self.end_seconds + value
-            self.start = start
-            self.end = end
+            self.start = aeidon.as_seconds(start)
+            self.end = aeidon.as_seconds(end)
+        else:
+            raise ValueError("Invalid type for value: {}"
+                             .format(repr(type(value))))
 
     @property
     def start(self):
@@ -327,7 +368,8 @@ class Subtitle(object):
             return self.calc.time_to_frame(self._start)
         if self._mode == aeidon.modes.FRAME:
             return self._start
-        raise ValueError("Invalid mode: {}".format(repr(self._mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
 
     @property
     def start_seconds(self):
@@ -342,7 +384,8 @@ class Subtitle(object):
             return self._start
         if self._mode == aeidon.modes.FRAME:
             return self.calc.frame_to_time(self._start)
-        raise ValueError("Invalid mode: {}".format(repr(self._mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self._mode)))
 
     @property
     def tran_text(self):

@@ -52,4 +52,6 @@ class TestModule(aeidon.TestCase):
         aeidon.containers.new("subrip")
 
     def test_new__value_error(self):
-        self.assert_raises(ValueError, aeidon.containers.new, "xxx")
+        self.assert_raises(ValueError,
+                           aeidon.containers.new,
+                           "xxx")
