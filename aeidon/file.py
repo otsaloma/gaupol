@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,7 +18,6 @@
 
 import aeidon
 import codecs
-import contextlib
 import os
 import re
 
@@ -74,8 +73,7 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
         Return a list of lines read.
         """
         re_newline_char = re.compile(r"\r?\n?$")
-        args = (self.path, "r", self.encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
+        with open(self.path, "r", encoding=self.encoding) as fobj:
             lines = fobj.readlines()
             lines = [re_newline_char.sub("", x) for x in lines]
         for index in (0, -1):
@@ -136,8 +134,7 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        args = (self.path, "w", self.encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
+        with open(self.path, "w", encoding=self.encoding) as fobj:
             # UTF-8-SIG automatically adds the UTF-8 signature BOM. Likewise,
             # UTF-16 automatically adds the system default BOM, but
             # UTF-16-BE and UTF-16-LE don't. For the latter two, add the BOM,
