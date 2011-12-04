@@ -27,4 +27,6 @@ class TestModule(aeidon.TestCase):
         assert isinstance(markup, aeidon.tags.SubRip)
 
     def test_new__value_error(self):
-        self.assert_raises(ValueError, aeidon.tags.new, None)
+        self.assert_raises(ValueError,
+                           aeidon.tags.new,
+                           None)

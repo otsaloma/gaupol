@@ -45,6 +45,7 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
     not implement any markup. The caller of any tagging methods, e.g.
     :meth:`bolden`, must be prepared to handle :exc:`NotImplementedError`.
     """
+
     _flags = re.DOTALL | re.MULTILINE | re.UNICODE
     format = aeidon.formats.NONE
 
@@ -56,7 +57,7 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         Return `text` with all matches of `regex` replaced.
 
         `replacement` may contain one or more of ``{}``, which are replaced
-        with parts of the match as defined `groups`, a ``tuple`` numbers.
+        with parts of the match as defined by `groups`, a ``tuple`` of numbers.
         """
         orig_text = text
         match = regex.search(text)
