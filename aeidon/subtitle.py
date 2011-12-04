@@ -27,23 +27,23 @@ class Subtitle(object):
     """
     Data store and basic position manipulation of a single subtitle.
 
-    :ivar start: Start position in native units (read/write)
-    :ivar start_time: Start time as string (read)
-    :ivar start_frame: Start frame as integer (read)
-    :ivar start_seconds: Start seconds as float (read)
-    :ivar end: End position in native units (read/write)
-    :ivar end_time: End time as string (read)
-    :ivar end_frame: End frame as integer (read)
-    :ivar end_seconds: End seconds as float (read)
-    :ivar duration: Duration in native units (read/write)
-    :ivar duration_time: Duration in time as string (read)
-    :ivar duration_frame: Duration in frames as integer (read)
-    :ivar duration_seconds: Duration in seconds as float (read)
-    :ivar main_text: Main text (read/write)
-    :ivar tran_text: Translation text (read/write)
-    :ivar calc: :class:`aeidon.Calculator` instance used (read/write)
-    :ivar framerate: :attr:`aeidon.framerates` item (read/write)
-    :ivar mode: :attr:`aeidon.modes` item (read/write)
+    :ivar start: Start position in native units
+    :ivar start_time: Start time as string
+    :ivar start_frame: Start frame as integer
+    :ivar start_seconds: Start seconds as float
+    :ivar end: End position in native units
+    :ivar end_time: End time as string
+    :ivar end_frame: End frame as integer
+    :ivar end_seconds: End seconds as float
+    :ivar duration: Duration in native units
+    :ivar duration_time: Duration in time as string
+    :ivar duration_frame: Duration in frames as integer
+    :ivar duration_seconds: Duration in seconds as float
+    :ivar main_text: Main text
+    :ivar tran_text: Translation text
+    :ivar calc: :class:`aeidon.Calculator` instance used
+    :ivar framerate: :attr:`aeidon.framerates` item
+    :ivar mode: :attr:`aeidon.modes` item
 
     Positions can be set as strings for times, integers for frames or floats
     for seconds. Positions are saved internally in only one mode.
@@ -186,16 +186,31 @@ class Subtitle(object):
         """Return duration as frames."""
         return self.end_frame - self.start_frame
 
+    @duration_frame.setter
+    def duration_frame(self, value):
+        """Set duration from `value`."""
+        self.duration = aeidon.as_frame(value)
+
     @property
     def duration_seconds(self):
         """Return duration as seconds."""
         return self.end_seconds - self.start_seconds
+
+    @duration_seconds.setter
+    def duration_seconds(self, value):
+        """Set duration from `value`."""
+        self.duration = aeidon.as_seconds(value)
 
     @property
     def duration_time(self):
         """Return duration as time."""
         seconds = self.duration_seconds
         return self.calc.seconds_to_time(seconds)
+
+    @duration_time.setter
+    def duration_time(self, value):
+        """Set duration from `value`."""
+        self.duration = aeidon.as_time(value)
 
     @property
     def end(self):
@@ -217,11 +232,21 @@ class Subtitle(object):
         raise ValueError("Invalid mode: {}"
                          .format(repr(self._mode)))
 
+    @end_frame.setter
+    def end_frame(self, value):
+        """Set end position from `value`."""
+        self.end = aeidon.as_frame(value)
+
     @property
     def end_seconds(self):
         """Return end position as seconds."""
         time = self.end_time
         return self.calc.time_to_seconds(time)
+
+    @end_seconds.setter
+    def end_seconds(self, value):
+        """Set end position from `value`."""
+        self.end = aeidon.as_seconds(value)
 
     @property
     def end_time(self):
@@ -232,6 +257,11 @@ class Subtitle(object):
             return self.calc.frame_to_time(self._end)
         raise ValueError("Invalid mode: {}"
                          .format(repr(self._mode)))
+
+    @end_time.setter
+    def end_time(self, value):
+        """Set end position from `value`."""
+        self.end = aeidon.as_time(value)
 
     @property
     def framerate(self):
@@ -371,11 +401,21 @@ class Subtitle(object):
         raise ValueError("Invalid mode: {}"
                          .format(repr(self._mode)))
 
+    @start_frame.setter
+    def start_frame(self, value):
+        """Set start position from `value`."""
+        self.start = aeidon.as_frame(value)
+
     @property
     def start_seconds(self):
         """Return start position as seconds."""
         time = self.start_time
         return self.calc.time_to_seconds(time)
+
+    @start_seconds.setter
+    def start_seconds(self, value):
+        """Set start position from `value`."""
+        self.start = aeidon.as_seconds(value)
 
     @property
     def start_time(self):
@@ -386,6 +426,11 @@ class Subtitle(object):
             return self.calc.frame_to_time(self._start)
         raise ValueError("Invalid mode: {}"
                          .format(repr(self._mode)))
+
+    @start_time.setter
+    def start_time(self, value):
+        """Set start position from `value`."""
+        self.start = aeidon.as_time(value)
 
     @property
     def tran_text(self):

@@ -108,13 +108,25 @@ class TestSubtitle(aeidon.TestCase):
         assert self.tsub.duration_frame == 50
         assert self.fsub.duration_frame == 200
 
+    def test_duration_frame__set(self):
+        self.fsub.duration_frame = 500
+        assert self.fsub.end_frame == 600
+
     def test_duration_seconds__get(self):
         assert self.tsub.duration_seconds == 2.0
         assert self.fsub.duration_seconds == 8.0
 
+    def test_duration_seconds__set(self):
+        self.tsub.duration_seconds = 3.0
+        assert self.tsub.end_seconds == 4.0
+
     def test_duration_time__get(self):
         assert self.tsub.duration_time == "00:00:02.000"
         assert self.fsub.duration_time == "00:00:08.000"
+
+    def test_duration_time__set(self):
+        self.tsub.duration_time = "00:00:03.000"
+        assert self.tsub.end_time == "00:00:04.000"
 
     def test_end__get(self):
         assert self.tsub.end == "00:00:03.000"
@@ -144,13 +156,25 @@ class TestSubtitle(aeidon.TestCase):
         assert self.tsub.end_frame == 75
         assert self.fsub.end_frame == 300
 
+    def test_end_frame__set(self):
+        self.fsub.end_frame = 300
+        assert self.fsub.end_frame == 300
+
     def test_end_seconds__get(self):
         assert self.tsub.end_seconds == 3.0
         assert self.fsub.end_seconds == 12.0
 
+    def test_end_seconds__set(self):
+        self.tsub.end_seconds = 4.0
+        assert self.tsub.end_seconds == 4.0
+
     def test_end_time__get(self):
         assert self.tsub.end_time == "00:00:03.000"
         assert self.fsub.end_time == "00:00:12.000"
+
+    def test_end_time__set(self):
+        self.tsub.end_time = "00:00:04.000"
+        assert self.tsub.end_time == "00:00:04.000"
 
     def test_framerate__get(self):
         assert self.tsub.framerate == aeidon.framerates.FPS_25_000
@@ -282,13 +306,25 @@ class TestSubtitle(aeidon.TestCase):
         assert self.tsub.start_frame == 25
         assert self.fsub.start_frame == 100
 
+    def test_start_frame__set(self):
+        self.fsub.start_frame = 25
+        assert self.fsub.start_frame == 25
+
     def test_start_seconds__get(self):
         assert self.tsub.start_seconds == 1.0
         assert self.fsub.start_seconds == 4.0
 
+    def test_start_seconds__set(self):
+        self.tsub.start_seconds = 0.1
+        assert self.tsub.start_seconds == 0.1
+
     def test_start_time__get(self):
         assert self.tsub.start_time == "00:00:01.000"
         assert self.fsub.start_time == "00:00:04.000"
+
+    def test_start_time__set(self):
+        self.tsub.start_time = "00:00:00.100"
+        assert self.tsub.start_time == "00:00:00.100"
 
     def test_tran_text__get(self):
         assert self.tsub.tran_text == "translation"
