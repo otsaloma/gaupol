@@ -55,11 +55,11 @@ class TMPlayer(aeidon.SubtitleFile):
             if match is not None:
                 i = match.span()[1]
                 subtitle = self._get_subtitle()
-                subtitle.start = ("-0" + line[1:i - 1] + ".000"
-                                  if line.startswith("-") else
-                                  "0" + line[:i - 1] + ".000")
+                subtitle.start_time = ("-0" + line[1:i - 1] + ".000"
+                                       if line.startswith("-") else
+                                       "0" + line[:i - 1] + ".000")
 
-                subtitles[-1].end = subtitle.start_time
+                subtitles[-1].end_time = subtitle.start_time
                 subtitle.main_text = line[i:].replace("|", "\n")
                 subtitles.append(subtitle)
                 self.two_digit_hour = False
@@ -67,16 +67,13 @@ class TMPlayer(aeidon.SubtitleFile):
             if match is not None:
                 i = match.span()[1]
                 subtitle = self._get_subtitle()
-                subtitle.start = line[:i - 1] + ".000"
-                subtitles[-1].end = subtitle.start_time
+                subtitle.start_time = line[:i - 1] + ".000"
+                subtitles[-1].end_time = subtitle.start_time
                 subtitle.main_text = line[i:].replace("|", "\n")
                 subtitles.append(subtitle)
                 self.two_digit_hour = True
         subtitles.pop(0)
-        calc = subtitles[-1].calc
-        time = subtitles[-1].start_time
-        time = calc.add_seconds_to_time(time, 5)
-        subtitles[-1].end = time
+        subtitles[-1].duration_seconds = 5
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
@@ -89,8 +86,9 @@ class TMPlayer(aeidon.SubtitleFile):
         for subtitle in subtitles:
             start = subtitle.calc.round_time(subtitle.start_time, 0)
             fobj.write("{}:".format(start[:-4] if self.two_digit_hour
-                                     else "-" + start[2:-4] if start.startswith("-")
-                                     else start[1:-4]))
+                                    else ("-" + start[2:-4]
+                                          if start.startswith("-")
+                                          else start[1:-4])))
 
             fobj.write(subtitle.get_text(doc).replace("\n", "|"))
             fobj.write(self.newline.value)

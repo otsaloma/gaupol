@@ -53,7 +53,9 @@ class TestMPsubTime(aeidon.TestCase):
         assert self.file.framerate == aeidon.framerates.NONE
 
     def test_set_header__value_error(self):
-        self.assert_raises(ValueError, self.file.set_header, "FORMAT=NONE")
+        self.assert_raises(ValueError,
+                           self.file.set_header,
+                           "FORMAT=NONE")
 
     def test_write(self):
         self.file.write(self.file.read(), aeidon.documents.MAIN)

@@ -42,4 +42,5 @@ def new(format, path, encoding, newline=None):
     for cls in map(eval, __all__):
         if cls.format == format:
             return cls(path, encoding, newline)
-    raise ValueError("Format {} not found".format(repr(format)))
+    raise ValueError("Format {} not found"
+                     .format(repr(format)))

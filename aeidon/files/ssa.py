@@ -33,7 +33,6 @@ class SubStationAlpha(aeidon.SubtitleFile):
     _re_file_time = re.compile(r"^(-?)(.+)$")
     _re_separator = re.compile(r",\s*")
     _re_subtitle_time = re.compile(r"(-?)\d(.{10})\d")
-
     format = aeidon.formats.SSA
     mode = aeidon.modes.TIME
 
@@ -58,10 +57,10 @@ class SubStationAlpha(aeidon.SubtitleFile):
             return setattr(subtitle.ssa, "marked", int(value))
         if field_name == "Start":
             value = self._re_file_time.sub(r"\1\060\2\060", value)
-            return setattr(subtitle, "start", value)
+            return setattr(subtitle, "start_time", value)
         if field_name == "End":
             value = self._re_file_time.sub(r"\1\060\2\060", value)
-            return setattr(subtitle, "end", value)
+            return setattr(subtitle, "end_time", value)
         if field_name == "Text":
             value = value.replace("\\n", "\n")
             value = value.replace("\\N", "\n")
@@ -126,7 +125,7 @@ class SubStationAlpha(aeidon.SubtitleFile):
             subtitle = self._get_subtitle()
             line = line.replace("Dialogue:", "").lstrip()
             values = self._re_separator.split(line, max_split)
-            for name, index in list(indices.items()):
+            for name, index in indices.items():
                 self._decode_field(name, values[index], subtitle)
             subtitles.append(subtitle)
         self.event_fields = tuple(fields)

@@ -42,8 +42,8 @@ class MPL2(aeidon.SubtitleFile):
             match = self._re_line.match(line)
             if match is None: continue
             subtitle = self._get_subtitle()
-            subtitle.start = float(match.group(1)) / 10
-            subtitle.end = float(match.group(2)) / 10
+            subtitle.start_seconds = float(match.group(1)) / 10
+            subtitle.end_seconds = float(match.group(2)) / 10
             subtitle.main_text = match.group(3).replace("|", "\n")
             subtitles.append(subtitle)
         return subtitles

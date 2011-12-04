@@ -50,8 +50,8 @@ class SubViewer2(aeidon.SubtitleFile):
             match = self._re_time_line.match(line)
             if match is None: continue
             subtitle = self._get_subtitle()
-            subtitle.start = match.group(1) + "0"
-            subtitle.end = match.group(2) + "0"
+            subtitle.start_time = match.group(1) + "0"
+            subtitle.end_time = match.group(2) + "0"
             text = lines[i + 1].replace("[br]", "\n")
             subtitle.main_text = text
             subtitles.append(subtitle)

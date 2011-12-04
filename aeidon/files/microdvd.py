@@ -32,7 +32,7 @@ class MicroDVD(aeidon.SubtitleFile):
 
     def read(self):
         """
-    Read file and return subtitles.
+        Read file and return subtitles.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -42,8 +42,8 @@ class MicroDVD(aeidon.SubtitleFile):
             match = self._re_line.match(line)
             if match is not None:
                 subtitle = self._get_subtitle()
-                subtitle.start = int(match.group(1))
-                subtitle.end = int(match.group(2))
+                subtitle.start_frame = int(match.group(1))
+                subtitle.end_frame = int(match.group(2))
                 subtitle.main_text = match.group(3).replace("|", "\n")
                 subtitles.append(subtitle)
             elif line.startswith("{DEFAULT}"):
@@ -62,7 +62,7 @@ class MicroDVD(aeidon.SubtitleFile):
             fobj.write(self.header.replace("\n", n))
             fobj.write(n)
         for subtitle in subtitles:
-            fobj.write("{:d}".format(subtitle.start_frame))
-            fobj.write("{:d}".format(subtitle.end_frame))
+            fobj.write("{{{:d}}}".format(subtitle.start_frame))
+            fobj.write("{{{:d}}}".format(subtitle.end_frame))
             fobj.write(subtitle.get_text(doc).replace("\n", "|"))
             fobj.write(n)

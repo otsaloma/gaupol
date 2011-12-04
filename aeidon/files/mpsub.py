@@ -61,7 +61,8 @@ class MPsub(aeidon.SubtitleFile):
             return self._get_times(subtitles)
         if self.mode == aeidon.modes.FRAME:
             return self._get_frames(subtitles)
-        raise ValueError("Invalid mode: {}".format(repr(self.mode)))
+        raise ValueError("Invalid mode: {}"
+                         .format(repr(self.mode)))
 
     def _get_times(self, subtitles):
         """Return MPsub-style start and end times."""
@@ -119,7 +120,10 @@ class MPsub(aeidon.SubtitleFile):
         subtitles = []
         lines = self._read_lines()
         self._read_header(lines)
-        convert = (float if self.mode == aeidon.modes.TIME else int)
+        convert = (aeidon.as_seconds
+                   if self.mode == aeidon.modes.TIME
+                   else aeidon.as_frame)
+
         end = convert("0")
         for line in lines:
             match = self._re_position_line.match(line)
@@ -155,7 +159,8 @@ class MPsub(aeidon.SubtitleFile):
             self.mode = aeidon.modes.FRAME
             self.framerate = framerates[mode]
             return setattr(self, "header", header)
-        raise ValueError("Invalid FORMAT line: {}".format(repr(header)))
+        raise ValueError("Invalid FORMAT line: {}"
+                         .format(repr(header)))
 
     def write_to_file(self, subtitles, doc, fobj):
         """
