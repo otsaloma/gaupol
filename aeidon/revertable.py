@@ -49,7 +49,7 @@ class RevertableAction(object, metaclass=aeidon.Contractual):
         self.revert_args = ()
         self.revert_function = None
         self.revert_kwargs = {}
-        for key, value in list(list(kwargs.items())):
+        for key, value in kwargs.items():
             setattr(self, key, value)
 
     def _get_reversion_register_require(self):
@@ -61,7 +61,8 @@ class RevertableAction(object, metaclass=aeidon.Contractual):
             return aeidon.registers.UNDO
         if self.register.shift == -1:
             return aeidon.registers.REDO
-        raise ValueError("Invalid register: {}".format(repr(self.register)))
+        raise ValueError("Invalid register: {}"
+                         .format(repr(self.register)))
 
     def revert_require(self):
         assert callable(self.revert_function)
@@ -92,5 +93,5 @@ class RevertableActionGroup(object):
         """
         self.actions = None
         self.description = None
-        for key, value in list(kwargs.items()):
+        for key, value in kwargs.items():
             setattr(self, key, value)
