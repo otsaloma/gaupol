@@ -46,8 +46,8 @@ class PatternManager(object, metaclass=aeidon.Contractual):
 
     def __init__(self, pattern_type):
         """Initialize a :class:`PatternManager` object."""
-        self.pattern_type = pattern_type
         self._patterns = {}
+        self.pattern_type = pattern_type
         self._read_patterns()
 
     def _assert_identifiers(self, script, language, country):
@@ -55,10 +55,10 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         if script is not None:
             assert aeidon.scripts.is_valid(script)
         if language is not None:
-            assert script is not None
+            assert aeidon.scripts.is_valid(script)
             assert aeidon.languages.is_valid(language)
         if country is not None:
-            assert language is not None
+            assert aeidon.languages.is_valid(language)
             assert aeidon.countries.is_valid(country)
 
     def _filter_patterns(self, patterns):
@@ -68,7 +68,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         Patterns with a more specific code replace those with a less specific
         code if they have the same name and the more specific pattern's policy
         is explicitly set to ``Replace`` (instead of the implicit ``Append``).
-        Order is mainteined so that all patterns with the same name are always
+        Order is maintaeined so that all patterns with the same name are always
         located in the position of the earliest of such patterns.
         """
         filtered_patterns = []
@@ -93,7 +93,8 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         """
         Return a sequence of all codes to be used by arguments.
 
-        ``Zyyy`` is the first code and the most specific one last.
+        ``Zyyy``, which is always included,  is the first code and the most
+        specific one last.
         """
         codes = ["Zyyy"]
         if script is not None:
@@ -102,7 +103,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
             code = "{}-{}".format(script, language)
             codes.append(code)
         if country is not None:
-            code = "{}-{}".format(code, country)
+            code = "{}-{}-{}".format(script, language, country)
             codes.append(code)
         return tuple(codes)
 
@@ -135,7 +136,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
             name = name.replace("&amp;", "&")
             enabled = (element.get("enabled") == "true")
             for pattern in patterns:
-                if pattern.get_name(False) == name:
+                if pattern.get_name(localize=False) == name:
                     pattern.enabled = enabled
 
     def _read_patterns(self):
@@ -202,7 +203,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         path = os.path.join(local_dir, basename)
         text = '<?xml version="1.0" encoding="utf-8"?>'
         text += '{}<patterns>{}'.format(os.linesep, os.linesep)
-        written_names = set(())
+        written_names = set()
         for pattern in self._patterns[code]:
             name = pattern.get_name(False)
             if name in written_names: continue
@@ -259,7 +260,6 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         """Save pattern configurations to files."""
         local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
         aeidon.deco.silent(OSError)(aeidon.util.makedirs)(local_dir)
-        encoding = aeidon.util.get_default_encoding()
         codes = self._get_codes(script, language, country)
         for code in (x for x in codes if x in self._patterns):
             self._write_config_to_file(code, "utf_8")
