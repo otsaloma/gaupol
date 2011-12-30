@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007,2009 Osmo Salomaa
+# Copyright (C) 2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -22,120 +22,102 @@ class TestLiner(aeidon.TestCase):
 
     def setup_method(self, method):
         self.liner = aeidon.Liner(re.compile(r"<.+?>"))
-        self.liner.break_points.append((re.compile(r" (- )"), r"\n\1"))
-        self.liner.break_points.append((re.compile(r"([.,?!]) "), r"\1\n"))
+        flags = re.DOTALL | re.MULTILINE | re.UNICODE
+        self.liner.set_penalties((dict(pattern=r"( )- ",
+                                       flags=flags,
+                                       group=1,
+                                       value=-1000),
 
-    def test__set_length_func(self):
-        get_length = lambda x: len(x)**2 + 1
-        self.liner.length_func = get_length
-        assert self.liner.length_func == get_length
-        assert self.liner._space_length == 2
+                                  dict(pattern=r"[,.;:!?]( )",
+                                       flags=flags,
+                                       group=1,
+                                       value=-100),
+
+                                  dict(pattern=r"\b(by|the|into|a)( )",
+                                       flags=flags,
+                                       group=2,
+                                       value=1000)))
+
 
     def test_break_lines__01(self):
-        text = ("- Isn't he off on Saturdays? "
-                "- Didn't he tell you?")
+        text = "Hello."
         self.liner.set_text(text)
-        assert self.liner.break_lines() == (
-            "- Isn't he off on Saturdays?\n"
-            "- Didn't he tell you?")
+        text = self.liner.break_lines()
+        assert text == "Hello."
 
     def test_break_lines__02(self):
         text = ("- Isn't he off on Saturdays? "
-                "- He changed shifts. "
-                "- Didn't he tell you? "
-                "- Can you give him this when he next comes?")
+                "- Didn't he tell you?")
+
         self.liner.set_text(text)
-        assert self.liner.break_lines() == (
+        text = self.liner.break_lines()
+        assert text == (
             "- Isn't he off on Saturdays?\n"
-            "- He changed shifts. - Didn't he tell you?\n"
-            "- Can you give him this when he next comes?")
+            "- Didn't he tell you?")
 
     def test_break_lines__03(self):
-        text = ("Isn't he off on Saturdays? "
-                "He changed shifts.")
+        text = ("Close by the king's castle "
+                "lay a great dark forest.")
+
         self.liner.set_text(text)
-        assert self.liner.break_lines() == (
-            "Isn't he off on Saturdays?\n"
-            "He changed shifts.")
+        text = self.liner.break_lines()
+        assert text == (
+            "Close by the king's castle\n"
+            "lay a great dark forest.")
 
     def test_break_lines__04(self):
-        text = ("Isn't he off on Saturdays? "
-                "He changed shifts. "
-                "Didn't he tell you?")
+        text = ("The king's child went out "
+                "into the forest and sat down "
+                "by the side of the cool fountain.")
+
         self.liner.set_text(text)
-        assert self.liner.break_lines() == (
-            "Isn't he off on Saturdays?\n"
-            "He changed shifts. Didn't he tell you?")
+        text = self.liner.break_lines()
+        assert text == (
+            "The king's child went out\n"
+            "into the forest and sat down\n"
+            "by the side of the cool fountain.")
 
     def test_break_lines__05(self):
-        text = "Isn't he off on Saturdays"
+        text = ("The king's child went out "
+                "into the forest and sat down by the side "
+                "of the cool fountain; and when "
+                "she was bored she took a golden ball, "
+                "and threw it up high and caught it; "
+                "and this ball was her favorite plaything.")
+
         self.liner.set_text(text)
-        assert self.liner.break_lines() == text
+        text = self.liner.break_lines()
+        assert text == (
+            "The king's child went out\n"
+            "into the forest and sat down by the side\n"
+            "of the cool fountain; and when she\n"
+            "was bored she took a golden ball,\n"
+            "and threw it up high and caught it; and\n"
+            "this ball was her favorite plaything.")
+
 
     def test_break_lines__06(self):
-        text = ("Isn't he off on Saturdays "
-                "He changed shifts "
-                "Didn't he tell you?")
-        self.liner.set_text(text)
-        assert self.liner.break_lines() == (
-            "Isn't he off on Saturdays He\n"
-            "changed shifts Didn't he tell you?")
+        text = ("one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight "
+                "one two three four five six seven eight")
 
-    def test_break_lines__07(self):
-        text = ("Isn't he off on Saturdays "
-                "He changed shifts "
-                "Didn't he tell you "
-                "Can you give him this when he next comes")
         self.liner.set_text(text)
-        assert self.liner.break_lines() == (
-            "Isn't he off on Saturdays He changed\n"
-            "shifts Didn't he tell you Can you\n"
-            "give him this when he next comes")
-
-    def test_break_lines__08(self):
-        text = "test " * 50
-        self.liner.set_text(text)
-        assert self.liner.break_lines() == (
-            "test test test test test test test test\n"
-            "test test test test test test test test\n"
-            "test test test test test test test test\n"
-            "test test test test test test test test test\n"
-            "test test test test test test test test\n"
-            "test test test test test test test test test")
-
-    def test_break_lines__09(self):
-        text = "test " * 60
-        self.liner.set_text(text)
-        assert self.liner.break_lines() == (
-            "test test test test test test test\n"
-            "test test test test test test test test\n"
-            "test test test test test test test\n"
-            "test test test test test test test test\n"
-            "test test test test test test test\n"
-            "test test test test test test test test\n"
-            "test test test test test test test\n"
-            "test test test test test test test test")
-
-    def test_break_lines__10(self):
-        text = "testtesttesttest " * 101
-        self.liner.set_text(text)
-        assert self.liner.break_lines()
-
-    def test_is_legal__long(self):
-        text = "<i>I got to the restaurant a little early little early.</i>"
-        self.liner.set_text(text)
-        assert not self.liner.is_legal()
-
-    def test_is_legal__ok(self):
-        text = "<i>I got to the restaurant a little early.</i>"
-        self.liner.set_text(text)
-        assert self.liner.is_legal()
-
-    def test_is_legal__unbreakable(self):
-        text = "He'soffdutytodayHe'soffdutytodayHe'soffdutytoday."
-        self.liner.set_text(text)
-        assert self.liner.is_legal()
-
-    def test_set_text(self):
-        self.liner.set_text(" <i>foo</i> ")
-        assert self.liner.text == "foo"
+        text = self.liner.break_lines()
+        assert text == (
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight\n"
+            "one two three four five six seven eight")

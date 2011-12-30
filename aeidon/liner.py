@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007,2009 Osmo Salomaa
+# Copyright (C) 2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,13 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Breaker of text into lines according to preferred break points."""
-
-## TODO: Rewrite using a suitable modification of Knuth-Plass.
+"""Breaking lines to a specified width."""
 
 import aeidon
-import copy
-import math
 import re
 import sys
 
@@ -30,27 +26,23 @@ __all__ = ("Liner",)
 class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
     """
-    Breaker of text into lines according to preferred break points.
+    Breaking lines to a specified width.
 
-    :class:`Liner` operates by first joining all lines by spaces and then
-    trying different breaks. Breaks are tried first from :attr:`break_points`
-    in the order they are defined and if that fails, lines are split at word
-    boundaries. Lines are attempted to be broken so that the variance of line
-    lengths is minimized, while satisfying legality constraints, of which
-    :attr:`max_length` is never broken and :attr:`max_lines` is broken if
-    absolutely necessary. Variance minimizing splits are sought using a brute
-    force algorithm as long as the text is not abnormally long.
-    :attr:`max_deviation` can be used to control the threshold for discarding
-    legal solutions for subtitles with three or more lines and a variance too
-    great for the subtitle to be typeset elegantly.
-
-    :ivar _space_length: Length of a space according to :attr:`length_func`
-    :ivar break_points: List of tuples of regex object, replacement
+    :ivar _penalties: List of penalty pattern dictionaries
     :ivar length_func: A function that returns the length of its argument
-    :ivar max_deviation: Maximum deviation for texts with three or more lines
     :ivar max_length: Maximum length of a line in units of :attr:`_length_func`
     :ivar max_lines: Maximum preferred amount of lines (may be exceeded)
     """
+
+    # Reading Donald E. Knuth and Michael F.Plass's "Breaking Paragraphs into
+    # Lines" from "Software--Practice and Experience" vol. 11 from 1981 is
+    # recommended to understand the general problem of breaking a paragraph of
+    # text into lines, the terminology used here as well of boxes, penalties
+    # and demerits and the computational complexity of finding the optimal
+    # solution in every case. Subtitling is in many ways a different
+    # application, which is a lot simpler, but also more ambiguous and
+    # subjective in terms of the minimized demerit measure.
+
     _re_multi_space = re.compile(r" {2,}")
 
     def __init__(self, re_tag=None, clean_func=None):
@@ -60,189 +52,181 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         `re_tag` should be a regular expression object.
         """
         aeidon.Parser.__init__(self, re_tag, clean_func)
-        self._length_func = len
-        self._space_length = 1
-        self.break_points = []
-        self.max_deviation = 0.16
-        self.max_length = 44
-        self.max_lines = 2
+        self._penalties = []
+        self.length_func = len
+        self.max_length = 40
+        self.max_lines = 3
 
-    def _break_on_pattern(self, max_lines, regex, replacement):
+    def _boxes_to_lines_require(self, boxes, breaks):
+        for i in breaks:
+            assert i in range(len(boxes) - 1)
+
+    def _boxes_to_lines_ensure(self, value, boxes, breaks):
+        assert len(value) == len(breaks) + 1
+
+    def _boxes_to_lines(self, boxes, breaks):
+        """Return `boxes` joined to form lines."""
+        edges = [0] + [x + 1 for x in breaks] + [len(boxes)]
+        return  [" ".join(boxes[edges[i]:edges[i+1]])
+                 for i in range(len(edges) - 1)]
+
+    def _break_lines_require(self, boxes, penalties, nlines):
+        assert len(boxes) == len(penalties)
+
+    def _break_lines_ensure(self, value, boxes, penalties, nlines):
+        breaks, demerit = value
+        if breaks is not None:
+            assert len(breaks) <= nlines - 1
+            for i in breaks:
+                assert i in range(len(boxes) - 1)
+
+    def _break_lines(self, boxes, penalties, nlines):
         """
-        Break text into lines based on `regex`.
+        Break `boxes` into lines and return break points and demerit.
 
-        Return ``True`` if breaks made and result is elegant and legal.
+        If keeping all boxes on a single line results in a valid and better
+        result than splitting to `nlines` an empty list is returned. If no
+        valid break points can be found, ``None`` is returned.
         """
-        # Prefer elegance over compactness by not using
-        # a maximum line count less than the preferred maximum.
-        max_lines = max(max_lines, self.max_lines)
-        self.text = regex.sub(replacement, self.text).strip()
-        if 0 < self.text.count("\n") < max_lines:
-            if self.is_legal() and (not self._is_deviant()):
-                # Success with one item per line.
-                return True
-        if self.text.count("\n") > 0:
-            self._join_even(max_lines)
-            if self.is_legal() and (not self._is_deviant()):
-                # Success with multiple items spread evenly on lines.
-                return True
-        self.text = self.text.replace("\n", " ")
-        return False
+        breaks = self._list_possible_breaks(boxes, penalties, nlines)
+        best_breaks = None
+        best_demerit = sys.maxsize
+        text = " ".join(boxes)
+        if self.length_func(text) <= self.max_length:
+            # Use a valid one-line solution as the benchmark,
+            # that any more-line solution must beat.
+            best_breaks = []
+            best_demerit = self._calculate_demerit(boxes, penalties, [])
+        if nlines == 1:
+            return best_breaks, best_demerit
+        if nlines == 2:
+            for i in breaks:
+                if penalties[i] > best_demerit: break
+                demerit = self._calculate_demerit(boxes, penalties, [i])
+                if demerit < best_demerit:
+                    best_breaks = [i]
+                    best_demerit = demerit
+            return best_breaks, best_demerit
+        ## For more than two lines, loop over first break points and
+        ## recursively figure out rest of the breaks in each case.
+        for i in breaks:
+            if penalties[i] > best_demerit: break
+            value = self._break_lines(boxes[i+1:], penalties[i+1:], nlines - 1)
+            if value[0] is None: continue
+            later = [i + 1 + x for x in value[0]]
+            demerit = self._calculate_demerit(boxes, penalties, [i] + later)
+            if demerit < best_demerit:
+                best_breaks = [i] + later
+                best_demerit = demerit
+        return best_breaks, best_demerit
 
-    def _break_on_words(self, max_lines):
-        """Break text into lines based on words."""
-        self.text = self.text.replace(" ", "\n")
-        self.text = self.text.replace("\n-\n", "\n- ")
-        self._join_even(max_lines)
-        if self.is_legal(): return True
-        self.text = self.text.replace("\n", " ")
-        return False
+    def _calculate_demerit_require(self, boxes, penalties, breaks):
+        assert len(boxes) == len(penalties)
+        for i in breaks:
+            assert i in range(len(boxes) - 1)
 
-    def _get_length(self, lengths):
-        """Return the length of items joined by spaces."""
-        return (sum(lengths) + (len(lengths) - 1) * self._space_length)
+    def _calculate_demerit(self, boxes, penalties, breaks):
+        """Return demerit measure for `boxes` broken by `breaks`."""
+        nlines = len(breaks) + 1
+        penalties = [penalties[i] for i in breaks]
+        lines = self._boxes_to_lines(boxes, breaks)
+        lengths = list(map(self.length_func, lines))
+        mlength = sum(lengths) / len(lengths)
+        xlength = self.max_length
+        # Use two subjetive measures of badness: (1) 'deviation',
+        # which is the variance of line lengths relative to the
+        # maximum line length and (2) upside-down 'pyramid', which
+        # is the sum of how much longer each line is than the next.
+        return (sum(penalties)
+                + 1 * sum(((x - mlength) / xlength)**2 for x in lengths)
+                + 1 * sum(((lengths[i] - lengths[i+1]) / xlength)**2
+                          for i in range(len(lengths) - 1)
+                          if lengths[i] > lengths[i+1])
 
-    def _get_break_ensure(self, value, lengths):
-        assert 0 <= value <= len(lengths)
+                + 10 * (nlines - 1)**3
+                + 1000 * max(0, nlines - self.max_lines)**3)
 
-    def _get_break(self, lengths):
+    def _detect_penalties_ensure(self, value, boxes):
+        assert len(value) == len(boxes)
+
+    def _detect_penalties(self, boxes):
+        """Detect penalties for break points following `boxes`."""
+        text = " ".join(self._boxes_to_lines(boxes, breaks=[]))
+        textpen = [0] * len(text)
+        for penalty in self._penalties:
+            self.pattern = penalty["regex"]
+            self.pos = 0
+            while True:
+                try: self.next()
+                except StopIteration: break
+                start, end = self.match.span(penalty["group"])
+                # Use sum, since in some rare cases multiple
+                # patterns can match the same space.
+                textpen[start] += penalty["value"]
+        penalties = [0] * len(boxes)
+        pos = -1
+        for i in range(len(boxes) - 1):
+            pos = pos + 1 + len(boxes[i])
+            penalties[i] = textpen[pos]
+        return penalties
+
+    def _list_possible_breaks_require(self, boxes, penalties, nlines):
+        assert len(boxes) == len(penalties)
+
+    def _list_possible_breaks_ensure(self, value, boxes, penalties, nlines):
+        for i in value:
+            assert i in range(len(boxes) - 1)
+
+    @aeidon.deco.memoize(100)
+    def _list_possible_breaks(self, boxes, penalties, nlines):
         """
-        Return index of break in two with minimum length difference.
+        Return a list of all possible break points for `boxes`.
 
-        Index is brute forced within reason and the result is optimal.
+        All that break points that would necessarily cause `max_length` to be
+        violated are discarded. Breaks are returned sorted in ascending order
+        of associated `penalties`, so that all remaining breaks can be
+        discarded once a demerit threshold is crossed.
         """
-        min_index = 0
-        min_diff = sys.maxsize
-        start = self._get_start_index(lengths, 2)
-        for i in range(start, len(lengths)):
-            a = self._get_length(lengths[:i])
-            b = self._get_length(lengths[i:])
-            diff = abs(a - b)
-            if diff < min_diff:
-                min_index = i
-                min_diff = diff
-            # End if already past halfway.
-            if b < a: break
-        return min_index
-
-    def _get_breaks_ensure(self, value, lengths, max_lines):
-        for index in value:
-            assert 0 <= index <= len(lengths)
-
-    def _get_breaks(self, lengths, max_lines):
-        """
-        Return indices of breaks with minimum length variance.
-
-        Indexes are brute forced within reason and the result is optimal if
-        ``max_lines`` is less than six, otherwise result is (potentially) ugly.
-        """
-        if max_lines == 1:
+        breaks = list(range(len(boxes) - (nlines - 1)))
+        breakpen = penalties[:len(breaks)]
+        if nlines == 1:
             return []
-        if max_lines == 2:
-            return [self._get_break(lengths)]
-        if (max_lines > 5) or (sum(lengths) > (5 * self.max_length)):
-            # Avoid slow brute forcing by combining items.
-            return self._get_breaks_ugly(lengths, max_lines)
-        return self._get_breaks_pretty(lengths, max_lines)
+        if nlines == 2:
+            keep = [False] * len(breaks)
+            for i in range(len(breaks)):
+                lines = self._boxes_to_lines(boxes, breaks=[i])
+                lengths = map(self.length_func, lines)
+                keep[i] = max(lengths) <= self.max_length
+            breaks = [breaks[i] for i in range(len(breaks)) if keep[i]]
+            breakpen = [breakpen[i] for i in range(len(breakpen)) if keep[i]]
+            # Sort breaks in ascending order by penalties,
+            # so that all remaining breaks can be discarded once
+            # a demerit threshold is crossed.
+            if not breaks: return []
+            points = sorted(zip(breakpen, breaks))
+            breakpen, breaks = zip(*points)
+            return(breaks)
+        ## For more than two lines, loop over first break points and
+        ## recursively figure out rest of the breaks in each case.
+        keep = [False] * len(breaks)
+        for i in range(len(breaks)):
+            lines = self._boxes_to_lines(boxes, breaks=[i])
+            alength = self.length_func(lines[0])
+            if alength > self.max_length: break
+            later = self._list_possible_breaks(boxes[i+1:],
+                                               penalties[i+1:],
+                                               nlines - 1)
 
-    def _get_breaks_pretty_ensure(self, value, lengths, max_lines):
-        for index in value:
-            assert 0 <= index <= len(lengths)
-
-    def _get_breaks_pretty(self, lengths, max_lines):
-        """
-        Return indices of breaks with minimum length variance.
-
-        Indexes are brute forced within reason and the result is optimal.
-        """
-        min_indices = []
-        min_squares = sys.maxsize
-        start = self._get_start_index(lengths, max_lines)
-        for i in range(start, len(lengths) - max_lines + 2):
-            indices = self._get_breaks(lengths[i:], max_lines - 1)
-            indices = [i] + [x + i for x in indices]
-            borders = [0] + indices + [len(lengths)]
-            line_lengths = []
-            for j in range(1, len(borders)):
-                a, z = borders[j - 1:j + 1]
-                line_lengths.append(self._get_length(lengths[a:z]))
-            mean = sum(line_lengths) / max_lines
-            squares = sum([(x - mean)**2 for x in line_lengths])
-            if round(min_squares - squares, 6) > 0:
-                min_indices = indices
-                min_squares = squares
-            a = self._get_length(lengths[:i])
-            b = self._get_length(lengths[i:])
-            # End if remaining less than average line length.
-            if a > (b / (max_lines - 1)): break
-        return min_indices
-
-    def _get_breaks_ugly_ensure(self, value, lengths, max_lines):
-        for index in value:
-            assert 0 <= index <= len(lengths)
-
-    def _get_breaks_ugly(self, lengths, max_lines):
-        """
-        Return indices of breaks with minimum length variance.
-
-        Items are first broken into half of ``max_lines`` and then each these
-        lines is further broken internally into two. The result is not optimal,
-        but is obtained fast.
-        """
-         # Splits can only be made to an even number of lines.
-        if (max_lines % 2 != 0):
-            max_lines = max_lines - 1
-        indices = self._get_breaks(lengths, int(max_lines / 2))
-        borders = [0] + indices + [len(lengths)]
-        for i in range(1, len(borders)):
-            a, z = borders[i - 1:i + 1]
-            indices.append(self._get_break(lengths[a:z]) + a)
-        return sorted(indices)
-
-    def _get_start_index_ensure(self, value, lengths, max_lines):
-        assert 0 <= value <= len(lengths)
-
-    def _get_start_index(self, lengths, max_lines):
-        """
-        Return the index for the first break candidate for items.
-
-        The start index is determined based on the line length mean with the
-        purpose to avoid brute forcing insanely small indices.
-        """
-        if len(lengths) < 3:
-            return 1
-        mean = sum(lengths) / max_lines
-        for i in range(2, len(lengths)):
-            a = self._get_length(lengths[:i])
-            if a > mean:
-                return i - 1
-        return 1
-
-    def _invariant(self):
-        assert isinstance(self._length_func(""), (int, float))
-
-    def _is_deviant(self):
-        """Return ``True`` if line lengths deviate too much."""
-        line_count = self.text.count("\n") + 1
-        if line_count <= 2: return
-        lengths = [self._length_func(x) for x in self.text.split("\n")]
-        mean = sum(lengths) / line_count
-        std = math.sqrt(sum([(x - mean)**2 for x in lengths]) / line_count)
-        return ((std / self.max_length) > self.max_deviation)
-
-    def _join_even_ensure(self, value, max_lines):
-        assert self.text.count("\n") + 1 <= max_lines
-
-    def _join_even(self, max_lines):
-        """Join lines evenly so that ``max_lines`` is not violated."""
-        text = ""
-        items = self.text.split("\n")
-        lengths = [self._length_func(x) for x in items]
-        indices = self._get_breaks(lengths, max_lines)
-        for i in range(len(items)):
-            prefix = ("\n" if i in indices else " ")
-            text = text + prefix + items[i]
-        self.text = text.strip()
+            keep[i] = bool(later)
+        breaks = [breaks[i] for i in range(len(breaks)) if keep[i]]
+        breakpen = [breakpen[i] for i in range(len(breakpen)) if keep[i]]
+        # Sort breaks in ascending order by penalties,
+        # so that all remaining breaks can be discarded once
+        # a demerit threshold is crossed.
+        if not breaks: return []
+        points = sorted(zip(breakpen, breaks))
+        breakpen, breaks = zip(*points)
+        return(breaks)
 
     def break_lines(self):
         """Break lines and return text."""
@@ -250,41 +234,51 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         self.pattern = self._re_multi_space
         self.replacement = " "
         self.replace_all()
-        text = self.text
-        tags = copy.deepcopy(self._tags)
-        for max_lines in range(1, 50):
-            # Try preferred break points one by one.
-            for regex, replacement in self.break_points:
+        boxes = self.text.split(" ")
+        if len(boxes) == 1:
+            return self.get_text()
+        penalties = self._detect_penalties(boxes)
+        best_breaks = None
+        best_demerit = sys.maxsize
+        # We can probably handle up to ten lines of text
+        # before finding break points gets intolerably slow.
+        min_nlines = min(2, self.max_lines)
+        max_nlines = min(10, len(boxes))
+        for nlines in range(min_nlines, max_nlines + 1):
+            breaks, demerit = self._break_lines(boxes, penalties, nlines)
+            if breaks is None: continue
+            if demerit < best_demerit:
+                best_breaks = breaks
+                best_demerit = demerit
+            if nlines < self.max_lines:
+                continue
+            pos = -1
+            for i in range(len(boxes)):
+                pos = pos + 1 + len(boxes[i])
+                text = self.text
+                if i in best_breaks:
+                    text = text[:pos] + "\n" + text[pos+1:]
                 self.text = text
-                self._tags = copy.deepcopy(tags)
-                args = (max_lines, regex, replacement)
-                if self._break_on_pattern(*args):
-                    return self.get_text()
-            # Fall back to breaking by words.
-            self.text = text
-            self._tags = copy.deepcopy(tags)
-            if self._break_on_words(max_lines):
-                return self.get_text()
+            return self.get_text()
+        # If text cannot be broken, return original text.
         return self.get_text()
 
-    def is_legal(self):
-        """Return ``True`` if text does not violate :attr:`max_length`."""
-        for line in self.text.split("\n"):
-            length = self._length_func(line)
-            if (" " in line) and (length > self.max_length):
-                return False
-        return True
+    def set_penalties(self, penalties):
+        """
+        Set penalty patterns.
 
-    @property
-    def length_func(self):
-        """Return the length function used."""
-        return self._length_func
-
-    @length_func.setter
-    def length_func(self, func):
-        """Set the length function to use."""
-        self._length_func = func
-        self._space_length = func(" ")
+        `penalties` should be a list of dictionaries with items "pattern",
+        "flags", "group" and "value", where pattern is a regular expression
+        with group parantheses around a space, group is the number of the group
+        in pattern to hold the penalty of value. A negative penalty encourages
+        a break and a positive penalty discourages.
+        """
+        self._penalties = []
+        for penalty in penalties:
+            regex = re.compile(penalty["pattern"], penalty["flags"])
+            self._penalties.append(dict(regex=regex,
+                                        group=penalty["group"],
+                                        value=penalty["value"]))
 
     def set_text(self, text, next=True):
         """
