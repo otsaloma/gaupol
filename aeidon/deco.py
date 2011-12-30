@@ -17,6 +17,7 @@
 """Miscellaneous decorators for functions and methods."""
 
 import aeidon
+import collections
 import copy
 import functools
 import pickle
@@ -93,21 +94,30 @@ def export(function):
         return function(*args, **kwargs)
     return wrapper
 
-def memoize(function):
-    """Decorator for functions that cache their return values."""
-    cache = {}
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        params = (args, kwargs)
-        if _is_method(function, args):
-            params = (id(args[0]), args[1:], kwargs)
-        key = pickle.dumps(params)
-        try: return cache[key]
-        except KeyError: pass
-        cache[key] = function(*args, **kwargs)
-        return cache[key]
-    wrapper.original = function
-    return wrapper
+def memoize(limit=100):
+    """
+    Decorator for functions that cache their return values.
+
+    Use ``None`` for `limit` for a boundless cache.
+    """
+    def outer_wrapper(function):
+        cache = collections.OrderedDict()
+        @functools.wraps(function)
+        def inner_wrapper(*args, **kwargs):
+            params = (args, kwargs)
+            if _is_method(function, args):
+                params = (id(args[0]), args[1:], kwargs)
+            key = pickle.dumps(params)
+            try: return cache[key]
+            except KeyError: pass
+            cache[key] = function(*args, **kwargs)
+            if limit is not None:
+                while len(cache) > limit:
+                    cache.popitem(last=False)
+            return cache[key]
+        inner_wrapper.original = function
+        return inner_wrapper
+    return outer_wrapper
 
 def monkey_patch(obj, name):
     """

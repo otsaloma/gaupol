@@ -50,9 +50,14 @@ class TestModule(aeidon.TestCase):
         assert function(2) == 4
 
     def test_memoize(self):
-        function = aeidon.deco.memoize(lambda x: x ** 2)
-        assert function(2) == 4
-        assert function(2) == 4
+        @aeidon.deco.memoize(3)
+        def square(x):
+            return x**2
+        assert square(1) == 1
+        assert square(1) == 1
+        assert square(2) == 4
+        assert square(3) == 9
+        assert square(4) == 16
 
     def test_monkey_patch__no_attribute(self):
         @aeidon.deco.monkey_patch(sys, "aeidon")

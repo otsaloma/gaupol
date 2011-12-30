@@ -152,7 +152,7 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         regex = self._get_regex(r"<u>(.*?)</u>")
         return self._encode_apply(text, regex, self.underline, 1)
 
-    @aeidon.deco.memoize
+    @aeidon.deco.memoize(100)
     def _get_regex(self, pattern, flags=0):
         """Return compiled regular expression from cache."""
         flags = self._flags | flags

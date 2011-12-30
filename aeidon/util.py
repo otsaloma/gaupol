@@ -286,7 +286,7 @@ def get_sorted_unique(lst):
             lst.pop(i)
     return lst
 
-@aeidon.deco.memoize
+@aeidon.deco.memoize(100)
 def get_template_header(format):
     """
     Read and return the template header for `format`.
@@ -510,7 +510,7 @@ def start_process(command, **kwargs):
 def title_to_lower_case_ensure(value, title_name):
     assert value.islower()
 
-@aeidon.deco.memoize
+@aeidon.deco.memoize(100)
 @aeidon.deco.contractual
 def title_to_lower_case(title_name):
     """

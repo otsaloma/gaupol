@@ -45,7 +45,7 @@ class TestCase(object, metaclass=aeidon.Contractual):
     def get_sample_text_ensure(self, value, format, name=None):
         assert value.count("a") > 10
 
-    @aeidon.deco.memoize
+    @aeidon.deco.memoize(100)
     def get_sample_text(self, format, name=None):
         """Return sample text for subtitle file `format`."""
         name = name or format.name.lower()
