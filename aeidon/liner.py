@@ -110,7 +110,11 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         ## For more than two lines, loop over first break points and
         ## recursively figure out rest of the breaks in each case.
         for i in breaks:
-            if penalties[i] > best_demerit: break
+            # Use the maximum total negative penalty
+            # that can accumulate from all later breaks.
+            negpen = sorted(x for x in penalties[i+1:] if x < 0)
+            negpen = sum(negpen[:min(len(negpen), nlines - 2)])
+            if (penalties[i] + negpen) > best_demerit: break
             value = self._break_lines(boxes[i+1:], penalties[i+1:], nlines - 1)
             if value[0] is None: continue
             later = [i + 1 + x for x in value[0]]
@@ -133,7 +137,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         lengths = list(map(self.length_func, lines))
         mlength = sum(lengths) / len(lengths)
         xlength = self.max_length
-        # Use two subjetive measures of badness: (1) 'deviation',
+        # Use two subjective measures of badness: (1) 'deviation',
         # which is the variance of line lengths relative to the
         # maximum line length and (2) upside-down 'pyramid', which
         # is the sum of how much longer each line is than the next.
@@ -182,7 +186,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         """
         Return a list of all possible break points for `boxes`.
 
-        All that break points that would necessarily cause `max_length` to be
+        All break points that would necessarily cause `max_length` to be
         violated are discarded. Breaks are returned sorted in ascending order
         of associated `penalties`, so that all remaining breaks can be
         discarded once a demerit threshold is crossed.
@@ -269,7 +273,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
         `penalties` should be a list of dictionaries with items "pattern",
         "flags", "group" and "value", where pattern is a regular expression
-        with group parantheses around a space, group is the number of the group
+        with group parentheses around a space, group is the number of the group
         in pattern to hold the penalty of value. A negative penalty encourages
         a break and a positive penalty discourages.
         """
