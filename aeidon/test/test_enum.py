@@ -44,6 +44,12 @@ class TestEnumerationItem(aeidon.TestCase):
         assert self.item_2 > self.item_1
         assert self.item_2 > 1
 
+    def test___hash__(self):
+        values = {}
+        values[self.item_0] = 0
+        values[self.item_1] = 1
+        values[self.item_2] = 2
+
     def test___le__(self):
         assert self.item_1 <= self.item_2
         assert self.item_1 <= self.item_1

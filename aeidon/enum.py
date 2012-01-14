@@ -70,6 +70,10 @@ class EnumerationItem(int):
             return int.__gt__(int(self), int(other))
         raise NotImplementedError
 
+    def __hash__(self):
+        """Return a hashable value."""
+        return int.__hash__(self)
+
     def __le__(self, other):
         """Compare enumeration item equality by value."""
         if isinstance(other, int):
