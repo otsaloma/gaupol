@@ -18,13 +18,17 @@
 
 import aeidon
 import gaupol
-import glib
+# import glib
 from gi.repository import Gtk
 
 __all__ = ("MultilineCellRenderer",)
 
 
 class CellTextView(Gtk.TextView, Gtk.CellEditable):
+
+    # XXX:
+    # Warning: Object class CellTextView doesn't implement property
+    # 'editing-canceled' from interface 'GtkCellEditable'
 
     """A :class:`Gtk.TextView` suitable for cell renderer use."""
 

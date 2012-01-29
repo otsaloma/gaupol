@@ -19,7 +19,7 @@
 import aeidon
 import functools
 import gaupol
-import glib
+# import glib
 from gi.repository import Gtk
 import re
 
@@ -40,7 +40,9 @@ def _blocked(function):
     return wrapper
 
 
-class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
+# XXX:
+# class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
+class TimeEntry(Gtk.Entry):
 
     """
     Entry for time data in format ``[-]HH:MM:SS.SSS``.

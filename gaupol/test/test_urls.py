@@ -15,28 +15,31 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import urllib.request, urllib.error, urllib.parse
+import urllib.request
 
 
 class TestModule(gaupol.TestCase):
 
+    def open(self, url):
+        return urllib.request.urlopen(url, timeout=10)
+
     def test_bug_report_url(self):
-        urllib.request.urlopen(gaupol.BUG_REPORT_URL, timeout=10)
+        self.open(gaupol.BUG_REPORT_URL)
 
     def test_extensions_url(self):
-        urllib.request.urlopen(gaupol.EXTENSIONS_URL, timeout=10)
+        self.open(gaupol.EXTENSIONS_URL)
 
     def test_homepage_url(self):
-        urllib.request.urlopen(gaupol.HOMEPAGE_URL, timeout=10)
+        self.open(gaupol.HOMEPAGE_URL)
 
     def test_preview_help_url(self):
-        urllib.request.urlopen(gaupol.PREVIEW_HELP_URL, timeout=10)
+        self.open(gaupol.PREVIEW_HELP_URL)
 
     def test_regex_help_url(self):
-        urllib.request.urlopen(gaupol.REGEX_HELP_URL, timeout=10)
+        self.open(gaupol.REGEX_HELP_URL)
 
     def test_speech_recognition_help_url(self):
-        urllib.request.urlopen(gaupol.SPEECH_RECOGNITION_HELP_URL, timeout=10)
+        self.open(gaupol.SPEECH_RECOGNITION_HELP_URL)
 
     def test_wiki_url(self):
-        urllib.request.urlopen(gaupol.WIKI_URL, timeout=10)
+        self.open(gaupol.WIKI_URL)

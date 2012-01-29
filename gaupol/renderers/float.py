@@ -17,7 +17,7 @@
 """Cell renderer for float data with fixed precision."""
 
 import aeidon
-import glib
+# import glib
 from gi.repository import Gtk
 
 __all__ = ("FloatCellRenderer",)

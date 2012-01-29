@@ -311,7 +311,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         label.props.xalign = 0
         label.set_ellipsize(Pango.EllipsizeMode.END)
         hbox.pack_start(label, True, True)
-        hbox.pack_start(Gtk.VSeparator(, True, True, 0), False, False)
+        # XXX:
+        # hbox.pack_start(Gtk.VSeparator(, True, True, 0), False, False)
         image = Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, size)
         hbox.pack_start(image, False, False)
         self.video_button = Gtk.Button()

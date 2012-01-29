@@ -26,7 +26,9 @@ _ = aeidon.i18n._
 __all__ = ("View",)
 
 
-class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
+# XXX:
+# class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
+class View(Gtk.TreeView):
 
     """
     Widget to display subtitle data in the form of a list.

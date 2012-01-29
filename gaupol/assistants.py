@@ -20,7 +20,7 @@
 
 import aeidon
 import gaupol
-import glib
+# import glib
 from gi.repository import Gtk
 import os
 from gi.repository import Pango
@@ -196,7 +196,9 @@ class IntroductionPage(BuilderPage):
         self._tree_view.get_selection().unselect_all()
 
 
-class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
+# XXX:
+# class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
+class LocalePage(BuilderPage):
 
     """Page with script, language and coutry based pattern selection."""
     _ui_file_basename = NotImplementedError
@@ -535,7 +537,9 @@ class HearingImpairedPage(LocalePage):
         project.remove_hearing_impaired(indices, doc, patterns)
 
 
-class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
+# XXX:
+# class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
+class JoinSplitWordsPage(BuilderPage):
 
     """Page for joining or splitting words based on spell-check suggestions."""
     _widgets = ("language_button", "join_check", "split_check")

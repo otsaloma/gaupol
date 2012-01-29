@@ -24,12 +24,12 @@ __all__ = ("toolbar_styles",)
 
 class Both(aeidon.EnumerationItem):
 
-    value = Gtk.TOOLBAR_BOTH
+    value = Gtk.ToolbarStyle.BOTH
 
 
 class BothHoriz(aeidon.EnumerationItem):
 
-    value = Gtk.TOOLBAR_BOTH_HORIZ
+    value = Gtk.ToolbarStyle.BOTH_HORIZ
 
 
 class Default(aeidon.EnumerationItem):
@@ -39,12 +39,12 @@ class Default(aeidon.EnumerationItem):
 
 class Icons(aeidon.EnumerationItem):
 
-    value = Gtk.TOOLBAR_ICONS
+    value = Gtk.ToolbarStyle.ICONS
 
 
 class Text(aeidon.EnumerationItem):
 
-    value = Gtk.TOOLBAR_TEXT
+    value = Gtk.ToolbarStyle.TEXT
 
 
 toolbar_styles = aeidon.Enumeration()

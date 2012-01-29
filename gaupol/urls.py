@@ -26,9 +26,6 @@ Website URLs.
 :var WIKI_URL: Wiki documentation
 """
 
-import gaupol
-from gi.repository import Gtk
-
 __all__ = ("BUG_REPORT_URL",
            "EXTENSIONS_URL",
            "HOMEPAGE_URL",
@@ -44,7 +41,3 @@ PREVIEW_HELP_URL = "http://live.gnome.org/Gaupol/Preview"
 REGEX_HELP_URL = "http://docs.python.org/lib/re-syntax.html"
 SPEECH_RECOGNITION_HELP_URL = "http://live.gnome.org/Gaupol/SpeechRecognition"
 WIKI_URL = "http://live.gnome.org/Gaupol"
-
-def _on_link_button_clicked(link_button, uri):
-    return gaupol.util.show_uri(uri)
-Gtk.link_button_set_uri_hook(_on_link_button_clicked)

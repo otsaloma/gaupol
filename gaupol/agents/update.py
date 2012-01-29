@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import glib
+# import glib
 from gi.repository import Gtk
 import os
 _ = aeidon.i18n._

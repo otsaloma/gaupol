@@ -21,7 +21,7 @@
 
 import aeidon
 import gaupol
-import glib
+# import glib
 from gi.repository import Gtk
 import linecache
 import os
