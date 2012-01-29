@@ -370,7 +370,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         flags = (re.IGNORECASE if ignore_case else 0)
         try: page.project.set_search_regex(pattern, flags)
         except re.error as message:
-            self._show_regex_error_dialog_pattern(str(message))
+            self._show_regex_error_dialog_pattern(r(message))
             raise gaupol.Default
         self._add_pattern_to_history()
 

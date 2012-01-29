@@ -54,7 +54,7 @@ class TestModule(aeidon.TestCase):
                            "xx_XX")
 
     def test_get_system_code(self):
-        aeidon.locales.get_system_code()
+        assert aeidon.locales.get_system_code()
 
     @aeidon.deco.monkey_patch(os, "environ")
     def test_get_system_modifier__latn(self):

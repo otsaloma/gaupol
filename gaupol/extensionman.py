@@ -80,7 +80,7 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         metadata.path = path
         for line in [_f for _f in lines if _f]:
             if line.startswith("["): continue
-            name, value = str(line).split("=", 1)
+            name, value = line.split("=", 1)
             name = (name[1:] if name.startswith("_") else name)
             metadata.set_field(name, value)
         self._store_metadata(path, metadata)

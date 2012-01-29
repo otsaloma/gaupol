@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -37,11 +37,13 @@ class ProjectMeta(aeidon.Contractual):
         new_dict = dic.copy()
         for agent_class_name in aeidon.agents.__all__:
             agent_class = getattr(aeidon.agents, agent_class_name)
-            def is_public_method(name):
-                return (not name.startswith("_") and
-                        callable(getattr(agent_class, name)))
+            def is_delegate_method(name):
+                value = getattr(agent_class, name)
+                return (callable(value) and
+                        hasattr(value, "export") and
+                        value.export is True)
 
-            attr_names = list(list(filter(is_public_method, dir(agent_class))))
+            attr_names = list(filter(is_delegate_method, dir(agent_class)))
             for attr_name in attr_names:
                 new_dict[attr_name] = getattr(agent_class, attr_name)
         return type.__new__(meta, class_name, bases, new_dict)
@@ -60,7 +62,7 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
 
        At unchanged state (i.e. file on disk corresponds to the state of the
        document) this value is zero. Doing and redoing increase the value by
-       one  and undoing decreases value by one.
+       one and undoing decreases value by one.
 
     :ivar main_file: Main instance of :class:`aeidon.SubtitleFile`
     :ivar redoables: Stack of :class:`aeidon.RevertableAction` instances
@@ -108,7 +110,10 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
 
     def __getattr__(self, name):
         """Return method delegated to an agent."""
-        return self._delegations[name]
+        try:
+            return self._delegations[name]
+        except KeyError:
+            raise AttributeError
 
     def __init__(self, framerate=None, undo_limit=None):
         """Initialize a :class:`Project` object."""

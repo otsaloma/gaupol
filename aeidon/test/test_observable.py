@@ -44,20 +44,6 @@ class TestObservable(aeidon.TestCase):
         self.obs.connect("do", self.on_do)
         self.obs.connect("notify::x", self.on_notify_x)
 
-    def test__add_signal(self):
-        self.obs._add_signal("undo")
-        self.obs.emit("undo")
-
-    def test__validate__immutable(self):
-        for value in ([], {}, set()):
-            assert self.obs._validate("", value) == value
-            assert self.obs._validate("", value) is not value
-
-    def test__validate__mutable(self):
-        for value in (True, "", 1, 1.0, (), frozenset()):
-            assert self.obs._validate("", value) == value
-            assert self.obs._validate("", value) is value
-
     def test_block(self):
         assert self.obs.block("do")
         assert not self.obs.block("do")

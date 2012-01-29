@@ -45,8 +45,9 @@ class Subtitle(object):
     :ivar framerate: :attr:`aeidon.framerates` item
     :ivar mode: :attr:`aeidon.modes` item
 
-    Positions can be set as strings for times, integers for frames or floats
-    for seconds. Positions are saved internally in only one mode.
+    Positions can be set as times, frames or seconds.Use
+    :func:`aeidon.as_time`, :func:`aeidon.as_frame` or
+    :func:`aeidon.as_seconds` if necessary to ensure correct type.
 
     Additional format-specific attributes are kept under separate containers,
     e.g. ``ssa`` for Sub Station Alpha formats, accessed as ``subtitle.ssa.*``.
@@ -322,7 +323,7 @@ class Subtitle(object):
     @main_text.setter
     def main_text(self, value):
         """Set main text from `value`."""
-        self._main_text = str(value)
+        self._main_text = value
 
     @property
     def mode(self):
@@ -440,4 +441,4 @@ class Subtitle(object):
     @tran_text.setter
     def tran_text(self, value):
         """Set translation text from `value`."""
-        self._tran_text = str(value)
+        self._tran_text = value

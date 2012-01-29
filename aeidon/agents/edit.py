@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,8 +16,6 @@
 
 """Basic editing of entire subtitles."""
 
-
-
 import aeidon
 _ = aeidon.i18n._
 
@@ -32,17 +30,17 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Insert new blank subtitles.
 
-        Set sensible equal duration positions within given window or with 3
-        second durations if window not limited.
+        Set sensible equal durations within given window or with 3 second
+        durations if window not limited.
         """
         for rindices in aeidon.util.get_ranges(indices):
             first_start = 0.0
-            if self.subtitles and (rindices[0] == 0):
+            if self.subtitles:
                 start = self.subtitles[0].start_seconds
                 first_start = (0.0 if start >= 0 else start - 3.0)
-            if rindices[0] > 0:
-                subtitle = self.subtitles[rindices[0] - 1]
-                first_start = subtitle.end_seconds
+                if rindices[0] > 0:
+                    subtitle = self.subtitles[rindices[0] - 1]
+                    first_start = subtitle.end_seconds
             duration = 3.0
             if rindices[0] < len(self.subtitles):
                 subtitle = self.subtitles[rindices[0]]
@@ -50,8 +48,8 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 duration = window / len(rindices)
             for i, index in enumerate(rindices):
                 subtitle = self.new_subtitle()
-                subtitle.start = first_start + (i * duration)
-                subtitle.duration = duration
+                subtitle.start_seconds = first_start + (i * duration)
+                subtitle.duration_seconds = duration
                 self.subtitles.insert(index, subtitle)
         action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
@@ -110,9 +108,9 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         subtitle.start = self.subtitles[indices[0]].start
         subtitle.end = self.subtitles[indices[-1]].end
         main_texts = [self.subtitles[i].main_text for i in indices]
-        subtitle.main_text = "\n".join([_f for _f in main_texts if _f])
         tran_texts = [self.subtitles[x].tran_text for x in indices]
-        subtitle.tran_text = "\n".join([_f for _f in tran_texts if _f])
+        subtitle.main_text = "\n".join(x for x in main_texts if x)
+        subtitle.tran_text = "\n".join(x for x in tran_texts if x)
         self.remove_subtitles(indices, register=register)
         self.insert_subtitles([indices[0]], [subtitle], register=register)
         self.group_actions(register, 2, _("Merging subtitles"))
@@ -127,9 +125,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def remove_subtitles(self, indices, register=-1):
         """Remove subtitles at `indices`."""
         indices = sorted(indices)
-        subtitles = list(reversed([self.subtitles.pop(i)
-                                   for i in reversed(indices)]))
-
+        subtitles = [self.subtitles.pop(i) for i in reversed(indices)][::-1]
         action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Removing subtitles")
@@ -200,8 +196,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         subtitle_2.start = middle
         subtitle_2.end = self.subtitles[index].end
         self.remove_subtitles([index], register=register)
-        self.insert_subtitles((index, index + 1),
-                              (subtitle_1, subtitle_2),
-                              register=register)
-
+        indices = (index, index + 1)
+        subtitles = (subtitle_1, subtitle_2)
+        self.insert_subtitles(indices, subtitles, register=register)
         self.group_actions(register, 2, _("Splitting subtitle"))

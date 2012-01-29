@@ -30,26 +30,26 @@ __all__ = ("as_frame",
            "is_seconds",
            "is_time")
 
-def as_frame(frame):
-    """Return `frame` as frame."""
-    return int(frame)
+def as_frame(pos):
+    """Return `pos` as type frame."""
+    return int(pos)
 
-def as_seconds(seconds):
-    """Return `seconds` as seconds."""
-    return float(seconds)
+def as_seconds(pos):
+    """Return `pos` as type seconds."""
+    return float(pos)
 
-def as_time(time):
-    """Return `time` as time."""
-    return str(time)
+def as_time(pos):
+    """Return `pos` as type time."""
+    return str(pos)
 
 def is_frame(pos):
-    """Return ``True`` if `pos` is frame."""
+    """Return ``True`` if `pos` is of type frame."""
     return isinstance(pos, int)
 
 def is_seconds(pos):
-    """Return ``True`` if `pos` is seconds."""
+    """Return ``True`` if `pos` is of type seconds."""
     return isinstance(pos, float)
 
 def is_time(pos):
-    """Return ``True`` if `pos` is time."""
+    """Return ``True`` if `pos` is of type time."""
     return isinstance(pos, str)

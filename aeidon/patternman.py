@@ -68,7 +68,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         Patterns with a more specific code replace those with a less specific
         code if they have the same name and the more specific pattern's policy
         is explicitly set to ``Replace`` (instead of the implicit ``Append``).
-        Order is maintaeined so that all patterns with the same name are always
+        Order is maintained so that all patterns with the same name are always
         located in the position of the earliest of such patterns.
         """
         filtered_patterns = []
@@ -131,7 +131,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         if not code in self._patterns: return
         patterns = self._patterns[code]
         for element in ET.parse(path).findall("pattern"):
-            name = str(element.get("name"))
+            name = element.get("name")
             name = name.replace("&quot;", '"')
             name = name.replace("&amp;", "&")
             enabled = (element.get("enabled") == "true")
@@ -191,7 +191,7 @@ class PatternManager(object, metaclass=aeidon.Contractual):
                 patterns.append(aeidon.Pattern())
                 patterns[-1].local = local
             else: # [_]KEY=VALUE
-                name, value = str(line).split("=", 1)
+                name, value = line.split("=", 1)
                 name = (name[1:] if name.startswith("_") else name)
                 patterns[-1].set_field(name, value)
 

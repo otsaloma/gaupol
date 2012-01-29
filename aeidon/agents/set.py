@@ -49,8 +49,9 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Set the value of duration position.
 
-        `value` can be a string to set duration as time, an integer to set as
-        frame or a float to set as seconds.
+        `value` can be time, frame or seconds. Use :func:`aeidon.as_time`,
+        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary to
+        ensure correct type.
         """
         subtitle = self.subtitles[index]
         orig_end = subtitle.end
@@ -73,8 +74,9 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Set the value of end position.
 
-        `value` can be a string to set duration as time, an integer to set as
-        frame or a float to set as seconds.
+        `value` can be time, frame or seconds. Use :func:`aeidon.as_time`,
+        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary to
+        ensure correct type.
         """
         subtitle = self.subtitles[index]
         orig_value = subtitle.end
@@ -114,8 +116,9 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Set the value of start position.
 
-        `value` can be a string to set duration as time, an integer to set as
-        frame or a float to set as seconds.
+        `value` can be time, frame or seconds. Use :func:`aeidon.as_time`,
+        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary to
+        ensure correct type.
         """
         subtitle = self.subtitles[index]
         orig_value = subtitle.start
@@ -137,7 +140,6 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.revertable
     def set_text(self, index, doc, value, register=-1):
         """Set the value of `doc`'s text."""
-        value = str(value)
         subtitle = self.subtitles[index]
         orig_value = subtitle.get_text(doc)
         if value == orig_value: return

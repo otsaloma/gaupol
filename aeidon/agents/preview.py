@@ -70,40 +70,23 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         without extension.
         """
         if self.main_file is None: return None
-        extensions = list(extensions or (".3ivx",
-                                         ".asf",
-                                         ".avi",
-                                         ".divx",
-                                         ".flv",
-                                         ".m2v",
-                                         ".mkv",
-                                         ".mov",
-                                         ".mp4",
-                                         ".mpeg",
-                                         ".mpg",
-                                         ".ogm",
-                                         ".ogv",
-                                         ".qt",
-                                         ".rm",
-                                         ".rmvb",
-                                         ".swf",
-                                         ".vob",
-                                         ".wmv",
-            # Keep extensions that are used by other file types than videos at
-            # the end of the list, so that if there are multiple matches, these
-            # ambiguous extensions would not be the ones chosen.
-                                         ".ogg",
-                                         ".dat"))
+        extensions = list(extensions or (
+                ".3ivx", ".asf", ".avi", ".divx", ".flv", ".m2v", ".mkv",
+                ".mov", ".mp4", ".mpeg", ".mpg", ".ogm", ".ogv", ".qt", ".rm",
+                ".rmvb", ".swf", ".vob", ".wmv",
+                # Keep extensions used by other file types than video at the
+                # end of the list, so that if there are multiple matches,
+                # ambiguous extensions would not be the ones chosen.
+                ".ogg", ".dat"))
 
         # Add upper-case versions of all extensions.
         extensions = aeidon.util.flatten([[x, x.upper()] for x in extensions])
-
         dirname = os.path.dirname(self.main_file.path)
         basename_sub = os.path.basename(self.main_file.path)
         rootname_sub = os.path.splitext(basename_sub)[0]
         for extension in extensions:
-            for video_path in [x for x in os.listdir(dirname) if x.endswith(extension)]:
-
+            for video_path in os.listdir(dirname):
+                if not video_path.endswith(extension): continue
                 basename_video = os.path.basename(video_path)
                 rootname_video = os.path.splitext(basename_video)[0]
                 if not rootname_sub.startswith(rootname_video): continue
@@ -132,18 +115,18 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         `command` can have variables ``$MILLISECONDS``, ``$SECONDS``,
         ``$SUBFILE`` and ``$VIDEOFILE``. `offset` should be the amount of
         seconds before `position` to start, which can be used to take into
-        account that video player's can usually seek only to keyframes, which
+        account that video players can usually seek only to keyframes, which
         exist maybe ten seconds or so apart. `encoding` can be specified if
         different from `doc` file encoding. Use ``True`` for `temp` to always
         use a temporary file for preview regardless of whether the file is
         changed or not.
 
+        Return a three tuple of :class:`subprocess.POpen` instance, command
+        with variables expanded and process standard output and error path.
+
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
         Raise :exc:`aeidon.ProcessError` if unable to start process.
-
-        Return a three tuple of :class:`subprocess.POpen` instance, command
-        with variables expanded and process standard output and error path.
         """
         sub_path = self._get_subtitle_path(doc, encoding, temp=temp)
         output_path = aeidon.temp.create(".output")

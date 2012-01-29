@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2009 Osmo Salomaa
+# Copyright (C) 2007-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -50,7 +50,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         Return ``True`` if the text of the next subtitle should be capitalized.
         """
         try:
-            a, z = next(parser)
+            a, z = parser.next()
         except StopIteration:
             return cap_next
         if pattern.get_field("Capitalize") == "Start":
@@ -71,10 +71,10 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         import enchant.checker
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
         path = os.path.join(directory, "{}.dict".format(language))
-        try: dictionary = enchant.DictWithPWL(str(language), str(path))
+        try: dictionary = enchant.DictWithPWL(language, path)
         except IOError:
             aeidon.util.print_write_io(sys.exc_info(), path)
-            dictionary = enchant.Dict(str(language))
+            dictionary = enchant.Dict(language)
         # Sometimes enchant will initialize a dictionary that will not
         # actually work when trying to use it, hence check something.
         dictionary.check("aeidon")
@@ -84,6 +84,16 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Return a list of misspelled indices in `checker`'s text."""
         i = [list(range(x.wordpos, x.wordpos + len(x.word))) for x in checker]
         return aeidon.util.flatten(i)
+
+    def _get_penalties_ensure(self, value, patterns):
+        assert len(value) <= len(patterns)
+
+    def _get_penalties(self, patterns):
+        """Return a list of penalty definitions."""
+        return [dict(pattern=x.get_field("Pattern"),
+                     flags=x.get_flags(),
+                     group=int(x.get_field("Group")),
+                     value=float(x.get_field("Value"))) for x in patterns]
 
     def _get_substitutions_ensure(self, value, patterns):
         assert len(value) <= len(patterns)
@@ -135,11 +145,11 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                     length_func,
                     max_length,
                     max_lines,
-                    max_deviation=None,
                     skip=False,
                     max_skip_length=sys.maxsize,
                     max_skip_lines=sys.maxsize,
                     register=-1):
+
         """
         Break lines to fit defined maximum line length and count.
 
@@ -148,26 +158,21 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         should return the length of a string argument. `max_length` should be
         the maximum allowed length of lines in the same scale as returned by
         `length_func`. `max_lines` may be violated to avoid violating
-        `max_length`. `max_deviation` can be used to control the threshold for
-        discarding legal solutions for subtitles with three or more lines and a
-        variance too great for the subtitle to be typeset elegantly. If `skip`
-        is ``True``, subtitles that do not violate or do not manage to reduce
-        `max_skip_length` and `max_skip_lines` are skipped.
+        `max_length`. If `skip` is ``True``, subtitles that do not violate or
+        do not manage to reduce `max_skip_length` and `max_skip_lines` are
+        skipped.
 
         Raise :exc:`re.error` if a bad regular expression among `patterns`.
         """
         new_indices = []
         new_texts = []
         patterns = [x for x in patterns if x.enabled]
-        patterns = self._get_substitutions(patterns)
-        patterns = [(re.compile(x, y), z) for x, y, z in patterns]
+        penalties = self._get_penalties(patterns)
         liner = self.get_liner(doc)
-        liner.break_points = patterns
-        if max_deviation is not None:
-            liner.max_deviation = max_deviation
+        liner.set_penalties(penalties)
+        liner.length_func = length_func
         liner.max_length = max_length
         liner.max_lines = max_lines
-        liner.length_func = length_func
         re_tag = self.get_markup_tag_regex(doc)
         for index in indices or self.get_all_indices():
             subtitle = self.subtitles[index]
@@ -176,7 +181,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             if re_tag is not None:
                 plain_text = re_tag.sub("", plain_text)
             lines = plain_text.split("\n")
-            length = max(list(map(length_func, lines)))
+            length = max(map(length_func, lines))
             line_count = len(lines)
             if length <= max_skip_length:
                 if line_count <= max_skip_lines:
@@ -187,13 +192,12 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             if re_tag is not None:
                 plain_text = re_tag.sub("", text)
             lines = plain_text.split("\n")
-            length_down = max(list(map(length_func, lines))) < length
+            length_down = max(map(length_func, lines)) < length
             lines_down = len(lines) < line_count
-            length_fixed = (length > max_skip_length) and length_down
-            lines_fixed = (line_count > max_skip_lines) and lines_down
-            if (not length_fixed) and (not lines_fixed):
-                # Implicitly require reduction of violator
-                # if only lines in violation are to be broken.
+            length_fixed = length > max_skip_length and length_down
+            lines_fixed = line_count > max_skip_lines and lines_down
+            if not length_fixed and not lines_fixed:
+                # Skip if part in violation not fixed.
                 if skip: continue
             if text != subtitle.get_text(doc):
                 new_indices.append(index)
@@ -347,7 +351,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             subtitle = self.subtitles[index]
             text = subtitle.get_text(doc)
             text = re_multispace.sub(" ", text)
-            checker.set_text(str(text))
+            checker.set_text(text)
             while True:
                 try: next(checker)
                 except StopIteration: break
@@ -369,7 +373,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                     checker.set_text(text[:a - 1] + text[a:])
                 if ok_with_next and not ok_with_prev:
                     checker.set_text(text[:z] + text[z + 1:])
-            new_text = str(checker.get_text())
+            new_text = checker.get_text()
             if new_text != text:
                 new_indices.append(index)
                 new_texts.append(new_text)
@@ -402,7 +406,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             subtitle = self.subtitles[index]
             text = subtitle.get_text(doc)
             text = re_multispace.sub(" ", text)
-            checker.set_text(str(text))
+            checker.set_text(text)
             while True:
                 try: next(checker)
                 except StopIteration: break
@@ -410,7 +414,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                     # Skip capitalized words, which are usually names
                     # and thus not always found in dictionaries.
                     continue
-                length = len(checker.word)
                 suggestions = []
                 for i, suggestion in enumerate(checker.suggest()):
                     if suggestion.find(" ") > 0:
@@ -423,7 +426,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 a = checker.wordpos
                 z = checker.wordpos + len(checker.word)
                 checker.set_text(text[:a] + suggestions[0] + text[z:])
-            new_text = str(checker.get_text())
+            new_text = checker.get_text()
             if new_text != text:
                 new_indices.append(index)
                 new_texts.append(new_text)

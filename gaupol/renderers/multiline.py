@@ -107,7 +107,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
-        self._text = text = str(self.props.text)
+        self._text = text = self.props.text
         if not (text and self._show_lengths): return
         lengths = gaupol.ruler.get_lengths(text)
         text = glib.markup_escape_text(text)

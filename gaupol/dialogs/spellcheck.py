@@ -98,7 +98,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 return self._advance_current()
             except StopIteration:
                 # Save the current text if changes were made.
-                text = str(self._checker.get_text())
+                text = self._checker.get_text()
                 subtitle = self._page.project.subtitles[self._row]
                 if text != subtitle.get_text(self._doc):
                     self._new_rows.append(self._row)
@@ -121,7 +121,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         col = self._page.document_to_text_column(self._doc)
         self._page.view.set_focus(self._row, col)
         self._page.view.scroll_to_row(self._row)
-        text = str(self._checker.get_text())
+        text = self._checker.get_text()
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(text)
         a = self._checker.wordpos
@@ -150,7 +150,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             raise StopIteration
         subtitle = self._page.project.subtitles[self._row]
         text = subtitle.get_text(self._doc)
-        self._checker.set_text(str(text))
+        self._checker.set_text(text)
 
     def _get_next_page(self):
         """Return the next page to check spelling in."""
@@ -243,23 +243,23 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_add_button_clicked(self, *args):
         """Add the current word to the user dictionary."""
-        self._checker.dict.add(str(self._checker.word))
+        self._checker.dict.add(self._checker.word)
         self._advance()
 
     def _on_edit_button_clicked(self, *args):
         """Edit the current text in a separate dialog."""
-        text = str(self._checker.get_text())
+        text = self._checker.get_text()
         dialog = gaupol.TextEditDialog(self._dialog, text)
         response = gaupol.util.run_dialog(dialog)
         text = dialog.get_text()
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
-        self._checker.set_text(str(text))
+        self._checker.set_text(text)
         self._advance()
 
     def _on_entry_changed(self, entry):
         """Populate suggestions based on text in `entry`."""
-        word = str(entry.get_text())
+        word = entry.get_text()
         suggestions = self._checker.suggest(word)
         self._populate_tree_view(suggestions, False)
         self._replace_button.set_sensitive(bool(word))
@@ -276,7 +276,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_join_back_button_clicked(self, *args):
         """Join the current word with the preceding word."""
-        text = str(self._checker.get_text())
+        text = self._checker.get_text()
         a = self._checker.wordpos
         text = text[:a - 1] + text[a:]
         self._checker.set_text(text)
@@ -284,7 +284,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_join_forward_button_clicked(self, *args):
         """Join the current word with the following word."""
-        text = str(self._checker.get_text())
+        text = self._checker.get_text()
         z = self._checker.wordpos + len(self._checker.word)
         text = text[:z] + text [z + 1:]
         self._checker.set_text(text)
@@ -292,18 +292,18 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_replace_all_button_clicked(self, *args):
         """Replace all instances of the current word."""
-        misspelled = str(self._checker.word)
+        misspelled = self._checker.word
         correct = self._entry.get_text()
         self._replacements.append((misspelled, correct))
-        self._checker.replace_always(str(correct))
+        self._checker.replace_always(correct)
         self._advance()
 
     def _on_replace_button_clicked(self, *args):
         """Replace the current word."""
-        misspelled = str(self._checker.word)
+        misspelled = self._checker.word
         correct = self._entry.get_text()
         self._replacements.append((misspelled, correct))
-        self._checker.replace(str(correct))
+        self._checker.replace(correct)
         self._advance()
 
     def _on_response(self, dialog, response):
@@ -321,7 +321,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _populate_tree_view(self, suggestions, select=True):
         """Populate the tree view with `suggestions`."""
-        word = str(self._checker.word)
+        word = self._checker.word
         replacements = [x[1] for x in reversed(self._replacements)
                         if x[0] == word]
 

@@ -15,7 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Codes, names and descriptions for character encodings.
+Codes, names and descriptions of character encodings.
 
 For functions dealing with character encodings, see also :mod:`aeidon.util`.
 """
@@ -264,7 +264,7 @@ def get_locale_long_name():
     Return localized long name for locale encoding.
 
     Raise :exc:`ValueError` if not found.
-    Return localized ``CURRENT LOCALE (NAME)``.
+    Return localized ``Current locale (NAME)``.
     """
     name = code_to_name(get_locale_code())
     return _("Current locale ({})").format(name)

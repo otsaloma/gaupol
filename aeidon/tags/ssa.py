@@ -129,7 +129,7 @@ class SubStationAlpha(aeidon.Markup):
             opening_matches = [x for x in re_opening.finditer(part)]
             closing_matches = [x for x in re_closing.finditer(part)]
             # Find out which tags have already been closed.
-            for j in reversed(list(range(len(closing_matches)))):
+            for j in reversed(range(len(closing_matches))):
                 closing_core = closing_matches[j].group(1)
                 for k in range(len(opening_matches)):
                     opening_core = opening_matches[k].group(1)
@@ -137,7 +137,7 @@ class SubStationAlpha(aeidon.Markup):
                         opening_matches.pop(k)
                         break
             # Add artificial closing tags to close remaining tags.
-            for j in reversed(list(range(len(opening_matches)))):
+            for j in reversed(range(len(opening_matches))):
                 parts[i] += "{{\\{}\\}}".format(opening_matches[j].group(1))
         return "".join(parts)
 

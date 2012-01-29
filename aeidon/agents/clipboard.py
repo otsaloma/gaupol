@@ -16,8 +16,6 @@
 
 """Storing text to the clipboard and pasting from it."""
 
-
-
 import aeidon
 _ = aeidon.i18n._
 
@@ -70,9 +68,8 @@ class ClipboardAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         length = len(self.subtitles)
         new_count = len(texts) - (length - index)
         if new_count > 0:
-            self.insert_subtitles(list(range(length, length + new_count)),
-                                  register=register)
-
+            indices = list(range(length, length + new_count))
+            self.insert_subtitles(indices, register=register)
         indices = [index + i for i in range(len(texts))
                    if texts[i] is not None]
 

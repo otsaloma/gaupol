@@ -16,7 +16,6 @@
 
 """Time and frame calculator."""
 
-
 import aeidon
 
 __all__ = ("Calculator",)
@@ -178,7 +177,7 @@ class Calculator(object):
         return coefficient * sum((float(time[ :2]) * 3600,
                                   float(time[3:5]) * 60,
                                   float(time[6:8]),
-                                  float(time[9: ]) / 1000,))
+                                  float(time[9: ]) / 1000))
 
     def to_frame(self, pos):
         """Convert `pos` to frame."""

@@ -88,10 +88,6 @@ class TestModule(aeidon.TestCase):
         lst = aeidon.util.flatten(lst)
         assert lst == [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    def test_get_all(self):
-        names = aeidon.util.get_all(dir(aeidon.util))
-        assert 0 < len(names) < len(dir(aeidon.util))
-
     def test_get_chardet_version(self):
         imp.reload(aeidon.util)
         assert aeidon.util.get_chardet_version()

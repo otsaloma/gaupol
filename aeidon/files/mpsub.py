@@ -49,7 +49,7 @@ class MPsub(aeidon.SubtitleFile):
         """Return MPsub-style start and end frames."""
         starts = [x.start_frame for x in subtitles]
         ends = [x.end_frame for x in subtitles]
-        for i in reversed(list(range(1, len(subtitles)))):
+        for i in reversed(range(1, len(subtitles))):
             ends[i] = ends[i] - starts[i]
             starts[i] = starts[i] - ends[i - 1]
         ends[0] = ends[0] - starts[0]
@@ -71,7 +71,7 @@ class MPsub(aeidon.SubtitleFile):
         deviation = 0
         # Avoid cumulation of rounding errors by keeping track of deviations
         # and adjusting times so that the deviation stays close to zero.
-        for i in reversed(list(range(1, len(subtitles)))):
+        for i in reversed(range(1, len(subtitles))):
             real_diff = ends[i] - starts[i]
             ends[i] = round(real_diff - deviation, 2)
             deviation += (ends[i] - real_diff)

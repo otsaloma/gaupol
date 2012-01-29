@@ -30,7 +30,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
     :ivar _penalties: List of penalty pattern dictionaries
     :ivar length_func: A function that returns the length of its argument
-    :ivar max_length: Maximum length of a line in units of :attr:`_length_func`
+    :ivar max_length: Maximum length of a line in units of :attr:`length_func`
     :ivar max_lines: Maximum preferred amount of lines (may be exceeded)
     """
 
@@ -85,8 +85,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         Break `boxes` into lines and return break points and demerit.
 
         If keeping all boxes on a single line results in a valid and better
-        result than splitting to `nlines` an empty list is returned. If no
-        valid break points can be found, ``None`` is returned.
+        result than splitting to `nlines` return an empty list. If no
+        valid break points can be found, return ``None``.
         """
         breaks = self._list_possible_breaks(boxes, penalties, nlines)
         best_breaks = None

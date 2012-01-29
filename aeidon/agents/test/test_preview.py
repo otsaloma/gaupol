@@ -43,17 +43,17 @@ class TestPreviewAgent(aeidon.TestCase):
     def test_preview__encoding(self):
         doc = aeidon.documents.MAIN
         self.project.video_path = self.new_subrip_file()
-        value = self.project.preview("00:00:00.000", doc, "echo", 0, "utf_8")
+        self.project.preview("00:00:00.000", doc, "echo", 0, "utf_8")
         assert os.path.isfile(self.project.get_file(doc).path)
 
     def test_preview__main(self):
         doc = aeidon.documents.MAIN
         self.project.video_path = self.new_subrip_file()
-        value = self.project.preview("00:00:00.000", doc, "echo", 0)
+        self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)
 
     def test_preview__translation(self):
         doc = aeidon.documents.TRAN
         self.project.video_path = self.new_subrip_file()
-        value = self.project.preview("00:00:00.000", doc, "echo", 0)
+        self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)

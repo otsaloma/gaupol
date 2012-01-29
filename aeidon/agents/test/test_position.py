@@ -25,84 +25,84 @@ class TestPositionAgent(aeidon.TestCase):
     def test_adjust_durations__gap(self):
         subtitles = self.project.subtitles
         subtitles[0].start = "00:00:01.000"
-        subtitles[0].end = "00:00:02.000"
+        subtitles[0].end   = "00:00:02.000"
         subtitles[1].start = "00:00:02.000"
-        subtitles[1].end = "00:00:03.000"
+        subtitles[1].end   = "00:00:03.000"
         subtitles[2].start = "00:00:04.000"
         self.project.adjust_durations(self.project.get_all_indices(),
                                       gap=0.3)
 
         assert subtitles[0].start == "00:00:01.000"
-        assert subtitles[0].end == "00:00:01.700"
+        assert subtitles[0].end   == "00:00:01.700"
         assert subtitles[1].start == "00:00:02.000"
-        assert subtitles[1].end == "00:00:03.000"
+        assert subtitles[1].end   == "00:00:03.000"
         assert subtitles[2].start == "00:00:04.000"
 
     def test_adjust_durations__lengthen(self):
         subtitles = self.project.subtitles
         subtitles[0].start = "00:00:01.000"
-        subtitles[0].end = "00:00:01.100"
-        subtitles[0].main_text = "1234567890"
+        subtitles[0].end   = "00:00:01.100"
         subtitles[1].start = "00:00:02.000"
-        subtitles[1].end = "00:00:02.100"
+        subtitles[1].end   = "00:00:02.100"
+        subtitles[0].main_text = "1234567890"
         subtitles[1].main_text = "12345678901234567890"
         self.project.adjust_durations(None,
                                       speed=20,
                                       lengthen=True)
 
         assert subtitles[0].start == "00:00:01.000"
-        assert subtitles[0].end == "00:00:01.500"
+        assert subtitles[0].end   == "00:00:01.500"
         assert subtitles[1].start == "00:00:02.000"
-        assert subtitles[1].end == "00:00:03.000"
+        assert subtitles[1].end   == "00:00:03.000"
 
     def test_adjust_durations__maximum(self):
         subtitles = self.project.subtitles
         subtitles[0].start = "00:00:01.000"
-        subtitles[0].end = "00:00:01.100"
+        subtitles[0].end   = "00:00:01.100"
         subtitles[1].start = "00:00:02.000"
-        subtitles[1].end = "00:00:02.100"
+        subtitles[1].end   = "00:00:02.100"
         self.project.adjust_durations(None,
                                       speed=10,
                                       lengthen=True,
                                       maximum=0.5)
 
         assert subtitles[0].start == "00:00:01.000"
-        assert subtitles[0].end == "00:00:01.500"
+        assert subtitles[0].end   == "00:00:01.500"
         assert subtitles[1].start == "00:00:02.000"
-        assert subtitles[1].end == "00:00:02.500"
+        assert subtitles[1].end   == "00:00:02.500"
 
     def test_adjust_durations__minimum(self):
         subtitles = self.project.subtitles
         subtitles[0].start = "00:00:01.000"
-        subtitles[0].end = "00:00:01.900"
+        subtitles[0].end   = "00:00:01.900"
         subtitles[1].start = "00:00:02.000"
-        subtitles[1].end = "00:00:02.900"
+        subtitles[1].end   = "00:00:02.900"
         self.project.adjust_durations(None,
                                       speed=1000,
                                       shorten=True,
                                       minimum=0.5)
 
         assert subtitles[0].start == "00:00:01.000"
-        assert subtitles[0].end == "00:00:01.500"
+        assert subtitles[0].end   == "00:00:01.500"
         assert subtitles[1].start == "00:00:02.000"
-        assert subtitles[1].end == "00:00:02.500"
+        assert subtitles[1].end   == "00:00:02.500"
 
     def test_adjust_durations__shorten(self):
         subtitles = self.project.subtitles
         subtitles[0].start = "00:00:01.000"
-        subtitles[0].end = "00:00:01.900"
-        subtitles[0].main_text = "1234567890"
+        subtitles[0].end   = "00:00:01.900"
         subtitles[1].start = "00:00:02.000"
-        subtitles[1].end = "00:00:02.900"
+        subtitles[1].end   = "00:00:02.900"
+        subtitles[0].main_text = "1234567890"
         subtitles[1].main_text = "12345678901234567890"
         self.project.adjust_durations(None,
                                       speed=100,
                                       shorten=True)
 
         assert subtitles[0].start == "00:00:01.000"
-        assert subtitles[0].end == "00:00:01.100"
+        assert subtitles[0].end   == "00:00:01.100"
         assert subtitles[1].start == "00:00:02.000"
-        assert subtitles[1].end == "00:00:02.200"
+        assert subtitles[1].end   == "00:00:02.200"
 
     def test_convert_framerate__frame(self):
         self.project.open_main(self.new_microdvd_file(), "ascii")
@@ -145,8 +145,8 @@ class TestPositionAgent(aeidon.TestCase):
         self.project.shift_positions(indices, -10)
         for i, subtitle in enumerate(self.project.subtitles):
             start = orig_subtitles[i].start_frame - 10
-            assert subtitle.start_frame == start
             end = orig_subtitles[i].end_frame - 10
+            assert subtitle.start_frame == start
             assert subtitle.end_frame == end
 
     @aeidon.deco.reversion_test
@@ -155,8 +155,8 @@ class TestPositionAgent(aeidon.TestCase):
         self.project.shift_positions(None, "00:00:01.000")
         for i, subtitle in enumerate(self.project.subtitles):
             start = round(orig_subtitles[i].start_seconds + 1.0, 3)
-            assert round(subtitle.start_seconds, 3) == start
             end = round(orig_subtitles[i].end_seconds + 1.0, 3)
+            assert round(subtitle.start_seconds, 3) == start
             assert round(subtitle.end_seconds, 3) == end
 
     @aeidon.deco.reversion_test
@@ -165,8 +165,8 @@ class TestPositionAgent(aeidon.TestCase):
         self.project.shift_positions(None, 1.0)
         for i, subtitle in enumerate(self.project.subtitles):
             start = round(orig_subtitles[i].start_seconds + 1.0, 3)
-            assert round(subtitle.start_seconds, 3) == start
             end = round(orig_subtitles[i].end_seconds + 1.0, 3)
+            assert round(subtitle.start_seconds, 3) == start
             assert round(subtitle.end_seconds, 3) == end
 
     @aeidon.deco.reversion_test

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007,2009 Osmo Salomaa
+# Copyright (C) 2005-2007,2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -35,8 +35,8 @@ class TestEditAgent(aeidon.TestCase):
         new_subtitles = []
         for i in range(3):
             subtitle = self.project.new_subtitle()
-            subtitle.start = i
-            subtitle.end = i + 1
+            subtitle.start_frame = i
+            subtitle.end_frame = i + 1
             subtitle.main_text = str(i)
             subtitle.tran_text = str(i)
             new_subtitles.append(subtitle)
@@ -48,9 +48,9 @@ class TestEditAgent(aeidon.TestCase):
     def test_insert_subtitles__blank_end(self):
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
-        indices = list(range(orig_length, orig_length + 10))
+        indices = list(range(orig_length, orig_length + 3))
         self.project.insert_subtitles(indices)
-        assert len(subtitles) == orig_length + 10
+        assert len(subtitles) == orig_length + 3
         assert subtitles == sorted(subtitles)
 
     @aeidon.deco.reversion_test
@@ -65,8 +65,8 @@ class TestEditAgent(aeidon.TestCase):
     def test_insert_subtitles__blank_start(self):
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
-        self.project.insert_subtitles((0, 1))
-        assert len(subtitles) == orig_length + 2
+        self.project.insert_subtitles((0, 1, 2))
+        assert len(subtitles) == orig_length + 3
         assert subtitles == sorted(subtitles)
 
     @aeidon.deco.reversion_test
@@ -92,8 +92,8 @@ class TestEditAgent(aeidon.TestCase):
         new_subtitles = []
         for i in range(3):
             subtitle = self.project.new_subtitle()
-            subtitle.start = i
-            subtitle.end = i + 1
+            subtitle.start_frame = i
+            subtitle.end_frame = i + 1
             new_subtitles.append(subtitle)
         self.project.replace_positions((0, 1, 2), new_subtitles)
         subtitles = self.project.subtitles
@@ -116,6 +116,4 @@ class TestEditAgent(aeidon.TestCase):
         self.project.split_subtitle(1)
         assert len(subtitles) == orig_length + 1
         assert subtitles[1].start == subtitle.start
-        assert subtitles[1].end < subtitle.end
-        assert subtitles[2].start < subtitle.end
         assert subtitles[2].end == subtitle.end

@@ -39,7 +39,7 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         return indices
 
     def _copy_file_ensure(self, value, source, destination):
-        assert (not value) or os.path.isfile(destination)
+        assert not value or os.path.isfile(destination)
 
     def _copy_file(self, source, destination):
         """Copy source file to destination and return success."""
@@ -59,7 +59,7 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.emit("positions-changed", self.get_all_indices())
 
     def _move_file_ensure(self, value, source, destination):
-        assert (not value) or os.path.isfile(destination)
+        assert not value or os.path.isfile(destination)
 
     def _move_file(self, source, destination):
         """Move source file to destination and return success."""
@@ -71,7 +71,7 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         return False
 
     def _remove_file_ensure(self, value, path):
-        assert (not value) or (not os.path.isfile(path))
+        assert not value or not os.path.isfile(path)
 
     def _remove_file(self, path):
         """Remove file and return success."""
@@ -86,11 +86,10 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Write subtitle data from `doc` to `sfile`.
 
+        Return indices of texts changed due to markup conversion.
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
-        Return indices of texts changed due to markup conversion.
         """
-        current_file = self.get_file(doc)
         current_format = self.get_format(doc)
         orig_texts = [x.get_text(doc) for x in self.subtitles]
         indices = []
@@ -113,9 +112,9 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         Raise :exc.`UnicodeError` if encoding fails.
         """
         file_existed = os.path.isfile(sfile.path)
-        if os.path.isfile(sfile.path):
-            # Create a backup of existing file in case writing
-            # new data to that file fails.
+        if file_existed:
+            # Create a backup of existing file in case
+            # writing new data to that file fails.
             backup_path = aeidon.temp.create(".bak")
             aeidon.temp.close(backup_path)
             backup_success = self._copy_file(sfile.path, backup_path)
@@ -147,7 +146,8 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.save_main(sfile, keep_changes)
         if doc == aeidon.documents.TRAN:
             return self.save_translation(sfile, keep_changes)
-        raise ValueError("Invalid document: {}".format(repr(doc)))
+        raise ValueError("Invalid document: {}"
+                         .format(repr(doc)))
 
     def save_main_ensure(self, value, sfile=None, keep_changes=True):
         assert self.main_file is not None

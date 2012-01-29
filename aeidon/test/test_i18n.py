@@ -20,10 +20,13 @@ import aeidon
 class TestModule(aeidon.TestCase):
 
     def test__(self):
-        aeidon.i18n._("message")
+        value = aeidon.i18n._("message")
+        assert value
 
     def test_dgettext(self):
-        aeidon.i18n.dgettext("domain", "message")
+        value = aeidon.i18n.dgettext("domain", "message")
+        assert value
 
     def test_ngettext(self):
-        aeidon.i18n.ngettext("singular", "plural", 1)
+        value = aeidon.i18n.ngettext("singular", "plural", 1)
+        assert value

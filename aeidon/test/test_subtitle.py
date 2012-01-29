@@ -72,7 +72,6 @@ class TestSubtitle(aeidon.TestCase):
 
     def test_copy(self):
         copy = self.tsub.copy()
-        # assert copy == self.tsub
         assert copy is not self.tsub
         assert "ssa" not in dir(copy)
         self.tsub.ssa.style = "test"

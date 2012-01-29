@@ -21,15 +21,15 @@ class TestModule(aeidon.TestCase):
 
     def test_is_frame(self):
         assert aeidon.is_frame(aeidon.as_frame(13))
-        assert not aeidon.is_frame(aeidon.as_seconds(13.3))
+        assert not aeidon.is_frame(aeidon.as_seconds(13))
         assert not aeidon.is_frame(aeidon.as_time("12:34:56.789"))
 
     def test_is_seconds(self):
-        assert aeidon.is_seconds(aeidon.as_seconds(13.3))
+        assert aeidon.is_seconds(aeidon.as_seconds(13))
         assert not aeidon.is_seconds(aeidon.as_frame(13))
         assert not aeidon.is_seconds(aeidon.as_time("12:34:56.789"))
 
     def test_is_time(self):
         assert aeidon.is_time(aeidon.as_time("12:34:56.789"))
         assert not aeidon.is_time(aeidon.as_frame(13))
-        assert not aeidon.is_time(aeidon.as_seconds(13.3))
+        assert not aeidon.is_time(aeidon.as_seconds(13))

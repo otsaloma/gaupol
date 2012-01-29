@@ -915,7 +915,7 @@ class ConfirmationPage(BuilderPage):
     def _on_tree_view_cell_edited(self, renderer, row, text):
         """Edit text in the corrected text column."""
         store = self._tree_view.get_model()
-        store[row][4] = str(text)
+        store[row][4] = text
 
     def _on_tree_view_cell_toggled(self, renderer, row):
         """Toggle accept column value."""

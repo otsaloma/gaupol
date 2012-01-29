@@ -119,4 +119,4 @@ class MetadataItem(object):
 
     def set_field(self, name, value):
         """Set the string value of field."""
-        self.fields[str(name)] = str(value)
+        self.fields[name] = str(value)

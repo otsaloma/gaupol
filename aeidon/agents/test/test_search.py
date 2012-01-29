@@ -32,8 +32,8 @@ class TestSearchAgent(aeidon.TestCase):
         for match in matches:
             if match is StopIteration:
                 self.assert_raises(StopIteration,
-                            self.project.find_next,
-                            index, doc, pos)
+                                   self.project.find_next,
+                                   index, doc, pos)
 
                 continue
             value = self.project.find_next(index, doc, pos)
@@ -51,8 +51,8 @@ class TestSearchAgent(aeidon.TestCase):
         for match in matches:
             if match is StopIteration:
                 self.assert_raises(StopIteration,
-                            self.project.find_previous,
-                            index, doc, pos)
+                                   self.project.find_previous,
+                                   index, doc, pos)
 
                 continue
             value = self.project.find_previous(index, doc, pos)
@@ -69,7 +69,7 @@ class TestSearchAgent(aeidon.TestCase):
                  ("So you are certain of\n"
                   "being saved?"),
                  ("Be careful,\n"
-                  "it's a dangerous answer."),)
+                  "it's a dangerous answer."))
 
         for i, text in enumerate(texts):
             self.project.subtitles[i].main_text = text
@@ -86,7 +86,10 @@ class TestSearchAgent(aeidon.TestCase):
                    (2, MAIN, (12, 12)),
                    (0, MAIN, ( 0,  0)),)
 
-        self._test_find_next(r"^", (MAIN,), True, matches)
+        self._test_find_next(pattern=r"^",
+                             docs=(MAIN,),
+                             wrap=True,
+                             matches=matches)
 
     def test_find_next__2(self):
         matches = ((0, MAIN, (25, 25)),
@@ -103,7 +106,10 @@ class TestSearchAgent(aeidon.TestCase):
                    (2, TRAN, (36, 36)),
                    (0, MAIN, (25, 25)),)
 
-        self._test_find_next(r"$", (MAIN, TRAN), True, matches)
+        self._test_find_next(pattern=r"$",
+                             docs=(MAIN, TRAN),
+                             wrap=True,
+                             matches=matches)
 
     def test_find_next__3(self):
         matches = ((0, TRAN, (25, 26)),
@@ -111,28 +117,43 @@ class TestSearchAgent(aeidon.TestCase):
                    (2, TRAN, (11, 12)),
                    (0, TRAN, (25, 26)),)
 
-        self._test_find_next(r"\n", (TRAN,), True, matches)
+        self._test_find_next(pattern=r"\n",
+                             docs=(TRAN,),
+                             wrap=True,
+                             matches=matches)
 
     def test_find_next__4(self):
         matches = ((0, MAIN, (20, 22)),
                    (0, MAIN, (37, 39)),
                    StopIteration,)
 
-        self._test_find_next(r" t", (MAIN,), False, matches)
+        self._test_find_next(pattern=r" t",
+                             docs=(MAIN,),
+                             wrap=False,
+                             matches=matches)
 
     def test_find_next__5(self):
         matches = ((0, TRAN, (32, 34)),
                    StopIteration,)
 
-        self._test_find_next(r"l{}", (TRAN,), False, matches)
+        self._test_find_next(pattern=r"l{2}",
+                             docs=(TRAN,),
+                             wrap=False,
+                             matches=matches)
 
     def test_find_next__6(self):
         matches = (StopIteration,)
-        self._test_find_next(r"xxx", (MAIN, TRAN), False, matches)
+        self._test_find_next(pattern=r"xxx",
+                             docs=(MAIN, TRAN),
+                             wrap=False,
+                             matches=matches)
 
     def test_find_next__7(self):
         matches = (StopIteration,)
-        self._test_find_next(r"xxx", (MAIN, TRAN), True, matches)
+        self._test_find_next(pattern=r"xxx",
+                             docs=(MAIN, TRAN),
+                             wrap=True,
+                             matches=matches)
 
     def test_find_previous__1(self):
         matches = ((2, MAIN, (12, 12)),
@@ -143,7 +164,10 @@ class TestSearchAgent(aeidon.TestCase):
                    (0, MAIN, ( 0,  0)),
                    (2, MAIN, (12, 12)),)
 
-        self._test_find_previous(r"^", (MAIN,), True, matches)
+        self._test_find_previous(pattern=r"^",
+                                 docs=(MAIN,),
+                                 wrap=True,
+                                 matches=matches)
 
     def test_find_previous__2(self):
         matches = ((2, TRAN, (36, 36)),
@@ -160,7 +184,10 @@ class TestSearchAgent(aeidon.TestCase):
                    (0, MAIN, (25, 25)),
                    (2, TRAN, (36, 36)),)
 
-        self._test_find_previous(r"$", (MAIN, TRAN), True, matches)
+        self._test_find_previous(pattern=r"$",
+                                 docs=(MAIN, TRAN),
+                                 wrap=True,
+                                 matches=matches)
 
     def test_find_previous__3(self):
         matches = ((2, TRAN, (11, 12)),
@@ -168,28 +195,43 @@ class TestSearchAgent(aeidon.TestCase):
                    (0, TRAN, (25, 26)),
                    (2, TRAN, (11, 12)),)
 
-        self._test_find_previous(r"\n", (TRAN,), True, matches)
+        self._test_find_previous(pattern=r"\n",
+                                 docs=(TRAN,),
+                                 wrap=True,
+                                 matches=matches)
 
     def test_find_previous__4(self):
         matches = ((0, MAIN, (37, 39)),
                    (0, MAIN, (20, 22)),
                    StopIteration,)
 
-        self._test_find_previous(r" t", (MAIN,), False, matches)
+        self._test_find_previous(pattern=r" t",
+                                 docs=(MAIN,),
+                                 wrap=False,
+                                 matches=matches)
 
     def test_find_previous__5(self):
         matches = ((0, TRAN, (32, 34)),
                    StopIteration,)
 
-        self._test_find_previous(r"l{}", (TRAN,), False, matches)
+        self._test_find_previous(pattern=r"l{2}",
+                                 docs=(TRAN,),
+                                 wrap=False,
+                                 matches=matches)
 
     def test_find_previous__6(self):
         matches = (StopIteration,)
-        self._test_find_previous(r"xxx", (MAIN, TRAN), False, matches)
+        self._test_find_previous(pattern=r"xxx",
+                                 docs=(MAIN, TRAN),
+                                 wrap=False,
+                                 matches=matches)
 
     def test_find_previous__7(self):
         matches = (StopIteration,)
-        self._test_find_previous(r"xxx", (MAIN, TRAN), True, matches)
+        self._test_find_previous(pattern=r"xxx",
+                                 docs=(MAIN, TRAN),
+                                 wrap=True,
+                                 matches=matches)
 
     @aeidon.deco.reversion_test
     def test_replace(self):
@@ -213,7 +255,7 @@ class TestSearchAgent(aeidon.TestCase):
                  ("So you are certain of--\n"
                   "being saved?--"),
                  ("Be careful,--\n"
-                  "it's a dangerous answer.--"),)
+                  "it's a dangerous answer.--"))
 
         for i, text in enumerate(texts):
             assert self.project.subtitles[i].main_text == text

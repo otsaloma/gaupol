@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2009,2011 Osmo Salomaa
+# Copyright (C) 2006-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -33,10 +33,15 @@ class TestModule(aeidon.TestCase):
         assert value == 1
         self.count += 1
 
+    def setup_method(self, method):
+        self.project = self.new_project()
+
     def test_benchmark(self):
-        function = aeidon.deco.benchmark(lambda x: x ** 2)
-        assert function(2) == 4
-        assert function(2) == 4
+        @aeidon.deco.benchmark
+        def square(x):
+            return x**2
+        assert square(2) == 4
+        assert square(2) == 4
 
     def test_contractual(self):
         assert aeidon.debug
@@ -45,9 +50,11 @@ class TestModule(aeidon.TestCase):
         assert self.count == 3
 
     def test_export(self):
-        function = aeidon.deco.export(lambda x: x ** 2)
-        assert function.export is True
-        assert function(2) == 4
+        @aeidon.deco.export
+        def square(x):
+            return x**2
+        assert square.export is True
+        assert square(2) == 4
 
     def test_memoize(self):
         @aeidon.deco.memoize(3)
@@ -82,9 +89,8 @@ class TestModule(aeidon.TestCase):
         assert sys.platform == platform
 
     def test_notify_frozen(self):
-        project = self.new_project()
-        project.insert_subtitles((0,))
-        assert not project.thaw_notify()
+        self.project.insert_subtitles((0,))
+        assert not self.project.thaw_notify()
 
     def test_once(self):
         function = aeidon.deco.once(lambda: 5)
@@ -93,20 +99,17 @@ class TestModule(aeidon.TestCase):
 
     @aeidon.deco.reversion_test
     def test_reversion_test(self):
-        project = self.new_project()
-        project.remove_subtitles((0,))
+        self.project.remove_subtitles((0,))
 
     def test_revertable__no_register(self):
-        project = self.new_project()
-        project.remove_subtitles((0,), register=None)
-        assert len(project.undoables) == 0
-        assert len(project.redoables) == 0
+        self.project.remove_subtitles((0,), register=None)
+        assert len(self.project.undoables) == 0
+        assert len(self.project.redoables) == 0
 
     def test_revertable__register(self):
-        project = self.new_project()
-        project.remove_subtitles((0,))
-        assert len(project.undoables) == 1
-        assert len(project.redoables) == 0
+        self.project.remove_subtitles((0,))
+        assert len(self.project.undoables) == 1
+        assert len(self.project.redoables) == 0
 
     def test_silent(self):
         function = lambda: [].remove(None)

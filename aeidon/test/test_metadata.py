@@ -25,9 +25,7 @@ class TestMetadataItem(aeidon.TestCase):
         aeidon.locales.get_system_code = lambda: code
         aeidon.locales.get_system_modifier = lambda: modifier
         self.item.set_field("Name", "system")
-        key = code
-        if modifier is not None:
-            key = "{}@{}".format(key, modifier)
+        key = ("{}@{}".format(code, modifier) if modifier else code)
         self.item.set_field("Name[{}]".format(key), "local")
         assert self.item.get_name(localize=True) == "local"
 

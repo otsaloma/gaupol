@@ -40,9 +40,9 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
      * ``<font=NAME>........</font>``
      * ``<size=POINTS>......</size>``
 
-    This class is effectively equivalent to a format with no markup and can
-    therefore be merely subclassed with a ``pass``-statement by formats that do
-    not implement any markup. The caller of any tagging methods, e.g.
+    :class:`Markup` is effectively equivalent to a format with no markup and
+    can therefore be merely subclassed with a ``pass``-statement by formats
+    that do not implement any markup. The caller of any tagging methods, e.g.
     :meth:`bolden`, must be prepared to handle :exc:`NotImplementedError`.
     """
 

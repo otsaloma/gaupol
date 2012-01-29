@@ -43,11 +43,11 @@ class ObservableDict(dict, metaclass=aeidon.Contractual):
     """
 
     def __copy__(self):
-        dic = dict(copy.copy(x) for  x in list(self.items()))
+        dic = dict(copy.copy(x) for  x in self.items())
         return self.__class__(dic, self.master, self.name)
 
     def __deepcopy__(self, memo):
-        dic = dict(copy.deepcopy(x) for  x in list(self.items()))
+        dic = dict(copy.deepcopy(x) for  x in self.items())
         return self.__class__(dic, self.master, self.name)
 
     @_mutation

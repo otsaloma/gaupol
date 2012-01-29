@@ -29,8 +29,14 @@ from .subrip     import SubRip
 from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 
-__all__ = aeidon.util.get_all(dir(), r"^[A-Z]")
-
+__all__ = ("SubStationAlpha",
+           "AdvSubStationAlpha",
+           "MicroDVD",
+           "MPL2",
+           "MPsub",
+           "SubRip",
+           "SubViewer2",
+           "TMPlayer")
 
 def add(cls):
     """Add a new :class:`aeidon.SubtitleFile` class."""

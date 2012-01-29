@@ -78,7 +78,8 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.undoables
         if register.shift == -1:
             return self.redoables
-        raise ValueError("Invalid register: {}".format(repr(register)))
+        raise ValueError("Invalid register: {}"
+                         .format(repr(register)))
 
     def _get_source_stack(self, register):
         """Return the stack where the action to register is taken from."""
@@ -86,7 +87,8 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.redoables
         if register.shift == -1:
             return self.undoables
-        raise ValueError("Invalid register: {}".format(repr(register)))
+        raise ValueError("Invalid register: {}"
+                         .format(repr(register)))
 
     def _on_notify_undo_limit(self, *args):
         """Cut reversion stacks if limit set."""
@@ -168,10 +170,8 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def group_actions(self, register, count, description):
         """Group the registered actions as one item in the stack."""
         if register is None: return
-        actions = []
         stack = self._get_destination_stack(register)
-        for i in range(count):
-            actions.append(stack.pop(0))
+        actions = [stack.pop(0) for i in range(count)]
         action_group = aeidon.RevertableActionGroup()
         action_group.actions = actions
         action_group.description = description
@@ -192,17 +192,18 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     def register_action(self, action):
         """Register `action` as done, undone or redone."""
-        if action.register is None: return
         if action.register == aeidon.registers.DO:
             self.undoables.insert(0, action)
             self.redoables = []
+            self._shift_changed_value(action, action.register.shift)
         if action.register == aeidon.registers.UNDO:
             self.redoables.insert(0, action)
             action.description = self._do_description
+            self._shift_changed_value(action, action.register.shift)
         if action.register == aeidon.registers.REDO:
             self.undoables.insert(0, action)
             action.description = self._do_description
-        self._shift_changed_value(action, action.register.shift)
+            self._shift_changed_value(action, action.register.shift)
 
     def set_action_description_require(self, register, description):
         if register is not None:

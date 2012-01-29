@@ -77,8 +77,8 @@ class Contractual(type):
     strengthened; all postconditions and class invariant checks found in the
     inheritance tree will be used.
 
-    This is a debug metaclass that is in use only if :data:`aeidon.debug` is
-    ``True``.
+    :class:`Contractual` is a debug metaclass that is in use only if
+    :data:`aeidon.debug` is ``True``.
 
     .. _design-by-contract:
        http://www.eiffel.com/developers/design_by_contract.html
@@ -87,7 +87,7 @@ class Contractual(type):
     def __new__(meta, class_name, bases, dic):
         """Return instance with method calls wrapped in condition calls."""
         new_dict = dic.copy()
-        for name, attr in list(list(dic.items())):
+        for name, attr in dic.items():
             if not callable(attr): continue
             require_name = "{}_require".format(name)
             if name.startswith("__"):

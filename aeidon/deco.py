@@ -55,10 +55,10 @@ def benchmark(function):
     """Decorator for benchmarking functions and methods."""
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        a = time.time()
+        start = time.time()
         value = function(*args, **kwargs)
-        z = time.time()
-        print("{:7.3f} {}".format(z - a, function.__name__))
+        duration = time.time() - start
+        print("{:7.3f} {}".format(duration, function.__name__))
         return value
     return wrapper
 
@@ -89,10 +89,7 @@ def contractual(function):
 def export(function):
     """Decorator for delegate functions that are exported to master."""
     function.export = True
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        return function(*args, **kwargs)
-    return wrapper
+    return function
 
 def memoize(limit=100):
     """
@@ -217,8 +214,8 @@ def revertable(function):
         try: value = function(*args, **kwargs)
         finally: project.unblock(register.signal)
         project.cut_reversion_stacks()
-        if ((project.main_changed != main_changed) or
-            (project.tran_changed != tran_changed)):
+        if (project.main_changed != main_changed or
+            project.tran_changed != tran_changed):
             project.emit_action_signal(register)
         return value
     return wrapper

@@ -216,7 +216,7 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_entry_1.set_text(str(subtitle.start_frame))
+        self._input_entry_1.set_text(subtitle.start_frame)
         self._output_spin_1.set_value(subtitle.start_frame)
         text = subtitle.main_text.replace("\n", " ")
         text = aeidon.re_any_tag.sub("", text)
@@ -229,7 +229,7 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_entry_2.set_text(str(subtitle.start_frame))
+        self._input_entry_2.set_text(subtitle.start_frame)
         self._output_spin_2.set_value(subtitle.start_frame)
         text = subtitle.main_text.replace("\n", " ")
         text = aeidon.re_any_tag.sub("", text)

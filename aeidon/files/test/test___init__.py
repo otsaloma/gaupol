@@ -30,6 +30,4 @@ class TestModule(aeidon.TestCase):
     def test_new__value_error(self):
         self.assert_raises(ValueError,
                            aeidon.files.new,
-                           None,
-                           "",
-                           "ascii")
+                           None, "", "ascii")

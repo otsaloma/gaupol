@@ -131,7 +131,7 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             if pos is not None:
                 self._finder.pos = pos
             try:
-                match_span = next(self._finder)
+                match_span = self._finder.next()
             except StopIteration:
                 # Raise StopIteration if a full loop around all target
                 # documents and indices has been made with no matches.
@@ -147,7 +147,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError("No more matches in document: {}".format(repr(doc)))
+        raise ValueError("No more matches in document: {}"
+                         .format(repr(doc)))
 
     def _previous_in_document(self, index, doc, pos=None):
         """
@@ -159,7 +160,7 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         Return tuple of index, document, match span.
         """
         indices = self._indices or self.get_all_indices()
-        for index in reversed(list(range(min(indices), index + 1))):
+        for index in reversed(range(min(indices), index + 1)):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:
@@ -184,7 +185,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError("No more matches in document: {}".format(repr(doc)))
+        raise ValueError("No more matches in document: {}"
+                         .format(repr(doc)))
 
     def find_next_require(self, index=None, doc=None, pos=None):
         assert 0 <= (index or 0) < len(self.subtitles)
@@ -302,17 +304,17 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         ``DOTALL``, ``MULTILINE`` and ``UNICODE`` are automatically added to
         flags. Raise :exc:`re.error` if bad pattern.
         """
-        self._finder.set_regex(str(pattern), flags)
+        self._finder.set_regex(pattern, flags)
 
     @aeidon.deco.export
     def set_search_replacement(self, replacement):
         """Set the replacement string."""
-        self._finder.replacement = str(replacement)
+        self._finder.replacement = replacement
 
     @aeidon.deco.export
     def set_search_string(self, pattern, ignore_case=False):
         """Set the string pattern to find."""
-        self._finder.pattern = str(pattern)
+        self._finder.pattern = pattern
         self._finder.ignore_case = ignore_case
 
     def set_search_target_require(self, indices=None, docs=None, wrap=True):

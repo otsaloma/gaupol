@@ -54,7 +54,7 @@ class TestClipboardAgent(aeidon.TestCase):
     def test_paste_texts__new(self):
         subtitles = self.project.subtitles
         self.project.copy_texts((0, 1), aeidon.documents.TRAN)
-        z = len(subtitles) - 1
-        indices = self.project.paste_texts(z, aeidon.documents.MAIN)
-        assert list(indices) == [z, z + 1]
-        assert len(subtitles) == z + 2
+        last = len(subtitles) - 1
+        indices = self.project.paste_texts(last, aeidon.documents.MAIN)
+        assert list(indices) == [last, last + 1]
+        assert len(subtitles) == last + 2

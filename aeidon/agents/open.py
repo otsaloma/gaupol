@@ -49,19 +49,15 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 if i == len(self.subtitles): break
                 ms = self.subtitles[i].get_start(mode)
                 me = self.subtitles[i].get_end(mode)
-                # XXX: No more compare in calc!
-                tm_cmp_ms = self.calc.compare(tm, ms)
-                tm_cmp_me = self.calc.compare(tm, me)
-                if tm_cmp_me <= 0: break
+                if not self.calc.is_earlier(me, tm): break
                 i += 1
-            if (i == len(self.subtitles)) or (tm_cmp_ms == -1):
+            if i == len(self.subtitles) or self.calc.is_later(ms, tm):
                 # Add a new subtitle when no suitable match
                 # found among existing subtitles.
                 subtitle = self.new_subtitle()
                 subtitle.start = subtitles[0].start
                 subtitle.end = subtitles[0].end
                 self.subtitles.insert(i, subtitle)
-                continue
             self.subtitles[i].tran_text = subtitles[0].main_text
             subtitles.pop(0)
             i += 1
@@ -80,13 +76,13 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             raise
         except Exception:
             if not aeidon.debug:
-                raise aeidon.ParseError("Failed to parse sfile {}"
-                                        .format(repr(sfile)))
+                raise aeidon.ParseError("Failed to parse file {}"
+                                        .format(repr(sfile.path)))
 
             raise
 
     def _sort_subtitles_ensure(self, value, subtitles):
-        sorted_subtitles, wrong_order_count = value
+        sorted_subtitles, sort_count = value
         for i in range(len(sorted_subtitles) - 1):
             assert sorted_subtitles[i] <= sorted_subtitles[i + 1]
 
@@ -98,29 +94,29 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         is the amount of subtitles that needed to be moved in order to arrange
         them in ascending chronological order.
         """
-        wrong_order_count = 0
+        sort_count = 0
         sorted_subtitles = []
         while subtitles:
             subtitle = subtitles.pop(0)
             index = bisect.bisect(sorted_subtitles, subtitle)
             if index < len(sorted_subtitles):
-                wrong_order_count += 1
+                sort_count += 1
             sorted_subtitles.insert(index, subtitle)
-        return sorted_subtitles, wrong_order_count
+        return sorted_subtitles, sort_count
 
     @aeidon.deco.export
     def open(self, doc, path, encoding=None, *args, **kwargs):
         """
         Read and parse subtitle data for `doc` from `path`.
 
-        `encoding` can be ``None`` to use the system default encoding.
+        `encoding` can be ``None`` to use the system default encoding. Return
+        the amount of subtitles that needed to be moved in order to arrange
+        them in ascending chronological order.
+
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
         Raise :exc:`aeidon.FormatError` if unable to detect format.
         Raise :exc:`aeidon.ParseError` if parsing fails.
-
-        Return the amount of subtitles that needed to be moved in order to
-        arrange them in ascending chronological order.
         """
         if doc == aeidon.documents.MAIN:
             return self.open_main(path, encoding, *args, **kwargs)
@@ -143,14 +139,14 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Read and parse subtitle data for main file from `path`.
 
-        `encoding` can be ``None`` to use the system default encoding.
+        `encoding` can be ``None`` to use the system default encoding. Return
+        the amount of subtitles that needed to be moved in order to arrange
+        them in ascending chronological order.
+
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
         Raise :exc:`aeidon.FormatError` if unable to detect format.
         Raise :exc:`aeidon.ParseError` if parsing fails.
-
-        Return the amount of subtitles that needed to be moved in order to
-        arrange them in ascending chronological order.
         """
         encoding = encoding or aeidon.util.get_default_encoding()
         # Check for a Unicode BOM first to avoid getting a FormatError in the
@@ -191,25 +187,24 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         Read and parse subtitle data for translation file from `path`.
 
         `encoding` can be ``None`` to use the system default encoding.
-
-        `align_method` specifies how translation texts are attached to the
-        existing subtitles. :attr:`aeidon.align_methods.NUMBER` is the simple
-        way, which adds the translation texts in order, one-by-one to the
-        exising subtitles. :attr:`aeidon.align_methods.POSITION` (the default)
-        is the smarter way, which compares the position data in the translation
+        `align_method` specifies how translation texts are attached to existing
+        subtitles. :attr:`aeidon.align_methods.NUMBER` is the simple way, which
+        adds the translation texts in order, one-by-one to the exising
+        subtitles. :attr:`aeidon.align_methods.POSITION` (the default) is the
+        smarter way, which compares the position data in the translation
         subtitles with the existing subtitles, skips and inserts subtitles as
         needed to have at least a rough chronological match. The latter thus
         takes into account that not all subtitles are translated, or vice versa
         and that one main subtitle may correspond to two translation subtitles,
         or vice versa, as per length restrictions or whatever.
 
+        Return the amount of subtitles that needed to be moved in order to
+        arrange them in ascending chronological order.
+
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
         Raise :exc:`aeidon.FormatError` if unable to detect format.
         Raise :exc:`aeidon.ParseError` if parsing fails.
-
-        Return the amount of subtitles that needed to be moved in order to
-        arrange them in ascending chronological order.
         """
         encoding = encoding or aeidon.util.get_default_encoding()
         align_method = align_method or aeidon.align_methods.POSITION

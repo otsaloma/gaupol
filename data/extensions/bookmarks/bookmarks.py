@@ -372,7 +372,7 @@ class BookmarksExtension(gaupol.Extension):
     def _on_tree_view_cell_edited(self, renderer, path, new_text):
         """Update description in the list store model of the tree view."""
         store = self._tree_view.get_model().get_model()
-        store[path][2] = str(new_text)
+        store[path][2] = new_text
         page = self.application.get_current_page()
 
     def _on_tree_view_key_press_event(self, tree_view, event):

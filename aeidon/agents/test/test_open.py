@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2011 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -51,26 +51,26 @@ class TestOpenAgent(aeidon.TestCase):
 
     def test_open_main__bom(self):
         path = self.new_subrip_file()
-        text = open(path, "r").read()
-        open(path, "w").write(codecs.BOM_UTF8 + text)
+        blob = open(path, "rb").read()
+        open(path, "wb").write(codecs.BOM_UTF8 + blob)
         self.project.open_main(path, "ascii")
         assert self.project.subtitles
         assert self.project.main_file.encoding == "utf_8_sig"
+
+    def test_open_main__io_error(self):
+        path = self.new_subrip_file()
+        os.chmod(path, 0000)
+        self.assert_raises(IOError,
+                           self.project.open_main,
+                           path, "ascii")
+
+        os.chmod(path, 0o777)
 
     def test_open_main__mpsub(self):
         self.project.remove_subtitles((0,))
         path = self.new_temp_file(aeidon.formats.MPSUB, "mpsub-frame")
         self.project.open_main(path, "ascii")
         assert self.project.subtitles
-
-    def test_open_main__io_error(self):
-        path = self.new_subrip_file()
-        os.chmod(path, 0000)
-        self.assert_raises(IOError,
-                    self.project.open_main,
-                    path, "ascii")
-
-        os.chmod(path, 0o777)
 
     @aeidon.deco.monkey_patch(aeidon, "debug")
     def test_open_main__parse_error(self):
@@ -81,13 +81,14 @@ class TestOpenAgent(aeidon.TestCase):
         fobj.write("00:00:03,000 <-- 00:00:04,000\n\n")
         fobj.close()
         self.assert_raises(aeidon.ParseError,
-                    self.project.open_main,
-                    path, "ascii")
+                           self.project.open_main,
+                           path, "ascii")
 
     def test_open_main__unicode_error(self):
         self.assert_raises(UnicodeError,
-                    self.project.open_main,
-                    self.new_subrip_file(), "punycode")
+                           self.project.open_main,
+                           self.new_subrip_file(),
+                           "punycode")
 
     def test_open_main__unsorted(self):
         path = self.new_microdvd_file()
@@ -114,7 +115,7 @@ class TestOpenAgent(aeidon.TestCase):
 
     def test_open_translation__bom(self):
         path = self.new_subrip_file()
-        text = open(path, "r").read()
-        open(path, "w").write(codecs.BOM_UTF8 + text)
+        blob = open(path, "rb").read()
+        open(path, "wb").write(codecs.BOM_UTF8 + blob)
         self.project.open_translation(path, "ascii")
         assert self.project.tran_file.encoding == "utf_8_sig"

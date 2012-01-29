@@ -58,10 +58,6 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         self.clean_func = clean_func
         self.re_tag = re_tag
 
-    def _invariant(self):
-        if self.clean_func is not None:
-            assert self.clean_func("") == ""
-
     def _set_margins_require(self, text):
         assert self.re_tag is not None
 
@@ -77,7 +73,7 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
             start_tag += line[a:z]
             line = line[z:]
         if not start_tag: return
-        if not all([x.startswith(start_tag) for x in lines]): return
+        if not all(x.startswith(start_tag) for x in lines): return
         end_tag = ""
         while True:
             iterator = self.re_tag.finditer(line)
@@ -87,7 +83,7 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
             if z != len(line): return
             end_tag = line[a:z] + end_tag
             line = line[:a]
-        if not all([x.endswith(end_tag) for x in lines]): return
+        if not all(x.endswith(end_tag) for x in lines): return
         for line in (x[len(start_tag):-len(end_tag)] for x in lines):
             # Ensure that no other tags exists on any of the lines.
             if self.re_tag.search(line) is not None: return

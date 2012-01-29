@@ -23,9 +23,7 @@ import os
 import re
 import subprocess
 import sys
-import urllib.error
 import urllib.parse
-import urllib.request
 
 
 def affirm(value):
@@ -49,7 +47,8 @@ def compare_versions_require(x, y):
 
 @aeidon.deco.contractual
 def compare_versions(x, y):
-    """Compare version strings `x` and `y`.
+    """
+    Compare version strings `x` and `y`.
 
     Used version number formats are ``MAJOR.MINOR``, ``MAJOR.MINOR.PATCH`` and
     ``MAJOR.MINOR.PATCH.DATE/REVISION``, where all items are integers.
@@ -91,12 +90,12 @@ def copy_dict(src):
     """Copy `src` dictionary recursively and return copy."""
     dst = src.copy()
     for key, value in src.items():
-        if isinstance(src[key], dict):
-            dst[key] = copy_dict(src[key])
-        if isinstance(src[key], list):
-            dst[key] = copy_list(src[key])
-        if isinstance(src[key], set):
-            dst[key] = set(src[key])
+        if isinstance(value, dict):
+            dst[key] = copy_dict(value)
+        if isinstance(value, list):
+            dst[key] = copy_list(value)
+        if isinstance(value, set):
+            dst[key] = set(value)
     return dst
 
 def copy_list_ensure(src, value):
@@ -174,21 +173,6 @@ def flatten(lst):
         else: # Non-list item.
             flat_lst.append(item)
     return flat_lst
-
-def get_all(names, pattern=None):
-    """Return a tuple of `names` filtered by pattern to use as ``__all__``."""
-    import __future__
-    for i in reversed(list(range(len(names)))):
-        if ((names[i].startswith("_")) or
-            (names[i].endswith("_require")) or
-            (names[i].endswith("_ensure")) or
-            (names[i] in sys.modules) or
-            (names[i] in dir(__future__))): names.pop(i)
-
-    if pattern is not None:
-        regex = re.compile(pattern, re.UNICODE)
-        names = list(filter(regex.search, names))
-    return tuple(names)
 
 def get_chardet_version_ensure(value):
     if value is not None:
@@ -281,7 +265,7 @@ def get_sorted_unique(lst):
     [1, 2, 3, 4]
     """
     lst = sorted(lst)
-    for i in reversed(list(range(1, len(lst)))):
+    for i in reversed(range(1, len(lst))):
         if lst[i] == lst[i - 1]:
             lst.pop(i)
     return lst
@@ -325,13 +309,13 @@ def get_unique(lst, keep_last=False):
 
     >>> aeidon.util.get_unique([3, 2, 1, 2, 4, 4])
     [3, 2, 1, 4]
-    >>> aeidon.util.get_unique([3, 2, 1, 2, 4, 4], True)
+    >>> aeidon.util.get_unique([3, 2, 1, 2, 4, 4], keep_last=True)
     [3, 1, 2, 4]
     """
     lst = lst[:]
     if keep_last:
         lst.reverse()
-    for i in reversed(list(range(len(lst)))):
+    for i in reversed(range(len(lst))):
         for j in range(0, i):
             if lst[j] == lst[i]:
                 lst.pop(i)
@@ -392,32 +376,32 @@ def path_to_uri(path):
     return "file://{}".format(urllib.parse.quote(path))
 
 def print_read_io(exc_info, path):
-    """Print :exc:`IOError` message to standard output."""
+    """Print :exc:`IOError` message to standard error."""
     print("Failed to read file '{}': {}"
           .format(path, exc_info[1].args[1]),
           file=sys.stderr)
 
 def print_read_unicode(exc_info, path, encoding):
-    """Print :exc:`UnicodeError` message to standard output."""
+    """Print :exc:`UnicodeError` message to standard error."""
     encoding = encoding or get_default_encoding()
     print("Failed to decode file '{}' with codec '{}'"
           .format(path, encoding),
           file=sys.stderr)
 
 def print_remove_os(exc_info, path):
-    """Print :exc:`OSError` message to standard output."""
+    """Print :exc:`OSError` message to standard error."""
     print("Failed to remove file '{}': {}"
           .format(path, exc_info[1].args[1]),
           file=sys.stderr)
 
 def print_write_io(exc_info, path):
-    """Print :exc:`IOError` message to standard output."""
+    """Print :exc:`IOError` message to standard error."""
     print("Failed to write file '{}': {}"
           .format(path, exc_info[1].args[1]),
           file=sys.stderr)
 
 def print_write_unicode(exc_info, path, encoding):
-    """Print :exc:`UnicodeError` message to standard output."""
+    """Print :exc:`UnicodeError` message to standard error."""
     encoding = encoding or get_default_encoding()
     print("Failed to encode file '{}' with codec '{}'"
           .format(path, encoding),
@@ -434,7 +418,7 @@ def read(path, encoding=None, fallback="utf_8"):
     """
     Read file at `path` and return text.
 
-    `fallback` should be ``None`` to not fall back to UTF-8.
+    `fallback` should be ``None`` to try only `encoding`.
     Raise :exc:`IOError` if reading fails.
     Raise :exc:`UnicodeError` if decoding fails.
     """
@@ -444,7 +428,7 @@ def read(path, encoding=None, fallback="utf_8"):
             return fobj.read().strip()
     except UnicodeError:
         if not fallback in (encoding, None, ""):
-            return read(path, "utf_8", None)
+            return read(path, fallback, None)
         raise # UnicodeError
 
 def readlines_require(path, encoding=None, fallback="utf_8"):
@@ -458,13 +442,12 @@ def readlines(path, encoding=None, fallback="utf_8"):
     """
     Read file at `path` and return lines.
 
-    `fallback` should be ``None`` to not fall back to UTF-8.
+    `fallback` should be ``None`` to try only `encoding`.
     Raise :exc:`IOError` if reading fails.
     Raise :exc:`UnicodeError` if decoding fails.
     """
     text = read(path, encoding, fallback)
-    text = text.replace("\r\n", "\n")
-    text = text.replace("\r", "\n")
+    text = normalize_newlines(text)
     return text.split("\n")
 
 def replace_extension(path, format):
@@ -487,7 +470,7 @@ def start_process(command, **kwargs):
     """
     Start `command` as a new background subprocess.
 
-    `command` and `kwargs` are passed to :meth:`subprocess.Popen.__init__`.
+    `command` and `kwargs` are passed to :class:`subprocess.Popen`.
     Raise :exc:`aeidon.ProcessError` if something goes wrong.
     Return :class:`subprocess.Popen` instance.
     """
@@ -550,7 +533,7 @@ def write(path, text, encoding=None, fallback="utf_8"):
     """
     Write `text` to file at `path`.
 
-    `fallback` should be ``None`` to not fall back to UTF-8.
+    `fallback` should be ``None`` to try only `encoding`.
     Raise :exc:`IOError` if writing fails.
     Raise :exc:`UnicodeError` if encoding fails.
     """
@@ -560,7 +543,7 @@ def write(path, text, encoding=None, fallback="utf_8"):
             return fobj.write(text)
     except UnicodeError:
         if not fallback in (encoding, None, ""):
-            return write(path, text, "utf_8", None)
+            return write(path, text, fallback, None)
         raise # UnicodeError
 
 def writelines_require(path, lines, encoding=None, fallback="utf_8"):
@@ -577,7 +560,7 @@ def writelines(path, lines, encoding=None, fallback="utf_8"):
     """
     Write `lines` of text to file at `path`.
 
-    `fallback` should be ``None`` to not fall back to UTF-8.
+    `fallback` should be ``None`` to try only `encoding`.
     Raise :exc:`IOError` if writing fails.
     Raise :exc:`UnicodeError` if encoding fails.
     """

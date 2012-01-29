@@ -23,16 +23,15 @@ class TestTextAgent(aeidon.TestCase):
         self.project = self.new_project()
 
     def test_break_lines(self):
+        # XXX: Give penalties once we have definitions.
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace(" ", "\n")
-        manager = aeidon.PatternManager("common-error")
         self.project.break_lines(self.project.get_all_indices(),
                                  aeidon.documents.MAIN,
-                                 manager.get_patterns("Latn"),
+                                 patterns=[],
                                  length_func=len,
                                  max_length=44,
-                                 max_lines=2,
-                                 max_deviation=1)
+                                 max_lines=2)
 
         for subtitle in self.project.subtitles:
             assert subtitle.main_text.count("\n") <= 2
@@ -57,6 +56,7 @@ class TestTextAgent(aeidon.TestCase):
                                            manager.get_patterns("Latn"))
 
         assert self.project.subtitles[0].main_text == '"Test"'
+        assert self.project.subtitles[1].main_text == "12304560789"
 
     def test_remove_hearing_impaired(self):
         orig_length = len(self.project.subtitles)
@@ -77,26 +77,30 @@ class TestTextAgent(aeidon.TestCase):
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace("a", " a")
             subtitle.main_text = subtitle.main_text.replace("e", "e ")
-        self.project.spell_check_join_words(self.project.get_all_indices(),
-                                            aeidon.documents.MAIN,
-                                            "en")
+        self.project.spell_check_join_words(indices=None,
+                                            doc=aeidon.documents.MAIN,
+                                            language="en")
 
     def test_spell_check_join_words__enchant_error(self):
         import enchant
         self.assert_raises(enchant.Error,
-                    self.project.spell_check_join_words,
-                    None, aeidon.documents.MAIN, "xx")
+                           self.project.spell_check_join_words,
+                           indices=None,
+                           doc=aeidon.documents.MAIN,
+                           language="xx")
 
     def test_spell_check_split_words(self):
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace("s ", "s")
             subtitle.main_text = subtitle.main_text.replace("y ", "y")
-        self.project.spell_check_split_words(self.project.get_all_indices(),
-                                             aeidon.documents.MAIN,
-                                             "en")
+        self.project.spell_check_split_words(indices=None,
+                                             doc=aeidon.documents.MAIN,
+                                             language="en")
 
     def test_spell_check_split_words__enchant_error(self):
         import enchant
         self.assert_raises(enchant.Error,
-                    self.project.spell_check_split_words,
-                    None, aeidon.documents.MAIN, "xx")
+                           self.project.spell_check_split_words,
+                           indices=None,
+                           doc=aeidon.documents.MAIN,
+                           language="xx")

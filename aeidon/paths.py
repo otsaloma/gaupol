@@ -107,15 +107,8 @@ def get_locale_directory_source():
     directory = os.path.join(directory, "locale")
     return os.path.abspath(directory)
 
-def get_obsolete_profile_directory():
-    """Return path to the profile directory used prior to version 0.14."""
-    directory = os.path.expanduser("~")
-    directory = os.path.join(directory, ".gaupol")
-    return os.path.abspath(directory)
-
 
 CONFIG_HOME_DIR = get_config_home_directory()
 DATA_DIR = get_data_directory()
 DATA_HOME_DIR = get_data_home_directory()
 LOCALE_DIR = get_locale_directory()
-OBSOLETE_HOME_DIR = get_obsolete_profile_directory()
