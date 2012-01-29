@@ -9,11 +9,9 @@ Releasing a New Version
    - Wait at least a week for translations
 
  * Do final quality checks
-   $ tools/pylint bin/gaupol *.py
-   $ tools/pylint aeidon/
-   $ tools/pylint gaupol/
-   $ py.test --tb=no aeidon
-   $ py.test --tb=no gaupol
+   $ pyflakes3 bin/gaupol *.py aeidon gaupol
+   $ py.test3 --tb=no aeidon
+   $ py.test3 --tb=no gaupol
 
  * Make final edits to files
    $ $EDITOR */__init__.py
@@ -21,11 +19,11 @@ Releasing a New Version
    $ $EDITOR NEWS TODO
 
  * Check that tarballs can be built
-   $ ./setup.py clean sdist_gna --formats bztar,gztar
+   $ python3 setup.py clean sdist_gna --formats bztar,gztar
 
  * Check that installation of above tarball works
-   $ sudo ./setup.py clean install --prefix=/usr/local
-   $ sudo ./setup.py clean
+   $ sudo python3 setup.py clean install --prefix=/usr/local
+   $ sudo python3 setup.py clean
    $ /usr/local/bin/gaupol
 
  * Commit changes
@@ -35,12 +33,12 @@ Releasing a New Version
    $ git push --tags
 
  * Build final tarballs, edit related files and upload
-   $ ./setup.py clean sdist_gna --formats bztar,gztar
+   $ python3 setup.py clean sdist_gna --formats bztar,gztar
    $ $EDITOR dist/*/*.news dist/*/*.changes
    - download.gna.org:/upload/gaupol/
 
  * Generate API documentation and upload
-   $ ./setup.py clean doc --format html
+   $ python3 setup.py clean doc --format html
    - download.gna.org:/upload/gaupol/
 
  * Send announcements and update web sites
