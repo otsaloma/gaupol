@@ -19,8 +19,11 @@ data/icons/hicolor/24x24/apps/*.png
 [share/icons/hicolor/32x32/apps]
 data/icons/hicolor/32x32/apps/*.png
 
-[share/icons/hicolor/scalable/apps]
-data/icons/hicolor/scalable/apps/*.svg
+[share/icons/hicolor/48x48/apps]
+data/icons/hicolor/48x48/apps/*.png
+
+[share/icons/hicolor/256x256/apps]
+data/icons/hicolor/256x256/apps/*.png
 
 [share/gaupol/ui]
 data/ui/*

@@ -1,14 +1,17 @@
 Gaupol 0.20
 ===========
 
- [ ] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
+ [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
      * Test encoding auto-detection
      * Add naming verbosity of modules not a part of external
        interface, e.g. rename recognition to speech_recognition
        in gaupol.dialogs
      * Check API documentation on aeidon.as_* and aeidon.is_*
- [ ] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
+ [/] Bump Python dependency to 3.2 or greater
+ [/] Replace PyGTK dependency with PyGobject 3.0.0 or greater
+ [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
      system of penalties and a versatile measure of goodness
+ [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
 
 Gaupol 1.0
 ==========
