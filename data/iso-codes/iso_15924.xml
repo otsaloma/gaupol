@@ -475,7 +475,7 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		name="Miao (Pollard)" />
 	<iso_15924_entry
 		alpha_4_code="Prti"
-		numeric_code="13O"
+		numeric_code="130"
 		name="Inscriptional Parthian" />
 	<iso_15924_entry
 		alpha_4_code="Qaaa"

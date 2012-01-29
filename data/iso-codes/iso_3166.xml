@@ -765,9 +765,8 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="LY"
 		alpha_3_code="LBY"
 		numeric_code="434"
-		common_name="Libya"
-		name="Libyan Arab Jamahiriya"
-		official_name="Socialist People's Libyan Arab Jamahiriya" />
+		name="Libya"
+		official_name="Libya" />
 	<iso_3166_entry
 		alpha_2_code="LI"
 		alpha_3_code="LIE"
@@ -1190,7 +1189,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="SX"
 		alpha_3_code="SXM"
 		numeric_code="702"
-		name="Sint Maarten"
+		name="Sint Maarten (Dutch part)"
 		official_name="Sint Maarten (Dutch part)" />
 	<iso_3166_entry
 		alpha_2_code="SK"
@@ -1421,7 +1420,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_3_code="VEN"
 		numeric_code="862"
 		common_name="Venezuela"
-		name="Venezuela, Bolivarian republic of"
+		name="Venezuela, Bolivarian Republic of"
 		official_name="Bolivarian Republic of Venezuela" />
 	<iso_3166_entry
 		alpha_2_code="VN"
