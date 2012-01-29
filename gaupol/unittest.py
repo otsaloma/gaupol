@@ -43,7 +43,7 @@ class TestCase(aeidon.TestCase):
         """Return a new page with two open documents."""
         page = gaupol.Page()
         page.project.open_main(self.new_subrip_file(), "ascii")
-        page.project.open_translation(self.new_microdvd_file(), "ascii", False)
+        page.project.open_translation(self.new_microdvd_file(), "ascii")
         return page
 
     def teardown_method(self, method):
