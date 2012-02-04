@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,17 +16,17 @@
 
 """Miscellaneous functions and decorators."""
 
-
-
 import aeidon
 import gaupol
-# import glib
-from gi.repository import Gtk
 import inspect
-from gi.repository import Pango
 import sys
 import traceback
 import webbrowser
+
+from gi.repository import GLib
+from gi.repository import Gdk
+from gi.repository import Gtk
+from gi.repository import Pango
 
 
 def char_to_px(nchar, font=None):
@@ -42,12 +42,12 @@ def delay_add(delay, function, *args, **kwargs):
     """
     Call `function` with `args` and `kwargs` once after `delay` (ms).
 
-    Return integer ID of the event source from :func:`GObject.timeout_add`.
+    Return integer ID of the event source from :func:`GLib.timeout_add`.
     """
     def call_function(*args, **kwargs):
         function(*args, **kwargs)
         return False
-    return GObject.timeout_add(delay, call_function, *args, **kwargs)
+    return GLib.timeout_add(delay, call_function, *args, **kwargs)
 
 def document_to_text_field(doc):
     """Return :attr:`gaupol.fields` item corresponding to `doc`."""
@@ -55,7 +55,8 @@ def document_to_text_field(doc):
         return gaupol.fields.MAIN_TEXT
     if doc == aeidon.documents.TRAN:
         return gaupol.fields.TRAN_TEXT
-    raise ValueError("Invalid document: {}".format(repr(doc)))
+    raise ValueError("Invalid document: {}"
+                     .format(repr(doc)))
 
 def flash_dialog(dialog):
     """
@@ -69,6 +70,15 @@ def flash_dialog(dialog):
     dialog.destroy()
     return response
 
+def get_content_size(widget):
+    """Return the width and height desired by `widget`."""
+    if isinstance(widget, Gtk.TextView):
+        return get_text_view_size(widget)
+    if isinstance(widget, Gtk.TreeView):
+        return get_tree_view_size(widget)
+    raise ValueError("Unsupported container type: {}"
+                     .format(repr(type(widget))))
+
 def get_font():
     """Return custom font or blank string."""
     return (gaupol.conf.editor.custom_font if
@@ -78,8 +88,8 @@ def get_font():
 def get_gst_version():
     """Return :mod:`gst` version number as string or ``None``."""
     try:
-        import gst
-        return ".".join(map(str, gst.version()))
+        from gi.repository import Gst
+        return ".".join(map(str, Gst.version()))
     except Exception:
         return None
 
@@ -91,37 +101,31 @@ def get_preview_command():
         return gaupol.conf.preview.player.command_utf_8
     return gaupol.conf.preview.player.command
 
-def get_pygst_version():
-    """Return ``pygst`` version number as string or ``None``."""
-    try:
-        import gst
-        return ".".join(map(str, gst.pygst_version))
-    except Exception:
-        return None
-
 def get_text_view_size(text_view, font=""):
     """Return the width and height desired by `text_view`."""
     text_buffer = text_view.get_buffer()
-    bounds = text_buffer.get_bounds()
-    text = text_buffer.get_text(*bounds)
+    start, end = text_buffer.get_bounds()
+    text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
     set_label_font(label, font)
-    return label.size_request()
+    return (label.get_preferred_width()[1],
+            label.get_preferred_height()[1])
 
 def get_tree_view_size(tree_view):
     """Return the width and height desired by `tree_view`."""
     scroller = tree_view.get_parent()
     policy = scroller.get_policy()
     scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER)
-    width, height = scroller.size_request()
+    width = scroller.get_preferred_width()[1]
+    height = scroller.get_preferred_height()[1]
     scroller.set_policy(*policy)
     return width, height
 
 @aeidon.deco.once
 def gst_available():
-    """Return ``True`` if :mod:`gst` module is available."""
+    """Return ``True`` if :mod:`Gst` module is available."""
     try:
-        import gst
+        from gi.repository import Gst
         return True
     except Exception:
         return False
@@ -130,7 +134,7 @@ def gst_available():
 def gtkspell_available():
     """Return ``True`` if :mod:`gtkspell` module is available."""
     try:
-        import gtkspell
+        from gi.repository import GtkSpell
         return True
     except Exception:
         return False
@@ -153,7 +157,8 @@ def iterate_main():
 def lines_to_px(nlines, font=None):
     """Convert lines to pixels."""
     if nlines < 0: return nlines
-    label = Gtk.Label(label="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    label = Gtk.Label(label=text)
     if font is not None:
         set_label_font(label, font)
     height = label.get_layout().get_pixel_size()[1]
@@ -161,32 +166,29 @@ def lines_to_px(nlines, font=None):
 
 @aeidon.deco.once
 def pocketsphinx_available():
-    """Return ``True`` if `pocketsphinx` gstreamer plugin is available."""
+    """Return ``True`` if `pocketsphinx` GStreamer plugin is available."""
     try:
-        import gst
-        return gst.plugin_load_by_name("pocketsphinx") is not None
+        from gi.repository import Gst
+        return Gst.plugin_load_by_name("pocketsphinx") is not None
     except Exception:
         return False
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
     if gaupol.util.gtkspell_available() and gaupol.conf.spell_check.inline:
-        import gtkspell
-        spell = gtkspell.Spell(text_view)
+        from gi.repository import GtkSpell
+        spell = GtkSpell.Spell(text_view)
         try: spell.set_language(gaupol.conf.spell_check.language)
         except Exception: spell.detach()
-
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
         if gaupol.conf.editor.show_lengths_edit:
             return gaupol.ruler.connect_text_view(text_view)
         return gaupol.ruler.disconnect_text_view(text_view)
-
     connect("notify::show_lengths_edit", update_margin, text_view)
     update_margin(None, None, text_view)
     def update_font(section, value, text_view):
         set_widget_font(text_view, get_font())
-
     connect("notify::use_custom_font", update_font, text_view)
     connect("notify::custom_font", update_font, text_view)
     update_font(None, None, text_view)
@@ -194,7 +196,6 @@ def prepare_text_view(text_view):
         if gaupol.conf.editor.show_lengths_cell:
             return text_view.set_pixels_above_lines(2)
         return text_view.set_pixels_above_lines(0)
-
     connect("notify::show_lengths_cell", update_spacing, text_view)
     update_spacing(None, None, text_view)
 
@@ -207,7 +208,7 @@ def run_dialog(dialog):
     """
     Run `dialog` and return response.
 
-    This function is to be used always when a :class:`Gtk.Dialog` is run so
+    This function should be used always when a :class:`Gtk.Dialog` is run so
     that unit tests can monkey patch this function with one that returns a
     specified response without waiting for user input.
     """
@@ -222,15 +223,7 @@ def scale_to_content(container,
 
     """Set `container`'s size by content, but limited by `min` and `max`."""
     # Vaguely account for possible scrollbars.
-    bump = lambda x: x + 36
-    if isinstance(container, Gtk.TextView):
-        width, height = list(map(bump, get_text_view_size(container)))
-    elif isinstance(container, Gtk.TreeView):
-        width, height = list(map(bump, get_tree_view_size(container)))
-    else:
-        raise ValueError("Don't know what to do with container of type {}"
-                        .format(repr(type(container))))
-
+    width, height = [x + 36 for x in get_content_size(container)]
     if min_nchar is not None:
         min_width = char_to_px(min_nchar, font)
         width = max(width, min_width)
@@ -254,34 +247,31 @@ def separate_combo(store, itr):
     """Separator function for combo box models."""
     return store.get_value(itr, 0) == gaupol.COMBO_SEPARATOR
 
-def set_cursor_busy_require(window):
-    assert hasattr(window, "window")
-
-@aeidon.deco.contractual
 def set_cursor_busy(window):
     """Set cursor busy when above window."""
-    window.window.set_cursor(Gdk.Cursor.new(Gdk.WATCH))
+    cursor = Gdk.Cursor.new(Gdk.CursorType.WATCH)
+    window.get_window().set_cursor(cursor)
     iterate_main()
 
-def set_cursor_normal_require(window):
-    assert hasattr(window, "window")
-
-@aeidon.deco.contractual
 def set_cursor_normal(window):
     """Set cursor normal when above window."""
-    window.window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.LEFT_PTR))
+    cursor = Gdk.Cursor.new(Gdk.CursorType.LEFT_PTR)
+    window.get_window().set_cursor(cursor)
     iterate_main()
 
 def set_label_font(label, font):
     """Use `font` for `label`."""
-    context = label.get_pango_context()
-    font_desc = context.get_font_description()
-    custom_font_desc = Pango.FontDescription(font)
-    font_desc.merge(custom_font_desc, True)
-    attr = Pango.AttrFontDesc(font_desc, 0, -1)
-    attr_list = Pango.AttrList()
-    attr_list.insert(attr)
-    label.set_attributes(attr_list)
+    # XXX: Pango attributes don't quite work?
+    # https://bugzilla.gnome.org/show_bug.cgi?id=669371
+    # context = label.get_pango_context()
+    # font_desc = context.get_font_description()
+    # custom_font_desc = Pango.FontDescription(font)
+    # font_desc.merge(custom_font_desc, True)
+    # attr = Pango.AttrFontDesc(desc=font_desc)
+    # attr_list = Pango.AttrList()
+    # attr_list.insert(attr)
+    # label.set_attributes(attr_list)
+    return set_widget_font(label, font)
 
 def set_widget_font(widget, font):
     """Use `font` for `widget`."""
@@ -289,7 +279,7 @@ def set_widget_font(widget, font):
     font_desc = context.get_font_description()
     custom_font_desc = Pango.FontDescription(font)
     font_desc.merge(custom_font_desc, True)
-    widget.modify_font(font_desc)
+    widget.override_font(font_desc)
 
 def show_exception(exctype, value, tb):
     """
@@ -299,7 +289,7 @@ def show_exception(exctype, value, tb):
     """
     traceback.print_exception(exctype, value, tb)
     if not isinstance(value, Exception): return
-    try: # Avoid recursion.
+    try: # to avoid recursion.
         dialog = gaupol.DebugDialog()
         dialog.set_text(exctype, value, tb)
         response = dialog.run()
@@ -311,11 +301,10 @@ def show_exception(exctype, value, tb):
 
 def show_uri(uri):
     """Open `uri` in default application."""
-    if sys.platform == "win32":
-        if uri.startswith(("http://", "https://")):
-            # Gtk.show_uri (GTK+ 2.20) fails on Windows.
-            # GError: No application is registered as handling this file
-            return webbrowser.open(uri)
+    if sys.platform == "win32" and uri.startswith(("http://", "https://")):
+        # Gtk.show_uri (GTK+ 2.20) fails on Windows.
+        # GError: No application is registered as handling this file
+        return webbrowser.open(uri)
     return Gtk.show_uri(None, uri, Gdk.CURRENT_TIME)
 
 def text_field_to_document(field):
@@ -324,4 +313,5 @@ def text_field_to_document(field):
         return aeidon.documents.MAIN
     if field == gaupol.fields.TRAN_TEXT:
         return aeidon.documents.TRAN
-    raise ValueError("Invalid field: {}".format(repr(field)))
+    raise ValueError("Invalid field: {}"
+                     .format(repr(field)))

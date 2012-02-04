@@ -101,7 +101,6 @@ class DebugDialog(gaupol.BuilderDialog):
             ("aeidon: {}\n".format(aeidon.__version__),
              "gaupol: {}\n".format(gaupol.__version__),
              "gtk: {:d}.{:d}.{:d}\n".format(Gtk.pygtk_version),
-             "gst: {}\n".format(gaupol.util.get_pygst_version()),
              "enchant: {}\n".format(aeidon.util.get_enchant_version()),
              "chardet: {}\n".format(aeidon.util.get_chardet_version()),
              )))

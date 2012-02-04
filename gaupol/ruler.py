@@ -128,12 +128,14 @@ def connect_text_view(text_view):
     """Connect `text_view` to show line lengths in the margin."""
     context = text_view.get_pango_context()
     layout = Pango.Layout(context)
-    layout.set_text("8")
+    layout.set_text("8", -1)
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
-    handler_id = text_view.connect("expose-event", _on_text_view_expose_event)
-    text_view.set_data("ruler_handler_id", handler_id)
-    return handler_id
+    # XXX: unknown signal name: expose-event
+    # handler_id = text_view.connect("expose-event", _on_text_view_expose_event)
+    # text_view.set_data("ruler_handler_id", handler_id)
+    # return handler_id
+    return -1
 
 def disconnect_text_view(text_view):
     """Disconnect `text_view` from showing line lengths in the margin."""

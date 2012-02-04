@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008,200 Osmo Salomaa
+# Copyright (C) 2005-2008,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,6 +16,8 @@
 
 import aeidon
 import gaupol
+import imp
+
 from gi.repository import Gtk
 
 
@@ -35,6 +37,25 @@ class TestModule(gaupol.TestCase):
         field = doc2field(aeidon.documents.TRAN)
         assert field == gaupol.fields.TRAN_TEXT
 
+    def test_get_content_size__text_view(self):
+        gaupol.util.get_content_size(Gtk.TextView())
+
+    def test_get_content_size__tree_view(self):
+        tree_view = Gtk.TreeView()
+        scroller = Gtk.ScrolledWindow()
+        scroller.add(tree_view)
+        gaupol.util.get_content_size(tree_view)
+
+    def test_get_content_size__value_error(self):
+        self.assert_raises(ValueError,
+                           gaupol.util.get_content_size,
+                           None)
+
+    def test_get_font__none(self):
+        gaupol.conf.editor.use_custom_font = True
+        gaupol.conf.editor.custom_font = None
+        assert gaupol.util.get_font() == ""
+
     def test_get_font__set(self):
         gaupol.conf.editor.use_custom_font = True
         gaupol.conf.editor.custom_font = "Serif 12"
@@ -43,31 +64,27 @@ class TestModule(gaupol.TestCase):
     def test_get_font__unset(self):
         gaupol.conf.editor.use_custom_font = False
         assert gaupol.util.get_font() == ""
-        gaupol.conf.editor.use_custom_font = True
-        gaupol.conf.editor.custom_font = None
-        assert gaupol.util.get_font() == ""
 
     def test_get_gst_version(self):
-        reload(gaupol.util)
+        imp.reload(gaupol.util)
         assert gaupol.util.get_gst_version()
 
-    def test_get_preview_command(self):
+    def test_get_preview_command__custom(self):
         gaupol.conf.preview.use_custom_command = True
+        gaupol.util.get_preview_command()
+
+    def test_get_preview_command__default(self):
+        gaupol.conf.preview.use_custom_command = False
         gaupol.conf.preview.force_utf_8 = False
         gaupol.util.get_preview_command()
+
+    def test_get_preview_command__utf_8(self):
         gaupol.conf.preview.use_custom_command = False
         gaupol.conf.preview.force_utf_8 = True
         gaupol.util.get_preview_command()
-        gaupol.conf.preview.use_custom_command = False
-        gaupol.conf.preview.force_utf_8 = False
-        gaupol.util.get_preview_command()
-
-    def test_get_pygst_version(self):
-        reload(gaupol.util)
-        assert gaupol.util.get_pygst_version()
 
     def test_get_text_view_size(self):
-        text_view = Gtk.TextView(Gtk.TextBuffer())
+        text_view = Gtk.TextView()
         gaupol.util.get_text_view_size(text_view)
 
     def test_get_tree_view_size(self):
@@ -77,12 +94,13 @@ class TestModule(gaupol.TestCase):
         gaupol.util.get_tree_view_size(tree_view)
 
     def test_gst_available(self):
-        reload(gaupol.util)
+        imp.reload(gaupol.util)
         assert gaupol.util.gst_available()
 
     def test_gtkspell_available(self):
-        reload(gaupol.util)
-        assert gaupol.util.gtkspell_available()
+        imp.reload(gaupol.util)
+        # XXX: GtkSpell not yet available for PyGI.
+        gaupol.util.gtkspell_available()
 
     def test_lines_to_px(self):
         assert gaupol.util.lines_to_px(1) > 0
@@ -110,21 +128,37 @@ class TestModule(gaupol.TestCase):
         text_view = Gtk.TextView()
         scroller = Gtk.ScrolledWindow()
         scroller.add(text_view)
-        gaupol.util.scale_to_content(text_view, 1, 2, 80, 10)
+        gaupol.util.scale_to_content(text_view,
+                                     min_nchar=1,
+                                     min_nlines=2,
+                                     max_nchar=80,
+                                     max_nlines=10)
 
     def test_scale_to_content__tree_view(self):
         tree_view = Gtk.TreeView()
         scroller = Gtk.ScrolledWindow()
         scroller.add(tree_view)
-        gaupol.util.scale_to_content(tree_view, 1, 2, 80, 10, "monospace")
+        gaupol.util.scale_to_content(tree_view,
+                                     min_nchar=1,
+                                     min_nlines=2,
+                                     max_nchar=80,
+                                     max_nlines=10,
+                                     font="monospace")
 
-    def test_scale_to_size(self):
-        gaupol.util.scale_to_size(Gtk.TextView(), 40, 5)
-        gaupol.util.scale_to_size(Gtk.TreeView(), 40, 5, "monospace")
+    def test_scale_to_size__text_view(self):
+        gaupol.util.scale_to_size(Gtk.TextView(),
+                                  nchar=40,
+                                  nlines=5)
+
+    def test_scale_to_size__tree_view(self):
+        gaupol.util.scale_to_size(Gtk.TreeView(),
+                                  nchar=40,
+                                  nlines=5,
+                                  font="monospace")
 
     def test_separate_combo(self):
         combo_box = Gtk.ComboBox()
-        combo_box.set_row_separator_func(gaupol.util.separate_combo)
+        combo_box.set_row_separator_func(gaupol.util.separate_combo, None)
 
     def test_set_cursor_busy(self):
         window = Gtk.Window()
@@ -146,7 +180,7 @@ class TestModule(gaupol.TestCase):
 
     def test_set_widget_font(self):
         label = Gtk.Label(label="testing...")
-        gaupol.util.set_label_font(label, "Serif 12")
+        gaupol.util.set_widget_font(label, "Serif 12")
 
     def test_show_uri(self):
         gaupol.util.show_uri(gaupol.HOMEPAGE_URL)
