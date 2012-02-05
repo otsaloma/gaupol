@@ -58,8 +58,8 @@ Gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
 from gaupol.urls import *
 from gaupol import util
 from gaupol.enums.fields import *
-from gaupol.enums.styles import *
 from gaupol.enums.targets import *
+from gaupol.enums.toolbar_styles import *
 from gaupol.enums.units import *
 from gaupol.enumuim import *
 from gaupol.errors import *

@@ -43,10 +43,7 @@ aeidon.__init__
 
 gaupol.urls
 gaupol.util
-gaupol.fields
-gaupol.styles
-gaupol.targets
-gaupol.units
+gaupol.enums
 gaupol.enumuim
 gaupol.errors
 gaupol.attrdict

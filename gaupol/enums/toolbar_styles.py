@@ -14,18 +14,43 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+"""Enumerations for toolbar style types."""
+
+import aeidon
+
+from gi.repository import Gtk
+
+__all__ = ("toolbar_styles",)
 
 
-class TestModule(gaupol.TestCase):
+class Both(aeidon.EnumerationItem):
 
-    def test_attributes(self):
-        for style in gaupol.toolbar_styles:
-            assert hasattr(style, "value")
+    value = Gtk.ToolbarStyle.BOTH
 
-    def test_items(self):
-        assert hasattr(gaupol.toolbar_styles, "DEFAULT")
-        assert hasattr(gaupol.toolbar_styles, "ICONS")
-        assert hasattr(gaupol.toolbar_styles, "TEXT")
-        assert hasattr(gaupol.toolbar_styles, "BOTH")
-        assert hasattr(gaupol.toolbar_styles, "BOTH_HORIZ")
+
+class BothHoriz(aeidon.EnumerationItem):
+
+    value = Gtk.ToolbarStyle.BOTH_HORIZ
+
+
+class Default(aeidon.EnumerationItem):
+
+    value = None
+
+
+class Icons(aeidon.EnumerationItem):
+
+    value = Gtk.ToolbarStyle.ICONS
+
+
+class Text(aeidon.EnumerationItem):
+
+    value = Gtk.ToolbarStyle.TEXT
+
+
+toolbar_styles = aeidon.Enumeration()
+toolbar_styles.DEFAULT = Default()
+toolbar_styles.ICONS = Icons()
+toolbar_styles.TEXT = Text()
+toolbar_styles.BOTH = Both()
+toolbar_styles.BOTH_HORIZ = BothHoriz()

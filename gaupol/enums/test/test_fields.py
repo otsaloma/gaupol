@@ -24,6 +24,7 @@ class TestModule(gaupol.TestCase):
             assert hasattr(field, "is_position")
             assert hasattr(field, "is_text")
             assert hasattr(field, "label")
+            assert hasattr(field, "tooltip")
 
     def test_items(self):
         assert hasattr(gaupol.fields, "NUMBER")
