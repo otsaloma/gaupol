@@ -17,7 +17,6 @@
 """Reading, writing and storing configurations."""
 
 import aeidon
-import codecs
 import gaupol
 import json
 import os
@@ -316,7 +315,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             container = getattr(container, section)
         signal = "notify::{}".format(option)
         method_name = "_on_conf_{}_{}".format("_".join(sections),
-                                          signal.replace("::", "_"))
+                                              signal.replace("::", "_"))
 
         if not hasattr(obj, method_name):
             method_name = method_name[1:]
@@ -332,7 +331,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             container = getattr(container, section)
         signal = "notify::{}".format(option)
         method_name = "_on_conf_{}_{}".format("_".join(sections),
-                                          signal.replace("::", "_"))
+                                              signal.replace("::", "_"))
 
         if not hasattr(obj, method_name):
             method_name = method_name[1:]
@@ -367,10 +366,10 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             # Ignore all decoding errors, since all keys and all standard
             # values are all ASCII. This will only mangle recent etc.
             # filenames, which are always checked for existance anyway.
-            lines = codecs.open(self.path,
-                                "r",
-                                encoding,
-                                errors="ignore").readlines()
+            lines = open(self.path,
+                         "r",
+                         encoding=encoding,
+                         errors="ignore").readlines()
 
         except IOError:
             aeidon.util.print_read_io(sys.exc_info(), self.path)
@@ -398,8 +397,13 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 try: value = json.loads(value, cls=EnumDecoder, enum=enum)
                 except (AttributeError, ValueError):
                     print(("Failed to parse value '{}' of option '{}.{}' "
-                           "from configuration file '{}'.".format(
-                            value, "::".join(sections), option, self.path)))
+                           "from configuration file '{}'."
+                           .format(value,
+                                   "::".join(sections),
+                                   option,
+                                   self.path)),
+
+                          file=sys.stderr)
 
                     continue
                 if hasattr(container, option) and value is None:
@@ -408,8 +412,13 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                     # accidentally bet set in some corner or error cases.
                     # By discarding them here, we ensure a clean start.
                     print ("Discarding value '{}' of option '{}.{}' "
-                           "from configuration file '{}'.".format(
-                            value, "::".join(sections), option, self.path))
+                           "from configuration file '{}'."
+                           .format(value,
+                                   "::".join(sections),
+                                   option,
+                                   self.path),
+
+                           file=sys.stderr)
 
                     continue
                 if not hasattr(container, option):
@@ -455,7 +464,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 aeidon.util.print_write_io(sys.exc_info(), self.path)
                 raise # IOError, OSError
         encoding = aeidon.util.get_default_encoding()
-        try: fobj = codecs.open(self.path, "w", encoding)
+        try: fobj = open(self.path, "w", encoding=encoding)
         except (IOError, OSError):
             aeidon.util.print_write_io(sys.exc_info(), self.path)
             raise # IOError, OSError
@@ -480,7 +489,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 try: fobj.write("{} = {}".format(option, json_value))
                 except UnicodeError:
                     print(("Failed to write value '{}' of option '{}.{}' "
-                           "to configuration file '{}'.".format(
-                            value, section, option, self.path)))
+                           "to configuration file '{}'."
+                           .format(value, section, option, self.path)),
+                          file=sys.stderr)
 
                 fobj.write(os.linesep)

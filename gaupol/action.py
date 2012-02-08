@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+from gi.repository import GObject
 from gi.repository import Gtk
 import sys
 
@@ -59,7 +60,7 @@ class Action(Gtk.Action):
 
     def __init__(self, name):
         """Initialize an :class:`Action` object."""
-        GObject.GObject.__init__(self, name, None, None, None)
+        GObject.GObject.__init__(self, name=name)
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -67,14 +68,16 @@ class Action(Gtk.Action):
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
-        self.widgets = tuple(getattr(application, x) for x in self.widgets)
+        # XXX:
+        # self.widgets = tuple(getattr(application, x) for x in self.widgets)
         callback = "_on_{}_activate".format(self.props.name)
         self.connect("activate", getattr(application, callback))
 
     def set_sensitive(self, sensitive):
         """Set the sensitivity of action and all its widgets."""
-        for widget in self.widgets:
-            widget.set_sensitive(sensitive)
+        # XXX:
+        # for widget in self.widgets:
+        #     widget.set_sensitive(sensitive)
         return Gtk.Action.set_sensitive(self, sensitive)
 
     def update_sensitivity(self, application, page):
@@ -110,13 +113,14 @@ class RecentAction(Gtk.RecentAction, Action):
 
     def __init__(self, name):
         """Initialize an :class:`RecentAction` object."""
-        GObject.GObject.__init__(self, name, None, None, None)
+        GObject.GObject.__init__(self, name=name)
         if sys.platform == "win32":
             self.set_show_icons(False)
         self.set_show_numbers(False)
         self.set_show_not_found(False)
         self.set_show_tips(True)
-        self.set_sort_type(Gtk.RECENT_SORT_MRU)
+        # XXX:
+        # self.set_sort_type(Gtk.RECENT_SORT_MRU)
         recent_filter = Gtk.RecentFilter()
         recent_filter.add_group(self.group)
         self.add_filter(recent_filter)
@@ -140,7 +144,7 @@ class ToggleAction(Gtk.ToggleAction, Action):
 
     def __init__(self, name):
         """Initialize an :class:`ToggleAction` object."""
-        GObject.GObject.__init__(self, name, None, None, None)
+        GObject.GObject.__init__(self, name=name)
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
@@ -170,7 +174,7 @@ class RadioAction(Gtk.RadioAction, Action):
 
     def __init__(self, name):
         """Initialize an :class:`RadioAction` object."""
-        GObject.GObject.__init__(self, name, None, None, None, 0)
+        GObject.GObject.__init__(self, name=name, value=0)
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""

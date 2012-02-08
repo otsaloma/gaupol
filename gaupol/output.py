@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+from gi.repository import GObject
 from gi.repository import Gtk
 _ = aeidon.i18n._
 
@@ -42,13 +43,15 @@ class OutputWindow(Gtk.Window):
 
     def _init_keys(self):
         """Initialize keyboard shortcuts."""
-        accel_group = Gtk.AccelGroup()
-        accel_group.connect_group(Gdk.KEY_w,
-                                  Gdk.EventMask.CONTROL_MASK,
-                                  Gtk.AccelFlags.MASK,
-                                  self._on_close_key_pressed)
+        # XXX:
+        # accel_group = Gtk.AccelGroup()
+        # accel_group.connect_group(Gdk.KEY_w,
+        #                           Gdk.EventMask.CONTROL_MASK,
+        #                           Gtk.AccelFlags.MASK,
+        #                           self._on_close_key_pressed)
 
-        self.add_accel_group(accel_group)
+        # self.add_accel_group(accel_group)
+        pass
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -81,10 +84,10 @@ class OutputWindow(Gtk.Window):
         self._close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
         button_box = Gtk.HButtonBox()
         button_box.set_layout(Gtk.ButtonBoxStyle.END)
-        button_box.pack_start(self._close_button, False, False)
+        button_box.pack_start(self._close_button, False, False, 0)
         vbox = Gtk.VBox(spacing=12)
-        vbox.pack_start(scroller, True, True)
-        vbox.pack_start(button_box, False, False)
+        vbox.pack_start(scroller, True, True, 0)
+        vbox.pack_start(button_box, False, False, 0)
         vbox.show_all()
         self.add(vbox)
 

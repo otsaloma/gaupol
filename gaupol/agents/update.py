@@ -19,6 +19,7 @@
 import aeidon
 import gaupol
 # import glib
+from gi.repository import Gdk
 from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
@@ -134,7 +135,7 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _on_window_window_state_event(self, window, event):
         """Save window maximization."""
         state = event.new_window_state
-        maximized = bool(state & Gdk.WINDOW_STATE_MAXIMIZED)
+        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
         gaupol.conf.application_window.maximized = maximized
 
     def _update_actions(self, page):
@@ -188,7 +189,7 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if self._message_id is not None:
             self.statusbar.remove_message(0, self._message_id)
         event_box = self.statusbar.get_ancestor(Gtk.EventBox)
-        self.statusbar.set_tooltip_text(message)
+        self.statusbar.set_tooltip_text(message or "")
         if message is not None:
             self._message_id = self.statusbar.push(0, message)
 

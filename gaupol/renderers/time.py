@@ -17,6 +17,7 @@
 """Cell renderer for time data in format ``[-]HH:MM:SS,SSS``."""
 
 import gaupol
+from gi.repository import GObject
 from gi.repository import Gtk
 
 __all__ = ("TimeCellRenderer",)

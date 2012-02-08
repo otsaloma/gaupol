@@ -457,7 +457,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         view.connect_after("move-cursor", self._on_view_move_cursor)
         view.connect("button-press-event", self._on_view_button_press_event)
         for column in view.get_columns():
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             callback = self._on_view_renderer_edited
             renderer.connect("edited", callback, column)
             callback = self._on_view_renderer_editing_started

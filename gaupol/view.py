@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 import re
@@ -81,17 +82,19 @@ class View(Gtk.TreeView):
         def set_number(column, renderer, store, itr):
             renderer.props.text = store.get_path(itr)[0] + 1
         column = self.get_column(self.columns.NUMBER)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         column.set_cell_data_func(renderer, set_number)
 
     def _init_column_attributes(self):
         """Initialize the column header :class:`Pango.AttrList`."""
-        self._active_attr = Pango.AttrList()
-        attr = Pango.AttrWeight(Pango.Weight.BOLD, 0, -1)
-        self._active_attr.insert(attr)
-        self._normal_attr = Pango.AttrList()
-        attr = Pango.AttrWeight(Pango.Weight.NORMAL, 0, -1)
-        self._normal_attr.insert(attr)
+        # XXX:
+        # self._active_attr = Pango.AttrList()
+        # attr = Pango.AttrWeight(Pango.Weight.BOLD, 0, -1)
+        # self._active_attr.insert(attr)
+        # self._normal_attr = Pango.AttrList()
+        # attr = Pango.AttrWeight(Pango.Weight.NORMAL, 0, -1)
+        # self._normal_attr.insert(attr)
+        pass
 
     def _init_columns(self, edit_mode):
         """Initialize the tree view columns."""
@@ -131,7 +134,7 @@ class View(Gtk.TreeView):
         """Initialize the interactive search properties."""
         self.set_enable_search(True)
         self.set_search_column(self.columns.NUMBER)
-        self.set_search_equal_func(self._search_equals)
+        self.set_search_equal_func(self._search_equals, None)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -147,7 +150,7 @@ class View(Gtk.TreeView):
         """Apply the new font to all columns."""
         font = gaupol.util.get_font()
         for column in self.get_columns():
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             if hasattr(renderer.props, "font"):
                 renderer.props.font = font
         self.columns_autosize()
@@ -165,7 +168,7 @@ class View(Gtk.TreeView):
         """Apply the new font to all columns."""
         font = gaupol.util.get_font()
         for column in self.get_columns():
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             if hasattr(renderer.props, "font"):
                 renderer.props.font = font
         self.columns_autosize()
@@ -275,10 +278,11 @@ class View(Gtk.TreeView):
         label = Gtk.Label(label=text)
         label.props.xalign = 0
         label.show()
-        label.set_attributes(self._active_attr)
-        width = label.size_request()[0]
-        label.set_size_request(width, -1)
-        label.set_attributes(self._normal_attr)
+        # XXX:
+        # label.set_attributes(self._active_attr)
+        # width = label.size_request()[0]
+        # label.set_size_request(width, -1)
+        # label.set_attributes(self._normal_attr)
         return label
 
     def get_selected_rows_ensure(self, value):

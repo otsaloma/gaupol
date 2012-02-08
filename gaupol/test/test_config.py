@@ -32,21 +32,21 @@ class TestConfigurationStore(gaupol.TestCase):
 
     def test_connect_notify(self):
         class PuppetObserver(object):
-            def _on_conf_application_window_notify_size(self, obj, value):
-                assert value == [99, 99]
+            def _on_conf_editor_notify_undo_limit(self, obj, value):
+                assert value == 99
         puppet = PuppetObserver()
-        self.conf.connect_notify("application_window", "size", puppet)
-        self.conf.application_window.size = [99, 99]
+        self.conf.connect_notify("editor", "undo_limit", puppet)
+        self.conf.editor.undo_limit = 99
 
     def test_disconnect_notify(self):
         class PuppetObserver(object):
-            def _on_conf_application_window_notify_size(self, obj, value):
-                assert value == [99, 99]
+            def _on_conf_editor_notify_undo_limit(self, obj, value):
+                assert value == 99
         puppet = PuppetObserver()
-        self.conf.connect_notify("application_window", "size", puppet)
-        self.conf.application_window.size = [99, 99]
-        self.conf.disconnect_notify("application_window", "size", puppet)
-        self.conf.application_window.size = [100, 100]
+        self.conf.connect_notify("editor", "undo_limit", puppet)
+        self.conf.editor.undo_limit = 99
+        self.conf.disconnect_notify("editor", "undo_limit", puppet)
+        self.conf.editor.undo_limit = 100
 
     def test_query_default(self):
         assert not self.conf.query_default("application_window", "maximized")
@@ -78,6 +78,6 @@ class TestConfigurationStore(gaupol.TestCase):
         self.conf.read_from_file()
 
     def test_write_to_file__io_error(self):
-        os.chmod(self.directory, 0000)
+        os.chmod(self.directory, 0o000)
         self.assert_raises(IOError, self.conf.write_to_file)
         os.chmod(self.directory, 0o777)

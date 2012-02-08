@@ -91,4 +91,5 @@ class AttributeDictionary(aeidon.Observable):
             else: # Update current value.
                 if isinstance(value, dict):
                     getattr(self, name).update(value)
-                else: setattr(self, name, value)
+                else: # Set non-dictionary value.
+                    setattr(self, name, value)

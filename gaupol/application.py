@@ -96,7 +96,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def __getattr__(self, name):
         """Return method delegated to an agent."""
-        return self._delegations[name]
+        try:
+            return self._delegations[name]
+        except KeyError:
+            raise AttributeError
 
     def __init__(self):
         """Initialize an :class:`Application` object."""
@@ -110,7 +113,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.output_window = None
         self.pages = []
         self.pattern = ""
-        self.recent_manager = Gtk.recent_manager_get_default()
+        self.recent_manager = Gtk.RecentManager.get_default()
         self.replacement = ""
         self.statusbar = None
         self.uim = None
@@ -213,14 +216,15 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.notebook = Gtk.Notebook()
         self.notebook.set_scrollable(True)
         self.notebook.set_show_border(False)
-        self.Gtk.drag_dest_set(notebook, Gtk.DEST_DEFAULT_ALL,
-                                    [("text/uri-list", 0, 0)],
-                                    Gdk.DragAction.COPY)
+        # XXX:
+        # self.Gtk.drag_dest_set(notebook, Gtk.DEST_DEFAULT_ALL,
+        #                             [("text/uri-list", 0, 0)],
+        #                             Gdk.DragAction.COPY)
 
-        aeidon.util.connect(self, "notebook", "drag-data-received")
-        aeidon.util.connect(self, "notebook", "page-reordered")
-        callback = self._on_notebook_switch_page
-        self.notebook.connect_after("switch-page", callback)
+        # aeidon.util.connect(self, "notebook", "drag-data-received")
+        # aeidon.util.connect(self, "notebook", "page-reordered")
+        # callback = self._on_notebook_switch_page
+        # self.notebook.connect_after("switch-page", callback)
         vbox.pack_start(self.notebook, True , True , 0)
 
     def _init_output_window(self):
@@ -232,16 +236,18 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""
         redo_button = self.get_tool_item("redo_action")
-        redo_button.set_menu(Gtk.Menu())
-        tip = _("Redo undone actions")
-        redo_button.set_arrow_tooltip_text(tip)
-        callback = self._on_redo_button_show_menu
-        redo_button.connect("show-menu", callback)
+        # XXX:
+        # redo_button.set_menu(Gtk.Menu())
+        # tip = _("Redo undone actions")
+        # redo_button.set_arrow_tooltip_text(tip)
+        # callback = self._on_redo_button_show_menu
+        # redo_button.connect("show-menu", callback)
 
     def _init_statusbar(self, vbox):
         """Initialize the statusbar."""
         self.statusbar = Gtk.Statusbar()
-        self.statusbar.set_has_resize_grip(True)
+        # XXX:
+        # self.statusbar.set_has_resize_grip(True)
         vbox.pack_start(self.statusbar, False, False, 0)
 
     def _init_uim(self):
@@ -279,17 +285,18 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             instance = None
             for action in (x for x in actions if x.group == group):
                 if instance is not None:
-                    action.set_group(instance)
+                    action.join_group(instance)
                 instance = instance or action
 
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
         undo_button = self.get_tool_item("undo_action")
-        undo_button.set_menu(Gtk.Menu())
-        tip = _("Undo actions")
-        undo_button.set_arrow_tooltip_text(tip)
-        callback = self._on_undo_button_show_menu
-        undo_button.connect("show-menu", callback)
+        # XXX:
+        # undo_button.set_menu(Gtk.Menu())
+        # tip = _("Undo actions")
+        # undo_button.set_arrow_tooltip_text(tip)
+        # callback = self._on_undo_button_show_menu
+        # undo_button.connect("show-menu", callback)
 
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""
@@ -306,24 +313,25 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         hbox = Gtk.HBox(False, 4)
         size = Gtk.IconSize.MENU
         image = Gtk.Image.new_from_stock(Gtk.STOCK_FILE, size)
-        hbox.pack_start(image, False, False)
+        hbox.pack_start(image, False, False, 0)
         label = Gtk.Label()
         label.props.xalign = 0
         label.set_ellipsize(Pango.EllipsizeMode.END)
-        hbox.pack_start(label, True, True)
+        hbox.pack_start(label, True, True, 0)
         # XXX:
         # hbox.pack_start(Gtk.VSeparator(, True, True, 0), False, False)
         image = Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, size)
-        hbox.pack_start(image, False, False)
+        hbox.pack_start(image, False, False, 0)
         self.video_button = Gtk.Button()
         self.video_button.add(hbox)
         self.video_button.set_data("label", label)
-        self.Gtk.drag_dest_set(video_button, Gtk.DEST_DEFAULT_ALL,
-                                        [("text/uri-list", 0, 0)],
-                                        Gdk.DragAction.COPY)
+        # XXX:
+        # self.Gtk.drag_dest_set(video_button, Gtk.DEST_DEFAULT_ALL,
+        #                                 [("text/uri-list", 0, 0)],
+        #                                 Gdk.DragAction.COPY)
 
-        aeidon.util.connect(self, "video_button", "clicked")
-        aeidon.util.connect(self, "video_button", "drag-data-received")
+        # aeidon.util.connect(self, "video_button", "clicked")
+        # aeidon.util.connect(self, "video_button", "drag-data-received")
         tool_item = Gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.set_expand(True)

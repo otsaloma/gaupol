@@ -41,17 +41,19 @@ class TestAttrDict(gaupol.TestCase):
         root = {"test": 1, "rest": 0}
         self.attr_dict.add_attribute("nest", root)
         assert self.attr_dict.nest.test == 1
+        assert self.attr_dict.nest.rest == 0
         assert self.root["nest"]["test"] == 1
+        assert self.root["nest"]["rest"] == 0
 
     def test_extend(self):
         root = {"test": 3, "pest": 4}
         self.attr_dict.extend(root)
         assert self.attr_dict.test == 1
-        assert self.attr_dict.pest == 4
         assert self.attr_dict.rest == 0
+        assert self.attr_dict.pest == 4
         assert self.root["test"] == 1
-        assert self.root["pest"] == 4
         assert self.root["rest"] == 0
+        assert self.root["pest"] == 4
 
     def test_extend__dict(self):
         root = {"test": 1, "rest": 0}
@@ -59,11 +61,11 @@ class TestAttrDict(gaupol.TestCase):
         root = {"nest": {"test": 3, "pest": 4}}
         self.attr_dict.extend(root)
         assert self.attr_dict.nest.test == 1
-        assert self.attr_dict.nest.pest == 4
         assert self.attr_dict.nest.rest == 0
+        assert self.attr_dict.nest.pest == 4
         assert self.root["nest"]["test"] == 1
-        assert self.root["nest"]["pest"] == 4
         assert self.root["nest"]["rest"] == 0
+        assert self.root["nest"]["pest"] == 4
 
     def test_remove_attribute(self):
         self.attr_dict.remove_attribute("test")
@@ -74,11 +76,11 @@ class TestAttrDict(gaupol.TestCase):
         root = {"test": 3, "pest": 4}
         self.attr_dict.update(root)
         assert self.attr_dict.test == 3
-        assert self.attr_dict.pest == 4
         assert self.attr_dict.rest == 0
+        assert self.attr_dict.pest == 4
         assert self.root["test"] == 3
-        assert self.root["pest"] == 4
         assert self.root["rest"] == 0
+        assert self.root["pest"] == 4
 
     def test_update__dict(self):
         root = {"test": 1, "rest": 0}
@@ -86,8 +88,8 @@ class TestAttrDict(gaupol.TestCase):
         root = {"nest": {"test": 3, "pest": 4}}
         self.attr_dict.update(root)
         assert self.attr_dict.nest.test == 3
-        assert self.attr_dict.nest.pest == 4
         assert self.attr_dict.nest.rest == 0
+        assert self.attr_dict.nest.pest == 4
         assert self.root["nest"]["test"] == 3
-        assert self.root["nest"]["pest"] == 4
         assert self.root["nest"]["rest"] == 0
+        assert self.root["nest"]["pest"] == 4

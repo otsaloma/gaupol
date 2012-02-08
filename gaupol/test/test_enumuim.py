@@ -26,14 +26,17 @@ class TestModule(gaupol.TestCase):
     def test_field_actions(self):
         for field in gaupol.fields:
             name = gaupol.field_actions[field]
-            assert self.application.get_action(name) is not None
+            action = self.application.get_action(name)
+            assert action is not None
 
     def test_framerate_actions(self):
         for framerate in aeidon.framerates:
             name = gaupol.framerate_actions[framerate]
-            assert self.application.get_action(name) is not None
+            action = self.application.get_action(name)
+            assert action is not None
 
     def test_mode_actions(self):
         for mode in aeidon.modes:
             name = gaupol.mode_actions[mode]
-            assert self.application.get_action(name) is not None
+            action = self.application.get_action(name)
+            assert action is not None

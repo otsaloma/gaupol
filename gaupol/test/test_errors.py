@@ -14,22 +14,35 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
 import gaupol
 
 
 class TestDefault(gaupol.TestCase):
 
-    def test_raise(self):
+    def test_raise__default(self):
         try:
             raise gaupol.Default
         except gaupol.Default:
             pass
 
+    def test_raise__error(self):
+        try:
+            raise gaupol.Default
+        except aeidon.Error:
+            pass
+
 
 class TestDependencyError(gaupol.TestCase):
 
-    def test_raise(self):
+    def test_raise__dependency_error(self):
         try:
             raise gaupol.DependencyError
         except gaupol.DependencyError:
+            pass
+
+    def test_raise__error(self):
+        try:
+            raise gaupol.Default
+        except aeidon.Error:
             pass

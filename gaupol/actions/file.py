@@ -133,7 +133,8 @@ class OpenMainFilesAction(gaupol.Action):
         self.props.tooltip = _("Open main files")
         self.accelerator = "<Control>O"
         self.action_group = "main-safe"
-        self.set_tool_item_type(Gtk.MenuToolButton)
+        # XXX:
+        # self.set_tool_item_type(Gtk.MenuToolButton)
 
 
 class OpenMainFilesRecentAction(gaupol.RecentAction):
@@ -151,7 +152,8 @@ class OpenMainFilesRecentAction(gaupol.RecentAction):
         self.props.stock_id = Gtk.STOCK_OPEN
         self.props.tooltip = _("Open main files")
         self.action_group = "main-safe"
-        self.set_tool_item_type(Gtk.MenuToolButton)
+        # XXX:
+        # self.set_tool_item_type(Gtk.MenuToolButton)
 
 
 class OpenRecentMainFileAction(gaupol.RecentAction):
