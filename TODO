@@ -10,6 +10,8 @@ Gaupol 0.20
      - http://live.gnome.org/GnomeGoals/PythonIntrospectionPorting
  [ ] Use Libpeas for extensions?
      - http://live.gnome.org/Libpeas
+ [X] Update Brazilian Portuguese translation
+     (Átila Camurça, Darlildo Lima)
 
 Gaupol 1.0
 ==========
