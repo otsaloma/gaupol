@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2008,2009 Osmo Salomaa
+# Copyright (C) 2006-2009,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,10 +16,9 @@
 
 """Functions to calculate line lengths and to show them in widgets."""
 
-
-
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 from gi.repository import Pango
 
@@ -74,7 +73,7 @@ class _Ruler(object):
         """Return length of `text` measured in ems."""
         text = (aeidon.re_any_tag.sub("", text) if strip else text)
         text = text.replace("\n", " ")
-        self._layout.set_text(text)
+        self._layout.set_text(text, -1)
         length = self._layout.get_size()[0] / self._em_length
         return (int(length) if floor else length)
 
@@ -83,7 +82,7 @@ class _Ruler(object):
         text = (aeidon.re_any_tag.sub("", text) if strip else text)
         lengths = []
         for line in text.split("\n"):
-            self._layout.set_text(line)
+            self._layout.set_text(line, -1)
             length = self._layout.get_size()[0] / self._em_length
             lengths.append(int(length) if floor else length)
         return tuple(lengths)
@@ -94,21 +93,26 @@ class _Ruler(object):
             return self.get_char_lengths(text, strip, floor)
         if self._length_unit == gaupol.length_units.EM:
             return self.get_em_lengths(text, strip, floor)
-        raise ValueError("Invalid length unit: {}".format(repr(self._length_unit)))
+        raise ValueError("Invalid length unit: {}"
+                         .format(repr(self._length_unit)))
 
 
 _ruler = _Ruler()
 
-def _on_text_view_expose_event(text_view, event):
+def _on_text_view_draw(text_view, cairoc):
     """Calculate and show line lengths in the margin."""
+    # XXX: Port this function from expose-event signal and Gdk.Window to
+    # draw signal and cairo once the damn signal connection works.
+    # https://bugzilla.gnome.org/show_bug.cgi?id=671318
+    # http://developer.gnome.org/gtk3/3.3/ch25s02.html
     text_buffer = text_view.get_buffer()
-    bounds = text_buffer.get_bounds()
-    text = text_buffer.get_text(*bounds)
+    start, end = text_buffer.get_bounds()
+    text = text_buffer.get_text(start, end, False)
     if not text: return
     lengths = get_lengths(text)
     layout = Pango.Layout(text_view.get_pango_context())
-    layout.set_markup("\n".join([str(x) for x in lengths]))
-    layout.set_alignment(Pango.ALIGN_RIGHT)
+    layout.set_markup("\n".join(str(x) for x in lengths), -1)
+    layout.set_alignment(Pango.Alignment.RIGHT)
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
     y = -text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 0)[1]
@@ -131,8 +135,9 @@ def connect_text_view(text_view):
     layout.set_text("8", -1)
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
-    # XXX: unknown signal name: expose-event
-    # handler_id = text_view.connect("expose-event", _on_text_view_expose_event)
+    # XXX: The draw signal doesn't seem to work.
+    # https://bugzilla.gnome.org/show_bug.cgi?id=671318
+    # handler_id = text_view.connect("draw", _on_text_view_draw)
     # text_view.set_data("ruler_handler_id", handler_id)
     # return handler_id
     return -1
@@ -151,8 +156,9 @@ def get_length_function(unit):
         return _ruler.get_char_length
     if unit == gaupol.length_units.EM:
         return _ruler.get_em_length
-    raise ValueError("Invalid length unit: {}".format(repr(unit)))
+    raise ValueError("Invalid length unit: {}"
+                     .format(repr(unit)))
 
 def get_lengths(text):
     """Return a sequence of floored line lengths without tags."""
-    return _ruler.get_lengths(text, True, True)
+    return _ruler.get_lengths(text, strip=True, floor=True)
