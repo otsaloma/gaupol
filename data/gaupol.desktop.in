@@ -1,7 +1,9 @@
 [Desktop Entry]
 _Name=Gaupol
 _GenericName=Subtitle Editor
+_GenericName[pt_BR]=Editor de Legendas
 _Comment=Edit subtitle files
+_Comment[pt_BR]=Edite arquivos de legenda
 Exec=gaupol %F
 Terminal=false
 StartupNotify=true
@@ -10,3 +12,4 @@ Type=Application
 MimeType=text/x-microdvd;text/x-mpsub;text/x-ssa;application/x-subrip;text/x-subviewer;
 Categories=GTK;AudioVideo;Video;
 _X-GNOME-FullName=Gaupol Subtitle Editor
+_X-GNOME-FullName[pt_BR]=Editor de Legendas Gaupol
