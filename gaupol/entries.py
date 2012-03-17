@@ -19,9 +19,12 @@
 import aeidon
 import functools
 import gaupol
-# import glib
-from gi.repository import Gtk
 import re
+
+from gi.repository import Gdk
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import Gtk
 
 __all__ = ("TimeEntry",)
 
@@ -40,9 +43,7 @@ def _blocked(function):
     return wrapper
 
 
-# XXX:
-# class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
-class TimeEntry(Gtk.Entry):
+class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
 
     """
     Entry for time data in format ``[-]HH:MM:SS.SSS``.
@@ -50,7 +51,7 @@ class TimeEntry(Gtk.Entry):
     :ivar _delete_handler: Handler for "delete-text" signal
     :ivar _insert_handler: Handler for "insert-text" signal
 
-    This widget uses :func:`glib.idle_add` a lot, which means that clients may
+    This widget uses :func:`GLib.idle_add` a lot, which means that clients may
     need to call :func:`Gtk.main_iteration` to ensure proper updating.
     """
     _re_digit = re.compile(r"\d")
@@ -119,11 +120,11 @@ class TimeEntry(Gtk.Entry):
         if not event.keyval in keys: return
         self.stop_emission("key-press-event")
         if self.get_selection_bounds():
-            glib.idle_add(self._zero_selection)
+            GLib.idle_add(self._zero_selection)
         elif event.keyval == Gdk.KEY_BackSpace:
-            glib.idle_add(self._zero_previous)
+            GLib.idle_add(self._zero_previous)
         elif event.keyval == Gdk.KEY_Delete:
-            glib.idle_add(self._zero_next)
+            GLib.idle_add(self._zero_next)
 
     def _on_insert_text_ensure(self, *args, **kwargs):
         text = self.get_text()
@@ -132,7 +133,7 @@ class TimeEntry(Gtk.Entry):
     def _on_insert_text(self, entry, text, length, pos):
         """Insert `text` after validation."""
         self.stop_emission("insert-text")
-        glib.idle_add(self._insert_text, text)
+        GLib.idle_add(self._insert_text, text)
 
     def _on_toggle_overwrite(self, entry):
         """Do not allow toggling overwrite."""

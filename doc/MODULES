@@ -50,7 +50,6 @@ gaupol.attrdict
 gaupol.config
 gaupol.ruler
 gaupol.meta
-gaupol.runner
 gaupol.entries
 gaupol.renderers
 gaupol.output
