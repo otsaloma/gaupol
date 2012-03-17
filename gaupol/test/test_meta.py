@@ -1,4 +1,4 @@
-# Copyright (C) 2007,2012 Osmo Salomaa
+# Copyright (C) 2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Metaclass for contractual GObjects."""
+import gaupol
 
-import aeidon
-import gi.types
+from gi.repository import Gtk
 
-__all__ = ("ContractualGObject",)
-
-
-class ContractualGObject(gi.types.GObjectMeta, aeidon.Contractual):
-
-    """Metaclass for contractual GObjects."""
+class PuppetEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
 
     pass
+
+
+class TestContractualGObject(gaupol.TestCase):
+
+    def test__init(self):
+        PuppetEntry()
