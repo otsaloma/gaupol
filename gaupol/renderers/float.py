@@ -17,7 +17,8 @@
 """Cell renderer for float data with fixed precision."""
 
 import aeidon
-# import glib
+
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -45,4 +46,4 @@ class FloatCellRenderer(Gtk.CellRendererText):
         text = text.replace(",", ".")
         text = self._format.format(float(text))
         text = (text.replace(".", ",") if has_comma else text)
-        self.props.markup = glib.markup_escape_text(text)
+        self.props.markup = GLib.markup_escape_text(text)

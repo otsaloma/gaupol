@@ -46,7 +46,7 @@ class OutputWindow(Gtk.Window):
         # XXX:
         # accel_group = Gtk.AccelGroup()
         # accel_group.connect_group(Gdk.KEY_w,
-        #                           Gdk.EventMask.CONTROL_MASK,
+        #                           Gdk.ModifierType.CONTROL_MASK,
         #                           Gtk.AccelFlags.MASK,
         #                           self._on_close_key_pressed)
 

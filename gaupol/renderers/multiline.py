@@ -18,7 +18,9 @@
 
 import aeidon
 import gaupol
-# import glib
+
+from gi.repository import Gdk
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -27,12 +29,16 @@ __all__ = ("MultilineCellRenderer",)
 
 class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
-    # XXX:
-    # Warning: Object class CellTextView doesn't implement property
-    # 'editing-canceled' from interface 'GtkCellEditable'
-
     """A :class:`Gtk.TextView` suitable for cell renderer use."""
 
+    __gproperties__ = {
+        "editing-canceled": (bool,
+                             "Editing canceled",
+                             "Editing canceled",
+                             False,
+                             GObject.PARAM_READWRITE),
+
+    }
     __gtype_name__ = "CellTextView"
 
     def __init__(self, text_buffer=None):
@@ -72,6 +78,9 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     are shown as superscripts at the end of each line.
     """
 
+    # XXX: This shit segfaults, when starting to edit text in a cell,
+    # before CellTextView gets initialized.
+
     __gtype_name__ = "MultilineCellRenderer"
 
     def __init__(self):
@@ -95,10 +104,13 @@ class MultilineCellRenderer(Gtk.CellRendererText):
 
     def _on_editor_key_press_event(self, editor, event):
         """End editing if ``Enter`` or ``Escape`` pressed."""
-        if event.get_state() & (Gdk.EventMask.SHIFT_MASK | Gdk.EventMask.CONTROL_MASK): return
+        if (event.get_state() &
+            (Gdk.ModifierType.SHIFT_MASK |
+             Gdk.ModifierType.CONTROL_MASK)): return
         if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())
+            return True
         if event.keyval == Gdk.KEY_Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
@@ -115,9 +127,9 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         self._text = text = self.props.text
         if not (text and self._show_lengths): return
         lengths = gaupol.ruler.get_lengths(text)
-        text = glib.markup_escape_text(text)
+        text = GLib.markup_escape_text(text)
         lines = text.split("\n")
-        for i, line in [x for x in enumerate(lines) if x[1]]:
+        for i, line in(x for x in enumerate(lines) if x[1]):
             lines[i] += " <sup>{:d}</sup>".format(lengths[i])
         self.props.markup = "\n".join(lines)
 

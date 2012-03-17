@@ -197,7 +197,7 @@ class View(Gtk.TreeView):
         """Handle various special-case key combinations."""
         # Disable Ctrl+PageUp/PageDown to allow them to be
         # used solely for navigation between notebook tabs.
-        if event.get_state() & Gdk.EventMask.CONTROL_MASK:
+        if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
             if event.keyval in (Gdk.KEY_Page_Up, Gdk.KEY_Page_Down):
                 return widget.stop_emission("key-press-event")
         # Use interactive search for a subtitle number or time

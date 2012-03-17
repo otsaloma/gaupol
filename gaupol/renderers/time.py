@@ -17,6 +17,8 @@
 """Cell renderer for time data in format ``[-]HH:MM:SS,SSS``."""
 
 import gaupol
+
+from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -42,10 +44,13 @@ class TimeCellRenderer(Gtk.CellRendererText):
 
     def _on_editor_key_press_event(self, editor, event):
         """End editing if ``Enter`` or ``Escape`` pressed."""
-        if event.get_state() & (Gdk.EventMask.SHIFT_MASK | Gdk.EventMask.CONTROL_MASK): return
+        if (event.get_state() &
+            (Gdk.ModifierType.SHIFT_MASK |
+             Gdk.ModifierType.CONTROL_MASK)): return
         if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())
+            return True
         if event.keyval == Gdk.KEY_Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
