@@ -120,21 +120,9 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
     def _init_props(self, edit_mode):
         """Initialize properties."""
         if edit_mode == aeidon.modes.TIME:
-            columns = (GObject.TYPE_INT,
-                       GObject.TYPE_STRING,
-                       GObject.TYPE_STRING,
-                       GObject.TYPE_DOUBLE,
-                       GObject.TYPE_STRING,
-                       GObject.TYPE_STRING)
-
+            columns = (int, str, str, float, str, str)
         if edit_mode == aeidon.modes.FRAME:
-            columns = (GObject.TYPE_INT,
-                       GObject.TYPE_INT,
-                       GObject.TYPE_INT,
-                       GObject.TYPE_INT,
-                       GObject.TYPE_STRING,
-                       GObject.TYPE_STRING)
-
+            columns = (int, int, int, int, str, str)
         store = Gtk.ListStore(*columns)
         self.set_model(store)
         self._init_columns(edit_mode)
