@@ -17,8 +17,9 @@
 """Baseclass and wrapper for :class:`Gtk.Builder` constructed dialogs."""
 
 import aeidon
-from gi.repository import Gtk
 import os
+
+from gi.repository import Gtk
 
 __all__ = ("BuilderDialog",)
 
