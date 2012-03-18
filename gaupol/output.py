@@ -18,8 +18,11 @@
 
 import aeidon
 import gaupol
+
+from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Gtk
+
 _ = aeidon.i18n._
 
 __all__ = ("OutputWindow",)
@@ -43,15 +46,13 @@ class OutputWindow(Gtk.Window):
 
     def _init_keys(self):
         """Initialize keyboard shortcuts."""
-        # XXX:
-        # accel_group = Gtk.AccelGroup()
-        # accel_group.connect_group(Gdk.KEY_w,
-        #                           Gdk.ModifierType.CONTROL_MASK,
-        #                           Gtk.AccelFlags.MASK,
-        #                           self._on_close_key_pressed)
+        accel_group = Gtk.AccelGroup()
+        accel_group.connect(Gdk.KEY_w,
+                            Gdk.ModifierType.CONTROL_MASK,
+                            Gtk.AccelFlags.MASK,
+                            self._on_close_key_pressed)
 
-        # self.add_accel_group(accel_group)
-        pass
+        self.add_accel_group(accel_group)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -114,7 +115,7 @@ class OutputWindow(Gtk.Window):
     def _on_window_state_event(self, window, event):
         """Save window maximization."""
         state = event.new_window_state
-        maximized = bool(state & Gdk.WINDOW_STATE_MAXIMIZED)
+        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
         gaupol.conf.output_window.maximized = maximized
 
     def _save_geometry(self):
@@ -128,4 +129,8 @@ class OutputWindow(Gtk.Window):
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(output)
         mark = text_buffer.get_insert()
-        self._text_view.scroll_to_mark(mark, 0)
+        self._text_view.scroll_to_mark(mark=mark,
+                                       within_margin=0,
+                                       use_align=False,
+                                       xalign=0.5,
+                                       yalign=0.5)

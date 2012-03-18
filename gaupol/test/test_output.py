@@ -16,6 +16,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -28,7 +29,8 @@ class TestOutputWindow(gaupol.TestCase):
     def setup_method(self, method):
         self.conf = gaupol.conf.output_window
         self.window = gaupol.OutputWindow()
-        self.window.set_output(self.get_sample_text(aeidon.formats.SUBRIP))
+        text = self.get_sample_text(aeidon.formats.SUBRIP)
+        self.window.set_output(text)
         self.window.show()
 
     def test__init_sizes(self):
