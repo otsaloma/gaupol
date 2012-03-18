@@ -336,7 +336,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         selection.unselect_all()
         for lst in aeidon.util.get_ranges(rows):
             start = gaupol.util.tree_row_to_path(lst[0])
-            end = gaupol.util.tree_row_to_path(lst[1])
+            end = gaupol.util.tree_row_to_path(lst[-1])
             selection.select_range(start, end)
 
     def set_focus_require(self, row, col=None):

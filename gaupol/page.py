@@ -18,10 +18,12 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
-from gi.repository import Pango
 import sys
+
+from gi.repository import Gtk
+from gi.repository import Pango
+
 _ = aeidon.i18n._
 
 __all__ = ("Page",)
@@ -99,12 +101,15 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
                 return subtitle.duration_seconds
             if mode == aeidon.modes.FRAME:
                 return subtitle.duration_frame
-            raise ValueError("Invalid mode: {}".format(repr(mode)))
+            raise ValueError("Invalid mode: {}"
+                             .format(repr(mode)))
+
         if field == gaupol.fields.MAIN_TEXT:
             return subtitle.main_text
         if field == gaupol.fields.TRAN_TEXT:
             return subtitle.tran_text
-        raise ValueError("Invalid field: {}".format(repr(field)))
+        raise ValueError("Invalid field: {}"
+                         .format(repr(field)))
 
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
@@ -250,7 +255,7 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         if len(rows) > 50:
             # Unset and later reset the model if removing a large amount of
             # rows, because a large batch of separate live updates directly
-            # made to the view are slow, 50 being a rough empirical border.
+            # made to the view are slow.
             self.view.set_model(None)
         for row in reversed(sorted(rows)):
             store.remove(store.get_iter(row))
@@ -281,13 +286,16 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
     def _on_tab_label_query_tooltip(self, label, x, y, keyboard, tooltip):
         """Update the text in the tab tooltip."""
         if self.project.main_file is None: return
+        path = self.project.main_file.path
+        format = self.project.main_file.format
         encoding = self.project.main_file.encoding
         encoding = aeidon.encodings.code_to_long_name(encoding)
+        newline = self.project.main_file.newline
         tooltip.set_markup("{}\n\n{}\n{}\n{}".format(
-            _("<b>Path:</b> {}").format(self.project.main_file.path),
-            _("<b>Format:</b> {}").format(self.project.main_file.format.label),
-            _("<b>Character encoding:</b> {}").format(encoding),
-            _("<b>Newlines:</b> {}").format(self.project.main_file.newline.label)))
+                _("<b>Path:</b> {}").format(path),
+                _("<b>Format:</b> {}").format(format.label),
+                _("<b>Character encoding:</b> {}").format(encoding),
+                _("<b>Newlines:</b> {}").format(newline.label)))
 
         return True # to show the tooltip.
 
@@ -302,7 +310,8 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
             return self.view.columns.MAIN_TEXT
         if doc == aeidon.documents.TRAN:
             return self.view.columns.TRAN_TEXT
-        raise ValueError("Invalid document: {}".format(repr(doc)))
+        raise ValueError("Invalid document: {}"
+                         .format(repr(doc)))
 
     def get_main_basename(self):
         """Return basename of the main document."""
@@ -359,7 +368,8 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
             return aeidon.documents.MAIN
         if col == self.view.columns.TRAN_TEXT:
             return aeidon.documents.TRAN
-        raise ValueError("Invalid column: {}".format(repr(col)))
+        raise ValueError("Invalid column: {}"
+                         .format(repr(col)))
 
     def update_tab_label(self):
         """Update the notebook tab label and return title."""
