@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2010 Osmo Salomaa
+# Copyright (C) 2005-2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,18 +18,19 @@
 
 import aeidon
 import gaupol
+import re
+
 from gi.repository import GObject
+from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import Pango
-import re
+
 _ = aeidon.i18n._
 
 __all__ = ("View",)
 
 
-# XXX:
-# class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
-class View(Gtk.TreeView):
+class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
 
     """
     Widget to display subtitle data in the form of a list.
@@ -79,15 +80,18 @@ class View(Gtk.TreeView):
     def _init_cell_data_functions(self):
         """Initialize functions to automatically update cell data."""
         # Set the data in the number column automatically.
-        def set_number(column, renderer, store, itr):
-            renderer.props.text = store.get_path(itr)[0] + 1
+        def set_number(column, renderer, store, itr, data):
+            path = store.get_path(itr)
+            row = gaupol.util.tree_path_to_row(path)
+            renderer.props.text = str(row + 1)
         column = self.get_column(self.columns.NUMBER)
         renderer = column.get_cells()[0]
         column.set_cell_data_func(renderer, set_number)
 
     def _init_column_attributes(self):
         """Initialize the column header :class:`Pango.AttrList`."""
-        # XXX:
+        # XXX: Pango attributes don't quite work?
+        # https://bugzilla.gnome.org/show_bug.cgi?id=669371
         # self._active_attr = Pango.AttrList()
         # attr = Pango.AttrWeight(Pango.Weight.BOLD, 0, -1)
         # self._active_attr.insert(attr)
@@ -116,9 +120,21 @@ class View(Gtk.TreeView):
     def _init_props(self, edit_mode):
         """Initialize properties."""
         if edit_mode == aeidon.modes.TIME:
-            columns = (int, str, str, float, str, str)
+            columns = (GObject.TYPE_INT,
+                       GObject.TYPE_STRING,
+                       GObject.TYPE_STRING,
+                       GObject.TYPE_DOUBLE,
+                       GObject.TYPE_STRING,
+                       GObject.TYPE_STRING)
+
         if edit_mode == aeidon.modes.FRAME:
-            columns = (int, int, int, int, str, str)
+            columns = (GObject.TYPE_INT,
+                       GObject.TYPE_INT,
+                       GObject.TYPE_INT,
+                       GObject.TYPE_INT,
+                       GObject.TYPE_STRING,
+                       GObject.TYPE_STRING)
+
         store = Gtk.ListStore(*columns)
         self.set_model(store)
         self._init_columns(edit_mode)
@@ -130,11 +146,14 @@ class View(Gtk.TreeView):
         selection.set_mode(Gtk.SelectionMode.MULTIPLE)
         self._init_search()
 
+
     def _init_search(self):
         """Initialize the interactive search properties."""
-        self.set_enable_search(True)
-        self.set_search_column(self.columns.NUMBER)
-        self.set_search_equal_func(self._search_equals, None)
+        # XXX: Causes a fucking segfault.
+        # self.set_enable_search(True)
+        # self.set_search_column(self.columns.NUMBER)
+        # self.set_search_equal_func(self._search_equals, None)
+        pass
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -208,8 +227,6 @@ class View(Gtk.TreeView):
 
     def _reset_columns(self):
         """Recreate the columns enumeration and set all items to ``None``."""
-        # Set default cell enumeration items to None without magic to silence
-        # false pylint positives about referencing a missing attribute.
         self.columns = aeidon.Enumeration()
         self.columns.NUMBER = None
         self.columns.START = None
@@ -218,9 +235,10 @@ class View(Gtk.TreeView):
         self.columns.MAIN_TEXT = None
         self.columns.TRAN_TEXT = None
 
-    def _search_equals(self, store, column, key, itr):
+    def _search_equals(self, store, column, key, itr, data):
         """Return ``False`` if `key` matches either subtitle number or time."""
-        row = int(store.get_path(itr)[0])
+        path = store.get_path(itr)
+        row = gaupol.util.tree_path_to_row(path)
         if key.count(":") == 0:
             # Search for subtitle number.
             try: return row != (int(key) - 1)
@@ -266,9 +284,8 @@ class View(Gtk.TreeView):
 
     def get_focus(self):
         """Return the row and column of the current focus."""
-        row, col = self.get_cursor()
-        if row is not None:
-            row = row[0]
+        path, col = self.get_cursor()
+        row = gaupol.util.tree_path_to_row(path)
         if col is not None:
             col = self.get_columns().index(col)
         return row, col
@@ -278,9 +295,10 @@ class View(Gtk.TreeView):
         label = Gtk.Label(label=text)
         label.props.xalign = 0
         label.show()
-        # XXX:
+        # XXX: Pango attributes don't quite work?
+        # https://bugzilla.gnome.org/show_bug.cgi?id=669371
         # label.set_attributes(self._active_attr)
-        # width = label.size_request()[0]
+        # width = label.get_preferred_width()[1]
         # label.set_size_request(width, -1)
         # label.set_attributes(self._normal_attr)
         return label
@@ -292,8 +310,8 @@ class View(Gtk.TreeView):
 
     def get_selected_rows(self):
         """Return a sequence of the selected rows."""
-        rows = self.get_selection().get_selected_rows()[1]
-        return tuple(x[0] for x in rows)
+        paths = self.get_selection().get_selected_rows()[1]
+        return tuple(gaupol.util.tree_path_to_row(x) for x in paths)
 
     def is_position_column(self, col):
         """Return ``True`` if `col` is a position column."""
@@ -312,7 +330,11 @@ class View(Gtk.TreeView):
 
     def scroll_to_row(self, row):
         """Scroll view until `row` is visible."""
-        self.scroll_to_cell(row, None, True, 0.5, 0)
+        self.scroll_to_cell(path=row,
+                            column=None,
+                            use_align=False,
+                            row_align=0.5,
+                            col_align=0)
 
     def select_rows_require(self, rows):
         store = self.get_model()
@@ -325,7 +347,9 @@ class View(Gtk.TreeView):
         selection = self.get_selection()
         selection.unselect_all()
         for lst in aeidon.util.get_ranges(rows):
-            selection.select_range(lst[0], lst[-1])
+            start = gaupol.util.tree_row_to_path(lst[0])
+            end = gaupol.util.tree_row_to_path(lst[1])
+            selection.select_range(start, end)
 
     def set_focus_require(self, row, col=None):
         store = self.get_model()
@@ -339,7 +363,8 @@ class View(Gtk.TreeView):
             row = len(self.get_model()) - 1
         if col is not None:
             col = self.get_column(col)
-        self.set_cursor(row, col)
+        path = gaupol.util.tree_row_to_path(row)
+        self.set_cursor(path, col, start_editing=False)
 
     def update_headers(self):
         """Update the attributes of the column header labels."""
@@ -349,8 +374,12 @@ class View(Gtk.TreeView):
         self._active_col_name = ""
         if acol is not None:
             label = self.get_column(acol).get_widget()
-            label.set_attributes(self._normal_attr)
+            # XXX: Pango attributes don't quite work?
+            # https://bugzilla.gnome.org/show_bug.cgi?id=669371
+            # label.set_attributes(self._normal_attr)
         if fcol is not None:
             label = self.get_column(fcol).get_widget()
-            label.set_attributes(self._active_attr)
+            # XXX: Pango attributes don't quite work?
+            # https://bugzilla.gnome.org/show_bug.cgi?id=669371
+            # label.set_attributes(self._active_attr)
             self._active_col_name = self.columns[fcol].name

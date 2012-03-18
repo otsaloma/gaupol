@@ -191,3 +191,11 @@ class TestModule(gaupol.TestCase):
         assert doc == aeidon.documents.MAIN
         doc = field2doc(gaupol.fields.TRAN_TEXT)
         assert doc == aeidon.documents.TRAN
+
+    def test_tree_path_to_row(self):
+        path = gaupol.util.tree_row_to_path(1)
+        assert gaupol.util.tree_path_to_row(path) == 1
+
+    def test_tree_row_to_path(self):
+        path = gaupol.util.tree_row_to_path(1)
+        assert gaupol.util.tree_path_to_row(path) == 1

@@ -319,3 +319,13 @@ def text_field_to_document(field):
         return aeidon.documents.TRAN
     raise ValueError("Invalid field: {}"
                      .format(repr(field)))
+
+def tree_path_to_row(path):
+    """Convert :class:`Gtk.TreePath` to a list row integer."""
+    if path is None: return None
+    return int(path.to_string())
+
+def tree_row_to_path(row):
+    """Convert list row integer to a :class:`Gtk.TreePath`."""
+    if row is None: return None
+    return Gtk.TreePath.new_from_string(str(row))
