@@ -15,6 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -28,5 +29,5 @@ class TestAboutDialog(gaupol.TestCase):
         self.dialog = gaupol.AboutDialog(Gtk.Window())
         self.dialog.show()
 
-    def test__on_url_clicked(self):
-        self.dialog._on_url_clicked(self.dialog, gaupol.HOMEPAGE_URL)
+    def test___init__(self):
+        pass
