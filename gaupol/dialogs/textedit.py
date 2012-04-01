@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007,2010 Osmo Salomaa
+# Copyright (C) 2005-2007,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,8 +18,10 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import GObject
+from gi.repository import Gtk
 
 
 class TextEditDialog(Gtk.Dialog):
@@ -29,7 +31,7 @@ class TextEditDialog(Gtk.Dialog):
     def __init__(self, parent, text=""):
         """Initialize a :class:`TextEditDialog` object."""
         GObject.GObject.__init__(self)
-        self._text_view = None
+        self._text_view = Gtk.TextView()
         self._init_dialog(parent)
         self._init_text_view()
         self.set_text(text)
@@ -39,7 +41,6 @@ class TextEditDialog(Gtk.Dialog):
         self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
-        self.set_has_separator(False)
         self.set_transient_for(parent)
         self.set_border_width(6)
         self.set_modal(True)
@@ -47,7 +48,6 @@ class TextEditDialog(Gtk.Dialog):
 
     def _init_text_view(self):
         """Initialize the text view."""
-        self._text_view = Gtk.TextView()
         gaupol.util.prepare_text_view(self._text_view)
         self._text_view.set_wrap_mode(Gtk.WrapMode.NONE)
         self._text_view.set_accepts_tab(False)
@@ -60,15 +60,15 @@ class TextEditDialog(Gtk.Dialog):
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
         scroller.set_shadow_type(Gtk.ShadowType.IN)
         scroller.add(self._text_view)
-        vbox = self.get_child()
-        vbox.add(scroller)
-        vbox.show_all()
+        box = self.get_content_area()
+        box.pack_start(scroller, expand=True, fill=True, padding=0)
+        box.show_all()
 
     def get_text(self):
         """Return text in the text view."""
         text_buffer = self._text_view.get_buffer()
-        bounds = text_buffer.get_bounds()
-        return text_buffer.get_text(*bounds)
+        start, end = text_buffer.get_bounds()
+        return text_buffer.get_text(start, end, False)
 
     def set_text(self, text):
         """Set `text` to the text view."""
