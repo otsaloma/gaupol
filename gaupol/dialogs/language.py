@@ -18,8 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("LanguageDialog",)
 
@@ -71,13 +72,14 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _init_values(self):
         """Initialize default values for widgets."""
+        language = gaupol.conf.spell_check.language
+        field = gaupol.conf.spell_check.field
+        target = gaupol.conf.spell_check.target
         store = self._tree_view.get_model()
         selection = self._tree_view.get_selection()
         for i in range(len(store)):
-            if store[i][0] == gaupol.conf.spell_check.language:
+            if store[i][0] == language:
                 selection.select_path(i)
-        field = gaupol.conf.spell_check.field
-        target = gaupol.conf.spell_check.target
         self._main_radio.set_active(field == gaupol.fields.MAIN_TEXT)
         self._tran_radio.set_active(field == gaupol.fields.TRAN_TEXT)
         self._all_radio.set_active(target == gaupol.targets.ALL)
@@ -136,7 +138,7 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         try: locales = set(enchant.list_languages())
         except enchant.Error: return
         for locale in locales:
-            try: enchant.Dict(locale).check("1")
+            try: enchant.Dict(locale).check("gaupol")
             except enchant.Error: continue
             try: name = aeidon.locales.code_to_name(locale)
             except LookupError: name = locale
