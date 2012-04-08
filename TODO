@@ -3,12 +3,9 @@ Gaupol 0.20
 
  [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
      * Test encoding auto-detection
-     * Add naming verbosity of modules not a part of external
-       interface, e.g. rename recognition to speech_recognition
-       in gaupol.dialogs
      * Check API documentation on aeidon.as_* and aeidon.is_*
      * Check if GtkSpell is availabel with PyGI support
-     * Fix remaining regressions (search for 'XXX')
+     * Fix remaining regressions (search for 'XXX:')
  [/] Bump Python dependency to 3.2 or greater
  [/] Replace PyGTK dependency with PyGobject 3.0.0 or greater
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
