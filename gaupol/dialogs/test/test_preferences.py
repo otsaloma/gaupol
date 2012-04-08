@@ -81,7 +81,7 @@ class TestExtensionPage(gaupol.TestCase):
 
     def test__on_tree_view_cell_toggled(self):
         column = self.page._tree_view.get_columns()[0]
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         renderer.emit("toggled", 0)
         renderer.emit("toggled", 0)
         renderer.emit("toggled", 0)
@@ -91,7 +91,7 @@ class TestExtensionPage(gaupol.TestCase):
         selection.unselect_all()
         selection.select_path(0)
         column = self.page._tree_view.get_columns()[0]
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         renderer.emit("toggled", 0)
         selection.unselect_all()
         selection.select_path(0)

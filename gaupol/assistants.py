@@ -890,7 +890,7 @@ class ConfirmationPage(BuilderPage):
         self._add_text_column(3, _("Original Text"))
         self._add_text_column(4, _("Corrected Text"))
         column = self._tree_view.get_column(2)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         renderer.connect("edited", self._on_tree_view_cell_edited)
 
     def _init_values(self):

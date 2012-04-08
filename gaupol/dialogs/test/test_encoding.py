@@ -15,6 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -30,10 +31,10 @@ class TestEncodingDialog(gaupol.TestCase):
 
     def test__on_tree_view_row_activated(self):
         column = self.dialog._tree_view.get_columns()[-1]
-        self.dialog._tree_view.row_activated(1, column)
+        path = gaupol.util.tree_row_to_path(1)
+        self.dialog._tree_view.row_activated(path, column)
 
     def test_get_encoding(self):
-        store = self.dialog._tree_view.get_model()
         selection = self.dialog._tree_view.get_selection()
         selection.select_path(10)
         name = self.dialog.get_encoding()
@@ -48,7 +49,7 @@ class TestMenuEncodingDialog(TestEncodingDialog):
 
     def test__on_tree_view_cell_toggled(self):
         column = self.dialog._tree_view.get_columns()[-1]
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         renderer.emit("toggled", 0)
 
     def test_get_visible_encodings(self):

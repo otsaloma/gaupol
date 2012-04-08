@@ -80,12 +80,12 @@ class TestMultiCloseDialog(gaupol.TestCase):
 
     def test__on_tree_view_cell_toggled__main(self):
         column = self.dialog._main_tree_view.get_columns()[0]
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         renderer.emit("toggled", 0)
         renderer.emit("toggled", 0)
 
     def test__on_tree_view_cell_toggled__translation(self):
         column = self.dialog._tran_tree_view.get_columns()[0]
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         renderer.emit("toggled", 0)
         renderer.emit("toggled", 0)

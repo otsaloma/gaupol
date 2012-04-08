@@ -152,7 +152,7 @@ class TestEditAgent(gaupol.TestCase):
         self.application.get_action("show_frames").activate()
         for col in filter(page.view.is_position_column, page.view.columns):
             column = page.view.get_column(col)
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             renderer.emit("edited", 1, 0)
             renderer.emit("edited", 1, "k")
 
@@ -161,7 +161,7 @@ class TestEditAgent(gaupol.TestCase):
         self.application.get_action("show_times").activate()
         for col in filter(page.view.is_position_column, page.view.columns):
             column = page.view.get_column(col)
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             renderer.emit("edited", 1, "00:00:00.000")
 
     def test_on_view_renderer_edited__text(self):
@@ -169,21 +169,21 @@ class TestEditAgent(gaupol.TestCase):
         self.application.get_action("show_times").activate()
         for col in filter(page.view.is_text_column, page.view.columns):
             column = page.view.get_column(col)
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             renderer.emit("edited", 1, "test")
 
     def test_on_view_renderer_editing_canceled__position(self):
         page = self.application.get_current_page()
         for col in filter(page.view.is_position_column, page.view.columns):
             column = page.view.get_column(col)
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             renderer.emit("editing-canceled")
 
     def test_on_view_renderer_editing_canceled__text(self):
         page = self.application.get_current_page()
         for col in filter(page.view.is_text_column, page.view.columns):
             column = page.view.get_column(col)
-            renderer = column.get_cell_renderers()[0]
+            renderer = column.get_cells()[0]
             renderer.emit("editing-canceled")
 
     def test_on_view_renderer_editing_started__position(self):

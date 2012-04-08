@@ -122,7 +122,7 @@ class EditNextValueAction(gaupol.Action):
         aeidon.util.affirm(not None in (row, col))
         aeidon.util.affirm(row < len(page.project.subtitles) - 1)
         column = page.view.get_column(col)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         mode = renderer.props.mode
         aeidon.util.affirm(mode == Gtk.CellRendererMode.EDITABLE)
 
@@ -148,7 +148,7 @@ class EditValueAction(gaupol.Action):
         row, col = page.view.get_focus()
         aeidon.util.affirm(not None in (row, col))
         column = page.view.get_column(col)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         mode = renderer.props.mode
         aeidon.util.affirm(mode == Gtk.CellRendererMode.EDITABLE)
 

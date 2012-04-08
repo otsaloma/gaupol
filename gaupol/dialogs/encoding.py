@@ -18,8 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("EncodingDialog", "MenuEncodingDialog")
 
@@ -38,7 +39,7 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                                      min_nchar=10,
                                      min_nlines=5,
                                      max_nchar=100,
-                                     max_nlines=30)
+                                     max_nlines=20)
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.OK)
@@ -65,7 +66,6 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _on_tree_view_row_activated(self, *args):
         """Send response to select activated character encoding."""
-        print("ACTIVATED")
         self.response(Gtk.ResponseType.OK)
 
     def get_encoding_ensure(self, value):

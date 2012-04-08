@@ -81,7 +81,7 @@ class TestIntroductionPage(_TestBuilderPage):
     def test__on_tree_view_cell_toggled(self):
         store = self.page._tree_view.get_model()
         column = self.page._tree_view.get_column(0)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         for i in range(len(store)):
             renderer.emit("toggled", i)
             renderer.emit("toggled", i)
@@ -143,7 +143,7 @@ class _TestLocalePage(_TestBuilderPage):
     def test__on_tree_view_cell_toggled(self):
         store = self.page._tree_view.get_model()
         column = self.page._tree_view.get_column(0)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         for i in range(len(store)):
             renderer.emit("toggled", i)
             renderer.emit("toggled", i)
@@ -343,7 +343,7 @@ class TestConfirmationPage(_TestBuilderPage):
     def test__on_tree_view_cell_edited(self):
         store = self.page._tree_view.get_model()
         column = self.page._tree_view.get_column(2)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         for i in range(len(store)):
             renderer.emit("edited", i, "test")
             renderer.emit("edited", i, "test")
@@ -352,7 +352,7 @@ class TestConfirmationPage(_TestBuilderPage):
     def test__on_tree_view_cell_toggled(self):
         store = self.page._tree_view.get_model()
         column = self.page._tree_view.get_column(0)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         for i in range(len(store)):
             renderer.emit("toggled", i)
             renderer.emit("toggled", i)
@@ -410,7 +410,7 @@ class TestTextAssistant(gaupol.TestCase):
         page = self.assistant._confirmation_page
         store = page._tree_view.get_model()
         column = page._tree_view.get_column(2)
-        renderer = column.get_cell_renderers()[0]
+        renderer = column.get_cells()[0]
         for i in range(0, len(store), 2):
             renderer.emit("edited", i, "")
         self.assistant.emit("apply")
