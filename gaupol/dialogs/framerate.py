@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 __all__ = ("FramerateConvertDialog",)
@@ -28,6 +29,8 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
     """Dialog for converting framerates."""
 
     _widgets = ("all_radio", "current_radio", "input_combo", "output_combo")
+
+    # XXX: This shit segfaults.
 
     def __init__(self, parent, application):
         """Initialize a FramerateConvertDialog object."""
@@ -42,11 +45,11 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
     def _convert_framerates(self):
         """Convert framerates in target projects."""
         target = self._get_target()
-        framerate_in = aeidon.framerates[self._input_combo.get_active()]
-        framerate_out = aeidon.framerates[self._output_combo.get_active()]
+        fri = aeidon.framerates[self._input_combo.get_active()]
+        fro = aeidon.framerates[self._output_combo.get_active()]
         for page in self.application.get_target_pages(target):
             self.application.set_current_page(page)
-            page.project.convert_framerate(None, framerate_in, framerate_out)
+            page.project.convert_framerate(None, fri, fro)
 
     def _get_target(self):
         """Return the selected target."""
@@ -79,9 +82,9 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
     def _init_values(self):
         """Intialize default values for widgets."""
         page = self.application.get_current_page()
+        target = gaupol.conf.framerate_convert.target
         self._input_combo.set_active(page.project.framerate)
         self._output_combo.set_active(page.project.framerate)
-        target = gaupol.conf.framerate_convert.target
         self._all_radio.set_active(target == gaupol.targets.ALL)
         self._current_radio.set_active(target == gaupol.targets.CURRENT)
 
