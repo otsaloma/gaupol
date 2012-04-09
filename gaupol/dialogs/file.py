@@ -18,8 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("FileDialog",)
 
@@ -27,6 +28,7 @@ __all__ = ("FileDialog",)
 class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Base class for dialogs for selecting subtitle files."""
+
     _use_autodetection = False
 
     def _init_encoding_combo(self):
@@ -40,7 +42,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._encoding_combo.pack_start(renderer, True)
         self._encoding_combo.add_attribute(renderer, "text", 1)
         function = gaupol.util.separate_combo
-        self._encoding_combo.set_row_separator_func(function)
+        self._encoding_combo.set_row_separator_func(function, data=None)
 
     def _init_filters(self):
         """Initialize file filters."""
@@ -107,7 +109,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             encodings.append((separator, separator))
             encodings.append(("auto", _("Auto-detected")))
         encodings.append((separator, separator))
-        encodings.append(("other", _("Other\342\200\246")))
+        encodings.append(("other", _("Other…")))
         self._encoding_combo.get_model().clear()
         store = self._encoding_combo.get_model()
         for encoding in encodings:
