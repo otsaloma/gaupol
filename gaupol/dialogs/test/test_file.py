@@ -28,7 +28,7 @@ class _TestFileDialog(gaupol.TestCase):
         self.dialog.run()
         self.dialog.destroy()
 
-    @aeidon.deco.monkey_path(gaupol.util, "run_dialog")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test__on_encoding_combo_changed(self):
         responder = iter((Gtk.ResponseType.OK, Gtk.ResponseType.CANCEL))
         def run_dialog(dialog):

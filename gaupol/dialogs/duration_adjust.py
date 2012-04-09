@@ -45,7 +45,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
 
     def __init__(self, parent, application):
         """Initialize a :class:`DurationAdjustDialog` object."""
-        gaupol.BuilderDialog.__init__(self, "duration-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, "duration-adjust-dialog.ui")
         self.application = application
         self._init_values()
         self._init_sensitivities()

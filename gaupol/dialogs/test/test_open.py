@@ -18,10 +18,10 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 import random
 
+from gi.repository import Gtk
 from .test_file import _TestFileDialog
 
 

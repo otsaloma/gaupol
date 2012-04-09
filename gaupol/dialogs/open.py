@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
+
+from gi.repository import Gtk
 
 __all__ = ("OpenDialog",)
 
@@ -31,6 +32,8 @@ class OpenDialog(gaupol.FileDialog):
     """Dialog for selecting subtitle files to open."""
 
     _widgets = ("align_combo", "align_label", "encoding_combo")
+
+    # XXX: This shit segfaults.
 
     def __init__(self, parent, title, doc):
         """Initialize an :class:`OpenDialog` object."""

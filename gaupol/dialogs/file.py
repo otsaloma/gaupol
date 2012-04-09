@@ -39,12 +39,13 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._encoding_combo.set_model(store)
         self._populate_encoding_combo()
         view = self._encoding_combo.get_child()
-        view.set_displayed_row(0)
+        path = gaupol.util.tree_row_to_path(0)
+        view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
         self._encoding_combo.pack_start(renderer, True)
         self._encoding_combo.add_attribute(renderer, "text", 1)
         function = gaupol.util.separate_combo
-        self._encoding_combo.set_row_separator_func(function, data=None)
+        self._encoding_combo.set_row_separator_func(function, None)
 
     def _init_filters(self):
         """Initialize file filters."""
