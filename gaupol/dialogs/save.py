@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
+
+from gi.repository import Gtk
 
 __all__ = ("SaveDialog",)
 
@@ -29,6 +30,8 @@ __all__ = ("SaveDialog",)
 class SaveDialog(gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
+
+    # XXX: This shit segfaults.
 
     _widgets = ("encoding_combo", "format_combo", "newline_combo")
 
@@ -50,7 +53,8 @@ class SaveDialog(gaupol.FileDialog):
         for name in (x.label for x in aeidon.formats):
             store.append((name,))
         view = self._format_combo.get_child()
-        view.set_displayed_row(0)
+        path = gaupol.util.tree_row_to_path(0)
+        view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
         self._format_combo.pack_start(renderer, True)
         self._format_combo.add_attribute(renderer, "text", 0)
@@ -62,7 +66,8 @@ class SaveDialog(gaupol.FileDialog):
         for name in (x.label for x in aeidon.newlines):
             store.append((name,))
         view = self._newline_combo.get_child()
-        view.set_displayed_row(0)
+        path = gaupol.util.tree_row_to_path(0)
+        view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
         self._newline_combo.pack_start(renderer, True)
         self._newline_combo.add_attribute(renderer, "text", 0)
@@ -90,18 +95,19 @@ class SaveDialog(gaupol.FileDialog):
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
-        gaupol.conf.file.encoding = self.get_encoding()
-        gaupol.conf.file.format = self.get_format()
-        gaupol.conf.file.newline = self.get_newline()
         directory = self.get_current_folder()
         if directory is not None:
             gaupol.conf.file.directory = directory
+        gaupol.conf.file.encoding = self.get_encoding()
+        gaupol.conf.file.format = self.get_format()
+        gaupol.conf.file.newline = self.get_newline()
 
     def _on_save_button_event(self, button, event):
         """Ensure that the filename contains an extension."""
-        # Catch all events on save button to ensure that all mouse and keyboard
-        # events are handled and that a possibly lacking extension is added to
-        # the filename so that overwrite confirmation check is done correctly.
+        # Catch all events on save button to ensure that a possibly
+        # lacking extension is added to the filename so that overwrite
+        # confirmation check is done correctly.
+        # XXX: Use the 'confirm-overwrite' signal instead?
         self._format_combo.emit("changed")
 
     def get_format(self):

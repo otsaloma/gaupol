@@ -1,5 +1,6 @@
 *.py[co]
 *~
+.coverage
 .hidden
 build/
 ChangeLog

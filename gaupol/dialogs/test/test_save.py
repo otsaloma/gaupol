@@ -18,9 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 
+from gi.repository import Gtk
 from .test_file import _TestFileDialog
 
 
@@ -59,7 +59,7 @@ class TestSaveDialog(_TestFileDialog):
             value = self.dialog.get_format()
             assert value == format
 
-    def test_set_name__name(self):
+    def test_set_name__name__basename(self):
         self.dialog.set_name("test")
         self.dialog.set_name("test")
 
