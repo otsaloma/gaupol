@@ -1,3 +1,5 @@
+# -*- coding: utf-8-unix -*-
+
 # Copyright (C) 2009 Osmo Salomaa
 #
 # Redistribution and use in source and binary forms, with or without

@@ -1,3 +1,5 @@
+# -*- coding: utf-8-unix -*-
+
 #!/usr/bin/env python
 
 # Copyright (C) 2009 Osmo Salomaa

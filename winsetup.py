@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8-unix -*-
 
 """py2exe installation routines built on top of normal setup.py."""
 

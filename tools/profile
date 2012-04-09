@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8-unix -*-
 
 # Profile running gaupol.main.main.
 # Usage: See gaupol --help.

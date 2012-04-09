@@ -1,3 +1,5 @@
+# -*- coding: utf-8-unix -*-
+
 # Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
