@@ -19,8 +19,10 @@
 """Dialog for selecting a video file."""
 
 import aeidon
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import GObject
+from gi.repository import Gtk
 
 __all__ = ("VideoDialog",)
 
