@@ -17,8 +17,9 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-from gi.repository import Gtk
 import sys
+
+from gi.repository import Gtk
 
 
 class TestDebugDialog(gaupol.TestCase):

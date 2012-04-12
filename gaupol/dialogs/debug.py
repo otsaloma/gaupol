@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010-2011 Osmo Salomaa
+# Copyright (C) 2005-2008,2010-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,21 +18,21 @@
 
 """Dialog for displaying a traceback in case of an unhandled exception."""
 
-# This file has been originally adapted from Gazpacho with copyright notice
-# Copyright (C) 2005 by Async Open Source and Sicem S.L.
-
 import aeidon
 import gaupol
-# import glib
-from gi.repository import Gtk
 import linecache
 import os
-from gi.repository import Pango
 import platform
 import string
 import sys
 import traceback
 _ = aeidon.i18n._
+
+from gi.repository import Gdk
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Pango
 
 __all__ = ("DebugDialog",)
 
@@ -59,25 +59,32 @@ class DebugDialog(gaupol.BuilderDialog):
         """Initialize tags for the text buffer."""
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("bold", weight=Pango.Weight.BOLD)
-        text_buffer.create_tag("large", scale=Pango.SCALE_LARGE)
+        text_buffer.create_tag("large", scale=1.2)
         text_buffer.create_tag("monospace", family="monospace")
 
     def _insert_environment(self):
         """Insert environment information."""
-        list(map(self._insert_text,
-            ("Platform: {}\n".format(platform.platform(True)),
-             "Locale: {}.{}\n".format(aeidon.locales.get_system_code(),
-                                  aeidon.encodings.get_locale_code()),
-
-             "\n")))
+        locale = aeidon.locales.get_system_code()
+        encoding = aeidon.encodings.get_locale_code()
+        ins = self._insert_text
+        ins("Platform: {}\n".format(platform.platform(True)))
+        ins("Locale: {}.{}\n\n".format(locale, encoding))
 
     def _insert_library_versions(self):
         """Insert version numbers of libraries."""
-        list(map(self._insert_text,
-            ("Python: {:d}.{:d}.{:d}\n".format(sys.version_info[:3]),
-             "GTK+: {:d}.{:d}.{:d}\n".format(Gtk.gtk_version),
-             "GStreamer: {}\n".format(gaupol.util.get_gst_version()),
-             "\n")))
+        dotjoin = lambda seq: ".".join(map(str, seq))
+        python_version = dotjoin(sys.version_info[:3])
+        gtk_version = dotjoin((Gtk.get_major_version(),
+                               Gtk.get_minor_version(),
+                               Gtk.get_micro_version()))
+
+        pygobject_version = dotjoin(GObject.pygobject_version)
+        gst_version = gaupol.util.get_gst_version()
+        ins = self._insert_text
+        ins("Python: {}\n".format(python_version))
+        ins("GTK+: {}\n".format(gtk_version))
+        ins("PyGObject: {}\n".format(pygobject_version))
+        ins("GStreamer: {}\n\n".format(gst_version))
 
     def _insert_link(self, path, lineno, *tags):
         """Insert `path` as a link into the text view."""
@@ -99,13 +106,11 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _insert_python_package_versions(self):
         """Insert version numbers of Python packages."""
-        list(map(self._insert_text,
-            ("aeidon: {}\n".format(aeidon.__version__),
-             "gaupol: {}\n".format(gaupol.__version__),
-             "gtk: {:d}.{:d}.{:d}\n".format(Gtk.pygtk_version),
-             "enchant: {}\n".format(aeidon.util.get_enchant_version()),
-             "chardet: {}\n".format(aeidon.util.get_chardet_version()),
-             )))
+        ins = self._insert_text
+        ins("aeidon: {}\n".format(aeidon.__version__))
+        ins("gaupol: {}\n".format(gaupol.__version__))
+        ins("enchant: {}\n".format(aeidon.util.get_enchant_version()))
+        ins("chardet: {}\n".format(aeidon.util.get_chardet_version()))
 
     def _insert_text(self, text, *tags):
         """Insert `text` with `tags` to the text view."""
@@ -121,20 +126,22 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _insert_traceback(self, exctype, value, tb, limit=100):
         """Insert up to `limit` stack trace entries from `tb`."""
+        # This function has been originally adapted from Gazpacho
+        # Copyright (C) 2005 by Async Open Source and Sicem S.L.
         for i in range(limit):
             if tb is None: break
-            frame = tb.tb_frame
-            code = frame.f_code
-            line = linecache.getline(code.co_filename,
-                                     tb.tb_lineno).strip()
-
+            lineno = tb.tb_lineno
+            filename = tb.tb_frame.f_code.co_filename
+            name = tb.tb_frame.f_code.co_name
+            line = linecache.getline(filename, lineno)
+            line = line.strip()
             self._insert_text("File: ")
-            self._insert_link(code.co_filename, tb.tb_lineno)
+            self._insert_link(filename, lineno)
             self._insert_text("\n")
-            self._insert_text("Line: {}\n".format(str(tb.tb_lineno)))
-            self._insert_text("In: {}\n\n".format(code.co_name))
+            self._insert_text("Line: {}\n".format(str(lineno)))
+            self._insert_text("In: {}\n\n".format(name))
             if line.strip():
-                indent = "\302\240" * 4
+                indent = "    "
                 self._insert_text("{}{}\n\n".format(indent, line))
             tb = tb.tb_next
         exception = traceback.format_exception_only(exctype, value)[0]
@@ -145,8 +152,8 @@ class DebugDialog(gaupol.BuilderDialog):
     def _on_editor_exit(self, pid, return_value, command):
         """Print an error message if editor process failed."""
         if return_value == 0: return
-        print(("Command '{}' failed with return value {:d}"
-               .format(command, return_value)))
+        print(("Command {} failed with return value {}"
+               .format(repr(command), repr(return_value))))
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
@@ -156,10 +163,9 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):
         """Open linked file in editor."""
-        if event.type != Gdk.BUTTON_RELEASE: return
-        if event.button != 1: return
+        if event.type != Gdk.EventType.BUTTON_RELEASE: return
         text_buffer = self._text_view.get_buffer()
-        assert not text_buffer.get_selection_bounds()
+        if text_buffer.get_selection_bounds(): return
         self._open_link(tag)
 
     def _on_text_view_motion_notify_event(self, text_view, event):
@@ -171,10 +177,10 @@ class DebugDialog(gaupol.BuilderDialog):
         window = text_view.get_window(Gtk.TextWindowType.TEXT)
         for tag in text_view.get_iter_at_location(x, y).get_tags():
             if tag.get_data("path") is not None:
-                window.set_cursor(Gdk.Cursor.new(Gdk.HAND2))
-                return text_view.window.get_pointer()
-        window.set_cursor(Gdk.Cursor.new(Gdk.XTERM))
-        text_view.window.get_pointer()
+                window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.HAND2))
+                return True
+        window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.XTERM))
+        return False
 
     def _open_link(self, tag):
         """Open linked file in editor."""
@@ -184,7 +190,7 @@ class DebugDialog(gaupol.BuilderDialog):
                                           FILE=path)
 
         process = aeidon.util.start_process(command)
-        glib.child_watch_add(process.pid, self._on_editor_exit, command)
+        GLib.child_watch_add(process.pid, self._on_editor_exit, command)
         tag.props.foreground = "purple"
 
     def set_text(self, exctype, value, tb):
@@ -198,7 +204,7 @@ class DebugDialog(gaupol.BuilderDialog):
         self._insert_title("Python Packages")
         self._insert_python_package_versions()
         gaupol.util.scale_to_content(self._text_view,
-                                     min_nchar=72,
+                                     min_nchar=30,
                                      min_nlines=10,
                                      max_nchar=100,
                                      max_nlines=30,
