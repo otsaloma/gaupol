@@ -56,7 +56,6 @@ class TextEditDialog(Gtk.Dialog):
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
         font = gaupol.util.get_font()
-        gaupol.util.scale_to_size(self._text_view, 70, 6, font)
         scroller = Gtk.ScrolledWindow()
         scroller.set_border_width(6)
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
@@ -64,6 +63,7 @@ class TextEditDialog(Gtk.Dialog):
         scroller.add(self._text_view)
         box = self.get_content_area()
         box.pack_start(scroller, expand=True, fill=True, padding=0)
+        gaupol.util.scale_to_size(self._text_view, 60, 6, font)
         box.show_all()
 
     def get_text(self):

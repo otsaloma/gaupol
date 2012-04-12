@@ -242,14 +242,14 @@ def scale_to_content(container,
     if max_nlines is not None:
         max_height = lines_to_px(max_nlines, font)
         height = min(height, max_height)
-    if isinstance(container, Gtk.TreeView):
-        # For tree views, it seems that
-        # we need to resize the scrolled window.
+    if isinstance(container.get_parent(), Gtk.ScrolledWindow):
         container = container.get_parent()
     container.set_size_request(width, height)
 
 def scale_to_size(widget, nchar, nlines, font=None):
     """Set `widget`'s size to `nchar` and `nlines`."""
+    if isinstance(widget.get_parent(), Gtk.ScrolledWindow):
+        widget = widget.get_parent()
     widget.set_size_request(char_to_px(nchar, font),
                             lines_to_px(nlines, font))
 
