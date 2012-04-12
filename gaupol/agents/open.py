@@ -407,7 +407,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
-        scroller.add(page.view)
+        # XXX: This shit segfaults.
+        # scroller.add(page.view)
         self.notebook.append_page(scroller, page.tab_widget)
         self.notebook.set_tab_reorderable(scroller, True)
         self.notebook.show_all()

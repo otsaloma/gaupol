@@ -43,6 +43,7 @@ class ErrorDialog(Gtk.MessageDialog):
 
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`ErrorDialog` object."""
+        # XXX:
         # Using __init__ to set Gtk.MessageDialog properties fails (probably
         # a PyGI regression), let's use __new__ instead, which means __init__
         # doesn't get called, but shall be defined for API doc parsers.
@@ -69,6 +70,7 @@ class InfoDialog(Gtk.MessageDialog):
 
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`InfoDialog` object."""
+        # XXX:
         # Using __init__ to set Gtk.MessageDialog properties fails (probably
         # a PyGI regression), let's use __new__ instead, which means __init__
         # doesn't get called, but shall be defined for API doc parsers.
@@ -95,6 +97,7 @@ class QuestionDialog(Gtk.MessageDialog):
 
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`QuestionDialog` object."""
+        # XXX:
         # Using __init__ to set Gtk.MessageDialog properties fails (probably
         # a PyGI regression), let's use __new__ instead, which means __init__
         # doesn't get called, but shall be defined for API doc parsers.
@@ -121,6 +124,7 @@ class WarningDialog(Gtk.MessageDialog):
 
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`WarningDialog` object."""
+        # XXX:
         # Using __init__ to set Gtk.MessageDialog properties fails (probably
         # a PyGI regression), let's use __new__ instead, which means __init__
         # doesn't get called, but shall be defined for API doc parsers.

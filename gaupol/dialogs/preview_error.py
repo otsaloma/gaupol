@@ -19,6 +19,7 @@
 """Dialog for informing that preview failed."""
 
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -30,7 +31,7 @@ class PreviewErrorDialog(gaupol.BuilderDialog):
 
     def __init__(self, parent, output):
         """Initialize a :class:`PreviewErrorDialog` object."""
-        gaupol.BuilderDialog.__init__(self, "previewerr-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, "preview-error-dialog.ui")
         self._init_data(output)
         gaupol.util.scale_to_content(self._text_view,
                                      min_nlines=5,

@@ -30,6 +30,3 @@ class TestAboutDialog(gaupol.TestCase):
     def setup_method(self, method):
         self.dialog = gaupol.AboutDialog(Gtk.Window())
         self.dialog.show()
-
-    def test___init__(self):
-        pass

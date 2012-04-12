@@ -243,15 +243,26 @@ def scale_to_content(container,
         max_height = lines_to_px(max_nlines, font)
         height = min(height, max_height)
     if isinstance(container.get_parent(), Gtk.ScrolledWindow):
+        # It seems that for tree views and text views,
+        # we need to set the size request of the scrolled window.
+        # Vaguely add 24 pixels for possible scroll bars.
         container = container.get_parent()
+        width += 24
+        height += 24
     container.set_size_request(width, height)
 
 def scale_to_size(widget, nchar, nlines, font=None):
     """Set `widget`'s size to `nchar` and `nlines`."""
+    width = char_to_px(nchar, font)
+    height = lines_to_px(nlines, font)
     if isinstance(widget.get_parent(), Gtk.ScrolledWindow):
+        # It seems that for tree views and text views,
+        # we need to set the size request of the scrolled window.
+        # Vaguely add 24 pixels for possible scroll bars.
         widget = widget.get_parent()
-    widget.set_size_request(char_to_px(nchar, font),
-                            lines_to_px(nlines, font))
+        width += 24
+        height += 24
+    widget.set_size_request(width, height)
 
 def separate_combo(store, itr):
     """Separator function for combo box models."""
