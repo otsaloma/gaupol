@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class FindAndReplaceAction(gaupol.Action):
@@ -79,4 +80,4 @@ class FindPreviousAction(gaupol.Action):
         aeidon.util.affirm(application.pattern)
 
 
-__all__ = tuple([x for x in dir() if x.endswith("Action")])
+__all__ = tuple(x for x in dir() if x.endswith("Action"))

@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class ShowCaseMenuAction(gaupol.MenuAction):
@@ -172,4 +173,4 @@ class UseUpperCaseAction(gaupol.Action):
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
-__all__ = tuple([x for x in dir() if x.endswith("Action")])
+__all__ = tuple(x for x in dir() if x.endswith("Action"))

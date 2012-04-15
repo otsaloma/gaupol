@@ -294,8 +294,7 @@ class RedoActionAction(gaupol.Action):
         self.props.tooltip = _("Redo the last undone action")
         self.accelerator = "<Shift><Control>Z"
         self.action_group = "main-unsafe"
-        # XXX:
-        # self.set_tool_item_type(Gtk.MenuToolButton)
+        self.tool_item_type = Gtk.MenuToolButton
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -391,8 +390,7 @@ class UndoActionAction(gaupol.Action):
         self.props.tooltip = _("Undo the last action")
         self.accelerator = "<Control>Z"
         self.action_group = "main-unsafe"
-        # XXX:
-        # self.set_tool_item_type(Gtk.MenuToolButton)
+        self.tool_item_type = Gtk.MenuToolButton
 
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -400,4 +398,4 @@ class UndoActionAction(gaupol.Action):
         aeidon.util.affirm(page.project.can_undo())
 
 
-__all__ = tuple([x for x in dir() if x.endswith("Action")])
+__all__ = tuple(x for x in dir() if x.endswith("Action"))

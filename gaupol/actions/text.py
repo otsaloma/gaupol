@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class ConfigureSpellCheckAction(gaupol.Action):
@@ -78,4 +79,4 @@ class CorrectTextsAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
 
 
-__all__ = tuple([x for x in dir() if x.endswith("Action")])
+__all__ = tuple(x for x in dir() if x.endswith("Action"))

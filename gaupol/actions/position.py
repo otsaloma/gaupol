@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class AdjustDurationsAction(gaupol.Action):
@@ -135,4 +136,4 @@ class TransformPositionsAction(gaupol.Action):
         aeidon.util.affirm(len(page.project.subtitles) > 1)
 
 
-__all__ = tuple([x for x in dir() if x.endswith("Action")])
+__all__ = tuple(x for x in dir() if x.endswith("Action"))

@@ -51,6 +51,11 @@ class Action(Gtk.Action):
        built-in keybindings (e.g. clipboard keybindings in entries) and
        "main-unsafe" for ones that do.
 
+    :ivar tool_item_type: Class to tool item widget
+
+        The default value is :class:`Gtk.ToolButton`. For buttons with a menu
+        attached, use :class:`Gtk.MenuToolButton`.
+
     :ivar widgets: Tuple of names of related application widgets
 
        :attr:`widgets` should be acquirable with :func:`getattr` from
@@ -60,6 +65,7 @@ class Action(Gtk.Action):
 
     accelerator = ""
     action_group = "main-unsafe"
+    tool_item_type = Gtk.ToolButton
     widgets = ()
 
     def __init__(self, name):
@@ -69,6 +75,18 @@ class Action(Gtk.Action):
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         pass
+
+    def do_create_tool_item(self):
+        """Return tool button with a menu."""
+        # This is a really fucking strange way to replace the deprecated
+        # Gtk.Action.set_tool_item_type function, but it seems to work.
+        # UI manager or whoever will set the correct labels and icons.
+        if self.tool_item_type is Gtk.ToolButton:
+            return Gtk.ToolButton.new(None, None)
+        if self.tool_item_type is Gtk.MenuToolButton:
+            return Gtk.MenuToolButton.new(None, None)
+        raise ValueError("Bad value for self.tool_item_type: {}"
+                         .format(repr(self.tool_item_type)))
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
