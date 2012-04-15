@@ -44,8 +44,10 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         renderer = Gtk.CellRendererText()
         self._encoding_combo.pack_start(renderer, True)
         self._encoding_combo.add_attribute(renderer, "text", 1)
-        function = gaupol.util.separate_combo
-        self._encoding_combo.set_row_separator_func(function, None)
+        # XXX: Segfaults.
+        # https://bugzilla.gnome.org/show_bug.cgi?id=674120
+        # func = gaupol.util.separate_combo
+        # self._encoding_combo.set_row_separator_func(func, None)
 
     def _init_filters(self):
         """Initialize file filters."""

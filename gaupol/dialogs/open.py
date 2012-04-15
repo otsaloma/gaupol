@@ -33,8 +33,6 @@ class OpenDialog(gaupol.FileDialog):
 
     _widgets = ("align_combo", "align_label", "encoding_combo")
 
-    # XXX: This shit segfaults.
-
     def __init__(self, parent, title, doc):
         """Initialize an :class:`OpenDialog` object."""
         gaupol.FileDialog.__init__(self, "open-dialog.ui")
@@ -53,7 +51,8 @@ class OpenDialog(gaupol.FileDialog):
         for align_method in aeidon.align_methods:
             store.append((align_method.label,))
         view = self._align_combo.get_child()
-        view.set_displayed_row(0)
+        path = gaupol.util.tree_row_to_path(0)
+        view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
         self._align_combo.pack_start(renderer, True)
         self._align_combo.add_attribute(renderer, "text", 0)

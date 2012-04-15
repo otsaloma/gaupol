@@ -26,6 +26,10 @@ from .test_file import _TestFileDialog
 
 class TestSaveDialog(_TestFileDialog):
 
+    def run__dialog(self):
+        self.dialog.run()
+        self.dialog.destroy()
+
     def setup_method(self, method):
         gaupol.conf.file.directory = os.getcwd()
         self.dialog = gaupol.SaveDialog(Gtk.Window(), "test")

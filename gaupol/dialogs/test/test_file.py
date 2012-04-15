@@ -24,10 +24,6 @@ from gi.repository import Gtk
 
 class _TestFileDialog(gaupol.TestCase):
 
-    def run__dialog(self):
-        self.dialog.run()
-        self.dialog.destroy()
-
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test__on_encoding_combo_changed(self):
         responder = iter((Gtk.ResponseType.OK, Gtk.ResponseType.CANCEL))

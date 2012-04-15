@@ -19,7 +19,6 @@
 import aeidon
 import gaupol
 import os
-import random
 
 from gi.repository import Gtk
 from .test_file import _TestFileDialog
@@ -27,9 +26,25 @@ from .test_file import _TestFileDialog
 
 class TestOpenDialog(_TestFileDialog):
 
+    def run_dialog_main(self):
+        gaupol.conf.file.directory = os.getcwd()
+        doc = aeidon.documents.MAIN
+        self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
+        self.dialog.show()
+        self.dialog.run()
+        self.dialog.destroy()
+
+    def run_dialog_translation(self):
+        gaupol.conf.file.directory = os.getcwd()
+        doc = aeidon.documents.TRAN
+        self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
+        self.dialog.show()
+        self.dialog.run()
+        self.dialog.destroy()
+
     def setup_method(self, method):
         gaupol.conf.file.directory = os.getcwd()
-        doc = aeidon.documents[random.randint(0, 1)]
+        doc = aeidon.documents.MAIN
         self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
         self.dialog.show()
 

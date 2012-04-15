@@ -264,7 +264,7 @@ def scale_to_size(widget, nchar, nlines, font=None):
         height += 24
     widget.set_size_request(width, height)
 
-def separate_combo(store, itr):
+def separate_combo(store, itr, data=None):
     """Separator function for combo box models."""
     return store.get_value(itr, 0) == gaupol.COMBO_SEPARATOR
 

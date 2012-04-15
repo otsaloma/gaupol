@@ -276,7 +276,10 @@ class LocalePage(BuilderPage):
         renderer = Gtk.CellRendererText()
         combo_box.pack_start(renderer, True)
         combo_box.add_attribute(renderer, "text", 1)
-        combo_box.set_row_separator_func(gaupol.util.separate_combo)
+        # XXX: Segfaults.
+        # https://bugzilla.gnome.org/show_bug.cgi?id=674120
+        # func = gaupol.util.separate_combo
+        # combo_box.set_row_separator_func(func, None)
 
     def _init_combo_boxes(self):
         """Initialize and populate combo boxes."""
