@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,11 +21,12 @@
 import aeidon
 import atexit
 import gaupol
-from gi.repository import Gtk
 import itertools
 import os
-from gi.repository import Pango
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
+from gi.repository import Pango
 
 __all__ = ("Application",)
 
@@ -46,11 +47,13 @@ class ApplicationMeta(aeidon.Contractual):
         new_dict = dic.copy()
         for agent_class_name in gaupol.agents.__all__:
             agent_class = getattr(gaupol.agents, agent_class_name)
-            def is_public_method(name):
-                return (not name.startswith("_") and
-                        callable(getattr(agent_class, name)))
+            def is_delegate_method(name):
+                value = getattr(agent_class, name)
+                return (callable(value) and
+                        hasattr(value, "export") and
+                        value.export is True)
 
-            attr_names = list(list(filter(is_public_method, dir(agent_class))))
+            attr_names = list(filter(is_delegate_method, dir(agent_class)))
             for attr_name in attr_names:
                 new_dict[attr_name] = getattr(agent_class, attr_name)
         return type.__new__(meta, class_name, bases, new_dict)
@@ -152,7 +155,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                 attr_value = getattr(agent, attr_name)
                 if attr_name in self._delegations:
                     raise ValueError("Multiple definitions of {}"
-                                    .format(repr(attr_name)))
+                                     .format(repr(attr_name)))
 
                 self._delegations[attr_name] = attr_value
                 # Remove class-level function added by ApplicationMeta.
@@ -199,8 +202,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_main_toolbar(self, vbox):
         """Initialize the main toolbar."""
-        self._init_redo_button()
         self._init_undo_button()
+        self._init_redo_button()
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         style = gaupol.conf.application_window.toolbar_style
         if style != gaupol.toolbar_styles.DEFAULT:

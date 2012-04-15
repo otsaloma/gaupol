@@ -31,7 +31,7 @@ class AdjustDurationsAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`AdjustDurationsAction` object."""
         gaupol.Action.__init__(self, "adjust_durations")
-        self.props.label = _("Adjust _Durations\342\200\246")
+        self.props.label = _("Adjust _Durations…")
         self.props.tooltip = _("Lengthen or shorten durations")
         self.action_group = "main-unsafe"
 
@@ -47,7 +47,7 @@ class ConvertFramerateAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ConvertFramerateAction` object."""
         gaupol.Action.__init__(self, "convert_framerate")
-        self.props.label = _("Convert _Framerate\342\200\246")
+        self.props.label = _("Convert _Framerate…")
         self.props.tooltip = _("Change positions for a different framerate")
         self.action_group = "main-unsafe"
 
@@ -87,7 +87,7 @@ class ShiftPositionsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ShiftPositionsAction` object."""
         gaupol.Action.__init__(self, "shift_positions")
-        self.props.label = _("_Shift Positions\342\200\246")
+        self.props.label = _("_Shift Positions…")
         self.props.tooltip = _("Make subtitles appear earlier or later")
         self.accelerator = "H"
         self.action_group = "main-unsafe"
@@ -104,7 +104,7 @@ class SpeechRecognitionAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SpeechRecognitionAction` object."""
         gaupol.Action.__init__(self, "speech_recognition")
-        self.props.label = _("Sp_eech Recognition\342\200\246")
+        self.props.label = _("Sp_eech Recognition…")
         self.props.tooltip = _("Generate subtitles by voice "
                                "and speech recognition")
 
@@ -123,7 +123,7 @@ class TransformPositionsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`TransformPositionsAction` object."""
         gaupol.Action.__init__(self, "transform_positions")
-        self.props.label = _("_Transform Positions\342\200\246")
+        self.props.label = _("_Transform Positions…")
         self.props.tooltip = _("Change positions by linear "
                                "two-point correction")
 

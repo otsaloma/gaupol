@@ -31,7 +31,7 @@ class AppendFileAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`AppendFileAction` object."""
         gaupol.Action.__init__(self, "append_file")
-        self.props.label = _("_Append File\342\200\246")
+        self.props.label = _("_Append File…")
         self.props.stock_id = Gtk.STOCK_ADD
         self.props.tooltip = _("Append subtitles from file "
                                "to the current project")
@@ -129,7 +129,7 @@ class OpenMainFilesAction(gaupol.Action):
         """Initialize an :class:`OpenMainFilesAction` object."""
         gaupol.Action.__init__(self, "open_main_files")
         self.props.is_important = True
-        self.props.label = _("_Open\342\200\246")
+        self.props.label = _("_Open…")
         self.props.short_label = _("Open")
         self.props.stock_id = Gtk.STOCK_OPEN
         self.props.tooltip = _("Open main files")
@@ -149,7 +149,7 @@ class OpenMainFilesRecentAction(gaupol.RecentAction):
         """Initialize an :class:`OpenMainFilesRecentAction` object."""
         gaupol.RecentAction.__init__(self, "open_main_files_recent")
         self.props.is_important = True
-        self.props.label = _("_Open\342\200\246")
+        self.props.label = _("_Open…")
         self.props.short_label = _("Open")
         self.props.stock_id = Gtk.STOCK_OPEN
         self.props.tooltip = _("Open main files")
@@ -197,7 +197,7 @@ class OpenTranslationFileAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`OpenTranslationFileAction` object."""
         gaupol.Action.__init__(self, "open_translation_file")
-        self.props.label = _("Open _Translation\342\200\246")
+        self.props.label = _("Open _Translation…")
         self.props.short_label = _("Open Translation")
         self.props.stock_id = Gtk.STOCK_OPEN
         self.props.tooltip = _("Open a translation file")
@@ -248,7 +248,7 @@ class SaveAllDocumentsAsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveAllDocumentsAsAction` object."""
         gaupol.Action.__init__(self, "save_all_documents_as")
-        self.props.label = _("Save _All As\342\200\246")
+        self.props.label = _("Save _All As…")
         self.props.stock_id = Gtk.STOCK_SAVE_AS
         self.props.tooltip = _("Save all open documents with "
                                "different properties")
@@ -287,7 +287,7 @@ class SaveMainDocumentAsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveMainDocumentAsAction` object."""
         gaupol.Action.__init__(self, "save_main_document_as")
-        self.props.label = _("Save _As\342\200\246")
+        self.props.label = _("Save _As…")
         self.props.short_label = _("Save As")
         self.props.stock_id = Gtk.STOCK_SAVE_AS
         self.props.tooltip = _("Save the current main document "
@@ -326,7 +326,7 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveTranslationDocumentAsAction` object."""
         gaupol.Action.__init__(self, "save_translation_document_as")
-        self.props.label = _("Save Translat_ion As\342\200\246")
+        self.props.label = _("Save Translat_ion As…")
         self.props.short_label = _("Save Translation As")
         self.props.stock_id = Gtk.STOCK_SAVE_AS
         self.props.tooltip = _("Save the current translation document "
@@ -347,7 +347,7 @@ class SelectVideoFileAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SelectVideoFileAction` object."""
         gaupol.Action.__init__(self, "select_video_file")
-        self.props.label = _("Select _Video\342\200\246")
+        self.props.label = _("Select _Video…")
         self.props.short_label = _("Video")
         self.props.stock_id = Gtk.STOCK_FILE
         self.props.tooltip = _("Select a video file")
@@ -367,7 +367,7 @@ class SplitProjectAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SplitProjectAction` object."""
         gaupol.Action.__init__(self, "split_project")
-        self.props.label = _("Spli_t Project\342\200\246")
+        self.props.label = _("Spli_t Project…")
         self.props.tooltip = _("Split the current project in two")
         self.action_group = "main-unsafe"
 

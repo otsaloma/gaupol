@@ -31,7 +31,7 @@ class ConfigureSpellCheckAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ConfigureSpellCheckAction` object."""
         gaupol.Action.__init__(self, "configure_spell_check")
-        self.props.label = _("Co_nfigure Spell-check\342\200\246")
+        self.props.label = _("Co_nfigure Spell-check…")
         self.props.tooltip = _("Set language and spell-check target")
         self.action_group = "main-unsafe"
 
@@ -68,7 +68,7 @@ class CorrectTextsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`CorrectTextsAction` object."""
         gaupol.Action.__init__(self, "correct_texts")
-        self.props.label = _("C_orrect Texts\342\200\246")
+        self.props.label = _("C_orrect Texts…")
         self.props.tooltip = _("Find and correct errors in texts")
         self.accelerator = "O"
         self.action_group = "main-unsafe"

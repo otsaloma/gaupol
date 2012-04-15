@@ -31,7 +31,7 @@ class FindAndReplaceAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`FindAndReplaceAction` object."""
         gaupol.Action.__init__(self, "find_and_replace")
-        self.props.label = _("_Find And Replace\342\200\246")
+        self.props.label = _("_Find And Replace…")
         self.props.short_label = _("Find")
         self.props.stock_id = Gtk.STOCK_FIND_AND_REPLACE
         self.props.tooltip = _("Search for and replace text")

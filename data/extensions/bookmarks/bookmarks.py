@@ -181,7 +181,7 @@ class BookmarksExtension(gaupol.Extension):
         """Initialize UI manager actions."""
         self._action_group.add_actions((
             ("show_bookmarks_menu", None, _("_Bookmarks")),
-            ("add_bookmark", Gtk.STOCK_ADD, _("_Add\342\200\246"),
+            ("add_bookmark", Gtk.STOCK_ADD, _("_Add…"),
              "<Control>D", _("Add a bookmark for the current subtitle"),
              self._on_add_bookmark_activate),
             ("edit_bookmarks", None, _("_Edit Bookmarks"),

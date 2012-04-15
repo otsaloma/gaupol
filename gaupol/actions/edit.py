@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class ClearTextsAction(gaupol.Action):
@@ -204,7 +205,7 @@ class InsertSubtitlesAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`InsertSubtitlesAction` object."""
         gaupol.Action.__init__(self, "insert_subtitles")
-        self.props.label = _("_Insert Subtitles\342\200\246")
+        self.props.label = _("_Insert Subtitles…")
         self.props.short_label = _("Insert")
         self.props.stock_id = Gtk.STOCK_ADD
         self.props.tooltip = _("Insert new subtitles")

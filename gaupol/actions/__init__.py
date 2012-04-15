@@ -18,8 +18,6 @@
 
 """:class:`Gtk.UIManager` actions for :class:`gaupol.Application`."""
 
-import aeidon
-
 from gaupol.actions.edit import *
 from gaupol.actions.file import *
 from gaupol.actions.format import *
@@ -30,4 +28,4 @@ from gaupol.actions.search import *
 from gaupol.actions.text import *
 from gaupol.actions.view import *
 
-__all__ = tuple([x for x in dir() if x.endswith("Action")])
+__all__ = tuple(x for x in dir() if x.endswith("Action"))
