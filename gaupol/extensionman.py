@@ -35,9 +35,9 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
     Finding activating, storing and deactivating extensions.
 
     :ivar _active: Dictionary mapping module names to extensions
-    :ivar _metadata: Dictionary mapping module names to metadata items
     :ivar _dependants: Dictionary mapping module names to a list of others
-    :ivar _inferior: List of modules activated to satisfy a dependency
+    :ivar _metadata: Dictionary mapping module names to metadata items
+    :ivar _slaves: List of modules activated to satisfy a dependency
     """
     _global_dir = os.path.join(aeidon.DATA_DIR, "extensions")
     _local_dir = os.path.join(aeidon.DATA_HOME_DIR, "extensions")
@@ -48,8 +48,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         self.application = application
         self._active = {}
         self._dependants = {}
-        self._inferior = []
         self._metadata = {}
+        self._slaves = []
 
     def _find_extensions_in_directory(self, directory):
         """Find all extensions in `directory` and parse their metadata."""
@@ -80,7 +80,7 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         lines = [x.strip() for x in lines]
         metadata = ExtensionMetadata()
         metadata.path = path
-        for line in [_f for _f in lines if _f]:
+        for line in [x for x in lines if x]:
             if line.startswith("["): continue
             name, value = line.split("=", 1)
             name = (name[1:] if name.startswith("_") else name)
@@ -141,14 +141,14 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         """Return ``True`` if extension is active, ``False`` if not."""
         return (module in self._active)
 
-    def setup_extension_require(self, module, inferior=False):
+    def setup_extension_require(self, module, slave=False):
         assert module in self._metadata
 
-    def setup_extension(self, module, inferior=False):
+    def setup_extension(self, module, slave=False):
         """
         Import and setup extension by module name.
 
-        `inferior` should be ``True`` if called just to satisfy a dependency of
+        `slave` should be ``True`` if called just to satisfy a dependency of
         another extension. Setup also all modules required by `module`. Return
         silently if `module` is already set up.
         """
@@ -173,11 +173,11 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
                 extension.setup(self.application)
                 self._active[module] = extension
                 self._dependants[module] = []
-        if inferior:
-            self._inferior.append(module)
-        else: # superior
-            if module in self._inferior:
-                self._inferior.remove(module)
+        if slave:
+            self._slaves.append(module)
+        else: # master
+            if module in self._slaves:
+                self._slaves.remove(module)
         self.application.update_gui()
 
     def setup_extensions(self):
@@ -235,10 +235,10 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
             if module in self._dependants[dependency]:
                 self._dependants[dependency].remove(module)
             if self._dependants[dependency]: continue
-            if not dependency in self._inferior: continue
+            if not dependency in self._slaves: continue
             self.teardown_extension(dependency)
-        if module in self._inferior:
-            self._inferior.remove(module)
+        if module in self._slaves:
+            self._slaves.remove(module)
         gaupol.conf.write_to_file()
 
     def teardown_extensions(self):
