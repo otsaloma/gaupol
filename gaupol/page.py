@@ -296,7 +296,7 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         tooltip.set_markup("{}\n\n{}\n{}\n{}".format(
                 _("<b>Path:</b> {}").format(path),
                 _("<b>Format:</b> {}").format(format.label),
-                _("<b>Character encoding:</b> {}").format(encoding),
+                _("<b>Encoding:</b> {}").format(encoding),
                 _("<b>Newlines:</b> {}").format(newline.label)))
 
         return True # to show the tooltip.

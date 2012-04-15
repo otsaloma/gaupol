@@ -31,8 +31,6 @@ class SaveDialog(gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
-    # XXX: This shit segfaults.
-
     _widgets = ("encoding_combo", "format_combo", "newline_combo")
 
     def __init__(self, parent, title):
@@ -84,12 +82,13 @@ class SaveDialog(gaupol.FileDialog):
         """Change the extension of the current filename."""
         path = self.get_filename()
         if path is None: return
-        self.unselect_filename(path)
         dirname = os.path.dirname(path)
         basename = os.path.basename(path)
         format = self.get_format()
+        if path.endswith(format.extension): return
         basename = aeidon.util.replace_extension(basename, format)
         path = os.path.join(dirname, basename)
+        self.unselect_filename(path)
         self.set_current_name(basename)
         self.set_filename(path)
 
@@ -107,7 +106,6 @@ class SaveDialog(gaupol.FileDialog):
         # Catch all events on save button to ensure that a possibly
         # lacking extension is added to the filename so that overwrite
         # confirmation check is done correctly.
-        # XXX: Use the 'confirm-overwrite' signal instead?
         self._format_combo.emit("changed")
 
     def get_format(self):
