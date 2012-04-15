@@ -20,9 +20,10 @@
 
 import aeidon
 import gaupol
+import sys
+
 from gi.repository import GObject
 from gi.repository import Gtk
-import sys
 
 __all__ = ("Action",
            "MenuAction",
@@ -40,9 +41,9 @@ class Action(Gtk.Action):
 
     :ivar accelerator: Accelerator string or ``None``
 
-       :attr:`accelerator` defines a string in the format understood by the
+       :attr:`accelerator` defines a string in the format understood by
        :func:`Gtk.accelerator_parse`, ``None`` to use the stock accelerator or
-       undefined to use a blank string.
+       unset to use a blank string.
 
     :ivar action_group: Name of action group to place action into
 
@@ -53,7 +54,8 @@ class Action(Gtk.Action):
     :ivar widgets: Tuple of names of related application widgets
 
        :attr:`widgets` should be acquirable with :func:`getattr` from
-       :class:`gaupol.Application`. Their sensitivities will be kep in sync.
+       :class:`gaupol.Application`. Their sensitivities will be kep in sync
+       with sensitivity of the corresponding action.
     """
 
     accelerator = ""
@@ -70,16 +72,14 @@ class Action(Gtk.Action):
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
-        # XXX:
-        # self.widgets = tuple(getattr(application, x) for x in self.widgets)
+        self.widgets = tuple(getattr(application, x) for x in self.widgets)
         callback = "_on_{}_activate".format(self.props.name)
         self.connect("activate", getattr(application, callback))
 
     def set_sensitive(self, sensitive):
         """Set the sensitivity of action and all its widgets."""
-        # XXX:
-        # for widget in self.widgets:
-        #     widget.set_sensitive(sensitive)
+        for widget in self.widgets:
+            widget.set_sensitive(sensitive)
         return Gtk.Action.set_sensitive(self, sensitive)
 
     def update_sensitivity(self, application, page):
@@ -121,8 +121,7 @@ class RecentAction(Gtk.RecentAction, Action):
         self.set_show_numbers(False)
         self.set_show_not_found(False)
         self.set_show_tips(True)
-        # XXX:
-        # self.set_sort_type(Gtk.RECENT_SORT_MRU)
+        self.set_sort_type(Gtk.RecentSortType.MRU)
         recent_filter = Gtk.RecentFilter()
         recent_filter.add_group(self.group)
         self.add_filter(recent_filter)
@@ -181,6 +180,6 @@ class RadioAction(Gtk.RadioAction, Action):
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        if self.__class__.__name__ != self.group: return
-        callback = "_on_{}_changed".format(self.props.name)
-        self.connect("changed", getattr(application, callback))
+        if self.__class__.__name__ == self.group:
+            callback = "_on_{}_changed".format(self.props.name)
+            self.connect("changed", getattr(application, callback))
