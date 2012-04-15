@@ -206,8 +206,16 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
         self._output_spin_2.set_increments(1, 10)
         self._output_spin_1.set_range(0, 999999)
         self._output_spin_2.set_range(0, 999999)
-        self._correction_hbox_1.pack_start(self._output_spin_1, True, True, 0)
-        self._correction_hbox_2.pack_start(self._output_spin_2, True, True, 0)
+        self._correction_hbox_1.pack_start(self._output_spin_1,
+                                           expand=True,
+                                           fill=True,
+                                           padding=0)
+
+        self._correction_hbox_2.pack_start(self._output_spin_2,
+                                           expand=True,
+                                           fill=True,
+                                           padding=0)
+
         self._correction_hbox_1.show_all()
         self._correction_hbox_2.show_all()
         self._correction_label_1.set_mnemonic_widget(self._output_spin_1)
@@ -280,8 +288,16 @@ class TimeTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual)
         PositionTransformDialog._init_widgets(self)
         self._input_entry_1.set_width_chars(13)
         self._input_entry_2.set_width_chars(13)
-        self._correction_hbox_1.pack_start(self._output_entry_1, True, True, 0)
-        self._correction_hbox_2.pack_start(self._output_entry_2, True, True, 0)
+        self._correction_hbox_1.pack_start(self._output_entry_1,
+                                           expand=True,
+                                           fill=True,
+                                           padding=0)
+
+        self._correction_hbox_2.pack_start(self._output_entry_2,
+                                           expand=True,
+                                           fill=True,
+                                           padding=0)
+
         self._correction_hbox_1.show_all()
         self._correction_hbox_2.show_all()
         self._correction_label_1.set_mnemonic_widget(self._output_entry_1)

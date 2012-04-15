@@ -48,7 +48,7 @@ class InsertDialog(gaupol.BuilderDialog):
         store.append((_("Above selection"),))
         store.append((_("Below selection"),))
         renderer = Gtk.CellRendererText()
-        self._position_combo.pack_start(renderer, True)
+        self._position_combo.pack_start(renderer, expand=True)
         self._position_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self):

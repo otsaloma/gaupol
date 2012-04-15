@@ -51,7 +51,7 @@ class Action(Gtk.Action):
        built-in keybindings (e.g. clipboard keybindings in entries) and
        "main-unsafe" for ones that do.
 
-    :ivar tool_item_type: Class to tool item widget
+    :ivar tool_item_type: Class of tool item widget
 
         The default value is :class:`Gtk.ToolButton`. For buttons with a menu
         attached, use :class:`Gtk.MenuToolButton`.
@@ -77,7 +77,7 @@ class Action(Gtk.Action):
         pass
 
     def do_create_tool_item(self):
-        """Return tool button with a menu."""
+        """Return a tool button widget."""
         # This is a really fucking strange way to replace the deprecated
         # Gtk.Action.set_tool_item_type function, but it seems to work.
         # UI manager or whoever will set the correct labels and icons.

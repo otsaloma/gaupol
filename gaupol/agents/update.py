@@ -173,7 +173,8 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             self.get_column_action(field).set_active(visible)
         video = os.path.basename(page.project.video_path or "")
         self.video_button.get_data("label").set_text(video)
-        self.video_button.set_tooltip_text(video or None)
+        self.video_button.set_has_tooltip(bool(video))
+        self.video_button.set_tooltip_text(video)
 
     @aeidon.deco.export
     def flash_message(self, message):
@@ -188,8 +189,9 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Show `message` in the statusbar."""
         if self._message_tag is not None:
             GObject.source_remove(self._message_tag)
-        if self._message_id is not None:
-            self.statusbar.remove_message(0, self._message_id)
+        # XXX:
+        # if self._message_id is not None:
+        #     self.statusbar.remove_message(0, self._message_id)
         event_box = self.statusbar.get_ancestor(Gtk.EventBox)
         self.statusbar.set_tooltip_text(message or "")
         if message is not None:

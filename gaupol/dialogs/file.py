@@ -42,7 +42,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         path = gaupol.util.tree_row_to_path(0)
         view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
-        self._encoding_combo.pack_start(renderer, True)
+        self._encoding_combo.pack_start(renderer, expand=True)
         self._encoding_combo.add_attribute(renderer, "text", 1)
         # XXX: Segfaults.
         # https://bugzilla.gnome.org/show_bug.cgi?id=674120

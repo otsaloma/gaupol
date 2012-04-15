@@ -64,7 +64,7 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
             store.append((label,))
         self._length_combo.set_model(store)
         renderer = Gtk.CellRendererText()
-        self._length_combo.pack_start(renderer, True)
+        self._length_combo.pack_start(renderer, expand=True)
         self._length_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self):
@@ -419,7 +419,7 @@ class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
         store.append((gaupol.COMBO_SEPARATOR,))
         store.append((_("Custom"),))
         renderer = Gtk.CellRendererText()
-        self._app_combo.pack_start(renderer, True)
+        self._app_combo.pack_start(renderer, expand=True)
         self._app_combo.add_attribute(renderer, "text", 0)
         # XXX: Segfaults.
         # https://bugzilla.gnome.org/show_bug.cgi?id=674120

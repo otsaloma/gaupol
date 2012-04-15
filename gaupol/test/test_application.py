@@ -17,6 +17,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -26,7 +27,7 @@ class TestApplication(gaupol.TestCase):
         Gtk.main()
 
     def setup_method(self, method):
-        self.application = self.new_application()
+        self.application = gaupol.Application()
 
     def test___init__(self):
         conf = gaupol.conf.application_window

@@ -57,7 +57,7 @@ class MultiSaveDialog(gaupol.FileDialog):
         view = self._format_combo.get_child()
         view.set_displayed_row(0)
         renderer = Gtk.CellRendererText()
-        self._format_combo.pack_start(renderer, True)
+        self._format_combo.pack_start(renderer, expand=True)
         self._format_combo.add_attribute(renderer, "text", 0)
 
     def _init_newline_combo(self):
@@ -69,7 +69,7 @@ class MultiSaveDialog(gaupol.FileDialog):
         view = self._newline_combo.get_child()
         view.set_displayed_row(0)
         renderer = Gtk.CellRendererText()
-        self._newline_combo.pack_start(renderer, True)
+        self._newline_combo.pack_start(renderer, expand=True)
         self._newline_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self):

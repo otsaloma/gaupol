@@ -25,6 +25,7 @@ import itertools
 import os
 _ = aeidon.i18n._
 
+from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import Pango
 
@@ -184,7 +185,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_gui(self):
         """Initialize the user interface."""
-        vbox = Gtk.VBox()
+        vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=0)
         self._init_window()
         self._init_uim()
         self._init_menubar(vbox)
@@ -208,29 +209,41 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         style = gaupol.conf.application_window.toolbar_style
         if style != gaupol.toolbar_styles.DEFAULT:
             toolbar.set_style(style.value)
-        gaupol.conf.connect_notify("application_window", "toolbar_style", self)
-        vbox.pack_start(toolbar, False, False, 0)
+        gaupol.conf.connect_notify("application_window",
+                                   "toolbar_style",
+                                   self)
+
+        vbox.pack_start(toolbar,
+                        expand=False,
+                        fill=False,
+                        padding=0)
 
     def _init_menubar(self, vbox):
         """Initialize the menubar."""
         menubar = self.uim.get_widget("/ui/menubar")
-        vbox.pack_start(menubar, False, False, 0)
+        vbox.pack_start(menubar,
+                        expand=False,
+                        fill=False,
+                        padding=0)
 
     def _init_notebook(self, vbox):
         """Initialize the notebook."""
         self.notebook = Gtk.Notebook()
         self.notebook.set_scrollable(True)
         self.notebook.set_show_border(False)
-        # XXX:
-        # self.Gtk.drag_dest_set(notebook, Gtk.DEST_DEFAULT_ALL,
-        #                             [("text/uri-list", 0, 0)],
-        #                             Gdk.DragAction.COPY)
+        self.notebook.drag_dest_set(flags=Gtk.DestDefaults.ALL,
+                                    targets=None,
+                                    actions=Gdk.DragAction.COPY)
 
-        # aeidon.util.connect(self, "notebook", "drag-data-received")
-        # aeidon.util.connect(self, "notebook", "page-reordered")
-        # callback = self._on_notebook_switch_page
-        # self.notebook.connect_after("switch-page", callback)
-        vbox.pack_start(self.notebook, True , True , 0)
+        self.notebook.drag_dest_add_uri_targets()
+        aeidon.util.connect(self, "notebook", "drag-data-received")
+        aeidon.util.connect(self, "notebook", "page-reordered")
+        callback = self._on_notebook_switch_page
+        self.notebook.connect_after("switch-page", callback)
+        vbox.pack_start(self.notebook,
+                        expand=True,
+                        fill=True,
+                        padding=0)
 
     def _init_output_window(self):
         """Initialize the output window."""
@@ -241,7 +254,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""
         redo_button = self.get_tool_item("redo_action")
-        # XXX:
         redo_button.set_menu(Gtk.Menu())
         tip = _("Redo undone actions")
         redo_button.set_arrow_tooltip_text(tip)
@@ -251,9 +263,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_statusbar(self, vbox):
         """Initialize the statusbar."""
         self.statusbar = Gtk.Statusbar()
-        # XXX:
-        # self.statusbar.set_has_resize_grip(True)
-        vbox.pack_start(self.statusbar, False, False, 0)
+        vbox.pack_start(self.statusbar,
+                        expand=False,
+                        fill=False,
+                        padding=0)
 
     def _init_uim(self):
         """Initialize the UI manager."""
@@ -286,7 +299,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize the groups of radio actions in action group."""
         actions = action_group.list_actions()
         actions = [x for x in actions if isinstance(x, Gtk.RadioAction)]
-        for group in set((x.group for x in actions)):
+        for group in set(x.group for x in actions):
             instance = None
             for action in (x for x in actions if x.group == group):
                 if instance is not None:
@@ -296,7 +309,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
         undo_button = self.get_tool_item("undo_action")
-        # XXX:
         undo_button.set_menu(Gtk.Menu())
         tip = _("Undo actions")
         undo_button.set_arrow_tooltip_text(tip)
@@ -315,28 +327,44 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Intialize the video button on the video toolbar."""
         # Let's make this resemble a Gtk.FileChooserButton,
         # but not actually be one, because they are slow to instantiate.
-        hbox = Gtk.HBox(False, 4)
+        hbox = Gtk.Box(Gtk.Orientation.HORIZONTAL, spacing=0)
         size = Gtk.IconSize.MENU
         image = Gtk.Image.new_from_stock(Gtk.STOCK_FILE, size)
-        hbox.pack_start(image, False, False, 0)
+        hbox.pack_start(image,
+                        expand=False,
+                        fill=False,
+                        padding=6)
+
         label = Gtk.Label()
         label.props.xalign = 0
         label.set_ellipsize(Pango.EllipsizeMode.END)
-        hbox.pack_start(label, True, True, 0)
-        # XXX:
-        # hbox.pack_start(Gtk.VSeparator(, True, True, 0), False, False)
+        hbox.pack_start(label,
+                        expand=True,
+                        fill=True,
+                        padding=0)
+
+        separator = Gtk.Separator.new(Gtk.Orientation.VERTICAL)
+        hbox.pack_start(separator,
+                        expand=False,
+                        fill=False,
+                        padding=6)
+
         image = Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, size)
-        hbox.pack_start(image, False, False, 0)
+        hbox.pack_start(image,
+                        expand=False,
+                        fill=False,
+                        padding=6)
+
         self.video_button = Gtk.Button()
         self.video_button.add(hbox)
         self.video_button.set_data("label", label)
-        # XXX:
-        # self.Gtk.drag_dest_set(video_button, Gtk.DEST_DEFAULT_ALL,
-        #                                 [("text/uri-list", 0, 0)],
-        #                                 Gdk.DragAction.COPY)
+        self.video_button.drag_dest_set(flags=Gtk.DestDefaults.ALL,
+                                        targets=None,
+                                        actions=Gdk.DragAction.COPY)
 
-        # aeidon.util.connect(self, "video_button", "clicked")
-        # aeidon.util.connect(self, "video_button", "drag-data-received")
+        self.video_button.drag_dest_add_uri_targets()
+        aeidon.util.connect(self, "video_button", "clicked")
+        aeidon.util.connect(self, "video_button", "drag-data-received")
         tool_item = Gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.set_expand(True)
@@ -358,7 +386,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_video_button()
         self._init_framerate_label()
         self._init_framerate_combo()
-        vbox.pack_start(self.video_toolbar, False, False, 0)
+        vbox.pack_start(self.video_toolbar,
+                        expand=False,
+                        fill=False,
+                        padding=0)
 
     def _init_window(self):
         """Initialize the main window."""

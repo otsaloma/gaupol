@@ -274,7 +274,7 @@ class LocalePage(BuilderPage):
         store = Gtk.ListStore(str, str)
         combo_box.set_model(store)
         renderer = Gtk.CellRendererText()
-        combo_box.pack_start(renderer, True)
+        combo_box.pack_start(renderer, expand=True)
         combo_box.add_attribute(renderer, "text", 1)
         # XXX: Segfaults.
         # https://bugzilla.gnome.org/show_bug.cgi?id=674120
@@ -705,7 +705,7 @@ class LineBreakOptionsPage(BuilderPage):
         for label in (x.label for x in gaupol.length_units):
             store.append((label,))
         renderer = Gtk.CellRendererText()
-        combo_box.pack_start(renderer, True)
+        combo_box.pack_start(renderer, expand=True)
         combo_box.add_attribute(renderer, "text", 0)
 
     def _init_values(self):

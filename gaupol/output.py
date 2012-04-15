@@ -86,10 +86,22 @@ class OutputWindow(Gtk.Window):
         self._close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
         button_box = Gtk.HButtonBox()
         button_box.set_layout(Gtk.ButtonBoxStyle.END)
-        button_box.pack_start(self._close_button, False, False, 0)
-        vbox = Gtk.VBox(spacing=12)
-        vbox.pack_start(scroller, True, True, 0)
-        vbox.pack_start(button_box, False, False, 0)
+        button_box.pack_start(self._close_button,
+                              expand=False,
+                              fill=False,
+                              padding=0)
+
+        vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=12)
+        vbox.pack_start(scroller,
+                        expand=True,
+                        fill=True,
+                        padding=0)
+
+        vbox.pack_start(button_box,
+                        expand=False,
+                        fill=False,
+                        padding=0)
+
         vbox.show_all()
         self.add(vbox)
 

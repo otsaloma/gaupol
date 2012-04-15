@@ -54,7 +54,7 @@ class OpenDialog(gaupol.FileDialog):
         path = gaupol.util.tree_row_to_path(0)
         view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
-        self._align_combo.pack_start(renderer, True)
+        self._align_combo.pack_start(renderer, expand=True)
         self._align_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self, doc):

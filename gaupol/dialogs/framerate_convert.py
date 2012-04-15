@@ -68,7 +68,7 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
         for label in (x.label for x in aeidon.framerates):
             store.append((label,))
         renderer = Gtk.CellRendererText()
-        self._input_combo.pack_start(renderer, True)
+        self._input_combo.pack_start(renderer, expand=True)
         self._input_combo.add_attribute(renderer, "text", 0)
 
     def _init_output_combo(self):
@@ -78,7 +78,7 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
         for label in (x.label for x in aeidon.framerates):
             store.append((label,))
         renderer = Gtk.CellRendererText()
-        self._output_combo.pack_start(renderer, True)
+        self._output_combo.pack_start(renderer, expand=True)
         self._output_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self):

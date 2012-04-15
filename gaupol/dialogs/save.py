@@ -54,7 +54,7 @@ class SaveDialog(gaupol.FileDialog):
         path = gaupol.util.tree_row_to_path(0)
         view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
-        self._format_combo.pack_start(renderer, True)
+        self._format_combo.pack_start(renderer, expand=True)
         self._format_combo.add_attribute(renderer, "text", 0)
 
     def _init_newline_combo(self):
@@ -67,7 +67,7 @@ class SaveDialog(gaupol.FileDialog):
         path = gaupol.util.tree_row_to_path(0)
         view.set_displayed_row(path)
         renderer = Gtk.CellRendererText()
-        self._newline_combo.pack_start(renderer, True)
+        self._newline_combo.pack_start(renderer, expand=True)
         self._newline_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self):
