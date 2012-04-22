@@ -103,10 +103,6 @@ _ruler = _Ruler()
 
 def _on_text_view_draw(text_view, cairoc):
     """Calculate and show line lengths in the margin."""
-    # XXX: Port this function from expose-event signal and Gdk.Window to
-    # draw signal and cairo once the damn signal connection works.
-    # https://bugzilla.gnome.org/show_bug.cgi?id=671318
-    # http://developer.gnome.org/gtk3/3.3/ch25s02.html
     text_buffer = text_view.get_buffer()
     start, end = text_buffer.get_bounds()
     text = text_buffer.get_text(start, end, False)
@@ -117,18 +113,17 @@ def _on_text_view_draw(text_view, cairoc):
     layout.set_alignment(Pango.Alignment.RIGHT)
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
-    y = -text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 0)[1]
-    window = text_view.get_window(Gtk.TextWindowType.RIGHT)
-    window.clear()
-    text_view.style.paint_layout(window=window,
-                                 state_type=Gtk.StateType.NORMAL,
-                                 use_text=True,
-                                 area=None,
-                                 widget=text_view,
-                                 detail=None,
-                                 x=2,
-                                 y=y,
-                                 layout=layout)
+    x, y = text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 0)
+    style = text_view.get_style()
+    Gtk.paint_layout(style,
+                     cairoc,
+                     state_type=Gtk.StateType.NORMAL,
+                     use_text=True,
+                     widget=text_view,
+                     detail=None,
+                     x=x,
+                     y=-y,
+                     layout=layout)
 
 def connect_text_view(text_view):
     """Connect `text_view` to show line lengths in the margin."""
@@ -137,12 +132,9 @@ def connect_text_view(text_view):
     layout.set_text("8", -1)
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
-    # XXX: The draw signal doesn't seem to work.
-    # https://bugzilla.gnome.org/show_bug.cgi?id=671318
-    # handler_id = text_view.connect("draw", _on_text_view_draw)
-    # text_view.set_data("ruler_handler_id", handler_id)
-    # return handler_id
-    return -1
+    handler_id = text_view.connect("draw", _on_text_view_draw)
+    text_view.set_data("ruler_handler_id", handler_id)
+    return handler_id
 
 def disconnect_text_view(text_view):
     """Disconnect `text_view` from showing line lengths in the margin."""
