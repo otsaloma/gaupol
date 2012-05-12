@@ -46,12 +46,13 @@ class TimeCellRenderer(Gtk.CellRendererText):
 
     def _on_editor_key_press_event(self, editor, event):
         """End editing if ``Enter`` or ``Escape`` pressed."""
+        # XXX: Segfaults.
         if (event.get_state() &
             (Gdk.ModifierType.SHIFT_MASK |
              Gdk.ModifierType.CONTROL_MASK)): return
         if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.remove_widget()
-            self.emit("edited", editor.get_data("path"), editor.get_text())
+            self.emit("edited", editor.gaupol_path, editor.get_text())
             return True
         if event.keyval == Gdk.KEY_Escape:
             editor.remove_widget()
@@ -72,7 +73,7 @@ class TimeCellRenderer(Gtk.CellRendererText):
         editor.modify_font(self.props.font_desc)
         editor.set_text(self.props.text)
         editor.select_region(0, -1)
-        editor.set_data("path", path)
+        editor.gaupol_path = path
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)
         editor.connect("populate-popup", self._on_editor_populate_popup)

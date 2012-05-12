@@ -111,7 +111,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
              Gdk.ModifierType.CONTROL_MASK)): return
         if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.remove_widget()
-            self.emit("edited", editor.get_data("path"), editor.get_text())
+            self.emit("edited", editor.gaupol_path, editor.get_text())
             return True
         if event.keyval == Gdk.KEY_Escape:
             editor.remove_widget()
@@ -142,7 +142,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         editor.set_text(self._text)
         editor.set_size_request(cell_area.width, cell_area.height)
         editor.set_border_width(min(self.props.xpad, self.props.ypad))
-        editor.set_data("path", path)
+        editor.gaupol_path = path
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)
         editor.connect("populate-popup", self._on_editor_populate_popup)
