@@ -133,15 +133,15 @@ def connect_text_view(text_view):
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
     handler_id = text_view.connect("draw", _on_text_view_draw)
-    text_view.set_data("ruler_handler_id", handler_id)
+    text_view.gaupol_ruler_handler_id = handler_id
     return handler_id
 
 def disconnect_text_view(text_view):
     """Disconnect `text_view` from showing line lengths in the margin."""
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, 0)
-    handler_id = text_view.get_data("ruler_handler_id")
+    handler_id = text_view.gaupol_ruler_handler_id
     if handler_id is None: return
-    text_view.set_data("ruler_handler_id", None)
+    del text_view.gaupol_ruler_handler_id
     return text_view.disconnect(handler_id)
 
 def get_length_function(unit):
