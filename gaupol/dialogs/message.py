@@ -27,9 +27,10 @@ class ErrorDialog(Gtk.MessageDialog):
 
     """Base class for error dialogs."""
 
-    def __new__(cls, parent, title, message=None):
+    def __init__(self, parent, title, message=None):
         """Initialize an :class:`ErrorDialog` object."""
-        dialog = Gtk.MessageDialog(parent=parent,
+        Gtk.MessageDialog.__init__(self,
+                                   parent=parent,
                                    flags=(Gtk.DialogFlags.MODAL |
                                           Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
@@ -38,25 +39,17 @@ class ErrorDialog(Gtk.MessageDialog):
                                    message_format=title)
 
         if message is not None:
-            dialog.format_secondary_text(message)
-        return dialog
-
-    def __init__(self, parent, title, message=None):
-        """Initialize an :class:`ErrorDialog` object."""
-        # XXX:
-        # Using __init__ to set Gtk.MessageDialog properties fails (probably
-        # a PyGI regression), let's use __new__ instead, which means __init__
-        # doesn't get called, but shall be defined for API doc parsers.
-        pass
+            self.format_secondary_text(message)
 
 
 class InfoDialog(Gtk.MessageDialog):
 
     """Base class for info dialogs."""
 
-    def __new__(cls, parent, title, message=None):
+    def __init__(self, parent, title, message=None):
         """Initialize an :class:`InfoDialog` object."""
-        dialog = Gtk.MessageDialog(parent=parent,
+        Gtk.MessageDialog.__init__(self,
+                                   parent=parent,
                                    flags=(Gtk.DialogFlags.MODAL |
                                           Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
@@ -65,25 +58,17 @@ class InfoDialog(Gtk.MessageDialog):
                                    message_format=title)
 
         if message is not None:
-            dialog.format_secondary_text(message)
-        return dialog
-
-    def __init__(self, parent, title, message=None):
-        """Initialize an :class:`InfoDialog` object."""
-        # XXX:
-        # Using __init__ to set Gtk.MessageDialog properties fails (probably
-        # a PyGI regression), let's use __new__ instead, which means __init__
-        # doesn't get called, but shall be defined for API doc parsers.
-        pass
+            self.format_secondary_text(message)
 
 
 class QuestionDialog(Gtk.MessageDialog):
 
     """Base class for question dialogs."""
 
-    def __new__(cls, parent, title, message=None):
+    def __init__(self, parent, title, message=None):
         """Initialize an :class:`QuestionDialog` object."""
-        dialog = Gtk.MessageDialog(parent=parent,
+        Gtk.MessageDialog.__init__(self,
+                                   parent=parent,
                                    flags=(Gtk.DialogFlags.MODAL |
                                           Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
@@ -92,25 +77,17 @@ class QuestionDialog(Gtk.MessageDialog):
                                    message_format=title)
 
         if message is not None:
-            dialog.format_secondary_text(message)
-        return dialog
-
-    def __init__(self, parent, title, message=None):
-        """Initialize an :class:`QuestionDialog` object."""
-        # XXX:
-        # Using __init__ to set Gtk.MessageDialog properties fails (probably
-        # a PyGI regression), let's use __new__ instead, which means __init__
-        # doesn't get called, but shall be defined for API doc parsers.
-        pass
+            self.format_secondary_text(message)
 
 
 class WarningDialog(Gtk.MessageDialog):
 
     """Base class for warning dialogs."""
 
-    def __new__(cls, parent, title, message=None):
+    def __init__(self, parent, title, message=None):
         """Initialize an :class:`WarningDialog` object."""
-        dialog = Gtk.MessageDialog(parent=parent,
+        Gtk.MessageDialog.__init__(self,
+                                   parent=parent,
                                    flags=(Gtk.DialogFlags.MODAL |
                                           Gtk.DialogFlags.DESTROY_WITH_PARENT),
 
@@ -119,13 +96,4 @@ class WarningDialog(Gtk.MessageDialog):
                                    message_format=title)
 
         if message is not None:
-            dialog.format_secondary_text(message)
-        return dialog
-
-    def __init__(self, parent, title, message=None):
-        """Initialize an :class:`WarningDialog` object."""
-        # XXX:
-        # Using __init__ to set Gtk.MessageDialog properties fails (probably
-        # a PyGI regression), let's use __new__ instead, which means __init__
-        # doesn't get called, but shall be defined for API doc parsers.
-        pass
+            self.format_secondary_text(message)
