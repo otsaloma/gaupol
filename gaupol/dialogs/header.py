@@ -69,14 +69,14 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _get_main_header(self):
         """Return main header from text view."""
         text_buffer = self._main_text_view.get_buffer()
-        bounds = text_buffer.get_bounds()
-        return text_buffer.get_text(*bounds)
+        start, end = text_buffer.get_bounds()
+        return text_buffer.get_text(start, end, False)
 
     def _get_translation_header(self):
         """Return translation header from text view."""
         text_buffer = self._tran_text_view.get_buffer()
-        bounds = text_buffer.get_bounds()
-        return text_buffer.get_text(*bounds)
+        start, end = text_buffer.get_bounds()
+        return text_buffer.get_text(start, end, False)
 
     def _init_sizes(self):
         """Initialize widget sizes."""

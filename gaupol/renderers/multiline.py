@@ -28,6 +28,9 @@ from gi.repository import Gtk
 
 __all__ = ("MultilineCellRenderer",)
 
+# XXX: Segfaults when trying to enter editing state.
+# https://bugzilla.gnome.org/show_bug.cgi?id=676264
+
 
 class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
@@ -63,8 +66,8 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
     def get_text(self):
         """Return text."""
         text_buffer = self.get_buffer()
-        bounds = text_buffer.get_bounds()
-        return text_buffer.get_text(*bounds)
+        start, end = text_buffer.get_bounds()
+        return text_buffer.get_text(start, end, False)
 
     def set_text(self, text):
         """Set text."""
@@ -79,9 +82,6 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     If :attr:`gaupol.conf.editor.show_lengths_cell` is ``True``, line lengths
     are shown as superscripts at the end of each line.
     """
-
-    # XXX: This shit segfaults, when starting to edit text in a cell,
-    # before CellTextView gets initialized.
 
     __gtype_name__ = "MultilineCellRenderer"
 

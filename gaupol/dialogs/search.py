@@ -324,8 +324,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         page = self.application.get_current_page()
         if page is not self._match_page: return
         text_buffer = text_view.get_buffer()
-        bounds = text_buffer.get_bounds()
-        text = text_buffer.get_text(*bounds)
+        start, end = text_buffer.get_bounds()
+        text = text_buffer.get_text(start, end, False)
         page.project.set_text(self._match_row, self._match_doc, text)
 
     def _on_tran_check_toggled(self, check_button):
