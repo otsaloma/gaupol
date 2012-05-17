@@ -144,7 +144,7 @@ class RecentAction(Gtk.RecentAction, Action):
         recent_filter.add_group(self.group)
         self.add_filter(recent_filter)
         self.set_filter(recent_filter)
-        self.set_data("group", self.group)
+        self.gaupol_group = self.group
         self.set_limit(gaupol.conf.file.max_recent)
 
     def finalize(self, application):
