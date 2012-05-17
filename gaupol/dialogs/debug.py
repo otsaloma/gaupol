@@ -93,8 +93,8 @@ class DebugDialog(gaupol.BuilderDialog):
         tag.props.underline = Pango.Underline.SINGLE
         tag.connect("event", self._on_text_view_link_tag_event)
         path = os.path.abspath(path)
-        tag.set_data("path", path)
-        tag.set_data("lineno", lineno)
+        tag.gaupol_path = path
+        tag.gaupol_lineno = lineno
         if path.startswith(os.getcwd()):
             path = path.replace(os.getcwd(), "")
         while path.startswith(os.sep):
@@ -176,7 +176,7 @@ class DebugDialog(gaupol.BuilderDialog):
         x, y = text_view.window_to_buffer_coords(window, x, y)
         window = text_view.get_window(Gtk.TextWindowType.TEXT)
         for tag in text_view.get_iter_at_location(x, y).get_tags():
-            if tag.get_data("path") is not None:
+            if hasattr(tag, "gaupol_path"):
                 window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.HAND2))
                 return True
         window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.XTERM))
@@ -184,9 +184,9 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _open_link(self, tag):
         """Open linked file in editor."""
-        path = aeidon.util.shell_quote(tag.get_data("path"))
+        path = aeidon.util.shell_quote(tag.gaupol_path)
         command = string.Template(gaupol.conf.debug.text_editor)
-        command = command.safe_substitute(LINENO=tag.get_data("lineno"),
+        command = command.safe_substitute(LINENO=tag.gaupol_lineno,
                                           FILE=path)
 
         process = aeidon.util.start_process(command)
