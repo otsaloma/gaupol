@@ -22,8 +22,8 @@ import aeidon
 import gaupol
 import re
 
-from gi.repository import GObject
 from gi.repository import Gdk
+from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 
@@ -108,7 +108,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         for field in gaupol.conf.editor.field_order:
             renderer = self._get_renderer(field, edit_mode)
             column = Gtk.TreeViewColumn(field.label, renderer, text=field)
-            column.set_data("identifier", field.name.lower())
+            column.gaupol_id = field.name.lower()
             self.append_column(column)
             column.set_clickable(True)
             column.set_resizable(True)
@@ -139,9 +139,10 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
 
     def _init_search(self):
         """Initialize the interactive search properties."""
-        # XXX: Causes a fucking segfault.
-        # self.set_enable_search(True)
-        # self.set_search_column(self.columns.NUMBER)
+        self.set_enable_search(True)
+        self.set_search_column(self.columns.NUMBER)
+        # XXX: Segfaults.
+        # https://bugzilla.gnome.org/show_bug.cgi?id=676283
         # self.set_search_equal_func(self._search_equals, None)
         pass
 
@@ -188,8 +189,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         self._reset_columns()
         field_order = []
         for column in self.get_columns():
-            identifier = column.get_data("identifier")
-            attribute = identifier.upper()
+            attribute = column.gaupol_id.upper()
             item = aeidon.EnumerationItem()
             setattr(self.columns, attribute, item)
             if hasattr(gaupol.fields, attribute):
