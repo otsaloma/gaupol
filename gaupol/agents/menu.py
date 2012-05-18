@@ -73,8 +73,8 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page = self.get_current_page()
         for i, action in enumerate(page.project.redoables):
             item = Gtk.MenuItem(action.description, False)
-            item.set_data("index", i)
-            item.set_data("tooltip", _('Redo "{}"').format(action.description))
+            item.gaupol_index = i
+            item.gaupol_tooltip = _('Redo "{}"').format(action.description)
             callback = self._on_redo_menu_item_activate
             item.connect("activate", callback)
             callback = self._on_redo_menu_item_enter_notify_event
@@ -88,19 +88,18 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     def _on_redo_menu_item_activate(self, menu_item):
         """Redo the selected action and all those above it."""
-        index = menu_item.get_data("index")
-        self.redo(index + 1)
+        self.redo(menu_item.gaupol_index + 1)
 
     def _on_redo_menu_item_enter_notify_event(self, menu_item, event):
         """Show tooltip and select all actions above `menu_item`."""
-        index = menu_item.get_data("index")
+        index = menu_item.gaupol_index
         for item in self._redo_menu_items[:index]:
             item.set_state(Gtk.StateType.PRELIGHT)
-        self.push_message(menu_item.get_data("tooltip"))
+        self.push_message(menu_item.gaupol_tooltip)
 
     def _on_redo_menu_item_leave_notify_event(self, menu_item, event):
         """Hide tooltip and unselect all actions above `menu_item`."""
-        index = menu_item.get_data("index")
+        index = menu_item.gaupol_index
         for item in self._redo_menu_items[:index]:
             item.set_state(Gtk.StateType.NORMAL)
         self.push_message(None)
@@ -143,8 +142,8 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page = self.get_current_page()
         for i, action in enumerate(page.project.undoables):
             item = Gtk.MenuItem(action.description, False)
-            item.set_data("index", i)
-            item.set_data("tooltip", _('Undo "{}"').format(action.description))
+            item.gaupol_index = i
+            item.gaupol_tooltip = _('Undo "{}"').format(action.description)
             callback = self._on_undo_menu_item_activate
             item.connect("activate", callback)
             callback = self._on_undo_menu_item_enter_notify_event
@@ -155,21 +154,21 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             menu.append(item)
         menu.show_all()
         self.get_tool_item("undo_action").set_menu(menu)
+
     def _on_undo_menu_item_activate(self, menu_item):
         """Undo the selected action and all those above it."""
-        index = menu_item.get_data("index")
-        self.undo(index + 1)
+        self.undo(menu_item.gaupol_index + 1)
 
     def _on_undo_menu_item_enter_notify_event(self, menu_item, event):
         """Show tooltip and select all actions above `menu_item`."""
-        index = menu_item.get_data("index")
+        index = menu_item.gaupol_index
         for item in self._undo_menu_items[:index]:
             item.set_state(Gtk.StateType.PRELIGHT)
-        self.push_message(menu_item.get_data("tooltip"))
+        self.push_message(menu_item.gaupol_tooltip)
 
     def _on_undo_menu_item_leave_notify_event(self, menu_item, event):
         """Hide tooltip and unselect all actions above `menu_item`."""
-        index = menu_item.get_data("index")
+        index = menu_item.gaupol_index
         for item in self._undo_menu_items[:index]:
             item.set_state(Gtk.StateType.NORMAL)
         self.push_message(None)

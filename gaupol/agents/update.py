@@ -23,6 +23,7 @@ import gaupol
 # import glib
 from gi.repository import Gdk
 from gi.repository import Gtk
+from gi.repository import GObject
 import os
 _ = aeidon.i18n._
 
@@ -45,7 +46,7 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _disable_widgets(self):
         """Make widgets insensitive and blank."""
         self.window.set_title("Gaupol")
-        self.video_button.get_data("label").set_text("")
+        self.video_button.gaupol_label.set_text("")
         self.push_message(None)
 
     @aeidon.deco.export
@@ -172,7 +173,7 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             visible = page.view.get_column(col).props.visible
             self.get_column_action(field).set_active(visible)
         video = os.path.basename(page.project.video_path or "")
-        self.video_button.get_data("label").set_text(video)
+        self.video_button.gaupol_label.set_text(video)
         self.video_button.set_has_tooltip(bool(video))
         self.video_button.set_tooltip_text(video)
 
