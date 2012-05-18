@@ -38,6 +38,46 @@ class TestCloseAgent(gaupol.TestCase):
         self.application = self.new_application()
         self.delegate = self.application.close.__self__
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__on_close_all_projects_activate(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
+        self.application.get_action("close_all_projects").activate()
+        self.application.open_main(self.new_subrip_file())
+        self.application.open_main(self.new_subrip_file())
+        for page in self.application.pages:
+            page.project.remove_subtitles((0,))
+        self.application.get_action("close_all_projects").activate()
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__on_close_project_activate(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
+        self.application.get_action("close_project").activate()
+        self.application.open_main(self.new_subrip_file())
+        self.application.pages[-1].project.remove_subtitles((0,))
+        self.application.get_action("close_project").activate()
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__on_page_close_request(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
+        self.application.pages[-1].emit("close-request")
+        self.application.open_main(self.new_subrip_file())
+        self.application.pages[-1].project.remove_subtitles((0,))
+        self.application.pages[-1].emit("close-request")
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__on_quit_activate(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
+        for page in self.application.pages:
+            page.project.remove_subtitles((0,))
+        self.application.get_action("quit").activate()
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__on_window_delete_event(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
+        for page in self.application.pages:
+            page.project.remove_subtitles((0,))
+        self.application.window.emit("delete-event", None)
+
     def test__save_window_geometry(self):
         self.delegate._save_window_geometry()
 
@@ -135,46 +175,6 @@ class TestCloseAgent(gaupol.TestCase):
         self.application.open_main(self.new_subrip_file())
         self.application.pages[-1].project.remove_subtitles((0,))
         self.application.close_all()
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_close_all_projects_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
-        self.application.get_action("close_all_projects").activate()
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_main(self.new_subrip_file())
-        for page in self.application.pages:
-            page.project.remove_subtitles((0,))
-        self.application.get_action("close_all_projects").activate()
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_close_project_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
-        self.application.get_action("close_project").activate()
-        self.application.open_main(self.new_subrip_file())
-        self.application.pages[-1].project.remove_subtitles((0,))
-        self.application.get_action("close_project").activate()
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_page_close_request(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
-        self.application.pages[-1].emit("close-request")
-        self.application.open_main(self.new_subrip_file())
-        self.application.pages[-1].project.remove_subtitles((0,))
-        self.application.pages[-1].emit("close-request")
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_quit_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
-        for page in self.application.pages:
-            page.project.remove_subtitles((0,))
-        self.application.get_action("quit").activate()
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_window_delete_event(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
-        for page in self.application.pages:
-            page.project.remove_subtitles((0,))
-        self.application.window.emit("delete-event", None)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_quit__default(self):

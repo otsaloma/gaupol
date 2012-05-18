@@ -160,7 +160,12 @@ class ViewAgent(aeidon.Delegate):
         """Display a column visibility pop-up menu."""
         if event.button != 3: return
         menu = self.uim.get_widget("/ui/view_header_popup")
-        menu.popup(None, None, None, event.button, event.time)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=None,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
 
     def _toggle_column(self, field):
         """Show or hide column corresponding to `field`."""

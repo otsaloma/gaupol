@@ -27,20 +27,20 @@ class TestFormatAgent(gaupol.TestCase):
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         page.view.select_rows((0, 1, 2))
 
-    def test_on_toggle_dialogue_dashes_activate(self):
+    def test__on_toggle_dialogue_dashes_activate(self):
         self.application.get_action("toggle_dialogue_dashes").activate()
 
-    def test_on_toggle_italicization_activate(self):
+    def test__on_toggle_italicization_activate(self):
         self.application.get_action("toggle_italicization").activate()
 
-    def test_on_use_lower_case_activate(self):
+    def test__on_use_lower_case_activate(self):
         self.application.get_action("use_lower_case").activate()
 
-    def test_on_use_sentence_case_activate(self):
+    def test__on_use_sentence_case_activate(self):
         self.application.get_action("use_sentence_case").activate()
 
-    def test_on_use_title_case_activate(self):
+    def test__on_use_title_case_activate(self):
         self.application.get_action("use_title_case").activate()
 
-    def test_on_use_upper_case_activate(self):
+    def test__on_use_upper_case_activate(self):
         self.application.get_action("use_upper_case").activate()

@@ -56,12 +56,12 @@ class TestPreviewAgent(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.delegate._show_process_error_dialog("test")
 
-    def test_on_preview_activate__main(self):
+    def test__on_preview_activate__main(self):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("preview").activate()
 
-    def test_on_preview_activate__translation(self):
+    def test__on_preview_activate__translation(self):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.TRAN_TEXT)
         self.application.get_action("preview").activate()

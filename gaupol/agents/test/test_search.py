@@ -30,11 +30,11 @@ class TestSearchAgent(gaupol.TestCase):
         self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog.response(Gtk.ResponseType.CLOSE)
 
-    def test_on_find_and_replace_activate(self):
+    def test__on_find_and_replace_activate(self):
         self.application.get_action("find_and_replace").activate()
         self.application.get_action("find_and_replace").activate()
 
-    def test_on_find_next_activate(self):
+    def test__on_find_next_activate(self):
         self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog._pattern_entry.set_text("a")
         next(self.delegate._search_dialog)
@@ -42,7 +42,7 @@ class TestSearchAgent(gaupol.TestCase):
         self.delegate._search_dialog.response(Gtk.ResponseType.CLOSE)
         self.application.get_action("find_next").activate()
 
-    def test_on_find_previous_activate(self):
+    def test__on_find_previous_activate(self):
         self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog._pattern_entry.set_text("a")
         self.delegate._search_dialog.previous()

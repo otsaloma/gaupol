@@ -25,7 +25,7 @@ class TestMenuAgent(gaupol.TestCase):
         self.application = self.new_application()
         self.delegate = self.application.set_menu_notify_events.__self__
 
-    def test_on_redo_button_show_menu(self):
+    def test__on_redo_button_show_menu(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
         page.project.remove_subtitles((0,))
@@ -34,12 +34,12 @@ class TestMenuAgent(gaupol.TestCase):
         item.emit("show-menu")
         item.get_menu().get_children()[0].activate()
 
-    def test_on_show_projects_menu_activate(self):
+    def test__on_show_projects_menu_activate(self):
         self.application.get_action("show_projects_menu").activate()
         self.application.get_action("show_projects_menu").activate()
         self.application.get_action("show_projects_menu").activate()
 
-    def test_on_undo_button_show_menu(self):
+    def test__on_undo_button_show_menu(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
         page.project.remove_subtitles((0,))

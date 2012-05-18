@@ -27,23 +27,23 @@ class TestSpellCheckAgent(gaupol.TestCase):
         self.application = self.new_application()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_check_spelling_activate(self):
+    def test__on_check_spelling_activate(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         gaupol.conf.spell_check.language = "en"
         self.application.get_action("check_spelling").activate()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_check_spelling_activate__value_error(self):
+    def test__on_check_spelling_activate__value_error(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         gaupol.conf.spell_check.language = "xx"
         self.application.get_action("check_spelling").activate()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_configure_spell_check_activate(self):
+    def test__on_configure_spell_check_activate(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("configure_spell_check").activate()
 
     @aeidon.deco.monkey_patch(gaupol.TextAssistant, "show")
-    def test_on_correct_texts_activate(self):
+    def test__on_correct_texts_activate(self):
         gaupol.TextAssistant.show = lambda *args: None
         self.application.get_action("correct_texts").activate()

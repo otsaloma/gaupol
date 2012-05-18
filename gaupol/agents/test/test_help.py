@@ -27,14 +27,14 @@ class TestHelpAgent(gaupol.TestCase):
     def setup_method(self, method):
         self.application = self.new_application()
 
-    def test_on_browse_wiki_documentation_activate(self):
+    def test__on_browse_wiki_documentation_activate(self):
         self.application.get_action("browse_wiki_documentation").activate()
 
-    def test_on_report_a_bug_activate(self):
+    def test__on_report_a_bug_activate(self):
         self.application.get_action("report_a_bug").activate()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test_on_view_about_dialog_activate(self):
+    def test__on_view_about_dialog_activate(self):
         respond = lambda *args: Gtk.ResponseType.DELETE_EVENT
         gaupol.util.flash_dialog = respond
         self.application.get_action("view_about_dialog").activate()
