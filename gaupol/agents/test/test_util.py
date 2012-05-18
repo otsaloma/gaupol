@@ -30,8 +30,10 @@ class TestUtilityAgent(gaupol.TestCase):
         self.application.get_action("show_times")
         self.application.get_action("toggle_number_column")
 
-    def test_get_action(self):
-        self.assert_raises(ValueError, self.application.get_action, "xxx")
+    def test_get_action_value_error(self):
+        self.assert_raises(ValueError,
+                           self.application.get_action,
+                           "xxx")
 
     def test_get_action_group(self):
         self.application.get_action_group("main-safe")

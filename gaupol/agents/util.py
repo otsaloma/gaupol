@@ -20,6 +20,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -36,7 +37,8 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         for action_group in self.uim.get_action_groups():
             action = action_group.get_action(name)
             if action is not None: return action
-        raise ValueError("Action {} not found".format(repr(name)))
+        raise ValueError("Action {} not found"
+                         .format(repr(name)))
 
     @aeidon.deco.export
     def get_action_group(self, name):
@@ -84,7 +86,8 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return (self.get_current_page(),)
         if target == gaupol.targets.ALL:
             return tuple(self.pages)
-        raise ValueError("Invalid target: {}".format(repr(target)))
+        raise ValueError("Invalid target: {}"
+                         .format(repr(target)))
 
     @aeidon.deco.export
     def get_target_rows(self, target):

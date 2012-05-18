@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,12 +20,11 @@
 
 import aeidon
 import gaupol
-# import glib
-from gi.repository import Gdk
-from gi.repository import Gtk
-from gi.repository import GObject
 import os
 _ = aeidon.i18n._
+
+from gi.repository import Gdk
+from gi.repository import GObject
 
 
 class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
@@ -93,7 +92,7 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _on_notebook_page_reordered(self, notebook, scroller, index):
         """Update the list of pages to match the new order."""
         view = scroller.get_child()
-        page = filter(lambda x: x.view is view, self.pages)[0]
+        page = [x for x in self.pages if x.view is view][0]
         self.pages.remove(page)
         self.pages.insert(index, page)
         self.update_gui()
@@ -117,11 +116,18 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         value = view.get_path_at_pos(x, y)
         if value is None: return
         path, column, x, y = value
-        if path[0] not in view.get_selected_rows():
-            view.set_cursor(path[0], column)
+        row = gaupol.util.tree_path_to_row(path)
+        if not row in view.get_selected_rows():
+            view.set_cursor(path, column)
             view.update_headers()
         menu = self.uim.get_widget("/ui/view_popup")
-        menu.popup(None, None, None, event.button, event.time)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=None,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
+
         return True
 
     @aeidon.deco.export
@@ -162,8 +168,7 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     def _update_widgets(self, page):
         """Update states of all widgets for `page`."""
-        if page is None:
-            return self._disable_widgets()
+        if page is None: return self._disable_widgets()
         self.window.set_title(page.tab_label.get_text())
         self.get_mode_action(page.edit_mode).set_active(True)
         self.get_framerate_action(page.project.framerate).set_active(True)
@@ -190,13 +195,11 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Show `message` in the statusbar."""
         if self._message_tag is not None:
             GObject.source_remove(self._message_tag)
-        # XXX:
-        # if self._message_id is not None:
-        #     self.statusbar.remove_message(0, self._message_id)
-        event_box = self.statusbar.get_ancestor(Gtk.EventBox)
-        self.statusbar.set_tooltip_text(message or "")
-        if message is not None:
-            self._message_id = self.statusbar.push(0, message)
+        if self._message_id is not None:
+            self.statusbar.remove(0, self._message_id)
+        message = message or ""
+        self.statusbar.set_tooltip_text(message)
+        self._message_id = self.statusbar.push(0, message)
 
     @aeidon.deco.export
     def update_gui(self):

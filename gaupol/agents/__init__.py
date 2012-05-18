@@ -33,4 +33,4 @@ from .update   import UpdateAgent
 from .util     import UtilityAgent
 from .view     import ViewAgent
 
-__all__ = tuple([x for x in dir() if x.endswith("Agent")])
+__all__ = tuple(x for x in dir() if x.endswith("Agent"))

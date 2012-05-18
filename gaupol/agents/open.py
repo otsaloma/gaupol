@@ -407,8 +407,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
-        # XXX: This shit segfaults.
-        # scroller.add(page.view)
+        scroller.add(page.view)
         self.notebook.append_page(scroller, page.tab_widget)
         self.notebook.set_tab_reorderable(scroller, True)
         self.notebook.show_all()
@@ -423,10 +422,11 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             group = "gaupol-main"
         if doc == aeidon.documents.TRAN:
             group = "gaupol-translation"
-        self.recent_manager.add_full(uri, {"mime_type": format.mime_type,
-                                           "app_name": "gaupol",
-                                           "app_exec": "gaupol %F",
-                                           "groups": (group,),})
+        # XXX: TypeError: Expected Gtk.RecentData, but got StructMeta
+        # self.recent_manager.add_full(uri, {"mime_type": format.mime_type,
+        #                                    "app_name": "gaupol",
+        #                                    "app_exec": "gaupol %F",
+        #                                    "groups": (group,),})
 
     @aeidon.deco.export
     def append_file(self, path, encoding=None):
