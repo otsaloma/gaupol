@@ -82,13 +82,16 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
     def _init_cell_data_functions(self):
         """Initialize functions to automatically update cell data."""
         # Set the data in the number column automatically.
-        def set_number(column, renderer, store, itr, data):
-            path = store.get_path(itr)
-            row = gaupol.util.tree_path_to_row(path)
-            renderer.props.text = str(row + 1)
-        column = self.get_column(self.columns.NUMBER)
-        renderer = column.get_cells()[0]
-        column.set_cell_data_func(renderer, set_number)
+        # XXX: Segfaults.
+        # https://bugzilla.gnome.org/show_bug.cgi?id=676325
+        # def set_number(column, renderer, store, itr, data):
+        #     path = store.get_path(itr)
+        #     row = gaupol.util.tree_path_to_row(path)
+        #     renderer.props.text = str(row + 1)
+        # column = self.get_column(self.columns.NUMBER)
+        # renderer = column.get_cells()[0]
+        # column.set_cell_data_func(renderer, set_number, None)
+        pass
 
     def _init_column_attributes(self):
         """Initialize the column header :class:`Pango.AttrList`."""
