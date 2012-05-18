@@ -107,6 +107,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         except KeyError:
             raise AttributeError
 
+    def __setattr__(self, name, value):
+        return aeidon.Observable.__setattr__(self, name, value)
+
     def __init__(self):
         """Initialize an :class:`Application` object."""
         aeidon.Observable.__init__(self)
@@ -140,6 +143,17 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             action_group = self.get_action_group(name)
             for action in action_group.list_actions():
                 action.finalize(self)
+
+    def _init_css(self):
+        """Init custom CSS theming rules for screen."""
+        provider = Gtk.CssProvider.get_default()
+        path = os.path.join(aeidon.DATA_DIR, "ui", "gaupol.css")
+        provider.load_from_path(path)
+        context = self.window.get_style_context()
+        priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        context.add_provider_for_screen(self.window.get_screen(),
+                                        provider,
+                                        priority)
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""
@@ -187,6 +201,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize the user interface."""
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=0)
         self._init_window()
+        self._init_css()
         self._init_uim()
         self._init_menubar(vbox)
         self._init_main_toolbar(vbox)
@@ -357,7 +372,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
         self.video_button = Gtk.Button()
         self.video_button.add(hbox)
-        self.video_button.set_data("label", label)
+        self.video_button.gaupol_label = label
         self.video_button.drag_dest_set(flags=Gtk.DestDefaults.ALL,
                                         targets=None,
                                         actions=Gdk.DragAction.COPY)

@@ -45,17 +45,17 @@ GTK+ user interface for the Gaupol subtitle editor.
 """
 
 import aeidon
+import os
+
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
-from gi.repository import GLib
-import os
 
 __version__ = "0.19.2"
 COMBO_SEPARATOR = "<separator/>"
 
-# XXX:
+# XXX: ???
 # glib.threads_init()
-Gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
 
 from gaupol.urls import *
 from gaupol import util

@@ -27,7 +27,7 @@ class TestApplication(gaupol.TestCase):
         Gtk.main()
 
     def setup_method(self, method):
-        self.application = gaupol.Application()
+        self.application = self.new_application()
 
     def test___init__(self):
         conf = gaupol.conf.application_window
