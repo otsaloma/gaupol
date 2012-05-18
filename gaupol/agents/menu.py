@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,14 +19,15 @@
 """Building and updating dynamic menus."""
 
 import aeidon
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """
-    Building and updating menus.
+    Building and updating dynamic menus.
 
     :ivar _projects_id: :class:`Gtk.UIManager` merge ID for projects menu
     :ivar _redo_menu_items: Redo menu tool button menu items
@@ -52,8 +53,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         action = Gtk.RadioAction(name, label, tooltip, None, index)
         action_group = self.get_action_group("projects")
         group = action_group.get_action("activate_project_0")
-        if group is not None:
-            action.set_group(group)
+        if group is not None: action.set_group(group)
         accel = ("<alt>{:d}".format(index + 1) if index < 9 else None)
         action_group.add_action_with_accel(action, accel)
         action.connect("changed", self._on_projects_action_changed)
@@ -72,7 +72,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self._redo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.redoables):
-            item = Gtk.MenuItem(action.description, False)
+            item = Gtk.MenuItem.new_with_label(action.description)
             item.gaupol_index = i
             item.gaupol_tooltip = _('Redo "{}"').format(action.description)
             callback = self._on_redo_menu_item_activate
@@ -132,7 +132,12 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if page is not self.get_current_page():
             self.set_current_page(page)
         menu = self.uim.get_widget("/ui/tab_popup")
-        menu.popup(None, None, None, event.button, event.time)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=None,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
 
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):
@@ -141,7 +146,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self._undo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.undoables):
-            item = Gtk.MenuItem(action.description, False)
+            item = Gtk.MenuItem.new_with_label(action.description)
             item.gaupol_index = i
             item.gaupol_tooltip = _('Undo "{}"').format(action.description)
             callback = self._on_undo_menu_item_activate
