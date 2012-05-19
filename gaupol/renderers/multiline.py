@@ -28,9 +28,6 @@ from gi.repository import Gtk
 
 __all__ = ("MultilineCellRenderer",)
 
-# XXX: Segfaults when trying to enter editing state.
-# https://bugzilla.gnome.org/show_bug.cgi?id=676264
-
 
 class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
@@ -48,12 +45,12 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
     def __init__(self, text_buffer=None):
         """Initialize a :class:`CellTextView` object."""
-        GObject.GObject.__init__(self, text_buffer)
+        GObject.GObject.__init__(self)
         gaupol.util.prepare_text_view(self)
 
     def do_editing_done(self, *args):
         """End editing."""
-        self.remove_widget()
+        pass
 
     def do_remove_widget(self, *args):
         """Remove widget."""
@@ -110,12 +107,15 @@ class MultilineCellRenderer(Gtk.CellRendererText):
             (Gdk.ModifierType.SHIFT_MASK |
              Gdk.ModifierType.CONTROL_MASK)): return
         if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+            editor.editing_done()
             editor.remove_widget()
             self.emit("edited", editor.gaupol_path, editor.get_text())
             return True
         if event.keyval == Gdk.KEY_Escape:
+            editor.editing_done()
             editor.remove_widget()
             self.emit("editing-canceled")
+            return True
 
     def _on_editor_populate_popup(self, editor, menu):
         """Disable "focus-out-event" ending editing."""

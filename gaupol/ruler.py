@@ -114,6 +114,7 @@ def _on_text_view_draw(text_view, cairoc):
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
     x, y = text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 0)
+    x += text_view.get_border_width()
     style = text_view.get_style()
     Gtk.paint_layout(style,
                      cairoc,
