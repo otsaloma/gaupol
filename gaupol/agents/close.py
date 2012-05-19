@@ -20,9 +20,10 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class CloseAgent(aeidon.Delegate):
@@ -36,7 +37,7 @@ class CloseAgent(aeidon.Delegate):
         Raise :exc:`gaupol.Default` if cancelled and `page` not closed.
         """
         docs = self._need_confirmation(page)
-        if len(docs) == 2:
+        if len(docs) > 1:
             return self._confirm_close_multiple((page,))
         if aeidon.documents.MAIN in docs:
             return self._confirm_close_main(page)
@@ -141,7 +142,7 @@ class CloseAgent(aeidon.Delegate):
         return True
 
     def _save_window_geometry(self):
-        """Save the geometry of the application and output windows."""
+        """Save the geometry of application and output windows."""
         if not gaupol.conf.application_window.maximized:
             conf = gaupol.conf.application_window
             conf.size = list(self.window.get_size())
@@ -150,6 +151,25 @@ class CloseAgent(aeidon.Delegate):
             conf = gaupol.conf.output_window
             conf.size = list(self.output_window.get_size())
             conf.position = list(self.output_window.get_position())
+
+    @aeidon.deco.export
+    def close(self, page, confirm=True):
+        """
+        Close `page` after asking to save its documents.
+
+        If `confirm` is ``False`` do not ask to save documents.
+        Raise :exc:`gaupol.Default` if cancelled and `page` was not closed.
+        """
+        if confirm:
+            self._confirm_close(page)
+        if not page in self.pages: return
+        index = self.pages.index(page)
+        if self.notebook.get_current_page() == index:
+            self.notebook.next_page()
+        self.notebook.remove_page(index)
+        self.pages.remove(page)
+        self.update_gui()
+        self.emit("page-closed", page)
 
     @aeidon.deco.export
     def close_all(self):
@@ -162,25 +182,6 @@ class CloseAgent(aeidon.Delegate):
             return self._confirm_close_multiple(tuple(self.pages))
         while self.pages:
             self.close(self.pages[-1])
-
-    @aeidon.deco.export
-    def close(self, page, confirm=True):
-        """
-        Close `page` after asking to save its documents.
-
-        If `confirm` is ``False`` do not ask to save documents.
-        Raise :exc:`gaupol.Default` if cancelled and page was not closed.
-        """
-        if confirm:
-            self._confirm_close(page)
-        if page not in self.pages: return
-        index = self.pages.index(page)
-        if self.notebook.get_current_page() == index:
-            self.notebook.next_page()
-        self.notebook.remove_page(index)
-        self.pages.remove(page)
-        self.update_gui()
-        self.emit("page-closed", page)
 
     @aeidon.deco.export
     def quit(self):

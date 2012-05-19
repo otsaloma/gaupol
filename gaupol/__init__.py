@@ -90,8 +90,8 @@ from gaupol.dialogs.header import *
 from gaupol.dialogs.insert import *
 from gaupol.dialogs.language import *
 from gaupol.dialogs.message import *
-from gaupol.dialogs.close_multi import *
-from gaupol.dialogs.save_multi import *
+from gaupol.dialogs.multi_close import *
+from gaupol.dialogs.multi_save import *
 from gaupol.dialogs.preferences import *
 from gaupol.dialogs.preview_error import *
 from gaupol.dialogs.speech_recognition import *

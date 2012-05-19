@@ -18,8 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
+
+from gi.repository import Gtk
 
 
 class TestCloseAgent(gaupol.TestCase):
@@ -85,30 +86,24 @@ class TestCloseAgent(gaupol.TestCase):
     @aeidon.deco.silent(gaupol.Default)
     def test_close__both_changed(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_translation(self.new_microdvd_file())
         self.application.pages[-1].project.remove_subtitles((0,))
-        self.application.close(self.application.pages[-1], True)
+        self.application.close(self.application.pages[-1], confirm=True)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test_close__main_changed__discard(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
         doc = aeidon.documents.MAIN
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_translation(self.new_microdvd_file())
         self.application.pages[-1].project.clear_texts((0,), doc)
-        self.application.close(self.application.pages[-1], True)
+        self.application.close(self.application.pages[-1], confirm=True)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test_close__main_changed__save(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         doc = aeidon.documents.MAIN
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_translation(self.new_microdvd_file())
         self.application.pages[-1].project.clear_texts((0,), doc)
-        self.application.close(self.application.pages[-1], True)
+        self.application.close(self.application.pages[-1], confirm=True)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
@@ -116,27 +111,23 @@ class TestCloseAgent(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
         page = self.application.get_current_page()
         os.remove(page.project.main_file.path)
-        self.application.close(page, True)
+        self.application.close(page, confirm=True)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test_close__translation_changed__discard(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
         doc = aeidon.documents.TRAN
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_translation(self.new_microdvd_file())
         self.application.pages[-1].project.clear_texts((0,), doc)
-        self.application.close(self.application.pages[-1], True)
+        self.application.close(self.application.pages[-1], confirm=True)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
     def test_close__translation_changed__save(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         doc = aeidon.documents.TRAN
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_translation(self.new_microdvd_file())
         self.application.pages[-1].project.clear_texts((0,), doc)
-        self.application.close(self.application.pages[-1], True)
+        self.application.close(self.application.pages[-1], confirm=True)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
@@ -144,23 +135,19 @@ class TestCloseAgent(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
         page = self.application.get_current_page()
         os.remove(page.project.tran_file.path)
-        self.application.close(page, True)
+        self.application.close(page, confirm=True)
 
     @aeidon.deco.silent(gaupol.Default)
     def test_close__unchanged__confirm(self):
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_translation(self.new_microdvd_file())
-        self.application.close(self.application.pages[-1], True)
+        self.application.close(self.application.pages[-1], confirm=True)
 
     @aeidon.deco.silent(gaupol.Default)
     def test_close__unchanged__no_confirm(self):
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_translation(self.new_microdvd_file())
-        self.application.close(self.application.pages[-1], False)
+        self.application.close(self.application.pages[-1], confirm=False)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
-    def test_close_all__multiple(self):
+    def test_close_all__multiple_changed(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
         self.application.open_main(self.new_subrip_file())
         self.application.open_main(self.new_subrip_file())
@@ -170,9 +157,8 @@ class TestCloseAgent(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     @aeidon.deco.silent(gaupol.Default)
-    def test_close_all__single(self):
+    def test_close_all__single_changed(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
-        self.application.open_main(self.new_subrip_file())
         self.application.pages[-1].project.remove_subtitles((0,))
         self.application.close_all()
 
