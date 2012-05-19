@@ -421,10 +421,8 @@ class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
         renderer = Gtk.CellRendererText()
         self._app_combo.pack_start(renderer, expand=True)
         self._app_combo.add_attribute(renderer, "text", 0)
-        # XXX: Segfaults.
-        # https://bugzilla.gnome.org/show_bug.cgi?id=674120
-        # func = gaupol.util.separate_combo
-        # self._app_combo.set_row_separator_func(func, None)
+        func = gaupol.util.separate_combo
+        self._app_combo.set_row_separator_func(func, None)
 
     def _init_values(self):
         """Initialize default values for widgets."""

@@ -160,10 +160,8 @@ class TestModule(gaupol.TestCase):
 
     def test_separate_combo(self):
         combo_box = Gtk.ComboBox()
-        # XXX: Segfaults.
-        # https://bugzilla.gnome.org/show_bug.cgi?id=674120
-        # func = gaupol.util.separate_combo
-        # combo_box.set_row_separator_func(func, None)
+        func = gaupol.util.separate_combo
+        combo_box.set_row_separator_func(func, None)
 
     def test_set_cursor_busy(self):
         window = Gtk.Window()

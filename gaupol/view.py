@@ -139,7 +139,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         selection.set_mode(Gtk.SelectionMode.MULTIPLE)
         self._init_search()
 
-
     def _init_search(self):
         """Initialize the interactive search properties."""
         self.set_enable_search(True)
