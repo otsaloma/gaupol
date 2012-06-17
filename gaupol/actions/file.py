@@ -39,6 +39,7 @@ class AppendFileAction(gaupol.Action):
     def _affirm_doable(self, application, page):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(len(page.project.subtitles) > 0)
 
 
 class CloseAllProjectsAction(gaupol.Action):
