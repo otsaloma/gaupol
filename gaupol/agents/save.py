@@ -20,9 +20,10 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class SaveAgent(aeidon.Delegate):
@@ -178,8 +179,9 @@ class SaveAgent(aeidon.Delegate):
                                  page.project.main_file.format,
                                  aeidon.documents.MAIN)
 
+        basename = os.path.basename(page.project.main_file.path)
         self.flash_message(_('Saved main document as "{}"')
-                           .format(os.path.basename(page.project.main_file.path)))
+                           .format(basename))
 
     @aeidon.deco.export
     def save_translation(self, page):
@@ -213,5 +215,6 @@ class SaveAgent(aeidon.Delegate):
                                  page.project.tran_file.format,
                                  aeidon.documents.TRAN)
 
+        basename = os.path.basename(page.project.tran_file.path)
         self.flash_message(_('Saved translation document as "{}"')
-                           .format(os.path.basename(page.project.tran_file.path)))
+                           .format(basename))

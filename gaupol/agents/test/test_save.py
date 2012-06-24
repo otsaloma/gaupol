@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,8 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
+
+from gi.repository import Gtk
 
 
 class TestSaveAgent(gaupol.TestCase):
@@ -34,18 +35,16 @@ class TestSaveAgent(gaupol.TestCase):
         self.application = self.new_application()
         self.delegate = self.application.save_main.__self__
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test__show_encoding_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
-        self.delegate._show_encoding_error_dialog("test", "ascii")
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test__show_io_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
-        self.delegate._show_io_error_dialog("test", "test")
-
     def test__on_save_all_documents_activate(self):
         self.application.get_action("save_all_documents").activate()
+
+    @aeidon.deco.monkey_patch(gaupol.MultiSaveDialog, "get_filename")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_save_all_documents_as_activate(self):
+        get_filename = lambda *args: self.new_subrip_file()
+        gaupol.MultiSaveDialog.get_filename = get_filename
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
+        self.application.get_action("save_all_documents_as").activate()
 
     def test__on_save_main_document_activate(self):
         self.application.get_action("save_main_document").activate()
@@ -68,6 +67,16 @@ class TestSaveAgent(gaupol.TestCase):
         gaupol.SaveDialog.get_filename = get_filename
         gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("save_translation_document_as").activate()
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_encoding_error_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
+        self.delegate._show_encoding_error_dialog("test", "ascii")
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_io_error_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
+        self.delegate._show_io_error_dialog("test", "test")
 
     def test_save_main(self):
         page = self.application.get_current_page()
