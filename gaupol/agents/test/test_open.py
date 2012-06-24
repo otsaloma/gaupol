@@ -18,8 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
+
+from gi.repository import Gtk
 
 
 class TestOpenAgent(gaupol.TestCase):
@@ -78,7 +79,6 @@ class TestOpenAgent(gaupol.TestCase):
         get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
         gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
-        page = self.application.get_current_page()
         self.application.get_action("open_translation_file").activate()
 
     @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
@@ -90,8 +90,7 @@ class TestOpenAgent(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
-        self.application.get_action("open_translation_file").activate()
-        page.project.set_text(0, aeidon.documents.TRAN, "")
+        page.project.set_text(0, aeidon.documents.TRAN, "test")
         self.application.get_action("open_translation_file").activate()
 
     @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
@@ -186,6 +185,8 @@ class TestOpenAgent(gaupol.TestCase):
 
     def test_append_file(self):
         self.application.append_file(self.new_subrip_file())
+
+    def test_append_file__ascii(self):
         self.application.append_file(self.new_subrip_file(), "ascii")
 
     def test_connect_view_signals(self):

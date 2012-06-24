@@ -19,6 +19,9 @@ Gaupol 0.20
 Gaupol 1.0
 ==========
 
+ * https://live.gnome.org/GnomeGoals/PortToGMenu?
+ * https://live.gnome.org/GnomeGoals/PortToGtkApplication?
+ * https://live.gnome.org/GnomeGoals/RemoveMarkupInMessages?
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
 

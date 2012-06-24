@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2010 Osmo Salomaa
+# Copyright (C) 2005-2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,33 +18,33 @@
 
 """Opening subtitle files and creating new projects."""
 
-
-
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Opening subtitle files and creating new projects."""
 
-    def _append_subtitles(self, from_page, to_page):
+    def _append_subtitles(self, page, subtitles):
         """
-        Append subtitles in `from_page` to `to_page`.
+        Append `subtitles` to `page`.
 
-        Return sequence of new indices in `to_page`.
+        Return sequence of new indices in `page`.
         """
-        fp = from_page.project
-        tp = to_page.project
-        tn = len(tp.subtitles)
-        indices = list(range(tn, tn + len(fp.subtitles)))
-        tp.block("action-done")
-        tp.insert_subtitles(indices, fp.subtitles)
-        tp.set_action_description(aeidon.registers.DO, _("Appending file"))
-        tp.unblock("action-done")
+        project = page.project
+        n = len(project.subtitles)
+        indices = list(range(n, n + len(subtitles)))
+        project.block("action-done")
+        project.insert_subtitles(indices, subtitles)
+        project.set_action_description(aeidon.registers.DO,
+                                       _("Appending file"))
+
+        project.unblock("action-done")
         return tuple(indices)
 
     def _check_file_exists(self, path):
@@ -55,7 +55,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Raise :exc:`gaupol.Default` if file at `path` already open."""
         for page in self.pages:
             files = (page.project.main_file, page.project.tran_file)
-            paths = [x.path for x in [_f for _f in files if _f]]
+            paths = [x.path for x in [y for y in files if y]]
             if not path in paths: continue
             self.set_current_page(page)
             message = _('File "{}" is already open')
@@ -81,8 +81,9 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     def _get_encodings_ensure(self, value, first=None):
         assert value
-        for encoding in [x for x in value if x != "auto"]:
-            assert aeidon.encodings.is_valid_code(encoding)
+        for encoding in value:
+            if encoding != "auto":
+                assert aeidon.encodings.is_valid_code(encoding)
         if first is not None:
             assert value[0] == first
 
@@ -125,8 +126,15 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.add_page(page)
 
     @aeidon.deco.export
-    def _on_notebook_drag_data_received(
-        self, notebook, context, x, y, selection_data, info, time):
+    def _on_notebook_drag_data_received(self,
+                                        notebook,
+                                        context,
+                                        x,
+                                        y,
+                                        selection_data,
+                                        info,
+                                        time):
+
         """Open main files from dragged URIs."""
         uris = selection_data.get_uris()
         paths = list(map(aeidon.util.uri_to_path, uris))
@@ -168,7 +176,9 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         uri = chooser.get_current_uri()
         path = aeidon.util.uri_to_path(uri)
         align_method = aeidon.align_methods.POSITION
-        self.open_translation(path, None, align_method)
+        self.open_translation(path,
+                              encoding=None,
+                              align_method=align_method)
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
@@ -188,11 +198,11 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page = self.get_current_page()
         path = page.project.video_path
         dialog = gaupol.VideoDialog(self.window)
-        if page.project.video_path is not None:
-            dialog.set_filename(page.project.video_path)
-        elif page.project.main_file is not None:
+        if page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
+        if page.project.video_path is not None:
+            dialog.set_filename(page.project.video_path)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         path = dialog.get_filename()
@@ -212,8 +222,15 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.get_action("select_video_file").activate()
 
     @aeidon.deco.export
-    def _on_video_button_drag_data_received(
-        self, notebook, context, x, y, selection_data, info, time):
+    def _on_video_button_drag_data_received(self,
+                                            video_button,
+                                            context,
+                                            x,
+                                            y,
+                                            selection_data,
+                                            info,
+                                            time):
+
         """Set video file from dragged URI."""
         page = self.get_current_page()
         uri = selection_data.get_uris()[0]
@@ -226,27 +243,26 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Open file at `path` and return corresponding page if successful.
 
-        Raise :exc:`Default` if cancelled or file cannot be opened.
+        Raise :exc:`gaupol.Default` if cancelled or file cannot be opened.
         """
         self._check_file_exists(path)
         if check_open:
             self._check_file_not_open(path)
         self._check_file_size(path)
         basename = os.path.basename(path)
-        if doc == aeidon.documents.MAIN:
-            page = gaupol.Page()
-            kwargs = {}
-        if doc == aeidon.documents.TRAN:
-            page = self.get_current_page()
-            kwargs = {"align_method": gaupol.conf.file.align_method}
+        page = (gaupol.Page if doc == aeidon.documents.MAIN
+                else self.get_current_page)()
+
         for encoding in encodings:
-            args = (path, encoding)
-            try: sort_count = self._try_open_file(page, doc, *args, **kwargs)
+            try: sort_count = self._try_open_file(page,
+                                                  doc,
+                                                  path,
+                                                  encoding)
+
             except UnicodeError: continue
-            sfile = page.project.get_file(doc)
             self._check_sort_count(path, sort_count)
             return page
-        # Report if all encodings failed to decode file.
+        # Report if all codecs failed to decode file.
         self._show_encoding_error_dialog(basename)
         raise gaupol.Default
 
@@ -300,9 +316,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _show_parse_error_dialog(self, basename, format):
         """Show an error dialog after failing to parse file."""
         title = _('Failed to parse file "{}"').format(basename)
-        message = _("Please check, e.g. with a text editor, that the file you "
-            "are trying open is a valid {} file. If you think it is, file a "
-            "bug report and attach the file.").format(format.label)
+        message = _("Please check that the file you are trying "
+            "to open is a valid {} file.").format(format.label)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -372,6 +387,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if encoding == "auto":
             encoding = aeidon.encodings.detect(path)
             if encoding is None: raise UnicodeError
+        if doc == aeidon.documents.TRAN:
+            kwargs["align_method"] = gaupol.conf.file.align_method
         try: return page.project.open(doc, path, encoding, **kwargs)
         except aeidon.FormatError:
             gaupol.util.set_cursor_normal(self.window)
@@ -399,10 +416,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page.project.connect("action-done", self._on_project_action_done)
         page.project.connect("action-redone", self._on_project_action_redone)
         page.project.connect("action-undone", self._on_project_action_undone)
-        page.tab_widget.connect("button-press-event",
-                                self._on_tab_widget_button_press_event,
-                                page)
-
+        callback = self._on_tab_widget_button_press_event
+        page.tab_widget.connect("button-press-event", callback, page)
         self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()
@@ -437,12 +452,12 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         encodings = self._get_encodings(encoding)
         doc = aeidon.documents.MAIN
-        temp = self._open_file(path, encodings, doc, False)
+        temp = self._open_file(path, encodings, doc, check_open=False)
         gaupol.util.set_cursor_busy(self.window)
         current = self.get_current_page()
         offset = current.project.subtitles[-1].end
         temp.project.shift_positions(None, offset)
-        rows = self._append_subtitles(temp, current)
+        rows = self._append_subtitles(current, temp.project.subtitles)
         amount = len(rows)
         current.view.set_focus(rows[0], None)
         current.view.select_rows(rows)
