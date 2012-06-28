@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("SplitDialog",)
 
@@ -29,6 +30,7 @@ __all__ = ("SplitDialog",)
 class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for splitting a project in two."""
+
     _widgets = ("subtitle_spin",)
 
     def __init___require(self, parent, application):
@@ -68,15 +70,18 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         indices = list(range(index, len(page.project.subtitles)))
         page.project.block("action-done")
         page.project.remove_subtitles(indices)
-        page.project.set_action_description(
-            aeidon.registers.DO, _("Splitting project"))
+        page.project.set_action_description(aeidon.registers.DO,
+                                            _("Splitting project"))
+
         page.project.unblock("action-done")
 
     def _shift_destination(self, src, dst):
         """Shift subtitles in `dst` page."""
         amount = src.project.subtitles[-1].end
         if isinstance(amount, str):
-            amount = (amount[1:] if amount.startswith("-") else "-{}".format(amount))
+            amount = (amount[1:] if amount.startswith("-")
+                      else "-{}".format(amount))
+
         if isinstance(amount, (int, float)):
             amount = -1 * amount
         dst.project.shift_positions(None, amount, register=None)
@@ -94,8 +99,9 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._remove_from_source(src, index)
         self._shift_destination(src, dst)
         self.application.add_page(dst)
-        amount = len(dst.project.subtitles)
-        name = dst.untitle
-        message = _('Split {amount:d} subtitles to project "{name}"')
-        self.application.flash_message(message.format(**locals()))
+        message = (_('Split {amount:d} subtitles to project "{name}"')
+                   .format(amount=len(dst.project.subtitles),
+                           name=dst.untitle))
+
+        self.application.flash_message(message)
         gaupol.util.set_cursor_normal(self.application.window)
