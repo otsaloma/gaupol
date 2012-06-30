@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 from .test_file import _TestFileDialog
@@ -32,7 +33,7 @@ class TestMultiSaveDialog(_TestFileDialog):
         self.dialog = gaupol.MultiSaveDialog(Gtk.Window(), self.application)
         self.dialog.show()
 
-    def test__on_response(self):
+    def test__on_response__cancel(self):
         self.dialog.response(Gtk.ResponseType.CANCEL)
 
     def test_get_format(self):

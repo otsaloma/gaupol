@@ -20,9 +20,10 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("MultiSaveDialog",)
 
@@ -38,7 +39,7 @@ class MultiSaveDialog(gaupol.FileDialog):
 
     def __init__(self, parent, application):
         """Initialize a :class:`MultiSaveDialog` object."""
-        gaupol.FileDialog.__init__(self, "multisave-dialog.ui")
+        gaupol.FileDialog.__init__(self, "multi-save-dialog.ui")
         self.application = application
         self._init_format_combo()
         self._init_encoding_combo()
@@ -55,7 +56,7 @@ class MultiSaveDialog(gaupol.FileDialog):
         for name in (x.label for x in aeidon.formats):
             store.append((name,))
         view = self._format_combo.get_child()
-        view.set_displayed_row(0)
+        view.set_displayed_row(gaupol.util.tree_row_to_path(0))
         renderer = Gtk.CellRendererText()
         self._format_combo.pack_start(renderer, expand=True)
         self._format_combo.add_attribute(renderer, "text", 0)
@@ -67,7 +68,7 @@ class MultiSaveDialog(gaupol.FileDialog):
         for name in (x.label for x in aeidon.newlines):
             store.append((name,))
         view = self._newline_combo.get_child()
-        view.set_displayed_row(0)
+        view.set_displayed_row(gaupol.util.tree_row_to_path(0))
         renderer = Gtk.CellRendererText()
         self._newline_combo.pack_start(renderer, expand=True)
         self._newline_combo.add_attribute(renderer, "text", 0)
@@ -124,11 +125,9 @@ class MultiSaveDialog(gaupol.FileDialog):
         Raise :exc:`gaupol.Default` if opening cancelled.
         """
         title = _("{:d} of the files to be saved already exist. "
-                  "Do you want to replace them?").format(overwrite_count)
-
+            "Do you want to replace them?").format(overwrite_count)
         message = _('The files already exist in "{}". '
-                    'Replacing them will overwrite their contents.').format(path)
-
+            'Replacing them will overwrite their contents.').format(path)
         dialog = gaupol.QuestionDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
         dialog.add_button(_("_Replace"), Gtk.ResponseType.YES)

@@ -19,18 +19,8 @@ Gaupol 0.20
 Gaupol 1.0
 ==========
 
- * https://live.gnome.org/GnomeGoals/PortToGMenu?
- * https://live.gnome.org/GnomeGoals/PortToGtkApplication?
- * https://live.gnome.org/GnomeGoals/RemoveMarkupInMessages?
+ * https://live.gnome.org/GnomeGoals/PortToGMenu
+ * https://live.gnome.org/GnomeGoals/PortToGtkApplication
+ * https://live.gnome.org/GnomeGoals/RemoveMarkupInMessages
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
-
-Gaupol 3000
-===========
-
- * Replace the headers-dialog with a more general properties-dialog
-   with format-specific fields to fill (?)
-   - SubRip: Write coordinates (extended SubRip format)
-   - MicroDVD: Write framerate information subtitle
- * Use a metadata XML file to remember associated video files,
-   selected framerates and possibly something else
