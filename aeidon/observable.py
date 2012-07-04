@@ -149,8 +149,8 @@ class Observable(object, metaclass=aeidon.Contractual):
             if not signal in self._notify_queue:
                 self._notify_queue.append(signal)
             return
-        if ((not self._blocked_state) and
-            (not signal in self._blocked_signals)):
+        if (not self._blocked_state and
+            not signal in self._blocked_signals):
             if signal.startswith("notify::"):
                 name = signal.replace("notify::", "")
                 args = (getattr(self, name),)
@@ -176,7 +176,7 @@ class Observable(object, metaclass=aeidon.Contractual):
         return self.emit("notify::{}".format(name))
 
     def thaw_notify_ensure(self, value, do=True):
-        assert (not do) or (not self._notify_queue)
+        assert not do or not self._notify_queue
 
     def thaw_notify(self, do=True):
         """

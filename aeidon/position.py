@@ -20,10 +20,10 @@
 
 # aeidon handles frames as integers, seconds as floats and times as strings.
 # Some functions accept a "position" argument, which will be interpreted based
-# on its type. These functions are introduced here so that callers can use as_*
-# to ensure argument types and functions can use is_* to check argument types,
-# all in a way which is compatible with the old ambiguous way of using int and
-# float directly.
+# on its type. These functions are introduced here so that callers can use
+# 'as_*' to ensure argument types and functions can use 'is_*' to check
+# argument types, all in a way which is compatible with the old ambiguous way
+# of using int, float and str directly.
 
 __all__ = ("as_frame",
            "as_seconds",
