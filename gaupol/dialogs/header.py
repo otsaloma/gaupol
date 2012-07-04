@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("HeaderDialog",)
 
@@ -30,10 +31,7 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     """Dialog for editing subtitle file headers."""
 
-    _widgets = ("copy_down_button",
-                "copy_hbox",
-                "copy_up_button",
-                "main_clear_button",
+    _widgets = ("main_clear_button",
                 "main_revert_button",
                 "main_template_button",
                 "main_text_view",
@@ -83,16 +81,16 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         if self._main_vbox.props.visible:
             gaupol.util.scale_to_content(self._main_text_view,
                                          min_nchar=60,
-                                         min_nlines=15,
                                          max_nchar=60,
+                                         min_nlines=15,
                                          max_nlines=15,
                                          font="monospace")
 
         if self._tran_vbox.props.visible:
             gaupol.util.scale_to_content(self._tran_text_view,
                                          min_nchar=60,
-                                         min_nlines=15,
                                          max_nchar=60,
+                                         min_nlines=15,
                                          max_nlines=15,
                                          font="monospace")
 
@@ -102,7 +100,6 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         tran = bool(self._tran_file and self._tran_file.format.has_header)
         self._main_vbox.props.visible = main
         self._tran_vbox.props.visible = tran
-        self._copy_hbox.props.visible = (main and tran)
         self._set_main_header(self._main_file.header if main else "")
         self._set_translation_header(self._tran_file.header if tran else "")
 
@@ -111,14 +108,6 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Return the main file of the current page's project."""
         page = self.application.get_current_page()
         return page.project.main_file
-
-    def _on_copy_down_button_clicked(self, *args):
-        """Copy main header to translation header."""
-        self._set_translation_header(self._get_main_header())
-
-    def _on_copy_up_button_clicked(self, *args):
-        """Copy translation header to main header."""
-        self._set_main_header(self._get_translation_header())
 
     def _on_main_clear_button_clicked(self, *args):
         """Set a blank string as main header."""
@@ -190,7 +179,7 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Show an error dialog for invalid MPsub header."""
         title = _("Invalid header")
         msg = _('MPsub header must contain a line of form "FORMAT=VALUE", '
-                'where VALUE is any of "TIME", "23.98", "25.00" or "29.97".')
+            'where VALUE is any of "TIME", "23.98", "25.00" or "29.97".')
         dialog = gaupol.ErrorDialog(self._dialog, title, msg)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)

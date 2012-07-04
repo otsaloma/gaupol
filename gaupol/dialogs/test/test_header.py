@@ -18,29 +18,30 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 
 class TestHeaderDialog(gaupol.TestCase):
 
-    def run__dialog__both(self):
+    def run__show_mpsub_error_dialog(self):
+        self.dialog._show_mpsub_error_dialog()
+
+    def run_dialog__both(self):
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog__main(self):
+    def run_dialog__main(self):
         self.dialog.destroy()
         self.setup_main()
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog__translation(self):
+    def run_dialog__translation(self):
         self.dialog.destroy()
         self.setup_translation()
         self.dialog.run()
         self.dialog.destroy()
-
-    def run__show_mpsub_error_dialog(self):
-        self.dialog._show_mpsub_error_dialog()
 
     def setup_both(self):
         self.application = self.new_application()
@@ -78,16 +79,6 @@ class TestHeaderDialog(gaupol.TestCase):
                                           self.application)
 
         self.dialog.show()
-
-    def test__on_copy_down_button_clicked(self):
-        self.dialog._copy_down_button.clicked()
-        value = self.dialog._get_translation_header()
-        assert value == self.dialog._main_file.header
-
-    def test__on_copy_up_button_clicked(self):
-        self.dialog._copy_up_button.clicked()
-        value = self.dialog._get_main_header()
-        assert value == self.dialog._tran_file.header
 
     def test__on_main_clear_button_clicked(self):
         self.dialog._main_clear_button.clicked()
