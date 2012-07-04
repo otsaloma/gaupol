@@ -21,13 +21,12 @@
 import aeidon
 import gaupol
 import re
+_ = aeidon.i18n._
 
 from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
-
-_ = aeidon.i18n._
 
 __all__ = ("View",)
 
@@ -82,16 +81,13 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
     def _init_cell_data_functions(self):
         """Initialize functions to automatically update cell data."""
         # Set the data in the number column automatically.
-        # XXX: Segfaults.
-        # https://bugzilla.gnome.org/show_bug.cgi?id=676325
-        # def set_number(column, renderer, store, itr, data):
-        #     path = store.get_path(itr)
-        #     row = gaupol.util.tree_path_to_row(path)
-        #     renderer.props.text = str(row + 1)
-        # column = self.get_column(self.columns.NUMBER)
-        # renderer = column.get_cells()[0]
-        # column.set_cell_data_func(renderer, set_number, None)
-        pass
+        def set_number(column, renderer, store, itr, data):
+            path = store.get_path(itr)
+            row = gaupol.util.tree_path_to_row(path)
+            renderer.props.text = str(row + 1)
+        column = self.get_column(self.columns.NUMBER)
+        renderer = column.get_cells()[0]
+        column.set_cell_data_func(renderer, set_number, None)
 
     def _init_column_attributes(self):
         """Initialize the column header :class:`Pango.AttrList`."""
@@ -143,10 +139,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         """Initialize the interactive search properties."""
         self.set_enable_search(True)
         self.set_search_column(self.columns.NUMBER)
-        # XXX: Segfaults.
-        # https://bugzilla.gnome.org/show_bug.cgi?id=676283
-        # self.set_search_equal_func(self._search_equals, None)
-        pass
+        self.set_search_equal_func(self._search_equals, None)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -261,7 +254,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         if not self._calc.is_valid_time(time_key): return False
         time_iter = store[row][col]
         if not ":" in time_iter: return False
-        try: time_next = store[row + 1][col]
+        try: time_next = store[row+1][col]
         except IndexError: time_next = "99:59:59.999"
         return not (self._calc.time_to_seconds(time_iter)
                     <= self._calc.time_to_seconds(time_key)
