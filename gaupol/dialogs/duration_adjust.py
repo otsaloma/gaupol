@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("DurationAdjustDialog",)
 
