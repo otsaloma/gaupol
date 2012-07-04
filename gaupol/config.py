@@ -426,9 +426,10 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 if not hasattr(container, option):
                     # Add attribute if it does not exist in container, which
                     # has been initialized from config_defaults. This is needed
-                    # for extensions, defaults of which are not known until
-                    # later. Any possible obsolete options created here will be
-                    # removed before writing in write_to_file.
+                    # for extensions, defaults of options of which are not
+                    # known until later. Any possible obsolete non-extension
+                    # options created here will be removed before writing in
+                    # write_to_file.
                     container.add_attribute(option, value)
                 setattr(container, option, value)
 

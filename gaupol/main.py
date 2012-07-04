@@ -114,6 +114,9 @@ def _parse_args(args):
         callback=_on_parser_version,
         help=_("show version number and exit"),)
 
+    # XXX: Remove this, since it's probably better to set XDG_CONFIG_HOME and
+    # XDG_DATA_HOME if not wanting to use the defaults. Document this in the
+    # man page under 'ENVIRONMENT VARIABLES'.
     parser.add_option(
         "-c", "--config-file",
         action="store",

@@ -22,11 +22,10 @@ import aeidon
 import gaupol
 import os
 import sys
+_ = aeidon.i18n._
 
 from gi.repository import Gtk
 from gi.repository import Pango
-
-_ = aeidon.i18n._
 
 __all__ = ("Page",)
 

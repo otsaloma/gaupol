@@ -20,6 +20,7 @@ import gaupol
 
 from gi.repository import Gtk
 
+
 class PuppetEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
 
     pass

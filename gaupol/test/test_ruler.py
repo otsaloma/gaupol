@@ -39,7 +39,7 @@ class TestModule(gaupol.TestCase):
         window = Gtk.Window()
         window.connect("delete-event", Gtk.main_quit)
         window.set_position(Gtk.WindowPosition.CENTER)
-        window.set_default_size(300, 100)
+        window.set_default_size(300, 120)
         window.set_border_width(12)
         window.add(scroller)
         window.show_all()
