@@ -19,6 +19,7 @@
 import aeidon
 import gaupol
 import imp
+import sys
 
 from gi.repository import Gtk
 
@@ -102,6 +103,7 @@ class TestModule(gaupol.TestCase):
     def test_gtkspell_available(self):
         imp.reload(gaupol.util)
         # XXX: GtkSpell not yet available for PyGI.
+        # assert gaupol.util.gtkspell_available()
         gaupol.util.gtkspell_available()
 
     def test_lines_to_px(self):
@@ -132,8 +134,8 @@ class TestModule(gaupol.TestCase):
         scroller.add(text_view)
         gaupol.util.scale_to_content(text_view,
                                      min_nchar=1,
-                                     min_nlines=2,
                                      max_nchar=80,
+                                     min_nlines=2,
                                      max_nlines=10)
 
     def test_scale_to_content__tree_view(self):
@@ -142,8 +144,8 @@ class TestModule(gaupol.TestCase):
         scroller.add(tree_view)
         gaupol.util.scale_to_content(tree_view,
                                      min_nchar=1,
-                                     min_nlines=2,
                                      max_nchar=80,
+                                     min_nlines=2,
                                      max_nlines=10,
                                      font="monospace")
 
@@ -186,6 +188,11 @@ class TestModule(gaupol.TestCase):
         gaupol.util.set_widget_font(label, "Serif 12")
 
     def test_show_uri(self):
+        gaupol.util.show_uri(gaupol.HOMEPAGE_URL)
+
+    @aeidon.deco.monkey_patch(sys, "platform")
+    def test_show_uri__windows(self):
+        sys.platform = "win32"
         gaupol.util.show_uri(gaupol.HOMEPAGE_URL)
 
     def test_text_field_to_document(self):

@@ -36,8 +36,8 @@ class BuilderDialog(object):
     All widgets defined in :attr:`_widgets` are assigned as instance variables
     with names preceded by a single underscore. All signals defined in the UI
     definition file are connected to ``self``. All :func:`getattr` calls not
-    found in ``self`` are delegated to :attr:`self._dialog` allowing ``self``
-    to look and act like a :class:`Gtk.Dialog`.
+    found in ``self`` are delegated to :attr:`_dialog` allowing ``self`` to
+    look and act like a :class:`Gtk.Dialog`.
     """
 
     _widgets = ()

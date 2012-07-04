@@ -24,17 +24,17 @@ from gi.repository import Gtk
 
 class TestMultiCloseDialog(gaupol.TestCase):
 
-    def run__dialog__both(self):
+    def run_dialog__both(self):
         self.setup_both()
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog__main(self):
+    def run_dialog__main(self):
         self.setup_main()
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog__translation(self):
+    def run_dialog__translation(self):
         self.setup_translation()
         self.dialog.run()
         self.dialog.destroy()

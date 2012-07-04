@@ -26,7 +26,7 @@ from .test_file import _TestFileDialog
 
 class TestSaveDialog(_TestFileDialog):
 
-    def run__dialog(self):
+    def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
 

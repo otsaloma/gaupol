@@ -23,7 +23,7 @@ from gi.repository import Gtk
 
 class TestLanguageDialog(gaupol.TestCase):
 
-    def run__dialog__hide_target(self):
+    def run_dialog__hide_target(self):
         self.dialog.destroy()
         self.dialog = gaupol.LanguageDialog(Gtk.Window(),
                                             show_target=False)
@@ -31,7 +31,7 @@ class TestLanguageDialog(gaupol.TestCase):
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog__show_target(self):
+    def run_dialog__show_target(self):
         self.dialog.destroy()
         self.dialog = gaupol.LanguageDialog(Gtk.Window(),
                                             show_target=True)

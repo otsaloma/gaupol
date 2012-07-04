@@ -39,8 +39,8 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_tree_view()
         gaupol.util.scale_to_content(self._tree_view,
                                      min_nchar=10,
-                                     min_nlines=5,
                                      max_nchar=100,
+                                     min_nlines=5,
                                      max_nlines=20)
 
         self._dialog.set_transient_for(parent)

@@ -17,13 +17,18 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
+import os
+
 from gi.repository import Gtk
+from .test_file import _TestFileDialog
 
-from .test_open import TestOpenDialog
 
+class TestAppendDialog(_TestFileDialog):
 
-class TestAppendDialog(TestOpenDialog):
+    def run_dialog(self):
+        self.dialog.run()
 
     def setup_method(self, method):
+        gaupol.conf.file.directory = os.getcwd()
         self.dialog = gaupol.AppendDialog(Gtk.Window())
         self.dialog.show()

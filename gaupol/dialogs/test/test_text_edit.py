@@ -23,7 +23,7 @@ from gi.repository import Gtk
 
 class TestTextEditDialog(gaupol.TestCase):
 
-    def run__dialog__monospace(self):
+    def run_dialog__monospace(self):
         gaupol.conf.editor.custom_font = "monospace"
         gaupol.conf.editor.use_custom_font = True
         self.dialog.destroy()
@@ -31,7 +31,7 @@ class TestTextEditDialog(gaupol.TestCase):
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog__sans(self):
+    def run_dialog__sans(self):
         gaupol.conf.editor.custom_font = "sans"
         gaupol.conf.editor.use_custom_font = True
         self.dialog.destroy()

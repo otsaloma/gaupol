@@ -36,12 +36,12 @@ def while_errors(function):
 
 class TestSpellCheckDialog(gaupol.TestCase):
 
-    def run__dialog(self):
-        self.dialog.run()
-        self.dialog.destroy()
-
     def run__show_error_dialog(self):
         self.dialog._show_error_dialog("test")
+
+    def run_dialog(self):
+        self.dialog.run()
+        self.dialog.destroy()
 
     def setup_method(self, method):
         gaupol.conf.editor.use_custom_font = True

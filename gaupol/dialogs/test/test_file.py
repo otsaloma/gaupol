@@ -25,15 +25,23 @@ from gi.repository import Gtk
 class _TestFileDialog(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
-    def test__on_encoding_combo_changed(self):
-        responder = iter((Gtk.ResponseType.OK, Gtk.ResponseType.CANCEL))
+    def test__on_encoding_combo_changed__cancel(self):
         def run_dialog(dialog):
             selection = dialog._tree_view.get_selection()
             selection.select_path(0)
-            return next(responder)
+            return Gtk.ResponseType.CANCEL
         gaupol.util.run_dialog = run_dialog
         store = self.dialog._encoding_combo.get_model()
         self.dialog._encoding_combo.set_active(len(store) - 1)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_encoding_combo_changed__ok(self):
+        def run_dialog(dialog):
+            selection = dialog._tree_view.get_selection()
+            selection.select_path(0)
+            return Gtk.ResponseType.OK
+        gaupol.util.run_dialog = run_dialog
+        store = self.dialog._encoding_combo.get_model()
         self.dialog._encoding_combo.set_active(len(store) - 1)
 
     def test_get_encoding(self):
