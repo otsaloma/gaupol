@@ -97,8 +97,8 @@ class DebugDialog(gaupol.BuilderDialog):
         tag.gaupol_lineno = lineno
         if path.startswith(os.getcwd()):
             path = path.replace(os.getcwd(), "")
-        while path.startswith(os.sep):
-            path = path.replace(os.sep, "", 1)
+            while path.startswith(os.sep):
+                path = path.replace(os.sep, "", 1)
         itr = text_buffer.get_end_iter()
         tag_table = text_buffer.get_tag_table()
         tags = list(map(tag_table.lookup, tags + ("monospace",)))
@@ -205,7 +205,7 @@ class DebugDialog(gaupol.BuilderDialog):
         self._insert_python_package_versions()
         gaupol.util.scale_to_content(self._text_view,
                                      min_nchar=30,
-                                     min_nlines=10,
                                      max_nchar=100,
+                                     min_nlines=10,
                                      max_nlines=30,
                                      font="monospace")

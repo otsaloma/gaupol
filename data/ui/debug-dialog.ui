@@ -107,7 +107,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="xalign">0</property>
-                    <property name="label" translatable="yes">An unhandled exception occured</property>
+                    <property name="label" translatable="yes">Something went wrong</property>
                     <property name="wrap">True</property>
                     <property name="selectable">True</property>
                     <attributes>
