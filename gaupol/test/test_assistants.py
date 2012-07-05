@@ -257,20 +257,20 @@ class TestLineBreakOptionsPage(_TestBuilderPage):
         self.page = LineBreakOptionsPage(self.window)
 
     def test__on_max_length_spin_value_changed(self):
-        self.page._max_length_spin.spin(Gtk.SPIN_STEP_FORWARD)
-        self.page._max_length_spin.spin(Gtk.SPIN_STEP_BACKWARD)
+        self.page._max_length_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.page._max_length_spin.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
     def test__on_max_lines_spin_value_changed(self):
-        self.page._max_lines_spin.spin(Gtk.SPIN_STEP_FORWARD)
-        self.page._max_lines_spin.spin(Gtk.SPIN_STEP_BACKWARD)
+        self.page._max_lines_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.page._max_lines_spin.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
     def test__on_max_skip_length_spin_value_changed(self):
-        self.page._max_skip_length_spin.spin(Gtk.SPIN_STEP_FORWARD)
-        self.page._max_skip_length_spin.spin(Gtk.SPIN_STEP_BACKWARD)
+        self.page._max_skip_length_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.page._max_skip_length_spin.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
     def test__on_max_skip_lines_spin_value_changed(self):
-        self.page._max_skip_lines_spin.spin(Gtk.SPIN_STEP_FORWARD)
-        self.page._max_skip_lines_spin.spin(Gtk.SPIN_STEP_BACKWARD)
+        self.page._max_skip_lines_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.page._max_skip_lines_spin.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
     def test__on_skip_length_check_toggled(self):
         self.page._skip_length_check.set_active(True)
