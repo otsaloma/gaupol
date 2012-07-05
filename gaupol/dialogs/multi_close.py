@@ -54,14 +54,16 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         """Initialize widget sizes."""
         if self._main_vbox.props.visible:
             gaupol.util.scale_to_content(self._main_tree_view,
-                                         min_nlines=2,
+                                         min_nchar=10,
                                          max_nchar=40,
+                                         min_nlines=2,
                                          max_nlines=6)
 
         if self._tran_vbox.props.visible:
             gaupol.util.scale_to_content(self._tran_tree_view,
-                                         min_nlines=2,
+                                         min_nchar=10,
                                          max_nchar=40,
+                                         min_nlines=2,
                                          max_nlines=6)
 
     def _init_tran_tree_view(self):
