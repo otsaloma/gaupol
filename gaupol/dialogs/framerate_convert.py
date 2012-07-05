@@ -32,8 +32,6 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
 
     _widgets = ("all_radio", "current_radio", "input_combo", "output_combo")
 
-    # XXX: This shit segfaults.
-
     def __init__(self, parent, application):
         """Initialize a FramerateConvertDialog object."""
         gaupol.BuilderDialog.__init__(self, "framerate-convert-dialog.ui")
