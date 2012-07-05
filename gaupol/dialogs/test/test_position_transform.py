@@ -17,6 +17,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -64,16 +65,16 @@ class _TestPositionTransformDialog(gaupol.TestCase):
         self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_subtitle_spin_1_value_changed(self):
-        self.dialog._subtitle_spin_1.spin(Gtk.SPIN_STEP_FORWARD)
-        self.dialog._subtitle_spin_1.spin(Gtk.SPIN_STEP_FORWARD)
-        self.dialog._subtitle_spin_1.spin(Gtk.SPIN_STEP_BACKWARD)
-        self.dialog._subtitle_spin_1.spin(Gtk.SPIN_STEP_BACKWARD)
+        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_BACKWARD, 1)
+        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
     def test__on_subtitle_spin_2_value_changed(self):
-        self.dialog._subtitle_spin_2.spin(Gtk.SPIN_STEP_FORWARD)
-        self.dialog._subtitle_spin_2.spin(Gtk.SPIN_STEP_FORWARD)
-        self.dialog._subtitle_spin_2.spin(Gtk.SPIN_STEP_BACKWARD)
-        self.dialog._subtitle_spin_2.spin(Gtk.SPIN_STEP_BACKWARD)
+        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_BACKWARD, 1)
+        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
 
 class TestFrameTransformDialog(_TestPositionTransformDialog):

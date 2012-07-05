@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,12 +16,14 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Dialogs for applying linear tranfromations to positions."""
+"""Dialogs for applying linear transformations to positions."""
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
+from gi.repository import Pango
 
 __all__ = ("FrameTransformDialog", "TimeTransformDialog")
 
@@ -47,9 +49,8 @@ class PositionTransformDialog(gaupol.BuilderDialog):
 
     def __init__(self, parent, application):
         """Initialize a :class:`PositionTransformDialog` object."""
-        gaupol.BuilderDialog.__init__(self, "transform-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, "position-transform-dialog.ui")
         self.application = application
-        self._init_input_labels()
         self._init_sensitivities()
         self._init_sizes()
         self._dialog.set_transient_for(parent)
@@ -63,15 +64,6 @@ class PositionTransformDialog(gaupol.BuilderDialog):
             return gaupol.targets.CURRENT
         raise ValueError("Invalid target radio state")
 
-    def _init_input_labels(self):
-        """Initialize non-editable input entries."""
-        style = self._correction_label_1.get_style()
-        text_color = style.fg[Gtk.StateType.NORMAL]
-        base_color = style.bg[Gtk.StateType.NORMAL]
-        for entry in (self._input_entry_1, self._input_entry_2):
-            entry.modify_text(Gtk.StateType.NORMAL, text_color)
-            entry.modify_base(Gtk.StateType.NORMAL, base_color)
-
     def _init_sensitivities(self):
         """Initialize sensitivities of widgets."""
         page = self.application.get_current_page()
@@ -84,8 +76,11 @@ class PositionTransformDialog(gaupol.BuilderDialog):
 
     def _init_sizes(self):
         """Initialize widget sizes."""
-        gaupol.util.scale_to_size(self._text_label_1, 40, -1)
-        gaupol.util.scale_to_size(self._text_label_2, 40, -1)
+        self._text_label_1.set_ellipsize(Pango.EllipsizeMode.END)
+        self._text_label_2.set_ellipsize(Pango.EllipsizeMode.END)
+        width = gaupol.util.char_to_px(50)
+        self._text_label_1.set_size_request(width, -1)
+        self._text_label_2.set_size_request(width, -1)
 
     def _init_values(self):
         """Intialize default values for widgets."""
@@ -167,9 +162,10 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         page.project.transform_positions(rows, point_1, point_2)
 
 
-class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual):
+class FrameTransformDialog(PositionTransformDialog,
+                           metaclass=aeidon.Contractual):
 
-    """Dialog for applying linear tranfromations to frames."""
+    """Dialog for applying a linear tranfromation to frames."""
 
     def __init__(self, parent, application):
         """Initialize a :class:`FrameTransformDialog` object."""
@@ -180,20 +176,20 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
         self._init_values()
 
     def _get_first_point_ensure(self, value):
-        assert isinstance(value[1], int)
+        assert aeidon.is_frame(value[1])
 
     def _get_first_point(self):
         """Return row, output frame of the first sync point."""
         return (self._subtitle_spin_1.get_value_as_int() - 1,
-                self._output_spin_1.get_value_as_int())
+                aeidon.as_frame(self._output_spin_1.get_value_as_int()))
 
     def _get_second_point_ensure(self, value):
-        assert isinstance(value[1], int)
+        assert aeidon.is_frame(value[1])
 
     def _get_second_point(self):
         """Return row, output frame of the second sync point."""
         return (self._subtitle_spin_2.get_value_as_int() - 1,
-                self._output_spin_2.get_value_as_int())
+                aeidon.as_frame(self._output_spin_2.get_value_as_int()))
 
     def _init_widgets(self):
         """Initialize properties of widgets."""
@@ -226,8 +222,8 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_entry_1.set_text(subtitle.start_frame)
-        self._output_spin_1.set_value(subtitle.start_frame)
+        self._input_entry_1.set_text(str(subtitle.start_frame))
+        self._output_spin_1.set_value(int(subtitle.start_frame))
         text = subtitle.main_text.replace("\n", " ")
         text = aeidon.re_any_tag.sub("", text)
         self._text_label_1.set_text(text)
@@ -239,8 +235,8 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_entry_2.set_text(subtitle.start_frame)
-        self._output_spin_2.set_value(subtitle.start_frame)
+        self._input_entry_2.set_text(str(subtitle.start_frame))
+        self._output_spin_2.set_value(int(subtitle.start_frame))
         text = subtitle.main_text.replace("\n", " ")
         text = aeidon.re_any_tag.sub("", text)
         self._text_label_2.set_text(text)
@@ -249,15 +245,16 @@ class FrameTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual
 
     def _output_edited(self):
         """Return ``True`` if output of either point has been edited."""
-        in_1 = int(self._input_entry_1.get_text())
-        in_2 = int(self._input_entry_2.get_text())
-        out_1 = self._output_spin_1.get_value_as_int()
-        out_2 = self._output_spin_2.get_value_as_int()
+        in_1 = aeidon.as_frame(self._input_entry_1.get_text())
+        in_2 = aeidon.as_frame(self._input_entry_2.get_text())
+        out_1 = aeidon.as_frame(self._output_spin_1.get_value_as_int())
+        out_2 = aeidon.as_frame(self._output_spin_2.get_value_as_int())
         return (out_1 != in_1 or out_2 != in_2)
 
-class TimeTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual):
+class TimeTransformDialog(PositionTransformDialog,
+                          metaclass=aeidon.Contractual):
 
-    """Dialog for applying linear tranfromations to times."""
+    """Dialog for applying a linear tranfromation to times."""
 
     def __init__(self, parent, application):
         """Initialize a :class:`TimeTransformDialog` object."""
@@ -268,20 +265,20 @@ class TimeTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual)
         self._init_values()
 
     def _get_first_point_ensure(self, value):
-        assert isinstance(value[1], str)
+        assert aeidon.is_time(value[1])
 
     def _get_first_point(self):
         """Return row, output time of the first sync point."""
         return (self._subtitle_spin_1.get_value_as_int() - 1,
-                self._output_entry_1.get_text())
+                aeidon.as_time(self._output_entry_1.get_text()))
 
     def _get_second_point_ensure(self, value):
-        assert isinstance(value[1], str)
+        assert aeidon.is_time(value[1])
 
     def _get_second_point(self):
         """Return row, output time of the second sync point."""
         return (self._subtitle_spin_2.get_value_as_int() - 1,
-                self._output_entry_2.get_text())
+                aeidon.as_time(self._output_entry_2.get_text()))
 
     def _init_widgets(self):
         """Initialize properties of widgets."""
@@ -308,14 +305,14 @@ class TimeTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual)
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_entry_1.set_text(subtitle.start_time)
-        self._output_entry_1.set_text(subtitle.start_time)
+        self._input_entry_1.set_text(str(subtitle.start_time))
+        self._output_entry_1.set_text(str(subtitle.start_time))
         text = subtitle.main_text.replace("\n", " ")
         text = aeidon.re_any_tag.sub("", text)
         self._text_label_1.set_text(text)
         self._text_label_1.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_2.props.adjustment.props.lower = row + 2
-        # Allow the glib.idle_add-using TimeEntry to update.
+        # Allow the GLib.idle_add-using TimeEntry to update.
         gaupol.util.iterate_main()
 
     def _on_subtitle_spin_2_value_changed(self, spin_button):
@@ -323,20 +320,20 @@ class TimeTransformDialog(PositionTransformDialog, metaclass=aeidon.Contractual)
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_entry_2.set_text(subtitle.start_time)
-        self._output_entry_2.set_text(subtitle.start_time)
+        self._input_entry_2.set_text(str(subtitle.start_time))
+        self._output_entry_2.set_text(str(subtitle.start_time))
         text = subtitle.main_text.replace("\n", " ")
         text = aeidon.re_any_tag.sub("", text)
         self._text_label_2.set_text(text)
         self._text_label_2.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_1.props.adjustment.props.upper = row
-        # Allow the glib.idle_add-using TimeEntry to update.
+        # Allow the GLib.idle_add-using TimeEntry to update.
         gaupol.util.iterate_main()
 
     def _output_edited(self):
         """Return ``True`` if output of either point has been edited."""
-        in_1 = self._input_entry_1.get_text()
-        in_2 = self._input_entry_2.get_text()
-        out_1 = self._output_entry_1.get_text()
-        out_2 = self._output_entry_2.get_text()
+        in_1 = aeidon.as_time(self._input_entry_1.get_text())
+        in_2 = aeidon.as_time(self._input_entry_2.get_text())
+        out_1 = aeidon.as_time(self._output_entry_1.get_text())
+        out_2 = aeidon.as_time(self._output_entry_2.get_text())
         return (out_1 != in_1 or out_2 != in_2)
