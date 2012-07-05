@@ -26,6 +26,14 @@ from .test_file import _TestFileDialog
 
 class TestMultiSaveDialog(_TestFileDialog):
 
+    @aeidon.deco.silent(gaupol.Default)
+    def run__show_overwrite_question_dialog(self):
+        self.dialog._show_overwrite_question_dialog(3, "test")
+
+    def run_dialog(self):
+        self.dialog.run()
+        self.dialog.destroy()
+
     def setup_method(self, method):
         self.application = self.new_application()
         self.application.add_page(self.new_page())
@@ -35,6 +43,11 @@ class TestMultiSaveDialog(_TestFileDialog):
 
     def test__on_response__cancel(self):
         self.dialog.response(Gtk.ResponseType.CANCEL)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_overwrite_question_dialog(self):
+        gaupol.util.flash_dialog = lambda dialog: Gtk.ResponseType.YES
+        self.dialog._show_overwrite_question_dialog(3, "test")
 
     def test_get_format(self):
         for format in aeidon.formats:
