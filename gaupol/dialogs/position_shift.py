@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,8 +20,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 __all__ = ("FrameShiftDialog", "TimeShiftDialog")
 
@@ -39,7 +40,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
 
     def __init__(self, parent, application):
         """Initialize a :class:`PositionShiftDialog` object."""
-        gaupol.BuilderDialog.__init__(self, "shift-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, "position-shift-dialog.ui")
         self.application = application
         self._init_widgets()
         self._init_values()
@@ -48,7 +49,6 @@ class PositionShiftDialog(gaupol.BuilderDialog):
 
     def _get_preview_row(self):
         """Return row to start preview from."""
-        target = self._get_target()
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
         return (rows[0] if rows else 0)
@@ -122,11 +122,11 @@ class FrameShiftDialog(PositionShiftDialog, metaclass=aeidon.Contractual):
     """Dialog for shifting frames."""
 
     def _get_amount_ensure(self, value):
-        assert isinstance(value, int)
+        assert aeidon.is_frame(value)
 
     def _get_amount(self):
         """Return the amount of frames to shift."""
-        return self._amount_spin.get_value_as_int()
+        return aeidon.as_frame(self._amount_spin.get_value_as_int())
 
     def _init_widgets(self):
         """Initialize widgets."""
@@ -143,11 +143,11 @@ class TimeShiftDialog(PositionShiftDialog, metaclass=aeidon.Contractual):
     """Dialog for shifting times."""
 
     def _get_amount_ensure(self, value):
-        assert isinstance(value, float)
+        assert aeidon.is_seconds(value)
 
     def _get_amount(self):
         """Return the amount of seconds to shift."""
-        return self._amount_spin.get_value()
+        return aeidon.as_seconds(self._amount_spin.get_value())
 
     def _init_widgets(self):
         """Initialize widgets."""

@@ -17,6 +17,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -44,34 +45,34 @@ class _TestPositionShiftDialog(gaupol.TestCase):
                                             self.application)
 
     def test__on_amount_spin_value_changed(self):
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_FORWARD)
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_FORWARD)
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_BACKWARD)
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_BACKWARD)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_BACKWARD, 1)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
     def test__on_preview_button_clicked__0(self):
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
         self.dialog._current_radio.set_active(True)
         self.dialog._preview_button.emit("clicked")
 
     def test__on_preview_button_clicked__selection(self):
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
         self.dialog._selected_radio.set_active(True)
         self.dialog._preview_button.emit("clicked")
 
     def test__on_response__all(self):
         self.dialog._all_radio.set_active(True)
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
         self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__current(self):
         self.dialog._current_radio.set_active(True)
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
         self.dialog.response(Gtk.ResponseType.OK)
 
     def test__on_response__selected(self):
         self.dialog._selected_radio.set_active(True)
-        self.dialog._amount_spin.spin(Gtk.SPIN_STEP_FORWARD)
+        self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
         self.dialog.response(Gtk.ResponseType.OK)
 
 

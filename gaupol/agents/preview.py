@@ -21,6 +21,7 @@
 import aeidon
 import gaupol
 # import glib
+from gi.repository import GObject
 from gi.repository import Gtk
 import tempfile
 _ = aeidon.i18n._
