@@ -128,6 +128,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         self.set_model(store)
         self._init_columns(edit_mode)
         self._init_cell_data_functions()
+        self.set_name("gaupol-view")
         self.set_headers_visible(True)
         self.set_rules_hint(True)
         self.set_rubber_banding(True)
