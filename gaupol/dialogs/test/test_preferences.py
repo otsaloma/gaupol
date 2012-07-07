@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -75,11 +76,9 @@ class TestExtensionPage(gaupol.TestCase):
     def test__on_about_button_clicked(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CLOSE
         selection = self.page._tree_view.get_selection()
-        selection.select_path(0)
+        path = gaupol.util.tree_row_to_path(0)
+        selection.select_path(path)
         self.page._about_button.clicked()
-
-    def test__on_about_dialog_url_clicked(self):
-        self.page._on_about_dialog_url_clicked(None, gaupol.HOMEPAGE_URL)
 
     def test__on_tree_view_cell_toggled(self):
         column = self.page._tree_view.get_columns()[0]
@@ -91,12 +90,13 @@ class TestExtensionPage(gaupol.TestCase):
     def test__on_tree_view_selection_changed(self):
         selection = self.page._tree_view.get_selection()
         selection.unselect_all()
-        selection.select_path(0)
+        path = gaupol.util.tree_row_to_path(0)
+        selection.select_path(path)
         column = self.page._tree_view.get_columns()[0]
         renderer = column.get_cells()[0]
         renderer.emit("toggled", 0)
         selection.unselect_all()
-        selection.select_path(0)
+        selection.select_path(path)
 
 
 class TestFilePage(gaupol.TestCase):
@@ -113,7 +113,8 @@ class TestFilePage(gaupol.TestCase):
     def test__on_add_button_clicked(self):
         def run_dialog(dialog):
             selection = dialog._tree_view.get_selection()
-            selection.select_path(0)
+            path = gaupol.util.tree_row_to_path(0)
+            selection.select_path(path)
             return Gtk.ResponseType.OK
         gaupol.util.run_dialog = run_dialog
         self.page._add_button.emit("clicked")
@@ -125,7 +126,8 @@ class TestFilePage(gaupol.TestCase):
 
     def test__on_down_button_clicked(self):
         selection = self.page._tree_view.get_selection()
-        selection.select_path(0)
+        path = gaupol.util.tree_row_to_path(0)
+        selection.select_path(path)
         self.page._down_button.emit("clicked")
 
     def test__on_locale_check_toggled(self):
@@ -135,12 +137,14 @@ class TestFilePage(gaupol.TestCase):
 
     def test__on_remove_button_clicked(self):
         selection = self.page._tree_view.get_selection()
-        selection.select_path(0)
+        path = gaupol.util.tree_row_to_path(0)
+        selection.select_path(path)
         self.page._remove_button.emit("clicked")
 
     def test__on_up_button_clicked(self):
         selection = self.page._tree_view.get_selection()
-        selection.select_path(1)
+        path = gaupol.util.tree_row_to_path(1)
+        selection.select_path(path)
         self.page._up_button.emit("clicked")
 
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,9 +20,10 @@
 
 import aeidon
 import gaupol
+_ = aeidon.i18n._
+
 from gi.repository import Gtk
 from gi.repository import Pango
-_ = aeidon.i18n._
 
 __all__ = ("PreferencesDialog",)
 
@@ -83,7 +84,7 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
             inline = gaupol.conf.spell_check.inline
             self._spell_check_check.set_active(inline)
             self._spell_check_check.set_sensitive(True)
-        else: # gtkspell not available
+        else: # GtkSpell not available
             self._spell_check_check.set_active(False)
             self._spell_check_check.set_sensitive(False)
 
@@ -181,7 +182,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             metadata = self.manager.get_metadata(module)
             if metadata.get_field_boolean("Hidden", False): continue
             markup = "<b>{}</b>\n{}".format(metadata.get_name(),
-                                        metadata.get_description())
+                                            metadata.get_description())
 
             extensions.append((module, markup))
         extensions.sort(key=lambda x: x[1])
@@ -195,7 +196,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         metadata = self.manager.get_metadata(module)
         dialog = Gtk.AboutDialog()
         dialog.set_transient_for(self._dialog)
-        Gtk.about_dialog_set_url_hook(self._on_about_dialog_url_clicked)
         dialog.set_program_name(metadata.get_name())
         dialog.set_comments(metadata.get_description())
         dialog.set_logo_icon_name("gaupol")
@@ -211,10 +211,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         if metadata.has_field("Authors"):
             dialog.set_authors(metadata.get_field_list("Authors"))
         gaupol.util.flash_dialog(dialog)
-
-    def _on_about_dialog_url_clicked(self, dialog, url):
-        """Open website in a web browser."""
-        gaupol.util.show_uri(url)
 
     def _on_help_button_clicked(self, *args):
         """Show extension's own documentation."""
@@ -265,7 +261,9 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             self._preferences_button.set_sensitive(False)
 
 
-class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class FilePage(aeidon.Delegate,
+               gaupol.BuilderDialog,
+               metaclass=aeidon.Contractual):
 
     """File preferences page."""
 
@@ -290,7 +288,8 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractu
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
         if itr is None: return None
-        return store.get_path(itr)[0]
+        path = store.get_path(itr)
+        return gaupol.util.tree_path_to_row(path)
 
     def _init_tree_view(self):
         """Initialize the fallback encoding tree view."""
@@ -342,10 +341,10 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractu
         """Move the selected fallback encoding down."""
         row = self._get_selected_row()
         encodings = gaupol.conf.encoding.fallback
-        encodings.insert(row + 1, encodings.pop(row))
+        encodings.insert(row+1, encodings.pop(row))
         self._reload_tree_view()
         self._tree_view.grab_focus()
-        self._tree_view.set_cursor(row + 1)
+        self._tree_view.set_cursor(row+1)
 
     def _on_locale_check_toggled(self, check_button):
         """Save locale encoding usage."""
@@ -362,7 +361,7 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractu
         self._tree_view.grab_focus()
         store = self._tree_view.get_model()
         if len(store) <= 0: return
-        self._tree_view.set_cursor(max(row - 1, 0))
+        self._tree_view.set_cursor(max(row-1, 0))
 
     def _on_up_button_clicked_require(self, *args):
         self._get_selected_row() > 0
@@ -371,10 +370,10 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractu
         """Move the selected fallback encoding up."""
         row = self._get_selected_row()
         encodings = gaupol.conf.encoding.fallback
-        encodings.insert(row - 1, encodings.pop(row))
+        encodings.insert(row-1, encodings.pop(row))
         self._reload_tree_view()
         self._tree_view.grab_focus()
-        self._tree_view.set_cursor(row - 1)
+        self._tree_view.set_cursor(row-1)
 
     def _reload_tree_view(self):
         """Reload the fallback encoding tree view."""
@@ -388,6 +387,7 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog, metaclass=aeidon.Contractu
         """Set the fallback tree view button sensitivities."""
         store = self._tree_view.get_model()
         row = self._get_selected_row()
+        row = (-1 if row is None else row)
         self._remove_button.set_sensitive(row >= 0)
         self._up_button.set_sensitive(row > 0)
         self._down_button.set_sensitive(0 <= row < len(store) - 1)

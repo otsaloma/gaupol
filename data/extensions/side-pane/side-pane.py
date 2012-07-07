@@ -86,7 +86,8 @@ class SidePane(aeidon.Observable):
         callback = self._on_header_toggle_button_key_press_event
         self._toggle_button.connect("key-press-event", callback)
         header_hbox.pack_start(self._toggle_button, False, False)
-        header_hbox.pack_start(Gtk.Alignment.new(, True, True, 0), True, True)
+        ## XXX:
+        ## header_hbox.pack_start(Gtk.Alignment.new(, True, True, 0), True, True)
         close_button = Gtk.Button()
         image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE, Gtk.IconSize.MENU)
         close_button.add(image)
