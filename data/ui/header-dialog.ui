@@ -131,7 +131,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
-                            <property name="image">main_revert_image</property>
+                            <property name="image">main_revert_button_image</property>
                             <property name="use_underline">True</property>
                             <signal name="clicked" handler="_on_main_revert_button_clicked" swapped="no"/>
                           </object>
@@ -150,7 +150,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
-                            <property name="image">main_template_image</property>
+                            <property name="image">main_template_button_image</property>
                             <property name="use_underline">True</property>
                             <signal name="clicked" handler="_on_main_template_button_clicked" swapped="no"/>
                           </object>
@@ -169,7 +169,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
-                            <property name="image">main_clear_image</property>
+                            <property name="image">main_clear_button_image</property>
                             <property name="use_underline">True</property>
                             <signal name="clicked" handler="_on_main_clear_button_clicked" swapped="no"/>
                           </object>
@@ -263,7 +263,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
-                            <property name="image">tran_revert_image</property>
+                            <property name="image">tran_revert_button_image</property>
                             <property name="use_underline">True</property>
                             <signal name="clicked" handler="_on_tran_revert_button_clicked" swapped="no"/>
                           </object>
@@ -282,7 +282,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
-                            <property name="image">tran_template_image</property>
+                            <property name="image">tran_template_button_image</property>
                             <property name="use_underline">True</property>
                             <signal name="clicked" handler="_on_tran_template_button_clicked" swapped="no"/>
                           </object>
@@ -301,7 +301,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_action_appearance">False</property>
-                            <property name="image">tran_clear_image</property>
+                            <property name="image">tran_clear_button_image</property>
                             <property name="use_underline">True</property>
                             <signal name="clicked" handler="_on_tran_clear_button_clicked" swapped="no"/>
                           </object>
@@ -346,32 +346,32 @@
       <action-widget response="-5">button2</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkImage" id="main_clear_image">
+  <object class="GtkImage" id="main_clear_button_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-clear</property>
   </object>
-  <object class="GtkImage" id="main_revert_image">
+  <object class="GtkImage" id="main_revert_button_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-revert-to-saved</property>
   </object>
-  <object class="GtkImage" id="main_template_image">
+  <object class="GtkImage" id="main_template_button_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-add</property>
   </object>
-  <object class="GtkImage" id="tran_clear_image">
+  <object class="GtkImage" id="tran_clear_button_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-clear</property>
   </object>
-  <object class="GtkImage" id="tran_revert_image">
+  <object class="GtkImage" id="tran_revert_button_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-revert-to-saved</property>
   </object>
-  <object class="GtkImage" id="tran_template_image">
+  <object class="GtkImage" id="tran_template_button_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-add</property>
