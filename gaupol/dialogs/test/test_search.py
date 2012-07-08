@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -50,7 +51,7 @@ class TestSearchDialog(gaupol.TestCase):
         # Ensure that editing obsolete data is not possible.
         # http://bugzilla.gnome.org/show_bug.cgi?id=572676
         self.dialog._pattern_entry.set_text("a")
-        next(self.dialog)
+        self.dialog.next()
         page = self.application.get_current_page()
         page.project.remove_subtitles((self.dialog._match_row,))
         assert not self.dialog._text_view.props.sensitive
@@ -114,7 +115,7 @@ class TestSearchDialog(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.dialog._regex_check.set_active(True)
         self.dialog._pattern_entry.set_text("*")
-        next(self.dialog)
+        self.dialog.next()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_regex_error_dialog_pattern(self):
@@ -130,16 +131,16 @@ class TestSearchDialog(gaupol.TestCase):
         self.dialog._regex_check.set_active(True)
         for char in "aeiouy":
             self.dialog._pattern_entry.set_text(char)
-            next(self.dialog)
-            next(self.dialog)
+            self.dialog.next()
+            self.dialog.next()
 
     def test_next__not_found(self):
         self.dialog._regex_check.set_active(True)
         self.dialog._pattern_entry.set_text("xxx")
-        next(self.dialog)
+        self.dialog.next()
         self.dialog._all_radio.set_active(True)
         self.application.open_main(self.new_subrip_file())
-        next(self.dialog)
+        self.dialog.next()
 
     def test_previous(self):
         self.dialog._regex_check.set_active(True)
@@ -161,7 +162,7 @@ class TestSearchDialog(gaupol.TestCase):
         for char in "aeiouy":
             self.dialog._pattern_entry.set_text(char)
             self.dialog._replacement_entry.set_text(char)
-            next(self.dialog)
+            self.dialog.next()
             self.dialog.replace()
             self.dialog.replace()
 
@@ -171,7 +172,7 @@ class TestSearchDialog(gaupol.TestCase):
         self.dialog._regex_check.set_active(True)
         self.dialog._pattern_entry.set_text(" ")
         self.dialog._replacement_entry.set_text("\\1")
-        next(self.dialog)
+        self.dialog.next()
         self.dialog.replace()
 
     def test_replace_all(self):

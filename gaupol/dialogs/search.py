@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2006-2008,2010 Osmo Salomaa
+# Copyright (C) 2006-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,10 +21,12 @@
 import aeidon
 import functools
 import gaupol
-from gi.repository import Gtk
 import os
 import re
 _ = aeidon.i18n._
+
+from gi.repository import Gdk
+from gi.repository import Gtk
 
 __all__ = ("SearchDialog",)
 
@@ -50,7 +52,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     :ivar _match_page: :class:`gaupol.Page` instance of the last match
     :ivar _match_row: Row in :attr:`_match_page` of the last match
     :ivar _match_span: Start, end position of the last match
-    :ivar _was_next: ``True`` if the last search was "next", else "previous"
+    :ivar _was_next: ``True`` if the last search was "next", else ``False``
     :ivar patterns: List of patterns previously searched for
     :ivar replacements: List of replacements previously used
     """
@@ -160,7 +162,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         if page.view.is_text_column(col):
             doc = page.text_column_to_document(col)
         docs = list(map(gaupol.util.text_field_to_document,
-                   gaupol.conf.search.fields))
+                        gaupol.conf.search.fields))
 
         if (doc is None) or (not doc in docs):
             doc = (docs[0] if next else docs[-1])
@@ -181,7 +183,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._pattern_combo.set_model(store)
         for pattern in self.patterns:
             store.append((pattern,))
-        self._pattern_combo.set_text_column(0)
+        self._pattern_combo.set_entry_text_column(0)
 
     def _init_replacement_combo(self):
         """Initialize the replacement combo box."""
@@ -189,7 +191,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._replacement_combo.set_model(store)
         for replacement in self.replacements:
             store.append((replacement,))
-        self._replacement_combo.set_text_column(0)
+        self._replacement_combo.set_entry_text_column(0)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -214,7 +216,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _init_text_view(self):
         """Initialize the text view."""
         gaupol.util.prepare_text_view(self._text_view)
-        gaupol.util.scale_to_size(self._text_view, 70, 5)
+        gaupol.util.scale_to_size(self._text_view, 65, 4)
         text_buffer = self._text_view.get_buffer()
         text_buffer.connect("changed", self._on_text_buffer_changed)
 
@@ -225,9 +227,9 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._regex_check.set_active(gaupol.conf.search.regex)
         self._ignore_case_check.set_active(gaupol.conf.search.ignore_case)
         fields = gaupol.conf.search.fields
+        target = gaupol.conf.search.target
         self._main_check.set_active(gaupol.fields.MAIN_TEXT in fields)
         self._tran_check.set_active(gaupol.fields.TRAN_TEXT in fields)
-        target = gaupol.conf.search.target
         self._all_radio.set_active(target == gaupol.targets.ALL)
         self._current_radio.set_active(target == gaupol.targets.CURRENT)
         self._update_search_targets()
@@ -263,7 +265,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Find the next match of pattern."""
         # Make sure the text view experiences a focus-out-event.
         self._next_button.grab_focus()
-        next(self)
+        self.next()
 
     def _on_pattern_entry_changed(self, entry):
         """Update action sensitivities."""
@@ -372,7 +374,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         flags = (re.IGNORECASE if ignore_case else 0)
         try: page.project.set_search_regex(pattern, flags)
         except re.error as message:
-            self._show_regex_error_dialog_pattern(r(message))
+            self._show_regex_error_dialog_pattern(str(message))
             raise gaupol.Default
         self._add_pattern_to_history()
 
@@ -406,7 +408,12 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         bound = text_buffer.get_iter_at_offset(match_span[1])
         text_buffer.select_range(ins, bound)
         mark = text_buffer.create_mark(None, bound, True)
-        self._text_view.scroll_to_mark(mark, 0.2)
+        self._text_view.scroll_to_mark(mark=mark,
+                                       within_margin=0,
+                                       use_align=False,
+                                       xalign=0.5,
+                                       yalign=0.5)
+
         self._text_view.set_sensitive(True)
         self._text_view.grab_focus()
 
@@ -427,7 +434,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _update_search_targets(self):
         """Update search targets in all pages."""
         docs = list(map(gaupol.util.text_field_to_document,
-                   gaupol.conf.search.fields))
+                        gaupol.conf.search.fields))
 
         wrap = (gaupol.conf.search.target != gaupol.targets.ALL)
         for page in self.application.pages:
@@ -520,7 +527,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             return self._show_regex_error_dialog_replacement(str(message))
         shift = (len(subtitle.get_text(self._match_doc)) - length)
         self._match_span[1] += shift
-        (self.__next__ if self._was_next else self.previous)()
+        (self.next if self._was_next else self.previous)()
 
     def replace_all_require(self):
         assert self._pattern_entry.get_text()
