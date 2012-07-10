@@ -53,6 +53,7 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         subtitle = (rows[0] + 1 if rows else 2)
         self._subtitle_spin.set_value(subtitle)
         self._subtitle_spin.set_range(2, len(page.project.subtitles))
+        self._subtitle_spin.emit("value-changed")
 
     def _on_subtitle_spin_value_changed(self, spin_button):
         """Select matching row in the view."""
