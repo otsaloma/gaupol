@@ -19,8 +19,9 @@
 import aeidon
 import functools
 import gaupol
-from gi.repository import Gtk
 import os
+
+from gi.repository import Gtk
 
 
 def while_errors(function):
@@ -29,7 +30,7 @@ def while_errors(function):
         while True:
             value = function(*args, **kwargs)
             # Break when no more errors left.
-            if not args[0].dialog._table.props.sensitive: break
+            if not args[0].dialog._grid.props.sensitive: break
         return value
     return wrapper
 
@@ -68,9 +69,9 @@ class TestSpellCheckDialog(gaupol.TestCase):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         gaupol.conf.spell_check.language = "wo"
         self.assert_raises(ValueError,
-                    gaupol.SpellCheckDialog,
-                    self.application.window,
-                    self.application)
+                           gaupol.SpellCheckDialog,
+                           self.application.window,
+                           self.application)
 
     def test___init____replacements(self):
         basename = "{}.repl".format(gaupol.conf.spell_check.language)

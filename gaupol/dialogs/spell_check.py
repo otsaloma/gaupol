@@ -20,11 +20,12 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
-from gi.repository import Pango
 import sys
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
+from gi.repository import Pango
 
 __all__ = ("SpellCheckDialog",)
 
@@ -60,7 +61,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 "language_label",
                 "replace_all_button",
                 "replace_button",
-                "table",
+                "grid",
                 "text_view",
                 "tree_view")
 
@@ -73,7 +74,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
         Raise :exc:`ValueError` if dictionary initialization fails.
         """
-        gaupol.BuilderDialog.__init__(self, "spellcheck-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, "spell-check-dialog.ui")
         self._checker = None
         self._doc = None
         self._entry_handler = None
@@ -132,7 +133,12 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         end = text_buffer.get_iter_at_offset(z)
         text_buffer.apply_tag_by_name("misspelled", start, end)
         mark = text_buffer.create_mark(None, end, True)
-        self._text_view.scroll_to_mark(mark, 0.2)
+        self._text_view.scroll_to_mark(mark=mark,
+                                       within_margin=0,
+                                       use_align=False,
+                                       xalign=0.5,
+                                       yalign=0.5)
+
         leading = self._checker.leading_context(1)
         trailing = self._checker.trailing_context(1)
         self._join_back_button.set_sensitive(leading.isspace())
@@ -179,7 +185,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             dictionary = enchant.Dict(self._language)
             # Sometimes enchant will initialize a dictionary that will not
             # actually work when trying to use it, hence check something.
-            dictionary.check("aeidon")
+            dictionary.check("gaupol")
         except enchant.Error as error:
             (message,) = error.args
             self._show_error_dialog(message)
@@ -238,7 +244,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         gaupol.util.set_widget_font(self._tree_view, font)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
-        gaupol.util.scale_to_size(self._text_view, 56, 5, font)
+        gaupol.util.scale_to_size(self._text_view, 50, 4, font)
         gaupol.util.scale_to_size(self._tree_view, 20, 9, font)
         self._entry_handler = self._entry.connect("changed",
                                                   self._on_entry_changed)
@@ -280,7 +286,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Join the current word with the preceding word."""
         text = self._checker.get_text()
         a = self._checker.wordpos
-        text = text[:a - 1] + text[a:]
+        text = text[:a-1] + text[a:]
         self._checker.set_text(text)
         self._advance()
 
@@ -288,7 +294,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Join the current word with the following word."""
         text = self._checker.get_text()
         z = self._checker.wordpos + len(self._checker.word)
-        text = text[:z] + text [z + 1:]
+        text = text[:z] + text [z+1:]
         self._checker.set_text(text)
         self._advance()
 
@@ -318,7 +324,8 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
         if itr is None: return
-        row = store.get_path(itr)[0]
+        path = store.get_path(itr)
+        row = gaupol.util.tree_path_to_row(path)
         self._set_entry_text(store[row][0])
 
     def _populate_tree_view(self, suggestions, select=True):
@@ -355,7 +362,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._text_view.get_buffer().set_text("")
         self._set_entry_text("")
         self._populate_tree_view(())
-        self._table.set_sensitive(False)
+        self._grid.set_sensitive(False)
         self._write_replacements()
 
     def _set_entry_text(self, word):
