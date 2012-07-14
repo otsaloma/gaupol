@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2010 Osmo Salomaa
+# Copyright (C) 2005-2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -50,7 +50,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         for item in self.pages:
             item.project.clipboard.set_texts(texts)
         text = page.project.clipboard.get_string()
-        self.x_clipboard.set_text(text)
+        self.x_clipboard.set_text(text, -1)
         self.update_gui()
 
     @aeidon.deco.export
@@ -93,7 +93,9 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Edit the focused column of the next subtitle."""
         page = self.get_current_page()
         path, column = page.view.get_cursor()
-        page.view.set_cursor((path[0] + 1,), column, True)
+        row = gaupol.util.tree_path_to_row(path)
+        path = gaupol.util.tree_row_to_path(row+1)
+        page.view.set_cursor(path, column, True)
 
     @aeidon.deco.export
     def _on_edit_preferences_activate(self, *args):
@@ -108,15 +110,15 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _on_edit_value_activate(self, *args):
         """Edit the focused cell."""
         page = self.get_current_page()
-        row, column = page.view.get_cursor()
-        page.view.set_cursor(row, column, True)
+        path, column = page.view.get_cursor()
+        page.view.set_cursor(path, column, True)
 
     @aeidon.deco.export
     def _on_extend_selection_to_beginning_activate(self, *args):
         """Extend the selection up to the first subtitle."""
         page = self.get_current_page()
         row = page.view.get_selected_rows()[-1]
-        rows = list(range(0, row + 1))
+        rows = list(range(0, row+1))
         page.view.select_rows(rows)
 
     @aeidon.deco.export
@@ -168,11 +170,11 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page.view.scroll_to_point(rect.x, rect.y)
         window.thaw_updates()
         count = len(page.project.subtitles) - length
-        if count <= 0: return
-        self.flash_message(aeidon.i18n.ngettext(
-                "Inserted {:d} subtitle to fit clipboard contents",
-                "Inserted {:d} subtitles to fit clipboard contents",
-                count).format(count))
+        if count > 0:
+            self.flash_message(aeidon.i18n.ngettext(
+                    "Inserted {:d} subtitle to fit clipboard contents",
+                    "Inserted {:d} subtitles to fit clipboard contents",
+                    count).format(count))
 
     @aeidon.deco.export
     def _on_project_action_done(self, *args):
@@ -243,7 +245,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if page.view.is_position_column(col):
             if not value: return
             if page.edit_mode == aeidon.modes.FRAME:
-                try: value = int(value)
+                try: value = aeidon.as_frame(value)
                 except ValueError: return
         if col == page.view.columns.START:
             return page.project.set_start(row, value)
@@ -252,7 +254,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if col ==  page.view.columns.DURATION:
             if page.edit_mode == aeidon.modes.TIME:
                 value = value.replace(",", ".")
-                try: value = float(value)
+                try: value = aeidon.as_seconds(value)
                 except ValueError: return
             return page.project.set_duration(row, value)
         doc = page.text_column_to_document(col)

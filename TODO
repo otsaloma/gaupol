@@ -9,6 +9,7 @@ Gaupol 0.20
      * Check video toolbar spacing etc.
      * Check that interactive search works
      * Check dialog sizes
+     * Check that clipboard is persistent
  [/] Bump Python dependency to 3.2 or greater
  [/] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible

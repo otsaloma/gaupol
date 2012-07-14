@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 
@@ -85,6 +86,7 @@ class TestEditAgent(gaupol.TestCase):
         self.application.get_action("insert_subtitles").activate()
 
     def test__on_invert_selection_activate(self):
+        self.application.get_action("invert_selection").activate()
         self.application.get_action("invert_selection").activate()
 
     def test__on_merge_subtitles_activate(self):
@@ -156,7 +158,7 @@ class TestEditAgent(gaupol.TestCase):
             column = page.view.get_column(col)
             renderer = column.get_cells()[0]
             renderer.emit("edited", 1, 0)
-            renderer.emit("edited", 1, "k")
+            renderer.emit("edited", 1, "xxx")
 
     def test__on_view_renderer_edited__position_time(self):
         page = self.application.get_current_page()
@@ -190,14 +192,14 @@ class TestEditAgent(gaupol.TestCase):
 
     def test__on_view_renderer_editing_started__position(self):
         page = self.application.get_current_page()
-        for col in filter(page.view.is_text_column, page.view.columns):
+        for col in filter(page.view.is_position_column, page.view.columns):
             column = page.view.get_column(col)
             page.view.set_cursor(1, column, True)
             gaupol.util.iterate_main()
 
-    def test__on_view_renderer_editing_started__position(self):
+    def test__on_view_renderer_editing_started__text(self):
         page = self.application.get_current_page()
-        for col in filter(page.view.is_position_column, page.view.columns):
+        for col in filter(page.view.is_text_column, page.view.columns):
             column = page.view.get_column(col)
             page.view.set_cursor(1, column, True)
             gaupol.util.iterate_main()

@@ -81,6 +81,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar video_button: A :class:`Gtk.Button` used to select a video file
     :ivar video_toolbar: A :class:`Gtk.Toolbar` for video actions
     :ivar window: A :class:`Gtk.Window` used to hold all the widgets
+    :ivar x_clipboard: A :class:`Gtk.Clipboard` used for desktop-wide copying
 
     Signals and their arguments for callback functions:
      * ``page-added``: application, page
@@ -129,7 +130,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.video_button = None
         self.video_toolbar = None
         self.window = None
-        self.x_clipboard = Gtk.Clipboard()
+        self.x_clipboard = None
         self._init_delegations()
         self._init_gui()
         self.extension_manager.find_extensions()
@@ -200,6 +201,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_gui(self):
         """Initialize the user interface."""
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=0)
+        self._init_x_clipboard()
         self._init_window()
         self._init_css()
         self._init_uim()
@@ -417,3 +419,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             self.window.maximize()
         aeidon.util.connect(self, "window", "delete-event")
         aeidon.util.connect(self, "window", "window-state-event")
+
+    def _init_x_clipboard(self):
+        """Initialize the desktop-wide, persistent clipboard."""
+        atom = Gdk.atom_intern('CLIPBOARD', True)
+        self.x_clipboard = Gtk.Clipboard.get(atom)
+        self.x_clipboard.set_can_store(None)
