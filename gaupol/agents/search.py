@@ -49,7 +49,7 @@ class SearchAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_find_next_activate(self, *args):
         """Search forwards for same text."""
-        next(self._search_dialog)
+        self._search_dialog.next()
 
     @aeidon.deco.export
     def _on_find_previous_activate(self, *args):
