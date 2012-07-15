@@ -39,11 +39,11 @@ class TestSaveAgent(gaupol.TestCase):
         self.application.get_action("save_all_documents").activate()
 
     @aeidon.deco.monkey_patch(gaupol.MultiSaveDialog, "get_filename")
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__on_save_all_documents_as_activate(self):
         get_filename = lambda *args: self.new_subrip_file()
         gaupol.MultiSaveDialog.get_filename = get_filename
-        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("save_all_documents_as").activate()
 
     def test__on_save_main_document_activate(self):
