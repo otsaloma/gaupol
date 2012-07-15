@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,8 +18,9 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import time
+
+from gi.repository import Gtk
 
 
 class TestPreviewAgent(gaupol.TestCase):
@@ -86,7 +87,9 @@ class TestPreviewAgent(gaupol.TestCase):
         doc = aeidon.documents.TRAN
         self.application.preview(page, 13, doc)
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_preview__unicode_error(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         doc = aeidon.documents.MAIN
         page.project.set_text(0, doc, "\303\266")

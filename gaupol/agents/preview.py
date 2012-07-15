@@ -20,11 +20,11 @@
 
 import aeidon
 import gaupol
-# import glib
-from gi.repository import GObject
-from gi.repository import Gtk
 import tempfile
 _ = aeidon.i18n._
+
+from gi.repository import GLib
+from gi.repository import Gtk
 
 
 class PreviewAgent(aeidon.Delegate):
@@ -51,7 +51,7 @@ class PreviewAgent(aeidon.Delegate):
     def _show_encoding_error_dialog(self):
         """Show an error dialog after failing to encode file."""
         title = _('Failed to encode subtitle file to temporary '
-                  'directory "{}"').format(tempfile.gettempdir())
+            'directory "{}"').format(tempfile.gettempdir())
         message = _("Subtitle data could not be encoded to a temporary file "
             "for preview with the current character encoding. Please first "
             "save the subtitle file with a different character encoding.")
@@ -62,7 +62,7 @@ class PreviewAgent(aeidon.Delegate):
     def _show_io_error_dialog(self, message):
         """Show an error dialog after failing to write file."""
         title = _('Failed to save subtitle file to temporary '
-                  'directory "{}"').format(tempfile.gettempdir())
+            'directory "{}"').format(tempfile.gettempdir())
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -108,9 +108,9 @@ class PreviewAgent(aeidon.Delegate):
             return self._show_io_error_dialog(message)
         except UnicodeError:
             return self._show_encoding_error_dialog()
-        # glib.child_watch_add does not appear to work on Windows,
+        # GLib.child_watch_add does not appear to work on Windows,
         # so let's watch the process by polling it at regular intervals.
-        GObject.timeout_add(1000,
+        GLib.timeout_add(1000,
                          self._check_process_state,
                          page,
                          process,

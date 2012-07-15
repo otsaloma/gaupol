@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2007-2009,2011 Osmo Salomaa
+# Copyright (C) 2007-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -56,6 +56,18 @@ class Subtitle(object):
     These containers are lazily created upon first use in order to avoid slow
     instantiation and excessive memory use when handling simpler formats.
     """
+
+    def __eq__(self, other):
+        """Compare subtitle equality by value."""
+        if isinstance(other, Subtitle):
+            return (self.start == other.start and
+                    self.end == other.end and
+                    self.main_text == other.main_text and
+                    self.tran_text == other.tran_text and
+                    self.framerate == other.framerate and
+                    self.mode == other.mode)
+
+        raise NotImplementedError
 
     def __getattr__(self, name):
         """Return lazily instantiated format-specific attribute container."""

@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2007-2009,2011 Osmo Salomaa
+# Copyright (C) 2007-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -36,6 +36,11 @@ class TestSubtitle(aeidon.TestCase):
         self.fsub.end = 300
         self.fsub.main_text = "main"
         self.fsub.tran_text = "translation"
+
+    def test___eq__(self):
+        assert self.tsub == self.tsub
+        assert self.fsub == self.fsub
+        assert self.tsub != self.fsub
 
     def test___getattr__(self):
         assert "ssa" not in dir(self.tsub)
