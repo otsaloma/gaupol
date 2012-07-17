@@ -95,7 +95,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         return [dict(pattern=x.get_field("Pattern"),
                      flags=x.get_flags(),
                      group=int(x.get_field("Group")),
-                     value=float(x.get_field("Value"))) for x in patterns]
+                     value=float(x.get_field("Penalty"))) for x in patterns]
 
     def _get_substitutions_ensure(self, value, patterns):
         assert len(value) <= len(patterns)

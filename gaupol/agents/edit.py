@@ -240,7 +240,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self._set_unsafe_sensitivities(True)
         self.push_message(None)
         page = self.get_current_page()
-        row = int(path)
+        row = gaupol.util.tree_path_to_row(path)
         col = page.view.get_columns().index(column)
         if page.view.is_position_column(col):
             if not value: return

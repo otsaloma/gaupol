@@ -98,9 +98,9 @@ class MultiCloseDialog(gaupol.BuilderDialog):
             for page in self.pages:
                 self.application.close(page, confirm=False)
 
-    def _on_tree_view_cell_toggled(self, renderer, row, store):
+    def _on_tree_view_cell_toggled(self, renderer, path, store):
         """Toggle save document check button value."""
-        store[row][1] = not store[row][1]
+        store[path][1] = not store[path][1]
         store = self._main_tree_view.get_model()
         mains = [x for x in store if x[1]]
         store = self._tran_tree_view.get_model()

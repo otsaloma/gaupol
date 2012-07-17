@@ -341,9 +341,19 @@ def text_field_to_document(field):
                      .format(repr(field)))
 
 def tree_path_to_row(path):
-    """Convert :class:`Gtk.TreePath` to a list row integer."""
+    """
+    Convert `path` to a list row integer.
+
+    `path` can be either a :class:`Gtk.Treepath` instance or a string
+    representation of it (as commonly used by various callbacks).
+    """
     if path is None: return None
-    return int(path.to_string())
+    if isinstance(path, Gtk.TreePath):
+        return(int(path.to_string()))
+    if isinstance(path, str):
+        return(int(path))
+    raise TypeError("Bad type {} for path {}"
+                    .format(repr(type(path)), repr(path)))
 
 def tree_row_to_path(row):
     """Convert list row integer to a :class:`Gtk.TreePath`."""

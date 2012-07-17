@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2007-2008,2010 Osmo Salomaa
+# Copyright (C) 2007-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,16 +18,17 @@
 
 """Assistant to guide through multiple text correction tasks."""
 
-
-
 import aeidon
 import gaupol
-# import glib
-from gi.repository import Gtk
 import os
-from gi.repository import Pango
 import sys
 _ = aeidon.i18n._
+
+from gi.repository import Gdk
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Pango
 
 __all__ = ("TextAssistant", "TextAssistantPage")
 
@@ -78,13 +79,13 @@ class BuilderPage(TextAssistantPage):
         self._builder.add_from_file(ui_file_path)
         self._builder.connect_signals(self)
         self._set_attributes(self._widgets)
-        self._builder.get_object("vbox").reparent(self)
+        self._builder.get_object("main_container").reparent(self)
 
     def _set_attributes(self, widgets):
         """Assign all names in `widgets` as attributes of `self`."""
         for name in widgets:
             widget = self._builder.get_object(name)
-            setattr(self, "_{}".format(name, widget))
+            setattr(self, "_{}".format(name), widget)
 
 
 class IntroductionPage(BuilderPage):
@@ -100,7 +101,7 @@ class IntroductionPage(BuilderPage):
 
     def __init__(self, assistant):
         """Initialize a :class:`IntroductionPage` object."""
-        BuilderPage.__init__(self, assistant, "intro-page.ui")
+        BuilderPage.__init__(self, assistant, "introduction-page.ui")
         self.page_title = _("Select Tasks and Target")
         self.page_type = Gtk.AssistantPageType.INTRO
         self._init_tree_view()
@@ -153,11 +154,11 @@ class IntroductionPage(BuilderPage):
         """Save the selected field."""
         gaupol.conf.text_assistant.field = self.get_field()
 
-    def _on_tree_view_cell_toggled(self, renderer, row):
+    def _on_tree_view_cell_toggled(self, renderer, path):
         """Toggle and save task check button value."""
         store = self._tree_view.get_model()
-        store[row][1] = not store[row][1]
-        store[row][0].props.visible = store[row][1]
+        store[path][1] = not store[path][1]
+        store[path][0].props.visible = store[path][1]
         pages = [x.handle for x in self.get_selected_pages()]
         gaupol.conf.text_assistant.pages = pages
 
@@ -190,21 +191,19 @@ class IntroductionPage(BuilderPage):
         store = self._tree_view.get_model()
         pages = gaupol.conf.text_assistant.pages
         for page in content_pages:
-            title = glib.markup_escape_text(page.title)
-            description = glib.markup_escape_text(page.description)
+            title = GLib.markup_escape_text(page.title)
+            description = GLib.markup_escape_text(page.description)
             markup = "<b>{}</b>\n{}".format(title, description)
             page.props.visible = (page.handle in pages)
             store.append((page, page.handle in pages, markup))
         self._tree_view.get_selection().unselect_all()
 
 
-# XXX:
-# class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
-class LocalePage(BuilderPage):
+class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
     """Page with script, language and coutry based pattern selection."""
-    _ui_file_basename = NotImplementedError
 
+    _ui_file_basename = NotImplementedError
     _widgets = ("country_combo",
                 "country_label",
                 "language_combo",
@@ -345,9 +344,10 @@ class LocalePage(BuilderPage):
         """Toggle the check button value."""
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
-        row = store_filter.convert_path_to_child_path(path)[0]
-        name = store[row][0].get_name(False)
-        enabled = not store[row][2]
+        path = Gtk.TreePath.new_from_string(path)
+        path = store_filter.convert_path_to_child_path(path)
+        name = store[path][0].get_name(False)
+        enabled = not store[path][2]
         for i in range(len(store)):
             # Toggle all patterns with the same name.
             if store[i][0].get_name(False) == name:
@@ -412,9 +412,9 @@ class LocalePage(BuilderPage):
             name = pattern.get_name()
             visible = not (name in names_entered)
             names_entered.add(name)
-            name = glib.markup_escape_text(name)
+            name = GLib.markup_escape_text(name)
             description = pattern.get_description()
-            description = glib.markup_escape_text(description)
+            description = GLib.markup_escape_text(description)
             markup = "<b>{}</b>\n{}".format(name, description)
             store.append((pattern, visible, pattern.enabled, markup))
         self._tree_view.get_selection().unselect_all()
@@ -540,11 +540,10 @@ class HearingImpairedPage(LocalePage):
         project.remove_hearing_impaired(indices, doc, patterns)
 
 
-# XXX:
-# class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
-class JoinSplitWordsPage(BuilderPage):
+class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
     """Page for joining or splitting words based on spell-check suggestions."""
+
     _widgets = ("language_button", "join_check", "split_check")
 
     def __init___require(self, assistant):
@@ -566,7 +565,8 @@ class JoinSplitWordsPage(BuilderPage):
         """Initialize default values for widgets."""
         language = gaupol.conf.spell_check.language
         try: label = aeidon.locales.code_to_name(language)
-        except LookupError: label = self._language_button.get_label()
+        except LookupError:
+            label = self._language_button.get_label()
         self._set_language_button_label(label)
         self._join_check.set_active(gaupol.conf.join_split_words.join)
         self._split_check.set_active(gaupol.conf.join_split_words.split)
@@ -583,7 +583,8 @@ class JoinSplitWordsPage(BuilderPage):
         gaupol.util.flash_dialog(dialog)
         language = gaupol.conf.spell_check.language
         try: label = aeidon.locales.code_to_name(language)
-        except LookupError: label = self._language_button.get_label()
+        except LookupError:
+            label = self._language_button.get_label()
         self._set_language_button_label(label)
 
     def _on_split_check_toggled(self, check_button, *args):
@@ -592,8 +593,8 @@ class JoinSplitWordsPage(BuilderPage):
 
     def _set_language_button_label(self, text):
         """Set `text` as the language button label."""
-        hbox = self._language_button.get_child()
-        label = hbox.get_children()[0]
+        box = self._language_button.get_child()
+        label = box.get_children()[0]
         label.set_text(text)
 
     def _show_error_dialog(self, message):
@@ -602,7 +603,7 @@ class JoinSplitWordsPage(BuilderPage):
         try: name = aeidon.locales.code_to_name(language)
         except LookupError: name = language
         title = _('Failed to load dictionary for language "{}"').format(name)
-        dialog = gaupol.ErrorDialog(self.parent, title, message)
+        dialog = gaupol.ErrorDialog(self.get_parent(), title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -665,7 +666,6 @@ class LineBreakPage(LocalePage):
                             length_func=length_func,
                             max_length=self.conf.max_length,
                             max_lines=self.conf.max_lines,
-                            max_deviation=self.conf.max_deviation,
                             skip=(self.conf.use_skip_max_length or
                                   self.conf.use_skip_max_lines),
 
@@ -688,7 +688,7 @@ class LineBreakOptionsPage(BuilderPage):
 
     def __init__(self, assistant):
         """Initialize a LineBreakOptionsPage object."""
-        BuilderPage.__init__(self, assistant, "line-break-opts-page.ui")
+        BuilderPage.__init__(self, assistant, "line-break-options-page.ui")
         self.conf = gaupol.conf.line_break
         self.page_title = _("Set Line-Break Options")
         self.page_type = Gtk.AssistantPageType.CONTENT
@@ -814,14 +814,14 @@ class ProgressPage(BuilderPage):
     def set_project_name(self, name):
         """Set `name` as the currently checked project."""
         text = _("Project: {}").format(name)
-        text = glib.markup_escape_text(text)
+        text = GLib.markup_escape_text(text)
         self._status_label.set_markup("<i>{}</i>".format(text))
         gaupol.util.iterate_main()
 
     def set_task_name(self, name):
         """Set `name` as the currently performed task."""
         text = _("Task: {}").format(name)
-        text = glib.markup_escape_text(text)
+        text = GLib.markup_escape_text(text)
         self._task_label.set_markup("<i>{}</i>".format(text))
         gaupol.util.iterate_main()
 
@@ -864,7 +864,8 @@ class ConfirmationPage(BuilderPage):
         """Return ``True`` if preview is possible."""
         row = self._get_selected_row()
         if row is None: return False
-        page = self._tree_view.get_model()[row][0]
+        store = self._tree_view.get_model()
+        page = store[row][0]
         if page is None: return False
         return all((page.project.video_path, page.project.main_file))
 
@@ -873,11 +874,12 @@ class ConfirmationPage(BuilderPage):
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
         if itr is None: return None
-        return store.get_path(itr)[0]
+        path = store.get_path(itr)
+        return gaupol.util.tree_path_to_row(path)
 
     def _init_tree_view(self):
         """Initialize the tree view of corrections."""
-        # page, index, accept, original tex, new text
+        # page, index, accept, original text, new text
         store = Gtk.ListStore(object, int, bool, str, str)
         self._tree_view.set_model(store)
         selection = self._tree_view.get_selection()
@@ -910,8 +912,9 @@ class ConfirmationPage(BuilderPage):
     def _on_preview_button_clicked(self, *args):
         """Preview original text in a video player."""
         row = self._get_selected_row()
-        page = self._tree_view.get_model()[row][0]
-        index = self._tree_view.get_model()[row][1]
+        store = self._tree_view.get_model()
+        page = store[row][0]
+        index = store[row][1]
         position = page.project.subtitles[index].start
         self.application.preview(page, position, self.doc)
 
@@ -919,15 +922,15 @@ class ConfirmationPage(BuilderPage):
         """Save remove blank subtitles value."""
         self.conf.remove_blank = check_button.get_active()
 
-    def _on_tree_view_cell_edited(self, renderer, row, text):
+    def _on_tree_view_cell_edited(self, renderer, path, text):
         """Edit text in the corrected text column."""
         store = self._tree_view.get_model()
-        store[row][4] = text
+        store[path][4] = text
 
-    def _on_tree_view_cell_toggled(self, renderer, row):
+    def _on_tree_view_cell_toggled(self, renderer, path):
         """Toggle accept column value."""
         store = self._tree_view.get_model()
-        store[row][2] = not store[row][2]
+        store[path][2] = not store[path][2]
 
     def _on_tree_view_selection_changed(self, *args):
         """Update preview button sensitivity."""
@@ -1093,14 +1096,15 @@ class TextAssistant(Gtk.Assistant):
     def _on_window_state_event(self, window, event):
         """Save window maximization."""
         state = event.new_window_state
-        maximized = bool(state & Gdk.WINDOW_STATE_MAXIMIZED)
+        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
         gaupol.conf.text_assistant.maximized = maximized
 
     def _prepare_confirmation_page(self, doc, changes):
         """Present `changes` and activate confirmation page."""
         count = len(changes)
         title = aeidon.i18n.ngettext("Confirm {:d} Change",
-                                     "Confirm {:d} Changes", count).format(count)
+                                     "Confirm {:d} Changes",
+                                     count).format(count)
 
         self.set_page_title(self._confirmation_page, title)
         self._confirmation_page.application = self.application
@@ -1111,7 +1115,7 @@ class TextAssistant(Gtk.Assistant):
     def _prepare_introduction_page(self):
         """Prepare introduction page content."""
         n = self.get_n_pages()
-        pages = list(map(self.get_nth_page, list(range(n))))
+        pages = list(map(self.get_nth_page, range(n)))
         pages.remove(self._introduction_page)
         pages.remove(self._progress_page)
         pages.remove(self._confirmation_page)
@@ -1145,7 +1149,8 @@ class TextAssistant(Gtk.Assistant):
         The first one of `pages` must have a "correct_texts" attribute.
         The visibilities of other pages are kept in sync with the first page.
         """
-        list(map(self.add_page, pages))
+        for page in pages:
+            self.add_page(page)
         def on_notify_visible(page, prop, pages):
             for page in pages[1:]:
                 page.props.visible = pages[0].props.visible

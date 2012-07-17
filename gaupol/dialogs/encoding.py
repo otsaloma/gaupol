@@ -112,10 +112,10 @@ class MenuEncodingDialog(EncodingDialog):
         column.set_sort_column_id(3)
         self._tree_view.append_column(column)
 
-    def _on_tree_view_cell_toggled(self, renderer, row):
+    def _on_tree_view_cell_toggled(self, renderer, path):
         """Toggle the value of the "Show in Menu" column."""
         store = self._tree_view.get_model()
-        store[row][3] = not store[row][3]
+        store[path][3] = not store[path][3]
 
     def get_visible_encodings_ensure(self, value):
         for name in value:

@@ -18,6 +18,7 @@
 
 import aeidon
 import gaupol
+
 from gi.repository import Gtk
 
 from ..assistants import CapitalizationPage
@@ -26,8 +27,8 @@ from ..assistants import ConfirmationPage
 from ..assistants import HearingImpairedPage
 from ..assistants import IntroductionPage
 from ..assistants import JoinSplitWordsPage
-from ..assistants import LineBreakPage
 from ..assistants import LineBreakOptionsPage
+from ..assistants import LineBreakPage
 from ..assistants import ProgressPage
 
 
@@ -283,10 +284,12 @@ class TestLineBreakOptionsPage(_TestBuilderPage):
         self.page._skip_lines_check.set_active(True)
 
     def test__on_skip_unit_combo_changed(self):
-        list(map(self.page._skip_unit_combo.set_active, gaupol.length_units))
+        for unit in gaupol.length_units:
+            self.page._skip_unit_combo.set_active(unit)
 
     def test__on_unit_combo_changed(self):
-        list(map(self.page._skip_unit_combo.set_active, gaupol.length_units))
+        for unit in gaupol.length_units:
+            self.page._unit_combo.set_active(unit)
 
 
 class TestProgressPage(_TestBuilderPage):
@@ -395,7 +398,7 @@ class TestTextAssistant(gaupol.TestCase):
         gaupol.conf.line_break.max_length = 10
         gaupol.conf.line_break.use_skip_max_length = False
         gaupol.conf.line_break.use_skip_max_lines = False
-        gaupol.conf.text_assistant.pages = ["line-break"]
+        gaupol.conf.text_assistant.pages = ["common-error"]
         self.application = self.new_application()
         self.assistant = gaupol.TextAssistant(self.application.window,
                                               self.application)
@@ -407,8 +410,9 @@ class TestTextAssistant(gaupol.TestCase):
         indices = list(range(count))
         # Remove progress page, which is automatically switched
         # to the confirmation page once done with all.
-        indices.remove(count - 2)
-        list(map(self.assistant.set_current_page, indices))
+        indices.remove(count-2)
+        for index in indices:
+            self.assistant.set_current_page(index)
         page = self.assistant._confirmation_page
         store = page._tree_view.get_model()
         column = page._tree_view.get_column(2)
