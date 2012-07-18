@@ -21,16 +21,14 @@ import gaupol
 
 class TestModule(gaupol.TestCase):
 
-    def test__check_dependencies(self):
-        gaupol.main._check_dependencies()
-
     def test__init_application(self):
         opts = type("", (object,), {})
         opts.encoding = "ascii"
         opts.translation_file = self.new_subrip_file()
         opts.align_method = "position"
         opts.video_file = self.new_subrip_file()
-        args = [self.new_subrip_file(), "+3"]
+        opts.jump = 3
+        args = (self.new_subrip_file(),)
         gaupol.main._init_application(opts, args)
 
     def test__init_configuration(self):

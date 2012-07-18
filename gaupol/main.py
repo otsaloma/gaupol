@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -29,47 +29,28 @@ import re
 import sys
 _ = aeidon.i18n._
 
+from gi.repository import Gtk
 
-def _check_dependencies():
-    """Check existance and versions of dependencies."""
-    if sys.version_info[:3] < (2, 6, 0):
-        print("Python 2.6 or greater is required to run Gaupol.")
-        raise SystemExit(1)
-    try:
-        from gi.repository import Gtk
-        if Gtk.pygtk_version < (2, 16, 0):
-            raise ImportError
-    except ImportError:
-        print("PyGTK 2.16 or greater is required to run Gaupol.")
-        raise SystemExit(1)
 
 def _init_application(opts, args):
     """Initialize application and open files from `args`."""
     application = gaupol.Application()
-    jump_row = None
-    re_jump = re.compile(r"\+\d*")
-    for arg in filter(re_jump.match, args):
-        jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
-        args.remove(arg)
     paths = list(map(os.path.abspath, args))
-    if not opts.encoding in (None, "auto"):
-        try: opts.encoding = aeidon.encodings.translate_code(opts.encoding)
-        except ValueError:
-            raise SystemExit("Unrecognized encoding: {}".format(repr(opts.encoding)))
     application.open_main(paths, opts.encoding)
     page = application.get_current_page()
-    if (page is not None) and opts.translation_file:
+    if page is None: return
+    if opts.translation_file is not None:
         path = os.path.abspath(opts.translation_file)
         align_method = opts.align_method.upper()
         align_method = getattr(aeidon.align_methods, align_method)
         application.open_translation(path, opts.encoding, align_method)
-    if (page is not None) and opts.video_file:
+    if opts.video_file is not None:
         path = os.path.abspath(opts.video_file)
         page.project.video_path = path
         application.update_gui()
-    if (page is not None) and (jump_row is not None):
-        page.view.set_focus(jump_row)
-        page.view.scroll_to_row(jump_row)
+    if opts.jump is not None:
+        page.view.set_focus(opts.jump)
+        page.view.scroll_to_row(opts.jump)
 
 def _init_configuration(path):
     """Read configuration values from file at `path`."""
@@ -94,7 +75,7 @@ def _on_parser_list_encodings(*args):
     encodings = [x[0] for x in aeidon.encodings.get_valid()]
     if aeidon.util.chardet_available():
         encodings.insert(0, "auto")
-    print("\n".join(encodings))
+    print(", ".join(encodings))
     raise SystemExit(0)
 
 def _on_parser_version(*args):
@@ -114,9 +95,7 @@ def _parse_args(args):
         callback=_on_parser_version,
         help=_("show version number and exit"),)
 
-    # XXX: Remove this, since it's probably better to set XDG_CONFIG_HOME and
-    # XDG_DATA_HOME if not wanting to use the defaults. Document this in the
-    # man page under 'ENVIRONMENT VARIABLES'.
+    # XXX: Do we really need this?
     parser.add_option(
         "-c", "--config-file",
         action="store",
@@ -169,16 +148,27 @@ def _parse_args(args):
         default=None,
         help=_("select video file"),)
 
-    return parser.parse_args(args)
+    opts, args = parser.parse_args(args)
+    # Translate encoding if an alias given.
+    if not opts.encoding in (None, "auto"):
+        try: opts.encoding = aeidon.encodings.translate_code(opts.encoding)
+        except ValueError:
+            raise SystemExit("Unrecognized encoding: {}"
+                             .format(repr(opts.encoding)))
+
+    # Parse row to jump to.
+    opts.jump = None
+    re_jump = re.compile(r"\+\d*")
+    for arg in filter(re_jump.match, args):
+        opts.jump = (max(0, int(arg[1:])-1) if arg[1:] else -1)
+        args.remove(arg)
+    return opts, args
 
 def main(args):
     """Parse arguments from `args` and start application."""
-    _check_dependencies()
-    aeidon.paths.xdg_copy_if_applicable()
     opts, args = _parse_args(args)
     sys.excepthook = gaupol.util.show_exception
     _init_gettext()
     _init_configuration(opts.config_file)
     _init_application(opts, args)
-    from gi.repository import Gtk
     Gtk.main()
