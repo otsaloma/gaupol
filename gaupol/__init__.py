@@ -44,24 +44,14 @@ GTK+ user interface for the Gaupol subtitle editor.
 :var conf: Instance of :class:`gaupol.ConfigurationStore` used
 """
 
-import aeidon
-import os
-
 from gi.repository import GLib
 from gi.repository import GObject
-from gi.repository import Gtk
 
 __version__ = "0.19.2"
 COMBO_SEPARATOR = "<separator/>"
 
-# XXX: ???
-# glib.threads_init()
+GLib.threads_init()
 GObject.threads_init()
-try:
-    from gi.repository import Gst
-    Gst.init(None)
-except Exception:
-    pass
 
 from gaupol.urls import *
 from gaupol import util
