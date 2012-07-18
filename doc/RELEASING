@@ -10,8 +10,8 @@ Releasing a New Version
 
  * Do final quality checks
    $ pyflakes3 bin/gaupol *.py aeidon gaupol
-   $ py.test3 --tb=no aeidon
-   $ py.test3 --tb=no gaupol
+   $ py.test-3 --tb=no aeidon
+   $ py.test-3 --tb=no gaupol
 
  * Make final edits to files
    $ $EDITOR */__init__.py
