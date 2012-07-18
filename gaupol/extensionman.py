@@ -89,18 +89,27 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
 
     def _store_metadata(self, path, metadata):
         """Store metadata to instance variables after validation."""
-        def discard_extension(name):
+        def discard_missing(name):
             print(("Field '{}' missing in file '{}', dicarding extension"
                    .format(name, path)))
 
+        def discard_version():
+            print(("Discarding outdated extension '{}'. It needs to be "
+                   "ported to Python 3, GTK+ 3 and the PyGObject "
+                   "introspection bindings and finally the 'GaupolVersion' "
+                   "field bumped accordingly.".format(path)))
+
         if not metadata.has_field("GaupolVersion"):
-            return discard_extension("GaupolVersion")
+            return discard_missing("GaupolVersion")
         if not metadata.has_field("Module"):
-            return discard_extension("Module")
+            return discard_missing("Module")
         if not metadata.has_field("Name"):
-            return discard_extension("Name")
+            return discard_missing("Name")
         if not metadata.has_field("Description"):
-            return discard_extension("Description")
+            return discard_missing("Description")
+        version = metadata.get_field("GaupolVersion")
+        if aeidon.util.compare_versions(version, "0.19.91") < 0:
+            return discard_version()
         module = metadata.get_field("Module")
         self._metadata[module] = metadata
 

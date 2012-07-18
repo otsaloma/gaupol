@@ -1,15 +1,9 @@
 #!/usr/bin/env python
 
-from gi.repository import Gtk
 import os
 import sys
 
-def get_running_from_source():
-    # '__file__' attribute is not available with py2exe.
-    if not "__file__" in globals(): return False
-    parent = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.join(parent, "..", "data", "gaupol.desktop.in")
-    return os.path.isfile(path)
+from gi.repository import Gtk
 
 def prepare_paths():
     # Add source root directory to sys.path.
@@ -21,8 +15,14 @@ def prepare_paths():
     path = os.path.join(parent, "..", "data", "icons")
     icon_theme.append_search_path(os.path.abspath(path))
 
-if get_running_from_source():
-    prepare_paths()
+def running_from_source():
+    # '__file__' attribute is not available with py2exe.
+    if not "__file__" in globals(): return False
+    parent = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(parent, "..", "data", "gaupol.desktop.in")
+    return os.path.isfile(path)
 
+if running_from_source():
+    prepare_paths()
 import gaupol
 gaupol.main.main(sys.argv[1:])

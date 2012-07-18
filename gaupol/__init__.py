@@ -47,7 +47,7 @@ GTK+ user interface for the Gaupol subtitle editor.
 from gi.repository import GLib
 from gi.repository import GObject
 
-__version__ = "0.19.2"
+__version__ = "0.19.91"
 COMBO_SEPARATOR = "<separator/>"
 
 GLib.threads_init()
