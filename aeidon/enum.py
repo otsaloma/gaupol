@@ -34,8 +34,8 @@ class EnumerationItem(int):
     """
     Named constant with an integer value.
 
-    :cls:`EnumerationItem` can be instantiated without any specified values and
-    users need not bother with them. Instantiation with correct values
+    :class:`EnumerationItem` can be instantiated without any specified values
+    and users need not bother with them. Instantiation with correct values
     harmonous with the rest of the items should be left up to the parent list.
     """
 
@@ -130,7 +130,7 @@ class Enumeration(list):
     """
     List of named constants with integer values.
 
-    :cls:`Enumeration` is an actual :class:`list` where enumeration items are
+    :class:`Enumeration` is an actual :class:`list` where enumeration items are
     stored as both list items and instance attributes. New items should be
     added by setting an instance attribute. Data-changing list methods raise
     :exc:`NotImplementedError`.

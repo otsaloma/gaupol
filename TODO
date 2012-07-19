@@ -4,6 +4,7 @@ Gaupol 0.20
  [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
      * Test encoding auto-detection
      * Check API documentation on aeidon.as_* and aeidon.is_*
+     * Check decorator API documentation
      * Check if GtkSpell is available with PyGI support
      * Fix remaining regressions (search for 'XXX')
      * Check video toolbar spacing etc.
