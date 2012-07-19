@@ -6,23 +6,16 @@
 
 # Unless planning on lazy loading modules,
 # we're not interested in profiling imports.
-# pylint: disable=W0404,W0611
+
 import atexit
 import bisect
 import chardet
-import codecs
 import contextlib
 import copy
-import pickle
 import cProfile
 import enchant
 import functools
 import gettext
-import glib
-from gi.repository import GObject
-import gst
-from gi.repository import Gtk
-import gtkspell
 import inspect
 import itertools
 import json
@@ -31,7 +24,7 @@ import locale
 import math
 import optparse
 import os
-from gi.repository import Pango
+import pickle
 import platform
 import pstats
 import random
@@ -43,10 +36,16 @@ import sys
 import tempfile
 import time
 import traceback
-import urllib.request, urllib.parse, urllib.error
-import urllib.request, urllib.error, urllib.parse
+import urllib.error
 import urllib.parse
+import urllib.request
 import webbrowser
+
+from gi.repository import Gdk
+from gi.repository import GLib
+from gi.repository import GObject
+from gi.repository import Gtk
+from gi.repository import Pango
 
 file_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(file_dir, ".."))

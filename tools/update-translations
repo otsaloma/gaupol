@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Update the PO template file and all existing PO-files with new strings.
+# Update the pot-file and all existing po-files with new strings.
 # Requires gettext and intltool.
 
 DIRNAME=$(dirname "$0")

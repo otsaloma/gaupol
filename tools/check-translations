@@ -4,7 +4,6 @@
 # Check translation files for common errors.
 # Usage: check-translations [XX[_YY[@ZZ]]...]
 
-import codecs
 import glob
 import os
 import sys
@@ -15,7 +14,7 @@ os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
 for name in sorted(glob.glob("*.po")):
     if args and not name in args:
         continue
-    fobj = codecs.open(name, "r", "utf_8")
+    fobj = open(name, "r", encoding="utf_8")
     lineno = 0
     nbad = 0
     ntotal = 0
@@ -26,7 +25,7 @@ for name in sorted(glob.glob("*.po")):
             continue
         msgid = line[7:-1]
         while True:
-            line = fobj.next().strip()
+            line = fobj.readline().strip()
             lineno += 1
             if line.startswith("msgstr"):
                 break
@@ -39,12 +38,10 @@ for name in sorted(glob.glob("*.po")):
         lineno_msgstr = lineno
         msgstr = line[8:-1]
         while True:
-            try:
-                line = fobj.next().strip()
-                lineno += 1
-            except StopIteration:
+            line = fobj.readline().strip()
+            lineno += 1
+            if not line:
                 break
-            if not line: break
             msgstr = "".join((msgstr, line[1:-1]))
         if not msgstr:
             continue
@@ -56,9 +53,9 @@ for name in sorted(glob.glob("*.po")):
         if "_" in msgid:
             if not "_" in msgstr:
                 nbad += 1
-                print("%s:%d: missing accelerator in" % pos)
-                print('"%s"' % msgid)
-                print('"%s"' % msgstr)
+                print("{0}:{1:d}: missing accelerator in".format(*pos))
+                print('"{0}"'.format(msgid))
+                print('"{0}"'.format(msgstr))
                 print("")
 
         # Check that the translation of a label includes
@@ -66,9 +63,9 @@ for name in sorted(glob.glob("*.po")):
         if msgid.endswith(":"):
             if not msgstr.endswith(":"):
                 nbad += 1
-                print("%s:%d: missing colon in" % pos)
-                print('"%s"' % msgid)
-                print('"%s"' % msgstr)
+                print("{0}:{1:d}: missing colon in".format(*pos))
+                print('"{0}"'.format(msgid))
+                print('"{0}"'.format(msgstr))
                 print("")
 
         # Check that the translation of a menu item includes
@@ -76,9 +73,9 @@ for name in sorted(glob.glob("*.po")):
         if "..." in msgid:
             if not "..." in msgstr:
                 nbad += 1
-                print("%s:%d: missing ellipsis in" % pos)
-                print('"%s"' % msgid)
-                print('"%s"' % msgstr)
+                print("{0}:{1:d}: missing ellipsis in".format(*pos))
+                print('"{0}"'.format(msgid))
+                print('"{0}"'.format(msgstr))
                 print("")
 
         # Check that the translation of a menu item includes
@@ -86,9 +83,10 @@ for name in sorted(glob.glob("*.po")):
         if "…" in msgid:
             if not "…" in msgstr:
                 nbad += 1
-                print("%s:%d: missing ellipsis in" % pos)
-                print('"%s"' % msgid)
-                print('"%s"' % msgstr)
+                print("{0}:{1:d}: missing ellipsis in".format(*pos))
+                print('"{0}"'.format(msgid))
+                print('"{0}"'.format(msgstr))
                 print("")
 
-    print("%s: %d bad, %d good messages" % (name, nbad, ntotal - nbad))
+    print("{0}: {1:d} bad, {2:d} good messages"
+          .format(name, nbad, ntotal - nbad))

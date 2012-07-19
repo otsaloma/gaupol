@@ -1,3 +1,4 @@
+:: -*- coding: us-ascii-dos -*-
 :: Build a Windows distribution of Gaupol and include
 :: all necessary dependencies in that distribution.
 cd "%~dp0\.."
