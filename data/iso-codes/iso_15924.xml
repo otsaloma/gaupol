@@ -234,6 +234,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="410"
 		name="Hiragana" />
 	<iso_15924_entry
+		alpha_4_code="Hluw"
+		numeric_code="080"
+		name="Anatolian Hieroglyphs (Luwian Hieroglyphs, Hittite Hieroglyphs)" />
+	<iso_15924_entry
 		alpha_4_code="Hmng"
 		numeric_code="450"
 		name="Pahawh Hmong" />

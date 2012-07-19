@@ -617,7 +617,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_3_code="HUN"
 		numeric_code="348"
 		name="Hungary"
-		official_name="Republic of Hungary" />
+		official_name="Hungary" />
 	<iso_3166_entry
 		alpha_2_code="IS"
 		alpha_3_code="ISL"
@@ -1079,7 +1079,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="RE"
 		alpha_3_code="REU"
 		numeric_code="638"
-		name="Reunion" />
+		name="Réunion" />
 	<iso_3166_entry
 		alpha_2_code="RO"
 		alpha_3_code="ROU"
@@ -1188,7 +1188,7 @@ Source: <http://www.iso.org/iso/country_codes>
 	<iso_3166_entry
 		alpha_2_code="SX"
 		alpha_3_code="SXM"
-		numeric_code="702"
+		numeric_code="534"
 		name="Sint Maarten (Dutch part)"
 		official_name="Sint Maarten (Dutch part)" />
 	<iso_3166_entry
