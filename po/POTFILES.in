@@ -2,33 +2,33 @@
 [type: gettext/glade]data/extensions/custom-framerates/add-framerate-dialog.ui
 [type: gettext/glade]data/extensions/custom-framerates/preferences-dialog.ui
 [type: gettext/glade]data/ui/debug-dialog.ui
-[type: gettext/glade]data/ui/duration-dialog.ui
+[type: gettext/glade]data/ui/duration-adjust-dialog.ui
 [type: gettext/glade]data/ui/encoding-dialog.ui
-[type: gettext/glade]data/ui/framerate-dialog.ui
+[type: gettext/glade]data/ui/framerate-convert-dialog.ui
 [type: gettext/glade]data/ui/header-dialog.ui
 [type: gettext/glade]data/ui/insert-dialog.ui
 [type: gettext/glade]data/ui/language-dialog.ui
-[type: gettext/glade]data/ui/multiclose-dialog.ui
-[type: gettext/glade]data/ui/multisave-dialog.ui
+[type: gettext/glade]data/ui/multi-close-dialog.ui
+[type: gettext/glade]data/ui/multi-save-dialog.ui
 [type: gettext/glade]data/ui/open-dialog.ui
+[type: gettext/glade]data/ui/position-shift-dialog.ui
+[type: gettext/glade]data/ui/position-transform-dialog.ui
 [type: gettext/glade]data/ui/preferences-dialog.ui
-[type: gettext/glade]data/ui/previewerr-dialog.ui
-[type: gettext/glade]data/ui/recognition-dialog.ui
+[type: gettext/glade]data/ui/preview-error-dialog.ui
 [type: gettext/glade]data/ui/save-dialog.ui
 [type: gettext/glade]data/ui/search-dialog.ui
-[type: gettext/glade]data/ui/shift-dialog.ui
-[type: gettext/glade]data/ui/spellcheck-dialog.ui
+[type: gettext/glade]data/ui/speech-recognition-dialog.ui
+[type: gettext/glade]data/ui/spell-check-dialog.ui
 [type: gettext/glade]data/ui/split-dialog.ui
 [type: gettext/glade]data/ui/text-assistant/capitalization-page.ui
 [type: gettext/glade]data/ui/text-assistant/common-error-page.ui
 [type: gettext/glade]data/ui/text-assistant/confirmation-page.ui
 [type: gettext/glade]data/ui/text-assistant/hearing-impaired-page.ui
-[type: gettext/glade]data/ui/text-assistant/intro-page.ui
+[type: gettext/glade]data/ui/text-assistant/introduction-page.ui
 [type: gettext/glade]data/ui/text-assistant/join-split-page.ui
-[type: gettext/glade]data/ui/text-assistant/line-break-opts-page.ui
+[type: gettext/glade]data/ui/text-assistant/line-break-options-page.ui
 [type: gettext/glade]data/ui/text-assistant/line-break-page.ui
 [type: gettext/glade]data/ui/text-assistant/progress-page.ui
-[type: gettext/glade]data/ui/transform-dialog.ui
 [type: gettext/ini]data/extensions/bookmarks/bookmarks.gaupol-extension.in
 [type: gettext/ini]data/extensions/custom-framerates/custom-framerates.gaupol-extension.in
 [type: gettext/ini]data/extensions/side-pane/side-pane.gaupol-extension.in
@@ -67,7 +67,7 @@ aeidon/delegate.py
 aeidon/encodings.py
 aeidon/enum.py
 aeidon/enums/__init__.py
-aeidon/enums/align.py
+aeidon/enums/align_methods.py
 aeidon/enums/documents.py
 aeidon/enums/formats.py
 aeidon/enums/framerates.py
@@ -156,31 +156,25 @@ gaupol/dialogs/about.py
 gaupol/dialogs/append.py
 gaupol/dialogs/builder.py
 gaupol/dialogs/debug.py
-gaupol/dialogs/duration.py
 gaupol/dialogs/encoding.py
 gaupol/dialogs/file.py
-gaupol/dialogs/framerate.py
 gaupol/dialogs/header.py
 gaupol/dialogs/insert.py
 gaupol/dialogs/language.py
 gaupol/dialogs/message.py
-gaupol/dialogs/multiclose.py
-gaupol/dialogs/multisave.py
+gaupol/dialogs/multi_save.py
 gaupol/dialogs/open.py
+gaupol/dialogs/position_shift.py
 gaupol/dialogs/preferences.py
-gaupol/dialogs/previewerr.py
 gaupol/dialogs/save.py
 gaupol/dialogs/search.py
-gaupol/dialogs/shift.py
-gaupol/dialogs/spellcheck.py
+gaupol/dialogs/spell_check.py
 gaupol/dialogs/split.py
-gaupol/dialogs/textedit.py
-gaupol/dialogs/transform.py
+gaupol/dialogs/text_edit.py
 gaupol/dialogs/video.py
 gaupol/entries.py
 gaupol/enums/__init__.py
 gaupol/enums/fields.py
-gaupol/enums/styles.py
 gaupol/enums/targets.py
 gaupol/enums/units.py
 gaupol/enumuim.py

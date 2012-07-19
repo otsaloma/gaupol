@@ -14,7 +14,7 @@ translated user interface, also desktop-style data files need to be
 
     mkdir -p locale/XX/LC_MESSAGES
     msgfmt -cv po/XX.po -o locale/XX/LC_MESSAGES/gaupol.mo
-    ./setup.py install_data -d /tmp/gaupol
+    python3 setup.py install_data -d /tmp/gaupol
     bin/gaupol
 
 Submitting Your Translation
