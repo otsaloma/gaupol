@@ -26,11 +26,11 @@ Installation
 
 To install only the aeidon package, use command
 
-    ./setup.py --without-gaupol clean install [--prefix=...]
+    python3 setup.py --without-gaupol clean install [--prefix=...]
 
 To install only the gaupol package, use command
 
-    ./setup.py --without-aeidon clean install [--prefix=...]
+    python3 setup.py --without-aeidon clean install [--prefix=...]
 
 Note that the --with-* and --without-* are global options and must
 placed before any commands.
@@ -38,26 +38,27 @@ placed before any commands.
 Dependencies
 ============
 
-As separate packages, aeidon requires Python [1] 2.6 or greater.
+As separate packages, aeidon requires Python [1] 3.2 or greater.
 Optional dependencies include: PyEnchant [5] 1.4.0 or greater --
-required for spell-checking; iso-codes [6] -- required to translate
-language and country names; and Universal Encoding Detector [7] --
+required for spell-checking; iso-codes [7] -- required to translate
+language and country names; and Universal Encoding Detector [8] --
 required for character encoding auto-detection. If aeidon is installed
-using the '--without-iso-codes' switch, then iso-codes is not
-optional, but rather required.
+using the '--without-iso-codes' switch, then iso-codes is not optional,
+but rather required.
 
-gaupol requires Python [1] 2.6 or greater, PyGTK [2] 2.16 or greater and
-aeidon of the same version as gaupol. Optional dependencies include
-gst-python [3] and pocketsphinx [4] -- required for speech recognition;
-PyGtkSpell (part of gnome-python-extras [2]) -- required for inline
-spell-checking and MPlayer [6] or VLC [7] -- recommended for preview.
+gaupol requires Python [1] 3.2 or greater, PyGObject [2] 3.0.0 or
+greater and aeidon of the exact same version as gaupol. Optional
+dependencies include GStreamer [3] and pocketsphinx [4] -- required for
+speech recognition; GtkSpell [6] -- required for inline spell-checking
+and MPlayer [9] or VLC [10] -- recommended for preview.
 
- [1] http://www.python.org/
- [2] http://www.pygtk.org/
- [3] http://gstreamer.freedesktop.org/
- [4] http://cmusphinx.sourceforge.net/
- [5] http://pyenchant.sourceforge.net/
- [6] http://pkg-isocodes.alioth.debian.org/
- [7] http://chardet.feedparser.org/
- [8] http://www.mplayerhq.hu/
- [9] http://www.videolan.org/vlc/
+  [1] http://www.python.org/
+  [2] http://live.gnome.org/PyGObject/
+  [3] http://gstreamer.freedesktop.org/
+  [4] http://cmusphinx.sourceforge.net/
+  [5] http://pyenchant.sourceforge.net/
+  [6] http://gtkspell.sourceforge.net/
+  [7] http://pkg-isocodes.alioth.debian.org/
+  [8] http://chardet.feedparser.org/
+  [9] http://www.mplayerhq.hu/
+ [10] http://www.videolan.org/vlc/

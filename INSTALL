@@ -8,7 +8,7 @@ dependencies required to run Gaupol, see the file "README".
 
 To install, run command
 
-    ./setup.py clean install [--prefix=...]
+    python3 setup.py clean install [--prefix=...]
 
 Developers or packagers interested in installing aeidon and gaupol
 separately, see the file "README.aeidon".
@@ -19,9 +19,12 @@ Uninstallation
 To uninstall, remove files and directories
 
     .../bin/gaupol
+    .../lib/pythonX.Y/dist-packages/aeidon*
+    .../lib/pythonX.Y/dist-packages/gaupol*
     .../lib/pythonX.Y/site-packages/aeidon*
     .../lib/pythonX.Y/site-packages/gaupol*
     .../share/applications/gaupol.desktop
+    .../share/icons/hicolor/*/apps/gaupol.*
     .../share/locale/*/LC_MESSAGES/gaupol.mo
     .../share/gaupol/
     .../share/man/man1/gaupol.1
