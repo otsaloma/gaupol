@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2011 Osmo Salomaa
+# Copyright (C) 2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,10 +18,11 @@
 
 import aeidon
 import gaupol
-import gtk
 import os
 import sys
 import traceback
+
+from gi.repository import Gtk
 
 
 class TestAddFramerateDialog(gaupol.TestCase):
@@ -38,14 +39,14 @@ class TestAddFramerateDialog(gaupol.TestCase):
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)
-        self.dialog = mobj.AddFramerateDialog(gtk.Window())
+        self.dialog = mobj.AddFramerateDialog(Gtk.Window())
         self.dialog.show()
 
     def test__on_response__cancel(self):
-        self.dialog.response(gtk.RESPONSE_CANCEL)
+        self.dialog.response(Gtk.ResponseType.CANCEL)
 
     def test__on_response__ok(self):
-        self.dialog.response(gtk.RESPONSE_OK)
+        self.dialog.response(Gtk.ResponseType.OK)
 
     def test_get_framerate(self):
         assert self.dialog.get_framerate() == 0.0
@@ -66,12 +67,12 @@ class TestPreferencesDialog(gaupol.TestCase):
             return traceback.print_exc()
         finally: sys.path.pop(0)
         self.framerates = (20.0, 21.0, 22.0, 23.0)
-        self.dialog = mobj.PreferencesDialog(self.framerates, gtk.Window())
+        self.dialog = mobj.PreferencesDialog(self.framerates, Gtk.Window())
         self.dialog.show()
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test__on_add_button_clicked(self):
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         orig_framerates = self.dialog.get_framerates()
         self.dialog._add_button.emit("clicked")
         framerates = self.dialog.get_framerates()
@@ -82,7 +83,8 @@ class TestPreferencesDialog(gaupol.TestCase):
         orig_framerates = self.dialog.get_framerates()
         selection = self.dialog._tree_view.get_selection()
         selection.unselect_all()
-        selection.select_path(0)
+        path = gaupol.util.tree_row_to_path(0)
+        selection.select_path(path)
         self.dialog._remove_button.emit("clicked")
         framerates = self.dialog.get_framerates()
         assert len(framerates) == len(orig_framerates) - 1
@@ -92,7 +94,8 @@ class TestPreferencesDialog(gaupol.TestCase):
         selection.unselect_all()
         store = self.dialog._tree_view.get_model()
         for i in range(len(store)):
-            selection.select_path(i)
+            path = gaupol.util.tree_row_to_path(i)
+            selection.select_path(path)
 
     def test_get_framerates(self):
         framerates = self.dialog.get_framerates()
@@ -120,12 +123,9 @@ class TestCustomFrameratesExtension(gaupol.TestCase):
     def test_setup(self):
         assert hasattr(aeidon.framerates, "FPS_48_000")
 
-    def test_setup__conf(self):
-        assert hasattr(aeidon.framerates, "FPS_48_000")
-
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test_show_preferences_dialog(self):
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_CLOSE
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.CLOSE
         self.extension.show_preferences_dialog(self.application.window)
 
     def test_teardown(self):

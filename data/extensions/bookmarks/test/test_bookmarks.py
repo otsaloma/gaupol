@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 import sys
 import traceback
@@ -41,7 +41,7 @@ class TestAddBookmarkDialog(gaupol.TestCase):
         self.application = self.new_application()
         self.page = self.application.get_current_page()
         self.page.view.select_rows((1,))
-        self.dialog = mobj.AddBookmarkDialog(gtk.Window(), self.page)
+        self.dialog = mobj.AddBookmarkDialog(Gtk.Window(), self.page)
         self.dialog.show()
 
     def test_get_description(self):
@@ -59,7 +59,7 @@ class TestBookmarksExtension(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def bookmark_subtitles(self):
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         action = self.application.get_action("add_bookmark")
         for i in range(5):
             self.page.view.select_rows((i,))
@@ -104,7 +104,7 @@ class TestBookmarksExtension(gaupol.TestCase):
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test__on_add_bookmark_activate(self):
-        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         action = self.application.get_action("add_bookmark")
         action.activate()
 

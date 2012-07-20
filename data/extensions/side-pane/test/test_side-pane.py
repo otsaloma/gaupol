@@ -17,7 +17,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import gtk
+from gi.repository import Gtk
 import os
 import sys
 import traceback
@@ -49,19 +49,19 @@ class TestSidePane(gaupol.TestCase):
         assert not side_vbox.props.visible
 
     def test__show_header_menu(self):
-        self.side_pane.add_page(gtk.TextView(), "test_1", "Test 1")
-        self.side_pane.add_page(gtk.TextView(), "test_2", "Test 2")
-        self.side_pane.add_page(gtk.TextView(), "test_3", "Test 3")
-        self.side_pane._show_header_menu(gtk.gdk.Event(gtk.gdk.BUTTON_PRESS))
+        self.side_pane.add_page(Gtk.TextView(), "test_1", "Test 1")
+        self.side_pane.add_page(Gtk.TextView(), "test_2", "Test 2")
+        self.side_pane.add_page(Gtk.TextView(), "test_3", "Test 3")
+        self.side_pane._show_header_menu(Gdk.Event(Gdk.EventType.BUTTON_PRESS))
 
     def test_add_page(self):
-        text_view = gtk.TextView()
+        text_view = Gtk.TextView()
         self.side_pane.add_page(text_view, "test", "Test")
         page = self.side_pane.get_current_page()
         assert page is text_view
 
     def test_get_current_page(self):
-        text_view = gtk.TextView()
+        text_view = Gtk.TextView()
         self.side_pane.add_page(text_view, "test", "Test")
         page = self.side_pane.get_current_page()
         assert page is text_view
@@ -73,12 +73,12 @@ class TestSidePane(gaupol.TestCase):
         assert not side_vbox.props.visible
 
     def test_remove(self):
-        text_view = gtk.TextView()
+        text_view = Gtk.TextView()
         self.side_pane.add_page(text_view, "test", "Test")
         self.side_pane.remove()
 
     def test_remove_page(self):
-        text_view = gtk.TextView()
+        text_view = Gtk.TextView()
         self.side_pane.add_page(text_view, "test", "Test")
         page = self.side_pane.get_current_page()
         assert page is text_view
@@ -87,8 +87,8 @@ class TestSidePane(gaupol.TestCase):
         assert page is None
 
     def test_set_current_page(self):
-        text_view_1 = gtk.TextView()
-        text_view_2 = gtk.TextView()
+        text_view_1 = Gtk.TextView()
+        text_view_2 = Gtk.TextView()
         self.side_pane.add_page(text_view_1, "test_1", "Test 1")
         self.side_pane.add_page(text_view_2, "test_2", "Test 2")
         self.side_pane.set_current_page(text_view_1)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2011 Osmo Salomaa
+# Copyright (C) 2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,13 +16,14 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Using custom, non-standard framerates."""
+"""Allow use of non-standard framerates."""
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class AddFramerateDialog(gaupol.BuilderDialog):
@@ -50,7 +51,7 @@ class AddFramerateDialog(gaupol.BuilderDialog):
 
 class PreferencesDialog(gaupol.BuilderDialog):
 
-    """Dialog for editing list of custom framerates."""
+    """Dialog for editing a list of custom framerates."""
 
     _widgets = ("add_button", "remove_button", "tree_view")
 
@@ -63,8 +64,8 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self._remove_button.set_sensitive(False)
         gaupol.util.scale_to_content(self._tree_view,
                                      min_nchar=20,
-                                     min_nlines=12,
                                      max_nchar=80,
+                                     min_nlines=12,
                                      max_nlines=16)
 
         self._dialog.set_transient_for(parent)
@@ -72,8 +73,9 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     def _get_selected_rows(self):
         """Return a sequence of the selected rows."""
-        rows = self._tree_view.get_selection().get_selected_rows()[1]
-        return tuple(x[0] for x in rows)
+        selection = self._tree_view.get_selection()
+        paths = selection.get_selected_rows()[1]
+        return list(map(gaupol.util.tree_path_to_row, paths))
 
     def _init_tree_view(self, framerates):
         """Initialize the tree view."""
@@ -89,7 +91,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
         renderer.props.xalign = 1
         column = Gtk.TreeViewColumn("", renderer, text=0)
         column.set_sort_column_id(0)
-        def format_framerate(column, renderer, store, itr):
+        def format_framerate(column, renderer, store, itr, data):
             renderer.props.text = "{:.6f}".format(store.get_value(itr, 0))
         column.set_cell_data_func(renderer, format_framerate)
         self._tree_view.append_column(column)
@@ -109,9 +111,10 @@ class PreferencesDialog(gaupol.BuilderDialog):
         rows = self._get_selected_rows()
         store = self._tree_view.get_model()
         for row in reversed(sorted(rows)):
-            store.remove(store.get_iter(row))
+            path = gaupol.util.tree_row_to_path(row)
+            store.remove(store.get_iter(path))
         if len(store) <= 0: return
-        self._tree_view.set_cursor(max(row - 1, 0))
+        self._tree_view.set_cursor(max(row-1, 0))
 
     def _on_tree_view_selection_changed(self, *args):
         """Set the remove button sensitivity."""
@@ -130,7 +133,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
 class CustomFrameratesExtension(gaupol.Extension):
 
-    """Using custom, non-standard framerates."""
+    """Allow use of non-standard framerates."""
 
     def __init__(self):
         """Initialize a :class:`CustomFrameratesExtension` object."""
@@ -159,13 +162,13 @@ class CustomFrameratesExtension(gaupol.Extension):
         self._framerates = []
         self._uim_ids = []
         for value in sorted(self._conf.framerates):
-            name = "FPS_{}".format(("{:.3f}".format(value)).replace(".", "_"))
+            name = "FPS_{:.3f}".format(value).replace(".", "_")
             if hasattr(aeidon.framerates, name):
                 print("Framerate {:.3f} already exists!".format(value))
                 continue
             setattr(aeidon.framerates, name, aeidon.EnumerationItem())
             framerate = getattr(aeidon.framerates, name)
-            framerate.label = "{:.3f} fps".format(value)
+            framerate.label = _("{:.3f} fps").format(value)
             framerate.mpsub = "{:.2f}".format(value)
             framerate.value = float(value)
             self._framerates.append(framerate)
@@ -177,11 +180,11 @@ class CustomFrameratesExtension(gaupol.Extension):
                                      value=int(framerate))
 
             group = "show_framerate_23_976"
-            action.set_group(self.application.get_action(group))
+            action.join_group(self.application.get_action(group))
             action.framerate = framerate
             self._action_group.add_action(action)
-            ui_xml = ui_xml_template.format(name.replace("FPS_", ""),
-                                            action.get_name())
+            ui_xml = ui_xml_template.format(name=name.replace("FPS_", ""),
+                                            action=action.get_name())
 
             uim_id = self.application.uim.add_ui_from_string(ui_xml)
             self._uim_ids.append(uim_id)
@@ -208,7 +211,7 @@ class CustomFrameratesExtension(gaupol.Extension):
                         combo.set_active(fallback)
                 self.application.set_current_page(orig_page)
             elif combo.get_active() == framerate:
-                ## If no pages are open, but the framerate is set to the custom
+                ## If no pages are open, but the framerate is set to a custom
                 ## one, reset back to the default framerate, but without
                 ## triggering callbacks that assume there are pages.
                 callback = self.application._on_framerate_combo_changed
@@ -222,9 +225,10 @@ class CustomFrameratesExtension(gaupol.Extension):
                 action.handler_unblock_by_func(callback)
             ## Remove UI elements created for the custom framerate and finally
             ## remove the custom framerate from its enumeration.
-            store.remove(store.get_iter(framerate))
+            path = gaupol.util.tree_row_to_path(int(framerate))
+            store.remove(store.get_iter(path))
             del gaupol.framerate_actions[framerate]
-            name = "FPS_{}".format(("{:.3f}".format(framerate.value)).replace(".", "_"))
+            name = "FPS_{:.3f}".format(framerate.value).replace(".", "_")
             delattr(aeidon.framerates, name)
         for uim_id in self._uim_ids:
             self.application.uim.remove_ui(uim_id)

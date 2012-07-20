@@ -3,7 +3,7 @@
     <menu name="view" action="show_view_menu">
       <menu name="framerate" action="show_framerate_menu">
         <placeholder name="1">
-          <menuitem name="%s" action="%s"/>
+          <menuitem name="{name}" action="{action}"/>
         </placeholder>
       </menu>
     </menu>
