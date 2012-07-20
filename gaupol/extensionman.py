@@ -133,8 +133,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
     def has_help(self, module):
         """Return ``True`` if extension can display documentation."""
         extension = self._active[module]
-        return (extension.show_help.__func__ is not
-                gaupol.Extension.show_help.__func__)
+        return (extension.__class__.show_help is not
+                gaupol.Extension.show_help)
 
     def has_preferences_dialog_require(self, module):
         assert module in self._active
@@ -143,8 +143,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
     def has_preferences_dialog(self, module):
         """Return True if extension can display a preferences dialog."""
         extension = self._active[module]
-        return (extension.show_preferences_dialog.__func__ is not
-                gaupol.Extension.show_preferences_dialog.__func__)
+        return (extension.__class__.show_preferences_dialog is not
+                gaupol.Extension.show_preferences_dialog)
 
     def is_active(self, module):
         """Return ``True`` if extension is active, ``False`` if not."""
