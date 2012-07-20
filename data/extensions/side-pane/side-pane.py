@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2008,2010 Osmo Salomaa
+# Copyright (C) 2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,9 +20,11 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 _ = aeidon.i18n._
+
+from gi.repository import Gdk
+from gi.repository import Gtk
 
 
 class SidePane(aeidon.Observable):
@@ -62,7 +64,7 @@ class SidePane(aeidon.Observable):
 
     def _init_gui(self):
         """Initialize all widgets."""
-        side_vbox = Gtk.VBox(False, 0)
+        side_vbox = Gtk.VBox.new(homogeneous=False, spacing=0)
         self._init_paned(side_vbox)
         self._init_header(side_vbox)
         self._init_notebook(side_vbox)
@@ -72,47 +74,74 @@ class SidePane(aeidon.Observable):
 
     def _init_header(self, side_vbox):
         """Initialize the side pane button header."""
-        header_hbox = Gtk.HBox(False, 12)
+        header_hbox = Gtk.HBox.new(homogeneous=False, spacing=12)
         header_hbox.set_border_width(1)
         self._toggle_button.set_relief(Gtk.ReliefStyle.NONE)
         self._toggle_button.set_focus_on_click(False)
-        toggle_button_hbox = Gtk.HBox(False, 6)
-        toggle_button_hbox.pack_start(self._label, True, True, 0)
+        toggle_button_hbox = Gtk.HBox.new(homogeneous=False, spacing=6)
+        toggle_button_hbox.pack_start(self._label,
+                                      expand=True,
+                                      fill=True,
+                                      padding=0)
+
         arrow = Gtk.Arrow(Gtk.ArrowType.DOWN, Gtk.ShadowType.NONE)
-        toggle_button_hbox.pack_start(arrow, True, True, 0)
+        toggle_button_hbox.pack_start(arrow,
+                                      expand=True,
+                                      fill=True,
+                                      padding=0)
+
         self._toggle_button.add(toggle_button_hbox)
         callback = self._on_header_toggle_button_button_press_event
         self._toggle_button.connect("button-press-event", callback)
         callback = self._on_header_toggle_button_key_press_event
         self._toggle_button.connect("key-press-event", callback)
-        header_hbox.pack_start(self._toggle_button, False, False)
-        ## XXX:
-        ## header_hbox.pack_start(Gtk.Alignment.new(, True, True, 0), True, True)
+        header_hbox.pack_start(self._toggle_button,
+                               expand=False,
+                               fill=False,
+                               padding=0)
+
+        header_hbox.pack_start(Gtk.Label(),
+                               expand=True,
+                               fill=True,
+                               padding=0)
+
         close_button = Gtk.Button()
-        image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE, Gtk.IconSize.MENU)
+        image = Gtk.Image.new_from_icon_name("window-close-symbolic",
+                                             Gtk.IconSize.MENU)
+
         close_button.add(image)
         close_button.set_relief(Gtk.ReliefStyle.NONE)
         close_button.set_focus_on_click(False)
         callback = self._on_header_close_button_clicked
         close_button.connect("clicked", callback)
-        header_hbox.pack_start(close_button, False, False)
-        side_vbox.pack_start(header_hbox, False, False)
+        header_hbox.pack_start(close_button,
+                               expand=False,
+                               fill=False,
+                               padding=0)
+
+        side_vbox.pack_start(header_hbox,
+                             expand=False,
+                             fill=False,
+                             padding=0)
 
     def _init_notebook(self, side_vbox):
         """Initialize the side pane notebook."""
         self._notebook.set_show_border(False)
         self._notebook.set_show_tabs(False)
-        side_vbox.pack_start(self._notebook, True, True)
+        side_vbox.pack_start(self._notebook,
+                             expand=True,
+                             fill=True,
+                             padding=0)
 
     def _init_paned(self, side_vbox):
         """Initialize the horizontal pane container."""
         main_vbox = self.application.window.get_children()[0]
         main_notebook = main_vbox.get_children()[2]
-        self._paned.pack1(side_vbox, False, False)
-        main_notebook_vbox = Gtk.VBox()
+        self._paned.pack1(side_vbox, resize=False, shrink=False)
+        main_notebook_vbox = Gtk.VBox.new(homogeneous=False, spacing=0)
         main_notebook.reparent(main_notebook_vbox)
-        self._paned.pack2(main_notebook_vbox, True, False)
-        main_vbox.pack_start(self._paned, True, True, 0)
+        self._paned.pack2(main_notebook_vbox, resize=True, shrink=False)
+        main_vbox.pack_start(self._paned, expand=True, fill=True, padding=0)
         main_vbox.reorder_child(self._paned, 2)
         self._paned.set_position(self._conf.width)
 
@@ -148,7 +177,7 @@ class SidePane(aeidon.Observable):
 
     def _on_header_menu_item_activate(self, menu_item):
         """Set the currently active page to activated `menu_item`."""
-        child = menu_item.get_data("child")
+        child = menu_item.gaupol_child
         self.set_current_page(child)
         self._toggle_button.set_active(False)
         parent = menu_item.get_parent()
@@ -185,14 +214,19 @@ class SidePane(aeidon.Observable):
         for i in range(self._notebook.get_n_pages()):
             child = self._notebook.get_nth_page(i)
             title = self._notebook.get_tab_label_text(child)
-            menu_item = Gtk.MenuItem(title, False)
-            menu_item.set_data("child", child)
+            menu_item = Gtk.MenuItem.new_with_label(title)
+            menu_item.gaupol_child = child
             menu_item.connect("activate", self._on_header_menu_item_activate)
             menu.append(menu_item)
         menu.connect("deactivate", self._on_header_menu_deactivate)
         menu.show_all()
         self._toggle_button.set_active(True)
-        menu.popup(None, None, self._position_header_menu, 1, event.time)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=self._position_header_menu,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
 
     def add_page(self, child, name, title):
         """
@@ -204,12 +238,11 @@ class SidePane(aeidon.Observable):
         having multiple side pane pages per extension, then a name prefixed
         with the module name. `title` is a string shown to the user.
         """
-        child.set_data("side_pane_extension_name", name)
-        self._notebook.append_page(child)
+        child.gaupol_side_pane_extension_name = name
+        self._notebook.append_page(child, None)
         self._notebook.set_tab_label_text(child, title)
-        if self._notebook.get_n_pages() == 1:
-            self.set_current_page(child)
-        elif name == self._conf.page:
+        if (self._notebook.get_n_pages() == 1 or
+            name == self._conf.page):
             self.set_current_page(child)
 
     def get_current_page(self):
@@ -234,7 +267,7 @@ class SidePane(aeidon.Observable):
         self._conf.width = self._paned.get_position()
         child = self.get_current_page()
         if child is not None:
-            self._conf.page = child.get_data("side_pane_extension_name")
+            self._conf.page = child.gaupol_side_pane_extension_name
         child = self._paned.get_child1()
         self._conf.visible = child.props.visible
         main_vbox = self.application.window.get_children()[0]
@@ -255,7 +288,7 @@ class SidePane(aeidon.Observable):
         self._notebook.set_current_page(page_num)
         title = self._notebook.get_tab_label_text(child)
         self._label.set_text(title)
-        self._conf.page = child.get_data("side_pane_extension_name")
+        self._conf.page = child.gaupol_side_pane_extension_name
 
     def show(self):
         """Show the side pane in the application window."""

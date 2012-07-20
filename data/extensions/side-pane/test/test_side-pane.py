@@ -17,10 +17,12 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-from gi.repository import Gtk
 import os
 import sys
 import traceback
+
+from gi.repository import Gdk
+from gi.repository import Gtk
 
 
 class TestSidePane(gaupol.TestCase):
@@ -47,12 +49,6 @@ class TestSidePane(gaupol.TestCase):
         button = header_hbox.get_children()[-1]
         button.emit("clicked")
         assert not side_vbox.props.visible
-
-    def test__show_header_menu(self):
-        self.side_pane.add_page(Gtk.TextView(), "test_1", "Test 1")
-        self.side_pane.add_page(Gtk.TextView(), "test_2", "Test 2")
-        self.side_pane.add_page(Gtk.TextView(), "test_3", "Test 3")
-        self.side_pane._show_header_menu(Gdk.Event(Gdk.EventType.BUTTON_PRESS))
 
     def test_add_page(self):
         text_view = Gtk.TextView()
