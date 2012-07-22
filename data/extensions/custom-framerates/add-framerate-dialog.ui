@@ -3,7 +3,6 @@
   <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkAdjustment" id="adjustment1">
     <property name="upper">9999</property>
-    <property name="value">0</property>
     <property name="step_increment">0.10000000000000001</property>
     <property name="page_increment">1</property>
   </object>
@@ -72,6 +71,7 @@
           <object class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="border_width">6</property>
             <property name="spacing">12</property>
             <child>
               <object class="GtkLabel" id="label1">
@@ -93,7 +93,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">•</property>
-                <property name="activates_default">True</property>
                 <property name="xalign">1</property>
                 <property name="invisible_char_set">True</property>
                 <property name="adjustment">adjustment1</property>
