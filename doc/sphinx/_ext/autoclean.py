@@ -33,7 +33,7 @@ def on_autodoc_process_docstring(app, what, name, obj, options, lines):
     lines[:] = [x for x in lines if not re_private.search(x)]
     parent = (name.split(".")[-1] if what == "class" else name)
     pattern = r"^:[ci]?var +(\w+): +(.*?)$"
-    replacement = r".. attribute:: %s.\1\n\n   \2\n" % parent
+    replacement = r".. attribute:: {}.\1\n\n   \2\n".format(parent)
     re_var = re.compile(pattern, re.MULTILINE)
     text = re_var.sub(replacement, "\n".join(lines))
     lines[:] = text.split("\n")

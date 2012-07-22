@@ -24,6 +24,7 @@ Gaupol 0.20
  [?] Move search history to configuration file
      * JSON should probably work better than ConfigObj did
  [?] Add local patterns as optional
+ [?] Rethink cell yalign, line length superscripts, etc.
  [X] Update Brazilian Portuguese translation
      (Átila Camurça, Darlildo Lima)
  [X] Update Hungarian translation (Andrássy László)
