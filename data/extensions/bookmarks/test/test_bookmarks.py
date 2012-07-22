@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2011 Osmo Salomaa
+# Copyright (C) 2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,10 +18,11 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
 import sys
 import traceback
+
+from gi.repository import Gtk
 
 
 class TestAddBookmarkDialog(gaupol.TestCase):
@@ -71,6 +72,7 @@ class TestBookmarksExtension(gaupol.TestCase):
                                                  "..",
                                                  "..",
                                                  "side-pane"))
+
         sys.path.insert(0, directory)
         try: mobj = __import__("side-pane", {}, {}, [])
         except ImportError:
@@ -79,12 +81,10 @@ class TestBookmarksExtension(gaupol.TestCase):
         return(mobj)
 
     def setup_method(self, method):
-        ## side-pane extension
         self.application = self.new_application()
         mobj_sp = self.import_side_pane()
         self.extension_sp = mobj_sp.SidePaneExtension()
         self.extension_sp.setup(self.application)
-        ## bookmarks extension
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
@@ -95,6 +95,7 @@ class TestBookmarksExtension(gaupol.TestCase):
         self.extension = mobj.BookmarksExtension()
         self.extension.setup(self.application)
         self.page = self.application.get_current_page()
+        self.bookmark_subtitles()
         self.page.view.select_rows((1,))
 
     def teardown_method(self, method):
@@ -124,7 +125,6 @@ class TestBookmarksExtension(gaupol.TestCase):
         action.activate()
 
     def test__on_next_bookmark_activate(self):
-        self.bookmark_subtitles()
         action = self.application.get_action("next_bookmark")
         action.activate()
         action.activate()
@@ -134,27 +134,23 @@ class TestBookmarksExtension(gaupol.TestCase):
         self.application.save_main(self.page)
 
     def test__on_project_subtitles_inserted(self):
-        self.bookmark_subtitles()
-        self.page.project.insert_subtitles(range(7))
+        self.page.project.insert_subtitles(list(range(7)))
 
     def test__on_project_subtitles_removed(self):
         self.bookmark_subtitles()
-        self.page.project.remove_subtitles(range(7))
+        self.page.project.remove_subtitles(list(range(7)))
 
     def test__on_previous_bookmark_activate(self):
-        self.bookmark_subtitles()
         action = self.application.get_action("previous_bookmark")
         action.activate()
         action.activate()
         action.activate()
 
     def test__on_search_entry_changed(self):
-        self.bookmark_subtitles()
         self.extension._search_entry.set_text("a")
         self.extension._search_entry.set_text("x")
 
     def test__on_tree_view_selection_changed(self):
-        self.bookmark_subtitles()
         selection = self.extension._tree_view.get_selection()
         selection.select_path(1)
         selection.select_path(2)
@@ -163,7 +159,7 @@ class TestBookmarksExtension(gaupol.TestCase):
     def test__read_bookmarks(self):
         path = self.new_subrip_file()
         path_bookmarks = path.replace(".srt", ".gaupol-bookmarks")
-        fobj = open(path, "a")
+        fobj = open(path_bookmarks, "a")
         fobj.write("1 test\n")
         fobj.write("2 test\n")
         fobj.write("3 test\n")

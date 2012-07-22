@@ -14,6 +14,8 @@ Gaupol 0.20
      * Migrate from Gtk.HBox and Gtk.VBox to Gtk.Box
      * Name text-assistant tree view to allow zebra-stripes
      * Check text-assistant layout due to new GTK+3 sidebar
+     * Rename gaupol-plugin extension (and gaupol-bookmarks?)
+     * Fix PyGObject constructors (usually no 'new')
  [/] Bump Python dependency to 3.2 or greater
  [/] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible

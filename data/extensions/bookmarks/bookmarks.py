@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2008-2010 Osmo Salomaa
+# Copyright (C) 2008-2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,10 +20,13 @@
 
 import aeidon
 import gaupol
-from gi.repository import Gtk
 import os
-from gi.repository import Pango
 _ = aeidon.i18n._
+
+from gi.repository import Gdk
+from gi.repository import GdkPixbuf
+from gi.repository import Gtk
+from gi.repository import Pango
 
 
 class AddBookmarkDialog(gaupol.BuilderDialog):
@@ -45,7 +48,7 @@ class AddBookmarkDialog(gaupol.BuilderDialog):
         """Initialize default values for widgets."""
         self._subtitle_spin.set_range(1, len(page.project.subtitles))
         row = page.view.get_selected_rows()[0]
-        self._subtitle_spin.set_value(row + 1)
+        self._subtitle_spin.set_value(row+1)
         description = page.project.subtitles[row].main_text
         description = description.replace("\n", " ")
         description = aeidon.re_any_tag.sub("", description)
@@ -98,13 +101,13 @@ class BookmarksExtension(gaupol.Extension):
         self.update(self.application, page)
 
     def _add_bookmark_column(self, page):
-        """Add a bookmark column to the subtitle tree view of page."""
+        """Add a bookmark column to `page`'s subtitle tree view."""
         renderer = Gtk.CellRendererPixbuf()
         directory = os.path.abspath(os.path.dirname(__file__))
         pixbuf_path = os.path.join(directory, "bookmark.png")
         pixbuf = GdkPixbuf.Pixbuf.new_from_file(pixbuf_path)
         # Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
-        # of a tree view column that contains 16 pixels wide pixbufs.
+        # of a tree view column that contains 16 pixels wide icons.
         column = Gtk.TreeViewColumn(_("Bm."), renderer)
         column.set_clickable(True)
         column.set_resizable(False)
@@ -113,14 +116,12 @@ class BookmarksExtension(gaupol.Extension):
         label = page.view.get_header_label(_("Bm."))
         label.set_tooltip_text(_("Bookmark"))
         column.set_widget(label)
-        column.set_data("pixbuf", pixbuf)
-        column.set_data("identifier", "bookmark")
+        column.gaupol_id = "bookmark"
+        column.gaupol_pixbuf = pixbuf
         column.set_cell_data_func(renderer, self._set_cell_pixbuf, page)
         page.view.insert_column(column, 0)
-        def toggle_bookmark(view, path, column, bookmark_column):
-            if column is not bookmark_column: return
-            self._toggle_bookmark(int(path[0]))
-        page.view.connect("row-activated", toggle_bookmark, column)
+        callback = self._on_page_view_row_activated
+        page.view.connect("row-activated", callback, column)
 
     def _clear_attributes(self):
         """Set values of attributes to ``None``."""
@@ -157,8 +158,7 @@ class BookmarksExtension(gaupol.Extension):
 
     def _disconnect_page(self, page):
         """Disconnect from signals emitted by ``page``."""
-        callback = self._on_page_view_created
-        page.disconnect("view-created", callback)
+        page.disconnect("view-created", self._on_page_view_created)
         callback = self._on_project_subtitles_inserted
         page.project.disconnect("subtitles-inserted", callback)
         callback = self._on_project_subtitles_removed
@@ -214,7 +214,7 @@ class BookmarksExtension(gaupol.Extension):
         self._conf = gaupol.conf.extensions.bookmarks
         self._search_entry = Gtk.Entry()
         self._side_container = Gtk.Alignment.new(0, 0, 1, 1)
-        self._side_vbox = Gtk.VBox(False, 6)
+        self._side_vbox = Gtk.VBox.new(homogeneous=False, spacing=6)
         self._tree_view = Gtk.TreeView()
         self._uim_id = None
         self.application = application
@@ -222,16 +222,32 @@ class BookmarksExtension(gaupol.Extension):
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
         self._side_vbox.set_border_width(2)
-        hbox = Gtk.HBox(False, 6)
+        hbox = Gtk.HBox.new(homogeneous=False, spacing=6)
         label = Gtk.Label(label=_("Search:"))
-        hbox.pack_start(label, False, False)
-        hbox.pack_start(self._search_entry, True, True)
-        self._side_vbox.pack_start(hbox, False, False)
+        hbox.pack_start(label,
+                        expand=False,
+                        fill=False,
+                        padding=0)
+
+        hbox.pack_start(self._search_entry,
+                        expand=True,
+                        fill=True,
+                        padding=0)
+
+        self._side_vbox.pack_start(hbox,
+                                   expand=False,
+                                   fill=False,
+                                   padding=0)
+
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._tree_view)
-        self._side_vbox.pack_start(scroller, True, True)
+        self._side_vbox.pack_start(scroller,
+                                   expand=True,
+                                   fill=True,
+                                   padding=0)
+
         self._side_container.set_padding(0, 6, 2, 0)
         self._side_container.add(self._side_vbox)
         self._side_container.show_all()
@@ -308,6 +324,15 @@ class BookmarksExtension(gaupol.Extension):
         """Add a bookmark column to `view`."""
         self._add_bookmark_column(page)
 
+    def _on_page_view_row_activated(self, view, path, column, bookmark_column):
+        """Remove existing bookmark or add new bookmark to the current page."""
+        if column is not bookmark_column: return
+        row = gaupol.util.tree_path_to_row(path)
+        page = self.application.get_current_page()
+        if row in self._bookmarks[page]:
+            return self._remove_bookmark(row)
+        return self._add_bookmark()
+
     def _on_project_main_file_opened(self, project, main_file, page):
         """Read bookmarks from ``.gaupol-bookmarks`` file."""
         self._read_bookmarks(page)
@@ -319,21 +344,17 @@ class BookmarksExtension(gaupol.Extension):
     def _on_project_subtitles_inserted(self, project, rows, page):
         """Update rows of bookmarks with `rows` inserted before them."""
         if not page in self._bookmarks: return
-        store_filter = self._tree_view.get_model()
-        store = store_filter.get_model()
         for irow in rows:
-            for crow in sorted(list(self._bookmarks[page].keys()), reverse=True):
+            for crow in sorted(self._bookmarks[page].keys(), reverse=True):
                 if crow < irow: continue
                 description = self._bookmarks[page][crow]
                 del self._bookmarks[page][crow]
-                self._bookmarks[page][crow + 1] = description
+                self._bookmarks[page][crow+1] = description
         self._update_tree_view()
 
     def _on_project_subtitles_removed(self, project, rows, page):
         """Remove bookmarks and update rows of those remaining."""
         if not page in self._bookmarks: return
-        store_filter = self._tree_view.get_model()
-        store = store_filter.get_model()
         for crow in list(self._bookmarks[page].keys()):
             if crow in rows: del self._bookmarks[page][crow]
         for crow in sorted(self._bookmarks[page].keys()):
@@ -375,22 +396,21 @@ class BookmarksExtension(gaupol.Extension):
         """Update description in the list store model of the tree view."""
         store = self._tree_view.get_model().get_model()
         store[path][2] = new_text
-        page = self.application.get_current_page()
 
     def _on_tree_view_key_press_event(self, tree_view, event):
         """Remove selected bookmark if ``Delete`` key pressed."""
         if event.keyval != Gdk.KEY_Delete: return
         selection = self._tree_view.get_selection()
-        store, tree_iter = selection.get_selected()
-        if tree_iter is None: return
-        path = store.get_path(tree_iter)
+        store, itr = selection.get_selected()
+        if itr is None: return
+        path = store.get_path(itr)
         self._remove_bookmark(store[path][1] - 1)
 
     def _on_tree_view_selection_changed(self, selection):
         """Jump to the subtitle of the selected bookmark."""
-        store, tree_iter = selection.get_selected()
-        if tree_iter is None: return
-        path = store.get_path(tree_iter)
+        store, itr = selection.get_selected()
+        if itr is None: return
+        path = store.get_path(itr)
         row = store[path][1] - 1
         page = self.application.get_current_page()
         col = page.view.get_focus()[1]
@@ -416,18 +436,15 @@ class BookmarksExtension(gaupol.Extension):
         encoding = page.project.main_file.encoding
         for line in aeidon.util.readlines(path, encoding):
             row, description = line.split(" ", 1)
-            self._bookmarks[page][int(row) - 1] = description
+            self._bookmarks[page][int(row)-1] = description
         self._update_tree_view()
 
     def _remove_bookmark(self, row):
         """Remove existing bookmark in `row` of the current page."""
         store = self._tree_view.get_model()
-        path = None
         for i in range(len(store)):
             if store[i][1] - 1 == row:
-                path = i
-        if path is not None:
-            del store[path]
+                del store[i]
         page = self.application.get_current_page()
         if row in self._bookmarks[page]:
             del self._bookmarks[page][row]
@@ -436,21 +453,15 @@ class BookmarksExtension(gaupol.Extension):
         page_store.row_changed(row, page_store.get_iter(row))
         self.update(self.application, page)
 
-    def _set_cell_pixbuf(self, column, renderer, store, tree_iter, page):
+    def _set_cell_pixbuf(self, column, renderer, store, itr, page):
         """Set the pixbuf property of `renderer`."""
         pixbuf = None
         if page in self._bookmarks:
-            row = store.get_path(tree_iter)[0]
+            path = store.get_path(itr)
+            row = gaupol.util.tree_path_to_row(path)
             if row in self._bookmarks[page]:
-                pixbuf = column.get_data("pixbuf")
+                pixbuf = column.gaupol_pixbuf
         renderer.props.pixbuf = pixbuf
-
-    def _toggle_bookmark(self, row):
-        """Remove existing bookmark or add new bookmark to the current page."""
-        page = self.application.get_current_page()
-        if row in self._bookmarks[page]:
-            return self._remove_bookmark(row)
-        return self._add_bookmark()
 
     def _update_tree_view(self):
         """Update tree view to display bookmarks for the current page."""
@@ -463,7 +474,7 @@ class BookmarksExtension(gaupol.Extension):
         for row in sorted(self._bookmarks[page].keys()):
             description = self._bookmarks[page][row]
             visible = (description.lower().find(pattern) >= 0)
-            store.append((visible, row + 1, description))
+            store.append((visible, row+1, description))
 
     def _write_bookmarks(self, page):
         """Write bookmarks from `page` to a ``.gaupol-bookmarks`` file."""
@@ -476,7 +487,7 @@ class BookmarksExtension(gaupol.Extension):
             return
         lines = []
         for row in sorted(self._bookmarks[page].keys()):
-            lines.append("{:d} {}".format(row + 1, self._bookmarks[page][row]))
+            lines.append("{:d} {}".format(row+1, self._bookmarks[page][row]))
         text = os.linesep.join(lines) + os.linesep
         encoding = page.project.main_file.encoding
         aeidon.util.write(path, text, encoding)
