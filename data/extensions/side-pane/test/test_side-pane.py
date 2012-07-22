@@ -21,7 +21,6 @@ import os
 import sys
 import traceback
 
-from gi.repository import Gdk
 from gi.repository import Gtk
 
 
