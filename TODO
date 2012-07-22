@@ -23,6 +23,7 @@ Gaupol 0.20
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [?] Move search history to configuration file
      * JSON should probably work better than ConfigObj did
+ [?] Add local patterns as optional
  [X] Update Brazilian Portuguese translation
      (Átila Camurça, Darlildo Lima)
  [X] Update Hungarian translation (Andrássy László)

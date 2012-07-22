@@ -22,7 +22,7 @@ import aeidon
 class TestTMPlayerOneDigitHour(aeidon.TestCase):
 
     format = aeidon.formats.TMPLAYER
-    name = "tmplayer-one-digit-hour"
+    name = "tmplayer-1"
 
     def setup_method(self, method):
         path = self.new_temp_file(self.format, self.name)
@@ -40,4 +40,4 @@ class TestTMPlayerOneDigitHour(aeidon.TestCase):
 
 class TestTMPlayerTwoDigitHour(TestTMPlayerOneDigitHour):
 
-    name = "tmplayer-two-digit-hour"
+    name = "tmplayer-2"
