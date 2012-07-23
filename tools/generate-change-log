@@ -42,18 +42,18 @@ def write_commit(match):
     sys.stdout.write("\n")
 
 def write_message(date, name, email, files, message):
-    sys.stdout.write("{0}  {1}  <{2}>\n".format(date, name, email))
+    sys.stdout.write("{}  {}  <{}>\n".format(date, name, email))
     message_lines = message.splitlines()
     if len(files) == 1:
-        text = "* {0}: {1}".format(files[0], message_lines.pop(0))
-        sys.stdout.write("\n{0}\n".format(wrapper.fill(text)))
+        text = "* {}: {}".format(files[0], message_lines.pop(0))
+        sys.stdout.write("\n{}\n".format(wrapper.fill(text)))
     else: # Multiple changed files.
         for name in files:
-            sys.stdout.write("\n\t* {0}:".format(name))
+            sys.stdout.write("\n\t* {}:".format(name))
         sys.stdout.write("\n\n")
     for line in message_lines:
-        line = re_trailing_space.sub("", "\t{0}".format(line))
-        sys.stdout.write("{0}\n".format(line))
+        line = re_trailing_space.sub("", "\t{}".format(line))
+        sys.stdout.write("{}\n".format(line))
 
 text = os.popen("git log --stat -M -C --name-only --date=short", "r").read()
 for match in re_commit.finditer(text):

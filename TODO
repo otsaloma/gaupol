@@ -16,6 +16,8 @@ Gaupol 0.20
      * Check text-assistant layout due to new GTK+3 sidebar
      * Rename gaupol-plugin extension (and gaupol-bookmarks?)
      * Fix PyGObject constructors (usually no 'new')
+     * Update wiki documentation
+     * Port setup.py, winsetup.py, MANIFEST.in and setup-files
  [/] Bump Python dependency to 3.2 or greater
  [/] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible

@@ -53,9 +53,9 @@ for name in sorted(glob.glob("*.po")):
         if "_" in msgid:
             if not "_" in msgstr:
                 nbad += 1
-                print("{0}:{1:d}: missing accelerator in".format(*pos))
-                print('"{0}"'.format(msgid))
-                print('"{0}"'.format(msgstr))
+                print("{}:{:d}: missing accelerator in".format(*pos))
+                print('"{}"'.format(msgid))
+                print('"{}"'.format(msgstr))
                 print("")
 
         # Check that the translation of a label includes
@@ -63,9 +63,9 @@ for name in sorted(glob.glob("*.po")):
         if msgid.endswith(":"):
             if not msgstr.endswith(":"):
                 nbad += 1
-                print("{0}:{1:d}: missing colon in".format(*pos))
-                print('"{0}"'.format(msgid))
-                print('"{0}"'.format(msgstr))
+                print("{}:{:d}: missing colon in".format(*pos))
+                print('"{}"'.format(msgid))
+                print('"{}"'.format(msgstr))
                 print("")
 
         # Check that the translation of a menu item includes
@@ -73,9 +73,9 @@ for name in sorted(glob.glob("*.po")):
         if "..." in msgid:
             if not "..." in msgstr:
                 nbad += 1
-                print("{0}:{1:d}: missing ellipsis in".format(*pos))
-                print('"{0}"'.format(msgid))
-                print('"{0}"'.format(msgstr))
+                print("{}:{:d}: missing ellipsis in".format(*pos))
+                print('"{}"'.format(msgid))
+                print('"{}"'.format(msgstr))
                 print("")
 
         # Check that the translation of a menu item includes
@@ -83,10 +83,10 @@ for name in sorted(glob.glob("*.po")):
         if "…" in msgid:
             if not "…" in msgstr:
                 nbad += 1
-                print("{0}:{1:d}: missing ellipsis in".format(*pos))
-                print('"{0}"'.format(msgid))
-                print('"{0}"'.format(msgstr))
+                print("{}:{:d}: missing ellipsis in".format(*pos))
+                print('"{}"'.format(msgid))
+                print('"{}"'.format(msgstr))
                 print("")
 
-    print("{0}: {1:d} bad, {2:d} good messages"
+    print("{}: {:d} bad, {:d} good messages"
           .format(name, nbad, ntotal - nbad))
