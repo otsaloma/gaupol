@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2006-2009,2011 Osmo Salomaa
+# Copyright (C) 2006-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -23,7 +23,23 @@ import collections
 import copy
 import functools
 import pickle
+import sys
 import time
+
+# Python decorators normally do not preserve the signature of the original
+# function. We, however, absolutely need those function signatures kept to able
+# to autogenerate useful API documentation with sphinx. Let's use the
+# 'decorator' module [1] designed to solve this problem, but only if running
+# sphinx in order to avoid an unnecessary dependency and to avoid an additional
+# layer of code with its own runtime speed penalty and potential bugs.
+# Specifically, let's use the 'decorator_apply' function as instructed [2] to
+# avoid rewriting our standard-form decorators.
+#
+#  [1] http://pypi.python.org/pypi/decorator/
+#  [2] http://micheles.googlecode.com/hg/decorator/documentation.html
+
+PRESERVE_SIGNATURES = (sys.argv[0].endswith("autogen.py") or
+                       sys.argv[0].endswith("sphinx-build"))
 
 
 def _dump_subtitles(subtitles):
@@ -64,6 +80,11 @@ def benchmark(function):
         return value
     return wrapper
 
+if PRESERVE_SIGNATURES:
+    _benchmark = benchmark
+    def benchmark(function):
+        return decorator_apply(_benchmark, function)
+
 def contractual(function):
     """
     Decorator for module level functions with pre- and/or postconditions.
@@ -88,10 +109,27 @@ def contractual(function):
         return value
     return wrapper
 
+if PRESERVE_SIGNATURES:
+    _contractual = contractual
+    def contractual(function):
+        return decorator_apply(_contractual, function)
+
+def decorator_apply(dec, fun):
+    """Rewrap `dec` to preserve function signature."""
+    import decorator
+    return decorator.FunctionMaker.create(
+        fun, 'return decorated(%(signature)s)',
+        dict(decorated=dec(fun)), __wrapped__=fun)
+
 def export(function):
     """Decorator for delegate functions that are exported to master."""
     function.export = True
     return function
+
+if PRESERVE_SIGNATURES:
+    _export = export
+    def export(function):
+        return decorator_apply(_export, function)
 
 def memoize(limit=100):
     """
@@ -116,6 +154,10 @@ def memoize(limit=100):
             return cache[key]
         inner_wrapper.original = function
         return inner_wrapper
+    if PRESERVE_SIGNATURES:
+        _outer_wrapper = outer_wrapper
+        def outer_wrapper(function):
+            return decorator_apply(_outer_wrapper, function)
     return outer_wrapper
 
 def monkey_patch(obj, name):
@@ -154,6 +196,10 @@ def monkey_patch(obj, name):
                     delattr(obj, name)
                     assert not _hasattr_def(obj, name)
         return inner_wrapper
+    if PRESERVE_SIGNATURES:
+        _outer_wrapper = outer_wrapper
+        def outer_wrapper(function):
+            return decorator_apply(_outer_wrapper, function)
     return outer_wrapper
 
 def notify_frozen(function):
@@ -165,6 +211,11 @@ def notify_frozen(function):
         finally: args[0].thaw_notify(frozen)
     return wrapper
 
+if PRESERVE_SIGNATURES:
+    _notify_frozen = notify_frozen
+    def notify_frozen(function):
+        return decorator_apply(_notify_frozen, function)
+
 def once(function):
     """Decorator for functions that cache their only return value."""
     cache = []
@@ -175,6 +226,11 @@ def once(function):
         cache.append(function(*args, **kwargs))
         return cache[0]
     return wrapper
+
+if PRESERVE_SIGNATURES:
+    _once = once
+    def once(function):
+        return decorator_apply(_once, function)
 
 def reversion_test(function):
     """Decorator for unit testing reversions of one action."""
@@ -194,6 +250,11 @@ def reversion_test(function):
             assert current == changed
         return value
     return wrapper
+
+if PRESERVE_SIGNATURES:
+    _reversion_test = reversion_test
+    def reversion_test(function):
+        return decorator_apply(_reversion_test, function)
 
 def revertable(function):
     """Decorator for revertable methods of :class:`aeidon.Project`."""
@@ -222,6 +283,11 @@ def revertable(function):
         return value
     return wrapper
 
+if PRESERVE_SIGNATURES:
+    _revertable = revertable
+    def revertable(function):
+        return decorator_apply(_revertable, function)
+
 def silent(*exceptions):
     """
     Decorator for ignoring `exceptions` raised  by function.
@@ -237,4 +303,8 @@ def silent(*exceptions):
             try: return function(*args, **kwargs)
             except exceptions: return None
         return inner_wrapper
+    if PRESERVE_SIGNATURES:
+        _outer_wrapper = outer_wrapper
+        def outer_wrapper(function):
+            return decorator_apply(_outer_wrapper, function)
     return outer_wrapper

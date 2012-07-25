@@ -2,30 +2,27 @@ Gaupol 0.20
 ===========
 
  [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     * Test encoding auto-detection
-     * Check API documentation on aeidon.as_* and aeidon.is_*
-     * Check decorator API documentation
      * Check if GtkSpell is available with PyGI support
      * Fix remaining regressions (search for 'XXX')
      * Check video toolbar spacing etc.
      * Check that interactive search works
-     * Check dialog sizes
-     * Check that clipboard is persistent
+     * Check size functions and dialog sizes
+     * Check that clipboard data is persistent
      * Migrate from Gtk.HBox and Gtk.VBox to Gtk.Box
-     * Name text-assistant tree view to allow zebra-stripes
      * Check text-assistant layout due to new GTK+3 sidebar
-     * Rename gaupol-plugin extension (and gaupol-bookmarks?)
+     * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
      * Fix PyGObject constructors (usually no 'new')
      * Update wiki documentation
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
- [/] Bump Python dependency to 3.2 or greater
- [/] Replace PyGTK dependency with PyGObject 3.0.0 or greater
+     * Rethink cell yalign, line length superscripts, striping, etc.
+ [X] Bump Python dependency to 3.2 or greater
+ [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
      system of penalties and a versatile measure of goodness
- [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [?] Move search history to configuration file
      * JSON should probably work better than ConfigObj did
- [?] Rethink cell yalign, line length superscripts, striping, etc.
+ [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
+ [X] Fix signatures of decorated function in API documentation
  [X] Update Brazilian Portuguese translation
      (Átila Camurça, Darlildo Lima)
  [X] Update Hungarian translation (Andrássy László)
@@ -33,8 +30,8 @@ Gaupol 0.20
 Gaupol 1.0
 ==========
 
- * https://live.gnome.org/GnomeGoals/PortToGMenu
  * https://live.gnome.org/GnomeGoals/PortToGtkApplication
+ * https://live.gnome.org/GnomeGoals/PortToGMenu
  * https://live.gnome.org/GnomeGoals/RemoveMarkupInMessages
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
