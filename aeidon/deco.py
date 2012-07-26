@@ -23,7 +23,6 @@ import collections
 import copy
 import functools
 import pickle
-import sys
 import time
 
 # Python decorators normally do not preserve the signature of the original
@@ -37,9 +36,6 @@ import time
 #
 #  [1] http://pypi.python.org/pypi/decorator/
 #  [2] http://micheles.googlecode.com/hg/decorator/documentation.html
-
-PRESERVE_SIGNATURES = (sys.argv[0].endswith("autogen.py") or
-                       sys.argv[0].endswith("sphinx-build"))
 
 
 def _dump_subtitles(subtitles):
@@ -80,7 +76,7 @@ def benchmark(function):
         return value
     return wrapper
 
-if PRESERVE_SIGNATURES:
+if aeidon.RUNNING_SPHINX:
     _benchmark = benchmark
     def benchmark(function):
         return decorator_apply(_benchmark, function)
@@ -93,9 +89,9 @@ def contractual(function):
     ``FUNCTION_NAME_ensure`` calls if such functions exist. The require
     function receives the same arguments as function, the ensure function will
     in addition receive function's return value as its first argument. This is
-    a debug decorator that does nothing if :data:`aeidon.debug` is ``False``.
+    a debug decorator that does nothing if :data:`aeidon.DEBUG` is ``False``.
     """
-    if not aeidon.debug:
+    if not aeidon.DEBUG:
         return function
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
@@ -109,7 +105,7 @@ def contractual(function):
         return value
     return wrapper
 
-if PRESERVE_SIGNATURES:
+if aeidon.RUNNING_SPHINX:
     _contractual = contractual
     def contractual(function):
         return decorator_apply(_contractual, function)
@@ -126,7 +122,7 @@ def export(function):
     function.export = True
     return function
 
-if PRESERVE_SIGNATURES:
+if aeidon.RUNNING_SPHINX:
     _export = export
     def export(function):
         return decorator_apply(_export, function)
@@ -154,7 +150,7 @@ def memoize(limit=100):
             return cache[key]
         inner_wrapper.original = function
         return inner_wrapper
-    if PRESERVE_SIGNATURES:
+    if aeidon.RUNNING_SPHINX:
         _outer_wrapper = outer_wrapper
         def outer_wrapper(function):
             return decorator_apply(_outer_wrapper, function)
@@ -196,7 +192,7 @@ def monkey_patch(obj, name):
                     delattr(obj, name)
                     assert not _hasattr_def(obj, name)
         return inner_wrapper
-    if PRESERVE_SIGNATURES:
+    if aeidon.RUNNING_SPHINX:
         _outer_wrapper = outer_wrapper
         def outer_wrapper(function):
             return decorator_apply(_outer_wrapper, function)
@@ -211,7 +207,7 @@ def notify_frozen(function):
         finally: args[0].thaw_notify(frozen)
     return wrapper
 
-if PRESERVE_SIGNATURES:
+if aeidon.RUNNING_SPHINX:
     _notify_frozen = notify_frozen
     def notify_frozen(function):
         return decorator_apply(_notify_frozen, function)
@@ -227,7 +223,7 @@ def once(function):
         return cache[0]
     return wrapper
 
-if PRESERVE_SIGNATURES:
+if aeidon.RUNNING_SPHINX:
     _once = once
     def once(function):
         return decorator_apply(_once, function)
@@ -251,7 +247,7 @@ def reversion_test(function):
         return value
     return wrapper
 
-if PRESERVE_SIGNATURES:
+if aeidon.RUNNING_SPHINX:
     _reversion_test = reversion_test
     def reversion_test(function):
         return decorator_apply(_reversion_test, function)
@@ -283,7 +279,7 @@ def revertable(function):
         return value
     return wrapper
 
-if PRESERVE_SIGNATURES:
+if aeidon.RUNNING_SPHINX:
     _revertable = revertable
     def revertable(function):
         return decorator_apply(_revertable, function)
@@ -303,7 +299,7 @@ def silent(*exceptions):
             try: return function(*args, **kwargs)
             except exceptions: return None
         return inner_wrapper
-    if PRESERVE_SIGNATURES:
+    if aeidon.RUNNING_SPHINX:
         _outer_wrapper = outer_wrapper
         def outer_wrapper(function):
             return decorator_apply(_outer_wrapper, function)

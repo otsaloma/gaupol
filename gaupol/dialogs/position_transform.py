@@ -225,7 +225,7 @@ class FrameTransformDialog(PositionTransformDialog,
         self._input_entry_1.set_text(str(subtitle.start_frame))
         self._output_spin_1.set_value(int(subtitle.start_frame))
         text = subtitle.main_text.replace("\n", " ")
-        text = aeidon.re_any_tag.sub("", text)
+        text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_1.set_text(text)
         self._text_label_1.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_2.props.adjustment.props.lower = row + 2
@@ -238,7 +238,7 @@ class FrameTransformDialog(PositionTransformDialog,
         self._input_entry_2.set_text(str(subtitle.start_frame))
         self._output_spin_2.set_value(int(subtitle.start_frame))
         text = subtitle.main_text.replace("\n", " ")
-        text = aeidon.re_any_tag.sub("", text)
+        text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_2.set_text(text)
         self._text_label_2.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_1.props.adjustment.props.upper = row
@@ -308,7 +308,7 @@ class TimeTransformDialog(PositionTransformDialog,
         self._input_entry_1.set_text(str(subtitle.start_time))
         self._output_entry_1.set_text(str(subtitle.start_time))
         text = subtitle.main_text.replace("\n", " ")
-        text = aeidon.re_any_tag.sub("", text)
+        text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_1.set_text(text)
         self._text_label_1.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_2.props.adjustment.props.lower = row + 2
@@ -323,7 +323,7 @@ class TimeTransformDialog(PositionTransformDialog,
         self._input_entry_2.set_text(str(subtitle.start_time))
         self._output_entry_2.set_text(str(subtitle.start_time))
         text = subtitle.main_text.replace("\n", " ")
-        text = aeidon.re_any_tag.sub("", text)
+        text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_2.set_text(text)
         self._text_label_2.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_1.props.adjustment.props.upper = row

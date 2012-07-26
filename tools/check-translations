@@ -9,7 +9,7 @@ import os
 import sys
 
 args = tuple(sys.argv[1:])
-args = tuple("%s.po" % x for x in args)
+args = tuple("{}.po".format(x) for x in args)
 os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
 for name in sorted(glob.glob("*.po")):
     if args and not name in args:

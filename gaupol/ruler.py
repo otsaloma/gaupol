@@ -63,17 +63,17 @@ class _Ruler(object):
 
     def get_char_length(self, text, strip=False, floor=False):
         """Return length of `text` measured in characters."""
-        text = (aeidon.re_any_tag.sub("", text) if strip else text)
+        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
         return len(text.replace("\n", " "))
 
     def get_char_lengths(self, text, strip=False, floor=False):
         """Return line lengths of `text` measured in characters."""
-        text = (aeidon.re_any_tag.sub("", text) if strip else text)
+        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
         return tuple(len(x) for x in text.split("\n"))
 
     def get_em_length(self, text, strip=False, floor=False):
         """Return length of `text` measured in ems."""
-        text = (aeidon.re_any_tag.sub("", text) if strip else text)
+        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
         text = text.replace("\n", " ")
         self._layout.set_text(text, -1)
         length = self._layout.get_size()[0] / self._em_length
@@ -81,7 +81,7 @@ class _Ruler(object):
 
     def get_em_lengths(self, text, strip=False, floor=False):
         """Return line lengths of `text` measured in ems."""
-        text = (aeidon.re_any_tag.sub("", text) if strip else text)
+        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
         lengths = []
         for line in text.split("\n"):
             self._layout.set_text(line, -1)

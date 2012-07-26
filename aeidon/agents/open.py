@@ -77,7 +77,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         except (IOError, UnicodeError):
             raise
         except Exception:
-            if not aeidon.debug:
+            if not aeidon.DEBUG:
                 raise aeidon.ParseError("Failed to parse file {}"
                                         .format(repr(sfile.path)))
 

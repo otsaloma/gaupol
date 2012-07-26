@@ -51,7 +51,7 @@ class AddBookmarkDialog(gaupol.BuilderDialog):
         self._subtitle_spin.set_value(row+1)
         description = page.project.subtitles[row].main_text
         description = description.replace("\n", " ")
-        description = aeidon.re_any_tag.sub("", description)
+        description = aeidon.RE_ANY_TAG.sub("", description)
         self._description_entry.set_text(description)
         self._description_entry.set_width_chars(30)
 

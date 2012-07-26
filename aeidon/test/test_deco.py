@@ -46,7 +46,7 @@ class TestModule(aeidon.TestCase):
         assert square(2) == 4
 
     def test_contractual(self):
-        assert aeidon.debug
+        assert aeidon.DEBUG
         self.count = 0
         self.do_something()
         assert self.count == 3

@@ -116,7 +116,7 @@ class EnumerationItem(int):
         """Return name as the string representation."""
         return self.name
 
-    if not aeidon.debug:
+    if not aeidon.DEBUG:
         del __eq__
         del __ge__
         del __gt__
@@ -209,5 +209,5 @@ class Enumeration(list):
     def sort(self, *args, **kwargs):
         raise NotImplementedError
 
-    if not aeidon.debug:
+    if not aeidon.DEBUG:
         del __contains__

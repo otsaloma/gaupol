@@ -80,7 +80,7 @@ class Contractual(type):
     inheritance tree will be used.
 
     :class:`Contractual` is a debug metaclass that is in use only if
-    :data:`aeidon.debug` is ``True``.
+    :data:`aeidon.DEBUG` is ``True``.
 
     .. _design-by-contract:
        http://www.eiffel.com/developers/design_by_contract.html
@@ -129,4 +129,4 @@ class Contractual(type):
             new_dict[name] = attr
         return type.__new__(meta, class_name, bases, new_dict)
 
-    if not aeidon.debug: del __new__
+    if not aeidon.DEBUG: del __new__
