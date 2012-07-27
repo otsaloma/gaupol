@@ -64,7 +64,9 @@ class SidePane(aeidon.Observable):
 
     def _init_gui(self):
         """Initialize all widgets."""
-        side_vbox = Gtk.VBox.new(homogeneous=False, spacing=0)
+        side_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                            spacing=0)
+
         self._init_paned(side_vbox)
         self._init_header(side_vbox)
         self._init_notebook(side_vbox)
@@ -74,11 +76,15 @@ class SidePane(aeidon.Observable):
 
     def _init_header(self, side_vbox):
         """Initialize the side pane button header."""
-        header_hbox = Gtk.HBox.new(homogeneous=False, spacing=12)
+        header_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+                              spacing=12)
+
         header_hbox.set_border_width(1)
         self._toggle_button.set_relief(Gtk.ReliefStyle.NONE)
         self._toggle_button.set_focus_on_click(False)
-        toggle_button_hbox = Gtk.HBox.new(homogeneous=False, spacing=6)
+        toggle_button_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+                                     spacing=6)
+
         toggle_button_hbox.pack_start(self._label,
                                       expand=True,
                                       fill=True,
@@ -138,7 +144,9 @@ class SidePane(aeidon.Observable):
         main_vbox = self.application.window.get_children()[0]
         main_notebook = main_vbox.get_children()[2]
         self._paned.pack1(side_vbox, resize=False, shrink=False)
-        main_notebook_vbox = Gtk.VBox.new(homogeneous=False, spacing=0)
+        main_notebook_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                                     spacing=0)
+
         main_notebook.reparent(main_notebook_vbox)
         self._paned.pack2(main_notebook_vbox, resize=True, shrink=False)
         main_vbox.pack_start(self._paned, expand=True, fill=True, padding=0)

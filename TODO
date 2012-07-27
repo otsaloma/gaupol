@@ -8,7 +8,6 @@ Gaupol 0.20
      * Check that interactive search works
      * Check size functions and dialog sizes
      * Check that clipboard data is persistent
-     * Migrate from Gtk.HBox and Gtk.VBox to Gtk.Box
      * Check text-assistant layout due to new GTK+3 sidebar
      * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
      * Fix PyGObject constructors (usually no 'new')

@@ -90,15 +90,17 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="vbox14">
+          <object class="GtkBox" id="vbox14">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="border_width">6</property>
+            <property name="orientation">vertical</property>
             <property name="spacing">18</property>
             <child>
-              <object class="GtkVBox" id="vbox15">
+              <object class="GtkBox" id="vbox15">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="label28">
@@ -123,12 +125,13 @@
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                     <property name="left_padding">12</property>
                     <child>
-                      <object class="GtkVBox" id="vbox16">
+                      <object class="GtkBox" id="vbox16">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkHBox" id="hbox16">
+                          <object class="GtkBox" id="hbox16">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="spacing">12</property>
@@ -148,7 +151,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="hbox17">
+                              <object class="GtkBox" id="hbox17">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
@@ -249,9 +252,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox17">
+              <object class="GtkBox" id="vbox17">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="label32">
@@ -342,7 +346,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="hbox19">
+                          <object class="GtkBox" id="hbox19">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="spacing">6</property>
@@ -387,7 +391,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="hbox20">
+                          <object class="GtkBox" id="hbox20">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="spacing">6</property>
@@ -432,7 +436,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="hbox21">
+                          <object class="GtkBox" id="hbox21">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="spacing">6</property>
@@ -493,9 +497,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox18">
+              <object class="GtkBox" id="vbox18">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="label37">
@@ -520,9 +525,10 @@
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                     <property name="left_padding">12</property>
                     <child>
-                      <object class="GtkVBox" id="vbox19">
+                      <object class="GtkBox" id="vbox19">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkRadioButton" id="selected_radio">

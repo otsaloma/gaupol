@@ -33,7 +33,7 @@ from gi.repository import Pango
 __all__ = ("TextAssistant", "TextAssistantPage")
 
 
-class TextAssistantPage(Gtk.VBox):
+class TextAssistantPage(Gtk.Box):
 
     """
     Baseclass for pages of :class:`TextAssistant`.
@@ -50,7 +50,7 @@ class TextAssistantPage(Gtk.VBox):
 
     def __init__(self, assistant):
         """Initialize a :class:`TextAssistantPage` object."""
-        GObject.GObject.__init__(self)
+        GObject.GObject.__init__(self, orientation=Gtk.Orientation.VERTICAL)
         self.assistant = assistant
         self.description = None
         self.handle = None

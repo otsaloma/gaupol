@@ -214,7 +214,9 @@ class BookmarksExtension(gaupol.Extension):
         self._conf = gaupol.conf.extensions.bookmarks
         self._search_entry = Gtk.Entry()
         self._side_container = Gtk.Alignment.new(0, 0, 1, 1)
-        self._side_vbox = Gtk.VBox.new(homogeneous=False, spacing=6)
+        self._side_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                                  spacing=6)
+
         self._tree_view = Gtk.TreeView()
         self._uim_id = None
         self.application = application
@@ -222,7 +224,9 @@ class BookmarksExtension(gaupol.Extension):
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
         self._side_vbox.set_border_width(2)
-        hbox = Gtk.HBox.new(homogeneous=False, spacing=6)
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+                       spacing=6)
+
         label = Gtk.Label(label=_("Search:"))
         hbox.pack_start(label,
                         expand=False,

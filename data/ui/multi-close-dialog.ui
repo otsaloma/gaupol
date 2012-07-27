@@ -79,7 +79,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkBox" id="hbox1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="border_width">6</property>
@@ -99,9 +99,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox2">
+              <object class="GtkBox" id="vbox2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">12</property>
                 <child>
                   <object class="GtkLabel" id="label1">
@@ -123,9 +124,10 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVBox" id="main_vbox">
+                  <object class="GtkBox" id="main_vbox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkLabel" id="label7">
@@ -174,9 +176,10 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVBox" id="tran_vbox">
+                  <object class="GtkBox" id="tran_vbox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkLabel" id="label10">
