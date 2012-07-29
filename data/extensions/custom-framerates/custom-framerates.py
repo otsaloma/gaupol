@@ -153,7 +153,7 @@ class CustomFrameratesExtension(gaupol.Extension):
 
     def _add_framerates(self):
         """Add custom framerates and corresponding UI elements."""
-        self._action_group = Gtk.ActionGroup("custom-framerates")
+        self._action_group = Gtk.ActionGroup(name="custom-framerates")
         self.application.uim.insert_action_group(self._action_group, -1)
         tooltip = _("Calculate nonnative units with a framerate of {:.3f} fps")
         directory = os.path.abspath(os.path.dirname(__file__))

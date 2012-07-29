@@ -10,7 +10,6 @@ Gaupol 0.20
      * Check that clipboard data is persistent
      * Check text-assistant layout due to new GTK+3 sidebar
      * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
-     * Fix PyGObject constructors (usually no 'new')
      * Update wiki documentation
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
      * Rethink cell yalign, line length superscripts, striping, etc.

@@ -106,7 +106,10 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         visible_fields = gaupol.conf.editor.visible_fields
         for field in gaupol.conf.editor.field_order:
             renderer = self._get_renderer(field, edit_mode)
-            column = Gtk.TreeViewColumn(field.label, renderer, text=field)
+            column = Gtk.TreeViewColumn(field.label,
+                                        renderer,
+                                        text=field)
+
             column.gaupol_id = field.name.lower()
             self.append_column(column)
             column.set_clickable(True)

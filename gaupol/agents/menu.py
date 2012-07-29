@@ -50,7 +50,12 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         label = "{:d}. {}".format(index + 1, label)
         label = ("_{}".format(label)if index < 9 else label)
         tooltip = _('Activate "{}"').format(basename)
-        action = Gtk.RadioAction(name, label, tooltip, None, index)
+        action = Gtk.RadioAction(name=name, 
+                                 label=label, 
+                                 tooltip=tooltip, 
+                                 stock_id=None, 
+                                 value=index)
+
         action_group = self.get_action_group("projects")
         group = action_group.get_action("activate_project_0")
         if group is not None: action.set_group(group)
@@ -72,7 +77,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self._redo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.redoables):
-            item = Gtk.MenuItem.new_with_label(action.description)
+            item = Gtk.MenuItem(label=action.description)
             item.gaupol_index = i
             item.gaupol_tooltip = _('Redo "{}"').format(action.description)
             callback = self._on_redo_menu_item_activate
@@ -146,7 +151,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self._undo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.undoables):
-            item = Gtk.MenuItem.new_with_label(action.description)
+            item = Gtk.MenuItem(label=action.description)
             item.gaupol_index = i
             item.gaupol_tooltip = _('Undo "{}"').format(action.description)
             callback = self._on_undo_menu_item_activate

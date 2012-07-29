@@ -209,11 +209,11 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_attributes(self, application):
         """Initialize default values for attributes."""
-        self._action_group = Gtk.ActionGroup("bookmarks")
+        self._action_group = Gtk.ActionGroup(name="bookmarks")
         self._bookmarks = {}
         self._conf = gaupol.conf.extensions.bookmarks
         self._search_entry = Gtk.Entry()
-        self._side_container = Gtk.Alignment.new(0, 0, 1, 1)
+        self._side_container = Gtk.Alignment(xalign=0, yalign=0)
         self._side_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                   spacing=6)
 

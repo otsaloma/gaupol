@@ -90,7 +90,9 @@ class SidePane(aeidon.Observable):
                                       fill=True,
                                       padding=0)
 
-        arrow = Gtk.Arrow(Gtk.ArrowType.DOWN, Gtk.ShadowType.NONE)
+        arrow = Gtk.Arrow(arrow_type=Gtk.ArrowType.DOWN,
+                          shadow_type=Gtk.ShadowType.NONE)
+
         toggle_button_hbox.pack_start(arrow,
                                       expand=True,
                                       fill=True,
@@ -112,8 +114,8 @@ class SidePane(aeidon.Observable):
                                padding=0)
 
         close_button = Gtk.Button()
-        image = Gtk.Image.new_from_icon_name("window-close-symbolic",
-                                             Gtk.IconSize.MENU)
+        image = Gtk.Image(icon_name="window-close-symbolic",
+                          icon_size=Gtk.IconSize.MENU)
 
         close_button.add(image)
         close_button.set_relief(Gtk.ReliefStyle.NONE)
@@ -222,7 +224,7 @@ class SidePane(aeidon.Observable):
         for i in range(self._notebook.get_n_pages()):
             child = self._notebook.get_nth_page(i)
             title = self._notebook.get_tab_label_text(child)
-            menu_item = Gtk.MenuItem.new_with_label(title)
+            menu_item = Gtk.MenuItem(label=title)
             menu_item.gaupol_child = child
             menu_item.connect("activate", self._on_header_menu_item_activate)
             menu.append(menu_item)
@@ -337,7 +339,7 @@ class SidePaneExtension(gaupol.Extension):
 
         self._conf = gaupol.conf.extensions.side_pane
         application.side_pane = SidePane(application)
-        self._action_group = Gtk.ActionGroup("side-pane")
+        self._action_group = Gtk.ActionGroup(name="side-pane")
         self._action_group.add_toggle_actions((
             ("toggle_side_pane", None, _("Si_de Pane"),
              None, _("Show or hide the side pane"),

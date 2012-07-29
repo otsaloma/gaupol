@@ -82,9 +82,9 @@ class Action(Gtk.Action):
         # Gtk.Action.set_tool_item_type function, but it seems to work.
         # UI manager or whoever will set the correct labels and icons.
         if self.tool_item_type is Gtk.ToolButton:
-            return Gtk.ToolButton.new(None, None)
+            return Gtk.ToolButton()
         if self.tool_item_type is Gtk.MenuToolButton:
-            return Gtk.MenuToolButton.new(None, None)
+            return Gtk.MenuToolButton()
         raise ValueError("Bad value for self.tool_item_type: {}"
                          .format(repr(self.tool_item_type)))
 

@@ -200,7 +200,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_gui(self):
         """Initialize the user interface."""
-        vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=0)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self._init_x_clipboard()
         self._init_window()
         self._init_css()
@@ -288,8 +288,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_uim(self):
         """Initialize the UI manager."""
         self.uim = Gtk.UIManager()
-        safe_group = Gtk.ActionGroup("main-safe")
-        unsafe_group = Gtk.ActionGroup("main-unsafe")
+        safe_group = Gtk.ActionGroup(name="main-safe")
+        unsafe_group = Gtk.ActionGroup(name="main-unsafe")
         for name in gaupol.actions.__all__:
             action = getattr(gaupol.actions, name)()
             args = (action, action.accelerator)
@@ -301,7 +301,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_uim_radio_groups(unsafe_group)
         self.uim.insert_action_group(safe_group, 0)
         self.uim.insert_action_group(unsafe_group, 1)
-        action_group = Gtk.ActionGroup("projects")
+        action_group = Gtk.ActionGroup(name="projects")
         self.uim.insert_action_group(action_group, -1)
         ui_xml_file = os.path.join(aeidon.DATA_DIR, "ui", "ui.xml")
         self.uim.add_ui_from_file(ui_xml_file)
@@ -344,9 +344,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Intialize the video button on the video toolbar."""
         # Let's make this resemble a Gtk.FileChooserButton,
         # but not actually be one, because they are slow to instantiate.
-        hbox = Gtk.Box(Gtk.Orientation.HORIZONTAL, spacing=0)
-        size = Gtk.IconSize.MENU
-        image = Gtk.Image.new_from_stock(Gtk.STOCK_FILE, size)
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        image = Gtk.Image(stock=Gtk.STOCK_FILE,
+                          icon_size=Gtk.IconSize.MENU)
+
         hbox.pack_start(image,
                         expand=False,
                         fill=False,
@@ -360,13 +361,15 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                         fill=True,
                         padding=0)
 
-        separator = Gtk.Separator.new(Gtk.Orientation.VERTICAL)
+        separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
         hbox.pack_start(separator,
                         expand=False,
                         fill=False,
                         padding=6)
 
-        image = Gtk.Image.new_from_stock(Gtk.STOCK_OPEN, size)
+        image = Gtk.Image(stock=Gtk.STOCK_OPEN,
+                          icon_size=Gtk.IconSize.MENU)
+
         hbox.pack_start(image,
                         expand=False,
                         fill=False,

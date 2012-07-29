@@ -177,9 +177,9 @@ class DebugDialog(gaupol.BuilderDialog):
         window = text_view.get_window(Gtk.TextWindowType.TEXT)
         for tag in text_view.get_iter_at_location(x, y).get_tags():
             if hasattr(tag, "gaupol_path"):
-                window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.HAND2))
+                window.set_cursor(Gdk.Cursor(cursor_type=Gdk.CursorType.HAND2))
                 return True
-        window.set_cursor(Gdk.Cursor.new(Gdk.CursorType.XTERM))
+        window.set_cursor(Gdk.Cursor(cursor_type=Gdk.CursorType.XTERM))
         return False
 
     def _open_link(self, tag):

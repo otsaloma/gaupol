@@ -91,7 +91,9 @@ class OutputWindow(Gtk.Window):
                               fill=False,
                               padding=0)
 
-        vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=12)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                       spacing=12)
+
         vbox.pack_start(scroller,
                         expand=True,
                         fill=True,
