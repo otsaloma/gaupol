@@ -24,9 +24,9 @@ import re
 _ = aeidon.i18n._
 
 from gi.repository import Gdk
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
-from gi.repository import Pango
 
 __all__ = ("View",)
 
@@ -47,12 +47,9 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
     def __init__(self, edit_mode):
         """Initialize a :class:`View` object."""
         GObject.GObject.__init__(self)
-        self._active_attr = None
         self._active_col_name = ""
         self._calc = aeidon.Calculator()
-        self._normal_attr = None
         self.columns = aeidon.Enumeration()
-        self._init_column_attributes()
         self._init_signal_handlers()
         self._init_props(edit_mode)
 
@@ -88,18 +85,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         column = self.get_column(self.columns.NUMBER)
         renderer = column.get_cells()[0]
         column.set_cell_data_func(renderer, set_number, None)
-
-    def _init_column_attributes(self):
-        """Initialize the column header :class:`Pango.AttrList`."""
-        # XXX: Pango attributes don't quite work?
-        # https://bugzilla.gnome.org/show_bug.cgi?id=669371
-        # self._active_attr = Pango.AttrList()
-        # attr = Pango.AttrWeight(Pango.Weight.BOLD, 0, -1)
-        # self._active_attr.insert(attr)
-        # self._normal_attr = Pango.AttrList()
-        # attr = Pango.AttrWeight(Pango.Weight.NORMAL, 0, -1)
-        # self._normal_attr.insert(attr)
-        pass
 
     def _init_columns(self, edit_mode):
         """Initialize the tree view columns."""
@@ -284,12 +269,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         label = Gtk.Label(label=text)
         label.props.xalign = 0
         label.show()
-        # XXX: Pango attributes don't quite work?
-        # https://bugzilla.gnome.org/show_bug.cgi?id=669371
-        # label.set_attributes(self._active_attr)
-        # width = label.get_preferred_width()[1]
-        # label.set_size_request(width, -1)
-        # label.set_attributes(self._normal_attr)
         return label
 
     def get_selected_rows_ensure(self, value):
@@ -363,12 +342,16 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         self._active_col_name = ""
         if acol is not None:
             label = self.get_column(acol).get_widget()
-            # XXX: Pango attributes don't quite work?
-            # https://bugzilla.gnome.org/show_bug.cgi?id=669371
-            # label.set_attributes(self._normal_attr)
+            text = GLib.markup_escape_text(label.get_text())
+            label.set_markup("{}".format(text))
         if fcol is not None:
+            # We used to set the focused column header bold here,
+            # but since GTK+3/GNOME3 the default Adwaita theme
+            # makes all column headers bold by default and uses a
+            # light color that's hard to read in normal weight.
+            # Hence, we'll use italic instead and hope it works
+            # all right across different themes.
             label = self.get_column(fcol).get_widget()
-            # XXX: Pango attributes don't quite work?
-            # https://bugzilla.gnome.org/show_bug.cgi?id=669371
-            # label.set_attributes(self._active_attr)
+            text = GLib.markup_escape_text(label.get_text())
+            label.set_markup("<i>{}</i>".format(text))
             self._active_col_name = self.columns[fcol].name

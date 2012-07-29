@@ -36,7 +36,7 @@ def char_to_px(nchar, font=None):
     if nchar < 0: return nchar
     label = Gtk.Label(label="etaoin shrdlu")
     if font is not None:
-        set_label_font(label, font)
+        set_widget_font(label, font)
     width = label.get_layout().get_pixel_size()[0]
     return int(round(nchar * (width / 13)))
 
@@ -109,7 +109,7 @@ def get_text_view_size(text_view, font=""):
     start, end = text_buffer.get_bounds()
     text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
-    set_label_font(label, font)
+    set_widget_font(label, font)
     return (label.get_preferred_width()[1],
             label.get_preferred_height()[1])
 
@@ -170,7 +170,7 @@ def lines_to_px(nlines, font=None):
     text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     label = Gtk.Label(label=text)
     if font is not None:
-        set_label_font(label, font)
+        set_widget_font(label, font)
     height = label.get_layout().get_pixel_size()[1]
     return int(round(nlines * height))
 
@@ -282,20 +282,6 @@ def set_cursor_normal(window):
     cursor = Gdk.Cursor(cursor_type=Gdk.CursorType.LEFT_PTR)
     window.get_window().set_cursor(cursor)
     iterate_main()
-
-def set_label_font(label, font):
-    """Use `font` for `label`."""
-    # XXX: Pango attributes don't quite work?
-    # https://bugzilla.gnome.org/show_bug.cgi?id=669371
-    # context = label.get_pango_context()
-    # font_desc = context.get_font_description()
-    # custom_font_desc = Pango.FontDescription(font)
-    # font_desc.merge(custom_font_desc, True)
-    # attr = Pango.AttrFontDesc(desc=font_desc)
-    # attr_list = Pango.AttrList()
-    # attr_list.insert(attr)
-    # label.set_attributes(attr_list)
-    return set_widget_font(label, font)
 
 def set_widget_font(widget, font):
     """Use `font` for `widget`."""

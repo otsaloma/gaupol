@@ -179,10 +179,6 @@ class TestModule(gaupol.TestCase):
         gaupol.util.set_cursor_normal(window)
         window.destroy()
 
-    def test_set_label_font(self):
-        label = Gtk.Label(label="testing...")
-        gaupol.util.set_label_font(label, "Serif 12")
-
     def test_set_widget_font(self):
         label = Gtk.Label(label="testing...")
         gaupol.util.set_widget_font(label, "Serif 12")
