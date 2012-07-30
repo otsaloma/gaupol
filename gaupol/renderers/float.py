@@ -39,6 +39,11 @@ class FloatCellRenderer(Gtk.CellRendererText):
         self._format = format
         self._text = ""
         aeidon.util.connect(self, self, "notify::text")
+        aeidon.util.connect(self, self, "editing-started")
+
+    def _on_editing_started(self, renderer, editor, path):
+        """Set `editor` to use same font as `self`."""
+        editor.modify_font(self.props.font_desc)
 
     def _on_notify_text(self, *args):
         """Cut decimals to fixed precision."""
