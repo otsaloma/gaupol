@@ -58,6 +58,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         font = gaupol.util.get_font()
         if field == gaupol.fields.NUMBER:
             renderer = Gtk.CellRendererText()
+            renderer.props.editable = False
             renderer.props.xalign = 1
         elif field.is_position:
             if edit_mode == aeidon.modes.TIME:
@@ -66,13 +67,16 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
                 else: renderer = gaupol.TimeCellRenderer()
             elif edit_mode == aeidon.modes.FRAME:
                 renderer = Gtk.CellRendererText()
+            renderer.props.editable = True
             renderer.props.xalign = 1
         elif field.is_text:
             renderer = gaupol.MultilineCellRenderer()
-            renderer.props.yalign = 0
-        renderer.props.editable = (field != gaupol.fields.NUMBER)
+            renderer.props.editable = True
+            renderer.props.xalign = 0
         renderer.props.font = font
+        renderer.props.yalign = 0
         renderer.props.xpad = 4
+        renderer.props.ypad = 4
         return renderer
 
     def _init_cell_data_functions(self):

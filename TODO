@@ -11,7 +11,6 @@ Gaupol 0.20
      * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
      * Update wiki documentation
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
-     * Rethink cell yalign, line length superscripts, striping, etc.
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible

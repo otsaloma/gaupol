@@ -132,7 +132,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         text = GLib.markup_escape_text(text)
         lines = text.split("\n")
         for i, line in(x for x in enumerate(lines) if x[1]):
-            lines[i] += " <sup>{:d}</sup>".format(lengths[i])
+            lines[i] += " <small>[{:d}]</small>".format(lengths[i])
         self.props.markup = "\n".join(lines)
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
@@ -141,7 +141,8 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         editor.modify_font(self.props.font_desc)
         editor.set_text(self._text)
         editor.set_size_request(cell_area.width, cell_area.height)
-        editor.set_border_width(min(self.props.xpad, self.props.ypad))
+        editor.props.left_margin = self.props.xpad
+        editor.props.right_margin = self.props.xpad
         editor.gaupol_path = path
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)
