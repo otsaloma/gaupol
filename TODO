@@ -2,8 +2,8 @@ Gaupol 0.20
 ===========
 
  [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     * Check if GtkSpell is available with PyGI support
-     * Fix remaining regressions (search for 'XXX')
+     * Check if GtkSpell is available with introspection support
+     * Check that Gst works with introspection
      * Check video toolbar spacing etc.
      * Check that interactive search works
      * Check size functions and dialog sizes
@@ -18,6 +18,7 @@ Gaupol 0.20
      system of penalties and a versatile measure of goodness
  [?] Move search history to configuration file
      * JSON should probably work better than ConfigObj did
+ [?] Remove --config-file option
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [X] Fix signatures of decorated functions in API documentation
  [X] Update Brazilian Portuguese translation

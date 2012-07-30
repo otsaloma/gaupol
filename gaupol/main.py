@@ -95,7 +95,6 @@ def _parse_args(args):
         callback=_on_parser_version,
         help=_("show version number and exit"),)
 
-    # XXX: Do we really need this?
     parser.add_option(
         "-c", "--config-file",
         action="store",

@@ -437,11 +437,18 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             group = "gaupol-main"
         if doc == aeidon.documents.TRAN:
             group = "gaupol-translation"
-        # XXX: TypeError: Expected Gtk.RecentData, but got StructMeta
-        # self.recent_manager.add_full(uri, {"mime_type": format.mime_type,
-        #                                    "app_name": "gaupol",
-        #                                    "app_exec": "gaupol %F",
-        #                                    "groups": (group,),})
+        # XXX: Gtk.RecentData fields cannot be set.
+        # https://bugzilla.gnome.org/show_bug.cgi?id=678401
+        # recent_data = Gtk.RecentData()
+        # recent_data.mime_type = format.mime_type
+        # recent_data.app_name = "gaupol"
+        # recent_data.app_exec = "gaupol %F"
+        # recent_data.groups = (group,)
+        # self.recent_manager.add_full(uri, recent_data)
+
+        # While waiting for a fix, let's use 'add_item',
+        # which seems to add the URI and application name.
+        self.recent_manager.add_item(uri)
 
     @aeidon.deco.export
     def append_file(self, path, encoding=None):

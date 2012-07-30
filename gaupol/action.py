@@ -141,10 +141,15 @@ class RecentAction(Gtk.RecentAction, Action):
         self.set_show_tips(True)
         self.set_sort_type(Gtk.RecentSortType.MRU)
         recent_filter = Gtk.RecentFilter()
-        recent_filter.add_group(self.group)
+        # XXX: While Gtk.RecentData fields cannot be set and thus
+        # Gtk.RecentManager.add_full is unusable, we have to use
+        # application instead of group and thus can't make a
+        # distinction between main and translation files.
+        # https://bugzilla.gnome.org/show_bug.cgi?id=678401
+        # recent_filter.add_group(self.group)
+        recent_filter.add_application("gaupol")
         self.add_filter(recent_filter)
         self.set_filter(recent_filter)
-        self.gaupol_group = self.group
         self.set_limit(gaupol.conf.file.max_recent)
 
     def finalize(self, application):
