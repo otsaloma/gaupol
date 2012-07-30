@@ -223,6 +223,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_undo_button()
         self._init_redo_button()
         toolbar = self.uim.get_widget("/ui/main_toolbar")
+        context = toolbar.get_style_context()
+        context.add_class("primary-toolbar")
         style = gaupol.conf.application_window.toolbar_style
         if style != gaupol.toolbar_styles.DEFAULT:
             toolbar.set_style(style.value)
