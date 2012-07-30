@@ -186,16 +186,16 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.framerate_combo.set_active(gaupol.conf.editor.framerate)
         aeidon.util.connect(self, "framerate_combo", "changed")
         tool_item = Gtk.ToolItem()
-        tool_item.set_border_width(4)
         tool_item.add(self.framerate_combo)
         self.video_toolbar.insert(tool_item, -1)
 
     def _init_framerate_label(self):
         """Intialize the framerate label on the video toolbar."""
         label = Gtk.Label(label=_("Framerate:"))
+        alignment = Gtk.Alignment(left_padding=6, right_padding=6)
+        alignment.add(label)
         tool_item = Gtk.ToolItem()
-        tool_item.set_border_width(4)
-        tool_item.add(label)
+        tool_item.add(alignment)
         self.video_toolbar.insert(tool_item, -1)
 
     def _init_gui(self):
@@ -351,7 +351,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         hbox.pack_start(image,
                         expand=False,
                         fill=False,
-                        padding=6)
+                        padding=4)
 
         label = Gtk.Label()
         label.props.xalign = 0
@@ -365,7 +365,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         hbox.pack_start(separator,
                         expand=False,
                         fill=False,
-                        padding=6)
+                        padding=4)
 
         image = Gtk.Image(stock=Gtk.STOCK_OPEN,
                           icon_size=Gtk.IconSize.MENU)
@@ -373,7 +373,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         hbox.pack_start(image,
                         expand=False,
                         fill=False,
-                        padding=6)
+                        padding=4)
 
         self.video_button = Gtk.Button()
         self.video_button.add(hbox)
@@ -386,7 +386,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         aeidon.util.connect(self, "video_button", "clicked")
         aeidon.util.connect(self, "video_button", "drag-data-received")
         tool_item = Gtk.ToolItem()
-        tool_item.set_border_width(4)
         tool_item.set_expand(True)
         tool_item.add(self.video_button)
         self.video_toolbar.insert(tool_item, -1)
@@ -394,14 +393,16 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_video_label(self):
         """Intialize the video label on the video toolbar."""
         label = Gtk.Label(label=_("Video file:"))
+        alignment = Gtk.Alignment(right_padding=6)
+        alignment.add(label)
         tool_item = Gtk.ToolItem()
-        tool_item.set_border_width(4)
-        tool_item.add(label)
+        tool_item.add(alignment)
         self.video_toolbar.insert(tool_item, -1)
 
     def _init_video_toolbar(self, vbox):
         """Initialize the video toolbar."""
         self.video_toolbar = Gtk.Toolbar()
+        self.video_toolbar.set_border_width(2)
         self._init_video_label()
         self._init_video_button()
         self._init_framerate_label()
