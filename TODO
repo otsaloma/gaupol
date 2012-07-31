@@ -2,14 +2,13 @@ Gaupol 0.20
 ===========
 
  [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
+     * Check size functions and dialog sizes
      * Check if GtkSpell is available with introspection support
      * Check that Gst works with introspection
-     * Check that interactive search works
-     * Check size functions and dialog sizes
      * Check text-assistant layout due to new GTK+3 sidebar
      * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
-     * Update wiki documentation
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
+     * Update wiki documentation
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible

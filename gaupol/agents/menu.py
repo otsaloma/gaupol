@@ -58,7 +58,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         action_group = self.get_action_group("projects")
         group = action_group.get_action("activate_project_0")
-        if group is not None: action.set_group(group)
+        if group is not None: action.join_group(group)
         accel = ("<alt>{:d}".format(index + 1) if index < 9 else None)
         action_group.add_action_with_accel(action, accel)
         action.connect("changed", self._on_projects_action_changed)
