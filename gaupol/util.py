@@ -110,7 +110,9 @@ def get_text_view_size(text_view, font=""):
     text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
     set_widget_font(label, font)
-    return (label.get_preferred_width()[1],
+    return (label.get_preferred_width()[1]
+            + text_view.props.left_margin
+            + text_view.props.right_margin,
             label.get_preferred_height()[1])
 
 def get_tree_view_size(tree_view):
