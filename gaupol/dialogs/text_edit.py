@@ -65,7 +65,7 @@ class TextEditDialog(Gtk.Dialog):
         box.pack_start(scroller, expand=True, fill=True, padding=0)
         gaupol.util.scale_to_size(self._text_view,
                                   nchar=60,
-                                  nlines=6,
+                                  nlines=5,
                                   font=font)
 
         box.show_all()

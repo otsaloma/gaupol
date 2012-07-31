@@ -38,8 +38,8 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         gaupol.BuilderDialog.__init__(self, "encoding-dialog.ui")
         self._init_tree_view()
         gaupol.util.scale_to_content(self._tree_view,
-                                     min_nchar=10,
-                                     max_nchar=100,
+                                     min_nchar=20,
+                                     max_nchar=80,
                                      min_nlines=5,
                                      max_nlines=20)
 
@@ -55,15 +55,15 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             store.append((item[0], item[2], item[1]))
         store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
         self._tree_view.set_model(store)
-        column = Gtk.TreeViewColumn(_("Description"), 
-                                    Gtk.CellRendererText(), 
+        column = Gtk.TreeViewColumn(_("Description"),
+                                    Gtk.CellRendererText(),
                                     text=1)
 
         column.set_clickable(True)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
-        column = Gtk.TreeViewColumn(_("Encoding"), 
-                                    Gtk.CellRendererText(), 
+        column = Gtk.TreeViewColumn(_("Encoding"),
+                                    Gtk.CellRendererText(),
                                     text=2)
 
         column.set_clickable(True)
@@ -100,15 +100,15 @@ class MenuEncodingDialog(EncodingDialog):
             store.append((item[0], item[2], item[1], item[0] in visible))
         store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
         self._tree_view.set_model(store)
-        column = Gtk.TreeViewColumn(_("Description"), 
-                                    Gtk.CellRendererText(), 
+        column = Gtk.TreeViewColumn(_("Description"),
+                                    Gtk.CellRendererText(),
                                     text=1)
 
         column.set_clickable(True)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
-        column = Gtk.TreeViewColumn(_("Encoding"), 
-                                    Gtk.CellRendererText(), 
+        column = Gtk.TreeViewColumn(_("Encoding"),
+                                    Gtk.CellRendererText(),
                                     text=2)
 
         column.set_clickable(True)
@@ -116,8 +116,8 @@ class MenuEncodingDialog(EncodingDialog):
         self._tree_view.append_column(column)
         renderer = Gtk.CellRendererToggle()
         renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = Gtk.TreeViewColumn(_("Show in Menu"), 
-                                    renderer, 
+        column = Gtk.TreeViewColumn(_("Show in Menu"),
+                                    renderer,
                                     active=3)
 
         column.set_sort_column_id(3)

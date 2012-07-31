@@ -82,20 +82,16 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         tran = bool(self._tran_file and self._tran_file.format.has_header)
         nlines = (10 if main and tran else 15)
         if self._main_vbox.props.visible:
-            gaupol.util.scale_to_content(self._main_text_view,
-                                         min_nchar=60,
-                                         max_nchar=60,
-                                         min_nlines=nlines,
-                                         max_nlines=nlines,
-                                         font="monospace")
+            gaupol.util.scale_to_size(self._main_text_view,
+                                      nchar=60,
+                                      nlines=nlines,
+                                      font="monospace")
 
         if self._tran_vbox.props.visible:
-            gaupol.util.scale_to_content(self._tran_text_view,
-                                         min_nchar=60,
-                                         max_nchar=60,
-                                         min_nlines=nlines,
-                                         max_nlines=nlines,
-                                         font="monospace")
+            gaupol.util.scale_to_size(self._tran_text_view,
+                                      nchar=60,
+                                      nlines=nlines,
+                                      font="monospace")
 
     def _init_values(self):
         """Initialize default values for widgets."""

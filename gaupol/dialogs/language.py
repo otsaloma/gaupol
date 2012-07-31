@@ -51,9 +51,9 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_values()
         gaupol.util.scale_to_content(self._tree_view,
                                      min_nchar=10,
-                                     max_nchar=80,
+                                     max_nchar=40,
                                      min_nlines=5,
-                                     max_nlines=15)
+                                     max_nlines=20)
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)

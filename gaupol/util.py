@@ -226,36 +226,26 @@ def run_dialog(dialog):
     """
     return dialog.run()
 
-def scale_to_content(container,
-                     min_nchar=None,
-                     max_nchar=None,
-                     min_nlines=None,
-                     max_nlines=None,
+def scale_to_content(widget,
+                     min_nchar=0,
+                     max_nchar=sys.maxsize,
+                     min_nlines=0,
+                     max_nlines=sys.maxsize,
                      font=None):
 
-    """Set `container's` size by content, but limited by `min` and `max`."""
-    width, height = get_content_size(container)
-    # Vaguely account for possible scrollbars.
-    width, height = width + 24, height + 24
-    if min_nchar is not None:
-        min_width = char_to_px(min_nchar, font)
-        width = max(width, min_width)
-    if max_nchar is not None:
-        max_width = char_to_px(max_nchar, font)
-        width = min(width, max_width)
-    if min_nlines is not None:
-        min_height = lines_to_px(min_nlines, font)
-        height = max(height, min_height)
-    if max_nlines is not None:
-        max_height = lines_to_px(max_nlines, font)
-        height = min(height, max_height)
-    if isinstance(container.get_parent(), Gtk.ScrolledWindow):
+    """Set `widget's` size by content, but limited by `min` and `max`."""
+    width, height = get_content_size(widget)
+    width = max(width, char_to_px(min_nchar, font))
+    width = min(width, char_to_px(max_nchar, font))
+    height = max(height, lines_to_px(min_nlines, font))
+    height = min(height, lines_to_px(max_nlines, font))
+    if isinstance(widget.get_parent(), Gtk.ScrolledWindow):
         # It seems that for tree views and text views
         # we need to set the size request of the scrolled window.
         # Vaguely account for possible scrollbars.
-        container = container.get_parent()
-        width, height = width + 36, height + 36
-    container.set_size_request(width, height)
+        widget = widget.get_parent()
+        width, height = width + 24, height + 24
+    widget.set_size_request(width, height)
 
 def scale_to_size(widget, nchar, nlines, font=None):
     """Set `widget`'s size to `nchar` and `nlines`."""

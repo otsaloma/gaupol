@@ -34,7 +34,7 @@ class PreviewErrorDialog(gaupol.BuilderDialog):
         gaupol.BuilderDialog.__init__(self, "preview-error-dialog.ui")
         self._init_data(output)
         gaupol.util.scale_to_content(self._text_view,
-                                     min_nchar=10,
+                                     min_nchar=40,
                                      max_nchar=100,
                                      min_nlines=5,
                                      max_nlines=30,

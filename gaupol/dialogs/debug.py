@@ -204,8 +204,8 @@ class DebugDialog(gaupol.BuilderDialog):
         self._insert_title("Python Packages")
         self._insert_python_package_versions()
         gaupol.util.scale_to_content(self._text_view,
-                                     min_nchar=30,
+                                     min_nchar=40,
                                      max_nchar=100,
-                                     min_nlines=10,
+                                     min_nlines=5,
                                      max_nlines=30,
                                      font="monospace")

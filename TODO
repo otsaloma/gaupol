@@ -2,7 +2,6 @@ Gaupol 0.20
 ===========
 
  [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     * Check size functions and dialog sizes
      * Check if GtkSpell is available with introspection support
      * Check that Gst works with introspection
      * Check text-assistant layout due to new GTK+3 sidebar

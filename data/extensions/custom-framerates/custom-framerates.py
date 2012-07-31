@@ -63,10 +63,10 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self._init_tree_view(framerates)
         self._remove_button.set_sensitive(False)
         gaupol.util.scale_to_content(self._tree_view,
-                                     min_nchar=20,
-                                     max_nchar=80,
-                                     min_nlines=12,
-                                     max_nlines=16)
+                                     min_nchar=10,
+                                     max_nchar=40,
+                                     min_nlines=10,
+                                     max_nlines=20)
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)

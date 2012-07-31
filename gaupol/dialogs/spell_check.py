@@ -244,8 +244,16 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         gaupol.util.set_widget_font(self._tree_view, font)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
-        gaupol.util.scale_to_size(self._text_view, 50, 4, font)
-        gaupol.util.scale_to_size(self._tree_view, 20, 9, font)
+        gaupol.util.scale_to_size(self._text_view,
+                                  nchar=50,
+                                  nlines=4,
+                                  font=font)
+
+        gaupol.util.scale_to_size(self._tree_view,
+                                  nchar=20,
+                                  nlines=8,
+                                  font=font)
+
         self._entry_handler = self._entry.connect("changed",
                                                   self._on_entry_changed)
 

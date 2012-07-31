@@ -216,7 +216,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _init_text_view(self):
         """Initialize the text view."""
         gaupol.util.prepare_text_view(self._text_view)
-        gaupol.util.scale_to_size(self._text_view, 65, 4)
+        gaupol.util.scale_to_size(self._text_view, nchar=60, nlines=4)
         text_buffer = self._text_view.get_buffer()
         text_buffer.connect("changed", self._on_text_buffer_changed)
 
