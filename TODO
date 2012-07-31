@@ -2,7 +2,6 @@ Gaupol 0.20
 ===========
 
  [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     * Check if GtkSpell is available with introspection support
      * Check that Gst works with introspection
      * Check text-assistant layout due to new GTK+3 sidebar
      * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
@@ -10,6 +9,9 @@ Gaupol 0.20
      * Update wiki documentation
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
+ [X] Inline spell checking is disabled while waiting for introspection
+     support to be added to GtkSpell
+     * https://bugzilla.redhat.com/show_bug.cgi?id=675504
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
      system of penalties and a versatile measure of goodness
  [?] Move search history to configuration file

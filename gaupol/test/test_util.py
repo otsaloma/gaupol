@@ -102,7 +102,8 @@ class TestModule(gaupol.TestCase):
 
     def test_gtkspell_available(self):
         imp.reload(gaupol.util)
-        # XXX: GtkSpell not yet available for PyGI.
+        # XXX: GtkSpell is not yet available with
+        # introspection (and thus Python 3) support.
         # assert gaupol.util.gtkspell_available()
         gaupol.util.gtkspell_available()
 

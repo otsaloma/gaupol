@@ -141,9 +141,12 @@ def gst_available():
 @aeidon.deco.once
 def gtkspell_available():
     """Return ``True`` if :mod:`GtkSpell` module is available."""
-    # XXX: Return False for now, since GtkSpell is not yet ported
-    # to Python 3 and GObject introspection. When ported, we need
-    # to check for API changes before allowing its use again.
+    # XXX: GtkSpell is not yet available with introspection (and
+    # thus Python 3) support. When introspection support is added
+    # we can expect some minor API changes and hence must return
+    # False for now while waiting to see what those API changes
+    # are so that we can port our code accordingly.
+    # https://bugzilla.redhat.com/show_bug.cgi?id=675504
     return False
     try:
         from gi.repository import GtkSpell
