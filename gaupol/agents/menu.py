@@ -50,10 +50,10 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         label = "{:d}. {}".format(index + 1, label)
         label = ("_{}".format(label)if index < 9 else label)
         tooltip = _('Activate "{}"').format(basename)
-        action = Gtk.RadioAction(name=name, 
-                                 label=label, 
-                                 tooltip=tooltip, 
-                                 stock_id=None, 
+        action = Gtk.RadioAction(name=name,
+                                 label=label,
+                                 tooltip=tooltip,
+                                 stock_id=None,
                                  value=index)
 
         action_group = self.get_action_group("projects")
