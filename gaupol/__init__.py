@@ -53,6 +53,12 @@ COMBO_SEPARATOR = "<separator/>"
 GLib.threads_init()
 GObject.threads_init()
 
+try:
+    from gi.repository import Gst
+    Gst.init(None)
+except Exception:
+    pass
+
 from gaupol.urls import *
 from gaupol import util
 from gaupol.enums.fields import *

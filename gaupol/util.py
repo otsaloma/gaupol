@@ -128,10 +128,6 @@ def get_tree_view_size(tree_view):
 @aeidon.deco.once
 def gst_available():
     """Return ``True`` if :mod:`Gst` module is available."""
-    # XXX: Return False for now, since having some problems with
-    # pocketsphinx. Once pocketsphinx works, we need to check for
-    # API changes in Gst before allowing its use again.
-    return False
     try:
         from gi.repository import Gst
         return True

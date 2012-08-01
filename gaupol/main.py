@@ -61,12 +61,20 @@ def _init_configuration(path):
 
 def _init_gettext():
     """Initialize translation settings."""
-    locale.setlocale(locale.LC_ALL, "")
+    try:
+        # Might fail with misconfigured locales.
+        locale.setlocale(locale.LC_ALL, "")
+    except Exception:
+        print(_("Failed to set default locale."), file=sys.stderr)
+        print(_("Please check your locale settings."), file=sys.stderr)
+        print(_("Falling back to the 'C' locale."), file=sys.stderr)
+        locale.setlocale(locale.LC_ALL, "C")
     try:
         # Not available on all platforms.
         locale.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
         locale.textdomain("gaupol")
-    except AttributeError: pass
+    except AttributeError:
+        pass
     gettext.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
     gettext.textdomain("gaupol")
 
