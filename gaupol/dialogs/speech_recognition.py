@@ -22,6 +22,7 @@ import aeidon
 import gaupol
 import itertools
 import os
+_ = aeidon.i18n._
 
 from gi.repository import Gtk
 
@@ -39,7 +40,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
                 "dialog",
                 "dict_button",
                 "lang_button",
-                "model_table",
+                "model_grid",
                 "noise_spin",
                 "options_vbox",
                 "progressbar",
@@ -54,7 +55,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def __init__(self, parent, application):
         """Initialize a :class:`SpeechRecognitionDialog` object."""
-        gaupol.BuilderDialog.__init__(self, "recognition-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, "speech-recognition-dialog.ui")
         self.application = application
         self._page = None
         self._pipeline = None
@@ -65,7 +66,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         self._init_values()
         self._init_sensitivities()
         width = gaupol.util.char_to_px(42)
-        self._acoustic_button.set_size_request(width, -1)
+        self._video_button.set_size_request(width, -1)
         self._update_response_sensitivities()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
@@ -89,7 +90,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
     def _get_pipeline_definition(self):
         """Return pipeline definition for :func:`Gst.parse_launch`."""
         return (self._get_filesrc_definition()
-                + "! decodebin2 "
+                + "! decodebin "
                 + "! audioconvert "
                 + "! audioresample "
                 + self._get_vader_definition()
@@ -141,7 +142,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         self._silence_spin.set_value(conf.silence_length)
         self._advance_spin.set_value(conf.advance_length)
         self._default_model_check.set_active(not conf.use_custom_models)
-        self._model_table.set_sensitive(conf.use_custom_models)
+        self._model_grid.set_sensitive(conf.use_custom_models)
         if os.path.isdir(conf.acoustic_model):
             self._acoustic_button.set_current_folder(conf.acoustic_model)
         if os.path.isfile(conf.phonetic_dict):
@@ -159,14 +160,13 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         if index < 0:
             index += len(self._starts)
         advance = gaupol.conf.speech_recognition.advance_length
-        advance = float(advance/1000) # ms to s
+        advance = aeidon.as_seconds(advance/1000) # ms to s
         subtitle = aeidon.Subtitle(mode=aeidon.modes.TIME)
-        start = max((self._stops[index-1] if index > 0 else 0.0),
-                    (self._starts[index] - advance))
-
+        start = self._starts[index] - advance
+        start = max(start, self._stops[index-1] if index > 0 else 0.0)
         subtitle.start = aeidon.as_seconds(start)
         subtitle.end = aeidon.as_seconds(self._stops[index])
-        subtitle.main_text = self._texts[index] or ("[{:d}]".format(index + 1))
+        subtitle.main_text = self._texts[index] or ("[{:d}]".format(index+1))
         indices = (len(self._page.project.subtitles),)
         self._page.project.insert_subtitles(indices,
                                             (subtitle,),
@@ -187,28 +187,28 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
     def _on_bus_message_application(self, bus, message):
         """Process application messages from the bus."""
         from gi.repository import Gst
-        name = message.structure.get_name()
-        if name == "start":
-            start = message.structure["start"]
-            self._starts.append(start)
+        struct = message.get_structure()
+        if struct.get_name() == "start":
+            pos = message.get_value("pos")
+            self._starts.append(pos)
             if self._text is not None:
                 # Store previous text.
                 self._texts[-1] = self._text
                 self._text = None
             self._stops.append(None)
             self._texts.append(None)
-            duration = self._pipeline.query_duration(Gst.Format.TIME, None)[0]
+            duration = self._pipeline.query_duration(Gst.Format.TIME)[1]
             duration = duration/1000000000 # ns to s
-            fraction = start/duration
+            fraction = pos/duration
             self._progressbar.set_fraction(fraction)
             if len(self._starts) > 1:
                 # Append previous subtitle to page.
                 self._append_subtitle(-2)
-        if name == "stop":
-            stop = message.structure["stop"]
-            self._stops[-1] = stop
-        if name == "text":
-            text = message.structure["text"]
+        if struct.get_name() == "stop":
+            pos = message.get_value("pos")
+            self._stops[-1] = pos
+        if struct.get_name() == "text":
+            text = message.get_value("text")
             if not isinstance(text, str):
                 text = str(text, errors="replace")
             self._text = text
@@ -224,11 +224,16 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
             self._append_subtitle(-1)
         self._stop_speech_recognition()
 
+    def _on_bus_message_error(self, bus, message):
+        """Show an error dialog and abort speech recognition."""
+        self._show_bus_message_error_dialog(message.parse_error())
+        self._stop_speech_recognition()
+
     def _on_default_model_check_toggled(self, toggle_button):
         """Save default model usage setting."""
         value = toggle_button.get_active()
         gaupol.conf.speech_recognition.use_custom_models = not value
-        self._model_table.set_sensitive(not value)
+        self._model_grid.set_sensitive(not value)
         self._update_response_sensitivities()
 
     def _on_dict_button_file_set(self, file_button):
@@ -252,11 +257,12 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _on_pocketsphinx_result(self, sphinx, text, uttid):
         """Send recognized text as a message on the bus."""
-        import Gst
-        struct = Gst.Structure("text")
+        from gi.repository import Gst
+        struct = Gst.Structure.new_empty("text")
         struct.set_value("text", text)
         struct.set_value("uttid", uttid)
-        sphinx.post_message(Gst.message_new_application(sphinx, struct))
+        message = Gst.Message.new_application(sphinx, struct)
+        sphinx.post_message(message)
 
     def _on_response(self, dialog, response):
         """Handle responses without destroying dialog."""
@@ -284,19 +290,21 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _on_vader_start(self, vader, pos):
         """Send start position as a message on the bus."""
-        import Gst
-        struct = Gst.Structure("start")
+        from gi.repository import Gst
+        struct = Gst.Structure.new_empty("start")
         pos = pos/1000000000 # ns to s
-        struct.set_value("start", pos)
-        vader.post_message(Gst.message_new_application(vader, struct))
+        struct.set_value("pos", pos)
+        message = Gst.Message.new_application(vader, struct)
+        vader.post_message(message)
 
     def _on_vader_stop(self, vader, pos):
         """Send stop position as a message on the bus."""
-        import Gst
-        struct = Gst.Structure("stop")
+        from gi.repository import Gst
+        struct = Gst.Structure.new_empty("stop")
         pos = pos/1000000000 # ns to s
-        struct.set_value("stop", pos)
-        vader.post_message(Gst.message_new_application(vader, struct))
+        struct.set_value("pos", pos)
+        message = Gst.Message.new_application(vader, struct)
+        vader.post_message(message)
 
     def _on_video_button_file_set(self, file_button):
         """Update response sensitivities."""
@@ -305,22 +313,20 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
     def _prepare_page(self):
         """Prepare page properties for speech recognition."""
         if self._page is None:
-            self._page = gaupol.Page(self.application.counter.next())
+            self._page = gaupol.Page(next(self.application.counter))
             self.application.add_page(self._page)
         video_path = self._video_button.get_filename()
         self._page.project.video_path = video_path
-        # Set project's main_file attribute to a SubRip file so that previewing
-        # is possible wihtout a need to save the file. Set the path to
-        # VIDEO.#.srt, so that the file can be easily saved to the same
-        # directory, but without risk of overwriting anything.
+        # Set project's main_file attribute to a SubRip file so that
+        # previewing is possible wihtout a need to save the file. Set
+        # the path to VIDEO.#.srt, so that the file can be easily saved
+        # to the same directory, but without risk of overwriting anything.
         base = video_path[:video_path.rfind(".")]
         for i in itertools.count(1):
             path = "{}.{:d}.srt".format(base, i)
             if not os.path.isfile(path): break
-        self._page.project.main_file = aeidon.files.new(aeidon.formats.SUBRIP,
-                                                        path,
-                                                        "utf_8")
-
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8")
+        self._page.project.main_file = sfile
         self._page.project.main_changed = 1
         if self._page.project.subtitles:
             indices = list(range(len(self._page.project.subtitles)))
@@ -328,7 +334,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _recognize_speech(self):
         """Generate subtitles from video or audio file."""
-        import Gst
+        from gi.repository import Gst
         self._set_sensitivities_start()
         self._progressbar.set_fraction(0)
         self._clear_attributes()
@@ -343,6 +349,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         bus.add_signal_watch()
         bus.connect("message::application", self._on_bus_message_application)
         bus.connect("message::eos", self._on_bus_message_eos)
+        bus.connect("message::error", self._on_bus_message_error)
         self._prepare_page()
         self._pipeline.set_state(Gst.State.PLAYING)
 
@@ -362,9 +369,16 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         self.set_response_sensitive(Gtk.ResponseType.OK, True)
         self.set_response_sensitive(Gtk.ResponseType.CLOSE, True)
 
+    def _show_bus_message_error_dialog(self, message):
+        """Show an error dialog after failing to decode file."""
+        title = _("Something went wrong")
+        dialog = gaupol.ErrorDialog(self, title, message)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        gaupol.util.flash_dialog(dialog)
+
     def _stop_speech_recognition(self):
         """Stop generating subtitles from video or audio file."""
-        import Gst
+        from gi.repository import Gst
         self._pipeline.set_state(Gst.State.NULL)
         self._set_sensitivities_stop()
 

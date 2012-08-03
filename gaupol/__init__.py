@@ -44,11 +44,17 @@ GTK+ user interface for the Gaupol subtitle editor.
 :var conf: Instance of :class:`gaupol.ConfigurationStore` used
 """
 
-from gi.repository import GLib
-from gi.repository import GObject
-
 __version__ = "0.19.91"
 COMBO_SEPARATOR = "<separator/>"
+
+try:
+    import gi
+    gi.require_version("Gst", "1.0")
+except Exception:
+    pass
+
+from gi.repository import GLib
+from gi.repository import GObject
 
 GLib.threads_init()
 GObject.threads_init()

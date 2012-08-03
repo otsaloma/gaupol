@@ -1,17 +1,20 @@
 Gaupol 0.20
 ===========
 
- [/] Migrate to Python 3, GTK+ 3, GNOME 3 and PyGI
-     * Check that Gst works with introspection
+ [/] Migrate to Python 3, GTK+ 3, GNOME 3, GStreamer 1.0 and PyGI
      * Check text-assistant layout due to new GTK+3 sidebar
      * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
      * Update wiki documentation
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
- [X] Inline spell checking is disabled while waiting for introspection
+ [X] Bump GStreamer dependency to 1.0
+ [X] Disable inline spell checking while waiting for introspection
      support to be added to GtkSpell
      * https://bugzilla.redhat.com/show_bug.cgi?id=675504
+ [X] Disable speech recognition while waiting for pocketsphinx to be
+     ported to GStreamer 1.0
+     * https://sourceforge.net/projects/cmusphinx/forums/forum/5471/topic/5497616
  [/] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
      system of penalties and a versatile measure of goodness
  [?] Move search history to configuration file

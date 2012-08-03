@@ -178,6 +178,11 @@ def lines_to_px(nlines, font=None):
 @aeidon.deco.once
 def pocketsphinx_available():
     """Return ``True`` if `pocketsphinx` GStreamer plugin is available."""
+    # XXX: Return False for now while waiting for pocketsphinx to be ported to
+    # GStreamer 1.0. Speech recognition code is technically already ported,
+    # but lacking pocketsphinx, it's completely untested.
+    # https://sourceforge.net/projects/cmusphinx/forums/forum/5471/topic/5497616
+    return False
     try:
         from gi.repository import Gst
         return Gst.Plugin.load_by_name("pocketsphinx") is not None

@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2011 Osmo Salomaa
+# Copyright (C) 2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -27,6 +27,9 @@ class TestSpeechRecognitionDialog(gaupol.TestCase):
     def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
+
+    def run__show_bus_message_error_dialog(self):
+        self.dialog._show_bus_message_error_dialog("test")
 
     def setup_method(self, method):
         conf = gaupol.conf.speech_recognition
@@ -97,3 +100,8 @@ class TestSpeechRecognitionDialog(gaupol.TestCase):
         self.dialog._silence_spin.set_value(100)
         self.dialog._silence_spin.set_value(200)
         self.dialog._silence_spin.set_value(300)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_bus_message_error_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
+        self.dialog._show_bus_message_error_dialog("test")

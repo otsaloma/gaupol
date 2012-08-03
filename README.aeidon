@@ -48,9 +48,9 @@ but rather required.
 
 gaupol requires Python [1] 3.2 or greater, PyGObject [2] 3.0.0 or
 greater and aeidon of the exact same version as gaupol. Optional
-dependencies include GStreamer [3] and pocketsphinx [4] -- required for
-speech recognition; GtkSpell [6] -- required for inline spell-checking
-and MPlayer [9] or VLC [10] -- recommended for preview.
+dependencies include GStreamer [3] 1.0 or greater and pocketsphinx [4]
+-- required for speech recognition; GtkSpell [6] -- required for inline
+spell-checking and MPlayer [9] or VLC [10] -- recommended for preview.
 
   [1] http://www.python.org/
   [2] http://live.gnome.org/PyGObject/

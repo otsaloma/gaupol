@@ -353,6 +353,7 @@
                               <object class="GtkLabel" id="label6">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="hexpand">True</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -488,7 +489,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkGrid" id="grid2">
+                              <object class="GtkGrid" id="model_grid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="row_spacing">6</property>

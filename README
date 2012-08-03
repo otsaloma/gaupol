@@ -18,7 +18,7 @@ Dependencies
 ============
 
 Gaupol requires Python [1] 3.2 or greater and PyGObject [2] 3.0.0 or
-greater. Optional dependencies include: GStreamer [3] and
+greater. Optional dependencies include: GStreamer [3] 1.0 or greater and
 pocketsphinx [4] -- required for speech recognition; PyEnchant [5] 1.4.0
 or greater -- required for spell-checking; GtkSpell [6] -- required for
 inline spell-checking; iso-codes [7] -- required to translate language
