@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2007-2008,2010 Osmo Salomaa
+# Copyright (C) 2007-2008,2010,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -56,30 +56,14 @@ class TestIntroductionPage(_TestBuilderPage):
         self.page = IntroductionPage(self.window)
         self.test_populate_tree_view()
 
-    def test__on_all_radio_toggled(self):
-        self.page._all_radio.set_active(True)
-        self.page._current_radio.set_active(True)
-        self.page._selected_radio.set_active(True)
+    def test__on_columns_combo_changed(self):
+        self.page._columns_combo.set_active(0)
+        self.page._columns_combo.set_active(1)
 
-    def test__on_current_radio_toggled(self):
-        self.page._all_radio.set_active(True)
-        self.page._current_radio.set_active(True)
-        self.page._selected_radio.set_active(True)
-
-    def test__on_main_radio_toggled(self):
-        self.page._main_radio.set_active(True)
-        self.page._tran_radio.set_active(True)
-        self.page._main_radio.set_active(True)
-
-    def test__on_selected_radio_toggled(self):
-        self.page._all_radio.set_active(True)
-        self.page._current_radio.set_active(True)
-        self.page._selected_radio.set_active(True)
-
-    def test__on_tran_radio_toggled(self):
-        self.page._tran_radio.set_active(True)
-        self.page._main_radio.set_active(True)
-        self.page._tran_radio.set_active(True)
+    def test__on_subtitles_combo_changed(self):
+        self.page._subtitles_combo.set_active(0)
+        self.page._subtitles_combo.set_active(1)
+        self.page._subtitles_combo.set_active(2)
 
     def test__on_tree_view_cell_toggled(self):
         store = self.page._tree_view.get_model()
@@ -91,12 +75,12 @@ class TestIntroductionPage(_TestBuilderPage):
             renderer.emit("toggled", i)
 
     def test_get_field__main(self):
-        self.page._main_radio.set_active(True)
+        self.page._columns_combo.set_active(0)
         field = self.page.get_field()
         assert field == gaupol.fields.MAIN_TEXT
 
     def test_get_field__tran(self):
-        self.page._tran_radio.set_active(True)
+        self.page._columns_combo.set_active(1)
         field = self.page.get_field()
         assert field == gaupol.fields.TRAN_TEXT
 
@@ -104,17 +88,17 @@ class TestIntroductionPage(_TestBuilderPage):
         self.page.get_selected_pages()
 
     def test_get_target__all(self):
-        self.page._all_radio.set_active(True)
+        self.page._subtitles_combo.set_active(2)
         target = self.page.get_target()
         assert target == gaupol.targets.ALL
 
     def test_get_target__current(self):
-        self.page._current_radio.set_active(True)
+        self.page._subtitles_combo.set_active(1)
         target = self.page.get_target()
         assert target == gaupol.targets.CURRENT
 
     def test_get_target__selected(self):
-        self.page._selected_radio.set_active(True)
+        self.page._subtitles_combo.set_active(0)
         target = self.page.get_target()
         assert target == gaupol.targets.SELECTED
 

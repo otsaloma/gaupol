@@ -57,7 +57,6 @@ class TextAssistantPage(Gtk.Box):
         self.page_title = None
         self.page_type = None
         self.title = None
-        self.set_border_width(12)
 
 
 class BuilderPage(TextAssistantPage):
@@ -92,20 +91,38 @@ class IntroductionPage(BuilderPage):
 
     """Page for listing all text correction tasks."""
 
-    _widgets = ("all_radio",
-                "current_radio",
-                "main_radio",
-                "selected_radio",
-                "tran_radio",
-                "tree_view")
+    _widgets = ("columns_combo", "subtitles_combo", "tree_view")
 
     def __init__(self, assistant):
         """Initialize a :class:`IntroductionPage` object."""
         BuilderPage.__init__(self, assistant, "introduction-page.ui")
-        self.page_title = _("Select Tasks and Target")
+        self.page_title = _("Tasks and Target")
         self.page_type = Gtk.AssistantPageType.INTRO
+        self._init_columns_combo()
+        self._init_subtitles_combo()
         self._init_tree_view()
         self._init_values()
+
+    def _init_columns_combo(self):
+        """Initalize the columns target combo box."""
+        store = Gtk.ListStore(str)
+        self._columns_combo.set_model(store)
+        store.append((_("Correct texts in main text column"),))
+        store.append((_("Correct texts in translation text column"),))
+        renderer = Gtk.CellRendererText()
+        self._columns_combo.pack_start(renderer, expand=True)
+        self._columns_combo.add_attribute(renderer, "text", 0)
+
+    def _init_subtitles_combo(self):
+        """Initalize the subtitles target combo box."""
+        store = Gtk.ListStore(str)
+        self._subtitles_combo.set_model(store)
+        store.append((_("Correct texts in selected subtitles"),))
+        store.append((_("Correct texts in current project"),))
+        store.append((_("Correct texts in all open projects"),))
+        renderer = Gtk.CellRendererText()
+        self._subtitles_combo.pack_start(renderer, expand=True)
+        self._subtitles_combo.add_attribute(renderer, "text", 0)
 
     def _init_tree_view(self):
         """Initialize the tree view of tasks."""
@@ -126,33 +143,25 @@ class IntroductionPage(BuilderPage):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-        target = gaupol.conf.text_assistant.target
-        self._all_radio.set_active(target == gaupol.targets.ALL)
-        self._current_radio.set_active(target == gaupol.targets.CURRENT)
-        self._selected_radio.set_active(target == gaupol.targets.SELECTED)
         field = gaupol.conf.text_assistant.field
-        self._main_radio.set_active(field == gaupol.fields.MAIN_TEXT)
-        self._tran_radio.set_active(field == gaupol.fields.TRAN_TEXT)
+        index = {gaupol.fields.MAIN_TEXT: 0,
+                 gaupol.fields.TRAN_TEXT: 1}[field]
 
-    def _on_all_radio_toggled(self, *args):
-        """Save the selected target."""
-        gaupol.conf.text_assistant.target = self.get_target()
+        self._columns_combo.set_active(index)
+        target = gaupol.conf.text_assistant.target
+        index = {gaupol.targets.SELECTED: 0,
+                 gaupol.targets.CURRENT: 1,
+                 gaupol.targets.ALL: 2}[target]
 
-    def _on_current_radio_toggled(self, *args):
-        """Save the selected target."""
-        gaupol.conf.text_assistant.target = self.get_target()
+        self._subtitles_combo.set_active(target)
 
-    def _on_main_radio_toggled(self, *args):
+    def _on_columns_combo_changed(self, *args):
         """Save the selected field."""
         gaupol.conf.text_assistant.field = self.get_field()
 
-    def _on_selected_radio_toggled(self, *args):
+    def _on_subtitles_combo_changed(self, *args):
         """Save the selected target."""
         gaupol.conf.text_assistant.target = self.get_target()
-
-    def _on_tran_radio_toggled(self, *args):
-        """Save the selected field."""
-        gaupol.conf.text_assistant.field = self.get_field()
 
     def _on_tree_view_cell_toggled(self, renderer, path):
         """Toggle and save task check button value."""
@@ -164,11 +173,9 @@ class IntroductionPage(BuilderPage):
 
     def get_field(self):
         """Return the selected field."""
-        if self._main_radio.get_active():
-            return gaupol.fields.MAIN_TEXT
-        if self._tran_radio.get_active():
-            return gaupol.fields.TRAN_TEXT
-        raise ValueError("Invalid field radio state")
+        index = self._columns_combo.get_active()
+        return [gaupol.fields.MAIN_TEXT,
+                gaupol.fields.TRAN_TEXT][index]
 
     def get_selected_pages(self):
         """Return selected content pages."""
@@ -177,13 +184,10 @@ class IntroductionPage(BuilderPage):
 
     def get_target(self):
         """Return the selected target."""
-        if self._selected_radio.get_active():
-            return gaupol.targets.SELECTED
-        if self._current_radio.get_active():
-            return gaupol.targets.CURRENT
-        if self._all_radio.get_active():
-            return gaupol.targets.ALL
-        raise ValueError("Invalid target radio state")
+        index = self._subtitles_combo.get_active()
+        return [gaupol.targets.SELECTED,
+                gaupol.targets.CURRENT,
+                gaupol.targets.ALL][index]
 
     def populate_tree_view(self, content_pages):
         """Populate the tree view with tasks from `content_pages`."""
@@ -436,7 +440,7 @@ class CapitalizationPage(LocalePage):
         self.conf = gaupol.conf.capitalization
         self.description = _("Capitalize texts written in lower case")
         self.handle = "capitalization"
-        self.page_title = _("Select Capitalization Patterns")
+        self.page_title = _("Capitalization Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Capitalize texts")
 
@@ -466,7 +470,7 @@ class CommonErrorPage(LocalePage):
                              "or image recognition software")
 
         self.handle = "common-error"
-        self.page_title = _("Select Common Error Patterns")
+        self.page_title = _("Common Error Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Correct common errors")
 
@@ -525,7 +529,7 @@ class HearingImpairedPage(LocalePage):
                              "for the hearing impaired")
 
         self.handle = "hearing-impaired"
-        self.page_title = _("Select Hearing Impaired Patterns")
+        self.page_title = _("Hearing Impaired Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Remove hearing impaired texts")
 
@@ -556,7 +560,7 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
                              "detection errors of image recognition software")
 
         self.handle = "join-split-words"
-        self.page_title = _("Set Options for Joining and Splitting Words")
+        self.page_title = _("Joining and Splitting Words")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Join or Split Words")
         self._init_values()
@@ -633,7 +637,7 @@ class LineBreakPage(LocalePage):
         self.conf = gaupol.conf.line_break
         self.description = _("Break text into lines of defined length")
         self.handle = "line-break"
-        self.page_title = _("Select Line-Break Patterns")
+        self.page_title = _("Line-Break Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Break lines")
 
@@ -690,7 +694,7 @@ class LineBreakOptionsPage(BuilderPage):
         """Initialize a LineBreakOptionsPage object."""
         BuilderPage.__init__(self, assistant, "line-break-options-page.ui")
         self.conf = gaupol.conf.line_break
-        self.page_title = _("Set Line-Break Options")
+        self.page_title = _("Line-Break Options")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self._init_unit_combo(self._unit_combo)
         self._init_unit_combo(self._skip_unit_combo)

@@ -2,7 +2,6 @@ Gaupol 0.20
 ===========
 
  [/] Migrate to Python 3, GTK+ 3, GNOME 3, GStreamer 1.0 and PyGI
-     * Check text-assistant layout due to new GTK+3 sidebar
      * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
      * Update wiki documentation
