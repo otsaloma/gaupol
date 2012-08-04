@@ -52,9 +52,9 @@ def _init_application(opts, args):
         page.view.set_focus(opts.jump)
         page.view.scroll_to_row(opts.jump)
 
-def _init_configuration(path):
+def _init_configuration():
     """Read configuration values from file at `path`."""
-    path = path or os.path.join(aeidon.CONFIG_HOME_DIR, "gaupol.conf")
+    path = os.path.join(aeidon.CONFIG_HOME_DIR, "gaupol.conf")
     gaupol.conf.path = path
     gaupol.conf.read_from_file()
     atexit.register(gaupol.conf.write_to_file)
@@ -167,6 +167,6 @@ def main(args):
     opts, args = _parse_args(args)
     sys.excepthook = gaupol.util.show_exception
     _init_gettext()
-    _init_configuration(opts.config_file)
+    _init_configuration()
     _init_application(opts, args)
     Gtk.main()
