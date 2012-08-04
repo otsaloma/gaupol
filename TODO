@@ -17,7 +17,8 @@ Gaupol 0.20
      system of penalties and a versatile measure of goodness
  [?] Move search history to configuration file
      * JSON should probably work better than ConfigObj did
- [?] Remove --config-file option
+ [X] Remove -c/--config-file option (you're better off setting XDG_*
+     environment variables if you're doing something weird.)
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [X] Fix signatures of decorated functions in API documentation
  [X] Use filename extension '.extension' for extension metadata files

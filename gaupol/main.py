@@ -104,15 +104,6 @@ def _parse_args(args):
         help=_("show version number and exit"),)
 
     parser.add_option(
-        "-c", "--config-file",
-        action="store",
-        type="string",
-        metavar=_("FILE"),
-        dest="config_file",
-        default=None,
-        help=_("set the configuration file used"),)
-
-    parser.add_option(
         "-e", "--encoding",
         action="store",
         type="string",
