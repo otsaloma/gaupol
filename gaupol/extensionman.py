@@ -54,8 +54,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
     def _find_extensions_in_directory(self, directory):
         """Find all extensions in `directory` and parse their metadata."""
         def is_metadata_file(path):
-            return (path.endswith(".gaupol-extension") or
-                    path.endswith(".gaupol-extension.in"))
+            return (path.endswith(".extension") or
+                    path.endswith(".extension.in"))
 
         for (root, dirs, files) in os.walk(directory):
             files = list(filter(is_metadata_file, files))

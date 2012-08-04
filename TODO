@@ -1,13 +1,12 @@
 Gaupol 0.20
 ===========
 
- [/] Migrate to Python 3, GTK+ 3, GNOME 3, GStreamer 1.0 and PyGI
-     * Rename gaupol-plugin filename extension (and gaupol-bookmarks?)
+ [/] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
      * Update wiki documentation
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
- [X] Bump GStreamer dependency to 1.0
+ [X] Bump optional GStreamer dependency to 1.0
  [X] Disable inline spell checking while waiting for introspection
      support to be added to GtkSpell
      * https://bugzilla.redhat.com/show_bug.cgi?id=675504
@@ -21,6 +20,12 @@ Gaupol 0.20
  [?] Remove --config-file option
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [X] Fix signatures of decorated functions in API documentation
+ [X] Use filename extension '.extension' for extension metadata files
+     (instead of previous '.gaupol-extension')
+ [X] Use filename extension '.bookmarks' for bookmark files written by
+     the bookmarks extension (instead of previous '.gaupol-bookmarks)
+ [?] Release gaupol source tarballs only compressed as tar.xz (instead
+     of the previous tar.gz and tar.bz2)
  [X] Update Brazilian Portuguese translation
      (Átila Camurça, Darlildo Lima)
  [X] Update Hungarian translation (Andrássy László)

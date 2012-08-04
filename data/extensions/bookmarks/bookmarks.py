@@ -169,13 +169,13 @@ class BookmarksExtension(gaupol.Extension):
         page.project.disconnect("main-file-saved", callback)
 
     def _get_bookmark_file_path(self, page):
-        """Return the path to ``.gaupol-bookmarks`` file or ``None``."""
+        """Return the path to ``.bookmarks`` file or ``None``."""
         main_file = page.project.main_file
         if main_file is None: return None
         path = main_file.path
         if path.endswith(main_file.format.extension):
             path = path[:-len(main_file.format.extension)]
-        return "{}.gaupol-bookmarks".format(path)
+        return "{}.bookmarks".format(path)
 
     def _init_actions(self):
         """Initialize UI manager actions."""
@@ -338,11 +338,11 @@ class BookmarksExtension(gaupol.Extension):
         return self._add_bookmark()
 
     def _on_project_main_file_opened(self, project, main_file, page):
-        """Read bookmarks from ``.gaupol-bookmarks`` file."""
+        """Read bookmarks from ``.bookmarks`` file."""
         self._read_bookmarks(page)
 
     def _on_project_main_file_saved(self, project, main_file, page):
-        """Write bookmarks to a ``.gaupol-bookmarks`` file."""
+        """Write bookmarks to a ``.bookmarks`` file."""
         self._write_bookmarks(page)
 
     def _on_project_subtitles_inserted(self, project, rows, page):
@@ -430,7 +430,7 @@ class BookmarksExtension(gaupol.Extension):
         self._read_bookmarks(page)
 
     def _read_bookmarks(self, page):
-        """Read bookmarks for `page` from ``.gaupol-bookmarks`` file."""
+        """Read bookmarks for `page` from ``.bookmarks`` file."""
         if not page in self._bookmarks:
             self._bookmarks[page] = {}
         self._bookmarks[page].clear()
@@ -481,7 +481,7 @@ class BookmarksExtension(gaupol.Extension):
             store.append((visible, row+1, description))
 
     def _write_bookmarks(self, page):
-        """Write bookmarks from `page` to a ``.gaupol-bookmarks`` file."""
+        """Write bookmarks from `page` to a ``.bookmarks`` file."""
         if not page in self._bookmarks: return
         path = self._get_bookmark_file_path(page)
         if path is None: return
