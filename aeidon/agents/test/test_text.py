@@ -25,12 +25,12 @@ class TestTextAgent(aeidon.TestCase):
         self.project = self.new_project()
 
     def test_break_lines(self):
-        # XXX: Give penalties once we have definitions.
+        manager = aeidon.PatternManager("line-break")
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace(" ", "\n")
         self.project.break_lines(self.project.get_all_indices(),
                                  aeidon.documents.MAIN,
-                                 patterns=[],
+                                 patterns=manager.get_patterns("Latn"),
                                  length_func=len,
                                  max_length=44,
                                  max_lines=2)

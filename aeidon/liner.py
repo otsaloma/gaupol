@@ -144,12 +144,12 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         # maximum line length and (2) upside-down 'pyramid', which
         # is the sum of how much longer each line is than the next.
         return (sum(penalties)
-                + 1 * sum(((x - mlength) / xlength)**2 for x in lengths)
-                + 1 * sum(((lengths[i] - lengths[i+1]) / xlength)**2
-                          for i in range(len(lengths) - 1)
-                          if lengths[i] > lengths[i+1])
+                + 50 * sum(((x - mlength) / xlength)**2 for x in lengths)
+                + 50 * sum(((lengths[i] - lengths[i+1]) / xlength)**2
+                            for i in range(len(lengths) - 1)
+                            if lengths[i] > lengths[i+1])
 
-                + 10 * (nlines - 1)**3
+                + 100 * (nlines-1)**3
                 + 1000 * max(0, nlines - self.max_lines)**3)
 
     def _detect_penalties_ensure(self, value, boxes):
