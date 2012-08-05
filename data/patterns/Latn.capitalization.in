@@ -4,3 +4,10 @@ _Description=Capitalize the first word of a sentence
 Capitalize=After
 Pattern=((?<!\..)\.|[?!])["'«»]?( |$)
 Flags=DOTALL;MULTILINE;UNICODE;
+
+[Capitalization Pattern]
+Name=Ellipsis
+Description=Capitalize after an ellipsis
+Capitalize=After
+Pattern=(\.\.\.)["'«»]?( |$)
+Flags=DOTALL;MULTILINE;UNICODE;
