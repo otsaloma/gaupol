@@ -27,7 +27,7 @@ Penalty=-5
 [Line Break Pattern]
 _Name=Number and unit
 _Description=Do not break between  a number and associated unit
-Pattern=(\d+)( )(%|\w{1,3})
+Pattern=(\d+)( )(%|\w{1,3}\b)
 Flags=DOTALL;MULTILINE;UNICODE;
 Group=2
-Penalty=-1000
+Penalty=-1000000

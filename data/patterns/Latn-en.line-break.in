@@ -4,7 +4,7 @@ _Description=Do not break after a title, e.g." Dr."
 Pattern=\b(Dr|Jr|Mr|Mrs|Ms|Sr|St)\.?( )
 Flags=DOTALL;MULTILINE;UNICODE;
 Group=2
-Penalty=1000
+Penalty=1000000
 
 [Line Break Pattern]
 _Name=Article
@@ -12,7 +12,7 @@ _Description=Do not break after an article
 Pattern=\b(a|an|the)( )
 Flags=DOTALL;MULTILINE;UNICODE;
 Group=2
-Penalty=1000
+Penalty=1000000
 
 [Line Break Pattern]
 _Name=Preposition
