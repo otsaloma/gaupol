@@ -21,6 +21,7 @@
 import aeidon
 import gaupol
 import os
+import sys
 _ = aeidon.i18n._
 
 from gi.repository import Gtk
@@ -164,7 +165,9 @@ class CustomFrameratesExtension(gaupol.Extension):
         for value in sorted(self._conf.framerates):
             name = "FPS_{:.3f}".format(value).replace(".", "_")
             if hasattr(aeidon.framerates, name):
-                print("Framerate {:.3f} already exists!".format(value))
+                print("Framerate {:.3f} already exists!".format(value),
+                      file=sys.stderr)
+
                 continue
             setattr(aeidon.framerates, name, aeidon.EnumerationItem())
             framerate = getattr(aeidon.framerates, name)

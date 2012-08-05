@@ -153,7 +153,8 @@ class DebugDialog(gaupol.BuilderDialog):
         """Print an error message if editor process failed."""
         if return_value == 0: return
         print(("Command {} failed with return value {}"
-               .format(repr(command), repr(return_value))))
+               .format(repr(command), repr(return_value))),
+              file=sys.stderr)
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
