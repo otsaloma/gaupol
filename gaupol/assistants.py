@@ -859,6 +859,8 @@ class ConfirmationPage(BuilderPage):
         renderer.props.ellipsize = Pango.EllipsizeMode.END
         renderer.props.font = gaupol.util.get_font()
         renderer.props.yalign = 0
+        renderer.props.xpad = 4
+        renderer.props.ypad = 4
         column = Gtk.TreeViewColumn(title, renderer, text=index)
         column.set_resizable(True)
         column.props.expand = True
