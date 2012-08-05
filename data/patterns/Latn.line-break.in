@@ -18,7 +18,6 @@ Penalty=-10
 [Line Break Pattern]
 _Name=Clause
 _Description=Break according to clauses terminated by a punctuation mark
-# Disallow abbreviations and ellipses preceding a period.
 Pattern=[,;:]["'«»]?( )
 Flags=DOTALL;MULTILINE;UNICODE;
 Group=1
@@ -26,8 +25,8 @@ Penalty=-5
 
 [Line Break Pattern]
 _Name=Number and unit
-_Description=Do not break between  a number and associated unit
+_Description=Do not break between a number and associated unit
 Pattern=(\d+)( )(%|\w{1,3}\b)
 Flags=DOTALL;MULTILINE;UNICODE;
 Group=2
-Penalty=-1000000
+Penalty=1000000
