@@ -10,7 +10,7 @@ Pattern files are placed under `~/.local/share/gaupol/patterns` on Unix or `C:\D
 
 Regular expressions in the pattern files are Perl-style regular expressions that follow the [[http://docs.python.org/lib/re-syntax.html|Python syntax]]. As flags, you'll usually want to use DOTALL, MULTILINE and UNICODE.
 
-[[http://home.gna.org/subtitleeditor/|Subtitle Editor]] uses functionally similar, but syntactically different (XML file format and [[http://library.gnome.org/devel/glib/unstable/glib-regex-syntax.html|GRegex regular expressions]]) pattern files. Patterns are shared between Subtitle Editor and Gaupol development teams and you may do the same with the patterns you write or wish to copy from Subtitle Editor hackers.
+[[http://home.gna.org/subtitleeditor/|Subtitle Editor]] uses functionally similar, but syntactically different (XML file format and [[http://developer.gnome.org/glib/stable/glib-regex-syntax.html|GRegex regular expressions]]) pattern files. Patterns are shared between Subtitle Editor and Gaupol development teams and you may do the same with the patterns you write or wish to copy from Subtitle Editor hackers.
 
 == Common Fields in Pattern Files ==
 
@@ -37,7 +37,7 @@ Replacement=\040
 Repeat=False
 }}}
 
- * '''`Classes`''' defines if the pattern is valid for human errors, OCR errors or both. The text correction assistant lets the user choose which of these classes are used to minimize the amount false positives. Especially the OCR corrections may be too aggressive and erroneous if used for human-written text.
+ * '''`Classes`''' defines if the pattern is valid for human errors, OCR errors or both. The text correction assistant lets the user choose which of these classes are used to minimize the amount false positives. Especially the OCR corrections may be too aggressive and in some, although very rare, cases produce false positives if used for human-written text.
 
  * '''`Pattern`''' and '''`Flags`''' define what to search for as a regular expression.
 
@@ -47,15 +47,16 @@ Repeat=False
 
 === Line-Break ===
 
-Line-break patterns define elegant locations in text which to use for a line-break if the text contains lines too long. Usually these locations are between dialogue or between clauses or between different type of text within one subtitle. Below is an example of a simple line-break pattern for dialogue separated by a single dash. `Pattern`, `Flags` and `Replacement` fields are as in common error patterns, except now the replacement should contain a single newline (\n) in place of a single space in pattern.
+Line-break patterns define "penalties" associated with possible break points, i.e. positive penalties to discourage a line-break and negative penalties to encourage a line-break. Usually encouraged locations are between dialogue or between clauses or between different type of text within one subtitle and discouraged breaks are inside multi-word phrases. Below is an example of a simple line-break pattern for dialogue separated by a single dash. `Pattern` and `Flags` are as in common error patterns. `Penalty` defines the penalty associated with making a line-break at `Group` in `Pattern`. `Group` here should always refer to a space. A penalty of -1000 is very strong, causing a break to be made always if feasible considering line lengths.
 
 {{{
 [Line Break Pattern]
 Name=Dialogue
 Description=Break according to dialogue separated by dashes
-Pattern= (- )
+Pattern=( )(- )
 Flags=DOTALL;MULTILINE;UNICODE;
-Replacement=\n\1
+Group=1
+Penalty=-1000
 }}}
 
 === Capitalization ===
@@ -73,7 +74,7 @@ Flags=DOTALL;MULTILINE;UNICODE;
 
 === Hearing Impaired Text Removal ===
 
-Hearing impaired patterns are used to remove descriptions of non-verbal sounds used in subtitles for deaf people. While the descriptions of sounds are useful for the intended audience they are often far too verbose for others. Below is a pattern for removing anything between square brackets, which is one common notation used. The fields are similar to those for common error patterns, with the replacement field now usually being empty. After running these removals, Gaupol does a lot of clean-up, e.g. removing lines that have no alphanumeric characters left, so it should be enough to keep these patterns to a recognizable minimum.
+Hearing impaired patterns are used to remove descriptions of non-verbal sounds used in subtitles for deaf people. While the descriptions of sounds are useful for the intended audience they are often far too verbose for others and at times the only form of subtitles officially provided matching the spoken language. Below is a pattern for removing anything between square brackets, which is one common notation used. The fields are similar to those for common error patterns, with the replacement field now usually being empty. After running these removals, Gaupol does a lot of clean-up, e.g. removing lines that have no alphanumeric characters left, so it should be enough to keep these patterns to a recognizable minimum.
 
 {{{
 [Hearing Impaired Pattern]

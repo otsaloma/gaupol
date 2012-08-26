@@ -3,7 +3,6 @@ Gaupol 0.20
 
  [/] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
      * Port setup.py, winsetup.py, MANIFEST.in and setup-files
-     * Update wiki documentation
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [X] Bump optional GStreamer dependency to 1.0
@@ -15,10 +14,11 @@ Gaupol 0.20
      * https://sourceforge.net/projects/cmusphinx/forums/forum/5471/topic/5497616
  [X] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
      system of penalties and a versatile measure of goodness
- [?] Move search history to configuration file
-     * JSON should probably work better than ConfigObj did
+ [ ] Write all files in a proper atomic manner
+     * http://stackoverflow.com/questions/2333872
  [X] Remove -c/--config-file option (you're better off setting XDG_*
      environment variables if you're doing something weird.)
+ [?] Existing bug reports
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [X] Fix signatures of decorated functions in API documentation
  [X] Use filename extension '.extension' for extension metadata files

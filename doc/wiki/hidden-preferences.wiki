@@ -14,7 +14,7 @@ toolbar_style = DEFAULT
 text_editor = "gedit +$LINENO $FILE"
 }}}
 
- * '''`text_editor`''' defines the text editor command to use when opening files from the "Unhandled Exception Occurred" dialog. At least `emacs` works here as well with the same arguments.
+ * '''`text_editor`''' defines the text editor command to use when opening files from the big "Something went wrong" dialog. At least `emacs` works here as well with the same arguments.
 
 {{{
 [editor]
@@ -32,13 +32,6 @@ max_recent = 10
 }}}
 
  * '''`max_recent`''' defines the maximum amount of recent files to show in the file menu and the open button drop-down on the main toolbar.
-
-{{{
-[line_break]
-max_deviation = 0.16
-}}}
-
- * '''`max_deviation`''' defines the maximum allowed relative standard deviation of line lengths of a subtitle with three or more lines when breaking lines according to dialogue or clauses. Lowering the value will result in falling back to breaking lines at word boudaries more often. Raising the value will keep dialogue or clause breaks more often, but may result in visually poor subtitles -- especially the long-short-long combination.
 
 {{{
 [search]

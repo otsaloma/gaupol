@@ -22,4 +22,3 @@ Author: Your Name<<BR>>
 == Capitalization Patterns ==
 
 == Hearing Impaired Text Removal Patterns ==
-

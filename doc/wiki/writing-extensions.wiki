@@ -6,17 +6,25 @@
 
 Extensions, as the name implies, extend the features of Gaupol. Extensions are suitable for rarely used or obscure features and customizations of the user interface or behaviour.
 
-Gaupol is written in [[http://www.python.org/|Python]] and so are its extensions as well. Python is an expressive, dynamic programming language well suitable for rapid extension development. Gaupol's user interface is implemented with the [[http://www.gtk.org/|GTK+]] toolkit using the [[http://www.pygtk.org/|PyGTK]] bindings. The reader is expected to be familiar with both Python and PyGTK and able to read documentation on both. Relevant parts of Gaupol's API will be explained; for details, consult the [[http://download.gna.org/gaupol/doc/|full API documentation]].
+Gaupol is written in [[http://www.python.org/|Python]] and so are its extensions as well. Python is an expressive, dynamic programming language well suitable for rapid extension development. Gaupol's user interface is implemented with the [[http://www.gtk.org/|GTK+]] toolkit using the [[https://live.gnome.org/PyGObject|PyGObject]] bindings. The reader is expected to be familiar with both Python and PyGObject and able to read documentation on both. Relevant parts of Gaupol's API will be explained; for details, consult the [[http://download.gna.org/gaupol/doc/|full API documentation]].
 
-Extensions consist of two parts: a metadata file (with the extension `.gaupol-extension`) and Python code. Gaupol looks for both files under both the global data directory and the user's home directory, which is `~/.local/share/gaupol/extensions` on Unix or `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista and 7. The metadata file contains information about the extension and tells Gaupol where to look for the corresponding Python code. The Python code contains the extension implementation as a subclass of `gaupol.Extension`.
+Extensions consist of two parts: a metadata file (with the filename extension `.extension`) and Python code. Gaupol looks for both files under both the global data directory and the user's home directory, which is `~/.local/share/gaupol/extensions` on Unix or `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista and 7. The metadata file contains information about the extension and tells Gaupol where to look for the corresponding Python code. The Python code contains the extension implementation as a subclass of `gaupol.Extension`.
+
+Starting with 0.20 Gaupol uses Python 3, GTK+ 3 and Py''''''GObject bindings. This applies to extensions as well. If you read the previous instructions and wrote code for Python 2, GTK+ 2 and Py''''''GTK, you might also want to read
+
+ * [[http://docs.python.org/dev/whatsnew/3.0.html|What’s New In Python 3.0]]
+
+ * [[http://developer.gnome.org/gtk3/stable/gtk-migrating-2-to-3.html|Migrating from GTK+ 2.x to GTK+ 3]] and
+
+ * [[PyGObject/IntrospectionPorting|Porting to PyGObject introspection]].
 
 == The Hello World Extension ==
 
-As customary, let us start with the simplest possible extension -- one that prints "Hello, World!" to standard output. Place the following metadata in a file named `hello.gaupol-extension` in the extension directory under a `hello` subdirectory. This is a minimal metadata file, see the ''Extension Metadata'' section for a description of all available fields.
+As customary, let us start with the simplest possible extension -- one that prints "Hello, World!" to standard output. Place the following metadata in a file named `hello.extension` in the extension directory under a `hello` subdirectory. This is a minimal metadata file, see the ''Extension Metadata'' section for a description of all available fields.
 
 {{{
 [Gaupol Extension]
-GaupolVersion=0.16
+GaupolVersion=0.20
 Module=hello
 Name=Hello, World
 Description=Print greetings to standard output
@@ -30,13 +38,13 @@ import gaupol
 class HelloWorldExtension(gaupol.Extension):
 
     def setup(self, application):
-        print "Hello, World!"
+        print("Hello, World!")
 
     def teardown(self, application):
-        print "Goodbye, World!"
+        print("Goodbye, World!")
 
     def update(self, application, page):
-        print "Still here!"
+        print("Still here!")
 }}}
 
 The "Hello, World" extension should now be visible in the preferences dialog. If you started Gaupol from the terminal, you will see when the three methods are called.
@@ -55,20 +63,20 @@ The extension metadata file defines information about the extension, which need 
 
 {{{
 [Gaupol Extension]
-GaupolVersion=0.16
+GaupolVersion=0.20
 Module=bookmarks
 Requires=side-pane;
 Name=Bookmarks
 Description=Marking subtitles for easy navigation
-Version=0.16
+Version=0.20
 Authors=Osmo Salomaa <otsaloma@iki.fi>;
-Copyright=Copyright (C) 2008-2010 Osmo Salomaa;
+Copyright=Copyright (C) 2008-2010,2012 Osmo Salomaa;
 Website=http://home.gna.org/gaupol
 }}}
 
- * '''`GaupolVersion`''' defines the version of Gaupol that the extension has been verified to function properly with. You don't need to check compatibility with each new version of Gaupol or keep bumping this number; Gaupol currently does nothing with this information. It will, however, be used in the future to refuse to load old extensions if there have been some major API changes.
+ * '''`GaupolVersion`''' defines the version of Gaupol that the extension has been verified to function properly with. You don't need to check compatibility with each new version of Gaupol or keep bumping this number; this field is only used to refuse to load extensions written before major API changes. Currently Gaupol only refuses to load extensions written before the great migration to Python 3, GTK+ 3 and Py''''''GObject bindings -- extensions that really wouldn't work anyway.
 
- * '''`Module`''' defines the name (sans extension) of the file that the code can be found in. It is passed to the `__import__` function in Python. This means that it can actually be a package instead of a module if you have a lot of code. In the case of a package, you need to define or import the extension class in your package's `__init__` file.
+ * '''`Module`''' defines the name (sans extension) of the file that the code can be found in. It is passed to the `__import__` function in Python. This means that it can actually be a package instead of a module if you have a lot of code. In the case of a package, you need to define or import the extension class in your package's `__init__.py` file.
 
  * '''`Requires`''' defines a semicolon-separated list of other extension modules that the extension depends on. In this example, the bookmarks extension adds a page to the side pane widget provided by the side-pane extension.
 
@@ -88,7 +96,7 @@ Website=http://home.gna.org/gaupol
 
 == Important Gaupol API ==
 
-The `setup`, `teardown` and `update` methods give you access to the application instance, which contains the user interface common to all projects. The `get_current_page` method of application returns the page instance corresponding to the currently active tab in the user interface. Page gives you access to the data (project) and a subclass of gtk.!TreeView to display that data (view). The actual subtitles are accessible via a project instance variable, but most of the time, you'll rather want to use methods in the Project class to modify the subtitles, because that way the modifications will be registered with the undo/redo-system. These are the main classes of gaupol and their relations are presented in the below UML-diagram.
+The `setup`, `teardown` and `update` methods give you access to the application instance, which contains the user interface common to all projects. The `get_current_page` method of application returns the page instance corresponding to the currently active tab in the user interface. Page gives you access to the data (project) and a subclass of Gtk.!TreeView to display that data (view). The actual subtitles are accessible via a project instance variable, but most of the time, you'll rather want to use methods in the Project class to modify the subtitles, because that way the modifications will be registered with the undo/redo-system. These are the main classes of gaupol and their relations are presented in the below UML-diagram.
 
 {{attachment:classes.png}}
 
@@ -103,7 +111,7 @@ The preferred way to store configurations across sessions is to use Gaupol's ini
         gaupol.conf.register_extension("hello", {"display_greetings": True})
 }}}
 
-Given the above `register_extension` call, the `display_greetings` option will be made available as a global variable under `gaupol.conf` and will be accessible as `gaupol.conf.extensions.hello.display_greetings`. You may well assign the section `gaupol.gtk.conf.extensions.hello` to `self.conf` or something for shorter names.
+Given the above `register_extension` call, the `display_greetings` option will be made available as a global variable under `gaupol.conf` and will be accessible as `gaupol.conf.extensions.hello.display_greetings`. You may well assign the section `gaupol.conf.extensions.hello` to `self.conf` or something for shorter names.
 
 To assign a value to a configuration option, all you need to do is simply assign the value to the attribute (in this case `gaupol.conf.extensions.hello.display_greetings`) as the correct Python data type. Writing configurations to file (including type conversion to strings) is done automatically upon exit.
 
@@ -123,26 +131,26 @@ The ''Extensions'' tab of Gaupol's preferences dialog allows the user to view do
 
 === Adding Menu- and Toolbar Items ===
 
-`gtk.UIManager` is used to add menu- and toolbar items. In the `setup` method, the UI manager instance is available as `application.uim`. Consult the documentation on [[http://library.gnome.org/devel/pygtk/stable/class-gtkuimanager.html|gtk.UIManager]] or see the extensions shipped with Gaupol for an example on how to use UI manager.
+`Gtk.UIManager` is used to add menu- and toolbar items. In the `setup` method, the UI manager instance is available as `application.uim`. Consult the documentation on [[http://developer.gnome.org/gtk3/stable/GtkUIManager.html|Gtk.UIManager]] or see the extensions shipped with Gaupol for an example on how to use UI manager.
 
 === Adding a Column to the Subtitle View ===
 
-Adding a column to the subtitle view is fairly easy if you're familiar with `gtk.TreeView`. Below is an adapted piece of code from the bookmarks extension that adds one pixbuf column to `page.view`. Apart from the usual tree view routines, there is an `identifier` attribute set on the column, which is used to update the `page.view.columns` enumeration.
+Adding a column to the subtitle view is fairly easy if you're familiar with `Gtk.TreeView`. Below is an adapted piece of code from the bookmarks extension that adds one pixbuf column to `page.view`. Apart from the usual tree view routines, there is a `gaupol_id` attribute set on the column, which is used to update the `page.view.columns` enumeration.
 
 {{{#!python
-        renderer = gtk.CellRendererPixbuf()
-        column = gtk.TreeViewColumn("Bm.", renderer)
+        renderer = Gtk.CellRendererPixbuf()
+        column = Gtk.TreeViewColumn(_("Bm."), renderer)
         column.set_clickable(True)
         column.set_reorderable(True)
         label = page.view.get_header_label("Bm.")
         label.set_tooltip_text("Bookmark")
         column.set_widget(label)
-        column.set_data("identifier", "bookmark")
-        column.set_cell_data_func(renderer, func)
+        column.gaupol_id = "bookmark"
+        column.set_cell_data_func(renderer, self._set_cell_pixbuf, page)
         page.view.insert_column(column, 0)
 }}}
 
-The bookmarks extension uses `set_cell_data_func` to display data in the column. `set_cell_data_func` is known to be very inefficient, it results in a very large amount of calls to the defined function. This is fine for bookmarks, where most rows are empty, and in the rest, the same preloaded icon is shown. But, if adding columns with more complicated data, you may wish to explore more efficient ways of loading that data and if such ways require any changes to gaupol, they will be welcomed.
+The bookmarks extension uses `set_cell_data_func` to display data in the column. `set_cell_data_func` is known to be very inefficient -- it results in a large amount of calls to the defined function. This is fine for bookmarks, where most rows are empty, and in the rest, the same preloaded icon is shown. But, if adding columns with more complicated data, you may wish to explore more efficient ways of loading that data and if necessary changes can be made to gaupol to accommodate those ways.
 
 === Adding a Page to the Side Pane ===
 
@@ -167,7 +175,8 @@ Gaupol contains a lot of keybindings that do not require a modifier (e.g. the Co
         handler_id = application.window.connect("set-focus", callback)
 
     def _on_application_window_set_focus(self, window, widget):
-        """Disable unsafe UI manager actions.
+        """
+        Disable unsafe UI manager actions.
 
         Disabling unsafe UI manager actions allows the side pane to contain any
         widgets that can have input focus and can have their own keybindings,
