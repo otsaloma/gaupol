@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2006-2009,2011 Osmo Salomaa
+# Copyright (C) 2006-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,9 +19,11 @@
 """Miscellaneous functions."""
 
 import aeidon
+import contextlib
 import inspect
 import locale
 import os
+import random
 import re
 import subprocess
 import sys
@@ -32,6 +34,55 @@ def affirm(value):
     """Raise :exc:`aeidon.AffirmationError` if value evaluates to ``False``."""
     if not value:
         raise aeidon.AffirmationError
+
+def atomic_open_require(path, mode="w", *args, **kwargs):
+    assert "w" in mode
+
+@contextlib.contextmanager
+@aeidon.deco.contractual
+def atomic_open(path, mode="w", *args, **kwargs):
+    """
+    A context manager for atomically writing a file.
+
+    The file is written to a temporary file on the same filesystem, flushed and
+    fsynced and then renamed to replace the existing file. This should
+    (probably) be atomic on any Unix system. On Windows, it should (probably)
+    be atomic if using Python 3.3 or greater.
+    """
+    chars = list("abcdefghijklmnopqrstuvwxyz0123456789")
+    directory = os.path.dirname(path)
+    basename = os.path.basename(path)
+    while True:
+        # Let's use a hidden temporary file to avoid a file
+        # flickering in a possibly open file browser window.
+        suffix = "".join(random.sample(chars, 8))
+        temp_basename = ".{}.tmp{}".format(basename, suffix)
+        temp_path = os.path.join(directory, temp_basename)
+        if not os.path.isfile(temp_path): break
+    try:
+        with open(temp_path, mode, *args, **kwargs) as fobj:
+            yield fobj
+            fobj.flush()
+            os.fsync(fobj.fileno())
+        if hasattr(os, "replace"):
+            # os.replace was added in Python 3.3.
+            # This should be atomic on Windows too.
+            os.replace(temp_path, path)
+        else:
+            if sys.platform == "win32":
+                if os.path.isfile(path):
+                    os.remove(path)
+            # os.rename is atomic on Unix, but fails
+            # on Windows if the file exists, hence must
+            # remove the file in advance with the danger
+            # that something fails between the remove
+            # and the rename.
+            os.rename(temp_path, path)
+    finally:
+        try:
+            os.remove(temp_path)
+        except Exception:
+            pass
 
 @aeidon.deco.once
 def chardet_available():

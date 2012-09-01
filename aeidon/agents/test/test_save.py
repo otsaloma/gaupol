@@ -25,26 +25,6 @@ class TestSaveAgent(aeidon.TestCase):
         self.project = self.new_project()
         self.delegate = self.project.save_main.__self__
 
-    def test__copy_file(self):
-        copy_file = self.delegate._copy_file
-        source = self.new_subrip_file()
-        destination = self.new_subrip_file()
-        assert copy_file(source, destination)
-        assert not copy_file(source, "/////")
-
-    def test__move_file(self):
-        move_file = self.delegate._move_file
-        source = self.new_subrip_file()
-        destination = self.new_subrip_file()
-        assert move_file(source, destination)
-        assert not move_file(source, "/////")
-
-    def test__remove_file(self):
-        remove_file = self.delegate._remove_file
-        path = self.new_subrip_file()
-        assert remove_file(path)
-        assert not remove_file("/////")
-
     def test_save__main(self):
         self.project.save(aeidon.documents.MAIN)
 

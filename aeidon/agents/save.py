@@ -19,9 +19,6 @@
 """Writing subtitle data to file."""
 
 import aeidon
-import os
-import shutil
-import sys
 
 
 class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
@@ -40,18 +37,6 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             indices.append(i)
         return indices
 
-    def _copy_file_ensure(self, value, source, destination):
-        assert not value or os.path.isfile(destination)
-
-    def _copy_file(self, source, destination):
-        """Copy source file to destination and return success."""
-        try:
-            shutil.copyfile(source, destination)
-            return True
-        except IOError:
-            aeidon.util.print_write_io(sys.exc_info(), destination)
-        return False
-
     def _ensure_mode(self, mode):
         """Update mode of subtitles if necessary."""
         if self.main_file is None: return
@@ -59,30 +44,6 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         for i, subtitle in enumerate(self.subtitles):
             subtitle.mode = mode
         self.emit("positions-changed", self.get_all_indices())
-
-    def _move_file_ensure(self, value, source, destination):
-        assert not value or os.path.isfile(destination)
-
-    def _move_file(self, source, destination):
-        """Move source file to destination and return success."""
-        try:
-            shutil.move(source, destination)
-            return True
-        except (IOError, OSError):
-            aeidon.util.print_write_io(sys.exc_info(), destination)
-        return False
-
-    def _remove_file_ensure(self, value, path):
-        assert not value or not os.path.isfile(path)
-
-    def _remove_file(self, path):
-        """Remove file and return success."""
-        try:
-            os.remove(path)
-            return True
-        except OSError:
-            aeidon.util.print_remove_os(sys.exc_info(), path)
-        return False
 
     def _save(self, doc, sfile, keep_changes):
         """
@@ -97,42 +58,11 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         indices = []
         if (current_format is not None) and (sfile.format != current_format):
             indices = self._convert_markup(doc, current_format, sfile.format)
-        self._write_file(sfile, self.subtitles, doc)
+        sfile.write(self.subtitles, doc)
         if keep_changes: return indices
         for i, subtitle in enumerate(self.subtitles):
             subtitle.set_text(doc, orig_texts[i])
         return []
-
-    def _write_file_ensure(self, value, sfile, subtitles, doc):
-        assert os.path.isfile(sfile.path)
-
-    def _write_file(self, sfile, subtitles, doc):
-        """
-        Write subtitle data to `sfile`.
-
-        Raise :exc.`IOError` if writing fails.
-        Raise :exc.`UnicodeError` if encoding fails.
-        """
-        file_existed = os.path.isfile(sfile.path)
-        if file_existed:
-            # Create a backup of existing file in case
-            # writing new data to that file fails.
-            backup_path = aeidon.temp.create(".bak")
-            aeidon.temp.close(backup_path)
-            backup_success = self._copy_file(sfile.path, backup_path)
-        try: sfile.write(subtitles, doc)
-        except (IOError, UnicodeError):
-            if file_existed and backup_success:
-                # If overwriting existing file fails,
-                # restore old file from backup.
-                self._move_file(backup_path, sfile.path)
-            if not file_existed:
-                # If writing new file fails, remove failed attempt,
-                # which is a blank or an incomplete file.
-                self._remove_file(sfile.path)
-            raise # (IOError, UnicodeError)
-        if file_existed and backup_success:
-            aeidon.temp.remove(backup_path)
 
     @aeidon.deco.export
     def save(self, doc, sfile=None, keep_changes=True):

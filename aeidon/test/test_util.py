@@ -1,6 +1,6 @@
 # -*- coding: utf-8-unix -*-
 
-# Copyright (C) 2006-2009,2011 Osmo Salomaa
+# Copyright (C) 2006-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -32,6 +32,30 @@ class TestModule(aeidon.TestCase):
 
     def test_affirm__true(self):
         aeidon.util.affirm(0 == 0)
+
+    def test_atomic_open__existing_file(self):
+        path = self.new_subrip_file()
+        with aeidon.util.atomic_open(path, "w") as fobj:
+            fobj.write("test\n")
+        text = open(path, "r").read()
+        assert text == "test\n"
+
+    def test_atomic_open__existing_file__io_error(self):
+        path = self.new_subrip_file()
+        os.chmod(path, 0000)
+        try:
+            with aeidon.util.atomic_open(path, "w") as fobj:
+                fobj.write("test\n")
+        except IOError:
+            pass
+        os.chmod(path, 0o777)
+
+    def test_atomic_open__no_existing_file(self):
+        path = aeidon.temp.create()
+        with aeidon.util.atomic_open(path, "w") as fobj:
+            fobj.write("test\n")
+        text = open(path, "r").read()
+        assert text == "test\n"
 
     def test_chardet_available(self):
         imp.reload(aeidon.util)

@@ -14,11 +14,12 @@ Gaupol 0.20
      * https://sourceforge.net/projects/cmusphinx/forums/forum/5471/topic/5497616
  [X] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
      system of penalties and a versatile measure of goodness
- [ ] Write all files in a proper atomic manner
-     * http://stackoverflow.com/questions/2333872
+ [X] Write subtitle files in a proper atomic manner (on Windows this
+     requires Python 3.3 or later)
  [X] Remove -c/--config-file option (you're better off setting XDG_*
      environment variables if you're doing something weird.)
- [?] Existing bug reports
+ [ ] Check existing bug reports
+ [ ] Check need for any API changes
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [X] Fix signatures of decorated functions in API documentation
  [X] Use filename extension '.extension' for extension metadata files
