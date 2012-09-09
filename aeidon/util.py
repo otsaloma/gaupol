@@ -26,6 +26,7 @@ import os
 import random
 import re
 import subprocess
+import stat
 import sys
 import urllib.parse
 
@@ -61,6 +62,13 @@ def atomic_open(path, mode="w", *args, **kwargs):
         temp_path = os.path.join(directory, temp_basename)
         if not os.path.isfile(temp_path): break
     try:
+        if os.path.isfile(path):
+            # If the file exists, use the same permissions.
+            # Note that all other file metadata, including
+            # owner and group, is not preserved.
+            with open(temp_path, "w") as fobj: pass
+            st = os.stat(path)
+            os.chmod(temp_path, stat.S_IMODE(st.st_mode))
         with open(temp_path, mode, *args, **kwargs) as fobj:
             yield fobj
             fobj.flush()
@@ -70,14 +78,14 @@ def atomic_open(path, mode="w", *args, **kwargs):
             # This should be atomic on Windows too.
             os.replace(temp_path, path)
         else:
-            if sys.platform == "win32":
-                if os.path.isfile(path):
-                    os.remove(path)
             # os.rename is atomic on Unix, but fails
             # on Windows if the file exists, hence must
             # remove the file in advance with the danger
             # that something fails between the remove
             # and the rename.
+            if sys.platform == "win32":
+                if os.path.isfile(path):
+                    os.remove(path)
             os.rename(temp_path, path)
     finally:
         try:

@@ -3,9 +3,6 @@ Gaupol 0.20
 
  * Check pattern file encoding (Unicode notes!)
  * Check need for any API changes
- * Test atomic file writing
-   - Copy permissions (os.chmod)
-   - Copy owner and group? (os.chown)
  * Test setup.py commands
  * Consider doing search-replace across po-files to migrate string formatting
 
