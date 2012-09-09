@@ -49,6 +49,7 @@ def atomic_open(path, mode="w", *args, **kwargs):
     (probably) be atomic on any Unix system. On Windows, it should (probably)
     be atomic if using Python 3.3 or greater.
     """
+    path = os.path.realpath(path)
     chars = list("abcdefghijklmnopqrstuvwxyz0123456789")
     directory = os.path.dirname(path)
     basename = os.path.basename(path)

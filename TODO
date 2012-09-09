@@ -6,7 +6,6 @@ Gaupol 0.20
  * Test atomic file writing
    - Copy permissions (os.chmod)
    - Copy owner and group? (os.chown)
-   - Fix symlink handling (os.path.realpath)
  * Test setup.py commands
  * Consider doing search-replace across po-files to migrate string formatting
 
