@@ -1,10 +1,14 @@
 Gaupol 0.20
 ===========
 
- [ ] Check pattern file encoding (Unicode notes!)
- [ ] Check need for any API changes
- [ ] Test atomic file writing
- [ ] Test setup.py commands
+ * Check pattern file encoding (Unicode notes!)
+ * Check need for any API changes
+ * Test atomic file writing
+   - Copy permissions (os.chmod)
+   - Copy owner and group? (os.chown)
+   - Fix symlink handling (os.path.realpath)
+ * Test setup.py commands
+ * Consider doing search-replace across po-files to migrate string formatting
 
  [X] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
  [X] Bump Python dependency to 3.2 or greater
