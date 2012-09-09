@@ -9,9 +9,9 @@ the aeidon.paths module, (3) handling translating of various files and
 
 (1) Allowing separate installations of aeidon and gaupol are handled through
     global options --with-aeidon, --without-aeidon, --with-gaupol and
-    --without-gaupol. See './setup.py --help' and the file 'README.aeidon' for
-    documentation and the Distribution class defined in this file for the
-    implementation and logic of how that is handled.
+    --without-gaupol. See 'python3 setup.py --help' and the file
+    'README.aeidon' for documentation and the Distribution class defined in
+    this file for the implementation and logic of how that is handled.
 
 (2) Gaupol finds non-Python files based on the paths written in module
     aeidon.paths. In aeidon/paths.py the paths default to the ones in the
@@ -29,7 +29,7 @@ the aeidon.paths module, (3) handling translating of various files and
 (4) Extensions are installed under the data directory. All python code included
     in the extensions are compiled during the 'install_data' command, using the
     same arguments for 'byte_compile' as used by the 'install_lib' command. If
-    the 'install_lib' command was given '--no-compile' option, then the
+    the 'install_lib' command was given the '--no-compile' option, then
     extensions are not compiled either.
 """
 
@@ -46,26 +46,20 @@ import sys
 import tarfile
 import tempfile
 
-os.chdir(os.path.dirname(__file__) or ".")
-running_py2exe = "py2exe" in sys.argv
-
 clean = distutils.command.clean.clean
 distribution = distutils.dist.Distribution
 install = distutils.command.install.install
 install_data = distutils.command.install_data.install_data
 install_lib = distutils.command.install_lib.install_lib
 log = distutils.log
+running_py2exe = "py2exe" in sys.argv
 sdist = distutils.command.sdist.sdist
 
 if running_py2exe:
-    # py2exe patches the Distribution class, so we need to import py2exe here
-    # and subclass the patched Distribution class ourselves.
+    # py2exe patches the Distribution class, so we need to import py2exe
+    # here and subclass the patched Distribution class ourselves.
     import py2exe
     distribution = py2exe.Distribution
-
-##
-## Patch distribution class with new global options.
-##
 
 global_options = (
     ("mandir=", None, ("relative installation directory for man pages "
@@ -88,12 +82,14 @@ distribution.negative_opt.update(negative_opt)
 
 def get_aeidon_version():
     """Return version number from aeidon/__init__.py."""
-    text = open(os.path.join("aeidon", "__init__.py"), "r").read()
+    path = os.path.join("aeidon", "__init__.py")
+    text = open(path, "r", encoding="utf_8").read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def get_gaupol_version():
     """Return version number from gaupol/__init__.py."""
-    text = open(os.path.join("gaupol", "__init__.py"), "r").read()
+    path = os.path.join("gaupol", "__init__.py")
+    text = open(path, "r", encoding="utf_8").read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def run_command_or_exit(command):
@@ -113,9 +109,9 @@ class Clean(clean):
     """Command to remove files and directories created."""
 
     def run(self):
-        """Remove files and directories listed in setup-files/clean."""
+        """Remove files and directories listed in manifests/clean."""
         clean.run(self)
-        fobj = open(os.path.join("setup-files", "clean"), "r")
+        fobj = open(os.path.join("manifests", "clean.manifest"), "r")
         for targets in (glob.glob(x.strip()) for x in fobj):
             for target in filter(os.path.isdir, targets):
                 log.info("removing '{}'".format(target))
@@ -135,8 +131,8 @@ class Distribution(distribution):
     def __find_data_files(self, name):
         """Find data files to install for name."""
         fok = lambda x: not x.endswith((".in", ".pyc"))
-        basename = "data-files.{}".format(name)
-        fobj = open(os.path.join("setup-files", basename), "r")
+        basename = "{}.manifest".format(name)
+        fobj = open(os.path.join("manifests", basename), "r")
         for line in (x.strip() for x in fobj):
             if not line: continue
             if line.startswith("["):
@@ -199,19 +195,18 @@ class Distribution(distribution):
             self.__find_man_pages()
             self.__find_packages("gaupol")
             self.__find_scripts("gaupol")
-        # Redefine name, version and requires metadata attributes. These are
-        # used in the egg-info file written by distutils. While egg-info files
-        # appear completely useless, it needs to be ensured that if aeidon and
-        # gaupol are installed separately, they install differently named
-        # egg-info files in order to avoid overwriting files.
+        # Redefine name, version and requires metadata attributes.
+        # These are used in the egg-info file written by distutils.
+        # While egg-info files appear completely useless, it needs
+        # to be ensured that if aeidon and gaupol are installed
+        # separately, they install differently named egg-info files
+        # in order to avoid overwriting each other.
         if self.with_gaupol:
             self.metadata.name = "gaupol"
             self.metadata.version = get_gaupol_version()
-            self.metadata.requires = ("gtk",)
-        else: # Without gaupol.
+        else: # without gaupol
             self.metadata.name = "aeidon"
             self.metadata.version = get_aeidon_version()
-            self.metadata.requires = ()
         return value
 
     def parse_config_files(self, filenames=None):
@@ -249,7 +244,7 @@ class Documentation(distutils.cmd.Command):
         if not self.dry_run:
             run_command_or_exit("make clean")
             run_command_or_exit("python{:d}.{:d} autogen.py aeidon gaupol"
-                                .format(sys.version_info[:2]))
+                                .format(*sys.version_info[:2]))
 
             run_command_or_exit("make {}".format(self.format))
 
@@ -261,15 +256,15 @@ class Install(install):
     def run(self):
         """Install everything and update the desktop file database."""
         install.run(self)
-        if self.distribution.with_gaupol:
-            get_command_obj = self.distribution.get_command_obj
-            root = get_command_obj("install").root
-            data_dir = get_command_obj("install_data").install_dir
-            # Assume we're actually installing if --root was not given.
-            if (root is not None) or (data_dir is None): return
-            directory = os.path.join(data_dir, "share", "applications")
-            log.info("updating desktop database in '{}'".format(directory))
-            run_command_or_warn('update-desktop-database "{}"'.format(directory))
+        if not self.distribution.with_gaupol: return
+        get_command_obj = self.distribution.get_command_obj
+        root = get_command_obj("install").root
+        data_dir = get_command_obj("install_data").install_dir
+        # Assume we're actually installing if --root was not given.
+        if (root is not None) or (data_dir is None): return
+        directory = os.path.join(data_dir, "share", "applications")
+        log.info("updating desktop database in '{}'".format(directory))
+        run_command_or_warn('update-desktop-database "{}"'.format(directory))
 
 
 class InstallData(install_data):
@@ -290,8 +285,9 @@ class InstallData(install_data):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
         if not running_py2exe:
-            command = "intltool-merge -d po {}.in {}".format(path, path)
-            run_command_or_exit(command)
+            run_command_or_exit("intltool-merge -d po {}.in {}"
+                                .format(path, path))
+
         return ("share/applications", (path,))
 
     def __get_extension_file(self, extension, extension_file):
@@ -299,8 +295,9 @@ class InstallData(install_data):
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
         if not running_py2exe:
-            command = "intltool-merge -d po {}.in {}".format(path, path)
-            run_command_or_exit(command)
+            run_command_or_exit("intltool-merge -d po {}.in {}"
+                                .format(path, path))
+
         return ("share/gaupol/extensions/{}".format(extension), (path,))
 
     def __get_mo_file(self, po_file):
@@ -314,8 +311,9 @@ class InstallData(install_data):
         dest_dir = os.path.join("share", mo_dir)
         if not running_py2exe:
             log.info("compiling '{}'".format(mo_file))
-            command = "msgfmt {} -o {}".format(po_file, mo_file)
-            run_command_or_exit(command)
+            run_command_or_exit("msgfmt {} -o {}"
+                                .format(po_file, mo_file))
+
         return (dest_dir, (mo_file,))
 
     def __get_pattern_file(self, pattern_file):
@@ -323,8 +321,9 @@ class InstallData(install_data):
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
         if not running_py2exe:
-            command = "intltool-merge -d po {}.in {}".format(path, path)
-            run_command_or_exit(command)
+            run_command_or_exit("intltool-merge -d po {}.in {}"
+                                .format(path, path))
+
         return ("share/gaupol/patterns", (path,))
 
     def run(self):
@@ -336,7 +335,7 @@ class InstallData(install_data):
                 self.data_files.append(self.__get_pattern_file(pattern_file))
         if self.distribution.with_gaupol:
             for extension in os.listdir("data/extensions"):
-                pattern = "data/extensions/{}/*.gaupol-extension.in"
+                pattern = "data/extensions/{}/*.extension.in"
                 pattern = pattern.format(extension)
                 for extension_file in glob.glob(pattern):
                     t = self.__get_extension_file(extension, extension_file)
@@ -364,7 +363,7 @@ class InstallLib(install_lib):
         locale_dir = os.path.join(prefix, "share", "locale")
         # Write changes to the aeidon.paths module.
         path = os.path.join(self.build_dir, "aeidon", "paths.py")
-        text = open(path, "r").read()
+        text = open(path, "r", encoding="utf_8").read()
         patt = "DATA_DIR = get_data_directory()"
         repl = "DATA_DIR = {}".format(repr(data_dir))
         text = text.replace(patt, repl)
@@ -373,7 +372,7 @@ class InstallLib(install_lib):
         repl = "LOCALE_DIR = {}".format(repr(locale_dir))
         text = text.replace(patt, repl)
         assert text.count(repr(locale_dir)) > 0
-        open(path, "w").write(text)
+        open(path, "w", encoding="utf_8").write(text)
 
     def install(self):
         """Install library files after writing changes."""
@@ -417,6 +416,7 @@ class SDistGna(sdist):
             raise SystemExit("Must edit MANIFEST.in")
         shutil.rmtree(test_dir)
         # Create extra distribution files.
+        os.system("xz {}.tar".format(basename))
         log.info("calculating md5sums")
         run_command_or_exit("md5sum * > {}.md5sum".format(basename))
         log.info("creating '{}.changes'".format(basename))
@@ -425,19 +425,13 @@ class SDistGna(sdist):
         log.info("creating '{}.news'".format(basename))
         source = os.path.join("..", "..", "NEWS")
         shutil.copyfile(source, "{}.news".format(basename))
-        for tarball in tarballs:
-            log.info("signing '{}'".format(tarball))
-            run_command_or_exit("gpg --detach {}".format(tarball))
-        os.chdir("..")
-        log.info("creating 'latest.txt'")
-        with open("latest.txt", "w") as fobj:
-            fobj.write("{}\n".format(version))
+        log.info("signing '{}.tar.xz'".format(basename))
+        run_command_or_exit("gpg --detach {}.tar.xz".format(basename))
 
 
 setup_kwargs = dict(
     name="gaupol",
     version=get_gaupol_version(),
-    requires=("gtk",),
     platforms=("Platform Independent",),
     author="Osmo Salomaa",
     author_email="otsaloma@iki.fi",
@@ -455,4 +449,5 @@ setup_kwargs = dict(
         })
 
 if __name__ == "__main__":
+    os.chdir(os.path.dirname(__file__) or ".")
     distutils.core.setup(**setup_kwargs)

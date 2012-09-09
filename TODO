@@ -1,8 +1,12 @@
 Gaupol 0.20
 ===========
 
- [/] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
-     * Port setup.py, winsetup.py, MANIFEST.in and setup-files
+ [ ] Check pattern file encoding (Unicode notes!)
+ [ ] Check need for any API changes
+ [ ] Test atomic file writing
+ [ ] Test setup.py commands
+
+ [X] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
  [X] Bump optional GStreamer dependency to 1.0
@@ -17,16 +21,14 @@ Gaupol 0.20
  [X] Write subtitle files in a proper atomic manner (on Windows this
      requires Python 3.3 or later)
  [X] Remove -c/--config-file option (you're better off setting XDG_*
-     environment variables if you're doing something weird.)
- [ ] Check existing bug reports
- [ ] Check need for any API changes
+     environment variables if you're doing something weird)
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
  [X] Fix signatures of decorated functions in API documentation
  [X] Use filename extension '.extension' for extension metadata files
      (instead of previous '.gaupol-extension')
  [X] Use filename extension '.bookmarks' for bookmark files written by
      the bookmarks extension (instead of previous '.gaupol-bookmarks)
- [?] Release gaupol source tarballs only compressed as tar.xz (instead
+ [X] Release source tarballs only compressed as tar.xz (instead
      of the previous tar.gz and tar.bz2)
  [X] Update Brazilian Portuguese translation
      (Átila Camurça, Darlildo Lima)

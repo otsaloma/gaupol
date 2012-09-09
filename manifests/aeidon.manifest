@@ -2,4 +2,4 @@
 data/headers/*
 
 [share/gaupol/patterns]
-data/patterns/*.conf
+data/patterns/*

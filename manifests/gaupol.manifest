@@ -26,7 +26,7 @@ data/icons/hicolor/48x48/apps/*.png
 data/icons/hicolor/256x256/apps/*.png
 
 [share/gaupol/ui]
-data/ui/*
+data/ui/*.*
 
 [share/gaupol/ui/text-assistant]
-data/ui/text-assistant/*
+data/ui/text-assistant/*.*

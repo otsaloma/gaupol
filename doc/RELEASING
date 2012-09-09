@@ -19,7 +19,7 @@ Releasing a New Version
    $ $EDITOR NEWS TODO
 
  * Check that tarballs can be built
-   $ python3 setup.py clean sdist_gna --formats bztar,gztar
+   $ python3 setup.py clean sdist_gna --formats tar
 
  * Check that installation of above tarball works
    $ sudo python3 setup.py clean install --prefix=/usr/local
@@ -33,7 +33,7 @@ Releasing a New Version
    $ git push --tags
 
  * Build final tarballs, edit related files and upload
-   $ python3 setup.py clean sdist_gna --formats bztar,gztar
+   $ python3 setup.py clean sdist_gna --formats tar
    $ $EDITOR dist/*/*.news dist/*/*.changes
    - download.gna.org:/upload/gaupol/
 

@@ -6,18 +6,12 @@
 from setup import *
 
 includes = ("aeidon",
-            "atk",
-            "cairo",
             "chardet",
             "enchant",
             "gaupol",
-            "gio",
-            "glib",
-            "gobject",
-            "gtk",
-            "pango",
-            "pangocairo",
-            "pygtk",
+            "gi.repository.GLib",
+            "gi.repository.GObject",
+            "gi.repository.Gtk",
             )
 
 setup_kwargs.update(dict(

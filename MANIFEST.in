@@ -1,16 +1,11 @@
-include bin/*
-include doc/gaupol.1
-include doc/MODULES
-include doc/RELEASING
-include doc/RELEASING.win32
-include doc/wiki/*
-include po/*
-include setup-files/*
-include tools/*
 recursive-include aeidon *.py
+recursive-include bin *
 recursive-include data *
-recursive-include doc/sphinx *
+recursive-include doc *
 recursive-include gaupol *.py
+recursive-include manifests *
+recursive-include po *
+recursive-include tools *
 include AUTHORS
 include ChangeLog
 include COPYING
@@ -25,4 +20,9 @@ include TODO
 include winsetup.py
 global-exclude *~
 global-exclude .hidden
+global-exclude __pycache__
 global-exclude TAGS
+prune doc/formats
+prune doc/sphinx/api
+prune doc/sphinx/_build
+exclude doc/sphinx/index.rst
