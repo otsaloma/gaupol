@@ -2,9 +2,10 @@
 *~
 .coverage
 .hidden
+__pycache__
 build/
 ChangeLog
-data/extensions/*/*.gaupol-extension
+data/extensions/*/*.extension
 data/gaupol.desktop
 data/patterns/*.capitalization
 data/patterns/*.common-error
