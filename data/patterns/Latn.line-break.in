@@ -7,6 +7,14 @@ Group=1
 Penalty=-1000
 
 [Line Break Pattern]
+_Name=Dialogue
+_Description=Break according to dialogue separated by dashes
+Pattern=( -)( )
+Flags=DOTALL;MULTILINE;UNICODE;
+Group=2
+Penalty=1000000
+
+[Line Break Pattern]
 _Name=Clause
 _Description=Break according to clauses terminated by a punctuation mark
 # Disallow abbreviations and ellipses preceding a period.
