@@ -1353,13 +1353,13 @@ msgstr "יוניקוד"
 
 #: ../aeidon/encodings.py:154
 #, python-format
-msgid "%(description)s (%(name)s)"
-msgstr "%(description)s (%(name)s)"
+msgid "{description} ({name})"
+msgstr "{description} ({name})"
 
 #: ../aeidon/encodings.py:248
 #, python-format
-msgid "Current locale (%s)"
-msgstr "סוג כתב נוכחי (%s)"
+msgid "Current locale ({})"
+msgstr "סוג כתב נוכחי ({})"
 
 #: ../aeidon/enums/align.py:27 ../gaupol/enums/fields.py:30
 msgid "Subtitle number"
@@ -1391,8 +1391,8 @@ msgstr "מק (קלאסי)"
 
 #: ../aeidon/locales.py:66
 #, python-format
-msgid "%(language)s (%(country)s)"
-msgstr "%(language)s (%(country)s)"
+msgid "{language} ({country})"
+msgstr "{language} ({country})"
 
 #. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
 #. of a tree view column that contains 16 pixels wide pixbufs.
@@ -1451,7 +1451,7 @@ msgstr "חיפוש:"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
-msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgid "Calculate nonnative units with a framerate of {:.3f} fps"
 msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
@@ -2143,20 +2143,20 @@ msgstr "הצגה או הסתרה של סרגל הכלים וידאו"
 
 #: ../gaupol/agents/close.py:48
 #, python-format
-msgid "Save changes to main document \"%s\" before closing?"
-msgstr "האם לשמור את השינויים למסמך הראשי ״%s״ בטרם הסגירה?"
+msgid "Save changes to main document \"{}\" before closing?"
+msgstr "האם לשמור את השינויים למסמך הראשי ״{}״ בטרם הסגירה?"
 
 #: ../gaupol/agents/close.py:77
 #, python-format
-msgid "Save changes to translation document \"%s\" before closing?"
-msgstr "האם לשמור את השינויים למסמך התרגום ״%s״ בטרם הסגירה?"
+msgid "Save changes to translation document \"{}\" before closing?"
+msgstr "האם לשמור את השינויים למסמך התרגום ״{}״ בטרם הסגירה?"
 
 #: ../gaupol/agents/edit.py:173
 #, python-format
-msgid "Inserted %d subtitle to fit clipboard contents"
-msgid_plural "Inserted %d subtitles to fit clipboard contents"
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] "נוספה כתובית כדי להתאים לתוכן לוח הגזירים"
-msgstr[1] "נוספו %d כתוביות כדי להתאים לתוכן לוח הגזירים"
+msgstr[1] "נוספו {:d} כתוביות כדי להתאים לתוכן לוח הגזירים"
 
 #: ../gaupol/agents/edit.py:280
 msgid "Use Shift+Return for line-break"
@@ -2164,18 +2164,18 @@ msgstr "שימוש ב־Shift+אנטר כדי לשבור שורות"
 
 #: ../gaupol/agents/menu.py:50
 #, python-format
-msgid "Activate \"%s\""
-msgstr "הפעלת ״%s״"
+msgid "Activate \"{}\""
+msgstr "הפעלת ״{}״"
 
 #: ../gaupol/agents/menu.py:76 ../gaupol/agents/update.py:157
 #, python-format
-msgid "Redo \"%s\""
-msgstr "ביצוע ״%s״ מחדש"
+msgid "Redo \"{}\""
+msgstr "ביצוע ״{}״ מחדש"
 
 #: ../gaupol/agents/menu.py:146 ../gaupol/agents/update.py:153
 #, python-format
-msgid "Undo \"%s\""
-msgstr "ביטול ״%s״"
+msgid "Undo \"{}\""
+msgstr "ביטול ״{}״"
 
 #: ../gaupol/agents/open.py:45
 msgid "Appending file"
@@ -2183,13 +2183,13 @@ msgstr "הקובץ מתווסף"
 
 #: ../gaupol/agents/open.py:60
 #, python-format
-msgid "File \"%s\" is already open"
-msgstr "הקובץ ״%s״ כבר פתוח"
+msgid "File \"{}\" is already open"
+msgstr "הקובץ ״{}״ כבר פתוח"
 
 #: ../gaupol/agents/open.py:273
 #, python-format
-msgid "Failed to decode file \"%s\" with all attempted codecs"
-msgstr "ארע כשל בפענוח הקובץ ״%s״ עם כל המקודדים שנוסו"
+msgid "Failed to decode file \"{}\" with all attempted codecs"
+msgstr "ארע כשל בפענוח הקובץ ״{}״ עם כל המקודדים שנוסו"
 
 #: ../gaupol/agents/open.py:275
 msgid "Please try to open the file with a different character encoding."
@@ -2197,8 +2197,8 @@ msgstr "נא לנסות לפתוח את הקובץ עם קידוד תווים ש
 
 #: ../gaupol/agents/open.py:283
 #, python-format
-msgid "Failed to recognize format of file \"%s\""
-msgstr "ארע כשל בזיהוי מבנה הקובץ ״%s״"
+msgid "Failed to recognize format of file \"{}\""
+msgstr "ארע כשל בזיהוי מבנה הקובץ ״{}״"
 
 #: ../gaupol/agents/open.py:284
 msgid ""
@@ -2208,55 +2208,55 @@ msgstr "נא לבדוק שהקובץ המועמד לפתיחה הוא מסוג �
 
 #: ../gaupol/agents/open.py:292
 #, python-format
-msgid "Failed to open file \"%s\""
-msgstr "ארע כשל בפתיחת הקובץ ״%s״"
+msgid "Failed to open file \"{}\""
+msgstr "ארע כשל בפתיחת הקובץ ״{}״"
 
 #: ../gaupol/agents/open.py:299
 #, python-format
-msgid "Failed to parse file \"%s\""
-msgstr "ארע כשל בפענוח הקובץ ״%s״"
+msgid "Failed to parse file \"{}\""
+msgstr "ארע כשל בפענוח הקובץ ״{}״"
 
 #: ../gaupol/agents/open.py:300
 #, python-format
 msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
-"a valid %s file. If you think it is, file a bug report and attach the file."
+"a valid {} file. If you think it is, file a bug report and attach the file."
 msgstr ""
-"נא לבדוק, לדוגמה באמצעות עורך טקסט, שהקובץ המועמד לפתיחה הוא קובץ %s תקין. "
+"נא לבדוק, לדוגמה באמצעות עורך טקסט, שהקובץ המועמד לפתיחה הוא קובץ {} תקין. "
 "אם קובץ זה נראה תקין ניתן לדווח על באג ולצרף את הקובץ."
 
 #: ../gaupol/agents/open.py:312
 #, python-format
-msgid "Open abnormally large file \"%s\"?"
-msgstr "האם לפתוח את הקובץ הגדול באופן חריג ״%s״?"
+msgid "Open abnormally large file \"{}\"?"
+msgstr "האם לפתוח את הקובץ הגדול באופן חריג ״{}״?"
 
 #: ../gaupol/agents/open.py:313
 #, python-format
 msgid ""
-"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"גודל הקובץ הוא %.1f מ״ב, שזהו גודל גדול באופן חריג עבור קובץ כתוביות מבוסס "
+"גודל הקובץ הוא {:.1f} מ״ב, שזהו גודל גדול באופן חריג עבור קובץ כתוביות מבוסס "
 "טקסט. נא לבדוק שזהו אינו קובץ בינרי."
 
 #: ../gaupol/agents/open.py:328
 #, python-format
-msgid "Open unsorted file \"%s\"?"
-msgstr "האם לפתוח את הקובץ הבלתי ממוין ״%s״?"
+msgid "Open unsorted file \"{}\"?"
+msgstr "האם לפתוח את הקובץ הבלתי ממוין ״{}״?"
 
 #: ../gaupol/agents/open.py:329
 #, python-format
 msgid ""
-"The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
+"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, the "
 "file may be erroneously composed."
 msgstr ""
-"יש לשנות את סדרן של %d כתוביות. אם %d נשמע כמו הרבה, יתכן שהקובץ הורכב בצורה "
+"יש לשנות את סדרן של {:d} כתוביות. אם {:d} נשמע כמו הרבה, יתכן שהקובץ הורכב בצורה "
 "לא נכונה."
 
 #: ../gaupol/agents/open.py:344
 #, python-format
-msgid "Save changes to translation document \"%s\" before opening a new one?"
-msgstr "האם לשמור את השינויים למסמך התרגום ״%s״ לפני פתיחת מסמך חדש?"
+msgid "Save changes to translation document \"{}\" before opening a new one?"
+msgstr "האם לשמור את השינויים למסמך התרגום ״{}״ לפני פתיחת מסמך חדש?"
 
 #: ../gaupol/agents/open.py:348
 msgid "Open _Without Saving"
@@ -2264,23 +2264,23 @@ msgstr "פתיחה _ללא שמירה"
 
 #: ../gaupol/agents/open.py:441
 #, python-format
-msgid "Appended %(amount)d subtitles from \"%(basename)s\""
-msgstr "האם להוסיף %(amount)d כתוביות מ־״%(basename)s״"
+msgid "Appended {amount:d} subtitles from \"{basename}\""
+msgstr "האם להוסיף {amount:d} כתוביות מ־״{basename}״"
 
 #: ../gaupol/agents/open.py:480
 #, python-format
-msgid "Opened main file \"%s\""
-msgstr "נפתח הקובץ הראשי ״%s״"
+msgid "Opened main file \"{}\""
+msgstr "נפתח הקובץ הראשי ״{}״"
 
 #: ../gaupol/agents/open.py:499
 #, python-format
-msgid "Opened translation file \"%s\""
-msgstr "נפתח קובץ התרגום ״%s״"
+msgid "Opened translation file \"{}\""
+msgstr "נפתח קובץ התרגום ״{}״"
 
 #: ../gaupol/agents/preview.py:50
 #, python-format
-msgid "Failed to encode subtitle file to temporary directory \"%s\""
-msgstr "ארע כשל בקידוד קובץ הכתוביות אל התיקייה הזמנית ״%s״"
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
+msgstr "ארע כשל בקידוד קובץ הכתוביות אל התיקייה הזמנית ״{}״"
 
 #: ../gaupol/agents/preview.py:52
 msgid ""
@@ -2293,8 +2293,8 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
-msgid "Failed to save subtitle file to temporary directory \"%s\""
-msgstr "ארע כשל בשמירת קובץ הכתוביות לתיקייה הזמנית ״%s״"
+msgid "Failed to save subtitle file to temporary directory \"{}\""
+msgstr "ארע כשל בשמירת קובץ הכתוביות לתיקייה הזמנית ״{}״"
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
@@ -2306,8 +2306,8 @@ msgstr "כל המסמכים הפתוחים נשמרו"
 
 #: ../gaupol/agents/save.py:129
 #, python-format
-msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
-msgstr "ארע כשל בקידוד הקובץ ״%(basename)s״ באמצעות המפענח ״%(codec)s״"
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
+msgstr "ארע כשל בקידוד הקובץ ״{basename}״ באמצעות המפענח ״{codec}״"
 
 #: ../gaupol/agents/save.py:131
 msgid "Please try to save the file with a different character encoding."
@@ -2315,8 +2315,8 @@ msgstr "נא לנסות לשמור את הקובץ בקידוד תווים שו�
 
 #: ../gaupol/agents/save.py:139
 #, python-format
-msgid "Failed to save file \"%s\""
-msgstr "ארע כשל בשמירת הקובץ ״%s״"
+msgid "Failed to save file \"{}\""
+msgstr "ארע כשל בשמירת הקובץ ״{}״"
 
 #: ../gaupol/agents/save.py:156
 msgid "Saved main document"
@@ -2324,8 +2324,8 @@ msgstr "המסמך הראשי נשמר"
 
 #: ../gaupol/agents/save.py:174
 #, python-format
-msgid "Saved main document as \"%s\""
-msgstr "המסמך הראשי נשמר בשם ״%s״"
+msgid "Saved main document as \"{}\""
+msgstr "המסמך הראשי נשמר בשם ״{}״"
 
 #: ../gaupol/agents/save.py:189
 msgid "Saved translation document"
@@ -2333,8 +2333,8 @@ msgstr "מסמך התרגום נשמר"
 
 #: ../gaupol/agents/save.py:207
 #, python-format
-msgid "Saved translation document as \"%s\""
-msgstr "מסמך התרגום נשמר בשם ״%s״"
+msgid "Saved translation document as \"{}\""
+msgstr "מסמך התרגום נשמר בשם ״{}״"
 
 #: ../gaupol/application.py:171
 msgid "Framerate:"
@@ -2414,8 +2414,8 @@ msgstr "צירוף או פיצול מילים"
 
 #: ../gaupol/assistants.py:600 ../gaupol/dialogs/spellcheck.py:367
 #, python-format
-msgid "Failed to load dictionary for language \"%s\""
-msgstr "ארע כשל בטעינת המילון עבור השפה״%s״"
+msgid "Failed to load dictionary for language \"{}\""
+msgstr "ארע כשל בטעינת המילון עבור השפה״{}״"
 
 #: ../gaupol/assistants.py:629
 msgid "Break text into lines of defined length"
@@ -2443,18 +2443,18 @@ msgstr "כל משימה מתבצעת כעת על כל מיזם."
 
 #: ../gaupol/assistants.py:804
 #, python-format
-msgid "%(current)d of %(total)d tasks complete"
-msgstr "%(current)d מתוך %(total)d משימות הושלמו"
+msgid "{current:d} of {total:d} tasks complete"
+msgstr "{current:d} מתוך {total:d} משימות הושלמו"
 
 #: ../gaupol/assistants.py:812
 #, python-format
-msgid "Project: %s"
-msgstr "מיזם: %s"
+msgid "Project: {}"
+msgstr "מיזם: {}"
 
 #: ../gaupol/assistants.py:819
 #, python-format
-msgid "Task: %s"
-msgstr "משימה: %s"
+msgid "Task: {}"
+msgstr "משימה: {}"
 
 #: ../gaupol/assistants.py:841
 msgid "Confirm Changes"
@@ -2482,15 +2482,15 @@ msgstr "הטקסטים מתוקנים"
 
 #: ../gaupol/assistants.py:1064
 #, python-format
-msgid "Edited %(edits)d and removed %(removals)d subtitles"
-msgstr "נערכו %(edits)d והוסרו %(removals)d כתוביות"
+msgid "Edited {edits:d} and removed {removals:d} subtitles"
+msgstr "נערכו {edits:d} והוסרו {removals:d} כתוביות"
 
 #: ../gaupol/assistants.py:1098
 #, python-format
-msgid "Confirm %d Change"
-msgid_plural "Confirm %d Changes"
+msgid "Confirm {:d} Change"
+msgid_plural "Confirm {:d} Changes"
 msgstr[0] "אישור השינוי"
-msgstr[1] "אישור %d השינויים"
+msgstr[1] "אישור {:d} השינויים"
 
 #: ../gaupol/dialogs/about.py:48
 msgid "About Gaupol"
@@ -2520,10 +2520,10 @@ msgstr "הוספת קובץ"
 
 #: ../gaupol/dialogs/duration.py:69
 #, python-format
-msgid "Adjusted duration of %d subtitle"
-msgid_plural "Adjusted durations of %d subtitles"
+msgid "Adjusted duration of {:d} subtitle"
+msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "הותאם פרק הזמן של כתובית אחת"
-msgstr[1] "הותאם פרק הזמן של %d כתוביות"
+msgstr[1] "הותאם פרק הזמן של {:d} כתוביות"
 
 #: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:100
 msgid "Description"
@@ -2547,7 +2547,7 @@ msgstr "כל הקבצים הנתמכים"
 
 #: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (*%(extension)s)"
+msgid "{format} (*{extension})"
 msgstr ""
 
 #: ../gaupol/dialogs/file.py:110
@@ -2584,20 +2584,20 @@ msgstr "הגדרת שפה"
 
 #: ../gaupol/dialogs/multisave.py:123
 #, python-format
-msgid "%d of the files to be saved already exist. Do you want to replace them?"
-msgstr "%d מתוך הקבצים לשמירה כבר קיימים. האם ברצונך להחליף אותם?"
+msgid "{:d} of the files to be saved already exist. Do you want to replace them?"
+msgstr "{:d} מתוך הקבצים לשמירה כבר קיימים. האם ברצונך להחליף אותם?"
 
 #: ../gaupol/dialogs/multisave.py:126
 #, python-format
 msgid ""
-"The files already exist in \"%s\". Replacing them will overwrite their "
+"The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
-msgstr "הקבצים כבר קיימים תחת ״%s״. החלפתם תשכתב על תוכנם."
+msgstr "הקבצים כבר קיימים תחת ״{}״. החלפתם תשכתב על תוכנם."
 
 #: ../gaupol/dialogs/preferences.py:207
 #, python-format
-msgid "%s Extension Website"
-msgstr "אתר ההרחבות %s"
+msgid "{} Extension Website"
+msgstr "אתר ההרחבות {}"
 
 #: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
@@ -2605,8 +2605,8 @@ msgstr "לא ניתן לפרוק את ההרחבה"
 
 #: ../gaupol/dialogs/preferences.py:236
 #, python-format
-msgid "Extension \"%s\" is required by other extensions."
-msgstr "ההרחבה ״%s״ נדרשת על ידי הרחבות אחרות."
+msgid "Extension \"{}\" is required by other extensions."
+msgstr "ההרחבה ״{}״ נדרשת על ידי הרחבות אחרות."
 
 #: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
@@ -2614,8 +2614,8 @@ msgstr "התאמה אישית"
 
 #: ../gaupol/dialogs/search.py:355
 #, python-format
-msgid "\"%s\" not found"
-msgstr "״%s״ לא נמצא"
+msgid "\"{}\" not found"
+msgstr "״{}״ לא נמצא"
 
 #: ../gaupol/dialogs/search.py:412
 msgid "Error in regular expression pattern"
@@ -2627,10 +2627,10 @@ msgstr "שגיאה בהחלפת הביטוי הרגולרי"
 
 #: ../gaupol/dialogs/search.py:540
 #, python-format
-msgid "Found and replaced %d occurence"
-msgid_plural "Found and replaced %d occurences"
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "נמצא והוחלף מופע אחד"
-msgstr[1] "נמצאו והוחלפו %d מופעים"
+msgstr[1] "נמצאו והוחלפו {:d} מופעים"
 
 #: ../gaupol/dialogs/shift.py:138
 msgid "frames"
@@ -2650,8 +2650,8 @@ msgstr "פיצול מיזם"
 
 #: ../gaupol/dialogs/split.py:99
 #, python-format
-msgid "Split %(amount)d subtitles to project \"%(name)s\""
-msgstr "פיצול %(amount)d כתוביות למיזם %(name)s"
+msgid "Split {amount:d} subtitles to project \"{name}\""
+msgstr "פיצול {amount:d} כתוביות למיזם {name}"
 
 #: ../gaupol/dialogs/textedit.py:46
 msgid "Edit Text"
@@ -2773,8 +2773,8 @@ msgstr "פלט"
 
 #: ../gaupol/page.py:59
 #, python-format
-msgid "Untitled %d"
-msgstr "ללא שם %d"
+msgid "Untitled {:d}"
+msgstr "ללא שם {:d}"
 
 #: ../gaupol/page.py:123
 msgid "Close project"
@@ -2782,28 +2782,28 @@ msgstr "סגירת המיזם"
 
 #: ../gaupol/page.py:287
 #, python-format
-msgid "<b>Path:</b> %s"
-msgstr "<b>נתיב:</b> %s"
+msgid "<b>Path:</b> {}"
+msgstr "<b>נתיב:</b> {}"
 
 #: ../gaupol/page.py:288
 #, python-format
-msgid "<b>Format:</b> %s"
-msgstr "<b>מבנה:</b> %s"
+msgid "<b>Format:</b> {}"
+msgstr "<b>מבנה:</b> {}"
 
 #: ../gaupol/page.py:289
 #, python-format
-msgid "<b>Character encoding:</b> %s"
-msgstr "<b>קידוד תווים:</b> %s"
+msgid "<b>Character encoding:</b> {}"
+msgstr "<b>קידוד תווים:</b> {}"
 
 #: ../gaupol/page.py:290
 #, python-format
-msgid "<b>Newlines:</b> %s"
-msgstr "<b>שורות חדשות:</b> %s"
+msgid "<b>Newlines:</b> {}"
+msgstr "<b>שורות חדשות:</b> {}"
 
 #: ../gaupol/page.py:322
 #, python-format
-msgid "%s translation"
-msgstr "תרגום %s"
+msgid "{} translation"
+msgstr "תרגום {}"
 
 #~ msgid "Tasks"
 #~ msgstr "משימות"
@@ -2835,5 +2835,5 @@ msgstr "תרגום %s"
 #~ msgid "Calculate nonnative units with a framerate of 30 fps"
 #~ msgstr "חישוב יחידות שאינן ייחודיות בקצב שקופיות של 30 שקופיות לשנייה"
 
-#~ msgid "%(format)s (%(pattern)s)"
-#~ msgstr "%(format)s (%(pattern)s)"
+#~ msgid "{format} ({pattern})"
+#~ msgstr "{format} ({pattern})"

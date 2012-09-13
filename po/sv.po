@@ -1350,13 +1350,13 @@ msgstr "Unicode"
 
 #: ../aeidon/encodings.py:154
 #, python-format
-msgid "%(description)s (%(name)s)"
+msgid "{description} ({name})"
 msgstr ""
 
 #: ../aeidon/encodings.py:248
 #, python-format
-msgid "Current locale (%s)"
-msgstr "Aktuell lokal (%s)"
+msgid "Current locale ({})"
+msgstr "Aktuell lokal ({})"
 
 #: ../aeidon/enums/align.py:27 ../gaupol/enums/fields.py:30
 msgid "Subtitle number"
@@ -1388,7 +1388,7 @@ msgstr ""
 
 #: ../aeidon/locales.py:66
 #, python-format
-msgid "%(language)s (%(country)s)"
+msgid "{language} ({country})"
 msgstr ""
 
 #. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
@@ -1448,7 +1448,7 @@ msgstr ""
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
-msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgid "Calculate nonnative units with a framerate of {:.3f} fps"
 msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
@@ -2138,20 +2138,20 @@ msgstr ""
 
 #: ../gaupol/agents/close.py:48
 #, python-format
-msgid "Save changes to main document \"%s\" before closing?"
-msgstr "Spara ändringar i huvuddokumentet \"%s\" innan stängning?"
+msgid "Save changes to main document \"{}\" before closing?"
+msgstr "Spara ändringar i huvuddokumentet \"{}\" innan stängning?"
 
 #: ../gaupol/agents/close.py:77
 #, python-format
-msgid "Save changes to translation document \"%s\" before closing?"
-msgstr "Spara ändringar i översättningsdokumentet \"%s\" innan stängning?"
+msgid "Save changes to translation document \"{}\" before closing?"
+msgstr "Spara ändringar i översättningsdokumentet \"{}\" innan stängning?"
 
 #: ../gaupol/agents/edit.py:173
 #, python-format
-msgid "Inserted %d subtitle to fit clipboard contents"
-msgid_plural "Inserted %d subtitles to fit clipboard contents"
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] "Infogade en undertext för att passa urklippets innehåll"
-msgstr[1] "Infogade %d undertexter för att passa urklippets innehåll"
+msgstr[1] "Infogade {:d} undertexter för att passa urklippets innehåll"
 
 #: ../gaupol/agents/edit.py:280
 msgid "Use Shift+Return for line-break"
@@ -2159,17 +2159,17 @@ msgstr "Använd Shift+Return för radbrytning"
 
 #: ../gaupol/agents/menu.py:50
 #, python-format
-msgid "Activate \"%s\""
-msgstr "Aktivera \"%s\""
+msgid "Activate \"{}\""
+msgstr "Aktivera \"{}\""
 
 #: ../gaupol/agents/menu.py:76 ../gaupol/agents/update.py:157
 #, python-format
-msgid "Redo \"%s\""
+msgid "Redo \"{}\""
 msgstr ""
 
 #: ../gaupol/agents/menu.py:146 ../gaupol/agents/update.py:153
 #, python-format
-msgid "Undo \"%s\""
+msgid "Undo \"{}\""
 msgstr ""
 
 #: ../gaupol/agents/open.py:45
@@ -2178,13 +2178,13 @@ msgstr "Lägger till fil"
 
 #: ../gaupol/agents/open.py:60
 #, python-format
-msgid "File \"%s\" is already open"
-msgstr "Filen \"%s\" är redan öppnad"
+msgid "File \"{}\" is already open"
+msgstr "Filen \"{}\" är redan öppnad"
 
 #: ../gaupol/agents/open.py:273
 #, python-format
-msgid "Failed to decode file \"%s\" with all attempted codecs"
-msgstr "Misslyckades med att avkoda filen \"%s\" med alla möjliga kodekar"
+msgid "Failed to decode file \"{}\" with all attempted codecs"
+msgstr "Misslyckades med att avkoda filen \"{}\" med alla möjliga kodekar"
 
 #: ../gaupol/agents/open.py:275
 msgid "Please try to open the file with a different character encoding."
@@ -2192,8 +2192,8 @@ msgstr "Försök att öppna filen med en annan teckenkodning."
 
 #: ../gaupol/agents/open.py:283
 #, python-format
-msgid "Failed to recognize format of file \"%s\""
-msgstr "Misslyckades med att känna igen formatet för filen \"%s\""
+msgid "Failed to recognize format of file \"{}\""
+msgstr "Misslyckades med att känna igen formatet för filen \"{}\""
 
 #: ../gaupol/agents/open.py:284
 msgid ""
@@ -2205,53 +2205,53 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:292
 #, python-format
-msgid "Failed to open file \"%s\""
-msgstr "Misslyckades med att öppna filen \"%s\""
+msgid "Failed to open file \"{}\""
+msgstr "Misslyckades med att öppna filen \"{}\""
 
 #: ../gaupol/agents/open.py:299
 #, python-format
-msgid "Failed to parse file \"%s\""
+msgid "Failed to parse file \"{}\""
 msgstr ""
 
 #: ../gaupol/agents/open.py:300
 #, python-format
 msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
-"a valid %s file. If you think it is, file a bug report and attach the file."
+"a valid {} file. If you think it is, file a bug report and attach the file."
 msgstr ""
 
 #: ../gaupol/agents/open.py:312
 #, python-format
-msgid "Open abnormally large file \"%s\"?"
-msgstr "Öppna den onormalt stora filen \"%s\"?"
+msgid "Open abnormally large file \"{}\"?"
+msgstr "Öppna den onormalt stora filen \"{}\"?"
 
 #: ../gaupol/agents/open.py:313
 #, python-format
 msgid ""
-"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"Storleken på filen är %.1f MB, vilket är onormalt stor för att vara en "
+"Storleken på filen är {:.1f} MB, vilket är onormalt stor för att vara en "
 "textbaserad undertextfil. Kontrollera att du inte försöker att öppna en "
 "binärfil."
 
 #: ../gaupol/agents/open.py:328
 #, python-format
-msgid "Open unsorted file \"%s\"?"
+msgid "Open unsorted file \"{}\"?"
 msgstr ""
 
 #: ../gaupol/agents/open.py:329
 #, python-format
 msgid ""
-"The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
+"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, the "
 "file may be erroneously composed."
 msgstr ""
 
 #: ../gaupol/agents/open.py:344
 #, python-format
-msgid "Save changes to translation document \"%s\" before opening a new one?"
+msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"Spara ändringar i översättningsdokumentet \"%s\" innan ett nytt öppnas?"
+"Spara ändringar i översättningsdokumentet \"{}\" innan ett nytt öppnas?"
 
 #: ../gaupol/agents/open.py:348
 msgid "Open _Without Saving"
@@ -2259,23 +2259,23 @@ msgstr "Öppna _utan att spara"
 
 #: ../gaupol/agents/open.py:441
 #, python-format
-msgid "Appended %(amount)d subtitles from \"%(basename)s\""
+msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr ""
 
 #: ../gaupol/agents/open.py:480
 #, python-format
-msgid "Opened main file \"%s\""
-msgstr "Öppnade huvudfilen \"%s\""
+msgid "Opened main file \"{}\""
+msgstr "Öppnade huvudfilen \"{}\""
 
 #: ../gaupol/agents/open.py:499
 #, python-format
-msgid "Opened translation file \"%s\""
-msgstr "Öppnade översättningsfilen \"%s\""
+msgid "Opened translation file \"{}\""
+msgstr "Öppnade översättningsfilen \"{}\""
 
 #: ../gaupol/agents/preview.py:50
 #, python-format
-msgid "Failed to encode subtitle file to temporary directory \"%s\""
-msgstr "Misslyckades med att koda undertextfilen till temporärkatalogen \"%s\""
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
+msgstr "Misslyckades med att koda undertextfilen till temporärkatalogen \"{}\""
 
 #: ../gaupol/agents/preview.py:52
 msgid ""
@@ -2286,9 +2286,9 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
-msgid "Failed to save subtitle file to temporary directory \"%s\""
+msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
-"Misslyckades med att spara undertextfilen till temporärkatalogen \"%s\""
+"Misslyckades med att spara undertextfilen till temporärkatalogen \"{}\""
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
@@ -2300,7 +2300,7 @@ msgstr "Sparade alla öppna dokument"
 
 #: ../gaupol/agents/save.py:129
 #, python-format
-msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr ""
 
 #: ../gaupol/agents/save.py:131
@@ -2309,8 +2309,8 @@ msgstr "Försök att spara filen med en annan teckenkodning."
 
 #: ../gaupol/agents/save.py:139
 #, python-format
-msgid "Failed to save file \"%s\""
-msgstr "Misslyckades med att spara filen \"%s\""
+msgid "Failed to save file \"{}\""
+msgstr "Misslyckades med att spara filen \"{}\""
 
 #: ../gaupol/agents/save.py:156
 msgid "Saved main document"
@@ -2318,8 +2318,8 @@ msgstr "Sparade huvuddokumentet"
 
 #: ../gaupol/agents/save.py:174
 #, python-format
-msgid "Saved main document as \"%s\""
-msgstr "Sparade huvuddokumentet som \"%s\""
+msgid "Saved main document as \"{}\""
+msgstr "Sparade huvuddokumentet som \"{}\""
 
 #: ../gaupol/agents/save.py:189
 msgid "Saved translation document"
@@ -2327,8 +2327,8 @@ msgstr "Sparade översättningsdokumentet"
 
 #: ../gaupol/agents/save.py:207
 #, python-format
-msgid "Saved translation document as \"%s\""
-msgstr "Sparade översättningsdokumentet som \"%s\""
+msgid "Saved translation document as \"{}\""
+msgstr "Sparade översättningsdokumentet som \"{}\""
 
 #: ../gaupol/application.py:171
 msgid "Framerate:"
@@ -2406,8 +2406,8 @@ msgstr ""
 
 #: ../gaupol/assistants.py:600 ../gaupol/dialogs/spellcheck.py:367
 #, python-format
-msgid "Failed to load dictionary for language \"%s\""
-msgstr "Misslyckades med att läsa in ordbok för språket \"%s\""
+msgid "Failed to load dictionary for language \"{}\""
+msgstr "Misslyckades med att läsa in ordbok för språket \"{}\""
 
 #: ../gaupol/assistants.py:629
 msgid "Break text into lines of defined length"
@@ -2435,17 +2435,17 @@ msgstr ""
 
 #: ../gaupol/assistants.py:804
 #, python-format
-msgid "%(current)d of %(total)d tasks complete"
+msgid "{current:d} of {total:d} tasks complete"
 msgstr ""
 
 #: ../gaupol/assistants.py:812
 #, python-format
-msgid "Project: %s"
+msgid "Project: {}"
 msgstr ""
 
 #: ../gaupol/assistants.py:819
 #, python-format
-msgid "Task: %s"
+msgid "Task: {}"
 msgstr ""
 
 #: ../gaupol/assistants.py:841
@@ -2474,13 +2474,13 @@ msgstr ""
 
 #: ../gaupol/assistants.py:1064
 #, python-format
-msgid "Edited %(edits)d and removed %(removals)d subtitles"
+msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr ""
 
 #: ../gaupol/assistants.py:1098
 #, python-format
-msgid "Confirm %d Change"
-msgid_plural "Confirm %d Changes"
+msgid "Confirm {:d} Change"
+msgid_plural "Confirm {:d} Changes"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2512,10 +2512,10 @@ msgstr "Lägg till fil"
 
 #: ../gaupol/dialogs/duration.py:69
 #, python-format
-msgid "Adjusted duration of %d subtitle"
-msgid_plural "Adjusted durations of %d subtitles"
+msgid "Adjusted duration of {:d} subtitle"
+msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "Justerar längden för en undertext"
-msgstr[1] "Justerar längden för %d undertexter"
+msgstr[1] "Justerar längden för {:d} undertexter"
 
 #: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:100
 msgid "Description"
@@ -2539,7 +2539,7 @@ msgstr ""
 
 #: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (*%(extension)s)"
+msgid "{format} (*{extension})"
 msgstr ""
 
 #: ../gaupol/dialogs/file.py:110
@@ -2574,19 +2574,19 @@ msgstr ""
 
 #: ../gaupol/dialogs/multisave.py:123
 #, python-format
-msgid "%d of the files to be saved already exist. Do you want to replace them?"
+msgid "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
 
 #: ../gaupol/dialogs/multisave.py:126
 #, python-format
 msgid ""
-"The files already exist in \"%s\". Replacing them will overwrite their "
+"The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:207
 #, python-format
-msgid "%s Extension Website"
+msgid "{} Extension Website"
 msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:235
@@ -2595,7 +2595,7 @@ msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:236
 #, python-format
-msgid "Extension \"%s\" is required by other extensions."
+msgid "Extension \"{}\" is required by other extensions."
 msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:420
@@ -2604,7 +2604,7 @@ msgstr "Anpassad"
 
 #: ../gaupol/dialogs/search.py:355
 #, python-format
-msgid "\"%s\" not found"
+msgid "\"{}\" not found"
 msgstr ""
 
 #: ../gaupol/dialogs/search.py:412
@@ -2617,8 +2617,8 @@ msgstr ""
 
 #: ../gaupol/dialogs/search.py:540
 #, python-format
-msgid "Found and replaced %d occurence"
-msgid_plural "Found and replaced %d occurences"
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2640,7 +2640,7 @@ msgstr "Delar upp projekt"
 
 #: ../gaupol/dialogs/split.py:99
 #, python-format
-msgid "Split %(amount)d subtitles to project \"%(name)s\""
+msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr ""
 
 #: ../gaupol/dialogs/textedit.py:46
@@ -2763,8 +2763,8 @@ msgstr "Utdata"
 
 #: ../gaupol/page.py:59
 #, python-format
-msgid "Untitled %d"
-msgstr "Namnlös %d"
+msgid "Untitled {:d}"
+msgstr "Namnlös {:d}"
 
 #: ../gaupol/page.py:123
 msgid "Close project"
@@ -2772,28 +2772,28 @@ msgstr ""
 
 #: ../gaupol/page.py:287
 #, python-format
-msgid "<b>Path:</b> %s"
+msgid "<b>Path:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:288
 #, python-format
-msgid "<b>Format:</b> %s"
+msgid "<b>Format:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:289
 #, python-format
-msgid "<b>Character encoding:</b> %s"
+msgid "<b>Character encoding:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:290
 #, python-format
-msgid "<b>Newlines:</b> %s"
+msgid "<b>Newlines:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:322
 #, python-format
-msgid "%s translation"
-msgstr "Översättning av %s"
+msgid "{} translation"
+msgstr "Översättning av {}"
 
 #~ msgid "25 fps"
 #~ msgstr "25 bilder/s"
@@ -2810,8 +2810,8 @@ msgstr "Översättning av %s"
 #~ msgid "Portugese"
 #~ msgstr "Portugisisk"
 
-#~ msgid "%s."
-#~ msgstr "%s."
+#~ msgid "{}."
+#~ msgstr "{}."
 
 #~ msgid "<b>Framerate</b>"
 #~ msgstr "<b>Bildhastighet</b>"
@@ -3064,32 +3064,32 @@ msgstr "Översättning av %s"
 #~ msgid "_Go to Download Page"
 #~ msgstr "_Gå till hämtningssidan"
 
-#~ msgid "Version %s is available"
-#~ msgstr "Version %s finns tillgänglig"
+#~ msgid "Version {} is available"
+#~ msgstr "Version {} finns tillgänglig"
 
-#~ msgid "You are currently using %s."
-#~ msgstr "Du använder för närvarande %s."
+#~ msgid "You are currently using {}."
+#~ msgstr "Du använder för närvarande {}."
 
 #~ msgid "You have the latest version"
 #~ msgstr "Du har den senaste versionen"
 
-#~ msgid "Failed to connect to URL \"%s\": %s."
-#~ msgstr "Misslyckades med att anslut till URL:en \"%s\": %s."
+#~ msgid "Failed to connect to URL \"{}\": {}."
+#~ msgstr "Misslyckades med att anslut till URL:en \"{}\": {}."
 
 #~ msgid "Connection timed out."
 #~ msgstr "Tidsgräns för anslutning överstegs."
 
-#~ msgid "No version information found at URL \"%s\"."
-#~ msgstr "Ingen versionsinformation hittades på URL:en \"%s\"."
+#~ msgid "No version information found at URL \"{}\"."
+#~ msgstr "Ingen versionsinformation hittades på URL:en \"{}\"."
 
-#~ msgid "Undo up to %s"
-#~ msgstr "Ångra upp till %s"
+#~ msgid "Undo up to {}"
+#~ msgstr "Ångra upp till {}"
 
-#~ msgid "Redo up to %s"
-#~ msgstr "Gör om upp till %s"
+#~ msgid "Redo up to {}"
+#~ msgstr "Gör om upp till {}"
 
-#~ msgid "Open main file \"%s\""
-#~ msgstr "Öppna huvudfilen \"%s\""
+#~ msgid "Open main file \"{}\""
+#~ msgstr "Öppna huvudfilen \"{}\""
 
 #~ msgid "Save _As..."
 #~ msgstr "Spara _som..."
@@ -3100,8 +3100,8 @@ msgstr "Översättning av %s"
 #~ msgid "Save _Translation As..."
 #~ msgstr "Spara _översättning som..."
 
-#~ msgid "Failed to encode file \"%s\" with codec \"%s\""
-#~ msgstr "Misslyckades med att koda filen \"%s\" med kodeken \"%s\""
+#~ msgid "Failed to encode file \"{}\" with codec \"{}\""
+#~ msgstr "Misslyckades med att koda filen \"{}\" med kodeken \"{}\""
 
 #~ msgid "Co_nfigure Spell-check..."
 #~ msgstr "Ko_nfigurera stavningskontroll..."
@@ -3124,8 +3124,8 @@ msgstr "Översättning av %s"
 #~ msgid "_Split Project..."
 #~ msgstr "_Dela upp projekt..."
 
-#~ msgid "%d subtitles will be moved"
-#~ msgstr "%d undertexter kommer att flyttas"
+#~ msgid "{:d} subtitles will be moved"
+#~ msgstr "{:d} undertexter kommer att flyttas"
 
 #~ msgid ""
 #~ "The file you are trying to open is not in sorted order and may thus be "
@@ -3152,14 +3152,14 @@ msgstr "Översättning av %s"
 #~ msgid "Append"
 #~ msgstr "Lägg till"
 
-#~ msgid "Appended file starting from subtitle %d"
-#~ msgstr "Lade till fil från och med undertexten %d"
+#~ msgid "Appended file starting from subtitle {:d}"
+#~ msgstr "Lade till fil från och med undertexten {:d}"
 
 #~ msgid "Created a new project"
 #~ msgstr "Skapade ett nytt projekt"
 
-#~ msgid "Split %d subtitles to project \"%s\""
-#~ msgstr "Dela upp %d undertexter till projektet \"%s\""
+#~ msgid "Split {:d} subtitles to project \"{}\""
+#~ msgstr "Dela upp {:d} undertexter till projektet \"{}\""
 
 #~ msgid "Length of lines in the main text of the selected subtitle"
 #~ msgstr "Längd på rader i huvudtexten för den markerade undertexten"
@@ -3269,11 +3269,11 @@ msgstr "Översättning av %s"
 #~ msgid "_Replace..."
 #~ msgstr "_Ersätt..."
 
-#~ msgid "Undo %s"
-#~ msgstr "Ångra %s"
+#~ msgid "Undo {}"
+#~ msgstr "Ångra {}"
 
-#~ msgid "Redo %s"
-#~ msgstr "Gör om %s"
+#~ msgid "Redo {}"
+#~ msgstr "Gör om {}"
 
 #~ msgid "_Insert Subtitles..."
 #~ msgstr "_Infoga undertext..."
@@ -3319,23 +3319,23 @@ msgstr "Översättning av %s"
 #~ "MPsub-huvud måste innehålla en FORMAT-rad med ett värde av \"TIME\", "
 #~ "\"23.98\", \"25.00\" eller \"29.97\"."
 
-#~ msgid "Pattern \"%s\" not found"
-#~ msgstr "Mönstret \"%s\" hittades inte"
+#~ msgid "Pattern \"{}\" not found"
+#~ msgstr "Mönstret \"{}\" hittades inte"
 
-#~ msgid "Replaced %d occurences of \"%s\" with \"%s\""
-#~ msgstr "Ersatte %d förekomster av \"%s\" med \"%s\""
+#~ msgid "Replaced {:d} occurences of \"{}\" with \"{}\""
+#~ msgstr "Ersatte {:d} förekomster av \"{}\" med \"{}\""
 
 #~ msgid "Show In Menu"
 #~ msgstr "Visa i meny"
 
-#~ msgid "Failed to open editor \"%s\""
-#~ msgstr "Misslyckades med att öppna redigeraren \"%s\""
+#~ msgid "Failed to open editor \"{}\""
+#~ msgstr "Misslyckades med att öppna redigeraren \"{}\""
 
 #~ msgid ""
-#~ "To change the editor, edit configuration file \"%s\" under section \"debug"
+#~ "To change the editor, edit configuration file \"{}\" under section \"debug"
 #~ "\"."
 #~ msgstr ""
-#~ "För att ändra redigeraren, redigera konfigurationsfilen \"%s\" under "
+#~ "För att ändra redigeraren, redigera konfigurationsfilen \"{}\" under "
 #~ "sektionen \"debug\"."
 
 #~ msgid "Current frame:"
@@ -3356,8 +3356,8 @@ msgstr "Översättning av %s"
 #~ msgid "Co_rrect time:"
 #~ msgstr "Ko_rrekt tid:"
 
-#~ msgid "A file named \"%s\" already exists"
-#~ msgstr "En fil med namnet \"%s\" finns redan"
+#~ msgid "A file named \"{}\" already exists"
+#~ msgstr "En fil med namnet \"{}\" finns redan"
 
 #~ msgid "Do you want to replace it with the one you are saving?"
 #~ msgstr "Vill du ersätta den med den som du sparar?"
@@ -3368,8 +3368,8 @@ msgstr "Översättning av %s"
 #~ msgid "Plain text files"
 #~ msgstr "Vanliga textfiler"
 
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
+#~ msgid "{} ({})"
+#~ msgstr "{} ({})"
 
 #~ msgid "C_haracter encoding:"
 #~ msgstr "T_eckenkodning:"

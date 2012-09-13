@@ -1350,13 +1350,13 @@ msgstr "Unicode"
 
 #: ../aeidon/encodings.py:154
 #, python-format
-msgid "%(description)s (%(name)s)"
+msgid "{description} ({name})"
 msgstr ""
 
 #: ../aeidon/encodings.py:248
 #, python-format
-msgid "Current locale (%s)"
-msgstr "Local actual (%s)"
+msgid "Current locale ({})"
+msgstr "Local actual ({})"
 
 #: ../aeidon/enums/align.py:27 ../gaupol/enums/fields.py:30
 msgid "Subtitle number"
@@ -1388,7 +1388,7 @@ msgstr ""
 
 #: ../aeidon/locales.py:66
 #, python-format
-msgid "%(language)s (%(country)s)"
+msgid "{language} ({country})"
 msgstr ""
 
 #. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
@@ -1448,7 +1448,7 @@ msgstr ""
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
-msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgid "Calculate nonnative units with a framerate of {:.3f} fps"
 msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
@@ -2139,18 +2139,18 @@ msgstr ""
 
 #: ../gaupol/agents/close.py:48
 #, python-format
-msgid "Save changes to main document \"%s\" before closing?"
-msgstr "Desar els canvis al document principal \"%s\" abans de tancar?"
+msgid "Save changes to main document \"{}\" before closing?"
+msgstr "Desar els canvis al document principal \"{}\" abans de tancar?"
 
 #: ../gaupol/agents/close.py:77
 #, python-format
-msgid "Save changes to translation document \"%s\" before closing?"
-msgstr "Desar els canvis a la traducció \"%s\" abans de tancar?"
+msgid "Save changes to translation document \"{}\" before closing?"
+msgstr "Desar els canvis a la traducció \"{}\" abans de tancar?"
 
 #: ../gaupol/agents/edit.py:173
 #, python-format
-msgid "Inserted %d subtitle to fit clipboard contents"
-msgid_plural "Inserted %d subtitles to fit clipboard contents"
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2160,17 +2160,17 @@ msgstr ""
 
 #: ../gaupol/agents/menu.py:50
 #, python-format
-msgid "Activate \"%s\""
-msgstr "Activat \"%s\""
+msgid "Activate \"{}\""
+msgstr "Activat \"{}\""
 
 #: ../gaupol/agents/menu.py:76 ../gaupol/agents/update.py:157
 #, python-format
-msgid "Redo \"%s\""
+msgid "Redo \"{}\""
 msgstr ""
 
 #: ../gaupol/agents/menu.py:146 ../gaupol/agents/update.py:153
 #, python-format
-msgid "Undo \"%s\""
+msgid "Undo \"{}\""
 msgstr ""
 
 #: ../gaupol/agents/open.py:45
@@ -2179,14 +2179,14 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:60
 #, python-format
-msgid "File \"%s\" is already open"
-msgstr "El fitxer \"%s\" ja està obert"
+msgid "File \"{}\" is already open"
+msgstr "El fitxer \"{}\" ja està obert"
 
 #: ../gaupol/agents/open.py:273
 #, python-format
-msgid "Failed to decode file \"%s\" with all attempted codecs"
+msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr ""
-"S'ha produït un error al decodificar el fitxer \"%s\" amb tots els "
+"S'ha produït un error al decodificar el fitxer \"{}\" amb tots els "
 "codificadors provats"
 
 #: ../gaupol/agents/open.py:275
@@ -2195,8 +2195,8 @@ msgstr "Prova d'obrir el fitxer amb una codificació de caràcter diferent."
 
 #: ../gaupol/agents/open.py:283
 #, python-format
-msgid "Failed to recognize format of file \"%s\""
-msgstr "Format de fitxer desconegut per al fitxer \"%s\""
+msgid "Failed to recognize format of file \"{}\""
+msgstr "Format de fitxer desconegut per al fitxer \"{}\""
 
 #: ../gaupol/agents/open.py:284
 msgid ""
@@ -2208,52 +2208,52 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:292
 #, python-format
-msgid "Failed to open file \"%s\""
-msgstr "S'ha produït un error al obrir el fitxer \"%s\""
+msgid "Failed to open file \"{}\""
+msgstr "S'ha produït un error al obrir el fitxer \"{}\""
 
 #: ../gaupol/agents/open.py:299
 #, python-format
-msgid "Failed to parse file \"%s\""
+msgid "Failed to parse file \"{}\""
 msgstr ""
 
 #: ../gaupol/agents/open.py:300
 #, python-format
 msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
-"a valid %s file. If you think it is, file a bug report and attach the file."
+"a valid {} file. If you think it is, file a bug report and attach the file."
 msgstr ""
 
 #: ../gaupol/agents/open.py:312
 #, python-format
-msgid "Open abnormally large file \"%s\"?"
-msgstr "Obrir el fitxer desmesuradament llarg \"%s\"?"
+msgid "Open abnormally large file \"{}\"?"
+msgstr "Obrir el fitxer desmesuradament llarg \"{}\"?"
 
 #: ../gaupol/agents/open.py:313
 #, python-format
 msgid ""
-"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"La mida d'aquest fitxer és %.1f Mb, que és desmesuradament gran per a un "
+"La mida d'aquest fitxer és {:.1f} Mb, que és desmesuradament gran per a un "
 "fitxer de subtítols. Comprova que no estiguis obrint un fitxer binari."
 
 #: ../gaupol/agents/open.py:328
 #, python-format
-msgid "Open unsorted file \"%s\"?"
+msgid "Open unsorted file \"{}\"?"
 msgstr ""
 
 #: ../gaupol/agents/open.py:329
 #, python-format
 msgid ""
-"The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
+"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, the "
 "file may be erroneously composed."
 msgstr ""
 
 #: ../gaupol/agents/open.py:344
 #, python-format
-msgid "Save changes to translation document \"%s\" before opening a new one?"
+msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"Desar els canvis al document de traducció \"%s\" abans d'obrir-ne un de nou?"
+"Desar els canvis al document de traducció \"{}\" abans d'obrir-ne un de nou?"
 
 #: ../gaupol/agents/open.py:348
 msgid "Open _Without Saving"
@@ -2261,25 +2261,25 @@ msgstr "Obrir _sense desar"
 
 #: ../gaupol/agents/open.py:441
 #, python-format
-msgid "Appended %(amount)d subtitles from \"%(basename)s\""
+msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr ""
 
 #: ../gaupol/agents/open.py:480
 #, python-format
-msgid "Opened main file \"%s\""
-msgstr "Fitxer principal \"%s\" obert"
+msgid "Opened main file \"{}\""
+msgstr "Fitxer principal \"{}\" obert"
 
 #: ../gaupol/agents/open.py:499
 #, python-format
-msgid "Opened translation file \"%s\""
-msgstr "Fitxer de traducció \"%s\" obert"
+msgid "Opened translation file \"{}\""
+msgstr "Fitxer de traducció \"{}\" obert"
 
 #: ../gaupol/agents/preview.py:50
 #, python-format
-msgid "Failed to encode subtitle file to temporary directory \"%s\""
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
 "S'ha produït un error al codificar el fitxer de subtítols al directori "
-"temporal \"%s\""
+"temporal \"{}\""
 
 #: ../gaupol/agents/preview.py:52
 msgid ""
@@ -2290,10 +2290,10 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
-msgid "Failed to save subtitle file to temporary directory \"%s\""
+msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
 "S'ha produït un error al desar el fitxer de subtítols en un directori "
-"temporal \"%s\""
+"temporal \"{}\""
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
@@ -2305,7 +2305,7 @@ msgstr "Desats tots els documents oberts"
 
 #: ../gaupol/agents/save.py:129
 #, python-format
-msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr ""
 
 #: ../gaupol/agents/save.py:131
@@ -2314,8 +2314,8 @@ msgstr "Prova de desar el fitxer amb una codificació de caràcter diferent."
 
 #: ../gaupol/agents/save.py:139
 #, python-format
-msgid "Failed to save file \"%s\""
-msgstr "S'ha produït un error al desar \"%s\""
+msgid "Failed to save file \"{}\""
+msgstr "S'ha produït un error al desar \"{}\""
 
 #: ../gaupol/agents/save.py:156
 msgid "Saved main document"
@@ -2323,8 +2323,8 @@ msgstr "Desat el document principal"
 
 #: ../gaupol/agents/save.py:174
 #, python-format
-msgid "Saved main document as \"%s\""
-msgstr "Desat el document principal com a \"%s\""
+msgid "Saved main document as \"{}\""
+msgstr "Desat el document principal com a \"{}\""
 
 #: ../gaupol/agents/save.py:189
 msgid "Saved translation document"
@@ -2332,8 +2332,8 @@ msgstr "Desada la traducció"
 
 #: ../gaupol/agents/save.py:207
 #, python-format
-msgid "Saved translation document as \"%s\""
-msgstr "Desada la traducció com a \"%s\""
+msgid "Saved translation document as \"{}\""
+msgstr "Desada la traducció com a \"{}\""
 
 #: ../gaupol/application.py:171
 msgid "Framerate:"
@@ -2411,7 +2411,7 @@ msgstr ""
 
 #: ../gaupol/assistants.py:600 ../gaupol/dialogs/spellcheck.py:367
 #, python-format
-msgid "Failed to load dictionary for language \"%s\""
+msgid "Failed to load dictionary for language \"{}\""
 msgstr ""
 
 #: ../gaupol/assistants.py:629
@@ -2440,17 +2440,17 @@ msgstr ""
 
 #: ../gaupol/assistants.py:804
 #, python-format
-msgid "%(current)d of %(total)d tasks complete"
+msgid "{current:d} of {total:d} tasks complete"
 msgstr ""
 
 #: ../gaupol/assistants.py:812
 #, python-format
-msgid "Project: %s"
+msgid "Project: {}"
 msgstr ""
 
 #: ../gaupol/assistants.py:819
 #, python-format
-msgid "Task: %s"
+msgid "Task: {}"
 msgstr ""
 
 #: ../gaupol/assistants.py:841
@@ -2479,13 +2479,13 @@ msgstr ""
 
 #: ../gaupol/assistants.py:1064
 #, python-format
-msgid "Edited %(edits)d and removed %(removals)d subtitles"
+msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr ""
 
 #: ../gaupol/assistants.py:1098
 #, python-format
-msgid "Confirm %d Change"
-msgid_plural "Confirm %d Changes"
+msgid "Confirm {:d} Change"
+msgid_plural "Confirm {:d} Changes"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2517,8 +2517,8 @@ msgstr ""
 
 #: ../gaupol/dialogs/duration.py:69
 #, python-format
-msgid "Adjusted duration of %d subtitle"
-msgid_plural "Adjusted durations of %d subtitles"
+msgid "Adjusted duration of {:d} subtitle"
+msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2544,7 +2544,7 @@ msgstr ""
 
 #: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (*%(extension)s)"
+msgid "{format} (*{extension})"
 msgstr ""
 
 #: ../gaupol/dialogs/file.py:110
@@ -2579,19 +2579,19 @@ msgstr ""
 
 #: ../gaupol/dialogs/multisave.py:123
 #, python-format
-msgid "%d of the files to be saved already exist. Do you want to replace them?"
+msgid "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
 
 #: ../gaupol/dialogs/multisave.py:126
 #, python-format
 msgid ""
-"The files already exist in \"%s\". Replacing them will overwrite their "
+"The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:207
 #, python-format
-msgid "%s Extension Website"
+msgid "{} Extension Website"
 msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:235
@@ -2600,7 +2600,7 @@ msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:236
 #, python-format
-msgid "Extension \"%s\" is required by other extensions."
+msgid "Extension \"{}\" is required by other extensions."
 msgstr ""
 
 #: ../gaupol/dialogs/preferences.py:420
@@ -2609,7 +2609,7 @@ msgstr ""
 
 #: ../gaupol/dialogs/search.py:355
 #, python-format
-msgid "\"%s\" not found"
+msgid "\"{}\" not found"
 msgstr ""
 
 #: ../gaupol/dialogs/search.py:412
@@ -2622,8 +2622,8 @@ msgstr ""
 
 #: ../gaupol/dialogs/search.py:540
 #, python-format
-msgid "Found and replaced %d occurence"
-msgid_plural "Found and replaced %d occurences"
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2645,7 +2645,7 @@ msgstr ""
 
 #: ../gaupol/dialogs/split.py:99
 #, python-format
-msgid "Split %(amount)d subtitles to project \"%(name)s\""
+msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr ""
 
 #: ../gaupol/dialogs/textedit.py:46
@@ -2768,8 +2768,8 @@ msgstr "Sortida"
 
 #: ../gaupol/page.py:59
 #, python-format
-msgid "Untitled %d"
-msgstr "%d desconegut"
+msgid "Untitled {:d}"
+msgstr "{:d} desconegut"
 
 #: ../gaupol/page.py:123
 msgid "Close project"
@@ -2777,28 +2777,28 @@ msgstr ""
 
 #: ../gaupol/page.py:287
 #, python-format
-msgid "<b>Path:</b> %s"
+msgid "<b>Path:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:288
 #, python-format
-msgid "<b>Format:</b> %s"
+msgid "<b>Format:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:289
 #, python-format
-msgid "<b>Character encoding:</b> %s"
+msgid "<b>Character encoding:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:290
 #, python-format
-msgid "<b>Newlines:</b> %s"
+msgid "<b>Newlines:</b> {}"
 msgstr ""
 
 #: ../gaupol/page.py:322
 #, python-format
-msgid "%s translation"
-msgstr "%s traducció"
+msgid "{} translation"
+msgstr "{} traducció"
 
 #~ msgid "25 fps"
 #~ msgstr "25 fps"
@@ -3093,8 +3093,8 @@ msgstr "%s traducció"
 #~ msgid "Se_lect Video..."
 #~ msgstr "Se_lecciona un vídeo..."
 
-#~ msgid "Attempt to read file returned error: %s."
-#~ msgstr "Al intentar llegir el fitxer ha retornat l'error: %s."
+#~ msgid "Attempt to read file returned error: {}."
+#~ msgstr "Al intentar llegir el fitxer ha retornat l'error: {}."
 
 #~ msgid "Created a new project"
 #~ msgstr "S'ha creat un nou projecte"
@@ -3160,47 +3160,47 @@ msgstr "%s traducció"
 #~ msgid "Save a copy of the current translation document."
 #~ msgstr "Desa una còpia del document actual de traducció."
 
-#~ msgid "Attempt to write file returned error: %s."
-#~ msgstr "El intentar escriure el fitxer ha retornat l'error: %s."
+#~ msgid "Attempt to write file returned error: {}."
+#~ msgstr "El intentar escriure el fitxer ha retornat l'error: {}."
 
-#~ msgid "Failed to encode file \"%s\" with codec \"%s\""
+#~ msgid "Failed to encode file \"{}\" with codec \"{}\""
 #~ msgstr ""
-#~ "S'ha produït un error al codificar el fitxer \"%s\" amb la codificació "
-#~ "\"%s\""
+#~ "S'ha produït un error al codificar el fitxer \"{}\" amb la codificació "
+#~ "\"{}\""
 
-#~ msgid "%s (copy)"
-#~ msgstr "%s (còpia)"
+#~ msgid "{} (copy)"
+#~ msgstr "{} (còpia)"
 
 #~ msgid "Save A Copy"
 #~ msgstr "Desa una còpia"
 
-#~ msgid "Saved a copy main document to \"%s\""
-#~ msgstr "Desada una còpia del document principal a \"%s\""
+#~ msgid "Saved a copy main document to \"{}\""
+#~ msgstr "Desada una còpia del document principal a \"{}\""
 
 #~ msgid "Save A Copy Of Translation"
 #~ msgstr "Desa una còpia de la traducció"
 
-#~ msgid "Saved a copy translation document to \"%s\""
-#~ msgstr "Desada una còpia de la traducció a \"%s"
+#~ msgid "Saved a copy translation document to \"{}\""
+#~ msgstr "Desada una còpia de la traducció a \"{}"
 
-#~ msgid "Open main file \"%s\""
-#~ msgstr "Obrint el fitxer principal \"%s\""
+#~ msgid "Open main file \"{}\""
+#~ msgstr "Obrint el fitxer principal \"{}\""
 
-#~ msgid "Undo up to %s"
-#~ msgstr "Desfés fins a %s"
+#~ msgid "Undo up to {}"
+#~ msgstr "Desfés fins a {}"
 
-#~ msgid "Redo up to %s"
-#~ msgstr "Torna a fer fins a %s"
+#~ msgid "Redo up to {}"
+#~ msgstr "Torna a fer fins a {}"
 
 #~ msgid ""
 #~ "Because the subtitle document you're trying to preview is changed, it "
 #~ "needs to be saved to a temporary file before previewing. Attempt to write "
-#~ "that temporary file returned error: %s."
+#~ "that temporary file returned error: {}."
 #~ msgstr ""
 #~ "Com que el document de subtítols que estàs intentant previsualitzar ha "
 #~ "canviat, es necessita desar en un fitxer temporal abans de "
 #~ "previsualitzar. Al intentar escriure aquest fitxer temporal s'ha retornat "
-#~ "l'error: %s."
+#~ "l'error: {}."
 
 #~ msgid ""
 #~ "Because the subtitle document you're trying to preview is changed, it "
@@ -3243,11 +3243,11 @@ msgstr "%s traducció"
 #~ msgid "Redo several undone actions"
 #~ msgstr "Torna a fer moltes accions"
 
-#~ msgid "Undo %s"
-#~ msgstr "Desfés %s"
+#~ msgid "Undo {}"
+#~ msgstr "Desfés {}"
 
-#~ msgid "Redo %s"
-#~ msgstr "Torna a fer %s"
+#~ msgid "Redo {}"
+#~ msgstr "Torna a fer {}"
 
 #~ msgid "Undo the last done action"
 #~ msgstr "Torna a fer l'última acció"
@@ -3280,14 +3280,14 @@ msgstr "%s traducció"
 #~ msgstr "Tens la última versió"
 
 #~ msgid ""
-#~ "The latest version is %s.\n"
-#~ "You are using %s."
+#~ "The latest version is {}.\n"
+#~ "You are using {}."
 #~ msgstr ""
-#~ "La última versió és %s.\n"
-#~ "Estàs fent servir la versió %s."
+#~ "La última versió és {}.\n"
+#~ "Estàs fent servir la versió {}."
 
-#~ msgid "Trying to connect to URL \"%s\" returned error: %s."
-#~ msgstr "Al provar de connectar a la URL \"%s\" ha retornat l'error: %s"
+#~ msgid "Trying to connect to URL \"{}\" returned error: {}."
+#~ msgstr "Al provar de connectar a la URL \"{}\" ha retornat l'error: {}"
 
 #~ msgid ""
 #~ "Operation timed out. Please try again later or proceed to the download "
@@ -3296,8 +3296,8 @@ msgstr "%s traducció"
 #~ "S'ha esgotat el temps per a l'operació. Prova-ho més tard o vés a la "
 #~ "pàgina de descàrrega."
 
-#~ msgid "No version information found at URL \"%s\"."
-#~ msgstr "No s'ha trobat informació de la versió a la URL \"%s\"."
+#~ msgid "No version information found at URL \"{}\"."
+#~ msgstr "No s'ha trobat informació de la versió a la URL \"{}\"."
 
 #~ msgid "Co_nfigure Spell-check"
 #~ msgstr "Co_nfigrua el verificador ortogràfic"
@@ -3309,8 +3309,8 @@ msgstr "%s traducció"
 #~ msgid "Show In Menu"
 #~ msgstr "Mostra en el menú"
 
-#~ msgid "A file named \"%s\" already exists"
-#~ msgstr "El nom de fitxer \"%s\" ja existeix"
+#~ msgid "A file named \"{}\" already exists"
+#~ msgstr "El nom de fitxer \"{}\" ja existeix"
 
 #~ msgid "Do you want to replace it with the one you are saving?"
 #~ msgstr "Vols reemplaçar-lo amb el que estàs desant?"
@@ -3318,8 +3318,8 @@ msgstr "%s traducció"
 #~ msgid "Plain text files"
 #~ msgstr "Fitxers de text pla"
 
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
+#~ msgid "{} ({})"
+#~ msgstr "{} ({})"
 
 #~ msgid "Other..."
 #~ msgstr "Altres..."
@@ -3327,25 +3327,25 @@ msgstr "%s traducció"
 #~ msgid "Fo_rmat:"
 #~ msgstr "Fo_rmat:"
 
-#~ msgid "Failed to open editor \"%s\""
-#~ msgstr "S'ha produït un error al obrir l'editor \"%s\""
+#~ msgid "Failed to open editor \"{}\""
+#~ msgstr "S'ha produït un error al obrir l'editor \"{}\""
 
 #~ msgid ""
 #~ "Currently only \"gvim\" and \"emacs\" editors are supported. If you don't "
-#~ "like this, file a bug report. To change the editor, edit file \"%s\" "
+#~ "like this, file a bug report. To change the editor, edit file \"{}\" "
 #~ "under section \"general\"."
 #~ msgstr ""
 #~ "Actualment només els editors \"gvim\" i l' \"emacs\" estan suportats. Si "
-#~ "no t'agraden, reporta un error. Per canviar l'editor, edita el fitxer \"%s"
+#~ "no t'agraden, reporta un error. Per canviar l'editor, edita el fitxer \"{}"
 #~ "\"en la secció \"general\"."
 
 #~ msgid "Failed to start spell-check"
 #~ msgstr "S'ha produït un error al iniciar el verificador ortogràfic"
 
-#~ msgid "Dictionary initialization for language \"%s\" returned error: %s."
+#~ msgid "Dictionary initialization for language \"{}\" returned error: {}."
 #~ msgstr ""
-#~ "La inicialització del diccionari per a l'idioma \"%s\" ha retornat "
-#~ "l'error: %s."
+#~ "La inicialització del diccionari per a l'idioma \"{}\" ha retornat "
+#~ "l'error: {}."
 
 #~ msgid "Unrecognized subtitle file format"
 #~ msgstr "Format de fitxer de subtítols desconegut"

@@ -1378,13 +1378,13 @@ msgstr "Unicode"
 
 #: ../aeidon/encodings.py:154
 #, python-format
-msgid "%(description)s (%(name)s)"
-msgstr "%(description)s (%(name)s)"
+msgid "{description} ({name})"
+msgstr "{description} ({name})"
 
 #: ../aeidon/encodings.py:248
 #, python-format
-msgid "Current locale (%s)"
-msgstr "Aktuelle Locale (%s)"
+msgid "Current locale ({})"
+msgstr "Aktuelle Locale ({})"
 
 #: ../aeidon/enums/align.py:27 ../gaupol/enums/fields.py:30
 msgid "Subtitle number"
@@ -1416,8 +1416,8 @@ msgstr "Mac (klassisch)"
 
 #: ../aeidon/locales.py:66
 #, python-format
-msgid "%(language)s (%(country)s)"
-msgstr "%(language)s (%(country)s)"
+msgid "{language} ({country})"
+msgstr "{language} ({country})"
 
 #. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
 #. of a tree view column that contains 16 pixels wide pixbufs.
@@ -1476,7 +1476,7 @@ msgstr "Suche:"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
-msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgid "Calculate nonnative units with a framerate of {:.3f} fps"
 msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
@@ -2174,20 +2174,20 @@ msgstr "Die Video-Werkzeugleiste anzeigen oder verstecken"
 
 #: ../gaupol/agents/close.py:48
 #, python-format
-msgid "Save changes to main document \"%s\" before closing?"
-msgstr "Änderungen am Hauptdokument »%s« vor dem Beenden speichern?"
+msgid "Save changes to main document \"{}\" before closing?"
+msgstr "Änderungen am Hauptdokument »{}« vor dem Beenden speichern?"
 
 #: ../gaupol/agents/close.py:77
 #, python-format
-msgid "Save changes to translation document \"%s\" before closing?"
-msgstr "Änderungen am Übersetzungdokument »%s« vor dem Beenden speichern?"
+msgid "Save changes to translation document \"{}\" before closing?"
+msgstr "Änderungen am Übersetzungdokument »{}« vor dem Beenden speichern?"
 
 #: ../gaupol/agents/edit.py:173
 #, python-format
-msgid "Inserted %d subtitle to fit clipboard contents"
-msgid_plural "Inserted %d subtitles to fit clipboard contents"
-msgstr[0] "%d Untertitel eingefügt, um Zwischenablageninhalte anzupassen"
-msgstr[1] "%d Untertitel eingefügt, um Zwischenablageninhalte anzupassen"
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
+msgstr[0] "{:d} Untertitel eingefügt, um Zwischenablageninhalte anzupassen"
+msgstr[1] "{:d} Untertitel eingefügt, um Zwischenablageninhalte anzupassen"
 
 #: ../gaupol/agents/edit.py:280
 msgid "Use Shift+Return for line-break"
@@ -2195,18 +2195,18 @@ msgstr "Feststelltaste+Eingabetaste für Zeilenumbruch benutzen"
 
 #: ../gaupol/agents/menu.py:50
 #, python-format
-msgid "Activate \"%s\""
-msgstr "»%s« aktivieren"
+msgid "Activate \"{}\""
+msgstr "»{}« aktivieren"
 
 #: ../gaupol/agents/menu.py:76 ../gaupol/agents/update.py:157
 #, python-format
-msgid "Redo \"%s\""
-msgstr "»%s« nochmal machen"
+msgid "Redo \"{}\""
+msgstr "»{}« nochmal machen"
 
 #: ../gaupol/agents/menu.py:146 ../gaupol/agents/update.py:153
 #, python-format
-msgid "Undo \"%s\""
-msgstr "»%s« rückgängig machen"
+msgid "Undo \"{}\""
+msgstr "»{}« rückgängig machen"
 
 #: ../gaupol/agents/open.py:45
 msgid "Appending file"
@@ -2214,13 +2214,13 @@ msgstr "Datei anhängen"
 
 #: ../gaupol/agents/open.py:60
 #, python-format
-msgid "File \"%s\" is already open"
-msgstr "Datei »%s« ist bereits geöffnet"
+msgid "File \"{}\" is already open"
+msgstr "Datei »{}« ist bereits geöffnet"
 
 #: ../gaupol/agents/open.py:273
 #, python-format
-msgid "Failed to decode file \"%s\" with all attempted codecs"
-msgstr "Dekodierung der Datei »%s« mit allen versuchten Codecs fehlgeschlagen"
+msgid "Failed to decode file \"{}\" with all attempted codecs"
+msgstr "Dekodierung der Datei »{}« mit allen versuchten Codecs fehlgeschlagen"
 
 #: ../gaupol/agents/open.py:275
 msgid "Please try to open the file with a different character encoding."
@@ -2229,8 +2229,8 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:283
 #, python-format
-msgid "Failed to recognize format of file \"%s\""
-msgstr "Das Format der Datei »%s« konnte nicht erkannt werden"
+msgid "Failed to recognize format of file \"{}\""
+msgstr "Das Format der Datei »{}« konnte nicht erkannt werden"
 
 #: ../gaupol/agents/open.py:284
 msgid ""
@@ -2242,59 +2242,59 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:292
 #, python-format
-msgid "Failed to open file \"%s\""
-msgstr "Öffnen der Datei »%s« fehlgeschlagen"
+msgid "Failed to open file \"{}\""
+msgstr "Öffnen der Datei »{}« fehlgeschlagen"
 
 #: ../gaupol/agents/open.py:299
 #, python-format
-msgid "Failed to parse file \"%s\""
-msgstr "Auswerten der Datei »%s« fehlgeschlagen"
+msgid "Failed to parse file \"{}\""
+msgstr "Auswerten der Datei »{}« fehlgeschlagen"
 
 #: ../gaupol/agents/open.py:300
 #, python-format
 msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
-"a valid %s file. If you think it is, file a bug report and attach the file."
+"a valid {} file. If you think it is, file a bug report and attach the file."
 msgstr ""
 "Bitte prüfen Sie, z.B. mit einem Texteditor, ob die Datei, die Sie öffnen "
-"möchten, eine gültige %s-Datei ist. Wenn Sie meinen, es sei eine, senden Sie "
+"möchten, eine gültige {}-Datei ist. Wenn Sie meinen, es sei eine, senden Sie "
 "einen Fehlerbericht und hängen Sie die Datei an."
 
 #: ../gaupol/agents/open.py:312
 #, python-format
-msgid "Open abnormally large file \"%s\"?"
-msgstr "Außergewöhnlich große Datei »%s« öffnen?"
+msgid "Open abnormally large file \"{}\"?"
+msgstr "Außergewöhnlich große Datei »{}« öffnen?"
 
 #: ../gaupol/agents/open.py:313
 #, python-format
 msgid ""
-"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"Die Datei ist %.1f MB groß, was für eine textbasierte Untertiteldatei "
+"Die Datei ist {:.1f} MB groß, was für eine textbasierte Untertiteldatei "
 "außerordentlich viel ist. Bitte prüfen Sie, ob sie nicht versuchen, eine "
 "Binärdatei zu öffnen."
 
 #: ../gaupol/agents/open.py:328
 #, python-format
-msgid "Open unsorted file \"%s\"?"
-msgstr "Unsortierte Datei »%s« öffnen?"
+msgid "Open unsorted file \"{}\"?"
+msgstr "Unsortierte Datei »{}« öffnen?"
 
 #: ../gaupol/agents/open.py:329
 #, python-format
 msgid ""
-"The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
+"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, the "
 "file may be erroneously composed."
 msgstr ""
-"Die Reihenfolge von %d Untertiteln muss geändert werden. Wenn %d klingt, als "
+"Die Reihenfolge von {:d} Untertiteln muss geändert werden. Wenn {:d} klingt, als "
 "ob es viel sei, könnte die Datei irrtümlicherweise zusammengesetzt worden "
 "sein."
 
 #: ../gaupol/agents/open.py:344
 #, python-format
-msgid "Save changes to translation document \"%s\" before opening a new one?"
+msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"Änderungen in der Übersetzungsdatei »%s« speichern, bevor eine neue geöffnet "
+"Änderungen in der Übersetzungsdatei »{}« speichern, bevor eine neue geöffnet "
 "wird?"
 
 #: ../gaupol/agents/open.py:348
@@ -2303,24 +2303,24 @@ msgstr "Öffnen _ohne zu speichern"
 
 #: ../gaupol/agents/open.py:441
 #, python-format
-msgid "Appended %(amount)d subtitles from \"%(basename)s\""
-msgstr "%(amount)d Untertitel von »%(basename)s« angehängt"
+msgid "Appended {amount:d} subtitles from \"{basename}\""
+msgstr "{amount:d} Untertitel von »{basename}« angehängt"
 
 #: ../gaupol/agents/open.py:480
 #, python-format
-msgid "Opened main file \"%s\""
-msgstr "Geöffnete Hauptdatei »%s«"
+msgid "Opened main file \"{}\""
+msgstr "Geöffnete Hauptdatei »{}«"
 
 #: ../gaupol/agents/open.py:499
 #, python-format
-msgid "Opened translation file \"%s\""
-msgstr "Geöffnete Übersetzungsdatei »%s«"
+msgid "Opened translation file \"{}\""
+msgstr "Geöffnete Übersetzungsdatei »{}«"
 
 #: ../gaupol/agents/preview.py:50
 #, python-format
-msgid "Failed to encode subtitle file to temporary directory \"%s\""
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
-"Kodieren der Untertiteldatei in das temporäre Verzeichnis »%s« fehlgeschlagen"
+"Kodieren der Untertiteldatei in das temporäre Verzeichnis »{}« fehlgeschlagen"
 
 #: ../gaupol/agents/preview.py:52
 msgid ""
@@ -2334,9 +2334,9 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
-msgid "Failed to save subtitle file to temporary directory \"%s\""
+msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
-"Speichern der Untertiteldatei in das temporäre Verzeichnis »%s« "
+"Speichern der Untertiteldatei in das temporäre Verzeichnis »{}« "
 "fehlgeschlagen"
 
 #: ../gaupol/agents/preview.py:69
@@ -2349,8 +2349,8 @@ msgstr "Alle offenen Dokumente gespeichert"
 
 #: ../gaupol/agents/save.py:129
 #, python-format
-msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
-msgstr "Kodieren der Datei »%(basename)s« mit Codec »%(codec)s« fehlgeschlagen"
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
+msgstr "Kodieren der Datei »{basename}« mit Codec »{codec}« fehlgeschlagen"
 
 #: ../gaupol/agents/save.py:131
 msgid "Please try to save the file with a different character encoding."
@@ -2359,8 +2359,8 @@ msgstr ""
 
 #: ../gaupol/agents/save.py:139
 #, python-format
-msgid "Failed to save file \"%s\""
-msgstr "Speichern von Datei »%s« fehlgeschlagen"
+msgid "Failed to save file \"{}\""
+msgstr "Speichern von Datei »{}« fehlgeschlagen"
 
 #: ../gaupol/agents/save.py:156
 msgid "Saved main document"
@@ -2368,8 +2368,8 @@ msgstr "Hauptdokument gespeichert"
 
 #: ../gaupol/agents/save.py:174
 #, python-format
-msgid "Saved main document as \"%s\""
-msgstr "Hauptdokument als »%s« gespeichert"
+msgid "Saved main document as \"{}\""
+msgstr "Hauptdokument als »{}« gespeichert"
 
 #: ../gaupol/agents/save.py:189
 msgid "Saved translation document"
@@ -2377,8 +2377,8 @@ msgstr "Übersetzungsdokument gespeichert"
 
 #: ../gaupol/agents/save.py:207
 #, python-format
-msgid "Saved translation document as \"%s\""
-msgstr "Übersetzungsdokument als »%s« gespeichert"
+msgid "Saved translation document as \"{}\""
+msgstr "Übersetzungsdokument als »{}« gespeichert"
 
 #: ../gaupol/application.py:171
 msgid "Framerate:"
@@ -2460,8 +2460,8 @@ msgstr "Wörter zusammensetzen oder trennen"
 
 #: ../gaupol/assistants.py:600 ../gaupol/dialogs/spellcheck.py:367
 #, python-format
-msgid "Failed to load dictionary for language \"%s\""
-msgstr "Laden des Wörterbuchs für die Sprache »%s« fehlgeschlagen."
+msgid "Failed to load dictionary for language \"{}\""
+msgstr "Laden des Wörterbuchs für die Sprache »{}« fehlgeschlagen."
 
 #: ../gaupol/assistants.py:629
 msgid "Break text into lines of defined length"
@@ -2489,18 +2489,18 @@ msgstr "Jede Aufgabe wird nun für jedes Projekt ausgeführt."
 
 #: ../gaupol/assistants.py:804
 #, python-format
-msgid "%(current)d of %(total)d tasks complete"
-msgstr "%(current)d von %(total)d Aufgaben komplett"
+msgid "{current:d} of {total:d} tasks complete"
+msgstr "{current:d} von {total:d} Aufgaben komplett"
 
 #: ../gaupol/assistants.py:812
 #, python-format
-msgid "Project: %s"
-msgstr "Projekt: %s"
+msgid "Project: {}"
+msgstr "Projekt: {}"
 
 #: ../gaupol/assistants.py:819
 #, python-format
-msgid "Task: %s"
-msgstr "Aufgabe: %s"
+msgid "Task: {}"
+msgstr "Aufgabe: {}"
 
 #: ../gaupol/assistants.py:841
 msgid "Confirm Changes"
@@ -2528,15 +2528,15 @@ msgstr "Texte werden korrigiert"
 
 #: ../gaupol/assistants.py:1064
 #, python-format
-msgid "Edited %(edits)d and removed %(removals)d subtitles"
-msgstr "%(edits)d Untertitel bearbeitet und %(removals)d entfernt"
+msgid "Edited {edits:d} and removed {removals:d} subtitles"
+msgstr "{edits:d} Untertitel bearbeitet und {removals:d} entfernt"
 
 #: ../gaupol/assistants.py:1098
 #, python-format
-msgid "Confirm %d Change"
-msgid_plural "Confirm %d Changes"
-msgstr[0] "%d Änderung bestätigen"
-msgstr[1] "%d Änderungen bestätigen"
+msgid "Confirm {:d} Change"
+msgid_plural "Confirm {:d} Changes"
+msgstr[0] "{:d} Änderung bestätigen"
+msgstr[1] "{:d} Änderungen bestätigen"
 
 #: ../gaupol/dialogs/about.py:48
 msgid "About Gaupol"
@@ -2566,10 +2566,10 @@ msgstr "Datei anhängen"
 
 #: ../gaupol/dialogs/duration.py:69
 #, python-format
-msgid "Adjusted duration of %d subtitle"
-msgid_plural "Adjusted durations of %d subtitles"
-msgstr[0] "Laufzeit von %d Untertitel anpassen"
-msgstr[1] "Laufzeit von %d Untertiteln anpassen"
+msgid "Adjusted duration of {:d} subtitle"
+msgid_plural "Adjusted durations of {:d} subtitles"
+msgstr[0] "Laufzeit von {:d} Untertitel anpassen"
+msgstr[1] "Laufzeit von {:d} Untertiteln anpassen"
 
 #: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:100
 msgid "Description"
@@ -2593,8 +2593,8 @@ msgstr "Alle unterstützten Dateien"
 
 #: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (*%(extension)s)"
-msgstr "%(format)s (*%(extension)s)"
+msgid "{format} (*{extension})"
+msgstr "{format} (*{extension})"
 
 #: ../gaupol/dialogs/file.py:110
 msgid "Auto-detected"
@@ -2630,23 +2630,23 @@ msgstr "Sprache setzen"
 
 #: ../gaupol/dialogs/multisave.py:123
 #, python-format
-msgid "%d of the files to be saved already exist. Do you want to replace them?"
+msgid "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
-"%d der zu speichernden Dateien existieren bereits. Möchten Sie sie ersetzen?"
+"{:d} der zu speichernden Dateien existieren bereits. Möchten Sie sie ersetzen?"
 
 #: ../gaupol/dialogs/multisave.py:126
 #, python-format
 msgid ""
-"The files already exist in \"%s\". Replacing them will overwrite their "
+"The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
-"Die Dateien exisiteren bereits in »%s«. Sie zu ersetzen wird ihren Inhalt "
+"Die Dateien exisiteren bereits in »{}«. Sie zu ersetzen wird ihren Inhalt "
 "überschreiben."
 
 #: ../gaupol/dialogs/preferences.py:207
 #, python-format
-msgid "%s Extension Website"
-msgstr "%s-Website-Erweiterung"
+msgid "{} Extension Website"
+msgstr "{}-Website-Erweiterung"
 
 #: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
@@ -2654,8 +2654,8 @@ msgstr "Erweiterung kann nicht deaktiviert werden"
 
 #: ../gaupol/dialogs/preferences.py:236
 #, python-format
-msgid "Extension \"%s\" is required by other extensions."
-msgstr "Erweiterung »%s« wird von anderen Erweiterungen benötigt."
+msgid "Extension \"{}\" is required by other extensions."
+msgstr "Erweiterung »{}« wird von anderen Erweiterungen benötigt."
 
 #: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
@@ -2663,8 +2663,8 @@ msgstr "Angepasst"
 
 #: ../gaupol/dialogs/search.py:355
 #, python-format
-msgid "\"%s\" not found"
-msgstr "»%s« nicht gefunden"
+msgid "\"{}\" not found"
+msgstr "»{}« nicht gefunden"
 
 #: ../gaupol/dialogs/search.py:412
 msgid "Error in regular expression pattern"
@@ -2676,10 +2676,10 @@ msgstr "Fehler in Ersetzung von regulärem Ausdruck"
 
 #: ../gaupol/dialogs/search.py:540
 #, python-format
-msgid "Found and replaced %d occurence"
-msgid_plural "Found and replaced %d occurences"
-msgstr[0] "%d Vorkommen gefunden und ersetzt"
-msgstr[1] "%d Vorkommen gefunden und ersetzt"
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
+msgstr[0] "{:d} Vorkommen gefunden und ersetzt"
+msgstr[1] "{:d} Vorkommen gefunden und ersetzt"
 
 #: ../gaupol/dialogs/shift.py:138
 msgid "frames"
@@ -2699,8 +2699,8 @@ msgstr "Projekt teilen"
 
 #: ../gaupol/dialogs/split.py:99
 #, python-format
-msgid "Split %(amount)d subtitles to project \"%(name)s\""
-msgstr "%(amount)d Untertitel zu Projekt »%(name)s« teilen"
+msgid "Split {amount:d} subtitles to project \"{name}\""
+msgstr "{amount:d} Untertitel zu Projekt »{name}« teilen"
 
 #: ../gaupol/dialogs/textedit.py:46
 msgid "Edit Text"
@@ -2824,8 +2824,8 @@ msgstr "Ausgabe"
 
 #: ../gaupol/page.py:59
 #, python-format
-msgid "Untitled %d"
-msgstr "Ohne Titel %d"
+msgid "Untitled {:d}"
+msgstr "Ohne Titel {:d}"
 
 #: ../gaupol/page.py:123
 msgid "Close project"
@@ -2833,28 +2833,28 @@ msgstr "Projekt schließen"
 
 #: ../gaupol/page.py:287
 #, python-format
-msgid "<b>Path:</b> %s"
-msgstr "<b>Pfad:</b> %s"
+msgid "<b>Path:</b> {}"
+msgstr "<b>Pfad:</b> {}"
 
 #: ../gaupol/page.py:288
 #, python-format
-msgid "<b>Format:</b> %s"
-msgstr "<b>Format:</b> %s"
+msgid "<b>Format:</b> {}"
+msgstr "<b>Format:</b> {}"
 
 #: ../gaupol/page.py:289
 #, python-format
-msgid "<b>Character encoding:</b> %s"
-msgstr "<b>Zeichenkodierung:</b> %s"
+msgid "<b>Character encoding:</b> {}"
+msgstr "<b>Zeichenkodierung:</b> {}"
 
 #: ../gaupol/page.py:290
 #, python-format
-msgid "<b>Newlines:</b> %s"
-msgstr "<b>Zeilenumbrüche:</b> %s"
+msgid "<b>Newlines:</b> {}"
+msgstr "<b>Zeilenumbrüche:</b> {}"
 
 #: ../gaupol/page.py:322
 #, python-format
-msgid "%s translation"
-msgstr "%s-Übersetzung"
+msgid "{} translation"
+msgstr "{}-Übersetzung"
 
 #~ msgid "Tasks"
 #~ msgstr "Aufgaben"

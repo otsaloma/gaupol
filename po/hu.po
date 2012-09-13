@@ -1403,13 +1403,13 @@ msgstr "Unicode"
 
 #: ../aeidon/encodings.py:154
 #, python-format
-msgid "%(description)s (%(name)s)"
-msgstr "%(description)s (%(name)s)"
+msgid "{description} ({name})"
+msgstr "{description} ({name})"
 
 #: ../aeidon/encodings.py:248
 #, python-format
-msgid "Current locale (%s)"
-msgstr "Aktuális hely (%s)"
+msgid "Current locale ({})"
+msgstr "Aktuális hely ({})"
 
 #: ../aeidon/enums/align.py:27
 #: ../gaupol/enums/fields.py:30
@@ -1442,8 +1442,8 @@ msgstr "Mac (klasszikus)"
 
 #: ../aeidon/locales.py:66
 #, python-format
-msgid "%(language)s (%(country)s)"
-msgstr "%(language)s (%(country)s)"
+msgid "{language} ({country})"
+msgstr "{language} ({country})"
 
 #. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
 #. of a tree view column that contains 16 pixels wide pixbufs.
@@ -1504,8 +1504,8 @@ msgstr "Keres:"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
-msgid "Calculate nonnative units with a framerate of %.3f fps"
-msgstr "Nem-natív egységek számolása %.3f képfrissítéssel (fps)"
+msgid "Calculate nonnative units with a framerate of {:.3f} fps"
+msgstr "Nem-natív egységek számolása {:.3f} képfrissítéssel (fps)"
 
 #: ../data/extensions/side-pane/side-pane.py:295
 msgid "Si_de Pane"
@@ -2201,20 +2201,20 @@ msgstr "Videó eszköztár megjelenítése vagy elrejtése"
 
 #: ../gaupol/agents/close.py:48
 #, python-format
-msgid "Save changes to main document \"%s\" before closing?"
-msgstr "Menti a dokumentumot »%s« bezárás előtt?"
+msgid "Save changes to main document \"{}\" before closing?"
+msgstr "Menti a dokumentumot »{}« bezárás előtt?"
 
 #: ../gaupol/agents/close.py:77
 #, python-format
-msgid "Save changes to translation document \"%s\" before closing?"
-msgstr "Menti a fordítási dokumentumot »%s« bezárás előtt?"
+msgid "Save changes to translation document \"{}\" before closing?"
+msgstr "Menti a fordítási dokumentumot »{}« bezárás előtt?"
 
 #: ../gaupol/agents/edit.py:173
 #, python-format
-msgid "Inserted %d subtitle to fit clipboard contents"
-msgid_plural "Inserted %d subtitles to fit clipboard contents"
-msgstr[0] "%d feliratsor beszúrása vágólapról"
-msgstr[1] "%d feliratsor beszúrása vágólapról"
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
+msgstr[0] "{:d} feliratsor beszúrása vágólapról"
+msgstr[1] "{:d} feliratsor beszúrása vágólapról"
 
 #: ../gaupol/agents/edit.py:280
 msgid "Use Shift+Return for line-break"
@@ -2222,20 +2222,20 @@ msgstr "Shift+Enter - Sortörés"
 
 #: ../gaupol/agents/menu.py:50
 #, python-format
-msgid "Activate \"%s\""
-msgstr "»%s« aktiválása"
+msgid "Activate \"{}\""
+msgstr "»{}« aktiválása"
 
 #: ../gaupol/agents/menu.py:76
 #: ../gaupol/agents/update.py:157
 #, python-format
-msgid "Redo \"%s\""
-msgstr "»%s« ismétlése"
+msgid "Redo \"{}\""
+msgstr "»{}« ismétlése"
 
 #: ../gaupol/agents/menu.py:146
 #: ../gaupol/agents/update.py:153
 #, python-format
-msgid "Undo \"%s\""
-msgstr "»%s« visszavonása"
+msgid "Undo \"{}\""
+msgstr "»{}« visszavonása"
 
 #: ../gaupol/agents/open.py:45
 msgid "Appending file"
@@ -2243,13 +2243,13 @@ msgstr "Fájl hozzáfűzése"
 
 #: ../gaupol/agents/open.py:60
 #, python-format
-msgid "File \"%s\" is already open"
-msgstr "A fájl »%s« már megnyitva"
+msgid "File \"{}\" is already open"
+msgstr "A fájl »{}« már megnyitva"
 
 #: ../gaupol/agents/open.py:273
 #, python-format
-msgid "Failed to decode file \"%s\" with all attempted codecs"
-msgstr "A fájl dekódolása »%s« a megadott Kodek-kel nem sikerült"
+msgid "Failed to decode file \"{}\" with all attempted codecs"
+msgstr "A fájl dekódolása »{}« a megadott Kodek-kel nem sikerült"
 
 #: ../gaupol/agents/open.py:275
 msgid "Please try to open the file with a different character encoding."
@@ -2257,8 +2257,8 @@ msgstr "Próbálja megnyitni a fájlt más karakterkódolással."
 
 #: ../gaupol/agents/open.py:283
 #, python-format
-msgid "Failed to recognize format of file \"%s\""
-msgstr "A fájl formátuma »%s« ismeretlen"
+msgid "Failed to recognize format of file \"{}\""
+msgstr "A fájl formátuma »{}« ismeretlen"
 
 #: ../gaupol/agents/open.py:284
 msgid "Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol."
@@ -2266,43 +2266,43 @@ msgstr "Ellenőrizze, hogy a fájl a Gaupol által támogatott felirat fájl-e."
 
 #: ../gaupol/agents/open.py:292
 #, python-format
-msgid "Failed to open file \"%s\""
-msgstr "A fájl megnyitása »%s« nem sikerült"
+msgid "Failed to open file \"{}\""
+msgstr "A fájl megnyitása »{}« nem sikerült"
 
 #: ../gaupol/agents/open.py:299
 #, python-format
-msgid "Failed to parse file \"%s\""
-msgstr "A fájl elemzése »%s« nem sikerült"
+msgid "Failed to parse file \"{}\""
+msgstr "A fájl elemzése »{}« nem sikerült"
 
 #: ../gaupol/agents/open.py:300
 #, python-format
-msgid "Please check, e.g. with a text editor, that the file you are trying open is a valid %s file. If you think it is, file a bug report and attach the file."
-msgstr "Ellenőrizze, pl. szövegszerkesztővel, hogy a megnyitandó fájl érvényes %s fájl-e. Ha úgy gondolja igen, küldje a hibalistára csatolmányként."
+msgid "Please check, e.g. with a text editor, that the file you are trying open is a valid {} file. If you think it is, file a bug report and attach the file."
+msgstr "Ellenőrizze, pl. szövegszerkesztővel, hogy a megnyitandó fájl érvényes {} fájl-e. Ha úgy gondolja igen, küldje a hibalistára csatolmányként."
 
 #: ../gaupol/agents/open.py:312
 #, python-format
-msgid "Open abnormally large file \"%s\"?"
-msgstr "Ez túl nagy fájl »%s«, megnyitja?"
+msgid "Open abnormally large file \"{}\"?"
+msgstr "Ez túl nagy fájl »{}«, megnyitja?"
 
 #: ../gaupol/agents/open.py:313
 #, python-format
-msgid "Size of the file is %.1f MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file."
-msgstr "A fájl mérete %.1f MB. Ez túl nagy méretű ahhoz, hogy szöveg alapú felirat fájl legyen! Ellenőrizze, hogy nem bináris fájlt akart-e megnyitni!"
+msgid "Size of the file is {:.1f} MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file."
+msgstr "A fájl mérete {:.1f} MB. Ez túl nagy méretű ahhoz, hogy szöveg alapú felirat fájl legyen! Ellenőrizze, hogy nem bináris fájlt akart-e megnyitni!"
 
 #: ../gaupol/agents/open.py:328
 #, python-format
-msgid "Open unsorted file \"%s\"?"
-msgstr "Nem támogatott fájl »%s«. megnyitja?"
+msgid "Open unsorted file \"{}\"?"
+msgstr "Nem támogatott fájl »{}«. megnyitja?"
 
 #: ../gaupol/agents/open.py:329
 #, python-format
-msgid "The order of %d subtitles needs to be changed. If %d sounds like a lot, the file may be erroneously composed."
-msgstr "Utasítás szerint %d fájlon változtatni kell. Ha %d soknak tűnik, akkor lehet, hogy a fájl hibásan lett összeállítva."
+msgid "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, the file may be erroneously composed."
+msgstr "Utasítás szerint {:d} fájlon változtatni kell. Ha {:d} soknak tűnik, akkor lehet, hogy a fájl hibásan lett összeállítva."
 
 #: ../gaupol/agents/open.py:344
 #, python-format
-msgid "Save changes to translation document \"%s\" before opening a new one?"
-msgstr "Menti a fordítási dokumentumot »%s« mielőtt megnyit egy újat?"
+msgid "Save changes to translation document \"{}\" before opening a new one?"
+msgstr "Menti a fordítási dokumentumot »{}« mielőtt megnyit egy újat?"
 
 #: ../gaupol/agents/open.py:348
 msgid "Open _Without Saving"
@@ -2310,23 +2310,23 @@ msgstr "Megnyitás _mentés nélkül"
 
 #: ../gaupol/agents/open.py:441
 #, python-format
-msgid "Appended %(amount)d subtitles from \"%(basename)s\""
-msgstr "%(amount)d felirat hozzáfűzve »%(basename)s«-ból"
+msgid "Appended {amount:d} subtitles from \"{basename}\""
+msgstr "{amount:d} felirat hozzáfűzve »{basename}«-ból"
 
 #: ../gaupol/agents/open.py:480
 #, python-format
-msgid "Opened main file \"%s\""
-msgstr "Alap fájl megnyitása »%s«"
+msgid "Opened main file \"{}\""
+msgstr "Alap fájl megnyitása »{}«"
 
 #: ../gaupol/agents/open.py:499
 #, python-format
-msgid "Opened translation file \"%s\""
-msgstr "Fordítási fájl megnyitása »%s«"
+msgid "Opened translation file \"{}\""
+msgstr "Fordítási fájl megnyitása »{}«"
 
 #: ../gaupol/agents/preview.py:50
 #, python-format
-msgid "Failed to encode subtitle file to temporary directory \"%s\""
-msgstr "A felirat fájl átkódolása az átmeneti mappába »%s« sikertelen"
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
+msgstr "A felirat fájl átkódolása az átmeneti mappába »{}« sikertelen"
 
 #: ../gaupol/agents/preview.py:52
 msgid "Subtitle data could not be encoded to a temporary file for preview with the current character encoding. Please first save the subtitle file with a different character encoding."
@@ -2334,8 +2334,8 @@ msgstr "A felirat adatok átkódolása átmeneti mappába az előnézethez, nem 
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
-msgid "Failed to save subtitle file to temporary directory \"%s\""
-msgstr "A felirat fájl mentése az átmeneti mappába »%s« sikertelen"
+msgid "Failed to save subtitle file to temporary directory \"{}\""
+msgstr "A felirat fájl mentése az átmeneti mappába »{}« sikertelen"
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
@@ -2347,8 +2347,8 @@ msgstr "Az összes nyitott dokumentum mentve"
 
 #: ../gaupol/agents/save.py:129
 #, python-format
-msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
-msgstr "A fájl átkódolása »%(basename)s« ezzel a kodekkel »%(codec)s« nem sikerült"
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
+msgstr "A fájl átkódolása »{basename}« ezzel a kodekkel »{codec}« nem sikerült"
 
 #: ../gaupol/agents/save.py:131
 msgid "Please try to save the file with a different character encoding."
@@ -2356,8 +2356,8 @@ msgstr "Próbálja más karakterkódolással menteni a fájlt!"
 
 #: ../gaupol/agents/save.py:139
 #, python-format
-msgid "Failed to save file \"%s\""
-msgstr "A fájl mentése »%s« sikertelen"
+msgid "Failed to save file \"{}\""
+msgstr "A fájl mentése »{}« sikertelen"
 
 #: ../gaupol/agents/save.py:156
 msgid "Saved main document"
@@ -2365,8 +2365,8 @@ msgstr "A dokumentum mentve"
 
 #: ../gaupol/agents/save.py:174
 #, python-format
-msgid "Saved main document as \"%s\""
-msgstr "A dokumentum mentése »%s« néven"
+msgid "Saved main document as \"{}\""
+msgstr "A dokumentum mentése »{}« néven"
 
 #: ../gaupol/agents/save.py:189
 msgid "Saved translation document"
@@ -2374,8 +2374,8 @@ msgstr "Fordítási dokumentum mentve"
 
 #: ../gaupol/agents/save.py:207
 #, python-format
-msgid "Saved translation document as \"%s\""
-msgstr "A fordítási dokumentum mentve »%s« néven"
+msgid "Saved translation document as \"{}\""
+msgstr "A fordítási dokumentum mentve »{}« néven"
 
 #: ../gaupol/application.py:171
 msgid "Framerate:"
@@ -2452,8 +2452,8 @@ msgstr "Szavak egyesítése vagy szétválasztása"
 #: ../gaupol/assistants.py:600
 #: ../gaupol/dialogs/spellcheck.py:367
 #, python-format
-msgid "Failed to load dictionary for language \"%s\""
-msgstr "A megadott nyelvhez »%s« tartozó szótár beolvasása sikertelen."
+msgid "Failed to load dictionary for language \"{}\""
+msgstr "A megadott nyelvhez »{}« tartozó szótár beolvasása sikertelen."
 
 #: ../gaupol/assistants.py:629
 msgid "Break text into lines of defined length"
@@ -2481,18 +2481,18 @@ msgstr "Kiválasztott feladat(ok) futatása a projekten."
 
 #: ../gaupol/assistants.py:804
 #, python-format
-msgid "%(current)d of %(total)d tasks complete"
-msgstr "%(current)d a(z) %(total)d feladatból kész"
+msgid "{current:d} of {total:d} tasks complete"
+msgstr "{current:d} a(z) {total:d} feladatból kész"
 
 #: ../gaupol/assistants.py:812
 #, python-format
-msgid "Project: %s"
-msgstr "Projekt: %s"
+msgid "Project: {}"
+msgstr "Projekt: {}"
 
 #: ../gaupol/assistants.py:819
 #, python-format
-msgid "Task: %s"
-msgstr "Feladat: %s"
+msgid "Task: {}"
+msgstr "Feladat: {}"
 
 #: ../gaupol/assistants.py:841
 msgid "Confirm Changes"
@@ -2520,15 +2520,15 @@ msgstr "Szövegek javítása"
 
 #: ../gaupol/assistants.py:1064
 #, python-format
-msgid "Edited %(edits)d and removed %(removals)d subtitles"
-msgstr "Szerkesztett %(edits)d és eltávolított %(removals)d feliratok"
+msgid "Edited {edits:d} and removed {removals:d} subtitles"
+msgstr "Szerkesztett {edits:d} és eltávolított {removals:d} feliratok"
 
 #: ../gaupol/assistants.py:1098
 #, python-format
-msgid "Confirm %d Change"
-msgid_plural "Confirm %d Changes"
-msgstr[0] "%d módosítás elfogadása"
-msgstr[1] "%d módosítás elfogadása"
+msgid "Confirm {:d} Change"
+msgid_plural "Confirm {:d} Changes"
+msgstr[0] "{:d} módosítás elfogadása"
+msgstr[1] "{:d} módosítás elfogadása"
 
 #: ../gaupol/dialogs/about.py:48
 msgid "About Gaupol"
@@ -2558,10 +2558,10 @@ msgstr "Fájl hozzáfűzése"
 
 #: ../gaupol/dialogs/duration.py:69
 #, python-format
-msgid "Adjusted duration of %d subtitle"
-msgid_plural "Adjusted durations of %d subtitles"
-msgstr[0] "%d felirat időtartam igazítása"
-msgstr[1] "%d felirat időtartam igazítása"
+msgid "Adjusted duration of {:d} subtitle"
+msgid_plural "Adjusted durations of {:d} subtitles"
+msgstr[0] "{:d} felirat időtartam igazítása"
+msgstr[1] "{:d} felirat időtartam igazítása"
 
 #: ../gaupol/dialogs/encoding.py:58
 #: ../gaupol/dialogs/encoding.py:100
@@ -2588,8 +2588,8 @@ msgstr "Összes támogatott fájl"
 
 #: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (*%(extension)s)"
-msgstr "%(format)s (*%(extension)s)"
+msgid "{format} (*{extension})"
+msgstr "{format} (*{extension})"
 
 #: ../gaupol/dialogs/file.py:110
 msgid "Auto-detected"
@@ -2621,18 +2621,18 @@ msgstr "Nyelv beállítása"
 
 #: ../gaupol/dialogs/multisave.py:123
 #, python-format
-msgid "%d of the files to be saved already exist. Do you want to replace them?"
-msgstr "%d nevű fájl már létezik! Le akarja cserélni?"
+msgid "{:d} of the files to be saved already exist. Do you want to replace them?"
+msgstr "{:d} nevű fájl már létezik! Le akarja cserélni?"
 
 #: ../gaupol/dialogs/multisave.py:126
 #, python-format
-msgid "The files already exist in \"%s\". Replacing them will overwrite their contents."
-msgstr "A fájl már létezik \"%s\". Lecserélésével a tartalma felül lesz írva."
+msgid "The files already exist in \"{}\". Replacing them will overwrite their contents."
+msgstr "A fájl már létezik \"{}\". Lecserélésével a tartalma felül lesz írva."
 
 #: ../gaupol/dialogs/preferences.py:207
 #, python-format
-msgid "%s Extension Website"
-msgstr "%s Bővitmények Honlap"
+msgid "{} Extension Website"
+msgstr "{} Bővitmények Honlap"
 
 #: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
@@ -2640,8 +2640,8 @@ msgstr "Bővítmény kikapcsolása sikertelen"
 
 #: ../gaupol/dialogs/preferences.py:236
 #, python-format
-msgid "Extension \"%s\" is required by other extensions."
-msgstr "A bővítmény »%s« szükséges egyéb bővítmény(ek)hez."
+msgid "Extension \"{}\" is required by other extensions."
+msgstr "A bővítmény »{}« szükséges egyéb bővítmény(ek)hez."
 
 #: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
@@ -2649,8 +2649,8 @@ msgstr "Egyéni"
 
 #: ../gaupol/dialogs/search.py:355
 #, python-format
-msgid "\"%s\" not found"
-msgstr "»%s« nem található"
+msgid "\"{}\" not found"
+msgstr "»{}« nem található"
 
 #: ../gaupol/dialogs/search.py:412
 msgid "Error in regular expression pattern"
@@ -2662,10 +2662,10 @@ msgstr "Hiba az általános kifejezés cseréjében"
 
 #: ../gaupol/dialogs/search.py:540
 #, python-format
-msgid "Found and replaced %d occurence"
-msgid_plural "Found and replaced %d occurences"
-msgstr[0] "%d egyezés megtalálva és kicserélve"
-msgstr[1] "%d egyezések megtalálva és kicserélve"
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
+msgstr[0] "{:d} egyezés megtalálva és kicserélve"
+msgstr[1] "{:d} egyezések megtalálva és kicserélve"
 
 #: ../gaupol/dialogs/shift.py:138
 msgid "frames"
@@ -2685,8 +2685,8 @@ msgstr "Projekt felosztása"
 
 #: ../gaupol/dialogs/split.py:99
 #, python-format
-msgid "Split %(amount)d subtitles to project \"%(name)s\""
-msgstr "%(amount)d felirat felosztása a »%(name)s« projektbe"
+msgid "Split {amount:d} subtitles to project \"{name}\""
+msgstr "{amount:d} felirat felosztása a »{name}« projektbe"
 
 #: ../gaupol/dialogs/textedit.py:46
 msgid "Edit Text"
@@ -2810,8 +2810,8 @@ msgstr "Kimenet"
 
 #: ../gaupol/page.py:59
 #, python-format
-msgid "Untitled %d"
-msgstr "Felirat nélkül %d"
+msgid "Untitled {:d}"
+msgstr "Felirat nélkül {:d}"
 
 #: ../gaupol/page.py:123
 msgid "Close project"
@@ -2819,28 +2819,28 @@ msgstr "Projekt bezárása"
 
 #: ../gaupol/page.py:287
 #, python-format
-msgid "<b>Path:</b> %s"
-msgstr "<b>Útvonal:</b> %s"
+msgid "<b>Path:</b> {}"
+msgstr "<b>Útvonal:</b> {}"
 
 #: ../gaupol/page.py:288
 #, python-format
-msgid "<b>Format:</b> %s"
-msgstr "<b>Formátum:</b> %s"
+msgid "<b>Format:</b> {}"
+msgstr "<b>Formátum:</b> {}"
 
 #: ../gaupol/page.py:289
 #, python-format
-msgid "<b>Character encoding:</b> %s"
-msgstr "<b>Karakt_erkódolás:</b> %s"
+msgid "<b>Character encoding:</b> {}"
+msgstr "<b>Karakt_erkódolás:</b> {}"
 
 #: ../gaupol/page.py:290
 #, python-format
-msgid "<b>Newlines:</b> %s"
-msgstr "<b>Új s_or:</b> %s"
+msgid "<b>Newlines:</b> {}"
+msgstr "<b>Új s_or:</b> {}"
 
 #: ../gaupol/page.py:322
 #, python-format
-msgid "%s translation"
-msgstr "%s fordítás"
+msgid "{} translation"
+msgstr "{} fordítás"
 
 #~ msgid "Tasks"
 #~ msgstr "Feladatok"
@@ -2866,5 +2866,5 @@ msgstr "%s fordítás"
 #~ msgid "(Empty)"
 #~ msgstr "(Üres)"
 
-#~ msgid "%s."
-#~ msgstr "%s."
+#~ msgid "{}."
+#~ msgstr "{}."

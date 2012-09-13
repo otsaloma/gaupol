@@ -1356,13 +1356,13 @@ msgstr "Unicode"
 
 #: ../aeidon/encodings.py:154
 #, python-format
-msgid "%(description)s (%(name)s)"
-msgstr "%(description)s (%(name)s)"
+msgid "{description} ({name})"
+msgstr "{description} ({name})"
 
 #: ../aeidon/encodings.py:248
 #, python-format
-msgid "Current locale (%s)"
-msgstr "Şimdiki lokal: \"%s\""
+msgid "Current locale ({})"
+msgstr "Şimdiki lokal: \"{}\""
 
 #: ../aeidon/enums/align.py:27 ../gaupol/enums/fields.py:30
 msgid "Subtitle number"
@@ -1394,8 +1394,8 @@ msgstr "Mac (klasik)"
 
 #: ../aeidon/locales.py:66
 #, python-format
-msgid "%(language)s (%(country)s)"
-msgstr "%(language)s (%(country)s)"
+msgid "{language} ({country})"
+msgstr "{language} ({country})"
 
 #. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
 #. of a tree view column that contains 16 pixels wide pixbufs.
@@ -1454,7 +1454,7 @@ msgstr "Ara:"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:153
 #, python-format
-msgid "Calculate nonnative units with a framerate of %.3f fps"
+msgid "Calculate nonnative units with a framerate of {:.3f} fps"
 msgstr ""
 
 #: ../data/extensions/side-pane/side-pane.py:295
@@ -2144,20 +2144,20 @@ msgstr "Video araç çubuğunu göster ya da gizle"
 
 #: ../gaupol/agents/close.py:48
 #, python-format
-msgid "Save changes to main document \"%s\" before closing?"
-msgstr "Kapatmadan önce %s kaydedilsin mi?"
+msgid "Save changes to main document \"{}\" before closing?"
+msgstr "Kapatmadan önce {} kaydedilsin mi?"
 
 #: ../gaupol/agents/close.py:77
 #, python-format
-msgid "Save changes to translation document \"%s\" before closing?"
-msgstr "Çeviri dosyası %s kapatmadan önce kaydedilsin mi?"
+msgid "Save changes to translation document \"{}\" before closing?"
+msgstr "Çeviri dosyası {} kapatmadan önce kaydedilsin mi?"
 
 #: ../gaupol/agents/edit.py:173
 #, python-format
-msgid "Inserted %d subtitle to fit clipboard contents"
-msgid_plural "Inserted %d subtitles to fit clipboard contents"
-msgstr[0] "Clipboard içeriğine %d alt yazı eklendi"
-msgstr[1] "Clipboard içeriğine %d alt yazı eklendi"
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
+msgstr[0] "Clipboard içeriğine {:d} alt yazı eklendi"
+msgstr[1] "Clipboard içeriğine {:d} alt yazı eklendi"
 
 #: ../gaupol/agents/edit.py:280
 msgid "Use Shift+Return for line-break"
@@ -2165,18 +2165,18 @@ msgstr "Satır arası bırakmak için Shift+Enter kullanın"
 
 #: ../gaupol/agents/menu.py:50
 #, python-format
-msgid "Activate \"%s\""
-msgstr "Aktif et: \"%s\""
+msgid "Activate \"{}\""
+msgstr "Aktif et: \"{}\""
 
 #: ../gaupol/agents/menu.py:76 ../gaupol/agents/update.py:157
 #, python-format
-msgid "Redo \"%s\""
-msgstr "İleri al: \"%s\""
+msgid "Redo \"{}\""
+msgstr "İleri al: \"{}\""
 
 #: ../gaupol/agents/menu.py:146 ../gaupol/agents/update.py:153
 #, python-format
-msgid "Undo \"%s\""
-msgstr "Geri al: \"%s\""
+msgid "Undo \"{}\""
+msgstr "Geri al: \"{}\""
 
 #: ../gaupol/agents/open.py:45
 msgid "Appending file"
@@ -2184,13 +2184,13 @@ msgstr "Dosya ekleniyor"
 
 #: ../gaupol/agents/open.py:60
 #, python-format
-msgid "File \"%s\" is already open"
-msgstr "\"%s\" dosyası zaten açık"
+msgid "File \"{}\" is already open"
+msgstr "\"{}\" dosyası zaten açık"
 
 #: ../gaupol/agents/open.py:273
 #, python-format
-msgid "Failed to decode file \"%s\" with all attempted codecs"
-msgstr "\"%s\" dosyası denenen bütün kodeklerle oynatılamadı"
+msgid "Failed to decode file \"{}\" with all attempted codecs"
+msgstr "\"{}\" dosyası denenen bütün kodeklerle oynatılamadı"
 
 #: ../gaupol/agents/open.py:275
 msgid "Please try to open the file with a different character encoding."
@@ -2198,8 +2198,8 @@ msgstr "Dosyayı başka karakter kodlamasıyla açmayı deneyin"
 
 #: ../gaupol/agents/open.py:283
 #, python-format
-msgid "Failed to recognize format of file \"%s\""
-msgstr "\"%s\" dosyasının tipi tanınamadı"
+msgid "Failed to recognize format of file \"{}\""
+msgstr "\"{}\" dosyasının tipi tanınamadı"
 
 #: ../gaupol/agents/open.py:284
 msgid ""
@@ -2210,57 +2210,57 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:292
 #, python-format
-msgid "Failed to open file \"%s\""
-msgstr "\"%s\" dosyası açılamadı"
+msgid "Failed to open file \"{}\""
+msgstr "\"{}\" dosyası açılamadı"
 
 #: ../gaupol/agents/open.py:299
 #, python-format
-msgid "Failed to parse file \"%s\""
-msgstr "\"%s\" dosyasının dizilimi hatalı"
+msgid "Failed to parse file \"{}\""
+msgstr "\"{}\" dosyasının dizilimi hatalı"
 
 #: ../gaupol/agents/open.py:300
 #, python-format
 msgid ""
 "Please check, e.g. with a text editor, that the file you are trying open is "
-"a valid %s file. If you think it is, file a bug report and attach the file."
+"a valid {} file. If you think it is, file a bug report and attach the file."
 msgstr ""
-"Açmaya çalıştığınız %s dosyası geçerli bir dosya gibi gözükmüyor.Farklı bir "
+"Açmaya çalıştığınız {} dosyası geçerli bir dosya gibi gözükmüyor.Farklı bir "
 "metin düzenleyicisi bir programla açmayı deneyin. Eğer sorun devam ederse "
 "dosya ile birlikte hatayı bildirin."
 
 #: ../gaupol/agents/open.py:312
 #, python-format
-msgid "Open abnormally large file \"%s\"?"
-msgstr "\"%s\" dosyası çok büyük. Açmak istiyor musunuz?"
+msgid "Open abnormally large file \"{}\"?"
+msgstr "\"{}\" dosyası çok büyük. Açmak istiyor musunuz?"
 
 #: ../gaupol/agents/open.py:313
 #, python-format
 msgid ""
-"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"Dosyanın boyutu %.1f MB ki bu normal bir alt yazı dosyası için çok büyük. "
+"Dosyanın boyutu {:.1f} MB ki bu normal bir alt yazı dosyası için çok büyük. "
 "Lüften ikili dosya açmadığınızdan emin olun."
 
 #: ../gaupol/agents/open.py:328
 #, python-format
-msgid "Open unsorted file \"%s\"?"
-msgstr "\"%s\" dosyası sıralanmamış. Açmak istiyor musunuz?"
+msgid "Open unsorted file \"{}\"?"
+msgstr "\"{}\" dosyası sıralanmamış. Açmak istiyor musunuz?"
 
 #: ../gaupol/agents/open.py:329
 #, python-format
 msgid ""
-"The order of %d subtitles needs to be changed. If %d sounds like a lot, the "
+"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, the "
 "file may be erroneously composed."
 msgstr ""
-"%d tane alt yazının sırası değişmesi gerekiyor. %d sayısı fazla gibi "
+"{:d} tane alt yazının sırası değişmesi gerekiyor. {:d} sayısı fazla gibi "
 "geldiyse dosya yanlışlıkla oluşmuş olabilir."
 
 #: ../gaupol/agents/open.py:344
 #, python-format
-msgid "Save changes to translation document \"%s\" before opening a new one?"
+msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"Yeni çeviri dosyası açmadan önce değişiklikleri \"%s\" 'e kaydetmek istiyor "
+"Yeni çeviri dosyası açmadan önce değişiklikleri \"{}\" 'e kaydetmek istiyor "
 "musunuz?"
 
 #: ../gaupol/agents/open.py:348
@@ -2269,23 +2269,23 @@ msgstr "Kaydet_meden Aç"
 
 #: ../gaupol/agents/open.py:441
 #, python-format
-msgid "Appended %(amount)d subtitles from \"%(basename)s\""
-msgstr "\"%(basename)s\" den %(amount)d alt yazı eklendi"
+msgid "Appended {amount:d} subtitles from \"{basename}\""
+msgstr "\"{basename}\" den {amount:d} alt yazı eklendi"
 
 #: ../gaupol/agents/open.py:480
 #, python-format
-msgid "Opened main file \"%s\""
-msgstr "\"%s\" ana dosya açıldı"
+msgid "Opened main file \"{}\""
+msgstr "\"{}\" ana dosya açıldı"
 
 #: ../gaupol/agents/open.py:499
 #, python-format
-msgid "Opened translation file \"%s\""
-msgstr "\"%s\" çeviri dosyası açıldı"
+msgid "Opened translation file \"{}\""
+msgstr "\"{}\" çeviri dosyası açıldı"
 
 #: ../gaupol/agents/preview.py:50
 #, python-format
-msgid "Failed to encode subtitle file to temporary directory \"%s\""
-msgstr "Geçici yer olarak \"%s\" 'e kodlanamadı."
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
+msgstr "Geçici yer olarak \"{}\" 'e kodlanamadı."
 
 #: ../gaupol/agents/preview.py:52
 msgid ""
@@ -2298,8 +2298,8 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:61
 #, python-format
-msgid "Failed to save subtitle file to temporary directory \"%s\""
-msgstr "Alt yazı dosyası geçici klasör olan \"%s\" 'e kaydedilemedi"
+msgid "Failed to save subtitle file to temporary directory \"{}\""
+msgstr "Alt yazı dosyası geçici klasör olan \"{}\" 'e kaydedilemedi"
 
 #: ../gaupol/agents/preview.py:69
 msgid "Failed to launch video player"
@@ -2311,8 +2311,8 @@ msgstr "Açık bütün dökümanlar kaydedildi"
 
 #: ../gaupol/agents/save.py:129
 #, python-format
-msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
-msgstr "\"%(codec)s\" kodeğini kullanarak \"%(basename)s\" dosyası kodlanamadı"
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
+msgstr "\"{codec}\" kodeğini kullanarak \"{basename}\" dosyası kodlanamadı"
 
 #: ../gaupol/agents/save.py:131
 msgid "Please try to save the file with a different character encoding."
@@ -2320,8 +2320,8 @@ msgstr "Lütfen farklı karakter kodlama ile kaydetmeyi deneyin."
 
 #: ../gaupol/agents/save.py:139
 #, python-format
-msgid "Failed to save file \"%s\""
-msgstr "\"%s\" kaydedilemedi"
+msgid "Failed to save file \"{}\""
+msgstr "\"{}\" kaydedilemedi"
 
 #: ../gaupol/agents/save.py:156
 msgid "Saved main document"
@@ -2329,8 +2329,8 @@ msgstr "Ana döküman kaydedildi"
 
 #: ../gaupol/agents/save.py:174
 #, python-format
-msgid "Saved main document as \"%s\""
-msgstr "Ana döküman \"%s\" olarak kaydedildi"
+msgid "Saved main document as \"{}\""
+msgstr "Ana döküman \"{}\" olarak kaydedildi"
 
 #: ../gaupol/agents/save.py:189
 msgid "Saved translation document"
@@ -2338,8 +2338,8 @@ msgstr "Çeviri dosyası kaydedildi"
 
 #: ../gaupol/agents/save.py:207
 #, python-format
-msgid "Saved translation document as \"%s\""
-msgstr "Çeviri dosyası \"%s\" olarak kaydedildi"
+msgid "Saved translation document as \"{}\""
+msgstr "Çeviri dosyası \"{}\" olarak kaydedildi"
 
 #: ../gaupol/application.py:171
 msgid "Framerate:"
@@ -2420,8 +2420,8 @@ msgstr "Kelimeleri Birleştir/Ayır"
 
 #: ../gaupol/assistants.py:600 ../gaupol/dialogs/spellcheck.py:367
 #, python-format
-msgid "Failed to load dictionary for language \"%s\""
-msgstr "\"%s\" için sözlük yüklenemedi."
+msgid "Failed to load dictionary for language \"{}\""
+msgstr "\"{}\" için sözlük yüklenemedi."
 
 #: ../gaupol/assistants.py:629
 msgid "Break text into lines of defined length"
@@ -2449,18 +2449,18 @@ msgstr "Her görev, kendi projesinde çalışıyor."
 
 #: ../gaupol/assistants.py:804
 #, python-format
-msgid "%(current)d of %(total)d tasks complete"
-msgstr "Toplam %(total)d olaydan %(current)d 'i tamamlandı."
+msgid "{current:d} of {total:d} tasks complete"
+msgstr "Toplam {total:d} olaydan {current:d} 'i tamamlandı."
 
 #: ../gaupol/assistants.py:812
 #, python-format
-msgid "Project: %s"
-msgstr "Proje: %s"
+msgid "Project: {}"
+msgstr "Proje: {}"
 
 #: ../gaupol/assistants.py:819
 #, python-format
-msgid "Task: %s"
-msgstr "Görev: %s"
+msgid "Task: {}"
+msgstr "Görev: {}"
 
 #: ../gaupol/assistants.py:841
 msgid "Confirm Changes"
@@ -2488,15 +2488,15 @@ msgstr "Yazılar düzeltiliyor"
 
 #: ../gaupol/assistants.py:1064
 #, python-format
-msgid "Edited %(edits)d and removed %(removals)d subtitles"
-msgstr "Düzenlenen: %(edits)d, Silinen: %(removals)d alt yazı."
+msgid "Edited {edits:d} and removed {removals:d} subtitles"
+msgstr "Düzenlenen: {edits:d}, Silinen: {removals:d} alt yazı."
 
 #: ../gaupol/assistants.py:1098
 #, python-format
-msgid "Confirm %d Change"
-msgid_plural "Confirm %d Changes"
-msgstr[0] "%d değişikliği onayla"
-msgstr[1] "%d değişikliği onayla"
+msgid "Confirm {:d} Change"
+msgid_plural "Confirm {:d} Changes"
+msgstr[0] "{:d} değişikliği onayla"
+msgstr[1] "{:d} değişikliği onayla"
 
 #: ../gaupol/dialogs/about.py:48
 msgid "About Gaupol"
@@ -2528,10 +2528,10 @@ msgstr "Dosyaya ilave et"
 
 #: ../gaupol/dialogs/duration.py:69
 #, python-format
-msgid "Adjusted duration of %d subtitle"
-msgid_plural "Adjusted durations of %d subtitles"
-msgstr[0] "Süreç %d alt yazı için ayarlandı"
-msgstr[1] "Süreçler %d alt yazı için ayarlandı"
+msgid "Adjusted duration of {:d} subtitle"
+msgid_plural "Adjusted durations of {:d} subtitles"
+msgstr[0] "Süreç {:d} alt yazı için ayarlandı"
+msgstr[1] "Süreçler {:d} alt yazı için ayarlandı"
 
 #: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:100
 msgid "Description"
@@ -2555,7 +2555,7 @@ msgstr "Bütün desteklenen dosyalar"
 
 #: ../gaupol/dialogs/file.py:68
 #, python-format
-msgid "%(format)s (*%(extension)s)"
+msgid "{format} (*{extension})"
 msgstr ""
 
 #: ../gaupol/dialogs/file.py:110
@@ -2593,21 +2593,21 @@ msgstr "Dili ayarla"
 
 #: ../gaupol/dialogs/multisave.py:123
 #, python-format
-msgid "%d of the files to be saved already exist. Do you want to replace them?"
-msgstr "Kaydedilecek olan %d dosya zaten var. Üzerine yazmak istiyor musunuz?"
+msgid "{:d} of the files to be saved already exist. Do you want to replace them?"
+msgstr "Kaydedilecek olan {:d} dosya zaten var. Üzerine yazmak istiyor musunuz?"
 
 #: ../gaupol/dialogs/multisave.py:126
 #, python-format
 msgid ""
-"The files already exist in \"%s\". Replacing them will overwrite their "
+"The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
-"\"%s\" isimli zaten bir dosya var. Bu dosyanın üzerine yazmak istermisiniz?"
+"\"{}\" isimli zaten bir dosya var. Bu dosyanın üzerine yazmak istermisiniz?"
 
 #: ../gaupol/dialogs/preferences.py:207
 #, python-format
-msgid "%s Extension Website"
-msgstr "%s uzantılı web sitesi"
+msgid "{} Extension Website"
+msgstr "{} uzantılı web sitesi"
 
 #: ../gaupol/dialogs/preferences.py:235
 msgid "Cannot deactivate extension"
@@ -2615,8 +2615,8 @@ msgstr "Uzantı etkisizleştirme yapılamıyor"
 
 #: ../gaupol/dialogs/preferences.py:236
 #, python-format
-msgid "Extension \"%s\" is required by other extensions."
-msgstr "\"%s\" uzantısı diğer uzatmalar için gerekli"
+msgid "Extension \"{}\" is required by other extensions."
+msgstr "\"{}\" uzantısı diğer uzatmalar için gerekli"
 
 #: ../gaupol/dialogs/preferences.py:420
 msgid "Custom"
@@ -2624,8 +2624,8 @@ msgstr "Kişisel"
 
 #: ../gaupol/dialogs/search.py:355
 #, python-format
-msgid "\"%s\" not found"
-msgstr "\"%s\" bulunamadı"
+msgid "\"{}\" not found"
+msgstr "\"{}\" bulunamadı"
 
 #: ../gaupol/dialogs/search.py:412
 msgid "Error in regular expression pattern"
@@ -2637,10 +2637,10 @@ msgstr "Düzenli ifade değiştirilmesinde hata var"
 
 #: ../gaupol/dialogs/search.py:540
 #, python-format
-msgid "Found and replaced %d occurence"
-msgid_plural "Found and replaced %d occurences"
-msgstr[0] "%d tane bunundu ve değiştirildi."
-msgstr[1] "%d apariciones encontradas y reemplazadas"
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
+msgstr[0] "{:d} tane bunundu ve değiştirildi."
+msgstr[1] "{:d} apariciones encontradas y reemplazadas"
 
 #: ../gaupol/dialogs/shift.py:138
 msgid "frames"
@@ -2660,8 +2660,8 @@ msgstr "Projeyi böl"
 
 #: ../gaupol/dialogs/split.py:99
 #, python-format
-msgid "Split %(amount)d subtitles to project \"%(name)s\""
-msgstr "Alt yazıların %(amount)d 'i, \"%s(name)s\" olarak bölündü."
+msgid "Split {amount:d} subtitles to project \"{name}\""
+msgstr "Alt yazıların {amount:d} 'i, \"{}(name)s\" olarak bölündü."
 
 #: ../gaupol/dialogs/textedit.py:46
 msgid "Edit Text"
@@ -2785,8 +2785,8 @@ msgstr "Çıktı"
 
 #: ../gaupol/page.py:59
 #, python-format
-msgid "Untitled %d"
-msgstr "İsimsiz %d"
+msgid "Untitled {:d}"
+msgstr "İsimsiz {:d}"
 
 #: ../gaupol/page.py:123
 msgid "Close project"
@@ -2794,28 +2794,28 @@ msgstr "Projeyi kapat"
 
 #: ../gaupol/page.py:287
 #, python-format
-msgid "<b>Path:</b> %s"
-msgstr "<b>Yol:</b> %s"
+msgid "<b>Path:</b> {}"
+msgstr "<b>Yol:</b> {}"
 
 #: ../gaupol/page.py:288
 #, python-format
-msgid "<b>Format:</b> %s"
-msgstr "<b>Tip:</b> %s"
+msgid "<b>Format:</b> {}"
+msgstr "<b>Tip:</b> {}"
 
 #: ../gaupol/page.py:289
 #, python-format
-msgid "<b>Character encoding:</b> %s"
-msgstr "<b>Karakter kodlama:</b> %s"
+msgid "<b>Character encoding:</b> {}"
+msgstr "<b>Karakter kodlama:</b> {}"
 
 #: ../gaupol/page.py:290
 #, python-format
-msgid "<b>Newlines:</b> %s"
-msgstr "<b>Yeni satırlar:</b> %s"
+msgid "<b>Newlines:</b> {}"
+msgstr "<b>Yeni satırlar:</b> {}"
 
 #: ../gaupol/page.py:322
 #, python-format
-msgid "%s translation"
-msgstr "%s çevirisi"
+msgid "{} translation"
+msgstr "{} çevirisi"
 
 #~ msgid "Tasks"
 #~ msgstr "Görevler"
@@ -2847,5 +2847,5 @@ msgstr "%s çevirisi"
 #~ msgid "Calculate nonnative units with a framerate of 30 fps"
 #~ msgstr "Bilinmeyen birimleri 30 fps kare hızı ile hesapla"
 
-#~ msgid "%(format)s (%(pattern)s)"
-#~ msgstr "%(format)s (%(pattern)s)"
+#~ msgid "{format} ({pattern})"
+#~ msgstr "{format} ({pattern})"

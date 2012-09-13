@@ -2,7 +2,7 @@ Gaupol 0.20
 ===========
 
  * Check need for any API changes
- * Consider doing search-replace across po-files to migrate string formatting
+ * Test
 
  [X] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
  [X] Bump Python dependency to 3.2 or greater
