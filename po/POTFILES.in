@@ -29,9 +29,9 @@
 [type: gettext/glade]data/ui/text-assistant/line-break-options-page.ui
 [type: gettext/glade]data/ui/text-assistant/line-break-page.ui
 [type: gettext/glade]data/ui/text-assistant/progress-page.ui
-[type: gettext/ini]data/extensions/bookmarks/bookmarks.gaupol-extension.in
-[type: gettext/ini]data/extensions/custom-framerates/custom-framerates.gaupol-extension.in
-[type: gettext/ini]data/extensions/side-pane/side-pane.gaupol-extension.in
+[type: gettext/ini]data/extensions/bookmarks/bookmarks.extension.in
+[type: gettext/ini]data/extensions/custom-framerates/custom-framerates.extension.in
+[type: gettext/ini]data/extensions/side-pane/side-pane.extension.in
 [type: gettext/ini]data/patterns/Latn-en-US.common-error.in
 [type: gettext/ini]data/patterns/Latn-en.capitalization.in
 [type: gettext/ini]data/patterns/Latn-en.common-error.in
@@ -168,6 +168,7 @@ gaupol/dialogs/position_shift.py
 gaupol/dialogs/preferences.py
 gaupol/dialogs/save.py
 gaupol/dialogs/search.py
+gaupol/dialogs/speech_recognition.py
 gaupol/dialogs/spell_check.py
 gaupol/dialogs/split.py
 gaupol/dialogs/text_edit.py
