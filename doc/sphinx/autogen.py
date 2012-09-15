@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8-unix -*-
+# -*- coding: utf-8 -*-
 
 # Copyright (C) 2009,2011 Osmo Salomaa
 #
