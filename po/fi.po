@@ -1,14 +1,14 @@
 # Finnish translations for gaupol package.
-# Copyright (C) 2010-2011 Osmo Salomaa
+# Copyright (C) 2010-2012 Osmo Salomaa
 # This file is distributed under the same license as the gaupol package.
-# Osmo Salomaa <otsaloma@iki.fi>, 2010, 2011.
+# Osmo Salomaa <otsaloma@iki.fi>, 2010-2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.19\n"
+"Project-Id-Version: gaupol 0.20\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-15 18:40+0300\n"
-"PO-Revision-Date: 2011-07-09 06:20+0300\n"
+"PO-Revision-Date: 2012-09-15 19:12+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
 "Language-Team: Finnish <otsaloma@iki.fi>\n"
 "Language: fi\n"
@@ -53,7 +53,7 @@ msgstr "_Ruutunopeudet:"
 
 #: ../data/ui/debug-dialog.ui.h:1 ../gaupol/dialogs/speech_recognition.py:374
 msgid "Something went wrong"
-msgstr ""
+msgstr "Jotain meni vikaan"
 
 #: ../data/ui/debug-dialog.ui.h:2
 msgid ""
@@ -286,7 +286,7 @@ msgstr "T_iedostomuoto:"
 #: ../data/ui/multi-save-dialog.ui.h:4 ../data/ui/open-dialog.ui.h:1
 #: ../data/ui/save-dialog.ui.h:2
 msgid "_Encoding:"
-msgstr ""
+msgstr "_Koodaus:"
 
 #: ../data/ui/multi-save-dialog.ui.h:5 ../data/ui/save-dialog.ui.h:3
 msgid "Ne_wlines:"
@@ -461,6 +461,11 @@ msgid ""
 "$SUBFILE\n"
 "$VIDEOFILE"
 msgstr ""
+"Kentät:\n"
+"$MILLISECONDS (millisekunnit)\n"
+"$SECONDS (sekunnit)\n"
+"$SUBFILE (tekstitystiedosto)\n"
+"$VIDEOFILE (videotiedosto)"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "Al_ways use UTF-8 character encoding"
@@ -712,7 +717,7 @@ msgstr "K_ieli:"
 #: ../data/ui/text-assistant/hearing-impaired-page.ui.h:4
 #: ../data/ui/text-assistant/line-break-page.ui.h:4
 msgid "Co_untry:"
-msgstr ""
+msgstr "_Maa:"
 
 #: ../data/ui/text-assistant/common-error-page.ui.h:1
 msgid "S_elect errors to correct:"
@@ -761,11 +766,11 @@ msgstr "_Valitse suoritettavat korjaukset:"
 
 #: ../data/ui/text-assistant/introduction-page.ui.h:2
 msgid "Colu_mns:"
-msgstr ""
+msgstr "_Sarakkeet:"
 
 #: ../data/ui/text-assistant/introduction-page.ui.h:3
 msgid "S_ubtitles:"
-msgstr ""
+msgstr "_Kappaleet:"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:1
 msgid "Spell-Check Dictionary"
@@ -814,11 +819,11 @@ msgstr "Merkitse kappaleita selaamisen helpottamiseksi"
 
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:1
 msgid "Custom Framerates"
-msgstr ""
+msgstr "Omat ruutunopeudet"
 
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:2
 msgid "Allow use of non-standard framerates"
-msgstr ""
+msgstr "Salli epästandardien ruutunopeuksien käyttö"
 
 #: ../data/extensions/side-pane/side-pane.extension.in.h:1
 msgid "Side Pane"
@@ -897,35 +902,35 @@ msgstr ""
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
-msgstr ""
+msgstr "Titteli"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 msgid "Do not break after a title, e.g.\" Dr.\""
-msgstr ""
+msgstr "Älä katkaise tittelin, esim. \"Dr.\", jälkeen"
 
 #: ../data/patterns/Latn-en.line-break.in.h:3
 msgid "Article"
-msgstr ""
+msgstr "Artikkeli"
 
 #: ../data/patterns/Latn-en.line-break.in.h:4
 msgid "Do not break after an article"
-msgstr ""
+msgstr "Älä katkaise artikkelin jälkeen"
 
 #: ../data/patterns/Latn-en.line-break.in.h:5
 msgid "Preposition"
-msgstr ""
+msgstr "Prepositio"
 
 #: ../data/patterns/Latn-en.line-break.in.h:6
 msgid "Do not break after a preposition"
-msgstr ""
+msgstr "Älä katkaise preposition jälkeen"
 
 #: ../data/patterns/Latn-en.line-break.in.h:7
 msgid "Possessive determiner"
-msgstr ""
+msgstr "Possessivimääre"
 
 #: ../data/patterns/Latn-en.line-break.in.h:8
 msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr ""
+msgstr "Älä katkaise possessiivimääreen, esim. \"my\", jälkeen"
 
 #: ../data/patterns/Latn.capitalization.in.h:1
 msgid "Sentence"
@@ -1112,11 +1117,11 @@ msgstr "Katkaise välimerkkiin päättyvien virkkeiden mukaan"
 
 #: ../data/patterns/Latn.line-break.in.h:5
 msgid "Number and unit"
-msgstr ""
+msgstr "Lukuarvo ja yksikkö"
 
 #: ../data/patterns/Latn.line-break.in.h:6
 msgid "Do not break between a number and associated unit"
-msgstr ""
+msgstr "Älä katkaise lukuarvon ja sen yksikön välistä"
 
 #: ../data/patterns/Zyyy.common-error.in.h:1
 msgid "Leading and trailing spaces"
@@ -1497,7 +1502,7 @@ msgstr "Laske vieraat yksiköt ruutunopeudella {:.3f} fps"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:174
 msgid "{:.3f} fps"
-msgstr ""
+msgstr "{:.3f} fps"
 
 #: ../data/extensions/side-pane/side-pane.py:344
 msgid "Si_de Pane"
@@ -2253,7 +2258,7 @@ msgstr "Tiedoston \"{}\" tulkinta epäonnistui"
 
 #: ../gaupol/agents/open.py:319
 msgid "Please check that the file you are trying to open is a valid {} file."
-msgstr ""
+msgstr "Tarkista, että tiedosto, jota yrität avata on kelvollinen {} tiedosto."
 
 #: ../gaupol/agents/open.py:331
 msgid "Open abnormally large file \"{}\"?"
@@ -2375,27 +2380,27 @@ msgstr "Videotiedosto:"
 
 #: ../gaupol/assistants.py:99
 msgid "Tasks and Target"
-msgstr ""
+msgstr "Tehtävät ja kohde"
 
 #: ../gaupol/assistants.py:110
 msgid "Correct texts in main text column"
-msgstr ""
+msgstr "Korjaa tekstit pääsarakkeessa"
 
 #: ../gaupol/assistants.py:111
 msgid "Correct texts in translation text column"
-msgstr ""
+msgstr "Korjaa tekstit käännössarakkeessa"
 
 #: ../gaupol/assistants.py:120
 msgid "Correct texts in selected subtitles"
-msgstr ""
+msgstr "Korjaa valittujen kappaleiden tekstit"
 
 #: ../gaupol/assistants.py:121
 msgid "Correct texts in current project"
-msgstr ""
+msgstr "Korjaa nykyisen projektin tekstit"
 
 #: ../gaupol/assistants.py:122
 msgid "Correct texts in all open projects"
-msgstr ""
+msgstr "Korjaa kaikkien avoimien projektien tekstit"
 
 #: ../gaupol/assistants.py:370
 msgid "Other"
@@ -2407,7 +2412,7 @@ msgstr "Muunna kokonaan pienellä kirjoitetun tekstin kirjainkoko"
 
 #: ../gaupol/assistants.py:443
 msgid "Capitalization Patterns"
-msgstr ""
+msgstr "Kirjainkoon lausekkeet"
 
 #: ../gaupol/assistants.py:445
 msgid "Capitalize texts"
@@ -2420,7 +2425,7 @@ msgstr ""
 
 #: ../gaupol/assistants.py:473
 msgid "Common Error Patterns"
-msgstr ""
+msgstr "Yleisten virheiden lausekkeet"
 
 #: ../gaupol/assistants.py:475
 msgid "Correct common errors"
@@ -2432,7 +2437,7 @@ msgstr "Poista kuulovammaisille tarkoitetut selittävät tekstit"
 
 #: ../gaupol/assistants.py:532
 msgid "Hearing Impaired Patterns"
-msgstr ""
+msgstr "Kuulovammaistekstien lausekkeet"
 
 #: ../gaupol/assistants.py:534
 msgid "Remove hearing impaired texts"
@@ -2448,7 +2453,7 @@ msgstr ""
 
 #: ../gaupol/assistants.py:563
 msgid "Joining and Splitting Words"
-msgstr ""
+msgstr "Sanojen yhdistäminen ja jakaminen"
 
 #: ../gaupol/assistants.py:565
 msgid "Join or Split Words"
@@ -2464,7 +2469,7 @@ msgstr "Katkaise teksti määritellyn pituisiin riveihin"
 
 #: ../gaupol/assistants.py:640
 msgid "Line-Break Patterns"
-msgstr ""
+msgstr "Rivien katkaisun lausekkeet"
 
 #: ../gaupol/assistants.py:642
 msgid "Break lines"
@@ -2472,7 +2477,7 @@ msgstr "Katkaise rivejä"
 
 #: ../gaupol/assistants.py:697
 msgid "Line-Break Options"
-msgstr ""
+msgstr "Rivien katkaisun asetukset"
 
 #: ../gaupol/assistants.py:782
 msgid "Correcting Texts"
@@ -2749,15 +2754,15 @@ msgstr "em"
 
 #: ../gaupol/main.py:68
 msgid "Failed to set default locale."
-msgstr ""
+msgstr "Maa-asetuston määrittäminen epäonnistui."
 
 #: ../gaupol/main.py:69
 msgid "Please check your locale settings."
-msgstr ""
+msgstr "Tarkista maa-asetuston määreet."
 
 #: ../gaupol/main.py:70
 msgid "Falling back to the 'C' locale."
-msgstr ""
+msgstr "Käytetään varamaa-asetustoa 'C'."
 
 #: ../gaupol/main.py:98
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
@@ -2823,7 +2828,7 @@ msgstr "<b>Tiedostomuoto:</b> {}"
 
 #: ../gaupol/page.py:311
 msgid "<b>Encoding:</b> {}"
-msgstr ""
+msgstr "<b>Koodaus:</b> {}"
 
 #: ../gaupol/page.py:312
 msgid "<b>Newlines:</b> {}"
@@ -2832,74 +2837,3 @@ msgstr "<b>Rivinvaihdot:</b> {}"
 #: ../gaupol/page.py:345
 msgid "{} translation"
 msgstr "{} käännös"
-
-#~ msgid "An unhandled exception occured"
-#~ msgstr "Tapahtui käsittelemätön poikkeus"
-
-#~ msgid "Copy _Down"
-#~ msgstr "Kopioi _alas"
-
-#~ msgid "Copy _Up"
-#~ msgstr "Kopioi _ylös"
-
-#~ msgid "Character _encoding:"
-#~ msgstr "_Merkistökoodaus:"
-
-#~ msgid "C_ountry:"
-#~ msgstr "_Maa:"
-
-#~ msgid "Correct texts in _all open projects"
-#~ msgstr "Korjaa k_aikkien avoimien projektien tekstit"
-
-#~ msgid "Correct texts in _main text column"
-#~ msgstr "Korjaa tekstit _pääsarakkeessa"
-
-#~ msgid "Correct texts in _translation text column"
-#~ msgstr "Korjaa tekstit _käännössarakkeessa"
-
-#~ msgid "Correct texts in c_urrent project"
-#~ msgstr "Korjaa _nykyisen projektin tekstit"
-
-#~ msgid "Correct texts in s_elected subtitles"
-#~ msgstr "Korjaa _valittujen kappaleiden tekstit"
-
-#~ msgid ""
-#~ "Please check, e.g. with a text editor, that the file you are trying open "
-#~ "is a valid {} file. If you think it is, file a bug report and attach the "
-#~ "file."
-#~ msgstr ""
-#~ "Tarkista, esimerkiksi tekstieditorilla, että tiedosto, jota yrität avata "
-#~ "on kelvollinen {} tiedosto. Jos luulet että se on, lähetä vikailmoitus ja "
-#~ "liitä tiedosto."
-
-#~ msgid "Select Tasks and Target"
-#~ msgstr "Valitse tehtävät ja kohde"
-
-#~ msgid "Select Capitalization Patterns"
-#~ msgstr "Valitse kirjainkoon muunnoksen lausekkeet"
-
-#~ msgid "Select Common Error Patterns"
-#~ msgstr "Valitse yleisten virheiden lausekkeet"
-
-#~ msgid "Select Hearing Impaired Patterns"
-#~ msgstr "Valitse kuulovammaistekstien lausekkeet"
-
-#~ msgid "Set Options for Joining and Splitting Words"
-#~ msgstr "Määritä sanojen yhdistämisen ja jakamisen asetukset"
-
-#~ msgid "Select Line-Break Patterns"
-#~ msgstr "Valitse rivien katkaisun lausekkeet"
-
-#~ msgid "Set Line-Break Options"
-#~ msgstr "Määritä rivien katkaisun asetukset"
-
-#~ msgid "Adjusted duration of {:d} subtitle"
-#~ msgid_plural "Adjusted durations of {:d} subtitles"
-#~ msgstr[0] "Säädettiin {:d} kappaleen kesto"
-#~ msgstr[1] "Säädettiin {:d} kappaleen kestot"
-
-#~ msgid "set the configuration file used"
-#~ msgstr "aseta käytettävä asetustiedosto"
-
-#~ msgid "<b>Character encoding:</b> {}"
-#~ msgstr "<b>Merkistökoodaus:</b> {}"
