@@ -80,6 +80,7 @@ if aeidon.RUNNING_SPHINX:
     _benchmark = benchmark
     def benchmark(function):
         return decorator_apply(_benchmark, function)
+    benchmark.__doc__ = _benchmark.__doc__
 
 def contractual(function):
     """
@@ -89,7 +90,8 @@ def contractual(function):
     ``FUNCTION_NAME_ensure`` calls if such functions exist. The require
     function receives the same arguments as function, the ensure function will
     in addition receive function's return value as its first argument. This is
-    a debug decorator that does nothing if :data:`aeidon.DEBUG` is ``False``.
+    a debug decorator that does nothing unless :data:`aeidon.DEBUG` is
+    ``True``.
     """
     if not aeidon.DEBUG:
         return function
@@ -109,6 +111,7 @@ if aeidon.RUNNING_SPHINX:
     _contractual = contractual
     def contractual(function):
         return decorator_apply(_contractual, function)
+    contractual.__doc__ = _contractual.__doc__
 
 def decorator_apply(dec, fun):
     """Rewrap `dec` to preserve function signature."""
@@ -126,6 +129,7 @@ if aeidon.RUNNING_SPHINX:
     _export = export
     def export(function):
         return decorator_apply(_export, function)
+    export.__doc__ = _export.__doc__
 
 def memoize(limit=100):
     """
@@ -211,6 +215,7 @@ if aeidon.RUNNING_SPHINX:
     _notify_frozen = notify_frozen
     def notify_frozen(function):
         return decorator_apply(_notify_frozen, function)
+    notify_frozen.__doc__ = _notify_frozen.__doc__
 
 def once(function):
     """Decorator for functions that cache their only return value."""
@@ -227,6 +232,7 @@ if aeidon.RUNNING_SPHINX:
     _once = once
     def once(function):
         return decorator_apply(_once, function)
+    once.__doc__ = _once.__doc__
 
 def reversion_test(function):
     """Decorator for unit testing reversions of one action."""
@@ -251,6 +257,7 @@ if aeidon.RUNNING_SPHINX:
     _reversion_test = reversion_test
     def reversion_test(function):
         return decorator_apply(_reversion_test, function)
+    reversion_test.__doc__ = _reversion_test.__doc__
 
 def revertable(function):
     """Decorator for revertable methods of :class:`aeidon.Project`."""
@@ -283,6 +290,7 @@ if aeidon.RUNNING_SPHINX:
     _revertable = revertable
     def revertable(function):
         return decorator_apply(_revertable, function)
+    revertable.__doc__ = _revertable.__doc__
 
 def silent(*exceptions):
     """

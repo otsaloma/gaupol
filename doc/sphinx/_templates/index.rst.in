@@ -7,6 +7,17 @@ source code. Please note that this documentation is not human-composed
 nor human-reviewed and may contain erros. If in doubt, read the full
 source code or contact the authors.
 
+The code in `aeidon` and `gaupol` is split across a large amount of
+packages and modules, but all relevant functionality has been imported
+to the top-level packages and thus it should be sufficient to import
+these as::
+
+    import aeidon
+    import gaupol
+
+If you find a need to do deeper imports, you're probably doing something
+vile and should either stop it or propose a change in the API.
+
 API Documentation
 -----------------
 
