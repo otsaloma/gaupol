@@ -127,7 +127,7 @@ def connect_require(observer, observable, signal, *args):
 @aeidon.deco.contractual
 def connect(observer, observable, signal, *args):
     """
-    Connect `observable`'s signal to `observer`'s callback method.
+    Connect `observable`'s `signal` to `observer`'s callback method.
 
     If `observable` is a string, it should be an attribute of `observer`.
     If `observable` is not a string it should be the same as `observer`.
@@ -254,10 +254,10 @@ def get_default_encoding_ensure(value):
 
 @aeidon.deco.once
 @aeidon.deco.contractual
-def get_default_encoding():
-    """Return the locale encoding or UTF-8 (as fallback)."""
+def get_default_encoding(fallback="utf_8"):
+    """Return the locale encoding or `fallback`."""
     encoding = locale.getpreferredencoding()
-    encoding = encoding or "utf_8"
+    encoding = encoding or fallback
     re_illegal = re.compile(r"[^a-z0-9_]")
     encoding = re_illegal.sub("_", encoding.lower())
     encoding = get_encoding_alias(encoding)
