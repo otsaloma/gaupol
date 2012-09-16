@@ -49,7 +49,12 @@ class TestCase(object, metaclass=aeidon.Contractual):
 
     @aeidon.deco.memoize(100)
     def get_sample_text(self, format, name=None):
-        """Return sample text for subtitle file `format`."""
+        """
+        Return sample text for subtitle file `format`.
+
+        `name` can be specified if different from ``format.name.lower()``.
+        This is useful for variants of a format, e.g. "subrip-extended".
+        """
         name = name or format.name.lower()
         basename = "".join((name, format.extension))
         path = os.path.join(aeidon.DATA_DIR, "samples", basename)
