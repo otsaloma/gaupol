@@ -155,11 +155,11 @@ class TestCalculator(aeidon.TestCase):
         assert self.calc.is_valid_time("12:34:56.789")
         assert self.calc.is_valid_time("-12:34:56.789")
 
-    def test_parse_time(self):
-        assert self.calc.parse_time("1:2:3.4") == "01:02:03.400"
-        assert self.calc.parse_time("1:2:3,4") == "01:02:03.400"
-        assert self.calc.parse_time("-00:00:00.400") == "-00:00:00.400"
-        assert self.calc.parse_time("-01:02:03.400") == "-01:02:03.400"
+    def test_normalize_time(self):
+        assert self.calc.normalize_time("1:2:3.4") == "01:02:03.400"
+        assert self.calc.normalize_time("1:2:3,4") == "01:02:03.400"
+        assert self.calc.normalize_time("-00:00:00.400") == "-00:00:00.400"
+        assert self.calc.normalize_time("-01:02:03.400") == "-01:02:03.400"
 
     def test_round_time(self):
         round_time = self.calc.round_time

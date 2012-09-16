@@ -69,8 +69,8 @@ class SubRip(aeidon.SubtitleFile):
                 subtitles[-1].main_text += line
                 continue
             subtitle = self._get_subtitle()
-            subtitle.start_time = subtitle.calc.parse_time(match.group(1))
-            subtitle.end_time = subtitle.calc.parse_time(match.group(2))
+            subtitle.start_time = subtitle.calc.normalize_time(match.group(1))
+            subtitle.end_time = subtitle.calc.normalize_time(match.group(2))
             if match.group(3) is not None:
                 subtitle.subrip.x1 = int(match.group(4))
                 subtitle.subrip.x2 = int(match.group(5))

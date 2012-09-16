@@ -133,12 +133,12 @@ class Calculator(object):
                 0 <= seconds  <=  59 and
                 0 <= mseconds <= 999)
 
-    def parse_time(self, time):
+    def normalize_time(self, time):
         """
-        Parse `time` to valid format.
+        Convert `time` to valid format.
 
         >>> calc = aeidon.Calculator()
-        >>> calc.parse_time("1:2:3,4")
+        >>> calc.normalize_time("1:2:3,4")
         '01:02:03.400'
         """
         time = time.strip()
