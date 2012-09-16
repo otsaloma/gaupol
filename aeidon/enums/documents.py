@@ -22,6 +22,17 @@ import aeidon
 
 __all__ = ("documents",)
 
+
+class Main(aeidon.EnumerationItem):
+
+    pass
+
+
+class Translation(aeidon.EnumerationItem):
+
+    pass
+
+
 documents = aeidon.Enumeration()
-documents.MAIN = aeidon.EnumerationItem()
-documents.TRAN = aeidon.EnumerationItem()
+documents.MAIN = Main()
+documents.TRAN = Translation()

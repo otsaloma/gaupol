@@ -22,6 +22,17 @@ import aeidon
 
 __all__ = ("modes",)
 
+
+class Time(aeidon.EnumerationItem):
+
+    pass
+
+
+class Frame(aeidon.EnumerationItem):
+
+    pass
+
+
 modes = aeidon.Enumeration()
-modes.TIME = aeidon.EnumerationItem()
-modes.FRAME = aeidon.EnumerationItem()
+modes.TIME = Time()
+modes.FRAME = Frame()
