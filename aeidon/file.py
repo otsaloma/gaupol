@@ -131,7 +131,7 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
 
     def write(self, subtitles, doc):
         """
-        Write `subtitles` from `doc` to file.
+        Write `subtitles` with text from `doc` to file.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
@@ -155,7 +155,7 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
 
     def write_to_file(self, subtitles, doc, fobj):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` with text from `doc` to open file object `fobj`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
