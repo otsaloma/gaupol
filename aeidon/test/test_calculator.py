@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2009,2011 Osmo Salomaa
+# Copyright (C) 2005-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -32,21 +32,15 @@ class TestCalculator(aeidon.TestCase):
             assert a is b
 
     def test_add__frames(self):
-        value = self.calc.add(10, 10)
-        assert aeidon.is_frame(value)
-        assert value == 20
+        assert self.calc.add(10, 10) == 20
 
     def test_add__seconds(self):
-        value = self.calc.add(10.0, 10.0)
-        assert aeidon.is_seconds(value)
-        assert value == 20.0
+        assert self.calc.add(10.0, 10.0) == 20.0
 
     def test_add__times(self):
         x = "00:00:10.000"
         y = "00:00:10.000"
-        value = self.calc.add(x, y)
-        assert aeidon.is_time(value)
-        assert value == "00:00:20.000"
+        assert self.calc.add(x, y) == "00:00:20.000"
 
     def test_frame_to_seconds(self):
         calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)
@@ -161,12 +155,14 @@ class TestCalculator(aeidon.TestCase):
         assert self.calc.normalize_time("-00:00:00.400") == "-00:00:00.400"
         assert self.calc.normalize_time("-01:02:03.400") == "-01:02:03.400"
 
-    def test_round_time(self):
-        round_time = self.calc.round_time
-        assert round_time("02:36:35.857", 3) == "02:36:35.857"
-        assert round_time("02:36:35.857", 2) == "02:36:35.860"
-        assert round_time("02:36:35.857", 1) == "02:36:35.900"
-        assert round_time("02:36:35.857", 0) == "02:36:36.000"
+    def test_round__frame(self):
+        assert self.calc.round(13, -1) == 10
+
+    def test_round__seconds(self):
+        assert self.calc.round(13.33, 0) == 13.0
+
+    def test_round__time(self):
+        assert self.calc.round("12:34:56.789", 1) == "12:34:56.800"
 
     def test_seconds_to_frame(self):
         seconds_to_frame = self.calc.seconds_to_frame

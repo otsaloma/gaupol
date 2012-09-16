@@ -26,6 +26,11 @@ class TestModule(aeidon.TestCase):
         assert not aeidon.is_frame(aeidon.as_seconds(13))
         assert not aeidon.is_frame(aeidon.as_time("12:34:56.789"))
 
+    def test_is_same_type(self):
+        assert aeidon.is_same_type(1, 2)
+        assert aeidon.is_same_type(1.0, 2.0)
+        assert aeidon.is_same_type("00:00:01.000", "00:00:02.000")
+
     def test_is_seconds(self):
         assert aeidon.is_seconds(aeidon.as_seconds(13))
         assert not aeidon.is_seconds(aeidon.as_frame(13))

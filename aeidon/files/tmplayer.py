@@ -86,7 +86,7 @@ class TMPlayer(aeidon.SubtitleFile):
         Raise :exc:`UnicodeError` if encoding fails.
         """
         for subtitle in subtitles:
-            start = subtitle.calc.round_time(subtitle.start_time, 0)
+            start = subtitle.calc.round(subtitle.start_time, 0)
             fobj.write("{}:".format(start[:-4] if self.two_digit_hour
                                     else ("-" + start[2:-4]
                                           if start.startswith("-")

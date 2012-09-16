@@ -79,10 +79,10 @@ class SubStationAlpha(aeidon.SubtitleFile):
         if field_name == "Marked":
             return "Marked={:d}".format(subtitle.ssa.marked)
         if field_name == "Start":
-            value = subtitle.calc.round_time(subtitle.start_time, 2)
+            value = subtitle.calc.round(subtitle.start_time, 2)
             return self._re_subtitle_time.sub(r"\1\2", value)
         if field_name == "End":
-            value = subtitle.calc.round_time(subtitle.end_time, 2)
+            value = subtitle.calc.round(subtitle.end_time, 2)
             return self._re_subtitle_time.sub(r"\1\2", value)
         if field_name == "Text":
             value = subtitle.get_text(doc)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2009,2011 Osmo Salomaa
+# Copyright (C) 2005-2009,2011-2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("Calculator",)
 
 
-class Calculator(object):
+class Calculator(object, metaclass=aeidon.Contractual):
 
     """
     Time and frame calculator.
@@ -46,29 +46,41 @@ class Calculator(object):
             cls._instances[framerate] = object.__new__(cls)
         return cls._instances[framerate]
 
+    def add_ensure(self, value, x, y):
+        assert aeidon.is_same_type(value, x)
+
     def add(self, x, y):
         """Add position `y` to `x`."""
+        if aeidon.is_time(x):
+            x = self.to_seconds(x)
+            y = self.to_seconds(y)
+            return self.seconds_to_time(x + y)
         if aeidon.is_frame(x):
             y = self.to_frame(y)
             return x + y
         if aeidon.is_seconds(x):
             y = self.to_seconds(y)
             return x + y
-        if aeidon.is_time(x):
-            x = self.to_seconds(x)
-            y = self.to_seconds(y)
-            return self.seconds_to_time(x + y)
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
+    def frame_to_seconds_ensure(self, value, frame):
+        assert aeidon.is_seconds(value)
+
     def frame_to_seconds(self, frame):
         """Convert `frame` to seconds."""
-        return frame / self._framerate
+        return aeidon.as_seconds(frame / self._framerate)
+
+    def frame_to_time_ensure(self, value, frame):
+        assert aeidon.is_time(value)
 
     def frame_to_time(self, frame):
         """Convert `frame` to time."""
         seconds = self.frame_to_seconds(frame)
         return self.seconds_to_time(seconds)
+
+    def get_middle_ensure(self, value, x, y):
+        assert aeidon.is_same_type(value, x)
 
     def get_middle(self, x, y):
         """
@@ -82,24 +94,27 @@ class Calculator(object):
         """
         if aeidon.is_time(x):
             x = self.time_to_seconds(x)
-            y = self.time_to_seconds(y)
-            return self.seconds_to_time((x + y) / 2)
+            y = self.to_seconds(y)
+            return self.seconds_to_time((x+y)/2)
         if aeidon.is_frame(x):
-            return round((x + y) / 2, 0)
+            y = self.to_frame(y)
+            return aeidon.as_frame(round((x+y)/2, 0))
         if aeidon.is_seconds(x):
-            return ((x + y) / 2)
+            y = self.to_seconds(y)
+            return aeidon.as_seconds(((x+y)/2))
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
     def is_earlier(self, x, y):
         """Return ``True`` if `x` is earlier than `y`."""
         if aeidon.is_time(x):
-            return self.is_earlier(self.time_to_seconds(x),
-                                   self.time_to_seconds(y))
-
+            x = self.time_to_seconds(x)
+            return self.is_earlier(x, y)
         if aeidon.is_frame(x):
+            y = self.to_frame(y)
             return (x < y)
         if aeidon.is_seconds(x):
+            y = self.to_seconds(y)
             return (x < y)
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
@@ -107,12 +122,13 @@ class Calculator(object):
     def is_later(self, x, y):
         """Return ``True`` if `x` is later than `y`."""
         if aeidon.is_time(x):
-            return self.is_later(self.time_to_seconds(x),
-                                 self.time_to_seconds(y))
-
+            x = self.time_to_seconds(x)
+            return self.is_later(x, y)
         if aeidon.is_frame(x):
+            y = self.to_frame(y)
             return (x > y)
         if aeidon.is_seconds(x):
+            y = self.to_seconds(y)
             return (x > y)
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
@@ -153,15 +169,39 @@ class Calculator(object):
                         int(float(seconds)),
                         (float(seconds) % 1) * 1000))
 
-    def round_time(self, time, decimals):
-        """Round `time` to amount of `decimals` in seconds."""
-        seconds = self.time_to_seconds(time)
-        seconds = round(seconds, decimals)
-        return self.seconds_to_time(seconds)
+    def round_ensure(self, value, pos, ndigits):
+        assert aeidon.is_same_type(value, pos)
+
+    def round(self, pos, ndigits):
+        """
+        Round `pos` to given precision in decimal digits.
+
+        `ndigits` may be negative. For frames zero will be used
+        if given `ndigits` is greater than zero.
+        """
+        if aeidon.is_time(pos):
+            pos = self.time_to_seconds(pos)
+            pos = round(pos, ndigits)
+            return self.seconds_to_time(pos)
+        if aeidon.is_frame(pos):
+            ndigits = min(0, ndigits)
+            pos = round(pos, ndigits)
+            return aeidon.as_frame(pos)
+        if aeidon.is_seconds(pos):
+            pos = round(pos, ndigits)
+            return aeidon.as_seconds(pos)
+        raise ValueError("Invalid type for pos: {}"
+                         .format(repr(type(pos))))
+
+    def seconds_to_frame_ensure(self, value, seconds):
+        assert aeidon.is_frame(value)
 
     def seconds_to_frame(self, seconds):
         """Convert `seconds` to frame."""
         return int(round(seconds * self._framerate, 0))
+
+    def seconds_to_time_ensure(self, value, seconds):
+        assert aeidon.is_time(value)
 
     def seconds_to_time(self, seconds):
         """Convert `seconds` to time."""
@@ -176,10 +216,22 @@ class Calculator(object):
                         int(seconds % 60),
                         (seconds % 1) * 1000))
 
+    def time_to_frame_require(self, time):
+        assert aeidon.is_time(time)
+
+    def time_to_frame_ensure(self, value, time):
+        assert aeidon.is_frame(value)
+
     def time_to_frame(self, time):
         """Convert `time` to frame."""
         seconds = self.time_to_seconds(time)
         return self.seconds_to_frame(seconds)
+
+    def time_to_seconds_require(self, time):
+        assert aeidon.is_time(time)
+
+    def time_to_seconds_ensure(self, value, time):
+        assert aeidon.is_seconds(value)
 
     def time_to_seconds(self, time):
         """Convert `time` to seconds."""
@@ -189,6 +241,9 @@ class Calculator(object):
                                   float(time[3:5]) * 60,
                                   float(time[6:8]),
                                   float(time[9: ]) / 1000))
+
+    def to_frame_ensure(self, value, pos):
+        assert aeidon.is_frame(value)
 
     def to_frame(self, pos):
         """Convert `pos` to frame."""
@@ -201,6 +256,9 @@ class Calculator(object):
         raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))
 
+    def to_seconds_ensure(self, value, pos):
+        assert aeidon.is_seconds(value)
+
     def to_seconds(self, pos):
         """Convert `pos` to secods."""
         if aeidon.is_time(pos):
@@ -211,6 +269,9 @@ class Calculator(object):
             return pos
         raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))
+
+    def to_time_ensure(self, value, pos):
+        assert aeidon.is_time(value)
 
     def to_time(self, pos):
         """Convert `pos` to time."""

@@ -71,8 +71,8 @@ class SubViewer2(aeidon.SubtitleFile):
         fobj.write(n)
         for subtitle in subtitles:
             fobj.write(n)
-            start = subtitle.calc.round_time(subtitle.start_time, 2)[:-1]
-            end = subtitle.calc.round_time(subtitle.end_time, 2)[:-1]
+            start = subtitle.calc.round(subtitle.start_time, 2)[:-1]
+            end = subtitle.calc.round(subtitle.end_time, 2)[:-1]
             fobj.write("{},{}{}".format(start, end, n))
             fobj.write(subtitle.get_text(doc).replace("\n", "[br]"))
             fobj.write(n)
