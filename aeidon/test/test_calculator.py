@@ -31,13 +31,22 @@ class TestCalculator(aeidon.TestCase):
             b = aeidon.Calculator(framerate)
             assert a is b
 
-    def test_add_times(self):
-        for x, y, z in (( "33:33:33.333",  "44:44:44.444",  "78:18:17.777"),
-                        ("-33:33:33.333", "-44:44:44.444", "-78:18:17.777"),
-                        ("-33:33:33.333",  "44:44:44.444",  "11:11:11.111"),
-                        ( "33:33:33.333", "-44:44:44.444", "-11:11:11.111")):
+    def test_add__frames(self):
+        value = self.calc.add(10, 10)
+        assert aeidon.is_frame(value)
+        assert value == 20
 
-            assert self.calc.add_times(x, y) == z
+    def test_add__seconds(self):
+        value = self.calc.add(10.0, 10.0)
+        assert aeidon.is_seconds(value)
+        assert value == 20.0
+
+    def test_add__times(self):
+        x = "00:00:10.000"
+        y = "00:00:10.000"
+        value = self.calc.add(x, y)
+        assert aeidon.is_time(value)
+        assert value == "00:00:20.000"
 
     def test_frame_to_seconds(self):
         calc = aeidon.Calculator(aeidon.framerates.FPS_25_000)

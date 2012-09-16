@@ -283,11 +283,6 @@ class TestSubtitle(aeidon.TestCase):
         assert self.tsub._start == "00:00:02.000"
         assert self.tsub._end == "00:00:04.000"
 
-    def test_shift_positions__value_error(self):
-        self.assert_raises(ValueError,
-                           self.tsub.shift_positions,
-                           None)
-
     def test_start__get(self):
         assert self.tsub.start == "00:00:01.000"
         assert self.fsub.start == 100

@@ -190,11 +190,7 @@ class Subtitle(object):
     def duration(self, value):
         """Set duration from `value`."""
         value = self._convert_position(value)
-        if self._mode == aeidon.modes.TIME:
-            times = (self.start_time, value)
-            self._end = self.calc.add_times(*times)
-        if self._mode == aeidon.modes.FRAME:
-            self._end = self.start_frame + value
+        self._end = self.calc.add(self._start, value)
 
     @property
     def duration_frame(self):
@@ -377,24 +373,8 @@ class Subtitle(object):
 
     def shift_positions(self, value):
         """Add `value` to start and end positions."""
-        if aeidon.is_time(value):
-            start = self.calc.add_times(self.start_time, value)
-            end = self.calc.add_times(self.end_time, value)
-            self.start = aeidon.as_time(start)
-            self.end = aeidon.as_time(end)
-        elif aeidon.is_frame(value):
-            start = self.start_frame + value
-            end = self.end_frame + value
-            self.start = aeidon.as_frame(start)
-            self.end = aeidon.as_frame(end)
-        elif aeidon.is_seconds(value):
-            start = self.start_seconds + value
-            end = self.end_seconds + value
-            self.start = aeidon.as_seconds(start)
-            self.end = aeidon.as_seconds(end)
-        else:
-            raise ValueError("Invalid type for value: {}"
-                             .format(repr(type(value))))
+        self._start = self.calc.add(self._start, value)
+        self._end = self.calc.add(self._end, value)
 
     @property
     def start(self):

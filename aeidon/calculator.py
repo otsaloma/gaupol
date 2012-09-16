@@ -46,11 +46,20 @@ class Calculator(object):
             cls._instances[framerate] = object.__new__(cls)
         return cls._instances[framerate]
 
-    def add_times(self, x, y):
-        """Add time `y` to time `x`."""
-        x = self.time_to_seconds(x)
-        y = self.time_to_seconds(y)
-        return self.seconds_to_time(x + y)
+    def add(self, x, y):
+        """Add position `y` to `x`."""
+        if aeidon.is_frame(x):
+            y = self.to_frame(y)
+            return x + y
+        if aeidon.is_seconds(x):
+            y = self.to_seconds(y)
+            return x + y
+        if aeidon.is_time(x):
+            x = self.to_seconds(x)
+            y = self.to_seconds(y)
+            return self.seconds_to_time(x + y)
+        raise ValueError("Invalid type for x: {}"
+                         .format(repr(type(x))))
 
     def frame_to_seconds(self, frame):
         """Convert `frame` to seconds."""
