@@ -286,11 +286,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
                                         group=penalty["group"],
                                         value=penalty["value"]))
 
-    def set_text(self, text, next=True):
-        """
-        Set the target text to search in and parse it.
-
-        `next` should be ``True`` to start at beginning, ``False`` for end.
-        """
-        aeidon.Parser.set_text(self, text.strip(), next)
+    def set_text(self, text):
+        """Set the target text to search in and parse it."""
+        aeidon.Parser.set_text(self, text.strip())
         self.text = self.text.strip()

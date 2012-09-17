@@ -162,13 +162,9 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         shift = len(self.text) - len(orig_text)
         self._shift_tags(a, shift, orig_text)
 
-    def set_text(self, text, next=True):
-        """
-        Set the target text to search in and parse it.
-
-        `next` should be ``True`` to start at beginning, ``False`` for end.
-        """
-        aeidon.Finder.set_text(self, text, next)
+    def set_text(self, text):
+        """Set the target text to search in and parse it."""
+        aeidon.Finder.set_text(self, text)
         self._margins = []
         self._tags = []
         if self.re_tag is None: return

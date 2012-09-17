@@ -28,7 +28,7 @@ class TestFinder(aeidon.TestCase):
     def assert_find_cases(self, cases, regex, next):
         advance = (self.finder.next if next else self.finder.previous)
         for pattern, matches in cases:
-            self.finder.set_text(self.text, next)
+            self.finder.set_text(self.text)
             if regex:
                 self.finder.set_regex(pattern)
             else: # String pattern.
@@ -306,7 +306,7 @@ class TestFinder(aeidon.TestCase):
                            self.finder.next)
 
     def test_replace__equal_length_previous(self):
-        self.finder.set_text(self.text, False)
+        self.finder.set_text(self.text)
         self.finder.pattern = "ne"
         self.finder.replacement = "--"
         self.finder.previous()
@@ -344,7 +344,7 @@ class TestFinder(aeidon.TestCase):
                            self.finder.next)
 
     def test_replace__lengthen_regex_dollar_previous(self):
-        self.finder.set_text(self.text, False)
+        self.finder.set_text(self.text)
         self.finder.set_regex(r"$")
         self.finder.replacement = "--"
         self.finder.previous()
@@ -382,7 +382,7 @@ class TestFinder(aeidon.TestCase):
                            self.finder.next)
 
     def test_replace__lengthen_regex_hat_previous(self):
-        self.finder.set_text(self.text, False)
+        self.finder.set_text(self.text)
         self.finder.set_regex(r"^")
         self.finder.replacement = "--"
         self.finder.previous()
@@ -420,7 +420,7 @@ class TestFinder(aeidon.TestCase):
                            self.finder.next)
 
     def test_replace__lengthen_string_match_previous(self):
-        self.finder.set_text(self.text, False)
+        self.finder.set_text(self.text)
         self.finder.pattern = "v"
         self.finder.replacement = "vv"
         self.finder.previous()
@@ -458,7 +458,7 @@ class TestFinder(aeidon.TestCase):
                            self.finder.next)
 
     def test_replace__shorten_regex_previous(self):
-        self.finder.set_text(self.text, False)
+        self.finder.set_text(self.text)
         self.finder.set_regex(r"[.,]")
         self.finder.replacement = ""
         self.finder.previous()
@@ -539,14 +539,8 @@ class TestFinder(aeidon.TestCase):
         assert self.finder.pattern.pattern == "test"
         assert self.finder.pattern.flags == flags | re.IGNORECASE
 
-    def test_set_text__next(self):
+    def test_set_text(self):
         self.finder.set_text("test")
         assert self.finder.text == "test"
         assert self.finder.match_span is None
-        assert self.finder.pos == 0
-
-    def test_set_text__previous(self):
-        self.finder.set_text("test", next=False)
-        assert self.finder.text == "test"
-        assert self.finder.match_span is None
-        assert self.finder.pos == 4
+        assert self.finder.pos is None

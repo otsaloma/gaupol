@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2007,2009 Osmo Salomaa
+# Copyright (C) 2005-2007,2009,2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -66,6 +66,9 @@ class Finder(object, metaclass=aeidon.Contractual):
         Raise :exc:`StopIteration` if no next match found.
         Return tuple of match start, end position.
         """
+        if self.pos is None:
+            # Start new search from beginning.
+            self.pos = 0
         if isinstance(self.pattern, str):
             text = self.text
             pattern = self.pattern
@@ -106,6 +109,9 @@ class Finder(object, metaclass=aeidon.Contractual):
         Raise :exc:`StopIteration` if no previous match found.
         Return tuple of match start, end position.
         """
+        if self.pos is None:
+            # Start new search from end.
+            self.pos = len(self.text)
         if isinstance(self.pattern, str):
             text = self.text
             pattern = self.pattern
@@ -208,13 +214,9 @@ class Finder(object, metaclass=aeidon.Contractual):
             flags = flags | re.DOTALL | re.MULTILINE | re.UNICODE
         self.pattern = re.compile(pattern, flags)
 
-    def set_text(self, text, next=True):
-        """
-        Set the target text to search in and reset position.
-
-        `next` should be ``True`` to start at beginning, ``False`` for end.
-        """
+    def set_text(self, text):
+        """Set the target text to search in and reset position."""
         self.text = text
         self.match = None
         self.match_span = None
-        self.pos = (0 if next else len(text))
+        self.pos = None
