@@ -64,9 +64,10 @@ def flash_dialog(dialog):
     """
     Run `dialog`, destroy it and return response.
 
-    This function is to be used always when a :class:`Gtk.Dialog` is run so
-    that unit tests can monkey-patch this function with one that returns a
-    specified response without waiting for user input.
+    :func:`flash_dialog` or :func:`run_dialog` should be used always when a
+    :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
+    function with one that returns a specified response without waiting for
+    user input.
     """
     response = dialog.run()
     dialog.destroy()
@@ -103,13 +104,14 @@ def get_preview_command():
         return gaupol.conf.preview.player.command_utf_8
     return gaupol.conf.preview.player.command
 
-def get_text_view_size(text_view, font=""):
+def get_text_view_size(text_view, font=None):
     """Return the width and height desired by `text_view`."""
     text_buffer = text_view.get_buffer()
     start, end = text_buffer.get_bounds()
     text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
-    set_widget_font(label, font)
+    if font is not None:
+        set_widget_font(label, font)
     return (label.get_preferred_width()[1]
             + text_view.props.left_margin
             + text_view.props.right_margin,
@@ -224,17 +226,18 @@ def run_dialog(dialog):
     """
     Run `dialog` and return response.
 
-    This function should be used always when a :class:`Gtk.Dialog` is run so
-    that unit tests can monkey patch this function with one that returns a
-    specified response without waiting for user input.
+    :func:`run_dialog` or :func:`flash_dialog` should be used always when a
+    :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
+    function with one that returns a specified response without waiting for
+    user input.
     """
     return dialog.run()
 
 def scale_to_content(widget,
                      min_nchar=0,
-                     max_nchar=sys.maxsize,
+                     max_nchar=2**16,
                      min_nlines=0,
-                     max_nlines=sys.maxsize,
+                     max_nlines=2**16,
                      font=None):
 
     """Set `widget's` size by content, but limited by `min` and `max`."""
@@ -268,13 +271,13 @@ def separate_combo(store, itr, data=None):
     return store.get_value(itr, 0) == gaupol.COMBO_SEPARATOR
 
 def set_cursor_busy(window):
-    """Set cursor busy when above window."""
+    """Set mouse pointer busy when above window."""
     cursor = Gdk.Cursor(cursor_type=Gdk.CursorType.WATCH)
     window.get_window().set_cursor(cursor)
     iterate_main()
 
 def set_cursor_normal(window):
-    """Set cursor normal when above window."""
+    """Set mouse pointer normal when above window."""
     cursor = Gdk.Cursor(cursor_type=Gdk.CursorType.LEFT_PTR)
     window.get_window().set_cursor(cursor)
     iterate_main()

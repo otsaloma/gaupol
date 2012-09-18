@@ -2,7 +2,8 @@ Gaupol 0.20
 ===========
 
  * Check need for any API changes
- * Test
+ * Run all unit tests
+ * Test manually
 
  [X] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
  [X] Bump Python dependency to 3.2 or greater
