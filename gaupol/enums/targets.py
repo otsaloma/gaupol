@@ -22,7 +22,23 @@ import aeidon
 
 __all__ = ("targets",)
 
+
+class Selected(aeidon.EnumerationItem):
+
+    pass
+
+
+class Current(aeidon.EnumerationItem):
+
+    pass
+
+
+class All(aeidon.EnumerationItem):
+
+    pass
+
+
 targets = aeidon.Enumeration()
-targets.SELECTED = aeidon.EnumerationItem()
-targets.CURRENT = aeidon.EnumerationItem()
-targets.ALL = aeidon.EnumerationItem()
+targets.SELECTED = Selected()
+targets.CURRENT = Current()
+targets.ALL = All()
