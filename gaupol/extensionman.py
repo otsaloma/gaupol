@@ -121,7 +121,7 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
         self._find_extensions_in_directory(self._local_dir)
 
     def get_metadata(self, module):
-        """Return :class:`ExtensionMetadata` instance for module."""
+        """Return an :class:`ExtensionMetadata` instance for `module`."""
         return self._metadata[module]
 
     def get_modules(self):

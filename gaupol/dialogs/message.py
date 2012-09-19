@@ -66,7 +66,7 @@ class QuestionDialog(Gtk.MessageDialog):
     """Base class for question dialogs."""
 
     def __init__(self, parent, title, message=None):
-        """Initialize an :class:`QuestionDialog` object."""
+        """Initialize a :class:`QuestionDialog` object."""
         Gtk.MessageDialog.__init__(self,
                                    parent=parent,
                                    flags=(Gtk.DialogFlags.MODAL |
@@ -85,7 +85,7 @@ class WarningDialog(Gtk.MessageDialog):
     """Base class for warning dialogs."""
 
     def __init__(self, parent, title, message=None):
-        """Initialize an :class:`WarningDialog` object."""
+        """Initialize a :class:`WarningDialog` object."""
         Gtk.MessageDialog.__init__(self,
                                    parent=parent,
                                    flags=(Gtk.DialogFlags.MODAL |

@@ -41,7 +41,7 @@ class TextAssistantPage(Gtk.Box):
    :ivar description: One-line description used in the introduction page
    :ivar handle: Unique unlocalized name for internal references
    :ivar page_title: Short string used as configuration page title
-   :ivar page_type: A GTK+ assistant page type constant
+   :ivar page_type: A :class:`Gtk.AssistantPageType` constant
    :ivar title: Short title used in the introduction page
 
     Of these attributes, :attr:`description`, :attr:`handle` and :attr:`title`

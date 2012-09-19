@@ -43,7 +43,7 @@ class Action(Gtk.Action):
 
        :attr:`accelerator` defines a string in the format understood by
        :func:`Gtk.accelerator_parse`, ``None`` to use the stock accelerator or
-       unset to use a blank string.
+       unset to use a blank string, i.e. undefined.
 
     :ivar action_group: Name of action group to place action into
 
@@ -53,8 +53,8 @@ class Action(Gtk.Action):
 
     :ivar tool_item_type: Class of tool item widget
 
-        The default value is :class:`Gtk.ToolButton`. For buttons with a menu
-        attached, use :class:`Gtk.MenuToolButton`.
+       The default value is :class:`Gtk.ToolButton`. For buttons with a menu
+       attached, use :class:`Gtk.MenuToolButton`.
 
     :ivar widgets: Tuple of names of related application widgets
 

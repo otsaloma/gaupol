@@ -39,12 +39,12 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
     :ivar project: The associated :class:`aeidon.Project` instance
     :ivar tab_label: :class:`Gtk.Label` contained in :attr:`tab_widget`
     :ivar tab_widget: Widget that can be placed in a notebook tab
-    :ivar untitle: Title used if the :attr:`project.main_file` is unsaved
+    :ivar untitle: Title used if :attr:`project.main_file` is unsaved
     :ivar view: The associated :class:`gaupol.View` instance
 
     Signals and their arguments for callback functions:
      * ``close-request``: page
-     * ``view-created``: page view
+     * ``view-created``: page, view
 
     This class represents one page in a notebook of user interfaces for
     projects. The view is updated automatically when project data changes.
