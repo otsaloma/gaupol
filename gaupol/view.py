@@ -269,7 +269,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         return row, col
 
     def get_header_label(self, text):
-        """Return a column header label that's wide enough."""
+        """Return a column header label from `text`."""
         label = Gtk.Label(label=text)
         label.props.xalign = 0
         label.show()
@@ -281,7 +281,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
             assert 0 <= row < len(store)
 
     def get_selected_rows(self):
-        """Return a sequence of the selected rows."""
+        """Return a sequence of selected rows."""
         paths = self.get_selection().get_selected_rows()[1]
         return tuple(gaupol.util.tree_path_to_row(x) for x in paths)
 
@@ -339,7 +339,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         self.set_cursor(path, col, start_editing=False)
 
     def update_headers(self):
-        """Update the attributes of the column header labels."""
+        """Update the attributes of all column header labels."""
         fcol = self.get_focus()[1]
         acol = getattr(self.columns, self._active_col_name, None)
         if fcol == acol: return
