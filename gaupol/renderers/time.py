@@ -65,7 +65,7 @@ class TimeCellRenderer(Gtk.CellRendererText):
         menu.connect("unmap", on_menu_unmap, self)
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
-        """Initialize and a :class:`gaupol.TimeEntry` widget."""
+        """Initialize and return a :class:`gaupol.TimeEntry` widget."""
         editor = gaupol.TimeEntry()
         editor.set_has_frame(False)
         editor.set_alignment(self.props.xalign)

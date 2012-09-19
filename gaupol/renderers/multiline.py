@@ -151,6 +151,6 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         return editor
 
     def set_show_lengths(self, show_lengths):
-        """Show or hide line lengths overriding ``conf``."""
+        """Show or hide line lengths, overriding ``conf``."""
         self._show_lengths = show_lengths
         gaupol.conf.disconnect_notify("editor", "show_lengths_cell", self)
