@@ -188,14 +188,15 @@ class CloseAgent(aeidon.Delegate):
             self.close(self.pages[-1], confirm=confirm)
 
     @aeidon.deco.export
-    def quit(self):
+    def quit(self, confirm=True):
         """
         Quit Gaupol.
 
-        Raise :exc:`gaupol.Default` if cancelled.
+        If `confirm` is ``False`` do not ask to save documents.
+        Raise :exc:`gaupol.Default` if asked to save, but cancelled.
         """
         self.emit("quit")
-        self.close_all()
+        self.close_all(confirm=confirm)
         self.extension_manager.teardown_extensions()
         self._save_window_geometry()
         try: Gtk.main_quit()
