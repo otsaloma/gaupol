@@ -192,7 +192,12 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     def push_message(self, message):
-        """Show `message` in the statusbar."""
+        """
+        Show `message` in the statusbar until explicitly cleared.
+
+        Use ``None`` or a blank string as `message` to clear any possible
+        existing message in the statusbar.
+        """
         if self._message_tag is not None:
             GObject.source_remove(self._message_tag)
         if self._message_id is not None:

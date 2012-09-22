@@ -90,7 +90,12 @@ class PreviewAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def preview(self, page, position, doc, temp=False):
-        """Preview from `position` with a video player."""
+        """
+        Preview from `position` with a video player.
+
+        Use ``True`` for `temp` to always use a temporary file for preview
+        regardless of whether the file is changed or not.
+        """
         command = gaupol.util.get_preview_command()
         offset = gaupol.conf.preview.offset
         encoding = ("utf_8" if gaupol.conf.preview.force_utf_8 else None)

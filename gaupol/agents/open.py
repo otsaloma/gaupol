@@ -500,6 +500,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         Open file at `path` as a main file.
 
         `path` can be a sequence of paths to open multiple files.
+        Use ``None`` for `encoding` to try the default sequence.
         """
         if isinstance(path, (list, set, tuple)):
             return [self.open_main(x, encoding) for x in sorted(path)]
@@ -517,7 +518,13 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def open_translation(self, path, encoding=None, align_method=None):
-        """Open file at `path` as a translation file."""
+        """
+        Open file at `path` as a translation file.
+
+        Use ``None`` for `encoding` to try the default sequence.
+        Use ``None`` for `align_method` to use whatever happens to be as
+        :attr:`gaupol.conf.file.align_method`.
+        """
         if align_method is not None:
             gaupol.conf.file.align_method = align_method
         encodings = self._get_encodings(encoding)
