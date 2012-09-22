@@ -55,8 +55,7 @@ class TestCase(aeidon.TestCase):
             if hasattr(self, name):
                 getattr(self, name).destroy()
         if hasattr(self, "application"):
-            for page in self.application.pages:
-                self.application.close(page, False)
+            self.application.close_all(confirm=False)
             self.application.window.hide()
             self.application.window.destroy()
         gaupol.util.iterate_main()

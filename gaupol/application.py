@@ -40,7 +40,7 @@ class ApplicationMeta(aeidon.Contractual):
     Public methods are added to the class dictionary during :meth:`__new__`
     in order to fool Sphinx (and perhaps other API documentation generators)
     into thinking that the resulting instantiated class actually contains those
-    methods, which it does not since the methods are be removed during
+    methods, which it does not since the methods are removed during
     :meth:`Application.__init__`.
     """
 
@@ -428,6 +428,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_x_clipboard(self):
         """Initialize the desktop-wide, persistent clipboard."""
-        atom = Gdk.atom_intern('CLIPBOARD', True)
+        atom = Gdk.atom_intern("CLIPBOARD", True)
         self.x_clipboard = Gtk.Clipboard.get(atom)
         self.x_clipboard.set_can_store(None)

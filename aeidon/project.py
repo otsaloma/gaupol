@@ -31,7 +31,7 @@ class ProjectMeta(aeidon.Contractual):
     Public methods are added to the class dictionary during :meth:`__new__`
     in order to fool Sphinx (and perhaps other API documentation generators)
     into thinking that the resulting instantiated class actually contains those
-    methods, which it does not since the methods are be removed during
+    methods, which it does not since the methods are removed during
     :meth:`Project.__init__`.
     """
 
