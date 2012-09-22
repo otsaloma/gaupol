@@ -44,8 +44,8 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
         """
-        sfile = self.get_file(doc)
-        if sfile is None or encoding != sfile.encoding:
+        file = self.get_file(doc)
+        if file is None or encoding != file.encoding:
             return self.new_temp_file(doc)
         if doc == aeidon.documents.MAIN:
             if not self.main_changed and not temp:

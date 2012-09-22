@@ -38,28 +38,28 @@ class TestSaveAgent(aeidon.TestCase):
         for format in aeidon.formats:
             self.project.clear_texts((0,), aeidon.documents.MAIN)
             path = self.project.main_file.path
-            sfile = aeidon.files.new(format, path, "ascii")
-            self.project.save_main(sfile, False)
+            file = aeidon.files.new(format, path, "ascii")
+            self.project.save_main(file, False)
             assert self.project.main_changed == 1
-            sfile = aeidon.files.new(format, path, "ascii")
-            self.project.save_main(sfile, True)
+            file = aeidon.files.new(format, path, "ascii")
+            self.project.save_main(file, True)
             assert self.project.main_changed == 0
 
     def test_save_main__io_error(self):
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP, "/////", "ascii")
-        self.assert_raises(IOError, self.project.save_main, sfile)
+        file = aeidon.files.new(aeidon.formats.SUBRIP, "/////", "ascii")
+        self.assert_raises(IOError, self.project.save_main, file)
 
     def test_save_main__unicode_error(self):
         path = self.project.main_file.path
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "undefined")
-        self.assert_raises(UnicodeError, self.project.save_main, sfile)
+        file = aeidon.files.new(aeidon.formats.SUBRIP, path, "undefined")
+        self.assert_raises(UnicodeError, self.project.save_main, file)
 
     def test_save_translation(self):
         for format in aeidon.formats:
             self.project.clear_texts((0,), aeidon.documents.TRAN)
             path = self.project.tran_file.path
-            sfile = aeidon.files.new(format, path, "ascii")
-            self.project.save_translation(sfile, False)
+            file = aeidon.files.new(format, path, "ascii")
+            self.project.save_translation(file, False)
             assert self.project.tran_changed == 1
-            self.project.save_translation(sfile, True)
+            self.project.save_translation(file, True)
             assert self.project.tran_changed == 0

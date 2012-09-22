@@ -62,8 +62,8 @@ class TestSubtitleFile(aeidon.TestCase):
             text = fobj.read()
         with open(path, "w", encoding="utf_16") as fobj:
             fobj.write(text)
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16")
-        sfile.read()
+        file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16")
+        file.read()
 
     def test_read__utf_16_be(self):
         path = self.new_subrip_file()
@@ -72,8 +72,8 @@ class TestSubtitleFile(aeidon.TestCase):
         with open(path, "w", encoding="utf_16_be") as fobj:
             fobj.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
             fobj.write(text)
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_be")
-        sfile.read()
+        file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_be")
+        file.read()
 
     def test_read__utf_16_le(self):
         path = self.new_subrip_file()
@@ -82,8 +82,8 @@ class TestSubtitleFile(aeidon.TestCase):
         with open(path, "w", encoding="utf_16_le") as fobj:
             fobj.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
             fobj.write(text)
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_le")
-        sfile.read()
+        file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_le")
+        file.read()
 
     def test_read__utf_8_sig(self):
         path = self.new_subrip_file()
@@ -91,8 +91,8 @@ class TestSubtitleFile(aeidon.TestCase):
             text = fobj.read()
         with open(path, "w", encoding="utf_8_sig") as fobj:
             fobj.write(text)
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8")
-        sfile.read()
+        file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8")
+        file.read()
 
     def test_write(self):
         self.assert_raises(NotImplementedError,

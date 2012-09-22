@@ -41,12 +41,12 @@ class TestUtilityAgent(aeidon.TestCase):
         self.assert_raises(ValueError, self.project.get_changed, None)
 
     def test_get_file__main(self):
-        sfile = self.project.get_file(aeidon.documents.MAIN)
-        assert sfile is self.project.main_file
+        file = self.project.get_file(aeidon.documents.MAIN)
+        assert file is self.project.main_file
 
     def test_get_file__translation(self):
-        sfile = self.project.get_file(aeidon.documents.TRAN)
-        assert sfile is self.project.tran_file
+        file = self.project.get_file(aeidon.documents.TRAN)
+        assert file is self.project.tran_file
 
     def test_get_file__value_error(self):
         self.assert_raises(ValueError, self.project.get_file, None)

@@ -80,11 +80,11 @@ class MultiSaveDialog(gaupol.FileDialog):
 
         ## Suggest format, encoding and newlines to match those
         ## from the first page to consider.
-        sfile = pages[0].project.main_file
-        self.set_directory(os.path.dirname(sfile.path))
-        self.set_format(sfile.format)
-        self.set_encoding(sfile.encoding)
-        self.set_newline(sfile.newline)
+        file = pages[0].project.main_file
+        self.set_directory(os.path.dirname(file.path))
+        self.set_format(file.format)
+        self.set_encoding(file.encoding)
+        self.set_newline(file.newline)
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""

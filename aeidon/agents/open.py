@@ -64,22 +64,22 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             subtitles.pop(0)
             i += 1
 
-    def _read_file(self, sfile):
+    def _read_file(self, file):
         """
-        Read `sfile` and return subtitles.
+        Read `file` and return subtitles.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
         Raise :exc:`aeidon.ParseError` if parsing fails.
         """
         try:
-            return sfile.read()
+            return file.read()
         except (IOError, UnicodeError):
             raise
         except Exception:
             if not aeidon.DEBUG:
                 raise aeidon.ParseError("Failed to parse file {}"
-                                        .format(repr(sfile.path)))
+                                        .format(repr(file.path)))
 
             raise
 

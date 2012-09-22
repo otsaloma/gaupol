@@ -45,9 +45,9 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             subtitle.mode = mode
         self.emit("positions-changed", self.get_all_indices())
 
-    def _save(self, doc, sfile, keep_changes):
+    def _save(self, doc, file, keep_changes):
         """
-        Write subtitle data from `doc` to `sfile`.
+        Write subtitle data from `doc` to `file`.
 
         Return indices of texts changed due to markup conversion.
         Raise :exc:`IOError` if writing fails.
@@ -56,74 +56,74 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         current_format = self.get_format(doc)
         orig_texts = [x.get_text(doc) for x in self.subtitles]
         indices = []
-        if (current_format is not None) and (sfile.format != current_format):
-            indices = self._convert_markup(doc, current_format, sfile.format)
-        sfile.write(self.subtitles, doc)
+        if (current_format is not None) and (file.format != current_format):
+            indices = self._convert_markup(doc, current_format, file.format)
+        file.write(self.subtitles, doc)
         if keep_changes: return indices
         for i, subtitle in enumerate(self.subtitles):
             subtitle.set_text(doc, orig_texts[i])
         return []
 
     @aeidon.deco.export
-    def save(self, doc, sfile=None, keep_changes=True):
+    def save(self, doc, file=None, keep_changes=True):
         """
-        Write subtitle data from `doc` to `sfile`.
+        Write subtitle data from `doc` to `file`.
 
-        `sfile` can be ``None`` to use existing file, i.e. :attr:`main_file`
+        `file` can be ``None`` to use existing file, i.e. :attr:`main_file`
         or :attr:`tran_file`.
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
         if doc == aeidon.documents.MAIN:
-            return self.save_main(sfile, keep_changes)
+            return self.save_main(file, keep_changes)
         if doc == aeidon.documents.TRAN:
-            return self.save_translation(sfile, keep_changes)
+            return self.save_translation(file, keep_changes)
         raise ValueError("Invalid document: {}"
                          .format(repr(doc)))
 
-    def save_main_ensure(self, value, sfile=None, keep_changes=True):
+    def save_main_ensure(self, value, file=None, keep_changes=True):
         assert self.main_file is not None
         assert (not keep_changes) or (self.main_changed == 0)
 
     @aeidon.deco.export
-    def save_main(self, sfile=None, keep_changes=True):
+    def save_main(self, file=None, keep_changes=True):
         """
-        Write subtitle data from main document to `sfile`.
+        Write subtitle data from main document to `file`.
 
-        `sfile` can be ``None`` to use :attr:`main_file`.
+        `file` can be ``None`` to use :attr:`main_file`.
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        sfile = sfile or self.main_file
-        if sfile is not None and self.main_file is not None:
-            sfile.copy_from(self.main_file)
-        indices = self._save(aeidon.documents.MAIN, sfile, keep_changes)
+        file = file or self.main_file
+        if file is not None and self.main_file is not None:
+            file.copy_from(self.main_file)
+        indices = self._save(aeidon.documents.MAIN, file, keep_changes)
         if keep_changes:
-            self._ensure_mode(sfile.mode)
-            self.main_file = sfile
+            self._ensure_mode(file.mode)
+            self.main_file = file
             self.main_changed = 0
             self.emit("main-texts-changed", indices)
-        self.emit("main-file-saved", sfile)
+        self.emit("main-file-saved", file)
 
-    def save_translation_ensure(self, value, sfile=None, keep_changes=True):
+    def save_translation_ensure(self, value, file=None, keep_changes=True):
         assert self.tran_file is not None
         assert (not keep_changes) or (self.tran_changed == 0)
 
     @aeidon.deco.export
-    def save_translation(self, sfile=None, keep_changes=True):
+    def save_translation(self, file=None, keep_changes=True):
         """
-        Write subtitle data from translation document to `sfile`.
+        Write subtitle data from translation document to `file`.
 
-        `sfile` can be ``None`` to use :attr:`tran_file`.
+        `file` can be ``None`` to use :attr:`tran_file`.
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        sfile = sfile or self.tran_file
-        if sfile is not None and self.tran_file is not None:
-            sfile.copy_from(self.tran_file)
-        indices = self._save(aeidon.documents.TRAN, sfile, keep_changes)
+        file = file or self.tran_file
+        if file is not None and self.tran_file is not None:
+            file.copy_from(self.tran_file)
+        indices = self._save(aeidon.documents.TRAN, file, keep_changes)
         if keep_changes:
-            self.tran_file = sfile
+            self.tran_file = file
             self.tran_changed = 0
             self.emit("translation-texts-changed", indices)
-        self.emit("translation-file-saved", sfile)
+        self.emit("translation-file-saved", file)

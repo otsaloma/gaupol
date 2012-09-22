@@ -325,8 +325,8 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         for i in itertools.count(1):
             path = "{}.{:d}.srt".format(base, i)
             if not os.path.isfile(path): break
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8")
-        self._page.project.main_file = sfile
+        file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8")
+        self._page.project.main_file = file
         self._page.project.main_changed = 1
         if self._page.project.subtitles:
             indices = list(range(len(self._page.project.subtitles)))

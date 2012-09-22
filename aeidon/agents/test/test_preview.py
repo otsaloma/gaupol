@@ -29,11 +29,11 @@ class TestPreviewAgent(aeidon.TestCase):
     def test_find_video__avi(self):
         video_path = aeidon.temp.create(".avi")
         sub_path = video_path.replace(".avi", ".srt")
-        sfile = aeidon.files.new(aeidon.formats.SUBRIP,
-                                 sub_path,
-                                 "ascii")
+        file = aeidon.files.new(aeidon.formats.SUBRIP,
+                                sub_path,
+                                "ascii")
 
-        self.project.save_main(sfile)
+        self.project.save_main(file)
         self.project.find_video()
         assert self.project.video_path == video_path
         os.remove(sub_path)

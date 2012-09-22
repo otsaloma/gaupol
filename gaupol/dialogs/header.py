@@ -139,20 +139,20 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         """Restore original translation header."""
         self._set_translation_header(self._tran_file.header)
 
-    def _save_header(self, sfile, header):
-        """Save `header` for `sfile`."""
-        if sfile.format == aeidon.formats.MPSUB:
-            return self._save_header_mpsub(sfile, header)
-        sfile.header = header
+    def _save_header(self, file, header):
+        """Save `header` for `file`."""
+        if file.format == aeidon.formats.MPSUB:
+            return self._save_header_mpsub(file, header)
+        file.header = header
 
-    def _save_header_mpsub(self, sfile, header):
-        """Save `header` for MPsub format `sfile`."""
-        try:  sfile.set_header(header)
+    def _save_header_mpsub(self, file, header):
+        """Save `header` for MPsub format `file`."""
+        try:  file.set_header(header)
         except ValueError:
             return self._show_mpsub_error_dialog()
-        if sfile.framerate is None: return
+        if file.framerate is None: return
         page = self.application.get_current_page()
-        page.project.set_framerate(sfile.framerate, register=None)
+        page.project.set_framerate(file.framerate, register=None)
 
     def _save_headers(self):
         """Save headers."""

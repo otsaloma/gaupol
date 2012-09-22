@@ -82,29 +82,29 @@ class SaveAgent(aeidon.Delegate):
         self.save_translation_as(page)
         self.update_gui()
 
-    def _save_document(self, page, doc, sfile=None):
+    def _save_document(self, page, doc, file=None):
         """
-        Save `doc` of `page` to `sfile`.
+        Save `doc` of `page` to `file`.
 
         Raise :exc:`gaupol.Default` if saving failed.
         """
-        sfile = sfile or page.project.get_file(doc)
+        file = file or page.project.get_file(doc)
         gaupol.util.set_cursor_busy(self.window)
-        try: return page.project.save(doc, sfile)
+        try: return page.project.save(doc, file)
         except IOError as error:
             (no, message) = error.args
             gaupol.util.set_cursor_normal(self.window)
-            basename = os.path.basename(sfile.path)
+            basename = os.path.basename(file.path)
             self._show_io_error_dialog(basename, message)
         except UnicodeError:
             gaupol.util.set_cursor_normal(self.window)
-            basename = os.path.basename(sfile.path)
-            self._show_encoding_error_dialog(basename, sfile.encoding)
+            basename = os.path.basename(file.path)
+            self._show_encoding_error_dialog(basename, file.encoding)
         finally:
             gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default
 
-    def _select_file(self, title, sfile=None):
+    def _select_file(self, title, file=None):
         """
         Select a file and return a :class:`aeidon.SubtitleFile`.
 
@@ -112,11 +112,11 @@ class SaveAgent(aeidon.Delegate):
         """
         gaupol.util.set_cursor_busy(self.window)
         dialog = gaupol.SaveDialog(self.window, title)
-        if sfile is not None:
-            dialog.set_name(sfile.path)
-            dialog.set_format(sfile.format)
-            dialog.set_encoding(sfile.encoding)
-            dialog.set_newline(sfile.newline)
+        if file is not None:
+            dialog.set_name(file.path)
+            dialog.set_format(file.format)
+            dialog.set_encoding(file.encoding)
+            dialog.set_newline(file.newline)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         format = dialog.get_format()
@@ -163,18 +163,18 @@ class SaveAgent(aeidon.Delegate):
         self.flash_message(_("Saved main document"))
 
     @aeidon.deco.export
-    def save_main_as(self, page, sfile=None):
+    def save_main_as(self, page, file=None):
         """
         Save the main document of `page` to a selected file.
 
-        If `sfile` is ``None`` show a filechooser dialog.
+        If `file` is ``None`` show a filechooser dialog.
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        if sfile is None:
-            sfile = self._select_file(_("Save As"),
-                                      page.project.main_file)
+        if file is None:
+            file = self._select_file(_("Save As"),
+                                     page.project.main_file)
 
-        self._save_document(page, aeidon.documents.MAIN, sfile)
+        self._save_document(page, aeidon.documents.MAIN, file)
         self.add_to_recent_files(page.project.main_file.path,
                                  page.project.main_file.format,
                                  aeidon.documents.MAIN)
@@ -199,18 +199,18 @@ class SaveAgent(aeidon.Delegate):
         self.flash_message(_("Saved translation document"))
 
     @aeidon.deco.export
-    def save_translation_as(self, page, sfile=None):
+    def save_translation_as(self, page, file=None):
         """
         Save the translation document of `page` to a selected file.
 
-        If `sfile` is ``None`` show a filechooser dialog.
+        If `file` is ``None`` show a filechooser dialog.
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        if sfile is None:
-            sfile = self._select_file(_("Save Translation As"),
-                                      page.project.tran_file)
+        if file is None:
+            file = self._select_file(_("Save Translation As"),
+                                     page.project.tran_file)
 
-        self._save_document(page, aeidon.documents.TRAN, sfile)
+        self._save_document(page, aeidon.documents.TRAN, file)
         self.add_to_recent_files(page.project.tran_file.path,
                                  page.project.tran_file.format,
                                  aeidon.documents.TRAN)
