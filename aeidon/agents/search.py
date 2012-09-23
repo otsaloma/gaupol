@@ -270,7 +270,7 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.revertable
     def replace_all(self, register=-1):
         """
-        Replace all matches of pattern and return amount.
+        Replace all matches of pattern and return amount of replacements made.
 
         Raise :exc:`re.error` if bad replacement.
         """

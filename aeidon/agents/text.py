@@ -148,8 +148,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                     max_length,
                     max_lines,
                     skip=False,
-                    max_skip_length=sys.maxsize,
-                    max_skip_lines=sys.maxsize,
+                    max_skip_length=2**16,
+                    max_skip_lines=2**16,
                     register=-1):
 
         """

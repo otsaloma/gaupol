@@ -56,7 +56,7 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Return format of the file corresponding to `doc`.
 
-        For translation file that is ``None``, return format of main file.
+        For a translation file that is ``None``, return format of main file.
         If main file is ``None``, return ``None``.
         """
         if doc == aeidon.documents.MAIN:

@@ -69,8 +69,11 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Write subtitle data from `doc` to `file`.
 
-        `file` can be ``None`` to use existing file, i.e. :attr:`main_file`
-        or :attr:`tran_file`.
+        `file` can be ``None`` to use existing file, i.e. :attr:`main_file` or
+        :attr:`tran_file`. If saving to a format different from the current,
+        changes might be needed in texts if there are markup tags that need to
+        be converted. Keep these markup changes if `keep_changes` is ``True``.
+
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
@@ -90,7 +93,11 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Write subtitle data from main document to `file`.
 
-        `file` can be ``None`` to use :attr:`main_file`.
+        `file` can be ``None`` to use :attr:`main_file`. If saving to a format
+        different from the current, changes might be needed in texts if there
+        are markup tags that need to be converted. Keep these markup changes if
+        `keep_changes` is ``True``.
+
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
@@ -114,7 +121,11 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Write subtitle data from translation document to `file`.
 
-        `file` can be ``None`` to use :attr:`tran_file`.
+        `file` can be ``None`` to use :attr:`tran_file`. If saving to a format
+        different from the current, changes might be needed in texts if there
+        are markup tags that need to be converted. Keep these markup changes if
+        `keep_changes` is ``True``.
+
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
