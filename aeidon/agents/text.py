@@ -238,7 +238,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 for pattern in patterns:
                     string = pattern.get_field("Pattern")
                     flags = pattern.get_flags()
-                    parser.set_regex(string, flags, 0)
+                    parser.set_regex(string, flags)
                     parser.pos = 0
                     cap_next = self._capitalize_text(parser,
                                                      pattern,
@@ -276,7 +276,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             subtitle = self.subtitles[index]
             parser.set_text(subtitle.get_text(doc))
             for i, (string, flags, replacement) in enumerate(re_patterns):
-                parser.set_regex(string, flags, 0)
+                parser.set_regex(string, flags)
                 parser.replacement = replacement
                 count = parser.replace_all()
                 while repeats[i] and count:
@@ -312,7 +312,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             subtitle = self.subtitles[index]
             parser.set_text(subtitle.get_text(doc))
             for string, flags, replacement in re_patterns:
-                parser.set_regex(string, flags, 0)
+                parser.set_regex(string, flags)
                 parser.replacement = replacement
                 parser.replace_all()
             text = parser.get_text()

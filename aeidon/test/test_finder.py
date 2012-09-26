@@ -528,16 +528,23 @@ class TestFinder(aeidon.TestCase):
         self.assert_replace_all_cases(cases, regex=False)
 
     def test_set_regex(self):
-        flags = re.DOTALL | re.MULTILINE
         self.finder.set_regex("test")
         assert self.finder.pattern.pattern == "test"
-        assert self.finder.pattern.flags == flags
+        assert self.finder.pattern.flags & re.DOTALL
+        assert self.finder.pattern.flags & re.MULTILINE
+
+    def test_set_regex__ascii(self):
+        self.finder.set_regex("test", re.ASCII)
+        assert self.finder.pattern.pattern == "test"
+        assert self.finder.pattern.flags & re.ASCII
 
     def test_set_regex__ignore_case(self):
-        flags = re.DOTALL | re.MULTILINE
-        self.finder.set_regex("test", re.IGNORECASE)
+        self.finder.ignore_case = True
+        self.finder.set_regex("test")
         assert self.finder.pattern.pattern == "test"
-        assert self.finder.pattern.flags == flags | re.IGNORECASE
+        assert self.finder.pattern.flags & re.DOTALL
+        assert self.finder.pattern.flags & re.MULTILINE
+        assert self.finder.pattern.flags & re.IGNORECASE
 
     def test_set_text(self):
         self.finder.set_text("test")

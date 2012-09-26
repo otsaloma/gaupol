@@ -198,20 +198,18 @@ class Finder(object, metaclass=aeidon.Contractual):
             count += 1
         return count
 
-    def set_regex(self, pattern, flags=0, default_flags=None):
+    def set_regex(self, pattern, flags=re.DOTALL|re.MULTILINE):
         """
         Set and use regular expression as pattern.
 
-        If `default_flags` is ``None``, both of ``DOTALL`` and ``MULTILINE``
-        are used. ``IGNORECASE`` is automatically added to flags if
-        :attr:`ignore_case` is ``True``.
+        The default value for `flags` is ``DOTALL`` and ``MULTILINE``.
+        ``IGNORECASE`` is automatically added to flags if :attr:`ignore_case`
+        is ``True``.
 
         Raise :exc:`re.error` if bad pattern.
         """
         if self.ignore_case:
             flags = flags | re.IGNORECASE
-        if default_flags is None:
-            flags = flags | re.DOTALL | re.MULTILINE
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text):

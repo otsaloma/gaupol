@@ -19,6 +19,7 @@
 """Searching for and replacing text."""
 
 import aeidon
+import re
 _ = aeidon.i18n._
 
 
@@ -299,12 +300,12 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         return sum(counts.values())
 
     @aeidon.deco.export
-    def set_search_regex(self, pattern, flags=0):
+    def set_search_regex(self, pattern, flags=re.DOTALL|re.MULTILINE):
         """
         Set the regular expression pattern to find.
 
-        ``DOTALL`` and ``MULTILINE`` are automatically added to
-        flags. Raise :exc:`re.error` if bad pattern.
+        The default value for `flags` is ``DOTALL`` and ``MULTILINE``.
+        Raise :exc:`re.error` if bad pattern.
         """
         self._finder.set_regex(pattern, flags)
 
