@@ -33,10 +33,10 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
     :ivar clean_func: Function to clean tags or ``None``
     :ivar re_tag: Regular expression object to match any tag
 
-    The purpose of the :class:`Parser` is to split text to the actual text and
-    its markup tags, allowing the text to be edited while keeping the tags
-    separate and intact. An example would be replacing all "i"s with "j"s
-    without changing italic markup::
+    The purpose of :class:`Parser` is to split text to the actual text and its
+    markup tags, allowing the text to be edited while keeping its tags separate
+    and intact. An example would be replacing all "i"s with "j"s without
+    changing italic markup::
 
         >>> parser = aeidon.Parser(re.compile(r"<.+?>"))
         >>> parser.set_text("<i>iii</i>")
@@ -47,9 +47,6 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         >>> parser.get_text()
         '<i>jjj</i>'
 
-    The margin system (wrapping each line in the same set of tags) is only used
-    if no other tags are found in the text and if the text has at least two
-    lines. Either margins or tags will always be empty.
     """
 
     def __init__(self, re_tag=None, clean_func=None):
