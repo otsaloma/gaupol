@@ -49,7 +49,7 @@ class SubStationAlpha(aeidon.Markup):
     """
 
     _closing_pattern = r"\{\\([bi])0\}"
-    _flags = re.DOTALL | re.MULTILINE | re.UNICODE | re.IGNORECASE
+    _flags = re.DOTALL | re.MULTILINE | re.IGNORECASE
     _opening_pattern = r"\{\\(?![bi]0)(b|i|c|fn|fs).*?\}"
     _reset_pattern = r"\{\\r\}"
     format = aeidon.formats.SSA

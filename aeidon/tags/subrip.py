@@ -38,7 +38,7 @@ class SubRip(aeidon.Markup):
      * ``<font color="#RRGGBB">...</font>``
     """
 
-    _flags = re.DOTALL | re.MULTILINE | re.UNICODE | re.IGNORECASE
+    _flags = re.DOTALL | re.MULTILINE | re.IGNORECASE
     format = aeidon.formats.SUBRIP
 
     def _main_decode(self, text):

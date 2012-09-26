@@ -3,7 +3,7 @@ _Name=Leading and trailing spaces
 _Description=Remove spaces from the beginning and end of lines
 Classes=Human;OCR;
 Pattern=^ +
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=
 Repeat=False
 
@@ -12,7 +12,7 @@ _Name=Leading and trailing spaces
 _Description=Remove spaces from the beginning and end of lines
 Classes=Human;OCR;
 Pattern= +$
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=
 Repeat=False
 
@@ -21,7 +21,7 @@ _Name=Multiple consecutive spaces
 _Description=Replace multiple consecutive spaces with only one
 Classes=Human;OCR;
 Pattern= {2,}
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\040
 Repeat=False
 
@@ -32,7 +32,7 @@ Classes=OCR;
 # Do not allow a trailing slash which might be used
 # to spell out a fraction, e.g. "2 1/2".
 Pattern=(\b\d+) +(\d+)(?!/)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1\2
 Repeat=True
 
@@ -41,6 +41,6 @@ Name=Musical notes
 Description=Replace Unicode musical note characters with number signs
 Classes=Human;
 Pattern=[♩♪♫♬]+
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=#
 Repeat=False

@@ -28,7 +28,7 @@ _ = aeidon.i18n._
 class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Automatic correcting of texts."""
-    _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w", re.UNICODE)
+    _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w")
 
     def _capitalize_first(self, parser, pos):
         """

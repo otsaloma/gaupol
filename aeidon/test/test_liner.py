@@ -24,7 +24,7 @@ class TestLiner(aeidon.TestCase):
 
     def setup_method(self, method):
         self.liner = aeidon.Liner(re.compile(r"<.+?>"))
-        flags = re.DOTALL | re.MULTILINE | re.UNICODE
+        flags = re.DOTALL | re.MULTILINE
         self.liner.set_penalties((dict(pattern=r"( )- ",
                                        flags=flags,
                                        group=1,

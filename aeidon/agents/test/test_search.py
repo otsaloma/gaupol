@@ -264,14 +264,14 @@ class TestSearchAgent(aeidon.TestCase):
             assert self.project.subtitles[i].tran_text == text
 
     def test_set_search_regex(self):
-        flags = re.DOTALL | re.MULTILINE | re.UNICODE
+        flags = re.DOTALL | re.MULTILINE
         finder = self.delegate._finder
         self.project.set_search_regex(r"test")
         assert finder.pattern.pattern == r"test"
         assert finder.pattern.flags == flags
 
     def test_set_search_regex__ignore_case(self):
-        flags = re.DOTALL | re.MULTILINE | re.UNICODE
+        flags = re.DOTALL | re.MULTILINE
         finder = self.delegate._finder
         self.project.set_search_regex(r"test", re.IGNORECASE)
         assert finder.pattern.pattern == r"test"

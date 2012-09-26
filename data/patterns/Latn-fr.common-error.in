@@ -3,7 +3,7 @@ _Name=Spaces around guillemets
 _Description=Add spaces around guillemets
 Classes=Human;OCR;
 Pattern=(\S)(«)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -12,7 +12,7 @@ _Name=Spaces around guillemets
 _Description=Add spaces around guillemets
 Classes=Human;OCR;
 Pattern=(»)(\w)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -21,7 +21,7 @@ _Name=Spaces around guillemets
 _Description=Add spaces around guillemets
 Classes=Human;OCR;
 Pattern=(«)(\S)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -30,7 +30,7 @@ _Name=Spaces around guillemets
 _Description=Add spaces around guillemets
 Classes=Human;OCR;
 Pattern=(\S)(»)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -40,7 +40,7 @@ _Description=Add or remove space before various punctuation marks
 Classes=Human;OCR;
 # Same as the Latin pattern, except keep space before [?!;:].
 Pattern= +(["'«»]?(?!\.\.)([,.])(?!\d))
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
 Policy=Replace
@@ -50,6 +50,6 @@ _Name=Space before punctuation marks
 _Description=Add or remove space before various punctuation marks
 Classes=Human;OCR;
 Pattern=([^\s?!;:])([?!;:])(?!\d)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False

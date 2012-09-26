@@ -48,7 +48,7 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
     :meth:`bolden`, must be prepared to handle :exc:`NotImplementedError`.
     """
 
-    _flags = re.DOTALL | re.MULTILINE | re.UNICODE
+    _flags = re.DOTALL | re.MULTILINE
     format = aeidon.formats.NONE
 
     def _decode_apply_require(self, text, regex, replacement, groups):

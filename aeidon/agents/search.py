@@ -303,7 +303,7 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         Set the regular expression pattern to find.
 
-        ``DOTALL``, ``MULTILINE`` and ``UNICODE`` are automatically added to
+        ``DOTALL`` and ``MULTILINE`` are automatically added to
         flags. Raise :exc:`re.error` if bad pattern.
         """
         self._finder.set_regex(pattern, flags)

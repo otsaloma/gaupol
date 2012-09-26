@@ -3,7 +3,7 @@ _Name=Letter "I" in a lower case word
 _Description=Replace letter "I" with letter "l" in a lower case word
 Classes=OCR;
 Pattern=(?<=[a-z])I
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=l
 Repeat=True
 
@@ -12,7 +12,7 @@ _Name=Letter "I" in a lower case word
 _Description=Replace letter "I" with letter "l" in a lower case word
 Classes=OCR;
 Pattern=(?<=\b[A-Z])I(?=[a-z])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=l
 Repeat=True
 
@@ -21,7 +21,7 @@ _Name=Letter "I" in a lower case word
 _Description=Replace letter "I" with letter "l" in a lower case word
 Classes=OCR;
 Pattern='[Il][Il]\b
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement='ll
 Repeat=False
 
@@ -30,7 +30,7 @@ _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
 Pattern=(?<=[A-Z][A-Z])l
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=I
 Repeat=True
 
@@ -39,7 +39,7 @@ _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
 Pattern=l(?=[A-Z])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=I
 Repeat=True
 
@@ -51,7 +51,7 @@ Classes=OCR;
 # Disallow dashes for the case of spelling out a word, but allow them
 # for the case of stuttering.
 Pattern=(?<![a-hj-z]-)\bl\b(?!-[a-hj-z])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=I
 Repeat=True
 
@@ -62,7 +62,7 @@ Classes=OCR;
 # Replace with "I" if "l" is the the first letter of a word
 # and is followed by a consonant.
 Pattern=((\s|^)["'«»]?)l(?!bs)(?!lama)([bcdfghjklmnpqrstvwxz])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1I\3
 Repeat=False
 
@@ -71,7 +71,7 @@ _Name=Zero in an upper case word
 _Description=Replace zero with letter "O" in an upper case word
 Classes=OCR;
 Pattern=(?<=[A-Z])0(?!\d)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=O
 Repeat=True
 
@@ -80,7 +80,7 @@ _Name=Zero in an upper case word
 _Description=Replace zero with letter "O" in an upper case word
 Classes=OCR;
 Pattern=(?<!\d)0(?=[A-Z])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=O
 Repeat=True
 
@@ -89,7 +89,7 @@ _Name=Spaces around an apostrophe
 _Description=Remove spaces around an apostrophe
 Classes=OCR;
 Pattern=(\w)(' +| +')(d|ll|m|re|s|t|ve)\b
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1'\3
 Repeat=False
 
@@ -98,6 +98,6 @@ _Name=Okay
 _Description=Convert various two-letter spellings of okay to "OK"
 Classes=Human;
 Pattern=\b(ok|Ok|O\.K\.)\b
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=OK
 Repeat=False

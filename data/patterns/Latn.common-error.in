@@ -3,7 +3,7 @@ _Name=Spelling of a.m. and p.m.
 _Description=Change the various spellings of 12-hour periods to "a.m." and "p.m."
 Classes=Human;OCR;
 Pattern=(\d)(\s*a\.? ?m\.?)(\W|$)
-Flags=DOTALL;MULTILINE;UNICODE;IGNORECASE;
+Flags=DOTALL;MULTILINE;IGNORECASE;
 Replacement=\1 a.m.\3
 Repeat=False
 
@@ -12,7 +12,7 @@ _Name=Spelling of a.m. and p.m.
 _Description=Change the various spellings of 12-hour periods to "a.m." and "p.m."
 Classes=Human;OCR;
 Pattern=(\d)(\s*p\.? ?m\.?)(\W|$)
-Flags=DOTALL;MULTILINE;UNICODE;IGNORECASE;
+Flags=DOTALL;MULTILINE;IGNORECASE;
 Replacement=\1 p.m.\3
 Repeat=False
 
@@ -21,7 +21,7 @@ _Name=Letter "O" in a number
 _Description=Replace letter "O" with a zero in a number
 Classes=OCR;
 Pattern=((?<![^\W\d])(\d|\d[,.]))[oO]
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1\060
 Repeat=True
 
@@ -31,7 +31,7 @@ _Description=Replace letter "O" with a zero in a number
 Classes=OCR;
 # Disallow "2" after the "O" for the case of Oxygen, "O2".
 Pattern=[oO]((?!2\W)(\d|[,.]\d)(?![^\W\d]))
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\060\1
 Repeat=True
 
@@ -40,7 +40,7 @@ _Name=Space between number and unit
 _Description=Add or remove space between a number and the associated unit
 Classes=Human;OCR;
 Pattern=([$£€]) (\d+)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1\2
 Repeat=False
 
@@ -49,7 +49,7 @@ _Name=Space between number and unit
 _Description=Add or remove space between a number and the associated unit
 Classes=Human;OCR;
 Pattern=(\d+) (st|nd|rd|th)\b
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1\2
 Repeat=False
 
@@ -58,7 +58,7 @@ _Name=Space between number and unit
 _Description=Add or remove space between a number and the associated unit
 Classes=Human;OCR;
 Pattern=(\d+)(%)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -67,7 +67,7 @@ _Name=Double apostrophe
 _Description=Replace a double apostrophe with a quotation mark
 Classes=OCR;
 Pattern=''
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement="
 Repeat=False
 
@@ -76,7 +76,7 @@ _Name=Spaces around brackets
 _Description=Add or remove spaces around parantheses and square brackets
 Classes=Human;OCR;
 Pattern=(\S)(\(|\[)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -85,7 +85,7 @@ _Name=Spaces around brackets
 _Description=Add or remove spaces around parantheses and square brackets
 Classes=Human;OCR;
 Pattern=(\)|\])(\w)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -94,7 +94,7 @@ _Name=Spaces around brackets
 _Description=Add or remove spaces around parantheses and square brackets
 Classes=Human;OCR;
 Pattern=(\(|\[)( )
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
 
@@ -103,7 +103,7 @@ _Name=Spaces around brackets
 _Description=Add or remove spaces around parantheses and square brackets
 Classes=Human;OCR;
 Pattern=( )(\)|\])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\2
 Repeat=False
 
@@ -112,7 +112,7 @@ _Name=Space after a dialogue dash
 _Description=Add space after a dialogue dash
 Classes=Human;OCR;
 Pattern=^-([^-\s])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=- \1
 Repeat=False
 
@@ -123,7 +123,7 @@ Classes=Human;OCR;
 # NOTE: Unsuitable for French, see Latn-fr.
 # Disallow trailing digits for the case of fractions, e.g. ".45".
 Pattern= +(["'«»]?(?!\.\.)([,;:.?!])(?!\d))
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
 
@@ -133,7 +133,7 @@ _Description=Add space after various punctuation marks
 Classes=Human;OCR;
 # NOTE: Unsuitable for Finnish, see Latn-fi.
 Pattern=((\w|^|["'«»]) ?[,;:?!])(?!["'«»])([^\W\d][\w\s])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \3
 Repeat=False
 
@@ -142,7 +142,7 @@ _Name=Space after an ellipsis
 _Description=Add space after an ellipsis
 Classes=Human;OCR;
 Pattern=(\w[^\w\s]*?\.\.\.)(["'«»]?\w)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \2
 Repeat=False
 
@@ -151,7 +151,7 @@ _Name=Space after a starting ellipsis
 _Description=Remove space after an ellipsis that starts a line
 Classes=Human;OCR;
 Pattern=(^\W*?\.\.\.)( +)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
 
@@ -162,7 +162,7 @@ Classes=OCR;
 # Remove space after the starting quotation mark in a subtitle with
 # a total of exactly two quotation marks.
 Pattern=(\A[^"]*)(" +)([^"]*"[^"]*\Z)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1"\3
 Repeat=False
 
@@ -173,7 +173,7 @@ Classes=OCR;
 # Remove space before the ending quotation mark in a subtitle with
 # a total of exactly two quotation marks.
 Pattern=(\A[^"]*"[^"]*)( +")([^"]*\Z)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1"\3
 Repeat=False
 
@@ -183,7 +183,7 @@ _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
 # Remove space after a quotation mark at the beginning of the line.
 Pattern=^(\W*?["'])( +)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
 
@@ -193,7 +193,7 @@ _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
 # Remove space before a quotation mark at the end of the line.
 Pattern=( +)(["']\W*?)$
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\2
 Repeat=False
 
@@ -202,7 +202,7 @@ _Name=Multiple question- and exclamation marks
 _Description=Replace multiple consequtive question- and exclamation marks with only one
 Classes=Human;
 Pattern=(\w\W*)(?<!^)(?<!\?)\?{2,}
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1?
 Repeat=False
 
@@ -211,7 +211,7 @@ _Name=Multiple question- and exclamation marks
 _Description=Replace multiple consequtive question- and exclamation marks with only one
 Classes=Human;
 Pattern=(\w\W*)(?<!^)(?<!\!)\!{2,}
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1!
 Repeat=False
 
@@ -221,7 +221,7 @@ _Description=Remove period before or after various punctuation marks
 Classes=OCR;
 # Remove period after the mark.
 Pattern=(?<=[:?!])\.(?!\.)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=
 Repeat=False
 
@@ -231,7 +231,7 @@ _Description=Remove period before or after various punctuation marks
 Classes=OCR;
 # Remove period before the mark.
 Pattern=(?<!\.\w)(?<!\.)\.(?=[:?!])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=
 Repeat=False
 
@@ -240,6 +240,6 @@ _Name=Terminating double-dashes
 _Description=Replace a single clause-terminating dash with two dashes
 Classes=Human;OCR;
 Pattern=([\w"'«»])(?<!-)-(?!-)([^\w']|$)
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1--\2
 Repeat=False

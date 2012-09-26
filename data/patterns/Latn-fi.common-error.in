@@ -5,7 +5,7 @@ Classes=Human;OCR;
 # Same as the Latin pattern, except no space after colon
 # to accommodate Finnish suffixes, e.g. "TV:ssä".
 Pattern=((\w|^|["'«»])[,;?!])(?!["'«»])([^\W\d][\w\s])
-Flags=DOTALL;MULTILINE;UNICODE;
+Flags=DOTALL;MULTILINE;
 Replacement=\1 \3
 Repeat=False
 Policy=Replace

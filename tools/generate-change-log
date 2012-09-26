@@ -22,7 +22,7 @@ re_commit = re.compile((r"^commit \w+?\n"
                         r"(?P<files>(^.+?$\n)+?)"
                         r"^$\n"
                         ),
-                       re.UNICODE | re.MULTILINE)
+                       re.MULTILINE)
 
 re_change_log_message = re.compile(r"^\d\d\d\d-\d\d-\d\d  ")
 re_trailing_space = re.compile(r"\s*$", re.MULTILINE)
