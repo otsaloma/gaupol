@@ -31,11 +31,6 @@ class TestModule(gaupol.TestCase):
         args = (self.new_subrip_file(),)
         gaupol.main._init_application(opts, args)
 
-    def test__init_configuration(self):
-        path = self.new_subrip_file()
-        open(path, "w").write("\n")
-        gaupol.main._init_configuration(path)
-
     def test__on_parser_list_encodings(self):
         self.assert_raises(SystemExit, gaupol.main._on_parser_list_encodings)
 
