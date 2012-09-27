@@ -208,6 +208,3 @@ class Enumeration(list):
 
     def sort(self, *args, **kwargs):
         raise NotImplementedError
-
-    if not aeidon.DEBUG:
-        del __contains__
