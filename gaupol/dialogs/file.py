@@ -86,6 +86,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._encoding_combo.set_active(0)
         if response != Gtk.ResponseType.OK: return
         gaupol.conf.encoding.visible = visible
+        if encoding is None: return
         self._populate_encoding_combo(encoding)
         self.set_encoding(encoding)
 
