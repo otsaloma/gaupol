@@ -145,6 +145,7 @@ class SidePane(aeidon.Observable):
         """Initialize the horizontal pane container."""
         main_vbox = self.application.window.get_children()[0]
         main_notebook = main_vbox.get_children()[2]
+        main_notebook.props.expand = True
         self._paned.pack1(side_vbox, resize=False, shrink=False)
         main_notebook_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                                      spacing=0)
