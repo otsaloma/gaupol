@@ -445,16 +445,19 @@ class BookmarksExtension(gaupol.Extension):
 
     def _remove_bookmark(self, row):
         """Remove existing bookmark in `row` of the current page."""
-        store = self._tree_view.get_model()
+        store_filter = self._tree_view.get_model()
+        store = store_filter.get_model()
         for i in range(len(store)):
             if store[i][1] - 1 == row:
                 del store[i]
+                break
         page = self.application.get_current_page()
         if row in self._bookmarks[page]:
             del self._bookmarks[page][row]
         # Update the pixbuf column immediately.
         page_store = page.view.get_model()
-        page_store.row_changed(row, page_store.get_iter(row))
+        path = gaupol.util.tree_row_to_path(row)
+        page_store.row_changed(path, page_store.get_iter(path))
         self.update(self.application, page)
 
     def _set_cell_pixbuf(self, column, renderer, store, itr, page):
