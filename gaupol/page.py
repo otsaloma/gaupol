@@ -181,20 +181,15 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         self.tab_label.set_size_request(width, -1)
         self.tab_label.set_tooltip_text(self.untitle)
         button = self._get_tab_close_button()
-        self.tab_widget = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
                                   spacing=4)
 
-        self.tab_widget.pack_start(self.tab_label,
-                                   expand=True,
-                                   fill=True,
-                                   padding=0)
-
-        self.tab_widget.pack_start(button,
-                                   expand=False,
-                                   fill=False,
-                                   padding=0)
-
-        self.tab_widget.gaupol_button = button
+        box.pack_start(self.tab_label, expand=True, fill=True, padding=0)
+        box.pack_start(button, expand=False, fill=False, padding=0)
+        box.gaupol_button = button
+        self.tab_widget = Gtk.EventBox()
+        self.tab_widget.add(box)
+        self.tab_widget.set_visible_window(False)
         self.tab_widget.show_all()
 
     def _on_project_main_file_opened(self, *args):
