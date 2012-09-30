@@ -19,7 +19,12 @@
 """Cell renderer widgets for subtitle data."""
 
 from .float import FloatCellRenderer
+from .integer import IntegerCellRenderer
 from .multiline import MultilineCellRenderer
 from .time import TimeCellRenderer
 
-__all__ = ("FloatCellRenderer", "MultilineCellRenderer", "TimeCellRenderer",)
+__all__ = ("FloatCellRenderer",
+           "IntegerCellRenderer",
+           "MultilineCellRenderer",
+           "TimeCellRenderer",
+           )
