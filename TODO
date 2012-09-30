@@ -1,8 +1,6 @@
 Gaupol 0.20
 ===========
 
- * Test manually
-
  [X] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
@@ -16,7 +14,7 @@ Gaupol 0.20
  [X] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
      system of penalties and a versatile measure of goodness
  [X] Write subtitle files in a proper atomic manner (on Windows this
-     requires Python 3.3 or later)
+     is fully atomic only with Python 3.3 or later)
  [X] Remove -c/--config-file option (you're better off setting XDG_*
      environment variables if you're doing something weird)
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
