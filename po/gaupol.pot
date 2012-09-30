@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-15 18:40+0300\n"
+"POT-Creation-Date: 2012-10-01 01:18+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -803,7 +803,7 @@ msgid "S_elect preferred line-break points:"
 msgstr ""
 
 #: ../data/extensions/bookmarks/bookmarks.extension.in.h:1
-#: ../data/extensions/bookmarks/bookmarks.py:511
+#: ../data/extensions/bookmarks/bookmarks.py:514
 msgid "Bookmarks"
 msgstr ""
 
@@ -1210,11 +1210,11 @@ msgstr ""
 msgid "Transforming positions"
 msgstr ""
 
-#: ../aeidon/agents/search.py:267
+#: ../aeidon/agents/search.py:268
 msgid "Replacing"
 msgstr ""
 
-#: ../aeidon/agents/search.py:296 ../aeidon/agents/search.py:298
+#: ../aeidon/agents/search.py:297 ../aeidon/agents/search.py:299
 msgid "Replacing all"
 msgstr ""
 
@@ -1491,11 +1491,11 @@ msgstr ""
 msgid "{:.3f} fps"
 msgstr ""
 
-#: ../data/extensions/side-pane/side-pane.py:344
+#: ../data/extensions/side-pane/side-pane.py:345
 msgid "Si_de Pane"
 msgstr ""
 
-#: ../data/extensions/side-pane/side-pane.py:345
+#: ../data/extensions/side-pane/side-pane.py:346
 msgid "Show or hide the side pane"
 msgstr ""
 
@@ -2276,11 +2276,11 @@ msgstr ""
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr ""
 
-#: ../gaupol/agents/open.py:513
+#: ../gaupol/agents/open.py:514
 msgid "Opened main file \"{}\""
 msgstr ""
 
-#: ../gaupol/agents/open.py:532
+#: ../gaupol/agents/open.py:539
 msgid "Opened translation file \"{}\""
 msgstr ""
 
@@ -2553,11 +2553,11 @@ msgstr ""
 msgid "{format} (*{extension})"
 msgstr ""
 
-#: ../gaupol/dialogs/file.py:113
+#: ../gaupol/dialogs/file.py:114
 msgid "Auto-detected"
 msgstr ""
 
-#: ../gaupol/dialogs/file.py:115
+#: ../gaupol/dialogs/file.py:116
 msgid "Other…"
 msgstr ""
 
@@ -2782,22 +2782,22 @@ msgstr ""
 msgid "Close project"
 msgstr ""
 
-#: ../gaupol/page.py:309
+#: ../gaupol/page.py:304
 msgid "<b>Path:</b> {}"
 msgstr ""
 
-#: ../gaupol/page.py:310
+#: ../gaupol/page.py:305
 msgid "<b>Format:</b> {}"
 msgstr ""
 
-#: ../gaupol/page.py:311
+#: ../gaupol/page.py:306
 msgid "<b>Encoding:</b> {}"
 msgstr ""
 
-#: ../gaupol/page.py:312
+#: ../gaupol/page.py:307
 msgid "<b>Newlines:</b> {}"
 msgstr ""
 
-#: ../gaupol/page.py:345
+#: ../gaupol/page.py:340
 msgid "{} translation"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-15 18:40+0300\n"
+"POT-Creation-Date: 2012-10-01 01:18+0300\n"
 "PO-Revision-Date: 2012-02-16 20:27-0300\n"
 "Last-Translator: Átila Camurça <camurca.home@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <comsolid3@googlegroups.com>\n"
@@ -806,7 +806,7 @@ msgid "S_elect preferred line-break points:"
 msgstr "S_elecionar pontos de quebra de linha preferidos:"
 
 #: ../data/extensions/bookmarks/bookmarks.extension.in.h:1
-#: ../data/extensions/bookmarks/bookmarks.py:511
+#: ../data/extensions/bookmarks/bookmarks.py:514
 msgid "Bookmarks"
 msgstr "Favoritos"
 
@@ -1218,11 +1218,11 @@ msgstr "Deslocando posições"
 msgid "Transforming positions"
 msgstr "Transformando posições"
 
-#: ../aeidon/agents/search.py:267
+#: ../aeidon/agents/search.py:268
 msgid "Replacing"
 msgstr "Substituindo"
 
-#: ../aeidon/agents/search.py:296 ../aeidon/agents/search.py:298
+#: ../aeidon/agents/search.py:297 ../aeidon/agents/search.py:299
 msgid "Replacing all"
 msgstr "Substituindo todos"
 
@@ -1499,11 +1499,11 @@ msgstr "Calcule unidades não-ativas com uma taxa de quadros de {:.3f} fps"
 msgid "{:.3f} fps"
 msgstr ""
 
-#: ../data/extensions/side-pane/side-pane.py:344
+#: ../data/extensions/side-pane/side-pane.py:345
 msgid "Si_de Pane"
 msgstr "Painel _Lateral"
 
-#: ../data/extensions/side-pane/side-pane.py:345
+#: ../data/extensions/side-pane/side-pane.py:346
 msgid "Show or hide the side pane"
 msgstr "Mostrar ou ocultar painel lateral"
 
@@ -2294,11 +2294,11 @@ msgstr "Abrir _Sem Salvar"
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "Adicionar ao fim {amount:d} legendas de \"{basename}\""
 
-#: ../gaupol/agents/open.py:513
+#: ../gaupol/agents/open.py:514
 msgid "Opened main file \"{}\""
 msgstr "Aberto arquivo principal \"{}\""
 
-#: ../gaupol/agents/open.py:532
+#: ../gaupol/agents/open.py:539
 msgid "Opened translation file \"{}\""
 msgstr "Aberto arquivo de tradução \"{}\""
 
@@ -2580,11 +2580,11 @@ msgstr "Todos os arquivos suportados"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: ../gaupol/dialogs/file.py:113
+#: ../gaupol/dialogs/file.py:114
 msgid "Auto-detected"
 msgstr "Auto-detecção"
 
-#: ../gaupol/dialogs/file.py:115
+#: ../gaupol/dialogs/file.py:116
 msgid "Other…"
 msgstr "Outro…"
 
@@ -2813,23 +2813,23 @@ msgstr "Sem-título {:d}"
 msgid "Close project"
 msgstr "Fechar projeto"
 
-#: ../gaupol/page.py:309
+#: ../gaupol/page.py:304
 msgid "<b>Path:</b> {}"
 msgstr "<b>Caminho:</b> {}"
 
-#: ../gaupol/page.py:310
+#: ../gaupol/page.py:305
 msgid "<b>Format:</b> {}"
 msgstr "<b>Formato:</b> {}"
 
-#: ../gaupol/page.py:311
+#: ../gaupol/page.py:306
 msgid "<b>Encoding:</b> {}"
 msgstr ""
 
-#: ../gaupol/page.py:312
+#: ../gaupol/page.py:307
 msgid "<b>Newlines:</b> {}"
 msgstr "<b>Novas Linhas:</b> {}"
 
-#: ../gaupol/page.py:345
+#: ../gaupol/page.py:340
 msgid "{} translation"
 msgstr "{} tradução"
 

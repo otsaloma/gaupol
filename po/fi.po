@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-15 18:40+0300\n"
+"POT-Creation-Date: 2012-10-01 01:18+0300\n"
 "PO-Revision-Date: 2012-09-15 19:12+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
 "Language-Team: Finnish <otsaloma@iki.fi>\n"
@@ -809,7 +809,7 @@ msgid "S_elect preferred line-break points:"
 msgstr "_Valitse mieluisimmat rivinvaihtokohdat:"
 
 #: ../data/extensions/bookmarks/bookmarks.extension.in.h:1
-#: ../data/extensions/bookmarks/bookmarks.py:511
+#: ../data/extensions/bookmarks/bookmarks.py:514
 msgid "Bookmarks"
 msgstr "Kirjanmerkit"
 
@@ -1223,11 +1223,11 @@ msgstr "sijaintien siirtäminen"
 msgid "Transforming positions"
 msgstr "sijaintien muuntaminen"
 
-#: ../aeidon/agents/search.py:267
+#: ../aeidon/agents/search.py:268
 msgid "Replacing"
 msgstr "korvaaminen"
 
-#: ../aeidon/agents/search.py:296 ../aeidon/agents/search.py:298
+#: ../aeidon/agents/search.py:297 ../aeidon/agents/search.py:299
 msgid "Replacing all"
 msgstr "kaikkien korvaaminen"
 
@@ -1504,11 +1504,11 @@ msgstr "Laske vieraat yksiköt ruutunopeudella {:.3f} fps"
 msgid "{:.3f} fps"
 msgstr "{:.3f} fps"
 
-#: ../data/extensions/side-pane/side-pane.py:344
+#: ../data/extensions/side-pane/side-pane.py:345
 msgid "Si_de Pane"
 msgstr "S_ivupaneeli"
 
-#: ../data/extensions/side-pane/side-pane.py:345
+#: ../data/extensions/side-pane/side-pane.py:346
 msgid "Show or hide the side pane"
 msgstr "Näytä tai piilota sivupaneeli"
 
@@ -2297,11 +2297,11 @@ msgstr "_Avaa tallentamatta"
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "Lisättiin {amount:d} kappaletta perään tiedostosta \"{basename}\""
 
-#: ../gaupol/agents/open.py:513
+#: ../gaupol/agents/open.py:514
 msgid "Opened main file \"{}\""
 msgstr "Avattiin päätiedosto \"{}\""
 
-#: ../gaupol/agents/open.py:532
+#: ../gaupol/agents/open.py:539
 msgid "Opened translation file \"{}\""
 msgstr "Avattiin käännöstiedosto \"{}\""
 
@@ -2583,11 +2583,11 @@ msgstr "Kaikki tuetut tiedostot"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: ../gaupol/dialogs/file.py:113
+#: ../gaupol/dialogs/file.py:114
 msgid "Auto-detected"
 msgstr "Automaattisesti tunnistettu"
 
-#: ../gaupol/dialogs/file.py:115
+#: ../gaupol/dialogs/file.py:116
 msgid "Other…"
 msgstr "Muu…"
 
@@ -2818,22 +2818,22 @@ msgstr "Nimetön {:d}"
 msgid "Close project"
 msgstr "Sulje projekti"
 
-#: ../gaupol/page.py:309
+#: ../gaupol/page.py:304
 msgid "<b>Path:</b> {}"
 msgstr "<b>Polku:</b> {}"
 
-#: ../gaupol/page.py:310
+#: ../gaupol/page.py:305
 msgid "<b>Format:</b> {}"
 msgstr "<b>Tiedostomuoto:</b> {}"
 
-#: ../gaupol/page.py:311
+#: ../gaupol/page.py:306
 msgid "<b>Encoding:</b> {}"
 msgstr "<b>Koodaus:</b> {}"
 
-#: ../gaupol/page.py:312
+#: ../gaupol/page.py:307
 msgid "<b>Newlines:</b> {}"
 msgstr "<b>Rivinvaihdot:</b> {}"
 
-#: ../gaupol/page.py:345
+#: ../gaupol/page.py:340
 msgid "{} translation"
 msgstr "{} käännös"
