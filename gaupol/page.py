@@ -386,4 +386,8 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         if self.project.main_changed or self.project.tran_changed:
             title = "*{}".format(title)
         self.tab_label.set_text(title)
+        self.tab_label.set_size_request(-1, -1)
+        width = self.tab_label.get_preferred_width()[1]
+        width = min(width, gaupol.util.char_to_px(32))
+        self.tab_label.set_size_request(width, -1)
         return title
