@@ -1,6 +1,6 @@
 Gaupol 0.20
 ===========
-
+ 
  [X] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
  [X] Bump Python dependency to 3.2 or greater
  [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater

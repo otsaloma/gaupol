@@ -1,10 +1,10 @@
 General Information
 ===================
 
-Gaupol is an editor for text-based subtitle files. It supports
-multiple subtitle file formats and provides means of correcting texts
-and timing subtitles to match video. The user interface is designed
-with attention to batch processing of multiple documents and
+Gaupol is an editor for text-based subtitle files. It supports multiple
+subtitle file formats and provides means of creating subtitles, editing
+texts and timing subtitles to match video. The user interface is
+designed with attention to batch processing of multiple documents and
 convenience of translating.
 
 Gaupol contains aeidon, a separately installable general-purpose
@@ -34,7 +34,7 @@ installation, see the file "INSTALL".
   [5] http://packages.python.org/pyenchant/
   [6] http://gtkspell.sourceforge.net/
   [7] http://pkg-isocodes.alioth.debian.org/
-  [8] http://chardet.feedparser.org/
+  [8] http://pypi.python.org/pypi/chardet
   [9] http://www.mplayerhq.hu/
  [10] http://www.videolan.org/vlc/
 
