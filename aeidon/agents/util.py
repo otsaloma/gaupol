@@ -170,13 +170,14 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if file is not None:
             path = aeidon.temp.create(file.format.extension)
             encoding = encoding or file.encoding
-            file = aeidon.files.new(file.format, path, encoding)
-            file.copy_from(self.get_file(doc))
+            temp_file = aeidon.files.new(file.format, path, encoding)
+            temp_file.copy_from(file)
         else:
             # If no saved document to pull properties from,
             # fall back to SubRip format and UTF-8 encoding.
-            path = aeidon.temp.create(aeidon.formats.SUBRIP.extension)
+            format = aeidon.formats.SUBRIP
+            path = aeidon.temp.create(format.extension)
             encoding = encoding or "utf_8"
-            file = aeidon.files.new(aeidon.formats.SUBRIP, path, encoding)
-        self.save(doc, file, False)
-        return file.path
+            temp_file = aeidon.files.new(format, path, encoding)
+        self.save(doc, temp_file, keep_changes=False)
+        return temp_file.path
