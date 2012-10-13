@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gaupol 0.20\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-13 19:42+0300\n"
-"PO-Revision-Date: 2012-10-13 19:46+0300\n"
+"PO-Revision-Date: 2012-10-13 19:59+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
 "Language-Team: Finnish <otsaloma@iki.fi>\n"
 "Language: fi\n"
@@ -887,7 +887,7 @@ msgstr "Okay"
 
 #: ../data/patterns/Latn-en.common-error.in.h:10
 msgid "Convert various two-letter spellings of okay to \"OK\""
-msgstr "Muunna useat eri okay:n kaksikirjaimiset kirjoitusasut muotoon \"OK\""
+msgstr "Muunna eri okay:n kaksikirjaimiset kirjoitusasut muotoon \"OK\""
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
@@ -940,7 +940,7 @@ msgstr "Väli välimerkkien jälkeen"
 #: ../data/patterns/Latn-fi.common-error.in.h:2
 #: ../data/patterns/Latn.common-error.in.h:16
 msgid "Add space after various punctuation marks"
-msgstr "Lisää väli useiden välimerkkien jälkeen"
+msgstr "Lisää väli tiettyjen välimerkkien jälkeen"
 
 #: ../data/patterns/Latn-fr.common-error.in.h:1
 msgid "Spaces around guillemets"
@@ -957,7 +957,7 @@ msgstr "Väli ennen välimerkkejä"
 
 #: ../data/patterns/Latn-fr.common-error.in.h:4
 msgid "Add or remove space before various punctuation marks"
-msgstr "Lisää tai poista väli ennen joitain välimerkkejä"
+msgstr "Lisää tai poista väli ennen tiettyjä välimerkkejä"
 
 #: ../data/patterns/Latn.capitalization.in.h:1
 msgid "Sentence"
@@ -982,9 +982,7 @@ msgstr "Aamu- ja iltapäivien kirjoitusasu"
 #: ../data/patterns/Latn.common-error.in.h:2
 msgid ""
 "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr ""
-"Muuta useiden eri 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m."
-"\""
+msgstr "Muuta 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m.\""
 
 #: ../data/patterns/Latn.common-error.in.h:3
 msgid "Letter \"O\" in a number"
@@ -1028,7 +1026,7 @@ msgstr "Lisää väli vuoropuheluviivan jälkeen"
 
 #: ../data/patterns/Latn.common-error.in.h:14
 msgid "Remove space before various punctuation marks"
-msgstr "Poista väli ennen joitain välimerkkejä"
+msgstr "Poista väli ennen tiettyjä välimerkkejä"
 
 #: ../data/patterns/Latn.common-error.in.h:17
 msgid "Space after an ellipsis"
@@ -1071,7 +1069,7 @@ msgstr "Pisteet välimerkin ympärillä"
 
 #: ../data/patterns/Latn.common-error.in.h:26
 msgid "Remove period before or after various punctuation marks"
-msgstr "Poista piste useiden välimerkkien edeltä tai jäljestä"
+msgstr "Poista piste tiettyjen välimerkkien edeltä tai jäljestä"
 
 #: ../data/patterns/Latn.common-error.in.h:27
 msgid "Terminating double-dashes"
