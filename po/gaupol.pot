@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-01 01:18+0300\n"
+"POT-Creation-Date: 2012-10-13 19:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -932,6 +932,14 @@ msgstr ""
 msgid "Capitalize the first word of a sentence"
 msgstr ""
 
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr ""
+
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
 msgstr ""
@@ -1132,6 +1140,15 @@ msgstr ""
 
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
+msgstr ""
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
 #: ../aeidon/agents/clipboard.py:59

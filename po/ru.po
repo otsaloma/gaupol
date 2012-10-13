@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.15.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-01 01:18+0300\n"
+"POT-Creation-Date: 2012-10-13 19:29+0300\n"
 "PO-Revision-Date: 2011-07-19 10:19+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
@@ -938,6 +938,14 @@ msgstr "Предложение"
 msgid "Capitalize the first word of a sentence"
 msgstr "Начинать предложения с заглавной буквы"
 
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr ""
+
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
 msgstr "Написание a.m. и p.m."
@@ -1139,6 +1147,15 @@ msgstr "Пробел между цифрами"
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
 msgstr "Удаляет пробелы между цифрами числа"
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
+msgstr ""
 
 #: ../aeidon/agents/clipboard.py:59
 msgid "Cutting texts"

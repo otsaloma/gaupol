@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-01 01:18+0300\n"
+"POT-Creation-Date: 2012-10-13 19:29+0300\n"
 "PO-Revision-Date: 2011-01-18 15:04+0200\n"
 "Last-Translator: Çağlar Kilimci <ckilimci@pardus.org.tr>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -936,6 +936,14 @@ msgstr "Cümle"
 msgid "Capitalize the first word of a sentence"
 msgstr "Cümlenin ilk harfini büyüt"
 
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr ""
+
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
 msgstr "\"ö.ö.\" ve \"ö.s.\" yazılımı"
@@ -1138,6 +1146,15 @@ msgstr "Rakamlar arasında boşluk"
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
 msgstr "Rakamlar arasındaki boşlukları sil"
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
+msgstr ""
 
 #: ../aeidon/agents/clipboard.py:59
 msgid "Cutting texts"

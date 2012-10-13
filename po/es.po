@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.19\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-01 01:18+0300\n"
+"POT-Creation-Date: 2012-10-13 19:29+0300\n"
 "PO-Revision-Date: 2012-10-13 12:49-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -61,8 +61,8 @@ msgid ""
 "You have probably discovered a bug. Please report it by providing the above "
 "information and a description of what you were doing."
 msgstr ""
-"Probablemente descubrió un error. Por favor informe de esto describiendo "
-"la tarea que se encontraba realizando, y adjunte la información arriba "
+"Probablemente descubrió un error. Por favor informe de esto describiendo la "
+"tarea que se encontraba realizando, y adjunte la información arriba "
 "presentada."
 
 #: ../data/ui/duration-adjust-dialog.ui.h:1
@@ -833,7 +833,8 @@ msgstr "Frecuencias de fotogramas personalizadas"
 
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:2
 msgid "Allow use of non-standard framerates"
-msgstr "Permite el uso de frecuencias de fotogramas (framerates) poco frecuentes"
+msgstr ""
+"Permite el uso de frecuencias de fotogramas (framerates) poco frecuentes"
 
 #: ../data/extensions/side-pane/side-pane.extension.in.h:1
 msgid "Side Pane"
@@ -884,7 +885,8 @@ msgstr "Cero en palabras en mayúsculas"
 
 #: ../data/patterns/Latn-en.common-error.in.h:6
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr "Reemplaza el número cero dentro de una palabra en mayúsculas por la letra «O»"
+msgstr ""
+"Reemplaza el número cero dentro de una palabra en mayúsculas por la letra «O»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
 msgid "Spaces around an apostrophe"
@@ -952,6 +954,14 @@ msgstr "Frase"
 #: ../data/patterns/Latn.capitalization.in.h:2
 msgid "Capitalize the first word of a sentence"
 msgstr "Capitaliza la primera palabra de cada oración"
+
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
@@ -1167,6 +1177,15 @@ msgstr "Espacio entre dígitos"
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
 msgstr "Elimina el espacio en blanco entre los dígitos de un número"
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
+msgstr ""
 
 #: ../aeidon/agents/clipboard.py:59
 msgid "Cutting texts"
@@ -2226,7 +2245,8 @@ msgstr "¿Guardar los cambios en el documento principal «{}» antes de salir?"
 
 #: ../gaupol/agents/close.py:84
 msgid "Save changes to translation document \"{}\" before closing?"
-msgstr "¿Guardar los cambios en el documento de traducción «{}» antes de salir?"
+msgstr ""
+"¿Guardar los cambios en el documento de traducción «{}» antes de salir?"
 
 #: ../gaupol/agents/edit.py:175
 msgid "Inserted {:d} subtitle to fit clipboard contents"
@@ -2268,7 +2288,7 @@ msgstr "No fue posible decodificar el archivo «{}» con los códecs disponibles
 
 #: ../gaupol/agents/open.py:294
 msgid "Please try to open the file with a different character encoding."
-msgstr
+msgstr ""
 "Intente abrir el archivo usando una codificación de caracteres diferente."
 
 #: ../gaupol/agents/open.py:302
@@ -2353,8 +2373,8 @@ msgid ""
 "different character encoding."
 msgstr ""
 "No fue posible codificar los subtítulos en un archivo temporal para su vista "
-"previa usando la codificación de caracteres actual. Intente guardar "
-"el archivo de subtítulos con una codificación de caracteres diferente."
+"previa usando la codificación de caracteres actual. Intente guardar el "
+"archivo de subtítulos con una codificación de caracteres diferente."
 
 #: ../gaupol/agents/preview.py:64
 msgid "Failed to save subtitle file to temporary directory \"{}\""
@@ -2459,8 +2479,8 @@ msgstr "Capitalizar texto"
 #: ../gaupol/assistants.py:469
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
-"Corrige errores frecuentes propios de un humano o un software reconocedor "
-"de imágenes"
+"Corrige errores frecuentes propios de un humano o un software reconocedor de "
+"imágenes"
 
 #: ../gaupol/assistants.py:473
 msgid "Common Error Patterns"

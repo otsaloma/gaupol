@@ -6,8 +6,8 @@ Pattern=((?<!\..)\.|[?!])["'«»]?( |$)
 Flags=DOTALL;MULTILINE;
 
 [Capitalization Pattern]
-Name=Ellipsis
-Description=Capitalize after an ellipsis
+_Name=Ellipsis
+_Description=Capitalize after an ellipsis
 Capitalize=After
 Pattern=(\.\.\.)["'«»]?( |$)
 Flags=DOTALL;MULTILINE;

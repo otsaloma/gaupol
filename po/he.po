@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaupol\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-01 01:18+0300\n"
+"POT-Creation-Date: 2012-10-13 19:29+0300\n"
 "PO-Revision-Date: 2010-08-19 04:20+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Gezer (Hebrew)\n"
@@ -934,6 +934,14 @@ msgstr "משפט"
 msgid "Capitalize the first word of a sentence"
 msgstr "הפיכת המילה הראשונה במשפט לרישית (הגדלת האות הראשונה)"
 
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr ""
+
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
 msgstr "איות של a.m.‎ ו־p.m.‎"
@@ -1135,6 +1143,15 @@ msgstr "רווח בין ספרות"
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
 msgstr "הסרת רווחים בין ספרות של מספר"
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
+msgstr ""
 
 #: ../aeidon/agents/clipboard.py:59
 msgid "Cutting texts"

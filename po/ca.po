@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-01 01:18+0300\n"
+"POT-Creation-Date: 2012-10-13 19:29+0300\n"
 "PO-Revision-Date: 2006-01-24 12:28+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -931,6 +931,14 @@ msgstr ""
 msgid "Capitalize the first word of a sentence"
 msgstr ""
 
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr ""
+
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
 msgstr ""
@@ -1131,6 +1139,15 @@ msgstr ""
 
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
+msgstr ""
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
 #: ../aeidon/agents/clipboard.py:59

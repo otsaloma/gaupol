@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-01 01:18+0300\n"
-"PO-Revision-Date: 2012-09-15 19:12+0300\n"
+"POT-Creation-Date: 2012-10-13 19:29+0300\n"
+"PO-Revision-Date: 2012-10-13 19:32+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
 "Language-Team: Finnish <otsaloma@iki.fi>\n"
 "Language: fi\n"
@@ -940,6 +940,14 @@ msgstr "Lause"
 msgid "Capitalize the first word of a sentence"
 msgstr "Kirjoita lauseen ensimmäinen sana isolla alkukirjaimella"
 
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr "Kolme pistettä"
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr "Aloita isolla alkukirjaimella kolmen pisteen jälkeen"
+
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
 msgstr "Aamu- ja iltapäivien kirjoitusasu"
@@ -1146,6 +1154,15 @@ msgstr "Väli numeroiden välissä"
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
 msgstr "Poista väli luvun numeroiden välissä"
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr "Musiikkinuotit"
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
+msgstr "Korvaa Unicode musiikkinuotit numeromerkeillä"
 
 #: ../aeidon/agents/clipboard.py:59
 msgid "Cutting texts"
