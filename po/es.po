@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.19\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-13 19:29+0300\n"
+"POT-Creation-Date: 2012-10-13 19:42+0300\n"
 "PO-Revision-Date: 2012-10-13 12:49-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -947,6 +947,33 @@ msgstr "Determinante posesivo"
 msgid "Do not break after a possessive determiner, e.g. \"my\""
 msgstr "No divide después de un determinante posesivo, como «mi»"
 
+#: ../data/patterns/Latn-fi.common-error.in.h:1
+#: ../data/patterns/Latn.common-error.in.h:15
+msgid "Space after punctuation marks"
+msgstr "Espacio a continuación de signos de puntuación"
+
+#: ../data/patterns/Latn-fi.common-error.in.h:2
+#: ../data/patterns/Latn.common-error.in.h:16
+msgid "Add space after various punctuation marks"
+msgstr "Agrega un espacio en blanco después de distintos signos de puntuación"
+
+#: ../data/patterns/Latn-fr.common-error.in.h:1
+msgid "Spaces around guillemets"
+msgstr ""
+
+#: ../data/patterns/Latn-fr.common-error.in.h:2
+msgid "Add spaces around guillemets"
+msgstr ""
+
+#: ../data/patterns/Latn-fr.common-error.in.h:3
+#: ../data/patterns/Latn.common-error.in.h:13
+msgid "Space before punctuation marks"
+msgstr "Espacio antes de signos de puntuación"
+
+#: ../data/patterns/Latn-fr.common-error.in.h:4
+msgid "Add or remove space before various punctuation marks"
+msgstr ""
+
 #: ../data/patterns/Latn.capitalization.in.h:1
 msgid "Sentence"
 msgstr "Frase"
@@ -1015,21 +1042,9 @@ msgstr "Espacio a continuación de rayas de diálogo"
 msgid "Add space after a dialogue dash"
 msgstr "Agrega un espacio en blanco después de una raya de diálogo"
 
-#: ../data/patterns/Latn.common-error.in.h:13
-msgid "Space before punctuation marks"
-msgstr "Espacio antes de signos de puntuación"
-
 #: ../data/patterns/Latn.common-error.in.h:14
 msgid "Remove space before various punctuation marks"
 msgstr "Elimina el espacio en blanco antes de distintos signos de puntuación"
-
-#: ../data/patterns/Latn.common-error.in.h:15
-msgid "Space after punctuation marks"
-msgstr "Espacio a continuación de signos de puntuación"
-
-#: ../data/patterns/Latn.common-error.in.h:16
-msgid "Add space after various punctuation marks"
-msgstr "Agrega un espacio en blanco después de distintos signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:17
 msgid "Space after an ellipsis"

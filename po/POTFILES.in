@@ -37,6 +37,8 @@
 [type: gettext/ini]data/patterns/Latn-en.common-error.in
 [type: gettext/ini]data/patterns/Latn-en.hearing-impaired.in
 [type: gettext/ini]data/patterns/Latn-en.line-break.in
+[type: gettext/ini]data/patterns/Latn-fi.common-error.in
+[type: gettext/ini]data/patterns/Latn-fr.common-error.in
 [type: gettext/ini]data/patterns/Latn.capitalization.in
 [type: gettext/ini]data/patterns/Latn.common-error.in
 [type: gettext/ini]data/patterns/Latn.hearing-impaired.in
