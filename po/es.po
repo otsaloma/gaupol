@@ -1,15 +1,15 @@
 # Spanish translation of gaupol.
-# Copyright (C) 2005-2011 Osmo Salomaa.
+# Copyright (C) 2005-2012 Osmo Salomaa.
 # This file is distributed under the same license as the gaupol package.
 # Miguel Latorre <kuan@graffiti.net>, 2006.
-# Carlos Mella <cmellib@gmail.com>, 2010-2011.
+# Carlos Mella <cmellib@gmail.com>, 2010-2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.19\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-01 01:18+0300\n"
-"PO-Revision-Date: 2011-07-16 13:00+0300\n"
+"PO-Revision-Date: 2012-10-13 12:49-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -54,15 +54,16 @@ msgstr "_Frecuencias de fotogramas:"
 
 #: ../data/ui/debug-dialog.ui.h:1 ../gaupol/dialogs/speech_recognition.py:374
 msgid "Something went wrong"
-msgstr ""
+msgstr "Algo salió mal"
 
 #: ../data/ui/debug-dialog.ui.h:2
 msgid ""
 "You have probably discovered a bug. Please report it by providing the above "
 "information and a description of what you were doing."
 msgstr ""
-"Probablemente descubrió un error. Envíe un informe describiendo la tarea que "
-"se encontraba realizando, y adjunte la información aquí presentada."
+"Probablemente descubrió un error. Por favor informe de esto describiendo "
+"la tarea que se encontraba realizando, y adjunte la información arriba "
+"presentada."
 
 #: ../data/ui/duration-adjust-dialog.ui.h:1
 msgid "Adjust Durations"
@@ -257,7 +258,7 @@ msgstr "Cerrar _sin guardar"
 
 #: ../data/ui/multi-close-dialog.ui.h:2
 msgid "Save changes to documents before closing?"
-msgstr "¿Desea guardar los cambios de los documentos antes de salir?"
+msgstr "¿Desea guardar los cambios en los documentos antes de salir?"
 
 #: ../data/ui/multi-close-dialog.ui.h:3
 msgid "Select the _main documents you want to save:"
@@ -287,7 +288,7 @@ msgstr "_Formato:"
 #: ../data/ui/multi-save-dialog.ui.h:4 ../data/ui/open-dialog.ui.h:1
 #: ../data/ui/save-dialog.ui.h:2
 msgid "_Encoding:"
-msgstr ""
+msgstr "Co_dificación:"
 
 #: ../data/ui/multi-save-dialog.ui.h:5 ../data/ui/save-dialog.ui.h:3
 msgid "Ne_wlines:"
@@ -316,7 +317,7 @@ msgstr "Desplazamiento"
 #: ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:7
 msgid "_Preview Changes"
-msgstr "_Previsualizar cambios"
+msgstr "_Vista previa"
 
 #: ../data/ui/position-shift-dialog.ui.h:7
 msgid "Shift s_elected subtitles"
@@ -364,7 +365,7 @@ msgstr "Ajus_te:"
 
 #: ../data/ui/position-transform-dialog.ui.h:11
 msgid "Pre_view Changes"
-msgstr "Pre_visualizar"
+msgstr "_Vista previa"
 
 #: ../data/ui/position-transform-dialog.ui.h:13
 msgid "Transform se_lected subtitles"
@@ -376,19 +377,19 @@ msgstr "Ajustar en el proyecto act_ual"
 
 #: ../data/ui/preferences-dialog.ui.h:3
 msgid "When opening files, try encodings in the following order:"
-msgstr "Al abrir archivos, probar codificaciones en el siguiente orden:"
+msgstr "Al abrir archivos, probar con las siguientes codificaciones:"
 
 #: ../data/ui/preferences-dialog.ui.h:4
 msgid "Curr_ent locale encoding"
-msgstr "C_onfiguración regional actual"
+msgstr "La c_odificación dada por la configuración regional actual"
 
 #: ../data/ui/preferences-dialog.ui.h:5
 msgid "_Fallback encodings:"
-msgstr "_En caso de error, usar:"
+msgstr "Codificacio_nes alternativas:"
 
 #: ../data/ui/preferences-dialog.ui.h:6
 msgid "Aut_o-detection"
-msgstr "Auto_detección"
+msgstr "_Detectar automáticamente"
 
 #: ../data/ui/preferences-dialog.ui.h:7
 msgid "Encoding specified in the open dialog will always be tried first."
@@ -410,7 +411,7 @@ msgstr "Utilizar la _tipografía por omisión del sistema"
 
 #: ../data/ui/preferences-dialog.ui.h:11
 msgid "_Editor font:"
-msgstr "Tipo de letra del e_ditor:"
+msgstr "Tipografía del e_ditor:"
 
 #: ../data/ui/preferences-dialog.ui.h:12
 msgid "Pick the Editor Font"
@@ -464,6 +465,11 @@ msgid ""
 "$SUBFILE\n"
 "$VIDEOFILE"
 msgstr ""
+"Variables:\n"
+"$MILLISECONDS\n"
+"$SECONDS\n"
+"$SUBFILE\n"
+"$VIDEOFILE"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "Al_ways use UTF-8 character encoding"
@@ -483,7 +489,7 @@ msgstr "segundos antes de la selección"
 
 #: ../data/ui/preferences-dialog.ui.h:32
 msgid "Preview"
-msgstr "Previsualización"
+msgstr "Vista previa"
 
 #: ../data/ui/preferences-dialog.ui.h:33
 msgid "A_vailable extensions:"
@@ -491,7 +497,7 @@ msgstr "C_omplementos disponibles:"
 
 #: ../data/ui/preferences-dialog.ui.h:34
 msgid "Get more extensions"
-msgstr "Obtén más complementos"
+msgstr "Obtener más complementos"
 
 #: ../data/ui/preferences-dialog.ui.h:35
 msgid "Extensions"
@@ -499,7 +505,7 @@ msgstr "Complementos"
 
 #: ../data/ui/preview-error-dialog.ui.h:1
 msgid "Preview in video player failed"
-msgstr "Falló la previsualización con el reproductor de vídeo"
+msgstr "No fue posible realizar la vista previa en el reproductor de vídeo"
 
 #: ../data/ui/preview-error-dialog.ui.h:2
 msgid "O_utput:"
@@ -693,7 +699,7 @@ msgstr "_Primer subtítulo del proyecto nuevo:"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:1
 msgid "S_elect parts to capitalize:"
-msgstr "S_eleccione los casos que quiera capitalizar:"
+msgstr "S_eleccione los casos donde quiera capitalizar:"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:2
 #: ../data/ui/text-assistant/common-error-page.ui.h:2
@@ -715,7 +721,7 @@ msgstr "_Idioma:"
 #: ../data/ui/text-assistant/hearing-impaired-page.ui.h:4
 #: ../data/ui/text-assistant/line-break-page.ui.h:4
 msgid "Co_untry:"
-msgstr ""
+msgstr "_País:"
 
 #: ../data/ui/text-assistant/common-error-page.ui.h:1
 msgid "S_elect errors to correct:"
@@ -748,7 +754,7 @@ msgstr "_Desmarcar todo"
 #: ../data/ui/text-assistant/confirmation-page.ui.h:4
 #: ../gaupol/actions/position.py:68
 msgid "_Preview"
-msgstr "_Previsualizar"
+msgstr "_Vista previa"
 
 # Se separó en dos líneas de texto por el poco espacio disponible en el
 # cuadro de diálogo.
@@ -768,11 +774,11 @@ msgstr "_Seleccione las tareas de corrección que quiera aplicar:"
 
 #: ../data/ui/text-assistant/introduction-page.ui.h:2
 msgid "Colu_mns:"
-msgstr ""
+msgstr "Colu_mnas:"
 
 #: ../data/ui/text-assistant/introduction-page.ui.h:3
 msgid "S_ubtitles:"
-msgstr ""
+msgstr "S_ubtítulos:"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:1
 msgid "Spell-Check Dictionary"
@@ -794,23 +800,23 @@ msgstr ""
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:2
 msgid "_Maximum line length:"
-msgstr "_Largo máximo de una línea:"
+msgstr "_Largo máximo de cada línea:"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:3
 msgid "_Preferred maximum amount of lines:"
-msgstr "_Nº máximo preferente de líneas:"
+msgstr "_Número preferido máximo de líneas:"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:5
 msgid "_Skip subtitles with maximum line length of:"
-msgstr "_Ignorar subtítulos con un largo máximo por línea de:"
+msgstr "_Ignorar subtítulos con líneas de un largo menor o igual a:"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:6
 msgid "S_kip subtitles with maximum line amount of:"
-msgstr "Ign_orar subtítulos con un nº máximo de líneas de:"
+msgstr "Ign_orar subtítulos con un número de líneas menor o igual a:"
 
 #: ../data/ui/text-assistant/line-break-page.ui.h:1
 msgid "S_elect preferred line-break points:"
-msgstr "S_eleccione los puntos de división de líneas preferentes:"
+msgstr "S_eleccione los puntos de división de líneas preferidos:"
 
 #: ../data/extensions/bookmarks/bookmarks.extension.in.h:1
 #: ../data/extensions/bookmarks/bookmarks.py:514
@@ -823,11 +829,11 @@ msgstr "Use marcadores en subtítulos para una navegación rápida"
 
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:1
 msgid "Custom Framerates"
-msgstr ""
+msgstr "Frecuencias de fotogramas personalizadas"
 
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:2
 msgid "Allow use of non-standard framerates"
-msgstr ""
+msgstr "Permite el uso de frecuencias de fotogramas (framerates) poco frecuentes"
 
 #: ../data/extensions/side-pane/side-pane.extension.in.h:1
 msgid "Side Pane"
@@ -878,7 +884,7 @@ msgstr "Cero en palabras en mayúsculas"
 
 #: ../data/patterns/Latn-en.common-error.in.h:6
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr "Reemplaza un cero dentro de una palabra en mayúsculas por la letra «O»"
+msgstr "Reemplaza el número cero dentro de una palabra en mayúsculas por la letra «O»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
 msgid "Spaces around an apostrophe"
@@ -886,7 +892,7 @@ msgstr "Espacios alrededor de apóstrofes"
 
 #: ../data/patterns/Latn-en.common-error.in.h:8
 msgid "Remove spaces around an apostrophe"
-msgstr "Elimina espacios en blanco alrededor de un apóstrofe"
+msgstr "Elimina el espacio en blanco alrededor de un apóstrofe"
 
 #: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Okay"
@@ -909,35 +915,35 @@ msgstr ""
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
-msgstr ""
+msgstr "Título personal"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 msgid "Do not break after a title, e.g.\" Dr.\""
-msgstr ""
+msgstr "No dívide después de un título personal, como «Dr.»"
 
 #: ../data/patterns/Latn-en.line-break.in.h:3
 msgid "Article"
-msgstr ""
+msgstr "Artículo"
 
 #: ../data/patterns/Latn-en.line-break.in.h:4
 msgid "Do not break after an article"
-msgstr ""
+msgstr "No divide después de un artículo"
 
 #: ../data/patterns/Latn-en.line-break.in.h:5
 msgid "Preposition"
-msgstr ""
+msgstr "Preposición"
 
 #: ../data/patterns/Latn-en.line-break.in.h:6
 msgid "Do not break after a preposition"
-msgstr ""
+msgstr "No divide después de una preposición"
 
 #: ../data/patterns/Latn-en.line-break.in.h:7
 msgid "Possessive determiner"
-msgstr ""
+msgstr "Determinante posesivo"
 
 #: ../data/patterns/Latn-en.line-break.in.h:8
 msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr ""
+msgstr "No divide después de un determinante posesivo, como «mi»"
 
 #: ../data/patterns/Latn.capitalization.in.h:1
 msgid "Sentence"
@@ -949,13 +955,13 @@ msgstr "Capitaliza la primera palabra de cada oración"
 
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
-msgstr "Escritura de «a.m.» y «p.m.»"
+msgstr "«a.m.» y «p.m.»"
 
 #: ../data/patterns/Latn.common-error.in.h:2
 msgid ""
 "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
-"Convierte varias formas de escribir períodos en 12 horas a «a.m.» y «p.m.»"
+"Convierte varias formas de escribir períodos de 12 horas a «a.m.» y «p.m.»"
 
 #: ../data/patterns/Latn.common-error.in.h:3
 msgid "Letter \"O\" in a number"
@@ -963,7 +969,7 @@ msgstr "Letra «O» en números"
 
 #: ../data/patterns/Latn.common-error.in.h:4
 msgid "Replace letter \"O\" with a zero in a number"
-msgstr "Reemplaza la letra «O» encontrada en un número por un cero"
+msgstr "Reemplaza la letra «O» dentro de un número por un cero"
 
 #: ../data/patterns/Latn.common-error.in.h:5
 msgid "Space between number and unit"
@@ -972,7 +978,7 @@ msgstr "Espacio entre números y unidades de medida"
 #: ../data/patterns/Latn.common-error.in.h:6
 msgid "Add or remove space between a number and the associated unit"
 msgstr ""
-"Agrega o elimina un espacio entre un número y la unidad de medida respectiva"
+"Ajusta el espacio en blanco entre un número y su unidad de medida asociada"
 
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
@@ -989,7 +995,7 @@ msgstr "Espacios alrededor de paréntesis"
 #: ../data/patterns/Latn.common-error.in.h:10
 msgid "Add or remove spaces around parantheses and square brackets"
 msgstr ""
-"Agrega o elimina espacios alrededor de paréntesis y corchetes cuadrados"
+"Ajusta los espacios en blanco alrededor de paréntesis y corchetes cuadrados"
 
 #: ../data/patterns/Latn.common-error.in.h:11
 msgid "Space after a dialogue dash"
@@ -1005,7 +1011,7 @@ msgstr "Espacio antes de signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:14
 msgid "Remove space before various punctuation marks"
-msgstr "Elimina un espacio en blanco antes de distintos signos de puntuación"
+msgstr "Elimina el espacio en blanco antes de distintos signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:15
 msgid "Space after punctuation marks"
@@ -1030,7 +1036,7 @@ msgstr "Espacio a continuación de puntos suspensivos iniciales"
 #: ../data/patterns/Latn.common-error.in.h:20
 msgid "Remove space after an ellipsis that starts a line"
 msgstr ""
-"Elimina un espacio en blanco después de puntos suspensivos al inicio de línea"
+"Elimina el espacio en blanco después de puntos suspensivos al inicio de línea"
 
 #: ../data/patterns/Latn.common-error.in.h:21
 msgid "Spaces around a quotation mark"
@@ -1039,7 +1045,7 @@ msgstr "Espacios alrededor de comillas"
 #: ../data/patterns/Latn.common-error.in.h:22
 msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr ""
-"Elimina espacios en blanco después de una comilla inicial y previo a una "
+"Elimina el espacio en blanco después de una comilla inicial y previo a una "
 "final"
 
 #: ../data/patterns/Latn.common-error.in.h:23
@@ -1050,8 +1056,7 @@ msgstr "Múltiples signos de exclamación e interrogación"
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr ""
-"Reduce múltiples signos de interrogación o exclamación consecutivos a uno "
-"sólo"
+"Reduce a uno múltiples signos de interrogación o exclamación consecutivos"
 
 #: ../data/patterns/Latn.common-error.in.h:25
 msgid "Periods around a punctuation mark"
@@ -1059,15 +1064,15 @@ msgstr "Puntos alrededor de signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:26
 msgid "Remove period before or after various punctuation marks"
-msgstr "Elimina un punto antes o después de distintos signos de puntuación"
+msgstr "Elimina el punto antes o después de distintos signos de puntuación"
 
 #: ../data/patterns/Latn.common-error.in.h:27
 msgid "Terminating double-dashes"
-msgstr "Finalizar oración con dos rayas"
+msgstr "Fin de oraciones con dos rayas"
 
 #: ../data/patterns/Latn.common-error.in.h:28
 msgid "Replace a single clause-terminating dash with two dashes"
-msgstr "Agrega una segunda raya al fin de una oración terminada por una raya"
+msgstr "Agrega una segunda raya al fin de una oración terminada por una"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:1
 msgid "Sound in brackets"
@@ -1097,13 +1102,13 @@ msgstr ""
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:7
 msgid "One-line song lyrics between number signs"
-msgstr "Letras de canciones de una línea entre almohadillas"
+msgstr "Letras de canciones entre almohadillas por línea"
 
-# Se ha forzado la división de líneas para presentar 
+# Se ha forzado la división de líneas para presentar
 #: ../data/patterns/Latn.hearing-impaired.in.h:8
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr ""
-"Elimina letras de canciones de una línea que comienzan o se encuentran entre "
+"Elimina letras de canciones que comienzan o se encuentran por línea entre "
 "almohadillas (#)"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:9
@@ -1133,11 +1138,11 @@ msgstr "Divide en base a oraciones finalizadas por un signo de puntuación"
 
 #: ../data/patterns/Latn.line-break.in.h:5
 msgid "Number and unit"
-msgstr ""
+msgstr "Número y unidad de medida"
 
 #: ../data/patterns/Latn.line-break.in.h:6
 msgid "Do not break between a number and associated unit"
-msgstr ""
+msgstr "No divide entre un número y su unidad de medida asociada"
 
 #: ../data/patterns/Zyyy.common-error.in.h:1
 msgid "Leading and trailing spaces"
@@ -1145,7 +1150,7 @@ msgstr "Espacios iniciales y finales"
 
 #: ../data/patterns/Zyyy.common-error.in.h:2
 msgid "Remove spaces from the beginning and end of lines"
-msgstr "Elimina espacios en blanco al inicio y fin de una línea"
+msgstr "Elimina el espacio en blanco al inicio y fin de una línea"
 
 #: ../data/patterns/Zyyy.common-error.in.h:3
 msgid "Multiple consecutive spaces"
@@ -1153,7 +1158,7 @@ msgstr "Múltiples espacios en blanco"
 
 #: ../data/patterns/Zyyy.common-error.in.h:4
 msgid "Replace multiple consecutive spaces with only one"
-msgstr "Reduce múltiples espacios en blanco consecutivos a sólo uno"
+msgstr "Reduce a uno múltiples espacios en blanco consecutivos"
 
 #: ../data/patterns/Zyyy.common-error.in.h:5
 msgid "Space between digits"
@@ -1161,7 +1166,7 @@ msgstr "Espacio entre dígitos"
 
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
-msgstr "Elimina un espacio en blanco entre dígitos de un número"
+msgstr "Elimina el espacio en blanco entre los dígitos de un número"
 
 #: ../aeidon/agents/clipboard.py:59
 msgid "Cutting texts"
@@ -1519,7 +1524,7 @@ msgstr ""
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:174
 msgid "{:.3f} fps"
-msgstr ""
+msgstr "{:.3f} fps"
 
 #: ../data/extensions/side-pane/side-pane.py:345
 msgid "Si_de Pane"
@@ -1699,11 +1704,11 @@ msgstr "Deshace la última acción"
 
 #: ../gaupol/actions/file.py:35
 msgid "_Append File…"
-msgstr "_Agregar archivo…"
+msgstr "_Añadir desde archivo…"
 
 #: ../gaupol/actions/file.py:37
 msgid "Append subtitles from file to the current project"
-msgstr "Agrega subtítulos desde un archivo al proyecto actual"
+msgstr "Agrega los subtítulos de un archivo al proyecto actual"
 
 #: ../gaupol/actions/file.py:55
 msgid "_Close All"
@@ -1776,7 +1781,7 @@ msgstr "_Salir"
 
 #: ../gaupol/actions/file.py:219
 msgid "Quit Gaupol"
-msgstr "Cierra Guapol"
+msgstr "Finaliza Guapol"
 
 #: ../gaupol/actions/file.py:231
 msgid "_Save All"
@@ -1792,7 +1797,7 @@ msgstr "Guardar todo c_omo…"
 
 #: ../gaupol/actions/file.py:251
 msgid "Save all open documents with different properties"
-msgstr "Guarda todos los documentos abiertos con otras propiedades"
+msgstr "Guarda todos los documentos abiertos con propiedades diferentes"
 
 #: ../gaupol/actions/file.py:270
 msgid "_Save"
@@ -1880,7 +1885,7 @@ msgstr "M_inúsculas"
 
 #: ../gaupol/actions/format.py:104
 msgid "Change the selected texts to lower case"
-msgstr "cambia el texto a minúsculas en los subtítulos seleccionados"
+msgstr "Cambia el texto a minúsculas en los subtítulos seleccionados"
 
 #: ../gaupol/actions/format.py:123
 msgid "_Sentence"
@@ -1898,7 +1903,7 @@ msgstr "_Título"
 #: ../gaupol/actions/format.py:144
 msgid "Change the selected texts to title case"
 msgstr ""
-"Cambia la Capitalización del Texto a Título en los Subtítulos Seleccionados"
+"Cambia la capitalización del texto a título en los subtítulos seleccionados"
 
 #: ../gaupol/actions/format.py:163
 msgid "_Upper"
@@ -1906,7 +1911,7 @@ msgstr "M_ayúsculas"
 
 #: ../gaupol/actions/format.py:164
 msgid "Change the selected texts to upper case"
-msgstr "CAMBIA EL TEXTO A MAYÚSCULAS EN LOS SUBTÍTULOS SELECCIONADOS"
+msgstr "Cambia el texto a mayúsculas en los subtítulos seleccionados"
 
 #: ../gaupol/actions/help.py:35
 msgid "_Wiki Documentation"
@@ -1962,7 +1967,7 @@ msgstr "Ajustar _duraciones…"
 
 #: ../gaupol/actions/position.py:36
 msgid "Lengthen or shorten durations"
-msgstr "Alarga o acorta duraciones"
+msgstr "Alarga o acorta la duración de subtítulos"
 
 #: ../gaupol/actions/position.py:51
 msgid "Convert _Framerate…"
@@ -1975,7 +1980,7 @@ msgstr ""
 
 #: ../gaupol/actions/position.py:70
 msgid "Preview from selected position with a video player"
-msgstr "Previsualiza en un reproductor de vídeo desde la posición seleccionada"
+msgstr "Vista previa en un reproductor de vídeo desde la posición seleccionada"
 
 #: ../gaupol/actions/position.py:91
 msgid "_Shift Positions…"
@@ -1983,7 +1988,7 @@ msgstr "_Desplazar posiciones…"
 
 #: ../gaupol/actions/position.py:92
 msgid "Make subtitles appear earlier or later"
-msgstr "Adelanta o retrasa subtítulos"
+msgstr "Adelanta o retrasa la aparición de subtítulos"
 
 #: ../gaupol/actions/position.py:108
 msgid "Sp_eech Recognition…"
@@ -1991,7 +1996,7 @@ msgstr "Reconocimiento de _voz…"
 
 #: ../gaupol/actions/position.py:109
 msgid "Generate subtitles by voice and speech recognition"
-msgstr "Contruye subtítulos mediante reconocimiento de voz"
+msgstr "Contruye subtítulos mediante el reconocimiento de voz"
 
 #: ../gaupol/actions/position.py:127
 msgid "_Transform Positions…"
@@ -1999,7 +2004,9 @@ msgstr "Ajustar po_siciones…"
 
 #: ../gaupol/actions/position.py:128
 msgid "Change positions by linear two-point correction"
-msgstr "Ajusta posiciones mediante una aproximación lineal entre dos puntos"
+msgstr ""
+"Ajusta la aparición de subtítulos mediante una aproximación lineal entre dos "
+"puntos"
 
 #: ../gaupol/actions/search.py:35
 msgid "_Find And Replace…"
@@ -2047,7 +2054,7 @@ msgstr "Corregir _texto…"
 
 #: ../gaupol/actions/text.py:73
 msgid "Find and correct errors in texts"
-msgstr "Busca y corrige problemas en el texto"
+msgstr "Busca y corrige problemas en los subtítulos"
 
 #: ../gaupol/actions/view.py:34
 msgid "Activate the project in the next tab"
@@ -2215,11 +2222,11 @@ msgstr "Muestra u oculta la barra de vídeo"
 
 #: ../gaupol/agents/close.py:53
 msgid "Save changes to main document \"{}\" before closing?"
-msgstr "¿Guardar los cambios del documento principal «{}» antes de salir?"
+msgstr "¿Guardar los cambios en el documento principal «{}» antes de salir?"
 
 #: ../gaupol/agents/close.py:84
 msgid "Save changes to translation document \"{}\" before closing?"
-msgstr "¿Guardar los cambios del documento de traducción «{}» antes de salir?"
+msgstr "¿Guardar los cambios en el documento de traducción «{}» antes de salir?"
 
 #: ../gaupol/agents/edit.py:175
 msgid "Inserted {:d} subtitle to fit clipboard contents"
@@ -2249,7 +2256,7 @@ msgstr "Deshace «{}»"
 
 #: ../gaupol/agents/open.py:45
 msgid "Appending file"
-msgstr "Agregar archivo"
+msgstr "Añadiendo archivo"
 
 #: ../gaupol/agents/open.py:61
 msgid "File \"{}\" is already open"
@@ -2257,23 +2264,24 @@ msgstr "El archivo «{}» ya está abierto"
 
 #: ../gaupol/agents/open.py:292
 msgid "Failed to decode file \"{}\" with all attempted codecs"
-msgstr "No fue posible decodificar el archivo «{}» con los codecs disponibles"
+msgstr "No fue posible decodificar el archivo «{}» con los códecs disponibles"
 
 #: ../gaupol/agents/open.py:294
 msgid "Please try to open the file with a different character encoding."
-msgstr "Abra el archivo usando una codificación de caracteres diferente."
+msgstr
+"Intente abrir el archivo usando una codificación de caracteres diferente."
 
 #: ../gaupol/agents/open.py:302
 msgid "Failed to recognize format of file \"{}\""
-msgstr "Formato desconocido para el archivo «{}»"
+msgstr "No fue posible reconocer el formato del archivo «{}»"
 
 #: ../gaupol/agents/open.py:303
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
-"Asegúrese que el archivo que intenta abrir es un archivo de subtítulos de un "
-"formato soportado por Gaupol."
+"Verifique que el archivo que intenta abrir está en un formato soportado por "
+"Gaupol."
 
 #: ../gaupol/agents/open.py:311
 msgid "Failed to open file \"{}\""
@@ -2285,7 +2293,7 @@ msgstr "No fue posible analizar el archivo «{}»"
 
 #: ../gaupol/agents/open.py:319
 msgid "Please check that the file you are trying to open is a valid {} file."
-msgstr ""
+msgstr "Verifique que el archivo que intenta abrir es un archivo {} válido."
 
 #: ../gaupol/agents/open.py:331
 msgid "Open abnormally large file \"{}\"?"
@@ -2297,7 +2305,7 @@ msgid ""
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
 "El tamaño del archivo es {:.1f} MB, que es excesivamente grande para un "
-"archivo de subtítulos. Verifique que no intenta abrir un archivo binario."
+"archivo de subtítulos. Verifique que no es un archivo binario."
 
 #: ../gaupol/agents/open.py:348
 msgid "Open unsorted file \"{}\"?"
@@ -2309,13 +2317,12 @@ msgid ""
 "the file may be erroneously composed."
 msgstr ""
 "Es necesario corregir el orden de {:d} subtítulos. Si considera que {:d} es "
-"una gran cantidad, es posible que el archivo fuese creado de forma "
-"incorrecta."
+"una gran cantidad, es posible que el archivo fue creado de forma incorrecta."
 
 #: ../gaupol/agents/open.py:365
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"¿Guardar cambios del documento de traducción «{}» antes de abrir uno nuevo?"
+"¿Guardar cambios en el documento de traducción «{}» antes de abrir uno nuevo?"
 
 #: ../gaupol/agents/open.py:369
 msgid "Open _Without Saving"
@@ -2345,8 +2352,8 @@ msgid ""
 "current character encoding. Please first save the subtitle file with a "
 "different character encoding."
 msgstr ""
-"No fue posible codificar los subtítulos a un directorio temporal para "
-"previsualización usando la codificación de caracteres actual. Guarde antes "
+"No fue posible codificar los subtítulos en un archivo temporal para su vista "
+"previa usando la codificación de caracteres actual. Intente guardar "
 "el archivo de subtítulos con una codificación de caracteres diferente."
 
 #: ../gaupol/agents/preview.py:64
@@ -2361,11 +2368,12 @@ msgstr "No fue posible ejecutar el reproductor de vídeo"
 
 #: ../gaupol/agents/save.py:43
 msgid "Saved all open documents"
-msgstr "Guardar todos los documentos abiertos"
+msgstr "Todos los documentos guardados"
 
 #: ../gaupol/agents/save.py:135
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr "No fue posible codificar el archivo «{basename}» usando «{codec}»"
+msgstr ""
+"No fue posible codificar el archivo «{basename}» usando el códec «{codec}»"
 
 #: ../gaupol/agents/save.py:137
 msgid "Please try to save the file with a different character encoding."
@@ -2410,27 +2418,27 @@ msgstr "Archivo de vídeo:"
 
 #: ../gaupol/assistants.py:99
 msgid "Tasks and Target"
-msgstr ""
+msgstr "Tareas y alcance"
 
 #: ../gaupol/assistants.py:110
 msgid "Correct texts in main text column"
-msgstr ""
+msgstr "Corregir la columna de texto principal"
 
 #: ../gaupol/assistants.py:111
 msgid "Correct texts in translation text column"
-msgstr ""
+msgstr "Corregir la columna de traducción"
 
 #: ../gaupol/assistants.py:120
 msgid "Correct texts in selected subtitles"
-msgstr ""
+msgstr "Corregir los subtítulos seleccionados"
 
 #: ../gaupol/assistants.py:121
 msgid "Correct texts in current project"
-msgstr ""
+msgstr "Corregir el proyecto actual"
 
 #: ../gaupol/assistants.py:122
 msgid "Correct texts in all open projects"
-msgstr ""
+msgstr "Corregir todos los proyectos abiertos"
 
 #: ../gaupol/assistants.py:370
 msgid "Other"
@@ -2438,11 +2446,11 @@ msgstr "Otro"
 
 #: ../gaupol/assistants.py:441
 msgid "Capitalize texts written in lower case"
-msgstr "Capitaliza texto escrito en minúsculas"
+msgstr "Capitaliza el texto escrito en minúsculas"
 
 #: ../gaupol/assistants.py:443
 msgid "Capitalization Patterns"
-msgstr ""
+msgstr "Reglas de capitalización"
 
 #: ../gaupol/assistants.py:445
 msgid "Capitalize texts"
@@ -2451,12 +2459,12 @@ msgstr "Capitalizar texto"
 #: ../gaupol/assistants.py:469
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
-"Corrige errores frecuentes aplicados por un humano o un software\n"
-"reconocedor de imágenes"
+"Corrige errores frecuentes propios de un humano o un software reconocedor "
+"de imágenes"
 
 #: ../gaupol/assistants.py:473
 msgid "Common Error Patterns"
-msgstr ""
+msgstr "Reglas de errores frecuentes"
 
 #: ../gaupol/assistants.py:475
 msgid "Correct common errors"
@@ -2464,11 +2472,11 @@ msgstr "Corregir errores frecuentes"
 
 #: ../gaupol/assistants.py:528
 msgid "Remove explanatory texts meant for the hearing impaired"
-msgstr "Elimina etiquetas de texto para personas con problemas de audición"
+msgstr "Elimina el texto explicativo para personas con problemas de audición"
 
 #: ../gaupol/assistants.py:532
 msgid "Hearing Impaired Patterns"
-msgstr ""
+msgstr "Reglas de texto para sordos"
 
 #: ../gaupol/assistants.py:534
 msgid "Remove hearing impaired texts"
@@ -2479,12 +2487,12 @@ msgid ""
 "Use spell-check suggestions to fix whitespace detection errors of image "
 "recognition software"
 msgstr ""
-"Usa sugerencias del corrector ortográfico para corregir una mala detección\n"
-"de espacios en blanco por parte de un software reconocedor de imágenes"
+"Usa sugerencias del corrector ortográfico para corregir los espacios en\n"
+"blanco detectados por un software reconocedor de imágenes"
 
 #: ../gaupol/assistants.py:563
 msgid "Joining and Splitting Words"
-msgstr ""
+msgstr "Unir o dividir palabras"
 
 #: ../gaupol/assistants.py:565
 msgid "Join or Split Words"
@@ -2496,11 +2504,11 @@ msgstr "No fue posible abrir el diccionario para el idioma «{}»"
 
 #: ../gaupol/assistants.py:638
 msgid "Break text into lines of defined length"
-msgstr "Divide texto en líneas de una longitud máxima indicada"
+msgstr "Divide el texto en líneas de un largo máximo especificado"
 
 #: ../gaupol/assistants.py:640
 msgid "Line-Break Patterns"
-msgstr ""
+msgstr "Reglas de división de líneas"
 
 #: ../gaupol/assistants.py:642
 msgid "Break lines"
@@ -2508,7 +2516,7 @@ msgstr "Dividir líneas"
 
 #: ../gaupol/assistants.py:697
 msgid "Line-Break Options"
-msgstr ""
+msgstr "Opciones de dividir líneas"
 
 #: ../gaupol/assistants.py:782
 msgid "Correcting Texts"
@@ -2516,7 +2524,7 @@ msgstr "Corrigiendo textos"
 
 #: ../gaupol/assistants.py:788
 msgid "Each task is now being run on each project."
-msgstr "Ejecutando las tareas seleccionadas sobre cada proyecto."
+msgstr "Aplicando las tareas seleccionadas a cada proyecto."
 
 #: ../gaupol/assistants.py:812
 msgid "{current:d} of {total:d} tasks complete"
@@ -2590,7 +2598,7 @@ msgstr ""
 
 #: ../gaupol/dialogs/append.py:35
 msgid "Append File"
-msgstr "Agregar archivo"
+msgstr "Añadir desde archivo"
 
 #: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:103
 msgid "Description"
@@ -2618,7 +2626,7 @@ msgstr "{format} (*{extension})"
 
 #: ../gaupol/dialogs/file.py:114
 msgid "Auto-detected"
-msgstr "Autodetección"
+msgstr "Detectar automáticamente"
 
 #: ../gaupol/dialogs/file.py:116
 msgid "Other…"
@@ -2705,11 +2713,11 @@ msgstr[1] "{:d} apariciones encontradas y reemplazadas"
 
 #: ../gaupol/dialogs/spell_check.py:363
 msgid "Spell-checking"
-msgstr "Corregir ortografía"
+msgstr "Corrigiendo ortografía"
 
 #: ../gaupol/dialogs/split.py:75
 msgid "Splitting project"
-msgstr "Dividir proyecto"
+msgstr "Dividiendo proyecto"
 
 #: ../gaupol/dialogs/split.py:103
 msgid "Split {amount:d} subtitles to project \"{name}\""
@@ -2787,15 +2795,15 @@ msgstr "ems"
 
 #: ../gaupol/main.py:68
 msgid "Failed to set default locale."
-msgstr ""
+msgstr "No fue posible establecer la configuración regional predeterminada."
 
 #: ../gaupol/main.py:69
 msgid "Please check your locale settings."
-msgstr ""
+msgstr "Verifique sus preferencias para la configuración regional."
 
 #: ../gaupol/main.py:70
 msgid "Falling back to the 'C' locale."
-msgstr ""
+msgstr "Recurriendo a la configuración regional «C»."
 
 #: ../gaupol/main.py:98
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
@@ -2803,7 +2811,7 @@ msgstr "gaupol [OPCIÓN...] [ARCHIVO...] [+[NUM]]"
 
 #: ../gaupol/main.py:104
 msgid "show version number and exit"
-msgstr "informar de la versión y salir"
+msgstr "informa de la versión y finaliza"
 
 #: ../gaupol/main.py:110
 msgid "ENCODING"
@@ -2811,13 +2819,11 @@ msgstr "CODIFICACIÓN"
 
 #: ../gaupol/main.py:113
 msgid "set the character encoding used to open files"
-msgstr "definir la codificación de caracteres de los archivos por abrir"
+msgstr "establece la codificación de caracteres usada para abrir archivos"
 
 #: ../gaupol/main.py:119
 msgid "list all available character encodings"
-msgstr ""
-"mostrar una lista de todas las opciones disponibles para la codificaciones "
-"de caracteres"
+msgstr "lista todas las codificaciones de caracteres disponibles"
 
 #: ../gaupol/main.py:125 ../gaupol/main.py:144
 msgid "FILE"
@@ -2825,7 +2831,7 @@ msgstr "ARCHIVO"
 
 #: ../gaupol/main.py:128
 msgid "open translation file"
-msgstr "abrir archivo de traducción"
+msgstr "abre el archivo de traducción"
 
 #: ../gaupol/main.py:134
 msgid "METHOD"
@@ -2834,16 +2840,15 @@ msgstr "MÉTODO"
 #: ../gaupol/main.py:137
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
-"método usado para ajustar subtítulos de traducción: según 'número' o "
-"'posición'"
+"método usado para ajustar los subtítulos de traducción: 'number' o 'position'"
 
 #: ../gaupol/main.py:147
 msgid "select video file"
-msgstr "seleccionar archivo de vídeo"
+msgstr "selecciona el archivo de vídeo"
 
 #: ../gaupol/output.py:42
 msgid "Output"
-msgstr "Salida"
+msgstr "Ventana de salida"
 
 #: ../gaupol/page.py:61
 msgid "Untitled {:d}"
@@ -2863,7 +2868,7 @@ msgstr "<b>Formato:</b> {}"
 
 #: ../gaupol/page.py:306
 msgid "<b>Encoding:</b> {}"
-msgstr ""
+msgstr "<b>Codificación:</b> {}"
 
 #: ../gaupol/page.py:307
 msgid "<b>Newlines:</b> {}"
@@ -2871,7 +2876,7 @@ msgstr "<b>Salto de línea:</b> {}"
 
 #: ../gaupol/page.py:340
 msgid "{} translation"
-msgstr "traducción {}"
+msgstr "traducción de {}"
 
 #~ msgid "An unhandled exception occured"
 #~ msgstr "Se produjo una excepción no tratada"
