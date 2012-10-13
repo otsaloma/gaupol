@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.19\n"
+"Project-Id-Version: gaupol 0.20\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-13 19:42+0300\n"
-"PO-Revision-Date: 2012-10-13 12:49-0300\n"
+"PO-Revision-Date: 2012-10-13 14:25-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -959,11 +959,11 @@ msgstr "Agrega un espacio en blanco después de distintos signos de puntuación"
 
 #: ../data/patterns/Latn-fr.common-error.in.h:1
 msgid "Spaces around guillemets"
-msgstr ""
+msgstr "Espacios alrededor de comillas angulares"
 
 #: ../data/patterns/Latn-fr.common-error.in.h:2
 msgid "Add spaces around guillemets"
-msgstr ""
+msgstr "Agrega espacios en blanco alrededor de comillas angulares"
 
 #: ../data/patterns/Latn-fr.common-error.in.h:3
 #: ../data/patterns/Latn.common-error.in.h:13
@@ -972,7 +972,7 @@ msgstr "Espacio antes de signos de puntuación"
 
 #: ../data/patterns/Latn-fr.common-error.in.h:4
 msgid "Add or remove space before various punctuation marks"
-msgstr ""
+msgstr "Ajusta el espacio en blanco antes de distintos signos de puntuación"
 
 #: ../data/patterns/Latn.capitalization.in.h:1
 msgid "Sentence"
@@ -984,11 +984,11 @@ msgstr "Capitaliza la primera palabra de cada oración"
 
 #: ../data/patterns/Latn.capitalization.in.h:3
 msgid "Ellipsis"
-msgstr ""
+msgstr "Puntos suspensivos"
 
 #: ../data/patterns/Latn.capitalization.in.h:4
 msgid "Capitalize after an ellipsis"
-msgstr ""
+msgstr "Capitaliza después de puntos suspensivos"
 
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
@@ -1196,11 +1196,11 @@ msgstr "Elimina el espacio en blanco entre los dígitos de un número"
 #. system of fallback fonts to provide missing characters.
 #: ../data/patterns/Zyyy.common-error.in.h:8
 msgid "Musical notes"
-msgstr ""
+msgstr "Notas musicales"
 
 #: ../data/patterns/Zyyy.common-error.in.h:9
 msgid "Replace Unicode musical note characters with number signs"
-msgstr ""
+msgstr "Reemplaza caracteres Unicode de notas musicales con signos numéricos"
 
 #: ../aeidon/agents/clipboard.py:59
 msgid "Cutting texts"
