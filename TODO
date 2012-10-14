@@ -1,37 +1,3 @@
-Gaupol 0.20
-===========
-
- [X] Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
- [X] Bump Python dependency to 3.2 or greater
- [X] Replace PyGTK dependency with PyGObject 3.0.0 or greater
- [X] Bump optional GStreamer dependency to 1.0
- [X] Disable inline spell checking while waiting for introspection
-     support to be added to GtkSpell
-     * https://bugzilla.redhat.com/show_bug.cgi?id=675504
- [X] Disable speech recognition while waiting for pocketsphinx to be
-     ported to GStreamer 1.0
-     * https://sourceforge.net/projects/cmusphinx/forums/forum/5471/topic/5497616
- [X] Rewrite line-breaking algorithm to use a Knuth-Plass-style flexible
-     system of penalties and a versatile measure of goodness
- [X] Write subtitle files in a proper atomic manner (on Windows this
-     is fully atomic only with Python 3.3 or later)
- [X] Ellipsize tab labels in the middle (#686099)
- [X] Remove -c/--config-file option (you're better off setting XDG_*
-     environment variables if you're doing something weird)
- [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
- [X] Fix bug in saving a temporary file for preview (#685706)
- [X] Fix signatures of decorated functions in API documentation
- [X] Use filename extension '.extension' for extension metadata files
-     (instead of previous '.gaupol-extension')
- [X] Use filename extension '.bookmarks' for bookmark files written by
-     the bookmarks extension (instead of previous '.gaupol-bookmarks)
- [X] Release source tarballs only compressed as tar.xz (instead
-     of the previous tar.gz and tar.bz2)
- [X] Update Brazilian Portuguese translation
-     (Átila Camurça, Darlildo Lima)
- [X] Update Hungarian translation (Andrássy László)
- [X] Update Spanish translation (Carlos Mella)
-
 Gaupol 1.0
 ==========
 
