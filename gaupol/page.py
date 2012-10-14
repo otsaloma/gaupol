@@ -176,8 +176,8 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         """Initialize widgets to use in a notebook tab."""
         self.tab_label = Gtk.Label()
         self.tab_label.props.xalign = 0
-        self.tab_label.set_ellipsize(Pango.EllipsizeMode.END)
-        width = gaupol.util.char_to_px(24)
+        self.tab_label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
+        width = gaupol.util.char_to_px(32)
         self.tab_label.set_size_request(width, -1)
         self.tab_label.set_tooltip_text(self.untitle)
         button = self._get_tab_close_button()

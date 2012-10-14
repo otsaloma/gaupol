@@ -15,6 +15,7 @@ Gaupol 0.20
      system of penalties and a versatile measure of goodness
  [X] Write subtitle files in a proper atomic manner (on Windows this
      is fully atomic only with Python 3.3 or later)
+ [X] Ellipsize tab labels in the middle (#686099)
  [X] Remove -c/--config-file option (you're better off setting XDG_*
      environment variables if you're doing something weird)
  [X] Add 48x48 and 256x256 pixel PNG icons and remove SVG icon
