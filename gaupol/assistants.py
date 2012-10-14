@@ -96,6 +96,8 @@ class IntroductionPage(BuilderPage):
     def __init__(self, assistant):
         """Initialize a :class:`IntroductionPage` object."""
         BuilderPage.__init__(self, assistant, "introduction-page.ui")
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Tasks and Target")
         self.page_type = Gtk.AssistantPageType.INTRO
         self._init_columns_combo()
@@ -440,6 +442,8 @@ class CapitalizationPage(LocalePage):
         self.conf = gaupol.conf.capitalization
         self.description = _("Capitalize texts written in lower case")
         self.handle = "capitalization"
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Capitalization Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Capitalize texts")
@@ -470,6 +474,8 @@ class CommonErrorPage(LocalePage):
                              "or image recognition software")
 
         self.handle = "common-error"
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Common Error Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Correct common errors")
@@ -529,6 +535,8 @@ class HearingImpairedPage(LocalePage):
                              "for the hearing impaired")
 
         self.handle = "hearing-impaired"
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Hearing Impaired Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Remove hearing impaired texts")
@@ -560,6 +568,8 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
                              "detection errors of image recognition software")
 
         self.handle = "join-split-words"
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Joining and Splitting Words")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Join or Split Words")
@@ -637,6 +647,8 @@ class LineBreakPage(LocalePage):
         self.conf = gaupol.conf.line_break
         self.description = _("Break text into lines of defined length")
         self.handle = "line-break"
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Line-Break Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Break lines")
@@ -694,6 +706,8 @@ class LineBreakOptionsPage(BuilderPage):
         """Initialize a LineBreakOptionsPage object."""
         BuilderPage.__init__(self, assistant, "line-break-options-page.ui")
         self.conf = gaupol.conf.line_break
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Line-Break Options")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self._init_unit_combo(self._unit_combo)
@@ -779,6 +793,8 @@ class ProgressPage(BuilderPage):
         BuilderPage.__init__(self, assistant, "progress-page.ui")
         self._current_task = None
         self._total_tasks = None
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Correcting Texts")
         self.page_type = Gtk.AssistantPageType.PROGRESS
         self._init_values()
@@ -846,6 +862,8 @@ class ConfirmationPage(BuilderPage):
         self.application = None
         self.conf = gaupol.conf.text_assistant
         self.doc = None
+        # Translators: Keep these page titles short, since they
+        # affect the width of the text correction assistant sidebar.
         self.page_title = _("Confirm Changes")
         self.page_type = Gtk.AssistantPageType.CONFIRM
         self._init_tree_view()
