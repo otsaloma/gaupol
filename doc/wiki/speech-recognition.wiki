@@ -4,9 +4,7 @@
 
 == Introduction ==
 
-{{{#!wiki important
-Speech recognition is only available in Gaupol 0.19.x. Earlier versions don't have that feature and later versions are currently waiting for the `pocketsphinx` speech recognition library to be ported to GStreamer 1.0.
-}}}
+'''Note:''' Speech recognition is only available in Gaupol 0.19.x. Earlier versions don't have that feature and later versions are currently waiting for the `pocketsphinx` speech recognition library to be ported to GStreamer 1.0.
 
 Making subtitles from scratch usually consists of two tedious tasks: (1) figuring out the times when someone starts and ends speaking -- in subtitle length pieces -- and (2) typing down text corresponding to that speech. An approach often worth attempting is to automate a large part of this work by using speech recognition to generate subtitles from given video. This method cannot be expected to produce release quality subtitles on its own, but it should provide a rough first draft, which can be finished by usual manual methods. With most video sources, the actual speech recognition cannot be expected to perform well, but voice recognition should provide decent results for the start and end times of subtitles. The extraction of those start and end times is the primary point for this feature to exist in Gaupol and the sensible use for this feature in a subtitling workflow.
 

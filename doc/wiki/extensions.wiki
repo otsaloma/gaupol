@@ -19,15 +19,7 @@ Author: Your Name<<BR>>
 
 == Deprecated Extensions ==
 
-The following extensions are deprecated and '''will not work with Gaupol 0.20 and later'''. They need to be ported to Python 3, GTK+ 3 and the Py''''''GObject introspection bindings. See
-
- * [[Gaupol/WritingExtensions|Updated documentation on writing extensions]]
-
- * [[http://docs.python.org/dev/whatsnew/3.0.html|What’s New In Python 3.0]]
-
- * [[http://developer.gnome.org/gtk3/stable/gtk-migrating-2-to-3.html|Migrating from GTK+ 2.x to GTK+ 3]] and
-
- * [[PyGObject/IntrospectionPorting|Porting to PyGObject introspection]].
+The following extensions are deprecated and '''will not work with Gaupol 0.20 and later'''. They need to be ported to Python 3, GTK+ 3 and the Py''''''GObject introspection bindings. See the updated [[Gaupol/WritingExtensions|documentation on writing extensions]].
 
 === Apertium ===
 Machine Translation suggestions through Apertium<<BR>>
