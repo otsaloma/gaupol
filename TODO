@@ -2,6 +2,8 @@ Gaupol 0.20.1
 =============
 
  [X] Fix side pane header menu (#686312)
+ [X] Disable 'Join or Split Words' task in the text correction assistant
+     if no spell-check dictionaries are available (#686340)
 
 Gaupol 1.0
 ==========

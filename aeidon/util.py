@@ -221,6 +221,15 @@ def enchant_available():
     except Exception:
         return False
 
+@aeidon.deco.once
+def enchant_and_dicts_available():
+    """Return ``True`` if :mod:`enchant` and dictionaries are available."""
+    try:
+        import enchant
+        return bool(enchant.list_languages())
+    except Exception:
+        return False
+
 def flatten(lst):
     """
     Return a shallow version of `lst`.

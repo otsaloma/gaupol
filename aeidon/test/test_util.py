@@ -109,6 +109,10 @@ class TestModule(aeidon.TestCase):
         imp.reload(aeidon.util)
         assert aeidon.util.enchant_available()
 
+    def test_enchant_and_dicts_available(self):
+        imp.reload(aeidon.util)
+        assert aeidon.util.enchant_and_dicts_available()
+
     def test_flatten(self):
         lst = [1, 2, [3, 4, [5, 6, [7]], 8], 9]
         lst = aeidon.util.flatten(lst)

@@ -559,7 +559,7 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
     _widgets = ("language_button", "join_check", "split_check")
 
     def __init___require(self, assistant):
-        assert aeidon.util.enchant_available()
+        assert aeidon.util.enchant_and_dicts_available()
 
     def __init__(self, assistant):
         """Initialize a JoinSplitWordsPage object."""
@@ -1050,7 +1050,7 @@ class TextAssistant(Gtk.Assistant):
         self.set_title(_("Correct Texts"))
         self.add_page(self._introduction_page)
         self.add_page(HearingImpairedPage(self))
-        if aeidon.util.enchant_available():
+        if aeidon.util.enchant_and_dicts_available():
             self.add_page(JoinSplitWordsPage(self))
         self.add_page(CommonErrorPage(self))
         self.add_page(CapitalizationPage(self))
