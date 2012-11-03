@@ -276,8 +276,8 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _on_entry_changed(self, entry):
         """Populate suggestions based on text in `entry`."""
         word = entry.get_text()
-        suggestions = self._checker.suggest(word)
-        self._populate_tree_view(suggestions, False)
+        suggestions = (self._checker.suggest(word) if word else [])
+        self._populate_tree_view(suggestions, select=False)
         self._replace_button.set_sensitive(bool(word))
         self._replace_all_button.set_sensitive(bool(word))
 
@@ -345,9 +345,11 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         suggestions = list(replacements) + list(suggestions)
         suggestions = aeidon.util.get_unique(suggestions)
         store = self._tree_view.get_model()
+        self._tree_view.set_model(None)
         store.clear()
         for suggestion in suggestions:
             store.append((suggestion,))
+        self._tree_view.set_model(store)
         if select and (len(store) > 0):
             self._tree_view.set_cursor(0)
             self._tree_view.scroll_to_cell(0)

@@ -6,6 +6,7 @@ Gaupol 0.20.1
      if no spell-check dictionaries are available (#686340)
  [X] Use a stock GTK+ close icon for tab close buttons if
      'window-close-symbolic' is not found
+ [X] Fix behaviour spell-check dialog's 'Replace with' entry
 
 Gaupol 1.0
 ==========
