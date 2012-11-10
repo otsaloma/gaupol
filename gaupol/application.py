@@ -273,11 +273,12 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""
         redo_button = self.get_tool_item("redo_action")
-        redo_button.set_menu(Gtk.Menu())
-        tip = _("Redo undone actions")
-        redo_button.set_arrow_tooltip_text(tip)
-        callback = self._on_redo_button_show_menu
-        redo_button.connect("show-menu", callback)
+        if isinstance(redo_button, Gtk.MenuToolButton):
+            redo_button.set_menu(Gtk.Menu())
+            tip = _("Redo undone actions")
+            redo_button.set_arrow_tooltip_text(tip)
+            callback = self._on_redo_button_show_menu
+            redo_button.connect("show-menu", callback)
 
     def _init_statusbar(self, vbox):
         """Initialize the statusbar."""
@@ -328,11 +329,12 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
         undo_button = self.get_tool_item("undo_action")
-        undo_button.set_menu(Gtk.Menu())
-        tip = _("Undo actions")
-        undo_button.set_arrow_tooltip_text(tip)
-        callback = self._on_undo_button_show_menu
-        undo_button.connect("show-menu", callback)
+        if isinstance(undo_button, Gtk.MenuToolButton):
+            undo_button.set_menu(Gtk.Menu())
+            tip = _("Undo actions")
+            undo_button.set_arrow_tooltip_text(tip)
+            callback = self._on_undo_button_show_menu
+            undo_button.connect("show-menu", callback)
 
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""

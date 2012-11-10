@@ -76,17 +76,19 @@ class Action(Gtk.Action):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         pass
 
-    def do_create_tool_item(self):
-        """Return a tool button widget."""
-        # This is a really fucking strange way to replace the deprecated
-        # Gtk.Action.set_tool_item_type function, but it seems to work.
-        # UI manager or whoever will set the correct labels and icons.
-        if self.tool_item_type is Gtk.ToolButton:
-            return Gtk.ToolButton()
-        if self.tool_item_type is Gtk.MenuToolButton:
-            return Gtk.MenuToolButton()
-        raise ValueError("Bad value for self.tool_item_type: {}"
-                         .format(repr(self.tool_item_type)))
+    # This shit doesn't work.
+    # https://bugzilla.gnome.org/show_bug.cgi?id=686608
+    # def do_create_tool_item(self):
+    #     """Return a tool button widget."""
+    #     # This is a really fucking strange way to replace the deprecated
+    #     # Gtk.Action.set_tool_item_type function, but it seems to work.
+    #     # UI manager or whoever will set the correct labels and icons.
+    #     if self.tool_item_type is Gtk.ToolButton:
+    #         return Gtk.ToolButton()
+    #     if self.tool_item_type is Gtk.MenuToolButton:
+    #         return Gtk.MenuToolButton()
+    #     raise ValueError("Bad value for self.tool_item_type: {}"
+    #                      .format(repr(self.tool_item_type)))
 
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
