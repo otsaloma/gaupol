@@ -1,3 +1,15 @@
+Gaupol 0.20.1
+=============
+
+ * Fix crash on startup on newer versions of PyGObject and/or GTK+
+   resulting from setting tool item types (#686608)
+ * Fix side pane header menu (#686312)
+ * Disable 'Join or Split Words' task in the text correction assistant
+   if no spell-check dictionaries are available (#686340)
+ * Use a stock GTK+ close icon for tab close buttons if
+   'window-close-symbolic' is not found
+ * Fix behaviour of spell-check dialog's 'Replace with' entry
+
 Gaupol 0.20
 ===========
 
