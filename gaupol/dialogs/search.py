@@ -91,6 +91,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_text_view()
         self._init_pattern_combo()
         self._init_replacement_combo()
+        self._init_keys()
         self._init_values()
         self._init_signal_handlers()
         self._init_sensitivities()
@@ -177,6 +178,16 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             return gaupol.targets.ALL
         raise ValueError("Invalid target radio state")
 
+    def _init_keys(self):
+        """Initialize keyboard shortcuts."""
+        accel_group = Gtk.AccelGroup()
+        accel_group.connect(Gdk.KEY_f,
+                            Gdk.ModifierType.CONTROL_MASK,
+                            Gtk.AccelFlags.MASK,
+                            self._on_find_key_pressed)
+
+        self.add_accel_group(accel_group)
+
     def _init_pattern_combo(self):
         """Initialize the pattern combo box."""
         store = Gtk.ListStore(str)
@@ -251,6 +262,10 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _on_current_radio_toggled(self, radio_button):
         """Save search target."""
         gaupol.conf.search.target = self._get_target()
+
+    def _on_find_key_pressed(self, *args):
+        """Move focus to the pattern entry."""
+        self._pattern_entry.grab_focus()
 
     def _on_ignore_case_check_toggled(self, check_button):
         """Save ignore case setting."""

@@ -57,6 +57,9 @@ class TestSearchDialog(gaupol.TestCase):
         assert not self.dialog._text_view.props.sensitive
         assert not self.dialog._replace_button.props.sensitive
 
+    def test__on_find_key_pressed(self):
+        self.dialog._on_find_key_pressed()
+
     def test__on_ignore_case_check_toggled(self):
         self.dialog._ignore_case_check.set_active(True)
         self.dialog._ignore_case_check.set_active(False)
