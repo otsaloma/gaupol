@@ -2,12 +2,12 @@
 _Name=Sentence
 _Description=Capitalize the first word of a sentence
 Capitalize=After
-Pattern=((?<!\..)\.|[?!])["'«»]?( |$)
+Pattern=((?<!\..)\.|[?!])['‘’"“”«»]?( |$)
 Flags=DOTALL;MULTILINE;
 
 [Capitalization Pattern]
 _Name=Ellipsis
 _Description=Capitalize after an ellipsis
 Capitalize=After
-Pattern=(\.\.\.)["'«»]?( |$)
+Pattern=(\.\.\.|…)['‘’"“”«»]?( |$)
 Flags=DOTALL;MULTILINE;

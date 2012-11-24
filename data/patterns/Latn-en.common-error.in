@@ -61,7 +61,7 @@ _Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
 # Replace with "I" if "l" is the the first letter of a word
 # and is followed by a consonant.
-Pattern=((\s|^)["'«»]?)l(?!bs)(?!lama)([bcdfghjklmnpqrstvwxz])
+Pattern=((\s|^)['‘’"“”«»]?)l(?!bs)(?!lama)([bcdfghjklmnpqrstvwxz])
 Flags=DOTALL;MULTILINE;
 Replacement=\1I\3
 Repeat=False

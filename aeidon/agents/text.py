@@ -28,7 +28,7 @@ _ = aeidon.i18n._
 class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     """Automatic correcting of texts."""
-    _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w")
+    _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)(?<!…)\w")
 
     def _capitalize_first(self, parser, pos):
         """
@@ -120,11 +120,11 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             # Remove empty lines.
             self._replace_all(parser, r"(^\n|\n$)", "")
             # Add space after dialogue dashes.
-            self._replace_all(parser, r"^-(\S)", r"- \1")
+            self._replace_all(parser, r"^([\-\–\—])(\S)", r"\1 \2")
             # Remove dialogue dashes if not present on other lines.
-            self._replace_all(parser, r"^- (.*?^[^-])", r"\1")
+            self._replace_all(parser, r"^[\-\–\—] (.*?^[^\-\–\—])", r"\1")
             # Remove dialogue dashes from single-line subtitles.
-            self._replace_all(parser, r"\A- ([^\n]*)\Z", r"\1")
+            self._replace_all(parser, r"\A[\-\–\—] ([^\n]*)\Z", r"\1")
             texts[i] = parser.get_text()
         return texts
 

@@ -1,7 +1,7 @@
 [Line Break Pattern]
 _Name=Dialogue
 _Description=Break according to dialogue separated by dashes
-Pattern=( )(- )
+Pattern=( )([\-\–\—] )
 Flags=DOTALL;MULTILINE;
 Group=1
 Penalty=-1000
@@ -9,7 +9,7 @@ Penalty=-1000
 [Line Break Pattern]
 _Name=Dialogue
 _Description=Break according to dialogue separated by dashes
-Pattern=( -)( )
+Pattern=( [\-\–\—])( )
 Flags=DOTALL;MULTILINE;
 Group=2
 Penalty=1000000
@@ -18,7 +18,7 @@ Penalty=1000000
 _Name=Clause
 _Description=Break according to clauses terminated by a punctuation mark
 # Disallow abbreviations and ellipses preceding a period.
-Pattern=((?<!.\.)(?<!\..)\.|[!?])["'«»]?( )
+Pattern=((?<!.\.)(?<!\..)\.|[!?])['‘’"“”«»]?( )
 Flags=DOTALL;MULTILINE;
 Group=2
 Penalty=-10
@@ -26,7 +26,7 @@ Penalty=-10
 [Line Break Pattern]
 _Name=Clause
 _Description=Break according to clauses terminated by a punctuation mark
-Pattern=[,;:]["'«»]?( )
+Pattern=[,;:]['‘’"“”«»]?( )
 Flags=DOTALL;MULTILINE;
 Group=1
 Penalty=-5

@@ -66,7 +66,7 @@ Repeat=False
 _Name=Double apostrophe
 _Description=Replace a double apostrophe with a quotation mark
 Classes=OCR;
-Pattern=''
+Pattern=(''|‘‘|’’)
 Flags=DOTALL;MULTILINE;
 Replacement="
 Repeat=False
@@ -111,9 +111,9 @@ Repeat=False
 _Name=Space after a dialogue dash
 _Description=Add space after a dialogue dash
 Classes=Human;OCR;
-Pattern=^-([^-\s])
+Pattern=^([\-\–\—])([^\-\–\—\s])
 Flags=DOTALL;MULTILINE;
-Replacement=- \1
+Replacement=\1 \2
 Repeat=False
 
 [Common Error Pattern]
@@ -122,7 +122,7 @@ _Description=Remove space before various punctuation marks
 Classes=Human;OCR;
 # NOTE: Unsuitable for French, see Latn-fr.
 # Disallow trailing digits for the case of fractions, e.g. ".45".
-Pattern= +(["'«»]?(?!\.\.)([,;:.?!])(?!\d))
+Pattern= +(['‘’"“”«»]?(?!\.\.)([,;:.?!])(?!\d))
 Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
@@ -132,7 +132,7 @@ _Name=Space after punctuation marks
 _Description=Add space after various punctuation marks
 Classes=Human;OCR;
 # NOTE: Unsuitable for Finnish, see Latn-fi.
-Pattern=((\w|^|["'«»]) ?[,;:?!])(?!["'«»])([^\W\d][\w\s])
+Pattern=((\w|^|['‘’"“”«»]) ?[,;:?!])(?!['‘’"“”«»])([^\W\d][\w\s])
 Flags=DOTALL;MULTILINE;
 Replacement=\1 \3
 Repeat=False
@@ -141,16 +141,16 @@ Repeat=False
 _Name=Space after an ellipsis
 _Description=Add space after an ellipsis
 Classes=Human;OCR;
-Pattern=(\w[^\w\s]*?\.\.\.)(["'«»]?\w)
+Pattern=(\w[^\w\s]*?(\.\.\.|…))(['‘’"“”«»]?\w)
 Flags=DOTALL;MULTILINE;
-Replacement=\1 \2
+Replacement=\1 \3
 Repeat=False
 
 [Common Error Pattern]
 _Name=Space after a starting ellipsis
 _Description=Remove space after an ellipsis that starts a line
 Classes=Human;OCR;
-Pattern=(^\W*?\.\.\.)( +)
+Pattern=(^\W*?(\.\.\.|…))( +)
 Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
@@ -161,9 +161,9 @@ _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
 # Remove space after the starting quotation mark in a subtitle with
 # a total of exactly two quotation marks.
-Pattern=(\A[^"]*)(" +)([^"]*"[^"]*\Z)
+Pattern=(\A[^"“”]*["“”])( +)([^"“”]*["“”][^"“”]*\Z)
 Flags=DOTALL;MULTILINE;
-Replacement=\1"\3
+Replacement=\1\3
 Repeat=False
 
 [Common Error Pattern]
@@ -172,9 +172,9 @@ _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
 # Remove space before the ending quotation mark in a subtitle with
 # a total of exactly two quotation marks.
-Pattern=(\A[^"]*"[^"]*)( +")([^"]*\Z)
+Pattern=(\A[^"“”]*["“”][^"“”]*)( +)(["“”][^"“”]*\Z)
 Flags=DOTALL;MULTILINE;
-Replacement=\1"\3
+Replacement=\1\3
 Repeat=False
 
 [Common Error Pattern]
@@ -182,7 +182,7 @@ _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
 # Remove space after a quotation mark at the beginning of the line.
-Pattern=^(\W*?["'])( +)
+Pattern=^(\W*?['‘’"“”])( +)
 Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
@@ -192,7 +192,7 @@ _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
 # Remove space before a quotation mark at the end of the line.
-Pattern=( +)(["']\W*?)$
+Pattern=( +)(['‘’"“”]\W*?)$
 Flags=DOTALL;MULTILINE;
 Replacement=\2
 Repeat=False
@@ -239,7 +239,7 @@ Repeat=False
 _Name=Terminating double-dashes
 _Description=Replace a single clause-terminating dash with two dashes
 Classes=Human;OCR;
-Pattern=([\w"'«»])(?<!-)-(?!-)([^\w']|$)
+Pattern=([\w'‘’"“”«»])-(?!-)([^\w'‘’"“”«»]|$)
 Flags=DOTALL;MULTILINE;
 Replacement=\1--\2
 Repeat=False

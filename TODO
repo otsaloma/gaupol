@@ -1,3 +1,14 @@
+Gaupol 0.21
+===========
+
+ [ ] Restore inline spell-check
+     * http://gtkspell.sourceforge.net/
+     * http://koehlma.github.com/projects/pygtkspellcheck.html
+ [ ] https://bugzilla.gnome.org/show_bug.cgi?id=688424
+ [ ] Add partial support for fancy Unicode dashes, ellipses and
+     quotation marks in text correction patterns and "Toggle dialogue
+     dashes" action
+
 Gaupol 1.0
 ==========
 

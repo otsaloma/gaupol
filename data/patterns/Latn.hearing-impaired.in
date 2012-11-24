@@ -31,6 +31,6 @@ Replacement=
 [Hearing Impaired Pattern]
 _Name=Speaker before a colon
 _Description=Replace the name of the speaker before a colon with a dialogue dash
-Pattern=^-?\s*?[\w\[][\w#&'.\-\[\] ]+?:\s
+Pattern=^[\-\–\—]?\s*?[\w\[][\w#&'.\-\[\] ]+?:\s
 Flags=MULTILINE;
 Replacement=-\040

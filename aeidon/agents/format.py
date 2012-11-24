@@ -87,7 +87,7 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         for index in indices:
             subtitle = self.subtitles[index]
             parser.set_text(subtitle.get_text(doc))
-            parser.set_regex(r"^-\s*")
+            parser.set_regex(r"^[\-\–\—]\s*")
             parser.replacement = ""
             parser.replace_all()
             parser.set_regex(r"^")
@@ -153,7 +153,7 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         for index in indices:
             subtitle = self.subtitles[index]
             parser.set_text(subtitle.get_text(doc))
-            parser.set_regex(r"^-\s*")
+            parser.set_regex(r"^[\-\–\—]\s*")
             parser.replacement = ""
             parser.replace_all()
             new_texts.append(parser.get_text())
