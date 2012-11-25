@@ -137,17 +137,10 @@ def gst_available():
         return False
 
 @aeidon.deco.once
-def gtkspell_available():
-    """Return ``True`` if :mod:`GtkSpell` module is available."""
-    # XXX: GtkSpell is not yet available with introspection (and
-    # thus Python 3) support. When introspection support is added
-    # we can expect some minor API changes and hence must return
-    # False for now while waiting to see what those API changes
-    # are so that we can port our code accordingly.
-    # https://bugzilla.redhat.com/show_bug.cgi?id=675504
-    return False
+def gtkspellcheck_available():
+    """Return ``True`` if :mod:`gtkspellcheck` module is available."""
     try:
-        from gi.repository import GtkSpell
+        import gtkspellcheck
         return True
     except Exception:
         return False
@@ -193,11 +186,12 @@ def pocketsphinx_available():
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
-    if gaupol.util.gtkspell_available() and gaupol.conf.spell_check.inline:
-        from gi.repository import GtkSpell
-        spell = GtkSpell.Spell(text_view)
-        try: spell.set_language(gaupol.conf.spell_check.language)
-        except Exception: spell.detach()
+    if (gaupol.util.gtkspellcheck_available() and
+        gaupol.conf.spell_check.inline):
+        import gtkspellcheck
+        language = gaupol.conf.spell_check.language
+        try: checker = gtkspellcheck.SpellChecker(text_view, language)
+        except Exception: pass
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
         if gaupol.conf.editor.show_lengths_edit:

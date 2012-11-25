@@ -1,8 +1,8 @@
 Gaupol 0.21
 ===========
 
- [ ] Restore inline spell-check
-     * http://gtkspell.sourceforge.net/
+ [X] Restore inline spell-check, replace the previous GtkSpell
+     dependency with a dependency on pygtkspellcheck
      * http://koehlma.github.com/projects/pygtkspellcheck.html
  [X] Add partial support for fancy Unicode dashes, ellipses and
      quotation marks in text correction patterns and "Toggle dialogue

@@ -100,9 +100,9 @@ class TestModule(gaupol.TestCase):
         imp.reload(gaupol.util)
         assert gaupol.util.gst_available()
 
-    def test_gtkspell_available(self):
+    def test_gtkspellcheck_available(self):
         imp.reload(gaupol.util)
-        gaupol.util.gtkspell_available()
+        gaupol.util.gtkspellcheck_available()
 
     def test_lines_to_px(self):
         assert gaupol.util.lines_to_px(1) > 0
