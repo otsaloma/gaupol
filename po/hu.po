@@ -2838,20 +2838,20 @@ msgid "Close project"
 msgstr "Projekt bezárása"
 
 #: ../gaupol/page.py:304
-msgid "<b>Path:</b> {}"
-msgstr "<b>Útvonal:</b> {}"
+msgid "Path:"
+msgstr "Útvonal:"
 
 #: ../gaupol/page.py:305
-msgid "<b>Format:</b> {}"
-msgstr "<b>Formátum:</b> {}"
+msgid "Format:"
+msgstr "Formátum:"
 
 #: ../gaupol/page.py:306
-msgid "<b>Encoding:</b> {}"
+msgid "Encoding:"
 msgstr ""
 
 #: ../gaupol/page.py:307
-msgid "<b>Newlines:</b> {}"
-msgstr "<b>Új s_or:</b> {}"
+msgid "Newlines:"
+msgstr "Új s_or:"
 
 #: ../gaupol/page.py:340
 msgid "{} translation"

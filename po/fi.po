@@ -2849,20 +2849,20 @@ msgid "Close project"
 msgstr "Sulje projekti"
 
 #: ../gaupol/page.py:304
-msgid "<b>Path:</b> {}"
-msgstr "<b>Polku:</b> {}"
+msgid "Path:"
+msgstr "Polku:"
 
 #: ../gaupol/page.py:305
-msgid "<b>Format:</b> {}"
-msgstr "<b>Tiedostomuoto:</b> {}"
+msgid "Format:"
+msgstr "Tiedostomuoto:"
 
 #: ../gaupol/page.py:306
-msgid "<b>Encoding:</b> {}"
-msgstr "<b>Koodaus:</b> {}"
+msgid "Encoding:"
+msgstr "Koodaus:"
 
 #: ../gaupol/page.py:307
-msgid "<b>Newlines:</b> {}"
-msgstr "<b>Rivinvaihdot:</b> {}"
+msgid "Newlines:"
+msgstr "Rivinvaihdot:"
 
 #: ../gaupol/page.py:340
 msgid "{} translation"

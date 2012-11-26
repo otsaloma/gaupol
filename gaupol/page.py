@@ -306,11 +306,11 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         encoding = self.project.main_file.encoding
         encoding = aeidon.encodings.code_to_long_name(encoding)
         newline = self.project.main_file.newline
-        tooltip.set_markup("{}\n\n{}\n{}\n{}".format(
-                _("<b>Path:</b> {}").format(path),
-                _("<b>Format:</b> {}").format(format.label),
-                _("<b>Encoding:</b> {}").format(encoding),
-                _("<b>Newlines:</b> {}").format(newline.label)))
+        tooltip.set_markup("{}\n{}\n{}\n{}".format(
+                "<b>{}</b> {}".format(_("Path:"), path),
+                "<b>{}</b> {}".format(_("Format:"), format.label),
+                "<b>{}</b> {}".format(_("Encoding:"), encoding),
+                "<b>{}</b> {}".format(_("Newlines:"), newline.label)))
 
         return True # to show the tooltip.
 

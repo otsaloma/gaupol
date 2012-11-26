@@ -2829,20 +2829,20 @@ msgid "Close project"
 msgstr "סגירת המיזם"
 
 #: ../gaupol/page.py:304
-msgid "<b>Path:</b> {}"
-msgstr "<b>נתיב:</b> {}"
+msgid "Path:"
+msgstr "נתיב:"
 
 #: ../gaupol/page.py:305
-msgid "<b>Format:</b> {}"
-msgstr "<b>מבנה:</b> {}"
+msgid "Format:"
+msgstr "מבנה:"
 
 #: ../gaupol/page.py:306
-msgid "<b>Encoding:</b> {}"
+msgid "Encoding:"
 msgstr ""
 
 #: ../gaupol/page.py:307
-msgid "<b>Newlines:</b> {}"
-msgstr "<b>שורות חדשות:</b> {}"
+msgid "Newlines:"
+msgstr "שורות חדשות:"
 
 #: ../gaupol/page.py:340
 msgid "{} translation"

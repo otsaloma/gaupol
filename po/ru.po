@@ -2836,20 +2836,20 @@ msgid "Close project"
 msgstr "Закрыть проект"
 
 #: ../gaupol/page.py:304
-msgid "<b>Path:</b> {}"
+msgid "Path:"
 msgstr ""
 
 #: ../gaupol/page.py:305
-msgid "<b>Format:</b> {}"
-msgstr "<b>Формат:</b> {}"
+msgid "Format:"
+msgstr "Формат:"
 
 #: ../gaupol/page.py:306
-msgid "<b>Encoding:</b> {}"
+msgid "Encoding:"
 msgstr ""
 
 #: ../gaupol/page.py:307
-msgid "<b>Newlines:</b> {}"
-msgstr "<b>Новые строки:</b> {}"
+msgid "Newlines:"
+msgstr "Новые строки:"
 
 #: ../gaupol/page.py:340
 msgid "{} translation"

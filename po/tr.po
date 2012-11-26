@@ -2841,20 +2841,20 @@ msgid "Close project"
 msgstr "Projeyi kapat"
 
 #: ../gaupol/page.py:304
-msgid "<b>Path:</b> {}"
-msgstr "<b>Yol:</b> {}"
+msgid "Path:"
+msgstr "Yol:"
 
 #: ../gaupol/page.py:305
-msgid "<b>Format:</b> {}"
-msgstr "<b>Tip:</b> {}"
+msgid "Format:"
+msgstr "Tip:"
 
 #: ../gaupol/page.py:306
-msgid "<b>Encoding:</b> {}"
+msgid "Encoding:"
 msgstr ""
 
 #: ../gaupol/page.py:307
-msgid "<b>Newlines:</b> {}"
-msgstr "<b>Yeni satırlar:</b> {}"
+msgid "Newlines:"
+msgstr "Yeni satırlar:"
 
 #: ../gaupol/page.py:340
 msgid "{} translation"
