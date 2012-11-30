@@ -116,6 +116,7 @@
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">_Search for:</property>
                             <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">pattern_combo_entry</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -131,6 +132,7 @@
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">Replace _with:</property>
                             <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">replacement_combo_entry</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -146,7 +148,7 @@
                             <property name="hexpand">True</property>
                             <property name="has_entry">True</property>
                             <child internal-child="entry">
-                              <object class="GtkEntry" id="combobox-entry">
+                              <object class="GtkEntry" id="pattern_combo_entry">
                                 <property name="can_focus">True</property>
                                 <property name="invisible_char">●</property>
                               </object>
@@ -166,7 +168,7 @@
                             <property name="hexpand">True</property>
                             <property name="has_entry">True</property>
                             <child internal-child="entry">
-                              <object class="GtkEntry" id="combobox-entry1">
+                              <object class="GtkEntry" id="replacement_combo_entry">
                                 <property name="can_focus">True</property>
                               </object>
                             </child>

@@ -7,6 +7,7 @@ Gaupol 0.21
  [X] Add partial support for fancy Unicode dashes, ellipses and
      quotation marks in text correction patterns and "Toggle dialogue
      dashes" action
+ [X] Fix search dialog mnemonics
  [X] Apply GNOME Goal: Remove markup in translatable messages
 
 Gaupol 1.0
