@@ -1,3 +1,15 @@
+Gaupol 0.21
+===========
+
+ * Restore inline spell-check, replace the previous GtkSpell
+   dependency with a dependency on pygtkspellcheck
+   - http://koehlma.github.com/projects/pygtkspellcheck.html
+ * Add partial support for fancy Unicode dashes, ellipses and
+   quotation marks in text correction patterns and "Toggle dialogue
+   dashes" action
+ * Fix search dialog mnemonics
+ * Apply GNOME Goal: Remove markup in translatable messages
+
 Gaupol 0.20.1
 =============
 
