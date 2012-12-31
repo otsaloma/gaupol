@@ -31,6 +31,11 @@ class TestCalculator(aeidon.TestCase):
             b = aeidon.Calculator(framerate)
             assert a is b
 
+    def test___new____float(self):
+        a = aeidon.Calculator(48.0)
+        b = aeidon.Calculator(96.0)
+        assert a is not b
+
     def test_add__frames(self):
         assert self.calc.add(10, 10) == 20
 

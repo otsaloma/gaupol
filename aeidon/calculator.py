@@ -35,13 +35,32 @@ class Calculator(object, metaclass=aeidon.Contractual):
     _instances = {}
 
     def __init__(self, framerate=None):
-        """Initialize a :class:`Calculator` object."""
-        framerate = framerate or aeidon.framerates.FPS_23_976
-        self._framerate = framerate.value
+        """
+        Initialize a :class:`Calculator` object.
+
+        `framerate` can be either an :attr:`aeidon.framerates` item (preferred
+        to be able to reuse instances) or an exact float value.
+        """
+        if framerate is None:
+            framerate = aeidon.framerates.FPS_23_976
+        if framerate in aeidon.framerates:
+            self._framerate = framerate.value
+        else:
+            # Use non-constant values as is.
+            self._framerate = float(framerate)
 
     def __new__(cls, framerate=None):
-        """Return possibly existing instance for `framerate`."""
-        framerate = int(framerate or aeidon.framerates.FPS_23_976)
+        """
+        Return possibly existing instance for `framerate`.
+
+        `framerate` can be either an :attr:`aeidon.framerates` item (preferred
+        to be able to reuse instances) or an exact float value.
+        """
+        if framerate is None:
+            framerate = aeidon.framerates.FPS_23_976
+        if not framerate in aeidon.framerates:
+            # Always return a new instance for float values.
+            return object.__new__(cls)
         if not framerate in cls._instances:
             cls._instances[framerate] = object.__new__(cls)
         return cls._instances[framerate]
