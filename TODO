@@ -2,6 +2,11 @@ Gaupol 0.xx
 ===========
 
  [ ] Add a built-in GStreamer-based video player
+     * Video player
+       - Displaying subtitles (polling/hooks?)
+     * Preferences dialog
+       - Time overlay font and color
+       - Subtitle overlay font and color
  [ ] Set framerate automatically when setting video file
 
 Gaupol 1.0

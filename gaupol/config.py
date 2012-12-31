@@ -185,6 +185,14 @@ config_defaults = {
         "size": [700, 433],
         "target": gaupol.targets.CURRENT,
         },
+    "video_player": {
+        "subtitle_alpha": 1.0,
+        "subtitle_color": "#ffff22",
+        "subtitle_font": "sans 18",
+        "time_alpha": 0.7,
+        "time_color": "#ffffff",
+        "time_font": "monospace 14",
+        },
     }
 
 config_enums = {

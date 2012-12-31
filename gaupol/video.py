@@ -44,6 +44,8 @@ class VideoPlayer(object):
     :ivar _bus: The :class:`Gtk.Bus` used to receive messages
     :ivar _pipeline: The :class:`Gst.Pipeline` used
     :ivar _playbin: The GStreamer playbin element
+    :ivar _text_overlay: A GStreamer "textoverlay" element
+    :ivar _time_overlay: A GStreamer "timeoverlay" element
     :ivar _xid: `widget`'s X resource (window)
     :ivar calc: The instance of :class:`aeidon.Calculator` used
     :ivar widget: :class:`Gtk.DrawingArea` used to render video
@@ -54,9 +56,13 @@ class VideoPlayer(object):
         self._bus = None
         self._pipeline = None
         self._playbin = None
+        self._text_overlay = None
+        self._time_overlay = None
         self._xid = None
         self.calc = aeidon.Calculator()
         self.widget = None
+        self._init_text_overlay()
+        self._init_time_overlay()
         self._init_pipeline()
         self._init_bus()
         self._init_widget()
@@ -74,7 +80,43 @@ class VideoPlayer(object):
         """Initialize the GStreamer playback pipeline."""
         self._pipeline = Gst.Pipeline()
         self._playbin = Gst.ElementFactory.make("playbin", name=None)
+        bin = Gst.Bin()
+        bin.add(self._time_overlay)
+        bin.add(self._text_overlay)
+        pad = self._time_overlay.get_static_pad("video_sink")
+        ghost = Gst.GhostPad.new("sink", pad)
+        sink = Gst.ElementFactory.make("autovideosink", name=None)
+        bin.add_pad(ghost)
+        bin.add(sink)
+        self._time_overlay.link(self._text_overlay)
+        self._text_overlay.link(sink)
+        self._playbin.set_property("video-sink", bin)
         self._pipeline.add(self._playbin)
+
+    def _init_text_overlay(self):
+        """Initialize the text overlay element."""
+        conf = gaupol.conf.video_player
+        text = Gst.ElementFactory.make("textoverlay", name=None)
+        text.props.font_desc = conf.subtitle_font
+        text.props.halignment = "center"
+        text.props.valignment = "bottom"
+        text.props.line_alignment = "left"
+        alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
+        color = conf.subtitle_color.replace("#", "")
+        text.props.color = eval("0x{}{}".format(alpha, color))
+        self._text_overlay = text
+
+    def _init_time_overlay(self):
+        """Initialize the time overlay element."""
+        conf = gaupol.conf.video_player
+        time = Gst.ElementFactory.make("timeoverlay", name=None)
+        time.props.font_desc = conf.time_font
+        time.props.halignment = "right"
+        time.props.valignment = "top"
+        alpha = "{:02x}".format(int(conf.time_alpha * 255))
+        color = conf.time_color.replace("#", "")
+        time.props.color = eval("0x{}{}".format(alpha, color))
+        self._time_overlay = time
 
     def _init_widget(self):
         """Initialize the rendering widget."""
