@@ -27,6 +27,11 @@ _ = aeidon.i18n._
 from gi.repository import Gtk
 from gi.repository import Pango
 
+try:
+    import enchant.checker
+except Exception:
+    pass
+
 __all__ = ("SpellCheckDialog",)
 
 
@@ -180,7 +185,6 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
         Raise :exc:`ValueError` if dictionary initialization fails.
         """
-        import enchant.checker
         try:
             dictionary = enchant.Dict(self._language)
             # Sometimes enchant will initialize a dictionary that will not

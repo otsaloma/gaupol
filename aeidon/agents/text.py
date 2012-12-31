@@ -24,6 +24,11 @@ import re
 import sys
 _ = aeidon.i18n._
 
+try:
+    import enchant.checker
+except Exception:
+    pass
+
 
 class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
@@ -70,7 +75,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         Raise :exc:`enchant.error` if dictionary instatiation fails.
         """
-        import enchant.checker
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
         path = os.path.join(directory, "{}.dict".format(language))
         try: dictionary = enchant.DictWithPWL(language, path)

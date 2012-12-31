@@ -18,6 +18,11 @@
 
 import aeidon
 
+try:
+    import enchant
+except Exception:
+    pass
+
 
 class TestTextAgent(aeidon.TestCase):
 
@@ -84,7 +89,6 @@ class TestTextAgent(aeidon.TestCase):
                                             language="en")
 
     def test_spell_check_join_words__enchant_error(self):
-        import enchant
         self.assert_raises(enchant.Error,
                            self.project.spell_check_join_words,
                            indices=None,
@@ -100,7 +104,6 @@ class TestTextAgent(aeidon.TestCase):
                                              language="en")
 
     def test_spell_check_split_words__enchant_error(self):
-        import enchant
         self.assert_raises(enchant.Error,
                            self.project.spell_check_split_words,
                            indices=None,

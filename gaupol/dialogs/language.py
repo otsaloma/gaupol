@@ -24,6 +24,11 @@ _ = aeidon.i18n._
 
 from gi.repository import Gtk
 
+try:
+    import enchant
+except Exception:
+    pass
+
 __all__ = ("LanguageDialog",)
 
 
@@ -136,7 +141,6 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _populate_store(self, store):
         """Add all available languages to `store`."""
-        import enchant
         try: locales = set(enchant.list_languages())
         except enchant.Error: return
         for locale in locales:

@@ -30,6 +30,11 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 
+try:
+    import enchant
+except Exception:
+    pass
+
 __all__ = ("TextAssistant", "TextAssistantPage")
 
 
@@ -623,7 +628,6 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
 
     def correct_texts(self, project, indices, doc):
         """Correct texts in `project`."""
-        import enchant
         language = gaupol.conf.spell_check.language
         if gaupol.conf.join_split_words.join:
             try: project.spell_check_join_words(indices, doc, language)

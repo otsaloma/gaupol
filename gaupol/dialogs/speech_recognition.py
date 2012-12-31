@@ -26,6 +26,11 @@ _ = aeidon.i18n._
 
 from gi.repository import Gtk
 
+try:
+    from gi.repository import Gst
+except Exception:
+    pass
+
 __all__ = ("SpeechRecognitionDialog",)
 
 
@@ -186,7 +191,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _on_bus_message_application(self, bus, message):
         """Process application messages from the bus."""
-        from gi.repository import Gst
         struct = message.get_structure()
         if struct.get_name() == "start":
             pos = message.get_value("pos")
@@ -257,7 +261,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _on_pocketsphinx_result(self, sphinx, text, uttid):
         """Send recognized text as a message on the bus."""
-        from gi.repository import Gst
         struct = Gst.Structure.new_empty("text")
         struct.set_value("text", text)
         struct.set_value("uttid", uttid)
@@ -290,7 +293,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _on_vader_start(self, vader, pos):
         """Send start position as a message on the bus."""
-        from gi.repository import Gst
         struct = Gst.Structure.new_empty("start")
         pos = pos/1000000000 # ns to s
         struct.set_value("pos", pos)
@@ -299,7 +301,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _on_vader_stop(self, vader, pos):
         """Send stop position as a message on the bus."""
-        from gi.repository import Gst
         struct = Gst.Structure.new_empty("stop")
         pos = pos/1000000000 # ns to s
         struct.set_value("pos", pos)
@@ -334,7 +335,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _recognize_speech(self):
         """Generate subtitles from video or audio file."""
-        from gi.repository import Gst
         self._set_sensitivities_start()
         self._progressbar.set_fraction(0)
         self._clear_attributes()
@@ -378,7 +378,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
 
     def _stop_speech_recognition(self):
         """Stop generating subtitles from video or audio file."""
-        from gi.repository import Gst
         self._pipeline.set_state(Gst.State.NULL)
         self._set_sensitivities_stop()
 
