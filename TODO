@@ -1,7 +1,12 @@
+Gaupol 0.xx
+===========
+
+ [ ] Add a built-in GStreamer-based video player
+ [ ] Set framerate automatically when setting video file
+
 Gaupol 1.0
 ==========
 
- * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
  * https://live.gnome.org/GnomeGoals/PortToGtkApplication
  * https://live.gnome.org/GnomeGoals/PortToGMenu

@@ -83,6 +83,7 @@ from gaupol.renderers import *
 from gaupol.output import *
 from gaupol.view import *
 from gaupol.page import *
+from gaupol.video import *
 from gaupol.dialogs.builder import *
 from gaupol.dialogs.file import *
 from gaupol.dialogs.open import *
