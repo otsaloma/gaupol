@@ -221,9 +221,14 @@ class VideoPlayer(object):
         """Set the path of the file to play."""
         self.set_uri(aeidon.util.path_to_uri(path))
 
+    def set_subtitle_text(self, text):
+        """Set `text` to the subtitle text overlay."""
+        self._text_overlay.props.text = aeidon.RE_ANY_TAG.sub("", text)
+
     def set_uri(self, uri):
         """Set the URI of the file to play."""
         self._playbin.set_property("uri", uri)
+        self.set_subtitle_text("")
         # Find out the exact framerate to be able
         # to convert between position types.
         discoverer = GstPbutils.Discoverer()
@@ -236,3 +241,4 @@ class VideoPlayer(object):
     def stop(self):
         """Stop."""
         self._pipeline.set_state(Gst.State.NULL)
+        self.set_subtitle_text("")
