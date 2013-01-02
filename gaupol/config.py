@@ -187,11 +187,13 @@ config_defaults = {
         },
     "video_player": {
         "subtitle_alpha": 1.0,
+        "subtitle_background": True,
         "subtitle_color": "#ffff22",
-        "subtitle_font": "sans 18",
+        "subtitle_font": "PT Sans Caption,sans 18",
         "time_alpha": 0.7,
+        "time_background": True,
         "time_color": "#ffffff",
-        "time_font": "monospace 14",
+        "time_font": "PT Mono,monospace Bold 15",
         },
     }
 

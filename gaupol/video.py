@@ -101,6 +101,7 @@ class VideoPlayer(object):
         text.props.halignment = "center"
         text.props.valignment = "bottom"
         text.props.line_alignment = "left"
+        text.props.shaded_background = conf.subtitle_background
         alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
         color = conf.subtitle_color.replace("#", "")
         text.props.color = eval("0x{}{}".format(alpha, color))
@@ -113,6 +114,7 @@ class VideoPlayer(object):
         time.props.font_desc = conf.time_font
         time.props.halignment = "right"
         time.props.valignment = "top"
+        time.props.shaded_background = conf.time_background
         alpha = "{:02x}".format(int(conf.time_alpha * 255))
         color = conf.time_color.replace("#", "")
         time.props.color = eval("0x{}{}".format(alpha, color))
