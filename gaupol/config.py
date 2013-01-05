@@ -124,7 +124,7 @@ config_defaults = {
         "length_unit": gaupol.length_units.EM,
         "max_deviation": 0.16,
         "max_length": 28,
-        "max_lines": 2,
+        "max_lines": 3,
         "script": "Latn",
         "skip_max_length": 28,
         "skip_max_lines": 3,
