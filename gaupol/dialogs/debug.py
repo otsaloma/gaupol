@@ -110,6 +110,8 @@ class DebugDialog(gaupol.BuilderDialog):
         ins("aeidon: {}\n".format(aeidon.__version__))
         ins("gaupol: {}\n".format(gaupol.__version__))
         ins("enchant: {}\n".format(aeidon.util.get_enchant_version()))
+        ins("gtkspellcheck: {}\n".
+            format(gaupol.util.get_gtkspellcheck_version()))
         ins("chardet: {}\n".format(aeidon.util.get_chardet_version()))
 
     def _insert_text(self, text, *tags):
