@@ -72,7 +72,7 @@ class Action(Gtk.Action):
         """Initialize an :class:`Action` object."""
         GObject.GObject.__init__(self, name=name)
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         pass
 
@@ -102,10 +102,10 @@ class Action(Gtk.Action):
             widget.set_sensitive(sensitive)
         return Gtk.Action.set_sensitive(self, sensitive)
 
-    def update_sensitivity(self, application, page):
+    def update_sensitivity(self, application, page, selected_rows):
         """Update the sensitivity of action and all its widgets."""
         try:
-            self._affirm_doable(application, page)
+            self._affirm_doable(application, page, selected_rows)
         except aeidon.AffirmationError:
             return self.set_sensitive(False)
         return self.set_sensitive(True)
@@ -190,7 +190,7 @@ class TopMenuAction(MenuAction):
 
     """Base class for actions that are top-level menu items with a submenu."""
 
-    def update_sensitivity(self, application, page):
+    def update_sensitivity(self, application, page, selected_rows):
         """Update the sensitivity of action and all its widgets."""
         pass
 

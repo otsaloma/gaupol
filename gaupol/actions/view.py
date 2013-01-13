@@ -35,7 +35,7 @@ class ActivateNextProjectAction(gaupol.Action):
         self.accelerator = "<Control>Page_Down"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         index = application.pages.index(page) + 1
@@ -54,7 +54,7 @@ class ActivatePreviousProjectAction(gaupol.Action):
         self.accelerator = "<Control>Page_Up"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
@@ -71,7 +71,7 @@ class MoveTabLeftAction(gaupol.Action):
         self.props.tooltip = _("Move the current tab to the left")
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
@@ -88,7 +88,7 @@ class MoveTabRightAction(gaupol.Action):
         self.props.tooltip = _("Move the current tab to the right")
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         index = application.pages.index(page) + 1
@@ -104,7 +104,7 @@ class ShowColumnsMenuAction(gaupol.MenuAction):
         self.props.label = _("_Columns")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -127,7 +127,7 @@ class ShowFramerate23976Action(gaupol.RadioAction):
         self.framerate = aeidon.framerates.FPS_23_976
         self.group = "ShowFramerate23976Action"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -151,7 +151,7 @@ class ShowFramerate24000Action(gaupol.RadioAction):
         self.framerate = aeidon.framerates.FPS_24_000
         self.group = "ShowFramerate23976Action"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -175,7 +175,7 @@ class ShowFramerate25000Action(gaupol.RadioAction):
         self.framerate = aeidon.framerates.FPS_25_000
         self.group = "ShowFramerate23976Action"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -199,7 +199,7 @@ class ShowFramerate29970Action(gaupol.RadioAction):
         self.framerate = aeidon.framerates.FPS_29_970
         self.group = "ShowFramerate23976Action"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -216,7 +216,7 @@ class ShowFramerateMenuAction(gaupol.MenuAction):
         self.action_group = "main-unsafe"
         self.widgets = ("framerate_combo",)
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -239,7 +239,7 @@ class ShowFramesAction(gaupol.RadioAction):
         self.group = "ShowTimesAction"
         self.mode = aeidon.modes.FRAME
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -261,7 +261,7 @@ class ShowTimesAction(gaupol.RadioAction):
         self.group = "ShowTimesAction"
         self.mode = aeidon.modes.TIME
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -279,7 +279,7 @@ class ToggleDurationColumnAction(gaupol.ToggleAction):
         self.props.tooltip = _('Show or hide the duration column')
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -297,7 +297,7 @@ class ToggleEndColumnAction(gaupol.ToggleAction):
         self.props.tooltip = _('Show or hide the end column')
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -315,7 +315,7 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
         self.props.tooltip = _('Show or hide the main text column')
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -347,7 +347,7 @@ class ToggleNumberColumnAction(gaupol.ToggleAction):
         self.props.tooltip = _('Show or hide the number column')
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -378,7 +378,7 @@ class ToggleStartColumnAction(gaupol.ToggleAction):
         self.props.tooltip = _('Show or hide the start column')
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -410,7 +410,7 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
         self.props.tooltip = _('Show or hide the translation text column')
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 

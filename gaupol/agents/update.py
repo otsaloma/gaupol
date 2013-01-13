@@ -149,10 +149,13 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""
+        rows = (page.view.get_selected_rows()
+                if page is not None and page.view is not None else ())
+
         for name in ("main-safe", "main-unsafe"):
             action_group = self.get_action_group(name)
             for action in action_group.list_actions():
-                action.update_sensitivity(self, page)
+                action.update_sensitivity(self, page, rows)
 
     def _update_revert(self, page):
         """Update tooltips for undo and redo actions."""

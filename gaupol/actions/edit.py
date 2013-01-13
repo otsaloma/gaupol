@@ -38,10 +38,10 @@ class ClearTextsAction(gaupol.Action):
         self.accelerator = "C"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -60,10 +60,10 @@ class CopyTextsAction(gaupol.Action):
         self.accelerator = "<Control>C"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -82,10 +82,10 @@ class CutTextsAction(gaupol.Action):
         self.accelerator = "<Control>X"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -118,7 +118,7 @@ class EditNextValueAction(gaupol.Action):
         self.accelerator = "space"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         row, col = page.view.get_focus()
@@ -145,7 +145,7 @@ class EditValueAction(gaupol.Action):
         self.accelerator = "Return"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         row, col = page.view.get_focus()
@@ -170,11 +170,11 @@ class ExtendSelectionToBeginningAction(gaupol.Action):
         self.accelerator = "<Shift><Control>Home"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
 
 
 class ExtendSelectionToEndAction(gaupol.Action):
@@ -191,11 +191,11 @@ class ExtendSelectionToEndAction(gaupol.Action):
         self.accelerator = "<Shift><Control>End"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
 
 
 class InsertSubtitlesAction(gaupol.Action):
@@ -212,11 +212,11 @@ class InsertSubtitlesAction(gaupol.Action):
         self.accelerator = "Insert"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         if page.project.subtitles:
-            aeidon.util.affirm(page.view.get_selected_rows())
+            aeidon.util.affirm(selected_rows)
 
 
 class InvertSelectionAction(gaupol.Action):
@@ -231,7 +231,7 @@ class InvertSelectionAction(gaupol.Action):
         self.accelerator = "<Control>I"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -249,12 +249,12 @@ class MergeSubtitlesAction(gaupol.Action):
         self.accelerator = "M"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        rows = page.view.get_selected_rows()
-        aeidon.util.affirm(len(rows) > 1)
-        aeidon.util.affirm(list(rows) == list(range(rows[0], rows[-1] + 1)))
+        aeidon.util.affirm(len(selected_rows) > 1)
+        block = list(range(selected_rows[0], selected_rows[-1]+1))
+        aeidon.util.affirm(list(selected_rows) == block)
 
 
 class PasteTextsAction(gaupol.Action):
@@ -270,11 +270,11 @@ class PasteTextsAction(gaupol.Action):
         self.accelerator = "<Control>V"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(not application.clipboard.is_empty())
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -296,7 +296,7 @@ class RedoActionAction(gaupol.Action):
         self.action_group = "main-unsafe"
         self.tool_item_type = Gtk.MenuToolButton
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.can_redo())
@@ -316,10 +316,10 @@ class RemoveSubtitlesAction(gaupol.Action):
         self.accelerator = "Delete"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
 
 
 class SelectAllAction(gaupol.Action):
@@ -335,7 +335,7 @@ class SelectAllAction(gaupol.Action):
         self.accelerator = "<Control>A"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -351,7 +351,7 @@ class ShowSelectionMenuAction(gaupol.MenuAction):
         self.props.label = _("Sele_ction")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -369,10 +369,10 @@ class SplitSubtitleAction(gaupol.Action):
         self.accelerator = "S"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(len(page.view.get_selected_rows()) == 1)
+        aeidon.util.affirm(len(selected_rows) == 1)
 
 
 class UndoActionAction(gaupol.Action):
@@ -392,7 +392,7 @@ class UndoActionAction(gaupol.Action):
         self.action_group = "main-unsafe"
         self.tool_item_type = Gtk.MenuToolButton
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.can_undo())

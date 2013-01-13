@@ -9,6 +9,7 @@ Gaupol 0.21.1
      different filesystems (Florian Léger, Osmo Salomaa)
  [X] Fix speed issues updating subtitle list selection (e.g. when doing
      a search-and-replace-all with a alot of matches)
+ [X] Speed up miscellaneous GUI updates
 
 Gaupol 1.0
 ==========

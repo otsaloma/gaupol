@@ -35,10 +35,10 @@ class ShowCaseMenuAction(gaupol.MenuAction):
         self.props.label = _("Ca_se")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -58,10 +58,10 @@ class ToggleDialogDashesAction(gaupol.Action):
         self.accelerator = "D"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -80,10 +80,10 @@ class ToggleItalicizationAction(gaupol.Action):
         self.accelerator = "I"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -104,10 +104,10 @@ class UseLowerCaseAction(gaupol.Action):
         self.props.tooltip = _("Change the selected texts to lower case")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -124,10 +124,10 @@ class UseSentenceCaseAction(gaupol.Action):
         self.props.tooltip = _("Change the selected texts to sentence case")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -144,10 +144,10 @@ class UseTitleCaseAction(gaupol.Action):
         self.props.tooltip = _("Change the selected texts to title case")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
@@ -164,10 +164,10 @@ class UseUpperCaseAction(gaupol.Action):
         self.props.tooltip = _("Change the selected texts to upper case")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.view.get_selected_rows())
+        aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))

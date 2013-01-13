@@ -39,7 +39,7 @@ class AppendFileAction(gaupol.Action):
 
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.project.subtitles) > 0)
@@ -58,7 +58,7 @@ class CloseAllProjectsAction(gaupol.Action):
         self.accelerator = "<Shift><Control>W"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.pages)
 
@@ -76,7 +76,7 @@ class CloseProjectAction(gaupol.Action):
         self.accelerator = "<Control>W"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -94,7 +94,7 @@ class EditHeadersAction(gaupol.Action):
         self.accelerator = "<Alt>Return"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         has_header_found = False
@@ -183,7 +183,7 @@ class OpenRecentTranslationFileAction(gaupol.RecentAction):
         self.props.label = _("Open R_ecent Translation")
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -201,7 +201,7 @@ class OpenTranslationFileAction(gaupol.Action):
         self.props.tooltip = _("Open a translation file")
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -234,7 +234,7 @@ class SaveAllDocumentsAction(gaupol.Action):
         self.accelerator = "<Shift><Control>L"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.pages)
 
@@ -253,7 +253,7 @@ class SaveAllDocumentsAsAction(gaupol.Action):
 
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm([x for x in application.pages
                             if x.project.main_file is not None])
@@ -273,7 +273,7 @@ class SaveMainDocumentAction(gaupol.Action):
         self.accelerator = "<Control>S"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -294,7 +294,7 @@ class SaveMainDocumentAsAction(gaupol.Action):
         self.accelerator = "<Shift><Control>S"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -312,7 +312,7 @@ class SaveTranslationDocumentAction(gaupol.Action):
         self.accelerator = "<Control>T"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -333,7 +333,7 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
         self.accelerator = "<Shift><Control>T"
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -352,7 +352,7 @@ class SelectVideoFileAction(gaupol.Action):
         self.action_group = "main-safe"
         self.widgets = ("video_button",)
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -369,7 +369,7 @@ class SplitProjectAction(gaupol.Action):
         self.props.tooltip = _("Split the current project in two")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.project.subtitles) > 1)

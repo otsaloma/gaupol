@@ -35,7 +35,7 @@ class TestAction(gaupol.TestCase):
         self.action.set_sensitive(True)
 
     def test_update_sensitivity(self):
-        self.action.update_sensitivity(self.application, None)
+        self.action.update_sensitivity(self.application, None, [])
 
 
 class TestMenuAction(gaupol.TestCase):
