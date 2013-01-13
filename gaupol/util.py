@@ -347,7 +347,7 @@ def tree_path_to_row(path):
     """
     if path is None: return None
     if isinstance(path, Gtk.TreePath):
-        return(int(path.to_string()))
+        return(path.get_indices()[0])
     if isinstance(path, str):
         return(int(path))
     raise TypeError("Bad type {} for path {}"
