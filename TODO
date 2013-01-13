@@ -4,10 +4,17 @@ Gaupol 0.21.1
  [X] Fix error disconnecting text view's line length margin handler
      (AttributeError: 'TextView' object has no attribute
      'gaupol_ruler_handler_id')
+ [X] Fix atomic file writing in weird cases where the subtitle file to
+     be written and its backup in the same directory would be on
+     different filesystems (Florian Léger, Osmo Salomaa)
 
 Gaupol 1.0
 ==========
 
+ * Restore proper keeping track of recent files
+   - https://bugzilla.gnome.org/show_bug.cgi?id=678401
+ * Speed up replace-all with a large amount of replacements
+ * Speed up applying a large amount of text corrections
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
  * https://live.gnome.org/GnomeGoals/PortToGtkApplication
