@@ -55,4 +55,4 @@ class FloatCellRenderer(Gtk.CellRendererText):
         text = self._format.format(float(text))
         if has_comma:
             text = text.replace(".", ",")
-        self.props.markup = text
+        self.props.markup = GLib.markup_escape_text(text)
