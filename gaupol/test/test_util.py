@@ -72,6 +72,10 @@ class TestModule(gaupol.TestCase):
         imp.reload(gaupol.util)
         assert gaupol.util.get_gst_version()
 
+    def test_get_gtkspellcheck_version(self):
+        imp.reload(gaupol.util)
+        assert gaupol.util.get_gtkspellcheck_version()
+
     def test_get_preview_command__custom(self):
         gaupol.conf.preview.use_custom_command = True
         gaupol.util.get_preview_command()

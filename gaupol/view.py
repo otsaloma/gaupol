@@ -49,6 +49,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         GObject.GObject.__init__(self)
         self._active_col_name = ""
         self._calc = aeidon.Calculator()
+        self._selection_changed_handlers = {}
         self.columns = aeidon.Enumeration()
         self._init_signal_handlers()
         self._init_props(edit_mode)
@@ -253,6 +254,29 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
                     <= self._calc.time_to_seconds(time_key)
                     < self._calc.time_to_seconds(time_next))
 
+    def connect_selection_changed(self, callback):
+        """Connect to the "changed" signal of selection.
+
+        Using this instead of the tree selection's own ``connect`` method
+        allows signal handlers to be blocked while in the process of selecting
+        multiple rows, which should be significantly faster if actually doing
+        something in the signal handler.
+
+        Return signal handler ID.
+        """
+        selection = self.get_selection()
+        handler_id = selection.connect("changed", callback)
+        self._selection_changed_handlers[handler_id] = callback
+        return handler_id
+
+    def disconnect_selection_changed(self, callback):
+        """Disconnect from the "changed" signal of selection."""
+        selection = self.get_selection()
+        for handler_id in list(self._selection_changed_handlers):
+            if self._selection_changed_handlers[handler_id] is callback:
+                selection.handler_disconnect(handler_id)
+                self._selection_changed_handlers.pop(handler_id)
+
     def get_focus_ensure(self, value):
         store = self.get_model()
         if value[0] is not None:
@@ -315,13 +339,18 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
 
     def select_rows(self, rows):
         """Select `rows`, clearing previous selection."""
-        # Select by ranges to avoid sending too many 'changed' signals.
+        # Avoid sending more than one 'changed' signal.
         selection = self.get_selection()
+        for handler_id in self._selection_changed_handlers:
+            selection.handler_block(handler_id)
         selection.unselect_all()
         for lst in aeidon.util.get_ranges(rows):
             start = gaupol.util.tree_row_to_path(lst[0])
             end = gaupol.util.tree_row_to_path(lst[-1])
             selection.select_range(start, end)
+        for handler_id in self._selection_changed_handlers:
+            selection.handler_unblock(handler_id)
+        selection.emit("changed")
 
     def set_focus_require(self, row, col=None):
         store = self.get_model()

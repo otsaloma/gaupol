@@ -36,7 +36,7 @@ class AdjustDurationsAction(gaupol.Action):
         self.props.tooltip = _("Lengthen or shorten durations")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -52,7 +52,7 @@ class ConvertFramerateAction(gaupol.Action):
         self.props.tooltip = _("Change positions for a different framerate")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -73,7 +73,7 @@ class PreviewAction(gaupol.Action):
         self.accelerator = "P"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.video_path is not None)
@@ -93,7 +93,7 @@ class ShiftPositionsAction(gaupol.Action):
         self.accelerator = "H"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -111,7 +111,7 @@ class SpeechRecognitionAction(gaupol.Action):
 
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(gaupol.util.gst_available())
         aeidon.util.affirm(gaupol.util.pocketsphinx_available())
@@ -130,7 +130,7 @@ class TransformPositionsAction(gaupol.Action):
 
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.project.subtitles) > 1)

@@ -478,7 +478,7 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def connect_view_signals(self, view):
         """Connect to signals emitted by `view`."""
         selection = view.get_selection()
-        selection.connect("changed", self._on_view_selection_changed)
+        view.connect_selection_changed(self._on_view_selection_changed)
         view.connect_after("move-cursor", self._on_view_move_cursor)
         view.connect("button-press-event", self._on_view_button_press_event)
         for column in view.get_columns():

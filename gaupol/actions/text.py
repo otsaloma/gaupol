@@ -36,7 +36,7 @@ class ConfigureSpellCheckAction(gaupol.Action):
         self.props.tooltip = _("Set language and spell-check target")
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(aeidon.util.enchant_available())
 
@@ -55,7 +55,7 @@ class CheckSpellingAction(gaupol.Action):
         self.accelerator = "F7"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(aeidon.util.enchant_available())
@@ -74,7 +74,7 @@ class CorrectTextsAction(gaupol.Action):
         self.accelerator = "O"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 

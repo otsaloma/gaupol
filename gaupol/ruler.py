@@ -140,8 +140,8 @@ def connect_text_view(text_view):
 def disconnect_text_view(text_view):
     """Disconnect `text_view` from showing line lengths in the margin."""
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, 0)
+    if not hasattr(text_view, "gaupol_ruler_handler_id"): return
     handler_id = text_view.gaupol_ruler_handler_id
-    if handler_id is None: return
     del text_view.gaupol_ruler_handler_id
     return text_view.disconnect(handler_id)
 

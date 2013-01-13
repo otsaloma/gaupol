@@ -1,3 +1,16 @@
+Gaupol 0.21.1
+=============
+
+ * Fix error disconnecting text view's line length margin handler
+   (AttributeError: 'TextView' object has no attribute
+   'gaupol_ruler_handler_id')
+ * Fix atomic file writing in weird cases where the subtitle file to
+   be written and its backup in the same directory would be on
+   different filesystems (Florian Léger, Osmo Salomaa)
+ * Fix speed issues updating subtitle list selection (e.g. when doing
+   a search-and-replace-all with a alot of matches)
+ * Speed up action sensitivity updates
+
 Gaupol 0.21
 ===========
 

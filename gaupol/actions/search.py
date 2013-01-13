@@ -39,7 +39,7 @@ class FindAndReplaceAction(gaupol.Action):
         self.accelerator = "<Control>F"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
@@ -56,7 +56,7 @@ class FindNextAction(gaupol.Action):
         self.accelerator = "<Control>G"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pattern)
@@ -74,7 +74,7 @@ class FindPreviousAction(gaupol.Action):
         self.accelerator = "<Shift><Control>G"
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pattern)

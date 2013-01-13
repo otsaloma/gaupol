@@ -25,6 +25,7 @@ import locale
 import os
 import random
 import re
+import shutil
 import subprocess
 import stat
 import sys
@@ -73,20 +74,28 @@ def atomic_open(path, mode="w", *args, **kwargs):
             yield fobj
             fobj.flush()
             os.fsync(fobj.fileno())
-        if hasattr(os, "replace"):
-            # os.replace was added in Python 3.3.
-            # This should be atomic on Windows too.
-            os.replace(temp_path, path)
-        else:
-            # os.rename is atomic on Unix, but fails
-            # on Windows if the file exists, hence must
-            # remove the file in advance with the danger
-            # that something fails between the remove
-            # and the rename.
+        try:
+            if hasattr(os, "replace"):
+                # os.replace was added in Python 3.3.
+                # This should be atomic on Windows too.
+                os.replace(temp_path, path)
+            else:
+                # os.rename is atomic on Unix, but fails
+                # on Windows if the file exists.
+                os.rename(temp_path, path)
+            # os.rename and os.replace will fail if path
+            # and temp_path are not on the same device,
+            # for instance they can be on two separate
+            # branches of a union mount. Atomicity is not
+            # possible in this case.
+        except OSError:
+            # Fall back to a non-atomic operation using
+            # shutil.move. On Windows this requires that
+            # the destination file does not exist.
             if sys.platform == "win32":
                 if os.path.isfile(path):
                     os.remove(path)
-            os.rename(temp_path, path)
+            shutil.move(temp_path, path)
     finally:
         try:
             os.remove(temp_path)

@@ -99,6 +99,15 @@ class TestView(gaupol.TestCase):
         self.view.emit("cursor-changed")
         self.view.emit("cursor-changed")
 
+    def test_connect_selection_changed(self):
+        def on_changed(*args): pass
+        self.view.connect_selection_changed(on_changed)
+
+    def test_disconnect_selection_changed(self):
+        def on_changed(*args): pass
+        self.view.connect_selection_changed(on_changed)
+        self.view.disconnect_selection_changed(on_changed)
+
     def test_get_focus(self):
         get_focus = self.view.get_focus
         self.view.set_focus(2, None)
