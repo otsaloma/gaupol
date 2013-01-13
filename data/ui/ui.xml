@@ -140,6 +140,11 @@
       <placeholder name="3">
       </placeholder>
     </menu>
+    <menu name="video" action="show_video_menu">
+      <menuitem name="load_video" action="load_video"/>
+      <placeholder name="1">
+      </placeholder>
+    </menu>
     <menu name="tools" action="show_tools_menu">
       <menuitem name="preview" action="preview"/>
       <placeholder name="1">

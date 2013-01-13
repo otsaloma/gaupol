@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2007-2008,2010 Osmo Salomaa
+# Copyright (C) 2012 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,17 +16,28 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-""":class:`Gtk.UIManager` actions for :class:`gaupol.Application`."""
+"""Video actions for :class:`gaupol.Application`."""
 
-from gaupol.actions.edit import *
-from gaupol.actions.file import *
-from gaupol.actions.format import *
-from gaupol.actions.help import *
-from gaupol.actions.menu import *
-from gaupol.actions.position import *
-from gaupol.actions.search import *
-from gaupol.actions.text import *
-from gaupol.actions.video import *
-from gaupol.actions.view import *
+import aeidon
+import gaupol
+_ = aeidon.i18n._
+
+
+class LoadVideoAction(gaupol.Action):
+
+    """Load a video file."""
+
+    def __init__(self):
+        """Initialize a :class:`LoadVideoAction` object."""
+        gaupol.Action.__init__(self, "load_video")
+        self.props.label = _("_Load Video…")
+        self.props.tooltip = _("Load a video file")
+        self.action_group = "main-safe"
+
+    def _affirm_doable(self, application, page):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(gaupol.util.gst_available())
+        aeidon.util.affirm(page is not None)
+
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

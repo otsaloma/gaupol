@@ -2,12 +2,20 @@ Gaupol 0.xx
 ===========
 
  [ ] Add a built-in GStreamer-based video player
-     * Video player
-       - Displaying subtitles (polling/hooks?)
+     * Video player in application window
+       - Per-page or single video?
+       - Video widget
+       - Toolbar
+       - Seek bar updates (timeout_add: 1s?)
+       - Subtitle text updates (timeout_add: 40ms?)
      * Preferences dialog
-       - Time overlay font and color
-       - Subtitle overlay font and color
+       - Time overlay font, color, alpha
+       - Subtitle overlay font, color, alpha
  [ ] Set framerate automatically when setting video file
+ [ ] Add a not-required, but recommended dependency on PT fonts
+     (PT Sans Caption and PT Mono) used by default for video player's
+     subtitle and timecode overlays
+     - http://www.paratype.com/public/
 
 Gaupol 1.0
 ==========

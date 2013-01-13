@@ -89,6 +89,17 @@ class ShowToolsMenuAction(gaupol.TopMenuAction):
         self.action_group = "main-safe"
 
 
+class ShowVideoMenuAction(gaupol.TopMenuAction):
+
+    """Show the "Video" menu."""
+
+    def __init__(self):
+        """Initialize a :class:`ShowVideoMenuAction` object."""
+        gaupol.TopMenuAction.__init__(self, "show_video_menu")
+        self.props.label = _("Vi_deo")
+        self.action_group = "main-safe"
+
+
 class ShowViewMenuAction(gaupol.TopMenuAction):
 
     """Show the "View" menu."""

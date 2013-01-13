@@ -188,7 +188,7 @@ config_defaults = {
     "video_player": {
         "subtitle_alpha": 1.0,
         "subtitle_background": True,
-        "subtitle_color": "#ffff22",
+        "subtitle_color": "#ffffff",
         "subtitle_font": "PT Sans Caption,sans 18",
         "time_alpha": 0.7,
         "time_background": True,
