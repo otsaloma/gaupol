@@ -1,0 +1,2878 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Pavel Fric <pavelfric@seznam.cz>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-13 19:42+0300\n"
+"PO-Revision-Date: 2013-01-26 22:54+0100\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.5\n"
+"X-Language: cs_CZ\n"
+"X-Source-Language: C\n"
+
+#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:1
+msgid "Add Bookmark"
+msgstr "Přidat záložku"
+
+#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:2
+#: ../data/ui/position-transform-dialog.ui.h:4
+msgid "_Subtitle:"
+msgstr "_Titulek:"
+
+#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:3
+msgid "_Description:"
+msgstr "_Popis"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
+msgid "Add Framerate"
+msgstr "Přidat rychlost opakování obrázků"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
+msgid "_Framerate:"
+msgstr "_Rychlost opakování obrázků:"
+
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
+msgid "fps"
+msgstr "fps"
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
+#: ../data/ui/preferences-dialog.ui.h:1
+msgid "Preferences"
+msgstr "Nastavení"
+
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
+msgid "_Framerates:"
+msgstr "_Rychlosti opakování obrázků:"
+
+#: ../data/ui/debug-dialog.ui.h:1 ../gaupol/dialogs/speech_recognition.py:374
+msgid "Something went wrong"
+msgstr "Něco se nepovedlo"
+
+#: ../data/ui/debug-dialog.ui.h:2
+msgid ""
+"You have probably discovered a bug. Please report it by providing the above "
+"information and a description of what you were doing."
+msgstr ""
+"Pravděpodobně jste objevili nějakou chybu. Oznamte ji, prosím, anglicky. "
+"Poskytněte informace výše a popište, co jste právě dělali."
+
+#: ../data/ui/duration-adjust-dialog.ui.h:1
+msgid "Adjust Durations"
+msgstr "Upravit doby trvání"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:2
+msgid "_Adjust"
+msgstr "_Upravit"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:3
+msgid "Theoretic Duration"
+msgstr "Teoretická doba trvání  "
+
+#: ../data/ui/duration-adjust-dialog.ui.h:4
+msgid "_Reading speed:"
+msgstr "Rychlost čt_ení:"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:5
+msgid "characters per second"
+msgstr "znaků za sekundu"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:6
+msgid "_Lengthen duration to match reading speed"
+msgstr "P_rodloužit dobu trvání, aby odpovídala rychlosti čtení"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:7
+msgid "_Shorten duration to match reading speed"
+msgstr "_Zkrátit dobu trvání, aby odpovídala rychlosti čtení"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:8
+#: ../data/ui/text-assistant/line-break-options-page.ui.h:1
+msgid "Limits"
+msgstr "Omezení"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:9
+msgid "_Minimum duration:"
+msgstr "_Nejmenší doba trvání:"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:10
+msgid "Ma_ximum duration:"
+msgstr "Nej_větší doba trvání:"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:11
+msgid "_Gap between subtitles:"
+msgstr "_Mezera mezi titulky:"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:12
+msgid "s_econds"
+msgstr "s_ekund"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:13
+msgid "seco_nds"
+msgstr "se_kund"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:14
+msgid "secon_ds"
+msgstr "sek_und"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:15
+#: ../data/ui/framerate-convert-dialog.ui.h:6 ../data/ui/language-dialog.ui.h:5
+#: ../data/ui/position-shift-dialog.ui.h:6
+#: ../data/ui/position-transform-dialog.ui.h:12
+#: ../data/ui/search-dialog.ui.h:14
+#: ../data/ui/text-assistant/line-break-options-page.ui.h:4
+msgid "Subtitles"
+msgstr "Titulky"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:16
+msgid "Adj_ust selected subtitles"
+msgstr "Up_ravit vybrané titulky"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:17
+msgid "Adjus_t current project"
+msgstr "Upr_avit nynější projekt"
+
+#: ../data/ui/duration-adjust-dialog.ui.h:18
+msgid "Adjust all _open projects"
+msgstr "Upravit všechny _otevřené projekty"
+
+#: ../data/ui/encoding-dialog.ui.h:1 ../data/ui/preferences-dialog.ui.h:2
+msgid "Character Encodings"
+msgstr "Kódování znaků"
+
+#: ../data/ui/framerate-convert-dialog.ui.h:1
+msgid "Convert Framerate"
+msgstr "Převést rychlost opakování obrázků"
+
+#: ../data/ui/framerate-convert-dialog.ui.h:2
+msgid "Co_nvert"
+msgstr "Převést"
+
+#: ../data/ui/framerate-convert-dialog.ui.h:3
+msgid "Framerate"
+msgstr "Rychlost opakování obrázků"
+
+#: ../data/ui/framerate-convert-dialog.ui.h:4
+msgid "_Input:"
+msgstr "_Vstup"
+
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+msgid "_Output:"
+msgstr "Vý_stup"
+
+#: ../data/ui/framerate-convert-dialog.ui.h:7
+msgid "Convert c_urrent project"
+msgstr "Převést n_ynější projekt"
+
+#: ../data/ui/framerate-convert-dialog.ui.h:8
+msgid "Convert _all open projects"
+msgstr "Převést vše_chny otevřené projekty"
+
+#: ../data/ui/header-dialog.ui.h:1
+msgid "Headers"
+msgstr "Záhlaví"
+
+#: ../data/ui/header-dialog.ui.h:2
+msgid "_Main file:"
+msgstr "_Hlavní soubor:"
+
+#: ../data/ui/header-dialog.ui.h:3
+msgid "_Revert"
+msgstr "_Obrátit"
+
+#: ../data/ui/header-dialog.ui.h:4
+msgid "I_nsert Template"
+msgstr "_Vložit předlohu"
+
+#: ../data/ui/header-dialog.ui.h:5 ../gaupol/actions/edit.py:35
+msgid "Cl_ear"
+msgstr "_Uklidit"
+
+#: ../data/ui/header-dialog.ui.h:6
+msgid "_Translation file:"
+msgstr "_Překladový soubor:"
+
+#: ../data/ui/header-dialog.ui.h:7
+msgid "Re_vert"
+msgstr "_Obrátit"
+
+#: ../data/ui/header-dialog.ui.h:8
+msgid "In_sert Template"
+msgstr "V_ložit předlohu"
+
+#: ../data/ui/header-dialog.ui.h:9
+msgid "Cle_ar"
+msgstr "U_klidit"
+
+#: ../data/ui/insert-dialog.ui.h:1
+msgid "Insert Subtitles"
+msgstr "Vložit titulky"
+
+#: ../data/ui/insert-dialog.ui.h:2 ../data/ui/position-shift-dialog.ui.h:4
+msgid "_Amount:"
+msgstr "_Množství:"
+
+#: ../data/ui/insert-dialog.ui.h:3
+msgid "_Position:"
+msgstr "_Poloha:"
+
+#: ../data/ui/insert-dialog.ui.h:4
+msgid "_Insert"
+msgstr "_Vložit"
+
+#: ../data/ui/language-dialog.ui.h:1
+msgid "Configure Spell-Check"
+msgstr "Nastavit ověřování pravopisu"
+
+#: ../data/ui/language-dialog.ui.h:2
+msgid "Language"
+msgstr "Jazyk"
+
+#: ../data/ui/language-dialog.ui.h:3
+msgid "Check _main text column"
+msgstr "Přezkoušet _hlavní textový sloupec"
+
+#: ../data/ui/language-dialog.ui.h:4
+msgid "Check _translation text column"
+msgstr "Přezkoušet _překladový textový sloupec"
+
+#: ../data/ui/language-dialog.ui.h:6
+msgid "Check c_urrent project"
+msgstr "Přezkoušet _nynější projekt"
+
+#: ../data/ui/language-dialog.ui.h:7
+msgid "Check _all open projects"
+msgstr "Přezkoušet _všechny otevřené projekty"
+
+#: ../data/ui/multi-close-dialog.ui.h:1 ../gaupol/agents/close.py:57
+#: ../gaupol/agents/close.py:88
+msgid "Close _Without Saving"
+msgstr "Zavřít _bez uložení"
+
+#: ../data/ui/multi-close-dialog.ui.h:2
+msgid "Save changes to documents before closing?"
+msgstr "Uložit před zavřením změny v dokumentech?"
+
+#: ../data/ui/multi-close-dialog.ui.h:3
+msgid "Select the _main documents you want to save:"
+msgstr "Vyberte _hlavní dokument, který chcete uložit:"
+
+#: ../data/ui/multi-close-dialog.ui.h:4
+msgid "Select the _translation documents you want to save:"
+msgstr "Vyberte _překladový dokument, který chcete uložit:"
+
+#: ../data/ui/multi-close-dialog.ui.h:5 ../gaupol/agents/close.py:55
+#: ../gaupol/agents/close.py:86 ../gaupol/agents/open.py:367
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Pokud je neuložíte, budou změny navždy ztraceny."
+
+#: ../data/ui/multi-save-dialog.ui.h:1
+msgid "Save All As"
+msgstr "Uložit vše jako"
+
+#: ../data/ui/multi-save-dialog.ui.h:2
+msgid "Save in _folder:"
+msgstr "Uložit ve _složce:"
+
+#: ../data/ui/multi-save-dialog.ui.h:3 ../data/ui/save-dialog.ui.h:1
+msgid "For_mat:"
+msgstr "_Formát:"
+
+#: ../data/ui/multi-save-dialog.ui.h:4 ../data/ui/open-dialog.ui.h:1
+#: ../data/ui/save-dialog.ui.h:2
+msgid "_Encoding:"
+msgstr "_Kódování:"
+
+#: ../data/ui/multi-save-dialog.ui.h:5 ../data/ui/save-dialog.ui.h:3
+msgid "Ne_wlines:"
+msgstr "Za_lomení řádků:"
+
+#: ../data/ui/multi-save-dialog.ui.h:6
+msgid "Select A Folder"
+msgstr "Vybrat složku"
+
+#: ../data/ui/open-dialog.ui.h:2
+msgid "Align _method:"
+msgstr "_Způsob zarovnání:"
+
+#: ../data/ui/position-shift-dialog.ui.h:1
+msgid "Shift Positions"
+msgstr "Posunout polohy"
+
+#: ../data/ui/position-shift-dialog.ui.h:2
+msgid "_Shift"
+msgstr "_Posunout"
+
+#: ../data/ui/position-shift-dialog.ui.h:3
+msgid "Shift"
+msgstr "Posunout"
+
+#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/position-transform-dialog.ui.h:7
+msgid "_Preview Changes"
+msgstr "_Náhled na změny"
+
+#: ../data/ui/position-shift-dialog.ui.h:7
+msgid "Shift s_elected subtitles"
+msgstr "Posunout _vybrané titulky"
+
+#: ../data/ui/position-shift-dialog.ui.h:8
+msgid "Shift c_urrent project"
+msgstr "Posunout _nynější projekt"
+
+#: ../data/ui/position-shift-dialog.ui.h:9
+msgid "Shift all _open projects"
+msgstr "Posunout všechny _otevřené projekty"
+
+#: ../data/ui/position-transform-dialog.ui.h:1
+msgid "Transform Positions"
+msgstr "Předělat polohy"
+
+#: ../data/ui/position-transform-dialog.ui.h:2
+msgid "_Transform"
+msgstr "_Předělat"
+
+#: ../data/ui/position-transform-dialog.ui.h:3
+msgid "First Point"
+msgstr "První bod"
+
+#: ../data/ui/position-transform-dialog.ui.h:5
+msgid "C_orrection:"
+msgstr "Úp_rava:"
+
+#: ../data/ui/position-transform-dialog.ui.h:6
+msgid "Text:"
+msgstr "Text:"
+
+#: ../data/ui/position-transform-dialog.ui.h:8
+msgid "Second Point"
+msgstr "Druhý bod"
+
+#: ../data/ui/position-transform-dialog.ui.h:9
+msgid "Su_btitle:"
+msgstr "_Titulek:"
+
+#: ../data/ui/position-transform-dialog.ui.h:10
+msgid "Co_rrection:"
+msgstr "Úpr_ava:"
+
+#: ../data/ui/position-transform-dialog.ui.h:11
+msgid "Pre_view Changes"
+msgstr "Náhled na z_měny"
+
+#: ../data/ui/position-transform-dialog.ui.h:13
+msgid "Transform se_lected subtitles"
+msgstr "Předělat vy_brané titulky"
+
+#: ../data/ui/position-transform-dialog.ui.h:14
+msgid "Transform c_urrent project"
+msgstr "Předělat _nynější projekt"
+
+#: ../data/ui/preferences-dialog.ui.h:3
+msgid "When opening files, try encodings in the following order:"
+msgstr "Při otevření souborů vyzkoušet kódování v následujícím pořadí:"
+
+#: ../data/ui/preferences-dialog.ui.h:4
+msgid "Curr_ent locale encoding"
+msgstr "Nyně_jší jazykové kódování"
+
+#: ../data/ui/preferences-dialog.ui.h:5
+msgid "_Fallback encodings:"
+msgstr "Zál_ožní kódování:"
+
+#: ../data/ui/preferences-dialog.ui.h:6
+msgid "Aut_o-detection"
+msgstr "_Automatické rozpoznání"
+
+#: ../data/ui/preferences-dialog.ui.h:7
+msgid "Encoding specified in the open dialog will always be tried first."
+msgstr "Kódování zadané v dialogu Otevřít bude vždy vyzkoušeno jako první."
+
+#: ../data/ui/preferences-dialog.ui.h:8
+msgid "File"
+msgstr "Soubor"
+
+#: ../data/ui/preferences-dialog.ui.h:9
+msgid "Font"
+msgstr "Písmo"
+
+#: ../data/ui/preferences-dialog.ui.h:10
+msgid "Use _default theme font"
+msgstr "Použít písmo _výchozího tématu"
+
+#: ../data/ui/preferences-dialog.ui.h:11
+msgid "_Editor font:"
+msgstr "Písmo _editoru:"
+
+#: ../data/ui/preferences-dialog.ui.h:12
+msgid "Pick the Editor Font"
+msgstr "Vybrat písmo editoru"
+
+#: ../data/ui/preferences-dialog.ui.h:13
+msgid "Line Lengths"
+msgstr "Délky řádků"
+
+#: ../data/ui/preferences-dialog.ui.h:14
+msgid "_Show line lengths in list cells"
+msgstr "_Ukázat délky řádků v buňkách seznamu"
+
+#: ../data/ui/preferences-dialog.ui.h:15
+msgid "S_how line lengths in editable text fields"
+msgstr "U_kázat délky řádků v upravitelných polích"
+
+#: ../data/ui/preferences-dialog.ui.h:16
+msgid "_Length unit:"
+msgstr "Jednotka _délky:"
+
+#: ../data/ui/preferences-dialog.ui.h:17
+msgid "Spell-Check"
+msgstr "Ověření správného psaní"
+
+#: ../data/ui/preferences-dialog.ui.h:18
+msgid "Chec_k spelling as you type"
+msgstr "Pravopis _ověřovat během psaní"
+
+#: ../data/ui/preferences-dialog.ui.h:19
+msgid "Editor"
+msgstr "Editor"
+
+#: ../data/ui/preferences-dialog.ui.h:20
+msgid "Video Player"
+msgstr "Přehrávač obrazového záznamu"
+
+#: ../data/ui/preferences-dialog.ui.h:21
+msgid "_Application:"
+msgstr "_Program:"
+
+#: ../data/ui/preferences-dialog.ui.h:22
+msgid "Co_mmand:"
+msgstr "Přík_az:"
+
+#: ../data/ui/preferences-dialog.ui.h:23
+msgid ""
+"Fields:\n"
+"$MILLISECONDS\n"
+"$SECONDS\n"
+"$SUBFILE\n"
+"$VIDEOFILE"
+msgstr ""
+"Pole:\n"
+"$MILLISECONDS\n"
+"$SECONDS\n"
+"$SUBFILE\n"
+"$VIDEOFILE"
+
+#: ../data/ui/preferences-dialog.ui.h:28
+msgid "Al_ways use UTF-8 character encoding"
+msgstr "Použít vždy kódování UTF-8"
+
+#: ../data/ui/preferences-dialog.ui.h:29
+msgid "Start Position"
+msgstr "Začáteční poloha"
+
+#: ../data/ui/preferences-dialog.ui.h:30
+msgid "_Offset:"
+msgstr "Po_sun:"
+
+#: ../data/ui/preferences-dialog.ui.h:31
+msgid "seconds before selection"
+msgstr "sekund před výběrem"
+
+#: ../data/ui/preferences-dialog.ui.h:32
+msgid "Preview"
+msgstr "Náhled"
+
+#: ../data/ui/preferences-dialog.ui.h:33
+msgid "A_vailable extensions:"
+msgstr "_Dostupná rozšíření:"
+
+#: ../data/ui/preferences-dialog.ui.h:34
+msgid "Get more extensions"
+msgstr "Získat více rozšíření"
+
+#: ../data/ui/preferences-dialog.ui.h:35
+msgid "Extensions"
+msgstr "Rozšíření"
+
+#: ../data/ui/preview-error-dialog.ui.h:1
+msgid "Preview in video player failed"
+msgstr "Náhled v přehrávači videa se nezdařil"
+
+#: ../data/ui/preview-error-dialog.ui.h:2
+msgid "O_utput:"
+msgstr "_Výstup:"
+
+#: ../data/ui/search-dialog.ui.h:1
+msgid "Find And Replace"
+msgstr "Najít a nahradit"
+
+#: ../data/ui/search-dialog.ui.h:2
+msgid "_Search for:"
+msgstr "_Hledat:"
+
+#: ../data/ui/search-dialog.ui.h:3 ../data/ui/spell-check-dialog.ui.h:12
+msgid "Replace _with:"
+msgstr "_Nahradit:"
+
+#: ../data/ui/search-dialog.ui.h:4 ../gaupol/actions/search.py:54
+msgid "Find _Next"
+msgstr "Najít _další"
+
+#: ../data/ui/search-dialog.ui.h:5
+msgid "Find _Previous"
+msgstr "Najít _předchozí"
+
+#: ../data/ui/search-dialog.ui.h:6 ../data/ui/spell-check-dialog.ui.h:7
+#: ../gaupol/dialogs/multi_save.py:135
+msgid "_Replace"
+msgstr "_Nahradit"
+
+#: ../data/ui/search-dialog.ui.h:7
+msgid "Replace _All"
+msgstr "Nahradit _vše"
+
+#: ../data/ui/search-dialog.ui.h:8
+msgid "R_egular expression"
+msgstr "_Regulární výraz"
+
+#: ../data/ui/search-dialog.ui.h:9
+msgid "_Ignore case"
+msgstr "_Přehlížet psaní velkých/malých písmen"
+
+#: ../data/ui/search-dialog.ui.h:10 ../gaupol/actions/search.py:36
+msgid "Find"
+msgstr "Najít"
+
+#: ../data/ui/search-dialog.ui.h:11
+msgid "Columns"
+msgstr "Sloupce"
+
+#: ../data/ui/search-dialog.ui.h:12
+msgid "Find in _main text column"
+msgstr "Najít v _hlavním textovém sloupci"
+
+#: ../data/ui/search-dialog.ui.h:13
+msgid "Find in _translation text column"
+msgstr "Najít v _překladovém textovém sloupci"
+
+#: ../data/ui/search-dialog.ui.h:15
+msgid "Find in c_urrent project"
+msgstr "Najít v _nynějším projektu"
+
+#: ../data/ui/search-dialog.ui.h:16
+msgid "Find in _all open projects"
+msgstr "Najít ve _všech otevřených projektech"
+
+#: ../data/ui/search-dialog.ui.h:17
+msgid "Target"
+msgstr "Cíl"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:1
+msgid "Speech Recognition"
+msgstr "Rozpoznávání řeči"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:2
+msgid "S_tart"
+msgstr "_Spustit"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:3
+msgid "Video or Audio Source"
+msgstr "Obrazový nebo zvukový zdroj"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:4
+msgid "_File:"
+msgstr "_Soubor:"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:5
+msgid "Select a Video or Audio File"
+msgstr "Vybrat obrazový nebo zvukový soubor"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:6
+msgid "Voice Recognition"
+msgstr "Rozpoznávání hlasu"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:7
+msgid "_Noise level:"
+msgstr "Úroveň š_umu:"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:8
+msgid "Sil_ence length:"
+msgstr "Délka _ticha:"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:9
+msgid "A_dvance length:"
+msgstr "Délka _pohybu vpřed:"
+
+#. Milliseconds
+#: ../data/ui/speech-recognition-dialog.ui.h:11
+msgid "ms"
+msgstr "ms"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:12
+msgid "_Use default models"
+msgstr "_Použít výchozí modely"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:13
+msgid "_Acoustic model:"
+msgstr "_Akustický model:"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:14
+msgid "_Phonetic dictionary:"
+msgstr "_Fonetický slovník:"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:15
+msgid "_Language model:"
+msgstr "_Jazykový model:"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:16
+msgid "Select an Acoustic Model Directory"
+msgstr "Vybrat adresář s akustickým modelem"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:17
+msgid "Select a Phonetic Dictionary File"
+msgstr "Vybrat soubor s fonetickým slovníkem"
+
+#: ../data/ui/speech-recognition-dialog.ui.h:18
+msgid "Select a Language Model File"
+msgstr "Vybrat soubor s jazykovým modelem"
+
+#: ../data/ui/spell-check-dialog.ui.h:1
+msgid "Check Spelling"
+msgstr "Ověřit pravopis"
+
+#: ../data/ui/spell-check-dialog.ui.h:2
+msgid "Join _Back"
+msgstr "Spojit _zpět"
+
+#: ../data/ui/spell-check-dialog.ui.h:3
+msgid "Join _Forward"
+msgstr "Spojit _vpřed"
+
+#: ../data/ui/spell-check-dialog.ui.h:4 ../gaupol/actions/menu.py:33
+msgid "_Edit"
+msgstr "Úp_ravy"
+
+#: ../data/ui/spell-check-dialog.ui.h:5
+msgid "_Ignore"
+msgstr "_Přehlížet"
+
+#: ../data/ui/spell-check-dialog.ui.h:6
+msgid "Ig_nore All"
+msgstr "Přehlížet _vše"
+
+#: ../data/ui/spell-check-dialog.ui.h:8
+msgid "Rep_lace All"
+msgstr "_Nahradit vše"
+
+#: ../data/ui/spell-check-dialog.ui.h:9
+msgid "_Add"
+msgstr "_Přidat"
+
+#: ../data/ui/spell-check-dialog.ui.h:10
+msgid "Language:"
+msgstr "Jazyk:"
+
+#: ../data/ui/spell-check-dialog.ui.h:11
+msgid "_Suggestions:"
+msgstr "Náv_rhy:"
+
+#: ../data/ui/split-dialog.ui.h:1
+msgid "Split Project"
+msgstr "Rozdělit projekt"
+
+#: ../data/ui/split-dialog.ui.h:2
+msgid "_Split"
+msgstr "_Rozdělit"
+
+#: ../data/ui/split-dialog.ui.h:3
+msgid "_First subtitle of new project:"
+msgstr "_První titulek nového projektu:"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:1
+msgid "S_elect parts to capitalize:"
+msgstr "Vybrat čás_ti, které se napíší velkými písmeny:"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:2
+#: ../data/ui/text-assistant/common-error-page.ui.h:2
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:2
+#: ../data/ui/text-assistant/line-break-page.ui.h:2
+msgid "_Script:"
+msgstr "_Skript:"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:3
+#: ../data/ui/text-assistant/common-error-page.ui.h:3
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:3
+#: ../data/ui/text-assistant/join-split-page.ui.h:2
+#: ../data/ui/text-assistant/line-break-page.ui.h:3
+msgid "_Language:"
+msgstr "_Jazyk:"
+
+#: ../data/ui/text-assistant/capitalization-page.ui.h:4
+#: ../data/ui/text-assistant/common-error-page.ui.h:4
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:4
+#: ../data/ui/text-assistant/line-break-page.ui.h:4
+msgid "Co_untry:"
+msgstr "Ze_mě:"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:1
+msgid "S_elect errors to correct:"
+msgstr "Vybrat _chyby k opravě:"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:5
+msgid "Error types:"
+msgstr "Typy chyb:"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:6
+msgid "_Human errors"
+msgstr "Chyby _uživatele"
+
+#: ../data/ui/text-assistant/common-error-page.ui.h:7
+msgid "_Image recognition errors"
+msgstr "Chyby rozpoznání _obrázku"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:1
+msgid "Acc_ept, discard or edit changes:"
+msgstr "_Potvrdit, zamítnout nebo upravit změny:"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:2
+msgid "_Mark All"
+msgstr "_Označit vše"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:3
+msgid "_Unmark All"
+msgstr "O_dznačit vše"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:4
+#: ../gaupol/actions/position.py:68
+msgid "_Preview"
+msgstr "_Náhled"
+
+#: ../data/ui/text-assistant/confirmation-page.ui.h:5
+msgid "_Remove all blank subtitles"
+msgstr "Ode_brat všechny prázdné titulky"
+
+#: ../data/ui/text-assistant/hearing-impaired-page.ui.h:1
+msgid "S_elect parts to remove:"
+msgstr "_Vybrat části, které se odstraní:"
+
+#: ../data/ui/text-assistant/introduction-page.ui.h:1
+msgid "_Select corrections to perform on texts:"
+msgstr "Vybrat _opravy, které se použijí na texty:"
+
+#: ../data/ui/text-assistant/introduction-page.ui.h:2
+msgid "Colu_mns:"
+msgstr "Slou_pce:"
+
+#: ../data/ui/text-assistant/introduction-page.ui.h:3
+msgid "S_ubtitles:"
+msgstr "T_itulky:"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:1
+msgid "Spell-Check Dictionary"
+msgstr "Slovník pro ověřování správného psaní"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:3
+msgid "Corrections"
+msgstr "Opravy"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:4
+msgid "_Join words not found in spell-check dictionary"
+msgstr ""
+"_Spojit slova, která nebyla nalezena ve slovníku pro ověřování správného psaní"
+
+#: ../data/ui/text-assistant/join-split-page.ui.h:5
+msgid "_Split words not found in spell-check dictionary"
+msgstr ""
+"_Rozdělit slova, která nebyla nalezena ve slovníku pro ověřování správného "
+"psaní"
+
+#: ../data/ui/text-assistant/line-break-options-page.ui.h:2
+msgid "_Maximum line length:"
+msgstr "_Největší délka řádku:"
+
+#: ../data/ui/text-assistant/line-break-options-page.ui.h:3
+msgid "_Preferred maximum amount of lines:"
+msgstr "_Upřednostňovaný největší počet řádků:"
+
+#: ../data/ui/text-assistant/line-break-options-page.ui.h:5
+msgid "_Skip subtitles with maximum line length of:"
+msgstr "Přeskočit _titulky, které mají následující největší délku řádku:"
+
+#: ../data/ui/text-assistant/line-break-options-page.ui.h:6
+msgid "S_kip subtitles with maximum line amount of:"
+msgstr "Př_eskočit titulky, které mají následující největší počet řádků:"
+
+#: ../data/ui/text-assistant/line-break-page.ui.h:1
+msgid "S_elect preferred line-break points:"
+msgstr "V_ybrat upřednostňované body zalomení řádků:"
+
+#: ../data/extensions/bookmarks/bookmarks.extension.in.h:1
+#: ../data/extensions/bookmarks/bookmarks.py:514
+msgid "Bookmarks"
+msgstr "Záložky"
+
+#: ../data/extensions/bookmarks/bookmarks.extension.in.h:2
+msgid "Marking subtitles for easy navigation"
+msgstr "Označit titulky pro jednoduchý pohyb"
+
+#: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:1
+msgid "Custom Framerates"
+msgstr "Vlastní rychlosti opakování obrázků"
+
+#: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:2
+msgid "Allow use of non-standard framerates"
+msgstr "Povolit užití nestandardních rychlostí opakování obrázků"
+
+#: ../data/extensions/side-pane/side-pane.extension.in.h:1
+msgid "Side Pane"
+msgstr "Postranní oblast"
+
+#: ../data/extensions/side-pane/side-pane.extension.in.h:2
+msgid "A side pane that can be used by other extensions"
+msgstr "Postranní oblast, kterou lze využít jinými rozšířeními"
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:1
+msgid "Period after title"
+msgstr "Tečka za titulem"
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:2
+msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
+msgstr "Přidat tečku za zkrácený titul, jako jsou například „Mgr“ a „Dr“"
+
+#: ../data/patterns/Latn-en.capitalization.in.h:1
+msgid "First person pronoun"
+msgstr "Zájmeno první osoby"
+
+#: ../data/patterns/Latn-en.capitalization.in.h:2
+msgid "Capitalize the first person pronoun \"I\""
+msgstr "Velké písmeno u zájmena první osoby (v angličtině „I“)"
+
+#: ../data/patterns/Latn-en.common-error.in.h:1
+msgid "Letter \"I\" in a lower case word"
+msgstr "Písmeno „I“ ve slově napsaném malými písmeny"
+
+#: ../data/patterns/Latn-en.common-error.in.h:2
+msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
+msgstr "Nahradit písmeno „I“ písmenem \"l\" ve slově napsaném malými písmeny"
+
+#: ../data/patterns/Latn-en.common-error.in.h:3
+msgid "Letter \"l\" in an upper case word"
+msgstr "Písmeno „l“ ve slově napsaném velkými písmeny"
+
+#: ../data/patterns/Latn-en.common-error.in.h:4
+msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
+msgstr "Nahradit písmeno „l“ písmenem \"I\"ve slově napsaném velkými písmeny"
+
+#: ../data/patterns/Latn-en.common-error.in.h:5
+msgid "Zero in an upper case word"
+msgstr "Nula ve slově napsaném velkými písmeny"
+
+#: ../data/patterns/Latn-en.common-error.in.h:6
+msgid "Replace zero with letter \"O\" in an upper case word"
+msgstr "Nahradí nulu za písmeno „O“ ve slově napsaném velkými písmeny"
+
+#: ../data/patterns/Latn-en.common-error.in.h:7
+msgid "Spaces around an apostrophe"
+msgstr "Mezery kolem odsuvníků (apostrofů)"
+
+#: ../data/patterns/Latn-en.common-error.in.h:8
+msgid "Remove spaces around an apostrophe"
+msgstr "Odstranit mezery kolem odsuvníků (apostrofů)"
+
+#: ../data/patterns/Latn-en.common-error.in.h:9
+msgid "Okay"
+msgstr "Okay"
+
+#: ../data/patterns/Latn-en.common-error.in.h:10
+msgid "Convert various two-letter spellings of okay to \"OK\""
+msgstr "Převést různé dvoupísmenné pravopisy slova „okay“ na „OK“"
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:1
+msgid "Uppercase speaker before a colon"
+msgstr "Mluvčí psaný velkými písmeny před dvojtečkou"
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:2
+msgid ""
+"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+msgstr ""
+"Nahradit jméno mluvčího psané velkými písmeny před dvojtečkou začínající "
+"velkým písmenem za "
+"dialogovou pomlčku"
+
+#: ../data/patterns/Latn-en.line-break.in.h:1
+msgid "Title"
+msgstr "Titul"
+
+#: ../data/patterns/Latn-en.line-break.in.h:2
+msgid "Do not break after a title, e.g.\" Dr.\""
+msgstr "Nezalamovat po titulu, např. \"Dr.\""
+
+#: ../data/patterns/Latn-en.line-break.in.h:3
+msgid "Article"
+msgstr "Článek"
+
+#: ../data/patterns/Latn-en.line-break.in.h:4
+msgid "Do not break after an article"
+msgstr "Nezalamovat po článku"
+
+#: ../data/patterns/Latn-en.line-break.in.h:5
+msgid "Preposition"
+msgstr "Zájmeno"
+
+#: ../data/patterns/Latn-en.line-break.in.h:6
+msgid "Do not break after a preposition"
+msgstr "Nezalamovat po zájmenu"
+
+#: ../data/patterns/Latn-en.line-break.in.h:7
+msgid "Possessive determiner"
+msgstr "Přivlastňovací zájmeno"
+
+#: ../data/patterns/Latn-en.line-break.in.h:8
+msgid "Do not break after a possessive determiner, e.g. \"my\""
+msgstr "Nezalamovat po přivlastňovacím zájmenu, např. \"my\""
+
+#: ../data/patterns/Latn-fi.common-error.in.h:1
+#: ../data/patterns/Latn.common-error.in.h:15
+msgid "Space after punctuation marks"
+msgstr "Mezera za interpunkčními znaménky"
+
+#: ../data/patterns/Latn-fi.common-error.in.h:2
+#: ../data/patterns/Latn.common-error.in.h:16
+msgid "Add space after various punctuation marks"
+msgstr "Přidat mezeru za různá interpunkční znaménka"
+
+#: ../data/patterns/Latn-fr.common-error.in.h:1
+msgid "Spaces around guillemets"
+msgstr "Mezery kolem francouzských uvozovek"
+
+#: ../data/patterns/Latn-fr.common-error.in.h:2
+msgid "Add spaces around guillemets"
+msgstr "Přidat mezery kolem francouzských uvozovek"
+
+#: ../data/patterns/Latn-fr.common-error.in.h:3
+#: ../data/patterns/Latn.common-error.in.h:13
+msgid "Space before punctuation marks"
+msgstr "Mezera před interpunkčními znaménky"
+
+#: ../data/patterns/Latn-fr.common-error.in.h:4
+msgid "Add or remove space before various punctuation marks"
+msgstr "Přidat nebo odstranit mezeru před různými interpunkčními znaménky"
+
+#: ../data/patterns/Latn.capitalization.in.h:1
+msgid "Sentence"
+msgstr "Věta"
+
+#: ../data/patterns/Latn.capitalization.in.h:2
+msgid "Capitalize the first word of a sentence"
+msgstr "Nastavit velké písmeno u prvního slova věty"
+
+#: ../data/patterns/Latn.capitalization.in.h:3
+msgid "Ellipsis"
+msgstr "Výpustka"
+
+#: ../data/patterns/Latn.capitalization.in.h:4
+msgid "Capitalize after an ellipsis"
+msgstr "Nastavit velké písmeno  u slova za výpustkou"
+
+#: ../data/patterns/Latn.common-error.in.h:1
+msgid "Spelling of a.m. and p.m."
+msgstr "Způsob psaní a.m. a p.m."
+
+#: ../data/patterns/Latn.common-error.in.h:2
+msgid ""
+"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgstr ""
+"Změnit různé způsoby psaní 12 hodinových údobí na »a.m.« a "
+"»p.m.«"
+
+#: ../data/patterns/Latn.common-error.in.h:3
+msgid "Letter \"O\" in a number"
+msgstr "Písmeno „O“ uprostřed čísla"
+
+#: ../data/patterns/Latn.common-error.in.h:4
+msgid "Replace letter \"O\" with a zero in a number"
+msgstr "Nahradit uprostřed čísel písmeno „O“ za nulu"
+
+#: ../data/patterns/Latn.common-error.in.h:5
+msgid "Space between number and unit"
+msgstr "Mezera mezi číslem a jednotkou"
+
+#: ../data/patterns/Latn.common-error.in.h:6
+msgid "Add or remove space between a number and the associated unit"
+msgstr "Přidat nebo odstranit mezeru mezi číslem a k němu patřící jednotkou"
+
+#: ../data/patterns/Latn.common-error.in.h:7
+msgid "Double apostrophe"
+msgstr "Dvojitý odsuvník (apostrof)"
+
+#: ../data/patterns/Latn.common-error.in.h:8
+msgid "Replace a double apostrophe with a quotation mark"
+msgstr "Nahradit dvojitý odsuvník (apostrof) za uvozovku"
+
+#: ../data/patterns/Latn.common-error.in.h:9
+msgid "Spaces around brackets"
+msgstr "Mezery kolem závorek"
+
+#: ../data/patterns/Latn.common-error.in.h:10
+msgid "Add or remove spaces around parantheses and square brackets"
+msgstr "Přidat nebo odstranit mezery kolem kulatých nebo hranatých závorek"
+
+#: ../data/patterns/Latn.common-error.in.h:11
+msgid "Space after a dialogue dash"
+msgstr "Mezera za v dialogovou odrážkou"
+
+#: ../data/patterns/Latn.common-error.in.h:12
+msgid "Add space after a dialogue dash"
+msgstr "Přidat mezeru za dialogovou pomlčku."
+
+#: ../data/patterns/Latn.common-error.in.h:14
+msgid "Remove space before various punctuation marks"
+msgstr "Odstranit mezeru před různými interpunkčními znaménky"
+
+#: ../data/patterns/Latn.common-error.in.h:17
+msgid "Space after an ellipsis"
+msgstr "Mezera za výpustkou"
+
+#: ../data/patterns/Latn.common-error.in.h:18
+msgid "Add space after an ellipsis"
+msgstr "Přidat mezeru za výpustku"
+
+#: ../data/patterns/Latn.common-error.in.h:19
+msgid "Space after a starting ellipsis"
+msgstr "Mezera za počáteční výpustkou"
+
+#: ../data/patterns/Latn.common-error.in.h:20
+msgid "Remove space after an ellipsis that starts a line"
+msgstr "Odstranit mezeru za výpustkou na začátku řádku"
+
+#: ../data/patterns/Latn.common-error.in.h:21
+msgid "Spaces around a quotation mark"
+msgstr "Mezery kolem uvozovek"
+
+#: ../data/patterns/Latn.common-error.in.h:22
+msgid "Remove space after a starting- and before an ending quotation mark"
+msgstr "Odstranit mezeru po otevírací uvozovce a před uzavírací uvozovkou"
+
+#: ../data/patterns/Latn.common-error.in.h:23
+msgid "Multiple question- and exclamation marks"
+msgstr "Více otazníků a vykřičníků najednou"
+
+#: ../data/patterns/Latn.common-error.in.h:24
+msgid ""
+"Replace multiple consequtive question- and exclamation marks with only one"
+msgstr "Nahradit vícenásobné otazníky a vykřičníky za jeden"
+
+#: ../data/patterns/Latn.common-error.in.h:25
+msgid "Periods around a punctuation mark"
+msgstr "Tečka vedle interpunkčního znaménka"
+
+#: ../data/patterns/Latn.common-error.in.h:26
+msgid "Remove period before or after various punctuation marks"
+msgstr "Odstranit tečku před nebo za různými interpunkčními znaménky"
+
+#: ../data/patterns/Latn.common-error.in.h:27
+msgid "Terminating double-dashes"
+msgstr "Závěrečné dvojité pomlčky"
+
+#: ../data/patterns/Latn.common-error.in.h:28
+msgid "Replace a single clause-terminating dash with two dashes"
+msgstr "Nahradit jednu uzavírající větnou pomlčku dvěma pomlčkami"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:1
+msgid "Sound in brackets"
+msgstr "Zvuk v hranatých závorkách"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:2
+msgid "Remove description of a sound between square brackets"
+msgstr "Odstranit popis zvuku v hranatých závorkách"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:3
+msgid "Sound in parantheses"
+msgstr "Zvuk v kulatých závorkách"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:4
+msgid "Remove description of a sound between parantheses"
+msgstr "Odstranit popis zvuku v kulatých závorkách"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:5
+msgid "Song lyrics between number signs"
+msgstr "Text písně mezi mezi dvojitými křížky"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:6
+msgid "Remove song lyrics starting with or between number signs"
+msgstr ""
+"Odstranit text písně začínající nebo nacházející se mezi dvojitými křížky"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:7
+msgid "One-line song lyrics between number signs"
+msgstr "Jednořádkový text písně mezi dvojitými křížky"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:8
+msgid "Remove one-line song lyrics starting with or between number signs"
+msgstr ""
+"Odstranit jednořádkový text písně začínající nebo nacházející se mezi "
+"symboly dvojitých křížků"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:9
+msgid "Speaker before a colon"
+msgstr "Mluvčí před dvojtečkou"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:10
+msgid "Replace the name of the speaker before a colon with a dialogue dash"
+msgstr "Nahradit jméno mluvčího před dvojtečkou za dialogovou odrážku"
+
+#: ../data/patterns/Latn.line-break.in.h:1
+msgid "Dialogue"
+msgstr "Dialog"
+
+#: ../data/patterns/Latn.line-break.in.h:2
+msgid "Break according to dialogue separated by dashes"
+msgstr "Zalomení odpovídající dialogu odděleno pomlčkami"
+
+#: ../data/patterns/Latn.line-break.in.h:3
+msgid "Clause"
+msgstr "Větný člen"
+
+#: ../data/patterns/Latn.line-break.in.h:4
+msgid "Break according to clauses terminated by a punctuation mark"
+msgstr "Zalomení odpovídající větným členům ukončené interpunkčním znaménkem"
+
+#: ../data/patterns/Latn.line-break.in.h:5
+msgid "Number and unit"
+msgstr "Číslo a jednotka"
+
+#: ../data/patterns/Latn.line-break.in.h:6
+msgid "Do not break between a number and associated unit"
+msgstr "Nezalamovat mezi číslem a s ním spojenou jednotkou"
+
+#: ../data/patterns/Zyyy.common-error.in.h:1
+msgid "Leading and trailing spaces"
+msgstr "Mezery na začátku a na konci"
+
+#: ../data/patterns/Zyyy.common-error.in.h:2
+msgid "Remove spaces from the beginning and end of lines"
+msgstr "Odstranit mezery ze začátku a konce řádku"
+
+#: ../data/patterns/Zyyy.common-error.in.h:3
+msgid "Multiple consecutive spaces"
+msgstr "Několik po sobě jdoucích mezer"
+
+#: ../data/patterns/Zyyy.common-error.in.h:4
+msgid "Replace multiple consecutive spaces with only one"
+msgstr "Nahradit více po sobě jdoucích mezer jen jednou"
+
+#: ../data/patterns/Zyyy.common-error.in.h:5
+msgid "Space between digits"
+msgstr "Mezery mezi číslicemi"
+
+#: ../data/patterns/Zyyy.common-error.in.h:6
+msgid "Remove space between digits of a number"
+msgstr "Odstranit mezery mezi číslicemi v čísle"
+
+#. system of fallback fonts to provide missing characters.
+#: ../data/patterns/Zyyy.common-error.in.h:8
+msgid "Musical notes"
+msgstr "Hudební noty"
+
+#: ../data/patterns/Zyyy.common-error.in.h:9
+msgid "Replace Unicode musical note characters with number signs"
+msgstr "Nahradit znaky Unicode hudebních not dvojitými křížky"
+
+#: ../aeidon/agents/clipboard.py:59
+msgid "Cutting texts"
+msgstr "Vyjmout texty"
+
+#: ../aeidon/agents/clipboard.py:82
+msgid "Pasting texts"
+msgstr "Vložit texty"
+
+#: ../aeidon/agents/edit.py:58 ../aeidon/agents/edit.py:93
+msgid "Inserting subtitles"
+msgstr "Vložit titulky"
+
+#: ../aeidon/agents/edit.py:74
+msgid "Clearing texts"
+msgstr "Uklidit texty"
+
+#: ../aeidon/agents/edit.py:118
+msgid "Merging subtitles"
+msgstr "Sloučit titulky"
+
+#: ../aeidon/agents/edit.py:133
+msgid "Removing subtitles"
+msgstr "Odstranit titulky"
+
+#: ../aeidon/agents/edit.py:155
+msgid "Replacing positions"
+msgstr "Nahradit polohy"
+
+#: ../aeidon/agents/edit.py:176
+msgid "Replacing texts"
+msgstr "Nahradit texty"
+
+#: ../aeidon/agents/edit.py:204
+msgid "Splitting subtitle"
+msgstr "Rozdělit titulky"
+
+#: ../aeidon/agents/format.py:98
+msgid "Adding dialogue dashes"
+msgstr "Přidat pomlčky"
+
+#: ../aeidon/agents/format.py:122
+msgid "Changing case"
+msgstr "Psát velká/malá písmena"
+
+#: ../aeidon/agents/format.py:141
+msgid "Italicizing"
+msgstr "Sázet kurzívou"
+
+#: ../aeidon/agents/format.py:161
+msgid "Removing dialogue dashes"
+msgstr "Odstranit pomlčky"
+
+#: ../aeidon/agents/format.py:203
+msgid "Unitalicizing"
+msgstr "Napřímit písmo"
+
+#: ../aeidon/agents/position.py:145
+msgid "Adjusting durations"
+msgstr "Upravit doby trvání"
+
+#: ../aeidon/agents/position.py:173
+msgid "Converting framerate"
+msgstr "Převést rychlost opakování obrázků"
+
+#: ../aeidon/agents/position.py:186
+msgid "Setting framerate"
+msgstr "Nastavení rychlosti opakování obrázků"
+
+#: ../aeidon/agents/position.py:210
+msgid "Shifting positions"
+msgstr "Posunout polohy"
+
+#: ../aeidon/agents/position.py:240
+msgid "Transforming positions"
+msgstr "Předělat polohy"
+
+#: ../aeidon/agents/search.py:268
+msgid "Replacing"
+msgstr "Nahradit"
+
+#: ../aeidon/agents/search.py:297 ../aeidon/agents/search.py:299
+msgid "Replacing all"
+msgstr "Nahradit vše"
+
+#: ../aeidon/agents/set.py:64 ../aeidon/agents/set.py:89
+#: ../aeidon/agents/set.py:132
+msgid "Editing position"
+msgstr "Upravit polohu"
+
+#: ../aeidon/agents/set.py:151
+msgid "Editing text"
+msgstr "Upravit text"
+
+#: ../aeidon/agents/text.py:209
+msgid "Breaking lines"
+msgstr "Zalomit řádky"
+
+#: ../aeidon/agents/text.py:253
+msgid "Capitalizing texts"
+msgstr "Psát texty velkým písmem"
+
+#: ../aeidon/agents/text.py:290
+msgid "Correcting common errors"
+msgstr "Opravit běžné chyby"
+
+#: ../aeidon/agents/text.py:325
+msgid "Removing hearing impaired texts"
+msgstr "Odstranit texty pro sluchově postižené"
+
+#: ../aeidon/agents/text.py:384
+msgid "Joining words by spell-check suggestions"
+msgstr "Spojit slova podle návrhů správného psaní"
+
+#: ../aeidon/agents/text.py:437
+msgid "Splitting words by spell-check suggestions"
+msgstr "Rozdělit slova podle návrhů správného psaní"
+
+#. Translators: Most of the character encoding descriptions are copied from
+#. gedit, which is translated to very many languages. Check the gedit .po
+#. files for a reference: <http://git.gnome.org/cgit/gedit/tree/po/>.
+#: ../aeidon/encodings.py:39 ../aeidon/encodings.py:42 ../aeidon/encodings.py:44
+msgid "English"
+msgstr "Angličtina"
+
+#: ../aeidon/encodings.py:40 ../aeidon/encodings.py:41 ../aeidon/encodings.py:66
+msgid "Chinese traditional"
+msgstr "Tradiční čínština"
+
+#: ../aeidon/encodings.py:43 ../aeidon/encodings.py:52
+#: ../aeidon/encodings.py:56 ../aeidon/encodings.py:75
+#: ../aeidon/encodings.py:101
+msgid "Hebrew"
+msgstr "Hebrejština"
+
+#: ../aeidon/encodings.py:45 ../aeidon/encodings.py:49
+#: ../aeidon/encodings.py:69 ../aeidon/encodings.py:72
+#: ../aeidon/encodings.py:94 ../aeidon/encodings.py:106
+#: ../aeidon/encodings.py:114
+msgid "Western"
+msgstr "Západní"
+
+#: ../aeidon/encodings.py:46 ../aeidon/encodings.py:58
+#: ../aeidon/encodings.py:76 ../aeidon/encodings.py:99
+msgid "Arabic"
+msgstr "Arabština"
+
+#: ../aeidon/encodings.py:47 ../aeidon/encodings.py:61
+#: ../aeidon/encodings.py:63 ../aeidon/encodings.py:73
+#: ../aeidon/encodings.py:100 ../aeidon/encodings.py:111
+msgid "Greek"
+msgstr "Řečtina"
+
+#: ../aeidon/encodings.py:48 ../aeidon/encodings.py:77
+#: ../aeidon/encodings.py:97 ../aeidon/encodings.py:104
+msgid "Baltic"
+msgstr "Baltské jazyky"
+
+#: ../aeidon/encodings.py:50 ../aeidon/encodings.py:70
+#: ../aeidon/encodings.py:95 ../aeidon/encodings.py:113
+msgid "Central European"
+msgstr "Středoevropské jazyky"
+
+#: ../aeidon/encodings.py:51 ../aeidon/encodings.py:71
+#: ../aeidon/encodings.py:98 ../aeidon/encodings.py:110
+msgid "Cyrillic"
+msgstr "Cyrilika"
+
+#: ../aeidon/encodings.py:53 ../aeidon/encodings.py:68
+#: ../aeidon/encodings.py:74 ../aeidon/encodings.py:102
+#: ../aeidon/encodings.py:115
+msgid "Turkish"
+msgstr "Turečtina"
+
+#: ../aeidon/encodings.py:54
+msgid "Portuguese"
+msgstr "Portugalština"
+
+#: ../aeidon/encodings.py:55 ../aeidon/encodings.py:112
+msgid "Icelandic"
+msgstr "Islandština"
+
+#: ../aeidon/encodings.py:57
+msgid "Canadian"
+msgstr "Kanadské"
+
+#: ../aeidon/encodings.py:59 ../aeidon/encodings.py:103
+msgid "Nordic"
+msgstr "Skandinávské jazyky"
+
+#: ../aeidon/encodings.py:60 ../aeidon/encodings.py:108
+msgid "Russian"
+msgstr "Ruština"
+
+#: ../aeidon/encodings.py:62
+msgid "Thai"
+msgstr "Thajština"
+
+#: ../aeidon/encodings.py:64 ../aeidon/encodings.py:79
+#: ../aeidon/encodings.py:80 ../aeidon/encodings.py:81
+#: ../aeidon/encodings.py:87 ../aeidon/encodings.py:88
+#: ../aeidon/encodings.py:89 ../aeidon/encodings.py:90
+#: ../aeidon/encodings.py:91 ../aeidon/encodings.py:92
+#: ../aeidon/encodings.py:117 ../aeidon/encodings.py:118
+#: ../aeidon/encodings.py:119
+msgid "Japanese"
+msgstr "Japonština"
+
+#: ../aeidon/encodings.py:65 ../aeidon/encodings.py:82
+#: ../aeidon/encodings.py:93 ../aeidon/encodings.py:107
+msgid "Korean"
+msgstr "Korejština"
+
+#: ../aeidon/encodings.py:67
+msgid "Urdu"
+msgstr "Urdština"
+
+#: ../aeidon/encodings.py:78
+msgid "Vietnamese"
+msgstr "Vietnamština"
+
+#: ../aeidon/encodings.py:83 ../aeidon/encodings.py:86
+msgid "Chinese simplified"
+msgstr "Zjednodušená čínština"
+
+#: ../aeidon/encodings.py:84 ../aeidon/encodings.py:85
+msgid "Chinese unified"
+msgstr "Sjednocená čínština"
+
+#: ../aeidon/encodings.py:96
+msgid "South European"
+msgstr "Jihoevropské jazyky"
+
+#: ../aeidon/encodings.py:105
+msgid "Celtic"
+msgstr "Keltština"
+
+#: ../aeidon/encodings.py:109
+msgid "Ukrainian"
+msgstr "Ukrajinština"
+
+#: ../aeidon/encodings.py:116
+msgid "Cyrillic Asian"
+msgstr "Asijská cyrilice"
+
+#: ../aeidon/encodings.py:120 ../aeidon/encodings.py:121
+#: ../aeidon/encodings.py:122 ../aeidon/encodings.py:123
+#: ../aeidon/encodings.py:124 ../aeidon/encodings.py:125
+#: ../aeidon/encodings.py:126 ../aeidon/encodings.py:127
+#: ../aeidon/encodings.py:128
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../aeidon/encodings.py:163
+msgid "{description} ({name})"
+msgstr "{description} ({name})"
+
+#: ../aeidon/encodings.py:272
+msgid "Current locale ({})"
+msgstr "Nynější kódování"
+
+#: ../aeidon/enums/align_methods.py:29 ../gaupol/enums/fields.py:32
+msgid "Subtitle number"
+msgstr "Číslo titulku"
+
+#: ../aeidon/enums/align_methods.py:34
+msgid "Subtitle position"
+msgstr "Poloha titulku"
+
+#: ../aeidon/enums/framerates.py:29
+msgid "23.976 fps"
+msgstr "23.976 fps"
+
+#: ../aeidon/enums/framerates.py:36
+msgid "24.000 fps"
+msgstr "24.000 fps"
+
+#: ../aeidon/enums/framerates.py:43
+msgid "25.000 fps"
+msgstr "25.000 fps"
+
+#: ../aeidon/enums/framerates.py:50
+msgid "29.970 fps"
+msgstr "29.970 fps"
+
+#: ../aeidon/enums/newlines.py:29
+msgid "Mac (classic)"
+msgstr "Mac (klasický)"
+
+#: ../aeidon/locales.py:72
+msgid "{language} ({country})"
+msgstr "{language} ({country})"
+
+#. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
+#. of a tree view column that contains 16 pixels wide icons.
+#: ../data/extensions/bookmarks/bookmarks.py:111
+#: ../data/extensions/bookmarks/bookmarks.py:116
+msgid "Bm."
+msgstr "Zál."
+
+#: ../data/extensions/bookmarks/bookmarks.py:117
+msgid "Bookmark"
+msgstr "Záložka"
+
+#: ../data/extensions/bookmarks/bookmarks.py:183
+msgid "_Bookmarks"
+msgstr "_Záložky"
+
+#: ../data/extensions/bookmarks/bookmarks.py:184
+msgid "_Add…"
+msgstr "_Přidat…"
+
+#: ../data/extensions/bookmarks/bookmarks.py:185
+msgid "Add a bookmark for the current subtitle"
+msgstr "Přidat záložku pro nynější titulek"
+
+#: ../data/extensions/bookmarks/bookmarks.py:187
+msgid "_Edit Bookmarks"
+msgstr "_Upravit záložky"
+
+#: ../data/extensions/bookmarks/bookmarks.py:190 ../gaupol/actions/view.py:33
+msgid "_Next"
+msgstr "_Další"
+
+#: ../data/extensions/bookmarks/bookmarks.py:191
+msgid "Go to the next bookmarked subtitle"
+msgstr "Jít na další záložkou označený titulek"
+
+#: ../data/extensions/bookmarks/bookmarks.py:193 ../gaupol/actions/view.py:52
+msgid "_Previous"
+msgstr "_Předchozí"
+
+#: ../data/extensions/bookmarks/bookmarks.py:194
+msgid "Go to the previous bookmarked subtitle"
+msgstr "Jít na předchozí záložkou označený titulek"
+
+#: ../data/extensions/bookmarks/bookmarks.py:198
+msgid "_Bookmark"
+msgstr "Zá_ložka"
+
+#: ../data/extensions/bookmarks/bookmarks.py:199
+msgid "Show or hide the bookmark column"
+msgstr "Ukázat nebo skrýt sloupec se záložkami"
+
+#: ../data/extensions/bookmarks/bookmarks.py:230
+msgid "Search:"
+msgstr "Hledat:"
+
+#: ../data/extensions/custom-framerates/custom-framerates.py:159
+msgid "Calculate nonnative units with a framerate of {:.3f} fps"
+msgstr "Spočítat nenativní jednotky s rychlostí opakování obrázků {:.3f} fps"
+
+#: ../data/extensions/custom-framerates/custom-framerates.py:174
+msgid "{:.3f} fps"
+msgstr "{:.3f} fps"
+
+#: ../data/extensions/side-pane/side-pane.py:345
+msgid "Si_de Pane"
+msgstr "_Postranní oblast"
+
+#: ../data/extensions/side-pane/side-pane.py:346
+msgid "Show or hide the side pane"
+msgstr "Ukázat nebo skrýt postranní oblast"
+
+#: ../data/gaupol.desktop.in.h:1
+msgid "Gaupol"
+msgstr "Gaupol"
+
+#: ../data/gaupol.desktop.in.h:2
+msgid "Subtitle Editor"
+msgstr "Editor titulků"
+
+#: ../data/gaupol.desktop.in.h:3
+msgid "Edit subtitle files"
+msgstr "Upravit soubory s titulky"
+
+#: ../data/gaupol.desktop.in.h:4
+msgid "Gaupol Subtitle Editor"
+msgstr "Editor titulků Gaupol"
+
+#: ../gaupol/actions/edit.py:37
+msgid "Clear the selected texts"
+msgstr "Uklidit vybrané texty"
+
+#: ../gaupol/actions/edit.py:57
+msgid "_Copy"
+msgstr "_Kopírovat"
+
+#: ../gaupol/actions/edit.py:59
+msgid "Copy the selected texts to the clipboard"
+msgstr "Kopírovat vybrané texty do schránky"
+
+#: ../gaupol/actions/edit.py:79
+msgid "Cu_t"
+msgstr "_Vyjmout"
+
+#: ../gaupol/actions/edit.py:81
+msgid "Cut the selected texts to the clipboard"
+msgstr "Vyjmout vybrané texty a zkopírovat je do schránky"
+
+#: ../gaupol/actions/edit.py:101
+msgid "_Preferences"
+msgstr "_Nastavení"
+
+#: ../gaupol/actions/edit.py:103
+msgid "Configure Gaupol"
+msgstr "Nastavit Gaupol"
+
+#: ../gaupol/actions/edit.py:114
+msgid "Edit _Next Cell"
+msgstr "Upravit _další buňku"
+
+#: ../gaupol/actions/edit.py:115
+msgid "Next"
+msgstr "Další"
+
+#: ../gaupol/actions/edit.py:117
+msgid "Edit the focused column of the next subtitle"
+msgstr "Upravit zaměřený sloupec dalšího titulku"
+
+#: ../gaupol/actions/edit.py:141
+msgid "_Edit Cell"
+msgstr "_Upravit buňku"
+
+#: ../gaupol/actions/edit.py:142
+msgid "Edit"
+msgstr "Upravit"
+
+#: ../gaupol/actions/edit.py:144
+msgid "Edit the focused cell"
+msgstr "Upravit zaměřenou buňku"
+
+#: ../gaupol/actions/edit.py:166
+msgid "Extend To _Beginning"
+msgstr "Rozšířit po _začátek"
+
+#: ../gaupol/actions/edit.py:167
+msgid "Extend the current selection up to the first subtitle"
+msgstr "Rozšířit nynější výběr až po první titulek"
+
+#: ../gaupol/actions/edit.py:187
+msgid "Extend To _End"
+msgstr "Rozšířit po _konec"
+
+#: ../gaupol/actions/edit.py:188
+msgid "Extend the current selection up to the last subtitle"
+msgstr "Rozšířit nynější výběr až po poslední titulek"
+
+#: ../gaupol/actions/edit.py:208
+msgid "_Insert Subtitles…"
+msgstr "_Vložit titulky..."
+
+#: ../gaupol/actions/edit.py:209
+msgid "Insert"
+msgstr "Vložit"
+
+#: ../gaupol/actions/edit.py:211
+msgid "Insert new subtitles"
+msgstr "Vložit nové titulky"
+
+#: ../gaupol/actions/edit.py:229
+msgid "_Invert Selection"
+msgstr "_Obrátit výběr"
+
+#: ../gaupol/actions/edit.py:230
+msgid "Invert the current selection"
+msgstr "Obrátit nynější výběr"
+
+#: ../gaupol/actions/edit.py:247
+msgid "_Merge Subtitles"
+msgstr "_Sloučit titulky"
+
+#: ../gaupol/actions/edit.py:248
+msgid "Merge the selected subtitles"
+msgstr "Sloučit vybrané titulky"
+
+#: ../gaupol/actions/edit.py:267
+msgid "_Paste"
+msgstr "V_ložit"
+
+#: ../gaupol/actions/edit.py:269
+msgid "Paste texts from the clipboard"
+msgstr "Vložit texty ze schránky"
+
+#: ../gaupol/actions/edit.py:292
+msgid "_Redo"
+msgstr "Z_novu"
+
+#: ../gaupol/actions/edit.py:294
+msgid "Redo the last undone action"
+msgstr "Znovu provést poslední krok vrácený zpět"
+
+#: ../gaupol/actions/edit.py:312
+msgid "Rem_ove Subtitles"
+msgstr "O_dstranit titulky"
+
+#: ../gaupol/actions/edit.py:313
+msgid "Remove"
+msgstr "Odstranit"
+
+#: ../gaupol/actions/edit.py:315
+msgid "Remove the selected subtitles"
+msgstr "Odstranit vybrané titulky"
+
+#: ../gaupol/actions/edit.py:332
+msgid "Select _All"
+msgstr "_Vybrat vše"
+
+#: ../gaupol/actions/edit.py:334
+msgid "Select all subtitles"
+msgstr "Vybrat všechny titulky"
+
+#: ../gaupol/actions/edit.py:351
+msgid "Sele_ction"
+msgstr "Vý_běr"
+
+#: ../gaupol/actions/edit.py:367
+msgid "_Split Subtitle"
+msgstr "_Rozdělit titulek"
+
+#: ../gaupol/actions/edit.py:368
+msgid "Split the selected subtitle"
+msgstr "Rozdělit vybraný titulek"
+
+#: ../gaupol/actions/edit.py:388
+msgid "_Undo"
+msgstr "_Zpět"
+
+#: ../gaupol/actions/edit.py:390
+msgid "Undo the last action"
+msgstr "Vrátit předchozí krok"
+
+#: ../gaupol/actions/file.py:35
+msgid "_Append File…"
+msgstr "_Připojit soubor…"
+
+#: ../gaupol/actions/file.py:37
+msgid "Append subtitles from file to the current project"
+msgstr "Přidat titulky ze souboru do nynějšího projektu"
+
+#: ../gaupol/actions/file.py:55
+msgid "_Close All"
+msgstr "_Zavřít vše"
+
+#: ../gaupol/actions/file.py:57
+msgid "Close all open projects"
+msgstr "Zavřít všechny otevřené projekty"
+
+#: ../gaupol/actions/file.py:73
+msgid "_Close"
+msgstr "_Zavřít"
+
+#: ../gaupol/actions/file.py:75
+msgid "Close the current project"
+msgstr "Zavřít nynější projekt"
+
+#: ../gaupol/actions/file.py:91
+msgid "_Headers"
+msgstr "_Záhlaví"
+
+#: ../gaupol/actions/file.py:93
+msgid "Edit file headers"
+msgstr "Upravit záhlaví souborů"
+
+#: ../gaupol/actions/file.py:117
+msgid "_New"
+msgstr "_Nový"
+
+#: ../gaupol/actions/file.py:119
+msgid "Create a new project"
+msgstr "Vytvořit nový projekt"
+
+#: ../gaupol/actions/file.py:134 ../gaupol/actions/file.py:152
+msgid "_Open…"
+msgstr "_Otevřít..."
+
+#: ../gaupol/actions/file.py:135 ../gaupol/actions/file.py:153
+#: ../gaupol/agents/open.py:148 ../gaupol/agents/open.py:156
+msgid "Open"
+msgstr "Otevřít"
+
+#: ../gaupol/actions/file.py:137 ../gaupol/actions/file.py:155
+msgid "Open main files"
+msgstr "Otevřít hlavní soubory"
+
+#: ../gaupol/actions/file.py:169
+msgid "Open _Recent"
+msgstr "Otevřít ne_dávný"
+
+#: ../gaupol/actions/file.py:183
+msgid "Open R_ecent Translation"
+msgstr "Otevřít _nynější překlad"
+
+#: ../gaupol/actions/file.py:198
+msgid "Open _Translation…"
+msgstr "Otevřít _překlad..."
+
+#: ../gaupol/actions/file.py:199 ../gaupol/agents/open.py:191
+msgid "Open Translation"
+msgstr "Otevřít překlad"
+
+#: ../gaupol/actions/file.py:201
+msgid "Open a translation file"
+msgstr "Otevřít překladový soubor"
+
+#: ../gaupol/actions/file.py:217
+msgid "_Quit"
+msgstr "_Ukončit"
+
+#: ../gaupol/actions/file.py:219
+msgid "Quit Gaupol"
+msgstr "Ukončit Gaupol"
+
+#: ../gaupol/actions/file.py:231
+msgid "_Save All"
+msgstr "_Uložit vše"
+
+#: ../gaupol/actions/file.py:233
+msgid "Save all open documents"
+msgstr "Uložit všechny otevřené dokumenty"
+
+#: ../gaupol/actions/file.py:249
+msgid "Save _All As…"
+msgstr "Uložit _vše jako…"
+
+#: ../gaupol/actions/file.py:251
+msgid "Save all open documents with different properties"
+msgstr "Uložit všechny otevřené dokumenty s rozdílnými vlastnostmi"
+
+#: ../gaupol/actions/file.py:270
+msgid "_Save"
+msgstr "_Uložit"
+
+#: ../gaupol/actions/file.py:272
+msgid "Save the current main document"
+msgstr "Uložit nynější hlavní dokument"
+
+#: ../gaupol/actions/file.py:288
+msgid "Save _As…"
+msgstr "Uložit _jako..."
+
+#: ../gaupol/actions/file.py:289 ../gaupol/agents/save.py:174
+msgid "Save As"
+msgstr "Uložit jako"
+
+#: ../gaupol/actions/file.py:291
+msgid "Save the current main document with a different name"
+msgstr "Uložit nynější hlavní dokument pod jiným názvem"
+
+#: ../gaupol/actions/file.py:309
+msgid "Save Trans_lation"
+msgstr "Uložit přek_lad"
+
+#: ../gaupol/actions/file.py:311
+msgid "Save the current translation document"
+msgstr "Uložit nynější překladový dokument"
+
+#: ../gaupol/actions/file.py:327
+msgid "Save Translat_ion As…"
+msgstr "Uložit pře_klad jako…"
+
+#: ../gaupol/actions/file.py:328 ../gaupol/agents/save.py:210
+msgid "Save Translation As"
+msgstr "Uložit překlad jako"
+
+#: ../gaupol/actions/file.py:330
+msgid "Save the current translation document with a different name"
+msgstr "Uložit nynější hlavní překladový dokument pod jiným názvem"
+
+#: ../gaupol/actions/file.py:348
+msgid "Select _Video…"
+msgstr "Vybrat _obrazový záznam…"
+
+#: ../gaupol/actions/file.py:349
+msgid "Video"
+msgstr "Video"
+
+#: ../gaupol/actions/file.py:351
+msgid "Select a video file"
+msgstr "Vybrat obrazový soubor"
+
+#: ../gaupol/actions/file.py:368
+msgid "Spli_t Project…"
+msgstr "Roz_dělit projekt…"
+
+#: ../gaupol/actions/file.py:369
+msgid "Split the current project in two"
+msgstr "Rozdělit nynější projekt na dva"
+
+#: ../gaupol/actions/format.py:35
+msgid "Ca_se"
+msgstr "Velikost _písmen"
+
+#: ../gaupol/actions/format.py:54
+msgid "_Dialogue"
+msgstr "_Dialog"
+
+#: ../gaupol/actions/format.py:55
+msgid "Add or remove dialogue dashes on the selected texts"
+msgstr "Přidat nebo odstranit dialogovou pomlčku ve vybraných textech"
+
+#: ../gaupol/actions/format.py:77
+msgid "_Italic"
+msgstr "_Kurzíva"
+
+#: ../gaupol/actions/format.py:79
+msgid "Italicize or unitalicize the selected texts"
+msgstr "Psát vybrané texty kurzívou nebo je kurzívou nepsat"
+
+#: ../gaupol/actions/format.py:103
+msgid "_Lower"
+msgstr "_Malá písmena"
+
+#: ../gaupol/actions/format.py:104
+msgid "Change the selected texts to lower case"
+msgstr "Změnit vybrané texty na malá písmena"
+
+#: ../gaupol/actions/format.py:123
+msgid "_Sentence"
+msgstr "_Věta"
+
+#: ../gaupol/actions/format.py:124
+msgid "Change the selected texts to sentence case"
+msgstr "Změnit vybrané texty na větně závislé psaní velkých písmen"
+
+#: ../gaupol/actions/format.py:143
+msgid "_Title"
+msgstr "_Název"
+
+#: ../gaupol/actions/format.py:144
+msgid "Change the selected texts to title case"
+msgstr "Změnit vybrané texty na slova s velkými počátečními písmeny"
+
+#: ../gaupol/actions/format.py:163
+msgid "_Upper"
+msgstr "_Velká písmena"
+
+#: ../gaupol/actions/format.py:164
+msgid "Change the selected texts to upper case"
+msgstr "Psát vybrané texty velkými písmeny"
+
+#: ../gaupol/actions/help.py:35
+msgid "_Wiki Documentation"
+msgstr "Dokumentace na _Wikipedii"
+
+#: ../gaupol/actions/help.py:37
+msgid "Browse wiki documentation"
+msgstr "Procházet dokumentaci na Wikipedii"
+
+#: ../gaupol/actions/help.py:48
+msgid "_Report A Bug"
+msgstr "_Nahlásit chybu"
+
+#: ../gaupol/actions/help.py:49
+msgid "Submit a bug report"
+msgstr "Poslat hlášení o chybě"
+
+#: ../gaupol/actions/help.py:60
+msgid "_About"
+msgstr "O _programu"
+
+#: ../gaupol/actions/help.py:62
+msgid "Show information about Gaupol"
+msgstr "Ukázat informace o programu Gaupol"
+
+#: ../gaupol/actions/menu.py:44
+msgid "_File"
+msgstr "_Soubor"
+
+#: ../gaupol/actions/menu.py:55
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: ../gaupol/actions/menu.py:66
+msgid "_Projects"
+msgstr "Pr_ojekty"
+
+#: ../gaupol/actions/menu.py:77
+msgid "_Text"
+msgstr "_Text"
+
+#: ../gaupol/actions/menu.py:88
+msgid "T_ools"
+msgstr "Nástroj_e"
+
+#: ../gaupol/actions/menu.py:99
+msgid "_View"
+msgstr "_Pohled"
+
+#: ../gaupol/actions/position.py:35
+msgid "Adjust _Durations…"
+msgstr "Upravit _doby trvání…"
+
+#: ../gaupol/actions/position.py:36
+msgid "Lengthen or shorten durations"
+msgstr "Zkrátit nebo prodloužit doby trvání"
+
+#: ../gaupol/actions/position.py:51
+msgid "Convert _Framerate…"
+msgstr "Převést rychlost opakování _obrázků…"
+
+#: ../gaupol/actions/position.py:52
+msgid "Change positions for a different framerate"
+msgstr "Změnit polohy pro rozdílnou rychlost opakování obrázků"
+
+#: ../gaupol/actions/position.py:70
+msgid "Preview from selected position with a video player"
+msgstr "Náhled od vybrané polohy v přehrávači videa"
+
+#: ../gaupol/actions/position.py:91
+msgid "_Shift Positions…"
+msgstr "_Posunout polohy…"
+
+#: ../gaupol/actions/position.py:92
+msgid "Make subtitles appear earlier or later"
+msgstr "Nechat titulky objevit dříve nebo později"
+
+#: ../gaupol/actions/position.py:108
+msgid "Sp_eech Recognition…"
+msgstr "Rozpoznávání _mluveného slova..."
+
+#: ../gaupol/actions/position.py:109
+msgid "Generate subtitles by voice and speech recognition"
+msgstr "Vytvořit titulky prostřednictvím rozpoznávání hlasu a řeči"
+
+#: ../gaupol/actions/position.py:127
+msgid "_Transform Positions…"
+msgstr "Pře_dělat polohy…"
+
+#: ../gaupol/actions/position.py:128
+msgid "Change positions by linear two-point correction"
+msgstr "Změnit polohy prostřednictvím přímé dvoubodové opravy"
+
+#: ../gaupol/actions/search.py:35
+msgid "_Find And Replace…"
+msgstr "_Najít a nahradit"
+
+#: ../gaupol/actions/search.py:38
+msgid "Search for and replace text"
+msgstr "Hledat a nahradit text"
+
+#: ../gaupol/actions/search.py:55
+msgid "Search forwards for same text"
+msgstr "Hledat stejný text dopředu"
+
+#: ../gaupol/actions/search.py:72
+msgid "Find Pre_vious"
+msgstr "Najít _předchozí"
+
+#: ../gaupol/actions/search.py:73
+msgid "Search backwards for same text"
+msgstr "Hledat stejný text dozadu"
+
+#: ../gaupol/actions/text.py:35
+msgid "Co_nfigure Spell-check…"
+msgstr "Na_stavit ověření správného psaní…"
+
+#: ../gaupol/actions/text.py:36
+msgid "Set language and spell-check target"
+msgstr "Nastavit jazyk a cíl ověření správného psaní"
+
+#: ../gaupol/actions/text.py:51
+msgid "_Check Spelling"
+msgstr "_Ověřit pravopis"
+
+#: ../gaupol/actions/text.py:52
+msgid "Spelling"
+msgstr "Pravopis"
+
+#: ../gaupol/actions/text.py:54
+msgid "Check for incorrect spelling"
+msgstr "Ověřit kvůli nesprávnému pravopisu"
+
+#: ../gaupol/actions/text.py:72
+msgid "C_orrect Texts…"
+msgstr "O_pravit texty…"
+
+#: ../gaupol/actions/text.py:73
+msgid "Find and correct errors in texts"
+msgstr "Najít a opravit chyby v textech"
+
+#: ../gaupol/actions/view.py:34
+msgid "Activate the project in the next tab"
+msgstr "Zapnout projekt v další kartě"
+
+#: ../gaupol/actions/view.py:53
+msgid "Activate the project in the previous tab"
+msgstr "Zapnout projekt v předchozí kartě"
+
+#: ../gaupol/actions/view.py:70
+msgid "Move Tab _Left"
+msgstr "Posunout kartu do_leva"
+
+#: ../gaupol/actions/view.py:71
+msgid "Move the current tab to the left"
+msgstr "Posunout nynější kartu doleva"
+
+#: ../gaupol/actions/view.py:87
+msgid "Move Tab _Right"
+msgstr "Posunout kartu do_prava"
+
+#: ../gaupol/actions/view.py:88
+msgid "Move the current tab to the right"
+msgstr "Posunout nynější kartu doprava"
+
+#: ../gaupol/actions/view.py:104
+msgid "_Columns"
+msgstr "_Sloupce"
+
+#: ../gaupol/actions/view.py:121
+msgid "2_3.976 fps"
+msgstr "2_3,976 fps"
+
+#: ../gaupol/actions/view.py:122
+msgid "Calculate nonnative units with a framerate of 23.976 fps"
+msgstr "Spočítat nenativní jednotky s rychlostí opakování obrázků 23.976 fps"
+
+#: ../gaupol/actions/view.py:145
+msgid "2_4.000 fps"
+msgstr "2_4,000 fps"
+
+#: ../gaupol/actions/view.py:146
+msgid "Calculate nonnative units with a framerate of 24.000 fps"
+msgstr "Spočítat nenativní jednotky s rychlostí opakování obrázků 24.000 fps"
+
+#: ../gaupol/actions/view.py:169
+msgid "2_5.000 fps"
+msgstr "2_5,000 fps"
+
+#: ../gaupol/actions/view.py:170
+msgid "Calculate nonnative units with a framerate of 25.000 fps"
+msgstr "Spočítat nenativní jednotky s rychlostí opakování obrázků 25.000 fps"
+
+#: ../gaupol/actions/view.py:193
+msgid "2_9.970 fps"
+msgstr "2_9,970 fps"
+
+#: ../gaupol/actions/view.py:194
+msgid "Calculate nonnative units with a framerate of 29.970 fps"
+msgstr "Spočítat nenativní jednotky s rychlostí opakování obrázků 29.970 fps"
+
+#: ../gaupol/actions/view.py:215
+msgid "F_ramerate"
+msgstr "Rychlost opakování _obrázků"
+
+#: ../gaupol/actions/view.py:234
+msgid "_Frames"
+msgstr "_Obrázky"
+
+#: ../gaupol/actions/view.py:235
+msgid "Show positions as frames"
+msgstr "Ukázat polohy jako obrázky"
+
+#: ../gaupol/actions/view.py:256
+msgid "_Times"
+msgstr "Č_asy"
+
+#: ../gaupol/actions/view.py:257
+msgid "Show positions as times"
+msgstr "Ukázat polohy jako časy"
+
+#: ../gaupol/actions/view.py:278
+msgid "_Duration"
+msgstr "_Doba trvání"
+
+#: ../gaupol/actions/view.py:279
+msgid "Show or hide the duration column"
+msgstr "Ukázat nebo skrýt sloupec Doba trvání"
+
+#: ../gaupol/actions/view.py:296
+msgid "_End"
+msgstr "Kon_ec"
+
+#: ../gaupol/actions/view.py:297
+msgid "Show or hide the end column"
+msgstr "Ukázat nebo skrýt sloupec Konec"
+
+#: ../gaupol/actions/view.py:314
+msgid "_Main Text"
+msgstr "_Hlavní text"
+
+#: ../gaupol/actions/view.py:315
+msgid "Show or hide the main text column"
+msgstr "Ukázat nebo skrýt sloupec Hlavní text"
+
+#: ../gaupol/actions/view.py:332
+msgid "_Main Toolbar"
+msgstr "_Hlavní nástrojový pruh"
+
+#: ../gaupol/actions/view.py:333
+msgid "Show or hide the main toolbar"
+msgstr "Ukázat nebo skrýt sloupec Hlavní nástrojový pruh"
+
+#: ../gaupol/actions/view.py:346
+msgid "_No."
+msgstr "Čís_lo"
+
+#: ../gaupol/actions/view.py:347
+msgid "Show or hide the number column"
+msgstr "Ukázat nebo skrýt sloupec Číslo"
+
+#: ../gaupol/actions/view.py:363
+msgid "_Output Window"
+msgstr "_Výstupní okno"
+
+#: ../gaupol/actions/view.py:364
+msgid "Show or hide the output window"
+msgstr "Ukázat nebo skrýt výstupní okno"
+
+#: ../gaupol/actions/view.py:377
+msgid "_Start"
+msgstr "_Začátek"
+
+#: ../gaupol/actions/view.py:378
+msgid "Show or hide the start column"
+msgstr "Ukázat nebo skrýt sloupec Začátek"
+
+#: ../gaupol/actions/view.py:394
+msgid "_Statusbar"
+msgstr "_Stavový řádek"
+
+#: ../gaupol/actions/view.py:395
+msgid "Show or hide the statusbar"
+msgstr "Ukázat nebo skrýt stavový řádek"
+
+#: ../gaupol/actions/view.py:409
+msgid "_Translation Text"
+msgstr "_Překladový text"
+
+#: ../gaupol/actions/view.py:410
+msgid "Show or hide the translation text column"
+msgstr "Ukázat nebo skrýt sloupec Překladový text"
+
+#: ../gaupol/actions/view.py:427
+msgid "_Video Toolbar"
+msgstr "Pruh _obrazového záznamu"
+
+#: ../gaupol/actions/view.py:428
+msgid "Show or hide the video toolbar"
+msgstr "Ukázat nebo skrýt Nástrojový pruh pro obrazový záznam"
+
+#: ../gaupol/agents/close.py:53
+msgid "Save changes to main document \"{}\" before closing?"
+msgstr "Uložit změny do hlavního dokumentu \"{}\" před zavřením?"
+
+#: ../gaupol/agents/close.py:84
+msgid "Save changes to translation document \"{}\" before closing?"
+msgstr "Uložit změny do překladového dokumentu \"{}\" před zavřením?"
+
+#: ../gaupol/agents/edit.py:175
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
+msgstr[0] "Vložen {:d} titulek, aby se shodoval s obsahem schránky"
+msgstr[1] "Vloženy {:d} nové titulky, aby se shodoval s obsahem schránky"
+msgstr[2] "Vloženo {:d} nových titulků, aby se shodoval s obsahem schránky"
+
+#: ../gaupol/agents/edit.py:281
+msgid "Use Shift+Return for line-break"
+msgstr "Pro zalomení řádku použít Shift+Enter"
+
+#: ../gaupol/agents/menu.py:52
+msgid "Activate \"{}\""
+msgstr "Spustit \"{}\""
+
+#: ../gaupol/agents/menu.py:82 ../gaupol/agents/update.py:166
+msgid "Redo \"{}\""
+msgstr "Znovu \"{}\""
+
+#: ../gaupol/agents/menu.py:156 ../gaupol/agents/update.py:162
+msgid "Undo \"{}\""
+msgstr "Zpět \"{}\""
+
+#: ../gaupol/agents/open.py:45
+msgid "Appending file"
+msgstr "Připojit soubor"
+
+#: ../gaupol/agents/open.py:61
+msgid "File \"{}\" is already open"
+msgstr "Soubor \"{}\" je již otevřen"
+
+#: ../gaupol/agents/open.py:292
+msgid "Failed to decode file \"{}\" with all attempted codecs"
+msgstr ""
+"Dekódování souboru \"{}\" se nezdařilo ani se všemi vyzkoušenými kodeky"
+
+#: ../gaupol/agents/open.py:294
+msgid "Please try to open the file with a different character encoding."
+msgstr "Zkuste, prosím, soubor otevřít s jiným kódováním znaků."
+
+#: ../gaupol/agents/open.py:302
+msgid "Failed to recognize format of file \"{}\""
+msgstr "Formát souboru \"{}\" se nepodařilo rozpoznat"
+
+#: ../gaupol/agents/open.py:303
+msgid ""
+"Please check that the file you are trying to open is a subtitle file of a "
+"format supported by Gaupol."
+msgstr ""
+"Ověřte, prosím, že soubor, který se pokoušíte otevřít, je "
+"soubor s titulky, jehož formát Gaupol podporuje."
+
+#: ../gaupol/agents/open.py:311
+msgid "Failed to open file \"{}\""
+msgstr "Nepodařilo se otevřít soubor \"{}\""
+
+#: ../gaupol/agents/open.py:318
+msgid "Failed to parse file \"{}\""
+msgstr "Zpracování souboru \"{}\" se nezdařilo"
+
+#: ../gaupol/agents/open.py:319
+msgid "Please check that the file you are trying to open is a valid {} file."
+msgstr ""
+"Ověřte, prosím, že soubor, který se pokoušíte otevřít, je platný soubor {}."
+
+#: ../gaupol/agents/open.py:331
+msgid "Open abnormally large file \"{}\"?"
+msgstr "Otevřít mimořádně velký soubor\"{}\"?"
+
+#: ../gaupol/agents/open.py:332
+msgid ""
+"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
+"subtitle file. Please, check that you are not trying to open a binary file."
+msgstr ""
+"Soubor je {:.1f} MB velký, což je pro textově založený soubor s titulky"
+"mimořádně hodně. Ověřte, prosím, že se nepokoušíte otevřít binární soubor."
+
+#: ../gaupol/agents/open.py:348
+msgid "Open unsorted file \"{}\"?"
+msgstr "Otevřít nezařazený soubor \"{}\"?"
+
+#: ../gaupol/agents/open.py:349
+msgid ""
+"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
+"the file may be erroneously composed."
+msgstr ""
+"Pořadí {:d} titulků se musí změnit. Když {:d} zní, jako by to bylo "
+"mnoho, soubor by mohl být složen chybně."
+
+#: ../gaupol/agents/open.py:365
+msgid "Save changes to translation document \"{}\" before opening a new one?"
+msgstr "Uložit změny do překladového dokumentu »{}« před otevřením nového?"
+
+#: ../gaupol/agents/open.py:369
+msgid "Open _Without Saving"
+msgstr "Otevřít _bez uložení"
+
+#: ../gaupol/agents/open.py:473
+msgid "Appended {amount:d} subtitles from \"{basename}\""
+msgstr "Připojeno {amount:d} titulků z \"{basename}\""
+
+#: ../gaupol/agents/open.py:514
+msgid "Opened main file \"{}\""
+msgstr "Otevřený hlavní soubor \"{}\""
+
+#: ../gaupol/agents/open.py:539
+msgid "Opened translation file \"{}\""
+msgstr "Otevřený překladový soubor \"{}\""
+
+#: ../gaupol/agents/preview.py:53
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
+msgstr "Soubor titulků se nepodařilo zakódovat do dočasného adresáře \"{}\""
+
+#: ../gaupol/agents/preview.py:55
+msgid ""
+"Subtitle data could not be encoded to a temporary file for preview with the "
+"current character encoding. Please first save the subtitle file with a "
+"different character encoding."
+msgstr ""
+"Data titulků se nepodařilo zakódovat do dočasného adresáře pro náhled s "
+"nynějším "
+"kódováním znaků. Nejprve, prosím, titulky uložte s jiným kódováním znaků."
+
+#: ../gaupol/agents/preview.py:64
+msgid "Failed to save subtitle file to temporary directory \"{}\""
+msgstr "Uložení souboru s titulky do dočasného adresáře \"{}\" se nezdařilo"
+
+#: ../gaupol/agents/preview.py:72
+msgid "Failed to launch video player"
+msgstr "Spuštění přehrávače obrazového záznamu se nezdařilo"
+
+#: ../gaupol/agents/save.py:43
+msgid "Saved all open documents"
+msgstr "Všechny otevřené dokumenty uloženy"
+
+#: ../gaupol/agents/save.py:135
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
+msgstr "Zakódování souboru \"{basename}\" kodekem \"{codec}\" se nezdařilo"
+
+#: ../gaupol/agents/save.py:137
+msgid "Please try to save the file with a different character encoding."
+msgstr "Zkuste, prosím, soubor uložit s jiným kódováním znaků."
+
+#: ../gaupol/agents/save.py:145
+msgid "Failed to save file \"{}\""
+msgstr "Nepodařilo se uložit soubor \"{}\""
+
+#: ../gaupol/agents/save.py:163
+msgid "Saved main document"
+msgstr "Hlavní dokument uložen"
+
+#: ../gaupol/agents/save.py:183
+msgid "Saved main document as \"{}\""
+msgstr "Hlavní dokument uložen jako \"{}\""
+
+#: ../gaupol/agents/save.py:199
+msgid "Saved translation document"
+msgstr "Uložit překladový dokument"
+
+#: ../gaupol/agents/save.py:219
+msgid "Saved translation document as \"{}\""
+msgstr "Uložit překladový dokument jako \"{}\""
+
+#: ../gaupol/application.py:194
+msgid "Framerate:"
+msgstr "Rychlost opakování obrázků:"
+
+#: ../gaupol/application.py:277
+msgid "Redo undone actions"
+msgstr "Udělat ještě jednou kroky vrácené zpět"
+
+#: ../gaupol/application.py:332
+msgid "Undo actions"
+msgstr "Vrátit kroky zpět"
+
+#: ../gaupol/application.py:397
+msgid "Video file:"
+msgstr "Obrazový záznam:"
+
+#: ../gaupol/assistants.py:99
+msgid "Tasks and Target"
+msgstr "Úkoly a cíl"
+
+#: ../gaupol/assistants.py:110
+msgid "Correct texts in main text column"
+msgstr "Opravit texty ve sloupci s hlavním textem"
+
+#: ../gaupol/assistants.py:111
+msgid "Correct texts in translation text column"
+msgstr "Opravit texty ve sloupci s překladovým textem"
+
+#: ../gaupol/assistants.py:120
+msgid "Correct texts in selected subtitles"
+msgstr "Opravit texty ve vybraných titulcích"
+
+#: ../gaupol/assistants.py:121
+msgid "Correct texts in current project"
+msgstr "Opravit texty v nynějším projektu"
+
+#: ../gaupol/assistants.py:122
+msgid "Correct texts in all open projects"
+msgstr "Opravit texty ve všech otevřených projektech"
+
+#: ../gaupol/assistants.py:370
+msgid "Other"
+msgstr "Jiné"
+
+#: ../gaupol/assistants.py:441
+msgid "Capitalize texts written in lower case"
+msgstr "Psát texty psané malými písmeny velkými písmeny"
+
+#: ../gaupol/assistants.py:443
+msgid "Capitalization Patterns"
+msgstr "Vzory pro psaní velkých písmen"
+
+#: ../gaupol/assistants.py:445
+msgid "Capitalize texts"
+msgstr "Psát texty velkými písmeny"
+
+#: ../gaupol/assistants.py:469
+msgid "Correct common errors made by humans or image recognition software"
+msgstr ""
+"Opravit běžné chyby způsobené lidmi nebo programem na rozpoznávání textu"
+
+#: ../gaupol/assistants.py:473
+msgid "Common Error Patterns"
+msgstr "Vzory běžných chyb"
+
+#: ../gaupol/assistants.py:475
+msgid "Correct common errors"
+msgstr "Opravit běžné chyby"
+
+#: ../gaupol/assistants.py:528
+msgid "Remove explanatory texts meant for the hearing impaired"
+msgstr "Odstranit vysvětlivky pro sluchově postižené"
+
+#: ../gaupol/assistants.py:532
+msgid "Hearing Impaired Patterns"
+msgstr "Vzory pro sluchově postižené"
+
+#: ../gaupol/assistants.py:534
+msgid "Remove hearing impaired texts"
+msgstr "Odstranit texty pro sluchově postižené"
+
+#: ../gaupol/assistants.py:559
+msgid ""
+"Use spell-check suggestions to fix whitespace detection errors of image "
+"recognition software"
+msgstr ""
+"Použít návrhy na správné psaní pro opravení chyb zjištěných prázdných "
+"míst programu na rozpoznávání obrázků"
+
+#: ../gaupol/assistants.py:563
+msgid "Joining and Splitting Words"
+msgstr "Spojit nebo rozdělit slova"
+
+#: ../gaupol/assistants.py:565
+msgid "Join or Split Words"
+msgstr "Spojit nebo rozdělit slova"
+
+#: ../gaupol/assistants.py:609 ../gaupol/dialogs/spell_check.py:388
+msgid "Failed to load dictionary for language \"{}\""
+msgstr "Nepodařilo se nahrát slovník pro jazyk \"{}\""
+
+#: ../gaupol/assistants.py:638
+msgid "Break text into lines of defined length"
+msgstr "Zalomit text do řádků s předem danou délkou"
+
+#: ../gaupol/assistants.py:640
+msgid "Line-Break Patterns"
+msgstr "Vzory pro zalomení řádku"
+
+#: ../gaupol/assistants.py:642
+msgid "Break lines"
+msgstr "Zalomit řádky"
+
+#: ../gaupol/assistants.py:697
+msgid "Line-Break Options"
+msgstr "Volby pro zalomení řádku"
+
+#: ../gaupol/assistants.py:782
+msgid "Correcting Texts"
+msgstr "Opravit texty"
+
+#: ../gaupol/assistants.py:788
+msgid "Each task is now being run on each project."
+msgstr "Každý úkol je nyní proveden pro každý projekt."
+
+#: ../gaupol/assistants.py:812
+msgid "{current:d} of {total:d} tasks complete"
+msgstr "{current:d} z {total:d} úkolů hotovo"
+
+#: ../gaupol/assistants.py:820
+msgid "Project: {}"
+msgstr "Projekt: {}"
+
+#: ../gaupol/assistants.py:827
+msgid "Task: {}"
+msgstr "Úkol: {}"
+
+#: ../gaupol/assistants.py:849
+msgid "Confirm Changes"
+msgstr "Potvrdit změny"
+
+#: ../gaupol/assistants.py:898
+msgid "Accept"
+msgstr "Přijmout"
+
+#: ../gaupol/assistants.py:901
+msgid "Original Text"
+msgstr "Původní text:"
+
+#: ../gaupol/assistants.py:902
+msgid "Corrected Text"
+msgstr "Opravený text"
+
+#: ../gaupol/assistants.py:1032
+msgid "Correct Texts"
+msgstr "Opravit texty"
+
+#: ../gaupol/assistants.py:1061
+msgid "Correcting texts"
+msgstr "Opravují se texty"
+
+#: ../gaupol/assistants.py:1077
+msgid "Edited {edits:d} and removed {removals:d} subtitles"
+msgstr "Upraveno {edits:d} a odstraněno {removals:d} titulků"
+
+#: ../gaupol/assistants.py:1111
+msgid "Confirm {:d} Change"
+msgid_plural "Confirm {:d} Changes"
+msgstr[0] "Potvrdit {:d} změnu"
+msgstr[1] "Potvrdit {:d} změny"
+msgstr[2] "Potvrdit {:d} změn"
+
+#: ../gaupol/dialogs/about.py:55
+msgid "About Gaupol"
+msgstr "O programu Gaupol"
+
+#: ../gaupol/dialogs/about.py:59
+msgid "Subtitle editor"
+msgstr "Editor titulků"
+
+#: ../gaupol/dialogs/about.py:63
+msgid "Gaupol Website"
+msgstr "Stránky Gaupolu"
+
+#. Translators: This is a special message that shouldn't be translated
+#. literally. It is used in the about dialog to give credits to the
+#. translators. Thus, you should translate it to your name and email
+#. address. You can also include other translators who have contributed
+#. to this translation; in that case, please write them on separate
+#. lines seperated by newlines (\n).
+#: ../gaupol/dialogs/about.py:73
+msgid "translator-credits"
+msgstr "Pavel Fric <fripohled.blogspot.cz>"
+
+#: ../gaupol/dialogs/append.py:35
+msgid "Append File"
+msgstr "Připojit soubor"
+
+#: ../gaupol/dialogs/encoding.py:58 ../gaupol/dialogs/encoding.py:103
+msgid "Description"
+msgstr "Popis"
+
+#: ../gaupol/dialogs/encoding.py:65 ../gaupol/dialogs/encoding.py:110
+msgid "Encoding"
+msgstr "Kódování"
+
+#: ../gaupol/dialogs/encoding.py:119
+msgid "Show in Menu"
+msgstr "Ukázat v nabídce"
+
+#: ../gaupol/dialogs/file.py:53 ../gaupol/dialogs/video.py:49
+msgid "All files"
+msgstr "Všechny soubory"
+
+#: ../gaupol/dialogs/file.py:57
+msgid "All supported files"
+msgstr "Všechny podporované soubory"
+
+#: ../gaupol/dialogs/file.py:71
+msgid "{format} (*{extension})"
+msgstr "{format} (*{extension})"
+
+#: ../gaupol/dialogs/file.py:114
+msgid "Auto-detected"
+msgstr "Zjištěno automaticky"
+
+#: ../gaupol/dialogs/file.py:116
+msgid "Other…"
+msgstr "Další..."
+
+#: ../gaupol/dialogs/header.py:179
+msgid "Invalid header"
+msgstr "Neplatné záhlaví"
+
+#: ../gaupol/dialogs/header.py:180
+msgid ""
+"MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is "
+"any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
+msgstr ""
+"MPsub-Header musí obsahovat řádek v podobě FORMÁT=HODNOTA, kde HODNOTA může "
+"být \"ČAS\", "
+"\"x23.98\", \"25.00\" nebo \"29.97\"."
+
+#: ../gaupol/dialogs/insert.py:49
+msgid "Above selection"
+msgstr "Výběr nahoře"
+
+#: ../gaupol/dialogs/insert.py:50
+msgid "Below selection"
+msgstr "Výběr dole"
+
+#: ../gaupol/dialogs/language.py:96
+msgid "Set Language"
+msgstr "Nastavit jazyk"
+
+#: ../gaupol/dialogs/multi_save.py:129
+msgid ""
+"{:d} of the files to be saved already exist. Do you want to replace them?"
+msgstr "{:d} ze souborů k uložení již existuje. Chcete je nahradit?"
+
+#: ../gaupol/dialogs/multi_save.py:131
+msgid ""
+"The files already exist in \"{}\". Replacing them will overwrite their "
+"contents."
+msgstr ""
+"Soubory již existují v \"{}\". Jejich nahrazením dojde k přepsání jejich "
+"obsahu."
+
+#: ../gaupol/dialogs/position_shift.py:138
+msgid "frames"
+msgstr "Obrázky"
+
+#: ../gaupol/dialogs/position_shift.py:159
+msgid "seconds"
+msgstr "Sekundy"
+
+#: ../gaupol/dialogs/preferences.py:209
+msgid "{} Extension Website"
+msgstr "Stránky rozšíření {}"
+
+#: ../gaupol/dialogs/preferences.py:233
+msgid "Cannot deactivate extension"
+msgstr "Rozšíření nelze vypnout"
+
+#: ../gaupol/dialogs/preferences.py:234
+msgid "Extension \"{}\" is required by other extensions."
+msgstr "Rozšíření \"{}\" je požadováno jinými rozšířeními."
+
+#: ../gaupol/dialogs/preferences.py:420
+msgid "Custom"
+msgstr "Vlastní"
+
+#: ../gaupol/dialogs/search.py:359
+msgid "\"{}\" not found"
+msgstr "\"{}\" nenalezeno"
+
+#: ../gaupol/dialogs/search.py:422
+msgid "Error in regular expression pattern"
+msgstr "Chyba ve vzoru regulárního výrazu"
+
+#: ../gaupol/dialogs/search.py:429
+msgid "Error in regular expression replacement"
+msgstr "Chyba v nahrazení od regulárního výrazu"
+
+#: ../gaupol/dialogs/search.py:550
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
+msgstr[0] "Nalezen a nahrazen {:d} výskyt"
+msgstr[1] "Nalezeny a nahrazeny {:d} výskyty"
+msgstr[2] "Nalezeno a nahrazeno {:d} výskytů"
+
+#: ../gaupol/dialogs/spell_check.py:363
+msgid "Spell-checking"
+msgstr "Ověření pravopisu"
+
+#: ../gaupol/dialogs/split.py:75
+msgid "Splitting project"
+msgstr "Rozdělit projekt"
+
+#: ../gaupol/dialogs/split.py:103
+msgid "Split {amount:d} subtitles to project \"{name}\""
+msgstr "Rozdělit {amount:d} titulků k projektu \"{name}\""
+
+#: ../gaupol/dialogs/text_edit.py:49
+msgid "Edit Text"
+msgstr "Upravit text"
+
+#: ../gaupol/dialogs/video.py:37
+msgid "Select Video"
+msgstr "Vybrat obrazový záznam"
+
+#: ../gaupol/dialogs/video.py:41
+msgid "_Select"
+msgstr "_Vybrat"
+
+#: ../gaupol/dialogs/video.py:53
+msgid "Video files"
+msgstr "Obrazové soubory"
+
+#: ../gaupol/enums/fields.py:31
+msgid "No."
+msgstr "Číslo"
+
+#: ../gaupol/enums/fields.py:39
+msgid "Start"
+msgstr "Začátek"
+
+#: ../gaupol/enums/fields.py:40
+msgid "Start position"
+msgstr "Začáteční poloha"
+
+#: ../gaupol/enums/fields.py:47
+msgid "End"
+msgstr "Konec"
+
+#: ../gaupol/enums/fields.py:48
+msgid "End position"
+msgstr "Koncová poloha"
+
+#. Translators: 'Dur.' is short for duration. It is used in the header of a
+#. tree view column that contains numbers five characters wide.
+#: ../gaupol/enums/fields.py:57
+msgid "Dur."
+msgstr "Doba"
+
+#: ../gaupol/enums/fields.py:58
+msgid "Duration"
+msgstr "Doba trvání"
+
+#: ../gaupol/enums/fields.py:65
+msgid "Main Text"
+msgstr "Hlavní text"
+
+#: ../gaupol/enums/fields.py:66
+msgid "Main text"
+msgstr "Hlavní text"
+
+#: ../gaupol/enums/fields.py:73
+msgid "Translation Text"
+msgstr "Překladový text"
+
+#: ../gaupol/enums/fields.py:74
+msgid "Translation text"
+msgstr "Překladový text"
+
+#: ../gaupol/enums/units.py:29
+msgid "characters"
+msgstr "znaky"
+
+#: ../gaupol/enums/units.py:34
+msgid "ems"
+msgstr "ems"
+
+#: ../gaupol/main.py:68
+msgid "Failed to set default locale."
+msgstr "Nepodařilo se nastavit výchozí jazykové nastavení."
+
+#: ../gaupol/main.py:69
+msgid "Please check your locale settings."
+msgstr "Prověřte, prosím, své jazykové nastavení."
+
+#: ../gaupol/main.py:70
+msgid "Falling back to the 'C' locale."
+msgstr "Návrat k jazykovému nastavení 'C'."
+
+#: ../gaupol/main.py:98
+msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
+msgstr "gaupol [VOLBA...] [SOUBOR...] [+[ČÍSLO]]"
+
+#: ../gaupol/main.py:104
+msgid "show version number and exit"
+msgstr "Ukázat číslo verze a ukončit."
+
+#: ../gaupol/main.py:110
+msgid "ENCODING"
+msgstr "KÓDOVÁNÍ"
+
+#: ../gaupol/main.py:113
+msgid "set the character encoding used to open files"
+msgstr "Nastavit kódování znaků, které se používá při otevírání souborů"
+
+#: ../gaupol/main.py:119
+msgid "list all available character encodings"
+msgstr "Vypsat všechna dostupná kódování znaků"
+
+#: ../gaupol/main.py:125 ../gaupol/main.py:144
+msgid "FILE"
+msgstr "SOUBOR"
+
+#: ../gaupol/main.py:128
+msgid "open translation file"
+msgstr "Otevřít překladový soubor"
+
+#: ../gaupol/main.py:134
+msgid "METHOD"
+msgstr "METODA"
+
+#: ../gaupol/main.py:137
+msgid "method used to align translation subtitles: 'number' or 'position'"
+msgstr ""
+"Metoda, která se používá k zarovnání překladových titulků: \"Číslo\" nebo "
+"\"Poloha\""
+
+#: ../gaupol/main.py:147
+msgid "select video file"
+msgstr "Vybrat obrazový soubor"
+
+#: ../gaupol/output.py:42
+msgid "Output"
+msgstr "Výstup"
+
+#: ../gaupol/page.py:61
+msgid "Untitled {:d}"
+msgstr "Bez názvu {:d}"
+
+#: ../gaupol/page.py:131
+msgid "Close project"
+msgstr "Zavřít projekt"
+
+#: ../gaupol/page.py:304
+msgid "Path:"
+msgstr "Cesta:"
+
+#: ../gaupol/page.py:305
+msgid "Format:"
+msgstr "Formát:"
+
+#: ../gaupol/page.py:306
+msgid "Encoding:"
+msgstr "Kódování:"
+
+#: ../gaupol/page.py:307
+msgid "Newlines:"
+msgstr "Zalomení řádků:"
+
+#: ../gaupol/page.py:340
+msgid "{} translation"
+msgstr "{} překlad"
+
+
