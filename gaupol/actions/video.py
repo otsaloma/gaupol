@@ -34,7 +34,7 @@ class LoadVideoAction(gaupol.Action):
         self.props.tooltip = _("Load a video file")
         self.action_group = "main-safe"
 
-    def _affirm_doable(self, application, page):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(gaupol.util.gst_available())
         aeidon.util.affirm(page is not None)

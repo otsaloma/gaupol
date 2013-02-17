@@ -222,6 +222,8 @@
     <separator/>
     <toolitem name="preview" action="preview"/>
   </toolbar>
+  <toolbar name="player_toolbar">
+  </toolbar>
   <popup name="tab_popup">
     <menuitem name="move_tab_left" action="move_tab_left"/>
     <menuitem name="move_tab_right" action="move_tab_right"/>

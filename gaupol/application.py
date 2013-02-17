@@ -73,13 +73,18 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
     :ivar output_window: A :class:`Gtk.Window` for external process output
     :ivar pages: List of :class:`gaupol.Page` currently open
+    :ivar paned: A :class:`Gtk.Paned` to hold player and subtitles
     :ivar pattern: Last used search pattern or blank if not used
+    :ivar player: A :class:`gaupol.VideoPlayer` instance or ``None``
+    :ivar player_hbox: Horizontal box containing video player etc.
+    :ivar player_toolbar: A :class:`Gtk.Toolbar` for video player actions
     :ivar recent_manager: Instance of :class:`Gtk.RecentManager` used
     :ivar replacement: Last used search replacement or blank if not used
+    :ivar seekbar: Video player seekbar (a :class:`Gtk.Scale` instance)
     :ivar statusbar: A :class:`Gtk.Statusbar` used to hold messages
     :ivar uim: Instance of :class:`Gtk.UIManager` used
     :ivar video_button: A :class:`Gtk.Button` used to select a video file
-    :ivar video_toolbar: A :class:`Gtk.Toolbar` for video actions
+    :ivar video_toolbar: A :class:`Gtk.Toolbar` for video file actions
     :ivar window: A :class:`Gtk.Window` used to hold all the widgets
     :ivar x_clipboard: A :class:`Gtk.Clipboard` used for desktop-wide copying
 
@@ -123,8 +128,12 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.output_window = None
         self.pages = []
         self.pattern = ""
+        self.player = None
+        self.player_hbox = None
+        self.player_toolbar = None
         self.recent_manager = Gtk.RecentManager.get_default()
         self.replacement = ""
+        self.seekbar = None
         self.statusbar = None
         self.uim = None
         self.video_button = None
@@ -207,7 +216,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_uim()
         self._init_menubar(vbox)
         self._init_main_toolbar(vbox)
-        self._init_notebook(vbox)
+        self.paned = Gtk.Paned(orientation=Gtk.Orientation.VERTICAL)
+        vbox.pack_start(self.paned, expand=True, fill=True, padding=0)
+        self._init_player_hbox(self.paned)
+        self._init_notebook(self.paned)
         self._init_video_toolbar(vbox)
         self._init_statusbar(vbox)
         self._init_output_window()
@@ -245,7 +257,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                         fill=False,
                         padding=0)
 
-    def _init_notebook(self, vbox):
+    def _init_notebook(self, paned):
         """Initialize the notebook."""
         self.notebook = Gtk.Notebook()
         self.notebook.set_scrollable(True)
@@ -259,16 +271,27 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         aeidon.util.connect(self, "notebook", "page-reordered")
         callback = self._on_notebook_switch_page
         self.notebook.connect_after("switch-page", callback)
-        vbox.pack_start(self.notebook,
-                        expand=True,
-                        fill=True,
-                        padding=0)
+        paned.add2(self.notebook)
 
     def _init_output_window(self):
         """Initialize the output window."""
         self.output_window = gaupol.OutputWindow()
         aeidon.util.connect(self, "output_window", "notify::visible")
         self.output_window.props.visible = gaupol.conf.output_window.show
+
+    def _init_player_hbox(self, paned):
+        """Initialize the video player horizontal box."""
+        # It's better to add player_hbox to paned only once a video is actually
+        # loaded for use. That we avoid having a useless paned separator and
+        # initiliazing instances that might never be needed.
+        self.player_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        conf = gaupol.conf.application_window
+        self.player_hbox.props.visible = conf.show_player
+        player_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.player_hbox.pack_start(player_vbox,
+                                    expand=True,
+                                    fill=True,
+                                    padding=0)
 
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""
