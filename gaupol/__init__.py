@@ -34,6 +34,7 @@ GTK+ user interface for the Gaupol subtitle editor.
 
 :var fields: Enumerations for subtitle field types
 :var length_units: Enumerations for length unit types
+:var orientation: Enumerations for orientation types
 :var targets: Enumerations for action target types
 :var toolbar_styles: Enumerations for toolbar style types
 
@@ -68,6 +69,7 @@ except Exception:
 from gaupol.urls import *
 from gaupol import util
 from gaupol.enums.fields import *
+from gaupol.enums.orientation import *
 from gaupol.enums.targets import *
 from gaupol.enums.toolbar_styles import *
 from gaupol.enums.units import *

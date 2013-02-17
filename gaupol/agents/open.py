@@ -197,7 +197,10 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         path = page.project.video_path
-        dialog = gaupol.VideoDialog(self.window)
+        dialog = gaupol.VideoDialog(self.window,
+                                    title=_("Select Video"),
+                                    button_label=_("_Select"))
+
         if page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)

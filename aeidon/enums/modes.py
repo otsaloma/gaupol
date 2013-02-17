@@ -33,6 +33,12 @@ class Frame(aeidon.EnumerationItem):
     pass
 
 
+class Seconds(aeidon.EnumerationItem):
+
+    pass
+
+
 modes = aeidon.Enumeration()
 modes.TIME = Time()
 modes.FRAME = Frame()
+modes.SECONDS = Seconds()

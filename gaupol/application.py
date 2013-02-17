@@ -76,7 +76,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar paned: A :class:`Gtk.Paned` to hold player and subtitles
     :ivar pattern: Last used search pattern or blank if not used
     :ivar player: A :class:`gaupol.VideoPlayer` instance or ``None``
-    :ivar player_hbox: Horizontal box containing video player etc.
+    :ivar player_box: Box containing video player etc.
     :ivar player_toolbar: A :class:`Gtk.Toolbar` for video player actions
     :ivar recent_manager: Instance of :class:`Gtk.RecentManager` used
     :ivar replacement: Last used search replacement or blank if not used
@@ -129,7 +129,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.pages = []
         self.pattern = ""
         self.player = None
-        self.player_hbox = None
+        self.player_box = None
         self.player_toolbar = None
         self.recent_manager = Gtk.RecentManager.get_default()
         self.replacement = ""
@@ -216,9 +216,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_uim()
         self._init_menubar(vbox)
         self._init_main_toolbar(vbox)
-        self.paned = Gtk.Paned(orientation=Gtk.Orientation.VERTICAL)
-        vbox.pack_start(self.paned, expand=True, fill=True, padding=0)
-        self._init_player_hbox(self.paned)
+        self._init_paned(vbox)
+        self._init_player_box(self.paned)
         self._init_notebook(self.paned)
         self._init_video_toolbar(vbox)
         self._init_statusbar(vbox)
@@ -279,19 +278,22 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         aeidon.util.connect(self, "output_window", "notify::visible")
         self.output_window.props.visible = gaupol.conf.output_window.show
 
-    def _init_player_hbox(self, paned):
+    def _init_paned(self, vbox):
+        """Intialize the paned layout."""
+        orientation = gaupol.conf.application_window.layout
+        self.paned = Gtk.Paned(orientation=orientation)
+        vbox.pack_start(self.paned, expand=True, fill=True, padding=0)
+
+    def _init_player_box(self, paned):
         """Initialize the video player horizontal box."""
-        # It's better to add player_hbox to paned only once a video is actually
-        # loaded for use. That we avoid having a useless paned separator and
-        # initiliazing instances that might never be needed.
-        self.player_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        # This will actually be added to paned
+        # once a video is loaded for use.
         conf = gaupol.conf.application_window
-        self.player_hbox.props.visible = conf.show_player
-        player_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.player_hbox.pack_start(player_vbox,
-                                    expand=True,
-                                    fill=True,
-                                    padding=0)
+        if conf.layout == Gtk.Orientation.HORIZONTAL:
+            orientation = Gtk.Orientation.VERTICAL
+        if conf.layout == Gtk.Orientation.VERTICAL:
+            orientation = Gtk.Orientation.HORIZONTAL
+        self.player_box = Gtk.Box(orientation=orientation)
 
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""

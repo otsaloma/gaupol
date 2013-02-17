@@ -180,7 +180,7 @@ class VideoPlayer(object):
 
     def play(self):
         """Play."""
-        self._xid = self.widget.get_property("window").get_xid()
+        self._xid = self.widget.props.window.get_xid()
         self._pipeline.set_state(Gst.State.PLAYING)
 
     def play_segment(self, start, end):

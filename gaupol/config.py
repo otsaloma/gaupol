@@ -29,10 +29,10 @@ __all__ = ("ConfigurationStore",)
 
 config_defaults = {
     "application_window": {
+        "layout": gaupol.orientation.VERTICAL,
         "maximized": False,
         "position": [0, 0],
         "show_main_toolbar": True,
-        "show_player": False,
         "show_statusbar": True,
         "show_video_toolbar": False,
         "size": [700, 433],
@@ -191,7 +191,7 @@ config_defaults = {
         "subtitle_background": True,
         "subtitle_color": "#ffffff",
         "subtitle_font": "PT Sans Caption,sans 18",
-        "time_alpha": 0.7,
+        "time_alpha": 1.0,
         "time_background": True,
         "time_color": "#ffffff",
         "time_font": "PT Mono,monospace Bold 15",
@@ -200,6 +200,7 @@ config_defaults = {
 
 config_enums = {
     "application_window": {
+        "layout": gaupol.orientation,
         "toolbar_style": gaupol.toolbar_styles,
         },
     "duration_adjust": {

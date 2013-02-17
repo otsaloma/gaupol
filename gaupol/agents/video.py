@@ -20,6 +20,10 @@
 
 import aeidon
 import gaupol
+import os
+_ = aeidon.i18n._
+
+from gi.repository import Gtk
 
 
 class VideoAgent(aeidon.Delegate):
@@ -29,4 +33,58 @@ class VideoAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_load_video_activate(self, *args):
         """Load a video file."""
-        pass
+        gaupol.util.set_cursor_busy(self.window)
+        page = self.get_current_page()
+        path = page.project.video_path
+        dialog = gaupol.VideoDialog(self.window,
+                                    title=_("Load Video"),
+                                    button_label=_("_Load"))
+
+        if page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(directory)
+        if page.project.video_path is not None:
+            dialog.set_filename(page.project.video_path)
+        gaupol.util.set_cursor_normal(self.window)
+        response = gaupol.util.run_dialog(dialog)
+        path = dialog.get_filename()
+        dialog.destroy()
+        if response != Gtk.ResponseType.OK: return
+        page.project.video_path = path
+        self.update_gui()
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.player = gaupol.VideoPlayer()
+        self.player.set_path(path)
+        vbox.pack_start(self.player.widget,
+                        expand=True,
+                        fill=True,
+                        padding=0)
+
+        self.seekbar = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL)
+        self.seekbar.props.draw_value = False
+        vbox.pack_start(self.seekbar,
+                        expand=False,
+                        fill=True,
+                        padding=0)
+
+        self.player_toolbar = self.uim.get_widget("/ui/player_toolbar")
+        self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
+        vbox.pack_start(self.player_toolbar,
+                        expand=False,
+                        fill=True,
+                        padding=0)
+
+        self.player_box.pack_start(vbox,
+                                   expand=True,
+                                   fill=True,
+                                   padding=0)
+
+        self.player_box.show_all()
+        self.paned.add1(self.player_box)
+        orientation = self.paned.props.orientation
+        if orientation == Gtk.Orientation.HORIZONTAL:
+            size = self.notebook.props.window.get_width()
+        if orientation == Gtk.Orientation.VERTICAL:
+            size = self.notebook.props.window.get_height()
+        self.paned.set_position(int(size/2))
+        self.player.play()

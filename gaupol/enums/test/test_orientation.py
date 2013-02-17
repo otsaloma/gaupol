@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,12 +16,15 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
+import gaupol
 
 
-class TestModule(aeidon.TestCase):
+class TestModule(gaupol.TestCase):
+
+    def test_attributes(self):
+        for style in gaupol.orientation:
+            assert hasattr(style, "value")
 
     def test_items(self):
-        assert hasattr(aeidon.modes, "TIME")
-        assert hasattr(aeidon.modes, "FRAME")
-        assert hasattr(aeidon.modes, "SECONDS")
+        assert hasattr(gaupol.orientation, "HORIZONTAL")
+        assert hasattr(gaupol.orientation, "VERTICAL")

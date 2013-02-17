@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,12 +16,25 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+"""Enumerations for orientation types."""
+
 import aeidon
 
+from gi.repository import Gtk
 
-class TestModule(aeidon.TestCase):
+__all__ = ("orientation",)
 
-    def test_items(self):
-        assert hasattr(aeidon.modes, "TIME")
-        assert hasattr(aeidon.modes, "FRAME")
-        assert hasattr(aeidon.modes, "SECONDS")
+
+class Horizontal(aeidon.EnumerationItem):
+
+    value = Gtk.Orientation.HORIZONTAL
+
+
+class Vertical(aeidon.EnumerationItem):
+
+    value = Gtk.Orientation.VERTICAL
+
+
+orientation = aeidon.Enumeration()
+orientation.HORIZONTAL = Horizontal()
+orientation.VERTICAL = Vertical()
