@@ -1,6 +1,8 @@
 Gaupol 0.21.2
 =============
 
+ [X] Restore drop-down arrows on undo and redo toolbar buttons for those
+     using PyGObject 3.7.90 or greater (#686608)
  [X] Add Czech translation (Pavel Fric)
 
 Gaupol 1.0
