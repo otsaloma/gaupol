@@ -332,7 +332,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize the undo button on the main toolbar."""
         undo_button = self.get_tool_item("undo_action")
         if isinstance(undo_button, Gtk.MenuToolButton):
-            # redo_button is not necessarily a menu tool button.
+            # undo_button is not necessarily a menu tool button.
             # https://bugzilla.gnome.org/show_bug.cgi?id=686608
             undo_button.set_menu(Gtk.Menu())
             tip = _("Undo actions")
