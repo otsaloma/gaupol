@@ -52,6 +52,7 @@ class VideoAgent(aeidon.Delegate):
         if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
         self.update_gui()
+        # TODO: Destroy possibly existing previous player.
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.player = gaupol.VideoPlayer()
         self.player.set_path(path)

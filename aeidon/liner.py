@@ -36,7 +36,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
     :ivar max_lines: Maximum preferred amount of lines (may be exceeded)
     """
 
-    # Reading Donald E. Knuth and Michael F.Plass's "Breaking Paragraphs into
+    # Reading Donald E. Knuth and Michael F. Plass's "Breaking Paragraphs into
     # Lines" from "Software--Practice and Experience" vol. 11 from 1981 is
     # recommended to understand the general problem of breaking a paragraph of
     # text into lines, the terminology used here as well of boxes, penalties
@@ -109,8 +109,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
                     best_breaks = [i]
                     best_demerit = demerit
             return best_breaks, best_demerit
-        ## For more than two lines, loop over first break points and
-        ## recursively figure out rest of the breaks in each case.
+        # For more than two lines, loop over first break points and
+        # recursively figure out rest of the breaks in each case.
         for i in breaks:
             # Use the maximum total negative penalty
             # that can accumulate from all later breaks.
@@ -212,8 +212,8 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
             points = sorted(zip(breakpen, breaks))
             breakpen, breaks = zip(*points)
             return(breaks)
-        ## For more than two lines, loop over first break points and
-        ## recursively figure out rest of the breaks in each case.
+        # For more than two lines, loop over first break points and
+        # recursively figure out rest of the breaks in each case.
         keep = [False] * len(breaks)
         for i in range(len(breaks)):
             lines = self._boxes_to_lines(boxes, breaks=[i])

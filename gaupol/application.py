@@ -299,6 +299,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize the redo button on the main toolbar."""
         redo_button = self.get_tool_item("redo_action")
         if isinstance(redo_button, Gtk.MenuToolButton):
+            # redo_button is not necessarily a menu tool button.
+            # https://bugzilla.gnome.org/show_bug.cgi?id=686608
             redo_button.set_menu(Gtk.Menu())
             tip = _("Redo undone actions")
             redo_button.set_arrow_tooltip_text(tip)
@@ -355,6 +357,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize the undo button on the main toolbar."""
         undo_button = self.get_tool_item("undo_action")
         if isinstance(undo_button, Gtk.MenuToolButton):
+            # undo_button is not necessarily a menu tool button.
+            # https://bugzilla.gnome.org/show_bug.cgi?id=686608
             undo_button.set_menu(Gtk.Menu())
             tip = _("Undo actions")
             undo_button.set_arrow_tooltip_text(tip)
