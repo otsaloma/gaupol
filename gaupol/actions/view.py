@@ -244,6 +244,21 @@ class ShowFramesAction(gaupol.RadioAction):
         aeidon.util.affirm(page is not None)
 
 
+class ShowLayoutMenuAction(gaupol.MenuAction):
+
+    """Show the "Layout" menu."""
+
+    def __init__(self):
+        """Initialize a :class:`ShowLayoutMenuAction` object."""
+        gaupol.MenuAction.__init__(self, "show_layout_menu")
+        self.props.label = _("_Layout")
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+
+
 class ShowTimesAction(gaupol.RadioAction):
 
     """Show positions as times."""
@@ -427,6 +442,48 @@ class ToggleVideoToolbarAction(gaupol.ToggleAction):
         self.props.label = _("_Video Toolbar")
         self.props.tooltip = _("Show or hide the video toolbar")
         self.action_group = "main-safe"
+
+
+class UseHorizontalLayoutAction(gaupol.RadioAction):
+
+    """Split window horizontally."""
+
+    def __init__(self):
+        """Initialize a :class:`UseHorizontalLayoutAction` object."""
+        gaupol.RadioAction.__init__(self, "use_horizontal_layout")
+        layout = gaupol.conf.application_window.layout
+        self.props.active = (layout == gaupol.orientation.HORIZONTAL)
+        self.props.label = _("_Horizontal")
+        self.props.tooltip = _("Split window horizontally")
+        self.props.value = gaupol.orientation.HORIZONTAL
+        self.action_group = "main-unsafe"
+        self.group = "UseHorizontalLayoutAction"
+        self.orientation = gaupol.orientation.HORIZONTAL
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+
+
+class UseVerticalLayoutAction(gaupol.RadioAction):
+
+    """Split window vertically."""
+
+    def __init__(self):
+        """Initialize a :class:`UseVerticalLayoutAction` object."""
+        gaupol.RadioAction.__init__(self, "use_vertical_layout")
+        layout = gaupol.conf.application_window.layout
+        self.props.active = (layout == gaupol.orientation.VERTICAL)
+        self.props.label = _("_Vertical")
+        self.props.tooltip = _("Split window vertically")
+        self.props.value = gaupol.orientation.VERTICAL
+        self.action_group = "main-unsafe"
+        self.group = "UseHorizontalLayoutAction"
+        self.orientation = gaupol.orientation.VERTICAL
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
 
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

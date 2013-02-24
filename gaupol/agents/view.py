@@ -186,3 +186,15 @@ class ViewAgent(aeidon.Delegate):
         self.update_gui()
         page.view.columns_autosize()
         gaupol.util.set_cursor_normal(self.window)
+
+    @aeidon.deco.export
+    def _on_use_horizontal_layout_changed(self, item, active_item):
+        """Change how window is split to video and subtitles."""
+        orientation = active_item.orientation
+        if orientation == gaupol.orientation.HORIZONTAL:
+            self.paned.props.orientation = gaupol.orientation.HORIZONTAL
+            self.player_box.orientation = gaupol.orientation.VERTICAL
+        if orientation == gaupol.orientation.VERTICAL:
+            self.paned.props.orientation = gaupol.orientation.VERTICAL
+            self.player_box.orientation = gaupol.orientation.HORIZONTAL
+        gaupol.conf.application_window.layout = orientation

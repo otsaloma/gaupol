@@ -88,7 +88,7 @@ class VideoAgent(aeidon.Delegate):
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
-        self.update_gui()
         if self.player is None:
             self._init_player_widgets()
         self.player.set_path(path)
+        self.update_gui()

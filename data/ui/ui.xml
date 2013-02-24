@@ -74,9 +74,19 @@
       <placeholder name="1">
       </placeholder>
       <separator/>
+      <menu name="layout" action="show_layout_menu">
+        <menuitem name="horizontal" action="use_horizontal_layout"/>
+        <menuitem name="vertical" action="use_vertical_layout"/>
+        <separator/>
+        <placeholder name="1">
+        </placeholder>
+      </menu>
+      <placeholder name="2">
+      </placeholder>
+      <separator/>
       <menuitem name="times" action="show_times"/>
       <menuitem name="frames" action="show_frames"/>
-      <placeholder name="2">
+      <placeholder name="3">
       </placeholder>
       <separator/>
       <menu name="framerate" action="show_framerate_menu">
@@ -110,7 +120,7 @@
         <placeholder name="6">
         </placeholder>
       </menu>
-      <placeholder name="3">
+      <placeholder name="4">
       </placeholder>
     </menu>
     <menu name="text" action="show_text_menu">
