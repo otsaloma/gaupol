@@ -1,0 +1,86 @@
+% -*- coding: utf-8-unix -*-
+\documentclass{minimal}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,finnish]{babel}
+\usepackage[a4paper,margin=1cm]{geometry}
+\usepackage[active,tightpage]{preview}
+\usepackage{tikz}
+\usepackage[default]{cantarell}
+\usepackage{inconsolata}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{5pt}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
+\begin{document}
+\tikzstyle{class}=[
+rectangle,
+rectangle split,
+rectangle split parts=3,
+text width=5cm,
+align=center,
+draw=black,
+anchor=north
+]
+\tikzstyle{tt}=[align=left]
+\tikzstyle{aeidon}=[fill=blue!5]
+\tikzstyle{gaupol}=[fill=green!5]
+\begin{center}
+\begin{tikzpicture}[node distance=4cm]
+\node (application) [class,gaupol] {
+  \textbf{gaupol.Application}
+  \nodepart[tt]{second}
+  \texttt{pages: list} \\
+  \texttt{uim: Gtk.UIManager}
+  \nodepart[tt]{third}
+  \texttt{get\_current\_page()}
+};
+\node (page) [class,gaupol,below=1.5cm of application] {
+  \textbf{gaupol.Page}
+  \nodepart[tt]{second}
+  \texttt{project: aeidon.Project} \\
+  \texttt{view: gaupol.View}
+  \nodepart[tt]{third}
+};
+\node (view) [class,gaupol,below=1.5 cm of page] {
+  \textbf{gaupol.View}
+  \nodepart[tt]{second}
+  \nodepart[tt]{third}
+  \texttt{get\_focus()} \\
+  \texttt{set\_focus(row, col=None)} \\
+  \texttt{get\_selected\_rows()} \\
+  \texttt{select\_rows(rows)} \\
+  \texttt{scroll\_to\_row(row)}
+};
+\node (project) [class,aeidon,right=1.5cm of page] {
+  \textbf{aeidon.Project}
+  \nodepart[tt]{second}
+  \texttt{subtitles: list}
+  \nodepart[tt]{third}
+  \texttt{set\_start(index, value)} \\
+  \texttt{set\_end(index, value)} \\
+  \texttt{set\_duration(index, value)} \\
+  \texttt{set\_text(index, doc, value)}
+  \texttt{insert\_subtitles(indices, subtitles)} \\
+  \texttt{remove\_subtitles(indices)}
+};
+\node (subtitle) [class,aeidon,below=1.5 cm of project] {
+  \textbf{aeidon.Subtitle}
+  \nodepart[tt]{second}
+  \texttt{start: str/int/float} \\
+  \texttt{end: str/int/float} \\
+  \texttt{duration: str/int/float} \\
+  \texttt{main\_text: str} \\
+  \texttt{tran\_text: str}
+  \nodepart[tt]{third}
+};
+\draw (application) -- node [left,pos=0.18] {1} (page);
+\draw (application) -- node [right,pos=0.82] {0$\dots$*} (page);
+\draw (page) -- node [left,pos=0.18] {1} (view);
+\draw (page) -- node [right,pos=0.82] {1} (view);
+\draw (page) -- node [above,pos=0.18] {1} (project);
+\draw (page) -- node [below,pos=0.82] {1} (project);
+\draw (project) -- node [left,pos=0.18] {1} (subtitle);
+\draw (project) -- node [right,pos=0.82] {0$\dots$*} (subtitle);
+\end{tikzpicture}
+\end{center}
+\end{document}
