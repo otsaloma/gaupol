@@ -131,6 +131,13 @@ class ViewAgent(aeidon.Delegate):
             return self.output_window.hide()
         self.output_window.show()
 
+
+    @aeidon.deco.export
+    def _on_toggle_player_toggled(self, *args):
+        """Show or hide the video player."""
+        visible = self.player_box.props.visible
+        self.player_box.props.visible = not visible
+
     @aeidon.deco.export
     def _on_toggle_start_column_toggled(self, *args):
         """Show or hide the start column."""

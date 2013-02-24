@@ -90,5 +90,7 @@ class VideoAgent(aeidon.Delegate):
         page.project.video_path = path
         if self.player is None:
             self._init_player_widgets()
+        action = self.get_action("toggle_player")
+        action.set_active = True
         self.player.set_path(path)
         self.update_gui()

@@ -367,6 +367,23 @@ class ToggleNumberColumnAction(gaupol.ToggleAction):
         aeidon.util.affirm(page is not None)
 
 
+class TogglePlayerAction(gaupol.ToggleAction):
+
+    """Show or hide the video player."""
+
+    def __init__(self):
+        """Initialize a :class:`TogglePlayerAction` object."""
+        gaupol.ToggleAction.__init__(self, "toggle_player")
+        self.props.active = True
+        self.props.label = _("_Video Player")
+        self.props.tooltip = _("Show or hide the video player")
+        self.action_group = "main-safe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+
+
 class ToggleOutputWindowAction(gaupol.ToggleAction):
 
     """Show or hide the output window."""
@@ -439,7 +456,7 @@ class ToggleVideoToolbarAction(gaupol.ToggleAction):
         gaupol.ToggleAction.__init__(self, "toggle_video_toolbar")
         show = gaupol.conf.application_window.show_video_toolbar
         self.props.active = show
-        self.props.label = _("_Video Toolbar")
+        self.props.label = _("Vi_deo Toolbar")
         self.props.tooltip = _("Show or hide the video toolbar")
         self.action_group = "main-safe"
 
