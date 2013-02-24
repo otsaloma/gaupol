@@ -174,6 +174,11 @@ class VideoPlayer(object):
         raise ValueError("Invalid mode: {}"
                          .format(repr(mode)))
 
+    def is_playing(self):
+        """Return ``True`` is playing video."""
+        state = self._pipeline.get_state(timeout=1)[1]
+        return state == Gst.State.PLAYING
+
     def pause(self):
         """Pause."""
         self._pipeline.set_state(Gst.State.PAUSED)

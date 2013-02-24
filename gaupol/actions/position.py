@@ -70,7 +70,7 @@ class PreviewAction(gaupol.Action):
         self.props.tooltip = _("Preview from selected position "
                                "with a video player")
 
-        self.accelerator = "P"
+        self.accelerator = "F5"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

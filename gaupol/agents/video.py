@@ -94,3 +94,15 @@ class VideoAgent(aeidon.Delegate):
         action.set_active = True
         self.player.set_path(path)
         self.update_gui()
+
+    @aeidon.deco.export
+    def _on_play_pause_activate(self, *args):
+        """Play or pause video."""
+        if self.player.is_playing():
+            self.player.pause()
+            action = self.get_action("play_pause")
+            action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
+        else: # Not playing.
+            self.player.play()
+            action = self.get_action("play_pause")
+            action.props.stock_id = Gtk.STOCK_MEDIA_PAUSE

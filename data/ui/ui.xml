@@ -155,6 +155,10 @@
       <menuitem name="load_video" action="load_video"/>
       <placeholder name="1">
       </placeholder>
+      <separator/>
+      <menuitem name="play_pause" action="play_pause"/>
+      <placeholder name="2">
+      </placeholder>
     </menu>
     <menu name="tools" action="show_tools_menu">
       <menuitem name="preview" action="preview"/>
@@ -232,8 +236,13 @@
     </placeholder>
     <separator/>
     <toolitem name="preview" action="preview"/>
+    <placeholder name="4">
+    </placeholder>
   </toolbar>
   <toolbar name="player_toolbar">
+    <toolitem name="play_pause" action="play_pause"/>
+    <placeholder name="1">
+    </placeholder>
   </toolbar>
   <popup name="tab_popup">
     <menuitem name="move_tab_left" action="move_tab_left"/>

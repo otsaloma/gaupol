@@ -22,6 +22,8 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
+from gi.repository import Gtk
+
 
 class LoadVideoAction(gaupol.Action):
 
@@ -38,6 +40,24 @@ class LoadVideoAction(gaupol.Action):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(gaupol.util.gst_available())
         aeidon.util.affirm(page is not None)
+
+
+class PlayPauseAction(gaupol.Action):
+
+    """Play or pause video."""
+
+    def __init__(self):
+        """Initialize a :class:`PlayPauseAction` object."""
+        gaupol.Action.__init__(self, "play_pause")
+        self.props.label = _("_Play/Pause")
+        self.props.stock_id = Gtk.STOCK_MEDIA_PLAY
+        self.props.tooltip = _("Play or pause video")
+        self.accelerator = "P"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
 
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))
