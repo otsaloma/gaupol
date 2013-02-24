@@ -30,32 +30,10 @@ class VideoAgent(aeidon.Delegate):
 
     """Loading a video file and interacting with its content."""
 
-    @aeidon.deco.export
-    def _on_load_video_activate(self, *args):
-        """Load a video file."""
-        gaupol.util.set_cursor_busy(self.window)
-        page = self.get_current_page()
-        path = page.project.video_path
-        dialog = gaupol.VideoDialog(self.window,
-                                    title=_("Load Video"),
-                                    button_label=_("_Load"))
-
-        if page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
-        if page.project.video_path is not None:
-            dialog.set_filename(page.project.video_path)
-        gaupol.util.set_cursor_normal(self.window)
-        response = gaupol.util.run_dialog(dialog)
-        path = dialog.get_filename()
-        dialog.destroy()
-        if response != Gtk.ResponseType.OK: return
-        page.project.video_path = path
-        self.update_gui()
-        # TODO: Destroy possibly existing previous player.
+    def _init_player_widgets(self):
+        """Initialize the video player and related widgets."""
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.player = gaupol.VideoPlayer()
-        self.player.set_path(path)
         vbox.pack_start(self.player.widget,
                         expand=True,
                         fill=True,
@@ -88,4 +66,29 @@ class VideoAgent(aeidon.Delegate):
         if orientation == Gtk.Orientation.VERTICAL:
             size = self.notebook.props.window.get_height()
         self.paned.set_position(int(size/2))
-        self.player.play()
+
+    @aeidon.deco.export
+    def _on_load_video_activate(self, *args):
+        """Load a video file."""
+        gaupol.util.set_cursor_busy(self.window)
+        page = self.get_current_page()
+        path = page.project.video_path
+        dialog = gaupol.VideoDialog(self.window,
+                                    title=_("Load Video"),
+                                    button_label=_("_Load"))
+
+        if page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(directory)
+        if page.project.video_path is not None:
+            dialog.set_filename(page.project.video_path)
+        gaupol.util.set_cursor_normal(self.window)
+        response = gaupol.util.run_dialog(dialog)
+        path = dialog.get_filename()
+        dialog.destroy()
+        if response != Gtk.ResponseType.OK: return
+        page.project.video_path = path
+        self.update_gui()
+        if self.player is None:
+            self._init_player_widgets()
+        self.player.set_path(path)
