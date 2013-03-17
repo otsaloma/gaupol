@@ -175,7 +175,7 @@ class VideoPlayer(object):
                          .format(repr(mode)))
 
     def is_playing(self):
-        """Return ``True`` is playing video."""
+        """Return ``True`` if playing video."""
         state = self._pipeline.get_state(timeout=1)[1]
         return state == Gst.State.PLAYING
 

@@ -23,6 +23,7 @@ import gaupol
 import os
 _ = aeidon.i18n._
 
+from gi.repository import GLib
 from gi.repository import Gtk
 
 
@@ -39,8 +40,18 @@ class VideoAgent(aeidon.Delegate):
                         fill=True,
                         padding=0)
 
-        self.seekbar = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL)
+        adjustment = Gtk.Adjustment(value=0,
+                                    lower=0,
+                                    upper=1,
+                                    step_increment=0.01,
+                                    page_increment=0.05,
+                                    page_size=0.05)
+
+        self.seekbar = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL,
+                                 adjustment=adjustment)
+
         self.seekbar.props.draw_value = False
+        self.seekbar.connect("change-value", self._on_seekbar_change_value)
         vbox.pack_start(self.seekbar,
                         expand=False,
                         fill=True,
@@ -106,3 +117,22 @@ class VideoAgent(aeidon.Delegate):
             self.player.play()
             action = self.get_action("play_pause")
             action.props.stock_id = Gtk.STOCK_MEDIA_PAUSE
+            GLib.timeout_add(1000, self._on_player_update_seekbar, None)
+
+    def _on_player_update_seekbar_require(self, data=None):
+        assert self.player is not None
+        assert self.player.is_playing()
+
+    def _on_player_update_seekbar(self, data=None):
+        """Update seekbar from video position."""
+        duration = self.player.get_duration(aeidon.modes.SECONDS)
+        position = self.player.get_position(aeidon.modes.SECONDS)
+        adjustment = self.seekbar.get_adjustment()
+        adjustment.set_value(position/duration)
+        # Continue repeated calls until returning False.
+        return self.player.is_playing()
+
+    def _on_seekbar_change_value(self, seekbar, scroll, value, data=None):
+        """Seek to specified position in video."""
+        duration = self.player.get_duration(aeidon.modes.SECONDS)
+        self.player.seek(value * duration)
