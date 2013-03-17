@@ -174,10 +174,19 @@ class VideoPlayer(object):
         raise ValueError("Invalid mode: {}"
                          .format(repr(mode)))
 
+    def get_subtitle_text(self):
+        """Return `text` shown in the subtitle text overlay."""
+        return self._text_overlay.props.text
+
     def is_playing(self):
         """Return ``True`` if playing video."""
-        state = self._pipeline.get_state(timeout=1)[1]
-        return state == Gst.State.PLAYING
+        # GStreamer's state information is far too detailed for our purposes.
+        # Let's consider the state to be playing also if undergoing a state
+        # change and/or having a pending playing state.
+        success, current, pending = self._pipeline.get_state(timeout=1)
+        return (success == Gst.StateChangeReturn.ASYNC or
+                current == Gst.State.PLAYING or
+                pending == Gst.State.PLAYING)
 
     def pause(self):
         """Pause."""
@@ -230,7 +239,7 @@ class VideoPlayer(object):
 
     def set_subtitle_text(self, text):
         """Set `text` to the subtitle text overlay."""
-        self._text_overlay.props.text = aeidon.RE_ANY_TAG.sub("", text)
+        self._text_overlay.props.text = text
 
     def set_uri(self, uri):
         """Set the URI of the file to play."""
