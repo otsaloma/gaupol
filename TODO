@@ -2,9 +2,6 @@ Gaupol 0.xx
 ===========
 
  [ ] Add a built-in GStreamer-based video player
-     * Video player in application window
-       - Seek bar updates (timeout_add: 1s?)
-       - Subtitle text updates (timeout_add: 40ms?)
      * Preferences dialog
        - Time overlay font, color, alpha
        - Subtitle overlay font, color, alpha

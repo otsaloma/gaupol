@@ -187,14 +187,15 @@ config_defaults = {
         "target": gaupol.targets.CURRENT,
         },
     "video_player": {
+        "seek_length": 30,
         "subtitle_alpha": 1.0,
-        "subtitle_background": True,
+        "subtitle_background": False,
         "subtitle_color": "#ffffff",
         "subtitle_font": "PT Sans Caption,sans 18",
         "time_alpha": 1.0,
-        "time_background": True,
+        "time_background": False,
         "time_color": "#ffffff",
-        "time_font": "PT Mono,monospace Bold 15",
+        "time_font": "PT Mono,monospace Bold 14",
         },
     }
 

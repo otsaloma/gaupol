@@ -168,11 +168,11 @@ class VideoAgent(aeidon.Delegate):
     def _on_player_update_subtitle(self, data=None):
         """Update subtitle overlay from video position."""
         position = self.player.get_position(aeidon.modes.SECONDS)
-        subtitle = list(filter(lambda x: x[0] <= position <= x[1],
-                               self._cache))
+        subtitles = list(filter(lambda x: x[0] <= position <= x[1],
+                                self._cache))
 
-        if subtitle:
-            text = aeidon.RE_ANY_TAG.sub("", subtitle[0][2])
+        if subtitles:
+            text = aeidon.RE_ANY_TAG.sub("", subtitles[0][2])
             if text != self.player.get_subtitle_text():
                 self.player.set_subtitle_text(text)
         else:
@@ -180,6 +180,43 @@ class VideoAgent(aeidon.Delegate):
                 self.player.set_subtitle_text("")
         # Continue repeated calls until paused.
         return self.player.is_playing()
+
+    @aeidon.deco.export
+    def _on_seek_backward_activate(self, *args):
+        """Seek backward."""
+        position = self.player.get_position(aeidon.modes.SECONDS)
+        position = position - gaupol.conf.video_player.seek_length
+        position = max(position, 0)
+        self.player.seek(position)
+
+    @aeidon.deco.export
+    def _on_seek_forward_activate(self, *args):
+        """Seek forward."""
+        position = self.player.get_position(aeidon.modes.SECONDS)
+        position = position + gaupol.conf.video_player.seek_length
+        duration = self.player.get_duration(aeidon.modes.SECONDS)
+        position = min(position, duration)
+        self.player.seek(position)
+
+    @aeidon.deco.export
+    def _on_seek_next_activate(self, *args):
+        """Seek to the start of the next subtitle."""
+        position = self.player.get_position(aeidon.modes.SECONDS)
+        subtitles = list(filter(lambda x: x[0] > position + 0.001,
+                                self._cache))
+
+        if not subtitles: return
+        self.player.seek(subtitles[0][0])
+
+    @aeidon.deco.export
+    def _on_seek_previous_activate(self, *args):
+        """Seek to the start of the previous subtitle."""
+        position = self.player.get_position(aeidon.modes.SECONDS)
+        subtitles = list(filter(lambda x: x[1] < position - 0.001,
+                                self._cache))
+
+        if not subtitles: return
+        self.player.seek(subtitles[-1][0])
 
     def _on_seekbar_change_value(self, seekbar, scroll, value, data=None):
         """Seek to specified position in video."""

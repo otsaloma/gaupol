@@ -159,6 +159,16 @@
       <menuitem name="play_pause" action="play_pause"/>
       <placeholder name="2">
       </placeholder>
+      <separator/>
+      <menuitem name="seek_previous" action="seek_previous"/>
+      <menuitem name="seek_next" action="seek_next"/>
+      <placeholder name="3">
+      </placeholder>
+      <separator/>
+      <menuitem name="seek_backward" action="seek_backward"/>
+      <menuitem name="seek_forward" action="seek_forward"/>
+      <placeholder name="4">
+      </placeholder>
     </menu>
     <menu name="tools" action="show_tools_menu">
       <menuitem name="preview" action="preview"/>
@@ -241,6 +251,12 @@
   </toolbar>
   <toolbar name="player_toolbar">
     <toolitem name="play_pause" action="play_pause"/>
+    <separator/>
+    <toolitem name="seek_previous" action="seek_previous"/>
+    <toolitem name="seek_next" action="seek_next"/>
+    <separator/>
+    <toolitem name="seek_backward" action="seek_backward"/>
+    <toolitem name="seek_forward" action="seek_forward"/>
     <placeholder name="1">
     </placeholder>
   </toolbar>

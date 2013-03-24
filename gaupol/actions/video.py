@@ -60,4 +60,76 @@ class PlayPauseAction(gaupol.Action):
         aeidon.util.affirm(application.player is not None)
 
 
+class SeekBackwardAction(gaupol.Action):
+
+    """Seek backward."""
+
+    def __init__(self):
+        """Initialize a :class:`SeekBackwardAction` object."""
+        gaupol.Action.__init__(self, "seek_backward")
+        self.props.label = _("Seek _Backward")
+        self.props.stock_id = Gtk.STOCK_MEDIA_REWIND
+        self.props.tooltip = _("Seek backward")
+        self.accelerator = "<Shift><Ctrl>Left"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+
+
+class SeekForwardAction(gaupol.Action):
+
+    """Seek forward."""
+
+    def __init__(self):
+        """Initialize a :class:`SeekForwardAction` object."""
+        gaupol.Action.__init__(self, "seek_forward")
+        self.props.label = _("Seek _Forward")
+        self.props.stock_id = Gtk.STOCK_MEDIA_FORWARD
+        self.props.tooltip = _("Seek forward")
+        self.accelerator = "<Shift><Ctrl>Right"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+
+
+class SeekNextAction(gaupol.Action):
+
+    """Seek to the start of the next subtitle."""
+
+    def __init__(self):
+        """Initialize a :class:`SeekNextAction` object."""
+        gaupol.Action.__init__(self, "seek_next")
+        self.props.label = _("Seek _Next")
+        self.props.stock_id = Gtk.STOCK_MEDIA_NEXT
+        self.props.tooltip = _("Seek to the start of the next subtitle")
+        self.accelerator = "<Ctrl>Right"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+
+
+class SeekPreviousAction(gaupol.Action):
+
+    """Seek to the start of the previous subtitle."""
+
+    def __init__(self):
+        """Initialize a :class:`SeekPreviousAction` object."""
+        gaupol.Action.__init__(self, "seek_previous")
+        self.props.label = _("Seek _Previous")
+        self.props.stock_id = Gtk.STOCK_MEDIA_PREVIOUS
+        self.props.tooltip = _("Seek to the start of the previous subtitle")
+        self.accelerator = "<Ctrl>Left"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+
+
 __all__ = tuple(x for x in dir() if x.endswith("Action"))
