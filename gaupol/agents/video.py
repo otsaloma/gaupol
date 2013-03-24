@@ -160,14 +160,18 @@ class VideoAgent(aeidon.Delegate):
         """Update seekbar from video position."""
         duration = self.player.get_duration(aeidon.modes.SECONDS)
         position = self.player.get_position(aeidon.modes.SECONDS)
-        adjustment = self.seekbar.get_adjustment()
-        adjustment.set_value(position/duration)
+        if duration is not None and position is not None:
+            adjustment = self.seekbar.get_adjustment()
+            adjustment.set_value(position/duration)
         # Continue repeated calls until paused.
         return self.player.is_playing()
 
     def _on_player_update_subtitle(self, data=None):
         """Update subtitle overlay from video position."""
         position = self.player.get_position(aeidon.modes.SECONDS)
+        if position is None:
+            # Continue repeated calls until paused.
+            return self.player.is_playing()
         subtitles = list(filter(lambda x: x[0] <= position <= x[1],
                                 self._cache))
 
@@ -185,6 +189,7 @@ class VideoAgent(aeidon.Delegate):
     def _on_seek_backward_activate(self, *args):
         """Seek backward."""
         position = self.player.get_position(aeidon.modes.SECONDS)
+        if position is None: return
         position = position - gaupol.conf.video_player.seek_length
         position = max(position, 0)
         self.player.seek(position)
@@ -193,8 +198,10 @@ class VideoAgent(aeidon.Delegate):
     def _on_seek_forward_activate(self, *args):
         """Seek forward."""
         position = self.player.get_position(aeidon.modes.SECONDS)
-        position = position + gaupol.conf.video_player.seek_length
         duration = self.player.get_duration(aeidon.modes.SECONDS)
+        if position is None: return
+        if duration is None: return
+        position = position + gaupol.conf.video_player.seek_length
         position = min(position, duration)
         self.player.seek(position)
 
@@ -222,6 +229,7 @@ class VideoAgent(aeidon.Delegate):
         """Seek to specified position in video."""
         self.player.set_subtitle_text("")
         duration = self.player.get_duration(aeidon.modes.SECONDS)
+        if duration is None: return
         self.player.seek(value * duration)
 
     def _update_subtitle_cache(self, *args, **kwargs):

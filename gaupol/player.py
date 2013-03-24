@@ -147,9 +147,9 @@ class VideoPlayer(object):
             message.src.set_window_handle(self._xid)
 
     def get_duration(self, mode):
-        """Return duration of video stream."""
+        """Return duration of video stream or ``None``."""
         success, duration = self._pipeline.query_duration(Gst.Format.TIME)
-        if not success: return duration
+        if not success: return None
         duration = duration / Gst.SECOND
         if mode == aeidon.modes.TIME:
             return self.calc.to_time(duration)
@@ -161,9 +161,9 @@ class VideoPlayer(object):
                          .format(repr(mode)))
 
     def get_position(self, mode):
-        """Return current position in video stream."""
+        """Return current position in video stream or ``None``."""
         success, pos = self._pipeline.query_position(Gst.Format.TIME)
-        if not success: return pos
+        if not success: return None
         pos = pos / Gst.SECOND
         if mode == aeidon.modes.TIME:
             return self.calc.to_time(pos)
