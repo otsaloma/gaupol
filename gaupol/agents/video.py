@@ -101,7 +101,7 @@ class VideoAgent(aeidon.Delegate):
         """Initialize seekbar and subtitle overlay updates."""
         if not self.player.is_playing():
             return True # to be called again.
-        GLib.timeout_add(1000, self._on_player_update_seekbar)
+        GLib.timeout_add(40, self._on_player_update_seekbar)
         GLib.timeout_add(20, self._on_player_update_subtitle)
         return False # to not be called again.
 
