@@ -6,6 +6,8 @@ Gaupol 0.xx
        - Time overlay font, color, alpha
        - Subtitle overlay font, color, alpha
      * Check side-pane extension containering
+     * Check keybindings, preview and video toolbar for changes needed
+       to avoid confusion
  [ ] Set framerate automatically when setting video file
  [ ] Add a not-required, but recommended dependency on PT fonts
      (PT Sans Caption and PT Mono) used by default for video player's
@@ -15,6 +17,8 @@ Gaupol 0.xx
 Gaupol 1.0
 ==========
 
+ * Allow selection of audio track in video player
+   - We need a Gtk.MenuToolbutton and thus PyGObject >= 3.7.90
  * Restore proper keeping track of recent files
    - Should be possible with PyGObject >= 3.7.4:
      https://bugzilla.gnome.org/show_bug.cgi?id=678401

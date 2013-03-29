@@ -43,7 +43,6 @@ class VideoPlayer(object):
 
     :ivar _bus: The :class:`Gtk.Bus` used to receive messages
     :ivar _pipeline: The :class:`Gst.Pipeline` used
-    :ivar _playbin: The GStreamer playbin element
     :ivar _text_overlay: A GStreamer "textoverlay" element
     :ivar _time_overlay: A GStreamer "timeoverlay" element
     :ivar _xid: `widget`'s X resource (window)
@@ -55,7 +54,6 @@ class VideoPlayer(object):
         """Initialize a :class:`VideoPlayer` object."""
         self._bus = None
         self._pipeline = None
-        self._playbin = None
         self._text_overlay = None
         self._time_overlay = None
         self._xid = None
@@ -78,20 +76,29 @@ class VideoPlayer(object):
 
     def _init_pipeline(self):
         """Initialize the GStreamer playback pipeline."""
-        self._pipeline = Gst.Pipeline()
-        self._playbin = Gst.ElementFactory.make("playbin", name=None)
+        self._pipeline = Gst.ElementFactory.make("playbin", name=None)
+        sink = Gst.ElementFactory.make("autovideosink", name=None)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
         bin.add(self._text_overlay)
         pad = self._time_overlay.get_static_pad("video_sink")
-        ghost = Gst.GhostPad.new("sink", pad)
-        sink = Gst.ElementFactory.make("autovideosink", name=None)
-        bin.add_pad(ghost)
+        bin.add_pad(Gst.GhostPad.new("sink", pad))
         bin.add(sink)
         self._time_overlay.link(self._text_overlay)
         self._text_overlay.link(sink)
-        self._playbin.set_property("video-sink", bin)
-        self._pipeline.add(self._playbin)
+        self._pipeline.props.video_sink= bin
+        # We need to disable playbin's own subtitle rendering, since we don't
+        # want embedded subtitles to be displayed, but rather what we
+        # explicitly set to our own overlays. Since Gst.PlayFlags is not
+        # available via introspection, we need to use Gst.util_set_object_arg.
+        # Playbin's default values can be found via 'gst-inspect playbin'.
+        Gst.util_set_object_arg(self._pipeline,
+                                "flags",
+                                "+".join(("soft-colorbalance",
+                                          "deinterlace",
+                                          "soft-volume",
+                                          "audio",
+                                          "video")))
 
     def _init_text_overlay(self):
         """Initialize the text overlay element."""
@@ -136,7 +143,7 @@ class VideoPlayer(object):
     def _on_bus_message_error(self, bus, message):
         """Handle error message from the bus."""
         title = _("Video playback failed")
-        dialog = gaupol.ErrorDialog(self, title, message.parse_error())
+        dialog = gaupol.ErrorDialog(None, title, message.parse_error())
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -243,7 +250,7 @@ class VideoPlayer(object):
 
     def set_uri(self, uri):
         """Set the URI of the file to play."""
-        self._playbin.set_property("uri", uri)
+        self._pipeline.set_property("uri", uri)
         self.set_subtitle_text("")
         # Find out the exact framerate to be able
         # to convert between position types.
