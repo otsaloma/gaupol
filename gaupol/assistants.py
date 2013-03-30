@@ -958,7 +958,7 @@ class ConfirmationPage(BuilderPage):
         """Set zerba-striped backgrounds for all columns."""
         path = self._tree_view.get_model().get_path(itr)
         row = gaupol.util.tree_path_to_row(path)
-        color = (gaupol.util.get_zebra_color(self)
+        color = (gaupol.util.get_zebra_color(self._tree_view)
                  if row % 2 == 0 else None)
 
         for column in self._tree_view.get_columns():
