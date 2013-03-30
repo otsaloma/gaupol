@@ -84,11 +84,13 @@ config_defaults = {
         "undo_limit": 50,
         "use_custom_font": False,
         "use_undo_limit": False,
+        "use_zebra_stripes": True,
         "visible_fields": [gaupol.fields.NUMBER,
                            gaupol.fields.START,
                            gaupol.fields.END,
                            gaupol.fields.DURATION,
                            gaupol.fields.MAIN_TEXT],
+
         },
     "encoding": {
         "fallback": ["utf_8", "cp1252"],

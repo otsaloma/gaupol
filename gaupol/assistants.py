@@ -910,6 +910,7 @@ class ConfirmationPage(BuilderPage):
         # page, index, accept, original text, new text
         store = Gtk.ListStore(object, int, bool, str, str)
         self._tree_view.set_model(store)
+        self._tree_view.set_rules_hint(False)
         selection = self._tree_view.get_selection()
         selection.set_mode(Gtk.SelectionMode.SINGLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
@@ -920,6 +921,9 @@ class ConfirmationPage(BuilderPage):
         column = Gtk.TreeViewColumn(_("Accept"), renderer, active=2)
         column.set_resizable(True)
         self._tree_view.append_column(column)
+        if gaupol.conf.editor.use_zebra_stripes:
+            callback = self._on_renderer_set_background
+            column.set_cell_data_func(renderer, callback, None)
         self._add_text_column(3, _("Original Text"))
         self._add_text_column(4, _("Corrected Text"))
         column = self._tree_view.get_column(2)
@@ -949,6 +953,17 @@ class ConfirmationPage(BuilderPage):
     def _on_remove_check_toggled(self, check_button):
         """Save remove blank subtitles value."""
         self.conf.remove_blank = check_button.get_active()
+
+    def _on_renderer_set_background(self, column, renderer, store, itr, data):
+        """Set zerba-striped backgrounds for all columns."""
+        path = self._tree_view.get_model().get_path(itr)
+        row = gaupol.util.tree_path_to_row(path)
+        color = (gaupol.util.get_zebra_color(self)
+                 if row % 2 == 0 else None)
+
+        for column in self._tree_view.get_columns():
+            for renderer in column.get_cells():
+                renderer.props.cell_background_rgba = color
 
     def _on_tree_view_cell_edited(self, renderer, path, text):
         """Edit text in the corrected text column."""

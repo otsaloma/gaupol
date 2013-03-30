@@ -86,7 +86,7 @@ class VideoPlayer(object):
         bin.add(sink)
         self._time_overlay.link(self._text_overlay)
         self._text_overlay.link(sink)
-        self._pipeline.props.video_sink= bin
+        self._pipeline.props.video_sink = bin
         # We need to disable playbin's own subtitle rendering, since we don't
         # want embedded subtitles to be displayed, but rather what we
         # explicitly set to our own overlays. Since Gst.PlayFlags is not
