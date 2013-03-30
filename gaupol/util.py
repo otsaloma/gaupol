@@ -147,6 +147,24 @@ def get_tree_view_size(tree_view):
     return width, height
 
 @aeidon.deco.once
+def get_zebra_color(tree_view):
+    """Return background color to use for tree view zebra-stripes."""
+    # Gtk.TreeView.set_rules_hint does not actually always produce
+    # zebra-stripes since some GTK+ theme authors have chosen to not allow
+    # them. To, at least provide the option to, clarify multiline text,
+    # we can calculate the colors theme-independently as a weighted mean of
+    # normal background and foreground colors and set those using
+    # Gtk.TreeViewColumn.set_cell_data_func.
+    style = tree_view.get_style_context()
+    fg = style.get_color(Gtk.StateFlags.NORMAL)
+    bg = style.get_background_color(Gtk.StateFlags.NORMAL)
+    color = Gdk.RGBA()
+    color.red =   0.9 * bg.red   + 0.1 * fg.red
+    color.green = 0.9 * bg.green + 0.1 * fg.green
+    color.blue =  0.9 * bg.blue  + 0.1 * fg.blue
+    return(color)
+
+@aeidon.deco.once
 def gst_available():
     """Return ``True`` if :mod:`Gst` module is available."""
     try:

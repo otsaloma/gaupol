@@ -3,6 +3,9 @@ Gaupol 0.21.2
 
  [X] Restore drop-down arrows on undo and redo toolbar buttons for those
      using PyGObject 3.7.90 or greater (#686608)
+ [X] Restore zebra-stripes, which were previously discarded by some GTK+
+     themes (this is a hidden preference, which can be enabled/disabled
+     by editing gaupol's configuration file)
  [X] Add Czech translation (Pavel Fric)
 
 Gaupol 1.0

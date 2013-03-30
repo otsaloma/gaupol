@@ -90,6 +90,9 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         column = self.get_column(self.columns.NUMBER)
         renderer = column.get_cells()[0]
         column.set_cell_data_func(renderer, set_number, None)
+        if gaupol.conf.editor.use_zebra_stripes:
+            callback = self._on_renderer_set_background
+            column.set_cell_data_func(renderer, callback, None)
 
     def _init_columns(self, edit_mode):
         """Initialize the tree view columns."""
@@ -123,7 +126,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         self._init_cell_data_functions()
         self.set_name("gaupol-view")
         self.set_headers_visible(True)
-        self.set_rules_hint(True)
+        self.set_rules_hint(False)
         self.set_rubber_banding(True)
         selection = self.get_selection()
         selection.set_mode(Gtk.SelectionMode.MULTIPLE)
@@ -203,6 +206,17 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         self.set_enable_search(event.string.isdigit() or
                                event.string == ":" or
                                event.string == ".")
+
+    def _on_renderer_set_background(self, column, renderer, store, itr, data):
+        """Set zerba-striped backgrounds for all columns."""
+        path = self.get_model().get_path(itr)
+        row = gaupol.util.tree_path_to_row(path)
+        color = (gaupol.util.get_zebra_color(self)
+                 if row % 2 == 0 else None)
+
+        for column in self.get_columns():
+            for renderer in column.get_cells():
+                renderer.props.cell_background_rgba = color
 
     def _reset_columns(self):
         """Recreate the columns enumeration and set all items to ``None``."""
