@@ -180,6 +180,8 @@ class VideoPlayer(aeidon.Observable):
     def get_audio_languages(self):
         """Return a sequence of audio language codes or ``None``."""
         if self._info is None: return None
+        # TODO: Maybe we should try to parse these language codes to human
+        # readable form, but the codes probably vary a lot by container.
         return tuple(x.get_language() for x in
                      self._info.get_audio_streams())
 

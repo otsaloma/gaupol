@@ -46,8 +46,6 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _add_audio_track_action(self, index, language):
         """Add an action to the "audio tracks" action group."""
         name = "activate_audio_track_{:d}".format(index)
-        # TODO: Maybe we should try to parse these language codes to human
-        # readable form, but the codes probably vary a lot by container.
         label = language.replace("_", "__")
         label = "{:d}. {}".format(index+1, label)
         label = ("_{}".format(label) if index < 9 else label)
@@ -58,7 +56,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                                  stock_id=None,
                                  value=index)
 
-        action_group = self.get_action_group("audio_tracks")
+        action_group = self.get_action_group("audio-tracks")
         group = action_group.get_action("activate_audio_track_0")
         if group is not None: action.join_group(group)
         accel = ("<alt>{:d}".format(index+1) if index < 9 else None)
@@ -142,7 +140,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     def _on_show_audio_track_menu_activate(self, *args):
         """Show the audio track menu."""
-        action_group = self.get_action_group("audio_tracks")
+        action_group = self.get_action_group("audio-tracks")
         for action in action_group.list_actions():
             action_group.remove_action(action)
         if self._audio_tracks_id is not None:
