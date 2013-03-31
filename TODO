@@ -1,8 +1,10 @@
-Gaupol 0.21.2
-=============
+Gaupol 0.22
+===========
 
  [X] Restore drop-down arrows on undo and redo toolbar buttons for those
      using PyGObject 3.7.90 or greater (#686608)
+ [X] Restore almost proper keeping track of recent files for those using
+     PyGObject 3.7.4 or greater (#678401, #695970)
  [X] Restore zebra-stripes, which were previously discarded by some GTK+
      themes (this is a hidden preference, which can be enabled/disabled
      by editing gaupol's configuration file)
@@ -11,9 +13,6 @@ Gaupol 0.21.2
 Gaupol 1.0
 ==========
 
- * Restore proper keeping track of recent files
-   - Should be possible with PyGObject >= 3.7.4:
-     https://bugzilla.gnome.org/show_bug.cgi?id=678401
  * Add a built-in GStreamer-based video player
  * Add a GStreamer-based audio waveform display
  * https://live.gnome.org/GnomeGoals/DesktopFileKeywords

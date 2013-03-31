@@ -143,20 +143,21 @@ class RecentAction(Gtk.RecentAction, Action):
         self.set_show_tips(True)
         self.set_sort_type(Gtk.RecentSortType.MRU)
         recent_filter = Gtk.RecentFilter()
-        # XXX: Gtk.RecentData fields cannot be set and thus group
-        # never gets saved and cannot be used to make a distinction
-        # between video files and main and translation files.
-        # https://bugzilla.gnome.org/show_bug.cgi?id=678401
-        # recent_filter.add_group(self.group)
+        if GObject.pygobject_version >= (3, 7, 4):
+            # Trying to set strings to struct fields
+            # fails with earlier versions of PyGObject.
+            # https://bugzilla.gnome.org/show_bug.cgi?id=678401
+            recent_filter.add_application("gaupol")
+            # We still cannot set string lists (gchar**).
+            # https://bugzilla.gnome.org/show_bug.cgi?id=695970
+            # recent_filter.add_group(self.group)
+        else:
+            recent_filter.add_mime_type("application/x-subrip")
+            recent_filter.add_mime_type("text/x-microdvd")
+            recent_filter.add_mime_type("text/x-mpsub")
+            recent_filter.add_mime_type("text/x-ssa")
+            recent_filter.add_mime_type("text/x-subviewer")
 
-        # While waiting for a fix, let's use a mimetype filter,
-        # which as a downside leaves out some rarer formats for
-        # which we don't have a mimetype.
-        recent_filter.add_mime_type("application/x-subrip")
-        recent_filter.add_mime_type("text/x-microdvd")
-        recent_filter.add_mime_type("text/x-mpsub")
-        recent_filter.add_mime_type("text/x-ssa")
-        recent_filter.add_mime_type("text/x-subviewer")
         self.add_filter(recent_filter)
         self.set_filter(recent_filter)
         self.set_limit(gaupol.conf.file.max_recent)
