@@ -41,12 +41,15 @@ class VideoPlayer(aeidon.Observable):
     """
     GStreamer video player.
 
+    :ivar _info: :class:`Gst.DiscovererInfo` from current uri
     :ivar _playbin: A GStreamer "playbin" element
     :ivar _text_overlay: A GStreamer "textoverlay" element
     :ivar _time_overlay: A GStreamer "timeoverlay" element
     :ivar _xid: `widget`'s X resource (window)
+    :ivar audio_track: Current audio track as integer
     :ivar calc: The instance of :class:`aeidon.Calculator` used
     :ivar subtitle_text: Text shown in the subtitle overlay
+    :ivar volume: Current audio stream volume
     :ivar widget: :class:`Gtk.DrawingArea` used to render video
 
     Signals and their arguments for callback functions:
@@ -58,6 +61,7 @@ class VideoPlayer(aeidon.Observable):
     def __init__(self):
         """Initialize a :class:`VideoPlayer` object."""
         aeidon.Observable.__init__(self)
+        self._info = None
         self._playbin = None
         self._text_overlay = None
         self._time_overlay = None
@@ -159,6 +163,26 @@ class VideoPlayer(aeidon.Observable):
         if struct.get_name() == "prepare-window-handle":
             message.src.set_window_handle(self._xid)
 
+    @property
+    def audio_track(self):
+        """Return number of the current audio track."""
+        track = self._playbin.props.current_audio
+        # If at the default value, the first track is used,
+        # which is (probably?) zero.
+        track = (0 if track == -1 else track)
+        return track
+
+    @audio_track.setter
+    def audio_track(self, track):
+        """Set the current audio track."""
+        self._playbin.props.current_audio = track
+
+    def get_audio_languages(self):
+        """Return a sequence of audio language codes or ``None``."""
+        if self._info is None: return None
+        return tuple(x.get_language() for x in
+                     self._info.get_audio_streams())
+
     def get_duration(self, mode):
         """Return duration of video stream or ``None``."""
         success, duration = self._playbin.query_duration(Gst.Format.TIME)
@@ -203,7 +227,6 @@ class VideoPlayer(aeidon.Observable):
 
     def play(self):
         """Play."""
-        self._xid = self.widget.props.window.get_xid()
         self._playbin.set_state(Gst.State.PLAYING)
 
     def play_segment(self, start, end):
@@ -254,17 +277,20 @@ class VideoPlayer(aeidon.Observable):
             # Find out the exact framerate to be able
             # to convert between position types.
             discoverer = GstPbutils.Discoverer()
-            info = discoverer.discover_uri(uri)
-            stream = info.get_video_streams()[0]
+            self._info = discoverer.discover_uri(uri)
+            stream = self._info.get_video_streams()[0]
             num = float(stream.get_framerate_num())
             denom = float(stream.get_framerate_denom())
             self.calc = aeidon.Calculator(num/denom)
         except Exception:
-            # If any of this fails, the video probably
-            # isn't playable and we'll present an error
-            # dialog when attempting to play with a
-            # detailed error message from GStreamer
+            # If any of this fails, playback probably fails
+            # as well and we'll show an error dialog then.
             pass
+        # Let's start playing, so that we can report immediately
+        # if missing a decoder and open the stream so that we
+        # get information about available audio tracks etc.
+        self._xid = self.widget.props.window.get_xid()
+        self._playbin.set_state(Gst.State.PLAYING)
 
     def stop(self):
         """Stop."""

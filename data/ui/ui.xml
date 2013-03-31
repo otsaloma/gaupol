@@ -171,9 +171,16 @@
       </placeholder>
     </menu>
     <menu name="audio" action="show_audio_menu">
+      <menu name="audio_track" action="show_audio_track_menu">
+        <placeholder name="audio_tracks">
+        </placeholder>
+      </menu>
+      <placeholder name="1">
+      </placeholder>
+      <separator/>
       <menuitem name="volume_down" action="volume_down"/>
       <menuitem name="volume_up" action="volume_up"/>
-      <placeholder name="1">
+      <placeholder name="2">
       </placeholder>
     </menu>
     <menu name="tools" action="show_tools_menu">

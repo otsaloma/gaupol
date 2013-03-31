@@ -50,4 +50,5 @@ class TestMenuAgent(gaupol.TestCase):
     def test_set_menu_notify_events(self):
         self.application.set_menu_notify_events("main-safe")
         self.application.set_menu_notify_events("main-unsafe")
+        self.application.set_menu_notify_events("audio_tracks")
         self.application.set_menu_notify_events("projects")

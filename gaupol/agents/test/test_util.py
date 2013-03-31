@@ -38,6 +38,7 @@ class TestUtilityAgent(gaupol.TestCase):
     def test_get_action_group(self):
         self.application.get_action_group("main-safe")
         self.application.get_action_group("main-unsafe")
+        self.application.get_action_group("audio_tracks")
         self.application.get_action_group("projects")
 
     def test_get_column_action(self):

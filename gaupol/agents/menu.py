@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012-2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -29,7 +29,8 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     """
     Building and updating dynamic menus.
 
-    :ivar _projects_id: :class:`Gtk.UIManager` merge ID for projects menu
+    :ivar _audio_tracks_id: A :class:`Gtk.UIManager` merge ID
+    :ivar _projects_id: A :class:`Gtk.UIManager` merge ID
     :ivar _redo_menu_items: Redo menu tool button menu items
     :ivar _undo_menu_items: Undo menu tool button menu items
     """
@@ -37,18 +38,42 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def __init__(self, master):
         """Initialize a MenuAgent object."""
         aeidon.Delegate.__init__(self, master)
+        self._audio_tracks_id = None
         self._projects_id = None
         self._redo_menu_items = []
         self._undo_menu_items = []
 
-    def _add_project_action(self, page):
-        """Add an action to the "projects" action group for `page`."""
-        index = self.pages.index(page)
+    def _add_audio_track_action(self, index, language):
+        """Add an action to the "audio tracks" action group."""
+        name = "activate_audio_track_{:d}".format(index)
+        # TODO: Maybe we should try to parse these language codes to human
+        # readable form, but the codes probably vary a lot by container.
+        label = language.replace("_", "__")
+        label = "{:d}. {}".format(index+1, label)
+        label = ("_{}".format(label) if index < 9 else label)
+        tooltip = _('Select "{}"').format(language)
+        action = Gtk.RadioAction(name=name,
+                                 label=label,
+                                 tooltip=tooltip,
+                                 stock_id=None,
+                                 value=index)
+
+        action_group = self.get_action_group("audio_tracks")
+        group = action_group.get_action("activate_audio_track_0")
+        if group is not None: action.join_group(group)
+        accel = ("<alt>{:d}".format(index+1) if index < 9 else None)
+        action_group.add_action_with_accel(action, accel)
+        action.connect("changed", self._on_audio_tracks_action_changed)
+        action.set_active(index == self.player.audio_track)
+        return action.get_name()
+
+    def _add_project_action(self, index, page):
+        """Add an action to the "projects" action group."""
         basename = page.get_main_basename()
         name = "activate_project_{:d}".format(index)
         label = page.tab_label.get_text().replace("_", "__")
-        label = "{:d}. {}".format(index + 1, label)
-        label = ("_{}".format(label)if index < 9 else label)
+        label = "{:d}. {}".format(index+1, label)
+        label = ("_{}".format(label) if index < 9 else label)
         tooltip = _('Activate "{}"').format(basename)
         action = Gtk.RadioAction(name=name,
                                  label=label,
@@ -59,11 +84,16 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         action_group = self.get_action_group("projects")
         group = action_group.get_action("activate_project_0")
         if group is not None: action.join_group(group)
-        accel = ("<alt>{:d}".format(index + 1) if index < 9 else None)
+        accel = ("<alt>{:d}".format(index+1) if index < 9 else None)
         action_group.add_action_with_accel(action, accel)
         action.connect("changed", self._on_projects_action_changed)
         action.set_active(page is self.get_current_page())
         return action.get_name()
+
+    def _on_audio_tracks_action_changed(self, item, active_item):
+        """Select a new audio track."""
+        index = int(active_item.get_name().split("_")[-1])
+        self.player.audio_track = index
 
     def _on_projects_action_changed(self, item, active_item):
         """Change the page in the notebook to the selected project."""
@@ -110,6 +140,27 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.push_message(None)
 
     @aeidon.deco.export
+    def _on_show_audio_track_menu_activate(self, *args):
+        """Show the audio track menu."""
+        action_group = self.get_action_group("audio_tracks")
+        for action in action_group.list_actions():
+            action_group.remove_action(action)
+        if self._audio_tracks_id is not None:
+            self.uim.remove_ui(self._audio_tracks_id)
+        if self.player is None: return
+        ui  = '<ui><menubar name="menubar">'
+        ui += '<menu name="audio" action="show_audio_menu">'
+        ui += '<menu name="audio_track" action="show_audio_track_menu">'
+        ui += '<placeholder name="audio_tracks">'
+        for i, language in enumerate(self.player.get_audio_languages()):
+            name = self._add_audio_track_action(i, language)
+            ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
+        ui += '</placeholder></menu></menu></menubar></ui>'
+        self._audio_tracks_id = self.uim.add_ui_from_string(ui)
+        self.uim.ensure_update()
+        self.set_menu_notify_events("audio_tracks")
+
+    @aeidon.deco.export
     def _on_show_projects_menu_activate(self, *args):
         """Update all project actions in the projects menu."""
         action_group = self.get_action_group("projects")
@@ -123,7 +174,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         ui += '<menu name="projects" action="show_projects_menu">'
         ui += '<placeholder name="open">'
         for i, page in enumerate(self.pages):
-            name = self._add_project_action(page)
+            name = self._add_project_action(i, page)
             ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
         ui += '</placeholder></menu></menubar></ui>'
         self._projects_id = self.uim.add_ui_from_string(ui)

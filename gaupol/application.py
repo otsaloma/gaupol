@@ -333,6 +333,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_uim_radio_groups(unsafe_group)
         self.uim.insert_action_group(safe_group, 0)
         self.uim.insert_action_group(unsafe_group, 1)
+        action_group = Gtk.ActionGroup(name="audio_tracks")
+        self.uim.insert_action_group(action_group, -1)
         action_group = Gtk.ActionGroup(name="projects")
         self.uim.insert_action_group(action_group, -1)
         ui_xml_file = os.path.join(aeidon.DATA_DIR, "ui", "ui.xml")

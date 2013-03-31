@@ -23,6 +23,23 @@ import gaupol
 _ = aeidon.i18n._
 
 
+class ShowAudioTrackMenuAction(gaupol.MenuAction):
+
+    """Show the audio track menu."""
+
+    def __init__(self):
+        """Initialize a :class:`ShowAudioTrackMenuAction` object."""
+        gaupol.MenuAction.__init__(self, "show_audio_track_menu")
+        self.props.label = _("_Language")
+        self.action_group = "main-safe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+        languages = application.player.get_audio_languages()
+        aeidon.util.affirm(languages is not None)
+
+
 class VolumeDownAction(gaupol.Action):
 
     """Decrease volume."""
