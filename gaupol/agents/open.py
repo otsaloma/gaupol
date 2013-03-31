@@ -24,6 +24,7 @@ import os
 _ = aeidon.i18n._
 
 from gi.repository import Gtk
+from gi.repository import GObject
 
 
 class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
@@ -436,22 +437,24 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def add_to_recent_files(self, path, format, doc):
         """Add `path` to recent files managed by the recent manager."""
         uri = aeidon.util.path_to_uri(path)
-        if doc == aeidon.documents.MAIN:
-            group = "gaupol-main"
-        if doc == aeidon.documents.TRAN:
-            group = "gaupol-translation"
-        # XXX: Gtk.RecentData fields cannot be set.
-        # https://bugzilla.gnome.org/show_bug.cgi?id=678401
-        # recent_data = Gtk.RecentData()
-        # recent_data.mime_type = format.mime_type
-        # recent_data.app_name = "gaupol"
-        # recent_data.app_exec = "gaupol %F"
-        # recent_data.groups = (group,)
-        # self.recent_manager.add_full(uri, recent_data)
+        group = ("gaupol-translation"
+                 if doc == aeidon.documents.TRAN
+                 else "gaupol-main")
 
-        # While waiting for a fix, let's use 'add_item',
-        # which seems to add the URI and application name.
-        self.recent_manager.add_item(uri)
+        if GObject.pygobject_version >= (3, 7, 4):
+            # Trying to set strings to struct fields
+            # fails with earlier versions of PyGObject.
+            # https://bugzilla.gnome.org/show_bug.cgi?id=678401
+            recent_data = Gtk.RecentData()
+            recent_data.mime_type = format.mime_type
+            recent_data.app_name = "gaupol"
+            recent_data.app_exec = "gaupol %F"
+            # We still cannot set string lists (gchar**).
+            # https://bugzilla.gnome.org/show_bug.cgi?id=695970
+            # recent_data.groups = (group,)
+            self.recent_manager.add_full(uri, recent_data)
+        else:
+            self.recent_manager.add_item(uri)
 
     @aeidon.deco.export
     def append_file(self, path, encoding=None):
