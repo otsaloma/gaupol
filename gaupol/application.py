@@ -85,6 +85,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar uim: Instance of :class:`Gtk.UIManager` used
     :ivar video_button: A :class:`Gtk.Button` used to select a video file
     :ivar video_toolbar: A :class:`Gtk.Toolbar` for video file actions
+    :ivar volume_button: A :class:`Gtk.VolumeButton` in the player toolbar
     :ivar window: A :class:`Gtk.Window` used to hold all the widgets
     :ivar x_clipboard: A :class:`Gtk.Clipboard` used for desktop-wide copying
 
@@ -138,6 +139,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.uim = None
         self.video_button = None
         self.video_toolbar = None
+        self.volume_button = None
         self.window = None
         self.x_clipboard = None
         self._init_delegations()

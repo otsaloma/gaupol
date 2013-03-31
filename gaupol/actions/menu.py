@@ -23,6 +23,17 @@ import gaupol
 _ = aeidon.i18n._
 
 
+class ShowAudioMenuAction(gaupol.TopMenuAction):
+
+    """Show the "Audio" menu."""
+
+    def __init__(self):
+        """Initialize a :class:`ShowAudioMenuAction` object."""
+        gaupol.TopMenuAction.__init__(self, "show_audio_menu")
+        self.props.label = _("_Audio")
+        self.action_group = "main-safe"
+
+
 class ShowEditMenuAction(gaupol.TopMenuAction):
 
     """Show the "Edit" menu."""

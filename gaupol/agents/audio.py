@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2007-2008,2010 Osmo Salomaa
+# Copyright (C) 2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,18 +16,24 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-""":class:`Gtk.UIManager` actions for :class:`gaupol.Application`."""
+"""Loading and interacting with audio."""
 
-from gaupol.actions.audio import *
-from gaupol.actions.edit import *
-from gaupol.actions.file import *
-from gaupol.actions.format import *
-from gaupol.actions.help import *
-from gaupol.actions.menu import *
-from gaupol.actions.position import *
-from gaupol.actions.search import *
-from gaupol.actions.text import *
-from gaupol.actions.video import *
-from gaupol.actions.view import *
+import aeidon
 
-__all__ = tuple(x for x in dir() if x.endswith("Action"))
+class AudioAgent(aeidon.Delegate):
+
+    """Loading and interacting with audio."""
+
+    @aeidon.deco.export
+    def _on_volume_down_activate(self, *args):
+        """Decrease volume."""
+        volume = self.player.volume
+        self.player.volume = volume - 0.05
+        self.update_gui()
+
+    @aeidon.deco.export
+    def _on_volume_up_activate(self, *args):
+        """Increase volume."""
+        volume = self.player.volume
+        self.player.volume = volume + 0.05
+        self.update_gui()

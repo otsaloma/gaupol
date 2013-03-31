@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Loading a video file and interacting with its content."""
+"""Loading and interacting with video."""
 
 import aeidon
 import gaupol
@@ -29,7 +29,7 @@ from gi.repository import Gtk
 
 class VideoAgent(aeidon.Delegate):
 
-    """Loading a video file and interacting with its content."""
+    """Loading and interacting with video."""
 
     def __init__(self, master):
         """Initialize an :class:`VideoAgent` object."""
@@ -54,6 +54,7 @@ class VideoAgent(aeidon.Delegate):
         """Initialize the video player and related widgets."""
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.player = gaupol.VideoPlayer()
+        aeidon.util.connect(self, "player", "volume-changed")
         vbox.pack_start(self.player.widget,
                         expand=True,
                         fill=True,
@@ -78,6 +79,18 @@ class VideoAgent(aeidon.Delegate):
 
         self.player_toolbar = self.uim.get_widget("/ui/player_toolbar")
         self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
+        separator = Gtk.SeparatorToolItem(draw=False)
+        self.player_toolbar.insert(separator, -1)
+        self.player_toolbar.child_set_property(separator, "expand", True)
+        self.volume_button = Gtk.VolumeButton()
+        self.volume_button.props.adjustment.props.lower = 0
+        self.volume_button.props.adjustment.props.upper = 1
+        self.volume_button.props.value = self.player.volume
+        aeidon.util.connect(self, "volume_button", "value-changed")
+        item = Gtk.ToolItem()
+        item.add(self.volume_button)
+        item.set_tooltip_text(_("Volume"))
+        self.player_toolbar.insert(item, -1)
         vbox.pack_start(self.player_toolbar,
                         expand=False,
                         fill=True,
@@ -130,6 +143,12 @@ class VideoAgent(aeidon.Delegate):
             self._init_player_widgets()
             self._init_cache_updates()
             self._update_subtitle_cache()
+        if self.player.is_playing():
+            action = self.get_action("play_pause")
+            action.activate()
+            adjustment = self.seekbar.get_adjustment()
+            adjustment.set_value(0)
+            self.player.stop()
         action = self.get_action("toggle_player")
         action.set_active = True
         self.player.set_path(path)
@@ -152,10 +171,6 @@ class VideoAgent(aeidon.Delegate):
             # as soon as that state change has happened.
             GLib.timeout_add(20, self._init_polled_updates)
 
-    def _on_player_update_seekbar_require(self, data=None):
-        assert self.player is not None
-        assert self.player.is_playing()
-
     def _on_player_update_seekbar(self, data=None):
         """Update seekbar from video position."""
         duration = self.player.get_duration(aeidon.modes.SECONDS)
@@ -177,13 +192,17 @@ class VideoAgent(aeidon.Delegate):
 
         if subtitles:
             text = aeidon.RE_ANY_TAG.sub("", subtitles[0][2])
-            if text != self.player.get_subtitle_text():
-                self.player.set_subtitle_text(text)
+            if text != self.player.subtitle_text:
+                self.player.subtitle_text = text
         else:
-            if self.player.get_subtitle_text():
-                self.player.set_subtitle_text("")
+            if self.player.subtitle_text:
+                self.player.subtitle_text = ""
         # Continue repeated calls until paused.
         return self.player.is_playing()
+
+    def _on_player_volume_changed(self, player, volume):
+        """Update volume button."""
+        self.volume_button.props.value = volume
 
     @aeidon.deco.export
     def _on_seek_backward_activate(self, *args):
@@ -227,10 +246,15 @@ class VideoAgent(aeidon.Delegate):
 
     def _on_seekbar_change_value(self, seekbar, scroll, value, data=None):
         """Seek to specified position in video."""
-        self.player.set_subtitle_text("")
+        self.player.subtitle_text = ""
         duration = self.player.get_duration(aeidon.modes.SECONDS)
         if duration is None: return
         self.player.seek(value * duration)
+
+    def _on_volume_button_value_changed(self, button, value):
+        """Update video player volume."""
+        self.player.volume = value
+        self.update_gui()
 
     def _update_subtitle_cache(self, *args, **kwargs):
         """Update subtitle position and text cache."""

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2012 Osmo Salomaa
+# Copyright (C) 2012-2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -36,24 +36,29 @@ except Exception:
 __all__ = ("VideoPlayer",)
 
 
-class VideoPlayer(object):
+class VideoPlayer(aeidon.Observable):
 
     """
     GStreamer video player.
 
-    :ivar _bus: The :class:`Gtk.Bus` used to receive messages
-    :ivar _pipeline: The :class:`Gst.Pipeline` used
+    :ivar _playbin: A GStreamer "playbin" element
     :ivar _text_overlay: A GStreamer "textoverlay" element
     :ivar _time_overlay: A GStreamer "timeoverlay" element
     :ivar _xid: `widget`'s X resource (window)
     :ivar calc: The instance of :class:`aeidon.Calculator` used
+    :ivar subtitle_text: Text shown in the subtitle overlay
     :ivar widget: :class:`Gtk.DrawingArea` used to render video
+
+    Signals and their arguments for callback functions:
+     * ``volume-changed``: player, volume
     """
+
+    signals = ("volume-changed",)
 
     def __init__(self):
         """Initialize a :class:`VideoPlayer` object."""
-        self._bus = None
-        self._pipeline = None
+        aeidon.Observable.__init__(self)
+        self._playbin = None
         self._text_overlay = None
         self._time_overlay = None
         self._xid = None
@@ -64,19 +69,20 @@ class VideoPlayer(object):
         self._init_pipeline()
         self._init_bus()
         self._init_widget()
+        self.volume = gaupol.conf.video_player.volume
 
     def _init_bus(self):
         """Initialize the GStreamer message bus."""
-        self._bus = self._pipeline.get_bus()
-        self._bus.enable_sync_message_emission()
-        self._bus.connect("sync-message::element", self._on_bus_sync_message)
-        self._bus.add_signal_watch()
-        self._bus.connect("message::eos", self._on_bus_message_eos)
-        self._bus.connect("message::error", self._on_bus_message_error)
+        bus = self._playbin.get_bus()
+        bus.enable_sync_message_emission()
+        bus.connect("sync-message::element", self._on_bus_sync_message)
+        bus.add_signal_watch()
+        bus.connect("message::eos", self._on_bus_message_eos)
+        bus.connect("message::error", self._on_bus_message_error)
 
     def _init_pipeline(self):
         """Initialize the GStreamer playback pipeline."""
-        self._pipeline = Gst.ElementFactory.make("playbin", name=None)
+        self._playbin = Gst.ElementFactory.make("playbin", name=None)
         sink = Gst.ElementFactory.make("autovideosink", name=None)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
@@ -86,13 +92,13 @@ class VideoPlayer(object):
         bin.add(sink)
         self._time_overlay.link(self._text_overlay)
         self._text_overlay.link(sink)
-        self._pipeline.props.video_sink = bin
+        self._playbin.props.video_sink = bin
         # We need to disable playbin's own subtitle rendering, since we don't
         # want embedded subtitles to be displayed, but rather what we
         # explicitly set to our own overlays. Since Gst.PlayFlags is not
         # available via introspection, we need to use Gst.util_set_object_arg.
         # Playbin's default values can be found via 'gst-inspect playbin'.
-        Gst.util_set_object_arg(self._pipeline,
+        Gst.util_set_object_arg(self._playbin,
                                 "flags",
                                 "+".join(("soft-colorbalance",
                                           "deinterlace",
@@ -142,8 +148,8 @@ class VideoPlayer(object):
 
     def _on_bus_message_error(self, bus, message):
         """Handle error message from the bus."""
-        title = _("Video playback failed")
-        dialog = gaupol.ErrorDialog(None, title, message.parse_error())
+        title, message = message.parse_error()
+        dialog = gaupol.ErrorDialog(None, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -155,7 +161,7 @@ class VideoPlayer(object):
 
     def get_duration(self, mode):
         """Return duration of video stream or ``None``."""
-        success, duration = self._pipeline.query_duration(Gst.Format.TIME)
+        success, duration = self._playbin.query_duration(Gst.Format.TIME)
         if not success: return None
         duration = duration / Gst.SECOND
         if mode == aeidon.modes.TIME:
@@ -169,7 +175,7 @@ class VideoPlayer(object):
 
     def get_position(self, mode):
         """Return current position in video stream or ``None``."""
-        success, pos = self._pipeline.query_position(Gst.Format.TIME)
+        success, pos = self._playbin.query_position(Gst.Format.TIME)
         if not success: return None
         pos = pos / Gst.SECOND
         if mode == aeidon.modes.TIME:
@@ -181,41 +187,37 @@ class VideoPlayer(object):
         raise ValueError("Invalid mode: {}"
                          .format(repr(mode)))
 
-    def get_subtitle_text(self):
-        """Return `text` shown in the subtitle text overlay."""
-        return self._text_overlay.props.text
-
     def is_playing(self):
         """Return ``True`` if playing video."""
         # GStreamer's state information is far too detailed for our purposes.
         # Let's consider the state to be playing also if undergoing a state
         # change and/or having a pending playing state.
-        success, current, pending = self._pipeline.get_state(timeout=1)
+        success, current, pending = self._playbin.get_state(timeout=1)
         return (success == Gst.StateChangeReturn.ASYNC or
                 current == Gst.State.PLAYING or
                 pending == Gst.State.PLAYING)
 
     def pause(self):
         """Pause."""
-        self._pipeline.set_state(Gst.State.PAUSED)
+        self._playbin.set_state(Gst.State.PAUSED)
 
     def play(self):
         """Play."""
         self._xid = self.widget.props.window.get_xid()
-        self._pipeline.set_state(Gst.State.PLAYING)
+        self._playbin.set_state(Gst.State.PLAYING)
 
     def play_segment(self, start, end):
-        """Play from `start` to `end` (either time, frame or seconds."""
+        """Play from `start` to `end` (either time, frame or seconds)."""
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
         start = self.calc.to_seconds(start) * Gst.SECOND
         end = self.calc.to_seconds(end) * Gst.SECOND
-        self._pipeline.seek(rate=1.0,
-                            format=Gst.Format.TIME,
-                            flags=seek_flags,
-                            start_type=Gst.SeekType.SET,
-                            start=start,
-                            stop_type=Gst.SeekType.SET,
-                            stop=end)
+        self._playbin.seek(rate=1.0,
+                           format=Gst.Format.TIME,
+                           flags=seek_flags,
+                           start_type=Gst.SeekType.SET,
+                           start=start,
+                           stop_type=Gst.SeekType.SET,
+                           stop=end)
 
         self.play()
 
@@ -223,7 +225,7 @@ class VideoPlayer(object):
         """Seek to position (either time, frame or seconds)."""
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
         pos = self.calc.to_seconds(pos) * Gst.SECOND
-        self._pipeline.seek_simple(Gst.Format.TIME, seek_flags, pos)
+        self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
     def seek_relative(self, offset):
         """
@@ -231,37 +233,64 @@ class VideoPlayer(object):
 
         `offset` can be either time, frame or seconds.
         """
-        success, pos = self._pipeline.query_position(Gst.Format.TIME)
+        success, pos = self._playbin.query_position(Gst.Format.TIME)
         if not success: return
         pos = pos + (self.calc.to_seconds(offset) * Gst.SECOND)
-        success, duration = self._pipeline.query_duration(Gst.Format.TIME)
+        success, duration = self._playbin.query_duration(Gst.Format.TIME)
         if not success: return
         pos = max(0, min(pos, duration))
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
-        self._pipeline.seek_simple(Gst.Format.TIME, seek_flags, pos)
+        self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
     def set_path(self, path):
         """Set the path of the file to play."""
         self.set_uri(aeidon.util.path_to_uri(path))
 
-    def set_subtitle_text(self, text):
-        """Set `text` to the subtitle text overlay."""
-        self._text_overlay.props.text = text
-
     def set_uri(self, uri):
         """Set the URI of the file to play."""
-        self._pipeline.set_property("uri", uri)
-        self.set_subtitle_text("")
-        # Find out the exact framerate to be able
-        # to convert between position types.
-        discoverer = GstPbutils.Discoverer()
-        info = discoverer.discover_uri(uri)
-        stream = info.get_video_streams()[0]
-        num = float(stream.get_framerate_num())
-        denom = float(stream.get_framerate_denom())
-        self.calc = aeidon.Calculator(num/denom)
+        self._playbin.props.uri = uri
+        self.subtitle_text= ""
+        try:
+            # Find out the exact framerate to be able
+            # to convert between position types.
+            discoverer = GstPbutils.Discoverer()
+            info = discoverer.discover_uri(uri)
+            stream = info.get_video_streams()[0]
+            num = float(stream.get_framerate_num())
+            denom = float(stream.get_framerate_denom())
+            self.calc = aeidon.Calculator(num/denom)
+        except Exception:
+            # If any of this fails, the video probably
+            # isn't playable and we'll present an error
+            # dialog when attempting to play with a
+            # detailed error message from GStreamer
+            pass
 
     def stop(self):
         """Stop."""
-        self._pipeline.set_state(Gst.State.NULL)
-        self.set_subtitle_text("")
+        self._playbin.set_state(Gst.State.NULL)
+        self.subtitle_text= ""
+
+    @property
+    def subtitle_text(self):
+        """Return text shown in the subtitle overlay."""
+        return self._text_overlay.props.text
+
+    @subtitle_text.setter
+    def subtitle_text(self, text):
+        """Set `text` to the subtitle overlay."""
+        self._text_overlay.props.text = text
+
+    @property
+    def volume(self):
+        """Return the current volume, in range [0,1]."""
+        return self._playbin.props.volume
+
+    @volume.setter
+    def volume(self, volume):
+        """Set the volume to use, in range [0,1]."""
+        volume = max(0, min(1, volume))
+        if abs(volume - self.volume) < 0.001: return
+        self._playbin.props.volume = volume
+        gaupol.conf.video_player.volume = volume
+        self.emit("volume-changed", volume)

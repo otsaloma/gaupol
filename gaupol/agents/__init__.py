@@ -18,6 +18,7 @@
 
 """Extension delegates of of :class:`gaupol.Application`."""
 
+from .audio    import AudioAgent
 from .close    import CloseAgent
 from .edit     import EditAgent
 from .format   import FormatAgent

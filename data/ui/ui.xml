@@ -170,6 +170,12 @@
       <placeholder name="4">
       </placeholder>
     </menu>
+    <menu name="audio" action="show_audio_menu">
+      <menuitem name="volume_down" action="volume_down"/>
+      <menuitem name="volume_up" action="volume_up"/>
+      <placeholder name="1">
+      </placeholder>
+    </menu>
     <menu name="tools" action="show_tools_menu">
       <menuitem name="preview" action="preview"/>
       <placeholder name="1">
