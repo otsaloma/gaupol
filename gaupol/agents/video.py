@@ -153,6 +153,7 @@ class VideoAgent(aeidon.Delegate):
         action.set_active = True
         self.player.set_path(path)
         self.update_gui()
+        self.get_action("play_pause").activate()
 
     @aeidon.deco.export
     def _on_play_pause_activate(self, *args):

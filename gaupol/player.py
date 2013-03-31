@@ -229,6 +229,7 @@ class VideoPlayer(aeidon.Observable):
 
     def play(self):
         """Play."""
+        self._xid = self.widget.props.window.get_xid()
         self._playbin.set_state(Gst.State.PLAYING)
 
     def play_segment(self, start, end):
@@ -288,11 +289,6 @@ class VideoPlayer(aeidon.Observable):
             # If any of this fails, playback probably fails
             # as well and we'll show an error dialog then.
             pass
-        # Let's start playing, so that we can report immediately
-        # if missing a decoder and open the stream so that we
-        # get information about available audio tracks etc.
-        self._xid = self.widget.props.window.get_xid()
-        self._playbin.set_state(Gst.State.PLAYING)
 
     def stop(self):
         """Stop."""
