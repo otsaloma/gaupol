@@ -8,6 +8,9 @@ Gaupol 0.22
  [X] Restore zebra-stripes, which were previously discarded by some GTK+
      themes (this is a hidden preference, which can be enabled/disabled
      by editing gaupol's configuration file)
+ [ ] Investigate and fix speed issues
+     - At least _on_notify_text of renderers gets called too often
+     - Reconsider zebra stripes?
  [X] Add Czech translation (Pavel Fric)
 
 Gaupol 1.0
