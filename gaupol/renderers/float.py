@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2009-2010 Osmo Salomaa
+# Copyright (C) 2009-2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -37,7 +37,6 @@ class FloatCellRenderer(Gtk.CellRendererText):
         """Initialize a :class:`FloatCellRenderer` object."""
         GObject.GObject.__init__(self)
         self._format = format
-        self._text = ""
         aeidon.util.connect(self, self, "notify::text")
         aeidon.util.connect(self, self, "editing-started")
 
@@ -47,12 +46,19 @@ class FloatCellRenderer(Gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Cut decimals to fixed precision."""
-        self._text = text = self.props.text
-        if not text: return
+        # Since GTK+ 3.6, the notify::text signal seems to get
+        # emitted insanely often even if text hasn't changed at
+        # all. Let's try to keep this callback as fast as possible.
+        self.props.markup = self._text_to_markup(self.props.text)
+
+    @aeidon.deco.memoize(1000)
+    def _text_to_markup(self, text):
+        """Return `text` renderer as markup for display."""
+        if not text: return ""
         has_comma = text.find(",") > 0
         if has_comma:
             text = text.replace(",", ".")
         text = self._format.format(float(text))
         if has_comma:
             text = text.replace(".", ",")
-        self.props.markup = GLib.markup_escape_text(text)
+        return GLib.markup_escape_text(text)
