@@ -42,27 +42,30 @@ class VideoPlayer(aeidon.Observable):
     GStreamer video player.
 
     :ivar _info: :class:`Gst.DiscovererInfo` from current uri
-    :ivar _playbin: A GStreamer "playbin" element
-    :ivar _text_overlay: A GStreamer "textoverlay" element
-    :ivar _time_overlay: A GStreamer "timeoverlay" element
+    :ivar _playbin: GStreamer "playbin" element
+    :ivar _prev_state: Previous state of `_playbin`
+    :ivar _text_overlay: GStreamer "textoverlay" element
+    :ivar _time_overlay: GStreamer "timeoverlay" element
     :ivar _xid: `widget`'s X resource (window)
     :ivar audio_track: Current audio track as integer
     :ivar calc: The instance of :class:`aeidon.Calculator` used
-    :ivar subtitle_text: Text shown in the subtitle overlay
+    :ivar subtitle_text: Current text shown in the subtitle overlay
     :ivar volume: Current audio stream volume
     :ivar widget: :class:`Gtk.DrawingArea` used to render video
 
     Signals and their arguments for callback functions:
+     * ``state-changed``: player new state
      * ``volume-changed``: player, volume
     """
 
-    signals = ("volume-changed",)
+    signals = ("state-changed", "volume-changed")
 
     def __init__(self):
         """Initialize a :class:`VideoPlayer` object."""
         aeidon.Observable.__init__(self)
         self._info = None
         self._playbin = None
+        self._prev_state = None
         self._text_overlay = None
         self._time_overlay = None
         self._xid = None
@@ -73,7 +76,6 @@ class VideoPlayer(aeidon.Observable):
         self._init_pipeline()
         self._init_bus()
         self._init_widget()
-        self.volume = gaupol.conf.video_player.volume
 
     def _init_bus(self):
         """Initialize the GStreamer message bus."""
@@ -83,10 +85,13 @@ class VideoPlayer(aeidon.Observable):
         bus.add_signal_watch()
         bus.connect("message::eos", self._on_bus_message_eos)
         bus.connect("message::error", self._on_bus_message_error)
+        bus.connect("message::state-changed",
+                    self._on_bus_message_state_changed)
 
     def _init_pipeline(self):
         """Initialize the GStreamer playback pipeline."""
         self._playbin = Gst.ElementFactory.make("playbin", name=None)
+        self._playbin.props.volume = gaupol.conf.video_player.volume
         sink = Gst.ElementFactory.make("autovideosink", name=None)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
@@ -157,6 +162,15 @@ class VideoPlayer(aeidon.Observable):
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
+    def _on_bus_message_state_changed(self, bus, message):
+        """Emit signal if state changed in a relevant manner."""
+        old, new, pending = message.parse_state_changed()
+        states = (Gst.State.NULL, Gst.State.PAUSED, Gst.State.PLAYING)
+        if not new in states: return
+        if new == self._prev_state: return
+        self.emit("state-changed", new)
+        self._prev_state = new
+
     def _on_bus_sync_message(self, bus, message):
         """Handle sync messages from the bus."""
         struct = message.get_structure()
@@ -178,7 +192,7 @@ class VideoPlayer(aeidon.Observable):
         self._playbin.props.current_audio = track
 
     def get_audio_languages(self):
-        """Return a sequence of audio language codes or ``None``."""
+        """Return a sequence of audio languages or ``None``."""
         if self._info is None: return None
         # TODO: Maybe we should try to parse these language codes to human
         # readable form, but the codes probably vary a lot by container.
@@ -229,11 +243,14 @@ class VideoPlayer(aeidon.Observable):
 
     def play(self):
         """Play."""
-        self._xid = self.widget.props.window.get_xid()
         self._playbin.set_state(Gst.State.PLAYING)
 
     def play_segment(self, start, end):
-        """Play from `start` to `end` (either time, frame or seconds)."""
+        """
+        Play from `start` to `end`.
+
+        `start` and `end` can be either time, frame or seconds.
+        """
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
         start = self.calc.to_seconds(start) * Gst.SECOND
         end = self.calc.to_seconds(end) * Gst.SECOND
@@ -248,7 +265,11 @@ class VideoPlayer(aeidon.Observable):
         self.play()
 
     def seek(self, pos):
-        """Seek to position (either time, frame or seconds)."""
+        """
+        Seek to `pos`.
+
+        `pos` can be either time, frame or seconds.
+        """
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
         pos = self.calc.to_seconds(pos) * Gst.SECOND
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
@@ -259,12 +280,12 @@ class VideoPlayer(aeidon.Observable):
 
         `offset` can be either time, frame or seconds.
         """
-        success, pos = self._playbin.query_position(Gst.Format.TIME)
-        if not success: return
-        pos = pos + (self.calc.to_seconds(offset) * Gst.SECOND)
-        success, duration = self._playbin.query_duration(Gst.Format.TIME)
-        if not success: return
+        pos = self.get_position(aeidon.modes.SECONDS)
+        duration = self.get_duration(aeidon.modes.SECONDS)
+        if pos is None or duration is None: return
+        pos = pos + self.calc.to_seconds(offset)
         pos = max(0, min(pos, duration))
+        pos = pos * Gst.SECOND
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
@@ -275,6 +296,7 @@ class VideoPlayer(aeidon.Observable):
     def set_uri(self, uri):
         """Set the URI of the file to play."""
         self._playbin.props.uri = uri
+        self._xid = self.widget.props.window.get_xid()
         self.subtitle_text= ""
         try:
             # Find out the exact framerate to be able

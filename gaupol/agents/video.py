@@ -26,6 +26,11 @@ _ = aeidon.i18n._
 from gi.repository import GLib
 from gi.repository import Gtk
 
+try:
+    from gi.repository import Gst
+except Exception:
+    pass
+
 
 class VideoAgent(aeidon.Delegate):
 
@@ -54,6 +59,7 @@ class VideoAgent(aeidon.Delegate):
         """Initialize the video player and related widgets."""
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.player = gaupol.VideoPlayer()
+        aeidon.util.connect(self, "player", "state-changed")
         aeidon.util.connect(self, "player", "volume-changed")
         vbox.pack_start(self.player.widget,
                         expand=True,
@@ -110,14 +116,6 @@ class VideoAgent(aeidon.Delegate):
             size = self.notebook.props.window.get_height()
         self.paned.set_position(int(size/2))
 
-    def _init_polled_updates(self, data=None):
-        """Initialize seekbar and subtitle overlay updates."""
-        if not self.player.is_playing():
-            return True # to be called again.
-        GLib.timeout_add(40, self._on_player_update_seekbar)
-        GLib.timeout_add(20, self._on_player_update_subtitle)
-        return False # to not be called again.
-
     @aeidon.deco.export
     def _on_load_video_activate(self, *args):
         """Load a video file."""
@@ -146,31 +144,36 @@ class VideoAgent(aeidon.Delegate):
         if self.player.is_playing():
             action = self.get_action("play_pause")
             action.activate()
-            adjustment = self.seekbar.get_adjustment()
+            adjustment = self.seekbar.props.adjustment
             adjustment.set_value(0)
             self.player.stop()
         action = self.get_action("toggle_player")
         action.set_active = True
         self.player.set_path(path)
         self.update_gui()
-        self.get_action("play_pause").activate()
+        self.player.play()
 
     @aeidon.deco.export
     def _on_play_pause_activate(self, *args):
         """Play or pause video."""
         if self.player.is_playing():
             self.player.pause()
-            action = self.get_action("play_pause")
-            action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
         else: # Not playing.
             self.player.play()
+
+    def _on_player_state_changed(self, player, state):
+        """Update UI to match `state` of `player`."""
+        if state == Gst.State.NULL:
+            action = self.get_action("play_pause")
+            action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
+        if state == Gst.State.PLAYING:
             action = self.get_action("play_pause")
             action.props.stock_id = Gtk.STOCK_MEDIA_PAUSE
-            # Even though we have called self.player.play, the state of the
-            # player changes to 'playing' with a slight delay. Hence, let's
-            # initialize polled updates of the seekbar and the subtitle overlay
-            # as soon as that state change has happened.
-            GLib.timeout_add(20, self._init_polled_updates)
+            GLib.timeout_add(40, self._on_player_update_seekbar)
+            GLib.timeout_add(20, self._on_player_update_subtitle)
+        if state == Gst.State.PAUSED:
+            action = self.get_action("play_pause")
+            action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
 
     def _on_player_update_seekbar(self, data=None):
         """Update seekbar from video position."""
