@@ -131,6 +131,7 @@ def get_text_view_size(text_view, font=None):
     label = Gtk.Label(label=text)
     if font is not None:
         set_widget_font(label, font)
+    label.show()
     return (label.get_preferred_width()[1]
             + text_view.props.left_margin
             + text_view.props.right_margin,

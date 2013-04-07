@@ -65,9 +65,9 @@ def _init_gettext():
         # Might fail with misconfigured locales.
         locale.setlocale(locale.LC_ALL, "")
     except Exception:
-        print(_("Failed to set default locale."), file=sys.stderr)
-        print(_("Please check your locale settings."), file=sys.stderr)
-        print(_("Falling back to the 'C' locale."), file=sys.stderr)
+        print("Failed to set default locale.", file=sys.stderr)
+        print("Please check your locale settings.", file=sys.stderr)
+        print("Falling back to the 'C' locale.", file=sys.stderr)
         locale.setlocale(locale.LC_ALL, "C")
     try:
         # Not available on all platforms.
