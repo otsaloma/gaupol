@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -126,14 +126,23 @@ class MultilineCellRenderer(Gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
-        self._text = text = self.props.text
-        if not (text and self._show_lengths): return
+        # Since GTK+ 3.6, the notify::text signal seems to get
+        # emitted insanely often even if text hasn't changed at
+        # all. Let's try to keep this callback as fast as possible.
+        self._text = self.props.text
+        self.props.markup = self._text_to_markup(self.props.text)
+
+    @aeidon.deco.memoize(1000)
+    def _text_to_markup(self, text):
+        """Return `text` renderer as markup for display."""
+        if (not text) and (not self._show_lengths): return ""
         lengths = gaupol.ruler.get_lengths(text)
         text = GLib.markup_escape_text(text)
         lines = text.split("\n")
-        for i, line in(x for x in enumerate(lines) if x[1]):
-            lines[i] += " <small>[{:d}]</small>".format(lengths[i])
-        self.props.markup = "\n".join(lines)
+        return "\n".join(("{} <small>[{:d}]</small>"
+                          .format(lines[i], lengths[i])
+                          if lines[i] else lines[i]
+                          for i in range(len(lines))))
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return a :class:`CellTextView` widget."""

@@ -35,7 +35,6 @@ class IntegerCellRenderer(Gtk.CellRendererText):
     def __init__(self):
         """Initialize a :class:`IntegerCellRenderer` object."""
         GObject.GObject.__init__(self)
-        self._text = ""
         aeidon.util.connect(self, self, "editing-started")
 
     def _on_editing_started(self, renderer, editor, path):
