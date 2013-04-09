@@ -18,6 +18,8 @@ Gaupol 1.0
 ==========
 
  * Add a GStreamer-based audio waveform display
+   - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
+   - https://github.com/Pecisk/libwaveform
  * https://live.gnome.org/GnomeGoals/DesktopFileKeywords
  * https://live.gnome.org/GnomeGoals/PortToGMenu
  * https://live.gnome.org/GnomeGoals/PortToGtkApplication
