@@ -87,7 +87,7 @@ import os
 import re
 import sys
 
-__version__ = "0.21.1"
+__version__ = "0.22"
 
 RUNNING_SPHINX = (sys.argv[0].endswith("autogen.py") or
                   sys.argv[0].endswith("sphinx-build"))

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-13 19:42+0300\n"
+"POT-Creation-Date: 2013-04-09 22:32+0300\n"
 "PO-Revision-Date: 2013-01-26 22:54+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -123,8 +123,8 @@ msgid "secon_ds"
 msgstr "sek_und"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:15
-#: ../data/ui/framerate-convert-dialog.ui.h:6 ../data/ui/language-dialog.ui.h:5
-#: ../data/ui/position-shift-dialog.ui.h:6
+#: ../data/ui/framerate-convert-dialog.ui.h:6
+#: ../data/ui/language-dialog.ui.h:5 ../data/ui/position-shift-dialog.ui.h:6
 #: ../data/ui/position-transform-dialog.ui.h:12
 #: ../data/ui/search-dialog.ui.h:14
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -269,7 +269,7 @@ msgid "Select the _translation documents you want to save:"
 msgstr "Vyberte _překladový dokument, který chcete uložit:"
 
 #: ../data/ui/multi-close-dialog.ui.h:5 ../gaupol/agents/close.py:55
-#: ../gaupol/agents/close.py:86 ../gaupol/agents/open.py:367
+#: ../gaupol/agents/close.py:86 ../gaupol/agents/open.py:368
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Pokud je neuložíte, budou změny navždy ztraceny."
 
@@ -785,7 +785,8 @@ msgstr "Opravy"
 #: ../data/ui/text-assistant/join-split-page.ui.h:4
 msgid "_Join words not found in spell-check dictionary"
 msgstr ""
-"_Spojit slova, která nebyla nalezena ve slovníku pro ověřování správného psaní"
+"_Spojit slova, která nebyla nalezena ve slovníku pro ověřování správného "
+"psaní"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:5
 msgid "_Split words not found in spell-check dictionary"
@@ -903,8 +904,7 @@ msgid ""
 "Replace the uppercase name of the speaker before a colon with a dialogue dash"
 msgstr ""
 "Nahradit jméno mluvčího psané velkými písmeny před dvojtečkou začínající "
-"velkým písmenem za "
-"dialogovou pomlčku"
+"velkým písmenem za dialogovou pomlčku"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
@@ -988,9 +988,7 @@ msgstr "Způsob psaní a.m. a p.m."
 #: ../data/patterns/Latn.common-error.in.h:2
 msgid ""
 "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr ""
-"Změnit různé způsoby psaní 12 hodinových údobí na »a.m.« a "
-"»p.m.«"
+msgstr "Změnit různé způsoby psaní 12 hodinových údobí na »a.m.« a »p.m.«"
 
 #: ../data/patterns/Latn.common-error.in.h:3
 msgid "Letter \"O\" in a number"
@@ -1305,11 +1303,13 @@ msgstr "Rozdělit slova podle návrhů správného psaní"
 #. Translators: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
 #. files for a reference: <http://git.gnome.org/cgit/gedit/tree/po/>.
-#: ../aeidon/encodings.py:39 ../aeidon/encodings.py:42 ../aeidon/encodings.py:44
+#: ../aeidon/encodings.py:39 ../aeidon/encodings.py:42
+#: ../aeidon/encodings.py:44
 msgid "English"
 msgstr "Angličtina"
 
-#: ../aeidon/encodings.py:40 ../aeidon/encodings.py:41 ../aeidon/encodings.py:66
+#: ../aeidon/encodings.py:40 ../aeidon/encodings.py:41
+#: ../aeidon/encodings.py:66
 msgid "Chinese traditional"
 msgstr "Tradiční čínština"
 
@@ -1540,11 +1540,11 @@ msgstr "Spočítat nenativní jednotky s rychlostí opakování obrázků {:.3f}
 msgid "{:.3f} fps"
 msgstr "{:.3f} fps"
 
-#: ../data/extensions/side-pane/side-pane.py:345
+#: ../data/extensions/side-pane/side-pane.py:346
 msgid "Si_de Pane"
 msgstr "_Postranní oblast"
 
-#: ../data/extensions/side-pane/side-pane.py:346
+#: ../data/extensions/side-pane/side-pane.py:347
 msgid "Show or hide the side pane"
 msgstr "Ukázat nebo skrýt postranní oblast"
 
@@ -1761,7 +1761,7 @@ msgid "_Open…"
 msgstr "_Otevřít..."
 
 #: ../gaupol/actions/file.py:135 ../gaupol/actions/file.py:153
-#: ../gaupol/agents/open.py:148 ../gaupol/agents/open.py:156
+#: ../gaupol/agents/open.py:149 ../gaupol/agents/open.py:157
 msgid "Open"
 msgstr "Otevřít"
 
@@ -1781,7 +1781,7 @@ msgstr "Otevřít _nynější překlad"
 msgid "Open _Translation…"
 msgstr "Otevřít _překlad..."
 
-#: ../gaupol/actions/file.py:199 ../gaupol/agents/open.py:191
+#: ../gaupol/actions/file.py:199 ../gaupol/agents/open.py:192
 msgid "Open Translation"
 msgstr "Otevřít překlad"
 
@@ -2248,97 +2248,98 @@ msgstr "Pro zalomení řádku použít Shift+Enter"
 msgid "Activate \"{}\""
 msgstr "Spustit \"{}\""
 
-#: ../gaupol/agents/menu.py:82 ../gaupol/agents/update.py:166
+#: ../gaupol/agents/menu.py:82 ../gaupol/agents/update.py:169
 msgid "Redo \"{}\""
 msgstr "Znovu \"{}\""
 
-#: ../gaupol/agents/menu.py:156 ../gaupol/agents/update.py:162
+#: ../gaupol/agents/menu.py:156 ../gaupol/agents/update.py:165
 msgid "Undo \"{}\""
 msgstr "Zpět \"{}\""
 
-#: ../gaupol/agents/open.py:45
+#: ../gaupol/agents/open.py:46
 msgid "Appending file"
 msgstr "Připojit soubor"
 
-#: ../gaupol/agents/open.py:61
+#: ../gaupol/agents/open.py:62
 msgid "File \"{}\" is already open"
 msgstr "Soubor \"{}\" je již otevřen"
 
-#: ../gaupol/agents/open.py:292
+#: ../gaupol/agents/open.py:293
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr ""
 "Dekódování souboru \"{}\" se nezdařilo ani se všemi vyzkoušenými kodeky"
 
-#: ../gaupol/agents/open.py:294
+#: ../gaupol/agents/open.py:295
 msgid "Please try to open the file with a different character encoding."
 msgstr "Zkuste, prosím, soubor otevřít s jiným kódováním znaků."
 
-#: ../gaupol/agents/open.py:302
+#: ../gaupol/agents/open.py:303
 msgid "Failed to recognize format of file \"{}\""
 msgstr "Formát souboru \"{}\" se nepodařilo rozpoznat"
 
-#: ../gaupol/agents/open.py:303
+#: ../gaupol/agents/open.py:304
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
-"Ověřte, prosím, že soubor, který se pokoušíte otevřít, je "
-"soubor s titulky, jehož formát Gaupol podporuje."
+"Ověřte, prosím, že soubor, který se pokoušíte otevřít, je soubor s titulky, "
+"jehož formát Gaupol podporuje."
 
-#: ../gaupol/agents/open.py:311
+#: ../gaupol/agents/open.py:312
 msgid "Failed to open file \"{}\""
 msgstr "Nepodařilo se otevřít soubor \"{}\""
 
-#: ../gaupol/agents/open.py:318
+#: ../gaupol/agents/open.py:319
 msgid "Failed to parse file \"{}\""
 msgstr "Zpracování souboru \"{}\" se nezdařilo"
 
-#: ../gaupol/agents/open.py:319
+#: ../gaupol/agents/open.py:320
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr ""
 "Ověřte, prosím, že soubor, který se pokoušíte otevřít, je platný soubor {}."
 
-#: ../gaupol/agents/open.py:331
+#: ../gaupol/agents/open.py:332
 msgid "Open abnormally large file \"{}\"?"
 msgstr "Otevřít mimořádně velký soubor\"{}\"?"
 
-#: ../gaupol/agents/open.py:332
+#: ../gaupol/agents/open.py:333
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"Soubor je {:.1f} MB velký, což je pro textově založený soubor s titulky"
-"mimořádně hodně. Ověřte, prosím, že se nepokoušíte otevřít binární soubor."
+"Soubor je {:.1f} MB velký, což je pro textově založený soubor s "
+"titulkymimořádně hodně. Ověřte, prosím, že se nepokoušíte otevřít binární "
+"soubor."
 
-#: ../gaupol/agents/open.py:348
+#: ../gaupol/agents/open.py:349
 msgid "Open unsorted file \"{}\"?"
 msgstr "Otevřít nezařazený soubor \"{}\"?"
 
-#: ../gaupol/agents/open.py:349
+#: ../gaupol/agents/open.py:350
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
 msgstr ""
-"Pořadí {:d} titulků se musí změnit. Když {:d} zní, jako by to bylo "
-"mnoho, soubor by mohl být složen chybně."
+"Pořadí {:d} titulků se musí změnit. Když {:d} zní, jako by to bylo mnoho, "
+"soubor by mohl být složen chybně."
 
-#: ../gaupol/agents/open.py:365
+#: ../gaupol/agents/open.py:366
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr "Uložit změny do překladového dokumentu »{}« před otevřením nového?"
 
-#: ../gaupol/agents/open.py:369
+#: ../gaupol/agents/open.py:370
 msgid "Open _Without Saving"
 msgstr "Otevřít _bez uložení"
 
-#: ../gaupol/agents/open.py:473
+#: ../gaupol/agents/open.py:476
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "Připojeno {amount:d} titulků z \"{basename}\""
 
-#: ../gaupol/agents/open.py:514
+#: ../gaupol/agents/open.py:517
 msgid "Opened main file \"{}\""
 msgstr "Otevřený hlavní soubor \"{}\""
 
-#: ../gaupol/agents/open.py:539
+#: ../gaupol/agents/open.py:542
 msgid "Opened translation file \"{}\""
 msgstr "Otevřený překladový soubor \"{}\""
 
@@ -2353,8 +2354,8 @@ msgid ""
 "different character encoding."
 msgstr ""
 "Data titulků se nepodařilo zakódovat do dočasného adresáře pro náhled s "
-"nynějším "
-"kódováním znaků. Nejprve, prosím, titulky uložte s jiným kódováním znaků."
+"nynějším kódováním znaků. Nejprve, prosím, titulky uložte s jiným kódováním "
+"znaků."
 
 #: ../gaupol/agents/preview.py:64
 msgid "Failed to save subtitle file to temporary directory \"{}\""
@@ -2400,168 +2401,186 @@ msgstr "Uložit překladový dokument jako \"{}\""
 msgid "Framerate:"
 msgstr "Rychlost opakování obrázků:"
 
-#: ../gaupol/application.py:277
+#: ../gaupol/application.py:280
 msgid "Redo undone actions"
 msgstr "Udělat ještě jednou kroky vrácené zpět"
 
-#: ../gaupol/application.py:332
+#: ../gaupol/application.py:338
 msgid "Undo actions"
 msgstr "Vrátit kroky zpět"
 
-#: ../gaupol/application.py:397
+#: ../gaupol/application.py:403
 msgid "Video file:"
 msgstr "Obrazový záznam:"
 
-#: ../gaupol/assistants.py:99
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:101
 msgid "Tasks and Target"
 msgstr "Úkoly a cíl"
 
-#: ../gaupol/assistants.py:110
+#: ../gaupol/assistants.py:112
 msgid "Correct texts in main text column"
 msgstr "Opravit texty ve sloupci s hlavním textem"
 
-#: ../gaupol/assistants.py:111
+#: ../gaupol/assistants.py:113
 msgid "Correct texts in translation text column"
 msgstr "Opravit texty ve sloupci s překladovým textem"
 
-#: ../gaupol/assistants.py:120
+#: ../gaupol/assistants.py:122
 msgid "Correct texts in selected subtitles"
 msgstr "Opravit texty ve vybraných titulcích"
 
-#: ../gaupol/assistants.py:121
+#: ../gaupol/assistants.py:123
 msgid "Correct texts in current project"
 msgstr "Opravit texty v nynějším projektu"
 
-#: ../gaupol/assistants.py:122
+#: ../gaupol/assistants.py:124
 msgid "Correct texts in all open projects"
 msgstr "Opravit texty ve všech otevřených projektech"
 
-#: ../gaupol/assistants.py:370
+#: ../gaupol/assistants.py:372
 msgid "Other"
 msgstr "Jiné"
 
-#: ../gaupol/assistants.py:441
+#: ../gaupol/assistants.py:443
 msgid "Capitalize texts written in lower case"
 msgstr "Psát texty psané malými písmeny velkými písmeny"
 
-#: ../gaupol/assistants.py:443
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:447
 msgid "Capitalization Patterns"
 msgstr "Vzory pro psaní velkých písmen"
 
-#: ../gaupol/assistants.py:445
+#: ../gaupol/assistants.py:449
 msgid "Capitalize texts"
 msgstr "Psát texty velkými písmeny"
 
-#: ../gaupol/assistants.py:469
+#: ../gaupol/assistants.py:473
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
 "Opravit běžné chyby způsobené lidmi nebo programem na rozpoznávání textu"
 
-#: ../gaupol/assistants.py:473
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:479
 msgid "Common Error Patterns"
 msgstr "Vzory běžných chyb"
 
-#: ../gaupol/assistants.py:475
+#: ../gaupol/assistants.py:481
 msgid "Correct common errors"
 msgstr "Opravit běžné chyby"
 
-#: ../gaupol/assistants.py:528
+#: ../gaupol/assistants.py:534
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr "Odstranit vysvětlivky pro sluchově postižené"
 
-#: ../gaupol/assistants.py:532
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:540
 msgid "Hearing Impaired Patterns"
 msgstr "Vzory pro sluchově postižené"
 
-#: ../gaupol/assistants.py:534
+#: ../gaupol/assistants.py:542
 msgid "Remove hearing impaired texts"
 msgstr "Odstranit texty pro sluchově postižené"
 
-#: ../gaupol/assistants.py:559
+#: ../gaupol/assistants.py:567
 msgid ""
 "Use spell-check suggestions to fix whitespace detection errors of image "
 "recognition software"
 msgstr ""
-"Použít návrhy na správné psaní pro opravení chyb zjištěných prázdných "
-"míst programu na rozpoznávání obrázků"
+"Použít návrhy na správné psaní pro opravení chyb zjištěných prázdných míst "
+"programu na rozpoznávání obrázků"
 
-#: ../gaupol/assistants.py:563
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:573
 msgid "Joining and Splitting Words"
 msgstr "Spojit nebo rozdělit slova"
 
-#: ../gaupol/assistants.py:565
+#: ../gaupol/assistants.py:575
 msgid "Join or Split Words"
 msgstr "Spojit nebo rozdělit slova"
 
-#: ../gaupol/assistants.py:609 ../gaupol/dialogs/spell_check.py:388
+#: ../gaupol/assistants.py:619 ../gaupol/dialogs/spell_check.py:390
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Nepodařilo se nahrát slovník pro jazyk \"{}\""
 
-#: ../gaupol/assistants.py:638
+#: ../gaupol/assistants.py:648
 msgid "Break text into lines of defined length"
 msgstr "Zalomit text do řádků s předem danou délkou"
 
-#: ../gaupol/assistants.py:640
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:652
 msgid "Line-Break Patterns"
 msgstr "Vzory pro zalomení řádku"
 
-#: ../gaupol/assistants.py:642
+#: ../gaupol/assistants.py:654
 msgid "Break lines"
 msgstr "Zalomit řádky"
 
-#: ../gaupol/assistants.py:697
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:711
 msgid "Line-Break Options"
 msgstr "Volby pro zalomení řádku"
 
-#: ../gaupol/assistants.py:782
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:798
 msgid "Correcting Texts"
 msgstr "Opravit texty"
 
-#: ../gaupol/assistants.py:788
+#: ../gaupol/assistants.py:804
 msgid "Each task is now being run on each project."
 msgstr "Každý úkol je nyní proveden pro každý projekt."
 
-#: ../gaupol/assistants.py:812
+#: ../gaupol/assistants.py:828
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "{current:d} z {total:d} úkolů hotovo"
 
-#: ../gaupol/assistants.py:820
+#: ../gaupol/assistants.py:836
 msgid "Project: {}"
 msgstr "Projekt: {}"
 
-#: ../gaupol/assistants.py:827
+#: ../gaupol/assistants.py:843
 msgid "Task: {}"
 msgstr "Úkol: {}"
 
-#: ../gaupol/assistants.py:849
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:867
 msgid "Confirm Changes"
 msgstr "Potvrdit změny"
 
-#: ../gaupol/assistants.py:898
+#: ../gaupol/assistants.py:917
 msgid "Accept"
 msgstr "Přijmout"
 
-#: ../gaupol/assistants.py:901
+#: ../gaupol/assistants.py:923
 msgid "Original Text"
 msgstr "Původní text:"
 
-#: ../gaupol/assistants.py:902
+#: ../gaupol/assistants.py:924
 msgid "Corrected Text"
 msgstr "Opravený text"
 
-#: ../gaupol/assistants.py:1032
+#: ../gaupol/assistants.py:1065
 msgid "Correct Texts"
 msgstr "Opravit texty"
 
-#: ../gaupol/assistants.py:1061
+#: ../gaupol/assistants.py:1094
 msgid "Correcting texts"
 msgstr "Opravují se texty"
 
-#: ../gaupol/assistants.py:1077
+#: ../gaupol/assistants.py:1110
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Upraveno {edits:d} a odstraněno {removals:d} titulků"
 
-#: ../gaupol/assistants.py:1111
+#: ../gaupol/assistants.py:1144
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Potvrdit {:d} změnu"
@@ -2636,8 +2655,7 @@ msgid ""
 "any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
 msgstr ""
 "MPsub-Header musí obsahovat řádek v podobě FORMÁT=HODNOTA, kde HODNOTA může "
-"být \"ČAS\", "
-"\"x23.98\", \"25.00\" nebo \"29.97\"."
+"být \"ČAS\", \"x23.98\", \"25.00\" nebo \"29.97\"."
 
 #: ../gaupol/dialogs/insert.py:49
 msgid "Above selection"
@@ -2688,26 +2706,26 @@ msgstr "Rozšíření \"{}\" je požadováno jinými rozšířeními."
 msgid "Custom"
 msgstr "Vlastní"
 
-#: ../gaupol/dialogs/search.py:359
+#: ../gaupol/dialogs/search.py:374
 msgid "\"{}\" not found"
 msgstr "\"{}\" nenalezeno"
 
-#: ../gaupol/dialogs/search.py:422
+#: ../gaupol/dialogs/search.py:439
 msgid "Error in regular expression pattern"
 msgstr "Chyba ve vzoru regulárního výrazu"
 
-#: ../gaupol/dialogs/search.py:429
+#: ../gaupol/dialogs/search.py:446
 msgid "Error in regular expression replacement"
 msgstr "Chyba v nahrazení od regulárního výrazu"
 
-#: ../gaupol/dialogs/search.py:550
+#: ../gaupol/dialogs/search.py:567
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "Nalezen a nahrazen {:d} výskyt"
 msgstr[1] "Nalezeny a nahrazeny {:d} výskyty"
 msgstr[2] "Nalezeno a nahrazeno {:d} výskytů"
 
-#: ../gaupol/dialogs/spell_check.py:363
+#: ../gaupol/dialogs/spell_check.py:365
 msgid "Spell-checking"
 msgstr "Ověření pravopisu"
 
@@ -2789,18 +2807,6 @@ msgstr "znaky"
 msgid "ems"
 msgstr "ems"
 
-#: ../gaupol/main.py:68
-msgid "Failed to set default locale."
-msgstr "Nepodařilo se nastavit výchozí jazykové nastavení."
-
-#: ../gaupol/main.py:69
-msgid "Please check your locale settings."
-msgstr "Prověřte, prosím, své jazykové nastavení."
-
-#: ../gaupol/main.py:70
-msgid "Falling back to the 'C' locale."
-msgstr "Návrat k jazykovému nastavení 'C'."
-
 #: ../gaupol/main.py:98
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [VOLBA...] [SOUBOR...] [+[ČÍSLO]]"
@@ -2851,28 +2857,35 @@ msgstr "Výstup"
 msgid "Untitled {:d}"
 msgstr "Bez názvu {:d}"
 
-#: ../gaupol/page.py:131
+#: ../gaupol/page.py:137
 msgid "Close project"
 msgstr "Zavřít projekt"
 
-#: ../gaupol/page.py:304
+#: ../gaupol/page.py:310
 msgid "Path:"
 msgstr "Cesta:"
 
-#: ../gaupol/page.py:305
+#: ../gaupol/page.py:311
 msgid "Format:"
 msgstr "Formát:"
 
-#: ../gaupol/page.py:306
+#: ../gaupol/page.py:312
 msgid "Encoding:"
 msgstr "Kódování:"
 
-#: ../gaupol/page.py:307
+#: ../gaupol/page.py:313
 msgid "Newlines:"
 msgstr "Zalomení řádků:"
 
-#: ../gaupol/page.py:340
+#: ../gaupol/page.py:346
 msgid "{} translation"
 msgstr "{} překlad"
 
+#~ msgid "Failed to set default locale."
+#~ msgstr "Nepodařilo se nastavit výchozí jazykové nastavení."
 
+#~ msgid "Please check your locale settings."
+#~ msgstr "Prověřte, prosím, své jazykové nastavení."
+
+#~ msgid "Falling back to the 'C' locale."
+#~ msgstr "Návrat k jazykovému nastavení 'C'."
