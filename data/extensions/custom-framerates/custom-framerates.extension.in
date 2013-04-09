@@ -1,5 +1,5 @@
 [Extension]
-GaupolVersion=0.21.1
+GaupolVersion=0.22
 Module=custom-framerates
 _Name=Custom Framerates
 _Description=Allow use of non-standard framerates

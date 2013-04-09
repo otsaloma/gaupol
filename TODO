@@ -1,16 +1,3 @@
-Gaupol 0.22
-===========
-
- [X] Restore drop-down arrows on undo and redo toolbar buttons for those
-     using PyGObject 3.7.90 or greater (#686608)
- [X] Restore almost proper keeping track of recent files for those using
-     PyGObject 3.7.4 or greater (#678401, #695970)
- [X] Restore zebra-stripes, which were previously discarded by some GTK+
-     themes (this is a hidden preference, which can be enabled/disabled
-     by editing gaupol's configuration file)
- [X] Partially fix cell rendering speed issues with GTK+ 3.6 and later
- [X] Add Czech translation (Pavel Fric)
-
 Gaupol 1.0
 ==========
 

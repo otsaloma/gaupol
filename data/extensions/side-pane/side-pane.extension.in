@@ -1,5 +1,5 @@
 [Extension]
-GaupolVersion=0.21.1
+GaupolVersion=0.22
 Module=side-pane
 _Name=Side Pane
 _Description=A side pane that can be used by other extensions
