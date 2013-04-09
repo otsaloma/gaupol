@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.20\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-13 19:42+0300\n"
+"POT-Creation-Date: 2013-04-09 22:32+0300\n"
 "PO-Revision-Date: 2012-10-13 14:25-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -269,7 +269,7 @@ msgid "Select the _translation documents you want to save:"
 msgstr "Seleccione los documentos de _traducción que quiera guardar:"
 
 #: ../data/ui/multi-close-dialog.ui.h:5 ../gaupol/agents/close.py:55
-#: ../gaupol/agents/close.py:86 ../gaupol/agents/open.py:367
+#: ../gaupol/agents/close.py:86 ../gaupol/agents/open.py:368
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Si no guarda, todos los cambios se perderán."
 
@@ -1560,11 +1560,11 @@ msgstr ""
 msgid "{:.3f} fps"
 msgstr "{:.3f} fps"
 
-#: ../data/extensions/side-pane/side-pane.py:345
+#: ../data/extensions/side-pane/side-pane.py:346
 msgid "Si_de Pane"
 msgstr "Panel _lateral"
 
-#: ../data/extensions/side-pane/side-pane.py:346
+#: ../data/extensions/side-pane/side-pane.py:347
 msgid "Show or hide the side pane"
 msgstr "Muestra u oculta el panel lateral"
 
@@ -1781,7 +1781,7 @@ msgid "_Open…"
 msgstr "_Abrir…"
 
 #: ../gaupol/actions/file.py:135 ../gaupol/actions/file.py:153
-#: ../gaupol/agents/open.py:148 ../gaupol/agents/open.py:156
+#: ../gaupol/agents/open.py:149 ../gaupol/agents/open.py:157
 msgid "Open"
 msgstr "Abrir"
 
@@ -1801,7 +1801,7 @@ msgstr "Abrir traducción rec_iente"
 msgid "Open _Translation…"
 msgstr "Abrir _traducción…"
 
-#: ../gaupol/actions/file.py:199 ../gaupol/agents/open.py:191
+#: ../gaupol/actions/file.py:199 ../gaupol/agents/open.py:192
 msgid "Open Translation"
 msgstr "Abrir traducción"
 
@@ -2281,36 +2281,36 @@ msgstr "Use Mayús+Intro para insertar un salto de línea"
 msgid "Activate \"{}\""
 msgstr "Activa «{}»"
 
-#: ../gaupol/agents/menu.py:82 ../gaupol/agents/update.py:166
+#: ../gaupol/agents/menu.py:82 ../gaupol/agents/update.py:169
 msgid "Redo \"{}\""
 msgstr "Rehace «{}»"
 
-#: ../gaupol/agents/menu.py:156 ../gaupol/agents/update.py:162
+#: ../gaupol/agents/menu.py:156 ../gaupol/agents/update.py:165
 msgid "Undo \"{}\""
 msgstr "Deshace «{}»"
 
-#: ../gaupol/agents/open.py:45
+#: ../gaupol/agents/open.py:46
 msgid "Appending file"
 msgstr "Añadiendo archivo"
 
-#: ../gaupol/agents/open.py:61
+#: ../gaupol/agents/open.py:62
 msgid "File \"{}\" is already open"
 msgstr "El archivo «{}» ya está abierto"
 
-#: ../gaupol/agents/open.py:292
+#: ../gaupol/agents/open.py:293
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "No fue posible decodificar el archivo «{}» con los códecs disponibles"
 
-#: ../gaupol/agents/open.py:294
+#: ../gaupol/agents/open.py:295
 msgid "Please try to open the file with a different character encoding."
 msgstr ""
 "Intente abrir el archivo usando una codificación de caracteres diferente."
 
-#: ../gaupol/agents/open.py:302
+#: ../gaupol/agents/open.py:303
 msgid "Failed to recognize format of file \"{}\""
 msgstr "No fue posible reconocer el formato del archivo «{}»"
 
-#: ../gaupol/agents/open.py:303
+#: ../gaupol/agents/open.py:304
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
@@ -2318,23 +2318,23 @@ msgstr ""
 "Verifique que el archivo que intenta abrir está en un formato soportado por "
 "Gaupol."
 
-#: ../gaupol/agents/open.py:311
+#: ../gaupol/agents/open.py:312
 msgid "Failed to open file \"{}\""
 msgstr "No fue posible abrir el archivo «{}»"
 
-#: ../gaupol/agents/open.py:318
+#: ../gaupol/agents/open.py:319
 msgid "Failed to parse file \"{}\""
 msgstr "No fue posible analizar el archivo «{}»"
 
-#: ../gaupol/agents/open.py:319
+#: ../gaupol/agents/open.py:320
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr "Verifique que el archivo que intenta abrir es un archivo {} válido."
 
-#: ../gaupol/agents/open.py:331
+#: ../gaupol/agents/open.py:332
 msgid "Open abnormally large file \"{}\"?"
 msgstr "¿Abrir el archivo de gran tamaño «{}»?"
 
-#: ../gaupol/agents/open.py:332
+#: ../gaupol/agents/open.py:333
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -2342,11 +2342,11 @@ msgstr ""
 "El tamaño del archivo es {:.1f} MB, que es excesivamente grande para un "
 "archivo de subtítulos. Verifique que no es un archivo binario."
 
-#: ../gaupol/agents/open.py:348
+#: ../gaupol/agents/open.py:349
 msgid "Open unsorted file \"{}\"?"
 msgstr "¿Abrir el archivo desordenado «{}»?"
 
-#: ../gaupol/agents/open.py:349
+#: ../gaupol/agents/open.py:350
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
@@ -2354,24 +2354,24 @@ msgstr ""
 "Es necesario corregir el orden de {:d} subtítulos. Si considera que {:d} es "
 "una gran cantidad, es posible que el archivo fue creado de forma incorrecta."
 
-#: ../gaupol/agents/open.py:365
+#: ../gaupol/agents/open.py:366
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
 "¿Guardar cambios en el documento de traducción «{}» antes de abrir uno nuevo?"
 
-#: ../gaupol/agents/open.py:369
+#: ../gaupol/agents/open.py:370
 msgid "Open _Without Saving"
 msgstr "Abrir _sin guardar"
 
-#: ../gaupol/agents/open.py:473
+#: ../gaupol/agents/open.py:476
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "{amount:d} subtítulos añadidos desde «{basename}»"
 
-#: ../gaupol/agents/open.py:514
+#: ../gaupol/agents/open.py:517
 msgid "Opened main file \"{}\""
 msgstr "Archivo principal «{}» abierto"
 
-#: ../gaupol/agents/open.py:539
+#: ../gaupol/agents/open.py:542
 msgid "Opened translation file \"{}\""
 msgstr "Archivo de traducción «{}» abierto"
 
@@ -2439,85 +2439,93 @@ msgstr "Documento de traducción guardado como «{}»"
 msgid "Framerate:"
 msgstr "Frecuencia de fotogramas:"
 
-#: ../gaupol/application.py:277
+#: ../gaupol/application.py:280
 msgid "Redo undone actions"
 msgstr "Rehace acciones deshechas"
 
-#: ../gaupol/application.py:332
+#: ../gaupol/application.py:338
 msgid "Undo actions"
 msgstr "Deshace acciones"
 
-#: ../gaupol/application.py:397
+#: ../gaupol/application.py:403
 msgid "Video file:"
 msgstr "Archivo de vídeo:"
 
-#: ../gaupol/assistants.py:99
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:101
 msgid "Tasks and Target"
 msgstr "Tareas y alcance"
 
-#: ../gaupol/assistants.py:110
+#: ../gaupol/assistants.py:112
 msgid "Correct texts in main text column"
 msgstr "Corregir la columna de texto principal"
 
-#: ../gaupol/assistants.py:111
+#: ../gaupol/assistants.py:113
 msgid "Correct texts in translation text column"
 msgstr "Corregir la columna de traducción"
 
-#: ../gaupol/assistants.py:120
+#: ../gaupol/assistants.py:122
 msgid "Correct texts in selected subtitles"
 msgstr "Corregir los subtítulos seleccionados"
 
-#: ../gaupol/assistants.py:121
+#: ../gaupol/assistants.py:123
 msgid "Correct texts in current project"
 msgstr "Corregir el proyecto actual"
 
-#: ../gaupol/assistants.py:122
+#: ../gaupol/assistants.py:124
 msgid "Correct texts in all open projects"
 msgstr "Corregir todos los proyectos abiertos"
 
-#: ../gaupol/assistants.py:370
+#: ../gaupol/assistants.py:372
 msgid "Other"
 msgstr "Otro"
 
-#: ../gaupol/assistants.py:441
+#: ../gaupol/assistants.py:443
 msgid "Capitalize texts written in lower case"
 msgstr "Capitaliza el texto escrito en minúsculas"
 
-#: ../gaupol/assistants.py:443
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:447
 msgid "Capitalization Patterns"
 msgstr "Reglas de capitalización"
 
-#: ../gaupol/assistants.py:445
+#: ../gaupol/assistants.py:449
 msgid "Capitalize texts"
 msgstr "Capitalizar texto"
 
-#: ../gaupol/assistants.py:469
+#: ../gaupol/assistants.py:473
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
 "Corrige errores frecuentes propios de un humano o un software reconocedor de "
 "imágenes"
 
-#: ../gaupol/assistants.py:473
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:479
 msgid "Common Error Patterns"
 msgstr "Reglas de errores frecuentes"
 
-#: ../gaupol/assistants.py:475
+#: ../gaupol/assistants.py:481
 msgid "Correct common errors"
 msgstr "Corregir errores frecuentes"
 
-#: ../gaupol/assistants.py:528
+#: ../gaupol/assistants.py:534
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr "Elimina el texto explicativo para personas con problemas de audición"
 
-#: ../gaupol/assistants.py:532
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:540
 msgid "Hearing Impaired Patterns"
 msgstr "Reglas de texto para sordos"
 
-#: ../gaupol/assistants.py:534
+#: ../gaupol/assistants.py:542
 msgid "Remove hearing impaired texts"
 msgstr "Eliminar texto para sordos"
 
-#: ../gaupol/assistants.py:559
+#: ../gaupol/assistants.py:567
 msgid ""
 "Use spell-check suggestions to fix whitespace detection errors of image "
 "recognition software"
@@ -2525,83 +2533,93 @@ msgstr ""
 "Usa sugerencias del corrector ortográfico para corregir los espacios en\n"
 "blanco detectados por un software reconocedor de imágenes"
 
-#: ../gaupol/assistants.py:563
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:573
 msgid "Joining and Splitting Words"
 msgstr "Unir o dividir palabras"
 
-#: ../gaupol/assistants.py:565
+#: ../gaupol/assistants.py:575
 msgid "Join or Split Words"
 msgstr "Unir o dividir palabras"
 
-#: ../gaupol/assistants.py:609 ../gaupol/dialogs/spell_check.py:388
+#: ../gaupol/assistants.py:619 ../gaupol/dialogs/spell_check.py:390
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "No fue posible abrir el diccionario para el idioma «{}»"
 
-#: ../gaupol/assistants.py:638
+#: ../gaupol/assistants.py:648
 msgid "Break text into lines of defined length"
 msgstr "Divide el texto en líneas de un largo máximo especificado"
 
-#: ../gaupol/assistants.py:640
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:652
 msgid "Line-Break Patterns"
 msgstr "Reglas de división de líneas"
 
-#: ../gaupol/assistants.py:642
+#: ../gaupol/assistants.py:654
 msgid "Break lines"
 msgstr "Dividir líneas"
 
-#: ../gaupol/assistants.py:697
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:711
 msgid "Line-Break Options"
 msgstr "Opciones de dividir líneas"
 
-#: ../gaupol/assistants.py:782
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:798
 msgid "Correcting Texts"
 msgstr "Corrigiendo textos"
 
-#: ../gaupol/assistants.py:788
+#: ../gaupol/assistants.py:804
 msgid "Each task is now being run on each project."
 msgstr "Aplicando las tareas seleccionadas a cada proyecto."
 
-#: ../gaupol/assistants.py:812
+#: ../gaupol/assistants.py:828
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "{current:d} de {total:d} tareas completadas"
 
-#: ../gaupol/assistants.py:820
+#: ../gaupol/assistants.py:836
 msgid "Project: {}"
 msgstr "Proyecto: {}"
 
-#: ../gaupol/assistants.py:827
+#: ../gaupol/assistants.py:843
 msgid "Task: {}"
 msgstr "Tarea: {}"
 
-#: ../gaupol/assistants.py:849
+#. Translators: Keep these page titles short, since they
+#. affect the width of the text correction assistant sidebar.
+#: ../gaupol/assistants.py:867
 msgid "Confirm Changes"
 msgstr "Confirmar cambios"
 
-#: ../gaupol/assistants.py:898
+#: ../gaupol/assistants.py:917
 msgid "Accept"
 msgstr "Aceptar"
 
-#: ../gaupol/assistants.py:901
+#: ../gaupol/assistants.py:923
 msgid "Original Text"
 msgstr "Texto original"
 
-#: ../gaupol/assistants.py:902
+#: ../gaupol/assistants.py:924
 msgid "Corrected Text"
 msgstr "Texto corregido"
 
-#: ../gaupol/assistants.py:1032
+#: ../gaupol/assistants.py:1065
 msgid "Correct Texts"
 msgstr "Corregir Texto"
 
-#: ../gaupol/assistants.py:1061
+#: ../gaupol/assistants.py:1094
 msgid "Correcting texts"
 msgstr "Corregir texto"
 
-#: ../gaupol/assistants.py:1077
+#: ../gaupol/assistants.py:1110
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "{edits:d} subtítulos editados, {removals:d} eliminados"
 
-#: ../gaupol/assistants.py:1111
+#: ../gaupol/assistants.py:1144
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "{:d} cambio por confirmar"
@@ -2728,25 +2746,25 @@ msgstr "El complemento «{}» es utilizado por otros complementos."
 msgid "Custom"
 msgstr "Personalizado"
 
-#: ../gaupol/dialogs/search.py:359
+#: ../gaupol/dialogs/search.py:374
 msgid "\"{}\" not found"
 msgstr "No se encontró «{}»"
 
-#: ../gaupol/dialogs/search.py:422
+#: ../gaupol/dialogs/search.py:439
 msgid "Error in regular expression pattern"
 msgstr "Error con la expresión regular de búsqueda"
 
-#: ../gaupol/dialogs/search.py:429
+#: ../gaupol/dialogs/search.py:446
 msgid "Error in regular expression replacement"
 msgstr "Error con la expresión regular de reemplazo"
 
-#: ../gaupol/dialogs/search.py:550
+#: ../gaupol/dialogs/search.py:567
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "{:d} aparición encontrada y reemplazada"
 msgstr[1] "{:d} apariciones encontradas y reemplazadas"
 
-#: ../gaupol/dialogs/spell_check.py:363
+#: ../gaupol/dialogs/spell_check.py:365
 msgid "Spell-checking"
 msgstr "Corrigiendo ortografía"
 
@@ -2828,18 +2846,6 @@ msgstr "caracteres"
 msgid "ems"
 msgstr "ems"
 
-#: ../gaupol/main.py:68
-msgid "Failed to set default locale."
-msgstr "No fue posible establecer la configuración regional predeterminada."
-
-#: ../gaupol/main.py:69
-msgid "Please check your locale settings."
-msgstr "Verifique sus preferencias para la configuración regional."
-
-#: ../gaupol/main.py:70
-msgid "Falling back to the 'C' locale."
-msgstr "Recurriendo a la configuración regional «C»."
-
 #: ../gaupol/main.py:98
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPCIÓN...] [ARCHIVO...] [+[NUM]]"
@@ -2889,29 +2895,38 @@ msgstr "Ventana de salida"
 msgid "Untitled {:d}"
 msgstr "Sin título {:d}"
 
-#: ../gaupol/page.py:131
+#: ../gaupol/page.py:137
 msgid "Close project"
 msgstr "Cerrar proyecto"
 
-#: ../gaupol/page.py:304
+#: ../gaupol/page.py:310
 msgid "Path:"
 msgstr "Ruta:"
 
-#: ../gaupol/page.py:305
+#: ../gaupol/page.py:311
 msgid "Format:"
 msgstr "Formato:"
 
-#: ../gaupol/page.py:306
+#: ../gaupol/page.py:312
 msgid "Encoding:"
 msgstr "Codificación:"
 
-#: ../gaupol/page.py:307
+#: ../gaupol/page.py:313
 msgid "Newlines:"
 msgstr "Salto de línea:"
 
-#: ../gaupol/page.py:340
+#: ../gaupol/page.py:346
 msgid "{} translation"
 msgstr "traducción de {}"
+
+#~ msgid "Failed to set default locale."
+#~ msgstr "No fue posible establecer la configuración regional predeterminada."
+
+#~ msgid "Please check your locale settings."
+#~ msgstr "Verifique sus preferencias para la configuración regional."
+
+#~ msgid "Falling back to the 'C' locale."
+#~ msgstr "Recurriendo a la configuración regional «C»."
 
 #~ msgid "An unhandled exception occured"
 #~ msgstr "Se produjo una excepción no tratada"
