@@ -207,6 +207,8 @@ class VideoAgent(aeidon.Delegate):
     def _on_player_update_volume(self, data=None):
         """Update volume button."""
         self.volume_button.props.value = self.player.volume
+        # Continue repeated calls until paused.
+        return self.player.is_playing()
 
     @aeidon.deco.export
     def _on_seek_backward_activate(self, *args):

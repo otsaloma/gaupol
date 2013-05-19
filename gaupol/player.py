@@ -91,7 +91,7 @@ class VideoPlayer(aeidon.Observable):
         """Initialize the GStreamer playback pipeline."""
         self._playbin = Gst.ElementFactory.make("playbin", name=None)
         if gaupol.conf.video_player.volume is not None:
-            self._playbin.props.volume = gaupol.conf.video_player.volume
+            self.volume = gaupol.conf.video_player.volume
         sink = Gst.ElementFactory.make("autovideosink", name=None)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
@@ -335,7 +335,7 @@ class VideoPlayer(aeidon.Observable):
     @volume.setter
     def volume(self, volume):
         """Set the volume to use, in range [0,1]."""
-        volume = max(0, min(1, volume))
+        volume = round(max(0, min(1, volume)), 2)
         if abs(volume - self.volume) < 0.001: return
         self._playbin.props.volume = volume
         gaupol.conf.video_player.volume = volume
