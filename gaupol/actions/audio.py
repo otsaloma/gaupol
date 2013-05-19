@@ -55,7 +55,6 @@ class VolumeDownAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-        aeidon.util.affirm(application.player.volume > 0)
 
 
 class VolumeUpAction(gaupol.Action):
@@ -73,7 +72,6 @@ class VolumeUpAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-        aeidon.util.affirm(application.player.volume < 1)
 
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))
