@@ -156,7 +156,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         ui += '</placeholder></menu></menu></menubar></ui>'
         self._audio_tracks_id = self.uim.add_ui_from_string(ui)
         self.uim.ensure_update()
-        self.set_menu_notify_events("audio_tracks")
+        self.set_menu_notify_events("audio-tracks")
 
     @aeidon.deco.export
     def _on_show_projects_menu_activate(self, *args):
