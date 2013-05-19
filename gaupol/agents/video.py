@@ -180,7 +180,7 @@ class VideoAgent(aeidon.Delegate):
             action.props.stock_id = Gtk.STOCK_MEDIA_PAUSE
             GLib.timeout_add(40, self._on_player_update_seekbar)
             GLib.timeout_add(40, self._on_player_update_volume)
-            GLib.timeout_add(20, self._on_player_update_subtitle)
+            GLib.timeout_add(10, self._on_player_update_subtitle)
         if state == Gst.State.PAUSED:
             action = self.get_action("play_pause")
             action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
