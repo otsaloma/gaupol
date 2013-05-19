@@ -189,6 +189,7 @@ config_defaults = {
         "target": gaupol.targets.CURRENT,
         },
     "video_player": {
+        "context_length": 1.0,
         "seek_length": 30,
         "subtitle_alpha": 1.0,
         "subtitle_background": False,

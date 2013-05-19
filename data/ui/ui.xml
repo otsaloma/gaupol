@@ -157,6 +157,7 @@
       </placeholder>
       <separator/>
       <menuitem name="play_pause" action="play_pause"/>
+      <menuitem name="play_selection" action="play_selection"/>
       <placeholder name="2">
       </placeholder>
       <separator/>

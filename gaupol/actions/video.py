@@ -60,6 +60,24 @@ class PlayPauseAction(gaupol.Action):
         aeidon.util.affirm(application.player is not None)
 
 
+class PlaySelectionAction(gaupol.Action):
+
+    """Play the selected subtitles."""
+
+    def __init__(self):
+        """Initialize a :class:`PlaySelectionAction`."""
+        gaupol.Action.__init__(self, "play_selection")
+        self.props.label = _("Play _Selection")
+        self.props.tooltip = _("Play the selected subtitles")
+        self.accelerator = "<Shift>P"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(selected_rows)
+
+
 class SeekBackwardAction(gaupol.Action):
 
     """Seek backward."""

@@ -160,6 +160,16 @@ class VideoAgent(aeidon.Delegate):
         else: # Not playing.
             self.player.play()
 
+    @aeidon.deco.export
+    def _on_play_selection_activate(self, *args):
+        """Play the selected subtitles."""
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        offset = gaupol.conf.video_player.context_length
+        start = page.project.subtitles[rows[0]].start_seconds - offset
+        end = page.project.subtitles[rows[-1]].end_seconds + offset
+        self.player.play_segment(start, end)
+
     def _on_player_state_changed(self, player, state):
         """Update UI to match `state` of `player`."""
         if state == Gst.State.NULL:
