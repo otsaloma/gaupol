@@ -251,7 +251,7 @@ class VideoPlayer(aeidon.Observable):
 
         `start` and `end` can be either time, frame or seconds.
         """
-        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
+        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         start = self.calc.to_seconds(start) * Gst.SECOND
         end = self.calc.to_seconds(end) * Gst.SECOND
         self._playbin.seek(rate=1.0,
@@ -270,7 +270,7 @@ class VideoPlayer(aeidon.Observable):
 
         `pos` can be either time, frame or seconds.
         """
-        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
+        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         pos = self.calc.to_seconds(pos) * Gst.SECOND
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
@@ -286,7 +286,7 @@ class VideoPlayer(aeidon.Observable):
         pos = pos + self.calc.to_seconds(offset)
         pos = max(0, min(pos, duration))
         pos = pos * Gst.SECOND
-        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.KEY_UNIT
+        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
     def set_path(self, path):
