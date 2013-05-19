@@ -55,10 +55,9 @@ class VideoPlayer(aeidon.Observable):
 
     Signals and their arguments for callback functions:
      * ``state-changed``: player new state
-     * ``volume-changed``: player, volume
     """
 
-    signals = ("state-changed", "volume-changed")
+    signals = ("state-changed",)
 
     def __init__(self):
         """Initialize a :class:`VideoPlayer` object."""
@@ -91,7 +90,8 @@ class VideoPlayer(aeidon.Observable):
     def _init_pipeline(self):
         """Initialize the GStreamer playback pipeline."""
         self._playbin = Gst.ElementFactory.make("playbin", name=None)
-        self._playbin.props.volume = gaupol.conf.video_player.volume
+        if gaupol.conf.video_player.volume is not None:
+            self._playbin.props.volume = gaupol.conf.video_player.volume
         sink = Gst.ElementFactory.make("autovideosink", name=None)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
@@ -339,4 +339,3 @@ class VideoPlayer(aeidon.Observable):
         if abs(volume - self.volume) < 0.001: return
         self._playbin.props.volume = volume
         gaupol.conf.video_player.volume = volume
-        self.emit("volume-changed", volume)

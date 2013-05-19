@@ -198,7 +198,7 @@ config_defaults = {
         "time_background": False,
         "time_color": "#ffffff",
         "time_font": "PT Mono,monospace Bold 14",
-        "volume": 1,
+        "volume": None,
         },
     }
 

@@ -60,7 +60,6 @@ class VideoAgent(aeidon.Delegate):
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
-        aeidon.util.connect(self, "player", "volume-changed")
         vbox.pack_start(self.player.widget,
                         expand=True,
                         fill=True,
@@ -170,6 +169,7 @@ class VideoAgent(aeidon.Delegate):
             action = self.get_action("play_pause")
             action.props.stock_id = Gtk.STOCK_MEDIA_PAUSE
             GLib.timeout_add(40, self._on_player_update_seekbar)
+            GLib.timeout_add(40, self._on_player_update_volume)
             GLib.timeout_add(20, self._on_player_update_subtitle)
         if state == Gst.State.PAUSED:
             action = self.get_action("play_pause")
@@ -204,9 +204,9 @@ class VideoAgent(aeidon.Delegate):
         # Continue repeated calls until paused.
         return self.player.is_playing()
 
-    def _on_player_volume_changed(self, player, volume):
+    def _on_player_update_volume(self, data=None):
         """Update volume button."""
-        self.volume_button.props.value = volume
+        self.volume_button.props.value = self.player.volume
 
     @aeidon.deco.export
     def _on_seek_backward_activate(self, *args):
