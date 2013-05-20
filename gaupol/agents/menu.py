@@ -150,6 +150,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         ui += '<menu name="audio_track" action="show_audio_track_menu">'
         ui += '<placeholder name="audio_tracks">'
         for i, language in enumerate(self.player.get_audio_languages()):
+            language = language or _("Undefined")
             name = self._add_audio_track_action(i, language)
             ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
         ui += '</placeholder></menu></menu></menubar></ui>'
