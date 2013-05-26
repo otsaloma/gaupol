@@ -172,11 +172,16 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def group_actions(self, register, count, description):
         """Group the registered actions as one item in the stack."""
         if register is None: return
-        stack = self._get_destination_stack(register)
-        actions = [stack.pop(0) for i in range(count)]
         action_group = aeidon.RevertableActionGroup()
-        action_group.actions = actions
+        action_group.actions = []
         action_group.description = description
+        stack = self._get_destination_stack(register)
+        for i in range(count):
+            action = stack.pop(0)
+            if isinstance(action, aeidon.RevertableActionGroup):
+                action_group.actions.extend(action.actions)
+            else: # Single action
+                action_group.actions.append(action)
         stack.insert(0, action_group)
 
     def redo_require(self, count=1):

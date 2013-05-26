@@ -115,6 +115,42 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page.view.set_cursor(path, column, True)
 
     @aeidon.deco.export
+    def _on_end_earlier_activate(self, *args):
+        """End the selected subtitle earlier."""
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        pos = page.project.subtitles[row].end_seconds
+        length = gaupol.conf.editor.stretch_length
+        value = ((pos-0.001) // length) * length
+        page.project.set_end(row, value)
+        register = aeidon.registers.DO
+        description = _("Stretching end position")
+        page.project.set_action_description(register, description)
+        # Group repeated stretces as one action.
+        if (len(page.project.undoables) > 1 and
+            page.project.undoables[1].description ==
+            page.project.undoables[0].description):
+            page.project.group_actions(register, 2, description)
+
+    @aeidon.deco.export
+    def _on_end_later_activate(self, *args):
+        """End the selected subtitle later."""
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        pos = page.project.subtitles[row].end_seconds
+        length = gaupol.conf.editor.stretch_length
+        value = (((pos+0.001) // length) + 1) * length
+        page.project.set_end(row, value)
+        register = aeidon.registers.DO
+        description = _("Stretching end position")
+        page.project.set_action_description(register, description)
+        # Group repeated stretces as one action.
+        if (len(page.project.undoables) > 1 and
+            page.project.undoables[1].description ==
+            page.project.undoables[0].description):
+            page.project.group_actions(register, 2, description)
+
+    @aeidon.deco.export
     def _on_extend_selection_to_beginning_activate(self, *args):
         """Extend the selection up to the first subtitle."""
         page = self.get_current_page()
@@ -246,6 +282,42 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page = self.get_current_page()
         row = page.view.get_selected_rows()[0]
         page.project.split_subtitle(row)
+
+    @aeidon.deco.export
+    def _on_start_earlier_activate(self, *args):
+        """Start the selected subtitle earlier."""
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        pos = page.project.subtitles[row].start_seconds
+        length = gaupol.conf.editor.stretch_length
+        value = ((pos-0.001) // length) * length
+        page.project.set_start(row, value)
+        register = aeidon.registers.DO
+        description = _("Stretching start position")
+        page.project.set_action_description(register, description)
+        # Group repeated stretces as one action.
+        if (len(page.project.undoables) > 1 and
+            page.project.undoables[1].description ==
+            page.project.undoables[0].description):
+            page.project.group_actions(register, 2, description)
+
+    @aeidon.deco.export
+    def _on_start_later_activate(self, *args):
+        """Start the selected subtitle later."""
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        pos = page.project.subtitles[row].start_seconds
+        length = gaupol.conf.editor.stretch_length
+        value = (((pos+0.001) // length) + 1) * length
+        page.project.set_start(row, value)
+        register = aeidon.registers.DO
+        description = _("Stretching start position")
+        page.project.set_action_description(register, description)
+        # Group repeated stretces as one action.
+        if (len(page.project.undoables) > 1 and
+            page.project.undoables[1].description ==
+            page.project.undoables[0].description):
+            page.project.group_actions(register, 2, description)
 
     @aeidon.deco.export
     def _on_undo_action_activate(self, *args):

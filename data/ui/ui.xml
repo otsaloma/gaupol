@@ -51,6 +51,13 @@
       <placeholder name="4">
       </placeholder>
       <separator/>
+      <menu name="stretch" action="show_stretch_menu">
+        <menuitem name="start_earlier" action="start_earlier"/>
+        <menuitem name="start_later" action="start_later"/>
+        <separator/>
+        <menuitem name="end_earlier" action="end_earlier"/>
+        <menuitem name="end_later" action="end_later"/>
+      </menu>
       <menu name="selection" action="show_selection_menu">
         <menuitem name="select_all" action="select_all"/>
         <menuitem name="invert_selection" action="invert_selection"/>

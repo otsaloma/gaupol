@@ -156,6 +156,44 @@ class EditValueAction(gaupol.Action):
         aeidon.util.affirm(mode == Gtk.CellRendererMode.EDITABLE)
 
 
+class EndEarlierAction(gaupol.Action):
+
+    """End the selected subtitle earlier."""
+
+    def __init__(self):
+        """Initialize a :class:`EndEarlierAction` object."""
+        gaupol.Action.__init__(self, "end_earlier")
+        self.props.label = _("E_nd Earlier")
+        self.props.tooltip = _("End the selected subtitle earlier")
+        self.accelerator = "E"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
+        aeidon.util.affirm(len(selected_rows) == 1)
+
+
+class EndLaterAction(gaupol.Action):
+
+    """End the selected subtitle later."""
+
+    def __init__(self):
+        """Initialize a :class:`EndLaterAction` object."""
+        gaupol.Action.__init__(self, "end_later")
+        self.props.label = _("En_d Later")
+        self.props.tooltip = _("End the selected subtitle later")
+        self.accelerator = "R"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
+        aeidon.util.affirm(len(selected_rows) == 1)
+
+
 class ExtendSelectionToBeginningAction(gaupol.Action):
 
     """Extend the selection up to the first subtitle."""
@@ -377,6 +415,23 @@ class ShowSelectionMenuAction(gaupol.MenuAction):
         aeidon.util.affirm(page.project.subtitles)
 
 
+class ShowStretchMenuAction(gaupol.MenuAction):
+
+    """Show the stretch menu."""
+
+    def __init__(self):
+        """Initialize a :class:`ShowStretchMenuAction` object."""
+        gaupol.MenuAction.__init__(self, "show_stretch_menu")
+        self.props.label = _("Stretc_h Subtitle")
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
+        aeidon.util.affirm(len(selected_rows) == 1)
+
+
 class SplitSubtitleAction(gaupol.Action):
 
     """Split the selected subtitle."""
@@ -392,6 +447,44 @@ class SplitSubtitleAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(len(selected_rows) == 1)
+
+
+class StartEarlierAction(gaupol.Action):
+
+    """Start the selected subtitle earlier."""
+
+    def __init__(self):
+        """Initialize a :class:`StartEarlierAction` object."""
+        gaupol.Action.__init__(self, "start_earlier")
+        self.props.label = _("_Start Earlier")
+        self.props.tooltip = _("Start the selected subtitle earlier")
+        self.accelerator = "Q"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
+        aeidon.util.affirm(len(selected_rows) == 1)
+
+
+class StartLaterAction(gaupol.Action):
+
+    """Start the selected subtitle later."""
+
+    def __init__(self):
+        """Initialize a :class:`StartLaterAction` object."""
+        gaupol.Action.__init__(self, "start_later")
+        self.props.label = _("S_tart Later")
+        self.props.tooltip = _("Start the selected subtitle later")
+        self.accelerator = "W"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
         aeidon.util.affirm(len(selected_rows) == 1)
 
 

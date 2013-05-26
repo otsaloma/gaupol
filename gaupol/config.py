@@ -81,6 +81,7 @@ config_defaults = {
         "mode": aeidon.modes.TIME,
         "show_lengths_cell": True,
         "show_lengths_edit": True,
+        "stretch_length": 0.05,
         "undo_limit": 50,
         "use_custom_font": False,
         "use_undo_limit": False,
