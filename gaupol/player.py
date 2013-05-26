@@ -252,8 +252,9 @@ class VideoPlayer(aeidon.Observable):
         `start` and `end` can be either time, frame or seconds.
         """
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
-        start = self.calc.to_seconds(start) * Gst.SECOND
-        end = self.calc.to_seconds(end) * Gst.SECOND
+        start = max(0, self.calc.to_seconds(start)) * Gst.SECOND
+        duration = self.get_duration(aeidon.modes.SECONDS)
+        end = min(duration, self.calc.to_seconds(end)) * Gst.SECOND
         self._playbin.seek(rate=1.0,
                            format=Gst.Format.TIME,
                            flags=seek_flags,
