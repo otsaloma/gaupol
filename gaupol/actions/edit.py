@@ -198,6 +198,26 @@ class ExtendSelectionToEndAction(gaupol.Action):
         aeidon.util.affirm(selected_rows)
 
 
+class InsertSubtitleAtVideoPositionAction(gaupol.Action):
+
+    """Insert a new subtitle at video position."""
+
+    def __init__(self):
+        """Initialize an :class:`InsertSubtitleAtVideoPositionAction` object."""
+        gaupol.Action.__init__(self, "insert_subtitle_at_video_position")
+        self.props.label = _("Inser_t Subtitle At Video Position")
+        self.props.short_label = _("Insert At Video")
+        self.props.stock_id = Gtk.STOCK_ADD
+        self.props.tooltip = _("Insert a new subtitle at video position")
+        self.accelerator = "A"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(application.player is not None)
+
+
 class InsertSubtitlesAction(gaupol.Action):
 
     """Insert subtitles."""

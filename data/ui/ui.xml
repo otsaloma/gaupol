@@ -46,6 +46,7 @@
       </placeholder>
       <separator/>
       <menuitem name="insert" action="insert_subtitles"/>
+      <menuitem name="insert_video" action="insert_subtitle_at_video_position"/>
       <menuitem name="remove" action="remove_subtitles"/>
       <placeholder name="4">
       </placeholder>

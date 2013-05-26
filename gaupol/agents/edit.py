@@ -19,6 +19,7 @@
 """Editing subtitle data."""
 
 import aeidon
+import bisect
 import gaupol
 _ = aeidon.i18n._
 
@@ -128,6 +129,23 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         row = page.view.get_selected_rows()[0]
         rows = list(range(row, len(page.project.subtitles)))
         page.view.select_rows(rows)
+
+    @aeidon.deco.export
+    def _on_insert_subtitle_at_video_position_activate(self, *args):
+        """Insert a new subtitle at video position."""
+        mode = aeidon.modes.SECONDS
+        pos = self.player.get_position(mode)
+        page = self.get_current_page()
+        starts = [x.start_seconds for x in page.project.subtitles]
+        index = bisect.bisect_right(starts, pos)
+        subtitle = page.project.new_subtitle()
+        subtitle.start_seconds = pos
+        subtitle.end_seconds = (starts[index+1]
+                                if len(starts) > index+1
+                                else pos + 3.0)
+
+        subtitle.main_text = "[{:d}]".format(index+1)
+        page.project.insert_subtitles((index,), (subtitle,))
 
     @aeidon.deco.export
     def _on_insert_subtitles_activate(self, *args):
