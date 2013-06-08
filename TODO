@@ -2,13 +2,9 @@ Gaupol 0.xx
 ===========
 
  [ ] Add a built-in GStreamer-based video player
-     * Preferences dialog
-       - Time overlay font, color, alpha
-       - Subtitle overlay font, color, alpha
      * Check side-pane extension containering
      * Check keybindings, preview and video toolbar for changes needed
        to avoid confusion
- [ ] Set framerate automatically when setting video file
  [ ] Add a not-required, but recommended dependency on PT fonts
      (PT Sans Caption and PT Mono) used by default for video player's
      subtitle and timecode overlays

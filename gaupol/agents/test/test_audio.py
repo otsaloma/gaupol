@@ -16,27 +16,11 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Loading and interacting with audio."""
-
-import aeidon
+import gaupol
 
 
-class AudioAgent(aeidon.Delegate):
+class TestAudioAgent(gaupol.TestCase):
 
-    """Loading and interacting with audio."""
-
-    @aeidon.deco.export
-    def _on_volume_down_activate(self, *args):
-        """Decrease volume."""
-        volume = self.player.volume
-        self.player.volume = volume - 0.05
-        self.volume_button.props.value = self.player.volume
-        self.update_gui()
-
-    @aeidon.deco.export
-    def _on_volume_up_activate(self, *args):
-        """Increase volume."""
-        volume = self.player.volume
-        self.player.volume = volume + 0.05
-        self.volume_button.props.value = self.player.volume
-        self.update_gui()
+    def setup_method(self, method):
+        self.application = self.new_application()
+        self.delegate = self.application._on_volume_down_activate.__self__
