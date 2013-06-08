@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -67,6 +67,16 @@ class TestEditAgent(gaupol.TestCase):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("edit_value").activate()
+
+    def test__on_end_earlier_activate(self):
+        self.application.get_action("end_earlier").activate()
+        self.application.get_action("end_earlier").activate()
+        self.application.get_action("end_earlier").activate()
+
+    def test__on_end_later_activate(self):
+        self.application.get_action("end_later").activate()
+        self.application.get_action("end_later").activate()
+        self.application.get_action("end_later").activate()
 
     def test__on_extend_selection_to_beginning_activate(self):
         page = self.application.get_current_page()
@@ -145,6 +155,16 @@ class TestEditAgent(gaupol.TestCase):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("split_subtitle").activate()
+
+    def test__on_start_earlier_activate(self):
+        self.application.get_action("start_earlier").activate()
+        self.application.get_action("start_earlier").activate()
+        self.application.get_action("start_earlier").activate()
+
+    def test__on_start_later_activate(self):
+        self.application.get_action("start_later").activate()
+        self.application.get_action("start_later").activate()
+        self.application.get_action("start_later").activate()
 
     def test__on_undo_action_activate(self):
         page = self.application.get_current_page()
