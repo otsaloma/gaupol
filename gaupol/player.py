@@ -309,11 +309,19 @@ class VideoPlayer(aeidon.Observable):
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
     def set_path(self, path):
-        """Set the path of the file to play."""
+        """
+        Set the path of the file to play.
+
+        You should have a window visible before calling `set_path`.
+        """
         self.set_uri(aeidon.util.path_to_uri(path))
 
     def set_uri(self, uri):
-        """Set the URI of the file to play."""
+        """
+        Set the URI of the file to play.
+
+        You should have a window visible before calling `set_uri`.
+        """
         self._playbin.props.uri = uri
         self._xid = self.widget.props.window.get_xid()
         self.subtitle_text= ""
