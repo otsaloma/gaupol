@@ -117,30 +117,25 @@ class VideoPlayer(aeidon.Observable):
 
     def _init_text_overlay(self):
         """Initialize the text overlay element."""
+        self._text_overlay = Gst.ElementFactory.make("textoverlay", name=None)
         conf = gaupol.conf.video_player
-        text = Gst.ElementFactory.make("textoverlay", name=None)
-        text.props.font_desc = conf.subtitle_font
-        text.props.halignment = "center"
-        text.props.valignment = "bottom"
-        text.props.line_alignment = "left"
-        text.props.shaded_background = conf.subtitle_background
-        alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
-        color = conf.subtitle_color.replace("#", "")
-        text.props.color = eval("0x{}{}".format(alpha, color))
-        self._text_overlay = text
+        callback = self._on_conf_notify_subtitle_property
+        conf.connect("notify::subtitle_font", callback)
+        conf.connect("notify::subtitle_color", callback)
+        conf.connect("notify::subtitle_alpha", callback)
+        conf.connect("notify::subtitle_background", callback)
+        self._on_conf_notify_subtitle_property()
 
     def _init_time_overlay(self):
         """Initialize the time overlay element."""
+        self._time_overlay = Gst.ElementFactory.make("timeoverlay", name=None)
         conf = gaupol.conf.video_player
-        time = Gst.ElementFactory.make("timeoverlay", name=None)
-        time.props.font_desc = conf.time_font
-        time.props.halignment = "right"
-        time.props.valignment = "top"
-        time.props.shaded_background = conf.time_background
-        alpha = "{:02x}".format(int(conf.time_alpha * 255))
-        color = conf.time_color.replace("#", "")
-        time.props.color = eval("0x{}{}".format(alpha, color))
-        self._time_overlay = time
+        callback = self._on_conf_notify_time_property
+        conf.connect("notify::time_font", callback)
+        conf.connect("notify::time_color", callback)
+        conf.connect("notify::time_alpha", callback)
+        conf.connect("notify::time_background", callback)
+        self._on_conf_notify_time_property()
 
     def _init_widget(self):
         """Initialize the rendering widget."""
@@ -176,6 +171,29 @@ class VideoPlayer(aeidon.Observable):
         struct = message.get_structure()
         if struct.get_name() == "prepare-window-handle":
             message.src.set_window_handle(self._xid)
+
+    def _on_conf_notify_subtitle_property(self, *args):
+       """Update subtitle text overlay properties."""
+       conf = gaupol.conf.video_player
+       self._text_overlay.props.font_desc = conf.subtitle_font
+       self._text_overlay.props.halignment = "center"
+       self._text_overlay.props.valignment = "bottom"
+       self._text_overlay.props.line_alignment = "left"
+       self._text_overlay.props.shaded_background = conf.subtitle_background
+       alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
+       color = conf.subtitle_color.replace("#", "")
+       self._text_overlay.props.color = eval("0x{}{}".format(alpha, color))
+
+    def _on_conf_notify_time_property(self, *args):
+       """Update time overlay properties."""
+       conf = gaupol.conf.video_player
+       self._time_overlay.props.font_desc = conf.time_font
+       self._time_overlay.props.halignment = "right"
+       self._time_overlay.props.valignment = "top"
+       self._time_overlay.props.shaded_background = conf.time_background
+       alpha = "{:02x}".format(int(conf.time_alpha * 255))
+       color = conf.time_color.replace("#", "")
+       self._time_overlay.props.color = eval("0x{}{}".format(alpha, color))
 
     @property
     def audio_track(self):
