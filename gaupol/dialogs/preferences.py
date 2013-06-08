@@ -463,6 +463,81 @@ class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
         gaupol.conf.preview.offset = spin_button.get_value()
 
 
+class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
+
+    """Video preferences page."""
+
+    _widgets = ("video_subtitle_bg_check",
+                "video_subtitle_color_button",
+                "video_subtitle_font_button",
+                "video_time_bg_check",
+                "video_time_color_button",
+                "video_time_font_button")
+
+    def __init__(self, master, application):
+        """Initialize a :class:`PreviewPage` object."""
+        aeidon.Delegate.__init__(self, master)
+        self._set_attributes(self._widgets, "video_")
+        self.application = application
+        self.conf = gaupol.conf.video_player
+        self._init_subtitle_values()
+        self._init_time_values()
+
+    def _get_custom_font(self, font):
+        """Return custom font as string."""
+        context = Gtk.Label().get_pango_context()
+        font_desc = context.get_font_description()
+        custom_font_desc = Pango.FontDescription(font)
+        font_desc.merge(custom_font_desc, True)
+        return font_desc.to_string()
+
+    def _init_subtitle_values(self):
+        """Initialize default values for subtitle widgets."""
+        self._subtitle_bg_check.set_active(self.conf.subtitle_background)
+        color = gaupol.util.hex_to_rgba(self.conf.subtitle_color)
+        color.alpha = self.conf.subtitle_alpha
+        self._subtitle_color_button.set_rgba(color)
+        font = self._get_custom_font(self.conf.subtitle_font)
+        self._subtitle_font_button.set_font_name(font)
+
+    def _init_time_values(self):
+        """Initialize default values for time widgets."""
+        self._time_bg_check.set_active(self.conf.time_background)
+        color = gaupol.util.hex_to_rgba(self.conf.time_color)
+        color.alpha = self.conf.time_alpha
+        self._time_color_button.set_rgba(color)
+        font = self._get_custom_font(self.conf.time_font)
+        self._time_font_button.set_font_name(font)
+
+    def _on_subtitle_bg_check_toggled(self, check_button):
+        """Save subtitle background use."""
+        self.conf.subtitle_background = check_button.get_active()
+
+    def _on_subtitle_color_button_color_set(self, color_button):
+        """Save subtitle color."""
+        color = color_button.get_rgba()
+        self.conf.subtitle_color = gaupol.util.rgba_to_hex(color)
+        self.conf.subtitle_alpha = color.alpha
+
+    def _on_subtitle_font_button_font_set(self, font_button):
+        """Save subtitle font."""
+        self.conf.subtitle_font = font_button.get_font_name()
+
+    def _on_time_bg_check_toggled(self, check_button):
+        """Save time background use."""
+        self.conf.time_background = check_button.get_active()
+
+    def _on_time_color_button_color_set(self, color_button):
+        """Save time color."""
+        color = color_button.get_rgba()
+        self.conf.time_color = gaupol.util.rgba_to_hex(color)
+        self.conf.time_alpha = color.alpha
+
+    def _on_time_font_button_font_set(self, font_button):
+        """Save time font."""
+        self.conf.time_font = font_button.get_font_name()
+
+
 class PreferencesDialog(gaupol.BuilderDialog):
 
     """Dialog for editing preferences."""
@@ -479,6 +554,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self._extension_page = ExtensionPage(self, application)
         self._file_page = FilePage(self, application)
         self._preview_page = PreviewPage(self, application)
+        self._video_page = VideoPage(self, application)
         self._builder.connect_signals(self._get_callbacks())
         self.connect("response", self._on_response)
         aeidon.util.connect(self, "_notebook", "switch-page")
@@ -492,7 +568,8 @@ class PreferencesDialog(gaupol.BuilderDialog):
         for page in (self._editor_page,
                      self._extension_page,
                      self._file_page,
-                     self._preview_page):
+                     self._preview_page,
+                     self._video_page):
 
             for name in [x for x in dir(page) if x.startswith("_on_")]:
                 callbacks[name] = getattr(page, name)
@@ -500,8 +577,8 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     def _on_notebook_switch_page(self, notebook, page, index):
         """Set sensitivity of the help button."""
-        # Use help on the preview page, which is the third.
-        self.set_response_sensitive(Gtk.ResponseType.HELP, index == 2)
+        # Use help on the preview page, which is the fourth.
+        self.set_response_sensitive(Gtk.ResponseType.HELP, index == 3)
 
     def _on_response(self, dialog, response):
         """Do not send response if browsing help."""

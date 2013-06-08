@@ -195,11 +195,11 @@ config_defaults = {
         "subtitle_alpha": 1.0,
         "subtitle_background": False,
         "subtitle_color": "#ffffff",
-        "subtitle_font": "PT Sans Caption,sans 18",
+        "subtitle_font": "PT Sans Caption 18",
         "time_alpha": 1.0,
         "time_background": False,
         "time_color": "#ffffff",
-        "time_font": "PT Mono,monospace Bold 14",
+        "time_font": "PT Mono Bold 14",
         "volume": None,
         },
     }

@@ -183,6 +183,20 @@ def gtkspellcheck_available():
     except Exception:
         return False
 
+def hex_to_rgba(string):
+    """
+    Return a :class:`Gdk.RGBA` for hexadecimal `string`.
+
+    Raise :exc:`ValueError` if parsing `string` fails.
+    """
+    rgba = Gdk.RGBA()
+    success = rgba.parse(string)
+    if not success:
+        raise ValueError("Parsing string {} failed"
+                         .format(repr(string)))
+
+    return rgba
+
 def install_module(name, obj):
     """
     Install `obj`'s module into the :mod:`gaupol` namespace.
@@ -253,6 +267,12 @@ def raise_default(expression):
     """Raise :exc:`gaupol.Default` if expression evaluates to ``True``."""
     if expression:
         raise gaupol.Default
+
+def rgba_to_hex(color):
+    """Return hexadecimal string for :class:`Gdk.RGBA` `color`."""
+    return "#{:02x}{:02x}{:02x}".format(int(color.red   * 255),
+                                        int(color.green * 255),
+                                        int(color.blue  * 255))
 
 def run_dialog(dialog):
     """

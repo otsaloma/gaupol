@@ -19,6 +19,7 @@
 import aeidon
 import gaupol
 
+from gi.repository import Gdk
 from gi.repository import Gtk
 
 
@@ -186,6 +187,45 @@ class TestPreviewPage(gaupol.TestCase):
     def test__on_offset_spin_value_changed(self):
         self.page._offset_spin.set_value(13)
         self.page._offset_spin.set_value(-13)
+
+
+class TestVideoPage(gaupol.TestCase):
+
+    def setup_method(self, method):
+        self.application = self.new_application()
+        self.dialog = gaupol.PreferencesDialog(self.application.window,
+                                               self.application)
+
+        self.page = self.dialog._video_page
+        self.dialog.show()
+
+    def test__on_subtitle_bg_check_toggled(self):
+        self.page._subtitle_bg_check.set_active(True)
+        self.page._subtitle_bg_check.set_active(False)
+        self.page._subtitle_bg_check.set_active(True)
+
+    def test__on_subtitle_color_button_color_set(self):
+        color = Gdk.RGBA(red=1.0, green=0.0, blue=0.0)
+        self.page._subtitle_color_button.set_rgba(color)
+        self.page._subtitle_color_button.emit("color-set")
+
+    def test__on_subtitle_font_button_font_set(self):
+        self.page._subtitle_font_button.set_font_name("Serif 12")
+        self.page._subtitle_font_button.emit("font-set")
+
+    def test__on_time_bg_check_toggled(self):
+        self.page._time_bg_check.set_active(True)
+        self.page._time_bg_check.set_active(False)
+        self.page._time_bg_check.set_active(True)
+
+    def test__on_time_color_button_color_set(self):
+        color = Gdk.RGBA(red=1.0, green=0.0, blue=0.0)
+        self.page._time_color_button.set_rgba(color)
+        self.page._time_color_button.emit("color-set")
+
+    def test__on_time_font_button_font_set(self):
+        self.page._time_font_button.set_font_name("Serif 12")
+        self.page._time_font_button.emit("font-set")
 
 
 class TestPreferencesDialog(gaupol.TestCase):

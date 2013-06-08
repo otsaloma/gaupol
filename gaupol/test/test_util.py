@@ -21,6 +21,7 @@ import gaupol
 import imp
 import sys
 
+from gi.repository import Gdk
 from gi.repository import Gtk
 
 
@@ -108,6 +109,15 @@ class TestModule(gaupol.TestCase):
         imp.reload(gaupol.util)
         gaupol.util.gtkspellcheck_available()
 
+    def test_hex_to_rgba(self):
+        color = gaupol.util.hex_to_rgba("#ff0000")
+        assert color.equal(Gdk.RGBA(red=1, green=0, blue=0, alpha=1))
+
+    def test_hex_to_rgba__value_error(self):
+        self.assert_raises(ValueError,
+                           gaupol.util.hex_to_rgba,
+                           "xxx")
+
     def test_lines_to_px(self):
         assert gaupol.util.lines_to_px(1) > 0
 
@@ -129,6 +139,16 @@ class TestModule(gaupol.TestCase):
     def test_raise_default(self):
         self.assert_raises(gaupol.Default, gaupol.util.raise_default, True)
         gaupol.util.raise_default(False)
+
+    def test_rgba_to_hex__black(self):
+        rgba = Gdk.RGBA(red=0, green=0, blue=0)
+        color = gaupol.util.rgba_to_hex(rgba)
+        assert color == "#000000"
+
+    def test_rgba_to_hex__violet(self):
+        rgba = Gdk.RGBA(red=1, green=0, blue=1)
+        color = gaupol.util.rgba_to_hex(rgba)
+        assert color == "#ff00ff"
 
     def test_scale_to_content__text_view(self):
         text_view = Gtk.TextView()
