@@ -314,8 +314,13 @@
     <placeholder name="2">
     </placeholder>
     <separator/>
-    <menuitem name="preview" action="preview"/>
+    <menuitem name="play_selection" action="play_selection"/>
+    <menuitem name="seek_selection_start" action="seek_selection_start"/>
     <placeholder name="3">
+    </placeholder>
+    <separator/>
+    <menuitem name="preview" action="preview"/>
+    <placeholder name="4">
     </placeholder>
   </popup>
   <popup name="view_header_popup">
