@@ -151,6 +151,9 @@
       <separator/>
       <menuitem name="italic" action="toggle_italicization"/>
       <menuitem name="dialogue" action="toggle_dialogue_dashes"/>
+      <placeholder name="3">
+      </placeholder>
+      <separator/>
       <menu name="case" action="show_case_menu">
         <menuitem name="title" action="use_title_case"/>
         <menuitem name="sentence" action="use_sentence_case"/>
@@ -159,7 +162,7 @@
         <placeholder name="1">
         </placeholder>
       </menu>
-      <placeholder name="3">
+      <placeholder name="4">
       </placeholder>
     </menu>
     <menu name="video" action="show_video_menu">
