@@ -40,17 +40,6 @@
       <placeholder name="2">
       </placeholder>
       <separator/>
-      <menuitem name="split" action="split_subtitle"/>
-      <menuitem name="merge" action="merge_subtitles"/>
-      <placeholder name="3">
-      </placeholder>
-      <separator/>
-      <menuitem name="insert" action="insert_subtitles"/>
-      <menuitem name="insert_video" action="insert_subtitle_at_video_position"/>
-      <menuitem name="remove" action="remove_subtitles"/>
-      <placeholder name="4">
-      </placeholder>
-      <separator/>
       <menu name="stretch" action="show_stretch_menu">
         <menuitem name="start_earlier" action="start_earlier"/>
         <menuitem name="start_later" action="start_later"/>
@@ -58,6 +47,20 @@
         <menuitem name="end_earlier" action="end_earlier"/>
         <menuitem name="end_later" action="end_later"/>
       </menu>
+      <placeholder name="3">
+      </placeholder>
+      <separator/>
+      <menuitem name="split" action="split_subtitle"/>
+      <menuitem name="merge" action="merge_subtitles"/>
+      <placeholder name="4">
+      </placeholder>
+      <separator/>
+      <menuitem name="insert" action="insert_subtitles"/>
+      <menuitem name="insert_video" action="insert_subtitle_at_video_position"/>
+      <menuitem name="remove" action="remove_subtitles"/>
+      <placeholder name="5">
+      </placeholder>
+      <separator/>
       <menu name="selection" action="show_selection_menu">
         <menuitem name="select_all" action="select_all"/>
         <menuitem name="invert_selection" action="invert_selection"/>
@@ -67,11 +70,11 @@
         <placeholder name="1">
         </placeholder>
       </menu>
-      <placeholder name="5">
+      <placeholder name="6">
       </placeholder>
       <separator/>
       <menuitem name="preferences" action="edit_preferences"/>
-      <placeholder name="6">
+      <placeholder name="7">
       </placeholder>
     </menu>
     <menu name="view" action="show_view_menu">
