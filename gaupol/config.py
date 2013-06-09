@@ -191,6 +191,7 @@ config_defaults = {
         },
     "video_player": {
         "context_length": 1.0,
+        "line_alignment": "center",
         "seek_length": 30,
         "subtitle_alpha": 1.0,
         "subtitle_background": False,

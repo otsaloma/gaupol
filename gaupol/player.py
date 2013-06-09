@@ -178,7 +178,7 @@ class VideoPlayer(aeidon.Observable):
        self._text_overlay.props.font_desc = conf.subtitle_font
        self._text_overlay.props.halignment = "center"
        self._text_overlay.props.valignment = "bottom"
-       self._text_overlay.props.line_alignment = "left"
+       self._text_overlay.props.line_alignment = conf.line_alignment
        self._text_overlay.props.shaded_background = conf.subtitle_background
        alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
        color = conf.subtitle_color.replace("#", "")
