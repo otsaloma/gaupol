@@ -272,7 +272,8 @@ class VideoAgent(aeidon.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         pos = page.project.subtitles[rows[-1]].end_seconds
-        self.player.seek(pos)
+        offset = gaupol.conf.video_player.context_length
+        self.player.seek(pos - offset)
 
     @aeidon.deco.export
     def _on_seek_selection_start_activate(self, *args):
@@ -280,7 +281,8 @@ class VideoAgent(aeidon.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         pos = page.project.subtitles[rows[0]].start_seconds
-        self.player.seek(pos)
+        offset = gaupol.conf.video_player.context_length
+        self.player.seek(pos - offset)
 
     def _on_seekbar_change_value(self, seekbar, scroll, value, data=None):
         """Seek to specified position in video."""
