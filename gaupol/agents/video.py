@@ -43,6 +43,7 @@ class VideoAgent(aeidon.Delegate):
         # subtitle texts in order to allow fast polled updates in video player.
         # This cache must be updated when page or subtitle data changes.
         self._cache = []
+        self._update_handlers = []
 
     def _clear_subtitle_cache(self):
         """Clear subtitle position and text cache."""
@@ -115,6 +116,16 @@ class VideoAgent(aeidon.Delegate):
             size = self.notebook.props.window.get_height()
         self.paned.set_position(int(size/2))
 
+    def _init_update_handlers(self):
+        """Initialize timed updates of widgets."""
+        while self._update_handlers:
+            GLib.source_remove(self._update_handlers.pop())
+        self._update_handlers = [
+            GLib.timeout_add( 10, self._on_player_update_subtitle),
+            GLib.timeout_add( 50, self._on_player_update_seekbar),
+            GLib.timeout_add(100, self._on_player_update_volume),
+        ]
+
     @aeidon.deco.export
     def _on_load_video_activate(self, *args):
         """Load a video file."""
@@ -139,6 +150,7 @@ class VideoAgent(aeidon.Delegate):
         if self.player is None:
             self._init_player_widgets()
             self._init_cache_updates()
+            self._init_update_handlers()
             self._update_subtitle_cache()
         else: # Player exists
             if self.player.is_playing():
@@ -179,47 +191,40 @@ class VideoAgent(aeidon.Delegate):
         if state == Gst.State.PLAYING:
             action = self.get_action("play_pause")
             action.props.stock_id = Gtk.STOCK_MEDIA_PAUSE
-            GLib.timeout_add(40, self._on_player_update_seekbar)
-            GLib.timeout_add(40, self._on_player_update_volume)
-            GLib.timeout_add(10, self._on_player_update_subtitle)
         if state == Gst.State.PAUSED:
             action = self.get_action("play_pause")
             action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
 
     def _on_player_update_seekbar(self, data=None):
         """Update seekbar from video position."""
-        duration = self.player.get_duration(aeidon.modes.SECONDS)
-        position = self.player.get_position(aeidon.modes.SECONDS)
+        duration = self.player.get_duration(mode=None)
+        position = self.player.get_position(mode=None)
         if duration is not None and position is not None:
             adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(position/duration)
-        # Continue repeated calls until paused.
-        return self.player.is_playing()
+        return True # to be called again.
 
     def _on_player_update_subtitle(self, data=None):
         """Update subtitle overlay from video position."""
-        position = self.player.get_position(aeidon.modes.SECONDS)
-        if position is None:
-            # Continue repeated calls until paused.
-            return self.player.is_playing()
-        subtitles = list(filter(lambda x: x[0] <= position <= x[1],
+        pos = self.player.get_position(aeidon.modes.SECONDS)
+        if pos is None:
+            return True # to be called again.
+        subtitles = list(filter(lambda x: x[0] <= pos <= x[1],
                                 self._cache))
 
         if subtitles:
-            text = aeidon.RE_ANY_TAG.sub("", subtitles[-1][2])
-            if text != self.player.subtitle_text:
+            text = subtitles[-1][2]
+            if text != self.player.subtitle_text_raw:
                 self.player.subtitle_text = text
         else:
             if self.player.subtitle_text:
                 self.player.subtitle_text = ""
-        # Continue repeated calls until paused.
-        return self.player.is_playing()
+        return True # to be called again.
 
     def _on_player_update_volume(self, data=None):
-        """Update volume button."""
+        """Update volume from player."""
         self.volume_button.props.value = self.player.volume
-        # Continue repeated calls until paused.
-        return self.player.is_playing()
+        return True # to be called again.
 
     @aeidon.deco.export
     def _on_seek_backward_activate(self, *args):

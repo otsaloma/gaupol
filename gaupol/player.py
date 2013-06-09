@@ -51,6 +51,7 @@ class VideoPlayer(aeidon.Observable):
     :ivar audio_track: Current audio track as integer
     :ivar calc: The instance of :class:`aeidon.Calculator` used
     :ivar subtitle_text: Current text shown in the subtitle overlay
+    :ivar subtitle_text_raw: `subtitle_text` before removal of tags
     :ivar volume: Current audio stream volume
     :ivar widget: :class:`Gtk.DrawingArea` used to render video
 
@@ -71,6 +72,7 @@ class VideoPlayer(aeidon.Observable):
         self._time_overlay = None
         self._xid = None
         self.calc = aeidon.Calculator()
+        self.subtitle_text_raw = ""
         self.widget = None
         self._init_text_overlay()
         self._init_time_overlay()
@@ -247,30 +249,42 @@ class VideoPlayer(aeidon.Observable):
                      self._info.get_audio_streams())
 
     def get_duration(self, mode):
-        """Return duration of video stream or ``None``."""
+        """
+        Return duration of video stream or ``None``.
+
+        `mode` can be ``None`` to return duration in internal :mod:`GStreamer`
+        units, which can be faster if data is fed back to :mod:`GStreamer`.
+        """
         success, duration = self._playbin.query_duration(Gst.Format.TIME)
         if not success: return None
+        if mode is None: return duration
         duration = duration / Gst.SECOND
+        if mode == aeidon.modes.SECONDS:
+            return duration
         if mode == aeidon.modes.TIME:
             return self.calc.to_time(duration)
         if mode == aeidon.modes.FRAME:
             return self.calc.to_frame(duration)
-        if mode == aeidon.modes.SECONDS:
-            return self.calc.to_seconds(duration)
         raise ValueError("Invalid mode: {}"
                          .format(repr(mode)))
 
     def get_position(self, mode):
-        """Return current position in video stream or ``None``."""
+        """
+        Return current position in video stream or ``None``.
+
+        `mode` can be ``None`` to return position in internal :mod:`GStreamer`
+        units, which can be faster if data is fed back to :mod:`GStreamer`.
+        """
         success, pos = self._playbin.query_position(Gst.Format.TIME)
         if not success: return None
+        if mode is None: return pos
         pos = pos / Gst.SECOND
+        if mode == aeidon.modes.SECONDS:
+            return pos
         if mode == aeidon.modes.TIME:
             return self.calc.to_time(pos)
         if mode == aeidon.modes.FRAME:
             return self.calc.to_frame(pos)
-        if mode == aeidon.modes.SECONDS:
-            return self.calc.to_seconds(pos)
         raise ValueError("Invalid mode: {}"
                          .format(repr(mode)))
 
@@ -384,6 +398,8 @@ class VideoPlayer(aeidon.Observable):
     @subtitle_text.setter
     def subtitle_text(self, text):
         """Set `text` to the subtitle overlay."""
+        self.subtitle_text_raw = text
+        test = aeidon.RE_ANY_TAG.sub("", text)
         self._text_overlay.props.text = text
 
     @property
