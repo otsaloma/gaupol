@@ -205,7 +205,7 @@ class VideoAgent(aeidon.Delegate):
                                 self._cache))
 
         if subtitles:
-            text = aeidon.RE_ANY_TAG.sub("", subtitles[0][2])
+            text = aeidon.RE_ANY_TAG.sub("", subtitles[-1][2])
             if text != self.player.subtitle_text:
                 self.player.subtitle_text = text
         else:
