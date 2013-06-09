@@ -3,7 +3,7 @@ Gaupol 0.xx
 
  [ ] Add a built-in GStreamer-based video player
      * Document hidden preferences
- [ ] Add a not-required, but recommended dependency on PT fonts
+ [X] Add a not-required, but recommended dependency on PT fonts
      (PT Sans Caption and PT Mono) used by default for video player's
      subtitle and timecode overlays
      - http://www.paratype.com/public/
