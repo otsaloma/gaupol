@@ -34,6 +34,7 @@ class LoadVideoAction(gaupol.Action):
         gaupol.Action.__init__(self, "load_video")
         self.props.label = _("_Load Video…")
         self.props.tooltip = _("Load a video file")
+        self.accelerator = "<Control>L"
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
