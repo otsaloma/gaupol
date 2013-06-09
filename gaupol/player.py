@@ -41,6 +41,7 @@ class VideoPlayer(aeidon.Observable):
     """
     GStreamer video player.
 
+    :ivar _in_default_segment: ``True`` if in the default playback segment
     :ivar _info: :class:`Gst.DiscovererInfo` from current uri
     :ivar _playbin: GStreamer "playbin" element
     :ivar _prev_state: Previous state of `_playbin`
@@ -62,6 +63,7 @@ class VideoPlayer(aeidon.Observable):
     def __init__(self):
         """Initialize a :class:`VideoPlayer` object."""
         aeidon.Observable.__init__(self)
+        self._in_default_segment = True
         self._info = None
         self._playbin = None
         self._prev_state = None
@@ -75,6 +77,32 @@ class VideoPlayer(aeidon.Observable):
         self._init_pipeline()
         self._init_bus()
         self._init_widget()
+
+    def _ensure_default_segment(self):
+        """
+        Reset playback start and stop positions.
+
+        When using `play_segment`, the playback limits are set to those
+        (instead of the default 0 and -1). To be able to do useful things,
+        we often need to reset those segment limits to their defaults.
+        Any methods that need to rely on the whole duration being
+        accessible, should as first thing call this method.
+        """
+        if self._in_default_segment: return
+        # XXX: There's got to be a simpler way to do this.
+        pos = self.get_position(aeidon.modes.SECONDS) * Gst.SECOND
+        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
+        end = self.get_duration(aeidon.modes.SECONDS) * Gst.SECOND
+        self._playbin.seek(rate=1.0,
+                           format=Gst.Format.TIME,
+                           flags=seek_flags,
+                           start_type=Gst.SeekType.SET,
+                           start=0,
+                           stop_type=Gst.SeekType.SET,
+                           stop=end)
+
+        self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
+        self._in_default_segment = True
 
     def _init_bus(self):
         """Initialize the GStreamer message bus."""
@@ -148,6 +176,7 @@ class VideoPlayer(aeidon.Observable):
 
     def _on_bus_message_eos(self, bus, message):
         """Handle EOS message from the bus."""
+        self._ensure_default_segment()
         self.pause()
 
     def _on_bus_message_error(self, bus, message):
@@ -269,6 +298,7 @@ class VideoPlayer(aeidon.Observable):
 
         `start` and `end` can be either time, frame or seconds.
         """
+        self._in_default_segment = False
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         start = max(0, self.calc.to_seconds(start)) * Gst.SECOND
         duration = self.get_duration(aeidon.modes.SECONDS)
@@ -289,6 +319,7 @@ class VideoPlayer(aeidon.Observable):
 
         `pos` can be either time, frame or seconds.
         """
+        self._ensure_default_segment()
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         pos = self.calc.to_seconds(pos) * Gst.SECOND
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
@@ -299,6 +330,7 @@ class VideoPlayer(aeidon.Observable):
 
         `offset` can be either time, frame or seconds.
         """
+        self._ensure_default_segment()
         pos = self.get_position(aeidon.modes.SECONDS)
         duration = self.get_duration(aeidon.modes.SECONDS)
         if pos is None or duration is None: return
