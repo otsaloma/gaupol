@@ -176,10 +176,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         index = bisect.bisect_right(starts, pos)
         subtitle = page.project.new_subtitle()
         subtitle.start_seconds = pos
-        subtitle.end_seconds = (starts[index+1]
-                                if len(starts) > index+1
-                                else pos + 3.0)
-
+        subtitle.end_seconds = pos + 3.0
         subtitle.main_text = "[{:d}]".format(index+1)
         page.project.insert_subtitles((index,), (subtitle,))
 
