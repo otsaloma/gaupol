@@ -2,7 +2,6 @@ Gaupol 0.xx
 ===========
 
  [ ] Add a built-in GStreamer-based video player
-     * Check side-pane extension containering
      * Document hidden preferences
  [ ] Add a not-required, but recommended dependency on PT fonts
      (PT Sans Caption and PT Mono) used by default for video player's

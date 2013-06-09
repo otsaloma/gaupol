@@ -21,6 +21,7 @@
 import aeidon
 import gaupol
 import os
+import sys
 _ = aeidon.i18n._
 
 from gi.repository import Gdk
@@ -114,8 +115,14 @@ class SidePane(aeidon.Observable):
                                padding=0)
 
         close_button = Gtk.Button()
-        image = Gtk.Image(icon_name="window-close-symbolic",
-                          icon_size=Gtk.IconSize.MENU)
+        theme = Gtk.IconTheme.get_default()
+        if theme.has_icon("window-close-symbolic"):
+            image = Gtk.Image(icon_name="window-close-symbolic",
+                              icon_size=Gtk.IconSize.MENU)
+
+        else:
+            image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE,
+                                             Gtk.IconSize.MENU)
 
         close_button.add(image)
         close_button.set_relief(Gtk.ReliefStyle.NONE)
