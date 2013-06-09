@@ -140,9 +140,10 @@ class VideoAgent(aeidon.Delegate):
             self._init_player_widgets()
             self._init_cache_updates()
             self._update_subtitle_cache()
-        if self.player.is_playing():
-            action = self.get_action("play_pause")
-            action.activate()
+        else: # Player exists
+            if self.player.is_playing():
+                action = self.get_action("play_pause")
+                action.activate()
             adjustment = self.seekbar.props.adjustment
             adjustment.set_value(0)
             self.player.stop()
