@@ -229,11 +229,11 @@ class VideoAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_seek_backward_activate(self, *args):
         """Seek backward."""
-        position = self.player.get_position(aeidon.modes.SECONDS)
-        if position is None: return
-        position = position - gaupol.conf.video_player.seek_length
-        position = max(position, 0)
-        self.player.seek(position)
+        pos = self.player.get_position(aeidon.modes.SECONDS)
+        if pos is None: return
+        pos = pos - gaupol.conf.video_player.seek_length
+        pos = max(pos, 0)
+        self.player.seek(pos)
 
     @aeidon.deco.export
     def _on_seek_forward_activate(self, *args):
@@ -249,8 +249,8 @@ class VideoAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_seek_next_activate(self, *args):
         """Seek to the start of the next subtitle."""
-        position = self.player.get_position(aeidon.modes.SECONDS)
-        subtitles = list(filter(lambda x: x[0] > position + 0.001,
+        pos = self.player.get_position(aeidon.modes.SECONDS)
+        subtitles = list(filter(lambda x: x[0] > pos + 0.001,
                                 self._cache))
 
         if not subtitles: return
@@ -259,12 +259,28 @@ class VideoAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_seek_previous_activate(self, *args):
         """Seek to the start of the previous subtitle."""
-        position = self.player.get_position(aeidon.modes.SECONDS)
-        subtitles = list(filter(lambda x: x[1] < position - 0.001,
+        pos = self.player.get_position(aeidon.modes.SECONDS)
+        subtitles = list(filter(lambda x: x[1] < pos - 0.001,
                                 self._cache))
 
         if not subtitles: return
         self.player.seek(subtitles[-1][0])
+
+    @aeidon.deco.export
+    def _on_seek_selection_end_activate(self, *args):
+        """Seek to the end of selection."""
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        pos = page.project.subtitles[rows[-1]].end_seconds
+        self.player.seek(pos)
+
+    @aeidon.deco.export
+    def _on_seek_selection_start_activate(self, *args):
+        """Seek to the start of selection."""
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        pos = page.project.subtitles[rows[0]].start_seconds
+        self.player.seek(pos)
 
     def _on_seekbar_change_value(self, seekbar, scroll, value, data=None):
         """Seek to specified position in video."""

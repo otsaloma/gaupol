@@ -184,6 +184,11 @@
       <menuitem name="seek_forward" action="seek_forward"/>
       <placeholder name="4">
       </placeholder>
+      <separator/>
+      <menuitem name="seek_selection_start" action="seek_selection_start"/>
+      <menuitem name="seek_selection_end" action="seek_selection_end"/>
+      <placeholder name="5">
+      </placeholder>
     </menu>
     <menu name="audio" action="show_audio_menu">
       <menu name="audio_track" action="show_audio_track_menu">

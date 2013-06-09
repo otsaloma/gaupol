@@ -151,4 +151,40 @@ class SeekPreviousAction(gaupol.Action):
         aeidon.util.affirm(application.player is not None)
 
 
+class SeekSelectionEndAction(gaupol.Action):
+
+    """Seek the end of selection."""
+
+    def __init__(self):
+        """Initialize a :class:`SeekSelectionEnd` object."""
+        gaupol.Action.__init__(self, "seek_selection_end")
+        self.props.label = _("See_k Selection End")
+        self.props.tooltip = _("Seek the end of selection")
+        self.accelerator = "<Ctrl>Down"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(selected_rows)
+
+
+class SeekSelectionStartAction(gaupol.Action):
+
+    """Seek the start of selection."""
+
+    def __init__(self):
+        """Initialize a :class:`SeekSelectionStart` object."""
+        gaupol.Action.__init__(self, "seek_selection_start")
+        self.props.label = _("S_eek Selection Start")
+        self.props.tooltip = _("Seek the start of selection")
+        self.accelerator = "<Ctrl>Up"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(selected_rows)
+
+
 __all__ = tuple(x for x in dir() if x.endswith("Action"))
