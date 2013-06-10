@@ -399,7 +399,7 @@ class VideoPlayer(aeidon.Observable):
     def subtitle_text(self, text):
         """Set `text` to the subtitle overlay."""
         self.subtitle_text_raw = text
-        test = aeidon.RE_ANY_TAG.sub("", text)
+        text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_overlay.props.text = text
 
     @property
