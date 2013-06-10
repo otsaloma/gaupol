@@ -42,3 +42,16 @@ max_history = 10
 }}}
 
  * '''`max_history`''' defines the maximum amount of search history items to show in search dialog's pattern and replacement drop-down entries.
+
+ {{{
+[video_player]
+context_length = 1.0
+line_alignment = "center"
+seek_length = 30.0
+}}}
+
+ * '''`context_length`''' defines the amount (in seconds) before selection to start when playing video matching selection or before selection to seek to when seeking to start of selection. And likewise for end. This should usually be set to a minimum amount of time that provides sufficient amount of leading and trailing context.
+
+ * '''`line_alignment`''' defines the alignment of lines of a single subtitle relative to each other in the video player. Try "left", "right" or "center".
+
+ * '''`seek_length`''' defines the amount (in seconds) seeked by the "Seek Backward" and "Seek Forward" actions.
