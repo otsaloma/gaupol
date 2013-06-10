@@ -439,7 +439,8 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="ER"
 		alpha_3_code="ERI"
 		numeric_code="232"
-		name="Eritrea" />
+		name="Eritrea"
+		official_name="the State of Eritrea" />
 	<iso_3166_entry
 		alpha_2_code="EE"
 		alpha_3_code="EST"
@@ -1016,8 +1017,8 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="PS"
 		alpha_3_code="PSE"
 		numeric_code="275"
-		name="Palestinian Territory, Occupied"
-		official_name="Occupied Palestinian Territory" />
+		name="Palestine, State of"
+		official_name="the State of Palestine" />
 	<iso_3166_entry
 		alpha_2_code="PA"
 		alpha_3_code="PAN"
@@ -1028,7 +1029,8 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="PG"
 		alpha_3_code="PNG"
 		numeric_code="598"
-		name="Papua New Guinea" />
+		name="Papua New Guinea"
+		official_name="Independent State of Papua New Guinea" />
 	<iso_3166_entry
 		alpha_2_code="PY"
 		alpha_3_code="PRY"
