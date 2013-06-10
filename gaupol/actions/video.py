@@ -70,7 +70,7 @@ class PlaySelectionAction(gaupol.Action):
         gaupol.Action.__init__(self, "play_selection")
         self.props.label = _("Play _Selection")
         self.props.tooltip = _("Play the selected subtitles")
-        self.accelerator = "<Shift>P"
+        self.accelerator = "O"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

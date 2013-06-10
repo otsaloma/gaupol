@@ -71,7 +71,7 @@ class CorrectTextsAction(gaupol.Action):
         gaupol.Action.__init__(self, "correct_texts")
         self.props.label = _("C_orrect Texts…")
         self.props.tooltip = _("Find and correct errors in texts")
-        self.accelerator = "O"
+        self.accelerator = "F8"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

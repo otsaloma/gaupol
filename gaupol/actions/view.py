@@ -22,6 +22,8 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
+from gi.repository import Gtk
+
 
 class ActivateNextProjectAction(gaupol.Action):
 
@@ -371,13 +373,17 @@ class TogglePlayerAction(gaupol.ToggleAction):
 
     """Show or hide the video player."""
 
+    __gtype_name__ = "TogglePlayerAction"
+
     def __init__(self):
         """Initialize a :class:`TogglePlayerAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_player")
-        self.props.active = True
+        self.props.active = False
         self.props.label = _("_Video Player")
+        self.set_icon_name("video")
         self.props.tooltip = _("Show or hide the video player")
         self.action_group = "main-safe"
+        self.tool_item_type = Gtk.ToggleToolButton
 
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""

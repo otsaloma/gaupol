@@ -134,6 +134,7 @@ class ViewAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_toggle_player_toggled(self, *args):
         """Show or hide the video player."""
+        if self.player is None: return
         visible = self.player_box.props.visible
         self.player_box.props.visible = not visible
 

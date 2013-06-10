@@ -278,6 +278,7 @@
     <placeholder name="3">
     </placeholder>
     <separator/>
+    <toolitem name="player" action="toggle_player"/>
     <toolitem name="preview" action="preview"/>
     <placeholder name="4">
     </placeholder>

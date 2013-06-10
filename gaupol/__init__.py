@@ -48,11 +48,20 @@ GTK+ user interface for the Gaupol subtitle editor.
 __version__ = "0.22"
 COMBO_SEPARATOR = "<separator/>"
 
+import aeidon
+import os
+
 try:
     import gi
     gi.require_version("Gst", "1.0")
 except Exception:
     pass
+
+from gi.repository import Gtk
+
+icon_theme = Gtk.IconTheme.get_default()
+path = os.path.join(aeidon.DATA_DIR, "icons")
+icon_theme.append_search_path(os.path.abspath(path))
 
 from gi.repository import GLib
 from gi.repository import GObject

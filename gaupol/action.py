@@ -82,6 +82,8 @@ class Action(Gtk.Action):
             return Gtk.ToolButton()
         if self.tool_item_type is Gtk.MenuToolButton:
             return Gtk.MenuToolButton()
+        if self.tool_item_type is Gtk.ToggleToolButton:
+            return Gtk.ToggleToolButton()
         raise ValueError("Bad value for self.tool_item_type: {}"
                          .format(repr(self.tool_item_type)))
 
