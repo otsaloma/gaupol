@@ -3,7 +3,6 @@ Gaupol 0.23
 
  [X] Add a built-in GStreamer-based video player
      - Test icon installation
- [ ] Do something about the statusbar?
  [X] Add a not-required, but recommended dependency on PT fonts
      (PT Sans Caption and PT Mono) used by default for video player's
      subtitle and timecode overlays
@@ -12,6 +11,9 @@ Gaupol 0.23
 Gaupol 1.0
 ==========
 
+ * Get rid of the statusbar?
+   - Use a non-focusable, buttonless infobar
+   - Or a floating label (see nautilus, epiphany)
  * Add a GStreamer-based audio waveform display
    - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
    - https://github.com/Pecisk/libwaveform
