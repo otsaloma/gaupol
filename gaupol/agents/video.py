@@ -146,8 +146,6 @@ class VideoAgent(aeidon.Delegate):
         path = dialog.get_filename()
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
-        action = self.get_action("toggle_player")
-        action.set_active(True)
         page.project.video_path = path
         if self.player is None:
             self._init_player_widgets()
@@ -162,6 +160,8 @@ class VideoAgent(aeidon.Delegate):
             adjustment.set_value(0)
             self.player.stop()
         self.player.set_path(path)
+        action = self.get_action("toggle_player")
+        action.set_active(True)
         self.update_gui()
         self.player.play()
 

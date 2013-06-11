@@ -71,6 +71,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar extension_manager: Instance of :class:`gaupol.ExtensionManager` used
     :ivar framerate_combo: A :class:`Gtk.ComboBox` used to select framerate
     :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
+    :ivar notebook_separator: A :class:`Gtk.Separator` above the notebook
     :ivar output_window: A :class:`Gtk.Window` for external process output
     :ivar pages: List of :class:`gaupol.Page` currently open
     :ivar paned: A :class:`Gtk.Paned` to hold player and subtitles
@@ -126,6 +127,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.extension_manager = gaupol.ExtensionManager(self)
         self.framerate_combo = None
         self.notebook = None
+        self.notebook_separator = None
         self.output_window = None
         self.pages = []
         self.pattern = ""
@@ -272,7 +274,20 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         aeidon.util.connect(self, "notebook", "page-reordered")
         callback = self._on_notebook_switch_page
         self.notebook.connect_after("switch-page", callback)
-        paned.add2(self.notebook)
+        orientation = Gtk.Orientation.HORIZONTAL
+        self.notebook_separator = Gtk.Separator(orientation=orientation)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        vbox.pack_start(self.notebook_separator,
+                        expand=False,
+                        fill=False,
+                        padding=0)
+
+        vbox.pack_start(self.notebook,
+                        expand=True,
+                        fill=True,
+                        padding=0)
+
+        paned.add2(vbox)
 
     def _init_output_window(self):
         """Initialize the output window."""
@@ -376,6 +391,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         toolbar.props.visible = conf.show_main_toolbar
         self.video_toolbar.props.visible = conf.show_video_toolbar
         self.statusbar.props.visible = conf.show_statusbar
+        self.notebook_separator.props.visible = False
 
     def _init_video_button(self):
         """Intialize the video button on the video toolbar."""
