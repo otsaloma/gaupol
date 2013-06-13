@@ -125,6 +125,7 @@ data/gaupol.desktop.in
 gaupol/__init__.py
 gaupol/action.py
 gaupol/actions/__init__.py
+gaupol/actions/audio.py
 gaupol/actions/edit.py
 gaupol/actions/file.py
 gaupol/actions/format.py
@@ -133,6 +134,7 @@ gaupol/actions/menu.py
 gaupol/actions/position.py
 gaupol/actions/search.py
 gaupol/actions/text.py
+gaupol/actions/video.py
 gaupol/actions/view.py
 gaupol/agents/__init__.py
 gaupol/agents/close.py
@@ -148,6 +150,7 @@ gaupol/agents/search.py
 gaupol/agents/text.py
 gaupol/agents/update.py
 gaupol/agents/util.py
+gaupol/agents/video.py
 gaupol/agents/view.py
 gaupol/application.py
 gaupol/assistants.py
