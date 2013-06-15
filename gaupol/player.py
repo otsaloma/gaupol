@@ -213,7 +213,8 @@ class VideoPlayer(aeidon.Observable):
        self._text_overlay.props.shaded_background = conf.subtitle_background
        alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
        color = conf.subtitle_color.replace("#", "")
-       self._text_overlay.props.color = eval("0x{}{}".format(alpha, color))
+       color = int(float.fromhex("".join((alpha, color))))
+       self._text_overlay.props.color = color
 
     def _on_conf_notify_time_property(self, *args):
        """Update time overlay properties."""
@@ -224,7 +225,8 @@ class VideoPlayer(aeidon.Observable):
        self._time_overlay.props.shaded_background = conf.time_background
        alpha = "{:02x}".format(int(conf.time_alpha * 255))
        color = conf.time_color.replace("#", "")
-       self._time_overlay.props.color = eval("0x{}{}".format(alpha, color))
+       color = int(float.fromhex("".join((alpha, color))))
+       self._time_overlay.props.color = color
 
     @property
     def audio_track(self):
