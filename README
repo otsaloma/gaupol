@@ -17,7 +17,7 @@ Gaupol is free software released under the GNU General Public License
 Dependencies
 ============
 
-Gaupol requires Python [1] 3.2 or greater and PyGObject [2] 3.0.0 or
+Gaupol requires Python [1] 3.2 or greater and PyGObject [2] 3.6.0 or
 greater. Optional dependencies include: GStreamer [3] 1.0 or greater --
 required for the integrated video player; pocketsphinx [4] -- required
 for speech recognition; PyEnchant [5] 1.4.0 or greater -- required for
