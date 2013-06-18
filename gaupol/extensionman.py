@@ -236,7 +236,8 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
                    .format(repr(module)))
 
             for user in self._dependants[module]:
-                self.teardown_extension(user)
+                self.teardown_extension(user, force=force)
+        if not module in self._active: return
         extension = self._active[module]
         extension.teardown(self.application)
         del self._active[module]
@@ -255,7 +256,7 @@ class ExtensionManager(object, metaclass=aeidon.Contractual):
     def teardown_extensions(self):
         """Teardown all active extensions."""
         for module in list(self._active.keys()):
-            self.teardown_extension(module, True)
+            self.teardown_extension(module, force=True)
 
     def update_extensions(self, page):
         """Call ``update`` on all active extensions."""
