@@ -1,15 +1,15 @@
 # Spanish translation of gaupol.
-# Copyright (C) 2005-2012 Osmo Salomaa.
+# Copyright (C) 2005-2013 Osmo Salomaa.
 # This file is distributed under the same license as the gaupol package.
 # Miguel Latorre <kuan@graffiti.net>, 2006.
-# Carlos Mella <cmellib@gmail.com>, 2010-2012.
+# Carlos Mella <cmellib@gmail.com>, 2010-2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.20\n"
+"Project-Id-Version: gaupol 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-13 22:03+0300\n"
-"PO-Revision-Date: 2012-10-13 14:25-0300\n"
+"PO-Revision-Date: 2013-06-19 19:38-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -407,15 +407,15 @@ msgstr "Tipografía"
 
 #: ../data/ui/preferences-dialog.ui.h:10
 msgid "Use _default theme font"
-msgstr "Utilizar la _tipografía por omisión del sistema"
+msgstr "Utilizar el _tipo de letra predeterminado del sistema"
 
 #: ../data/ui/preferences-dialog.ui.h:11
 msgid "_Editor font:"
-msgstr "Tipografía del e_ditor:"
+msgstr "Tipo de letra del e_ditor:"
 
 #: ../data/ui/preferences-dialog.ui.h:12
 msgid "Pick the Editor Font"
-msgstr "Seleccionar la tipografía del editor"
+msgstr "Seleccionar el tipo de letra del editor"
 
 #: ../data/ui/preferences-dialog.ui.h:13
 msgid "Line Lengths"
@@ -423,15 +423,15 @@ msgstr "Largo de líneas"
 
 #: ../data/ui/preferences-dialog.ui.h:14
 msgid "_Show line lengths in list cells"
-msgstr "Mostrar _largo de líneas en celdas"
+msgstr "_Mostrar el largo de las líneas en las celdas"
 
 #: ../data/ui/preferences-dialog.ui.h:15
 msgid "S_how line lengths in editable text fields"
-msgstr "Mostrar largo de líneas en campos de texto mientras se _escribe"
+msgstr "Mo_strar el largo de las líneas en los campos de texto mientras se escribe"
 
 #: ../data/ui/preferences-dialog.ui.h:16
 msgid "_Length unit:"
-msgstr "Unidad de _medida:"
+msgstr "_Unidad de medida:"
 
 #: ../data/ui/preferences-dialog.ui.h:17
 msgid "Spell-Check"
@@ -447,51 +447,51 @@ msgstr "Editor"
 
 #: ../data/ui/preferences-dialog.ui.h:20
 msgid "Subtitle"
-msgstr ""
+msgstr "Subtítulos"
 
 #: ../data/ui/preferences-dialog.ui.h:21
 msgid "_Font:"
-msgstr ""
+msgstr "_Tipo de letra:"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "Pick the Subtitle Font"
-msgstr ""
+msgstr "Seleccionar el tipo de letra de los subtítulos"
 
 #: ../data/ui/preferences-dialog.ui.h:23
 msgid "C_olor:"
-msgstr ""
+msgstr "C_olor:"
 
 #: ../data/ui/preferences-dialog.ui.h:24
 msgid "Pick the Subtitle Color"
-msgstr ""
+msgstr "Seleccionar el color de los subtítulos"
 
 #: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Use a background behind text"
-msgstr ""
+msgstr "_Mostrar un fondo tras el texto"
 
 #: ../data/ui/preferences-dialog.ui.h:26
 msgid "Time"
-msgstr ""
+msgstr "Tiempos"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Colo_r:"
-msgstr ""
+msgstr "Colo_r:"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "Pick the Time Color"
-msgstr ""
+msgstr "Seleccionar el color de los tiempos"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 msgid "Us_e a background behind text"
-msgstr ""
+msgstr "Mo_strar un fondo tras el texto"
 
 #: ../data/ui/preferences-dialog.ui.h:30
 msgid "Fo_nt:"
-msgstr ""
+msgstr "Tipo _de letra:"
 
 #: ../data/ui/preferences-dialog.ui.h:31
 msgid "Pick the Time Font"
-msgstr ""
+msgstr "Seleccionar el tipo de letra de los tiempos"
 
 #: ../data/ui/preferences-dialog.ui.h:32 ../gaupol/actions/file.py:349
 msgid "Video"
@@ -886,7 +886,7 @@ msgstr "Frecuencias de fotogramas personalizadas"
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:2
 msgid "Allow use of non-standard framerates"
 msgstr ""
-"Permite el uso de frecuencias de fotogramas (framerates) poco frecuentes"
+"Permite el uso de frecuencias de fotogramas («framerates») poco frecuentes"
 
 #: ../data/extensions/side-pane/side-pane.extension.in.h:1
 msgid "Side Pane"
@@ -1606,7 +1606,8 @@ msgstr "Buscar:"
 #: ../data/extensions/custom-framerates/custom-framerates.py:159
 msgid "Calculate nonnative units with a framerate of {:.3f} fps"
 msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de {:.3f} fps"
+"Calcula unidades no nativas con una frecuencia de {:.3f} fotogramas por "
+"segundo"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:174
 msgid "{:.3f} fps"
@@ -1638,23 +1639,23 @@ msgstr "Editor de subtítulos Gaupol"
 
 #: ../gaupol/actions/audio.py:33
 msgid "_Language"
-msgstr ""
+msgstr "_Idioma"
 
 #: ../gaupol/actions/audio.py:50
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Bajar volumen"
 
 #: ../gaupol/actions/audio.py:51
 msgid "Decrease volume"
-msgstr ""
+msgstr "Disminuye el volumen"
 
 #: ../gaupol/actions/audio.py:67
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Subir volumen"
 
 #: ../gaupol/actions/audio.py:68
 msgid "Increase volume"
-msgstr ""
+msgstr "Aumenta el volumen"
 
 #: ../gaupol/actions/edit.py:37
 msgid "Clear the selected texts"
@@ -1686,7 +1687,7 @@ msgstr "Configura Gaupol"
 
 #: ../gaupol/actions/edit.py:114
 msgid "Edit _Next Cell"
-msgstr "Editar _siguiente celda"
+msgstr "Edi_tar la siguiente celda"
 
 #: ../gaupol/actions/edit.py:115
 msgid "Next"
@@ -1710,19 +1711,19 @@ msgstr "Edita la celda seleccionada"
 
 #: ../gaupol/actions/edit.py:166
 msgid "E_nd Earlier"
-msgstr ""
+msgstr "_Desaparecer antes"
 
 #: ../gaupol/actions/edit.py:167
 msgid "End the selected subtitle earlier"
-msgstr ""
+msgstr "Adelanta la desaparición del subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:185
 msgid "En_d Later"
-msgstr ""
+msgstr "D_esaparecer después"
 
 #: ../gaupol/actions/edit.py:186
 msgid "End the selected subtitle later"
-msgstr ""
+msgstr "Retrasa la desaparición del subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:204
 msgid "Extend To _Beginning"
@@ -1742,15 +1743,15 @@ msgstr "Extiende la selección actual hasta el último subtítulo"
 
 #: ../gaupol/actions/edit.py:246
 msgid "Inser_t Subtitle At Video Position"
-msgstr ""
+msgstr "Insertar subtítulo en la posición del _vídeo"
 
 #: ../gaupol/actions/edit.py:247
 msgid "Insert At Video"
-msgstr ""
+msgstr "Insertar a partir de vídeo"
 
 #: ../gaupol/actions/edit.py:249
 msgid "Insert a new subtitle at video position"
-msgstr ""
+msgstr "Inserta un subtítulo nuevo dada la posición actual del vídeo"
 
 #: ../gaupol/actions/edit.py:266
 msgid "_Insert Subtitles…"
@@ -1766,7 +1767,7 @@ msgstr "Inserta subtítulos nuevos"
 
 #: ../gaupol/actions/edit.py:287
 msgid "_Invert Selection"
-msgstr "_Invertir selección"
+msgstr "I_nvertir selección"
 
 #: ../gaupol/actions/edit.py:288
 msgid "Invert the current selection"
@@ -1774,7 +1775,7 @@ msgstr "Invierte la selección actual"
 
 #: ../gaupol/actions/edit.py:305
 msgid "_Merge Subtitles"
-msgstr "_Combinar subtítulos"
+msgstr "Co_mbinar subtítulos"
 
 #: ../gaupol/actions/edit.py:306
 msgid "Merge the selected subtitles"
@@ -1818,15 +1819,15 @@ msgstr "Selecciona todos los subtítulos"
 
 #: ../gaupol/actions/edit.py:409
 msgid "Sele_ction"
-msgstr "_Selección"
+msgstr "Sele_cción"
 
 #: ../gaupol/actions/edit.py:425
 msgid "Stretc_h Subtitle"
-msgstr ""
+msgstr "_Ajustar subtítulo"
 
 #: ../gaupol/actions/edit.py:442
 msgid "_Split Subtitle"
-msgstr "D_ividir subtítulo"
+msgstr "Dividir _subtítulo"
 
 #: ../gaupol/actions/edit.py:443
 msgid "Split the selected subtitle"
@@ -1834,19 +1835,19 @@ msgstr "Divide el subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:460
 msgid "_Start Earlier"
-msgstr ""
+msgstr "_Aparecer antes"
 
 #: ../gaupol/actions/edit.py:461
 msgid "Start the selected subtitle earlier"
-msgstr ""
+msgstr "Adelanta la aparición del subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:479
 msgid "S_tart Later"
-msgstr ""
+msgstr "Apa_recer después"
 
 #: ../gaupol/actions/edit.py:480
 msgid "Start the selected subtitle later"
-msgstr ""
+msgstr "Retrasa la aparición del subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:501
 msgid "_Undo"
@@ -2089,7 +2090,7 @@ msgstr "Muestra información acerca de Gaupol"
 
 #: ../gaupol/actions/menu.py:33
 msgid "_Audio"
-msgstr ""
+msgstr "Audi_o"
 
 #: ../gaupol/actions/menu.py:55
 msgid "_File"
@@ -2113,7 +2114,7 @@ msgstr "_Herramientas"
 
 #: ../gaupol/actions/menu.py:110
 msgid "Vi_deo"
-msgstr ""
+msgstr "Vi_deo"
 
 #: ../gaupol/actions/menu.py:121
 msgid "_View"
@@ -2134,7 +2135,7 @@ msgstr "Cambiar _frecuencia de fotogramas…"
 #: ../gaupol/actions/position.py:52
 msgid "Change positions for a different framerate"
 msgstr ""
-"Ajusta posiciones para una frecuencia de fotogramas (framerate) diferente"
+"Ajusta posiciones dada una frecuencia de fotogramas («framerate») diferente"
 
 #: ../gaupol/actions/position.py:70
 msgid "Preview from selected position with a video player"
@@ -2146,7 +2147,7 @@ msgstr "_Desplazar posiciones…"
 
 #: ../gaupol/actions/position.py:92
 msgid "Make subtitles appear earlier or later"
-msgstr "Adelanta o retrasa la aparición de subtítulos"
+msgstr "Adelanta o retrasa subtítulos"
 
 #: ../gaupol/actions/position.py:108
 msgid "Sp_eech Recognition…"
@@ -2163,7 +2164,7 @@ msgstr "Ajustar po_siciones…"
 #: ../gaupol/actions/position.py:128
 msgid "Change positions by linear two-point correction"
 msgstr ""
-"Ajusta la aparición de subtítulos mediante una aproximación lineal entre dos "
+"Ajusta la posición de subtítulos mediante una aproximación lineal entre dos "
 "puntos"
 
 #: ../gaupol/actions/search.py:35
@@ -2216,75 +2217,75 @@ msgstr "Busca y corrige problemas en los subtítulos"
 
 #: ../gaupol/actions/video.py:35
 msgid "_Load Video…"
-msgstr ""
+msgstr "Abrir _vídeo…"
 
 #: ../gaupol/actions/video.py:36
 msgid "Load a video file"
-msgstr ""
+msgstr "Abre un archivo de vídeo"
 
 #: ../gaupol/actions/video.py:53
 msgid "_Play/Pause"
-msgstr ""
+msgstr "_Reproducir o pausar"
 
 #: ../gaupol/actions/video.py:55
 msgid "Play or pause video"
-msgstr ""
+msgstr "Reproduce o pausa el vídeo"
 
 #: ../gaupol/actions/video.py:71
 msgid "Play _Selection"
-msgstr ""
+msgstr "Reproducir sele_cción"
 
 #: ../gaupol/actions/video.py:72
 msgid "Play the selected subtitles"
-msgstr ""
+msgstr "Reproduce los subtítulos seleccionados"
 
 #: ../gaupol/actions/video.py:89
 msgid "Seek _Backward"
-msgstr ""
+msgstr "Saltar hacia a_trás"
 
 #: ../gaupol/actions/video.py:91
 msgid "Seek backward"
-msgstr ""
+msgstr "Salta hacia atrás"
 
 #: ../gaupol/actions/video.py:107
 msgid "Seek _Forward"
-msgstr ""
+msgstr "Saltar hacia a_delante"
 
 #: ../gaupol/actions/video.py:109
 msgid "Seek forward"
-msgstr ""
+msgstr "Salta hacia adelante"
 
 #: ../gaupol/actions/video.py:125
 msgid "Seek _Next"
-msgstr ""
+msgstr "Saltar al _siguiente"
 
 #: ../gaupol/actions/video.py:127
 msgid "Seek to the start of the next subtitle"
-msgstr ""
+msgstr "Salta al inicio del subtítulo siguiente"
 
 #: ../gaupol/actions/video.py:143
 msgid "Seek _Previous"
-msgstr ""
+msgstr "Saltar al _anterior"
 
 #: ../gaupol/actions/video.py:145
 msgid "Seek to the start of the previous subtitle"
-msgstr ""
+msgstr "Salta al inicio del subtítulo anterior"
 
 #: ../gaupol/actions/video.py:161
 msgid "See_k Selection End"
-msgstr ""
+msgstr "Saltar al _fin de la selección"
 
 #: ../gaupol/actions/video.py:162
 msgid "Seek the end of selection"
-msgstr ""
+msgstr "Salta al último subtítulo seleccionado"
 
 #: ../gaupol/actions/video.py:179
 msgid "S_eek Selection Start"
-msgstr ""
+msgstr "Saltar al _inicio de la selección"
 
 #: ../gaupol/actions/video.py:180
 msgid "Seek the start of selection"
-msgstr ""
+msgstr "Salta al primer subtítulo seleccionado"
 
 #: ../gaupol/actions/view.py:36
 msgid "Activate the project in the next tab"
@@ -2321,7 +2322,8 @@ msgstr "2_3,976 fps"
 #: ../gaupol/actions/view.py:124
 msgid "Calculate nonnative units with a framerate of 23.976 fps"
 msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de 23,976 fps"
+"Calcula unidades no nativas con una frecuencia de 23,976 fotogramas por "
+"segundo"
 
 #: ../gaupol/actions/view.py:147
 msgid "2_4.000 fps"
@@ -2330,7 +2332,8 @@ msgstr "2_4,000 fps"
 #: ../gaupol/actions/view.py:148
 msgid "Calculate nonnative units with a framerate of 24.000 fps"
 msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de 24,000 fps"
+"Calcula unidades no nativas con una frecuencia de 24,000 fotogramas por "
+"segundo"
 
 #: ../gaupol/actions/view.py:171
 msgid "2_5.000 fps"
@@ -2339,7 +2342,8 @@ msgstr "2_5,000 fps"
 #: ../gaupol/actions/view.py:172
 msgid "Calculate nonnative units with a framerate of 25.000 fps"
 msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de 25,000 fps"
+"Calcula unidades no nativas con una frecuencia de 25,000 fotogramas por "
+"segundo"
 
 #: ../gaupol/actions/view.py:195
 msgid "2_9.970 fps"
@@ -2348,7 +2352,8 @@ msgstr "2_9,970 fps"
 #: ../gaupol/actions/view.py:196
 msgid "Calculate nonnative units with a framerate of 29.970 fps"
 msgstr ""
-"Calcula unidades no nativas con una frecuencia de fotogramas de 29,970 fps"
+"Calcula unidades no nativas con una frecuencia de 29,970 fotogramas por "
+"segundo"
 
 #: ../gaupol/actions/view.py:217
 msgid "F_ramerate"
@@ -2360,11 +2365,11 @@ msgstr "_Fotogramas"
 
 #: ../gaupol/actions/view.py:237
 msgid "Show positions as frames"
-msgstr "Usa fotogramas (frames) para posicionar subtítulos"
+msgstr "Usa fotogramas («frames») para posicionar subtítulos"
 
 #: ../gaupol/actions/view.py:256
 msgid "_Layout"
-msgstr ""
+msgstr "Disp_osición"
 
 #: ../gaupol/actions/view.py:273
 msgid "_Times"
@@ -2416,11 +2421,11 @@ msgstr "Muestra u oculta la columna número del subtítulo"
 
 #: ../gaupol/actions/view.py:382
 msgid "_Video Player"
-msgstr ""
+msgstr "Ví_deo"
 
 #: ../gaupol/actions/view.py:384
 msgid "Show or hide the video player"
-msgstr ""
+msgstr "Muestra u oculta el vídeo integrado"
 
 #: ../gaupol/actions/view.py:401
 msgid "_Output Window"
@@ -2456,7 +2461,7 @@ msgstr "Muestra u oculta la columna traducción"
 
 #: ../gaupol/actions/view.py:465
 msgid "Vi_deo Toolbar"
-msgstr ""
+msgstr "Barra de _vídeo"
 
 #: ../gaupol/actions/view.py:466
 msgid "Show or hide the video toolbar"
@@ -2464,19 +2469,19 @@ msgstr "Muestra u oculta la barra de vídeo"
 
 #: ../gaupol/actions/view.py:479
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Horizontal"
 
 #: ../gaupol/actions/view.py:480
 msgid "Split window horizontally"
-msgstr ""
+msgstr "Divide la ventana horizontalmente"
 
 #: ../gaupol/actions/view.py:500
 msgid "_Vertical"
-msgstr ""
+msgstr "_Vertical"
 
 #: ../gaupol/actions/view.py:501
 msgid "Split window vertically"
-msgstr ""
+msgstr "Divide la ventana verticalmente"
 
 #: ../gaupol/agents/close.py:53
 msgid "Save changes to main document \"{}\" before closing?"
@@ -2489,7 +2494,7 @@ msgstr ""
 
 #: ../gaupol/agents/edit.py:127 ../gaupol/agents/edit.py:145
 msgid "Stretching end position"
-msgstr ""
+msgstr "Ajustar desaparición"
 
 #: ../gaupol/agents/edit.py:226
 msgid "Inserted {:d} subtitle to fit clipboard contents"
@@ -2503,7 +2508,7 @@ msgstr[1] ""
 
 #: ../gaupol/agents/edit.py:293 ../gaupol/agents/edit.py:311
 msgid "Stretching start position"
-msgstr ""
+msgstr "Ajustar aparición"
 
 #: ../gaupol/agents/edit.py:368
 msgid "Use Shift+Return for line-break"
@@ -2511,7 +2516,7 @@ msgstr "Use Mayús+Intro para insertar un salto de línea"
 
 #: ../gaupol/agents/menu.py:52
 msgid "Select \"{}\""
-msgstr ""
+msgstr "Selecciona «{}»"
 
 #: ../gaupol/agents/menu.py:74
 msgid "Activate \"{}\""
@@ -2523,7 +2528,7 @@ msgstr "Rehace «{}»"
 
 #: ../gaupol/agents/menu.py:153
 msgid "Undefined"
-msgstr ""
+msgstr "Indeterminado"
 
 #: ../gaupol/agents/menu.py:205 ../gaupol/agents/update.py:165
 msgid "Undo \"{}\""
@@ -2685,15 +2690,15 @@ msgstr "Documento de traducción guardado como «{}»"
 
 #: ../gaupol/agents/video.py:98
 msgid "Volume"
-msgstr ""
+msgstr "Volumen"
 
 #: ../gaupol/agents/video.py:136
 msgid "Load Video"
-msgstr ""
+msgstr "Abrir vídeo"
 
 #: ../gaupol/agents/video.py:137
 msgid "_Load"
-msgstr ""
+msgstr "_Abrir"
 
 #: ../gaupol/application.py:207
 msgid "Framerate:"
