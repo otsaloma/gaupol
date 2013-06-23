@@ -59,8 +59,8 @@ video player's subtitle and timecode overlays.
   [2] http://live.gnome.org/PyGObject/
   [3] http://gstreamer.freedesktop.org/
   [4] http://cmusphinx.sourceforge.net/
-  [5] http://packages.python.org/pyenchant/
-  [6] http://koehlma.github.com/projects/pygtkspellcheck.html
+  [5] http://pythonhosted.org/pyenchant/
+  [6] http://koehlma.github.io/projects/pygtkspellcheck.html
   [7] http://pkg-isocodes.alioth.debian.org/
   [8] http://pypi.python.org/pypi/chardet
   [9] http://www.mplayerhq.hu/
