@@ -61,7 +61,7 @@ class TestUtilityAgent(gaupol.TestCase):
         self.application.get_menu_item("toggle_number_column")
 
     def test_get_mode_action(self):
-        for mode in aeidon.modes:
+        for mode in (aeidon.modes.TIME, aeidon.modes.FRAME):
             self.application.get_mode_action(mode)
 
     def test_get_target_pages(self):

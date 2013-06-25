@@ -38,7 +38,7 @@ class TestModule(gaupol.TestCase):
             assert action is not None
 
     def test_mode_actions(self):
-        for mode in aeidon.modes:
+        for mode in (aeidon.modes.TIME, aeidon.modes.FRAME):
             name = gaupol.mode_actions[mode]
             action = self.application.get_action(name)
             assert action is not None

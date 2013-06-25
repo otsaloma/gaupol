@@ -13,6 +13,7 @@ Gaupol 0.23
 Gaupol 1.0
 ==========
 
+ * Why are the unit tests insanely slow?
  * Get rid of the statusbar?
    - Use a non-focusable, buttonless infobar
    - Or a floating label (see nautilus, epiphany)
