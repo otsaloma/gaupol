@@ -1,3 +1,15 @@
+Gaupol 0.23
+===========
+
+ * Add a built-in GStreamer-based video player
+ * Add a not-required, but recommended dependency on PT fonts
+   (PT Sans Caption and PT Mono) used by default for video player's
+   subtitle and timecode overlays
+   - http://www.paratype.com/public/
+ * Bump PyGObject dependency to version 3.6.0 or later
+ * Fix KeyError tearing down extension on quit (#702518)
+ * Update Spanish translation (Carlos Mella)
+
 Gaupol 0.22
 ===========
 
