@@ -78,6 +78,10 @@ class TestUpdateAgent(gaupol.TestCase):
         self.application.push_message("")
         self.application.push_message(None)
 
+    def test_show_message(self):
+        self.application.show_message("")
+        self.application.show_message(None)
+
     def test_update_gui(self):
         self.application.update_gui()
         self.application.close_all()

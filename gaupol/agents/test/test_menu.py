@@ -23,7 +23,6 @@ class TestMenuAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.delegate = self.application.set_menu_notify_events.__self__
 
     def test__on_redo_button_show_menu(self):
         page = self.application.get_current_page()
@@ -46,9 +45,3 @@ class TestMenuAgent(gaupol.TestCase):
         item = self.application.get_tool_item("undo_action")
         item.emit("show-menu")
         item.get_menu().get_children()[0].activate()
-
-    def test_set_menu_notify_events(self):
-        self.application.set_menu_notify_events("main-safe")
-        self.application.set_menu_notify_events("main-unsafe")
-        self.application.set_menu_notify_events("audio-tracks")
-        self.application.set_menu_notify_events("projects")

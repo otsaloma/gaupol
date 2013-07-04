@@ -421,19 +421,6 @@ class ToggleStartColumnAction(gaupol.ToggleAction):
         aeidon.util.affirm(page is not None)
 
 
-class ToggleStatusbarAction(gaupol.ToggleAction):
-
-    """Show or hide the statusbar."""
-
-    def __init__(self):
-        """Initialize a :class:`ToggleStatusbarAction` object."""
-        gaupol.ToggleAction.__init__(self, "toggle_statusbar")
-        self.props.active = gaupol.conf.application_window.show_statusbar
-        self.props.label = _("_Statusbar")
-        self.props.tooltip = _("Show or hide the statusbar")
-        self.action_group = "main-safe"
-
-
 class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
 
     """Show or hide the translation text column."""

@@ -52,6 +52,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     :ivar _match_page: :class:`gaupol.Page` instance of the last match
     :ivar _match_row: Row in :attr:`_match_page` of the last match
     :ivar _match_span: Start, end position of the last match
+    :ivar _statuslabel: Instance of :class:`gaupol.FloatingLabel` used
     :ivar _was_next: ``True`` if the last search was "next", else ``False``
     :ivar patterns: List of patterns previously searched for
     :ivar replacements: List of replacements previously used
@@ -62,6 +63,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 "ignore_case_check",
                 "main_check",
                 "next_button",
+                "overlay",
                 "pattern_combo",
                 "previous_button",
                 "regex_check",
@@ -82,6 +84,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._match_span = None
         self._pattern_entry = self._pattern_combo.get_child()
         self._replacement_entry = self._replacement_combo.get_child()
+        self._statuslabel = gaupol.FloatingLabel()
         self._was_next = None
         self.application = application
         self.patterns = []
@@ -95,6 +98,9 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._init_values()
         self._init_signal_handlers()
         self._init_sensitivities()
+        self._overlay.add_overlay(self._statuslabel)
+        self._overlay.show_all()
+        self._statuslabel.set_text(None)
         self._dialog.set_transient_for(None)
         self._dialog.set_type_hint(Gdk.WindowTypeHint.NORMAL)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
@@ -372,7 +378,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._reset_properties()
         pattern = self._pattern_entry.get_text()
         message = _('"{}" not found').format(pattern)
-        self.application.flash_message(message)
+        self._statuslabel.flash_text(message)
 
     def _set_pattern(self, page):
         """
@@ -563,7 +569,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 self._show_regex_error_dialog_replacement(str(message))
                 break
         self._reset_properties()
-        self.application.flash_message(aeidon.i18n.ngettext(
+        self._statuslabel.flash_text(aeidon.i18n.ngettext(
                 "Found and replaced {:d} occurence",
                 "Found and replaced {:d} occurences",
                 count).format(count))

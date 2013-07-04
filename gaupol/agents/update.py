@@ -24,29 +24,17 @@ import os
 _ = aeidon.i18n._
 
 from gi.repository import Gdk
-from gi.repository import GObject
 
 
 class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
-    """
-    Updating the application GUI.
-
-    :ivar _message_id: A :class:`Gtk.Statusbar` message ID
-    :ivar _message_tag: A timeout from :func:`GObject.timeout_add`
-    """
-
-    def __init__(self, master):
-        """Initialize an :class:`UpdateAgent` object."""
-        aeidon.Delegate.__init__(self, master)
-        self._message_id = None
-        self._message_tag = None
+    """Updating the application GUI."""
 
     def _disable_widgets(self):
         """Make widgets insensitive and blank."""
         self.window.set_title("Gaupol")
         self.video_button.gaupol_label.set_text("")
-        self.push_message(None)
+        self.show_message(None)
 
     @aeidon.deco.export
     def _on_activate_next_project_activate(self, *args):
@@ -186,28 +174,23 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.video_button.set_tooltip_text(video)
 
     @aeidon.deco.export
-    def flash_message(self, message):
-        """Show `message` in statusbar for a short while."""
-        self.push_message(message)
-        self._message_tag = gaupol.util.delay_add(6000,
-                                                  self.push_message,
-                                                  None)
+    def flash_message(self, message, duration=6):
+        """Show `message` in statuslabel for `duration` seconds."""
+        self.statuslabel.flash_text(message, duration=duration)
 
     @aeidon.deco.export
     def push_message(self, message):
-        """
-        Show `message` in the statusbar until explicitly cleared.
+        """A compatibility alias for :meth:`show_message`."""
+        self.show_message(message)
 
-        Use ``None`` or a blank string as `message` to clear any possible
-        existing message in the statusbar.
+    @aeidon.deco.export
+    def show_message(self, message):
         """
-        if self._message_tag is not None:
-            GObject.source_remove(self._message_tag)
-        if self._message_id is not None:
-            self.statusbar.remove(0, self._message_id)
-        message = message or ""
-        self.statusbar.set_tooltip_text(message)
-        self._message_id = self.statusbar.push(0, message)
+        Show `message` in the statuslabel until explicitly cleared.
+
+        Use ``None`` as `message` to hide the status label.
+        """
+        self.statuslabel.set_text(message)
 
     @aeidon.deco.export
     def update_gui(self):

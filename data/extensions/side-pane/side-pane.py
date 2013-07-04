@@ -361,7 +361,6 @@ class SidePaneExtension(gaupol.Extension):
         callback = self._on_side_pane_close_button_clicked
         application.side_pane.connect("close-button-clicked", callback)
         application.uim.ensure_update()
-        application.set_menu_notify_events("side-pane")
         self.application = application
 
     def teardown(self, application):

@@ -33,7 +33,6 @@ config_defaults = {
         "maximized": False,
         "position": [0, 0],
         "show_main_toolbar": True,
-        "show_statusbar": True,
         "show_video_toolbar": False,
         "size": [700, 433],
         "toolbar_style": gaupol.toolbar_styles.DEFAULT,

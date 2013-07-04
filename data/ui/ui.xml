@@ -81,7 +81,6 @@
       <menuitem name="main_toolbar" action="toggle_main_toolbar"/>
       <menuitem name="player" action="toggle_player"/>
       <menuitem name="video_toolbar" action="toggle_video_toolbar"/>
-      <menuitem name="statusbar" action="toggle_statusbar"/>
       <menuitem name="output_window" action="toggle_output_window"/>
       <placeholder name="1">
       </placeholder>

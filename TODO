@@ -1,10 +1,14 @@
+Gaupol 0.24
+===========
+
+ [ ] Use a floating label for the statusbar
+     - Hide on input? key-press-event?
+ [ ] Show search dialog messages in a floating label
+     in the search dialog
+
 Gaupol 1.0
 ==========
 
- * Why are the unit tests insanely slow?
- * Get rid of the statusbar?
-   - Use a non-focusable, buttonless infobar
-   - Or a floating label (see nautilus, epiphany)
  * Add a GStreamer-based audio waveform display
    - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
    - https://github.com/Pecisk/libwaveform

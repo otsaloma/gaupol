@@ -1,3 +1,10 @@
+
+#gaupol-floating-label {
+  border-top-right-radius: 5px;
+  box-shadow: inset -1px 1px alpha(@theme_fg_color, 0.5);
+  padding: 2px 12px;
+}
+
 #gaupol-tab-close-button {
   -GtkButton-default-border: 0;
   -GtkButton-default-outside-border: 0;

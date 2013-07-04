@@ -127,14 +127,12 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         index = menu_item.gaupol_index
         for item in self._redo_menu_items[:index]:
             item.set_state(Gtk.StateType.PRELIGHT)
-        self.push_message(menu_item.gaupol_tooltip)
 
     def _on_redo_menu_item_leave_notify_event(self, menu_item, event):
         """Hide tooltip and unselect all actions above `menu_item`."""
         index = menu_item.gaupol_index
         for item in self._redo_menu_items[:index]:
             item.set_state(Gtk.StateType.NORMAL)
-        self.push_message(None)
 
     @aeidon.deco.export
     def _on_show_audio_track_menu_activate(self, *args):
@@ -156,7 +154,6 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         ui += '</placeholder></menu></menu></menubar></ui>'
         self._audio_tracks_id = self.uim.add_ui_from_string(ui)
         self.uim.ensure_update()
-        self.set_menu_notify_events("audio-tracks")
 
     @aeidon.deco.export
     def _on_show_projects_menu_activate(self, *args):
@@ -177,7 +174,6 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         ui += '</placeholder></menu></menubar></ui>'
         self._projects_id = self.uim.add_ui_from_string(ui)
         self.uim.ensure_update()
-        self.set_menu_notify_events("projects")
 
     @aeidon.deco.export
     def _on_tab_widget_button_press_event(self, button, event, page):
@@ -223,24 +219,9 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         index = menu_item.gaupol_index
         for item in self._undo_menu_items[:index]:
             item.set_state(Gtk.StateType.PRELIGHT)
-        self.push_message(menu_item.gaupol_tooltip)
 
     def _on_undo_menu_item_leave_notify_event(self, menu_item, event):
         """Hide tooltip and unselect all actions above `menu_item`."""
         index = menu_item.gaupol_index
         for item in self._undo_menu_items[:index]:
             item.set_state(Gtk.StateType.NORMAL)
-        self.push_message(None)
-
-    @aeidon.deco.export
-    def set_menu_notify_events(self, name):
-        """Set statusbar tooltips for menu items of action group."""
-        def on_enter(menu_item, event, self, action):
-            self.push_message(action.props.tooltip)
-        def on_leave(menu_item, event, self, action):
-            self.push_message(None)
-        action_group = self.get_action_group(name)
-        for action in action_group.list_actions():
-            for widget in action.get_proxies():
-                widget.connect("enter-notify-event", on_enter, self, action)
-                widget.connect("leave-notify-event", on_leave, self, action)

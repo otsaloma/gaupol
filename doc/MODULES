@@ -52,6 +52,7 @@ gaupol.ruler
 gaupol.meta
 gaupol.entries
 gaupol.renderers
+gaupol.floatlabel
 gaupol.output
 gaupol.view
 gaupol.page

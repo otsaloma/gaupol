@@ -516,8 +516,6 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.add_page(page)
         format = page.project.main_file.format
         self.add_to_recent_files(path, format, aeidon.documents.MAIN)
-        basename = page.get_main_basename()
-        self.flash_message(_('Opened main file "{}"').format(basename))
         gaupol.util.iterate_main()
         gaupol.util.set_cursor_normal(self.window)
 
@@ -541,6 +539,4 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             self.get_column_action(gaupol.fields.TRAN_TEXT).activate()
         format = page.project.tran_file.format
         self.add_to_recent_files(path, format, aeidon.documents.TRAN)
-        basename = page.get_translation_basename()
-        self.flash_message(_('Opened translation file "{}"').format(basename))
         gaupol.util.set_cursor_normal(self.window)

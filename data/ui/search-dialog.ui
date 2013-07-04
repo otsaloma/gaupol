@@ -85,20 +85,25 @@
                         <property name="row_spacing">6</property>
                         <property name="column_spacing">12</property>
                         <child>
-                          <object class="GtkScrolledWindow" id="scrolledwindow1">
+                          <object class="GtkOverlay" id="overlay">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
-                            <property name="shadow_type">in</property>
                             <child>
-                              <object class="GtkTextView" id="text_view">
+                              <object class="GtkScrolledWindow" id="scrolledwindow1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="left_margin">6</property>
-                                <property name="right_margin">6</property>
-                                <property name="accepts_tab">False</property>
-                                <signal name="focus-out-event" handler="_on_text_view_focus_out_event" swapped="no"/>
+                                <property name="hexpand">True</property>
+                                <property name="vexpand">True</property>
+                                <property name="shadow_type">in</property>
+                                <child>
+                                  <object class="GtkTextView" id="text_view">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="left_margin">6</property>
+                                    <property name="right_margin">6</property>
+                                    <property name="accepts_tab">False</property>
+                                    <signal name="focus-out-event" handler="_on_text_view_focus_out_event" swapped="no"/>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                           </object>

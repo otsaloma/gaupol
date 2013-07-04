@@ -146,13 +146,6 @@ class ViewAgent(aeidon.Delegate):
         self._toggle_column(gaupol.fields.START)
 
     @aeidon.deco.export
-    def _on_toggle_statusbar_toggled(self, *args):
-        """Show or hide the statusbar."""
-        visible = self.statusbar.props.visible
-        self.statusbar.props.visible = not visible
-        gaupol.conf.application_window.show_statusbar = not visible
-
-    @aeidon.deco.export
     def _on_toggle_translation_text_column_toggled(self, *args):
         """Show or hide the translation text column."""
         self._toggle_column(gaupol.fields.TRAN_TEXT)

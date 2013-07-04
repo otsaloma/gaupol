@@ -325,7 +325,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _on_view_renderer_edited(self, renderer, path, value, column):
         """Save changes made while editing cell."""
         self._set_unsafe_sensitivities(True)
-        self.push_message(None)
+        self.show_message(None)
         page = self.get_current_page()
         row = gaupol.util.tree_path_to_row(path)
         col = page.view.get_columns().index(column)
@@ -351,7 +351,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _on_view_renderer_editing_canceled(self, *args):
         """Unset state set for editing cell."""
         self._set_unsafe_sensitivities(True)
-        self.push_message(None)
+        self.show_message(None)
 
     @aeidon.deco.export
     def _on_view_renderer_editing_started(self,
@@ -365,7 +365,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page = self.get_current_page()
         col = page.view.get_columns().index(column)
         if not page.view.is_text_column(col): return
-        self.push_message(_("Use Shift+Return for line-break"))
+        self.show_message(_("Use Shift+Return for line-break"))
 
     def redo_require(self, count=1):
         page = self.get_current_page()

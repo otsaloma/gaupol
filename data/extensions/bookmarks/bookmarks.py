@@ -205,7 +205,6 @@ class BookmarksExtension(gaupol.Extension):
         ui_file_path = os.path.join(directory, "bookmarks.ui.xml")
         self._uim_id = self.application.uim.add_ui_from_file(ui_file_path)
         self.application.uim.ensure_update()
-        self.application.set_menu_notify_events("bookmarks")
 
     def _init_attributes(self, application):
         """Initialize default values for attributes."""

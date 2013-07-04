@@ -82,7 +82,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar recent_manager: Instance of :class:`Gtk.RecentManager` used
     :ivar replacement: Last used search replacement or blank if not used
     :ivar seekbar: Video player seekbar (a :class:`Gtk.Scale` instance)
-    :ivar statusbar: A :class:`Gtk.Statusbar` used to hold messages
+    :ivar statuslabel: Instance of :class:`gaupol.FloatingLabel` used
     :ivar uim: Instance of :class:`Gtk.UIManager` used
     :ivar video_button: A :class:`Gtk.Button` used to select a video file
     :ivar video_toolbar: A :class:`Gtk.Toolbar` for video file actions
@@ -137,7 +137,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.recent_manager = Gtk.RecentManager.get_default()
         self.replacement = ""
         self.seekbar = None
-        self.statusbar = None
+        self.statuslabel = None
         self.uim = None
         self.video_button = None
         self.video_toolbar = None
@@ -224,13 +224,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_player_box(self.paned)
         self._init_notebook(self.paned)
         self._init_video_toolbar(vbox)
-        self._init_statusbar(vbox)
         self._init_output_window()
         self.window.add(vbox)
         vbox.show_all()
         self._init_visibilities()
-        self.set_menu_notify_events("main-safe")
-        self.set_menu_notify_events("main-unsafe")
         self._finalize_uim_actions()
 
     def _init_main_toolbar(self, vbox):
@@ -282,7 +279,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                         fill=False,
                         padding=0)
 
-        vbox.pack_start(self.notebook,
+        overlay = Gtk.Overlay()
+        overlay.add(self.notebook)
+        self.statuslabel = gaupol.FloatingLabel()
+        overlay.add_overlay(self.statuslabel)
+        vbox.pack_start(overlay,
                         expand=True,
                         fill=True,
                         padding=0)
@@ -323,14 +324,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             redo_button.set_arrow_tooltip_text(tip)
             callback = self._on_redo_button_show_menu
             redo_button.connect("show-menu", callback)
-
-    def _init_statusbar(self, vbox):
-        """Initialize the statusbar."""
-        self.statusbar = Gtk.Statusbar()
-        vbox.pack_start(self.statusbar,
-                        expand=False,
-                        fill=False,
-                        padding=0)
 
     def _init_uim(self):
         """Initialize the UI manager."""
@@ -390,8 +383,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         toolbar.props.visible = conf.show_main_toolbar
         self.video_toolbar.props.visible = conf.show_video_toolbar
-        self.statusbar.props.visible = conf.show_statusbar
         self.notebook_separator.props.visible = False
+        self.show_message(None)
 
     def _init_video_button(self):
         """Intialize the video button on the video toolbar."""

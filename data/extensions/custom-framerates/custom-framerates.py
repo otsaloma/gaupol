@@ -194,7 +194,6 @@ class CustomFrameratesExtension(gaupol.Extension):
             gaupol.framerate_actions[framerate] = action.get_name()
             self.application.framerate_combo.append_text(action.get_label())
         self.application.uim.ensure_update()
-        self.application.set_menu_notify_events("custom-framerates")
 
     def _remove_framerates(self):
         """Remove custom framerates and corresponding UI elements."""

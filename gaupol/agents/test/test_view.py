@@ -92,11 +92,6 @@ class TestViewAgent(gaupol.TestCase):
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
-    def test__on_toggle_statusbar_activate(self):
-        name = "toggle_statusbar"
-        self.application.get_action(name).activate()
-        self.application.get_action(name).activate()
-
     def test__on_toggle_translation_text_column_toggled(self):
         name = "toggle_translation_text_column"
         self.application.get_action(name).activate()
