@@ -177,6 +177,15 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def flash_message(self, message, duration=6):
         """Show `message` in statuslabel for `duration` seconds."""
         self.statuslabel.flash_text(message, duration=duration)
+        # To minimize the disturbance, try to hide the statuslabel
+        # immediately after any kind of user input.
+        self.statuslabel.register_hide_event(self.window, "key-press-event")
+        self.statuslabel.register_hide_event(self.window, "scroll-event")
+        try:
+            view = self.get_current_page().view
+            self.statuslabel.register_hide_event(view, "button-press-event")
+        except AttributeError:
+            pass
 
     @aeidon.deco.export
     def push_message(self, message):

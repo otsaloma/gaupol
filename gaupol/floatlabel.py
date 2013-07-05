@@ -39,6 +39,7 @@ class FloatingLabel(Gtk.Box):
         GObject.GObject.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
         self._label = Gtk.Label()
         self._event_box = Gtk.EventBox()
+        self._handlers = []
         self._hide_id = None
         self.props.halign = Gtk.Align.START
         self.props.valign = Gtk.Align.END
@@ -91,6 +92,14 @@ class FloatingLabel(Gtk.Box):
     def hide(self, *args):
         """Hide the label."""
         self.props.visible = False
+        while self._handlers:
+            widget, handler_id = self._handlers.pop()
+            widget.handler_disconnect(handler_id)
+
+    def register_hide_event(self, widget, signal):
+        """Register `widget`'s `signal` as cause to hide the label."""
+        handler_id = widget.connect(signal, self.hide)
+        self._handlers.append((widget, handler_id))
 
     def set_text(self, text):
         """Show `text` in the label."""
