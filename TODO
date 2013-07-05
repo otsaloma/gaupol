@@ -2,17 +2,22 @@ Gaupol 0.24
 ===========
 
  [ ] Use a floating label for the statusbar
-     - Hide on input? key-press-event?
+     - Hide on input?
+       * Gtk.Window: key-press-event
+       * Gtk.Window: scroll-event
+       * Gtk.TreeView: button-press-event
  [ ] Show search dialog messages in a floating label
      in the search dialog
 
 Gaupol 1.0
 ==========
 
- * Add a GStreamer-based audio waveform display
-   - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
-   - https://github.com/Pecisk/libwaveform
+ * Use inline toolbars in the preferences dialog?
+   - https://wiki.gnome.org/Design/HIG/InlineToolbars
  * https://live.gnome.org/GnomeGoals/DesktopFileKeywords
  * https://live.gnome.org/GnomeGoals/PortToGMenu
  * https://live.gnome.org/GnomeGoals/PortToGtkApplication
  * https://live.gnome.org/GnomeGoals/UnicodeUsage
+ * Add a GStreamer-based audio waveform display
+   - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
+   - https://github.com/Pecisk/libwaveform
