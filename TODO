@@ -8,12 +8,12 @@ Gaupol 0.24
        * Gtk.TreeView: button-press-event
  [ ] Show search dialog messages in a floating label
      in the search dialog
+ [X] Use inline toolbars in the preferences dialog
+     - https://wiki.gnome.org/Design/HIG/InlineToolbars
 
 Gaupol 1.0
 ==========
 
- * Use inline toolbars in the preferences dialog?
-   - https://wiki.gnome.org/Design/HIG/InlineToolbars
  * https://live.gnome.org/GnomeGoals/DesktopFileKeywords
  * https://live.gnome.org/GnomeGoals/PortToGMenu
  * https://live.gnome.org/GnomeGoals/PortToGtkApplication

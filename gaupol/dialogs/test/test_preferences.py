@@ -79,7 +79,7 @@ class TestExtensionPage(gaupol.TestCase):
         selection = self.page._tree_view.get_selection()
         path = gaupol.util.tree_row_to_path(0)
         selection.select_path(path)
-        self.page._about_button.clicked()
+        self.page._about_button.emit("clicked")
 
     def test__on_tree_view_cell_toggled(self):
         column = self.page._tree_view.get_columns()[0]

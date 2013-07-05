@@ -163,11 +163,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         provider = Gtk.CssProvider.get_default()
         path = os.path.join(aeidon.DATA_DIR, "ui", "gaupol.css")
         provider.load_from_path(path)
-        context = self.window.get_style_context()
+        style = self.window.get_style_context()
         priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        context.add_provider_for_screen(self.window.get_screen(),
-                                        provider,
-                                        priority)
+        style.add_provider_for_screen(self.window.get_screen(),
+                                      provider,
+                                      priority)
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""
@@ -235,11 +235,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_undo_button()
         self._init_redo_button()
         toolbar = self.uim.get_widget("/ui/main_toolbar")
-        context = toolbar.get_style_context()
-        context.add_class("primary-toolbar")
-        style = gaupol.conf.application_window.toolbar_style
-        if style != gaupol.toolbar_styles.DEFAULT:
-            toolbar.set_style(style.value)
+        style = toolbar.get_style_context()
+        style.add_class("primary-toolbar")
+        toolbar_style = gaupol.conf.application_window.toolbar_style
+        if toolbar_style != gaupol.toolbar_styles.DEFAULT:
+            toolbar.set_style(toolbar_style.value)
         gaupol.conf.connect_notify("application_window",
                                    "toolbar_style",
                                    self)

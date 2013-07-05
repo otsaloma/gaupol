@@ -130,6 +130,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
                 "extensions_help_button",
                 "extensions_link_button",
                 "extensions_preferences_button",
+                "extensions_toolbar",
                 "extensions_tree_view")
 
     def __init__(self, master, application):
@@ -139,6 +140,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         self.application = application
         self.manager = self.application.extension_manager
         self._init_tree_view()
+        self._init_toolbar()
         self._init_values()
         self._init_sensitivities()
 
@@ -154,6 +156,12 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         self._about_button.set_sensitive(False)
         self._help_button.set_sensitive(False)
         self._preferences_button.set_sensitive(False)
+
+    def _init_toolbar(self):
+        """Initialize the tree view inline toolbar."""
+        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
+        style = self._toolbar.get_style_context()
+        style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
@@ -273,6 +281,7 @@ class FilePage(aeidon.Delegate,
                 "file_tree_view",
                 "file_locale_check",
                 "file_remove_button",
+                "file_toolbar",
                 "file_up_button")
 
     def __init__(self, master, application):
@@ -281,6 +290,7 @@ class FilePage(aeidon.Delegate,
         self._set_attributes(self._widgets, "file_")
         self.application = application
         self._init_tree_view()
+        self._init_toolbar()
         self._init_values()
 
     def _get_selected_row(self):
@@ -290,6 +300,26 @@ class FilePage(aeidon.Delegate,
         if itr is None: return None
         path = store.get_path(itr)
         return gaupol.util.tree_path_to_row(path)
+
+    def _init_toolbar(self):
+        """Initialize the tree view inline toolbar."""
+        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
+        style = self._toolbar.get_style_context()
+        style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
+        theme = Gtk.IconTheme.get_default()
+        # Tool buttons in the UI file are specified as symbolic icons
+        # by name. These have been checked to be found in gnome-icon-theme,
+        # but might be missing in other themes. If even one is missing
+        # fall back to using GTK+ stock icons.
+        if not all((theme.has_icon(self._add_button.props.icon_name),
+                    theme.has_icon(self._remove_button.props.icon_name),
+                    theme.has_icon(self._up_button.props.icon_name),
+                    theme.has_icon(self._down_button.props.icon_name))):
+
+            self._add_button.set_stock_id(Gtk.STOCK_ADD)
+            self._remove_button.set_stock_id(Gtk.STOCK_REMOVE)
+            self._up_button.set_stock_id(Gtk.STOCK_GO_UP)
+            self._down_button.set_stock_id(Gtk.STOCK_GO_DOWN)
 
     def _init_tree_view(self):
         """Initialize the fallback encoding tree view."""
