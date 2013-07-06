@@ -6,14 +6,15 @@ Gaupol 0.24
      in the search dialog
  [X] Use inline toolbars in the preferences dialog
      - https://wiki.gnome.org/Design/HIG/InlineToolbars
+ [ ] Apply GNOME Goal: Add keywords to application desktop files
+     - https://wiki.gnome.org/GnomeGoals/DesktopFileKeywords
 
 Gaupol 1.0
 ==========
 
- * https://live.gnome.org/GnomeGoals/DesktopFileKeywords
- * https://live.gnome.org/GnomeGoals/PortToGMenu
- * https://live.gnome.org/GnomeGoals/PortToGtkApplication
- * https://live.gnome.org/GnomeGoals/UnicodeUsage
  * Add a GStreamer-based audio waveform display
    - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
    - https://github.com/Pecisk/libwaveform
+ * https://live.gnome.org/GnomeGoals/UnicodeUsage
+ * https://live.gnome.org/GnomeGoals/PortToGMenu
+ * https://live.gnome.org/GnomeGoals/PortToGtkApplication

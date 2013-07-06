@@ -428,7 +428,6 @@
                                     <property name="use_action_appearance">False</property>
                                     <property name="preview_text"/>
                                     <property name="title" translatable="yes">Pick the Editor Font</property>
-                                    <property name="use_font">True</property>
                                     <signal name="font-set" handler="_on_font_button_font_set" swapped="no"/>
                                   </object>
                                   <packing>
@@ -738,7 +737,6 @@
                                 <property name="font">Sans 12</property>
                                 <property name="preview_text"/>
                                 <property name="title" translatable="yes">Pick the Subtitle Font</property>
-                                <property name="use_font">True</property>
                                 <signal name="font-set" handler="_on_subtitle_font_button_font_set" swapped="no"/>
                               </object>
                               <packing>
@@ -938,7 +936,6 @@
                                 <property name="font">Sans 12</property>
                                 <property name="preview_text"/>
                                 <property name="title" translatable="yes">Pick the Time Font</property>
-                                <property name="use_font">True</property>
                                 <signal name="font-set" handler="_on_time_font_button_font_set" swapped="no"/>
                               </object>
                               <packing>
