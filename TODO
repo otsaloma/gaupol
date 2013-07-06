@@ -6,7 +6,7 @@ Gaupol 0.24
      in the search dialog
  [X] Use inline toolbars in the preferences dialog
      - https://wiki.gnome.org/Design/HIG/InlineToolbars
- [ ] Apply GNOME Goal: Add keywords to application desktop files
+ [X] Apply GNOME Goal: Add keywords to application desktop files
      - https://wiki.gnome.org/GnomeGoals/DesktopFileKeywords
 
 Gaupol 1.0
