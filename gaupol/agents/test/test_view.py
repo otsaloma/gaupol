@@ -25,16 +25,6 @@ class TestViewAgent(gaupol.TestCase):
     def setup_method(self, method):
         self.application = self.new_application()
 
-    def test__on_framerate_combo_changed__frames(self):
-        self.application.get_action("show_frames").activate()
-        for framerate in aeidon.framerates:
-            self.application.framerate_combo.set_active(framerate)
-
-    def test__on_framerate_combo_changed__times(self):
-        self.application.get_action("show_times").activate()
-        for framerate in aeidon.framerates:
-            self.application.framerate_combo.set_active(framerate)
-
     def test__on_output_window_notify_visible(self):
         self.application.output_window.show()
         self.application.output_window.hide()
@@ -94,10 +84,5 @@ class TestViewAgent(gaupol.TestCase):
 
     def test__on_toggle_translation_text_column_toggled(self):
         name = "toggle_translation_text_column"
-        self.application.get_action(name).activate()
-        self.application.get_action(name).activate()
-
-    def test__on_toggle_video_toolbar_toggled(self):
-        name = "toggle_video_toolbar"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()

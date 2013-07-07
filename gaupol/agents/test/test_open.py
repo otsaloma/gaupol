@@ -110,14 +110,6 @@ class TestOpenAgent(gaupol.TestCase):
         page.view.select_rows((3,))
         self.application.get_action("split_project").activate()
 
-    @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
-    def test__on_video_button_clicked(self):
-        get_filenames = lambda *args: (self.new_subrip_file(),)
-        gaupol.FileDialog.get_filenames = get_filenames
-        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
-        self.application.video_button.emit("clicked")
-
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_encoding_error_dialog(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK

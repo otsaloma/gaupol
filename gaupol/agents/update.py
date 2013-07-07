@@ -33,7 +33,6 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def _disable_widgets(self):
         """Make widgets insensitive and blank."""
         self.window.set_title("Gaupol")
-        self.video_button.gaupol_label.set_text("")
         self.show_message(None)
 
     @aeidon.deco.export
@@ -163,15 +162,10 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.window.set_title(page.tab_label.get_text())
         self.get_mode_action(page.edit_mode).set_active(True)
         self.get_framerate_action(page.project.framerate).set_active(True)
-        self.framerate_combo.set_active(page.project.framerate)
         for field in gaupol.fields:
             col = getattr(page.view.columns, field.name)
             visible = page.view.get_column(col).props.visible
             self.get_column_action(field).set_active(visible)
-        video = os.path.basename(page.project.video_path or "")
-        self.video_button.gaupol_label.set_text(video)
-        self.video_button.set_has_tooltip(bool(video))
-        self.video_button.set_tooltip_text(video)
 
     @aeidon.deco.export
     def flash_message(self, message, duration=6):

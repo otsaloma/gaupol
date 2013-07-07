@@ -69,7 +69,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar clipboard: Instance of :class:`aeidon.Clipboard` used
     :ivar counter: Iterator used for naming unsaved documents
     :ivar extension_manager: Instance of :class:`gaupol.ExtensionManager` used
-    :ivar framerate_combo: A :class:`Gtk.ComboBox` used to select framerate
     :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
     :ivar notebook_separator: A :class:`Gtk.Separator` above the notebook
     :ivar output_window: A :class:`Gtk.Window` for external process output
@@ -84,8 +83,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar seekbar: Video player seekbar (a :class:`Gtk.Scale` instance)
     :ivar statuslabel: Instance of :class:`gaupol.FloatingLabel` used
     :ivar uim: Instance of :class:`Gtk.UIManager` used
-    :ivar video_button: A :class:`Gtk.Button` used to select a video file
-    :ivar video_toolbar: A :class:`Gtk.Toolbar` for video file actions
     :ivar volume_button: A :class:`Gtk.VolumeButton` in the player toolbar
     :ivar window: A :class:`Gtk.Window` used to hold all the widgets
     :ivar x_clipboard: A :class:`Gtk.Clipboard` used for desktop-wide copying
@@ -125,7 +122,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.clipboard = aeidon.Clipboard()
         self.counter = itertools.count(1)
         self.extension_manager = gaupol.ExtensionManager(self)
-        self.framerate_combo = None
         self.notebook = None
         self.notebook_separator = None
         self.output_window = None
@@ -139,8 +135,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.seekbar = None
         self.statuslabel = None
         self.uim = None
-        self.video_button = None
-        self.video_toolbar = None
         self.volume_button = None
         self.window = None
         self.x_clipboard = None
@@ -191,26 +185,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                 if hasattr(self.__class__, attr_name):
                     delattr(self.__class__, attr_name)
 
-    def _init_framerate_combo(self):
-        """Intialize the framerate combo box on the video toolbar."""
-        self.framerate_combo = Gtk.ComboBoxText()
-        for name in (x.label for x in aeidon.framerates):
-            self.framerate_combo.append_text(name)
-        self.framerate_combo.set_active(gaupol.conf.editor.framerate)
-        aeidon.util.connect(self, "framerate_combo", "changed")
-        tool_item = Gtk.ToolItem()
-        tool_item.add(self.framerate_combo)
-        self.video_toolbar.insert(tool_item, -1)
-
-    def _init_framerate_label(self):
-        """Intialize the framerate label on the video toolbar."""
-        label = Gtk.Label(label=_("Framerate:"))
-        alignment = Gtk.Alignment(left_padding=6, right_padding=6)
-        alignment.add(label)
-        tool_item = Gtk.ToolItem()
-        tool_item.add(alignment)
-        self.video_toolbar.insert(tool_item, -1)
-
     def _init_gui(self):
         """Initialize the user interface."""
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -223,7 +197,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_paned(vbox)
         self._init_player_box(self.paned)
         self._init_notebook(self.paned)
-        self._init_video_toolbar(vbox)
         self._init_output_window()
         self.window.add(vbox)
         vbox.show_all()
@@ -382,81 +355,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         conf = gaupol.conf.application_window
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         toolbar.props.visible = conf.show_main_toolbar
-        self.video_toolbar.props.visible = conf.show_video_toolbar
         self.notebook_separator.props.visible = False
         self.show_message(None)
-
-    def _init_video_button(self):
-        """Intialize the video button on the video toolbar."""
-        # Let's make this resemble a Gtk.FileChooserButton,
-        # but not actually be one, because they are slow to instantiate.
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        image = Gtk.Image(stock=Gtk.STOCK_FILE,
-                          icon_size=Gtk.IconSize.MENU)
-
-        hbox.pack_start(image,
-                        expand=False,
-                        fill=False,
-                        padding=4)
-
-        label = Gtk.Label()
-        label.props.xalign = 0
-        label.set_ellipsize(Pango.EllipsizeMode.END)
-        hbox.pack_start(label,
-                        expand=True,
-                        fill=True,
-                        padding=0)
-
-        separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
-        hbox.pack_start(separator,
-                        expand=False,
-                        fill=False,
-                        padding=4)
-
-        image = Gtk.Image(stock=Gtk.STOCK_OPEN,
-                          icon_size=Gtk.IconSize.MENU)
-
-        hbox.pack_start(image,
-                        expand=False,
-                        fill=False,
-                        padding=4)
-
-        self.video_button = Gtk.Button()
-        self.video_button.add(hbox)
-        self.video_button.gaupol_label = label
-        self.video_button.drag_dest_set(flags=Gtk.DestDefaults.ALL,
-                                        targets=None,
-                                        actions=Gdk.DragAction.COPY)
-
-        self.video_button.drag_dest_add_uri_targets()
-        aeidon.util.connect(self, "video_button", "clicked")
-        aeidon.util.connect(self, "video_button", "drag-data-received")
-        tool_item = Gtk.ToolItem()
-        tool_item.set_expand(True)
-        tool_item.add(self.video_button)
-        self.video_toolbar.insert(tool_item, -1)
-
-    def _init_video_label(self):
-        """Intialize the video label on the video toolbar."""
-        label = Gtk.Label(label=_("Video file:"))
-        alignment = Gtk.Alignment(right_padding=6)
-        alignment.add(label)
-        tool_item = Gtk.ToolItem()
-        tool_item.add(alignment)
-        self.video_toolbar.insert(tool_item, -1)
-
-    def _init_video_toolbar(self, vbox):
-        """Initialize the video toolbar."""
-        self.video_toolbar = Gtk.Toolbar()
-        self.video_toolbar.set_border_width(2)
-        self._init_video_label()
-        self._init_video_button()
-        self._init_framerate_label()
-        self._init_framerate_combo()
-        vbox.pack_start(self.video_toolbar,
-                        expand=False,
-                        fill=False,
-                        padding=0)
 
     def _init_window(self):
         """Initialize the main window."""

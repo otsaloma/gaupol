@@ -8,6 +8,9 @@ Gaupol 0.24
      - https://wiki.gnome.org/Design/HIG/InlineToolbars
  [X] Apply GNOME Goal: Add keywords to application desktop files
      - https://wiki.gnome.org/GnomeGoals/DesktopFileKeywords
+ [X] Remove video toolbar (video file and framerate selectors)
+ [ ] Clarify "select video" vs. "load video"?
+ [ ] Add framerate selector to save dialogs?
 
 Gaupol 1.0
 ==========

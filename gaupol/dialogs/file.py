@@ -138,7 +138,7 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             if store[i][0] == encoding:
                 return self._encoding_combo.set_active(i)
         if aeidon.encodings.is_valid_code(encoding):
-            ## Add encoding if not found in store.
+            # Add encoding if not found in store.
             self._populate_encoding_combo(encoding)
             return self.set_encoding(encoding)
         self._encoding_combo.set_active(0)

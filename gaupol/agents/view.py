@@ -27,23 +27,6 @@ class ViewAgent(aeidon.Delegate):
     """Changing the visual appearance of application and its documents."""
 
     @aeidon.deco.export
-    def _on_framerate_combo_changed(self, combo_box):
-        """Change the framerate with which nonnative units are calculated."""
-        page = self.get_current_page()
-        index = combo_box.get_active()
-        framerate = aeidon.framerates[index]
-        if framerate == page.project.framerate: return
-        gaupol.util.set_cursor_busy(self.window)
-        page.project.set_framerate(framerate, register=None)
-        gaupol.conf.editor.framerate = framerate
-        self.get_framerate_action(framerate).set_active(True)
-        if page.edit_mode != page.project.main_file.mode:
-            rows = list(range(len(page.project.subtitles)))
-            fields = [x for x in gaupol.fields if x.is_position]
-            page.reload_view(rows, fields)
-        gaupol.util.set_cursor_normal(self.window)
-
-    @aeidon.deco.export
     def _on_output_window_notify_visible(self, output_window, visible):
         """Sync menu item to output window's visibility."""
         action = self.get_action("toggle_output_window")
@@ -58,7 +41,6 @@ class ViewAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         page.project.set_framerate(framerate, register=None)
         gaupol.conf.editor.framerate = framerate
-        self.framerate_combo.set_active(framerate)
         if page.edit_mode != page.project.main_file.mode:
             rows = list(range(len(page.project.subtitles)))
             fields = [x for x in gaupol.fields if x.is_position]
@@ -149,13 +131,6 @@ class ViewAgent(aeidon.Delegate):
     def _on_toggle_translation_text_column_toggled(self, *args):
         """Show or hide the translation text column."""
         self._toggle_column(gaupol.fields.TRAN_TEXT)
-
-    @aeidon.deco.export
-    def _on_toggle_video_toolbar_toggled(self, *args):
-        """Show or hide the video toolbar."""
-        visible = self.video_toolbar.props.visible
-        self.video_toolbar.props.visible = not visible
-        gaupol.conf.application_window.show_video_toolbar = not visible
 
     @aeidon.deco.export
     def _on_view_header_button_press_event(self, button, event):

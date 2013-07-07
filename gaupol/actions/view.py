@@ -216,7 +216,6 @@ class ShowFramerateMenuAction(gaupol.MenuAction):
         gaupol.MenuAction.__init__(self, "show_framerate_menu")
         self.props.label = _("F_ramerate")
         self.action_group = "main-unsafe"
-        self.widgets = ("framerate_combo",)
 
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
@@ -438,20 +437,6 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-
-
-class ToggleVideoToolbarAction(gaupol.ToggleAction):
-
-    """Show or hide the video toolbar."""
-
-    def __init__(self):
-        """Initialize a :class:`ToggleVideoToolbarAction` object."""
-        gaupol.ToggleAction.__init__(self, "toggle_video_toolbar")
-        show = gaupol.conf.application_window.show_video_toolbar
-        self.props.active = show
-        self.props.label = _("Vi_deo Toolbar")
-        self.props.tooltip = _("Show or hide the video toolbar")
-        self.action_group = "main-safe"
 
 
 class UseHorizontalLayoutAction(gaupol.RadioAction):

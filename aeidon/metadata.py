@@ -63,13 +63,13 @@ class MetadataItem(object):
             if key in self.fields:
                 return self.get_field(key)
             locale = locale[0:2]
-        ## 'xx@Zzzz', fall back to unlocalized.
+        # 'xx@Zzzz', fall back to unlocalized.
         if (not "_" in locale) and (modifier is not None):
             key = "{}[{}@{}]".format(name, locale, modifier)
             if key in self.fields:
                 return self.get_field(key)
             return self.get_field(name)
-        ## 'xx', fall back to unlocalized.
+        # 'xx', fall back to unlocalized.
         if (not "_" in locale) and (modifier is None):
             key = "{}[{}]".format(name, locale)
             if key in self.fields:

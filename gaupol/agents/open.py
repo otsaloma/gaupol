@@ -220,29 +220,6 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Split the current project in two."""
         gaupol.util.flash_dialog(gaupol.SplitDialog(self.window, self))
 
-    @aeidon.deco.export
-    def _on_video_button_clicked(self, *args):
-        """Select a video file."""
-        self.get_action("select_video_file").activate()
-
-    @aeidon.deco.export
-    def _on_video_button_drag_data_received(self,
-                                            video_button,
-                                            context,
-                                            x,
-                                            y,
-                                            selection_data,
-                                            info,
-                                            time):
-
-        """Set video file from dragged URI."""
-        page = self.get_current_page()
-        uri = selection_data.get_uris()[0]
-        path = aeidon.util.uri_to_path(uri)
-        if not os.path.isfile(path): return
-        page.project.video_path = path
-        self.update_gui()
-
     def _open_file(self, path, encodings, doc, check_open=True):
         """
         Open file at `path` and return corresponding page if successful.

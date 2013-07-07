@@ -192,43 +192,35 @@ class CustomFrameratesExtension(gaupol.Extension):
             uim_id = self.application.uim.add_ui_from_string(ui_xml)
             self._uim_ids.append(uim_id)
             gaupol.framerate_actions[framerate] = action.get_name()
-            self.application.framerate_combo.append_text(action.get_label())
         self.application.uim.ensure_update()
 
     def _remove_framerates(self):
         """Remove custom framerates and corresponding UI elements."""
         fallback = aeidon.framerates.FPS_23_976
-        combo = self.application.framerate_combo
-        store = self.application.framerate_combo.get_model()
         for framerate in reversed(self._framerates):
             if gaupol.conf.editor.framerate == framerate:
                 gaupol.conf.editor.framerate = fallback
             if self.application.pages:
-                ## Go through all application's pages and reset those set to
-                ## the custom framerate back to the default framerate.
+                # Go through all application's pages and reset those set to
+                # the custom framerate back to the default framerate.
                 orig_page = self.application.get_current_page()
                 for page in self.application.pages:
                     self.application.set_current_page(page)
-                    if page.project.framerate == framerate:
-                        combo.set_active(fallback)
+                    if page.project.framerate != framerate: next
+                    action = self.application.get_framerate_action(fallback)
+                    action.set_active(True)
                 self.application.set_current_page(orig_page)
-            elif combo.get_active() == framerate:
-                ## If no pages are open, but the framerate is set to a custom
-                ## one, reset back to the default framerate, but without
-                ## triggering callbacks that assume there are pages.
-                callback = self.application._on_framerate_combo_changed
-                combo.handler_block_by_func(callback)
-                combo.set_active(fallback)
-                combo.handler_unblock_by_func(callback)
+            elif self.application.get_framerate_action(framerate).get_active():
+                # If no pages are open, but the framerate is set to a custom
+                # one, reset back to the default framerate, but without
+                # triggering callbacks that assume there are pages.
                 action = self.application.get_framerate_action(fallback)
                 callback = self.application._on_show_framerate_23_976_changed
                 action.handler_block_by_func(callback)
                 action.set_active(True)
                 action.handler_unblock_by_func(callback)
-            ## Remove UI elements created for the custom framerate and finally
-            ## remove the custom framerate from its enumeration.
-            path = gaupol.util.tree_row_to_path(int(framerate))
-            store.remove(store.get_iter(path))
+            # Remove UI elements created for the custom framerate and finally
+            # remove the custom framerate from its enumeration.
             del gaupol.framerate_actions[framerate]
             name = "FPS_{:.3f}".format(framerate.value).replace(".", "_")
             delattr(aeidon.framerates, name)

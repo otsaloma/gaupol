@@ -350,7 +350,6 @@ class SelectVideoFileAction(gaupol.Action):
         self.props.stock_id = Gtk.STOCK_FILE
         self.props.tooltip = _("Select a video file")
         self.action_group = "main-safe"
-        self.widgets = ("video_button",)
 
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""

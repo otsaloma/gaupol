@@ -78,8 +78,8 @@ class MultiSaveDialog(gaupol.FileDialog):
         pages = [x for x in self.application.pages
                  if x.project.main_file is not None]
 
-        ## Suggest format, encoding and newlines to match those
-        ## from the first page to consider.
+        # Suggest format, encoding and newlines to match those
+        # from the first page to consider.
         file = pages[0].project.main_file
         self.set_directory(os.path.dirname(file.path))
         self.set_format(file.format)
