@@ -9,8 +9,12 @@ Gaupol 0.24
  [X] Apply GNOME Goal: Add keywords to application desktop files
      - https://wiki.gnome.org/GnomeGoals/DesktopFileKeywords
  [X] Remove video toolbar (video file and framerate selectors)
+ [X] Hide translation text column by default and show only when a
+     translation file is opened or the column is explicitly selected
+     to be shown
  [ ] Clarify "select video" vs. "load video"?
  [ ] Add framerate selector to save dialogs?
+ [X] Add Galician translation (Leandro Regueiro)
 
 Gaupol 1.0
 ==========

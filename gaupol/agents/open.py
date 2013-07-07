@@ -122,6 +122,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     def _on_new_project_activate(self, *args):
         """Create a new project."""
+        if gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields:
+            gaupol.conf.editor.visible_fields.remove(gaupol.fields.TRAN_TEXT)
         page = gaupol.Page(next(self.counter))
         page.project.insert_subtitles((0,), register=None)
         self.add_page(page)
@@ -485,6 +487,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         `path` can be a sequence of paths to open multiple files.
         Use ``None`` for `encoding` to try the default sequence.
         """
+        if gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields:
+            gaupol.conf.editor.visible_fields.remove(gaupol.fields.TRAN_TEXT)
         if isinstance(path, (list, set, tuple)):
             return [self.open_main(x, encoding) for x in sorted(path)]
         encodings = self._get_encodings(encoding)
