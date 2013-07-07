@@ -345,8 +345,8 @@ class ToggleMainToolbarAction(gaupol.ToggleAction):
         gaupol.ToggleAction.__init__(self, "toggle_main_toolbar")
         show = gaupol.conf.application_window.show_main_toolbar
         self.props.active = show
-        self.props.label = _("_Main Toolbar")
-        self.props.tooltip = _("Show or hide the main toolbar")
+        self.props.label = _("Tool_bar")
+        self.props.tooltip = _("Show or hide the toolbar")
         self.action_group = "main-safe"
 
 
