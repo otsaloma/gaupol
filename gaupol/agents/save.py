@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2010 Osmo Salomaa
+# Copyright (C) 2005-2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -46,7 +46,11 @@ class SaveAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_save_all_documents_as_activate(self, *args):
         """Save all open documents with different properties."""
-        dialog = gaupol.MultiSaveDialog(self.window, self)
+        modes = []
+        for page in self.pages:
+            if page.project.main_file is not None:
+                modes.append(page.project.main_file.mode)
+        dialog = gaupol.MultiSaveDialog(self.window, self, modes)
         gaupol.util.flash_dialog(dialog)
         self.update_gui()
 
@@ -104,28 +108,36 @@ class SaveAgent(aeidon.Delegate):
             gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default
 
-    def _select_file(self, title, file=None):
+    def _select_file(self, title, page, file=None):
         """
         Select a file and return a :class:`aeidon.SubtitleFile`.
 
         Raise :exc:`gaupol.Default` if cancelled.
         """
         gaupol.util.set_cursor_busy(self.window)
-        dialog = gaupol.SaveDialog(self.window, title)
+        mode = page.project.get_mode()
+        dialog = gaupol.SaveDialog(self.window, title, mode)
         if file is not None:
             dialog.set_name(file.path)
             dialog.set_format(file.format)
             dialog.set_encoding(file.encoding)
             dialog.set_newline(file.newline)
+            dialog.set_framerate(page.project.framerate)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         format = dialog.get_format()
         path = dialog.get_filename()
         encoding = dialog.get_encoding()
         newline = dialog.get_newline()
+        framerate = dialog.get_framerate()
         dialog.destroy()
         if response != Gtk.ResponseType.OK:
             raise gaupol.Default
+        if format.mode != mode:
+            # Set framerate to the selected one.
+            self.set_current_page(page)
+            action = self.get_framerate_action(framerate)
+            action.set_active(True)
         gaupol.util.iterate_main()
         return aeidon.files.new(format, path, encoding, newline)
 
@@ -172,6 +184,7 @@ class SaveAgent(aeidon.Delegate):
         """
         if file is None:
             file = self._select_file(_("Save As"),
+                                     page,
                                      page.project.main_file)
 
         self._save_document(page, aeidon.documents.MAIN, file)
@@ -208,6 +221,7 @@ class SaveAgent(aeidon.Delegate):
         """
         if file is None:
             file = self._select_file(_("Save Translation As"),
+                                     page,
                                      page.project.tran_file)
 
         self._save_document(page, aeidon.documents.TRAN, file)

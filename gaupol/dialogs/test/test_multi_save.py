@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -38,7 +38,11 @@ class TestMultiSaveDialog(_TestFileDialog):
         self.application = self.new_application()
         self.application.add_page(self.new_page())
         self.application.add_page(self.new_page())
-        self.dialog = gaupol.MultiSaveDialog(Gtk.Window(), self.application)
+        modes = [x.project.main_file.mode for x in self.application.pages]
+        self.dialog = gaupol.MultiSaveDialog(parent=Gtk.Window(),
+                                             application=self.application,
+                                             modes=modes)
+
         self.dialog.show()
 
     def test__on_response__cancel(self):
@@ -55,6 +59,12 @@ class TestMultiSaveDialog(_TestFileDialog):
             value = self.dialog.get_format()
             assert value == format
 
+    def test_get_framerate(self):
+        for framerate in aeidon.framerates:
+            self.dialog.set_framerate(framerate)
+            value = self.dialog.get_framerate()
+            assert value == framerate
+
     def test_get_newline(self):
         for newline in aeidon.newlines:
             self.dialog.set_newline(newline)
@@ -66,6 +76,12 @@ class TestMultiSaveDialog(_TestFileDialog):
             self.dialog.set_format(format)
             value = self.dialog.get_format()
             assert value == format
+
+    def test_set_framerate(self):
+        for framerate in aeidon.framerates:
+            self.dialog.set_framerate(framerate)
+            value = self.dialog.get_framerate()
+            assert value == framerate
 
     def test_set_newline(self):
         for newline in aeidon.newlines:

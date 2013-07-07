@@ -113,12 +113,12 @@ from aeidon.errors import *
 from aeidon.enum import *
 from aeidon.enums.align_methods import *
 from aeidon.enums.documents import *
-from aeidon.enums.formats import *
 from aeidon.enums.framerates import *
 from aeidon.enums.modes import *
 from aeidon.enums.newlines import *
 from aeidon.enums.players import *
 from aeidon.enums.registers import *
+from aeidon.enums.formats import *
 from aeidon import encodings
 from aeidon import languages
 from aeidon import countries

@@ -40,6 +40,7 @@ class AdvSubStationAlpha(aeidon.EnumerationItem):
     identifier = r"^ScriptType:\s*[vV]4.00\+\s*$"
     label = "Advanced Sub Station Alpha"
     mime_type = "text/x-ssa"
+    mode = aeidon.modes.TIME
 
 
 class MicroDVD(aeidon.EnumerationItem):
@@ -50,6 +51,7 @@ class MicroDVD(aeidon.EnumerationItem):
     identifier = r"^\{-?\d+\}\{-?\d+\}"
     label = "MicroDVD"
     mime_type = "text/x-microdvd"
+    mode = aeidon.modes.FRAME
 
 
 class MPL2(aeidon.EnumerationItem):
@@ -60,6 +62,7 @@ class MPL2(aeidon.EnumerationItem):
     identifier = r"^\[-?\d+\]\[-?\d+\]"
     label = "MPL2"
     mime_type = "text/plain"
+    mode = aeidon.modes.TIME
 
 
 class MPsub(aeidon.EnumerationItem):
@@ -70,6 +73,7 @@ class MPsub(aeidon.EnumerationItem):
     identifier = r"^FORMAT=(TIME|[\d.]+)\s*$"
     label = "MPsub"
     mime_type = "text/x-mpsub"
+    mode = aeidon.modes.TIME
 
 
 class SubRip(aeidon.EnumerationItem):
@@ -83,6 +87,7 @@ class SubRip(aeidon.EnumerationItem):
 
     label = "SubRip"
     mime_type = "application/x-subrip"
+    mode = aeidon.modes.TIME
 
 
 class SubStationAlpha(aeidon.EnumerationItem):
@@ -93,6 +98,7 @@ class SubStationAlpha(aeidon.EnumerationItem):
     identifier = r"^ScriptType:\s*[vV]4.00\s*$"
     label = "Sub Station Alpha"
     mime_type = "text/x-ssa"
+    mode = aeidon.modes.TIME
 
 
 class SubViewer2(aeidon.EnumerationItem):
@@ -105,6 +111,7 @@ class SubViewer2(aeidon.EnumerationItem):
 
     label = "SubViewer 2.0"
     mime_type = "text/x-subviewer"
+    mode = aeidon.modes.TIME
 
 
 class TMPlayer(aeidon.EnumerationItem):
@@ -115,6 +122,7 @@ class TMPlayer(aeidon.EnumerationItem):
     identifier = r"^-?\d?\d:\d\d:\d\d:"
     label = "TMPlayer"
     mime_type = "text/plain"
+    mode = aeidon.modes.TIME
 
 
 formats = aeidon.Enumeration()

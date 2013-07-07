@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -35,15 +35,19 @@ class MultiSaveDialog(gaupol.FileDialog):
     _widgets = ("encoding_combo",
                 "filechooser_button",
                 "format_combo",
+                "framerate_combo",
+                "framerate_label",
                 "newline_combo")
 
-    def __init__(self, parent, application):
+    def __init__(self, parent, application, modes):
         """Initialize a :class:`MultiSaveDialog` object."""
         gaupol.FileDialog.__init__(self, "multi-save-dialog.ui")
         self.application = application
+        self._modes = modes
         self._init_format_combo()
         self._init_encoding_combo()
         self._init_newline_combo()
+        self._init_framerate_combo()
         width = gaupol.util.char_to_px(60)
         self._filechooser_button.set_size_request(width, -1)
         self._init_values()
@@ -60,6 +64,19 @@ class MultiSaveDialog(gaupol.FileDialog):
         renderer = Gtk.CellRendererText()
         self._format_combo.pack_start(renderer, expand=True)
         self._format_combo.add_attribute(renderer, "text", 0)
+
+    def _init_framerate_combo(self):
+        """Initialize the framerate combo box."""
+        store = Gtk.ListStore(str)
+        self._framerate_combo.set_model(store)
+        for name in (x.label for x in aeidon.framerates):
+            store.append((name,))
+        view = self._framerate_combo.get_child()
+        path = gaupol.util.tree_row_to_path(0)
+        view.set_displayed_row(path)
+        renderer = Gtk.CellRendererText()
+        self._framerate_combo.pack_start(renderer, expand=True)
+        self._framerate_combo.add_attribute(renderer, "text", 0)
 
     def _init_newline_combo(self):
         """Initialize the newline combo box."""
@@ -85,12 +102,25 @@ class MultiSaveDialog(gaupol.FileDialog):
         self.set_format(file.format)
         self.set_encoding(file.encoding)
         self.set_newline(file.newline)
+        self.set_framerate(gaupol.conf.editor.framerate)
+        visible = (len(set(self._modes)) > 1)
+        self._framerate_combo.props.visible = visible
+        self._framerate_label.props.visible = visible
+
+    def _on_format_combo_changed(self, *args):
+        """Change the extension of the current filename."""
+        format = self.get_format()
+        modes = list(self._modes) + list((format.mode,))
+        visible = (len(set(modes)) > 1)
+        self._framerate_combo.props.visible = visible
+        self._framerate_label.props.visible = visible
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
         gaupol.conf.file.encoding = self.get_encoding()
         gaupol.conf.file.format = self.get_format()
         gaupol.conf.file.newline = self.get_newline()
+        gaupol.conf.editor.framerate = self.get_framerate()
         if response != Gtk.ResponseType.OK: return
         gaupol.util.set_cursor_busy(self._dialog)
         self._save_all_documents_as()
@@ -104,6 +134,12 @@ class MultiSaveDialog(gaupol.FileDialog):
 
         files = [None for x in pages]
         for i, page in enumerate(pages):
+            if self._framerate_combo.props.visible:
+                # Set framerate to the selected one.
+                framerate = self.get_framerate()
+                self.application.set_current_page(page)
+                action = self.application.get_framerate_action(framerate)
+                action.set_active(True)
             path = os.path.basename(page.project.main_file.path)
             path = aeidon.util.replace_extension(path, self.get_format())
             path = os.path.join(self.get_directory(), path)
@@ -137,14 +173,19 @@ class MultiSaveDialog(gaupol.FileDialog):
         response = gaupol.util.flash_dialog(dialog)
         gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
+    def get_directory(self):
+        """Return the selected directory."""
+        return self._filechooser_button.get_filename()
+
     def get_format(self):
         """Return the selected format."""
         index = self._format_combo.get_active()
         return aeidon.formats[index]
 
-    def get_directory(self):
-        """Return the selected directory."""
-        return self._filechooser_button.get_filename()
+    def get_framerate(self):
+        """Return the selected framerate."""
+        index = self._framerate_combo.get_active()
+        return aeidon.framerates[index]
 
     def get_newline(self):
         """Return the selected newline."""
@@ -159,6 +200,11 @@ class MultiSaveDialog(gaupol.FileDialog):
         """Set the selected format."""
         if format is None: return
         self._format_combo.set_active(format)
+
+    def set_framerate(self, framerate):
+        """Set the selected framerate."""
+        if framerate is None: return
+        self._framerate_combo.set_active(framerate)
 
     def set_newline(self, newline):
         """Set the selected newline."""

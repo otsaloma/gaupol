@@ -94,7 +94,8 @@ class FloatingLabel(Gtk.Box):
         self.props.visible = False
         while self._handlers:
             widget, handler_id = self._handlers.pop()
-            widget.handler_disconnect(handler_id)
+            if widget.handler_is_connected(handler_id):
+                widget.handler_disconnect(handler_id)
 
     def register_hide_event(self, widget, signal):
         """Register `widget`'s `signal` as cause to hide the label."""

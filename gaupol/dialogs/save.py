@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -31,15 +31,21 @@ class SaveDialog(gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
-    _widgets = ("encoding_combo", "format_combo", "newline_combo")
+    _widgets = ("encoding_combo",
+                "format_combo",
+                "framerate_combo",
+                "framerate_label",
+                "newline_combo")
 
-    def __init__(self, parent, title):
+    def __init__(self, parent, title, mode):
         """Initialize a :class:`SaveDialog` object."""
         gaupol.FileDialog.__init__(self, "save-dialog.ui")
+        self._mode = mode
         self._init_filters()
         self._init_format_combo()
         self._init_encoding_combo()
         self._init_newline_combo()
+        self._init_framerate_combo()
         self._init_values()
         self.set_title(title)
         self.set_transient_for(parent)
@@ -56,6 +62,19 @@ class SaveDialog(gaupol.FileDialog):
         renderer = Gtk.CellRendererText()
         self._format_combo.pack_start(renderer, expand=True)
         self._format_combo.add_attribute(renderer, "text", 0)
+
+    def _init_framerate_combo(self):
+        """Initialize the framerate combo box."""
+        store = Gtk.ListStore(str)
+        self._framerate_combo.set_model(store)
+        for name in (x.label for x in aeidon.framerates):
+            store.append((name,))
+        view = self._framerate_combo.get_child()
+        path = gaupol.util.tree_row_to_path(0)
+        view.set_displayed_row(path)
+        renderer = Gtk.CellRendererText()
+        self._framerate_combo.pack_start(renderer, expand=True)
+        self._framerate_combo.add_attribute(renderer, "text", 0)
 
     def _init_newline_combo(self):
         """Initialize the newline combo box."""
@@ -77,20 +96,26 @@ class SaveDialog(gaupol.FileDialog):
         self.set_encoding(gaupol.conf.file.encoding)
         self.set_format(gaupol.conf.file.format)
         self.set_newline(gaupol.conf.file.newline)
+        self.set_framerate(gaupol.conf.editor.framerate)
+        self._framerate_combo.props.visible = False
+        self._framerate_label.props.visible = False
 
-    def _on_format_combo_changed(self, combo_box):
+    def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""
-        path = self.get_filename()
-        if path is None: return
-        dirname = os.path.dirname(path)
-        basename = os.path.basename(path)
         format = self.get_format()
-        if path.endswith(format.extension): return
-        basename = aeidon.util.replace_extension(basename, format)
-        path = os.path.join(dirname, basename)
-        self.unselect_filename(path)
-        self.set_current_name(basename)
-        self.set_filename(path)
+        path = self.get_filename()
+        if path is not None:
+            dirname = os.path.dirname(path)
+            basename = os.path.basename(path)
+            if not path.endswith(format.extension):
+                basename = aeidon.util.replace_extension(basename, format)
+                path = os.path.join(dirname, basename)
+                self.unselect_filename(path)
+                self.set_current_name(basename)
+                self.set_filename(path)
+        visible = (format.mode != self._mode)
+        self._framerate_combo.props.visible = visible
+        self._framerate_label.props.visible = visible
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
@@ -100,6 +125,7 @@ class SaveDialog(gaupol.FileDialog):
         gaupol.conf.file.encoding = self.get_encoding()
         gaupol.conf.file.format = self.get_format()
         gaupol.conf.file.newline = self.get_newline()
+        gaupol.conf.editor.framerate = self.get_framerate()
 
     def _on_save_button_event(self, button, event):
         """Ensure that the filename contains an extension."""
@@ -113,6 +139,11 @@ class SaveDialog(gaupol.FileDialog):
         index = self._format_combo.get_active()
         return aeidon.formats[index]
 
+    def get_framerate(self):
+        """Return the selected framerate."""
+        index = self._framerate_combo.get_active()
+        return aeidon.framerates[index]
+
     def get_newline(self):
         """Return the selected newline."""
         index = self._newline_combo.get_active()
@@ -122,6 +153,11 @@ class SaveDialog(gaupol.FileDialog):
         """Set the selected format."""
         if format is None: return
         self._format_combo.set_active(format)
+
+    def set_framerate(self, framerate):
+        """Set the selected framerate."""
+        if framerate is None: return
+        self._framerate_combo.set_active(framerate)
 
     def set_name(self, path):
         """Set the selected filename."""

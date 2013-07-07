@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -32,7 +32,10 @@ class TestSaveDialog(_TestFileDialog):
 
     def setup_method(self, method):
         gaupol.conf.file.directory = os.getcwd()
-        self.dialog = gaupol.SaveDialog(Gtk.Window(), "test")
+        self.dialog = gaupol.SaveDialog(parent=Gtk.Window(),
+                                        title="test",
+                                        mode=aeidon.modes.TIME)
+
         self.dialog.show()
 
     def test__on_format_combo_changed(self):
@@ -51,6 +54,12 @@ class TestSaveDialog(_TestFileDialog):
             value = self.dialog.get_format()
             assert value == format
 
+    def test_get_framerate(self):
+        for framerate in aeidon.framerates:
+            self.dialog.set_framerate(framerate)
+            value = self.dialog.get_framerate()
+            assert value == framerate
+
     def test_get_newline(self):
         for newline in aeidon.newlines:
             self.dialog.set_newline(newline)
@@ -62,6 +71,12 @@ class TestSaveDialog(_TestFileDialog):
             self.dialog.set_format(format)
             value = self.dialog.get_format()
             assert value == format
+
+    def test_set_framerate(self):
+        for framerate in aeidon.framerates:
+            self.dialog.set_framerate(framerate)
+            value = self.dialog.get_framerate()
+            assert value == framerate
 
     def test_set_name__name__basename(self):
         self.dialog.set_name("test")

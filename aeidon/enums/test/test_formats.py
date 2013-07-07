@@ -29,6 +29,7 @@ class TestModule(aeidon.TestCase):
             assert hasattr(format, "identifier")
             assert hasattr(format, "label")
             assert hasattr(format, "mime_type")
+            assert hasattr(format, "mode")
 
     def test_items(self):
         assert hasattr(aeidon.formats, "ASS")
