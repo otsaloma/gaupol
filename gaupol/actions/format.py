@@ -55,7 +55,6 @@ class ToggleDialogDashesAction(gaupol.Action):
         self.props.tooltip = _("Add or remove dialogue dashes "
                                "on the selected texts")
 
-        self.accelerator = "D"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -77,7 +76,6 @@ class ToggleItalicizationAction(gaupol.Action):
         self.props.label = _("_Italic")
         self.props.stock_id = Gtk.STOCK_ITALIC
         self.props.tooltip = _("Italicize or unitalicize the selected texts")
-        self.accelerator = "I"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

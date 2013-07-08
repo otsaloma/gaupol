@@ -267,7 +267,7 @@ class InsertSubtitlesAction(gaupol.Action):
         self.props.short_label = _("Insert")
         self.props.stock_id = Gtk.STOCK_ADD
         self.props.tooltip = _("Insert new subtitles")
-        self.accelerator = "Insert"
+        self.accelerator = "I"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

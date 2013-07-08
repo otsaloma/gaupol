@@ -12,9 +12,10 @@ Gaupol 0.24
      translation file is opened or the column is explicitly selected
      to be shown
  [X] Remove video toolbar (video file and framerate selectors)
- [ ] Add a framerate selector to save dialogs (shown only when
+ [X] Add a framerate selector to save dialogs (shown only when
      converting from a time-based file format to a frame-based
      or vice versa)
+ [X] Change some keybindings
  [ ] Clarify "select video" vs. "load video"?
  [X] Add Galician translation (Leandro Regueiro)
 
