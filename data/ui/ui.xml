@@ -4,7 +4,6 @@
       <menuitem name="new" action="new_project"/>
       <menuitem name="open_main" action="open_main_files"/>
       <menuitem name="open_translation" action="open_translation_file"/>
-      <menuitem name="select_video" action="select_video_file"/>
       <placeholder name="1">
       </placeholder>
       <separator/>
@@ -203,6 +202,7 @@
     </menu>
     <menu name="tools" action="show_tools_menu">
       <menuitem name="preview" action="preview"/>
+      <menuitem name="select_video" action="select_video_file"/>
       <placeholder name="1">
       </placeholder>
       <separator/>

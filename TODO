@@ -15,8 +15,9 @@ Gaupol 0.24
  [X] Add a framerate selector to save dialogs (shown only when
      converting from a time-based file format to a frame-based
      or vice versa)
- [X] Change some keybindings
- [ ] Clarify "select video" vs. "load video"?
+ [X] Change a couple keybindings
+ [X] Move "Select Video" from the file menu to the tools menu (below
+     "Preview") to clarify that it relates to the external preview
  [X] Add Galician translation (Leandro Regueiro)
 
 Gaupol 1.0
