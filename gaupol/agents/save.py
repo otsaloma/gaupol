@@ -40,7 +40,6 @@ class SaveAgent(aeidon.Delegate):
             save_main(page)
             if page.project.tran_changed is not None:
                 save_tran(page)
-        self.flash_message(_("Saved all open documents"))
         self.update_gui()
 
     @aeidon.deco.export
@@ -172,7 +171,6 @@ class SaveAgent(aeidon.Delegate):
             return self.save_main_as(page)
 
         self._save_document(page, aeidon.documents.MAIN)
-        self.flash_message(_("Saved main document"))
 
     @aeidon.deco.export
     def save_main_as(self, page, file=None):
@@ -209,7 +207,6 @@ class SaveAgent(aeidon.Delegate):
             return self.save_translation_as(page)
 
         self._save_document(page, aeidon.documents.TRAN)
-        self.flash_message(_("Saved translation document"))
 
     @aeidon.deco.export
     def save_translation_as(self, page, file=None):
