@@ -1,0 +1,29 @@
+= Creating Subtitles from Scratch =
+
+<<TableOfContents(3)>>
+
+== Introduction ==
+
+This documentation applies to Gaupol version 0.24 or later.
+
+== By Interaction with the Built-In Video Player ==
+
+Gaupol's built-in video player should provide necessary means to acquire subtitle start and end times as well as decipher the texts and various tools provided should help with necessary automatic post-processing. There are many possible work-flows for subtitling; here's one.
+
+ 1. Open Gaupol and create a blank document (''File'' / ''New'').
+
+ 2. Load the video file you wish to subtitle (''Tools'' / ''Load Video'').
+
+ 3. Play the video from start to finish. Press "J" (''Edit'' / ''Insert Subtitle At Video Position'') whenever someone starts speaking a new subtitle length piece. A new subtitle will be inserted with a three-second duration.
+
+ 4. Go over the video on subtitle at a time. Press "O" (''Video'' / ''Play Selection'') to play video of the selected subtitle. Write down what is said. Press "O" to play the subtitle again. Now press "K" (''Edit'' / ''Set End From Video Position'') when speaking of that particular subtitle ends. Split and merge subtitles (keys "S" and "M") where needed.
+
+ 5. When the whole video is subtitled, hit "H" (''Tools'' / ''Shift positions'') to correct for your reaction speed, e.g. if your reaction speed earlier has been half a second, shift all subtitles -0.5 seconds.
+
+ 6. Now all subtitles should match exactly what is spoken. You'll notice that short subtitles disappear too fast. Go to ''Tools'' / ''Adjust Durations''. Use at least minimum duration and gap and possibly lengthening to match reading speed to ensure that subtitle remain on screen long enough to be read.
+
+ 7. Done! Save your file! Share your work!
+
+== Speech Recognition ==
+
+[[Gaupol/SpeechRecognition|Speech Recognition]] might help, depending on the video source, with the spotting phase of the previous workflow, i.e. acquiring start and end times for subtitles.
