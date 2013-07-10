@@ -1,6 +1,7 @@
 Gaupol 0.24
 ===========
 
+ [X] Add action to set the end time from video position
  [X] Use a floating label for the statusbar
  [X] Show search dialog messages in a floating label
      in the search dialog

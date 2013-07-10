@@ -247,7 +247,7 @@ class InsertSubtitleAtVideoPositionAction(gaupol.Action):
         self.props.short_label = _("Insert At Video")
         self.props.stock_id = Gtk.STOCK_ADD
         self.props.tooltip = _("Insert a new subtitle at video position")
-        self.accelerator = "A"
+        self.accelerator = "J"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -397,6 +397,26 @@ class SelectAllAction(gaupol.Action):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
+
+
+class SetEndFromVideoPositionAction(gaupol.Action):
+
+    """Set subtitle end from video position."""
+
+    def __init__(self):
+        """Initialize an :class:`SetEndFromVideoPositionAction` object."""
+        gaupol.Action.__init__(self, "set_end_from_video_position")
+        self.props.label = _("Set En_d From Video Position")
+        self.props.short_label = _("Set End From Video")
+        self.props.tooltip = _("Set subtitle end from video position")
+        self.accelerator = "K"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(len(selected_rows) == 1)
 
 
 class ShowSelectionMenuAction(gaupol.MenuAction):
