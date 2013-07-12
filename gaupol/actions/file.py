@@ -346,7 +346,6 @@ class SelectVideoFileAction(gaupol.Action):
         """Initialize a :class:`SelectVideoFileAction` object."""
         gaupol.Action.__init__(self, "select_video_file")
         self.props.label = _("Select _Video…")
-        self.props.short_label = _("Video")
         self.props.stock_id = Gtk.STOCK_FILE
         self.props.tooltip = _("Select a video file")
         self.action_group = "main-safe"

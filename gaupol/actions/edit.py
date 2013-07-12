@@ -112,7 +112,6 @@ class EditNextValueAction(gaupol.Action):
         """Initialize an :class:`EditNextValueAction` object."""
         gaupol.Action.__init__(self, "edit_next_value")
         self.props.label = _("Edit _Next Cell")
-        self.props.short_label = _("Next")
         self.props.stock_id = Gtk.STOCK_EDIT
         self.props.tooltip = _("Edit the focused column of the next subtitle")
         self.accelerator = "space"
@@ -139,7 +138,6 @@ class EditValueAction(gaupol.Action):
         gaupol.Action.__init__(self, "edit_value")
         self.props.is_important = True
         self.props.label = _("_Edit Cell")
-        self.props.short_label = _("Edit")
         self.props.stock_id = Gtk.STOCK_EDIT
         self.props.tooltip = _("Edit the focused cell")
         self.accelerator = "Return"
@@ -244,7 +242,6 @@ class InsertSubtitleAtVideoPositionAction(gaupol.Action):
         """Initialize an :class:`InsertSubtitleAtVideoPositionAction` object."""
         gaupol.Action.__init__(self, "insert_subtitle_at_video_position")
         self.props.label = _("Inser_t Subtitle At Video Position")
-        self.props.short_label = _("Insert At Video")
         self.props.stock_id = Gtk.STOCK_ADD
         self.props.tooltip = _("Insert a new subtitle at video position")
         self.accelerator = "J"
@@ -407,7 +404,6 @@ class SetEndFromVideoPositionAction(gaupol.Action):
         """Initialize an :class:`SetEndFromVideoPositionAction` object."""
         gaupol.Action.__init__(self, "set_end_from_video_position")
         self.props.label = _("Set En_d From Video Position")
-        self.props.short_label = _("Set End From Video")
         self.props.tooltip = _("Set subtitle end from video position")
         self.accelerator = "K"
         self.action_group = "main-unsafe"

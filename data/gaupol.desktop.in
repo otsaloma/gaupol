@@ -2,8 +2,7 @@
 _Name=Gaupol
 _GenericName=Subtitle Editor
 _Comment=Edit subtitle files
-# TRANSLATORS: Search terms to find this application. Do NOT translate
-# or localize the semicolons! The list MUST also end with a semicolon!
+# TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 _Keywords=video;subtitles;captions;
 Exec=gaupol %F
 Terminal=false
