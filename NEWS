@@ -122,7 +122,7 @@ Gaupol 0.19
 ===========
 
  * Add speech recognition to allow generating subtitles from video
-   http://live.gnome.org/Gaupol/SpeechRecognition
+   http://wiki.gnome.org/Gaupol/SpeechRecognition
  * Fix installation of custom-framerates extension
  * Add optional dependency on gst-python (this also implies a
    dependency on one or more of gst-plugins-base, gst-plugins-good,
@@ -234,7 +234,7 @@ Gaupol 0.16
    numbers if the search string contains a colon (fixes #609176)
  * Add miscellaneous Latin common error corrections patterns
  * Add help menu item to browse wiki documentation at
-   http://live.gnome.org/Gaupol
+   http://wiki.gnome.org/Gaupol
  * Increase size of line length superscripts shown in list cells
  * Fix focus changing when pasting subtitles
  * Use gtk.RecentAction for recent file menus (fixes #615372 and
