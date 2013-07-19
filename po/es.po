@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.23\n"
+"Project-Id-Version: gaupol 0.24\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-13 02:22+0300\n"
-"PO-Revision-Date: 2013-06-19 19:38-0300\n"
+"PO-Revision-Date: 2013-07-18 19:54-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -279,7 +279,7 @@ msgstr "Guardar todo como"
 
 #: ../data/ui/multi-save-dialog.ui.h:2
 msgid "Save in _folder:"
-msgstr "G_uardar en carpeta:"
+msgstr "G_uardar en la carpeta:"
 
 #: ../data/ui/multi-save-dialog.ui.h:3 ../data/ui/save-dialog.ui.h:1
 msgid "For_mat:"
@@ -300,7 +300,7 @@ msgstr "Seleccionar carpeta"
 
 #: ../data/ui/multi-save-dialog.ui.h:7 ../data/ui/save-dialog.ui.h:4
 msgid "F_ramerate:"
-msgstr ""
+msgstr "F_recuencia de fotogramas:"
 
 #: ../data/ui/open-dialog.ui.h:2
 msgid "Align _method:"
@@ -1641,7 +1641,7 @@ msgstr "Edita archivos de subtítulos"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:5
 msgid "video;subtitles;captions;"
-msgstr ""
+msgstr "vídeo;subtítulos;"
 
 #: ../data/gaupol.desktop.in.h:6
 msgid "Gaupol Subtitle Editor"
@@ -1713,7 +1713,7 @@ msgstr "Edita la celda seleccionada"
 
 #: ../gaupol/actions/edit.py:164
 msgid "E_nd Earlier"
-msgstr "_Desaparecer antes"
+msgstr "_Finalizar antes"
 
 #: ../gaupol/actions/edit.py:165
 msgid "End the selected subtitle earlier"
@@ -1721,7 +1721,7 @@ msgstr "Adelanta la desaparición del subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:183
 msgid "En_d Later"
-msgstr "D_esaparecer después"
+msgstr "Fin_alizar después"
 
 #: ../gaupol/actions/edit.py:184
 msgid "End the selected subtitle later"
@@ -1745,7 +1745,7 @@ msgstr "Extiende la selección actual hasta el último subtítulo"
 
 #: ../gaupol/actions/edit.py:244
 msgid "Inser_t Subtitle At Video Position"
-msgstr "Insertar subtítulo en la posición del _vídeo"
+msgstr "Insertar subtítulo según la posición del _vídeo"
 
 #: ../gaupol/actions/edit.py:246
 msgid "Insert a new subtitle at video position"
@@ -1817,11 +1817,11 @@ msgstr "Selecciona todos los subtítulos"
 
 #: ../gaupol/actions/edit.py:406
 msgid "Set En_d From Video Position"
-msgstr ""
+msgstr "Definir posición _final según la posición del vídeo"
 
 #: ../gaupol/actions/edit.py:407
 msgid "Set subtitle end from video position"
-msgstr ""
+msgstr "Finaliza el subtítulo seleccionado en la posición actual del vídeo"
 
 #: ../gaupol/actions/edit.py:425
 msgid "Sele_ction"
@@ -1841,7 +1841,7 @@ msgstr "Divide el subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:476
 msgid "_Start Earlier"
-msgstr "_Aparecer antes"
+msgstr "_Iniciar antes"
 
 #: ../gaupol/actions/edit.py:477
 msgid "Start the selected subtitle earlier"
@@ -1849,7 +1849,7 @@ msgstr "Adelanta la aparición del subtítulo seleccionado"
 
 #: ../gaupol/actions/edit.py:495
 msgid "S_tart Later"
-msgstr "Apa_recer después"
+msgstr "I_niciar después"
 
 #: ../gaupol/actions/edit.py:496
 msgid "Start the selected subtitle later"
@@ -2411,11 +2411,11 @@ msgstr "Muestra u oculta la columna texto principal"
 
 #: ../gaupol/actions/view.py:348
 msgid "Tool_bar"
-msgstr ""
+msgstr "Barra de _herramientas"
 
 #: ../gaupol/actions/view.py:349
 msgid "Show or hide the toolbar"
-msgstr ""
+msgstr "Muestra u oculta la barra de herramientas"
 
 #: ../gaupol/actions/view.py:362
 msgid "_No."
@@ -2484,7 +2484,7 @@ msgstr ""
 
 #: ../gaupol/agents/edit.py:127 ../gaupol/agents/edit.py:145
 msgid "Stretching end position"
-msgstr "Ajustar desaparición"
+msgstr "Ajustar posición final"
 
 #: ../gaupol/agents/edit.py:226
 msgid "Inserted {:d} subtitle to fit clipboard contents"
@@ -2498,7 +2498,7 @@ msgstr[1] ""
 
 #: ../gaupol/agents/edit.py:302 ../gaupol/agents/edit.py:320
 msgid "Stretching start position"
-msgstr "Ajustar aparición"
+msgstr "Ajustar posición inicial"
 
 #: ../gaupol/agents/edit.py:377
 msgid "Use Shift+Return for line-break"
