@@ -372,7 +372,7 @@ class VideoPlayer(aeidon.Observable):
         """
         self._playbin.props.uri = uri
         self._xid = self.widget.props.window.get_xid()
-        self.subtitle_text= ""
+        self.subtitle_text = ""
         try:
             # Find out the exact framerate to be able
             # to convert between position types.
@@ -390,7 +390,7 @@ class VideoPlayer(aeidon.Observable):
     def stop(self):
         """Stop."""
         self._playbin.set_state(Gst.State.NULL)
-        self.subtitle_text= ""
+        self.subtitle_text = ""
 
     @property
     def subtitle_text(self):

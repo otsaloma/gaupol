@@ -4,8 +4,6 @@
 import os
 import sys
 
-from gi.repository import Gtk
-
 def prepare_paths():
     # Add source root directory to sys.path.
     parent = os.path.dirname(os.path.abspath(__file__))
@@ -21,5 +19,6 @@ def running_from_source():
 
 if running_from_source():
     prepare_paths()
+
 import gaupol
 gaupol.main.main(sys.argv[1:])
