@@ -1,3 +1,28 @@
+Gaupol 0.24
+===========
+
+ * Add action to set the end time from video position
+   (see also https://wiki.gnome.org/Gaupol/CreatingSubtitles)
+ * Use a floating label for the statusbar
+ * Show search dialog messages in a floating label
+   in the search dialog
+ * Use inline toolbars in the preferences dialog
+   - https://wiki.gnome.org/Design/HIG/InlineToolbars
+ * Apply GNOME Goal: Add keywords to application desktop files
+   - https://wiki.gnome.org/GnomeGoals/DesktopFileKeywords
+ * Hide translation text column by default and show only when a
+   translation file is opened or the column is explicitly selected
+   to be shown
+ * Remove video toolbar (video file and framerate selectors)
+ * Add a framerate selector to save dialogs (shown only when
+   converting from a time-based file format to a frame-based
+   or vice versa)
+ * Change a couple keybindings
+ * Move "Select Video" from the file menu to the tools menu (below
+   "Preview") to clarify that it relates to the external preview
+ * Add Galician translation (Leandro Regueiro)
+ * Update Spanish translation (Carlos Mella)
+
 Gaupol 0.23
 ===========
 

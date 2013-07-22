@@ -12,6 +12,8 @@ Releasing a New Version
    $ pyflakes3 bin/gaupol *.py aeidon gaupol
    $ py.test-3 --tb=no aeidon
    $ py.test-3 --tb=no gaupol
+     - Faster in separate runs!?
+       $ for X in $(find gaupol -name "test_*.py" | sort); do py.test-3 --tb=no $X; done
 
  * Make final edits to files
    $ $EDITOR */__init__.py
