@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-13 02:22+0300\n"
-"PO-Revision-Date: 2013-01-26 22:54+0100\n"
+"PO-Revision-Date: 2013-07-28 07:59+0200\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -300,7 +300,7 @@ msgstr "Vybrat složku"
 
 #: ../data/ui/multi-save-dialog.ui.h:7 ../data/ui/save-dialog.ui.h:4
 msgid "F_ramerate:"
-msgstr ""
+msgstr "Rychlost snímkování:"
 
 #: ../data/ui/open-dialog.ui.h:2
 msgid "Align _method:"
@@ -449,51 +449,51 @@ msgstr "Editor"
 
 #: ../data/ui/preferences-dialog.ui.h:20
 msgid "Subtitle"
-msgstr ""
+msgstr "Titulek"
 
 #: ../data/ui/preferences-dialog.ui.h:21
 msgid "_Font:"
-msgstr ""
+msgstr "_Písmo:"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "Pick the Subtitle Font"
-msgstr ""
+msgstr "Vybrat písmo titulku"
 
 #: ../data/ui/preferences-dialog.ui.h:23
 msgid "C_olor:"
-msgstr ""
+msgstr "B_arva:"
 
 #: ../data/ui/preferences-dialog.ui.h:24
 msgid "Pick the Subtitle Color"
-msgstr ""
+msgstr "Vybrat barvu titulku"
 
 #: ../data/ui/preferences-dialog.ui.h:25
 msgid "_Use a background behind text"
-msgstr ""
+msgstr "_Použít pozadí za textem"
 
 #: ../data/ui/preferences-dialog.ui.h:26
 msgid "Time"
-msgstr ""
+msgstr "Čas"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Colo_r:"
-msgstr ""
+msgstr "Ba_rva:"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "Pick the Time Color"
-msgstr ""
+msgstr "Vybrat barvu času"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 msgid "Us_e a background behind text"
-msgstr ""
+msgstr "P_oužít pozadí za textem"
 
 #: ../data/ui/preferences-dialog.ui.h:30
 msgid "Fo_nt:"
-msgstr ""
+msgstr "Pí_smo:"
 
 #: ../data/ui/preferences-dialog.ui.h:31
 msgid "Pick the Time Font"
-msgstr ""
+msgstr "Vybrat písmo času"
 
 #: ../data/ui/preferences-dialog.ui.h:32
 msgid "Video"
@@ -1619,7 +1619,7 @@ msgstr "Upravit soubory s titulky"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:5
 msgid "video;subtitles;captions;"
-msgstr ""
+msgstr "video;titulky;podtitulky;"
 
 #: ../data/gaupol.desktop.in.h:6
 msgid "Gaupol Subtitle Editor"
@@ -1627,23 +1627,23 @@ msgstr "Editor titulků Gaupol"
 
 #: ../gaupol/actions/audio.py:33
 msgid "_Language"
-msgstr ""
+msgstr "_Jazyk"
 
 #: ../gaupol/actions/audio.py:50
 msgid "Volume _Down"
-msgstr ""
+msgstr "Hlasitost _dolů"
 
 #: ../gaupol/actions/audio.py:51
 msgid "Decrease volume"
-msgstr ""
+msgstr "Snížit hlasitost"
 
 #: ../gaupol/actions/audio.py:67
 msgid "Volume _Up"
-msgstr ""
+msgstr "Hlasitost _nahoru"
 
 #: ../gaupol/actions/audio.py:68
 msgid "Increase volume"
-msgstr ""
+msgstr "Zvýšit hlasitost"
 
 #: ../gaupol/actions/edit.py:37
 msgid "Clear the selected texts"
@@ -1691,19 +1691,19 @@ msgstr "Upravit zaměřenou buňku"
 
 #: ../gaupol/actions/edit.py:164
 msgid "E_nd Earlier"
-msgstr ""
+msgstr "U_končit dříve"
 
 #: ../gaupol/actions/edit.py:165
 msgid "End the selected subtitle earlier"
-msgstr ""
+msgstr "Ukončit vybraný titulek dříve"
 
 #: ../gaupol/actions/edit.py:183
 msgid "En_d Later"
-msgstr ""
+msgstr "_Ukončit později"
 
 #: ../gaupol/actions/edit.py:184
 msgid "End the selected subtitle later"
-msgstr ""
+msgstr "Ukončit vybraný titulek později"
 
 #: ../gaupol/actions/edit.py:202
 msgid "Extend To _Beginning"
@@ -1723,11 +1723,11 @@ msgstr "Rozšířit nynější výběr až po poslední titulek"
 
 #: ../gaupol/actions/edit.py:244
 msgid "Inser_t Subtitle At Video Position"
-msgstr ""
+msgstr "_Vložit titulek v poloze videa"
 
 #: ../gaupol/actions/edit.py:246
 msgid "Insert a new subtitle at video position"
-msgstr ""
+msgstr "Vložit nový titulek v poloze videa"
 
 #: ../gaupol/actions/edit.py:263
 msgid "_Insert Subtitles…"
@@ -1795,11 +1795,11 @@ msgstr "Vybrat všechny titulky"
 
 #: ../gaupol/actions/edit.py:406
 msgid "Set En_d From Video Position"
-msgstr ""
+msgstr "Nastavit kon_ec z polohy videa"
 
 #: ../gaupol/actions/edit.py:407
 msgid "Set subtitle end from video position"
-msgstr ""
+msgstr "Nastavit konec titulku z polohy videa"
 
 #: ../gaupol/actions/edit.py:425
 msgid "Sele_ction"
@@ -1807,7 +1807,7 @@ msgstr "Vý_běr"
 
 #: ../gaupol/actions/edit.py:441
 msgid "Stretc_h Subtitle"
-msgstr ""
+msgstr "_Natáhnout titulek"
 
 #: ../gaupol/actions/edit.py:458
 msgid "_Split Subtitle"
@@ -1819,19 +1819,19 @@ msgstr "Rozdělit vybraný titulek"
 
 #: ../gaupol/actions/edit.py:476
 msgid "_Start Earlier"
-msgstr ""
+msgstr "_Začít dříve"
 
 #: ../gaupol/actions/edit.py:477
 msgid "Start the selected subtitle earlier"
-msgstr ""
+msgstr "Začít vybraný titulek dříve"
 
 #: ../gaupol/actions/edit.py:495
 msgid "S_tart Later"
-msgstr ""
+msgstr "Z_ačít později"
 
 #: ../gaupol/actions/edit.py:496
 msgid "Start the selected subtitle later"
-msgstr ""
+msgstr "Začít vybraný titulek později"
 
 #: ../gaupol/actions/edit.py:517
 msgid "_Undo"
@@ -2072,7 +2072,7 @@ msgstr "Ukázat informace o programu Gaupol"
 
 #: ../gaupol/actions/menu.py:33
 msgid "_Audio"
-msgstr ""
+msgstr "Zv_uk"
 
 #: ../gaupol/actions/menu.py:55
 msgid "_File"
@@ -2084,7 +2084,7 @@ msgstr "_Nápověda"
 
 #: ../gaupol/actions/menu.py:77
 msgid "_Projects"
-msgstr "Pr_ojekty"
+msgstr "Proje_kty"
 
 #: ../gaupol/actions/menu.py:88
 msgid "_Text"
@@ -2096,7 +2096,7 @@ msgstr "Nástroj_e"
 
 #: ../gaupol/actions/menu.py:110
 msgid "Vi_deo"
-msgstr ""
+msgstr "_Obraz"
 
 #: ../gaupol/actions/menu.py:121
 msgid "_View"
@@ -2196,75 +2196,75 @@ msgstr "Najít a opravit chyby v textech"
 
 #: ../gaupol/actions/video.py:35
 msgid "_Load Video…"
-msgstr ""
+msgstr "Nahrát video…"
 
 #: ../gaupol/actions/video.py:36
 msgid "Load a video file"
-msgstr ""
+msgstr "Nahrát obrazový záznam"
 
 #: ../gaupol/actions/video.py:53
 msgid "_Play/Pause"
-msgstr ""
+msgstr "_Přehrát/Pozastavit"
 
 #: ../gaupol/actions/video.py:55
 msgid "Play or pause video"
-msgstr ""
+msgstr "Přehrát nebo pozastavit obrazový záznam"
 
 #: ../gaupol/actions/video.py:71
 msgid "Play _Selection"
-msgstr ""
+msgstr "Přehrát _výběr"
 
 #: ../gaupol/actions/video.py:72
 msgid "Play the selected subtitles"
-msgstr ""
+msgstr "Přehrát vybrané titulky"
 
 #: ../gaupol/actions/video.py:89
 msgid "Seek _Backward"
-msgstr ""
+msgstr "Přetočit _zpět"
 
 #: ../gaupol/actions/video.py:91
 msgid "Seek backward"
-msgstr ""
+msgstr "Přetočit zpět"
 
 #: ../gaupol/actions/video.py:107
 msgid "Seek _Forward"
-msgstr ""
+msgstr "Přetočit _vpřed"
 
 #: ../gaupol/actions/video.py:109
 msgid "Seek forward"
-msgstr ""
+msgstr "Přetočit vpřed"
 
 #: ../gaupol/actions/video.py:125
 msgid "Seek _Next"
-msgstr ""
+msgstr "Přetočit na _další"
 
 #: ../gaupol/actions/video.py:127
 msgid "Seek to the start of the next subtitle"
-msgstr ""
+msgstr "Vyhledat začátek dalšího titulku"
 
 #: ../gaupol/actions/video.py:143
 msgid "Seek _Previous"
-msgstr ""
+msgstr "Přetočit na _předchozí"
 
 #: ../gaupol/actions/video.py:145
 msgid "Seek to the start of the previous subtitle"
-msgstr ""
+msgstr "Vyhledat začátek předchozího titulku"
 
 #: ../gaupol/actions/video.py:161
 msgid "See_k Selection End"
-msgstr ""
+msgstr "Přetočit na _konec výběru"
 
 #: ../gaupol/actions/video.py:162
 msgid "Seek the end of selection"
-msgstr ""
+msgstr "Vyhledat konec výběru"
 
 #: ../gaupol/actions/video.py:179
 msgid "S_eek Selection Start"
-msgstr ""
+msgstr "Přetočit na _začátek výběru"
 
 #: ../gaupol/actions/video.py:180
 msgid "Seek the start of selection"
-msgstr ""
+msgstr "Vyhledat začátek výběru"
 
 #: ../gaupol/actions/view.py:36
 msgid "Activate the project in the next tab"
@@ -2340,7 +2340,7 @@ msgstr "Ukázat polohy jako obrázky"
 
 #: ../gaupol/actions/view.py:255
 msgid "_Layout"
-msgstr ""
+msgstr "_Rozvržení"
 
 #: ../gaupol/actions/view.py:272
 msgid "_Times"
@@ -2376,11 +2376,11 @@ msgstr "Ukázat nebo skrýt sloupec Hlavní text"
 
 #: ../gaupol/actions/view.py:348
 msgid "Tool_bar"
-msgstr ""
+msgstr "Nástrojový _pruh"
 
 #: ../gaupol/actions/view.py:349
 msgid "Show or hide the toolbar"
-msgstr ""
+msgstr "Ukázat nebo skrýt nástrojový pruh"
 
 #: ../gaupol/actions/view.py:362
 msgid "_No."
@@ -2392,11 +2392,11 @@ msgstr "Ukázat nebo skrýt sloupec Číslo"
 
 #: ../gaupol/actions/view.py:381
 msgid "_Video Player"
-msgstr ""
+msgstr "Přehrávač _videa"
 
 #: ../gaupol/actions/view.py:383
 msgid "Show or hide the video player"
-msgstr ""
+msgstr "Ukázat nebo skrýt přehrávač obrazového záznamu"
 
 #: ../gaupol/actions/view.py:400
 msgid "_Output Window"
@@ -2424,19 +2424,19 @@ msgstr "Ukázat nebo skrýt sloupec Překladový text"
 
 #: ../gaupol/actions/view.py:451
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Vodorovně"
 
 #: ../gaupol/actions/view.py:452
 msgid "Split window horizontally"
-msgstr ""
+msgstr "Rozdělit okno vodorovně"
 
 #: ../gaupol/actions/view.py:472
 msgid "_Vertical"
-msgstr ""
+msgstr "_Svisle"
 
 #: ../gaupol/actions/view.py:473
 msgid "Split window vertically"
-msgstr ""
+msgstr "Rozdělit okno svisle"
 
 #: ../gaupol/agents/close.py:53
 msgid "Save changes to main document \"{}\" before closing?"
@@ -2448,7 +2448,7 @@ msgstr "Uložit změny do překladového dokumentu \"{}\" před zavřením?"
 
 #: ../gaupol/agents/edit.py:127 ../gaupol/agents/edit.py:145
 msgid "Stretching end position"
-msgstr ""
+msgstr "Natažení polohy konce"
 
 #: ../gaupol/agents/edit.py:226
 msgid "Inserted {:d} subtitle to fit clipboard contents"
@@ -2459,7 +2459,7 @@ msgstr[2] "Vloženo {:d} nových titulků, aby se shodoval s obsahem schránky"
 
 #: ../gaupol/agents/edit.py:302 ../gaupol/agents/edit.py:320
 msgid "Stretching start position"
-msgstr ""
+msgstr "Natažení polohy začátku"
 
 #: ../gaupol/agents/edit.py:377
 msgid "Use Shift+Return for line-break"
@@ -2467,7 +2467,7 @@ msgstr "Pro zalomení řádku použít Shift+Enter"
 
 #: ../gaupol/agents/menu.py:52
 msgid "Select \"{}\""
-msgstr ""
+msgstr "Vybrat \"{}\""
 
 #: ../gaupol/agents/menu.py:74
 msgid "Activate \"{}\""
@@ -2479,7 +2479,7 @@ msgstr "Znovu \"{}\""
 
 #: ../gaupol/agents/menu.py:151
 msgid "Undefined"
-msgstr ""
+msgstr "Nestanoveno"
 
 #: ../gaupol/agents/menu.py:201 ../gaupol/agents/update.py:152
 msgid "Undo \"{}\""
@@ -2616,15 +2616,15 @@ msgstr "Uložit překladový dokument jako \"{}\""
 
 #: ../gaupol/agents/video.py:98
 msgid "Volume"
-msgstr ""
+msgstr "Hlasitost"
 
 #: ../gaupol/agents/video.py:136
 msgid "Load Video"
-msgstr ""
+msgstr "Nahrát obrazový záznam"
 
 #: ../gaupol/agents/video.py:137
 msgid "_Load"
-msgstr ""
+msgstr "_Nahrát"
 
 #: ../gaupol/application.py:296
 msgid "Redo undone actions"
