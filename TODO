@@ -1,6 +1,7 @@
 Gaupol 0.24.1/0.25
 ==================
 
+ [X] Possibly fix floating status label colors on non-Adwaita themes
  [X] Update Czech translation (Pavel Fric)
 
 Gaupol 1.0

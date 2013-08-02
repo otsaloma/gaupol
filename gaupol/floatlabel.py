@@ -55,7 +55,7 @@ class FloatingLabel(Gtk.Box):
         entry = Gtk.Entry()
         entry.show()
         style = entry.get_style_context()
-        return style.get_background_color(Gtk.StateFlags.SELECTED)
+        return style.get_background_color(Gtk.StateFlags.NORMAL)
 
     def _get_label_color(self):
         """Return a foreground color to use for the label."""
@@ -67,7 +67,7 @@ class FloatingLabel(Gtk.Box):
         entry = Gtk.Entry()
         entry.show()
         style = entry.get_style_context()
-        return style.get_color(Gtk.StateFlags.SELECTED)
+        return style.get_color(Gtk.StateFlags.NORMAL)
 
     def _init_widgets(self):
         """Initialize widgets contained in the box."""
