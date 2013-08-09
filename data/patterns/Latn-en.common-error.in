@@ -95,9 +95,18 @@ Repeat=False
 
 [Common Error Pattern]
 _Name=Okay
-_Description=Convert various two-letter spellings of okay to "OK"
+_Description=Spell two-letter forms of "okay" in all upper case
 Classes=Human;
-Pattern=\b(ok|Ok|O\.K\.)\b
+Pattern=\b[Oo]k\b
 Flags=DOTALL;MULTILINE;
 Replacement=OK
+Repeat=False
+
+[Common Error Pattern]
+_Name=Okay
+_Description=Spell two-letter forms of "okay" in all upper case
+Classes=Human;
+Pattern=\b[Oo]\.k\.
+Flags=DOTALL;MULTILINE;
+Replacement=O.K.
 Repeat=False
