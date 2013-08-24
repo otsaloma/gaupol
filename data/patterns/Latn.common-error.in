@@ -45,24 +45,6 @@ Replacement=\1\2
 Repeat=False
 
 [Common Error Pattern]
-_Name=Space between number and unit
-_Description=Add or remove space between a number and the associated unit
-Classes=Human;OCR;
-Pattern=(\d+) (st|nd|rd|th)\b
-Flags=DOTALL;MULTILINE;
-Replacement=\1\2
-Repeat=False
-
-[Common Error Pattern]
-_Name=Space between number and unit
-_Description=Add or remove space between a number and the associated unit
-Classes=Human;OCR;
-Pattern=(\d+)(%)
-Flags=DOTALL;MULTILINE;
-Replacement=\1 \2
-Repeat=False
-
-[Common Error Pattern]
 _Name=Double apostrophe
 _Description=Replace a double apostrophe with a quotation mark
 Classes=OCR;

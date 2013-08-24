@@ -85,6 +85,15 @@ Replacement=O
 Repeat=True
 
 [Common Error Pattern]
+_Name=Space between number and unit
+_Description=Add or remove space between a number and the associated unit
+Classes=Human;OCR;
+Pattern=(\d+) (st|nd|rd|th)\b
+Flags=DOTALL;MULTILINE;
+Replacement=\1\2
+Repeat=False
+
+[Common Error Pattern]
 _Name=Spaces around an apostrophe
 _Description=Remove spaces around an apostrophe
 Classes=OCR;
