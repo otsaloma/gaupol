@@ -7,6 +7,10 @@ Gaupol 0.24.1/0.25
 Gaupol 1.0
 ==========
 
+ * Windows installer
+   - https://code.google.com/p/osspack32/downloads/detail?name=pygi-aio-3.4.2rev11.7z
+ * Add AppData XML file?
+   - http://people.freedesktop.org/~hughsient/appdata/
  * Add a GStreamer-based audio waveform display
    - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
    - https://github.com/Pecisk/libwaveform
