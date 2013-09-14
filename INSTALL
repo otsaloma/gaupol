@@ -23,6 +23,7 @@ To uninstall, remove files and directories
     .../lib/pythonX.Y/dist-packages/gaupol*
     .../lib/pythonX.Y/site-packages/aeidon*
     .../lib/pythonX.Y/site-packages/gaupol*
+    .../share/appdata/gaupol.appdata.xml
     .../share/applications/gaupol.desktop
     .../share/icons/hicolor/*/apps/gaupol.*
     .../share/locale/*/LC_MESSAGES/gaupol.mo
