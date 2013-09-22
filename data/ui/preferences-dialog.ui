@@ -27,11 +27,9 @@
             <child>
               <object class="GtkButton" id="button2">
                 <property name="label">gtk-help</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -43,12 +41,10 @@
             <child>
               <object class="GtkButton" id="button1">
                 <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -69,11 +65,15 @@
           <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
             <property name="border_width">6</property>
             <child>
               <object class="GtkBox" id="file_vbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
@@ -128,11 +128,9 @@
                             <child>
                               <object class="GtkCheckButton" id="file_locale_check">
                                 <property name="label" translatable="yes">Curr_ent locale encoding</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
@@ -202,10 +200,8 @@
                                         <property name="show_arrow">False</property>
                                         <child>
                                           <object class="GtkToolButton" id="file_add_button">
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="icon_name">list-add-symbolic</property>
                                             <signal name="clicked" handler="_on_add_button_clicked" swapped="no"/>
                                           </object>
@@ -216,10 +212,8 @@
                                         </child>
                                         <child>
                                           <object class="GtkToolButton" id="file_remove_button">
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="icon_name">list-remove-symbolic</property>
                                             <signal name="clicked" handler="_on_remove_button_clicked" swapped="no"/>
                                           </object>
@@ -230,10 +224,8 @@
                                         </child>
                                         <child>
                                           <object class="GtkToolButton" id="file_up_button">
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="icon_name">go-up-symbolic</property>
                                             <signal name="clicked" handler="_on_up_button_clicked" swapped="no"/>
                                           </object>
@@ -244,10 +236,8 @@
                                         </child>
                                         <child>
                                           <object class="GtkToolButton" id="file_down_button">
-                                            <property name="use_action_appearance">False</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="use_action_appearance">False</property>
                                             <property name="icon_name">go-down-symbolic</property>
                                             <signal name="clicked" handler="_on_down_button_clicked" swapped="no"/>
                                           </object>
@@ -280,11 +270,9 @@
                             <child>
                               <object class="GtkCheckButton" id="file_auto_check">
                                 <property name="label" translatable="yes">Aut_o-detection</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
@@ -344,6 +332,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="valign">start</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
@@ -384,11 +374,9 @@
                             <child>
                               <object class="GtkCheckButton" id="editor_default_font_check">
                                 <property name="label" translatable="yes">Use _default theme font</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
@@ -421,11 +409,9 @@
                                 </child>
                                 <child>
                                   <object class="GtkFontButton" id="editor_font_button">
-                                    <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="preview_text"/>
                                     <property name="title" translatable="yes">Pick the Editor Font</property>
                                     <signal name="font-set" handler="_on_font_button_font_set" swapped="no"/>
@@ -496,11 +482,9 @@
                             <child>
                               <object class="GtkCheckButton" id="editor_length_cell_check">
                                 <property name="label" translatable="yes">_Show line lengths in list cells</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
@@ -515,11 +499,9 @@
                             <child>
                               <object class="GtkCheckButton" id="editor_length_edit_check">
                                 <property name="label" translatable="yes">S_how line lengths in editable text fields</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
@@ -622,11 +604,9 @@
                             <child>
                               <object class="GtkCheckButton" id="editor_spell_check_check">
                                 <property name="label" translatable="yes">Chec_k spelling as you type</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
@@ -674,6 +654,8 @@
               <object class="GtkBox" id="video_vbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
@@ -688,7 +670,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Subtitle</property>
+                        <property name="label" translatable="yes">Fonts</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -715,7 +697,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">_Font:</property>
+                                <property name="label" translatable="yes">_Subtitles:</property>
                                 <property name="use_underline">True</property>
                                 <property name="mnemonic_widget">video_subtitle_font_button</property>
                               </object>
@@ -728,12 +710,10 @@
                             </child>
                             <child>
                               <object class="GtkFontButton" id="video_subtitle_font_button">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="hexpand">True</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="font">Sans 12</property>
                                 <property name="preview_text"/>
                                 <property name="title" translatable="yes">Pick the Subtitle Font</property>
@@ -747,13 +727,13 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="label19">
+                              <object class="GtkLabel" id="label18">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">C_olor:</property>
+                                <property name="label" translatable="yes">_Time:</property>
                                 <property name="use_underline">True</property>
-                                <property name="mnemonic_widget">video_subtitle_color_button</property>
+                                <property name="mnemonic_widget">video_time_font_button</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -763,43 +743,20 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkColorButton" id="video_subtitle_color_button">
-                                <property name="use_action_appearance">False</property>
+                              <object class="GtkFontButton" id="video_time_font_button">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="halign">start</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="use_alpha">True</property>
-                                <property name="title" translatable="yes">Pick the Subtitle Color</property>
-                                <property name="color">#ffffffffffff</property>
-                                <signal name="color-set" handler="_on_subtitle_color_button_color_set" swapped="no"/>
+                                <property name="hexpand">True</property>
+                                <property name="font">Sans 12</property>
+                                <property name="preview_text"/>
+                                <property name="title" translatable="yes">Pick the Time Font</property>
+                                <signal name="font-set" handler="_on_time_font_button_font_set" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="video_subtitle_bg_check">
-                                <property name="label" translatable="yes">_Use a background behind text</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="hexpand">True</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="xalign">0</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="_on_subtitle_bg_check_toggled" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="width">1</property>
+                                <property name="width">2</property>
                                 <property name="height">1</property>
                               </packing>
                             </child>
@@ -830,7 +787,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Time</property>
+                        <property name="label" translatable="yes">Colors</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -857,9 +814,62 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Colo_r:</property>
+                                <property name="label" translatable="yes">Su_btitles:</property>
                                 <property name="use_underline">True</property>
                                 <property name="mnemonic_widget">video_time_color_button</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">0</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkColorButton" id="video_subtitle_color_button">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="halign">start</property>
+                                <property name="use_alpha">True</property>
+                                <property name="title" translatable="yes">Pick the Time Color</property>
+                                <property name="color">#ffffffffffff</property>
+                                <signal name="color-set" handler="_on_time_color_button_color_set" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">0</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="video_subtitle_bg_check">
+                                <property name="label" translatable="yes">_Use a background behind text</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="hexpand">True</property>
+                                <property name="use_underline">True</property>
+                                <property name="xalign">0</property>
+                                <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="_on_time_bg_check_toggled" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="top_attach">0</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="label19">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Ti_me:</property>
+                                <property name="use_underline">True</property>
+                                <property name="mnemonic_widget">video_subtitle_color_button</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -870,16 +880,14 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="video_time_color_button">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="halign">start</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_alpha">True</property>
-                                <property name="title" translatable="yes">Pick the Time Color</property>
+                                <property name="title" translatable="yes">Pick the Subtitle Color</property>
                                 <property name="color">#ffffffffffff</property>
-                                <signal name="color-set" handler="_on_time_color_button_color_set" swapped="no"/>
+                                <signal name="color-set" handler="_on_subtitle_color_button_color_set" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -891,57 +899,19 @@
                             <child>
                               <object class="GtkCheckButton" id="video_time_bg_check">
                                 <property name="label" translatable="yes">Us_e a background behind text</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="hexpand">True</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="_on_time_bg_check_toggled" swapped="no"/>
+                                <signal name="toggled" handler="_on_subtitle_bg_check_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
                                 <property name="top_attach">1</property>
                                 <property name="width">1</property>
-                                <property name="height">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label18">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Fo_nt:</property>
-                                <property name="use_underline">True</property>
-                                <property name="mnemonic_widget">video_time_font_button</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkFontButton" id="video_time_font_button">
-                                <property name="use_action_appearance">False</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="hexpand">True</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="font">Sans 12</property>
-                                <property name="preview_text"/>
-                                <property name="title" translatable="yes">Pick the Time Font</property>
-                                <signal name="font-set" handler="_on_time_font_button_font_set" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="top_attach">0</property>
-                                <property name="width">2</property>
                                 <property name="height">1</property>
                               </packing>
                             </child>
@@ -982,6 +952,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="valign">start</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
@@ -1095,12 +1067,10 @@ $VIDEOFILE</property>
                             <child>
                               <object class="GtkCheckButton" id="preview_force_utf_8_check">
                                 <property name="label" translatable="yes">Al_ways use UTF-8 character encoding</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="hexpand">True</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
@@ -1253,6 +1223,8 @@ $VIDEOFILE</property>
               <object class="GtkBox" id="extensions_vbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
@@ -1289,11 +1261,9 @@ $VIDEOFILE</property>
                     <child>
                       <object class="GtkLinkButton" id="extensions_link_button">
                         <property name="label" translatable="yes">Get more extensions</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="relief">none</property>
                         <property name="uri">http://glade.gnome.org</property>
                       </object>
@@ -1345,10 +1315,8 @@ $VIDEOFILE</property>
                         <property name="toolbar_style">icons</property>
                         <child>
                           <object class="GtkToolButton" id="extensions_preferences_button">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="stock_id">gtk-preferences</property>
                             <signal name="clicked" handler="_on_preferences_button_clicked" swapped="no"/>
                           </object>
@@ -1359,10 +1327,8 @@ $VIDEOFILE</property>
                         </child>
                         <child>
                           <object class="GtkToolButton" id="extensions_help_button">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="stock_id">gtk-help</property>
                             <signal name="clicked" handler="_on_help_button_clicked" swapped="no"/>
                           </object>
@@ -1373,10 +1339,8 @@ $VIDEOFILE</property>
                         </child>
                         <child>
                           <object class="GtkToolButton" id="extensions_about_button">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="stock_id">gtk-about</property>
                             <signal name="clicked" handler="_on_about_button_clicked" swapped="no"/>
                           </object>
