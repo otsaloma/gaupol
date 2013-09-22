@@ -1,12 +1,3 @@
-Gaupol 0.24.1/0.25
-==================
-
- [X] Possibly fix floating status label colors on non-Adwaita themes
- [X] Add an AppData XML file
-     - http://people.freedesktop.org/~hughsient/appdata/
- [X] Add French translation (RyDroid)
- [X] Update Czech translation (Pavel Fric)
-
 Gaupol 1.0
 ==========
 
@@ -16,5 +7,5 @@ Gaupol 1.0
    - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
    - https://github.com/Pecisk/libwaveform
  * https://wiki.gnome.org/GnomeGoals/UnicodeUsage
- * https://wiki.gnome.org/GnomeGoals/PortToGMenu
  * https://wiki.gnome.org/GnomeGoals/PortToGtkApplication
+ * https://wiki.gnome.org/GnomeGoals/PortToGMenu

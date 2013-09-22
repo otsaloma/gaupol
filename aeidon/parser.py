@@ -38,6 +38,7 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
     and intact. An example would be replacing all "i"s with "j"s without
     changing italic markup::
 
+        >>> import re
         >>> parser = aeidon.Parser(re.compile(r"<.+?>"))
         >>> parser.set_text("<i>iii</i>")
         >>> parser.pattern = "i"

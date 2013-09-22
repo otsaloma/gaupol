@@ -1,3 +1,12 @@
+Gaupol 0.24.1
+=============
+
+ * Possibly fix floating status label colors on non-Adwaita themes
+ * Add an AppData XML file
+   - http://people.freedesktop.org/~hughsient/appdata/
+ * Add French translation (RyDroid)
+ * Update Czech translation (Pavel Fric)
+
 Gaupol 0.24
 ===========
 
