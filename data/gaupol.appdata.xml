@@ -10,7 +10,7 @@
     multiple documents and convenience of translating.</p>
   </description>
   <screenshots>
-    <screenshot type="default" width="714" height="773">http://home.gna.org/gaupol/screenshots/main.png</screenshot>
+    <screenshot type="default">http://home.gna.org/gaupol/screenshots/main.png</screenshot>
   </screenshots>
   <url type="homepage">http://home.gna.org/gaupol/</url>
   <updatecontact>gaupol-list@gna.org</updatecontact>
