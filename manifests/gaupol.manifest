@@ -1,6 +1,3 @@
-[share/appdata]
-data/gaupol.appdata.xml
-
 [share/gaupol/extensions/bookmarks]
 data/extensions/bookmarks/*.*
 

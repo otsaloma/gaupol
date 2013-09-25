@@ -3,7 +3,11 @@
   <id type="desktop">gaupol.desktop</id>
   <licence>CC0</licence>
   <description>
-    <p>Gaupol is an editor for text-based subtitle files. It supports multiple subtitle file formats and provides means of creating subtitles, editing texts and timing subtitles to match video. The user interface is designed with attention to batch processing of multiple documents and convenience of translating.</p>
+    <_p>Gaupol is an editor for text-based subtitle files. It supports
+    multiple subtitle file formats and provides means of creating
+    subtitles, editing texts and timing subtitles to match video. The
+    user interface is designed with attention to batch processing of
+    multiple documents and convenience of translating.</_p>
   </description>
   <screenshots>
     <screenshot type="default">http://home.gna.org/gaupol/screenshots/main.png</screenshot>

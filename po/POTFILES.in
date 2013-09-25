@@ -121,6 +121,7 @@ aeidon/util.py
 data/extensions/bookmarks/bookmarks.py
 data/extensions/custom-framerates/custom-framerates.py
 data/extensions/side-pane/side-pane.py
+data/gaupol.appdata.xml.in
 data/gaupol.desktop.in
 gaupol/__init__.py
 gaupol/action.py

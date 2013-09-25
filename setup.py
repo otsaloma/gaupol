@@ -21,8 +21,8 @@ the aeidon.paths module, (3) handling translating of various files and
     variable stripped if it is given. If doing distro-packaging, make sure this
     file gets correctly written.
 
-(3) During installation, the .po files are compiled into .mo files, the desktop
-    file, pattern files and extension metadata files are translated. This
+(3) During installation, the .po files are compiled into .mo files, appdata,
+    desktop, pattern and extension metadata files are translated. This
     requires gettext and intltool, more specifically, executables 'msgfmt' and
     'intltool-merge' in $PATH.
 
@@ -281,6 +281,15 @@ class InstallData(install_data):
         files = glob.glob("{}/extensions/*/*.py".format(data_dir))
         distutils.util.byte_compile(files, optimize, self.force, self.dry_run)
 
+    def __get_appdata_file(self):
+        """Return a tuple for translated appdata file."""
+        path = os.path.join("data", "gaupol.appdata.xml")
+        if not running_py2exe:
+            run_command_or_exit("intltool-merge -x po {}.in {}"
+                                .format(path, path))
+
+        return ("share/appdata", (path,))
+
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
@@ -340,6 +349,7 @@ class InstallData(install_data):
                 for extension_file in glob.glob(pattern):
                     t = self.__get_extension_file(extension, extension_file)
                     self.data_files.append(t)
+            self.data_files.append(self.__get_appdata_file())
             self.data_files.append(self.__get_desktop_file())
         install_data.run(self)
         if self.distribution.with_gaupol:
