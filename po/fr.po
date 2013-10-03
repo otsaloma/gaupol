@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaupol\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-13 02:22+0300\n"
-"PO-Revision-Date: 2013-09-03 15:23+0100\n"
+"PO-Revision-Date: 2013-10-03 21:02+0300\n"
 "Last-Translator: RyDroid <rydroid_trans@yahoo.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
@@ -1486,7 +1486,7 @@ msgstr "Unicode"
 
 #: ../aeidon/encodings.py:163
 msgid "{description} ({name})"
-msgstr "{description} ({nom})"
+msgstr "{description} ({name})"
 
 #: ../aeidon/encodings.py:272
 msgid "Current locale ({})"
