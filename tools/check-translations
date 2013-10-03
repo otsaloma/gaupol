@@ -88,5 +88,18 @@ for name in sorted(glob.glob("*.po")):
                 print('"{}"'.format(msgstr))
                 print("")
 
+        # Check that string formatting fields exists as-is in
+        # the translation (order may vary, but not the field).
+        for i in range(len(msgid)):
+            if msgid[i] == "{":
+                j = msgid.index("}", i+1)
+                field = msgid[i:(j+1)]
+                if not field in msgstr:
+                    nbad += 1
+                    print("{}:{:d}: formatting mismatch in".format(*pos))
+                    print('"{}"'.format(msgid))
+                    print('"{}"'.format(msgstr))
+                    print("")
+
     print("{}: {:d} bad, {:d} good messages"
           .format(name, nbad, ntotal - nbad))
