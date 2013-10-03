@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-13 02:22+0300\n"
-"PO-Revision-Date: 2013-07-28 07:59+0200\n"
+"PO-Revision-Date: 2013-10-03 22:16+0300\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -1499,7 +1499,7 @@ msgstr "{description} ({name})"
 
 #: ../aeidon/encodings.py:272
 msgid "Current locale ({})"
-msgstr "Nynější kódování"
+msgstr "Nynější kódování ({})"
 
 #: ../aeidon/enums/align_methods.py:29 ../gaupol/enums/fields.py:32
 msgid "Subtitle number"
