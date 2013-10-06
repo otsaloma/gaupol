@@ -1,3 +1,10 @@
+Gaupol 0.24.2
+=============
+
+ * Make AppData file translatable
+ * Fix broken string formatting in the French translation that caused
+   KeyErrors handling encoding names (#709335)
+
 Gaupol 0.24.1
 =============
 
