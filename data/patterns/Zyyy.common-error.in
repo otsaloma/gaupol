@@ -39,6 +39,16 @@ Replacement=\1\2
 Repeat=True
 
 [Common Error Pattern]
+_Name=Space between digits
+_Description=Remove space between digits of a number
+Classes=OCR;
+# Don't leave thousand separators for four-digit numbers.
+Pattern=(\b\d) +(\d\d\d\b)(?!.\d)
+Flags=DOTALL;MULTILINE;
+Replacement=\1\2
+Repeat=True
+
+[Common Error Pattern]
 # Many subtitle fonts don't support Unicode note characters and many
 # video players by default use fonts with a poor coverage and have no
 # system of fallback fonts to provide missing characters.
