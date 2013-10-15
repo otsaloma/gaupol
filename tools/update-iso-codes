@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Update iso-codes XML files from /usr/share/xml/iso-codes.
 
 DIRNAME=$(dirname "$0")

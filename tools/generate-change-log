@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8-unix -*-
+"""
+Print GNU-style ChangeLog to standard output based on git log.
 
-# Print GNU-style ChangeLog to standard output based on git log.
-#
-# git commit messages are left untouched to avoid ruining formatting, so they
-# are expected to have been wrapped at 72 characters. All commit messages that
-# appear to be full ChangeLog messages are used as is, i.e. date and author
-# information from git log is not used for those entries.
-
+git commit messages are left untouched to avoid ruining formatting, so they
+are expected to have been wrapped at 72 characters. All commit messages that
+appear to be full ChangeLog messages are used as is, i.e. date and author
+information from git log is not used for those entries.
+"""
 import os
 import re
 import sys

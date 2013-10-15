@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8-unix -*-
-
-# Profile running gaupol.main.main.
-# Usage: See gaupol --help.
-
-# Unless planning on lazy loading modules,
-# we're not interested in profiling imports.
-
+"""
+Profile running gaupol.main.main.
+Usage: See gaupol --help.
+"""
 import atexit
 import bisect
 import chardet

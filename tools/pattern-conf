@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Generate pattern configuration files.
 # Usage: pattern-conf PATTERN_FILE...
 

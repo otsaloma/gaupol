@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Update the pot-file and all existing po-files with new strings.
 # Requires gettext and intltool.
 
