@@ -35,34 +35,14 @@ To install only the gaupol package, use command
 Note that the --with-* and --without-* are global options and must
 placed before any commands.
 
-Dependencies
-============
+Dependencies of aeidon and gaupol as Separate Packages
+======================================================
 
-As separate packages, aeidon requires Python [1] 3.2 or greater.
-Optional dependencies include: PyEnchant [5] 1.4.0 or greater --
-required for spell-checking; iso-codes [7] -- required to translate
-language and country names; and Universal Encoding Detector [8] --
-required for character encoding auto-detection. If aeidon is installed
-using the '--without-iso-codes' switch, then iso-codes is required
-instead of optional.
+Of the dependencies listed in the 'README' file, Python, PyEnchant,
+iso-codes and Universal Encoding Detector are to be associated with
+aeidon. If aeidon is installed using the '--without-iso-codes' switch,
+then iso-codes is required instead of optional.
 
-gaupol requires Python [1] 3.2 or greater, PyGObject [2] 3.6.0 or
-greater and aeidon of the exact same version as gaupol. Optional
-dependencies include GStreamer [3] 1.0 or greater -- required for the
-integrated video player; pocketsphinx [4] -- required for speech
-recognition; pygtkspell [6] -- required for inline spell-checking;
-MPlayer [9] or VLC [10] -- recommended for preview; PT Sans Caption and
-PT Mono fonts [11] -- recommended and used by default for integrated
-video player's subtitle and timecode overlays.
-
-  [1] http://www.python.org/
-  [2] http://wiki.gnome.org/PyGObject/
-  [3] http://gstreamer.freedesktop.org/
-  [4] http://cmusphinx.sourceforge.net/
-  [5] http://pythonhosted.org/pyenchant/
-  [6] http://koehlma.github.io/projects/pygtkspellcheck.html
-  [7] http://pkg-isocodes.alioth.debian.org/
-  [8] http://pypi.python.org/pypi/chardet
-  [9] http://www.mplayerhq.hu/
- [10] http://www.videolan.org/vlc/
- [11] http://www.paratype.com/public/
+Likewise, Python, PyGObject, GStreamer, pocketsphinx, pygtkspell,
+MPlayer, VLC and PT Sans Caption and PT Mono fonts are to be associated
+with gaupol. gaupol also requires aeidon of the exact same version.

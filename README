@@ -18,9 +18,12 @@ Dependencies
 ============
 
 Gaupol requires Python [1] 3.2 or greater and PyGObject [2] 3.6.0 or
-greater. Optional dependencies include: GStreamer [3] 1.0 or greater --
-required for the integrated video player; pocketsphinx [4] -- required
-for speech recognition; PyEnchant [5] 1.4.0 or greater -- required for
+greater. Optional, but recommended dependencies include: GStreamer [3]
+1.0 or greater (at least the core, gst-plugins-base and
+gst-plugins-good; and for good container and codec support preferrably
+each of gst-plugins-bad, gst-plugins-ugly and gst-libav) -- required for
+the integrated video player; pocketsphinx [4] -- required for speech
+recognition; PyEnchant [5] 1.4.0 or greater -- required for
 spell-checking; pygtkspellcheck [6] -- required for inline
 spell-checking; iso-codes [7] -- required to translate language and
 country names; Universal Encoding Detector [8] -- required for character

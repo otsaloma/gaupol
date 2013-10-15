@@ -1,11 +1,19 @@
+Gaupol 0.24.4/0.25
+==================
+
+ [X] Clarify GStreamer dependency as "at least the core,
+     gst-plugins-base and gst-plugins-good; and for good container and
+     codec support preferrably each of gst-plugins-bad, gst-plugins-ugly
+     and gst-libav" (#710138)
+ [X] Check that required GStreamer elements can be found and print
+     error messages if not (#710138)
+
 Gaupol 1.0
 ==========
 
  * Windows installer
    - https://code.google.com/p/osspack32/downloads/detail?name=pygi-aio-3.4.2rev11.7z
  * Add a GStreamer-based audio waveform display
-   - http://pecisk.blogspot.ca/2012/11/state-of-libwaveform-after-gsoc.html
-   - https://github.com/Pecisk/libwaveform
  * https://wiki.gnome.org/GnomeGoals/UnicodeUsage
  * https://wiki.gnome.org/GnomeGoals/PortToGtkApplication
  * https://wiki.gnome.org/GnomeGoals/PortToGMenu

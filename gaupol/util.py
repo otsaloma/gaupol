@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2008,2010,2012 Osmo Salomaa
+# Copyright (C) 2005-2008,2010,2012-2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -167,9 +167,38 @@ def get_zebra_color(tree_view):
 
 @aeidon.deco.once
 def gst_available():
-    """Return ``True`` if :mod:`Gst` module is available."""
+    """
+    Return ``True`` if :mod:`Gst` module is available.
+
+    Also check that required elements from gst-plugins-base and
+    gst-plugins-good are available.
+    """
     try:
         from gi.repository import Gst
+        if not Gst.ElementFactory.find("playbin"):
+            print("GStreamer found, but playbin missing.",
+                  "Try installing gst-plugins-base.",
+                  file=sys.stderr)
+
+            raise Exception
+        if not Gst.ElementFactory.find("textoverlay"):
+            print("GStreamer found, but textoverlay missing.",
+                  "Try installing gst-plugins-base.",
+                  file=sys.stderr)
+
+            raise Exception
+        if not Gst.ElementFactory.find("timeoverlay"):
+            print("GStreamer found, but timeoverlay missing.",
+                  "Try installing gst-plugins-base.",
+                  file=sys.stderr)
+
+            raise Exception
+        if not Gst.ElementFactory.find("autovideosink"):
+            print("GStreamer found, but autovideosink missing.",
+                  "Try installing gst-plugins-good.",
+                  file=sys.stderr)
+
+            raise Exception
         return True
     except Exception:
         return False
