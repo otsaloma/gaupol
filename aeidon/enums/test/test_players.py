@@ -42,5 +42,6 @@ class TestModule(aeidon.TestCase):
             assert hasattr(player, "label")
 
     def test_items(self):
+        assert hasattr(aeidon.players, "FFPLAY")
         assert hasattr(aeidon.players, "MPLAYER")
         assert hasattr(aeidon.players, "VLC")

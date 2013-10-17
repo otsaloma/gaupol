@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2009,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,6 +25,13 @@ import sys
 __all__ = ("players",)
 
 
+def _get_ffplay_executable():
+    if sys.platform == "win32":
+        directory = os.environ.get("PROGRAMFILES", "C:\\Program Files")
+        path = os.path.join(directory, "ffmpeg", "bin", "ffplay.exe")
+        return aeidon.util.shell_quote(path)
+    return "ffplay"
+
 def _get_mplayer_executable():
     if sys.platform == "win32":
         directory = os.environ.get("PROGRAMFILES", "C:\\Program Files")
@@ -38,6 +45,22 @@ def _get_vlc_executable():
         path = os.path.join(directory, "VideoLAN", "VLC", "vlc.exe")
         return aeidon.util.shell_quote(path)
     return "vlc"
+
+
+
+class FFplay(aeidon.EnumerationItem):
+
+    command = " ".join((_get_ffplay_executable(),
+                        "$VIDEOFILE",
+                        "-ss $SECONDS",
+                        "-fast",
+                        "-scodec null",
+                        "-vf subtitles=$SUBFILE"))
+
+    # ffplay always assumes subtitles are UTF-8,
+    # if not, the encoding would need to be specified.
+    command_utf_8 = command
+    label = "FFplay"
 
 
 class MPlayer(aeidon.EnumerationItem):
@@ -91,5 +114,6 @@ class VLC(aeidon.EnumerationItem):
 
 
 players = aeidon.Enumeration()
+players.FFPLAY = FFplay()
 players.MPLAYER = MPlayer()
 players.VLC = VLC()
