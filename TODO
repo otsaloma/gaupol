@@ -10,10 +10,13 @@ Gaupol 0.25
      and gst-libav" (#710138)
  [X] Check that required GStreamer elements can be found and print
      error messages if not (#710138)
+ [ ] Review open bugs
 
 Gaupol 1.0
 ==========
 
+ * Check AppData screenshots
+   - http://blogs.gnome.org/hughsie/2013/10/08/how-to-take-169-screenshots/
  * Windows installer
    - https://code.google.com/p/osspack32/downloads/detail?name=pygi-aio-3.4.2rev11.7z
  * Add a GStreamer-based audio waveform display

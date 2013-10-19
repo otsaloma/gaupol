@@ -6,6 +6,7 @@ __pycache__
 build/
 ChangeLog
 data/extensions/*/*.extension
+data/gaupol.appdata.xml
 data/gaupol.desktop
 data/patterns/*.capitalization
 data/patterns/*.common-error
