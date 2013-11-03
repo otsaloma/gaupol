@@ -53,6 +53,7 @@ class FFplay(aeidon.EnumerationItem):
     command = " ".join((_get_ffplay_executable(),
                         "$VIDEOFILE",
                         "-ss $SECONDS",
+                        "-fast",
                         "-scodec null",
                         "-vf subtitles=$SUBFILE"))
 
