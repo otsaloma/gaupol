@@ -1,9 +1,6 @@
-Gaupol 0.25
-===========
+Gaupol 0.24.4/0.25
+==================
 
- [X] Add FFmpeg's FFplay among preconfigured external video players
-     (it should be a lot lighter than VLC and unlike MPlayer it will
-     always seek to *before* the requested position)
  [X] Clarify GStreamer dependency as "at least the core,
      gst-plugins-base and gst-plugins-good; and for good container and
      codec support preferrably each of gst-plugins-bad, gst-plugins-ugly
