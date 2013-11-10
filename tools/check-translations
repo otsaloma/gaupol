@@ -4,10 +4,7 @@
 Check translation files for common errors.
 Usage: check-translations [XX[_YY[@ZZ]]...]
 """
-import glob
-import os
-import sys
-
+import glob, os, sys
 args = tuple(sys.argv[1:])
 args = tuple("{}.po".format(x) for x in args)
 os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))

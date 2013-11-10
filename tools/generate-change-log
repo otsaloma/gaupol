@@ -8,10 +8,7 @@ are expected to have been wrapped at 72 characters. All commit messages that
 appear to be full ChangeLog messages are used as is, i.e. date and author
 information from git log is not used for those entries.
 """
-import os
-import re
-import sys
-import textwrap
+import os, re, sys, textwrap
 
 re_commit = re.compile((r"^commit \w+?\n"
                         r"^Author: (?P<name>.*?) <(?P<email>.*?)>\n"

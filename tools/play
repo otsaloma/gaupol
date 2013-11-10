@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
-"""
-Play video file using gaupol.VideoPlayer.
-"""
-import os
-import sys
+"""Play video file using gaupol.VideoPlayer."""
+import os, sys
 file_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(file_dir, ".."))
-import aeidon
-import gaupol
+import aeidon, gaupol
 from gi.repository import Gtk
 player = gaupol.VideoPlayer()
 window = Gtk.Window()
