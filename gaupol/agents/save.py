@@ -95,10 +95,9 @@ class SaveAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         try: return page.project.save(doc, file)
         except IOError as error:
-            (no, message) = error.args
             gaupol.util.set_cursor_normal(self.window)
             basename = os.path.basename(file.path)
-            self._show_io_error_dialog(basename, message)
+            self._show_io_error_dialog(basename, str(error))
         except UnicodeError:
             gaupol.util.set_cursor_normal(self.window)
             basename = os.path.basename(file.path)

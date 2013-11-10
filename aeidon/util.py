@@ -573,7 +573,7 @@ def start_process(command, **kwargs):
                                 **kwargs)
 
     except OSError as error:
-        raise aeidon.ProcessError(error.args[1])
+        raise aeidon.ProcessError(str(error.args))
 
 def title_to_lower_case_ensure(value, title_name):
     assert value.islower()
