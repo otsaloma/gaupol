@@ -19,6 +19,5 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "..\build\exe.win32-3.3\*"; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\Gaupol"; Filename: "{app}\gaupol.exe"
-Name: "{group}\{cm:UninstallProgram,Gaupol}"; Filename: "{uninstallexe}"
+Name: "{commonprograms}\Gaupol"; Filename: "{app}\gaupol.exe"
 Name: "{commondesktop}\Gaupol"; Filename: "{app}\gaupol.exe"; Tasks: desktopicon

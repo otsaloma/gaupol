@@ -23,8 +23,9 @@ setup_kwargs.update(dict(
                                 packages=includes,
                                 include_files=include_files)),
 
-    executables=[cx_Freeze.Executable("bin/gaupol",
-                                      base="Win32GUI")],
+    executables=[cx_Freeze.Executable(script="bin/gaupol",
+                                      base="Win32GUI",
+                                      icon="data/icons/gaupol.ico")],
 
 ))
 
