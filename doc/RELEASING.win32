@@ -1,123 +1,62 @@
-On Different Versions of Windows
-================================
-
-Empirical evidence suggests that a Windows installer should be built
-on an XP system to best ensure that it will work on all three current
-versions: XP, Vista and 7.
-
 Preparing to Build Windows Installers
 =====================================
 
- NOTES: Most of this is outdated. Python 3 and GTK+ 3 binaries are
- available for Windows, but PyGObject not yet. GStreamer and
- pocketsphinx have thus far been excluded, since it would require
- including lots of plugins and language models in addition to the
- libraries. Packaging those would be a lot of work and would make the
- installer insanely large in size.
+ * Install the latest Python 3.x.
+   - http://python.org/download/
+ * Install Python for Windows Extensions
+   - http://sourceforge.net/projects/pywin32/
+ * Install setuptools
+   - https://pypi.python.org/pypi/setuptools
+ * Install PyGObject all-in-one for Windows
+   - http://sourceforge.net/projects/pygobjectwin32/files/
+   - Remove the Gst typelib since it's somehow broken
+     o .../site-packages/gtk/lib/girepository-1.0/Gst-1.0.typelib
+   - Fix GTK+3 theming for Windows
+     o .../site-packages/gtk/etc/gtk-3.0/settings.ini
 
- 1. Install the latest Python 2.x [1.1]. Do not install Tcl/Tk; it is
-    a horrendous size monster that for some reason gets pulled in by
-    py2exe. Not sure if Documentation, Utility Scripts and Test Suite
-    do any harm; if you don't need them, leave them out.
+[Settings]
+gtk-button-images = 0
+gtk-font-name = Verdana 8
+gtk-icon-sizes = gtk-menu=16,16:gtk-large-toolbar=16,16:gtk-small-toolbar=16,16:gtk-button=16,16
+gtk-icon-theme = gnome
+gtk-menu-images = 0
+gtk-theme-name = Adwaita
+gtk-toolbar-style = GTK_TOOLBAR_ICONS
 
-     [1.1] http://www.python.org/download/releases/
-
- 2. Install all necessary Python packages of the GTK+ stack [2.1-2.3].
-
-     [2.1] http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/
-     [2.2] http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
-     [2.3] http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/
-
- 3. Install chardet from source [3.1]. Use 'install_lib' command [3.2]
-    instead of the usual 'install' command to avoid laying an egg.
-
-     [3.1] http://chardet.feedparser.org/
-     [3.2] c:\python26\python.exe setup.py install_lib
-
- 4. Install PyEnchant and the enchant library [4.1]. Install
-    PyGtkSpell from GRAMPS [4.2] and GtkSpell from Pidgin [4.3]. Make
-    a copy of the libenchant DLL shipped with PyEnchant [4.4] as [4.5]
-    (note the different basename!) so that it is available to GtkSpell.
-
-     [4.1] http://www.rfk.id.au/software/pyenchant/download.html
-     [4.2] http://gramps-project.org/wiki/index.php?title=Windows_installer
-     [4.3] http://developer.pidgin.im/wiki/BuildingWinPidgin#GtkSpell
-     [4.5] c:\python26\...\libenchant-1.dll
-     [4.4] c:\gtk+\bin\libenchant.dll
-
- 5. Install GTK+. The easiest way seems to be to use the all-in-one
-    bundle [5.1], although it may include some unnecessary files.
-    Unpack to %SYSTEMDRIVE%\gtk+ and add %SYSTEMDRIVE%\gtk+\bin to
-    %PATH%.
-
-     [5.1] http://ftp.gnome.org/pub/gnome/binaries/win32/gtk+/
-
-    Create file 'etc\gtk-2.0\gtkrc' with the following content.
-
-        gtk-theme-name = "MS-Windows"
-
-    Edit file 'share\themes\MS-Windows\gtk-2.0\gtkrc' according to the
-    following lines.
-
-        gtk-toolbar-style = GTK_TOOLBAR_ICONS
-        GtkTreeView::allow-rules = 1
-
- 6. Install 'index.theme' from hicolor icon theme [6.1] to
-    'share/icons/hicolor' in the GTK+ bundle.
-
-     [6.1] http://www.freedesktop.org/wiki/Software/icon-theme
-
- 7. Install translations from iso-codes [7.1] to 'share/locale' in the
-    GTK+ bundle. Only include iso_639.mo, iso_3166.mo and iso_15924.mo.
-
-     [7.1] http://download.opensuse.org/repositories/windows:/mingw:/win32:/legacy/
-
- 8. Install py2exe [8.1] and Inno Setup [8.2].
-
-     [8.1] http://www.py2exe.org/
-     [8.2] http://www.jrsoftware.org/isdl.php
-
- 9. Test that everything has been installed correctly. Importing
-    'gtk', 'chardet' and 'enchant' at the Python console is a good
-    minimal test. At this point you should also be able to run gaupol
-    from the source directory.
+ * Install chardet compatible with Python 3
+   - https://github.com/bsidhom/python3-chardet
+   - python3 setyp.py install_lib
+ * Install PyEnchant
+   - https://pypi.python.org/pypi/pyenchant
+   - Keep libenchant-1.dll, but remove other DLLs since they seem to
+     conflict with ones from pygi-aio
+     o .../site-packages/enchant/*.dll
+ * Install PyGTKSpellCheck
+   - https://pypi.python.org/pypi/pygtkspellcheck/
+ * Install cx_Freeze
+   - http://cx-freeze.sourceforge.net/
+ * Install Inno Setup
+   - http://www.jrsoftware.org/isdl.php
 
 Releasing a New Version for Windows
 ===================================
 
- 1. Generate translations on a Unix machine (or wherever you have
-    gettext and intltool available) [1.1]. While all translations
-    (GtkBuilder files, Python code, desktop-style files) do not work
-    consistently, at least due to lacking mystic piles of code
-    presented as solutions for pygtk bug #574520, delete all po-files
-    prior to running 'install_data'.
+ * Remove all po-files since translations are difficult
+ * Generate translated files on a Unix machine
+   - python3 setup.py install_data -d /tmp
+ * Copy the gaupol directory to a Windows machine
+ * Run tools/winbuild.bat
+ * Run build/exe.win32-3.3/gaupol.exe and check that it works
+ * Compile tools/winbuild.iss with Inno Setup
+ * Install Gaupol and check that it works
+ * Copy installer to a Unix machine, 'gpg --detach' and upload
 
-     [1.1] ./setup.py clean install_data -d /tmp
+Known Issues
+============
 
- 2. Copy the whole top-level gaupol directory to a Windows machine, to
-    %SYSTEMDRIVE%\gaupol-X.Y.Z.
-
- 3. Run the 'tools\py2exe.bat' installation script. If py2exe fails to
-    find some DLL, it is probably just lacking from the not so
-    all-in-one GTK+ bundle. Find the DLL from [3.1] or [3.2] and add
-    it to the GTK+ bundle directory.
-
-     [3.1] http://ftp.gnome.org/pub/GNOME/binaries/win32/
-     [3.2] http://ftp.gnome.org/pub/GNOME/binaries/win32/dependencies/
-
-    py2exe places a whole lot of files under the 'dist' directory. You
-    should be able to run gaupol from 'gaupol.exe' in that directory.
-    If you get a missing DLL error, you will need to edit
-    'tools\py2exe.bat' to copy the necessary DLLs from wherever to
-    somewhere under 'dist'. If you get a Python ImportError, you will
-    need to edit 'winsetup.py' to include the missing module or
-    package.
-
- 4. Open 'tools\gaupol.iss' using Inno Setup. Update version numbers
-    and filenames. Compile the installer. Run the installer and run
-    the installed version of gaupol to make sure that they work. Check
-    that extensions, pattern files, spell-check and encoding
-    auto-detection work.
-
- 5. Copy the installer to a Unix machine (or wherever you have gpg
-    available), sign ('gpg --detach') and upload.
+ * GStreamer is broken in the pygi-aio package
+   - Integrated video player won't be available
+ * Most fonts look bad
+ * Recent file tracking doesn't work
+ * Links don't open (Gtk.LinkButton etc.)
+ * Installer contains a whole lot of unnecessary stuff
