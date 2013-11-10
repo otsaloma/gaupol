@@ -9,12 +9,18 @@ import cx_Freeze
 
 includes = ("aeidon", "gaupol", "gi")
 include_files = []
-gtk_path = os.path.join(site.getsitepackages()[1], "gtk")
+site_path = site.getsitepackages()[1]
+gtk_path = os.path.join(site_path, "gtk")
+enchant_path = os.path.join(site_path, "enchant")
 # XXX: How the fuck do we find out which DLLs are actually needed?
 for dll in glob.glob("{}\\*.dll".format(gtk_path)):
     include_files.append((dll, os.path.basename(dll)))
+for dll in glob.glob("{}\\*.dll".format(enchant_path)):
+    include_files.append((dll, os.path.basename(dll)))
 for lib in ("etc", "lib", "share"):
     include_files.append((os.path.join(gtk_path, lib), lib))
+for lib in ("lib", "share"):
+    include_files.append((os.path.join(enchant_path, lib), lib))
 include_files.append(("build/usr/share", "share"))
 
 setup_kwargs.update(dict(

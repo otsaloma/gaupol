@@ -18,7 +18,6 @@ Preparing to Build Windows Installers
 gtk-button-images = 0
 gtk-font-name = Verdana 8
 gtk-icon-sizes = gtk-menu=16,16:gtk-large-toolbar=16,16:gtk-small-toolbar=16,16:gtk-button=16,16
-gtk-icon-theme = gnome
 gtk-menu-images = 0
 gtk-theme-name = Adwaita
 gtk-toolbar-style = GTK_TOOLBAR_ICONS
@@ -28,6 +27,8 @@ gtk-toolbar-style = GTK_TOOLBAR_ICONS
    - python3 setyp.py install_lib
  * Install PyEnchant
    - https://pypi.python.org/pypi/pyenchant
+   - Monkey patch for frozen Python 3
+     o https://github.com/rfk/pyenchant/issues/22
    - Keep libenchant-1.dll, but remove other DLLs since they seem to
      conflict with ones from pygi-aio
      o .../site-packages/enchant/*.dll
