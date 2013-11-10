@@ -20,10 +20,13 @@ Preparing to Build Windows Installers
 gtk-button-images = 0
 gtk-font-name = Verdana 8
 gtk-icon-sizes = gtk-menu=16,16:gtk-large-toolbar=16,16:gtk-small-toolbar=16,16:gtk-button=16,16
+gtk-icon-theme-name = gnome
 gtk-menu-images = 0
 gtk-theme-name = Adwaita
 gtk-toolbar-style = GTK_TOOLBAR_ICONS
 
+ * Install symbolic icons from gnome-icon-theme
+   - http://packages.debian.org/sid/gnome-icon-theme-symbolic
  * Install chardet compatible with Python 3
    - https://github.com/bsidhom/python3-chardet
    - python3 setyp.py install_lib
@@ -45,7 +48,7 @@ Releasing a New Version for Windows
  * On a Unix system with proper tools available
    - Remove all po-files since translations are difficult
    - Generate translated data files
-     o python3 setup.py install_data -d /tmp
+     o python3 setup.py clean install_data -d /tmp
  * Copy the gaupol directory to a Windows system
  * Run 'tools/winbuild.bat'
  * Run 'tools/wintest.bat' to test that it works
