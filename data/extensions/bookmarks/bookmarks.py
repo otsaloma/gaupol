@@ -494,7 +494,7 @@ class BookmarksExtension(gaupol.Extension):
         lines = []
         for row in sorted(self._bookmarks[page].keys()):
             lines.append("{:d} {}".format(row+1, self._bookmarks[page][row]))
-        text = os.linesep.join(lines) + os.linesep
+        text = "\n".join(lines) + "\n"
         encoding = page.project.main_file.encoding
         aeidon.util.write(path, text, encoding)
 

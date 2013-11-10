@@ -59,12 +59,11 @@ class MicroDVD(aeidon.SubtitleFile):
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        n = self.newline.value
         if self.header.strip():
-            fobj.write(self.header.replace("\n", n))
-            fobj.write(n)
+            fobj.write(self.header + "\n")
         for subtitle in subtitles:
-            fobj.write("{{{:d}}}".format(subtitle.start_frame))
-            fobj.write("{{{:d}}}".format(subtitle.end_frame))
-            fobj.write(subtitle.get_text(doc).replace("\n", "|"))
-            fobj.write(n)
+            text = subtitle.get_text(doc).replace("\n", "|")
+            fobj.write(("{{{:d}}}{{{:d}}}{}\n"
+                        .format(subtitle.start_frame,
+                                subtitle.end_frame,
+                                text)))

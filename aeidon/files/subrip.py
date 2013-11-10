@@ -86,10 +86,9 @@ class SubRip(aeidon.SubtitleFile):
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        n = self.newline.value
         for i, subtitle in enumerate(subtitles):
-            if i > 0: fobj.write(n)
-            fobj.write("{:d}{}".format((i + 1), n))
+            if i > 0: fobj.write("\n")
+            fobj.write("{:d}\n".format(i+1))
             start = subtitle.start_time.replace(".", ",")
             end = subtitle.end_time.replace(".", ",")
             fobj.write("{} --> {}".format(start, end))
@@ -103,5 +102,4 @@ class SubRip(aeidon.SubtitleFile):
                 if not (x1 == x2 == y1 == y2 == 0):
                     fobj.write("  X1:{:03d} X2:{:03d}".format(x1, x2))
                     fobj.write( " Y1:{:03d} Y2:{:03d}".format(y1, y2))
-            text = subtitle.get_text(doc).replace("\n", n)
-            fobj.write("{}{}{}".format(n, text, n))
+            fobj.write("\n{}\n".format(subtitle.get_text(doc)))

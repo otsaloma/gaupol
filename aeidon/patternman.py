@@ -203,8 +203,8 @@ class PatternManager(object, metaclass=aeidon.Contractual):
         if not os.path.isdir(local_dir): return
         basename = "{}.{}.conf".format(code, self.pattern_type)
         path = os.path.join(local_dir, basename)
-        text = '<?xml version="1.0" encoding="utf-8"?>'
-        text += '{}<patterns>{}'.format(os.linesep, os.linesep)
+        text = '<?xml version="1.0" encoding="utf-8"?>\n'
+        text += '<patterns>\n'
         written_names = set()
         for pattern in self._patterns[code]:
             name = pattern.get_name(False)
@@ -214,9 +214,8 @@ class PatternManager(object, metaclass=aeidon.Contractual):
             name = name.replace('"', "&quot;")
             enabled = ("true" if pattern.enabled else "false")
             text += '  <pattern name="{}" '.format(name)
-            text += 'enabled="{}"/>'.format(enabled)
-            text += os.linesep
-        text += "</patterns>{}".format(os.linesep)
+            text += 'enabled="{}"/>\n'.format(enabled)
+        text += "</patterns>\n"
         aeidon.util.write(path, text, encoding)
 
     def get_countries(self, script, language):

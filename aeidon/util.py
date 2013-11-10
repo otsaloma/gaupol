@@ -211,7 +211,7 @@ def detect_format(path, encoding):
 def detect_newlines(path):
     """Detect and return the newline type of file at `path` or ``None``."""
     try:
-        fobj = open(path, "r")
+        fobj = open(path, "r", newline="")
         fobj.read()
         chars = fobj.newlines
     except Exception:
@@ -644,5 +644,5 @@ def writelines(path, lines, encoding=None, fallback="utf_8"):
     Raise :exc:`IOError` if writing fails.
     Raise :exc:`UnicodeError` if encoding fails.
     """
-    text = os.linesep.join(lines) + os.linesep
+    text = "\n".join(lines) + "\n"
     return write(path, text, encoding, fallback)

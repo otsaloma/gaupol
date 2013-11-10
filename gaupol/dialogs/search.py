@@ -470,7 +470,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         except OSError: return
         path = os.path.join(directory, "{}.history".format(name))
         history = getattr(self, name)
-        text = os.linesep.join(history) + os.linesep
+        text = "\n".join(history) + "\n"
         aeidon.util.write(path, text)
 
     def next_require(self):

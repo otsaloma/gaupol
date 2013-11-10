@@ -101,9 +101,23 @@ class TestModule(aeidon.TestCase):
                            aeidon.util.detect_format,
                            path, "ascii")
 
-    def test_detect_newlines(self):
-        newlines = aeidon.util.detect_newlines(self.new_subrip_file())
-        assert newlines is not None
+    def test_detect_newlines__mac(self):
+        path = aeidon.temp.create()
+        open(path, "w", newline="").write("a\rb\rc\r")
+        newlines = aeidon.util.detect_newlines(path)
+        assert newlines == aeidon.newlines.MAC
+
+    def test_detect_newlines__unix(self):
+        path = aeidon.temp.create()
+        open(path, "w", newline="").write("a\nb\nc\n")
+        newlines = aeidon.util.detect_newlines(path)
+        assert newlines == aeidon.newlines.UNIX
+
+    def test_detect_newlines__windows(self):
+        path = aeidon.temp.create()
+        open(path, "w", newline="").write("a\r\nb\r\nc\r\n")
+        newlines = aeidon.util.detect_newlines(path)
+        assert newlines == aeidon.newlines.WINDOWS
 
     def test_enchant_available(self):
         imp.reload(aeidon.util)
@@ -361,7 +375,7 @@ class TestModule(aeidon.TestCase):
         path = self.new_subrip_file()
         aeidon.util.writelines(path, (text,), "ascii")
         fobj = open(path, "r", encoding="utf_8")
-        assert fobj.read() == text + os.linesep
+        assert fobj.read() == text + "\n"
 
     def test_writelines__unicode_error(self):
         path = self.new_subrip_file()

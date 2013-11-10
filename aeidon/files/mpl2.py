@@ -58,7 +58,8 @@ class MPL2(aeidon.SubtitleFile):
         Raise :exc:`UnicodeError` if encoding fails.
         """
         for subtitle in subtitles:
-            fobj.write("[{:.0f}]".format(subtitle.start_seconds * 10))
-            fobj.write("[{:.0f}]".format(subtitle.end_seconds * 10))
-            fobj.write(subtitle.get_text(doc).replace("\n", "|"))
-            fobj.write(self.newline.value)
+            text = subtitle.get_text(doc).replace("\n", "|")
+            fobj.write(("[{:.0f}][{:.0f}]{}\n"
+                        .format(subtitle.start_seconds*10,
+                                subtitle.end_seconds*10,
+                                text)))

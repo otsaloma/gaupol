@@ -410,7 +410,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         if len(self._replacements) > self._max_replacements:
             # Discard the oldest of replacements.
             self._replacements[-self._max_replacements:]
-        text = os.linesep.join("|".join(x) for x in self._replacements)
-        try: aeidon.util.write(path, text + os.linesep)
+        text = "\n".join("|".join(x) for x in self._replacements)
+        try: aeidon.util.write(path, text + "\n")
         except (IOError, UnicodeError):
             aeidon.util.print_write_io(sys.exc_info(), path)

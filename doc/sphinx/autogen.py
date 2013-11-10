@@ -239,7 +239,7 @@ def write_template(name_in, names_out, **kwargs):
         kwargs[underline] = "-" * len(str(value))
     text = template.render(**kwargs)
     if not text.endswith(("\n", "\r")):
-        text = "".join((text, os.linesep))
+        text = "".join((text, "\n"))
     if name_in == "index":
         encoding = conf.source_encoding
         return open("index.rst", "w", encoding=encoding).write(text)

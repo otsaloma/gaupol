@@ -491,9 +491,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         root = self._flatten(self._root)
         defaults = self._flatten(self._defaults)
         for section in sorted(root):
-            fobj.write(os.linesep)
-            fobj.write("[{}]".format(section))
-            fobj.write(os.linesep)
+            fobj.write("\n[{}]\n".format(section))
             for option in sorted(root[section]):
                 value = root[section][option]
                 json_value = json.dumps(value, ensure_ascii=False)
@@ -506,11 +504,9 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 if (section in defaults) and (option in defaults[section]):
                     if value == defaults[section][option]:
                         fobj.write("# ")
-                try: fobj.write("{} = {}".format(option, json_value))
+                try: fobj.write("{} = {}\n".format(option, json_value))
                 except UnicodeError:
                     print(("Failed to write value '{}' of option '{}.{}' "
                            "to configuration file '{}'."
                            .format(value, section, option, self.path)),
                           file=sys.stderr)
-
-                fobj.write(os.linesep)

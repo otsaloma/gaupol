@@ -136,8 +136,10 @@ class SubtitleFile(object, metaclass=aeidon.Contractual):
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        with aeidon.util.atomic_open(self.path, "w",
-                                     encoding=self.encoding) as fobj:
+        with aeidon.util.atomic_open(self.path,
+                                     mode="w",
+                                     encoding=self.encoding,
+                                     newline=self.newline.value) as fobj:
 
             # UTF-8-SIG automatically adds the UTF-8 signature BOM. Likewise,
             # UTF-16 automatically adds the system default BOM, but

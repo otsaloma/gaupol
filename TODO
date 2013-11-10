@@ -5,9 +5,13 @@ Gaupol 0.25
      gst-plugins-base and gst-plugins-good; and for good container and
      codec support preferrably each of gst-plugins-bad, gst-plugins-ugly
      and gst-libav" (#710138)
- [X] Check that required GStreamer elements can be found and print
-     error messages if not (#710138)
+ [X] Check that required GStreamer elements can be found and
+     print error messages if not (#710138)
+ [X] Fix newline handling (Python 3 does implicit conversions
+     that were not accounted for)
  [X] Fix preview error dialog on Windows (#651675)
+ [X] Fix miscellaneous Windows-specific issues
+ [X] Rewrite Windows installer build scripts
 
 Gaupol 1.0
 ==========
