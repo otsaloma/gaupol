@@ -48,18 +48,13 @@ import tempfile
 
 clean = distutils.command.clean.clean
 distribution = distutils.dist.Distribution
+freezing = "GAUPOL_FREEZING" in os.environ
 install = distutils.command.install.install
 install_data = distutils.command.install_data.install_data
 install_lib = distutils.command.install_lib.install_lib
 log = distutils.log
-running_py2exe = "py2exe" in sys.argv
 sdist = distutils.command.sdist.sdist
 
-if running_py2exe:
-    # py2exe patches the Distribution class, so we need to import py2exe
-    # here and subclass the patched Distribution class ourselves.
-    import py2exe
-    distribution = py2exe.Distribution
 
 global_options = (
     ("mandir=", None, ("relative installation directory for man pages "
@@ -168,6 +163,8 @@ class Distribution(distribution):
 
     def __init__(self, attrs=None):
         """Initialize a Distribution object."""
+        if freezing:
+            self.executables = []
         self.mandir = "share/man"
         self.with_aeidon = True
         self.with_gaupol = True
@@ -284,7 +281,7 @@ class InstallData(install_data):
     def __get_appdata_file(self):
         """Return a tuple for translated appdata file."""
         path = os.path.join("data", "gaupol.appdata.xml")
-        if not running_py2exe:
+        if not freezing:
             run_command_or_exit("intltool-merge -x po {}.in {}"
                                 .format(path, path))
 
@@ -293,7 +290,7 @@ class InstallData(install_data):
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
-        if not running_py2exe:
+        if not freezing:
             run_command_or_exit("intltool-merge -d po {}.in {}"
                                 .format(path, path))
 
@@ -303,7 +300,7 @@ class InstallData(install_data):
         """Return a tuple for translated extension metadata file."""
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
-        if not running_py2exe:
+        if not freezing:
             run_command_or_exit("intltool-merge -d po {}.in {}"
                                 .format(path, path))
 
@@ -318,7 +315,7 @@ class InstallData(install_data):
             os.makedirs(mo_dir)
         mo_file = os.path.join(mo_dir, "gaupol.mo")
         dest_dir = os.path.join("share", mo_dir)
-        if not running_py2exe:
+        if not freezing:
             log.info("compiling '{}'".format(mo_file))
             run_command_or_exit("msgfmt {} -o {}"
                                 .format(po_file, mo_file))
@@ -329,7 +326,7 @@ class InstallData(install_data):
         """Return a tuple for the translated pattern file."""
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
-        if not running_py2exe:
+        if not freezing:
             run_command_or_exit("intltool-merge -d po {}.in {}"
                                 .format(path, path))
 

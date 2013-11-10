@@ -1,25 +1,32 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""cx_Freeze installation routines built on top of normal setup.py."""
+import os, site, sys
 
-"""py2exe installation routines built on top of normal setup.py."""
-
+os.environ["GAUPOL_FREEZING"] = "1"
 from setup import *
+import cx_Freeze
 
-includes = ("aeidon",
-            "chardet",
-            "enchant",
-            "gaupol",
-            "gi.repository.GLib",
-            "gi.repository.GObject",
-            "gi.repository.Gtk",
-            )
+includes = ("aeidon", "gaupol", "gi")
+include_files = []
+gtk_path = os.path.join(site.getsitepackages()[1], "gtk")
+# XXX: How the fuck do we find out which DLLs are actually needed?
+for dll in glob.glob("{}\\*.dll".format(gtk_path)):
+    include_files.append((dll, os.path.basename(dll)))
+for lib in ("etc", "lib", "share"):
+    include_files.append((os.path.join(gtk_path, lib), lib))
+include_files.append(("build/usr/share", "share"))
 
 setup_kwargs.update(dict(
-    windows=[dict(script="bin/gaupol",
-                  icon_resources=[(0, "data/icons/gaupol.ico")])],
+    options=dict(build_exe=dict(compressed=False,
+                                includes=includes,
+                                packages=includes,
+                                include_files=include_files)),
 
-    options=dict(py2exe=dict(includes=list(includes),
-                             packages=list(includes)))))
+    executables=[cx_Freeze.Executable("bin/gaupol",
+                                      base="Win32GUI")],
+
+))
 
 if __name__ == "__main__":
-    distutils.core.setup(**setup_kwargs)
+    cx_Freeze.setup(**setup_kwargs)
