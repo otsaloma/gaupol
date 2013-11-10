@@ -10,6 +10,8 @@ Preparing to Build Windows Installers
  * Install PyGObject all-in-one for Windows
    - http://sourceforge.net/projects/pygobjectwin32/files/
    - Remove the Gst typelib since it's somehow broken
+     (This is just the easiest and non-code-changing way
+      to prevent Gaupol from trying to use it.)
      o .../site-packages/gtk/lib/girepository-1.0/Gst-1.0.typelib
    - Fix GTK+3 theming for Windows
      o .../site-packages/gtk/etc/gtk-3.0/settings.ini
@@ -27,13 +29,11 @@ gtk-toolbar-style = GTK_TOOLBAR_ICONS
    - python3 setyp.py install_lib
  * Install PyEnchant
    - https://pypi.python.org/pypi/pyenchant
-   - Monkey patch for frozen Python 3
-     o https://github.com/rfk/pyenchant/issues/22
-   - Keep libenchant-1.dll, but remove other DLLs since they seem to
-     conflict with ones from pygi-aio
+   - Keep libenchant-1.dll, but remove other DLLs since they seem
+     to conflict with ones from pygi-aio
      o .../site-packages/enchant/*.dll
- * Install PyGTKSpellCheck
-   - https://pypi.python.org/pypi/pygtkspellcheck/
+   - Monkey patch to accomodate a frozen installation
+     o https://github.com/rfk/pyenchant/issues/25
  * Install cx_Freeze
    - http://cx-freeze.sourceforge.net/
  * Install Inno Setup
@@ -42,22 +42,26 @@ gtk-toolbar-style = GTK_TOOLBAR_ICONS
 Releasing a New Version for Windows
 ===================================
 
- * Remove all po-files since translations are difficult
- * Generate translated files on a Unix machine
-   - python3 setup.py install_data -d /tmp
- * Copy the gaupol directory to a Windows machine
- * Run tools/winbuild.bat
- * Run build/exe.win32-3.3/gaupol.exe and check that it works
- * Compile tools/winbuild.iss with Inno Setup
+ * On a Unix system with proper tools available
+   - Remove all po-files since translations are difficult
+   - Generate translated data files
+     o python3 setup.py install_data -d /tmp
+ * Copy the gaupol directory to a Windows system
+ * Run 'tools/winbuild.bat'
+ * Run 'tools/wintest.bat' to test that it works
+   - If needed, enable a console window to see output
+     o winsetup.py: s/base="Win32GUI"/base=None/
+ * Compile 'tools/winbuild.iss' with Inno Setup
  * Install Gaupol and check that it works
- * Copy installer to a Unix machine, 'gpg --detach' and upload
+ * On a Unix system, sign ('gpg --detach') and upload
 
 Known Issues
 ============
 
  * GStreamer is broken in the pygi-aio package
    - Integrated video player won't be available
- * Most fonts look bad
+ * Most fonts look bad; default set to Verdana
  * Recent file tracking doesn't work
  * Links don't open (Gtk.LinkButton etc.)
- * Installer contains a whole lot of unnecessary stuff
+ * The installer contains a whole lot of unnecessary stuff because it's
+   difficult to tell which DLLs etc. are actually needed
