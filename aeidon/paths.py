@@ -54,11 +54,11 @@ def get_config_home_directory_xdg():
 def get_data_directory():
     """Return path to the global data directory."""
     if hasattr(sys, "frozen"):
-        return get_data_directory_py2exe()
+        return get_data_directory_frozen()
     return get_data_directory_source()
 
-def get_data_directory_py2exe():
-    """Return path to the global data directory on ``py2exe``."""
+def get_data_directory_frozen():
+    """Return path to the global data directory on ``frozen``."""
     directory = os.path.dirname(sys.argv[0])
     directory = os.path.join(directory, "share", "gaupol")
     return os.path.abspath(directory)
@@ -93,11 +93,11 @@ def get_data_home_directory_xdg():
 def get_locale_directory():
     """Return path to the locale directory."""
     if hasattr(sys, "frozen"):
-        return get_locale_directory_py2exe()
+        return get_locale_directory_frozen()
     return get_locale_directory_source()
 
-def get_locale_directory_py2exe():
-    """Return path to the locale directory on ``py2exe``."""
+def get_locale_directory_frozen():
+    """Return path to the locale directory on ``frozen``."""
     directory = os.path.dirname(sys.argv[0])
     directory = os.path.join(directory, "share", "locale")
     return os.path.abspath(directory)
