@@ -1,6 +1,9 @@
 Gaupol 0.25
 ===========
 
+ [X] Depend on GtkSpell 3.0.0 or later instead of pygtkspellcheck
+     for inline spell-check
+     - http://gtkspell.sourceforge.net/
  [X] Clarify GStreamer dependency as "at least the core,
      gst-plugins-base and gst-plugins-good; and for good container and
      codec support preferrably each of gst-plugins-bad, gst-plugins-ugly
@@ -11,7 +14,7 @@ Gaupol 0.25
      that were not accounted for)
  [X] Fix preview error dialog on Windows (#651675)
  [X] Fix video selection dialog on Windows (#654523)
- [X] Fix miscellaneous Windows-specific issues
+ [X] Fix miscellaneous small Windows-specific issues
  [X] Rewrite Windows installer build scripts (thanks to TumaGonx Zakkum
      for pygi-aio binaries and Gian Mario Tagliaretti for a template
      cx_Freeze setup script)

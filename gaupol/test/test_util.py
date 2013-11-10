@@ -73,9 +73,9 @@ class TestModule(gaupol.TestCase):
         imp.reload(gaupol.util)
         assert gaupol.util.get_gst_version()
 
-    def test_get_gtkspellcheck_version(self):
+    def test_get_gtkspell_version(self):
         imp.reload(gaupol.util)
-        assert gaupol.util.get_gtkspellcheck_version()
+        assert gaupol.util.get_gtkspell_version()
 
     def test_get_preview_command__custom(self):
         gaupol.conf.preview.use_custom_command = True
@@ -105,9 +105,9 @@ class TestModule(gaupol.TestCase):
         imp.reload(gaupol.util)
         assert gaupol.util.gst_available()
 
-    def test_gtkspellcheck_available(self):
+    def test_gtkspell_available(self):
         imp.reload(gaupol.util)
-        gaupol.util.gtkspellcheck_available()
+        gaupol.util.gtkspell_available()
 
     def test_hex_to_rgba(self):
         color = gaupol.util.hex_to_rgba("#ff0000")

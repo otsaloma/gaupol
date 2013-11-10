@@ -102,16 +102,21 @@ def get_gst_version():
     except Exception:
         return None
 
-def get_gtkspellcheck_version_ensure(value):
+def get_gtkspell_version_ensure(value):
     if value is not None:
         assert isinstance(value, str)
 
 @aeidon.deco.contractual
-def get_gtkspellcheck_version():
-    """Return :mod:`gtkspellcheck` version number as string or ``None``."""
+def get_gtkspell_version():
+    """
+    Return :mod:`GtkSpell` version number as string or ``None``.
+
+    Please try not to use this.
+    """
     try:
-        import gtkspellcheck
-        return gtkspellcheck.__version__
+        from gi.repository import GtkSpell
+        # XXX: Not public!?
+        return GtkSpell._version
     except Exception:
         return None
 
@@ -204,10 +209,10 @@ def gst_available():
         return False
 
 @aeidon.deco.once
-def gtkspellcheck_available():
-    """Return ``True`` if :mod:`gtkspellcheck` module is available."""
+def gtkspell_available():
+    """Return ``True`` if :mod:`GtkSpell` module is available."""
     try:
-        import gtkspellcheck
+        from gi.repository import GtkSpell
         return True
     except Exception:
         return False
@@ -267,11 +272,14 @@ def pocketsphinx_available():
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
-    if (gaupol.util.gtkspellcheck_available() and
+    if (gaupol.util.gtkspell_available() and
         gaupol.conf.spell_check.inline):
-        import gtkspellcheck
+        from gi.repository import GtkSpell
         language = gaupol.conf.spell_check.language
-        try: checker = gtkspellcheck.SpellChecker(text_view, language)
+        try:
+            checker = GtkSpell.Checker()
+            checker.set_language(language)
+            checker.attach(text_view)
         except Exception: pass
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):

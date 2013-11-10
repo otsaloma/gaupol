@@ -80,11 +80,11 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
         self._length_cell_check.set_active(show_cell)
         self._length_edit_check.set_active(show_edit)
         self._length_combo.set_active(gaupol.conf.editor.length_unit)
-        if gaupol.util.gtkspellcheck_available():
+        if gaupol.util.gtkspell_available():
             inline = gaupol.conf.spell_check.inline
             self._spell_check_check.set_active(inline)
             self._spell_check_check.set_sensitive(True)
-        else: # gtkspellcheck not available
+        else: # GtkSpell not available
             self._spell_check_check.set_active(False)
             self._spell_check_check.set_sensitive(False)
 
