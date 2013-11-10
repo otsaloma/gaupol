@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2007-2009 Osmo Salomaa
+# Copyright (C) 2007-2009,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -22,25 +22,24 @@ import os
 
 class TestModule(aeidon.TestCase):
 
-    def test_close(self):
-        path = aeidon.temp.create()
-        aeidon.temp.close(path)
-        aeidon.temp.remove(path)
-
     def test_create(self):
         path = aeidon.temp.create()
         aeidon.temp.remove(path)
 
     def test_create_directory(self):
         path = aeidon.temp.create_directory()
-        aeidon.temp.remove_directory(path)
-
-    def test_get_handle(self):
-        path = aeidon.temp.create()
-        aeidon.temp.get_handle(path)
         aeidon.temp.remove(path)
 
-    def test_remove(self):
+    def test_remove__directory(self):
+        path = aeidon.temp.create_directory()
+        open(os.path.join(path, "a"), "w").write("a")
+        open(os.path.join(path, "b"), "w").write("b")
+        os.makedirs(os.path.join(path, "c"))
+        aeidon.temp.remove(path)
+        assert not os.path.isdir(path)
+        aeidon.temp.remove(path)
+
+    def test_remove__file(self):
         path = aeidon.temp.create()
         aeidon.temp.remove(path)
         assert not os.path.isfile(path)
@@ -52,12 +51,3 @@ class TestModule(aeidon.TestCase):
         aeidon.temp.remove_all()
         assert not os.path.isfile(path_1)
         assert not os.path.isfile(path_2)
-
-    def test_remove_directory(self):
-        path = aeidon.temp.create_directory()
-        open(os.path.join(path, "a"), "w").write("a")
-        open(os.path.join(path, "b"), "w").write("b")
-        os.makedirs(os.path.join(path, "c"))
-        aeidon.temp.remove_directory(path)
-        assert not os.path.isdir(path)
-        aeidon.temp.remove_directory(path)

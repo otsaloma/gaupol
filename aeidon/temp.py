@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2007-2009 Osmo Salomaa
+# Copyright (C) 2007-2009,2013 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -23,13 +23,8 @@ import atexit
 import os
 import tempfile
 
-_handles = {}
+_paths = []
 
-
-def close(path):
-    """Close the OS-level handle to the file at `path`."""
-    os.close(_handles[path])
-    del _handles[path]
 
 def create_ensure(value, suffix=""):
     assert os.path.isfile(value)
@@ -38,7 +33,11 @@ def create_ensure(value, suffix=""):
 def create(suffix=""):
     """Create a new temporary file and return its path."""
     handle, path = tempfile.mkstemp(suffix, "gaupol-")
-    _handles[path] = handle
+    # Avoid PermissionErrors etc. on Windows by closing
+    # the handle and returning only the path which will
+    # be opened and closed separately.
+    os.close(handle)
+    _paths.append(path)
     return path
 
 def create_directory_ensure(value, suffix=""):
@@ -47,33 +46,24 @@ def create_directory_ensure(value, suffix=""):
 @aeidon.deco.contractual
 def create_directory(suffix=""):
     """Create a new temporary directory and return its path."""
-    return tempfile.mkdtemp(suffix, "gaupol-")
+    path = tempfile.mkdtemp(suffix, "gaupol-")
+    _paths.append(path)
+    return path
 
-def get_handle(path):
-    """Return the OS-level handle to the file at path."""
-    return _handles[path]
-
-@aeidon.deco.silent(OSError)
 def remove(path):
-    """Remove temporary file at `path` after closing its handle."""
-    if path in _handles:
-        close(path)
-    os.remove(path)
+    """Remove temporary file or directory at `path`."""
+    if os.path.isfile(path):
+        try: os.remove(path)
+        except OSError: pass
+    if os.path.isdir(path):
+        for name in os.listdir(path):
+            remove(os.path.join(path, name))
+        try: os.rmdir(path)
+        except OSError: pass
 
 def remove_all():
-    """Remove all temporary files after closing their handles."""
-    for path in set(_handles.keys()):
+    """Remove all temporary files and directories."""
+    for path in _paths:
         remove(path)
-
-@aeidon.deco.silent(OSError)
-def remove_directory(root):
-    """Remove temporary directory at `root` and all its contents."""
-    for name in os.listdir(root):
-        path = os.path.join(root, name)
-        if os.path.isdir(path):
-            remove_directory(path)
-        elif os.path.isfile(path):
-            remove(path)
-    os.rmdir(root)
 
 atexit.register(remove_all)

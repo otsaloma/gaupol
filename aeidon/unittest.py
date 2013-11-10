@@ -92,7 +92,6 @@ class TestCase(object, metaclass=aeidon.Contractual):
         """Return path to a new temporary subtitle file."""
         text = self.get_sample_text(format, name)
         path = aeidon.temp.create(format.extension)
-        aeidon.temp.close(path)
         with open(path, "w", encoding="ascii") as fobj:
             fobj.write(text)
         return path

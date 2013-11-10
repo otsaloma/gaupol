@@ -102,11 +102,6 @@ def atomic_open(path, mode="w", *args, **kwargs):
         except Exception:
             pass
 
-if sys.platform == "win32":
-    # XXX: os.replace and os.remove in atomic open both return
-    # PermissionError [WinError 5 and 32] on Windows.
-    atomic_open = open
-
 @aeidon.deco.once
 def chardet_available():
     """Return ``True`` if :mod:`chardet` module is available."""

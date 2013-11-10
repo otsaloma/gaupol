@@ -31,18 +31,19 @@ class PreviewAgent(aeidon.Delegate):
 
     """Previewing subtitles with a video player."""
 
-    def _check_process_state(self, page, process, output_path, command):
+    def _check_process_state(self, page, process, output_fobj, command):
         """Check if `process` has terminated or not."""
         if process.poll() is None: return True
-        self._handle_output(process, output_path, command)
+        self._handle_output(process, output_fobj, command)
         return False # to not check again.
 
-    def _handle_output(self, process, output_path, command):
+    def _handle_output(self, process, output_fobj, command):
         """Handle output of finished `process`."""
-        with open(output_path, "r") as fobj:
+        output_fobj.close()
+        with open(output_fobj.name, "r") as fobj:
             output = fobj.read()
         output = "$ {}\n\n{}".format(command, output)
-        aeidon.temp.remove(output_path)
+        aeidon.temp.remove(output_fobj.name)
         self.output_window.set_output(output)
         if process.returncode == 0: return
         dialog = gaupol.PreviewErrorDialog(self.window, output)
@@ -99,7 +100,7 @@ class PreviewAgent(aeidon.Delegate):
         command = gaupol.util.get_preview_command()
         offset = gaupol.conf.preview.offset
         encoding = ("utf_8" if gaupol.conf.preview.force_utf_8 else None)
-        try: process, command, output_path = page.project.preview(position,
+        try: process, command, output_fobj = page.project.preview(position,
                                                                   doc,
                                                                   command,
                                                                   offset,
@@ -118,7 +119,7 @@ class PreviewAgent(aeidon.Delegate):
                          self._check_process_state,
                          page,
                          process,
-                         output_path,
+                         output_fobj,
                          command)
 
     @aeidon.deco.export

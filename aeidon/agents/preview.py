@@ -124,7 +124,8 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         changed or not.
 
         Return a three tuple of :class:`subprocess.POpen` instance, command
-        with variables expanded and process standard output and error path.
+        with variables expanded and a file object to which process standard
+        output and standard error are directed.
 
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
@@ -132,7 +133,7 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """
         sub_path = self._get_subtitle_path(doc, encoding, temp=temp)
         output_path = aeidon.temp.create(".output")
-        output_fd = aeidon.temp.get_handle(output_path)
+        output_fobj = open(output_path, "w")
         seconds = max(0, self.calc.to_seconds(position) - offset)
         command = string.Template(command).safe_substitute(
             MILLISECONDS=("{:.0f}".format(seconds * 1000)),
@@ -142,6 +143,6 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         process = aeidon.util.start_process(command,
                                             stderr=subprocess.STDOUT,
-                                            stdout=output_fd)
+                                            stdout=output_fobj)
 
-        return process, command, output_path
+        return process, command, output_fobj
