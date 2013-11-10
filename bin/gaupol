@@ -11,7 +11,7 @@ def prepare_paths():
     sys.path.insert(0, os.path.abspath(path))
 
 def running_from_source():
-    # '__file__' attribute is not available with py2exe.
+    # '__file__' attribute is not available when frozen.
     if not "__file__" in globals(): return False
     parent = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(parent, "..", "data", "gaupol.desktop.in")

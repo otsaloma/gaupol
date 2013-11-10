@@ -43,8 +43,8 @@ class TestModule(aeidon.TestCase):
         assert hasattr(aeidon, "CONFIG_HOME_DIR")
 
     @aeidon.deco.monkey_patch(sys, "frozen")
-    def test_data_dir__py2exe(self):
-        sys.frozen = "py2exe"
+    def test_data_dir__frozen(self):
+        sys.frozen = "frozen"
         imp.reload(aeidon.paths)
         assert hasattr(aeidon, "DATA_DIR")
 
@@ -70,8 +70,8 @@ class TestModule(aeidon.TestCase):
         assert hasattr(aeidon, "DATA_HOME_DIR")
 
     @aeidon.deco.monkey_patch(sys, "frozen")
-    def test_locale_dir__py2exe(self):
-        sys.frozen = "py2exe"
+    def test_locale_dir__frozen(self):
+        sys.frozen = "frozen"
         imp.reload(aeidon.paths)
         assert hasattr(aeidon, "LOCALE_DIR")
 
