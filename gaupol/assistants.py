@@ -631,12 +631,12 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
         language = gaupol.conf.spell_check.language
         if gaupol.conf.join_split_words.join:
             try: project.spell_check_join_words(indices, doc, language)
-            except enchant.Error as message:
-                return self._show_error_dialog(message)
+            except enchant.Error as error:
+                return self._show_error_dialog(str(error))
         if gaupol.conf.join_split_words.split:
             try: project.spell_check_split_words(indices, doc, language)
-            except enchant.Error as message:
-                return self._show_error_dialog(message)
+            except enchant.Error as error:
+                return self._show_error_dialog(str(error))
 
 
 class LineBreakPage(LocalePage):

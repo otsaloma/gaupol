@@ -191,8 +191,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             # actually work when trying to use it, hence check something.
             dictionary.check("gaupol")
         except enchant.Error as error:
-            (message,) = error.args
-            self._show_error_dialog(message)
+            self._show_error_dialog(str(error))
             raise ValueError("Dictionary initialization failed "
                              "for language {}".format(repr(self._language)))
 

@@ -377,9 +377,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             gaupol.util.set_cursor_normal(self.window)
             self._show_format_error_dialog(basename)
         except IOError as error:
-            (no, message) = error.args
             gaupol.util.set_cursor_normal(self.window)
-            self._show_io_error_dialog(basename, message)
+            self._show_io_error_dialog(basename, str(error))
         except aeidon.ParseError:
             gaupol.util.set_cursor_normal(self.window)
             bom_encoding = aeidon.encodings.detect_bom(path)

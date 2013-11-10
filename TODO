@@ -1,5 +1,5 @@
-Gaupol 0.24.4/0.25
-==================
+Gaupol 0.25
+===========
 
  [X] Clarify GStreamer dependency as "at least the core,
      gst-plugins-base and gst-plugins-good; and for good container and
@@ -7,7 +7,7 @@ Gaupol 0.24.4/0.25
      and gst-libav" (#710138)
  [X] Check that required GStreamer elements can be found and print
      error messages if not (#710138)
- [ ] Review open bugs
+ [X] Fix preview error dialog on Windows (#651675)
 
 Gaupol 1.0
 ==========

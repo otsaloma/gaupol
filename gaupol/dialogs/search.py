@@ -396,8 +396,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         if gaupol.conf.search.ignore_case:
             flags = flags | re.IGNORECASE
         try: page.project.set_search_regex(pattern, flags)
-        except re.error as message:
-            self._show_regex_error_dialog_pattern(str(message))
+        except re.error as error:
+            self._show_regex_error_dialog_pattern(str(error))
             raise gaupol.Default
         self._add_pattern_to_history()
 
@@ -546,8 +546,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         subtitle = page.project.subtitles[self._match_row]
         length = len(subtitle.get_text(self._match_doc))
         try: page.project.replace()
-        except re.error as message:
-            return self._show_regex_error_dialog_replacement(str(message))
+        except re.error as error:
+            return self._show_regex_error_dialog_replacement(str(error))
         shift = (len(subtitle.get_text(self._match_doc)) - length)
         self._match_span[1] += shift
         (self.next if self._was_next else self.previous)()
@@ -565,8 +565,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             self._set_pattern(page)
             self._set_replacement(page)
             try: count += page.project.replace_all()
-            except re.error as message:
-                self._show_regex_error_dialog_replacement(str(message))
+            except re.error as error:
+                self._show_regex_error_dialog_replacement(str(error))
                 break
         self._reset_properties()
         self._statuslabel.flash_text(aeidon.i18n.ngettext(

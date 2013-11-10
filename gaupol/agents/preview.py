@@ -106,11 +106,10 @@ class PreviewAgent(aeidon.Delegate):
                                                                   encoding,
                                                                   temp)
 
-        except aeidon.ProcessError as message:
-            return self._show_process_error_dialog(message)
+        except aeidon.ProcessError as error:
+            return self._show_process_error_dialog(str(error))
         except (IOError, OSError) as error:
-            (no, message) = error.args
-            return self._show_io_error_dialog(message)
+            return self._show_io_error_dialog(str(error))
         except UnicodeError:
             return self._show_encoding_error_dialog()
         # GLib.child_watch_add does not appear to work on Windows,
