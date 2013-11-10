@@ -12,7 +12,9 @@ Gaupol 0.25
  [X] Fix preview error dialog on Windows (#651675)
  [X] Fix video selection dialog on Windows (#654523)
  [X] Fix miscellaneous Windows-specific issues
- [X] Rewrite Windows installer build scripts
+ [X] Rewrite Windows installer build scripts (thanks to TumaGonx Zakkum
+     for pygi-aio binaries and Gian Mario Tagliaretti for a template
+     cx_Freeze setup script)
 
 Gaupol 1.0
 ==========
