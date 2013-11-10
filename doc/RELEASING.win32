@@ -51,7 +51,7 @@ Releasing a New Version for Windows
      o python3 setup.py clean install_data -d /tmp
  * Copy the gaupol directory to a Windows system
  * Run 'tools/winbuild.bat'
- * Run 'tools/wintest.bat' to test that it works
+ * Run 'tools/winrun.bat' to test that it works
    - If needed, enable a console window to see output
      o winsetup.py: s/base="Win32GUI"/base=None/
  * Compile 'tools/winbuild.iss' with Inno Setup
