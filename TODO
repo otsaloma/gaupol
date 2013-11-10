@@ -10,6 +10,7 @@ Gaupol 0.25
  [X] Fix newline handling (Python 3 does implicit conversions
      that were not accounted for)
  [X] Fix preview error dialog on Windows (#651675)
+ [X] Fix video selection dialog on Windows (#654523)
  [X] Fix miscellaneous Windows-specific issues
  [X] Rewrite Windows installer build scripts
 

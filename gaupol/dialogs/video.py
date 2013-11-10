@@ -19,6 +19,7 @@
 """Dialog for selecting a video file."""
 
 import aeidon
+import sys
 _ = aeidon.i18n._
 
 from gi.repository import GObject
@@ -44,12 +45,18 @@ class VideoDialog(Gtk.FileChooserDialog):
 
     def _init_filters(self):
         """Intialize the file filters."""
-        file_filter = Gtk.FileFilter()
-        file_filter.add_pattern("*")
-        file_filter.set_name(_("All files"))
-        self.add_filter(file_filter)
-        file_filter = Gtk.FileFilter()
-        file_filter.add_mime_type("video/*")
-        file_filter.set_name(_("Video files"))
-        self.add_filter(file_filter)
-        self.set_filter(file_filter)
+        all_filter = Gtk.FileFilter()
+        all_filter.add_pattern("*")
+        all_filter.set_name(_("All files"))
+        self.add_filter(all_filter)
+        video_filter = Gtk.FileFilter()
+        video_filter.add_mime_type("video/*")
+        video_filter.set_name(_("Video files"))
+        self.add_filter(video_filter)
+        if sys.platform == "win32":
+            # Mimetype detection seem unreliable on Windows.
+            # We could enumerate filename extensions instead
+            # of using mimetypes, but I'm feeling lazy.
+            self.set_filter(all_filter)
+        else:
+            self.set_filter(video_filter)
