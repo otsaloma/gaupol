@@ -1,13 +1,14 @@
+; -*- conf-windows -*-
 [Setup]
 AllowNoIcons=yes
 AppName=Gaupol
 AppPublisher=Osmo Salomaa
 AppPublisherURL=http://home.gna.org/gaupol/
-AppVerName=Gaupol 0.19.1
+AppVerName=Gaupol 0.24.3.20131110
 Compression=lzma
 DefaultDirName={pf}\Gaupol
 DefaultGroupName=Gaupol
-OutputBaseFilename=gaupol-0.19.1-win32
+OutputBaseFilename=gaupol-0.24.3.20131110-win32
 OutputDir=".."
 SolidCompression=yes
 
@@ -15,7 +16,7 @@ SolidCompression=yes
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\dist\*"; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\build\exe.win32-3.3\*"; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\Gaupol"; Filename: "{app}\gaupol.exe"
