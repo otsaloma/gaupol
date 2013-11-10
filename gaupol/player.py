@@ -23,10 +23,10 @@ import gaupol
 _ = aeidon.i18n._
 
 from gi.repository import Gdk
-from gi.repository import GdkX11
 from gi.repository import Gtk
 
 try:
+    from gi.repository import GdkX11
     from gi.repository import Gst
     from gi.repository import GstPbutils
     from gi.repository import GstVideo
