@@ -100,7 +100,7 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         assert self.video_path is not None
 
     def preview_ensure(self, value, *args, **kwargs):
-        assert os.path.isfile(value[2])
+        assert os.path.isfile(value[2].name)
 
     @aeidon.deco.export
     def preview(self,

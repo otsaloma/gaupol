@@ -1,6 +1,7 @@
 Gaupol 0.25
 ===========
 
+ [ ] Check the recent file filtering etc.
  [X] Depend on GtkSpell 3.0.0 or later instead of pygtkspellcheck
      for inline spell-check
      - http://gtkspell.sourceforge.net/
@@ -24,8 +25,7 @@ Gaupol 1.0
 
  * Check AppData screenshots
    - http://blogs.gnome.org/hughsie/2013/10/08/how-to-take-169-screenshots/
- * Windows installer
-   - https://code.google.com/p/osspack32/downloads/detail?name=pygi-aio-3.4.2rev11.7z
+ * Allow using multiple dictionaries for spell-check
  * Add a GStreamer-based audio waveform display
  * https://wiki.gnome.org/GnomeGoals/UnicodeUsage
  * https://wiki.gnome.org/GnomeGoals/PortToGtkApplication
