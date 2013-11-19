@@ -1,7 +1,6 @@
 Gaupol 0.25
 ===========
 
- [ ] Check the recent file filtering etc.
  [X] Depend on GtkSpell 3.0.0 or later instead of pygtkspellcheck
      for inline spell-check
      - http://gtkspell.sourceforge.net/
@@ -11,7 +10,8 @@ Gaupol 0.25
      and gst-libav" (#710138)
  [X] Check that required GStreamer elements can be found and
      print error messages if not (#710138)
- [X] Fix newline handling (Python 3 does implicit conversions
+ [X] Filter open recent menu items by mimetype
+ [X] Fix newline handling on Windows (Python 3 does implicit conversions
      that were not accounted for)
  [X] Fix preview error dialog on Windows (#651675)
  [X] Fix video selection dialog on Windows (#654523)

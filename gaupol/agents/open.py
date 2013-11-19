@@ -415,10 +415,6 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def add_to_recent_files(self, path, format, doc):
         """Add `path` to recent files managed by the recent manager."""
         uri = aeidon.util.path_to_uri(path)
-        group = ("gaupol-translation"
-                 if doc == aeidon.documents.TRAN
-                 else "gaupol-main")
-
         if GObject.pygobject_version >= (3, 7, 4):
             # Trying to set strings to struct fields
             # fails with earlier versions of PyGObject.
@@ -427,8 +423,12 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             recent_data.mime_type = format.mime_type
             recent_data.app_name = "gaupol"
             recent_data.app_exec = "gaupol %F"
-            # We still cannot set string lists (gchar**).
+            # XXX: We still cannot set string lists (gchar**).
             # https://bugzilla.gnome.org/show_bug.cgi?id=695970
+            # group = ("gaupol-translation"
+            #          if doc == aeidon.documents.TRAN
+            #          else "gaupol-main")
+
             # recent_data.groups = (group,)
             self.recent_manager.add_full(uri, recent_data)
         else:
@@ -461,7 +461,6 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     @aeidon.deco.export
     def connect_view_signals(self, view):
         """Connect to signals emitted by `view`."""
-        selection = view.get_selection()
         view.connect_selection_changed(self._on_view_selection_changed)
         view.connect_after("move-cursor", self._on_view_move_cursor)
         view.connect("button-press-event", self._on_view_button_press_event)

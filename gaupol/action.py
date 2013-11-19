@@ -138,28 +138,21 @@ class RecentAction(Gtk.RecentAction, Action):
     def __init__(self, name):
         """Initialize an :class:`RecentAction` object."""
         GObject.GObject.__init__(self, name=name)
-        if sys.platform == "win32":
-            self.set_show_icons(False)
-        self.set_show_numbers(False)
+        self.set_show_icons(sys.platform != "win32")
         self.set_show_not_found(False)
+        self.set_show_numbers(False)
         self.set_show_tips(True)
         self.set_sort_type(Gtk.RecentSortType.MRU)
         recent_filter = Gtk.RecentFilter()
-        if GObject.pygobject_version >= (3, 7, 4):
-            # Trying to set strings to struct fields
-            # fails with earlier versions of PyGObject.
-            # https://bugzilla.gnome.org/show_bug.cgi?id=678401
-            recent_filter.add_application("gaupol")
-            # We still cannot set string lists (gchar**).
-            # https://bugzilla.gnome.org/show_bug.cgi?id=695970
-            # recent_filter.add_group(self.group)
-        else:
-            recent_filter.add_mime_type("application/x-subrip")
-            recent_filter.add_mime_type("text/x-microdvd")
-            recent_filter.add_mime_type("text/x-mpsub")
-            recent_filter.add_mime_type("text/x-ssa")
-            recent_filter.add_mime_type("text/x-subviewer")
-
+        # XXX: We still cannot set and thus neither use
+        # the recent data group field. So, instead of filtering
+        # by application and group, let's fall back to mimetypes.
+        # https://bugzilla.gnome.org/show_bug.cgi?id=695970
+        recent_filter.add_mime_type("application/x-subrip")
+        recent_filter.add_mime_type("text/x-microdvd")
+        recent_filter.add_mime_type("text/x-mpsub")
+        recent_filter.add_mime_type("text/x-ssa")
+        recent_filter.add_mime_type("text/x-subviewer")
         self.add_filter(recent_filter)
         self.set_filter(recent_filter)
         self.set_limit(gaupol.conf.file.max_recent)
