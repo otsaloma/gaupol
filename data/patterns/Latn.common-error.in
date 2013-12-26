@@ -180,6 +180,24 @@ Replacement=\2
 Repeat=False
 
 [Common Error Pattern]
+_Name=Spaces around musical notes
+_Description=Add spaces between musical note characters and lyrics
+Classes=OCR;
+Pattern=^(\W*?(?!#\d)[♩♪♫♬#]+)(\S)
+Flags=DOTALL;MULTILINE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Spaces around musical notes
+_Description=Add spaces between musical note characters and lyrics
+Classes=OCR;
+Pattern=(\S)([♩♪♫♬#]+\W*?)$
+Flags=DOTALL;MULTILINE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
 _Name=Multiple question- and exclamation marks
 _Description=Replace multiple consequtive question- and exclamation marks with only one
 Classes=Human;
