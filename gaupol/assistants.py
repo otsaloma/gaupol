@@ -1091,13 +1091,12 @@ class TextAssistant(Gtk.Assistant):
         gaupol.util.set_cursor_busy(self)
         edits = removals = 0
         changes = self._confirmation_page.get_confirmed_changes()
-        target = self._introduction_page.get_target()
-        application_pages = self.application.get_target_pages(target)
+        changed_pages = aeidon.util.get_unique([x[0] for x in changes])
         field = self._introduction_page.get_field()
         doc = gaupol.util.text_field_to_document(field)
         description = _("Correcting texts")
         register = aeidon.registers.DO
-        for page in application_pages:
+        for page in changed_pages:
             indices = [x[1] for x in changes if x[0] is page]
             texts = [x[3] for x in changes if x[0] is page]
             if indices and texts:
