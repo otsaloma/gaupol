@@ -216,10 +216,20 @@ def detect_newlines(path):
         chars = fobj.newlines
     except Exception:
         return None
-    if chars is None: return None
+    if chars is None:
+        return None
+    if isinstance(chars, str):
+        return aeidon.newlines.find_item("value", chars)
     if isinstance(chars, tuple):
-        chars = chars[0]
-    return aeidon.newlines.find_item("value", chars)
+        if len(chars) == 1:
+            return aeidon.newlines.find_item("value", chars[0])
+        # This is not actually correct. If both CR and LF are detected,
+        # it could mean a mixture of Mac and Unix newlines on separate
+        # lines or one Windows newline in a mostly something else file.
+        # We could count the frequencies, but it's probably not worth
+        # the effort.
+        return aeidon.newlines.WINDOWS
+    return None
 
 @aeidon.deco.once
 def enchant_available():
