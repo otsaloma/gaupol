@@ -6,52 +6,56 @@ Usage: See gaupol --help.
 """
 import atexit
 import bisect
-import chardet
+import codecs
+import collections
 import contextlib
 import copy
-import cProfile
-import enchant
 import functools
 import gettext
-import inspect
+import glob
 import itertools
 import json
 import linecache
 import locale
-import math
 import optparse
 import os
 import pickle
 import platform
-import pstats
 import random
 import re
 import shutil
+import stat
 import string
 import subprocess
 import sys
 import tempfile
 import time
 import traceback
-import urllib.error
 import urllib.parse
 import urllib.request
 import webbrowser
+import xml.etree.ElementTree
 
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
+from gi.repository import GdkX11
 from gi.repository import GLib
 from gi.repository import GObject
+from gi.repository import Gst
+from gi.repository import GstPbutils
+from gi.repository import GstVideo
 from gi.repository import Gtk
+from gi.repository import GtkSpell
 from gi.repository import Pango
 
 file_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(file_dir, ".."))
+root_dir = os.path.abspath(os.path.join(file_dir, ".."))
+sys.path.insert(0, root_dir)
+os.chdir(root_dir)
 os.environ["GAUPOL_DEBUG"] = ""
-import aeidon
-import gaupol
+import aeidon, gaupol, cProfile, pstats
 cProfile.run("gaupol.main.main(sys.argv[1:])", "gaupol.prof")
 stats = pstats.Stats("gaupol.prof")
 stats.sort_stats("cumulative")
-stats.print_stats("gaupol", .2)
+stats.print_stats("gaupol", .1)
 os.remove("gaupol.prof")
