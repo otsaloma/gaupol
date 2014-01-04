@@ -11,7 +11,7 @@ Gaupol 0.25
  [X] Check that required GStreamer elements can be found and
      print error messages if not (#710138)
  [X] Filter open recent menu items by mimetype
- [X] Speed up applying text corrections
+ [X] Fix search dialog "Ignore case" option
  [X] Fix newline handling on Windows (Python 3 does implicit conversions
      that were not accounted for)
  [X] Fix preview error dialog on Windows (#651675)

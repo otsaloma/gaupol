@@ -307,6 +307,8 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         The default value for `flags` is ``DOTALL`` and ``MULTILINE``.
         Raise :exc:`re.error` if bad pattern.
         """
+        # Ignore case only if in flags.
+        self._finder.ignore_case = False
         self._finder.set_regex(pattern, flags)
 
     @aeidon.deco.export
