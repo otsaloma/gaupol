@@ -371,6 +371,7 @@ class VideoPlayer(aeidon.Observable):
         You should have a window visible before calling `set_uri`.
         """
         self._playbin.props.uri = uri
+        # XXX: We need platform specific calls here.
         self._xid = self.widget.props.window.get_xid()
         self.subtitle_text = ""
         try:
