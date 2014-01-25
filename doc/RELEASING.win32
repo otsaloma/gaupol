@@ -12,21 +12,17 @@ Preparing to Build Windows Installers
    - Remove the Gst typelib since it's somehow broken
      (This is just the easiest and non-code-changing way
       to prevent Gaupol from trying to use it.)
-     o .../site-packages/gtk/lib/girepository-1.0/Gst-1.0.typelib
+     o .../site-packages/gnome/lib/girepository-1.0/Gst-1.0.typelib
    - Fix GTK+3 theming for Windows
-     o .../site-packages/gtk/etc/gtk-3.0/settings.ini
+     o .../site-packages/gnome/etc/gtk-3.0/settings.ini
 
 [Settings]
 gtk-button-images = 0
 gtk-font-name = Verdana 8
-gtk-icon-sizes = gtk-menu=16,16:gtk-large-toolbar=16,16:gtk-small-toolbar=16,16:gtk-button=16,16
 gtk-icon-theme-name = gnome
 gtk-menu-images = 0
 gtk-theme-name = Adwaita
-gtk-toolbar-style = GTK_TOOLBAR_ICONS
 
- * Install symbolic icons from gnome-icon-theme
-   - http://packages.debian.org/sid/gnome-icon-theme-symbolic
  * Install chardet compatible with Python 3
    - https://github.com/bsidhom/python3-chardet
    - python3 setyp.py install_lib
@@ -64,7 +60,6 @@ Known Issues
  * GStreamer is broken in the pygi-aio package
    - Integrated video player won't be available
  * Most fonts look bad; default set to Verdana
- * Recent file tracking doesn't work
  * Links don't open (Gtk.LinkButton etc.)
  * The installer contains a whole lot of unnecessary stuff because it's
    difficult to tell which DLLs etc. are actually needed
