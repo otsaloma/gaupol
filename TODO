@@ -12,7 +12,7 @@ Gaupol 0.25
      print error messages if not (#710138)
  [X] Filter open recent menu items by mimetype
  [X] Fix search dialog "Ignore case" option
- [X] Fix text correction assistant layout with GTK+3
+ [X] Fix text correction assistant layout with GTK+ 3.10
  [X] Fix newline handling on Windows (Python 3 does implicit conversions
      that were not accounted for)
  [X] Fix preview error dialog on Windows (#651675)
