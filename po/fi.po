@@ -3119,24 +3119,3 @@ msgstr "Rivinvaihdot:"
 #: ../gaupol/page.py:346
 msgid "{} translation"
 msgstr "{} käännös"
-
-#~ msgid "Subtitle"
-#~ msgstr "Tekstitys"
-
-#~ msgid "_Font:"
-#~ msgstr "_Kirjasin:"
-
-#~ msgid "C_olor:"
-#~ msgstr "_Väri:"
-
-#~ msgid "Time"
-#~ msgstr "Aika"
-
-#~ msgid "Colo_r:"
-#~ msgstr "V_äri:"
-
-#~ msgid "Fo_nt:"
-#~ msgstr "Ki_rjasin:"
-
-#~ msgid "Convert various two-letter spellings of okay to \"OK\""
-#~ msgstr "Muunna eri okay:n kaksikirjaimiset kirjoitusasut muotoon \"OK\""
