@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-13 02:22+0300\n"
-"PO-Revision-Date: 2013-07-13 02:29+0300\n"
+"POT-Creation-Date: 2014-01-26 21:50+0200\n"
+"PO-Revision-Date: 2014-01-26 22:12+0200\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
 "Language-Team: Finnish <otsaloma@iki.fi>\n"
 "Language: fi\n"
@@ -446,52 +446,52 @@ msgid "Editor"
 msgstr "Muokkain"
 
 #: ../data/ui/preferences-dialog.ui.h:20
-msgid "Subtitle"
-msgstr "Tekstitys"
+msgid "Fonts"
+msgstr "Kirjasimet"
 
 #: ../data/ui/preferences-dialog.ui.h:21
-msgid "_Font:"
-msgstr "_Kirjasin:"
+msgid "_Subtitles:"
+msgstr "_Tekstitykset:"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "Pick the Subtitle Font"
 msgstr "Valitse tekstityksen kirjasin"
 
 #: ../data/ui/preferences-dialog.ui.h:23
-msgid "C_olor:"
-msgstr "_Väri:"
+msgid "_Time:"
+msgstr "_Aika:"
 
 #: ../data/ui/preferences-dialog.ui.h:24
-msgid "Pick the Subtitle Color"
-msgstr "Valitse tekstityksen väri"
+msgid "Pick the Time Font"
+msgstr "Valitse ajan kirjasin"
 
 #: ../data/ui/preferences-dialog.ui.h:25
-msgid "_Use a background behind text"
-msgstr "Käytä _taustaa tekstin takana"
+msgid "Colors"
+msgstr "Värit"
 
 #: ../data/ui/preferences-dialog.ui.h:26
-msgid "Time"
-msgstr "Aika"
+msgid "Su_btitles:"
+msgstr "T_ekstitykset:"
 
 #: ../data/ui/preferences-dialog.ui.h:27
-msgid "Colo_r:"
-msgstr "V_äri:"
-
-#: ../data/ui/preferences-dialog.ui.h:28
 msgid "Pick the Time Color"
 msgstr "Valitse ajan väri"
 
+#: ../data/ui/preferences-dialog.ui.h:28
+msgid "_Use a background behind text"
+msgstr "K_äytä taustaa tekstin takana"
+
 #: ../data/ui/preferences-dialog.ui.h:29
-msgid "Us_e a background behind text"
-msgstr "Käytä t_austaa tekstin takana"
+msgid "Ti_me:"
+msgstr "Ai_ka:"
 
 #: ../data/ui/preferences-dialog.ui.h:30
-msgid "Fo_nt:"
-msgstr "Ki_rjasin:"
+msgid "Pick the Subtitle Color"
+msgstr "Valitse tekstityksen väri"
 
 #: ../data/ui/preferences-dialog.ui.h:31
-msgid "Pick the Time Font"
-msgstr "Valitse ajan kirjasin"
+msgid "Us_e a background behind text"
+msgstr "Käytä ta_ustaa tekstin takana"
 
 #: ../data/ui/preferences-dialog.ui.h:32
 msgid "Video"
@@ -930,20 +930,30 @@ msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr "Korvaa nolla kirjaimella \"O\" isolla kirjoitetussa sanassa"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
+#: ../data/patterns/Latn.common-error.in.h:5
+msgid "Space between number and unit"
+msgstr "Väli luvun ja yksikön välissä"
+
+#: ../data/patterns/Latn-en.common-error.in.h:8
+#: ../data/patterns/Latn.common-error.in.h:6
+msgid "Add or remove space between a number and the associated unit"
+msgstr "Lisää tai poista väli luvun ja sen yksikön välistä"
+
+#: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Spaces around an apostrophe"
 msgstr "Välit heittomerkin ympärillä"
 
-#: ../data/patterns/Latn-en.common-error.in.h:8
+#: ../data/patterns/Latn-en.common-error.in.h:10
 msgid "Remove spaces around an apostrophe"
 msgstr "Poista välit heittomerkin ympäriltä"
 
-#: ../data/patterns/Latn-en.common-error.in.h:9
+#: ../data/patterns/Latn-en.common-error.in.h:11
 msgid "Okay"
 msgstr "Okay"
 
-#: ../data/patterns/Latn-en.common-error.in.h:10
-msgid "Convert various two-letter spellings of okay to \"OK\""
-msgstr "Muunna eri okay:n kaksikirjaimiset kirjoitusasut muotoon \"OK\""
+#: ../data/patterns/Latn-en.common-error.in.h:12
+msgid "Spell two-letter forms of \"okay\" in all upper case"
+msgstr "Muunna okay:n kaksikirjaimiset kirjoitusasut isolla kirjoitetuksi"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
@@ -1048,14 +1058,6 @@ msgstr "Kirjain \"O\" luvussa"
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr "Korvaa kirjain \"O\" nollalla luvussa"
 
-#: ../data/patterns/Latn.common-error.in.h:5
-msgid "Space between number and unit"
-msgstr "Väli luvun ja yksikön välissä"
-
-#: ../data/patterns/Latn.common-error.in.h:6
-msgid "Add or remove space between a number and the associated unit"
-msgstr "Lisää tai poista väli luvun ja sen yksikön välistä"
-
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
 msgstr "Kaksoisheittomerkki"
@@ -1111,27 +1113,35 @@ msgstr ""
 "lainausmerkkiä"
 
 #: ../data/patterns/Latn.common-error.in.h:23
+msgid "Spaces around musical notes"
+msgstr "Välit nuottien ympärillä"
+
+#: ../data/patterns/Latn.common-error.in.h:24
+msgid "Add spaces between musical note characters and lyrics"
+msgstr "Lisää välit nuottimerkkien ja lyriikoiden väliin"
+
+#: ../data/patterns/Latn.common-error.in.h:25
 msgid "Multiple question- and exclamation marks"
 msgstr "Useat kysymys- ja huutomerkit"
 
-#: ../data/patterns/Latn.common-error.in.h:24
+#: ../data/patterns/Latn.common-error.in.h:26
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr "Korvaa useat peräkkäiset kysymys- ja heittomerkit yhdellä"
 
-#: ../data/patterns/Latn.common-error.in.h:25
+#: ../data/patterns/Latn.common-error.in.h:27
 msgid "Periods around a punctuation mark"
 msgstr "Pisteet välimerkin ympärillä"
 
-#: ../data/patterns/Latn.common-error.in.h:26
+#: ../data/patterns/Latn.common-error.in.h:28
 msgid "Remove period before or after various punctuation marks"
 msgstr "Poista piste tiettyjen välimerkkien edeltä tai jäljestä"
 
-#: ../data/patterns/Latn.common-error.in.h:27
+#: ../data/patterns/Latn.common-error.in.h:29
 msgid "Terminating double-dashes"
 msgstr "Päättävät kaksoisviivat"
 
-#: ../data/patterns/Latn.common-error.in.h:28
+#: ../data/patterns/Latn.common-error.in.h:30
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr "Korvaa yksi virkkeen päättävä viiva kahdella"
 
@@ -1488,6 +1498,7 @@ msgid "Unicode"
 msgstr "Unicode"
 
 #: ../aeidon/encodings.py:163
+#, python-brace-format
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
@@ -1524,6 +1535,7 @@ msgid "Mac (classic)"
 msgstr "Mac (klassinen)"
 
 #: ../aeidon/locales.py:72
+#, python-brace-format
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
@@ -1597,6 +1609,21 @@ msgstr "S_ivupaneeli"
 #: ../data/extensions/side-pane/side-pane.py:354
 msgid "Show or hide the side pane"
 msgstr "Näytä tai piilota sivupaneeli"
+
+#: ../data/gaupol.appdata.xml.in.h:1
+msgid ""
+"Gaupol is an editor for text-based subtitle files. It supports multiple "
+"subtitle file formats and provides means of creating subtitles, editing "
+"texts and timing subtitles to match video. The user interface is designed "
+"with attention to batch processing of multiple documents and convenience of "
+"translating."
+msgstr ""
+"Gaupol on muokkain tekstimuotoisille tekstitystiedostoille. Se tukee\n"
+"useita eri tekstitystiedostomuotoja ja tarjoaa toimintoja\n"
+"tekstitysten luomiseen, tekstien muokkaamiseen ja tekstitysten\n"
+"ajoittamiseen videoon sovittaen. Käyttöliittymä on suunniteltu tukemaan\n"
+"useiden asiakirjojen erittäistä muokkaamista ja tarjoamaan hyödyllinen\n"
+"ympäristö tekstitysten kääntämiseen."
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Gaupol"
@@ -1944,7 +1971,7 @@ msgstr "Tallenna nykyinen pääasiakirja"
 msgid "Save _As…"
 msgstr "Tall_enna nimellä…"
 
-#: ../gaupol/actions/file.py:289 ../gaupol/agents/save.py:184
+#: ../gaupol/actions/file.py:289 ../gaupol/agents/save.py:183
 msgid "Save As"
 msgstr "Tallenna nimellä"
 
@@ -1964,7 +1991,7 @@ msgstr "Tallenna nykyinen käännösasiakirja"
 msgid "Save Translat_ion As…"
 msgstr "Tallenna k_äännös nimellä…"
 
-#: ../gaupol/actions/file.py:328 ../gaupol/agents/save.py:220
+#: ../gaupol/actions/file.py:328 ../gaupol/agents/save.py:219
 msgid "Save Translation As"
 msgstr "Tallenna käännös nimellä"
 
@@ -2560,16 +2587,17 @@ msgstr "Tallenna muutokset käännösasiakirjaan \"{}\" ennen uuden avaamista?"
 msgid "Open _Without Saving"
 msgstr "_Avaa tallentamatta"
 
-#: ../gaupol/agents/open.py:458
+#: ../gaupol/agents/open.py:457
+#, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "Lisättiin {amount:d} kappaletta perään tiedostosta \"{basename}\""
 
-#: ../gaupol/agents/preview.py:53
+#: ../gaupol/agents/preview.py:54
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
 "Tekstitystiedoston koodaaminen väliaikaishakemistoon \"{}\" epäonnistui"
 
-#: ../gaupol/agents/preview.py:55
+#: ../gaupol/agents/preview.py:56
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
@@ -2579,33 +2607,34 @@ msgstr ""
 "nykyisellä merkistökoodauksella. Tallenna tekstitystiedosto ensin eri "
 "merkistökoodauksella."
 
-#: ../gaupol/agents/preview.py:64
+#: ../gaupol/agents/preview.py:65
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
 "Tekstitystiedoston tallentaminen väliaikaishakemistoon \"{}\" epäonnistui"
 
-#: ../gaupol/agents/preview.py:72
+#: ../gaupol/agents/preview.py:73
 msgid "Failed to launch video player"
 msgstr "Videosoittimen käynnistäminen epäonnistui"
 
-#: ../gaupol/agents/save.py:146
+#: ../gaupol/agents/save.py:145
+#, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr ""
 "Tiedoston \"{basename}\" koodaaminen koodekilla \"{codec}\" epäonnistui"
 
-#: ../gaupol/agents/save.py:148
+#: ../gaupol/agents/save.py:147
 msgid "Please try to save the file with a different character encoding."
 msgstr "Yritä tallentaa tiedosto eri merkistökoodauksella."
 
-#: ../gaupol/agents/save.py:156
+#: ../gaupol/agents/save.py:155
 msgid "Failed to save file \"{}\""
 msgstr "Tiedoston \"{}\" tallentaminen epäonnistui"
 
-#: ../gaupol/agents/save.py:194
+#: ../gaupol/agents/save.py:193
 msgid "Saved main document as \"{}\""
 msgstr "Tallennettiin pääasiakirja nimellä \"{}\""
 
-#: ../gaupol/agents/save.py:230
+#: ../gaupol/agents/save.py:229
 msgid "Saved translation document as \"{}\""
 msgstr "Tallennettiin käännösasiakirja nimellä \"{}\""
 
@@ -2621,11 +2650,11 @@ msgstr "Lataa video"
 msgid "_Load"
 msgstr "_Lataa"
 
-#: ../gaupol/application.py:296
+#: ../gaupol/application.py:305
 msgid "Redo undone actions"
 msgstr "Tee uudelleen kumottuja toimintoja"
 
-#: ../gaupol/application.py:348
+#: ../gaupol/application.py:357
 msgid "Undo actions"
 msgstr "Kumoa toimintoja"
 
@@ -2720,7 +2749,7 @@ msgstr "Sanojen yhdistäminen ja jakaminen"
 msgid "Join or Split Words"
 msgstr "Yhdistä tai jaa sanoja"
 
-#: ../gaupol/assistants.py:624 ../gaupol/dialogs/spell_check.py:394
+#: ../gaupol/assistants.py:624 ../gaupol/dialogs/spell_check.py:393
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Sanakirjan lataaminen kielelle \"{}\" epäonnistui"
 
@@ -2755,6 +2784,7 @@ msgid "Each task is now being run on each project."
 msgstr "Jokaista tehtävää ajetaan nyt jokaiselle projektille."
 
 #: ../gaupol/assistants.py:832
+#, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "{current:d} / {total:d} tehtävästä valmiina"
 
@@ -2788,15 +2818,16 @@ msgstr "Korjattu teksti"
 msgid "Correct Texts"
 msgstr "Korjaa tekstejä"
 
-#: ../gaupol/assistants.py:1098
+#: ../gaupol/assistants.py:1097
 msgid "Correcting texts"
 msgstr "tekstien korjaaminen"
 
-#: ../gaupol/assistants.py:1114
+#: ../gaupol/assistants.py:1113
+#, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Muokattiin {edits:d} ja poistettiin {removals:d} kappaletta"
 
-#: ../gaupol/assistants.py:1148
+#: ../gaupol/assistants.py:1147
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Vahvista {:d} muutos"
@@ -2840,7 +2871,7 @@ msgstr "Koodaus"
 msgid "Show in Menu"
 msgstr "Näytä valikossa"
 
-#: ../gaupol/dialogs/file.py:53 ../gaupol/dialogs/video.py:49
+#: ../gaupol/dialogs/file.py:53 ../gaupol/dialogs/video.py:50
 msgid "All files"
 msgstr "Kaikki tiedostot"
 
@@ -2849,6 +2880,7 @@ msgid "All supported files"
 msgstr "Kaikki tuetut tiedostot"
 
 #: ../gaupol/dialogs/file.py:71
+#, python-brace-format
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
@@ -2939,7 +2971,7 @@ msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "Löydettiin ja korvattiin {:d} esiintymä"
 msgstr[1] "Löydettiin ja korvattiin {:d} esiintymää"
 
-#: ../gaupol/dialogs/spell_check.py:369
+#: ../gaupol/dialogs/spell_check.py:368
 msgid "Spell-checking"
 msgstr "oikeinkirjoituksen tarkistaminen"
 
@@ -2948,6 +2980,7 @@ msgid "Splitting project"
 msgstr "projektin jakaminen"
 
 #: ../gaupol/dialogs/split.py:103
+#, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Jaettiin {amount:d} kappaletta projektiin \"{name}\""
 
@@ -2955,7 +2988,7 @@ msgstr "Jaettiin {amount:d} kappaletta projektiin \"{name}\""
 msgid "Edit Text"
 msgstr "Muokkaa tekstiä"
 
-#: ../gaupol/dialogs/video.py:53
+#: ../gaupol/dialogs/video.py:54
 msgid "Video files"
 msgstr "Videotiedostot"
 
@@ -3086,3 +3119,24 @@ msgstr "Rivinvaihdot:"
 #: ../gaupol/page.py:346
 msgid "{} translation"
 msgstr "{} käännös"
+
+#~ msgid "Subtitle"
+#~ msgstr "Tekstitys"
+
+#~ msgid "_Font:"
+#~ msgstr "_Kirjasin:"
+
+#~ msgid "C_olor:"
+#~ msgstr "_Väri:"
+
+#~ msgid "Time"
+#~ msgstr "Aika"
+
+#~ msgid "Colo_r:"
+#~ msgstr "V_äri:"
+
+#~ msgid "Fo_nt:"
+#~ msgstr "Ki_rjasin:"
+
+#~ msgid "Convert various two-letter spellings of okay to \"OK\""
+#~ msgstr "Muunna eri okay:n kaksikirjaimiset kirjoitusasut muotoon \"OK\""

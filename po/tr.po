@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-13 02:22+0300\n"
+"POT-Creation-Date: 2014-01-26 21:50+0200\n"
 "PO-Revision-Date: 2013-10-03 22:17+0300\n"
 "Last-Translator: Çağlar Kilimci <ckilimci@pardus.org.tr>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -447,11 +447,11 @@ msgid "Editor"
 msgstr "Editör"
 
 #: ../data/ui/preferences-dialog.ui.h:20
-msgid "Subtitle"
+msgid "Fonts"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:21
-msgid "_Font:"
+msgid "_Subtitles:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:22
@@ -459,39 +459,39 @@ msgid "Pick the Subtitle Font"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:23
-msgid "C_olor:"
+msgid "_Time:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:24
-msgid "Pick the Subtitle Color"
+msgid "Pick the Time Font"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:25
-msgid "_Use a background behind text"
+msgid "Colors"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:26
-msgid "Time"
+msgid "Su_btitles:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:27
-msgid "Colo_r:"
-msgstr ""
-
-#: ../data/ui/preferences-dialog.ui.h:28
 msgid "Pick the Time Color"
 msgstr ""
 
+#: ../data/ui/preferences-dialog.ui.h:28
+msgid "_Use a background behind text"
+msgstr ""
+
 #: ../data/ui/preferences-dialog.ui.h:29
-msgid "Us_e a background behind text"
+msgid "Ti_me:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:30
-msgid "Fo_nt:"
+msgid "Pick the Subtitle Color"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:31
-msgid "Pick the Time Font"
+msgid "Us_e a background behind text"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:32
@@ -926,20 +926,30 @@ msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr "Büyük harfli yazımda sıfır yerine \"O\" kullan"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
+#: ../data/patterns/Latn.common-error.in.h:5
+msgid "Space between number and unit"
+msgstr "Rakam ve birim arasındaki boşluk"
+
+#: ../data/patterns/Latn-en.common-error.in.h:8
+#: ../data/patterns/Latn.common-error.in.h:6
+msgid "Add or remove space between a number and the associated unit"
+msgstr "Rakamla ilgili karakter arasındaki boşluğu ekle ya da kaldır"
+
+#: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Spaces around an apostrophe"
 msgstr "Kesme işareti çevresinde boşluk"
 
-#: ../data/patterns/Latn-en.common-error.in.h:8
+#: ../data/patterns/Latn-en.common-error.in.h:10
 msgid "Remove spaces around an apostrophe"
 msgstr "Kesme işaretinin önünde sonunda boşluk kalmasın"
 
-#: ../data/patterns/Latn-en.common-error.in.h:9
+#: ../data/patterns/Latn-en.common-error.in.h:11
 msgid "Okay"
 msgstr "Okay"
 
-#: ../data/patterns/Latn-en.common-error.in.h:10
-msgid "Convert various two-letter spellings of okay to \"OK\""
-msgstr "Tamam anlamında kullanılan \"OK\" farklı yazıldıysa bu şekle getir"
+#: ../data/patterns/Latn-en.common-error.in.h:12
+msgid "Spell two-letter forms of \"okay\" in all upper case"
+msgstr ""
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
@@ -1044,14 +1054,6 @@ msgstr "Rakam için \"O\" karakteri"
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr "\"O\" harfini, sıfır sayısı ile değiştir"
 
-#: ../data/patterns/Latn.common-error.in.h:5
-msgid "Space between number and unit"
-msgstr "Rakam ve birim arasındaki boşluk"
-
-#: ../data/patterns/Latn.common-error.in.h:6
-msgid "Add or remove space between a number and the associated unit"
-msgstr "Rakamla ilgili karakter arasındaki boşluğu ekle ya da kaldır"
-
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
 msgstr "Çift tırnak"
@@ -1105,27 +1107,35 @@ msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr "Tırnaktan sonra ve kapanıştan önce boşlukları kaldır"
 
 #: ../data/patterns/Latn.common-error.in.h:23
+msgid "Spaces around musical notes"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:24
+msgid "Add spaces between musical note characters and lyrics"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:25
 msgid "Multiple question- and exclamation marks"
 msgstr "Birden fazla soru işareti ve ünlem"
 
-#: ../data/patterns/Latn.common-error.in.h:24
+#: ../data/patterns/Latn.common-error.in.h:26
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr "Arka arkaya olan çoklu soru ve ünlem işaretini teke indir"
 
-#: ../data/patterns/Latn.common-error.in.h:25
+#: ../data/patterns/Latn.common-error.in.h:27
 msgid "Periods around a punctuation mark"
 msgstr "Noktalama işaretiyle birlikte nokta kullanımı"
 
-#: ../data/patterns/Latn.common-error.in.h:26
+#: ../data/patterns/Latn.common-error.in.h:28
 msgid "Remove period before or after various punctuation marks"
 msgstr "Noktalama işaretlerinin önünde sonunda nokta koyma"
 
-#: ../data/patterns/Latn.common-error.in.h:27
+#: ../data/patterns/Latn.common-error.in.h:29
 msgid "Terminating double-dashes"
 msgstr "İkili konuşma çizgileri sonlandırılıyor"
 
-#: ../data/patterns/Latn.common-error.in.h:28
+#: ../data/patterns/Latn.common-error.in.h:30
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr "Kesik cümle bitirmesindeki tek tireyi, çift tire yap"
 
@@ -1482,6 +1492,7 @@ msgid "Unicode"
 msgstr "Unicode"
 
 #: ../aeidon/encodings.py:163
+#, python-brace-format
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
@@ -1518,6 +1529,7 @@ msgid "Mac (classic)"
 msgstr "Mac (klasik)"
 
 #: ../aeidon/locales.py:72
+#, python-brace-format
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
@@ -1591,6 +1603,15 @@ msgstr "_Yan Panel"
 #: ../data/extensions/side-pane/side-pane.py:354
 msgid "Show or hide the side pane"
 msgstr "Yan paneli göster ya da gizle"
+
+#: ../data/gaupol.appdata.xml.in.h:1
+msgid ""
+"Gaupol is an editor for text-based subtitle files. It supports multiple "
+"subtitle file formats and provides means of creating subtitles, editing "
+"texts and timing subtitles to match video. The user interface is designed "
+"with attention to batch processing of multiple documents and convenience of "
+"translating."
+msgstr ""
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Gaupol"
@@ -1938,7 +1959,7 @@ msgstr "Şimdiki ana dökümanı kaydet"
 msgid "Save _As…"
 msgstr "_Farklı Kaydet"
 
-#: ../gaupol/actions/file.py:289 ../gaupol/agents/save.py:184
+#: ../gaupol/actions/file.py:289 ../gaupol/agents/save.py:183
 msgid "Save As"
 msgstr "Farklı Kaydet"
 
@@ -1958,7 +1979,7 @@ msgstr "Şimdiki çeviri dökümanını kaydet"
 msgid "Save Translat_ion As…"
 msgstr "Çev_iriyi farklı kaydet..."
 
-#: ../gaupol/actions/file.py:328 ../gaupol/agents/save.py:220
+#: ../gaupol/actions/file.py:328 ../gaupol/agents/save.py:219
 msgid "Save Translation As"
 msgstr "Çeviriyi farklı kaydet"
 
@@ -2553,15 +2574,16 @@ msgstr ""
 msgid "Open _Without Saving"
 msgstr "Kaydet_meden Aç"
 
-#: ../gaupol/agents/open.py:458
+#: ../gaupol/agents/open.py:457
+#, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "\"{basename}\" den {amount:d} alt yazı eklendi"
 
-#: ../gaupol/agents/preview.py:53
+#: ../gaupol/agents/preview.py:54
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr "Geçici yer olarak \"{}\" 'e kodlanamadı."
 
-#: ../gaupol/agents/preview.py:55
+#: ../gaupol/agents/preview.py:56
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
@@ -2570,31 +2592,32 @@ msgstr ""
 "Alt yazı ön izleme için kullanılan karakter kodlama ile geçici dosyaya "
 "kodlanamadı. Lütfen farklı bir karakter kodlama ile kaydedin."
 
-#: ../gaupol/agents/preview.py:64
+#: ../gaupol/agents/preview.py:65
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr "Alt yazı dosyası geçici klasör olan \"{}\" 'e kaydedilemedi"
 
-#: ../gaupol/agents/preview.py:72
+#: ../gaupol/agents/preview.py:73
 msgid "Failed to launch video player"
 msgstr "Video oynatıcısı oynatılamadı"
 
-#: ../gaupol/agents/save.py:146
+#: ../gaupol/agents/save.py:145
+#, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "\"{codec}\" kodeğini kullanarak \"{basename}\" dosyası kodlanamadı"
 
-#: ../gaupol/agents/save.py:148
+#: ../gaupol/agents/save.py:147
 msgid "Please try to save the file with a different character encoding."
 msgstr "Lütfen farklı karakter kodlama ile kaydetmeyi deneyin."
 
-#: ../gaupol/agents/save.py:156
+#: ../gaupol/agents/save.py:155
 msgid "Failed to save file \"{}\""
 msgstr "\"{}\" kaydedilemedi"
 
-#: ../gaupol/agents/save.py:194
+#: ../gaupol/agents/save.py:193
 msgid "Saved main document as \"{}\""
 msgstr "Ana döküman \"{}\" olarak kaydedildi"
 
-#: ../gaupol/agents/save.py:230
+#: ../gaupol/agents/save.py:229
 msgid "Saved translation document as \"{}\""
 msgstr "Çeviri dosyası \"{}\" olarak kaydedildi"
 
@@ -2610,11 +2633,11 @@ msgstr ""
 msgid "_Load"
 msgstr ""
 
-#: ../gaupol/application.py:296
+#: ../gaupol/application.py:305
 msgid "Redo undone actions"
 msgstr "İleri al"
 
-#: ../gaupol/application.py:348
+#: ../gaupol/application.py:357
 msgid "Undo actions"
 msgstr "Geri al"
 
@@ -2709,7 +2732,7 @@ msgstr ""
 msgid "Join or Split Words"
 msgstr "Kelimeleri Birleştir/Ayır"
 
-#: ../gaupol/assistants.py:624 ../gaupol/dialogs/spell_check.py:394
+#: ../gaupol/assistants.py:624 ../gaupol/dialogs/spell_check.py:393
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "\"{}\" için sözlük yüklenemedi."
 
@@ -2744,6 +2767,7 @@ msgid "Each task is now being run on each project."
 msgstr "Her görev, kendi projesinde çalışıyor."
 
 #: ../gaupol/assistants.py:832
+#, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "Toplam {total:d} olaydan {current:d} 'i tamamlandı."
 
@@ -2777,15 +2801,16 @@ msgstr "Yazı Düzeltildi"
 msgid "Correct Texts"
 msgstr "Yazıları Düzelt"
 
-#: ../gaupol/assistants.py:1098
+#: ../gaupol/assistants.py:1097
 msgid "Correcting texts"
 msgstr "Yazılar düzeltiliyor"
 
-#: ../gaupol/assistants.py:1114
+#: ../gaupol/assistants.py:1113
+#, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Düzenlenen: {edits:d}, Silinen: {removals:d} alt yazı."
 
-#: ../gaupol/assistants.py:1148
+#: ../gaupol/assistants.py:1147
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "{:d} değişikliği onayla"
@@ -2831,7 +2856,7 @@ msgstr "Kodlama"
 msgid "Show in Menu"
 msgstr "Menüde göster"
 
-#: ../gaupol/dialogs/file.py:53 ../gaupol/dialogs/video.py:49
+#: ../gaupol/dialogs/file.py:53 ../gaupol/dialogs/video.py:50
 msgid "All files"
 msgstr "Bütün dosyalar"
 
@@ -2840,6 +2865,7 @@ msgid "All supported files"
 msgstr "Bütün desteklenen dosyalar"
 
 #: ../gaupol/dialogs/file.py:71
+#, python-brace-format
 msgid "{format} (*{extension})"
 msgstr ""
 
@@ -2931,7 +2957,7 @@ msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "{:d} tane bunundu ve değiştirildi."
 msgstr[1] "{:d} apariciones encontradas y reemplazadas"
 
-#: ../gaupol/dialogs/spell_check.py:369
+#: ../gaupol/dialogs/spell_check.py:368
 msgid "Spell-checking"
 msgstr "Yazım kontrolü"
 
@@ -2940,6 +2966,7 @@ msgid "Splitting project"
 msgstr "Projeyi böl"
 
 #: ../gaupol/dialogs/split.py:103
+#, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Alt yazıların {amount:d} 'i, \"{name}\" olarak bölündü."
 
@@ -2947,7 +2974,7 @@ msgstr "Alt yazıların {amount:d} 'i, \"{name}\" olarak bölündü."
 msgid "Edit Text"
 msgstr "Yazıyı Düzenle"
 
-#: ../gaupol/dialogs/video.py:53
+#: ../gaupol/dialogs/video.py:54
 msgid "Video files"
 msgstr "Video dosyası"
 
@@ -3078,6 +3105,9 @@ msgstr "Yeni satırlar:"
 #: ../gaupol/page.py:346
 msgid "{} translation"
 msgstr "{} çevirisi"
+
+#~ msgid "Convert various two-letter spellings of okay to \"OK\""
+#~ msgstr "Tamam anlamında kullanılan \"OK\" farklı yazıldıysa bu şekle getir"
 
 #~ msgid "Next"
 #~ msgstr "Sonraki"

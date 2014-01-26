@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.15.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-13 02:22+0300\n"
+"POT-Creation-Date: 2014-01-26 21:50+0200\n"
 "PO-Revision-Date: 2011-07-19 10:19+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
@@ -451,11 +451,11 @@ msgid "Editor"
 msgstr "Редактор"
 
 #: ../data/ui/preferences-dialog.ui.h:20
-msgid "Subtitle"
+msgid "Fonts"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:21
-msgid "_Font:"
+msgid "_Subtitles:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:22
@@ -463,39 +463,39 @@ msgid "Pick the Subtitle Font"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:23
-msgid "C_olor:"
+msgid "_Time:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:24
-msgid "Pick the Subtitle Color"
+msgid "Pick the Time Font"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:25
-msgid "_Use a background behind text"
+msgid "Colors"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:26
-msgid "Time"
+msgid "Su_btitles:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:27
-msgid "Colo_r:"
-msgstr ""
-
-#: ../data/ui/preferences-dialog.ui.h:28
 msgid "Pick the Time Color"
 msgstr ""
 
+#: ../data/ui/preferences-dialog.ui.h:28
+msgid "_Use a background behind text"
+msgstr ""
+
 #: ../data/ui/preferences-dialog.ui.h:29
-msgid "Us_e a background behind text"
+msgid "Ti_me:"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:30
-msgid "Fo_nt:"
+msgid "Pick the Subtitle Color"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:31
-msgid "Pick the Time Font"
+msgid "Us_e a background behind text"
 msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:32
@@ -930,20 +930,30 @@ msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr "Заменять ноль на букву \"O\" в словах верхнего регистра"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
+#: ../data/patterns/Latn.common-error.in.h:5
+msgid "Space between number and unit"
+msgstr "Пробел между числом и единицей"
+
+#: ../data/patterns/Latn-en.common-error.in.h:8
+#: ../data/patterns/Latn.common-error.in.h:6
+msgid "Add or remove space between a number and the associated unit"
+msgstr "Добавить или удалить пробел между числом и единицей измерения"
+
+#: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Spaces around an apostrophe"
 msgstr "Пробелы вокруг апострофов"
 
-#: ../data/patterns/Latn-en.common-error.in.h:8
+#: ../data/patterns/Latn-en.common-error.in.h:10
 msgid "Remove spaces around an apostrophe"
 msgstr "Удалить пробелы вокруг апострофов"
 
-#: ../data/patterns/Latn-en.common-error.in.h:9
+#: ../data/patterns/Latn-en.common-error.in.h:11
 msgid "Okay"
 msgstr "Okay"
 
-#: ../data/patterns/Latn-en.common-error.in.h:10
-msgid "Convert various two-letter spellings of okay to \"OK\""
-msgstr "Заменять различные написания слова \"okay\" на \"OK\""
+#: ../data/patterns/Latn-en.common-error.in.h:12
+msgid "Spell two-letter forms of \"okay\" in all upper case"
+msgstr ""
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
@@ -1046,14 +1056,6 @@ msgstr "Буква \"O\" в числах"
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr "Заменить букву \"O\" в числах на ноль"
 
-#: ../data/patterns/Latn.common-error.in.h:5
-msgid "Space between number and unit"
-msgstr "Пробел между числом и единицей"
-
-#: ../data/patterns/Latn.common-error.in.h:6
-msgid "Add or remove space between a number and the associated unit"
-msgstr "Добавить или удалить пробел между числом и единицей измерения"
-
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
 msgstr "Двойные апострофы"
@@ -1107,27 +1109,35 @@ msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr "Удаляет пробелы внутри кавычек"
 
 #: ../data/patterns/Latn.common-error.in.h:23
+msgid "Spaces around musical notes"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:24
+msgid "Add spaces between musical note characters and lyrics"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:25
 msgid "Multiple question- and exclamation marks"
 msgstr "Несколько вопросительных и восклицательных знаков"
 
-#: ../data/patterns/Latn.common-error.in.h:24
+#: ../data/patterns/Latn.common-error.in.h:26
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr "Заменить несколько вопросительных и восклицательных знаков одним"
 
-#: ../data/patterns/Latn.common-error.in.h:25
+#: ../data/patterns/Latn.common-error.in.h:27
 msgid "Periods around a punctuation mark"
 msgstr "Пробелы вокруг знаков препинания"
 
-#: ../data/patterns/Latn.common-error.in.h:26
+#: ../data/patterns/Latn.common-error.in.h:28
 msgid "Remove period before or after various punctuation marks"
 msgstr "Удалить точку возле других знаков препинания"
 
-#: ../data/patterns/Latn.common-error.in.h:27
+#: ../data/patterns/Latn.common-error.in.h:29
 msgid "Terminating double-dashes"
 msgstr "Два дефиса на конце"
 
-#: ../data/patterns/Latn.common-error.in.h:28
+#: ../data/patterns/Latn.common-error.in.h:30
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr "Замена завершающего предложение дефиса на два"
 
@@ -1483,6 +1493,7 @@ msgid "Unicode"
 msgstr "Юникод"
 
 #: ../aeidon/encodings.py:163
+#, python-brace-format
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
@@ -1519,6 +1530,7 @@ msgid "Mac (classic)"
 msgstr "Мак (ранние модели)"
 
 #: ../aeidon/locales.py:72
+#, python-brace-format
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
@@ -1592,6 +1604,15 @@ msgstr "_Боковая панель"
 #: ../data/extensions/side-pane/side-pane.py:354
 msgid "Show or hide the side pane"
 msgstr "Показать или скрыть боковую панель"
+
+#: ../data/gaupol.appdata.xml.in.h:1
+msgid ""
+"Gaupol is an editor for text-based subtitle files. It supports multiple "
+"subtitle file formats and provides means of creating subtitles, editing "
+"texts and timing subtitles to match video. The user interface is designed "
+"with attention to batch processing of multiple documents and convenience of "
+"translating."
+msgstr ""
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Gaupol"
@@ -1939,7 +1960,7 @@ msgstr "Сохранить текущий документ"
 msgid "Save _As…"
 msgstr "Сохранить _как…"
 
-#: ../gaupol/actions/file.py:289 ../gaupol/agents/save.py:184
+#: ../gaupol/actions/file.py:289 ../gaupol/agents/save.py:183
 msgid "Save As"
 msgstr "Сохранить как"
 
@@ -1959,7 +1980,7 @@ msgstr "Сохранить текущий перевод"
 msgid "Save Translat_ion As…"
 msgstr "Сохранить перево_д как…"
 
-#: ../gaupol/actions/file.py:328 ../gaupol/agents/save.py:220
+#: ../gaupol/actions/file.py:328 ../gaupol/agents/save.py:219
 msgid "Save Translation As"
 msgstr "Сохранить перевод как"
 
@@ -2552,15 +2573,16 @@ msgstr "Сохранить изменения в переводе \"{}\" пер�
 msgid "Open _Without Saving"
 msgstr "Открыть _без сохранения"
 
-#: ../gaupol/agents/open.py:458
+#: ../gaupol/agents/open.py:457
+#, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "Добавлены субтитры из файла \"{basename}\": {amount:d}"
 
-#: ../gaupol/agents/preview.py:53
+#: ../gaupol/agents/preview.py:54
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr "Не удалось создать перекодированный файл во временном каталоге \"{}\""
 
-#: ../gaupol/agents/preview.py:55
+#: ../gaupol/agents/preview.py:56
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
@@ -2569,31 +2591,32 @@ msgstr ""
 "Не удалось закодировать в текущей кодировке субтитры во временном файле. "
 "Сначала сохраните файл в другой кодировке."
 
-#: ../gaupol/agents/preview.py:64
+#: ../gaupol/agents/preview.py:65
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr "Не удалось сохранить файл во временном каталоге \"{}\""
 
-#: ../gaupol/agents/preview.py:72
+#: ../gaupol/agents/preview.py:73
 msgid "Failed to launch video player"
 msgstr "Не удалось запустить видеоплеер"
 
-#: ../gaupol/agents/save.py:146
+#: ../gaupol/agents/save.py:145
+#, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "Не удалось закодировать файл \"{basename}\" с помощью \"{codec}\""
 
-#: ../gaupol/agents/save.py:148
+#: ../gaupol/agents/save.py:147
 msgid "Please try to save the file with a different character encoding."
 msgstr "Попробуйте сохранить файл в другой кодировке символов."
 
-#: ../gaupol/agents/save.py:156
+#: ../gaupol/agents/save.py:155
 msgid "Failed to save file \"{}\""
 msgstr "Не удалось сохранить файл \"{}\""
 
-#: ../gaupol/agents/save.py:194
+#: ../gaupol/agents/save.py:193
 msgid "Saved main document as \"{}\""
 msgstr "Документ был сохранен под именем \"{}\""
 
-#: ../gaupol/agents/save.py:230
+#: ../gaupol/agents/save.py:229
 msgid "Saved translation document as \"{}\""
 msgstr "Перевод был сохранен под именем \"{}\""
 
@@ -2609,11 +2632,11 @@ msgstr ""
 msgid "_Load"
 msgstr ""
 
-#: ../gaupol/application.py:296
+#: ../gaupol/application.py:305
 msgid "Redo undone actions"
 msgstr "Повтор отмененных действий"
 
-#: ../gaupol/application.py:348
+#: ../gaupol/application.py:357
 msgid "Undo actions"
 msgstr "Отмена действий"
 
@@ -2708,7 +2731,7 @@ msgstr ""
 msgid "Join or Split Words"
 msgstr "Объединить или разделить слова"
 
-#: ../gaupol/assistants.py:624 ../gaupol/dialogs/spell_check.py:394
+#: ../gaupol/assistants.py:624 ../gaupol/dialogs/spell_check.py:393
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Не удалось загрузить словарь для языка \"{}\""
 
@@ -2743,6 +2766,7 @@ msgid "Each task is now being run on each project."
 msgstr "Выполняются выбранные задачи для каждого из проектов."
 
 #: ../gaupol/assistants.py:832
+#, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "Завершено задач: {current:d} из {total:d}"
 
@@ -2776,15 +2800,16 @@ msgstr "Исправленный текст"
 msgid "Correct Texts"
 msgstr "Исправление текста"
 
-#: ../gaupol/assistants.py:1098
+#: ../gaupol/assistants.py:1097
 msgid "Correcting texts"
 msgstr "Исправление текста"
 
-#: ../gaupol/assistants.py:1114
+#: ../gaupol/assistants.py:1113
+#, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Изменено субтитров: {edits:d}, удалено: {removals:d}"
 
-#: ../gaupol/assistants.py:1148
+#: ../gaupol/assistants.py:1147
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Подтверждение {:d} изменения"
@@ -2829,7 +2854,7 @@ msgstr "Кодировка"
 msgid "Show in Menu"
 msgstr "Включать в меню"
 
-#: ../gaupol/dialogs/file.py:53 ../gaupol/dialogs/video.py:49
+#: ../gaupol/dialogs/file.py:53 ../gaupol/dialogs/video.py:50
 msgid "All files"
 msgstr "Все файлы"
 
@@ -2838,6 +2863,7 @@ msgid "All supported files"
 msgstr "Все поддерживаемые файлы"
 
 #: ../gaupol/dialogs/file.py:71
+#, python-brace-format
 msgid "{format} (*{extension})"
 msgstr ""
 
@@ -2927,7 +2953,7 @@ msgstr[0] "Найдено и заменено {:d} вхождение"
 msgstr[1] "Найдено и заменено {:d} вхождения"
 msgstr[2] "Найдено и заменено {:d} вхождений"
 
-#: ../gaupol/dialogs/spell_check.py:369
+#: ../gaupol/dialogs/spell_check.py:368
 msgid "Spell-checking"
 msgstr "Проверка орфографии"
 
@@ -2936,6 +2962,7 @@ msgid "Splitting project"
 msgstr "Разделение проекта"
 
 #: ../gaupol/dialogs/split.py:103
+#, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Перенесено субтитров в проект \"{name}\": {amount:d}"
 
@@ -2943,7 +2970,7 @@ msgstr "Перенесено субтитров в проект \"{name}\": {amo
 msgid "Edit Text"
 msgstr ""
 
-#: ../gaupol/dialogs/video.py:53
+#: ../gaupol/dialogs/video.py:54
 msgid "Video files"
 msgstr "Видеофайлы"
 
@@ -3073,6 +3100,9 @@ msgstr "Новые строки:"
 #: ../gaupol/page.py:346
 msgid "{} translation"
 msgstr "Перевод {}"
+
+#~ msgid "Convert various two-letter spellings of okay to \"OK\""
+#~ msgstr "Заменять различные написания слова \"okay\" на \"OK\""
 
 #~ msgid "Next"
 #~ msgstr "Вперед"
