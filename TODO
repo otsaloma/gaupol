@@ -21,6 +21,7 @@ Gaupol 0.25
  [X] Rewrite Windows installer build scripts (thanks to TumaGonx Zakkum
      for pygi-aio binaries and Gian Mario Tagliaretti for a template
      cx_Freeze setup script)
+ [X] Update Spanish translation (Carlos Mella)
 
 Gaupol 1.0
 ==========

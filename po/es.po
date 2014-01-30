@@ -2,14 +2,14 @@
 # Copyright (C) 2005-2013 Osmo Salomaa.
 # This file is distributed under the same license as the gaupol package.
 # Miguel Latorre <kuan@graffiti.net>, 2006.
-# Carlos Mella <cmellib@gmail.com>, 2010-2013.
+# Carlos Mella <cmellib@gmail.com>, 2010-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.24\n"
+"Project-Id-Version: gaupol 0.25\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-26 21:50+0200\n"
-"PO-Revision-Date: 2013-07-18 19:54-0300\n"
+"PO-Revision-Date: 2014-01-29 20:22-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -452,11 +452,11 @@ msgstr "Editor"
 
 #: ../data/ui/preferences-dialog.ui.h:20
 msgid "Fonts"
-msgstr ""
+msgstr "Tipografía"
 
 #: ../data/ui/preferences-dialog.ui.h:21
 msgid "_Subtitles:"
-msgstr ""
+msgstr "_Subtítulos:"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "Pick the Subtitle Font"
@@ -464,7 +464,7 @@ msgstr "Seleccionar el tipo de letra de los subtítulos"
 
 #: ../data/ui/preferences-dialog.ui.h:23
 msgid "_Time:"
-msgstr ""
+msgstr "_Tiempo:"
 
 #: ../data/ui/preferences-dialog.ui.h:24
 msgid "Pick the Time Font"
@@ -472,11 +472,11 @@ msgstr "Seleccionar el tipo de letra de los tiempos"
 
 #: ../data/ui/preferences-dialog.ui.h:25
 msgid "Colors"
-msgstr ""
+msgstr "Colores"
 
 #: ../data/ui/preferences-dialog.ui.h:26
 msgid "Su_btitles:"
-msgstr ""
+msgstr "S_ubtítulos:"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Pick the Time Color"
@@ -488,7 +488,7 @@ msgstr "_Mostrar un fondo tras el texto"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 msgid "Ti_me:"
-msgstr ""
+msgstr "T_iempo:"
 
 #: ../data/ui/preferences-dialog.ui.h:30
 msgid "Pick the Subtitle Color"
@@ -496,7 +496,7 @@ msgstr "Seleccionar el color de los subtítulos"
 
 #: ../data/ui/preferences-dialog.ui.h:31
 msgid "Us_e a background behind text"
-msgstr "Mo_strar un fondo tras el texto"
+msgstr "M_ostrar un fondo tras el texto"
 
 #: ../data/ui/preferences-dialog.ui.h:32
 msgid "Video"
@@ -970,7 +970,7 @@ msgstr "Okay"
 
 #: ../data/patterns/Latn-en.common-error.in.h:12
 msgid "Spell two-letter forms of \"okay\" in all upper case"
-msgstr ""
+msgstr "Convierte varias formas abreviadas de la palabra «okay» a «OK»"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
@@ -1013,7 +1013,7 @@ msgstr "Determinante posesivo"
 
 #: ../data/patterns/Latn-en.line-break.in.h:8
 msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr "No divide después de un determinante posesivo, como «mi»"
+msgstr "No divide después de un determinante posesivo, tal como «mi»"
 
 #: ../data/patterns/Latn-fi.common-error.in.h:1
 #: ../data/patterns/Latn.common-error.in.h:15
@@ -1134,11 +1134,13 @@ msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:23
 msgid "Spaces around musical notes"
-msgstr ""
+msgstr "Espacios alrededor de notas musicales"
 
 #: ../data/patterns/Latn.common-error.in.h:24
 msgid "Add spaces between musical note characters and lyrics"
-msgstr ""
+msgstr "
+"Agrega espacios en blanco entre caracteres de notas musicales y letras de "
+"canciones"
 
 #: ../data/patterns/Latn.common-error.in.h:25
 msgid "Multiple question- and exclamation marks"
@@ -1646,6 +1648,11 @@ msgid ""
 "with attention to batch processing of multiple documents and convenience of "
 "translating."
 msgstr ""
+"Gaupol es un editor de archivos de subtítulos basados en texto. Con soporte "
+"para diversos formatos de archivos, proporciona los medios para crear, "
+"editar y sincronizar subtítulos a un vídeo. Su interfaz de usuario está "
+"diseñada con especial énfasis en el procesamiento por lotes de múltiples "
+"documentos y comodidad para la traducción de texto."
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Gaupol"
@@ -3164,154 +3171,3 @@ msgstr "Salto de línea:"
 #: ../gaupol/page.py:346
 msgid "{} translation"
 msgstr "traducción de {}"
-
-#~ msgid "Subtitle"
-#~ msgstr "Subtítulos"
-
-#~ msgid "_Font:"
-#~ msgstr "_Tipo de letra:"
-
-#~ msgid "C_olor:"
-#~ msgstr "C_olor:"
-
-#~ msgid "Time"
-#~ msgstr "Tiempos"
-
-#~ msgid "Colo_r:"
-#~ msgstr "Colo_r:"
-
-#~ msgid "Fo_nt:"
-#~ msgstr "Tipo _de letra:"
-
-#~ msgid "Convert various two-letter spellings of okay to \"OK\""
-#~ msgstr "Convierte varias formas abreviadas de la palabra «okay» a «OK»"
-
-#~ msgid "Next"
-#~ msgstr "Siguiente"
-
-#~ msgid "Edit"
-#~ msgstr "Editar"
-
-#~ msgid "Insert At Video"
-#~ msgstr "Insertar a partir de vídeo"
-
-#~ msgid "_Main Toolbar"
-#~ msgstr "Barra de _herramientas"
-
-#~ msgid "Show or hide the main toolbar"
-#~ msgstr "Muestra u oculta la barra de herramientas"
-
-#~ msgid "_Statusbar"
-#~ msgstr "Barra de _estado"
-
-#~ msgid "Show or hide the statusbar"
-#~ msgstr "Muestra u oculta la barra de estado"
-
-#~ msgid "Vi_deo Toolbar"
-#~ msgstr "Barra de _vídeo"
-
-#~ msgid "Show or hide the video toolbar"
-#~ msgstr "Muestra u oculta la barra de vídeo"
-
-#~ msgid "Opened main file \"{}\""
-#~ msgstr "Archivo principal «{}» abierto"
-
-#~ msgid "Opened translation file \"{}\""
-#~ msgstr "Archivo de traducción «{}» abierto"
-
-#~ msgid "Saved all open documents"
-#~ msgstr "Todos los documentos guardados"
-
-#~ msgid "Saved main document"
-#~ msgstr "Documento principal guardado"
-
-#~ msgid "Saved translation document"
-#~ msgstr "Documento de traducción guardado"
-
-#~ msgid "Framerate:"
-#~ msgstr "Frecuencia de fotogramas:"
-
-#~ msgid "Video file:"
-#~ msgstr "Archivo de vídeo:"
-
-#~ msgid "_Video Toolbar"
-#~ msgstr "Barra de _vídeo"
-
-#~ msgid "Failed to set default locale."
-#~ msgstr "No fue posible establecer la configuración regional predeterminada."
-
-#~ msgid "Please check your locale settings."
-#~ msgstr "Verifique sus preferencias para la configuración regional."
-
-#~ msgid "Falling back to the 'C' locale."
-#~ msgstr "Recurriendo a la configuración regional «C»."
-
-#~ msgid "An unhandled exception occured"
-#~ msgstr "Se produjo una excepción no tratada"
-
-#~ msgid "Copy _Down"
-#~ msgstr "Copiar hacia abaj_o"
-
-#~ msgid "Copy _Up"
-#~ msgstr "Copiar hacia arr_iba"
-
-#~ msgid "Character _encoding:"
-#~ msgstr "Codificación d_e caracteres:"
-
-#~ msgid "C_ountry:"
-#~ msgstr "_País:"
-
-#~ msgid "Correct texts in _all open projects"
-#~ msgstr "Corregir _todos los proyectos abiertos"
-
-#~ msgid "Correct texts in _main text column"
-#~ msgstr "Corregir columna de texto pr_incipal"
-
-#~ msgid "Correct texts in _translation text column"
-#~ msgstr "Corregir columna de t_raducción"
-
-#~ msgid "Correct texts in c_urrent project"
-#~ msgstr "Corregir proyecto act_ual"
-
-#~ msgid "Correct texts in s_elected subtitles"
-#~ msgstr "Corregir subtítulos s_eleccionados"
-
-#~ msgid ""
-#~ "Please check, e.g. with a text editor, that the file you are trying open "
-#~ "is a valid {} file. If you think it is, file a bug report and attach the "
-#~ "file."
-#~ msgstr ""
-#~ "Verifique que el archivo que intenta abrir es un archivo {} válido. Si es "
-#~ "así, envíe un informe de error adjuntando dicho archivo."
-
-#~ msgid "Select Tasks and Target"
-#~ msgstr "Seleccionar tareas"
-
-#~ msgid "Select Capitalization Patterns"
-#~ msgstr "Seleccionar reglas para capitalizar texto"
-
-#~ msgid "Select Common Error Patterns"
-#~ msgstr "Seleccionar reglas para errores frecuentes"
-
-#~ msgid "Select Hearing Impaired Patterns"
-#~ msgstr "Seleccionar reglas para texto para sordos"
-
-#~ msgid "Set Options for Joining and Splitting Words"
-#~ msgstr "Definir opciones para unir o dividir palabras"
-
-#~ msgid "Select Line-Break Patterns"
-#~ msgstr "Seleccionar reglas para dividir líneas"
-
-#~ msgid "Set Line-Break Options"
-#~ msgstr "Definir opciones de dividir líneas"
-
-#~ msgid "Adjusted duration of {:d} subtitle"
-#~ msgid_plural "Adjusted durations of {:d} subtitles"
-#~ msgstr[0] "Se ajustó la duración de {:d} subtítulo"
-#~ msgstr[1] "Se ajustó la duración de {:d} subtítulos"
-
-#~ msgid "set the configuration file used"
-#~ msgstr "definir el archivo de configuración por usar"
-
-#~ msgid "<b>Character encoding:</b> {}"
-#~ msgstr "<b>Codificación de caracteres:</b> {}"
