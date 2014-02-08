@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """cx_Freeze installation routines built on top of normal setup.py."""
-import os, site, sys
+import os, site
 
 os.environ["GAUPOL_FREEZING"] = "1"
 from setup import *
