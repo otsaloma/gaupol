@@ -1,28 +1,3 @@
-Gaupol 0.25
-===========
-
- [X] Depend on GtkSpell 3.0.0 or later instead of pygtkspellcheck
-     for inline spell-check
-     - http://gtkspell.sourceforge.net/
- [X] Clarify GStreamer dependency as "at least the core,
-     gst-plugins-base and gst-plugins-good; and for good container and
-     codec support preferrably each of gst-plugins-bad, gst-plugins-ugly
-     and gst-libav" (#710138)
- [X] Check that required GStreamer elements can be found and
-     print error messages if not (#710138)
- [X] Filter open recent menu items by mimetype
- [X] Fix search dialog "Ignore case" option
- [X] Fix text correction assistant layout with GTK+ 3.10
- [X] Fix newline handling on Windows (Python 3 does implicit conversions
-     that were not accounted for)
- [X] Fix preview error dialog on Windows (#651675)
- [X] Fix video selection dialog on Windows (#654523)
- [X] Fix miscellaneous small Windows-specific issues
- [X] Rewrite Windows installer build scripts (thanks to TumaGonx Zakkum
-     for pygi-aio binaries and Gian Mario Tagliaretti for a template
-     cx_Freeze setup script)
- [X] Update Spanish translation (Carlos Mella)
-
 Gaupol 1.0
 ==========
 
