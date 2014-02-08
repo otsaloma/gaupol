@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gaupol 0.25\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-26 21:50+0200\n"
-"PO-Revision-Date: 2014-01-29 20:22-0300\n"
+"PO-Revision-Date: 2014-02-08 16:15+0200\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -1138,9 +1138,7 @@ msgstr "Espacios alrededor de notas musicales"
 
 #: ../data/patterns/Latn.common-error.in.h:24
 msgid "Add spaces between musical note characters and lyrics"
-msgstr "
-"Agrega espacios en blanco entre caracteres de notas musicales y letras de "
-"canciones"
+msgstr "Agrega espacios en blanco entre caracteres de notas musicales y letras de canciones"
 
 #: ../data/patterns/Latn.common-error.in.h:25
 msgid "Multiple question- and exclamation marks"
