@@ -1,3 +1,9 @@
+Gaupol 0.25.1
+=============
+
+ [X] Use Gtk.render_layout instead of deprecated Gtk.paint_layout to
+     render line length margin in text views
+
 Gaupol 1.0
 ==========
 
