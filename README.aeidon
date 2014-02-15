@@ -43,6 +43,6 @@ iso-codes and Universal Encoding Detector are to be associated with
 aeidon. If aeidon is installed using the '--without-iso-codes' switch,
 then iso-codes is required instead of optional.
 
-Likewise, Python, PyGObject, GStreamer, pocketsphinx, GtkSpell, MPlayer,
-VLC and PT Sans Caption and PT Mono fonts are to be associated with
-gaupol. gaupol also requires aeidon of the exact same version.
+Likewise, Python, PyGObject, GTK+, GStreamer, pocketsphinx, GtkSpell,
+MPlayer, VLC and PT Sans Caption and PT Mono fonts are to be associated
+with gaupol. gaupol also requires aeidon of the exact same version.

@@ -3,7 +3,9 @@ Gaupol 0.25.1
 
  [X] Use Gtk.render_layout instead of deprecated Gtk.paint_layout to
      render line length margin in text views
- [ ] Check list of dependencies (e.g. PyGObject doesn't pull in Gtk!)
+ [X] Add GTK+ to list of dependencies in the README file (GTK+ has
+     always been a dependency, its explicit mention was just forgotten
+     when migrating from PyGTK to PyGObject)
 
 Gaupol 1.0
 ==========
