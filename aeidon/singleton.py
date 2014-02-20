@@ -21,7 +21,7 @@
 __all__ = ("Singleton",)
 
 
-class Singleton(object):
+class Singleton:
 
     """Base class for single-instance classes."""
 

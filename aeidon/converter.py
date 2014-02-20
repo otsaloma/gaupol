@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("MarkupConverter",)
 
 
-class MarkupConverter(object):
+class MarkupConverter:
 
     """Subtitle text markup converter."""
 

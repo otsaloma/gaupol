@@ -26,7 +26,7 @@ from gi.repository import Gtk
 __all__ = ("BuilderDialog",)
 
 
-class BuilderDialog(object):
+class BuilderDialog:
 
     """
     Baseclass and wrapper for :class:`Gtk.Builder` constructed dialogs.

@@ -24,7 +24,7 @@ import os
 __all__ = ("TestCase",)
 
 
-class TestCase(object, metaclass=aeidon.Contractual):
+class TestCase(metaclass=aeidon.Contractual):
 
     """
     Base class for unit test cases.

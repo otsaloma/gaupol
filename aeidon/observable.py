@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("Observable",)
 
 
-class Observable(object, metaclass=aeidon.Contractual):
+class Observable(metaclass=aeidon.Contractual):
 
     """
     Base class for observable objects.

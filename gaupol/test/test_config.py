@@ -33,7 +33,7 @@ class TestConfigurationStore(gaupol.TestCase):
         shutil.rmtree(self.directory)
 
     def test_connect_notify(self):
-        class PuppetObserver(object):
+        class PuppetObserver:
             def _on_conf_editor_notify_undo_limit(self, obj, value):
                 assert value == 99
         puppet = PuppetObserver()
@@ -41,7 +41,7 @@ class TestConfigurationStore(gaupol.TestCase):
         self.conf.editor.undo_limit = 99
 
     def test_disconnect_notify(self):
-        class PuppetObserver(object):
+        class PuppetObserver:
             def _on_conf_editor_notify_undo_limit(self, obj, value):
                 assert value == 99
         puppet = PuppetObserver()

@@ -21,7 +21,7 @@
 __all__ = ("Delegate",)
 
 
-class Delegate(object):
+class Delegate:
 
     """
     Base class for objects that dispatch ``self``-lookups.

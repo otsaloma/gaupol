@@ -25,7 +25,7 @@ from gi.repository import Gtk
 from gi.repository import Pango
 
 
-class _Ruler(object):
+class _Ruler:
 
     """
     Measurer of line lengths in various units.

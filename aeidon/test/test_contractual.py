@@ -19,7 +19,7 @@
 import aeidon
 
 
-class PuppetBaseClass(object, metaclass=aeidon.Contractual):
+class PuppetBaseClass(metaclass=aeidon.Contractual):
 
     def _invariant(self):
         assert True

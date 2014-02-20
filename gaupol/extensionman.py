@@ -29,7 +29,7 @@ import traceback
 __all__ = ("ExtensionManager", "ExtensionMetadata",)
 
 
-class ExtensionManager(object, metaclass=aeidon.Contractual):
+class ExtensionManager(metaclass=aeidon.Contractual):
 
     """
     Finding activating, storing and deactivating extensions.

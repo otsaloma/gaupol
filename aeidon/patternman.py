@@ -26,7 +26,7 @@ import xml.etree.ElementTree as ET
 __all__ = ("PatternManager",)
 
 
-class PatternManager(object, metaclass=aeidon.Contractual):
+class PatternManager(metaclass=aeidon.Contractual):
 
     """
     Managing regular expression substitutions for subtitle texts.

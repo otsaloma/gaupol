@@ -26,7 +26,7 @@ import re
 __all__ = ("SubtitleFile",)
 
 
-class SubtitleFile(object, metaclass=aeidon.Contractual):
+class SubtitleFile(metaclass=aeidon.Contractual):
 
     """
     Base class for subtitle files.

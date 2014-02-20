@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("Calculator",)
 
 
-class Calculator(object, metaclass=aeidon.Contractual):
+class Calculator(metaclass=aeidon.Contractual):
 
     """
     Time and frame calculator.

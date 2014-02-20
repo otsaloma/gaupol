@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("RevertableAction", "RevertableActionGroup",)
 
 
-class RevertableAction(object, metaclass=aeidon.Contractual):
+class RevertableAction(metaclass=aeidon.Contractual):
 
     """
     Action that can be reverted, i.e. undone and redone.
@@ -76,7 +76,7 @@ class RevertableAction(object, metaclass=aeidon.Contractual):
         return self.revert_function(*self.revert_args, **kwargs)
 
 
-class RevertableActionGroup(object):
+class RevertableActionGroup:
 
     """
     Group of :class:`RevertableAction`.

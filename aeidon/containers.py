@@ -26,7 +26,7 @@ this.
 """
 
 
-class SubRip(object):
+class SubRip:
 
     """
     Subtitle box pixel coordinates for extended SubRip format.
@@ -40,7 +40,7 @@ class SubRip(object):
     x1 = y1 = x2 = y2 = 0
 
 
-class SubStationAlpha(object):
+class SubStationAlpha:
 
     """
     Attributes for all versions of Sub Station Alpha formats.

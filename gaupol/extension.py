@@ -21,7 +21,7 @@
 __all__ = ("Extension",)
 
 
-class Extension(object):
+class Extension:
 
     """Separate object that can be activated and deactivated during runtime."""
 

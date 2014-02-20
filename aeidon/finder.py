@@ -24,7 +24,7 @@ import re
 __all__ = ("Finder",)
 
 
-class Finder(object, metaclass=aeidon.Contractual):
+class Finder(metaclass=aeidon.Contractual):
 
     """
     String and regular expression finder and replacer.

@@ -20,7 +20,7 @@ import copy
 import aeidon
 
 
-class PuppetMaster(object):
+class PuppetMaster:
 
     def __init__(self):
         self.count = 0

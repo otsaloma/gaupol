@@ -21,7 +21,7 @@
 __all__ = ("Clipboard",)
 
 
-class Clipboard(object):
+class Clipboard:
 
     """Internal text clipboard."""
 

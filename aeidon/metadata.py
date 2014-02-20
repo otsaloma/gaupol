@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("MetadataItem",)
 
 
-class MetadataItem(object):
+class MetadataItem:
 
     """
     Metadata store for one item in a desktop-style file.
