@@ -50,7 +50,7 @@ class SidePane(aeidon.Observable):
     signals = ("close-button-clicked", "page-switched")
 
     def __init__(self, application):
-        """Initialize a :class:`SidePane` object."""
+        """Initialize a :class:`SidePane` instance."""
         aeidon.Observable.__init__(self)
         self._conf = gaupol.conf.extensions.side_pane
         self._focus_handler_id = None
@@ -319,7 +319,7 @@ class SidePaneExtension(gaupol.Extension):
     """A side pane that can be used by other extensions."""
 
     def __init__(self):
-        """Initialize a :class:`SidePaneExtension` object."""
+        """Initialize a :class:`SidePaneExtension` instance."""
         self._action_group = None
         self._conf = None
         self._uim_id = None

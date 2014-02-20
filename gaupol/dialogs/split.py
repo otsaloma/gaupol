@@ -39,7 +39,7 @@ class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         assert len(page.project.subtitles) > 1
 
     def __init__(self, parent, application):
-        """Initialize a :class:`SplitDialog` object."""
+        """Initialize a :class:`SplitDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "split-dialog.ui")
         self.application = application
         self._init_subtitle_spin()

@@ -30,7 +30,7 @@ class ActivateNextProjectAction(gaupol.Action):
     """Activate the project in the next tab."""
 
     def __init__(self):
-        """Initialize an :class:`ActivateNextProjectAction` object."""
+        """Initialize an :class:`ActivateNextProjectAction` instance."""
         gaupol.Action.__init__(self, "activate_next_project")
         self.props.label = _("_Next")
         self.props.tooltip = _("Activate the project in the next tab")
@@ -49,7 +49,7 @@ class ActivatePreviousProjectAction(gaupol.Action):
     """Activate the project in the previous tab."""
 
     def __init__(self):
-        """Initialize an :class:`ActivatePreviousProjectAction` object."""
+        """Initialize an :class:`ActivatePreviousProjectAction` instance."""
         gaupol.Action.__init__(self, "activate_previous_project")
         self.props.label = _("_Previous")
         self.props.tooltip = _("Activate the project in the previous tab")
@@ -67,7 +67,7 @@ class MoveTabLeftAction(gaupol.Action):
     """Move the current tab to the left."""
 
     def __init__(self):
-        """Initialize a :class:`MoveTabLeftAction` object."""
+        """Initialize a :class:`MoveTabLeftAction` instance."""
         gaupol.Action.__init__(self, "move_tab_left")
         self.props.label = _("Move Tab _Left")
         self.props.tooltip = _("Move the current tab to the left")
@@ -84,7 +84,7 @@ class MoveTabRightAction(gaupol.Action):
     """Move the current tab to the right."""
 
     def __init__(self):
-        """Initialize a :class:`MoveTabRightAction` object."""
+        """Initialize a :class:`MoveTabRightAction` instance."""
         gaupol.Action.__init__(self, "move_tab_right")
         self.props.label = _("Move Tab _Right")
         self.props.tooltip = _("Move the current tab to the right")
@@ -101,7 +101,7 @@ class ShowColumnsMenuAction(gaupol.MenuAction):
 
     """Show the "Columns" menu."""
     def __init__(self):
-        """Initialize a :class:`ShowColumnsMenuAction` object."""
+        """Initialize a :class:`ShowColumnsMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_columns_menu")
         self.props.label = _("_Columns")
         self.action_group = "main-unsafe"
@@ -116,7 +116,7 @@ class ShowFramerate23976Action(gaupol.RadioAction):
     """Calculate nonnative units with a framerate of 23.976 fps."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramerate23976Action` object."""
+        """Initialize a :class:`ShowFramerate23976Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_23_976")
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_23_976)
@@ -140,7 +140,7 @@ class ShowFramerate24000Action(gaupol.RadioAction):
     """Calculate nonnative units with a framerate of 24.000 fps."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramerate24000Action` object."""
+        """Initialize a :class:`ShowFramerate24000Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_24_000")
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_24_000)
@@ -164,7 +164,7 @@ class ShowFramerate25000Action(gaupol.RadioAction):
     """Calculate nonnative units with a framerate of 25.000 fps."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramerate25000Action` object."""
+        """Initialize a :class:`ShowFramerate25000Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_25_000")
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_25_000)
@@ -188,7 +188,7 @@ class ShowFramerate29970Action(gaupol.RadioAction):
     """Calculate nonnative units with a framerate of 29.970 fps."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramerate30Action` object."""
+        """Initialize a :class:`ShowFramerate30Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_29_970")
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_29_970)
@@ -212,7 +212,7 @@ class ShowFramerateMenuAction(gaupol.MenuAction):
     """Show the "Framerate" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramerateMenuAction` object."""
+        """Initialize a :class:`ShowFramerateMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_framerate_menu")
         self.props.label = _("F_ramerate")
         self.action_group = "main-unsafe"
@@ -228,7 +228,7 @@ class ShowFramesAction(gaupol.RadioAction):
     """Show positions as frames."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFramesAction` object."""
+        """Initialize a :class:`ShowFramesAction` instance."""
         gaupol.RadioAction.__init__(self, "show_frames")
         mode = gaupol.conf.editor.mode
         self.props.active = (mode == aeidon.modes.FRAME)
@@ -250,7 +250,7 @@ class ShowLayoutMenuAction(gaupol.MenuAction):
     """Show the "Layout" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowLayoutMenuAction` object."""
+        """Initialize a :class:`ShowLayoutMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_layout_menu")
         self.props.label = _("_Layout")
         self.action_group = "main-unsafe"
@@ -265,7 +265,7 @@ class ShowTimesAction(gaupol.RadioAction):
     """Show positions as times."""
 
     def __init__(self):
-        """Initialize a :class:`ShowTimesAction` object."""
+        """Initialize a :class:`ShowTimesAction` instance."""
         gaupol.RadioAction.__init__(self, "show_times")
         mode = gaupol.conf.editor.mode
         self.props.active = (mode == aeidon.modes.TIME)
@@ -287,7 +287,7 @@ class ToggleDurationColumnAction(gaupol.ToggleAction):
     """Show or hide the duration column."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleDurationColumnAction` object."""
+        """Initialize a :class:`ToggleDurationColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_duration_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.DURATION in fields
@@ -305,7 +305,7 @@ class ToggleEndColumnAction(gaupol.ToggleAction):
     """Show or hide the end column."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleEndColumnAction` object."""
+        """Initialize a :class:`ToggleEndColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_end_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.END in fields
@@ -323,7 +323,7 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
     """Show or hide the main text column."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleMainTextColumnAction` object."""
+        """Initialize a :class:`ToggleMainTextColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_main_text_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.MAIN_TEXT in fields
@@ -341,7 +341,7 @@ class ToggleMainToolbarAction(gaupol.ToggleAction):
     """Show or hide the main toolbar."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleMainToolbarAction` object."""
+        """Initialize a :class:`ToggleMainToolbarAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_main_toolbar")
         show = gaupol.conf.application_window.show_main_toolbar
         self.props.active = show
@@ -355,7 +355,7 @@ class ToggleNumberColumnAction(gaupol.ToggleAction):
     """Show or hide the number column."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleNumberColumnAction` object."""
+        """Initialize a :class:`ToggleNumberColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_number_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.NUMBER in fields
@@ -375,7 +375,7 @@ class TogglePlayerAction(gaupol.ToggleAction):
     __gtype_name__ = "TogglePlayerAction"
 
     def __init__(self):
-        """Initialize a :class:`TogglePlayerAction` object."""
+        """Initialize a :class:`TogglePlayerAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_player")
         self.props.active = False
         self.props.label = _("_Video Player")
@@ -394,7 +394,7 @@ class ToggleOutputWindowAction(gaupol.ToggleAction):
     """Show or hide the output window."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleOutputWindowAction` object."""
+        """Initialize a :class:`ToggleOutputWindowAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_output_window")
         self.props.active = gaupol.conf.output_window.show
         self.props.label = _("_Output Window")
@@ -407,7 +407,7 @@ class ToggleStartColumnAction(gaupol.ToggleAction):
     """Show or hide the start column."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleStartColumnAction` object."""
+        """Initialize a :class:`ToggleStartColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_start_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.START in fields
@@ -425,7 +425,7 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
     """Show or hide the translation text column."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleTranslationTextColumnAction` object."""
+        """Initialize a :class:`ToggleTranslationTextColumnAction` instance."""
         name = "toggle_translation_text_column"
         gaupol.ToggleAction.__init__(self, name)
         fields = gaupol.conf.editor.visible_fields
@@ -444,7 +444,7 @@ class UseHorizontalLayoutAction(gaupol.RadioAction):
     """Split window horizontally."""
 
     def __init__(self):
-        """Initialize a :class:`UseHorizontalLayoutAction` object."""
+        """Initialize a :class:`UseHorizontalLayoutAction` instance."""
         gaupol.RadioAction.__init__(self, "use_horizontal_layout")
         layout = gaupol.conf.application_window.layout
         self.props.active = (layout == gaupol.orientation.HORIZONTAL)
@@ -465,7 +465,7 @@ class UseVerticalLayoutAction(gaupol.RadioAction):
     """Split window vertically."""
 
     def __init__(self):
-        """Initialize a :class:`UseVerticalLayoutAction` object."""
+        """Initialize a :class:`UseVerticalLayoutAction` instance."""
         gaupol.RadioAction.__init__(self, "use_vertical_layout")
         layout = gaupol.conf.application_window.layout
         self.props.active = (layout == gaupol.orientation.VERTICAL)

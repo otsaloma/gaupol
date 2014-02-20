@@ -52,7 +52,7 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
     signals = ("close-request", "view-created")
 
     def __init__(self, count=0):
-        """Initialize a :class:`Page` object."""
+        """Initialize a :class:`Page` instance."""
         aeidon.Observable.__init__(self)
         self.edit_mode = gaupol.conf.editor.mode
         self.project = None

@@ -55,7 +55,7 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     """
 
     def __init__(self, master):
-        """Initialize a :class:`RegisterAgent` object."""
+        """Initialize a :class:`RegisterAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._do_description = None
         aeidon.util.connect(self, self, "notify::undo_limit")

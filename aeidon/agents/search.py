@@ -44,7 +44,7 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     """
 
     def __init__(self, master):
-        """Initialize a :class:`SearchAgent` object."""
+        """Initialize a :class:`SearchAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._docs = None
         self._finder = aeidon.Finder()

@@ -34,7 +34,7 @@ class AddFramerateDialog(gaupol.BuilderDialog):
     _widgets = ("spin_button",)
 
     def __init__(self, parent):
-        """Initialize an :class:`AddFramerateDialog` object."""
+        """Initialize an :class:`AddFramerateDialog` instance."""
         directory = os.path.abspath(os.path.dirname(__file__))
         ui_file_path = os.path.join(directory, "add-framerate-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
@@ -57,7 +57,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
     _widgets = ("add_button", "remove_button", "tree_view")
 
     def __init__(self, framerates, parent):
-        """Initialize a :class:`PreferencesDialog` object."""
+        """Initialize a :class:`PreferencesDialog` instance."""
         directory = os.path.abspath(os.path.dirname(__file__))
         ui_file_path = os.path.join(directory, "preferences-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
@@ -137,7 +137,7 @@ class CustomFrameratesExtension(gaupol.Extension):
     """Allow use of non-standard framerates."""
 
     def __init__(self):
-        """Initialize a :class:`CustomFrameratesExtension` object."""
+        """Initialize a :class:`CustomFrameratesExtension` instance."""
         self._action_group = None
         self._conf = None
         self._framerates = []

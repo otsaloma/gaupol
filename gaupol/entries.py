@@ -60,7 +60,7 @@ class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 
     def __init__(self):
-        """Initialize a :class:`TimeEntry` object."""
+        """Initialize a :class:`TimeEntry` instance."""
         GObject.GObject.__init__(self)
         self._delete_handler = None
         self._insert_handler = None

@@ -117,7 +117,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         return aeidon.Observable.__setattr__(self, name, value)
 
     def __init__(self):
-        """Initialize an :class:`Application` object."""
+        """Initialize an :class:`Application` instance."""
         aeidon.Observable.__init__(self)
         self._delegations = {}
         self.clipboard = aeidon.Clipboard()

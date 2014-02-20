@@ -42,7 +42,7 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
                 "editor_spell_check_check",)
 
     def __init__(self, master, application):
-        """Initialize an :class:`EditorPage` object."""
+        """Initialize an :class:`EditorPage` instance."""
         aeidon.Delegate.__init__(self, master)
         self._set_attributes(self._widgets, "editor_")
         self.application = application
@@ -134,7 +134,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
                 "extensions_tree_view")
 
     def __init__(self, master, application):
-        """Initialize an :class:`ExtensionPage` object."""
+        """Initialize an :class:`ExtensionPage` instance."""
         aeidon.Delegate.__init__(self, master)
         self._set_attributes(self._widgets, "extensions_")
         self.application = application
@@ -285,7 +285,7 @@ class FilePage(aeidon.Delegate,
                 "file_up_button")
 
     def __init__(self, master, application):
-        """Initialize a :class:`FilePage` object."""
+        """Initialize a :class:`FilePage` instance."""
         aeidon.Delegate.__init__(self, master)
         self._set_attributes(self._widgets, "file_")
         self.application = application
@@ -433,7 +433,7 @@ class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
                 "preview_offset_spin")
 
     def __init__(self, master, application):
-        """Initialize a :class:`PreviewPage` object."""
+        """Initialize a :class:`PreviewPage` instance."""
         aeidon.Delegate.__init__(self, master)
         self._set_attributes(self._widgets, "preview_")
         self.application = application
@@ -505,7 +505,7 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
                 "video_time_font_button")
 
     def __init__(self, master, application):
-        """Initialize a :class:`PreviewPage` object."""
+        """Initialize a :class:`PreviewPage` instance."""
         aeidon.Delegate.__init__(self, master)
         self._set_attributes(self._widgets, "video_")
         self.application = application
@@ -575,7 +575,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
     _widgets = ("notebook",)
 
     def __init__(self, parent, application):
-        """Initialize a :class:`PreferencesDialog` object."""
+        """Initialize a :class:`PreferencesDialog` instance."""
         gaupol.BuilderDialog.__init__(self,
                                       "preferences-dialog.ui",
                                       connect_signals=False)

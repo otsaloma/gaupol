@@ -26,7 +26,7 @@ class Clipboard:
     """Internal text clipboard."""
 
     def __init__(self):
-        """Initialize a Clipboard object."""
+        """Initialize a :class:`Clipboard` instance."""
         # List of strings, each being the text of one subtitle. Nones in the
         # list express that those subtitles are skipped, i.e. the range of
         # subtitles is not unified, but contains gaps.

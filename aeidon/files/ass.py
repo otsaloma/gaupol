@@ -34,7 +34,7 @@ class AdvSubStationAlpha(aeidon.files.SubStationAlpha):
     format = aeidon.formats.ASS
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize an :class:`AdvSubStationAlpha` object."""
+        """Initialize an :class:`AdvSubStationAlpha` instance."""
         aeidon.files.SubStationAlpha.__init__(self, path, encoding, newline)
         self.event_fields = ("Layer",
                              "Start",

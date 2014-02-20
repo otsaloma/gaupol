@@ -34,7 +34,7 @@ class OpenDialog(gaupol.FileDialog):
     _widgets = ("align_combo", "align_label", "encoding_combo")
 
     def __init__(self, parent, title, doc):
-        """Initialize an :class:`OpenDialog` object."""
+        """Initialize an :class:`OpenDialog` instance."""
         gaupol.FileDialog.__init__(self, "open-dialog.ui")
         self._use_autodetection = aeidon.util.chardet_available()
         self._init_filters()

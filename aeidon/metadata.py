@@ -42,7 +42,7 @@ class MetadataItem:
     """
 
     def __init__(self, fields=None):
-        """Initialize a :class:`MetadataItem` object."""
+        """Initialize a :class:`MetadataItem` instance."""
         self.fields = fields or {}
 
     def _get_localized_field(self, name):

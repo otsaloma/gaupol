@@ -37,7 +37,7 @@ class VideoAgent(aeidon.Delegate):
     """Loading and interacting with video."""
 
     def __init__(self, master):
-        """Initialize an :class:`VideoAgent` object."""
+        """Initialize an :class:`VideoAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         # Maintain an up-to-date cache of subtitle positions in seconds and
         # subtitle texts in order to allow fast polled updates in video player.

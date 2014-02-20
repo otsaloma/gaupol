@@ -35,7 +35,7 @@ class Pattern(aeidon.MetadataItem):
     """
 
     def __init__(self, fields=None):
-        """Initialize a :class:`Pattern` object."""
+        """Initialize a :class:`Pattern` instance."""
         aeidon.MetadataItem.__init__(self, fields)
         self.enabled = True
         self.local = False

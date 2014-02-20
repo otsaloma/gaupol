@@ -30,7 +30,7 @@ class PreviewErrorDialog(gaupol.BuilderDialog):
     _widgets = ("text_view",)
 
     def __init__(self, parent, output):
-        """Initialize a :class:`PreviewErrorDialog` object."""
+        """Initialize a :class:`PreviewErrorDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "preview-error-dialog.ui")
         self._init_data(output)
         gaupol.util.scale_to_content(self._text_view,

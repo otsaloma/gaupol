@@ -38,7 +38,7 @@ class RevertableAction(metaclass=aeidon.Contractual):
 
     def __init__(self, **kwargs):
         """
-        Initialize a :class:`RevertableAction` object.
+        Initialize a :class:`RevertableAction` instance.
 
         `kwargs` can contain any of the names of public instance variables, of
         which :attr:`description`, :attr:`docs`, :attr:`register` and
@@ -87,7 +87,7 @@ class RevertableActionGroup:
 
     def __init__(self, **kwargs):
         """
-        Initialize a :class:`RevertableAction` object.
+        Initialize a :class:`RevertableAction` instance.
 
         `kwargs` can contain any of the names of public instance variables, of
         which :attr:`actions` and :attr:`description` are required to be set

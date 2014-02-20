@@ -55,7 +55,7 @@ class Observable(metaclass=aeidon.Contractual):
     signals = ()
 
     def __init__(self):
-        """Initialize an :class:`Observable` object."""
+        """Initialize an :class:`Observable` instance."""
         self._blocked_signals = []
         self._blocked_state = False
         self._notify_frozen = False

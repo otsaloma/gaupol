@@ -48,7 +48,7 @@ class PositionTransformDialog(gaupol.BuilderDialog):
                 "text_label_2")
 
     def __init__(self, parent, application):
-        """Initialize a :class:`PositionTransformDialog` object."""
+        """Initialize a :class:`PositionTransformDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "position-transform-dialog.ui")
         self.application = application
         self._init_sensitivities()
@@ -168,7 +168,7 @@ class FrameTransformDialog(PositionTransformDialog,
     """Dialog for applying a linear tranfromation to frames."""
 
     def __init__(self, parent, application):
-        """Initialize a :class:`FrameTransformDialog` object."""
+        """Initialize a :class:`FrameTransformDialog` instance."""
         PositionTransformDialog.__init__(self, parent, application)
         self._output_spin_1 = Gtk.SpinButton()
         self._output_spin_2 = Gtk.SpinButton()
@@ -257,7 +257,7 @@ class TimeTransformDialog(PositionTransformDialog,
     """Dialog for applying a linear tranfromation to times."""
 
     def __init__(self, parent, application):
-        """Initialize a :class:`TimeTransformDialog` object."""
+        """Initialize a :class:`TimeTransformDialog` instance."""
         PositionTransformDialog.__init__(self, parent, application)
         self._output_entry_1 = gaupol.TimeEntry()
         self._output_entry_2 = gaupol.TimeEntry()

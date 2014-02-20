@@ -31,7 +31,7 @@ class TextEditDialog(Gtk.Dialog):
     """Dialog for editing text of a single subtitle."""
 
     def __init__(self, parent, text=""):
-        """Initialize a :class:`TextEditDialog` object."""
+        """Initialize a :class:`TextEditDialog` instance."""
         GObject.GObject.__init__(self)
         self._text_view = Gtk.TextView()
         self._init_dialog(parent)

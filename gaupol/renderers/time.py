@@ -34,7 +34,7 @@ class TimeCellRenderer(Gtk.CellRendererText):
     __gtype_name__ = "TimeCellRenderer"
 
     def __init__(self):
-        """Initialize a :class:`TimeCellRenderer` object."""
+        """Initialize a :class:`TimeCellRenderer` instance."""
         GObject.GObject.__init__(self)
         self._in_editor_menu = False
 

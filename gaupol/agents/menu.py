@@ -36,7 +36,7 @@ class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     """
 
     def __init__(self, master):
-        """Initialize a MenuAgent object."""
+        """Initialize a :class:`MenuAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._audio_tracks_id = None
         self._projects_id = None

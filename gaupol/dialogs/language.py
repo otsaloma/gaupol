@@ -49,7 +49,7 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         assert aeidon.util.enchant_available()
 
     def __init__(self, parent, show_target=True):
-        """Initialize a :class:`LanguageDialog` object."""
+        """Initialize a :class:`LanguageDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "language-dialog.ui")
         self._init_visibilities(show_target)
         self._init_tree_view()

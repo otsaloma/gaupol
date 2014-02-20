@@ -49,7 +49,7 @@ class AboutDialog(Gtk.AboutDialog):
     """Dialog for displaying credits and information."""
 
     def __init__(self, parent):
-        """Initialize an :class:`AboutDialog` object."""
+        """Initialize an :class:`AboutDialog` instance."""
         GObject.GObject.__init__(self)
         self.set_transient_for(parent)
         self.set_title(_("About Gaupol"))

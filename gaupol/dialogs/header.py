@@ -54,7 +54,7 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         assert has_header_count > 0
 
     def __init__(self, parent, application):
-        """Initialize a :class:`HeaderDialog` object."""
+        """Initialize a :class:`HeaderDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "header-dialog.ui")
         self.application = application
         gaupol.util.set_widget_font(self._main_text_view, "monospace")

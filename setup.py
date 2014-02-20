@@ -162,7 +162,7 @@ class Distribution(distribution):
             self.scripts.append("bin/gaupol")
 
     def __init__(self, attrs=None):
-        """Initialize a Distribution object."""
+        """Initialize a :class:`Distribution` instance."""
         if freezing:
             self.executables = []
         self.mandir = "share/man"

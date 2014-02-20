@@ -34,7 +34,7 @@ class FloatCellRenderer(Gtk.CellRendererText):
     __gtype_name__ = "FloatCellRenderer"
 
     def __init__(self, format="{:.3f}"):
-        """Initialize a :class:`FloatCellRenderer` object."""
+        """Initialize a :class:`FloatCellRenderer` instance."""
         GObject.GObject.__init__(self)
         self._format = format
         aeidon.util.connect(self, self, "notify::text")

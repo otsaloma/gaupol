@@ -51,7 +51,7 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
     """
 
     def __init__(self, re_tag=None, clean_func=None):
-        """Initialize a :class:`Parser` object."""
+        """Initialize a :class:`Parser` instance."""
         aeidon.Finder.__init__(self)
         self._margins = None
         self._tags = None

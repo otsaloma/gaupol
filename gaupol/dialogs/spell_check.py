@@ -75,7 +75,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def __init__(self, parent, application):
         """
-        Initialize a :class:`SpellCheckDialog` object.
+        Initialize a :class:`SpellCheckDialog` instance.
 
         Raise :exc:`ValueError` if dictionary initialization fails.
         """

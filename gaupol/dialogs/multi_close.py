@@ -33,7 +33,7 @@ class MultiCloseDialog(gaupol.BuilderDialog):
     _widgets = ("main_tree_view", "main_vbox", "tran_tree_view", "tran_vbox")
 
     def __init__(self, parent, application, pages):
-        """Initialize a :class:`MultiCloseDialog` object."""
+        """Initialize a :class:`MultiCloseDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "multi-close-dialog.ui")
         self.application = application
         self.pages = tuple(pages)

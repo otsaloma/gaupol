@@ -44,7 +44,7 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
     __gtype_name__ = "CellTextView"
 
     def __init__(self, text_buffer=None):
-        """Initialize a :class:`CellTextView` object."""
+        """Initialize a :class:`CellTextView` instance."""
         GObject.GObject.__init__(self)
         gaupol.util.prepare_text_view(self)
 
@@ -83,7 +83,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     __gtype_name__ = "MultilineCellRenderer"
 
     def __init__(self):
-        """Initialize a MultilineCellRenderer object."""
+        """Initialize a :class:`MultilineCellRenderer` instance."""
         GObject.GObject.__init__(self)
         self._in_editor_menu = False
         self._show_lengths = gaupol.conf.editor.show_lengths_cell

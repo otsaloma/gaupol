@@ -39,7 +39,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
                 "unit_label")
 
     def __init__(self, parent, application):
-        """Initialize a :class:`PositionShiftDialog` object."""
+        """Initialize a :class:`PositionShiftDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "position-shift-dialog.ui")
         self.application = application
         self._init_widgets()

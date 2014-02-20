@@ -36,7 +36,7 @@ class AddBookmarkDialog(gaupol.BuilderDialog):
     _widgets = ("description_entry", "subtitle_spin")
 
     def __init__(self, parent, page):
-        """Initialize an :class:`AddBookmarkDialog` object."""
+        """Initialize an :class:`AddBookmarkDialog` instance."""
         directory = os.path.abspath(os.path.dirname(__file__))
         ui_file_path = os.path.join(directory, "add-bookmark-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
@@ -74,7 +74,7 @@ class BookmarksExtension(gaupol.Extension):
     """Marking subtitles for easy navigation."""
 
     def __init__(self):
-        """Initialize a :class:`BookmarksExtension` object."""
+        """Initialize a :class:`BookmarksExtension` instance."""
         self._action_group = None
         self._bookmarks = None
         self._conf = None

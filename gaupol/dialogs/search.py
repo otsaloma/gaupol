@@ -75,7 +75,7 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 "tran_check")
 
     def __init__(self, application):
-        """Initialize a :class:`SearchDialog` object."""
+        """Initialize a :class:`SearchDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "search-dialog.ui")
         self._handle_page_changes = True
         self._match_doc = None

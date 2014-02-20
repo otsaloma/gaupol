@@ -36,7 +36,7 @@ class AttributeDictionary(aeidon.Observable):
 
     def __init__(self, root):
         """
-        Initialize an AttributeDictionary object.
+        Initialize an :class:`AttributeDictionary` instance.
 
         All subdictionaries of `root` are initialized as instances of
         :class:`AttributeDictionary` as well.

@@ -30,7 +30,7 @@ class ClearTextsAction(gaupol.Action):
     """Clear the selected texts."""
 
     def __init__(self):
-        """Initialize a :class:`ClearTextsAction` object."""
+        """Initialize a :class:`ClearTextsAction` instance."""
         gaupol.Action.__init__(self, "clear_texts")
         self.props.label = _("Cl_ear")
         self.props.stock_id = Gtk.STOCK_CLEAR
@@ -52,7 +52,7 @@ class CopyTextsAction(gaupol.Action):
     """Copy the selected texts to the clipboard."""
 
     def __init__(self):
-        """Initialize a :class:`CopyTextsAction` object."""
+        """Initialize a :class:`CopyTextsAction` instance."""
         gaupol.Action.__init__(self, "copy_texts")
         self.props.label = _("_Copy")
         self.props.stock_id = Gtk.STOCK_COPY
@@ -74,7 +74,7 @@ class CutTextsAction(gaupol.Action):
     """Cut the selected texts to the clipboard."""
 
     def __init__(self):
-        """Initialize a :class:`CutTextsAction` object."""
+        """Initialize a :class:`CutTextsAction` instance."""
         gaupol.Action.__init__(self, "cut_texts")
         self.props.label = _("Cu_t")
         self.props.stock_id = Gtk.STOCK_CUT
@@ -96,7 +96,7 @@ class EditPreferencesAction(gaupol.Action):
     """Configure Gaupol."""
 
     def __init__(self):
-        """Initialize an :class:`EditPreferencesAction` object."""
+        """Initialize an :class:`EditPreferencesAction` instance."""
         gaupol.Action.__init__(self, "edit_preferences")
         self.props.label = _("_Preferences")
         self.props.stock_id = Gtk.STOCK_PREFERENCES
@@ -109,7 +109,7 @@ class EditNextValueAction(gaupol.Action):
     """Edit the focused column of the next subtitle."""
 
     def __init__(self):
-        """Initialize an :class:`EditNextValueAction` object."""
+        """Initialize an :class:`EditNextValueAction` instance."""
         gaupol.Action.__init__(self, "edit_next_value")
         self.props.label = _("Edit _Next Cell")
         self.props.stock_id = Gtk.STOCK_EDIT
@@ -134,7 +134,7 @@ class EditValueAction(gaupol.Action):
     """Edit the focused cell."""
 
     def __init__(self):
-        """Initialize an :class:`EditValueAction` object."""
+        """Initialize an :class:`EditValueAction` instance."""
         gaupol.Action.__init__(self, "edit_value")
         self.props.is_important = True
         self.props.label = _("_Edit Cell")
@@ -159,7 +159,7 @@ class EndEarlierAction(gaupol.Action):
     """End the selected subtitle earlier."""
 
     def __init__(self):
-        """Initialize a :class:`EndEarlierAction` object."""
+        """Initialize a :class:`EndEarlierAction` instance."""
         gaupol.Action.__init__(self, "end_earlier")
         self.props.label = _("E_nd Earlier")
         self.props.tooltip = _("End the selected subtitle earlier")
@@ -178,7 +178,7 @@ class EndLaterAction(gaupol.Action):
     """End the selected subtitle later."""
 
     def __init__(self):
-        """Initialize a :class:`EndLaterAction` object."""
+        """Initialize a :class:`EndLaterAction` instance."""
         gaupol.Action.__init__(self, "end_later")
         self.props.label = _("En_d Later")
         self.props.tooltip = _("End the selected subtitle later")
@@ -197,7 +197,7 @@ class ExtendSelectionToBeginningAction(gaupol.Action):
     """Extend the selection up to the first subtitle."""
 
     def __init__(self):
-        """Initialize an :class:`ExtendSelectionToBeginningAction` object."""
+        """Initialize an :class:`ExtendSelectionToBeginningAction` instance."""
         gaupol.Action.__init__(self, "extend_selection_to_beginning")
         self.props.label = _("Extend To _Beginning")
         self.props.tooltip = _("Extend the current selection "
@@ -218,7 +218,7 @@ class ExtendSelectionToEndAction(gaupol.Action):
     """Extend the selection up to the last subtitle."""
 
     def __init__(self):
-        """Initialize an :class:`ExtendSelectionToEndAction` object."""
+        """Initialize an :class:`ExtendSelectionToEndAction` instance."""
         gaupol.Action.__init__(self, "extend_selection_to_end")
         self.props.label = _("Extend To _End")
         self.props.tooltip = _("Extend the current selection "
@@ -239,7 +239,7 @@ class InsertSubtitleAtVideoPositionAction(gaupol.Action):
     """Insert a new subtitle at video position."""
 
     def __init__(self):
-        """Initialize an :class:`InsertSubtitleAtVideoPositionAction` object."""
+        """Initialize an :class:`InsertSubtitleAtVideoPositionAction` instance."""
         gaupol.Action.__init__(self, "insert_subtitle_at_video_position")
         self.props.label = _("Inser_t Subtitle At Video Position")
         self.props.stock_id = Gtk.STOCK_ADD
@@ -258,7 +258,7 @@ class InsertSubtitlesAction(gaupol.Action):
     """Insert subtitles."""
 
     def __init__(self):
-        """Initialize an :class:`InsertSubtitlesAction` object."""
+        """Initialize an :class:`InsertSubtitlesAction` instance."""
         gaupol.Action.__init__(self, "insert_subtitles")
         self.props.label = _("_Insert Subtitles…")
         self.props.short_label = _("Insert")
@@ -279,7 +279,7 @@ class InvertSelectionAction(gaupol.Action):
     """Invert the current selection."""
 
     def __init__(self):
-        """Initialize an :class:`InvertSelectionAction` object."""
+        """Initialize an :class:`InvertSelectionAction` instance."""
         gaupol.Action.__init__(self, "invert_selection")
         self.props.label = _("_Invert Selection")
         self.props.tooltip = _("Invert the current selection")
@@ -297,7 +297,7 @@ class MergeSubtitlesAction(gaupol.Action):
     """Merge the selected subtitles."""
 
     def __init__(self):
-        """Initialize a :class:`MergeSubtitlesAction` object."""
+        """Initialize a :class:`MergeSubtitlesAction` instance."""
         gaupol.Action.__init__(self, "merge_subtitles")
         self.props.label = _("_Merge Subtitles")
         self.props.tooltip = _("Merge the selected subtitles")
@@ -317,7 +317,7 @@ class PasteTextsAction(gaupol.Action):
     """Paste texts from the clipboard."""
 
     def __init__(self):
-        """Initialize a :class:`PasteTextsAction` object."""
+        """Initialize a :class:`PasteTextsAction` instance."""
         gaupol.Action.__init__(self, "paste_texts")
         self.props.label = _("_Paste")
         self.props.stock_id = Gtk.STOCK_PASTE
@@ -342,7 +342,7 @@ class RedoActionAction(gaupol.Action):
     __gtype_name__ = "RedoActionAction"
 
     def __init__(self):
-        """Initialize a :class:`RedoActionAction` object."""
+        """Initialize a :class:`RedoActionAction` instance."""
         gaupol.Action.__init__(self, "redo_action")
         self.props.label = _("_Redo")
         self.props.stock_id = Gtk.STOCK_REDO
@@ -362,7 +362,7 @@ class RemoveSubtitlesAction(gaupol.Action):
     """Remove the selected subtitles."""
 
     def __init__(self):
-        """Initialize a :class:`RemoveSubtitlesAction` object."""
+        """Initialize a :class:`RemoveSubtitlesAction` instance."""
         gaupol.Action.__init__(self, "remove_subtitles")
         self.props.label = _("Rem_ove Subtitles")
         self.props.short_label = _("Remove")
@@ -382,7 +382,7 @@ class SelectAllAction(gaupol.Action):
     """Select all subtitles."""
 
     def __init__(self):
-        """Initialize a :class:`SelectAllAction` object."""
+        """Initialize a :class:`SelectAllAction` instance."""
         gaupol.Action.__init__(self, "select_all")
         self.props.label = _("Select _All")
         self.props.stock_id = Gtk.STOCK_SELECT_ALL
@@ -401,7 +401,7 @@ class SetEndFromVideoPositionAction(gaupol.Action):
     """Set subtitle end from video position."""
 
     def __init__(self):
-        """Initialize an :class:`SetEndFromVideoPositionAction` object."""
+        """Initialize an :class:`SetEndFromVideoPositionAction` instance."""
         gaupol.Action.__init__(self, "set_end_from_video_position")
         self.props.label = _("Set En_d From Video Position")
         self.props.tooltip = _("Set subtitle end from video position")
@@ -420,7 +420,7 @@ class ShowSelectionMenuAction(gaupol.MenuAction):
     """Show the selection menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowSelectionMenuAction` object."""
+        """Initialize a :class:`ShowSelectionMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_selection_menu")
         self.props.label = _("Sele_ction")
         self.action_group = "main-unsafe"
@@ -436,7 +436,7 @@ class ShowStretchMenuAction(gaupol.MenuAction):
     """Show the stretch menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowStretchMenuAction` object."""
+        """Initialize a :class:`ShowStretchMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_stretch_menu")
         self.props.label = _("Stretc_h Subtitle")
         self.action_group = "main-unsafe"
@@ -453,7 +453,7 @@ class SplitSubtitleAction(gaupol.Action):
     """Split the selected subtitle."""
 
     def __init__(self):
-        """Initialize a :class:`SplitSubtitleAction` object."""
+        """Initialize a :class:`SplitSubtitleAction` instance."""
         gaupol.Action.__init__(self, "split_subtitle")
         self.props.label = _("_Split Subtitle")
         self.props.tooltip = _("Split the selected subtitle")
@@ -471,7 +471,7 @@ class StartEarlierAction(gaupol.Action):
     """Start the selected subtitle earlier."""
 
     def __init__(self):
-        """Initialize a :class:`StartEarlierAction` object."""
+        """Initialize a :class:`StartEarlierAction` instance."""
         gaupol.Action.__init__(self, "start_earlier")
         self.props.label = _("_Start Earlier")
         self.props.tooltip = _("Start the selected subtitle earlier")
@@ -490,7 +490,7 @@ class StartLaterAction(gaupol.Action):
     """Start the selected subtitle later."""
 
     def __init__(self):
-        """Initialize a :class:`StartLaterAction` object."""
+        """Initialize a :class:`StartLaterAction` instance."""
         gaupol.Action.__init__(self, "start_later")
         self.props.label = _("S_tart Later")
         self.props.tooltip = _("Start the selected subtitle later")
@@ -511,7 +511,7 @@ class UndoActionAction(gaupol.Action):
     __gtype_name__ = "UndoActionAction"
 
     def __init__(self):
-        """Initialize an :class:`UndoActionAction` object."""
+        """Initialize an :class:`UndoActionAction` instance."""
         gaupol.Action.__init__(self, "undo_action")
         self.props.is_important = True
         self.props.label = _("_Undo")

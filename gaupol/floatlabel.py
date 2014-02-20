@@ -35,7 +35,7 @@ class FloatingLabel(Gtk.Box):
     # https://git.gnome.org/browse/nautilus/tree/src/nautilus-floating-bar.c
 
     def __init__(self):
-        """Initialize a :class:`FloatingLabel` object."""
+        """Initialize a :class:`FloatingLabel` instance."""
         GObject.GObject.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
         self._label = Gtk.Label()
         self._event_box = Gtk.EventBox()

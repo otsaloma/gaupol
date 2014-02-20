@@ -47,7 +47,7 @@ class PatternManager(metaclass=aeidon.Contractual):
                                 "line-break")
 
     def __init__(self, pattern_type):
-        """Initialize a :class:`PatternManager` object."""
+        """Initialize a :class:`PatternManager` instance."""
         self._patterns = {}
         self.pattern_type = pattern_type
         self._read_patterns()

@@ -34,7 +34,7 @@ class TMPlayer(aeidon.SubtitleFile):
     mode = aeidon.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize an :class:`MPsub` object."""
+        """Initialize an :class:`MPsub` instance."""
         aeidon.SubtitleFile.__init__(self, path, encoding, newline)
         self.two_digit_hour = True
 

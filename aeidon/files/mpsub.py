@@ -42,7 +42,7 @@ class MPsub(aeidon.SubtitleFile):
     mode = aeidon.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize an :class:`MPsub` object."""
+        """Initialize an :class:`MPsub` instance."""
         aeidon.SubtitleFile.__init__(self, path, encoding, newline)
         self.framerate = aeidon.framerates.NONE
         self.mode = aeidon.modes.TIME

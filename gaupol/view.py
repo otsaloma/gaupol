@@ -45,7 +45,7 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
     """
 
     def __init__(self, edit_mode):
-        """Initialize a :class:`View` object."""
+        """Initialize a :class:`View` instance."""
         GObject.GObject.__init__(self)
         self._active_col_name = ""
         self._calc = aeidon.Calculator()

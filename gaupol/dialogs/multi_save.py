@@ -40,7 +40,7 @@ class MultiSaveDialog(gaupol.FileDialog):
                 "newline_combo")
 
     def __init__(self, parent, application, modes):
-        """Initialize a :class:`MultiSaveDialog` object."""
+        """Initialize a :class:`MultiSaveDialog` instance."""
         gaupol.FileDialog.__init__(self, "multi-save-dialog.ui")
         self.application = application
         self._modes = modes

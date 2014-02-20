@@ -33,7 +33,7 @@ class VideoDialog(Gtk.FileChooserDialog):
     """Dialog for selecting a video file."""
 
     def __init__(self, parent, title, button_label):
-        """Initialize a :class:`VideoDialog` object."""
+        """Initialize a :class:`VideoDialog` instance."""
         GObject.GObject.__init__(self)
         self.set_title(title)
         self.set_transient_for(parent)

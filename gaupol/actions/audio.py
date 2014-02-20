@@ -28,7 +28,7 @@ class ShowAudioTrackMenuAction(gaupol.MenuAction):
     """Show the audio track menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowAudioTrackMenuAction` object."""
+        """Initialize a :class:`ShowAudioTrackMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_audio_track_menu")
         self.props.label = _("_Language")
         self.action_group = "main-safe"
@@ -45,7 +45,7 @@ class VolumeDownAction(gaupol.Action):
     """Decrease volume."""
 
     def __init__(self):
-        """Initialize a :class:`VolumeDownAction` object."""
+        """Initialize a :class:`VolumeDownAction` instance."""
         gaupol.Action.__init__(self, "volume_down")
         self.props.label = _("Volume _Down")
         self.props.tooltip = _("Decrease volume")
@@ -62,7 +62,7 @@ class VolumeUpAction(gaupol.Action):
     """Increase volume."""
 
     def __init__(self):
-        """Initialize a :class:`VolumeUpAction` object."""
+        """Initialize a :class:`VolumeUpAction` instance."""
         gaupol.Action.__init__(self, "volume_up")
         self.props.label = _("Volume _Up")
         self.props.tooltip = _("Increase volume")

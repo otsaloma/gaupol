@@ -98,7 +98,7 @@ class Subtitle:
                          .format(repr(self._mode)))
 
     def __init__(self, mode=None, framerate=None):
-        """Initialize a :class:`Subtitle` object."""
+        """Initialize a :class:`Subtitle` instance."""
         self._start = None
         self._end = None
         self._main_text = ""

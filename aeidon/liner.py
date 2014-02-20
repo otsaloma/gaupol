@@ -49,7 +49,7 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
     def __init__(self, re_tag=None, clean_func=None):
         """
-        Initialize a :class:`Liner` object.
+        Initialize a :class:`Liner` instance.
 
         `re_tag` should be a regular expression object.
         """

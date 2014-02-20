@@ -30,7 +30,7 @@ class ShowCaseMenuAction(gaupol.MenuAction):
     """Show the case format menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowCaseMenuAction` object."""
+        """Initialize a :class:`ShowCaseMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_case_menu")
         self.props.label = _("Ca_se")
         self.action_group = "main-unsafe"
@@ -49,7 +49,7 @@ class ToggleDialogDashesAction(gaupol.Action):
     """Add or remove dialogue dashes on the selected texts."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleDialogDashesAction` object."""
+        """Initialize a :class:`ToggleDialogDashesAction` instance."""
         gaupol.Action.__init__(self, "toggle_dialogue_dashes")
         self.props.label = _("_Dialogue")
         self.props.tooltip = _("Add or remove dialogue dashes "
@@ -71,7 +71,7 @@ class ToggleItalicizationAction(gaupol.Action):
     """Italicize or unitalicize the selected texts."""
 
     def __init__(self):
-        """Initialize a :class:`ToggleItalicizationAction` object."""
+        """Initialize a :class:`ToggleItalicizationAction` instance."""
         gaupol.Action.__init__(self, "toggle_italicization")
         self.props.label = _("_Italic")
         self.props.stock_id = Gtk.STOCK_ITALIC
@@ -96,7 +96,7 @@ class UseLowerCaseAction(gaupol.Action):
     """Change the selected texts to lower case."""
 
     def __init__(self):
-        """Initialize a :class:`UseLowerCaseAction` object."""
+        """Initialize a :class:`UseLowerCaseAction` instance."""
         gaupol.Action.__init__(self, "use_lower_case")
         self.props.label = _("_Lower")
         self.props.tooltip = _("Change the selected texts to lower case")
@@ -116,7 +116,7 @@ class UseSentenceCaseAction(gaupol.Action):
     """Change the selected texts to sentence case."""
 
     def __init__(self):
-        """Initialize a :class:`UseSentenceCaseAction` object."""
+        """Initialize a :class:`UseSentenceCaseAction` instance."""
         gaupol.Action.__init__(self, "use_sentence_case")
         self.props.label = _("_Sentence")
         self.props.tooltip = _("Change the selected texts to sentence case")
@@ -136,7 +136,7 @@ class UseTitleCaseAction(gaupol.Action):
     """Change the selected texts to title case."""
 
     def __init__(self):
-        """Initialize a :class:`UseTitleCaseAction` object."""
+        """Initialize a :class:`UseTitleCaseAction` instance."""
         gaupol.Action.__init__(self, "use_title_case")
         self.props.label = _("_Title")
         self.props.tooltip = _("Change the selected texts to title case")
@@ -156,7 +156,7 @@ class UseUpperCaseAction(gaupol.Action):
     """Change the selected texts to upper case."""
 
     def __init__(self):
-        """Initialize a :class:`UseUpperCaseAction` object."""
+        """Initialize a :class:`UseUpperCaseAction` instance."""
         gaupol.Action.__init__(self, "use_upper_case")
         self.props.label = _("_Upper")
         self.props.tooltip = _("Change the selected texts to upper case")

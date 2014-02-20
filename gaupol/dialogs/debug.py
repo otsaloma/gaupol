@@ -44,7 +44,7 @@ class DebugDialog(gaupol.BuilderDialog):
     _widgets = ("message_label", "text_view")
 
     def __init__(self):
-        """Initialize a :class:`DebugDialog` object."""
+        """Initialize a :class:`DebugDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "debug-dialog.ui")
         self._init_text_tags()
         self._init_signal_handlers()

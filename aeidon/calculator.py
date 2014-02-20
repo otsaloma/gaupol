@@ -36,7 +36,7 @@ class Calculator(metaclass=aeidon.Contractual):
 
     def __init__(self, framerate=None):
         """
-        Initialize a :class:`Calculator` object.
+        Initialize a :class:`Calculator` instance.
 
         `framerate` can be either an :attr:`aeidon.framerates` item (preferred
         to be able to reuse instances) or an exact float value.

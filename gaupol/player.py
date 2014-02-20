@@ -62,7 +62,7 @@ class VideoPlayer(aeidon.Observable):
     signals = ("state-changed",)
 
     def __init__(self):
-        """Initialize a :class:`VideoPlayer` object."""
+        """Initialize a :class:`VideoPlayer` instance."""
         aeidon.Observable.__init__(self)
         self._in_default_segment = True
         self._info = None

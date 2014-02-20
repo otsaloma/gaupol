@@ -34,7 +34,7 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     _widgets = ("tree_view",)
 
     def __init__(self, parent):
-        """Initialize an :class:`EncodingDialog` object."""
+        """Initialize an :class:`EncodingDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "encoding-dialog.ui")
         self._init_tree_view()
         gaupol.util.scale_to_content(self._tree_view,

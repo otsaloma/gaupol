@@ -48,7 +48,7 @@ class SubtitleFile(metaclass=aeidon.Contractual):
     mode = aeidon.modes.NONE
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize a :class:`SubtitleFile` object."""
+        """Initialize a :class:`SubtitleFile` instance."""
         self.encoding = encoding
         self.has_utf_16_bom = False
         self.header = (aeidon.util.get_template_header(self.format)

@@ -59,7 +59,7 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         assert gaupol.util.pocketsphinx_available()
 
     def __init__(self, parent, application):
-        """Initialize a :class:`SpeechRecognitionDialog` object."""
+        """Initialize a :class:`SpeechRecognitionDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "speech-recognition-dialog.ui")
         self.application = application
         self._page = None

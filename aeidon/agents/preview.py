@@ -29,7 +29,7 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     """Previewing subtitles with a video player."""
 
     def __init__(self, master):
-        """Initialize a :class:`aeidon.PreviewAgent` object."""
+        """Initialize a :class:`aeidon.PreviewAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         aeidon.util.connect(self, self, "notify::main_file")
 

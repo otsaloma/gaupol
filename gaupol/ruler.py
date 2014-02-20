@@ -37,7 +37,7 @@ class _Ruler:
     """
 
     def __init__(self):
-        """Initialize a :class:`_Ruler` object."""
+        """Initialize a :class:`_Ruler` instance."""
         self._em_length = None
         self._layout = None
         self._length_unit = None

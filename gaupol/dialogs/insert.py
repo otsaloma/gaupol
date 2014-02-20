@@ -34,7 +34,7 @@ class InsertDialog(gaupol.BuilderDialog):
     _widgets = ("amount_spin", "position_combo", "position_label")
 
     def __init__(self, parent, application):
-        """Initialize an :class:`InsertDialog` object."""
+        """Initialize an :class:`InsertDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "insert-dialog.ui")
         self.application = application
         self._init_position_combo()

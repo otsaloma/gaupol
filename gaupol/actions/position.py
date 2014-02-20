@@ -30,7 +30,7 @@ class AdjustDurationsAction(gaupol.Action):
     """Lengthen or shorten durations."""
 
     def __init__(self):
-        """Initialize an :class:`AdjustDurationsAction` object."""
+        """Initialize an :class:`AdjustDurationsAction` instance."""
         gaupol.Action.__init__(self, "adjust_durations")
         self.props.label = _("Adjust _Durations…")
         self.props.tooltip = _("Lengthen or shorten durations")
@@ -46,7 +46,7 @@ class ConvertFramerateAction(gaupol.Action):
     """Change positions for a different framerate."""
 
     def __init__(self):
-        """Initialize a :class:`ConvertFramerateAction` object."""
+        """Initialize a :class:`ConvertFramerateAction` instance."""
         gaupol.Action.__init__(self, "convert_framerate")
         self.props.label = _("Convert _Framerate…")
         self.props.tooltip = _("Change positions for a different framerate")
@@ -63,7 +63,7 @@ class PreviewAction(gaupol.Action):
     """Preview from selected position with a video player."""
 
     def __init__(self):
-        """Initialize a :class:`PreviewAction` object."""
+        """Initialize a :class:`PreviewAction` instance."""
         gaupol.Action.__init__(self, "preview")
         self.props.label = _("_Preview")
         self.props.stock_id = Gtk.STOCK_MEDIA_PLAY
@@ -86,7 +86,7 @@ class ShiftPositionsAction(gaupol.Action):
     """Make subtitles appear earlier or later."""
 
     def __init__(self):
-        """Initialize a :class:`ShiftPositionsAction` object."""
+        """Initialize a :class:`ShiftPositionsAction` instance."""
         gaupol.Action.__init__(self, "shift_positions")
         self.props.label = _("_Shift Positions…")
         self.props.tooltip = _("Make subtitles appear earlier or later")
@@ -103,7 +103,7 @@ class SpeechRecognitionAction(gaupol.Action):
     """Generate subtitles by voice and speech recognition."""
 
     def __init__(self):
-        """Initialize a :class:`SpeechRecognitionAction` object."""
+        """Initialize a :class:`SpeechRecognitionAction` instance."""
         gaupol.Action.__init__(self, "speech_recognition")
         self.props.label = _("Sp_eech Recognition…")
         self.props.tooltip = _("Generate subtitles by voice "
@@ -122,7 +122,7 @@ class TransformPositionsAction(gaupol.Action):
     """Change positions by linear two-point correction."""
 
     def __init__(self):
-        """Initialize a :class:`TransformPositionsAction` object."""
+        """Initialize a :class:`TransformPositionsAction` instance."""
         gaupol.Action.__init__(self, "transform_positions")
         self.props.label = _("_Transform Positions…")
         self.props.tooltip = _("Change positions by linear "

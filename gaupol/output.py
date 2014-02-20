@@ -34,7 +34,7 @@ class OutputWindow(Gtk.Window):
     """Window for standard output from external applications."""
 
     def __init__(self):
-        """Initialize an :class:`OutputWindow` object."""
+        """Initialize an :class:`OutputWindow` instance."""
         GObject.GObject.__init__(self)
         self._close_button = None
         self._text_view = None

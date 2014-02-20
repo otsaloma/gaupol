@@ -28,7 +28,7 @@ class ShowAudioMenuAction(gaupol.TopMenuAction):
     """Show the "Audio" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowAudioMenuAction` object."""
+        """Initialize a :class:`ShowAudioMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_audio_menu")
         self.props.label = _("_Audio")
         self.action_group = "main-safe"
@@ -39,7 +39,7 @@ class ShowEditMenuAction(gaupol.TopMenuAction):
     """Show the "Edit" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowEditMenuAction` object."""
+        """Initialize a :class:`ShowEditMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_edit_menu")
         self.props.label = _("_Edit")
         self.action_group = "main-safe"
@@ -50,7 +50,7 @@ class ShowFileMenuAction(gaupol.TopMenuAction):
     """Show the "File" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowFileMenuAction` object."""
+        """Initialize a :class:`ShowFileMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_file_menu")
         self.props.label = _("_File")
         self.action_group = "main-safe"
@@ -61,7 +61,7 @@ class ShowHelpMenuAction(gaupol.TopMenuAction):
     """Show the "Help" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowHelpMenuAction` object."""
+        """Initialize a :class:`ShowHelpMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_help_menu")
         self.props.label = _("_Help")
         self.action_group = "main-safe"
@@ -72,7 +72,7 @@ class ShowProjectsMenuAction(gaupol.TopMenuAction):
     """Show the "Projects" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowProjectsMenuAction` object."""
+        """Initialize a :class:`ShowProjectsMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_projects_menu")
         self.props.label = _("_Projects")
         self.action_group = "main-safe"
@@ -83,7 +83,7 @@ class ShowTextMenuAction(gaupol.TopMenuAction):
     """Show the "Text" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowTextMenuAction` object."""
+        """Initialize a :class:`ShowTextMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_text_menu")
         self.props.label = _("_Text")
         self.action_group = "main-safe"
@@ -94,7 +94,7 @@ class ShowToolsMenuAction(gaupol.TopMenuAction):
     """Show the "Tools" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowToolsMenuAction` object."""
+        """Initialize a :class:`ShowToolsMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_tools_menu")
         self.props.label = _("T_ools")
         self.action_group = "main-safe"
@@ -105,7 +105,7 @@ class ShowVideoMenuAction(gaupol.TopMenuAction):
     """Show the "Video" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowVideoMenuAction` object."""
+        """Initialize a :class:`ShowVideoMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_video_menu")
         self.props.label = _("Vi_deo")
         self.action_group = "main-safe"
@@ -116,7 +116,7 @@ class ShowViewMenuAction(gaupol.TopMenuAction):
     """Show the "View" menu."""
 
     def __init__(self):
-        """Initialize a :class:`ShowViewMenuAction` object."""
+        """Initialize a :class:`ShowViewMenuAction` instance."""
         gaupol.TopMenuAction.__init__(self, "show_view_menu")
         self.props.label = _("_View")
         self.action_group = "main-safe"

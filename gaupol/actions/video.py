@@ -30,7 +30,7 @@ class LoadVideoAction(gaupol.Action):
     """Load a video file."""
 
     def __init__(self):
-        """Initialize a :class:`LoadVideoAction` object."""
+        """Initialize a :class:`LoadVideoAction` instance."""
         gaupol.Action.__init__(self, "load_video")
         self.props.label = _("_Load Video…")
         self.props.tooltip = _("Load a video file")
@@ -48,7 +48,7 @@ class PlayPauseAction(gaupol.Action):
     """Play or pause video."""
 
     def __init__(self):
-        """Initialize a :class:`PlayPauseAction` object."""
+        """Initialize a :class:`PlayPauseAction` instance."""
         gaupol.Action.__init__(self, "play_pause")
         self.props.label = _("_Play/Pause")
         self.props.stock_id = Gtk.STOCK_MEDIA_PLAY
@@ -84,7 +84,7 @@ class SeekBackwardAction(gaupol.Action):
     """Seek backward."""
 
     def __init__(self):
-        """Initialize a :class:`SeekBackwardAction` object."""
+        """Initialize a :class:`SeekBackwardAction` instance."""
         gaupol.Action.__init__(self, "seek_backward")
         self.props.label = _("Seek _Backward")
         self.props.stock_id = Gtk.STOCK_MEDIA_REWIND
@@ -102,7 +102,7 @@ class SeekForwardAction(gaupol.Action):
     """Seek forward."""
 
     def __init__(self):
-        """Initialize a :class:`SeekForwardAction` object."""
+        """Initialize a :class:`SeekForwardAction` instance."""
         gaupol.Action.__init__(self, "seek_forward")
         self.props.label = _("Seek _Forward")
         self.props.stock_id = Gtk.STOCK_MEDIA_FORWARD
@@ -120,7 +120,7 @@ class SeekNextAction(gaupol.Action):
     """Seek to the start of the next subtitle."""
 
     def __init__(self):
-        """Initialize a :class:`SeekNextAction` object."""
+        """Initialize a :class:`SeekNextAction` instance."""
         gaupol.Action.__init__(self, "seek_next")
         self.props.label = _("Seek _Next")
         self.props.stock_id = Gtk.STOCK_MEDIA_NEXT
@@ -138,7 +138,7 @@ class SeekPreviousAction(gaupol.Action):
     """Seek to the start of the previous subtitle."""
 
     def __init__(self):
-        """Initialize a :class:`SeekPreviousAction` object."""
+        """Initialize a :class:`SeekPreviousAction` instance."""
         gaupol.Action.__init__(self, "seek_previous")
         self.props.label = _("Seek _Previous")
         self.props.stock_id = Gtk.STOCK_MEDIA_PREVIOUS
@@ -156,7 +156,7 @@ class SeekSelectionEndAction(gaupol.Action):
     """Seek the end of selection."""
 
     def __init__(self):
-        """Initialize a :class:`SeekSelectionEnd` object."""
+        """Initialize a :class:`SeekSelectionEnd` instance."""
         gaupol.Action.__init__(self, "seek_selection_end")
         self.props.label = _("See_k Selection End")
         self.props.tooltip = _("Seek the end of selection")
@@ -174,7 +174,7 @@ class SeekSelectionStartAction(gaupol.Action):
     """Seek the start of selection."""
 
     def __init__(self):
-        """Initialize a :class:`SeekSelectionStart` object."""
+        """Initialize a :class:`SeekSelectionStart` instance."""
         gaupol.Action.__init__(self, "seek_selection_start")
         self.props.label = _("S_eek Selection Start")
         self.props.tooltip = _("Seek the start of selection")

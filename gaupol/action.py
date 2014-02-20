@@ -69,7 +69,7 @@ class Action(Gtk.Action):
     widgets = ()
 
     def __init__(self, name):
-        """Initialize an :class:`Action` object."""
+        """Initialize an :class:`Action` instance."""
         GObject.GObject.__init__(self, name=name)
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -136,7 +136,7 @@ class RecentAction(Gtk.RecentAction, Action):
     group = NotImplementedError
 
     def __init__(self, name):
-        """Initialize an :class:`RecentAction` object."""
+        """Initialize an :class:`RecentAction` instance."""
         GObject.GObject.__init__(self, name=name)
         self.set_show_icons(sys.platform != "win32")
         self.set_show_not_found(False)
@@ -172,7 +172,7 @@ class ToggleAction(Gtk.ToggleAction, Action):
     """Base class for UI manager toggle actions."""
 
     def __init__(self, name):
-        """Initialize an :class:`ToggleAction` object."""
+        """Initialize an :class:`ToggleAction` instance."""
         GObject.GObject.__init__(self, name=name)
 
     def finalize(self, application):
@@ -202,7 +202,7 @@ class RadioAction(Gtk.RadioAction, Action):
     group = NotImplementedError
 
     def __init__(self, name):
-        """Initialize an :class:`RadioAction` object."""
+        """Initialize an :class:`RadioAction` instance."""
         GObject.GObject.__init__(self, name=name, value=0)
 
     def finalize(self, application):

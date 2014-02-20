@@ -29,7 +29,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     """Editing subtitle data."""
 
     def __init__(self, master):
-        """Initialize an :class:`EditAgent` object."""
+        """Initialize an :class:`EditAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._pref_dialog = None
 

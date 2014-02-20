@@ -30,7 +30,7 @@ class FindAndReplaceAction(gaupol.Action):
     """Search for and replace text."""
 
     def __init__(self):
-        """Initialize a :class:`FindAndReplaceAction` object."""
+        """Initialize a :class:`FindAndReplaceAction` instance."""
         gaupol.Action.__init__(self, "find_and_replace")
         self.props.label = _("_Find And Replace…")
         self.props.short_label = _("Find")
@@ -49,7 +49,7 @@ class FindNextAction(gaupol.Action):
     """Search forwards for same text."""
 
     def __init__(self):
-        """Initialize a :class:`FindNextAction` object."""
+        """Initialize a :class:`FindNextAction` instance."""
         gaupol.Action.__init__(self, "find_next")
         self.props.label = _("Find _Next")
         self.props.tooltip = _("Search forwards for same text")
@@ -67,7 +67,7 @@ class FindPreviousAction(gaupol.Action):
     """Search backwards for same text."""
 
     def __init__(self):
-        """Initialize a :class:`FindPreviousAction` object."""
+        """Initialize a :class:`FindPreviousAction` instance."""
         gaupol.Action.__init__(self, "find_previous")
         self.props.label = _("Find Pre_vious")
         self.props.tooltip = _("Search backwards for same text")

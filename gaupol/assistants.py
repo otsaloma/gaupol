@@ -54,7 +54,7 @@ class TextAssistantPage(Gtk.Box):
     """
 
     def __init__(self, assistant):
-        """Initialize a :class:`TextAssistantPage` object."""
+        """Initialize a :class:`TextAssistantPage` instance."""
         GObject.GObject.__init__(self, orientation=Gtk.Orientation.VERTICAL)
         self.assistant = assistant
         self.description = None
@@ -71,7 +71,7 @@ class BuilderPage(TextAssistantPage):
     _widgets = ()
 
     def __init__(self, assistant, basename):
-        """Initialize a :class:`BuilderPage` object."""
+        """Initialize a :class:`BuilderPage` instance."""
         TextAssistantPage.__init__(self, assistant)
         ui_file_path = os.path.join(aeidon.DATA_DIR,
                                     "ui",
@@ -99,7 +99,7 @@ class IntroductionPage(BuilderPage):
     _widgets = ("columns_combo", "subtitles_combo", "tree_view")
 
     def __init__(self, assistant):
-        """Initialize a :class:`IntroductionPage` object."""
+        """Initialize a :class:`IntroductionPage` instance."""
         BuilderPage.__init__(self, assistant, "introduction-page.ui")
         # Translators: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
@@ -224,7 +224,7 @@ class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
                 "tree_view")
 
     def __init__(self, assistant):
-        """Initialize a :class:`LocalePage` object."""
+        """Initialize a :class:`LocalePage` instance."""
         BuilderPage.__init__(self, assistant, self._ui_file_basename)
         self.conf = None
         self._init_attributes()
@@ -567,7 +567,7 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
         assert aeidon.util.enchant_and_dicts_available()
 
     def __init__(self, assistant):
-        """Initialize a JoinSplitWordsPage object."""
+        """Initialize a :class:`JoinSplitWordsPage` instance."""
         BuilderPage.__init__(self, assistant, "join-split-page.ui")
         self.description = _("Use spell-check suggestions to fix whitespace "
                              "detection errors of image recognition software")
@@ -707,7 +707,7 @@ class LineBreakOptionsPage(BuilderPage):
                 "unit_combo")
 
     def __init__(self, assistant):
-        """Initialize a LineBreakOptionsPage object."""
+        """Initialize a :class:`LineBreakOptionsPage` instance."""
         BuilderPage.__init__(self, assistant, "line-break-options-page.ui")
         self.conf = gaupol.conf.line_break
         # Translators: Keep these page titles short, since they
@@ -793,7 +793,7 @@ class ProgressPage(BuilderPage):
                 "task_label")
 
     def __init__(self, assistant):
-        """Initialize a :class:`ProgressPage` object."""
+        """Initialize a :class:`ProgressPage` instance."""
         BuilderPage.__init__(self, assistant, "progress-page.ui")
         self._current_task = None
         self._total_tasks = None
@@ -861,7 +861,7 @@ class ConfirmationPage(BuilderPage):
                 "unmark_all_button")
 
     def __init__(self, assistant):
-        """Initialize a :class:`ConfirmationPage` object."""
+        """Initialize a :class:`ConfirmationPage` instance."""
         BuilderPage.__init__(self, assistant, "confirmation-page.ui")
         self.application = None
         self.conf = gaupol.conf.text_assistant
@@ -1008,7 +1008,7 @@ class TextAssistant(Gtk.Assistant):
     """Assistant to guide through multiple text correction tasks."""
 
     def __init__(self, parent, application):
-        """Initialize a TextAssistant object."""
+        """Initialize a :class:`TextAssistant` instance."""
         GObject.GObject.__init__(self)
         self._confirmation_page = ConfirmationPage(self)
         self._introduction_page = IntroductionPage(self)

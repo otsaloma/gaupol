@@ -30,7 +30,7 @@ class ConfigureSpellCheckAction(gaupol.Action):
     """Set languages and spell-check targets."""
 
     def __init__(self):
-        """Initialize a :class:`ConfigureSpellCheckAction` object."""
+        """Initialize a :class:`ConfigureSpellCheckAction` instance."""
         gaupol.Action.__init__(self, "configure_spell_check")
         self.props.label = _("Co_nfigure Spell-check…")
         self.props.tooltip = _("Set language and spell-check target")
@@ -46,7 +46,7 @@ class CheckSpellingAction(gaupol.Action):
     """Check for incorrect spelling."""
 
     def __init__(self):
-        """Initialize a :class:`CheckSpellingAction` object."""
+        """Initialize a :class:`CheckSpellingAction` instance."""
         gaupol.Action.__init__(self, "check_spelling")
         self.props.label = _("_Check Spelling")
         self.props.short_label = _("Spelling")
@@ -67,7 +67,7 @@ class CorrectTextsAction(gaupol.Action):
     """Find and correct errors in texts."""
 
     def __init__(self):
-        """Initialize a :class:`CorrectTextsAction` object."""
+        """Initialize a :class:`CorrectTextsAction` instance."""
         gaupol.Action.__init__(self, "correct_texts")
         self.props.label = _("C_orrect Texts…")
         self.props.tooltip = _("Find and correct errors in texts")

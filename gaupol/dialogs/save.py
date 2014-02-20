@@ -38,7 +38,7 @@ class SaveDialog(gaupol.FileDialog):
                 "newline_combo")
 
     def __init__(self, parent, title, mode):
-        """Initialize a :class:`SaveDialog` object."""
+        """Initialize a :class:`SaveDialog` instance."""
         gaupol.FileDialog.__init__(self, "save-dialog.ui")
         self._mode = mode
         self._init_filters()

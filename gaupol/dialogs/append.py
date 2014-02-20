@@ -30,7 +30,7 @@ class AppendDialog(gaupol.OpenDialog):
     """Dialog for selecting a subtitle file to append to project."""
 
     def __init__(self, parent):
-        """Initialize an :class:`AppendDialog` object."""
+        """Initialize an :class:`AppendDialog` instance."""
         doc = aeidon.documents.MAIN
         gaupol.OpenDialog.__init__(self, parent, _("Append File"), doc)
         self.set_select_multiple(False)

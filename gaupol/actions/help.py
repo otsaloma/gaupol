@@ -30,7 +30,7 @@ class BrowseWikiDocumentationAction(gaupol.Action):
     """Browse wiki documentation."""
 
     def __init__(self):
-        """Initialize a :class:`BrowseWikiDocumentationAction` object."""
+        """Initialize a :class:`BrowseWikiDocumentationAction` instance."""
         gaupol.Action.__init__(self, "browse_wiki_documentation")
         self.props.label = _("_Wiki Documentation")
         self.props.stock_id = Gtk.STOCK_HELP
@@ -43,7 +43,7 @@ class ReportABugAction(gaupol.Action):
     """Submit a bug report."""
 
     def __init__(self):
-        """Initialize a :class:`ReportABugAction` object."""
+        """Initialize a :class:`ReportABugAction` instance."""
         gaupol.Action.__init__(self, "report_a_bug")
         self.props.label = _("_Report A Bug")
         self.props.tooltip = _("Submit a bug report")
@@ -55,7 +55,7 @@ class ViewAboutDialogAction(gaupol.Action):
     """Show information about Gaupol."""
 
     def __init__(self):
-        """Initialize a :class:`ViewAboutDialogAction` object."""
+        """Initialize a :class:`ViewAboutDialogAction` instance."""
         gaupol.Action.__init__(self, "view_about_dialog")
         self.props.label = _("_About")
         self.props.stock_id = Gtk.STOCK_ABOUT

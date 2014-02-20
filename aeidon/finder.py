@@ -39,7 +39,7 @@ class Finder(metaclass=aeidon.Contractual):
     """
 
     def __init__(self):
-        """Initialize a Finder object."""
+        """Initialize a :class:`Finder` instance."""
         self.ignore_case = False
         self.match = None
         self.match_span = None

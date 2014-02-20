@@ -261,7 +261,7 @@ class EnumDecoder(json.JSONDecoder):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize a :class:`EnumDecoder` object.
+        Initialize a :class:`EnumDecoder` instance.
 
         `kwargs` should contain an "enum" key with a value of ``None`` if not
         decoding an enumeration or the corresponding
@@ -296,7 +296,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
     _enums = config_enums
 
     def __init__(self):
-        """Initialize a :class:`ConfigurationStore` object."""
+        """Initialize a :class:`ConfigurationStore` instance."""
         root = aeidon.util.copy_dict(self._defaults)
         gaupol.AttributeDictionary.__init__(self, root)
         self.path = None

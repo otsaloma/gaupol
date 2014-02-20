@@ -39,7 +39,7 @@ class SubStationAlpha(aeidon.SubtitleFile):
     mode = aeidon.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize a :class:`SubStationAlpha` object."""
+        """Initialize a :class:`SubStationAlpha` instance."""
         aeidon.SubtitleFile.__init__(self, path, encoding, newline)
         self.event_fields = ("Marked",
                              "Start",

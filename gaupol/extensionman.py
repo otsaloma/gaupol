@@ -44,7 +44,7 @@ class ExtensionManager(metaclass=aeidon.Contractual):
     _re_comment = re.compile(r"#.*$")
 
     def __init__(self, application):
-        """Initialize an :class:`ExtensionManager` object."""
+        """Initialize an :class:`ExtensionManager` instance."""
         self.application = application
         self._active = {}
         self._dependants = {}
@@ -269,6 +269,6 @@ class ExtensionMetadata(aeidon.MetadataItem):
     """Extension metadata specified in a separate desktop-style file."""
 
     def __init__(self, fields=None):
-        """Initialize an :class:`ExtensionMetadata` object."""
+        """Initialize an :class:`ExtensionMetadata` instance."""
         aeidon.MetadataItem.__init__(self, fields)
         self.path = None

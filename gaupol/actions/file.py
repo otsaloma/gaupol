@@ -30,7 +30,7 @@ class AppendFileAction(gaupol.Action):
     """Append subtitles from file to the current project."""
 
     def __init__(self):
-        """Initialize an :class:`AppendFileAction` object."""
+        """Initialize an :class:`AppendFileAction` instance."""
         gaupol.Action.__init__(self, "append_file")
         self.props.label = _("_Append File…")
         self.props.stock_id = Gtk.STOCK_ADD
@@ -50,7 +50,7 @@ class CloseAllProjectsAction(gaupol.Action):
     """Close all open projects."""
 
     def __init__(self):
-        """Initialize a :class:`CloseAllProjectsAction` object."""
+        """Initialize a :class:`CloseAllProjectsAction` instance."""
         gaupol.Action.__init__(self, "close_all_projects")
         self.props.label = _("_Close All")
         self.props.stock_id = Gtk.STOCK_CLOSE
@@ -68,7 +68,7 @@ class CloseProjectAction(gaupol.Action):
     """Close project."""
 
     def __init__(self):
-        """Initialize a :class:`CloseProjectAction` object."""
+        """Initialize a :class:`CloseProjectAction` instance."""
         gaupol.Action.__init__(self, "close_project")
         self.props.label = _("_Close")
         self.props.stock_id = Gtk.STOCK_CLOSE
@@ -86,7 +86,7 @@ class EditHeadersAction(gaupol.Action):
     """Edit file headers."""
 
     def __init__(self):
-        """Initialize an :class:`EditHeadersAction` object."""
+        """Initialize an :class:`EditHeadersAction` instance."""
         gaupol.Action.__init__(self, "edit_headers")
         self.props.label = _("_Headers")
         self.props.stock_id = Gtk.STOCK_PROPERTIES
@@ -112,7 +112,7 @@ class NewProjectAction(gaupol.Action):
     """Create a new project."""
 
     def __init__(self):
-        """Initialize a :class:`NewProjectAction` object."""
+        """Initialize a :class:`NewProjectAction` instance."""
         gaupol.Action.__init__(self, "new_project")
         self.props.label = _("_New")
         self.props.stock_id = Gtk.STOCK_NEW
@@ -128,7 +128,7 @@ class OpenMainFilesAction(gaupol.Action):
     __gtype_name__ = "OpenMainFilesAction"
 
     def __init__(self):
-        """Initialize an :class:`OpenMainFilesAction` object."""
+        """Initialize an :class:`OpenMainFilesAction` instance."""
         gaupol.Action.__init__(self, "open_main_files")
         self.props.is_important = True
         self.props.label = _("_Open…")
@@ -146,7 +146,7 @@ class OpenMainFilesRecentAction(gaupol.RecentAction):
     group = "gaupol-main"
 
     def __init__(self):
-        """Initialize an :class:`OpenMainFilesRecentAction` object."""
+        """Initialize an :class:`OpenMainFilesRecentAction` instance."""
         gaupol.RecentAction.__init__(self, "open_main_files_recent")
         self.props.is_important = True
         self.props.label = _("_Open…")
@@ -163,7 +163,7 @@ class OpenRecentMainFileAction(gaupol.RecentAction):
     group = "gaupol-main"
 
     def __init__(self):
-        """Initialize a :class:`OpenRecentMainFileAction` object."""
+        """Initialize a :class:`OpenRecentMainFileAction` instance."""
         gaupol.RecentAction.__init__(self, "open_recent_main_file")
         self.props.is_important = True
         self.props.label = _("Open _Recent")
@@ -177,7 +177,7 @@ class OpenRecentTranslationFileAction(gaupol.RecentAction):
     group = "gaupol-translation"
 
     def __init__(self):
-        """Initialize a :class:`OpenRecentTranslationFileAction` object."""
+        """Initialize a :class:`OpenRecentTranslationFileAction` instance."""
         gaupol.RecentAction.__init__(self, "open_recent_translation_file")
         self.props.is_important = False
         self.props.label = _("Open R_ecent Translation")
@@ -193,7 +193,7 @@ class OpenTranslationFileAction(gaupol.Action):
     """Open a translation file."""
 
     def __init__(self):
-        """Initialize an :class:`OpenTranslationFileAction` object."""
+        """Initialize an :class:`OpenTranslationFileAction` instance."""
         gaupol.Action.__init__(self, "open_translation_file")
         self.props.label = _("Open _Translation…")
         self.props.short_label = _("Open Translation")
@@ -212,7 +212,7 @@ class QuitAction(gaupol.Action):
     """Quit Gaupol."""
 
     def __init__(self):
-        """Initialize a :class:`QuitAction` object."""
+        """Initialize a :class:`QuitAction` instance."""
         gaupol.Action.__init__(self, "quit")
         self.props.label = _("_Quit")
         self.props.stock_id = Gtk.STOCK_QUIT
@@ -226,7 +226,7 @@ class SaveAllDocumentsAction(gaupol.Action):
     """Save all open documents."""
 
     def __init__(self):
-        """Initialize a :class:`SaveAllDocumentsAction` object."""
+        """Initialize a :class:`SaveAllDocumentsAction` instance."""
         gaupol.Action.__init__(self, "save_all_documents")
         self.props.label = _("_Save All")
         self.props.stock_id = Gtk.STOCK_SAVE
@@ -244,7 +244,7 @@ class SaveAllDocumentsAsAction(gaupol.Action):
     """Save all open documents with different properties."""
 
     def __init__(self):
-        """Initialize a :class:`SaveAllDocumentsAsAction` object."""
+        """Initialize a :class:`SaveAllDocumentsAsAction` instance."""
         gaupol.Action.__init__(self, "save_all_documents_as")
         self.props.label = _("Save _All As…")
         self.props.stock_id = Gtk.STOCK_SAVE_AS
@@ -264,7 +264,7 @@ class SaveMainDocumentAction(gaupol.Action):
     """Save the current main document."""
 
     def __init__(self):
-        """Initialize a :class:`SaveMainDocumentAction` object."""
+        """Initialize a :class:`SaveMainDocumentAction` instance."""
         gaupol.Action.__init__(self, "save_main_document")
         self.props.is_important = True
         self.props.label = _("_Save")
@@ -283,7 +283,7 @@ class SaveMainDocumentAsAction(gaupol.Action):
     """Save the current main document with a different name."""
 
     def __init__(self):
-        """Initialize a :class:`SaveMainDocumentAsAction` object."""
+        """Initialize a :class:`SaveMainDocumentAsAction` instance."""
         gaupol.Action.__init__(self, "save_main_document_as")
         self.props.label = _("Save _As…")
         self.props.short_label = _("Save As")
@@ -304,7 +304,7 @@ class SaveTranslationDocumentAction(gaupol.Action):
     """Save the current translation document."""
 
     def __init__(self):
-        """Initialize a :class:`SaveTranslationDocumentAction` object."""
+        """Initialize a :class:`SaveTranslationDocumentAction` instance."""
         gaupol.Action.__init__(self, "save_translation_document")
         self.props.label = _("Save Trans_lation")
         self.props.stock_id = Gtk.STOCK_SAVE
@@ -322,7 +322,7 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
     """Save the current translation document with a different name."""
 
     def __init__(self):
-        """Initialize a :class:`SaveTranslationDocumentAsAction` object."""
+        """Initialize a :class:`SaveTranslationDocumentAsAction` instance."""
         gaupol.Action.__init__(self, "save_translation_document_as")
         self.props.label = _("Save Translat_ion As…")
         self.props.short_label = _("Save Translation As")
@@ -343,7 +343,7 @@ class SelectVideoFileAction(gaupol.Action):
     """Select a video file."""
 
     def __init__(self):
-        """Initialize a :class:`SelectVideoFileAction` object."""
+        """Initialize a :class:`SelectVideoFileAction` instance."""
         gaupol.Action.__init__(self, "select_video_file")
         self.props.label = _("Select _Video…")
         self.props.stock_id = Gtk.STOCK_FILE
@@ -361,7 +361,7 @@ class SplitProjectAction(gaupol.Action):
     """Split the current project in two."""
 
     def __init__(self):
-        """Initialize a :class:`SplitProjectAction` object."""
+        """Initialize a :class:`SplitProjectAction` instance."""
         gaupol.Action.__init__(self, "split_project")
         self.props.label = _("Spli_t Project…")
         self.props.tooltip = _("Split the current project in two")

@@ -33,7 +33,7 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
     _widgets = ("all_radio", "current_radio", "input_combo", "output_combo")
 
     def __init__(self, parent, application):
-        """Initialize a FramerateConvertDialog object."""
+        """Initialize a :class:`FramerateConvertDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "framerate-convert-dialog.ui")
         self.application = application
         self._init_input_combo()

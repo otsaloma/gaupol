@@ -45,7 +45,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
                 "speed_spin")
 
     def __init__(self, parent, application):
-        """Initialize a :class:`DurationAdjustDialog` object."""
+        """Initialize a :class:`DurationAdjustDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "duration-adjust-dialog.ui")
         self.application = application
         self._init_values()
