@@ -34,8 +34,7 @@ def on_autodoc_process_docstring(app, what, name, obj, options, lines):
     parent = (name.split(".")[-1] if what == "class" else name)
     pattern = r"^:[ci]?var +(\w+): +(.*?)$"
     replacement = r".. attribute:: {}.\1\n\n   \2\n".format(parent)
-    re_var = re.compile(pattern, re.MULTILINE)
-    text = re_var.sub(replacement, "\n".join(lines))
+    text = re.sub(pattern, replacement, "\n".join(lines), flags=re.MULTILINE)
     lines[:] = text.split("\n")
 
 def setup(app):

@@ -254,5 +254,6 @@ def write_template(name_in, names_out, **kwargs):
     encoding = conf.source_encoding
     open(path, "w", encoding=encoding).write(text)
 
+
 if __name__ == "__main__":
     main(sys.argv[1:])

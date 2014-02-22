@@ -1,10 +1,10 @@
-``{{ project }}`` Documentation
-=================={{ project_double_underline }}
+{{ project }} Documentation
+=============={{ project_double_underline }}
 
 This is documentation for `{{ project }} <{{ project_url }}>`_ that
 has been automatically generated from documentation strings in the
 source code. Please note that this documentation is not human-composed
-nor human-reviewed and may contain erros. If in doubt, read the full
+nor human-reviewed and may contain errors. If in doubt, read the full
 source code or contact the authors.
 
 The code in `aeidon` and `gaupol` is split across a large amount of

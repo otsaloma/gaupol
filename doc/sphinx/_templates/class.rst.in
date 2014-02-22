@@ -1,5 +1,5 @@
-``{{ cls }}``
-===={{ cls_double_underline }}
+{{ cls }}
+{{ cls_double_underline }}
 
 .. currentmodule:: {{ module }}
 {% if source_doc %}
