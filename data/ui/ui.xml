@@ -228,7 +228,8 @@
       <placeholder name="4">
       </placeholder>
       <separator/>
-      <menuitem name="speech_recognition" action="speech_recognition"/>
+      <!-- pocketsphinx is not available for GStreamer 1.0 -->
+      <!-- <menuitem name="speech_recognition" action="speech_recognition"/> -->
       <placeholder name="5">
       </placeholder>
     </menu>

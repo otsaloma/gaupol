@@ -6,7 +6,8 @@ Gaupol 0.25.1
  [X] Add GTK+ to list of dependencies in the README file (GTK+ has
      always been a dependency, its explicit mention was just forgotten
      when migrating from PyGTK to PyGObject)
- [ ] Remove speech recognition menu item
+ [X] Remove non-functional speech recognition menu item
+     - https://www.mail-archive.com/gaupol-list@gna.org/msg00069.html
 
 Gaupol 1.0
 ==========
