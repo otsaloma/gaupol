@@ -529,13 +529,19 @@ class BookmarksExtension(gaupol.Extension):
     def update(self, application, page):
         """Update state of extension for `application` and active `page`."""
         action = self._action_group.get_action("add_bookmark")
-        try: action.set_sensitive(len(page.view.get_selected_rows()) == 1)
-        except AttributeError: action.set_sensitive(False)
+        try:
+            action.set_sensitive(len(page.view.get_selected_rows()) == 1)
+        except AttributeError:
+            action.set_sensitive(False)
         action = self._action_group.get_action("edit_bookmarks")
         action.set_sensitive(page is not None)
         action = self._action_group.get_action("next_bookmark")
-        try: action.set_sensitive(bool(self._bookmarks[page]))
-        except KeyError: action.set_sensitive(False)
+        try:
+            action.set_sensitive(bool(self._bookmarks[page]))
+        except KeyError:
+            action.set_sensitive(False)
         action = self._action_group.get_action("previous_bookmark")
-        try: action.set_sensitive(bool(self._bookmarks[page]))
-        except KeyError: action.set_sensitive(False)
+        try:
+            action.set_sensitive(bool(self._bookmarks[page]))
+        except KeyError:
+            action.set_sensitive(False)

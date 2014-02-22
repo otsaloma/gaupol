@@ -93,7 +93,8 @@ class SaveAgent(aeidon.Delegate):
         """
         file = file or page.project.get_file(doc)
         gaupol.util.set_cursor_busy(self.window)
-        try: return page.project.save(doc, file)
+        try:
+            return page.project.save(doc, file)
         except IOError as error:
             gaupol.util.set_cursor_normal(self.window)
             basename = os.path.basename(file.path)

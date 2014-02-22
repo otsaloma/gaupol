@@ -395,7 +395,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         flags = re.DOTALL | re.MULTILINE
         if gaupol.conf.search.ignore_case:
             flags = flags | re.IGNORECASE
-        try: page.project.set_search_regex(pattern, flags)
+        try:
+            page.project.set_search_regex(pattern, flags)
         except re.error as error:
             self._show_regex_error_dialog_pattern(str(error))
             raise gaupol.Default
@@ -466,8 +467,10 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _write_history(self, name):
         """Write history to file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
-        try: aeidon.util.makedirs(directory)
-        except OSError: return
+        try:
+            aeidon.util.makedirs(directory)
+        except OSError:
+            return
         path = os.path.join(directory, "{}.history".format(name))
         history = getattr(self, name)
         text = "\n".join(history) + "\n"
@@ -545,7 +548,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         self._set_replacement(page)
         subtitle = page.project.subtitles[self._match_row]
         length = len(subtitle.get_text(self._match_doc))
-        try: page.project.replace()
+        try:
+            page.project.replace()
         except re.error as error:
             return self._show_regex_error_dialog_replacement(str(error))
         shift = (len(subtitle.get_text(self._match_doc)) - length)
@@ -564,7 +568,8 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         for page in self.application.get_target_pages(target):
             self._set_pattern(page)
             self._set_replacement(page)
-            try: count += page.project.replace_all()
+            try:
+                count += page.project.replace_all()
             except re.error as error:
                 self._show_regex_error_dialog_replacement(str(error))
                 break

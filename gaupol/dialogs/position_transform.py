@@ -251,6 +251,7 @@ class FrameTransformDialog(PositionTransformDialog,
         out_2 = aeidon.as_frame(self._output_spin_2.get_value_as_int())
         return (out_1 != in_1 or out_2 != in_2)
 
+
 class TimeTransformDialog(PositionTransformDialog,
                           metaclass=aeidon.Contractual):
 

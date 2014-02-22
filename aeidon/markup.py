@@ -119,8 +119,10 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         args = (text, (a, z))
         if value is not None:
             args = (text, match.group(value), (a, z))
-        try: text = method(*args)
-        except NotImplementedError: pass
+        try:
+            text = method(*args)
+        except NotImplementedError:
+            pass
         if text == orig_text: return text
         return self._encode_apply(text, regex, method, target, value)
 

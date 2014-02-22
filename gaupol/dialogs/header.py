@@ -147,7 +147,8 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _save_header_mpsub(self, file, header):
         """Save `header` for MPsub format `file`."""
-        try:  file.set_header(header)
+        try:
+            file.set_header(header)
         except ValueError:
             return self._show_mpsub_error_dialog()
         if file.framerate is None: return

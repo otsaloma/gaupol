@@ -18,7 +18,7 @@
 
 import aeidon
 
-from .test_ssa import TestSubStationAlpha
+from aeidon.tags.test.test_ssa import TestSubStationAlpha
 
 
 class TestAdvSubStationAlpha(TestSubStationAlpha):

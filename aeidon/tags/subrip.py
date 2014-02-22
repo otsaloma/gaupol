@@ -56,9 +56,9 @@ class SubRip(aeidon.Markup):
 
     def clean(self, text):
         """Return `text` with less ugly markup."""
-        # Remove tags that are immeadiately closed after opening.
+        # Remove tags that are immediately closed after opening.
         text = self._substitute(text, r"<([a-z]+)[^<]*?>( *)</\1>", r"\2")
-        # Remove tags that are immeadiately opened after closing.
+        # Remove tags that are immediately opened after closing.
         text = self._substitute(text, r"</([a-z]+)>( *)<\1[^<]*?>", r"\2")
         # Remove or relocate space right after an opening tag.
         text = self._substitute(text, r" ?(<(?!/)[^>]+?>) ", r" \1")

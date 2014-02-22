@@ -235,8 +235,9 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         store = self._tree_view.get_model()
         module = store[path][0]
         active = store[path][1]
-        if active: # Deactivating extension.
-            try: self.manager.teardown_extension(module)
+        if active:
+            try:
+                self.manager.teardown_extension(module)
             except gaupol.DependencyError:
                 title = _("Cannot deactivate extension")
                 message = _('Extension "{}" is required by other extensions.')

@@ -21,7 +21,7 @@ import gaupol
 import os
 
 from gi.repository import Gtk
-from .test_file import _TestFileDialog
+from gaupol.dialogs.test.test_file import _TestFileDialog
 
 
 class TestOpenDialog(_TestFileDialog):

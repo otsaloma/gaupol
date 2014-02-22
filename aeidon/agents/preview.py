@@ -103,14 +103,7 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         assert os.path.isfile(value[2].name)
 
     @aeidon.deco.export
-    def preview(self,
-                position,
-                doc,
-                command,
-                offset,
-                encoding=None,
-                temp=False):
-
+    def preview(self, position, doc, command, offset, encoding=None, temp=False):
         """
         Start video player with `command` from `position`.
 

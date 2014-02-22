@@ -19,9 +19,7 @@
 """Automatic correcting of texts."""
 
 import aeidon
-import os
 import re
-import sys
 _ = aeidon.i18n._
 
 try:
@@ -45,8 +43,8 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if match is not None:
             i = pos + match.end() - 1
             prefix = parser.text[:i]
-            text = parser.text[i:i + 1].capitalize()
-            suffix = parser.text[i + 1:]
+            text = parser.text[i:i+1].capitalize()
+            suffix = parser.text[i+1:]
             parser.text = prefix + text + suffix
         return match is not None
 
@@ -75,12 +73,7 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
         Raise :exc:`enchant.error` if dictionary instatiation fails.
         """
-        directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
-        path = os.path.join(directory, "{}.dict".format(language))
-        try: dictionary = enchant.DictWithPWL(language, path)
-        except IOError:
-            aeidon.util.print_write_io(sys.exc_info(), path)
-            dictionary = enchant.Dict(language)
+        dictionary = enchant.Dict(language)
         # Sometimes enchant will initialize a dictionary that will not
         # actually work when trying to use it, hence check something.
         dictionary.check("aeidon")
@@ -144,17 +137,9 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     @aeidon.deco.revertable
-    def break_lines(self,
-                    indices,
-                    doc,
-                    patterns,
-                    length_func,
-                    max_length,
-                    max_lines,
-                    skip=False,
-                    max_skip_length=2**16,
-                    max_skip_lines=2**16,
-                    register=-1):
+    def break_lines(self, indices, doc, patterns, length_func, max_length,
+                    max_lines, skip=False, max_skip_length=32768,
+                    max_skip_lines=32768, register=-1):
 
         """
         Break lines to fit defined maximum line length and count.
@@ -359,8 +344,10 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             text = re_multispace.sub(" ", text)
             checker.set_text(text)
             while True:
-                try: next(checker)
-                except StopIteration: break
+                try:
+                    next(checker)
+                except StopIteration:
+                    break
                 text = checker.get_text()
                 a = checker.wordpos
                 z = checker.wordpos + len(checker.word)
@@ -414,8 +401,10 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             text = re_multispace.sub(" ", text)
             checker.set_text(text)
             while True:
-                try: next(checker)
-                except StopIteration: break
+                try:
+                    next(checker)
+                except StopIteration:
+                    break
                 if checker.word.capitalize() == checker.word:
                     # Skip capitalized words, which are usually names
                     # and thus not always found in dictionaries.

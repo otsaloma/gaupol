@@ -100,12 +100,13 @@ class PreviewAgent(aeidon.Delegate):
         command = gaupol.util.get_preview_command()
         offset = gaupol.conf.preview.offset
         encoding = ("utf_8" if gaupol.conf.preview.force_utf_8 else None)
-        try: process, command, output_fobj = page.project.preview(position,
-                                                                  doc,
-                                                                  command,
-                                                                  offset,
-                                                                  encoding,
-                                                                  temp)
+        try:
+            process, command, output_fobj = page.project.preview(position,
+                                                                 doc,
+                                                                 command,
+                                                                 offset,
+                                                                 encoding,
+                                                                 temp)
 
         except aeidon.ProcessError as error:
             return self._show_process_error_dialog(str(error))

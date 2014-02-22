@@ -35,7 +35,8 @@ class TestAddBookmarkDialog(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try: mobj = __import__("bookmarks", {}, {}, [])
+        try:
+            mobj = __import__("bookmarks", {}, {}, [])
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)
@@ -74,7 +75,8 @@ class TestBookmarksExtension(gaupol.TestCase):
                                                  "side-pane"))
 
         sys.path.insert(0, directory)
-        try: mobj = __import__("side-pane", {}, {}, [])
+        try:
+            mobj = __import__("side-pane", {}, {}, [])
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)
@@ -88,7 +90,8 @@ class TestBookmarksExtension(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try: mobj = __import__("bookmarks", {}, {}, [])
+        try:
+            mobj = __import__("bookmarks", {}, {}, [])
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)

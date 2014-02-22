@@ -262,7 +262,7 @@ def pocketsphinx_available():
     # XXX: Return False for now while waiting for pocketsphinx to be ported to
     # GStreamer 1.0. Speech recognition code is technically already ported,
     # but lacking pocketsphinx, it's completely untested.
-    # https://sourceforge.net/projects/cmusphinx/forums/forum/5471/topic/5497616
+    # http://sourceforge.net/p/cmusphinx/discussion/help/thread/6a286ad1/
     return False
     try:
         from gi.repository import Gst
@@ -280,7 +280,8 @@ def prepare_text_view(text_view):
             checker = GtkSpell.Checker()
             checker.set_language(language)
             checker.attach(text_view)
-        except Exception: pass
+        except Exception:
+            pass
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
         if gaupol.conf.editor.show_lengths_edit:
@@ -322,12 +323,8 @@ def run_dialog(dialog):
     """
     return dialog.run()
 
-def scale_to_content(widget,
-                     min_nchar=0,
-                     max_nchar=2**16,
-                     min_nlines=0,
-                     max_nlines=2**16,
-                     font=None):
+def scale_to_content(widget, min_nchar=0, max_nchar=2**16, min_nlines=0,
+                     max_nlines=2**16, font=None):
 
     """Set `widget's` size by content, but limited by `min` and `max`."""
     width, height = get_content_size(widget)
@@ -387,7 +384,8 @@ def show_exception(exctype, value, tb):
     """
     traceback.print_exception(exctype, value, tb)
     if not isinstance(value, Exception): return
-    try: # to avoid recursion.
+    try:
+        # to avoid recursion.
         dialog = gaupol.DebugDialog()
         dialog.set_text(exctype, value, tb)
         response = dialog.run()

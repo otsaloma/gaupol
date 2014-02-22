@@ -7,6 +7,9 @@ Usage: check-translations [XX[_YY[@ZZ]]...]
 import glob, os, sys
 args = tuple(sys.argv[1:])
 args = tuple("{}.po".format(x) for x in args)
+for arg in args:
+    if not arg in os.listdir("po"):
+        print("'po/{}' not found".format(arg), file=sys.stderr)
 os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
 for name in sorted(glob.glob("*.po")):
     if args and not name in args:

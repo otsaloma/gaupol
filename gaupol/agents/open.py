@@ -129,14 +129,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.add_page(page)
 
     @aeidon.deco.export
-    def _on_notebook_drag_data_received(self,
-                                        notebook,
-                                        context,
-                                        x,
-                                        y,
-                                        selection_data,
-                                        info,
-                                        time):
+    def _on_notebook_drag_data_received(self, notebook, context, x, y,
+                                        selection_data, info, time):
 
         """Open main files from dragged URIs."""
         uris = selection_data.get_uris()
@@ -237,12 +231,14 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 else self.get_current_page)()
 
         for encoding in encodings:
-            try: sort_count = self._try_open_file(page,
-                                                  doc,
-                                                  path,
-                                                  encoding)
+            try:
+                sort_count = self._try_open_file(page,
+                                                 doc,
+                                                 path,
+                                                 encoding)
 
-            except UnicodeError: continue
+            except UnicodeError:
+                continue
             self._check_sort_count(path, sort_count)
             return page
         # Report if all codecs failed to decode file.
@@ -372,7 +368,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             if encoding is None: raise UnicodeError
         if doc == aeidon.documents.TRAN:
             kwargs["align_method"] = gaupol.conf.file.align_method
-        try: return page.project.open(doc, path, encoding, **kwargs)
+        try:
+            return page.project.open(doc, path, encoding, **kwargs)
         except aeidon.FormatError:
             gaupol.util.set_cursor_normal(self.window)
             self._show_format_error_dialog(basename)

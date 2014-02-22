@@ -234,8 +234,10 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         row = gaupol.util.tree_path_to_row(path)
         if key.count(":") == 0:
             # Search for subtitle number.
-            try: return row != (int(key) - 1)
-            except ValueError: return False
+            try:
+                return row != (int(key) - 1)
+            except ValueError:
+                return False
         col = gaupol.conf.editor.field_order.index(gaupol.fields.START)
         hours = minutes = seconds = 0
         if key.count(":") == 1 and key.startswith(":"):
@@ -248,22 +250,28 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
             match = re.search(r"^(\d{1,2}):([\d.]+)?$", key)
             if match is None: return False
             minutes = int(match.group(1))
-            try: seconds = float(match.group(2) or "00.000")
-            except ValueError: return False
+            try:
+                seconds = float(match.group(2) or "00.000")
+            except ValueError:
+                return False
         if key.count(":") == 2:
             # Search for time of form '[HH]:MM:[SS.SSS]'
             match = re.search(r"^(\d{,2}):(\d{1,2}):([\d.]+)?$", key)
             if match is None: return False
             hours = int(match.group(1) or "00")
             minutes = int(match.group(2))
-            try: seconds = float(match.group(3) or "00.000")
-            except ValueError: return False
+            try:
+                seconds = float(match.group(3) or "00.000")
+            except ValueError:
+                return False
         time_key = "{:02d}:{:02d}:{:06.3f}".format(hours, minutes, seconds)
         if not self._calc.is_valid_time(time_key): return False
         time_iter = store[row][col]
         if not ":" in time_iter: return False
-        try: time_next = store[row+1][col]
-        except IndexError: time_next = "99:59:59.999"
+        try:
+            time_next = store[row+1][col]
+        except IndexError:
+            time_next = "99:59:59.999"
         return not (self._calc.time_to_seconds(time_iter)
                     <= self._calc.time_to_seconds(time_key)
                     < self._calc.time_to_seconds(time_next))

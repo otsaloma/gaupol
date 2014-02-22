@@ -83,14 +83,8 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     @aeidon.deco.revertable
-    def adjust_durations(self,
-                         indices=None,
-                         speed=None,
-                         lengthen=False,
-                         shorten=False,
-                         minimum=None,
-                         maximum=None,
-                         gap=None,
+    def adjust_durations(self, indices=None, speed=None, lengthen=False,
+                         shorten=False, minimum=None, maximum=None, gap=None,
                          register=-1):
 
         """
@@ -151,11 +145,9 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
 
     @aeidon.deco.export
     @aeidon.deco.revertable
-    def convert_framerate(self,
-                          indices,
-                          framerate_in,
-                          framerate_out,
+    def convert_framerate(self, indices, framerate_in, framerate_out,
                           register=-1):
+
         """
         Set the value of framerate and convert subtitles to it.
 

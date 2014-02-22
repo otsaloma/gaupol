@@ -35,7 +35,8 @@ class TestAddFramerateDialog(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try: mobj = __import__("custom-framerates", {}, {}, [])
+        try:
+            mobj = __import__("custom-framerates", {}, {}, [])
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)
@@ -62,7 +63,8 @@ class TestPreferencesDialog(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try: mobj = __import__("custom-framerates", {}, {}, [])
+        try:
+            mobj = __import__("custom-framerates", {}, {}, [])
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)
@@ -108,7 +110,8 @@ class TestCustomFrameratesExtension(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try: mobj = __import__("custom-framerates", {}, {}, [])
+        try:
+            mobj = __import__("custom-framerates", {}, {}, [])
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)

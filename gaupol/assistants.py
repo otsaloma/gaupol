@@ -583,7 +583,8 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
     def _init_values(self):
         """Initialize default values for widgets."""
         language = gaupol.conf.spell_check.language
-        try: label = aeidon.locales.code_to_name(language)
+        try:
+            label = aeidon.locales.code_to_name(language)
         except LookupError:
             label = self._language_button.get_label()
         self._set_language_button_label(label)
@@ -601,7 +602,8 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
         gaupol.util.set_cursor_normal(self.assistant)
         gaupol.util.flash_dialog(dialog)
         language = gaupol.conf.spell_check.language
-        try: label = aeidon.locales.code_to_name(language)
+        try:
+            label = aeidon.locales.code_to_name(language)
         except LookupError:
             label = self._language_button.get_label()
         self._set_language_button_label(label)
@@ -619,8 +621,10 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
     def _show_error_dialog(self, message):
         """Show an error dialog after failing to load dictionary."""
         language = gaupol.conf.spell_check.language
-        try: name = aeidon.locales.code_to_name(language)
-        except LookupError: name = language
+        try:
+            name = aeidon.locales.code_to_name(language)
+        except LookupError:
+            name = language
         title = _('Failed to load dictionary for language "{}"').format(name)
         dialog = gaupol.ErrorDialog(self.get_parent(), title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
@@ -630,11 +634,13 @@ class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
         """Correct texts in `project`."""
         language = gaupol.conf.spell_check.language
         if gaupol.conf.join_split_words.join:
-            try: project.spell_check_join_words(indices, doc, language)
+            try:
+                project.spell_check_join_words(indices, doc, language)
             except enchant.Error as error:
                 return self._show_error_dialog(str(error))
         if gaupol.conf.join_split_words.split:
-            try: project.spell_check_split_words(indices, doc, language)
+            try:
+                project.spell_check_split_words(indices, doc, language)
             except enchant.Error as error:
                 return self._show_error_dialog(str(error))
 

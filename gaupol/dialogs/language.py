@@ -141,11 +141,17 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _populate_store(self, store):
         """Add all available languages to `store`."""
-        try: locales = set(enchant.list_languages())
-        except enchant.Error: return
+        try:
+            locales = set(enchant.list_languages())
+        except enchant.Error:
+            return
         for locale in locales:
-            try: enchant.Dict(locale).check("gaupol")
-            except enchant.Error: continue
-            try: name = aeidon.locales.code_to_name(locale)
-            except LookupError: name = locale
+            try:
+                enchant.Dict(locale).check("gaupol")
+            except enchant.Error:
+                continue
+            try:
+                name = aeidon.locales.code_to_name(locale)
+            except LookupError:
+                name = locale
             store.append((locale, name))

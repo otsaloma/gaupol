@@ -149,7 +149,8 @@ def _parse_args(args):
     opts, args = parser.parse_args(args)
     # Translate encoding if an alias given.
     if not opts.encoding in (None, "auto"):
-        try: opts.encoding = aeidon.encodings.translate_code(opts.encoding)
+        try:
+            opts.encoding = aeidon.encodings.translate_code(opts.encoding)
         except ValueError:
             raise SystemExit("Unrecognized encoding: {}"
                              .format(repr(opts.encoding)))

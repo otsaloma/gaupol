@@ -53,13 +53,17 @@ def create_directory(suffix=""):
 def remove(path):
     """Remove temporary file or directory at `path`."""
     if os.path.isfile(path):
-        try: os.remove(path)
-        except OSError: pass
+        try:
+            os.remove(path)
+        except OSError:
+            pass
     if os.path.isdir(path):
         for name in os.listdir(path):
             remove(os.path.join(path, name))
-        try: os.rmdir(path)
-        except OSError: pass
+        try:
+            os.rmdir(path)
+        except OSError:
+            pass
 
 def remove_all():
     """Remove all temporary files and directories."""

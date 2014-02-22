@@ -341,8 +341,10 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if page.view.is_position_column(col):
             if not value: return
             if page.edit_mode == aeidon.modes.FRAME:
-                try: value = aeidon.as_frame(value)
-                except ValueError: return
+                try:
+                    value = aeidon.as_frame(value)
+                except ValueError:
+                    return
         if col == page.view.columns.START:
             return page.project.set_start(row, value)
         if col == page.view.columns.END:
@@ -350,8 +352,10 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if col ==  page.view.columns.DURATION:
             if page.edit_mode == aeidon.modes.TIME:
                 value = value.replace(",", ".")
-                try: value = aeidon.as_seconds(value)
-                except ValueError: return
+                try:
+                    value = aeidon.as_seconds(value)
+                except ValueError:
+                    return
             return page.project.set_duration(row, value)
         doc = page.text_column_to_document(col)
         page.project.set_text(row, doc, value)
@@ -363,11 +367,7 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.show_message(None)
 
     @aeidon.deco.export
-    def _on_view_renderer_editing_started(self,
-                                          renderer,
-                                          editor,
-                                          path,
-                                          column):
+    def _on_view_renderer_editing_started(self, renderer, editor, path, column):
 
         """Set proper state for editing cell."""
         self._set_unsafe_sensitivities(False)

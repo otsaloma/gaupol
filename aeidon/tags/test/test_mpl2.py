@@ -18,7 +18,7 @@
 
 import aeidon
 
-from .test_microdvd import TestMicroDVD
+from aeidon.tags.test.test_microdvd import TestMicroDVD
 
 
 class TestMPL2(TestMicroDVD):

@@ -413,7 +413,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 option = option.strip()
                 value = value.strip()
                 enum = enums.get(option, None)
-                try: value = json.loads(value, cls=EnumDecoder, enum=enum)
+                try:
+                    value = json.loads(value, cls=EnumDecoder, enum=enum)
                 except (AttributeError, ValueError):
                     print(("Failed to parse value '{}' of option '{}.{}' "
                            "from configuration file '{}'."
@@ -479,12 +480,14 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         if self.path is None: return
         self.general.version = gaupol.__version__
         if not os.path.isdir(os.path.dirname(self.path)):
-            try: aeidon.util.makedirs(os.path.dirname(self.path))
+            try:
+                aeidon.util.makedirs(os.path.dirname(self.path))
             except (IOError, OSError):
                 aeidon.util.print_write_io(sys.exc_info(), self.path)
                 raise # IOError, OSError
         encoding = aeidon.util.get_default_encoding()
-        try: fobj = open(self.path, "w", encoding=encoding)
+        try:
+            fobj = open(self.path, "w", encoding=encoding)
         except (IOError, OSError):
             aeidon.util.print_write_io(sys.exc_info(), self.path)
             raise # IOError, OSError
@@ -504,7 +507,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 if (section in defaults) and (option in defaults[section]):
                     if value == defaults[section][option]:
                         fobj.write("# ")
-                try: fobj.write("{} = {}\n".format(option, json_value))
+                try:
+                    fobj.write("{} = {}\n".format(option, json_value))
                 except UnicodeError:
                     print(("Failed to write value '{}' of option '{}.{}' "
                            "to configuration file '{}'."

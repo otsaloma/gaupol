@@ -21,15 +21,15 @@ import gaupol
 
 from gi.repository import Gtk
 
-from ..assistants import CapitalizationPage
-from ..assistants import CommonErrorPage
-from ..assistants import ConfirmationPage
-from ..assistants import HearingImpairedPage
-from ..assistants import IntroductionPage
-from ..assistants import JoinSplitWordsPage
-from ..assistants import LineBreakOptionsPage
-from ..assistants import LineBreakPage
-from ..assistants import ProgressPage
+from gaupol.assistants import CapitalizationPage
+from gaupol.assistants import CommonErrorPage
+from gaupol.assistants import ConfirmationPage
+from gaupol.assistants import HearingImpairedPage
+from gaupol.assistants import IntroductionPage
+from gaupol.assistants import JoinSplitWordsPage
+from gaupol.assistants import LineBreakOptionsPage
+from gaupol.assistants import LineBreakPage
+from gaupol.assistants import ProgressPage
 
 
 class TestTextAssistantPage(gaupol.TestCase):

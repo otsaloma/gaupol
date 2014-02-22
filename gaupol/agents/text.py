@@ -30,7 +30,8 @@ class TextAgent(aeidon.Delegate):
     def _on_check_spelling_activate(self, *args):
         """Check for incorrect spelling."""
         gaupol.util.set_cursor_busy(self.window)
-        try: # Fails if no dictionary for conf.spell_check.language.
+        try:
+            # Fails if no dictionary for conf.spell_check.language.
             dialog = gaupol.SpellCheckDialog(self.window, self)
         except ValueError:
             return gaupol.util.set_cursor_normal(self.window)

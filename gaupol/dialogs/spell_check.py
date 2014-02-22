@@ -113,10 +113,13 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                     self._new_texts.append(text)
             # Move to the next row in the current page, move to the next page
             # in the sequence of target pages or end when all pages checked.
-            try: self._advance_row()
+            try:
+                self._advance_row()
             except StopIteration:
-                try: next(self._pager)
-                except StopIteration: break
+                try:
+                    next(self._pager)
+                except StopIteration:
+                    break
         self._set_done()
 
     def _advance_current(self):
@@ -202,8 +205,10 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         basename = "{}.repl".format(gaupol.conf.spell_check.language)
         path = os.path.join(self._personal_dir, basename)
         if not os.path.isfile(path): return
-        try: lines = aeidon.util.readlines(path)
-        except (IOError, OSError): lines = []
+        try:
+            lines = aeidon.util.readlines(path)
+        except (IOError, OSError):
+            lines = []
         for line in aeidon.util.get_unique(lines):
             misspelled, correct  = line.strip().split("|", 1)
             self._replacements.append((misspelled, correct))
@@ -224,8 +229,10 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         aeidon.util.makedirs(self._personal_dir)
         self._init_checker()
         self._init_replacements()
-        try: name = aeidon.locales.code_to_name(self._language)
-        except LookupError: name = self._language
+        try:
+            name = aeidon.locales.code_to_name(self._language)
+        except LookupError:
+            name = self._language
         self._language_label.set_markup("<b>{}</b>".format(name))
 
     def _init_tree_view(self):
@@ -388,8 +395,10 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
 
     def _show_error_dialog(self, message):
         """Show an error dialog after failing to load dictionary."""
-        try: name = aeidon.locales.code_to_name(self._language)
-        except LookupError: name = self._language
+        try:
+            name = aeidon.locales.code_to_name(self._language)
+        except LookupError:
+            name = self._language
         title = _('Failed to load dictionary for language "{}"').format(name)
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
@@ -411,6 +420,7 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
             # Discard the oldest of replacements.
             self._replacements[-self._max_replacements:]
         text = "\n".join("|".join(x) for x in self._replacements)
-        try: aeidon.util.write(path, text + "\n")
+        try:
+            aeidon.util.write(path, text + "\n")
         except (IOError, UnicodeError):
             aeidon.util.print_write_io(sys.exc_info(), path)

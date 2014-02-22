@@ -41,13 +41,13 @@ class TestLiner(aeidon.TestCase):
                                        value=1000)))
 
 
-    def test_break_lines__01(self):
+    def test_break_lines__1(self):
         text = "Hello."
         self.liner.set_text(text)
         text = self.liner.break_lines()
         assert text == "Hello."
 
-    def test_break_lines__02(self):
+    def test_break_lines__2(self):
         text = ("- Isn't he off on Saturdays? "
                 "- Didn't he tell you?")
 
@@ -57,7 +57,7 @@ class TestLiner(aeidon.TestCase):
             "- Isn't he off on Saturdays?\n"
             "- Didn't he tell you?")
 
-    def test_break_lines__03(self):
+    def test_break_lines__3(self):
         text = ("Close by the king's castle "
                 "lay a great dark forest.")
 
@@ -67,7 +67,7 @@ class TestLiner(aeidon.TestCase):
             "Close by the king's castle\n"
             "lay a great dark forest.")
 
-    def test_break_lines__04(self):
+    def test_break_lines__4(self):
         text = ("The king's child went out "
                 "into the forest and sat down "
                 "by the side of the cool fountain.")
@@ -79,7 +79,7 @@ class TestLiner(aeidon.TestCase):
             "into the forest and sat down\n"
             "by the side of the cool fountain.")
 
-    def test_break_lines__05(self):
+    def test_break_lines__5(self):
         text = ("The king's child went out "
                 "into the forest and sat down by the side "
                 "of the cool fountain; and when "
@@ -98,7 +98,7 @@ class TestLiner(aeidon.TestCase):
             "this ball was her favorite plaything.")
 
 
-    def test_break_lines__06(self):
+    def test_break_lines__6(self):
         text = ("one two three four five six seven eight "
                 "one two three four five six seven eight "
                 "one two three four five six seven eight "

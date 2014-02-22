@@ -9,10 +9,6 @@ Preparing to Build Windows Installers
    - https://pypi.python.org/pypi/setuptools
  * Install PyGObject all-in-one for Windows
    - http://sourceforge.net/projects/pygobjectwin32/files/
-   - Remove the Gst typelib since it's somehow broken
-     (This is just the easiest and non-code-changing way
-      to prevent Gaupol from trying to use it.)
-     o .../site-packages/gnome/lib/girepository-1.0/Gst-1.0.typelib
    - Fix GTK+3 theming for Windows
      o .../site-packages/gnome/etc/gtk-3.0/settings.ini
 
@@ -57,8 +53,7 @@ Releasing a New Version for Windows
 Known Issues
 ============
 
- * GStreamer is broken in the pygi-aio package
-   - Integrated video player won't be available
+ * Integrated video player needs some Windows-specific work
  * Most fonts look bad; default set to Verdana
  * Links don't open (Gtk.LinkButton etc.)
  * The installer contains a whole lot of unnecessary stuff because it's

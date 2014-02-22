@@ -69,12 +69,16 @@ class TestExtensionManager(gaupol.TestCase):
         self.manager.setup_extensions()
 
     def test_show_help(self):
-        try: self.manager.show_help("bookmarks")
-        except NotImplementedError: pass
+        try:
+            self.manager.show_help("bookmarks")
+        except NotImplementedError:
+            pass
 
     def test_show_preferences_dialog(self):
-        try: self.manager.show_preferences_dialog("bookmarks", Gtk.Window())
-        except NotImplementedError: pass
+        try:
+            self.manager.show_preferences_dialog("bookmarks", Gtk.Window())
+        except NotImplementedError:
+            pass
 
     def test_teardown_extension(self):
         self.manager.setup_extension("bookmarks")

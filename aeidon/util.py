@@ -372,7 +372,8 @@ def get_template_header(format):
     directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
     path = os.path.join(directory, format.name.lower())
     if os.path.isfile(path):
-        try: header = read(path, None).rstrip()
+        try:
+            header = read(path, None).rstrip()
         except IOError:
             print_read_io(sys.exc_info(), path)
         except UnicodeError:

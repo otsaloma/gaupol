@@ -6,16 +6,20 @@ Gaupol 0.25.1
  [X] Add GTK+ to list of dependencies in the README file (GTK+ has
      always been a dependency, its explicit mention was just forgotten
      when migrating from PyGTK to PyGObject)
+ [ ] Remove speech recognition menu item
 
 Gaupol 1.0
 ==========
 
  * Check AppData screenshots
    - http://blogs.gnome.org/hughsie/2013/10/08/how-to-take-169-screenshots/
- * Update wiki page?
-   - http://blogs.gnome.org/mccann/2013/12/17/lets-face-it/
+ * Update wiki page to use new template
+   - https://wiki.gnome.org/Apps/Template
+ * Apply new GNOME goals?
+   - https://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
+   - https://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
+   - https://wiki.gnome.org/Initiatives/GnomeGoals/HeaderBars
+ * Migrate away from Gtk.Action, Gtk.UIManager, stock icons, etc.
+   - https://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
  * Allow using multiple dictionaries for spell-check
  * Add a GStreamer-based audio waveform display
- * https://wiki.gnome.org/GnomeGoals/UnicodeUsage
- * https://wiki.gnome.org/GnomeGoals/PortToGtkApplication
- * https://wiki.gnome.org/GnomeGoals/PortToGMenu

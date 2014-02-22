@@ -145,8 +145,10 @@ def memoize(limit=100):
             if _is_method(function, args):
                 params = (id(args[0]), args[1:], kwargs)
             key = pickle.dumps(params)
-            try: return cache[key]
-            except KeyError: pass
+            try:
+                return cache[key]
+            except KeyError:
+                pass
             cache[key] = function(*args, **kwargs)
             if limit is not None:
                 while len(cache) > limit:
@@ -185,13 +187,15 @@ def monkey_patch(obj, name):
             if _hasattr_def(obj, name):
                 attr = getattr(obj, name)
                 setattr(obj, name, copy.deepcopy(attr))
-                try: return function(*args, **kwargs)
+                try:
+                    return function(*args, **kwargs)
                 finally:
                     setattr(obj, name, attr)
                     assert getattr(obj, name) == attr
                     assert getattr(obj, name) is attr
             else: # Attribute not defined.
-                try: return function(*args, **kwargs)
+                try:
+                    return function(*args, **kwargs)
                 finally:
                     delattr(obj, name)
                     assert not _hasattr_def(obj, name)
@@ -207,8 +211,10 @@ def notify_frozen(function):
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         frozen = args[0].freeze_notify()
-        try: return function(*args, **kwargs)
-        finally: args[0].thaw_notify(frozen)
+        try:
+            return function(*args, **kwargs)
+        finally:
+            args[0].thaw_notify(frozen)
     return wrapper
 
 if aeidon.RUNNING_SPHINX:
@@ -222,8 +228,10 @@ def once(function):
     cache = []
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        try: return cache[0]
-        except IndexError: pass
+        try:
+            return cache[0]
+        except IndexError:
+            pass
         cache.append(function(*args, **kwargs))
         return cache[0]
     return wrapper
@@ -277,8 +285,10 @@ def revertable(function):
             # Execute plain function for nested function calls
             # that are part of another revertable action.
             return function(*args, **kwargs)
-        try: value = function(*args, **kwargs)
-        finally: project.unblock(register.signal)
+        try:
+            value = function(*args, **kwargs)
+        finally:
+            project.unblock(register.signal)
         project.cut_reversion_stacks()
         if (project.main_changed != main_changed or
             project.tran_changed != tran_changed):
@@ -304,8 +314,10 @@ def silent(*exceptions):
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
-            try: return function(*args, **kwargs)
-            except exceptions: return None
+            try:
+                return function(*args, **kwargs)
+            except exceptions:
+                return None
         return inner_wrapper
     if aeidon.RUNNING_SPHINX:
         _outer_wrapper = outer_wrapper

@@ -70,8 +70,10 @@ class ExtensionManager(metaclass=aeidon.Contractual):
 
     def _parse_metadata(self, path):
         """Parse extension metadata file at `path`."""
-        try: lines = aeidon.util.readlines(path, "utf_8", None)
-        except UnicodeError: # Metadata file must be UTF-8.
+        try:
+            lines = aeidon.util.readlines(path, "utf_8", None)
+        except UnicodeError:
+            # Metadata file must be UTF-8.
             return aeidon.util.print_read_unicode(sys.exc_info(),
                                                   path,
                                                   "utf_8")
@@ -171,7 +173,8 @@ class ExtensionManager(metaclass=aeidon.Contractual):
             self._dependants[dependency].append(module)
         directory = os.path.dirname(metadata.path)
         sys.path.insert(0, directory)
-        try: mobj = __import__(module, {}, {}, [])
+        try:
+            mobj = __import__(module, {}, {}, [])
         except ImportError:
             return traceback.print_exc()
         finally: sys.path.pop(0)
