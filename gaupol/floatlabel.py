@@ -47,27 +47,23 @@ class FloatingLabel(Gtk.Box):
 
     def _get_label_background_color(self):
         """Return a background color to use for the label."""
-        infobar = Gtk.InfoBar(message_type=Gtk.MessageType.INFO)
-        infobar.show()
-        style = infobar.get_style_context()
-        found, color = style.lookup_color("info_bg_color")
-        if found: return color
         entry = Gtk.Entry()
         entry.show()
         style = entry.get_style_context()
-        return style.get_background_color(Gtk.StateFlags.NORMAL)
+        for name in ("theme_tooltip_bg_color", "tooltip_bg_color"):
+            found, color = style.lookup_color(name)
+            if found: return color
+        return style.get_foreground_color(Gtk.StateFlags.NORMAL)
 
     def _get_label_color(self):
         """Return a foreground color to use for the label."""
-        infobar = Gtk.InfoBar(message_type=Gtk.MessageType.INFO)
-        infobar.show()
-        style = infobar.get_style_context()
-        found, color = style.lookup_color("info_fg_color")
-        if found: return color
         entry = Gtk.Entry()
         entry.show()
         style = entry.get_style_context()
-        return style.get_color(Gtk.StateFlags.NORMAL)
+        for name in ("theme_tooltip_fg_color", "tooltip_fg_color"):
+            found, color = style.lookup_color(name)
+            if found: return color
+        return style.get_background_color(Gtk.StateFlags.NORMAL)
 
     def _init_widgets(self):
         """Initialize widgets contained in the box."""

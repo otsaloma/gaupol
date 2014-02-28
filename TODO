@@ -8,6 +8,8 @@ Gaupol 0.25.1
      when migrating from PyGTK to PyGObject)
  [X] Remove non-functional speech recognition menu item
      - https://www.mail-archive.com/gaupol-list@gna.org/msg00069.html
+ [X] Try to use tooltip colors for floating labels (this should perhaps
+     work better with GTK+ 3.10)
 
 Gaupol 1.0
 ==========
