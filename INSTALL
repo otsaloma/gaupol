@@ -4,14 +4,14 @@ Installation
 The installation process requires that you have Python, gettext and
 intltool installed. Depending on your distro's Python packaging you
 may also need a package called python-dev or python-devel. For
-dependencies required to run Gaupol, see the file "README".
+dependencies required to run Gaupol, see the file 'README'.
 
 To install, run command
 
     python3 setup.py clean install [--prefix=...]
 
 Developers or packagers interested in installing aeidon and gaupol
-separately, see the file "README.aeidon".
+separately, see the file 'README.aeidon'.
 
 Uninstallation
 ==============

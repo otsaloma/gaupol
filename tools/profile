@@ -4,49 +4,13 @@
 Profile running gaupol.main.main.
 Usage: See gaupol --help.
 """
-import atexit
-import bisect
-import codecs
-import collections
-import contextlib
-import copy
-import functools
-import gettext
-import glob
-import itertools
-import json
-import linecache
-import locale
-import optparse
-import os
-import pickle
-import platform
-import random
-import re
-import shutil
-import stat
-import string
-import subprocess
-import sys
-import tempfile
-import time
-import traceback
-import urllib.parse
-import urllib.request
-import webbrowser
-import xml.etree.ElementTree
+import atexit, bisect, codecs, collections, contextlib, copy, functools, \
+gettext, glob, itertools, json, linecache, locale, optparse, os, pickle, \
+platform, random, re, shutil, stat, string, subprocess, sys, tempfile, time, \
+traceback, urllib.parse, urllib.request, webbrowser, xml.etree.ElementTree
 
-from gi.repository import Gdk
-from gi.repository import GdkPixbuf
-from gi.repository import GdkX11
-from gi.repository import GLib
-from gi.repository import GObject
-from gi.repository import Gst
-from gi.repository import GstPbutils
-from gi.repository import GstVideo
-from gi.repository import Gtk
-from gi.repository import GtkSpell
-from gi.repository import Pango
+from gi.repository import Gdk, GdkPixbuf, GdkX11, GLib, GObject, Gst, \
+GstPbutils, GstVideo, Gtk, GtkSpell, Pango
 
 file_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.abspath(os.path.join(file_dir, ".."))

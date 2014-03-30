@@ -15,7 +15,7 @@ remain that may or may not affect the use of aeidon.
    $XDG_DATA_HOME/gaupol.
 
  * Translatable strings from both aeidon and gaupol are in the same
-   .po files and thus both found under the "gaupol" gettext domain.
+   .po files and thus both found under the 'gaupol' gettext domain.
 
 These caveats and having aeidon maintained under the Gaupol source
 tree and released along with Gaupol are subject to change if demand
