@@ -20,7 +20,6 @@
 
 import aeidon
 import os
-import re
 
 _countries = {}
 
@@ -33,16 +32,16 @@ def _init_countries():
         # Use local, possibly outdated copy, only as a fallback.
         path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_3166.xml")
     for element in ET.parse(path).findall("iso_3166_entry"):
-        code = element.get("alpha_2_code")
-        name = element.get("name")
-        if code and name:
+        code = element.get("alpha_2_code", None)
+        name = element.get("name", None)
+        if code is not None and name is not None:
             _countries[code] = name
 
 def code_to_name(code):
     """
     Convert ISO 639 `code` to localized country name.
 
-    Raise :exc:`KeyError` if `code` not found.
+    Raise :exc:`LookupError` if `code` not found.
     """
     return aeidon.i18n.dgettext("iso_3166", _countries[code])
 

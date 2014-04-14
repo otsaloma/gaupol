@@ -26,7 +26,6 @@ Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
 
 import aeidon
 import os
-import re
 _ = aeidon.i18n._
 
 
@@ -34,7 +33,7 @@ def code_to_country(code):
     """
     Convert locale `code` to localized country name or ``None``.
 
-    Raise :exc:`KeyError` if `code` not found.
+    Raise :exc:`LookupError` if `code` not found.
     """
     if len(code) < 5: return None
     return aeidon.countries.code_to_name(code[-2:])
@@ -43,7 +42,7 @@ def code_to_language(code):
     """
     Convert locale `code` to localized language name.
 
-    Raise :exc:`KeyError` if `code` not found.
+    Raise :exc:`LookupError` if `code` not found.
     """
     return aeidon.languages.code_to_name(code[:2])
 
@@ -51,7 +50,7 @@ def code_to_name(code):
     """
     Convert locale `code` to localized name.
 
-    Raise :exc:`KeyError` if `code` not found.
+    Raise :exc:`LookupError` if `code` not found.
     Return localized ``LANGUAGE (COUNTRY)``.
     """
     language = code_to_language(code)
@@ -63,14 +62,15 @@ def code_to_name(code):
 def get_system_code():
     """Return the locale code preferred by system or ``None``."""
     import locale
-    return locale.getdefaultlocale()[0]
+    language, encoding = locale.getdefaultlocale()
+    return language
 
 @aeidon.deco.once
 def get_system_modifier():
     """Return the script modifier of system or ``None``."""
-    names = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
-    values = list(map(os.environ.get, names))
-    values = [x for x in values if x]
-    for value in (x for x in values if x.count("@")):
-        return value[value.index("@") + 1:value.index("@") + 5]
+    for name in ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"):
+        value = os.environ.get(name, None)
+        if value is not None and value.count("@") == 1:
+            i = value.index("@")
+            return value[i+1:i+5]
     return None

@@ -27,11 +27,6 @@ class TestModule(aeidon.TestCase):
         name = aeidon.i18n.dgettext("iso_15924", "Latin")
         assert aeidon.scripts.code_to_name("Latn") == name
 
-    def test_code_to_name__key_error(self):
-        self.assert_raises(KeyError,
-                           aeidon.scripts.code_to_name,
-                           "Xxxx")
-
     def test_is_valid(self):
         assert aeidon.scripts.is_valid("Latn")
         assert not aeidon.scripts.is_valid("Xxxx")

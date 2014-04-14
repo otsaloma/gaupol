@@ -27,11 +27,6 @@ class TestModule(aeidon.TestCase):
         name = aeidon.i18n.dgettext("iso_3166", "Yemen")
         assert aeidon.countries.code_to_name("YE") == name
 
-    def test_code_to_name__key_error(self):
-        self.assert_raises(KeyError,
-                           aeidon.countries.code_to_name,
-                           "XX")
-
     def test_is_valid(self):
         assert aeidon.countries.is_valid("RU")
         assert not aeidon.countries.is_valid("XX")

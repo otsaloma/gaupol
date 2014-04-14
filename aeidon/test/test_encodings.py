@@ -29,20 +29,10 @@ class TestModule(aeidon.TestCase):
         assert code_to_description("hz") == _("Chinese simplified")
         assert code_to_description("shift_jis") == _("Japanese")
 
-    def test_code_to_description__value_error(self):
-        self.assert_raises(ValueError,
-                           aeidon.encodings.code_to_description,
-                           "xxxxx")
-
     def test_code_to_long_name(self):
         code, name, description = ("cp1140", "IBM1140", _("Western"))
         long_name = aeidon.encodings.code_to_long_name(code)
         assert long_name == _("{description} ({name})").format(**locals())
-
-    def test_code_to_long_name__value_error(self):
-        self.assert_raises(ValueError,
-                           aeidon.encodings.code_to_long_name,
-                           "xxxxx")
 
     def test_code_to_name(self):
         code_to_name = aeidon.encodings.code_to_name
@@ -50,20 +40,9 @@ class TestModule(aeidon.TestCase):
         assert code_to_name("cp949") == "IBM949"
         assert code_to_name("mac_roman") == "MacRoman"
 
-    def test_code_to_name__value_error(self):
-        self.assert_raises(ValueError,
-                           aeidon.encodings.code_to_name,
-                           "xxxxx")
-
     def test_detect(self):
         name = aeidon.encodings.detect(self.new_subrip_file())
         assert aeidon.encodings.is_valid_code(name)
-
-    @aeidon.deco.monkey_patch(aeidon.encodings, "translate_code")
-    def test_detect__value_error(self):
-        def bad_translate_code(code): raise ValueError
-        aeidon.encodings.translate_code = bad_translate_code
-        assert aeidon.encodings.detect(self.new_subrip_file()) is None
 
     def test_detect_bom__none(self):
         path = self.new_subrip_file()
@@ -128,15 +107,8 @@ class TestModule(aeidon.TestCase):
     def test_get_valid(self):
         assert aeidon.encodings.get_valid()
         for item in aeidon.encodings.get_valid():
-            assert aeidon.encodings.is_valid_code(item[0])
-            assert isinstance(item[1], str)
-            assert isinstance(item[2], str)
-
-    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_code")
-    def test_get_valid__invalid(self):
-        bad_is_valid_code = lambda code: not code.startswith("cp")
-        aeidon.encodings.is_valid_code = bad_is_valid_code
-        assert aeidon.encodings.get_valid()
+            code, name, description = item
+            assert aeidon.encodings.is_valid_code(code)
 
     def test_is_valid_code(self):
         assert aeidon.encodings.is_valid_code("gbk")
@@ -149,18 +121,8 @@ class TestModule(aeidon.TestCase):
         assert name_to_code("GB2312") == "gb2312"
         assert name_to_code("PTCP154") == "ptcp154"
 
-    def test_name_to_code__value_error(self):
-        self.assert_raises(ValueError,
-                           aeidon.encodings.name_to_code,
-                           "XXXXX")
-
     def test_translate_code(self):
         translate_code = aeidon.encodings.translate_code
         assert translate_code("johab") == "johab"
         assert translate_code("UTF-8") == "utf_8"
         assert translate_code("ISO-8859-1") == "latin_1"
-
-    def test_translate_code__value_error(self):
-        self.assert_raises(ValueError,
-                           aeidon.encodings.translate_code,
-                           "xxxxx")

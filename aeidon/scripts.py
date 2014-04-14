@@ -20,7 +20,6 @@
 
 import aeidon
 import os
-import re
 
 _scripts = {}
 
@@ -33,16 +32,16 @@ def _init_scripts():
         # Use local, possibly outdated copy, only as a fallback.
         path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_15924.xml")
     for element in ET.parse(path).findall("iso_15924_entry"):
-        code = element.get("alpha_4_code")
-        name = element.get("name")
-        if code and name:
+        code = element.get("alpha_4_code", None)
+        name = element.get("name", None)
+        if code is not None and name is not None:
             _scripts[code] = name
 
 def code_to_name(code):
     """
     Convert ISO 15924 `code` to localized script name.
 
-    Raise :exc:`KeyError` if code not found.
+    Raise :exc:`LookupError` if code not found.
     """
     return aeidon.i18n.dgettext("iso_15924", _scripts[code])
 
