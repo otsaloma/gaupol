@@ -19,10 +19,12 @@
 import aeidon
 
 
+class PuppetSingleton(aeidon.Singleton):
+
+    pass
+
+
 class TestSingleton(aeidon.TestCase):
 
-    def setup_method(self, method):
-        self.cls = type("", (aeidon.Singleton,), {})
-
     def test___new__(self):
-        assert self.cls() is self.cls()
+        assert PuppetSingleton() is PuppetSingleton()
