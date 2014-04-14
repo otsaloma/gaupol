@@ -24,6 +24,14 @@ import os
 _languages = {}
 
 
+def code_to_name(code):
+    """
+    Convert ISO 639 `code` to localized language name.
+
+    Raise :exc:`LookupError` if `code` not found.
+    """
+    return aeidon.i18n.dgettext("iso_639", _languages[code])
+
 def _init_languages():
     """Initialize the dictionary mapping codes to names."""
     import xml.etree.ElementTree as ET
@@ -36,14 +44,6 @@ def _init_languages():
         name = element.get("name", None)
         if code is not None and name is not None:
             _languages[code] = name
-
-def code_to_name(code):
-    """
-    Convert ISO 639 `code` to localized language name.
-
-    Raise :exc:`LookupError` if `code` not found.
-    """
-    return aeidon.i18n.dgettext("iso_639", _languages[code])
 
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 639 language code."""

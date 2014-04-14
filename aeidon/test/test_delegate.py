@@ -34,11 +34,11 @@ class TestDelegate(aeidon.TestCase):
     def test___getattr__(self):
         assert self.delegate.name == "master"
 
-    def test___setattr____master(self):
-        self.delegate.name = "slave"
-        assert self.master.name == "slave"
-
     def test___setattr____delegate(self):
         self.delegate.none = None
         assert "none" in self.delegate.__dict__
         assert "none" not in self.master.__dict__
+
+    def test___setattr____master(self):
+        self.delegate.name = "slave"
+        assert self.master.name == "slave"
