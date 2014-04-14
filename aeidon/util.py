@@ -476,6 +476,14 @@ def shell_quote(path):
         path = path.replace('"', '\\"')
     return '"{}"'.format(path)
 
+@contextlib.contextmanager
+def silent(*exceptions):
+    """Try to execute body, ignoring `exceptions`."""
+    try:
+        yield
+    except exceptions:
+        pass
+
 def start_process(command, **kwargs):
     """
     Start `command` as a new background subprocess.

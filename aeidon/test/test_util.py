@@ -321,6 +321,10 @@ class TestModule(aeidon.TestCase):
         path = aeidon.util.shell_quote(path)
         assert path == '"c:\\aeidon\\a file.srt"'
 
+    def test_silent(self):
+        with aeidon.util.silent(ZeroDivisionError):
+            x = 1 / 0
+
     def test_start_process(self):
         process = aeidon.util.start_process("echo")
         assert process.wait() == 0
