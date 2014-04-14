@@ -29,7 +29,6 @@ __all__ = ("as_frame",
            "as_seconds",
            "as_time",
            "is_frame",
-           "is_same_type",
            "is_seconds",
            "is_time")
 
@@ -48,17 +47,6 @@ def as_time(pos):
 def is_frame(pos):
     """Return ``True`` if `pos` is of type frame."""
     return isinstance(pos, int)
-
-def is_same_type(pos1, pos2):
-    """Return ``True`` if `pos1` and `pos2` are of the same type."""
-    if is_time(pos1):
-        return is_time(pos2)
-    if is_frame(pos1):
-        return is_frame(pos2)
-    if is_seconds(pos1):
-        return is_seconds(pos2)
-    raise ValueError("Invalid type for pos1: {}"
-                     .format(repr(type(pos1))))
 
 def is_seconds(pos):
     """Return ``True`` if `pos` is of type seconds."""
