@@ -63,13 +63,13 @@ def atomic_open(path, mode="w", *args, **kwargs):
             # If the file exists, use the same permissions.
             # Note that all other file metadata, including
             # owner and group, is not preserved.
-            with open(temp_path, "w") as fobj: pass
+            with open(temp_path, "w") as f: pass
             st = os.stat(path)
             os.chmod(temp_path, stat.S_IMODE(st.st_mode))
-        with open(temp_path, mode, *args, **kwargs) as fobj:
-            yield fobj
-            fobj.flush()
-            os.fsync(fobj.fileno())
+        with open(temp_path, mode, *args, **kwargs) as f:
+            yield f
+            f.flush()
+            os.fsync(f.fileno())
         try:
             if hasattr(os, "replace"):
                 # os.replace was added in Python 3.3.
@@ -171,8 +171,8 @@ def detect_format(path, encoding):
     Return an :attr:`aeidon.formats` enumeration item.
     """
     re_ids = [(x, re.compile(x.identifier)) for x in aeidon.formats]
-    with open(path, "r", encoding=encoding) as fobj:
-        for line in fobj:
+    with open(path, "r", encoding=encoding) as f:
+        for line in f:
             for format, re_id in re_ids:
                 if re_id.search(line) is not None:
                     return format
@@ -182,9 +182,9 @@ def detect_format(path, encoding):
 def detect_newlines(path):
     """Detect and return the newline type of file at `path` or ``None``."""
     try:
-        fobj = open(path, "r", newline="")
-        fobj.read()
-        chars = fobj.newlines
+        f = open(path, "r", newline="")
+        f.read()
+        chars = f.newlines
     except Exception:
         return None
     if chars is None:
@@ -441,8 +441,8 @@ def read(path, encoding=None, fallback="utf_8"):
     """
     encoding = encoding or get_default_encoding()
     try:
-        with open(path, "r", encoding=encoding) as fobj:
-            return fobj.read().strip()
+        with open(path, "r", encoding=encoding) as f:
+            return f.read().strip()
     except UnicodeError:
         if not fallback in (encoding, None, ""):
             return read(path, fallback, None)
@@ -543,8 +543,8 @@ def write(path, text, encoding=None, fallback="utf_8"):
     """
     encoding = encoding or get_default_encoding()
     try:
-        with open(path, "w", encoding=encoding) as fobj:
-            return fobj.write(text)
+        with open(path, "w", encoding=encoding) as f:
+            return f.write(text)
     except UnicodeError:
         if not fallback in (encoding, None, ""):
             return write(path, text, fallback, None)

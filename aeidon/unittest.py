@@ -55,8 +55,8 @@ class TestCase:
         name = name or format.name.lower()
         basename = "".join((name, format.extension))
         path = os.path.join(aeidon.DATA_DIR, "samples", basename)
-        with open(path, "r", encoding="ascii") as fobj:
-            return fobj.read().strip()
+        with open(path, "r", encoding="ascii") as f:
+            return f.read().strip()
 
     def new_microdvd_file(self):
         """Return path to a new temporary ``MicroDVD`` file."""
@@ -77,8 +77,8 @@ class TestCase:
         """Return path to a new temporary subtitle file."""
         text = self.get_sample_text(format, name)
         path = aeidon.temp.create(format.extension)
-        with open(path, "w", encoding="ascii") as fobj:
-            fobj.write(text)
+        with open(path, "w", encoding="ascii") as f:
+            f.write(text)
         return path
 
     def setUp(self):

@@ -76,10 +76,10 @@ class TestOpenAgent(aeidon.TestCase):
 
     def test_open_main__parse_error(self):
         path = self.new_subrip_file()
-        fobj = open(path, "w")
-        fobj.write("00:00:01,000 --> 00:00:02,000\n\n")
-        fobj.write("00:00:03,000 <-- 00:00:04,000\n\n")
-        fobj.close()
+        f = open(path, "w")
+        f.write("00:00:01,000 --> 00:00:02,000\n\n")
+        f.write("00:00:03,000 <-- 00:00:04,000\n\n")
+        f.close()
         self.assert_raises(aeidon.ParseError,
                            self.project.open_main,
                            path, "ascii")
@@ -92,11 +92,11 @@ class TestOpenAgent(aeidon.TestCase):
 
     def test_open_main__unsorted(self):
         path = self.new_microdvd_file()
-        fobj = open(path, "w")
-        fobj.write("{100}{200}\n")
-        fobj.write("{500}{600}\n")
-        fobj.write("{300}{400}\n")
-        fobj.close()
+        f = open(path, "w")
+        f.write("{100}{200}\n")
+        f.write("{500}{600}\n")
+        f.write("{300}{400}\n")
+        f.close()
         assert self.project.open_main(path, "ascii") == 1
 
     def test_open_translation__align_number(self):

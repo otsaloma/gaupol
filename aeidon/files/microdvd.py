@@ -52,18 +52,18 @@ class MicroDVD(aeidon.SubtitleFile):
                 self.header = line
         return subtitles
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` from `doc` to `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
         if self.header.strip():
-            fobj.write(self.header + "\n")
+            f.write(self.header + "\n")
         for subtitle in subtitles:
             text = subtitle.get_text(doc).replace("\n", "|")
-            fobj.write(("{{{:d}}}{{{:d}}}{}\n"
+            f.write(("{{{:d}}}{{{:d}}}{}\n"
                         .format(subtitle.start_frame,
                                 subtitle.end_frame,
                                 text)))

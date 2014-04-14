@@ -227,24 +227,24 @@ class TestOpenAgent(gaupol.TestCase):
     def test_open_main__parse_error(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         path = self.new_microdvd_file()
-        fobj = open(path, "w")
-        fobj.write("{10}{20}Testing...\n")
-        fobj.write("{20}{30}Testing...\n")
-        fobj.write("{30}{40}Testing...\n")
-        fobj.write("{xx}{yy}Testing...\n")
-        fobj.close()
+        f = open(path, "w")
+        f.write("{10}{20}Testing...\n")
+        f.write("{20}{30}Testing...\n")
+        f.write("{30}{40}Testing...\n")
+        f.write("{xx}{yy}Testing...\n")
+        f.close()
         self.application.open_main(path)
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_open_main__sort_warning(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.YES
         path = self.new_microdvd_file()
-        fobj = open(path, "w")
-        fobj.write("{30}{40}Testing...\n")
-        fobj.write("{40}{50}Testing...\n")
-        fobj.write("{10}{20}Testing...\n")
-        fobj.write("{20}{30}Testing...\n")
-        fobj.close()
+        f = open(path, "w")
+        f.write("{30}{40}Testing...\n")
+        f.write("{40}{50}Testing...\n")
+        f.write("{10}{20}Testing...\n")
+        f.write("{20}{30}Testing...\n")
+        f.close()
         self.application.open_main(path)
 
     def test_open_translation(self):

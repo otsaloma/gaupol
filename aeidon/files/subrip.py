@@ -79,19 +79,19 @@ class SubRip(aeidon.SubtitleFile):
             subtitles.append(subtitle)
         return subtitles
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` from `doc` to `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
         for i, subtitle in enumerate(subtitles):
-            if i > 0: fobj.write("\n")
-            fobj.write("{:d}\n".format(i+1))
+            if i > 0: f.write("\n")
+            f.write("{:d}\n".format(i+1))
             start = subtitle.start_time.replace(".", ",")
             end = subtitle.end_time.replace(".", ",")
-            fobj.write("{} --> {}".format(start, end))
+            f.write("{} --> {}".format(start, end))
             # Write Extended SubRip coordinates only if the container
             # has been initialized and the coordinates make some sense.
             if subtitle.has_container("subrip"):
@@ -100,6 +100,6 @@ class SubRip(aeidon.SubtitleFile):
                 y1 = subtitle.subrip.y1
                 y2 = subtitle.subrip.y2
                 if not (x1 == x2 == y1 == y2 == 0):
-                    fobj.write("  X1:{:03d} X2:{:03d}".format(x1, x2))
-                    fobj.write( " Y1:{:03d} Y2:{:03d}".format(y1, y2))
-            fobj.write("\n{}\n".format(subtitle.get_text(doc)))
+                    f.write("  X1:{:03d} X2:{:03d}".format(x1, x2))
+                    f.write( " Y1:{:03d} Y2:{:03d}".format(y1, y2))
+            f.write("\n{}\n".format(subtitle.get_text(doc)))

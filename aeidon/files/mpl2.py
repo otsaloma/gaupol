@@ -50,16 +50,16 @@ class MPL2(aeidon.SubtitleFile):
             subtitles.append(subtitle)
         return subtitles
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` from `doc` to `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
         for subtitle in subtitles:
             text = subtitle.get_text(doc).replace("\n", "|")
-            fobj.write(("[{:.0f}][{:.0f}]{}\n"
+            f.write(("[{:.0f}][{:.0f}]{}\n"
                         .format(subtitle.start_seconds*10,
                                 subtitle.end_seconds*10,
                                 text)))

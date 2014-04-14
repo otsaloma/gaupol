@@ -164,18 +164,18 @@ class MPsub(aeidon.SubtitleFile):
         raise ValueError("Invalid FORMAT line: {}"
                          .format(repr(header)))
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` from `doc` to `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        fobj.write(self.header + "\n\n")
+        f.write(self.header + "\n\n")
         starts, ends = self._get_positions(subtitles)
         for i, subtitle in enumerate(subtitles):
-            if i > 0: fobj.write("\n")
-            fobj.write(("{} {}\n{}\n"
+            if i > 0: f.write("\n")
+            f.write(("{} {}\n{}\n"
                         .format(starts[i],
                                 ends[i],
                                 subtitle.get_text(doc))))

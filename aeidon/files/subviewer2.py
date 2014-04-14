@@ -59,16 +59,16 @@ class SubViewer2(aeidon.SubtitleFile):
             subtitles.append(subtitle)
         return subtitles
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` from `doc` to `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        fobj.write(self.header + "\n")
+        f.write(self.header + "\n")
         for subtitle in subtitles:
             start = subtitle.calc.round(subtitle.start_time, 2)[:-1]
             end = subtitle.calc.round(subtitle.end_time, 2)[:-1]
             text = subtitle.get_text(doc).replace("\n", "[br]")
-            fobj.write("\n{},{}\n{}\n".format(start, end, text))
+            f.write("\n{},{}\n{}\n".format(start, end, text))

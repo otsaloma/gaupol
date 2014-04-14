@@ -193,9 +193,9 @@ def detect(path):
         return bom_encoding
     from chardet import universaldetector
     detector = universaldetector.UniversalDetector()
-    with open(path, "rb") as fobj:
+    with open(path, "rb") as f:
         detector.reset()
-        for line in fobj:
+        for line in f:
             detector.feed(line)
             if detector.done: break
     detector.close()

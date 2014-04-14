@@ -35,8 +35,8 @@ class TestModule(aeidon.TestCase):
 
     def test_atomic_open__existing_file(self):
         path = self.new_subrip_file()
-        with aeidon.util.atomic_open(path, "w") as fobj:
-            fobj.write("test\n")
+        with aeidon.util.atomic_open(path, "w") as f:
+            f.write("test\n")
         text = open(path, "r").read()
         assert text == "test\n"
 
@@ -44,16 +44,16 @@ class TestModule(aeidon.TestCase):
         path = self.new_subrip_file()
         os.chmod(path, 0000)
         try:
-            with aeidon.util.atomic_open(path, "w") as fobj:
-                fobj.write("test\n")
+            with aeidon.util.atomic_open(path, "w") as f:
+                f.write("test\n")
         except IOError:
             pass
         os.chmod(path, 0o777)
 
     def test_atomic_open__no_existing_file(self):
         path = aeidon.temp.create()
-        with aeidon.util.atomic_open(path, "w") as fobj:
-            fobj.write("test\n")
+        with aeidon.util.atomic_open(path, "w") as f:
+            f.write("test\n")
         text = open(path, "r").read()
         assert text == "test\n"
 
@@ -351,15 +351,15 @@ class TestModule(aeidon.TestCase):
         text = "test\ntest\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text)
-        fobj = open(path, "r", encoding="ascii")
-        assert fobj.read() == text
+        f = open(path, "r", encoding="ascii")
+        assert f.read() == text
 
     def test_write__fallback(self):
         text = "\xc3\xb6\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text, "ascii")
-        fobj = open(path, "r", encoding="utf_8")
-        assert fobj.read() == text
+        f = open(path, "r", encoding="utf_8")
+        assert f.read() == text
 
     def test_write__unicode_error(self):
         path = self.new_subrip_file()
@@ -371,15 +371,15 @@ class TestModule(aeidon.TestCase):
         lines = ("test", "test")
         path = self.new_subrip_file()
         aeidon.util.writelines(path, lines)
-        fobj = open(path, "r", encoding="ascii")
-        assert fobj.read() == "test\ntest\n"
+        f = open(path, "r", encoding="ascii")
+        assert f.read() == "test\ntest\n"
 
     def test_writelines__fallback(self):
         text = "\xc3\xb6"
         path = self.new_subrip_file()
         aeidon.util.writelines(path, (text,), "ascii")
-        fobj = open(path, "r", encoding="utf_8")
-        assert fobj.read() == text + "\n"
+        f = open(path, "r", encoding="utf_8")
+        assert f.read() == text + "\n"
 
     def test_writelines__unicode_error(self):
         path = self.new_subrip_file()

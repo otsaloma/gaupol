@@ -78,9 +78,9 @@ class TMPlayer(aeidon.SubtitleFile):
         subtitles[-1].duration_seconds = 5
         return subtitles
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` from `doc` to `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
@@ -93,4 +93,4 @@ class TMPlayer(aeidon.SubtitleFile):
                            else start[1:-4]))
 
             text = subtitle.get_text(doc).replace("\n", "|")
-            fobj.write("{}:{}\n".format(start, text))
+            f.write("{}:{}\n".format(start, text))

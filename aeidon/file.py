@@ -72,8 +72,8 @@ class SubtitleFile:
         Return a list of lines read.
         """
         re_newline_char = re.compile(r"\r?\n?$")
-        with open(self.path, "r", encoding=self.encoding) as fobj:
-            lines = fobj.readlines()
+        with open(self.path, "r", encoding=self.encoding) as f:
+            lines = f.readlines()
             lines = [re_newline_char.sub("", x) for x in lines]
         for index in (0, -1):
             while lines and (not lines[index].strip()):
@@ -130,21 +130,21 @@ class SubtitleFile:
         with aeidon.util.atomic_open(self.path,
                                      mode="w",
                                      encoding=self.encoding,
-                                     newline=self.newline.value) as fobj:
+                                     newline=self.newline.value) as f:
 
             # UTF-8-SIG automatically adds the UTF-8 signature BOM. Likewise,
             # UTF-16 automatically adds the system default BOM, but
             # UTF-16-BE and UTF-16-LE don't. For the latter two, add the BOM,
             # if it was originally read in the file.
             if self.has_utf_16_bom and (self.encoding == "utf_16_be"):
-                fobj.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
+                f.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
             if self.has_utf_16_bom and (self.encoding == "utf_16_le"):
-                fobj.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
-            self.write_to_file(subtitles, doc, fobj)
+                f.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
+            self.write_to_file(subtitles, doc, f)
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` with text from `doc` to open file object `fobj`.
+        Write `subtitles` with text from `doc` to open file object `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

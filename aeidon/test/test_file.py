@@ -35,8 +35,8 @@ class TestSubtitleFile(aeidon.TestCase):
         self.file = PuppetSubtitleFile(path, "ascii", newline)
 
     def test__read_lines(self):
-        with open(self.file.path, "a") as fobj:
-            fobj.write("\n\r\n\n")
+        with open(self.file.path, "a") as f:
+            f.write("\n\r\n\n")
         lines = self.file._read_lines()
         assert lines
         for line in lines:
@@ -58,39 +58,39 @@ class TestSubtitleFile(aeidon.TestCase):
 
     def test_read__utf_16(self):
         path = self.new_subrip_file()
-        with open(path, "r") as fobj:
-            text = fobj.read()
-        with open(path, "w", encoding="utf_16") as fobj:
-            fobj.write(text)
+        with open(path, "r") as f:
+            text = f.read()
+        with open(path, "w", encoding="utf_16") as f:
+            f.write(text)
         file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16")
         file.read()
 
     def test_read__utf_16_be(self):
         path = self.new_subrip_file()
-        with open(path, "r") as fobj:
-            text = fobj.read()
-        with open(path, "w", encoding="utf_16_be") as fobj:
-            fobj.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
-            fobj.write(text)
+        with open(path, "r") as f:
+            text = f.read()
+        with open(path, "w", encoding="utf_16_be") as f:
+            f.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
+            f.write(text)
         file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_be")
         file.read()
 
     def test_read__utf_16_le(self):
         path = self.new_subrip_file()
-        with open(path, "r") as fobj:
-            text = fobj.read()
-        with open(path, "w", encoding="utf_16_le") as fobj:
-            fobj.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
-            fobj.write(text)
+        with open(path, "r") as f:
+            text = f.read()
+        with open(path, "w", encoding="utf_16_le") as f:
+            f.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
+            f.write(text)
         file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_le")
         file.read()
 
     def test_read__utf_8_sig(self):
         path = self.new_subrip_file()
-        with open(path, "r") as fobj:
-            text = fobj.read()
-        with open(path, "w", encoding="utf_8_sig") as fobj:
-            fobj.write(text)
+        with open(path, "r") as f:
+            text = f.read()
+        with open(path, "w", encoding="utf_8_sig") as f:
+            f.write(text)
         file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8")
         file.read()
 

@@ -40,8 +40,8 @@ class PreviewAgent(aeidon.Delegate):
     def _handle_output(self, process, output_fobj, command):
         """Handle output of finished `process`."""
         output_fobj.close()
-        with open(output_fobj.name, "r") as fobj:
-            output = fobj.read()
+        with open(output_fobj.name, "r") as f:
+            output = f.read()
         output = "$ {}\n\n{}".format(command, output)
         aeidon.temp.remove(output_fobj.name)
         self.output_window.set_output(output)

@@ -133,19 +133,19 @@ class SubStationAlpha(aeidon.SubtitleFile):
         self.event_fields = tuple(fields)
         return subtitles
 
-    def write_to_file(self, subtitles, doc, fobj):
+    def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `fobj`.
+        Write `subtitles` from `doc` to `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
-        fobj.write(self.header + "\n\n")
-        fobj.write("[Events]\n")
+        f.write(self.header + "\n\n")
+        f.write("[Events]\n")
         fields = ", ".join(self.event_fields)
-        fobj.write("Format: {}\n".format(fields))
+        f.write("Format: {}\n".format(fields))
         for subtitle in subtitles:
             values = [self._encode_field(x, subtitle, doc)
                       for x in self.event_fields]
 
-            fobj.write("Dialogue: {}\n".format(",".join(values)))
+            f.write("Dialogue: {}\n".format(",".join(values)))

@@ -162,11 +162,11 @@ class TestBookmarksExtension(gaupol.TestCase):
     def test__read_bookmarks(self):
         path = self.new_subrip_file()
         path_bookmarks = path.replace(".srt", ".gaupol-bookmarks")
-        fobj = open(path_bookmarks, "a")
-        fobj.write("1 test\n")
-        fobj.write("2 test\n")
-        fobj.write("3 test\n")
-        fobj.close()
+        f = open(path_bookmarks, "a")
+        f.write("1 test\n")
+        f.write("2 test\n")
+        f.write("3 test\n")
+        f.close()
         self.application.open_main(path)
 
     def test_setup(self):

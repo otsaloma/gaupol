@@ -105,8 +105,8 @@ class Clean(clean):
     def run(self):
         """Remove files and directories listed in manifests/clean."""
         clean.run(self)
-        fobj = open(os.path.join("manifests", "clean.manifest"), "r")
-        for targets in (glob.glob(x.strip()) for x in fobj):
+        f = open(os.path.join("manifests", "clean.manifest"), "r")
+        for targets in (glob.glob(x.strip()) for x in f):
             for target in filter(os.path.isdir, targets):
                 log.info("removing '{}'".format(target))
                 if not self.dry_run:
@@ -115,7 +115,7 @@ class Clean(clean):
                 log.info("removing '{}'".format(target))
                 if not self.dry_run:
                     os.remove(target)
-        fobj.close()
+        f.close()
 
 
 class Distribution(distribution):
@@ -126,8 +126,8 @@ class Distribution(distribution):
         """Find data files to install for name."""
         fok = lambda x: not x.endswith((".in", ".pyc"))
         basename = "{}.manifest".format(name)
-        fobj = open(os.path.join("manifests", basename), "r")
-        for line in (x.strip() for x in fobj):
+        f = open(os.path.join("manifests", basename), "r")
+        for line in (x.strip() for x in f):
             if not line: continue
             if line.startswith("["):
                 dest = line[1:-1]
@@ -136,7 +136,7 @@ class Distribution(distribution):
             files = list(filter(os.path.isfile, files))
             assert files
             self.data_files.append((dest, files))
-        fobj.close()
+        f.close()
 
     def __find_man_pages(self):
         """Find man pages to install."""

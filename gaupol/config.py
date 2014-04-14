@@ -487,14 +487,14 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 raise # IOError, OSError
         encoding = aeidon.util.get_default_encoding()
         try:
-            fobj = open(self.path, "w", encoding=encoding)
+            f = open(self.path, "w", encoding=encoding)
         except (IOError, OSError):
             aeidon.util.print_write_io(sys.exc_info(), self.path)
             raise # IOError, OSError
         root = self._flatten(self._root)
         defaults = self._flatten(self._defaults)
         for section in sorted(root):
-            fobj.write("\n[{}]\n".format(section))
+            f.write("\n[{}]\n".format(section))
             for option in sorted(root[section]):
                 value = root[section][option]
                 json_value = json.dumps(value, ensure_ascii=False)
@@ -506,9 +506,9 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                     continue
                 if (section in defaults) and (option in defaults[section]):
                     if value == defaults[section][option]:
-                        fobj.write("# ")
+                        f.write("# ")
                 try:
-                    fobj.write("{} = {}\n".format(option, json_value))
+                    f.write("{} = {}\n".format(option, json_value))
                 except UnicodeError:
                     print(("Failed to write value '{}' of option '{}.{}' "
                            "to configuration file '{}'."
