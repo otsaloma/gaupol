@@ -24,7 +24,7 @@ _ = aeidon.i18n._
 from gi.repository import Gtk
 
 
-class MenuAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class MenuAgent(aeidon.Delegate):
 
     """
     Building and updating dynamic menus.

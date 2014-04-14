@@ -162,8 +162,7 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         page.project.transform_positions(rows, point_1, point_2)
 
 
-class FrameTransformDialog(PositionTransformDialog,
-                           metaclass=aeidon.Contractual):
+class FrameTransformDialog(PositionTransformDialog):
 
     """Dialog for applying a linear tranfromation to frames."""
 
@@ -175,16 +174,10 @@ class FrameTransformDialog(PositionTransformDialog,
         self._init_widgets()
         self._init_values()
 
-    def _get_first_point_ensure(self, value):
-        assert aeidon.is_frame(value[1])
-
     def _get_first_point(self):
         """Return row, output frame of the first sync point."""
         return (self._subtitle_spin_1.get_value_as_int() - 1,
                 aeidon.as_frame(self._output_spin_1.get_value_as_int()))
-
-    def _get_second_point_ensure(self, value):
-        assert aeidon.is_frame(value[1])
 
     def _get_second_point(self):
         """Return row, output frame of the second sync point."""
@@ -252,8 +245,7 @@ class FrameTransformDialog(PositionTransformDialog,
         return (out_1 != in_1 or out_2 != in_2)
 
 
-class TimeTransformDialog(PositionTransformDialog,
-                          metaclass=aeidon.Contractual):
+class TimeTransformDialog(PositionTransformDialog):
 
     """Dialog for applying a linear tranfromation to times."""
 
@@ -265,16 +257,10 @@ class TimeTransformDialog(PositionTransformDialog,
         self._init_widgets()
         self._init_values()
 
-    def _get_first_point_ensure(self, value):
-        assert aeidon.is_time(value[1])
-
     def _get_first_point(self):
         """Return row, output time of the first sync point."""
         return (self._subtitle_spin_1.get_value_as_int() - 1,
                 aeidon.as_time(self._output_entry_1.get_text()))
-
-    def _get_second_point_ensure(self, value):
-        assert aeidon.is_time(value[1])
 
     def _get_second_point(self):
         """Return row, output time of the second sync point."""

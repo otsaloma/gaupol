@@ -34,8 +34,7 @@ except Exception:
 __all__ = ("SpeechRecognitionDialog",)
 
 
-class SpeechRecognitionDialog(gaupol.BuilderDialog,
-                              metaclass=aeidon.Contractual):
+class SpeechRecognitionDialog(gaupol.BuilderDialog):
 
     """Dialog for generating subtitles by voice and speech recognition."""
 
@@ -53,10 +52,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
                 "silence_spin",
                 "video_button",
                 )
-
-    def __init___require(self, parent, application):
-        assert gaupol.util.gst_available()
-        assert gaupol.util.pocketsphinx_available()
 
     def __init__(self, parent, application):
         """Initialize a :class:`SpeechRecognitionDialog` instance."""
@@ -84,9 +79,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
         self._text = None
         self._texts = []
 
-    def _get_filesrc_definition_require(self):
-        assert self._video_button.get_filename() is not None
-
     def _get_filesrc_definition(self):
         """Return ``filesrc`` definition for :func:`Gst.parse_launch`."""
         path = self._video_button.get_filename()
@@ -102,12 +94,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
                 + self._get_pocketsphinx_definition()
                 + "! fakesink"
                 )
-
-    def _get_pocketsphinx_definition_require(self):
-        if not self._default_model_check.get_active():
-            assert self._acoustic_button.get_current_folder() is not None
-            assert self._dict_button.get_filename() is not None
-            assert self._lang_button.get_filename() is not None
 
     def _get_pocketsphinx_definition(self):
         """Return ``pocketsphinx`` definition for :func:`Gst.parse_launch`."""
@@ -154,11 +140,6 @@ class SpeechRecognitionDialog(gaupol.BuilderDialog,
             self._dict_button.set_filename(conf.phonetic_dict)
         if os.path.isfile(conf.lang_model):
             self._lang_button.set_filename(conf.lang_model)
-
-    def _append_subtitle_require(self, index):
-        if index < 0:
-            index += len(self._starts)
-        assert index in range(len(self._starts))
 
     def _append_subtitle(self, index):
         """Create subtitle from `index` and append to page."""

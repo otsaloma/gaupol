@@ -82,37 +82,6 @@ if aeidon.RUNNING_SPHINX:
         return decorator_apply(_benchmark, function)
     benchmark.__doc__ = _benchmark.__doc__
 
-def contractual(function):
-    """
-    Decorator for module level functions with pre- and/or postconditions.
-
-    `function` call will be wrapped around ``FUNCTION_NAME_require`` and
-    ``FUNCTION_NAME_ensure`` calls if such functions exist. The require
-    function receives the same arguments as function, the ensure function will
-    in addition receive function's return value as its first argument. This is
-    a debug decorator that does nothing unless :data:`aeidon.DEBUG` is
-    ``True``.
-    """
-    if not aeidon.DEBUG:
-        return function
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        name = "{}_require".format(function.__name__)
-        if name in function.__globals__:
-            function.__globals__[name](*args, **kwargs)
-        value = function(*args, **kwargs)
-        name = "{}_ensure".format(function.__name__)
-        if name in function.__globals__:
-            function.__globals__[name](value, *args, **kwargs)
-        return value
-    return wrapper
-
-if aeidon.RUNNING_SPHINX:
-    _contractual = contractual
-    def contractual(function):
-        return decorator_apply(_contractual, function)
-    contractual.__doc__ = _contractual.__doc__
-
 def decorator_apply(dec, fun):
     """Rewrap `dec` to preserve function signature."""
     import decorator

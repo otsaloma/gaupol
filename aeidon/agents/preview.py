@@ -24,7 +24,7 @@ import string
 import subprocess
 
 
-class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class PreviewAgent(aeidon.Delegate):
 
     """Previewing subtitles with a video player."""
 
@@ -32,10 +32,6 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Initialize a :class:`aeidon.PreviewAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         aeidon.util.connect(self, self, "notify::main_file")
-
-    def _get_subtitle_path_require(self, doc, encoding=None, temp=False):
-        if encoding is not None:
-            assert aeidon.encodings.is_valid_code(encoding)
 
     def _get_subtitle_path(self, doc, encoding=None, temp=False):
         """
@@ -95,12 +91,6 @@ class PreviewAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 self.video_path = os.path.join(dirname, basename_video)
                 return self.video_path
         return None
-
-    def preview_require(self, *args, **kwargs):
-        assert self.video_path is not None
-
-    def preview_ensure(self, value, *args, **kwargs):
-        assert os.path.isfile(value[2].name)
 
     @aeidon.deco.export
     def preview(self, position, doc, command, offset, encoding=None, temp=False):

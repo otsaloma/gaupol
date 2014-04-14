@@ -35,7 +35,7 @@ except Exception:
 __all__ = ("SpellCheckDialog",)
 
 
-class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class SpellCheckDialog(gaupol.BuilderDialog):
 
     """
     Dialog for checking and correcting spelling.
@@ -69,9 +69,6 @@ class SpellCheckDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 "grid",
                 "text_view",
                 "tree_view")
-
-    def __init___require(self, parent, application):
-        assert aeidon.util.enchant_available()
 
     def __init__(self, parent, application):
         """

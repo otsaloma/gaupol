@@ -42,7 +42,7 @@ def page_changing(function):
     return wrapper
 
 
-class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class SearchDialog(gaupol.BuilderDialog):
 
     """
     Dialog for searching for and replacing text.
@@ -476,9 +476,6 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         text = "\n".join(history) + "\n"
         aeidon.util.write(path, text)
 
-    def next_require(self):
-        assert self._pattern_entry.get_text()
-
     @aeidon.deco.silent(gaupol.Default)
     def next(self):
         """Find the next match of pattern."""
@@ -503,9 +500,6 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 row = doc = pos = None
         # Fail wrapped search of all pages.
         self._set_failure_state()
-
-    def previous_require(self):
-        assert self._pattern_entry.get_text()
 
     @aeidon.deco.silent(gaupol.Default)
     def previous(self):
@@ -532,13 +526,6 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         # Fail wrapped search of all pages.
         self._set_failure_state()
 
-    def replace_require(self):
-        assert self._match_doc  is not None
-        assert self._match_page is not None
-        assert self._match_row  is not None
-        assert self._match_span is not None
-        assert self._was_next   is not None
-
     @page_changing
     @aeidon.deco.silent(gaupol.Default)
     def replace(self):
@@ -555,9 +542,6 @@ class SearchDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         shift = (len(subtitle.get_text(self._match_doc)) - length)
         self._match_span[1] += shift
         (self.next if self._was_next else self.previous)()
-
-    def replace_all_require(self):
-        assert self._pattern_entry.get_text()
 
     @page_changing
     @aeidon.deco.silent(gaupol.Default)

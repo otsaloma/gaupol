@@ -569,222 +569,163 @@ Gaupol 0.8
 Gaupol 0.7.1
 ============
 
-  Changes:
-    * Fixed cell renderers to work with GTK and PyGTK 2.10
-    * Fixed MicroDVD tag conversion errors (Bug #6938)
-    * Fixed issue of disappearing tags when converting case
-
-  Updated translations:
-    * Polish (pl)
-
+ * Fixed cell renderers to work with GTK and PyGTK 2.10
+ * Fixed MicroDVD tag conversion errors (Bug #6938)
+ * Fixed issue of disappearing tags when converting case
+ * Polish (pl)
 
 Gaupol 0.7.0
 ============
 
-  New:
-    * Append file
-    * Split project
-
-  Changes:
-    * Fixed error opening file if no locale encoding set (bug #6319)
-    * Catch OSError in case saving file fails and temporary backup copy is
-      restored (bug #6316)
-    * Fixed error launching preview if no column focused
-    * Improved blank line handling of subtitle merge
-    * setup.py: AUTHORS, COPYING and README files no longer installed
-
+ * Append file
+ * Split project
+ * Fixed error opening file if no locale encoding set (bug #6319)
+ * Catch OSError in case saving file fails and temporary backup copy is
+   restored (bug #6316)
+ * Fixed error launching preview if no column focused
+ * Improved blank line handling of subtitle merge
+ * setup.py: AUTHORS, COPYING and README files no longer installed
 
 Gaupol 0.6.0
 ============
 
-  New:
-    * Subtitle split and merge
-    * Smarter translation file opening
-    * Show .srtx files as images
-    * Support TMPlayer subtitle file format
-
-  Changes:
-    * Copy-paste now works from one project to another
-    * Fixed target radio button defaults in case of no selection
-    * Changed some keybindings
-    * setup.py: Fixed paths module generation in case --root option given with
-      a trailing directory separator
-
+ * Subtitle split and merge
+ * Smarter translation file opening
+ * Show .srtx files as images
+ * Support TMPlayer subtitle file format
+ * Copy-paste now works from one project to another
+ * Fixed target radio button defaults in case of no selection
+ * Changed some keybindings
+ * setup.py: Fixed paths module generation in case --root option given with
+   a trailing directory separator
 
 Gaupol 0.5.0
 ============
 
-  New:
-    * Find and replace, including regular expressions
-    * Character encoding auto-detection
-    * Support MPlayer's MPsub subtitle file format
-
-  Changes:
-    * New icon, as both PNG and SVG
-    * Applied GNOME Goal 2.1: Install theme-friendly icons
-    * Icon field in the desktop file no longer contains extension
-    * Warning dialog displayed if opening unsorted file
-    * Separate, locally overridable, header template files
-    * Support MicroDVD headers ("{DEFAULT}{}{...}" lines)
-    * Time decimal changed from comma (",") to period (".")
-    * Framerate conversion available for time-based subs as well
-    * Dialogs are again resizable to be smaller
-    * Fixed spell-check recursion bugs
-    * Fixed bug #6235: double-click on subtitle item cause exception
-    * "Unselect All" menu item removed
-    * "Save A Copy..." menu items removed
-    * Unified target specifications in dialogs
-    * Spell-check suggestion list now scrolls to top with new word
-    * Gaupol no longer hangs if video player not closed before exit
-    * Debug dialog no longer fails to start if PyEnchant not installed
-    * Video selection dialog's file filter now defaults to video
-    * Support default browsers on KDE and Mac OSX as well
-    * Better video player defaults on Windows
-    * Testing framework made compatible with py.test
-    * Desktop file strings are now translated in .po files
-    * Developer-specific options to gaupol made into separate scripts
-    * setup.cfg no longer specifies prefix or optimization
-    * Added clean command to setup.py
-    * General polish here and there
-
-  Dependencies:
-    * Psyco no longer used
-    * New optional dependency of Universal Encoding Detector (chardet)
-
-  New Translations:
-    * Polish (pl)
-
+ * Find and replace, including regular expressions
+ * Character encoding auto-detection
+ * Support MPlayer's MPsub subtitle file format
+ * New icon, as both PNG and SVG
+ * Applied GNOME Goal 2.1: Install theme-friendly icons
+ * Icon field in the desktop file no longer contains extension
+ * Warning dialog displayed if opening unsorted file
+ * Separate, locally overridable, header template files
+ * Support MicroDVD headers ("{DEFAULT}{}{...}" lines)
+ * Time decimal changed from comma (",") to period (".")
+ * Framerate conversion available for time-based subs as well
+ * Dialogs are again resizable to be smaller
+ * Fixed spell-check recursion bugs
+ * Fixed bug #6235: double-click on subtitle item cause exception
+ * "Unselect All" menu item removed
+ * "Save A Copy..." menu items removed
+ * Unified target specifications in dialogs
+ * Spell-check suggestion list now scrolls to top with new word
+ * Gaupol no longer hangs if video player not closed before exit
+ * Debug dialog no longer fails to start if PyEnchant not installed
+ * Video selection dialog's file filter now defaults to video
+ * Support default browsers on KDE and Mac OSX as well
+ * Better video player defaults on Windows
+ * Testing framework made compatible with py.test
+ * Desktop file strings are now translated in .po files
+ * Developer-specific options to gaupol made into separate scripts
+ * setup.cfg no longer specifies prefix or optimization
+ * Added clean command to setup.py
+ * General polish here and there
+ * Psyco no longer used
+ * New optional dependency of Universal Encoding Detector (chardet)
+ * Polish (pl)
 
 Gaupol 0.4.1
 ============
 
-  Bug Fixes:
-    * #5880: Framerate conversion returns an error
-
-  New Translations:
-    * Miguel Latorre: Spanish (es)
-
+ * #5880: Framerate conversion returns an error
+ * Miguel Latorre: Spanish (es)
 
 Gaupol 0.4.0
 ============
 
-  New Features:
-    * Time shift
-    * Time adjustment
-    * Duration adjustment
-    * Framerate conversion
-    * Partial support for SSA & ASS formats
-
-  Bug Fixes:
-    * Various errors in Micro DVD tag conversions
-    * Newline counted as a character in text length statusbar
-    * Rounding errors when undoing after having edited in unnative mode
-    * Template header not written when converting to SubViewer 2.0 format
-    * Distutils commands sdist and bdist_* broken
-
-  New Translations:
-    * Gil Forcada: Catalan (ca)
-
+ * Time shift
+ * Time adjustment
+ * Duration adjustment
+ * Framerate conversion
+ * Partial support for SSA & ASS formats
+ * Various errors in Micro DVD tag conversions
+ * Newline counted as a character in text length statusbar
+ * Rounding errors when undoing after having edited in unnative mode
+ * Template header not written when converting to SubViewer 2.0 format
+ * Distutils commands sdist and bdist_* broken
+ * Gil Forcada: Catalan (ca)
 
 Gaupol 0.3.4
 ============
 
-  Improvements:
-    * Support SubViewer 2.0 format
-
-  Bug Fixes:
-    * Start-up fails if PyEnchant is not installed
-    * Spell-check "Join Forward" button does not work
-
+ * Support SubViewer 2.0 format
+ * Start-up fails if PyEnchant is not installed
+ * Spell-check "Join Forward" button does not work
 
 Gaupol 0.3.3
 ============
 
-  Improvements:
-    * Preview current data instead of saved file
-    * Allow selecting arbitrary video file
-    * New toolbar for video
-    * New window for video player output
-    * Pre-configured commands for more than one video player
-
-  Bug Fixes:
-    * Spell-check not working with new PyEnchant releases 1.1.4 and 1.1.5
-    * File marked unchanged after saving a copy of it
-    * Overwrite dialog not always presented when saving
-    * Open button on the main toolbar missing tooltip
-    * Open dialog not always defaulting to directory of last opened file
-
+ * Preview current data instead of saved file
+ * Allow selecting arbitrary video file
+ * New toolbar for video
+ * New window for video player output
+ * Pre-configured commands for more than one video player
+ * Spell-check not working with new PyEnchant releases 1.1.4 and 1.1.5
+ * File marked unchanged after saving a copy of it
+ * Overwrite dialog not always presented when saving
+ * Open button on the main toolbar missing tooltip
+ * Open dialog not always defaulting to directory of last opened file
 
 Gaupol 0.3.2
 ============
 
-  Bug Fixes:
-    * #5046: MPlayer freezes in preview
-
+ * #5046: MPlayer freezes in preview
 
 Gaupol 0.3.1
 ============
 
-  Improvements:
-    * Save file before preview only if the file is changed
-    * Have the spell-check dialog use the customizable editor font
-
+ * Save file before preview only if the file is changed
+ * Have the spell-check dialog use the customizable editor font
 
 Gaupol 0.3.0
 ============
 
-  New Features:
-    * Preview function
-
-  Improvements:
-    * Smarter dialog sizes
-
-  Bug Fixes:
-    * Spell-check menu- and toolbar items grayed out when shouldn't
-    * Unexpected exits return value 0
-    * Exception not raised when version check fails on IOError
-    * Toggling dialog lines fails if document is unsaved
-    * Italicization menu item not grayed out when document is unsaved
-
+ * Preview function
+ * Smarter dialog sizes
+ * Spell-check menu- and toolbar items grayed out when shouldn't
+ * Unexpected exits return value 0
+ * Exception not raised when version check fails on IOError
+ * Toggling dialog lines fails if document is unsaved
+ * Italicization menu item not grayed out when document is unsaved
 
 Gaupol 0.2.0
 ============
 
-  New Features:
-    * Spell-check
-    * Debug dialog
+ * Spell-check
+ * Debug dialog
+ * Ability to try multiple character encodings when opening a file
+ * Opening multiple files at once with the open dialog
+ * Moving to edit an adjacent cell with Alt+Arrow keys
+ * Smarter uninstallation
+ * PyGTK dependency raised to 2.8
+ * Introduced PyEnchant 1.1.3 dependency
+ * Introduced optional iso-codes dependency
+ * Finnish (fi) translation removed
 
-  Improvements:
-    * Ability to try multiple character encodings when opening a file
-    * Opening multiple files at once with the open dialog
-    * Moving to edit an adjacent cell with Alt+Arrow keys
-    * Smarter uninstallation
-
-  Dependencies:
-    * PyGTK dependency raised to 2.8
-    * Introduced PyEnchant 1.1.3 dependency
-    * Introduced optional iso-codes dependency
-
-  Translations:
-    * Finnish (fi) translation removed
-
-  Lots of code has been redesigned and rewritten. Most importantly the
-  undo/redo system, the configuration module and all GUI building and updating
-  functions have been rewritten. Separation between base and gtk modules is now
-  far more sensible and should better suit possible alternative user
-  interfaces.
-
+Lots of code has been redesigned and rewritten. Most importantly the
+undo/redo system, the configuration module and all GUI building and updating
+functions have been rewritten. Separation between base and gtk modules is now
+far more sensible and should better suit possible alternative user
+interfaces.
 
 Gaupol 0.1.1
 ============
 
-  Fixes:
-
-    - Bug #2816: Settings not being saved.
-    - Write correct version number to config file.
-
+ * Bug #2816: Settings not being saved.
+ * Write correct version number to config file.
 
 Gaupol 0.1.0
 ============
 
-  Initial release.
+Initial release.

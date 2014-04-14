@@ -32,7 +32,7 @@ from gi.repository import Gtk
 __all__ = ("Application",)
 
 
-class ApplicationMeta(aeidon.Contractual):
+class ApplicationMeta(type):
 
     """
     Application metaclass with delegated methods added.

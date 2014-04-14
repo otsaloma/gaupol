@@ -21,7 +21,7 @@
 import aeidon
 
 
-class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class SaveAgent(aeidon.Delegate):
 
     """Writing subtitle data to file."""
 
@@ -36,14 +36,6 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             subtitle.set_text(doc, new_text)
             indices.append(i)
         return indices
-
-    def _ensure_mode(self, mode):
-        """Update mode of subtitles if necessary."""
-        if self.main_file is None: return
-        if mode == self.main_file.mode: return
-        for i, subtitle in enumerate(self.subtitles):
-            subtitle.mode = mode
-        self.emit("positions-changed", self.get_all_indices())
 
     def _save(self, doc, file, keep_changes):
         """
@@ -84,10 +76,6 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         raise ValueError("Invalid document: {}"
                          .format(repr(doc)))
 
-    def save_main_ensure(self, value, file=None, keep_changes=True):
-        assert self.main_file is not None
-        assert (not keep_changes) or (self.main_changed == 0)
-
     @aeidon.deco.export
     def save_main(self, file=None, keep_changes=True):
         """
@@ -111,10 +99,6 @@ class SaveAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             self.main_changed = 0
             self.emit("main-texts-changed", indices)
         self.emit("main-file-saved", file)
-
-    def save_translation_ensure(self, value, file=None, keep_changes=True):
-        assert self.tran_file is not None
-        assert (not keep_changes) or (self.tran_changed == 0)
 
     @aeidon.deco.export
     def save_translation(self, file=None, keep_changes=True):

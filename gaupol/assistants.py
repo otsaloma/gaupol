@@ -210,7 +210,7 @@ class IntroductionPage(BuilderPage):
         self._tree_view.get_selection().unselect_all()
 
 
-class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
+class LocalePage(BuilderPage):
 
     """Page with script, language and coutry based pattern selection."""
 
@@ -236,10 +236,6 @@ class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
         """Return a subset of `patterns` to show."""
         return patterns
 
-    def _get_country_ensure(self, value):
-        if value is not None:
-            assert aeidon.countries.is_valid(value)
-
     def _get_country(self):
         """Return the selected country or ``None``."""
         if not self._country_combo.props.sensitive: return None
@@ -249,10 +245,6 @@ class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
         value = store[index][0]
         return (None if value == "other" else value)
 
-    def _get_language_ensure(self, value):
-        if value is not None:
-            assert aeidon.languages.is_valid(value)
-
     def _get_language(self):
         """Return the selected language or ``None``."""
         if not self._language_combo.props.sensitive: return None
@@ -261,10 +253,6 @@ class LocalePage(BuilderPage, metaclass=gaupol.ContractualGObject):
         store = self._language_combo.get_model()
         value = store[index][0]
         return (None if value == "other" else value)
-
-    def _get_script_ensure(self, value):
-        if value is not None:
-            assert aeidon.scripts.is_valid(value)
 
     def _get_script(self):
         """Return the selected script or ``None``."""
@@ -557,14 +545,11 @@ class HearingImpairedPage(LocalePage):
         project.remove_hearing_impaired(indices, doc, patterns)
 
 
-class JoinSplitWordsPage(BuilderPage, metaclass=gaupol.ContractualGObject):
+class JoinSplitWordsPage(BuilderPage):
 
     """Page for joining or splitting words based on spell-check suggestions."""
 
     _widgets = ("language_button", "join_check", "split_check")
-
-    def __init___require(self, assistant):
-        assert aeidon.util.enchant_and_dicts_available()
 
     def __init__(self, assistant):
         """Initialize a :class:`JoinSplitWordsPage` instance."""

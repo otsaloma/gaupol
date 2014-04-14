@@ -30,10 +30,6 @@ import re
 _ = aeidon.i18n._
 
 
-def code_to_country_require(code):
-    assert re.match(r"^[a-z][a-z](_[A-Z][A-Z])?$", code)
-
-@aeidon.deco.contractual
 def code_to_country(code):
     """
     Convert locale `code` to localized country name or ``None``.
@@ -43,10 +39,6 @@ def code_to_country(code):
     if len(code) < 5: return None
     return aeidon.countries.code_to_name(code[-2:])
 
-def code_to_language_require(code):
-    assert re.match(r"^[a-z][a-z](_[A-Z][A-Z])?$", code)
-
-@aeidon.deco.contractual
 def code_to_language(code):
     """
     Convert locale `code` to localized language name.
@@ -55,10 +47,6 @@ def code_to_language(code):
     """
     return aeidon.languages.code_to_name(code[:2])
 
-def code_to_name_require(code):
-    assert re.match(r"^[a-z][a-z](_[A-Z][A-Z])?$", code)
-
-@aeidon.deco.contractual
 def code_to_name(code):
     """
     Convert locale `code` to localized name.

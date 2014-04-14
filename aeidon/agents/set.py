@@ -23,12 +23,9 @@ import bisect
 _ = aeidon.i18n._
 
 
-class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class SetAgent(aeidon.Delegate):
 
     """Setting values of single subtitle fields."""
-
-    def _move_if_needed_require(self, index):
-        assert 0 <= index < len(self.subtitles)
 
     def _move_if_needed(self, index):
         """Move subtitle for correct order and return new index."""
@@ -41,9 +38,6 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.subtitles.insert(new_index, subtitle)
         self.emit("subtitles-inserted", (new_index,))
         return new_index
-
-    def set_duration_require(self, index, value, register=-1):
-        assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -67,9 +61,6 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.register_action(action)
         self.emit("positions-changed", (index,))
 
-    def set_end_require(self, index, value, register=-1):
-        assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def set_end(self, index, value, register=-1):
@@ -92,9 +83,6 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.register_action(action)
         self.emit("positions-changed", (index,))
 
-    def set_main_text_require(self, index, value, register=-1):
-        assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def set_main_text(self, index, value, register=-1):
@@ -103,13 +91,6 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                              aeidon.documents.MAIN,
                              value,
                              register=register)
-
-    def set_start_require(self, index, value, register=-1):
-        assert 0 <= index < len(self.subtitles)
-
-    def set_start_ensure(self, return_value, index, value, register=-1):
-        for i in range(len(self.subtitles) - 1):
-            assert self.subtitles[i] <= self.subtitles[i + 1]
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -135,9 +116,6 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.register_action(action)
         self.emit("positions-changed", (index,))
 
-    def set_text_require(self, index, doc, value, register=-1):
-        assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def set_text(self, index, doc, value, register=-1):
@@ -154,9 +132,6 @@ class SetAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.register_action(action)
         signal = self.get_text_signal(doc)
         self.emit(signal, (index,))
-
-    def set_translation_text_require(self, index, value, register=-1):
-        assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable

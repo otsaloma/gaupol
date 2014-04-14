@@ -27,7 +27,7 @@ from gi.repository import Gtk
 __all__ = ("FileDialog",)
 
 
-class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class FileDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for selecting subtitle files."""
 
@@ -118,10 +118,6 @@ class FileDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
         store = self._encoding_combo.get_model()
         for encoding in encodings:
             store.append(tuple(encoding))
-
-    def get_encoding_ensure(self, value):
-        if not value in ("auto", "other", None):
-            assert aeidon.encodings.is_valid_code(value)
 
     def get_encoding(self):
         """Return the selected encoding or ``None``."""

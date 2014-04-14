@@ -26,7 +26,7 @@ import re
 __all__ = ("SubtitleFile",)
 
 
-class SubtitleFile(metaclass=aeidon.Contractual):
+class SubtitleFile:
 
     """
     Base class for subtitle files.
@@ -60,9 +60,6 @@ class SubtitleFile(metaclass=aeidon.Contractual):
     def _get_subtitle(self):
         """Return a new subtitle instance with proper properties."""
         return aeidon.Subtitle(self.mode)
-
-    def _invariant(self):
-        assert aeidon.encodings.is_valid_code(self.encoding)
 
     def _read_lines(self):
         """
@@ -108,9 +105,6 @@ class SubtitleFile(metaclass=aeidon.Contractual):
                 lines = [lines[i] for i in range(0, len(lines), 2)]
         return lines
 
-    def copy_from_require(self, other):
-        assert isinstance(other, SubtitleFile)
-
     def copy_from(self, other):
         """Copy generic properties from `other`."""
         if self.format == other.format:
@@ -125,9 +119,6 @@ class SubtitleFile(metaclass=aeidon.Contractual):
         Raise :exc:`UnicodeError` if decoding fails.
         """
         raise NotImplementedError
-
-    def write_require(self, subtitles, doc):
-        assert self.newline is not None
 
     def write(self, subtitles, doc):
         """
@@ -150,10 +141,6 @@ class SubtitleFile(metaclass=aeidon.Contractual):
             if self.has_utf_16_bom and (self.encoding == "utf_16_le"):
                 fobj.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
             self.write_to_file(subtitles, doc, fobj)
-
-    def write_to_file_require(self, subtitles, doc, fobj):
-        assert hasattr(fobj, "write")
-        assert self.newline is not None
 
     def write_to_file(self, subtitles, doc, fobj):
         """

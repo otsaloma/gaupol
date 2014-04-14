@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("Calculator",)
 
 
-class Calculator(metaclass=aeidon.Contractual):
+class Calculator:
 
     """
     Time and frame calculator.
@@ -65,9 +65,6 @@ class Calculator(metaclass=aeidon.Contractual):
             cls._instances[framerate] = object.__new__(cls)
         return cls._instances[framerate]
 
-    def add_ensure(self, value, x, y):
-        assert aeidon.is_same_type(value, x)
-
     def add(self, x, y):
         """Add position `y` to `x`."""
         if aeidon.is_time(x):
@@ -83,23 +80,14 @@ class Calculator(metaclass=aeidon.Contractual):
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
-    def frame_to_seconds_ensure(self, value, frame):
-        assert aeidon.is_seconds(value)
-
     def frame_to_seconds(self, frame):
         """Convert `frame` to seconds."""
         return aeidon.as_seconds(frame / self._framerate)
-
-    def frame_to_time_ensure(self, value, frame):
-        assert aeidon.is_time(value)
 
     def frame_to_time(self, frame):
         """Convert `frame` to time."""
         seconds = self.frame_to_seconds(frame)
         return self.seconds_to_time(seconds)
-
-    def get_middle_ensure(self, value, x, y):
-        assert aeidon.is_same_type(value, x)
 
     def get_middle(self, x, y):
         """
@@ -188,9 +176,6 @@ class Calculator(metaclass=aeidon.Contractual):
                         int(float(seconds)),
                         (float(seconds) % 1) * 1000))
 
-    def round_ensure(self, value, pos, ndigits):
-        assert aeidon.is_same_type(value, pos)
-
     def round(self, pos, ndigits):
         """
         Round `pos` to given precision in decimal digits.
@@ -212,15 +197,9 @@ class Calculator(metaclass=aeidon.Contractual):
         raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))
 
-    def seconds_to_frame_ensure(self, value, seconds):
-        assert aeidon.is_frame(value)
-
     def seconds_to_frame(self, seconds):
         """Convert `seconds` to frame."""
         return int(round(seconds * self._framerate, 0))
-
-    def seconds_to_time_ensure(self, value, seconds):
-        assert aeidon.is_time(value)
 
     def seconds_to_time(self, seconds):
         """Convert `seconds` to time."""
@@ -235,22 +214,10 @@ class Calculator(metaclass=aeidon.Contractual):
                         int(seconds % 60),
                         (seconds % 1) * 1000))
 
-    def time_to_frame_require(self, time):
-        assert aeidon.is_time(time)
-
-    def time_to_frame_ensure(self, value, time):
-        assert aeidon.is_frame(value)
-
     def time_to_frame(self, time):
         """Convert `time` to frame."""
         seconds = self.time_to_seconds(time)
         return self.seconds_to_frame(seconds)
-
-    def time_to_seconds_require(self, time):
-        assert aeidon.is_time(time)
-
-    def time_to_seconds_ensure(self, value, time):
-        assert aeidon.is_seconds(value)
 
     def time_to_seconds(self, time):
         """Convert `time` to seconds."""
@@ -260,9 +227,6 @@ class Calculator(metaclass=aeidon.Contractual):
                                   float(time[3:5]) * 60,
                                   float(time[6:8]),
                                   float(time[9: ]) / 1000))
-
-    def to_frame_ensure(self, value, pos):
-        assert aeidon.is_frame(value)
 
     def to_frame(self, pos):
         """Convert `pos` to frame."""
@@ -275,9 +239,6 @@ class Calculator(metaclass=aeidon.Contractual):
         raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))
 
-    def to_seconds_ensure(self, value, pos):
-        assert aeidon.is_seconds(value)
-
     def to_seconds(self, pos):
         """Convert `pos` to secods."""
         if aeidon.is_time(pos):
@@ -288,9 +249,6 @@ class Calculator(metaclass=aeidon.Contractual):
             return pos
         raise ValueError("Invalid type for pos: {}"
                          .format(repr(type(pos))))
-
-    def to_time_ensure(self, value, pos):
-        assert aeidon.is_time(value)
 
     def to_time(self, pos):
         """Convert `pos` to time."""

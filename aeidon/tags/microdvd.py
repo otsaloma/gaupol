@@ -45,9 +45,6 @@ class MicroDVD(aeidon.Markup):
 
     format = aeidon.formats.MICRODVD
 
-    def _main_decode_ensure(self, value, text):
-        assert self.tag.search(value) is None
-
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"\{([Yy]:b)\}(.*?)\{/\1\}", 2)
@@ -101,10 +98,6 @@ class MicroDVD(aeidon.Markup):
         for j in reversed(range(len(matches))):
             text += "{{/{}}}".format(matches[j].group(1))
         return text
-
-    def _pre_decode_color_ensure(self, value, text):
-        regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{})\}")
-        assert regex.search(value) is None
 
     def _pre_decode_color(self, text):
         """

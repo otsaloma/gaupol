@@ -25,7 +25,7 @@ _ = aeidon.i18n._
 from gi.repository import Gdk
 
 
-class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class UpdateAgent(aeidon.Delegate):
 
     """Updating the application GUI."""
 
@@ -68,11 +68,6 @@ class UpdateAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         scroller = page.view.get_parent()
         index = self.pages.index(page)
         self.notebook.reorder_child(scroller, index + 1)
-
-    def _on_notebook_page_reordered_ensure(self, value, *args, **kwargs):
-        for i, page in enumerate(self.pages):
-            ith_page = self.notebook.get_nth_page(i)
-            assert ith_page.get_child() == page.view
 
     @aeidon.deco.export
     def _on_notebook_page_reordered(self, notebook, scroller, index):

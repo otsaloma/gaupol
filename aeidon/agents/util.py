@@ -22,7 +22,7 @@ import aeidon
 import os
 
 
-class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class UtilityAgent(aeidon.Delegate):
 
     """Miscellaneous helper methods."""
 
@@ -112,9 +112,6 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         clean_func = self.get_markup_clean_func(doc)
         return aeidon.Parser(re_tag, clean_func)
 
-    def get_text_length_require(self, index, doc):
-        assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     def get_text_length(self, index, doc):
         """Return the amount of characters in text excluding markup."""
@@ -145,14 +142,6 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
     def new_subtitle(self):
         """Return a new :class:`aeidon.Subtitle` instance."""
         return aeidon.Subtitle(self.get_mode(), self.framerate)
-
-    def new_temp_file_require(self, doc, encoding=None):
-        assert self.get_file(doc) is not None
-        if encoding is not None:
-            assert aeidon.encodings.is_valid_code(encoding)
-
-    def new_temp_file_ensure(self, value, doc, encoding=None):
-        assert os.path.isfile(value)
 
     @aeidon.deco.export
     def new_temp_file(self, doc, encoding=None):

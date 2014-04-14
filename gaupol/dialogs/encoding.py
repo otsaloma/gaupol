@@ -27,7 +27,7 @@ from gi.repository import Gtk
 __all__ = ("EncodingDialog", "MenuEncodingDialog")
 
 
-class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class EncodingDialog(gaupol.BuilderDialog):
 
     """Dialog for selecting a character encoding."""
 
@@ -73,10 +73,6 @@ class EncodingDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
     def _on_tree_view_row_activated(self, *args):
         """Send response to select activated character encoding."""
         self.response(Gtk.ResponseType.OK)
-
-    def get_encoding_ensure(self, value):
-        if value is not None:
-            assert aeidon.encodings.is_valid_code(value)
 
     def get_encoding(self):
         """Return the selected encoding or ``None``."""
@@ -127,10 +123,6 @@ class MenuEncodingDialog(EncodingDialog):
         """Toggle the value of the "Show in Menu" column."""
         store = self._tree_view.get_model()
         store[path][3] = not store[path][3]
-
-    def get_visible_encodings_ensure(self, value):
-        for name in value:
-            assert aeidon.encodings.is_valid_code(name)
 
     def get_visible_encodings(self):
         """Return encodings chosen to be visible."""

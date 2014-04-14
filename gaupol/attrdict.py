@@ -49,11 +49,6 @@ class AttributeDictionary(aeidon.Observable):
         """Synchronize changed attribute value with root dictionary."""
         self._root[name] = value
 
-    def add_attribute_ensure(self, rvalue, name, value):
-        assert self._root[name] == value
-        if not isinstance(value, dict):
-            assert getattr(self, name) == value
-
     def add_attribute(self, name, value):
         """Add instance attribute and corresponding root dictionary key."""
         self._root[name] = value
@@ -73,10 +68,6 @@ class AttributeDictionary(aeidon.Observable):
             else: # Extend current value.
                 if isinstance(value, dict):
                     getattr(self, name).extend(value)
-
-    def remove_attribute_ensure(self, rvalue, name):
-        assert not hasattr(self, name)
-        assert not name in self._root
 
     def remove_attribute(self, name):
         """Remove instance attribute and corresponding root dictionary key."""

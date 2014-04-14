@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("RevertableAction", "RevertableActionGroup",)
 
 
-class RevertableAction(metaclass=aeidon.Contractual):
+class RevertableAction:
 
     """
     Action that can be reverted, i.e. undone and redone.
@@ -54,9 +54,6 @@ class RevertableAction(metaclass=aeidon.Contractual):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-    def _get_reversion_register_require(self):
-        assert self.register in aeidon.registers
-
     def _get_reversion_register(self):
         """Return the :attr:`aeidon.registers` item for reversion."""
         if self.register.shift == 1:
@@ -65,9 +62,6 @@ class RevertableAction(metaclass=aeidon.Contractual):
             return aeidon.registers.REDO
         raise ValueError("Invalid register: {}"
                          .format(repr(self.register)))
-
-    def revert_require(self):
-        assert callable(self.revert_function)
 
     def revert(self):
         """Call the reversion function."""

@@ -23,17 +23,9 @@ import sys
 
 class TestModule(aeidon.TestCase):
 
-    def do_something_require(self):
-        self.count += 1
-
-    @aeidon.deco.contractual
     def do_something(self):
         self.count += 1
         return 1
-
-    def do_something_ensure(self, value):
-        assert value == 1
-        self.count += 1
 
     def setup_method(self, method):
         self.project = self.new_project()
@@ -44,12 +36,6 @@ class TestModule(aeidon.TestCase):
             return x**2
         assert square(2) == 4
         assert square(2) == 4
-
-    def test_contractual(self):
-        if not aeidon.DEBUG: return
-        self.count = 0
-        self.do_something()
-        assert self.count == 3
 
     def test_export(self):
         @aeidon.deco.export

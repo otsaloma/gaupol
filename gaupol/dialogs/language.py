@@ -32,7 +32,7 @@ except Exception:
 __all__ = ("LanguageDialog",)
 
 
-class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class LanguageDialog(gaupol.BuilderDialog):
 
     """Dialog for configuring spell-check."""
 
@@ -44,9 +44,6 @@ class LanguageDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 "target_vbox",
                 "tran_radio",
                 "tree_view",)
-
-    def __init___require(self, parent, show_target=True):
-        assert aeidon.util.enchant_available()
 
     def __init__(self, parent, show_target=True):
         """Initialize a :class:`LanguageDialog` instance."""

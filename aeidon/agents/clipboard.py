@@ -22,20 +22,9 @@ import aeidon
 _ = aeidon.i18n._
 
 
-class ClipboardAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class ClipboardAgent(aeidon.Delegate):
 
     """Storing text to the clipboard and pasting from it."""
-
-    def copy_texts_require(self, indices, doc):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
-    def copy_texts_ensure(self, value, indices, doc):
-        texts = self.clipboard.get_texts()
-        assert len(texts) == len(list(range(indices[0], indices[-1] + 1)))
-        while None in texts:
-            texts.remove(None)
-        assert len(texts) == len(indices)
 
     @aeidon.deco.export
     def copy_texts(self, indices, doc):
@@ -46,10 +35,6 @@ class ClipboardAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             text = (subtitle.get_text(doc) if index in indices else None)
             self.clipboard.append(text)
 
-    def cut_texts_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def cut_texts(self, indices, doc, register=-1):
@@ -57,10 +42,6 @@ class ClipboardAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.copy_texts(indices, doc)
         self.clear_texts(indices, doc, register=register)
         self.set_action_description(register, _("Cutting texts"))
-
-    def paste_texts_require(self, index, doc, register=-1):
-        assert 0 <= index <= len(self.subtitles)
-        assert self.clipboard.get_texts()
 
     @aeidon.deco.export
     @aeidon.deco.revertable

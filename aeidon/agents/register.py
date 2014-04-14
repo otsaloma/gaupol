@@ -46,7 +46,7 @@ This way it will not be in any way processed by the undo/redo system.
 import aeidon
 
 
-class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class RegisterAgent(aeidon.Delegate):
 
     """
     Managing revertable actions.
@@ -59,9 +59,6 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         aeidon.Delegate.__init__(self, master)
         self._do_description = None
         aeidon.util.connect(self, self, "notify::undo_limit")
-
-    def _break_action_group_require(self, stack, index=0):
-        assert 0 <= index < len(stack)
 
     def _break_action_group(self, stack, index=0):
         """
@@ -96,10 +93,6 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Cut reversion stacks if limit set."""
         if self.undo_limit is not None:
             self.cut_reversion_stacks()
-
-    def _revert_multiple_require(self, count, register):
-        stack = self._get_source_stack(register)
-        assert len(stack) >= count
 
     def _revert_multiple(self, count, register):
         """Revert multiple actions."""
@@ -148,25 +141,12 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             del self.redoables[self.undo_limit:]
             del self.undoables[self.undo_limit:]
 
-    def emit_action_signal_require(self, register):
-        if  register is not None:
-            assert self._get_destination_stack(register)
-
     @aeidon.deco.export
     def emit_action_signal(self, register):
         """Emit an action signal for the most recent registered action."""
         if register is not None:
             self.emit(register.signal,
                       self._get_destination_stack(register)[0])
-
-    def group_actions_require(self, register, count, description):
-        if register is not None:
-            assert len(self._get_destination_stack(register)) >= count
-
-    def group_actions_ensure(self, value, register, count, description):
-        if register is not None:
-            assert isinstance(self._get_destination_stack(register)[0],
-                              aeidon.RevertableActionGroup)
 
     @aeidon.deco.export
     def group_actions(self, register, count, description):
@@ -183,9 +163,6 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             else: # Single action
                 action_group.actions.append(action)
         stack.insert(0, action_group)
-
-    def redo_require(self, count=1):
-        assert len(self.redoables) >= count
 
     @aeidon.deco.export
     def redo(self, count=1):
@@ -212,19 +189,12 @@ class RegisterAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             action.description = self._do_description
             self._shift_changed_value(action, action.register.shift)
 
-    def set_action_description_require(self, register, description):
-        if register is not None:
-            assert self._get_destination_stack(register)
-
     @aeidon.deco.export
     def set_action_description(self, register, description):
         """Set the description of the most recent registered action."""
         if register is None: return
         stack = self._get_destination_stack(register)
         stack[0].description = description
-
-    def undo_require(self, count=1):
-        assert len(self.undoables) >= count
 
     @aeidon.deco.export
     def undo(self, count=1):

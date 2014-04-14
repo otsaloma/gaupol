@@ -24,7 +24,7 @@ import re
 __all__ = ("Finder",)
 
 
-class Finder(metaclass=aeidon.Contractual):
+class Finder:
 
     """
     String and regular expression finder and replacer.
@@ -47,17 +47,6 @@ class Finder(metaclass=aeidon.Contractual):
         self.pos = None
         self.replacement = None
         self.text = None
-
-    def _invariant(self):
-        if self.pos is not None:
-            assert (0 <= self.pos <= len(self.text))
-
-    def next_require(self):
-        assert self.pattern is not None
-
-    def next_ensure(self, value):
-        for pos in value:
-            assert (0 <= pos <= len(self.text))
 
     def next(self):
         """
@@ -94,13 +83,6 @@ class Finder(metaclass=aeidon.Contractual):
             self.match_span = match.span()
         self.pos = self.match_span[1]
         return self.match_span
-
-    def previous_require(self):
-        assert self.pattern is not None
-
-    def previous_ensure(self, value):
-        for pos in value:
-            assert (0 <= pos <= len(self.text))
 
     def previous(self):
         """
@@ -147,11 +129,6 @@ class Finder(metaclass=aeidon.Contractual):
         self.pos = self.match_span[0]
         return self.match_span
 
-    def replace_require(self, next=True):
-        assert self.match_span is not None
-        assert self.pattern is not None
-        assert self.replacement is not None
-
     def replace(self, next=True):
         """
         Replace the current match of pattern.
@@ -171,10 +148,6 @@ class Finder(metaclass=aeidon.Contractual):
         # getting stuck with zero-length regular expressions.
         if next and (self.match_span[0] == self.match_span[1]):
             self.match_span = (self.pos, self.pos)
-
-    def replace_all_require(self):
-        assert self.pattern is not None
-        assert self.replacement is not None
 
     def replace_all(self):
         """

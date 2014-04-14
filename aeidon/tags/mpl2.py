@@ -40,9 +40,6 @@ class MPL2(aeidon.tags.MicroDVD):
 
     format = aeidon.formats.MPL2
 
-    def _main_decode_ensure(self, value, text):
-        assert self.tag.search(value) is None
-
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"<\\>(.*?)</\\>", 1)

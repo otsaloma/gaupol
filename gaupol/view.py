@@ -31,7 +31,7 @@ from gi.repository import Gtk
 __all__ = ("View",)
 
 
-class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
+class View(Gtk.TreeView):
 
     """
     Widget to display subtitle data in the form of a list.
@@ -299,13 +299,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
                 selection.handler_disconnect(handler_id)
                 self._selection_changed_handlers.pop(handler_id)
 
-    def get_focus_ensure(self, value):
-        store = self.get_model()
-        if value[0] is not None:
-            assert 0 <= value[0] < len(store)
-        if value[1] is not None:
-            assert value[1] in self.columns
-
     def get_focus(self):
         """Return the row and column of the current focus."""
         path, col = self.get_cursor()
@@ -320,11 +313,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         label.props.xalign = 0
         label.show()
         return label
-
-    def get_selected_rows_ensure(self, value):
-        store = self.get_model()
-        for row in value:
-            assert 0 <= row < len(store)
 
     def get_selected_rows(self):
         """Return a sequence of selected rows."""
@@ -342,10 +330,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         return col in (self.columns.MAIN_TEXT,
                        self.columns.TRAN_TEXT)
 
-    def scroll_to_row_require(self, row):
-        store = self.get_model()
-        assert 0 <= row < len(store)
-
     def scroll_to_row(self, row):
         """Scroll view until `row` is visible."""
         self.scroll_to_cell(path=row,
@@ -353,11 +337,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
                             use_align=False,
                             row_align=0.5,
                             col_align=0)
-
-    def select_rows_require(self, rows):
-        store = self.get_model()
-        for row in rows:
-            assert 0 <= row < len(store)
 
     def select_rows(self, rows):
         """Select `rows`, clearing previous selection."""
@@ -373,12 +352,6 @@ class View(Gtk.TreeView, metaclass=gaupol.ContractualGObject):
         for handler_id in self._selection_changed_handlers:
             selection.handler_unblock(handler_id)
         selection.emit("changed")
-
-    def set_focus_require(self, row, col=None):
-        store = self.get_model()
-        assert -1 <= row < len(store)
-        if col is not None:
-            assert col in self.columns
 
     def set_focus(self, row, col=None):
         """Set the focus to `row` (-1 for last), `col`."""

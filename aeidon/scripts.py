@@ -38,10 +38,6 @@ def _init_scripts():
         if code and name:
             _scripts[code] = name
 
-def code_to_name_require(code):
-    assert re.match(r"^[A-Z][a-z]{3}$", code)
-
-@aeidon.deco.contractual
 def code_to_name(code):
     """
     Convert ISO 15924 `code` to localized script name.
@@ -50,10 +46,6 @@ def code_to_name(code):
     """
     return aeidon.i18n.dgettext("iso_15924", _scripts[code])
 
-def is_valid_require(code):
-    assert re.match(r"^[A-Z][a-z]{3}$", code)
-
-@aeidon.deco.contractual
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 15924 script code."""
     return (code in _scripts)

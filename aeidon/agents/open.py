@@ -22,7 +22,7 @@ import aeidon
 import bisect
 
 
-class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class OpenAgent(aeidon.Delegate):
 
     """Reading and parsing data from subtitle files."""
 
@@ -77,16 +77,8 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         except (IOError, UnicodeError):
             raise
         except Exception:
-            if not aeidon.DEBUG:
-                raise aeidon.ParseError("Failed to parse file {}"
-                                        .format(repr(file.path)))
-
-            raise
-
-    def _sort_subtitles_ensure(self, value, subtitles):
-        sorted_subtitles, sort_count = value
-        for i in range(len(sorted_subtitles) - 1):
-            assert sorted_subtitles[i] <= sorted_subtitles[i + 1]
+            raise aeidon.ParseError("Failed to parse file {}"
+                                    .format(repr(file.path)))
 
     def _sort_subtitles(self, subtitles):
         """
@@ -126,15 +118,6 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.open_translation(path, encoding, *args, **kwargs)
         raise ValueError("Invalid document: {}".format(repr(doc)))
 
-    def open_main_require(self, path, encoding):
-        assert aeidon.encodings.is_valid_code(encoding)
-
-    def open_main_ensure(self, value, path, encoding):
-        assert self.main_file is not None
-        assert self.main_changed == 0
-        assert self.tran_file is None
-        assert self.tran_changed is None
-
     @aeidon.deco.export
     @aeidon.deco.notify_frozen
     def open_main(self, path, encoding=None):
@@ -173,14 +156,6 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.tran_changed = None
         self.emit("main-file-opened", self.main_file)
         return sort_count
-
-    def open_translation_require(self, path, encoding, align_method=None):
-        assert self.main_file is not None
-        assert aeidon.encodings.is_valid_code(encoding)
-
-    def open_translation_ensure(self, *args, **kwargs):
-        assert self.tran_file is not None
-        assert self.tran_changed == 0
 
     @aeidon.deco.export
     @aeidon.deco.notify_frozen

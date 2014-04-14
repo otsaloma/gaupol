@@ -182,14 +182,6 @@ def code_to_name(code):
     raise ValueError("Code {} not found"
                      .format(repr(code)))
 
-def detect_require(path):
-    assert aeidon.util.chardet_available()
-
-def detect_ensure(value, path):
-    if value is not None:
-        assert is_valid_code(value)
-
-@aeidon.deco.contractual
 def detect(path):
     """
     Detect the encoding of file at `path` and return code or ``None``.
@@ -217,11 +209,6 @@ def detect(path):
     except ValueError:
         return None
 
-def detect_bom_ensure(value, path):
-    if value is not None:
-        assert is_valid_code(value)
-
-@aeidon.deco.contractual
 def detect_bom(path):
     """Return corresponding encoding if BOM found, else ``None``."""
     line = open(path, "rb").readline()
@@ -242,12 +229,7 @@ def detect_bom(path):
         return "utf_16_le"
     return None
 
-def get_locale_code_ensure(value):
-    if value is not None:
-        assert is_valid_code(value)
-
 @aeidon.deco.once
-@aeidon.deco.contractual
 def get_locale_code():
     """Return code of the locale encoding or ``None``."""
     code = locale.getpreferredencoding()
@@ -256,11 +238,7 @@ def get_locale_code():
     code = aeidon.util.get_encoding_alias(code)
     return code
 
-def get_locale_long_name_require():
-    assert get_locale_code() is not None
-
 @aeidon.deco.once
-@aeidon.deco.contractual
 def get_locale_long_name():
     """
     Return localized long name for locale encoding.
@@ -307,10 +285,6 @@ def name_to_code(name):
     raise ValueError("Name {} not found"
                      .format(repr(name)))
 
-def translate_code_ensure(value, code):
-    assert is_valid_code(value)
-
-@aeidon.deco.contractual
 def translate_code(code):
     """
     Translate weird encoding `code`.

@@ -37,11 +37,7 @@ def affirm(value):
     if not value:
         raise aeidon.AffirmationError
 
-def atomic_open_require(path, mode="w", *args, **kwargs):
-    assert "w" in mode
-
 @contextlib.contextmanager
-@aeidon.deco.contractual
 def atomic_open(path, mode="w", *args, **kwargs):
     """
     A context manager for atomically writing a file.
@@ -111,12 +107,6 @@ def chardet_available():
     except Exception:
         return False
 
-def compare_versions_require(x, y):
-    re_version = re.compile(r"^(\d+\.)+\d+$")
-    assert re_version.match(x) is not None
-    assert re_version.match(y) is not None
-
-@aeidon.deco.contractual
 def compare_versions(x, y):
     """
     Compare version strings `x` and `y`.
@@ -129,11 +119,6 @@ def compare_versions(x, y):
     return compare(list(map(int, x.split("."))),
                    list(map(int, y.split("."))))
 
-def connect_require(observer, observable, signal, *args):
-    if observer is not observable:
-        assert hasattr(observer, observable)
-
-@aeidon.deco.contractual
 def connect(observer, observable, signal, *args):
     """
     Connect `observable`'s `signal` to `observer`'s callback method.
@@ -152,11 +137,6 @@ def connect(observer, observable, signal, *args):
         observable = getattr(observer, observable)
     return observable.connect(signal, method, *args)
 
-def copy_dict_ensure(src, value):
-    assert src == value
-    assert src is not value
-
-@aeidon.deco.contractual
 def copy_dict(src):
     """Copy `src` dictionary recursively and return copy."""
     dst = src.copy()
@@ -169,11 +149,6 @@ def copy_dict(src):
             dst[key] = set(value)
     return dst
 
-def copy_list_ensure(src, value):
-    assert src == value
-    assert src is not value
-
-@aeidon.deco.contractual
 def copy_list(src):
     """Copy `src` list recursively and return copy."""
     dst = list(src)
@@ -186,10 +161,6 @@ def copy_list(src):
             dst[i] = set(value)
     return dst
 
-def detect_format_require(path, encoding):
-    assert aeidon.encodings.is_valid_code(encoding)
-
-@aeidon.deco.contractual
 def detect_format(path, encoding):
     """
     Detect and return format of subtitle file at `path`.
@@ -264,11 +235,6 @@ def flatten(lst):
             flat_lst.append(item)
     return flat_lst
 
-def get_chardet_version_ensure(value):
-    if value is not None:
-        assert isinstance(value, str)
-
-@aeidon.deco.contractual
 def get_chardet_version():
     """Return :mod:`chardet` version number as string or ``None``."""
     try:
@@ -277,11 +243,7 @@ def get_chardet_version():
     except Exception:
         return None
 
-def get_default_encoding_ensure(value):
-    assert aeidon.encodings.is_valid_code(value)
-
 @aeidon.deco.once
-@aeidon.deco.contractual
 def get_default_encoding(fallback="utf_8"):
     """Return the locale encoding or `fallback`."""
     encoding = locale.getpreferredencoding()
@@ -296,11 +258,6 @@ def get_default_newline():
     """Return system default newline as :attr:`aeidon.newlines` item."""
     return aeidon.newlines.find_item("value", os.linesep)
 
-def get_enchant_version_ensure(value):
-    if value is not None:
-        assert isinstance(value, str)
-
-@aeidon.deco.contractual
 def get_enchant_version():
     """Return :mod:`enchant` version number as string or ``None``."""
     try:
@@ -316,15 +273,6 @@ def get_encoding_alias(encoding):
         return aliases[encoding]
     return encoding
 
-def get_ranges_require(lst):
-    for item in lst:
-        assert isinstance(item, int)
-
-def get_ranges_ensure(value, lst):
-    for item in value:
-        assert item == list(range(item[0], item[-1] + 1))
-
-@aeidon.deco.contractual
 def get_ranges(lst):
     """
     Return a list of ranges in list of integers.
@@ -341,12 +289,6 @@ def get_ranges(lst):
         else: ranges.append([item])
     return ranges
 
-def get_sorted_unique_ensure(value, lst):
-    for item in value:
-        assert value.count(item) == 1
-    assert sorted(value) == value
-
-@aeidon.deco.contractual
 def get_sorted_unique(lst):
     """
     Return sorted `lst` with duplicates removed.
@@ -387,11 +329,6 @@ def get_template_header(format):
         header = read(path, "ascii").rstrip()
     return normalize_newlines(header)
 
-def get_unique_ensure(value, lst, keep_last=False):
-    for item in value:
-        assert value.count(item) == 1
-
-@aeidon.deco.contractual
 def get_unique(lst, keep_last=False):
     """
     Return `lst` with duplicates removed.
@@ -437,10 +374,6 @@ def last(iterator):
     for value in iterator: pass
     return value
 
-def makedirs_ensure(value, directory):
-    assert os.path.isdir(directory)
-
-@aeidon.deco.contractual
 def makedirs(directory):
     """
     Recursively make `directory` if it does not exist.
@@ -498,13 +431,6 @@ def print_write_unicode(exc_info, path, encoding):
           .format(path, encoding),
           file=sys.stderr)
 
-def read_require(path, encoding=None, fallback="utf_8"):
-    if encoding is not None:
-        assert aeidon.encodings.is_valid_code(encoding)
-    if fallback is not None:
-        assert aeidon.encodings.is_valid_code(fallback)
-
-@aeidon.deco.contractual
 def read(path, encoding=None, fallback="utf_8"):
     """
     Read file at `path` and return text.
@@ -522,13 +448,6 @@ def read(path, encoding=None, fallback="utf_8"):
             return read(path, fallback, None)
         raise # UnicodeError
 
-def readlines_require(path, encoding=None, fallback="utf_8"):
-    if encoding is not None:
-        assert aeidon.encodings.is_valid_code(encoding)
-    if fallback is not None:
-        assert aeidon.encodings.is_valid_code(fallback)
-
-@aeidon.deco.contractual
 def readlines(path, encoding=None, fallback="utf_8"):
     """
     Read file at `path` and return lines.
@@ -581,11 +500,7 @@ def start_process(command, **kwargs):
     except OSError as error:
         raise aeidon.ProcessError(str(error.args))
 
-def title_to_lower_case_ensure(value, title_name):
-    assert value.islower()
-
 @aeidon.deco.memoize(100)
-@aeidon.deco.contractual
 def title_to_lower_case(title_name):
     """
     Convert title case name to lower case with underscores.
@@ -610,16 +525,6 @@ def uri_to_path(uri):
         return path.replace("/", "\\")
     return urllib.parse.urlsplit(uri)[2]
 
-def write_require(path, text, encoding=None, fallback="utf_8"):
-    if encoding is not None:
-        assert aeidon.encodings.is_valid_code(encoding)
-    if fallback is not None:
-        assert aeidon.encodings.is_valid_code(fallback)
-
-def write_ensure(value, path, text, encoding=None, fallback="utf_8"):
-    assert os.path.isfile(path)
-
-@aeidon.deco.contractual
 def write(path, text, encoding=None, fallback="utf_8"):
     """
     Write `text` to file at `path`.
@@ -637,16 +542,6 @@ def write(path, text, encoding=None, fallback="utf_8"):
             return write(path, text, fallback, None)
         raise # UnicodeError
 
-def writelines_require(path, lines, encoding=None, fallback="utf_8"):
-    if encoding is not None:
-        assert aeidon.encodings.is_valid_code(encoding)
-    if fallback is not None:
-        assert aeidon.encodings.is_valid_code(fallback)
-
-def writelines_ensure(value, path, lines, encoding=None, fallback="utf_8"):
-    assert os.path.isfile(path)
-
-@aeidon.deco.contractual
 def writelines(path, lines, encoding=None, fallback="utf_8"):
     """
     Write `lines` of text to file at `path`.

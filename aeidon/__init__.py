@@ -59,11 +59,6 @@ accessing the subtitles directly (via :attr:`aeidon.Project.subtitles`).
 :var CONFIG_HOME_DIR: Path to the user's local configuration directory
 :var DATA_DIR: Path to the global data directory
 :var DATA_HOME_DIR: Path to the user's local data directory
-:var DEBUG: ``True`` to perform additional run-time checks
-
-   `DEBUG` is used in many cases at import time and should thus not be set
-   directly, but rather by setting a non-blank value, e.g. "1", to either of
-   environment variables ``AEIDON_DEBUG`` or ``GAUPOL_DEBUG``.
 
 :var LOCALE_DIR: Path to the global locale directory
 :var RE_ANY_TAG: Regular expression for markup tags of any format
@@ -92,10 +87,6 @@ __version__ = "0.25"
 RUNNING_SPHINX = (sys.argv[0].endswith("autogen.py") or
                   sys.argv[0].endswith("sphinx-build"))
 
-DEBUG = ((bool(os.environ.get("AEIDON_DEBUG", "")) or
-          bool(os.environ.get("GAUPOL_DEBUG", "")))
-         and not RUNNING_SPHINX)
-
 RE_ANY_TAG = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
 
 from aeidon.paths import *
@@ -104,7 +95,6 @@ from aeidon import deco
 from aeidon import i18n
 from aeidon import util
 from aeidon import temp
-from aeidon.contractual import *
 from aeidon.delegate import *
 from aeidon.singleton import *
 from aeidon.mutables import *

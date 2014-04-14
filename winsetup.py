@@ -9,8 +9,9 @@ import cx_Freeze
 
 includes = ("aeidon", "gaupol", "gi")
 include_files = []
-gnome_path = os.path.join(site.getsitepackages()[1], "gnome")
-enchant_path = os.path.join(site.getsitepackages()[1], "enchant")
+site_path = site.getsitepackages()[1]
+gnome_path = os.path.join(site_path, "gnome")
+enchant_path = os.path.join(site_path, "enchant")
 for dll in glob.glob("{}\\*.dll".format(gnome_path)):
     include_files.append((dll, os.path.basename(dll)))
 for dll in glob.glob("{}\\*.dll".format(enchant_path)):

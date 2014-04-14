@@ -38,10 +38,6 @@ def _init_countries():
         if code and name:
             _countries[code] = name
 
-def code_to_name_require(code):
-    assert re.match(r"^[A-Z][A-Z]$", code)
-
-@aeidon.deco.contractual
 def code_to_name(code):
     """
     Convert ISO 639 `code` to localized country name.
@@ -50,10 +46,6 @@ def code_to_name(code):
     """
     return aeidon.i18n.dgettext("iso_3166", _countries[code])
 
-def is_valid_require(code):
-    assert re.match(r"^[A-Z][A-Z]$", code)
-
-@aeidon.deco.contractual
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 3166 country code."""
     return (code in _countries)

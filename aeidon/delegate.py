@@ -43,8 +43,3 @@ class Delegate:
         if hasattr(self.master, name):
             return setattr(self.master, name, value)
         return object.__setattr__(self, name, value)
-
-    def _invariant(self):
-        # Default to checking master's class invariant.
-        if hasattr(self.master, "_invariant"):
-            return self.master._invariant()

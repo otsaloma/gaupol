@@ -88,12 +88,6 @@ def get_font():
             (gaupol.conf.editor.use_custom_font and
              gaupol.conf.editor.custom_font) else "")
 
-
-def get_gst_version_ensure(value):
-    if value is not None:
-        assert isinstance(value, str)
-
-@aeidon.deco.contractual
 def get_gst_version():
     """Return :mod:`Gst` version number as string or ``None``."""
     try:
@@ -102,11 +96,6 @@ def get_gst_version():
     except Exception:
         return None
 
-def get_gtkspell_version_ensure(value):
-    if value is not None:
-        assert isinstance(value, str)
-
-@aeidon.deco.contractual
 def get_gtkspell_version():
     """
     Return :mod:`GtkSpell` version number as string or ``None``.

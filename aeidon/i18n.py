@@ -20,7 +20,7 @@
 Internationalization functions.
 
 Functions defined in this module are convenience aliases for functions of the
-:mod:`gettext` module with proper initialization and character encodings.
+:mod:`gettext` module with proper initialization ensured done.
 """
 
 import aeidon
@@ -28,7 +28,9 @@ import gettext
 
 __all__ = ("_", "dgettext", "ngettext")
 
-_translation = gettext.translation("gaupol", aeidon.LOCALE_DIR, fallback=True)
+_translation = gettext.translation("gaupol",
+                                   aeidon.LOCALE_DIR,
+                                   fallback=True)
 
 
 def _(message):

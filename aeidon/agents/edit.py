@@ -22,7 +22,7 @@ import aeidon
 _ = aeidon.i18n._
 
 
-class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class EditAgent(aeidon.Delegate):
 
     """Basic editing of entire subtitles."""
 
@@ -61,10 +61,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.register_action(action)
         self.emit("subtitles-inserted", indices)
 
-    def clear_texts_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def clear_texts(self, indices, doc, register=-1):
@@ -96,12 +92,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.register_action(action)
         self.emit("subtitles-inserted", indices)
 
-    def merge_subtitles_require(self, indices, register=-1):
-        assert len(indices) > 1
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-        assert list(indices) == list(range(indices[0], indices[-1] + 1))
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def merge_subtitles(self, indices, register=-1):
@@ -117,10 +107,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.insert_subtitles([indices[0]], [subtitle], register=register)
         self.group_actions(register, 2, _("Merging subtitles"))
 
-    def remove_subtitles_require(self, indices, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
@@ -135,11 +121,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         action.revert_args = (indices, subtitles)
         self.register_action(action)
         self.emit("subtitles-removed", indices)
-
-    def replace_positions_require(self, indices, subtitles, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-        assert len(indices) == len(subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -158,11 +139,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.register_action(action)
         self.emit("positions-changed", indices)
 
-    def replace_texts_require(self, indices, doc, texts, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-        assert len(indices) == len(texts)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
@@ -178,9 +154,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         action.revert_args = (indices, doc, orig_texts)
         self.register_action(action)
         self.emit(self.get_text_signal(doc), indices)
-
-    def split_subtitle_require(self, index, register=-1):
-        assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable

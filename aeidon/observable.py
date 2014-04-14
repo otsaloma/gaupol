@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("Observable",)
 
 
-class Observable(metaclass=aeidon.Contractual):
+class Observable:
 
     """
     Base class for observable objects.
@@ -77,15 +77,9 @@ class Observable(metaclass=aeidon.Contractual):
         self.emit(signal, value)
         return return_value
 
-    def _add_signal_require(self, signal):
-        assert not signal in self._signal_handlers
-
     def _add_signal(self, signal):
         """Add `signal` to the list of signals emitted."""
         self._signal_handlers[signal] = []
-
-    def _validate_ensure(self, return_value, name, value):
-        assert return_value == value
 
     def _validate(self, name, value):
         """Return `value` or an observable version if `value` is mutable."""
@@ -97,9 +91,6 @@ class Observable(metaclass=aeidon.Contractual):
         if isinstance(value, set):
             return aeidon.ObservableSet(*args)
         return value
-
-    def block_require(self, signal):
-        assert signal in self._signal_handlers
 
     def block(self, signal):
         """
@@ -123,25 +114,15 @@ class Observable(metaclass=aeidon.Contractual):
             return True
         return False
 
-    def connect_require(self, signal, method, *args):
-        assert signal in self._signal_handlers
-        assert callable(method)
-
     def connect(self, signal, method, *args):
         """Register to receive notifications of ``signal``."""
         self._signal_handlers[signal].append((method, args))
-
-    def disconnect_require(self, signal, method):
-        assert signal in self._signal_handlers
 
     def disconnect(self, signal, method):
         """Remove registration to receive notifications of ``signal``."""
         for i in reversed(range(len(self._signal_handlers[signal]))):
             if self._signal_handlers[signal][i][0] == method:
                 self._signal_handlers[signal].pop(i)
-
-    def emit_require(self, signal, *args):
-        assert signal in self._signal_handlers
 
     def emit(self, signal, *args):
         """Send notification of ``signal`` to all registered observers."""
@@ -168,15 +149,9 @@ class Observable(metaclass=aeidon.Contractual):
             return True
         return False
 
-    def notify_require(self, name):
-        assert hasattr(self, name)
-
     def notify(self, name):
         """Emit notification signal for variable."""
         return self.emit("notify::{}".format(name))
-
-    def thaw_notify_ensure(self, value, do=True):
-        assert not do or not self._notify_queue
 
     def thaw_notify(self, do=True):
         """
@@ -197,9 +172,6 @@ class Observable(metaclass=aeidon.Contractual):
             self._notify_queue = []
             return True
         return False
-
-    def unblock_require(self, signal, do=True):
-        assert signal in self._signal_handlers
 
     def unblock(self, signal, do=True):
         """

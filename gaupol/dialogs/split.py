@@ -27,16 +27,11 @@ from gi.repository import Gtk
 __all__ = ("SplitDialog",)
 
 
-class SplitDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class SplitDialog(gaupol.BuilderDialog):
 
     """Dialog for splitting a project in two."""
 
     _widgets = ("subtitle_spin",)
-
-    def __init___require(self, parent, application):
-        page = application.get_current_page()
-        assert page is not None
-        assert len(page.project.subtitles) > 1
 
     def __init__(self, parent, application):
         """Initialize a :class:`SplitDialog` instance."""

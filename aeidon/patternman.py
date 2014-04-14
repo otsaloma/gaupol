@@ -26,7 +26,7 @@ import xml.etree.ElementTree as ET
 __all__ = ("PatternManager",)
 
 
-class PatternManager(metaclass=aeidon.Contractual):
+class PatternManager:
 
     """
     Managing regular expression substitutions for subtitle texts.
@@ -39,12 +39,6 @@ class PatternManager(metaclass=aeidon.Contractual):
     ``Script[-language-[COUNTRY]]`` using the corresponding ISO codes.
     """
     _re_comment = re.compile(r"^\s*#.*$")
-
-    def __init___require(self, pattern_type):
-        assert pattern_type in ("capitalization",
-                                "common-error",
-                                "hearing-impaired",
-                                "line-break")
 
     def __init__(self, pattern_type):
         """Initialize a :class:`PatternManager` instance."""
@@ -88,9 +82,6 @@ class PatternManager(metaclass=aeidon.Contractual):
                 filtered_patterns.remove(None)
         return filtered_patterns
 
-    def _get_codes_require(self, script=None, language=None, country=None):
-        self._assert_identifiers(script, language, country)
-
     def _get_codes(self, script=None, language=None, country=None):
         """
         Return a sequence of all codes to be used by arguments.
@@ -109,9 +100,6 @@ class PatternManager(metaclass=aeidon.Contractual):
             codes.append(code)
         return tuple(codes)
 
-    def _read_config_from_directory_require(self, directory, encoding):
-        assert aeidon.encodings.is_valid_code(encoding)
-
     def _read_config_from_directory(self, directory, encoding):
         """Read configurations from files in `directory`."""
         if not os.path.isdir(directory): return
@@ -120,9 +108,6 @@ class PatternManager(metaclass=aeidon.Contractual):
         for name in (x for x in files if x.endswith(extension)):
             path = os.path.join(directory, name)
             self._read_config_from_file(path, encoding)
-
-    def _read_config_from_file_require(self, path, encoding):
-        assert aeidon.encodings.is_valid_code(encoding)
 
     def _read_config_from_file(self, path, encoding):
         """Read configurations from file at `path`."""
@@ -152,9 +137,6 @@ class PatternManager(metaclass=aeidon.Contractual):
         self._read_config_from_directory(data_dir, "utf_8")
         self._read_config_from_directory(config_home_dir, encoding)
 
-    def _read_patterns_from_directory_require(self, directory, encoding):
-        assert aeidon.encodings.is_valid_code(encoding)
-
     def _read_patterns_from_directory(self, directory, encoding):
         """Read all patterns from files in `directory`."""
         if not os.path.isdir(directory): return
@@ -171,9 +153,6 @@ class PatternManager(metaclass=aeidon.Contractual):
         for name in files:
             path = os.path.join(directory, name)
             self._read_patterns_from_file(path, encoding)
-
-    def _read_patterns_from_file_require(self, directory, encoding):
-        assert aeidon.encodings.is_valid_code(encoding)
 
     def _read_patterns_from_file(self, path, encoding):
         """Read all patterns from file at `path`."""
@@ -234,9 +213,6 @@ class PatternManager(metaclass=aeidon.Contractual):
         languages = [x.split("-")[1] for x in codes]
         return tuple(aeidon.util.get_unique(languages))
 
-    def get_patterns_require(self, script=None, language=None, country=None):
-        self._assert_identifiers(script, language, country)
-
     def get_patterns(self, script=None, language=None, country=None):
         """Return patterns for `script`, `language` and `country`."""
         patterns = []
@@ -253,9 +229,6 @@ class PatternManager(metaclass=aeidon.Contractual):
             codes.remove("Zyyy")
         scripts = [x.split("-")[0] for x in codes]
         return tuple(aeidon.util.get_unique(scripts))
-
-    def save_config_require(self, script=None, language=None, country=None):
-        self._assert_identifiers(script, language, country)
 
     def save_config(self, script=None, language=None, country=None):
         """Save pattern configurations to files."""

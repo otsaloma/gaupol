@@ -24,12 +24,9 @@ import gaupol
 from gi.repository import Gtk
 
 
-class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class UtilityAgent(aeidon.Delegate):
 
     """Miscellaneous helper methods."""
-
-    def get_action_ensure(self, value, name):
-        assert value is not None
 
     @aeidon.deco.export
     def get_action(self, name):
@@ -101,9 +98,6 @@ class UtilityAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Return tool item from UI manager by `name`."""
         widgets = self.get_action(name).get_proxies()
         return [x for x in widgets if isinstance(x, Gtk.ToolItem)][0]
-
-    def set_current_page_require(self, page):
-        assert page in self.pages
 
     @aeidon.deco.export
     def set_current_page(self, page):

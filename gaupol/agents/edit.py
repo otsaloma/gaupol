@@ -24,7 +24,7 @@ import gaupol
 _ = aeidon.i18n._
 
 
-class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class EditAgent(aeidon.Delegate):
 
     """Editing subtitle data."""
 
@@ -376,10 +376,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if not page.view.is_text_column(col): return
         self.show_message(_("Use Shift+Return for line-break"))
 
-    def redo_require(self, count=1):
-        page = self.get_current_page()
-        assert page.project.can_redo()
-
     @aeidon.deco.export
     def redo(self, count=1):
         """Redo `count` amount of actions."""
@@ -387,10 +383,6 @@ class EditAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         page = self.get_current_page()
         page.project.redo(count)
         gaupol.util.set_cursor_normal(self.window)
-
-    def undo_require(self, count=1):
-        page = self.get_current_page()
-        assert page.project.can_undo()
 
     @aeidon.deco.export
     def undo(self, count=1):

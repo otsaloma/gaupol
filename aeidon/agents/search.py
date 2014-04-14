@@ -23,7 +23,7 @@ import re
 _ = aeidon.i18n._
 
 
-class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class SearchAgent(aeidon.Delegate):
 
     """
     Searching for and replacing text.
@@ -111,10 +111,6 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         raise ValueError("Invalid document: {} or invalid next: {}"
                          .format(repr(doc), repr(next)))
 
-    def _invariant(self):
-        for index in self._indices or ():
-            assert 0 <= index < len(self.subtitles)
-
     def _next_in_document(self, index, doc, pos=None):
         """
         Find the next match in `doc` starting from `pos`.
@@ -191,17 +187,6 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         raise ValueError("No more matches in document: {}"
                          .format(repr(doc)))
 
-    def find_next_require(self, index=None, doc=None, pos=None):
-        assert 0 <= (index or 0) < len(self.subtitles)
-
-    def find_next_ensure(self, value, index=None, doc=None, pos=None):
-        index, doc, match_span = value
-        assert 0 <= index < len(self.subtitles)
-        text = self.subtitles[index].get_text(doc)
-        assert 0 <= match_span[0] <= len(text)
-        assert 0 <= match_span[1] <= len(text)
-        assert self._docs
-
     @aeidon.deco.export
     def find_next(self, index=None, doc=None, pos=None):
         """
@@ -215,20 +200,6 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         doc = (self._docs[0] if doc is None else doc)
         return self._find(index, doc, pos, True)
 
-    def find_previous_require(self, index=None, doc=None, pos=None):
-        assert 0 <= (index or 0) < len(self.subtitles)
-        if doc is not None:
-            text = self.subtitles[index or 0].get_text(doc)
-            assert 0 <= (pos or 0) <= len(text)
-
-    def find_previous_ensure(self, value, index=None, doc=None, pos=None):
-        index, doc, match_span = value
-        assert 0 <= index < len(self.subtitles)
-        text = self.subtitles[index].get_text(doc)
-        assert 0 <= match_span[0] <= len(text)
-        assert 0 <= match_span[1] <= len(text)
-        assert self._docs
-
     @aeidon.deco.export
     def find_previous(self, index=None, doc=None, pos=None):
         """
@@ -241,13 +212,6 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         index = (len(self.subtitles) - 1 if index is None else index)
         doc = (self._docs[-1] if doc is None else doc)
         return self._find(index, doc, pos, False)
-
-    def replace_require(self, register=-1):
-        assert 0 <= self._match_index < len(self.subtitles)
-        subtitle = self.subtitles[self._match_index]
-        text = subtitle.get_text(self._match_doc)
-        assert 0 <= self._match_span[0] <= len(text)
-        assert 0 <= self._match_span[1] <= len(text)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -321,10 +285,6 @@ class SearchAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         """Set the string pattern to find."""
         self._finder.pattern = pattern
         self._finder.ignore_case = ignore_case
-
-    def set_search_target_require(self, indices=None, docs=None, wrap=True):
-        for index in indices or ():
-            assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     def set_search_target(self, indices=None, docs=None, wrap=True):

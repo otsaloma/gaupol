@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("Project",)
 
 
-class ProjectMeta(aeidon.Contractual):
+class ProjectMeta(type):
 
     """
     Project metaclass with delegated methods added.

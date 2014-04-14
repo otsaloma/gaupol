@@ -35,7 +35,7 @@ def _mutation(function):
     return wrapper
 
 
-class ObservableDict(dict, metaclass=aeidon.Contractual):
+class ObservableDict(dict):
 
     """
     Observable version of ``dict``.
@@ -55,9 +55,6 @@ class ObservableDict(dict, metaclass=aeidon.Contractual):
     @_mutation
     def __delitem__(self, *args, **kwargs):
         return dict.__delitem__(self, *args, **kwargs)
-
-    def __init___require(self, *args, **kwargs):
-        assert hasattr(args[-2], "notify")
 
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args[:-2], **kwargs)
@@ -89,7 +86,7 @@ class ObservableDict(dict, metaclass=aeidon.Contractual):
         return dict.update(self, *args, **kwargs)
 
 
-class ObservableList(list, metaclass=aeidon.Contractual):
+class ObservableList(list):
 
     """
     Observable version of ``list``.
@@ -117,9 +114,6 @@ class ObservableList(list, metaclass=aeidon.Contractual):
     @_mutation
     def __imul__(self, *args, **kwargs):
         return list.__imul__(self, *args, **kwargs)
-
-    def __init___require(self, *args, **kwargs):
-        assert hasattr(args[-2], "notify")
 
     def __init__(self, *args, **kwargs):
         list.__init__(self, *args[:-2], **kwargs)
@@ -159,7 +153,7 @@ class ObservableList(list, metaclass=aeidon.Contractual):
         return list.sort(self, *args, **kwargs)
 
 
-class ObservableSet(set, metaclass=aeidon.Contractual):
+class ObservableSet(set):
 
     """
     Observable version of ``set``.
@@ -179,9 +173,6 @@ class ObservableSet(set, metaclass=aeidon.Contractual):
     @_mutation
     def __iand__(self, *args, **kwargs):
         return set.__iand__(self, *args, **kwargs)
-
-    def __init___require(self, *args, **kwargs):
-        assert hasattr(args[-2], "notify")
 
     def __init__(self, *args, **kwargs):
         set.__init__(self, *args[:-2], **kwargs)

@@ -29,7 +29,7 @@ import traceback
 __all__ = ("ExtensionManager", "ExtensionMetadata",)
 
 
-class ExtensionManager(metaclass=aeidon.Contractual):
+class ExtensionManager:
 
     """
     Finding activating, storing and deactivating extensions.
@@ -130,19 +130,11 @@ class ExtensionManager(metaclass=aeidon.Contractual):
         """Return a list of all extension module names."""
         return list(self._metadata.keys())
 
-    def has_help_require(self, module):
-        assert module in self._active
-        assert module in self._metadata
-
     def has_help(self, module):
         """Return ``True`` if extension can display documentation."""
         extension = self._active[module]
         return (extension.__class__.show_help is not
                 gaupol.Extension.show_help)
-
-    def has_preferences_dialog_require(self, module):
-        assert module in self._active
-        assert module in self._metadata
 
     def has_preferences_dialog(self, module):
         """Return True if extension can display a preferences dialog."""
@@ -153,9 +145,6 @@ class ExtensionManager(metaclass=aeidon.Contractual):
     def is_active(self, module):
         """Return ``True`` if extension is active, ``False`` if not."""
         return (module in self._active)
-
-    def setup_extension_require(self, module, slave=False):
-        assert module in self._metadata
 
     def setup_extension(self, module, slave=False):
         """
@@ -201,26 +190,15 @@ class ExtensionManager(metaclass=aeidon.Contractual):
                 gaupol.conf.extensions.active.remove(module)
             else: self.setup_extension(module)
 
-    def show_help_require(self, module):
-        assert module in self._active
-        assert module in self._metadata
-
     def show_help(self, module):
         """Show documentation on using extension."""
         extension = self._active[module]
         extension.show_help()
 
-    def show_preferences_dialog_require(self, module, parent):
-        assert module in self._active
-        assert module in self._metadata
-
     def show_preferences_dialog(self, module, parent):
         """Show a preferences dialog for configuring extension."""
         extension = self._active[module]
         extension.show_preferences_dialog(parent)
-
-    def teardown_extension_require(self, module, force=True):
-        assert module in self._metadata
 
     def teardown_extension(self, module, force=True):
         """

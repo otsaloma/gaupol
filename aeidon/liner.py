@@ -25,7 +25,7 @@ import sys
 __all__ = ("Liner",)
 
 
-class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
+class Liner(aeidon.Parser):
 
     """
     Breaking lines to a specified width.
@@ -59,28 +59,11 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
         self.max_length = 40
         self.max_lines = 3
 
-    def _boxes_to_lines_require(self, boxes, breaks):
-        for i in breaks:
-            assert i in range(len(boxes) - 1)
-
-    def _boxes_to_lines_ensure(self, value, boxes, breaks):
-        assert len(value) == len(breaks) + 1
-
     def _boxes_to_lines(self, boxes, breaks):
         """Return `boxes` joined to form lines."""
         edges = [0] + [x+1 for x in breaks] + [len(boxes)]
         return  [" ".join(boxes[edges[i]:edges[i+1]])
                  for i in range(len(edges) - 1)]
-
-    def _break_lines_require(self, boxes, penalties, nlines):
-        assert len(boxes) == len(penalties)
-
-    def _break_lines_ensure(self, value, boxes, penalties, nlines):
-        breaks, demerit = value
-        if breaks is not None:
-            assert len(breaks) <= nlines - 1
-            for i in breaks:
-                assert i in range(len(boxes) - 1)
 
     def _break_lines(self, boxes, penalties, nlines):
         """
@@ -126,11 +109,6 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
                 best_demerit = demerit
         return best_breaks, best_demerit
 
-    def _calculate_demerit_require(self, boxes, penalties, breaks):
-        assert len(boxes) == len(penalties)
-        for i in breaks:
-            assert i in range(len(boxes) - 1)
-
     def _calculate_demerit(self, boxes, penalties, breaks):
         """Return demerit measure for `boxes` broken by `breaks`."""
         nlines = len(breaks) + 1
@@ -151,9 +129,6 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
 
                 + 100 * (nlines-1)**3
                 + 1000 * max(0, nlines - self.max_lines)**3)
-
-    def _detect_penalties_ensure(self, value, boxes):
-        assert len(value) == len(boxes)
 
     def _detect_penalties(self, boxes):
         """Detect penalties for break points following `boxes`."""
@@ -177,13 +152,6 @@ class Liner(aeidon.Parser, metaclass=aeidon.Contractual):
             pos = pos + 1 + len(boxes[i])
             penalties[i] = textpen[pos]
         return penalties
-
-    def _list_possible_breaks_require(self, boxes, penalties, nlines):
-        assert len(boxes) == len(penalties)
-
-    def _list_possible_breaks_ensure(self, value, boxes, penalties, nlines):
-        for i in value:
-            assert i in range(len(boxes) - 1)
 
     @aeidon.deco.memoize(100)
     def _list_possible_breaks(self, boxes, penalties, nlines):

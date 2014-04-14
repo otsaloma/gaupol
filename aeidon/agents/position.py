@@ -22,12 +22,9 @@ import aeidon
 _ = aeidon.i18n._
 
 
-class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class PositionAgent(aeidon.Delegate):
 
     """Manipulating times and frames."""
-
-    def _get_frame_transform_ensure(self, value, p1, p2):
-        assert aeidon.is_frame(value[1])
 
     def _get_frame_transform(self, p1, p2):
         """
@@ -45,9 +42,6 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         coefficient = (y2 - y1) / (x2 - x1)
         constant = int(round(-coefficient * x1 + y1, 0))
         return coefficient, constant
-
-    def _get_seconds_transform_ensure(self, value, p1, p2):
-        assert aeidon.is_seconds(value[1])
 
     def _get_seconds_transform(self, p1, p2):
         """
@@ -76,10 +70,6 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         p1 = [p1[0], self.calc.time_to_seconds(p1[1])]
         p2 = [p2[0], self.calc.time_to_seconds(p2[1])]
         return self._get_seconds_transform(p1, p2)
-
-    def adjust_durations_require(self, indices=None, *args, **kwargs):
-        for index in indices or ():
-            assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -139,10 +129,6 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.set_action_description(register, _("Adjusting durations"))
         return new_indices
 
-    def convert_framerate_require(self, indices, *args, **kwargs):
-        for index in indices or ():
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def convert_framerate(self, indices, framerate_in, framerate_out,
@@ -180,10 +166,6 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         action.revert_args = (orig_framerate,)
         self.register_action(action)
 
-    def shift_positions_require(self, indices, count, register=-1):
-        for index in indices or ():
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def shift_positions(self, indices, value, register=-1):
@@ -200,10 +182,6 @@ class PositionAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             new_subtitles.append(subtitle)
         self.replace_positions(indices, new_subtitles, register=register)
         self.set_action_description(register, _("Shifting positions"))
-
-    def transform_positions_require(self, indices, *args, **kwargs):
-        for index in indices or ():
-            assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable

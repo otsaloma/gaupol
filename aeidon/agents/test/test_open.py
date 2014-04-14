@@ -74,9 +74,7 @@ class TestOpenAgent(aeidon.TestCase):
         self.project.open_main(path, "ascii")
         assert self.project.subtitles
 
-    @aeidon.deco.monkey_patch(aeidon, "DEBUG")
     def test_open_main__parse_error(self):
-        aeidon.DEBUG = False
         path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("00:00:01,000 --> 00:00:02,000\n\n")

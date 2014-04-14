@@ -116,14 +116,6 @@ class EnumerationItem(int):
         """Return name as the string representation."""
         return self.name
 
-    if not aeidon.DEBUG:
-        del __eq__
-        del __ge__
-        del __gt__
-        del __le__
-        del __lt__
-        del __ne__
-
 
 class Enumeration(list):
 

@@ -23,7 +23,7 @@ import re
 _ = aeidon.i18n._
 
 
-class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class FormatAgent(aeidon.Delegate):
 
     """Changing the appearance of texts."""
 
@@ -74,10 +74,6 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
                 return True
         return False
 
-    def add_dialogue_dashes_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def add_dialogue_dashes(self, indices, doc, register=-1):
@@ -96,11 +92,6 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             new_texts.append(parser.get_text())
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Adding dialogue dashes"))
-
-    def change_case_require(self, indices, doc, method, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-        assert method in ("title", "capitalize", "upper", "lower")
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -121,10 +112,6 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Changing case"))
 
-    def italicize_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def italicize(self, indices, doc, register=-1):
@@ -139,10 +126,6 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             new_texts.append(text)
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Italicizing"))
-
-    def remove_dialogue_dashes_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -160,10 +143,6 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Removing dialogue dashes"))
 
-    def toggle_dialogue_dashes_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def toggle_dialogue_dashes(self, indices, doc, register=-1):
@@ -172,10 +151,6 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             return self.add_dialogue_dashes(indices, doc, register=register)
         return self.remove_dialogue_dashes(indices, doc, register=register)
 
-    def toggle_italicization_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def toggle_italicization(self, indices, doc, register=-1):
@@ -183,10 +158,6 @@ class FormatAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if self._should_italicize(indices, doc):
             return self.italicize(indices, doc, register=register)
         return self.unitalicize(indices, doc, register=register)
-
-    def unitalicize_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable

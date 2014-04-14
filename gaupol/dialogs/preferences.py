@@ -270,9 +270,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             self._preferences_button.set_sensitive(False)
 
 
-class FilePage(aeidon.Delegate,
-               gaupol.BuilderDialog,
-               metaclass=aeidon.Contractual):
+class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """File preferences page."""
 
@@ -356,17 +354,9 @@ class FilePage(aeidon.Delegate,
         store = self._tree_view.get_model()
         self._tree_view.set_cursor(len(store) - 1)
 
-    def _on_auto_check_toggled_require(self, check_button):
-        assert aeidon.util.chardet_available()
-
     def _on_auto_check_toggled(self, check_button):
         """Save encoding auto-detection usage."""
         gaupol.conf.encoding.try_auto = check_button.get_active()
-
-    def _on_down_button_clicked_require(self, *args):
-        row = self._get_selected_row()
-        store = self._tree_view.get_model()
-        assert row < len(store) - 1
 
     def _on_down_button_clicked(self, *args):
         """Move the selected fallback encoding down."""
@@ -381,9 +371,6 @@ class FilePage(aeidon.Delegate,
         """Save locale encoding usage."""
         gaupol.conf.encoding.try_locale = check_button.get_active()
 
-    def _on_remove_button_clicked_require(self, *args):
-        self._get_selected_row() is not None
-
     def _on_remove_button_clicked(self, *args):
         """Remove the selected fallback encoding."""
         row = self._get_selected_row()
@@ -393,9 +380,6 @@ class FilePage(aeidon.Delegate,
         store = self._tree_view.get_model()
         if len(store) <= 0: return
         self._tree_view.set_cursor(max(row-1, 0))
-
-    def _on_up_button_clicked_require(self, *args):
-        self._get_selected_row() > 0
 
     def _on_up_button_clicked(self, *args):
         """Move the selected fallback encoding up."""

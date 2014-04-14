@@ -23,7 +23,7 @@ import aeidon
 __all__ = ("Parser",)
 
 
-class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
+class Parser(aeidon.Finder):
 
     """
     Text parser for markup-tag-aware text editing.
@@ -58,9 +58,6 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
         self.clean_func = clean_func
         self.re_tag = re_tag
 
-    def _set_margins_require(self, text):
-        assert self.re_tag is not None
-
     def _set_margins(self, text):
         """Find the margin markup tags in `text` if such exist."""
         lines = text.split("\n")
@@ -88,9 +85,6 @@ class Parser(aeidon.Finder, metaclass=aeidon.Contractual):
             # Ensure that no other tags exists on any of the lines.
             if self.re_tag.search(line) is not None: return
         self._margins = [start_tag, end_tag]
-
-    def _set_tags_require(self, text):
-        assert self.re_tag is not None
 
     def _set_tags(self, text):
         """Find markup tags in `text`."""

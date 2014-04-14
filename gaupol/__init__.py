@@ -88,7 +88,6 @@ from gaupol.attrdict import *
 from gaupol.config import *
 conf = ConfigurationStore()
 from gaupol import ruler
-from gaupol.meta import *
 from gaupol.entries import *
 from gaupol.renderers import *
 from gaupol.floatlabel import *

@@ -24,7 +24,7 @@ import re
 __all__ = ("Markup",)
 
 
-class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
+class Markup(aeidon.Singleton):
 
     """
     Base class for text markup.
@@ -50,9 +50,6 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
 
     _flags = re.DOTALL | re.MULTILINE
     format = aeidon.formats.NONE
-
-    def _decode_apply_require(self, text, regex, replacement, groups):
-        assert replacement.count("{}") == len(groups)
 
     def _decode_apply(self, text, regex, replacement, groups):
         """
@@ -179,10 +176,6 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         regex = self._get_regex(pattern, flags)
         return regex.sub(replacement, text)
 
-    def bolden_require(self, text, bounds=None):
-        if bounds is not None:
-            assert 0 <= bounds[0] <= bounds[1] <= len(text)
-
     def bolden(self, text, bounds=None):
         """Return bolded `text`."""
         raise NotImplementedError
@@ -196,12 +189,6 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         that changes the style of the markup but not that of the text.
         """
         return text
-
-    def colorize_require(self, text, color, bounds=None):
-        regex = self._get_regex(r"[0-9a-fA-F]{6}")
-        assert regex.match(color) is not None
-        if bounds is not None:
-            assert 0 <= bounds[0] <= bounds[1] <= len(text)
 
     def colorize(self, text, color, bounds=None):
         """Return `text` colorized to hexadecimal value."""
@@ -222,10 +209,6 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         text = self._encode_s(text)
         return self._encode_u(text)
 
-    def fontify_require(self, text, font, bounds=None):
-        if bounds is not None:
-            assert 0 <= bounds[0] <= bounds[1] <= len(text)
-
     def fontify(self, text, font, bounds=None):
         """Return `text` changed to `font`."""
         raise NotImplementedError
@@ -235,18 +218,9 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
         """Regular expression for an italic markup tag or ``None``."""
         return None
 
-    def italicize_require(self, text, bounds=None):
-        if bounds is not None:
-            assert 0 <= bounds[0] <= bounds[1] <= len(text)
-
     def italicize(self, text, bounds=None):
         """Return italicized `text`."""
         raise NotImplementedError
-
-    def scale_require(self, text, size, bounds=None):
-        assert isinstance(size, int) or size.isdigit()
-        if bounds is not None:
-            assert 0 <= bounds[0] <= bounds[1] <= len(text)
 
     def scale(self, text, size, bounds=None):
         """Return `text` scaled to `size`."""
@@ -256,10 +230,6 @@ class Markup(aeidon.Singleton, metaclass=aeidon.Contractual):
     def tag(self):
         """Regular expression for any markup tag or ``None``."""
         return None
-
-    def underline_require(self, text, bounds=None):
-        if bounds is not None:
-            assert 0 <= bounds[0] <= bounds[1] <= len(text)
 
     def underline(self, text, bounds=None):
         """Return underlined `text`."""

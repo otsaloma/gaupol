@@ -24,9 +24,6 @@ class PuppetMaster:
     def __init__(self):
         self.name = "master"
 
-    def _invariant(self):
-        pass
-
 
 class TestDelegate(aeidon.TestCase):
 
@@ -45,6 +42,3 @@ class TestDelegate(aeidon.TestCase):
         self.delegate.none = None
         assert "none" in self.delegate.__dict__
         assert "none" not in self.master.__dict__
-
-    def test__invariant(self):
-        self.delegate._invariant()

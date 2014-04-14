@@ -27,7 +27,7 @@ from gi.repository import Gtk
 from gi.repository import GObject
 
 
-class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class OpenAgent(aeidon.Delegate):
 
     """Opening subtitle files and creating new projects."""
 
@@ -75,18 +75,6 @@ class OpenAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if sort_count <= 0: return
         basename = os.path.basename(path)
         self._show_sort_warning_dialog(basename, sort_count)
-
-    def _get_encodings_require(self, first=None):
-        if not first in (None, "auto"):
-            assert aeidon.encodings.is_valid_code(first)
-
-    def _get_encodings_ensure(self, value, first=None):
-        assert value
-        for encoding in value:
-            if encoding != "auto":
-                assert aeidon.encodings.is_valid_code(encoding)
-        if first is not None:
-            assert value[0] == first
 
     def _get_encodings(self, first=None):
         """Return a sequence of encodings to try when opening files."""

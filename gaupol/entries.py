@@ -45,7 +45,7 @@ def _blocked(function):
     return wrapper
 
 
-class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
+class TimeEntry(Gtk.Entry):
 
     """
     Entry for time data in format ``[-]HH:MM:SS.SSS``.
@@ -94,27 +94,15 @@ class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
         if (len(text) > (pos + 1)) and (text[pos + 1] in (":", ".")):
             self.set_position(pos + 2)
 
-    def _on_cut_clipboard_ensure(self, *args, **kwargs):
-        text = self.get_text()
-        assert (not text) or self._re_time.match(text)
-
     def _on_cut_clipboard(self, entry):
         """Change "cut-clipboard" signal to "copy-clipboard"."""
         self.stop_emission("cut-clipboard")
         self.emit("copy-clipboard")
 
-    def _on_delete_text_ensure(self, *args, **kwargs):
-        text = self.get_text()
-        assert (not text) or self._re_time.match(text)
-
     def _on_delete_text(self, entry, start_pos, end_pos):
         """Do not allow deleting text."""
         self.stop_emission("delete-text")
         self.set_position(start_pos)
-
-    def _on_key_press_event_ensure(self, *args, **kwargs):
-        text = self.get_text()
-        assert (not text) or self._re_time.match(text)
 
     def _on_key_press_event(self, entry, event):
         """Change numbers to zero if ``BackSpace`` or ``Delete`` pressed."""
@@ -127,10 +115,6 @@ class TimeEntry(Gtk.Entry, metaclass=gaupol.ContractualGObject):
             GLib.idle_add(self._zero_previous)
         elif event.keyval == Gdk.KEY_Delete:
             GLib.idle_add(self._zero_next)
-
-    def _on_insert_text_ensure(self, *args, **kwargs):
-        text = self.get_text()
-        assert (not text) or self._re_time.match(text)
 
     def _on_insert_text(self, entry, text, length, pos):
         """Insert `text` after validation."""

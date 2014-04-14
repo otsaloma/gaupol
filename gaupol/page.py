@@ -30,7 +30,7 @@ from gi.repository import Pango
 __all__ = ("Page",)
 
 
-class Page(aeidon.Observable, metaclass=aeidon.Contractual):
+class Page(aeidon.Observable):
 
     """
     User interface container and controller for :class:`aeidon.Project`.
@@ -236,9 +236,6 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         self.view.select_rows(rows)
         gaupol.util.iterate_main()
 
-    def _on_project_subtitles_inserted_ensure(self, value, project, rows):
-        self._assert_store()
-
     def _on_project_subtitles_inserted(self, project, rows):
         """Insert rows to the view and select them."""
         if not rows: return
@@ -259,9 +256,6 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
         self.view.set_focus(rows[0])
         self.view.select_rows(rows)
         gaupol.util.iterate_main()
-
-    def _on_project_subtitles_removed_ensure(self, value, project, rows):
-        self._assert_store()
 
     def _on_project_subtitles_removed(self, project, rows):
         """Remove rows from the view."""
@@ -345,18 +339,12 @@ class Page(aeidon.Observable, metaclass=aeidon.Contractual):
                 basename = basename[:-len(extension)]
         return _("{} translation").format(basename)
 
-    def reload_view_ensure(self, value, rows, fields):
-        self._assert_store(fields)
-
     def reload_view(self, rows, fields):
         """Reload the view in `rows` and `fields`."""
         store = self.view.get_model()
         for row, field in ((x, y) for x in rows for y in fields):
             value = self._get_subtitle_value(row, field)
             store[row][field] = value
-
-    def reload_view_all_ensure(self, value):
-        self._assert_store()
 
     def reload_view_all(self):
         """Clear and repopulate the entire view."""

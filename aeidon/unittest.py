@@ -24,7 +24,7 @@ import os
 __all__ = ("TestCase",)
 
 
-class TestCase(metaclass=aeidon.Contractual):
+class TestCase:
 
     """
     Base class for unit test cases.
@@ -44,9 +44,6 @@ class TestCase(metaclass=aeidon.Contractual):
                              .format(repr(function),
                                      repr(exception)))
 
-    def get_sample_text_ensure(self, value, format, name=None):
-        assert value.count("a") > 10
-
     @aeidon.deco.memoize(100)
     def get_sample_text(self, format, name=None):
         """
@@ -61,15 +58,9 @@ class TestCase(metaclass=aeidon.Contractual):
         with open(path, "r", encoding="ascii") as fobj:
             return fobj.read().strip()
 
-    def new_microdvd_file_ensure(self, value):
-        assert os.path.isfile(value)
-
     def new_microdvd_file(self):
         """Return path to a new temporary ``MicroDVD`` file."""
         return self.new_temp_file(aeidon.formats.MICRODVD)
-
-    def new_project_ensure(self, value):
-        assert value.subtitles
 
     def new_project(self):
         """Return a new project with both main and translation files."""
@@ -78,15 +69,9 @@ class TestCase(metaclass=aeidon.Contractual):
         project.open_translation(self.new_microdvd_file(), "ascii")
         return project
 
-    def new_subrip_file_ensure(self, value):
-        assert os.path.isfile(value)
-
     def new_subrip_file(self):
         """Return path to a new temporary ``SubRip`` file."""
         return self.new_temp_file(aeidon.formats.SUBRIP)
-
-    def new_temp_file_ensure(self, value, format, name=None):
-        assert os.path.isfile(value)
 
     def new_temp_file(self, format, name=None):
         """Return path to a new temporary subtitle file."""

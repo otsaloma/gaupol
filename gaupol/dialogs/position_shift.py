@@ -117,12 +117,9 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         gaupol.util.set_cursor_normal(self)
 
 
-class FrameShiftDialog(PositionShiftDialog, metaclass=aeidon.Contractual):
+class FrameShiftDialog(PositionShiftDialog):
 
     """Dialog for shifting frames."""
-
-    def _get_amount_ensure(self, value):
-        assert aeidon.is_frame(value)
 
     def _get_amount(self):
         """Return the amount of frames to shift."""
@@ -138,12 +135,9 @@ class FrameShiftDialog(PositionShiftDialog, metaclass=aeidon.Contractual):
         self._unit_label.set_text(_("frames"))
 
 
-class TimeShiftDialog(PositionShiftDialog, metaclass=aeidon.Contractual):
+class TimeShiftDialog(PositionShiftDialog):
 
     """Dialog for shifting times."""
-
-    def _get_amount_ensure(self, value):
-        assert aeidon.is_seconds(value)
 
     def _get_amount(self):
         """Return the amount of seconds to shift."""

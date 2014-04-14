@@ -28,7 +28,7 @@ except Exception:
     pass
 
 
-class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
+class TextAgent(aeidon.Delegate):
 
     """Automatic correcting of texts."""
     _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)(?<!…)\w")
@@ -64,9 +64,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
             cap_next = not self._capitalize_first(parser, z)
         return self._capitalize_text(parser, pattern, cap_next)
 
-    def _get_enchant_checker_require(self, language):
-        assert aeidon.util.enchant_available()
-
     def _get_enchant_checker(self, language):
         """
         Return an enchant spell-checker for `language`.
@@ -84,18 +81,12 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         i = [list(range(x.wordpos, x.wordpos + len(x.word))) for x in checker]
         return aeidon.util.flatten(i)
 
-    def _get_penalties_ensure(self, value, patterns):
-        assert len(value) <= len(patterns)
-
     def _get_penalties(self, patterns):
         """Return a list of penalty definitions."""
         return [dict(pattern=x.get_field("Pattern"),
                      flags=x.get_flags(),
                      group=int(x.get_field("Group")),
                      value=float(x.get_field("Penalty"))) for x in patterns]
-
-    def _get_substitutions_ensure(self, value, patterns):
-        assert len(value) <= len(patterns)
 
     def _get_substitutions(self, patterns):
         """Return a sequence of tuples of pattern, flags, replacement."""
@@ -130,10 +121,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         parser.set_regex(pattern)
         parser.replacement = replacement
         parser.replace_all()
-
-    def break_lines_require(self, indices, *args, **kwargs):
-        for index in (indices or ()):
-            assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -197,10 +184,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.replace_texts(new_indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Breaking lines"))
 
-    def capitalize_require(self, indices, doc, pattern, register=-1):
-        for index in (indices or ()):
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def capitalize(self, indices, doc, patterns, register=-1):
@@ -241,10 +224,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.replace_texts(new_indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Capitalizing texts"))
 
-    def correct_common_errors_require(self, indices, *args, **kwargs):
-        for index in (indices or ()):
-            assert 0 <= index < len(self.subtitles)
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def correct_common_errors(self, indices, doc, patterns, register=-1):
@@ -277,10 +256,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if not new_indices: return
         self.replace_texts(new_indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Correcting common errors"))
-
-    def remove_hearing_impaired_require(self, indices, *args, **kwargs):
-        for index in (indices or ()):
-            assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -319,11 +294,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         if not remove_indices: return
         self.remove_subtitles(remove_indices, register=register)
         self.group_actions(register, 2, description)
-
-    def spell_check_join_words_require(self, indices, *args, **kwargs):
-        for index in (indices or ()):
-            assert 0 <= index < len(self.subtitles)
-        assert aeidon.util.enchant_available()
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -374,11 +344,6 @@ class TextAgent(aeidon.Delegate, metaclass=aeidon.Contractual):
         self.replace_texts(new_indices, doc, new_texts, register=register)
         description = _("Joining words by spell-check suggestions")
         self.set_action_description(register, description)
-
-    def spell_check_split_words_require(self, indices, *args, **kwargs):
-        for index in (indices or ()):
-            assert 0 <= index < len(self.subtitles)
-        assert aeidon.util.enchant_available()
 
     @aeidon.deco.export
     @aeidon.deco.revertable

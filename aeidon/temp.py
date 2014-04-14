@@ -26,10 +26,6 @@ import tempfile
 _paths = []
 
 
-def create_ensure(value, suffix=""):
-    assert os.path.isfile(value)
-
-@aeidon.deco.contractual
 def create(suffix=""):
     """Create a new temporary file and return its path."""
     handle, path = tempfile.mkstemp(suffix, "gaupol-")
@@ -40,10 +36,6 @@ def create(suffix=""):
     _paths.append(path)
     return path
 
-def create_directory_ensure(value, suffix=""):
-    assert os.path.isdir(value)
-
-@aeidon.deco.contractual
 def create_directory(suffix=""):
     """Create a new temporary directory and return its path."""
     path = tempfile.mkdtemp(suffix, "gaupol-")

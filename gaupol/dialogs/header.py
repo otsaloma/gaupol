@@ -27,7 +27,7 @@ from gi.repository import Gtk
 __all__ = ("HeaderDialog",)
 
 
-class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
+class HeaderDialog(gaupol.BuilderDialog):
 
     """Dialog for editing subtitle file headers."""
 
@@ -41,17 +41,6 @@ class HeaderDialog(gaupol.BuilderDialog, metaclass=aeidon.Contractual):
                 "tran_template_button",
                 "tran_text_view",
                 "tran_vbox")
-
-    def __init___require(self, parent, application):
-        page = application.get_current_page()
-        has_header_count = 0
-        if page.project.main_file is not None:
-            if page.project.main_file.format.has_header:
-                has_header_count += 1
-        if page.project.tran_file is not None:
-            if page.project.tran_file.format.has_header:
-                has_header_count += 1
-        assert has_header_count > 0
 
     def __init__(self, parent, application):
         """Initialize a :class:`HeaderDialog` instance."""

@@ -62,10 +62,6 @@ class SubStationAlpha(aeidon.Markup):
         text = self._decode_i(text, r"\{\\i1\}(.*?)\{\\i[0\\]\}", 1)
         return self._decode_s(text, r"\{\\fs(\d+)\}(.*?)\{\\fs\\\}", 1, 2)
 
-    def _post_decode_ensure(self, value, text):
-        regex = self._get_regex(r"\{\\.*?\}")
-        assert regex.search(value) is None
-
     def _post_decode(self, text):
         """Return `text` with markup finalized after decoding."""
         # Remove all unsupported markup tags.
@@ -93,10 +89,6 @@ class SubStationAlpha(aeidon.Markup):
                 parts[i - 1] += "}{"
         return "\\".join(parts)
 
-    def _pre_decode_color_ensure(self, value, text):
-        regex = self._get_regex(r"\{\\c&H([0-9a-fA-F]*)&\}")
-        assert regex.search(value) is None
-
     def _pre_decode_color(self, text):
         """
         Return `text` with colors converted to standard hexadecimal form.
@@ -111,10 +103,6 @@ class SubStationAlpha(aeidon.Markup):
         color = "{}{}{}".format(color[4:], color[2:4], color[:2])
         text = regex.sub(r"{{\\c#{}}}".format(color), text, 1)
         return self._pre_decode_color(text)
-
-    def _pre_decode_reset_ensure(self, value, text):
-        regex = self._get_regex(self._reset_pattern)
-        assert regex.search(value) is None
 
     def _pre_decode_reset(self, text):
         """
