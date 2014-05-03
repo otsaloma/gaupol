@@ -31,8 +31,7 @@ class Markup(aeidon.Singleton):
     Markup conversions between different formats are done via an internal
     format, which has the following BBcode-style tags with angle brackets.
     Conversions are best done via the ``_decode_*`` and ``_encode_*`` methods
-    rather than hard-coding the internal tags in regular expression
-    substitutions.
+    rather than hard-coding internal tags in regular expression substitutions.
 
      * ``<b>...................</b>``
      * ``<i>...................</i>``
@@ -49,6 +48,30 @@ class Markup(aeidon.Singleton):
 
     _flags = re.DOTALL | re.MULTILINE
     format = aeidon.formats.NONE
+
+    def bolden(self, text, bounds=None):
+        """Return bolded `text`."""
+        raise NotImplementedError
+
+    def clean(self, text):
+        """
+        Return `text` with less ugly markup.
+
+        Subclasses can implement this to, for example, remove redundant markup,
+        finetune tag positioning or to join or split tags; in general, whatever
+        that changes the style of the markup but not that of the text.
+        """
+        return text
+
+    def colorize(self, text, color, bounds=None):
+        """Return `text` colorized to hexadecimal value."""
+        raise NotImplementedError
+
+    def decode(self, text):
+        """Return `text` with markup converted from this to internal format."""
+        text = self._pre_decode(text)
+        text = self._main_decode(text)
+        return self._post_decode(text)
 
     def _decode_apply(self, text, regex, replacement, groups):
         """
@@ -69,7 +92,8 @@ class Markup(aeidon.Singleton):
     def _decode_b(self, text, pattern, target, flags=0):
         """Return `text` with bold markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        return self._decode_apply(text, regex, "<b>{}</b>", (target,))
+        replacement = "<b>{}</b>"
+        return self._decode_apply(text, regex, replacement, (target,))
 
     def _decode_c(self, text, pattern, value, target, flags=0):
         """Return `text` with color markup converted to internal format."""
@@ -86,7 +110,8 @@ class Markup(aeidon.Singleton):
     def _decode_i(self, text, pattern, target, flags=0):
         """Return `text` with italic markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        return self._decode_apply(text, regex, "<i>{}</i>", (target,))
+        replacement = "<i>{}</i>"
+        return self._decode_apply(text, regex, replacement, (target,))
 
     def _decode_s(self, text, pattern, value, target, flags=0):
         """Return `text` with size markup converted to internal format."""
@@ -97,7 +122,17 @@ class Markup(aeidon.Singleton):
     def _decode_u(self, text, pattern, target, flags=0):
         """Return `text` with underline markup converted to internal format."""
         regex = self._get_regex(pattern, flags)
-        return self._decode_apply(text, regex, "<u>{}</u>", (target,))
+        replacement = "<u>{}</u>"
+        return self._decode_apply(text, regex, replacement, (target,))
+
+    def encode(self, text):
+        """Return `text` with markup converted from internal to this format."""
+        text = self._encode_b(text)
+        text = self._encode_c(text)
+        text = self._encode_f(text)
+        text = self._encode_i(text)
+        text = self._encode_s(text)
+        return self._encode_u(text)
 
     def _encode_apply(self, text, regex, method, target, value=None):
         """
@@ -115,10 +150,8 @@ class Markup(aeidon.Singleton):
         args = (text, (a, z))
         if value is not None:
             args = (text, match.group(value), (a, z))
-        try:
+        with aeidon.util.silent(NotImplementedError):
             text = method(*args)
-        except NotImplementedError:
-            pass
         if text == orig_text: return text
         return self._encode_apply(text, regex, method, target, value)
 
@@ -152,11 +185,24 @@ class Markup(aeidon.Singleton):
         regex = self._get_regex(r"<u>(.*?)</u>")
         return self._encode_apply(text, regex, self.underline, 1)
 
+    def fontify(self, text, font, bounds=None):
+        """Return `text` changed to `font`."""
+        raise NotImplementedError
+
     @aeidon.deco.memoize(100)
     def _get_regex(self, pattern, flags=0):
         """Return compiled regular expression from cache."""
         flags = self._flags | flags
         return re.compile(pattern, flags)
+
+    @property
+    def italic_tag(self):
+        """Regular expression for an italic markup tag or ``None``."""
+        return None
+
+    def italicize(self, text, bounds=None):
+        """Return italicized `text`."""
+        raise NotImplementedError
 
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
@@ -170,60 +216,14 @@ class Markup(aeidon.Singleton):
         """Return `text` with markup prepared for decoding."""
         return text
 
+    def scale(self, text, size, bounds=None):
+        """Return `text` scaled to `size`."""
+        raise NotImplementedError
+
     def _substitute(self, text, pattern, replacement, flags=0):
         """Return `text` with matches of `pattern` replaced."""
         regex = self._get_regex(pattern, flags)
         return regex.sub(replacement, text)
-
-    def bolden(self, text, bounds=None):
-        """Return bolded `text`."""
-        raise NotImplementedError
-
-    def clean(self, text):
-        """
-        Return `text` with less ugly markup.
-
-        Subclasses can implement this to, for example, remove redundant markup,
-        finetune tag positioning or to join or split tags, in general, whatever
-        that changes the style of the markup but not that of the text.
-        """
-        return text
-
-    def colorize(self, text, color, bounds=None):
-        """Return `text` colorized to hexadecimal value."""
-        raise NotImplementedError
-
-    def decode(self, text):
-        """Return `text` with markup converted from this to internal format."""
-        text = self._pre_decode(text)
-        text = self._main_decode(text)
-        return self._post_decode(text)
-
-    def encode(self, text):
-        """Return `text` with markup converted from internal to this format."""
-        text = self._encode_b(text)
-        text = self._encode_c(text)
-        text = self._encode_f(text)
-        text = self._encode_i(text)
-        text = self._encode_s(text)
-        return self._encode_u(text)
-
-    def fontify(self, text, font, bounds=None):
-        """Return `text` changed to `font`."""
-        raise NotImplementedError
-
-    @property
-    def italic_tag(self):
-        """Regular expression for an italic markup tag or ``None``."""
-        return None
-
-    def italicize(self, text, bounds=None):
-        """Return italicized `text`."""
-        raise NotImplementedError
-
-    def scale(self, text, size, bounds=None):
-        """Return `text` scaled to `size`."""
-        raise NotImplementedError
 
     @property
     def tag(self):

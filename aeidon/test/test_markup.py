@@ -20,76 +20,39 @@ import aeidon
 
 class TestMarkup(aeidon.TestCase):
 
-    text = ("All things weird are normal\n"
-            "in this whore of cities.")
+    text = "All things weird are normal\nin this whore of cities."
 
     def setup_method(self, method):
         self.markup = aeidon.Markup()
 
-    def test_bolden(self):
-        args = (self.markup.bolden, self.text)
-        self.assert_raises(NotImplementedError, *args)
-
     def test_clean(self):
         text = self.markup.clean(self.text)
         assert text == self.text
-
-    def test_colorize(self):
-        args = (self.markup.colorize, self.text, "ff00ff")
-        self.assert_raises(NotImplementedError, *args)
 
     def test_decode(self):
         text = self.markup.decode(self.text)
         assert text == self.text
 
     def test_encode__b(self):
-        text = ("<b>All</b> things weird are normal\n"
-                "in this whore of cities.")
+        text = "<b>All</b> things weird are normal\nin this whore of cities."
         assert self.markup.encode(text) == self.text
 
     def test_encode__color(self):
-        text = ('<color=#ffffff>All</color> things weird are normal\n'
-                'in this whore of cities.')
+        text = "<color=#FFFFFF>All</color> things weird are normal\nin this whore of cities."
         assert self.markup.encode(text) == self.text
 
     def test_encode__font(self):
-        text = ('<font=Sans>All things weird are normal\n'
-                'in this whore of cities.</font>')
+        text = "<font=Sans>All things weird are normal\nin this whore of cities.</font>"
         assert self.markup.encode(text) == self.text
 
     def test_encode__i(self):
-        text = ("<i>All things weird are normal\n"
-                "in this whore of cities.</i>")
+        text = "<i>All things weird are normal\nin this whore of cities.</i>"
         assert self.markup.encode(text) == self.text
 
     def test_encode__size(self):
-        text = ('All things weird are normal\n'
-                'in this whore of <size=12>cities</size>.')
+        text = "All things weird are normal\nin this whore of <size=12>cities</size>."
         assert self.markup.encode(text) == self.text
 
     def test_encode__u(self):
-        text = ("All things weird are normal\n"
-                "in this whore of <u>cities</u>.")
+        text = "All things weird are normal\nin this whore of <u>cities</u>."
         assert self.markup.encode(text) == self.text
-
-    def test_fontify(self):
-        args = (self.markup.fontify, self.text, "sans")
-        self.assert_raises(NotImplementedError, *args)
-
-    def test_italic_tag(self):
-        assert self.markup.italic_tag is None
-
-    def test_italicize(self):
-        args = (self.markup.italicize, self.text)
-        self.assert_raises(NotImplementedError, *args)
-
-    def test_scale(self):
-        args = (self.markup.scale, self.text, 12)
-        self.assert_raises(NotImplementedError, *args)
-
-    def test_tag(self):
-        assert self.markup.tag is None
-
-    def test_underline(self):
-        args = (self.markup.underline, self.text)
-        self.assert_raises(NotImplementedError, *args)
