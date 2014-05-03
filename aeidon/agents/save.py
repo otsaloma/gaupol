@@ -37,6 +37,14 @@ class SaveAgent(aeidon.Delegate):
             indices.append(i)
         return indices
 
+    def _ensure_mode(self, mode):
+        """Update mode of subtitles if necessary."""
+        if self.main_file is None: return
+        if mode == self.main_file.mode: return
+        for i, subtitle in enumerate(self.subtitles):
+            subtitle.mode = mode
+        self.emit("positions-changed", self.get_all_indices())
+
     def _save(self, doc, file, keep_changes):
         """
         Write subtitle data from `doc` to `file`.
