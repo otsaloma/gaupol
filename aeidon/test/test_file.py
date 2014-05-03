@@ -18,7 +18,6 @@
 
 import aeidon
 import codecs
-import sys
 
 
 class PuppetSubtitleFile(aeidon.SubtitleFile):
@@ -33,28 +32,6 @@ class TestSubtitleFile(aeidon.TestCase):
         path = self.new_temp_file(PuppetSubtitleFile.format)
         newline = aeidon.newlines.UNIX
         self.file = PuppetSubtitleFile(path, "ascii", newline)
-
-    def test__read_lines(self):
-        with open(self.file.path, "a") as f:
-            f.write("\n\r\n\n")
-        lines = self.file._read_lines()
-        assert lines
-        for line in lines:
-            assert not line.endswith("\n")
-        assert lines[-1]
-
-    def test_copy_from(self):
-        self.file.has_utf_16_bom = False
-        self.file.header = "test"
-        path = self.new_temp_file(PuppetSubtitleFile.format)
-        new_file = PuppetSubtitleFile(path, "ascii")
-        new_file.copy_from(self.file)
-        assert new_file.has_utf_16_bom is False
-        assert new_file.header == "test"
-
-    def test_read(self):
-        self.assert_raises(NotImplementedError,
-                           self.file.read)
 
     def test_read__utf_16(self):
         path = self.new_subrip_file()
@@ -93,16 +70,3 @@ class TestSubtitleFile(aeidon.TestCase):
             f.write(text)
         file = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8")
         file.read()
-
-    def test_write(self):
-        self.assert_raises(NotImplementedError,
-                           self.file.write,
-                           (),
-                           aeidon.documents.MAIN)
-
-    def test_write_to_file(self):
-        self.assert_raises(NotImplementedError,
-                           self.file.write_to_file,
-                           (),
-                           aeidon.documents.MAIN,
-                           sys.stdout)

@@ -32,10 +32,10 @@ class SubtitleFile:
     Base class for subtitle files.
 
     :cvar format: :attr:`aeidon.formats` item corresponding to file format
-    :cvar mode: :attr:`aeidon.modes` item corresponding to the native positions
+    :cvar mode: :attr:`aeidon.modes` item corresponding to native positions
     :ivar encoding: Character encoding used to read and write file
     :ivar has_utf_16_bom: True if BOM found for UTF-16-BE or UTF-16-LE
-    :ivar header: String of generic information at the top of the file
+    :ivar header: String of metadata at the top of the file
     :ivar newline: :attr:`aeidon.newlines` item, detected upon read
     :ivar path: Full, absolute path to the file on disk
 
@@ -57,13 +57,28 @@ class SubtitleFile:
         self.newline = newline or aeidon.util.get_default_newline()
         self.path = os.path.abspath(path)
 
+    def copy_from(self, other):
+        """Copy generic properties from `other`."""
+        if self.format == other.format:
+            self.header = other.header
+        self.has_utf_16_bom = other.has_utf_16_bom
+
     def _get_subtitle(self):
         """Return a new subtitle instance with proper properties."""
         return aeidon.Subtitle(self.mode)
 
+    def read(self):
+        """
+        Read file and return subtitles.
+
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
+        """
+        raise NotImplementedError
+
     def _read_lines(self):
         """
-        Read file to a unicoded list of lines.
+        Read file to a list of lines.
 
         All newlines are stripped.
         All blank lines from beginning and end are removed.
@@ -76,7 +91,7 @@ class SubtitleFile:
             lines = f.readlines()
             lines = [re_newline_char.sub("", x) for x in lines]
         for index in (0, -1):
-            while lines and (not lines[index].strip()):
+            while lines and not lines[index].strip():
                 lines.pop(index)
         newline = aeidon.util.detect_newlines(self.path)
         if newline is not None:
@@ -105,21 +120,6 @@ class SubtitleFile:
                 lines = [lines[i] for i in range(0, len(lines), 2)]
         return lines
 
-    def copy_from(self, other):
-        """Copy generic properties from `other`."""
-        if self.format == other.format:
-            self.header = other.header
-        self.has_utf_16_bom = other.has_utf_16_bom
-
-    def read(self):
-        """
-        Read file and return subtitles.
-
-        Raise :exc:`IOError` if reading fails.
-        Raise :exc:`UnicodeError` if decoding fails.
-        """
-        raise NotImplementedError
-
     def write(self, subtitles, doc):
         """
         Write `subtitles` with text from `doc` to file.
@@ -136,9 +136,9 @@ class SubtitleFile:
             # UTF-16 automatically adds the system default BOM, but
             # UTF-16-BE and UTF-16-LE don't. For the latter two, add the BOM,
             # if it was originally read in the file.
-            if self.has_utf_16_bom and (self.encoding == "utf_16_be"):
+            if self.has_utf_16_bom and self.encoding == "utf_16_be":
                 f.write(str(codecs.BOM_UTF16_BE, "utf_16_be"))
-            if self.has_utf_16_bom and (self.encoding == "utf_16_le"):
+            if self.has_utf_16_bom and self.encoding == "utf_16_le":
                 f.write(str(codecs.BOM_UTF16_LE, "utf_16_le"))
             self.write_to_file(subtitles, doc, f)
 
