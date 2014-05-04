@@ -35,31 +35,6 @@ class TestEnumerationItem(aeidon.TestCase):
         assert self.item_0 == self.item_0
         assert self.item_0 == 0
 
-    def test___ge__(self):
-        assert self.item_1 >= self.item_0
-        assert self.item_1 >= self.item_1
-        assert self.item_1 >= 0
-        assert self.item_1 >= 1
-
-    def test___gt__(self):
-        assert self.item_2 > self.item_1
-        assert self.item_2 > 1
-
-    def test___hash__(self):
-        {self.item_0: 0,
-         self.item_1: 1,
-         self.item_2: 2}
-
-    def test___le__(self):
-        assert self.item_1 <= self.item_2
-        assert self.item_1 <= self.item_1
-        assert self.item_1 <= 2
-        assert self.item_1 <= 1
-
-    def test___lt__(self):
-        assert self.item_0 < self.item_1
-        assert self.item_0 < 1
-
     def test___ne__(self):
         assert self.item_0 != self.item_1
         assert self.item_0 != 1
@@ -87,15 +62,15 @@ class TestEnumeration(aeidon.TestCase):
         assert 0 in self.fruits
         assert 1 in self.fruits
 
-    def test___contains____other(self):
-        item = aeidon.EnumerationItem(0, "test", object())
-        assert not item in self.fruits
-
     def test___delattr__(self):
         value = self.fruits.MANGO
         delattr(self.fruits, "MANGO")
         assert not hasattr(self.fruits, "MANGO")
         assert not value in self.fruits
+
+    def test_find_item(self):
+        assert self.fruits.find_item("size", 10) == self.fruits.APPLE
+        assert self.fruits.find_item("size", 20) == self.fruits.MANGO
 
     def test___setattr__(self):
         assert self.fruits.APPLE == 0
@@ -104,12 +79,3 @@ class TestEnumeration(aeidon.TestCase):
         assert self.fruits.MANGO.name == "MANGO"
         assert self.fruits.APPLE.size == 10
         assert self.fruits.MANGO.size == 20
-
-    def test_find_item(self):
-        assert self.fruits.find_item("size", 10) == self.fruits.APPLE
-        assert self.fruits.find_item("size", 20) == self.fruits.MANGO
-
-    def test_find_item__value_error(self):
-        self.assert_raises(ValueError,
-                           self.fruits.find_item,
-                           "size", 30)

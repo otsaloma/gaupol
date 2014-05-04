@@ -23,9 +23,9 @@ integers. The string value of an item will be the name that it was defined with
 in its set. New items can always be added to an enumeration.
 """
 
-import aeidon
-
 __all__ = ("EnumerationItem", "Enumeration",)
+
+# TODO: Dump this code and use the enum module added in Python 3.4?
 
 
 class EnumerationItem(int):
@@ -38,78 +38,16 @@ class EnumerationItem(int):
     harmonous with the rest of the items should be left up to the parent list.
     """
 
-    def __bool__(self):
-        """For consistency, always return ``True``."""
-        return True
-
-    def __eq__(self, other):
-        """Compare enumeration item equality by value."""
-        if isinstance(other, int):
-            if isinstance(other, EnumerationItem):
-                if self.parent is not other.parent:
-                    raise NotImplementedError
-            return int.__eq__(int(self), int(other))
-        if other is None:
-            return False
-        raise NotImplementedError
-
-    def __ge__(self, other):
-        """Compare enumeration item equality by value."""
-        if isinstance(other, int):
-            if isinstance(other, EnumerationItem):
-                if self.parent is not other.parent:
-                    raise NotImplementedError
-            return int.__ge__(int(self), int(other))
-        raise NotImplementedError
-
-    def __gt__(self, other):
-        """Compare enumeration item equality by value."""
-        if isinstance(other, int):
-            if isinstance(other, EnumerationItem):
-                if self.parent is not other.parent:
-                    raise NotImplementedError
-            return int.__gt__(int(self), int(other))
-        raise NotImplementedError
-
-    def __hash__(self):
-        """Return a hashable value."""
-        return int.__hash__(self)
-
-    def __le__(self, other):
-        """Compare enumeration item equality by value."""
-        if isinstance(other, int):
-            if isinstance(other, EnumerationItem):
-                if self.parent is not other.parent:
-                    raise NotImplementedError
-            return int.__le__(int(self), int(other))
-        raise NotImplementedError
-
-    def __lt__(self, other):
-        """Compare enumeration item equality by value."""
-        if isinstance(other, int):
-            if isinstance(other, EnumerationItem):
-                if self.parent is not other.parent:
-                    raise NotImplementedError
-            return int.__lt__(int(self), int(other))
-        raise NotImplementedError
-
-    def __ne__(self, other):
-        """Compare enumeration item equality by value."""
-        if isinstance(other, int):
-            if isinstance(other, EnumerationItem):
-                if self.parent is not other.parent:
-                    raise NotImplementedError
-            return int.__ne__(int(self), int(other))
-        if other is None:
-            return True
-        raise NotImplementedError
-
     def __new__(cls, value=0, name="", parent=None):
         """Return integer instance with additional attributes."""
         instance = int.__new__(cls, value)
         instance.name = name
         instance.parent = parent
         return instance
+
+    def __bool__(self):
+        """For consistency, always return ``True``."""
+        return True
 
     def __str__(self):
         """Return name as the string representation."""
@@ -123,8 +61,7 @@ class Enumeration(list):
 
     :class:`Enumeration` is an actual :class:`list` where enumeration items are
     stored as both list items and instance attributes. New items should be
-    added by setting an instance attribute. Data-changing list methods raise
-    :exc:`NotImplementedError`.
+    added by setting an instance attribute.
 
     Typical use to create a new enumeration would be something like::
 
@@ -152,14 +89,12 @@ class Enumeration(list):
         list.remove(self, getattr(self, name))
         return object.__delattr__(self, name)
 
-    def __delitem__(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def __iadd__(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def __imul__(self, *args, **kwargs):
-        raise NotImplementedError
+    def find_item(self, name, value):
+        """Return the first found item with the given attribute `value`."""
+        for item in self:
+            if getattr(item, name) == value:
+                return item
+        raise ValueError("Name {} not found".format(repr(name)))
 
     def __setattr__(self, name, value):
         """Set value of enumeration item with correct attributes."""
@@ -167,35 +102,3 @@ class Enumeration(list):
             value = value.__class__(len(self), name, self)
             list.append(self, value)
         return object.__setattr__(self, name, value)
-
-    def __setitem__(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def append(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def extend(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def find_item(self, name, value):
-        """Return the first found item with the given attribute `value`."""
-        for item in self:
-            if getattr(item, name) == value:
-                return item
-        raise ValueError("Name {} not found"
-                         .format(repr(name)))
-
-    def insert(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def pop(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def remove(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def reverse(self, *args, **kwargs):
-        raise NotImplementedError
-
-    def sort(self, *args, **kwargs):
-        raise NotImplementedError

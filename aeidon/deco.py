@@ -22,7 +22,6 @@ import collections
 import copy
 import functools
 import pickle
-import time
 
 # Python decorators normally do not preserve the signature of the original
 # function. We, however, absolutely need those function signatures kept to able
@@ -36,6 +35,24 @@ import time
 #  [1] http://pypi.python.org/pypi/decorator/
 #  [2] http://micheles.googlecode.com/hg/decorator/documentation.html
 
+
+def decorator_apply(dec, fun):
+    """Rewrap `dec` to preserve function signature."""
+    import decorator
+    return decorator.FunctionMaker.create(
+        fun, "return decorated(%(signature)s)",
+        dict(decorated=dec(fun)), __wrapped__=fun)
+
+def export(function):
+    """Decorator for delegate functions that are exported to master."""
+    function.export = True
+    return function
+
+if aeidon.RUNNING_SPHINX:
+    _export = export
+    def export(function):
+        return decorator_apply(_export, function)
+    export.__doc__ = _export.__doc__
 
 def _dump_subtitles(subtitles):
     """Return a tuple of essential attributes of subtitles."""
@@ -64,47 +81,14 @@ def _is_method(function, args):
     except (IndexError, AttributeError):
         return False
 
-def benchmark(function):
-    """Decorator for benchmarking functions and methods."""
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        value = function(*args, **kwargs)
-        duration = time.time() - start
-        print("{:7.3f} {}".format(duration, function.__name__))
-        return value
-    return wrapper
-
-if aeidon.RUNNING_SPHINX:
-    _benchmark = benchmark
-    def benchmark(function):
-        return decorator_apply(_benchmark, function)
-    benchmark.__doc__ = _benchmark.__doc__
-
-def decorator_apply(dec, fun):
-    """Rewrap `dec` to preserve function signature."""
-    import decorator
-    return decorator.FunctionMaker.create(
-        fun, 'return decorated(%(signature)s)',
-        dict(decorated=dec(fun)), __wrapped__=fun)
-
-def export(function):
-    """Decorator for delegate functions that are exported to master."""
-    function.export = True
-    return function
-
-if aeidon.RUNNING_SPHINX:
-    _export = export
-    def export(function):
-        return decorator_apply(_export, function)
-    export.__doc__ = _export.__doc__
-
 def memoize(limit=100):
     """
     Decorator for functions that cache their return values.
 
     Use ``None`` for `limit` for a boundless cache.
     """
+    # Since 3.2 Pyton has functools.lru_cache,
+    # but it doesn't seem to handle methods gracefully.
     def outer_wrapper(function):
         cache = collections.OrderedDict()
         @functools.wraps(function)
@@ -113,10 +97,8 @@ def memoize(limit=100):
             if _is_method(function, args):
                 params = (id(args[0]), args[1:], kwargs)
             key = pickle.dumps(params)
-            try:
+            with aeidon.util.silent(KeyError):
                 return cache[key]
-            except KeyError:
-                pass
             cache[key] = function(*args, **kwargs)
             if limit is not None:
                 while len(cache) > limit:
@@ -136,18 +118,7 @@ def monkey_patch(obj, name):
 
     Any changes done will be reverted after the function is run, i.e. `name`
     attribute is either restored to its original value or deleted, if it didn't
-    originally exist. The attribute in question must be able to correctly
-    handle a :func:`copy.deepcopy` operation.
-
-    Typical use would be unit testing code under legitimately unachievable
-    conditions, e.g. pseudo-testing behaviour on Windows, while not actually
-    using Windows::
-
-        @aeidon.deco.monkey_patch(sys, "platform")
-        def test_do_something():
-            sys.platform = "win32"
-            do_something()
-
+    originally exist.
     """
     def outer_wrapper(function):
         @functools.wraps(function)
@@ -196,10 +167,8 @@ def once(function):
     cache = []
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        try:
+        with aeidon.util.silent(IndexError):
             return cache[0]
-        except IndexError:
-            pass
         cache.append(function(*args, **kwargs))
         return cache[0]
     return wrapper
@@ -242,8 +211,7 @@ def revertable(function):
         project = args[0]
         main_changed = project.main_changed
         tran_changed = project.tran_changed
-        kwargs.setdefault("register", aeidon.registers.DO)
-        register = kwargs["register"]
+        register = kwargs.setdefault("register", aeidon.registers.DO)
         if register is None:
             # Execute plain function for special-case actions
             # that are not to be pushed to the undo stack.

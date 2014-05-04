@@ -22,36 +22,8 @@ import sys
 
 class TestModule(aeidon.TestCase):
 
-    def do_something(self):
-        self.count += 1
-        return 1
-
     def setup_method(self, method):
         self.project = self.new_project()
-
-    def test_benchmark(self):
-        @aeidon.deco.benchmark
-        def square(x):
-            return x**2
-        assert square(2) == 4
-        assert square(2) == 4
-
-    def test_export(self):
-        @aeidon.deco.export
-        def square(x):
-            return x**2
-        assert square.export is True
-        assert square(2) == 4
-
-    def test_memoize(self):
-        @aeidon.deco.memoize(3)
-        def square(x):
-            return x**2
-        assert square(1) == 1
-        assert square(1) == 1
-        assert square(2) == 4
-        assert square(3) == 9
-        assert square(4) == 16
 
     def test_monkey_patch__no_attribute(self):
         @aeidon.deco.monkey_patch(sys, "aeidon")
@@ -75,31 +47,7 @@ class TestModule(aeidon.TestCase):
         modify_platform()
         assert sys.platform == platform
 
-    def test_notify_frozen(self):
-        self.project.insert_subtitles((0,))
-        assert not self.project.thaw_notify()
-
-    def test_once(self):
-        function = aeidon.deco.once(lambda: 5)
-        assert function() == 5
-        assert function() == 5
-
-    @aeidon.deco.reversion_test
-    def test_reversion_test(self):
-        self.project.remove_subtitles((0,))
-
-    def test_revertable__no_register(self):
-        self.project.remove_subtitles((0,), register=None)
-        assert len(self.project.undoables) == 0
-        assert len(self.project.redoables) == 0
-
-    def test_revertable__register(self):
-        self.project.remove_subtitles((0,))
-        assert len(self.project.undoables) == 1
-        assert len(self.project.redoables) == 0
-
     def test_silent(self):
         function = lambda: [].remove(None)
         aeidon.deco.silent(ValueError)(function)()
         aeidon.deco.silent(Exception)(function)()
-        aeidon.deco.silent()(function)()
