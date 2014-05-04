@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2008-2009 Osmo Salomaa
+# Copyright (C) 2008 Osmo Salomaa
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,14 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Containers for additional format-specific subtitle attributes.
-
-Instances of containers must be able to gracefully survive a
-:func:`copy.deepcopy` operation. If the container is in some way complicated,
-it should implement :meth:`__copy__` and :meth:`__deepcopy__` methods to ensure
-this.
-"""
+"""Containers for additional format-specific subtitle attributes."""
 
 
 class SubRip:

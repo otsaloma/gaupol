@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2009,2011 Osmo Salomaa
+# Copyright (C) 2009 Osmo Salomaa
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
