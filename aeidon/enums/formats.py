@@ -19,7 +19,7 @@
 Enumerations for subtitle file format types.
 
 Mime-types of subtitle file formats conform to those defined in
-freedesktop.org_'s shared-mime-info_ package. For all formats not included in
+freedesktop.org_'s shared-mime-info_ package. For formats not included in
 ``shared-mime-info``, ``text/plain`` is used as the mime-type.
 
 .. _freedesktop.org: http://www.freedesktop.org/
