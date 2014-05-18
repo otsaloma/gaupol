@@ -23,36 +23,33 @@ class TestLiner(aeidon.TestCase):
 
     def setup_method(self, method):
         self.liner = aeidon.Liner(re.compile(r"<.+?>"))
-        flags = re.DOTALL | re.MULTILINE
-        self.liner.set_penalties((dict(pattern=r"( )- ",
-                                       flags=flags,
-                                       group=1,
-                                       value=-1000),
+        self.liner.set_penalties((
+            dict(pattern=r"( )- ",
+                 flags=re.DOTALL|re.MULTILINE,
+                 group=1,
+                 value=-1000),
 
-                                  dict(pattern=r"[,.;:!?]( )",
-                                       flags=flags,
-                                       group=1,
-                                       value=-100),
+            dict(pattern=r"[,.;:!?]( )",
+                 flags=re.DOTALL|re.MULTILINE,
+                 group=1,
+                 value=-100),
 
-                                  dict(pattern=r"\b(by|the|into|a)( )",
-                                       flags=flags,
-                                       group=2,
-                                       value=1000)))
-
+            dict(pattern=r"\b(by|the|into|a)( )",
+                 flags=re.DOTALL|re.MULTILINE,
+                 group=2,
+                 value=1000)))
 
     def test_break_lines__1(self):
         text = "Hello."
         self.liner.set_text(text)
-        text = self.liner.break_lines()
-        assert text == "Hello."
+        assert self.liner.break_lines() == "Hello."
 
     def test_break_lines__2(self):
         text = ("- Isn't he off on Saturdays? "
                 "- Didn't he tell you?")
 
         self.liner.set_text(text)
-        text = self.liner.break_lines()
-        assert text == (
+        assert self.liner.break_lines() == (
             "- Isn't he off on Saturdays?\n"
             "- Didn't he tell you?")
 
@@ -61,8 +58,7 @@ class TestLiner(aeidon.TestCase):
                 "lay a great dark forest.")
 
         self.liner.set_text(text)
-        text = self.liner.break_lines()
-        assert text == (
+        assert self.liner.break_lines() == (
             "Close by the king's castle\n"
             "lay a great dark forest.")
 
@@ -72,8 +68,7 @@ class TestLiner(aeidon.TestCase):
                 "by the side of the cool fountain.")
 
         self.liner.set_text(text)
-        text = self.liner.break_lines()
-        assert text == (
+        assert self.liner.break_lines() == (
             "The king's child went out\n"
             "into the forest and sat down\n"
             "by the side of the cool fountain.")
@@ -87,38 +82,10 @@ class TestLiner(aeidon.TestCase):
                 "and this ball was her favorite plaything.")
 
         self.liner.set_text(text)
-        text = self.liner.break_lines()
-        assert text == (
+        assert self.liner.break_lines() == (
             "The king's child went out\n"
             "into the forest and sat down by the side\n"
             "of the cool fountain; and when she\n"
             "was bored she took a golden ball,\n"
             "and threw it up high and caught it; and\n"
             "this ball was her favorite plaything.")
-
-
-    def test_break_lines__6(self):
-        text = ("one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight "
-                "one two three four five six seven eight")
-
-        self.liner.set_text(text)
-        text = self.liner.break_lines()
-        assert text == (
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight\n"
-            "one two three four five six seven eight")

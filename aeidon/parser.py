@@ -27,10 +27,10 @@ class Parser(aeidon.Finder):
     """
     Text parser for markup-tag-aware text editing.
 
-    :ivar _margins: Start tag, end tag that every line is wrapped in
-    :ivar _tags: List of lists of markup tag, position
     :ivar clean_func: Function to clean tags or ``None``
+    :ivar _margins: Start tag, end tag that every line is wrapped in
     :ivar re_tag: Regular expression object to match any tag
+    :ivar _tags: List of lists of markup tag, position
 
     The purpose of :class:`Parser` is to split text to the actual text and its
     markup tags, allowing the text to be edited while keeping its tags separate
@@ -52,10 +52,38 @@ class Parser(aeidon.Finder):
     def __init__(self, re_tag=None, clean_func=None):
         """Initialize a :class:`Parser` instance."""
         aeidon.Finder.__init__(self)
-        self._margins = None
-        self._tags = None
         self.clean_func = clean_func
+        self._margins = None
         self.re_tag = re_tag
+        self._tags = None
+
+    def get_text(self):
+        """Reassemble the full text and return it."""
+        if not self.text:
+            self._margins = []
+            self._tags = []
+        text = self.text[:]
+        for pos, tag in self._tags:
+            text = text[:pos] + tag + text[pos:]
+        if self._margins:
+            text = text.replace("\n", "{1}\n{0}".format(*self._margins))
+            text = self._margins[0] + text + self._margins[1]
+        if self.clean_func is not None:
+            text = self.clean_func(text)
+        return text
+
+    def replace(self, next=True):
+        """
+        Replace the current match of pattern.
+
+        `next` should be ``True`` to finish at end of match, ``False`` for
+        beginning. Raise :exc:`re.error` if bad replacement.
+        """
+        a = self.match_span[0]
+        orig_text = self.text[:]
+        aeidon.Finder.replace(self, next)
+        shift = len(self.text) - len(orig_text)
+        self._shift_tags(a, shift, orig_text)
 
     def _set_margins(self, text):
         """Find the margin markup tags in `text` if such exist."""
@@ -91,6 +119,18 @@ class Parser(aeidon.Finder):
             a, z = match.span()
             self._tags.append([a, text[a:z]])
 
+    def set_text(self, text):
+        """Set the target text to search in and parse it."""
+        aeidon.Finder.set_text(self, text)
+        self._margins = []
+        self._tags = []
+        if self.re_tag is None: return
+        if text.count("\n"):
+            self._set_margins(text)
+        if not self._margins:
+            self._set_tags(text)
+        self.text = self.re_tag.sub("", text)
+
     def _shift_tags(self, pos, shift, orig_text):
         """Shift all markup tags after `pos`."""
         if not shift: return
@@ -124,43 +164,3 @@ class Parser(aeidon.Finder):
                 between_length += len(tag)
             elif tag_pos >= pos_with_tags:
                 self._tags[i][0] += shift
-
-    def get_text(self):
-        """Reassemble the full text and return it."""
-        if not self.text:
-            self._margins = []
-            self._tags = []
-        text = self.text[:]
-        for pos, tag in self._tags:
-            text = text[:pos] + tag + text[pos:]
-        if self._margins:
-            text = text.replace("\n", "{1}\n{0}".format(*self._margins))
-            text = self._margins[0] + text + self._margins[1]
-        if self.clean_func is not None:
-            text = self.clean_func(text)
-        return text
-
-    def replace(self, next=True):
-        """
-        Replace the current match of pattern.
-
-        `next` should be ``True`` to finish at end of match, ``False`` for
-        beginning. Raise :exc:`re.error` if bad replacement.
-        """
-        a = self.match_span[0]
-        orig_text = self.text[:]
-        aeidon.Finder.replace(self, next)
-        shift = len(self.text) - len(orig_text)
-        self._shift_tags(a, shift, orig_text)
-
-    def set_text(self, text):
-        """Set the target text to search in and parse it."""
-        aeidon.Finder.set_text(self, text)
-        self._margins = []
-        self._tags = []
-        if self.re_tag is None: return
-        if text.count("\n"):
-            self._set_margins(text)
-        if not self._margins:
-            self._set_tags(text)
-        self.text = self.re_tag.sub("", text)

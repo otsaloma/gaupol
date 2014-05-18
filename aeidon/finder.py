@@ -17,7 +17,6 @@
 
 """String and regular expression finder and replacer."""
 
-import aeidon
 import re
 
 __all__ = ("Finder",)

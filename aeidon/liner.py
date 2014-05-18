@@ -29,16 +29,16 @@ class Liner(aeidon.Parser):
     """
     Breaking lines to a specified width.
 
-    :ivar _penalties: List of penalty pattern dictionaries
     :ivar length_func: A function that returns the length of its argument
     :ivar max_length: Maximum length of a line in units of :attr:`length_func`
     :ivar max_lines: Maximum preferred amount of lines (may be exceeded)
+    :ivar _penalties: List of penalty pattern dictionaries
     """
 
     # Reading Donald E. Knuth and Michael F. Plass's "Breaking Paragraphs into
     # Lines" from "Software--Practice and Experience" vol. 11 from 1981 is
-    # recommended to understand the general problem of breaking a paragraph of
-    # text into lines, the terminology used here as well of boxes, penalties
+    # recommended to understand the general problem of breaking a paragraph
+    # of text into lines, the terminology used here as well of boxes, penalties
     # and demerits and the computational complexity of finding the optimal
     # solution in each case. Subtitling is in many ways a different
     # application, which is a lot simpler, but also more ambiguous and
@@ -47,11 +47,7 @@ class Liner(aeidon.Parser):
     _re_multi_space = re.compile(r" {2,}")
 
     def __init__(self, re_tag=None, clean_func=None):
-        """
-        Initialize a :class:`Liner` instance.
-
-        `re_tag` should be a regular expression object.
-        """
+        """Initialize a :class:`Liner` instance."""
         aeidon.Parser.__init__(self, re_tag, clean_func)
         self._penalties = []
         self.length_func = len
@@ -99,14 +95,49 @@ class Liner(aeidon.Parser):
             negpen = sorted(x for x in penalties[i+1:] if x < 0)
             negpen = sum(negpen[:min(len(negpen), nlines - 2)])
             if (penalties[i] + negpen) > best_demerit: break
-            value = self._break_lines(boxes[i+1:], penalties[i+1:], nlines - 1)
+            value = self._break_lines(boxes[i+1:], penalties[i+1:], nlines-1)
             if value[0] is None: continue
-            later = [i + 1 + x for x in value[0]]
+            later = [i+1+x for x in value[0]]
             demerit = self._calculate_demerit(boxes, penalties, [i] + later)
             if demerit < best_demerit:
                 best_breaks = [i] + later
                 best_demerit = demerit
         return best_breaks, best_demerit
+
+    def break_lines(self):
+        """Break lines and return text."""
+        self.text = self.text.replace("\n", " ")
+        self.pattern = self._re_multi_space
+        self.replacement = " "
+        self.replace_all()
+        boxes = self.text.split(" ")
+        if len(boxes) == 1:
+            return self.get_text()
+        penalties = self._detect_penalties(boxes)
+        best_breaks = None
+        best_demerit = sys.maxsize
+        # We can probably handle up to ten lines of text
+        # before finding break points gets intolerably slow.
+        min_nlines = min(2, self.max_lines)
+        max_nlines = min(10, len(boxes))
+        for nlines in range(min_nlines, max_nlines+1):
+            breaks, demerit = self._break_lines(boxes, penalties, nlines)
+            if breaks is None: continue
+            if demerit < best_demerit:
+                best_breaks = breaks
+                best_demerit = demerit
+            if nlines < self.max_lines:
+                continue
+            pos = -1
+            for i in range(len(boxes)):
+                pos = pos + 1 + len(boxes[i])
+                text = self.text
+                if i in best_breaks:
+                    text = text[:pos] + "\n" + text[pos+1:]
+                self.text = text
+            return self.get_text()
+        # If text cannot be broken, return original text.
+        return self.get_text()
 
     def _calculate_demerit(self, boxes, penalties, breaks):
         """Return demerit measure for `boxes` broken by `breaks`."""
@@ -190,7 +221,7 @@ class Liner(aeidon.Parser):
             if alength > self.max_length: break
             later = self._list_possible_breaks(boxes[i+1:],
                                                penalties[i+1:],
-                                               nlines - 1)
+                                               nlines-1)
 
             keep[i] = bool(later)
         breaks = [breaks[i] for i in range(len(breaks)) if keep[i]]
@@ -202,41 +233,6 @@ class Liner(aeidon.Parser):
         points = sorted(zip(breakpen, breaks))
         breakpen, breaks = zip(*points)
         return(breaks)
-
-    def break_lines(self):
-        """Break lines and return text."""
-        self.text = self.text.replace("\n", " ")
-        self.pattern = self._re_multi_space
-        self.replacement = " "
-        self.replace_all()
-        boxes = self.text.split(" ")
-        if len(boxes) == 1:
-            return self.get_text()
-        penalties = self._detect_penalties(boxes)
-        best_breaks = None
-        best_demerit = sys.maxsize
-        # We can probably handle up to ten lines of text
-        # before finding break points gets intolerably slow.
-        min_nlines = min(2, self.max_lines)
-        max_nlines = min(10, len(boxes))
-        for nlines in range(min_nlines, max_nlines+1):
-            breaks, demerit = self._break_lines(boxes, penalties, nlines)
-            if breaks is None: continue
-            if demerit < best_demerit:
-                best_breaks = breaks
-                best_demerit = demerit
-            if nlines < self.max_lines:
-                continue
-            pos = -1
-            for i in range(len(boxes)):
-                pos = pos + 1 + len(boxes[i])
-                text = self.text
-                if i in best_breaks:
-                    text = text[:pos] + "\n" + text[pos+1:]
-                self.text = text
-            return self.get_text()
-        # If text cannot be broken, return original text.
-        return self.get_text()
 
     def set_penalties(self, penalties):
         """
