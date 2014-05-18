@@ -23,9 +23,6 @@ from gi.repository import Gtk
 
 class TestHeaderDialog(gaupol.TestCase):
 
-    def run__show_mpsub_error_dialog(self):
-        self.dialog._show_mpsub_error_dialog()
-
     def run_dialog__both(self):
         self.dialog.run()
         self.dialog.destroy()
@@ -46,7 +43,7 @@ class TestHeaderDialog(gaupol.TestCase):
         self.application = self.new_application()
         path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
         self.application.open_main(path, "ascii")
-        path = self.new_temp_file(aeidon.formats.MPSUB)
+        path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
         self.application.open_translation(path, "ascii")
         self.dialog = gaupol.HeaderDialog(self.application.window,
                                           self.application)
@@ -112,8 +109,3 @@ class TestHeaderDialog(gaupol.TestCase):
         self.dialog._tran_revert_button.clicked()
         value = self.dialog._get_translation_header()
         assert value == self.dialog._tran_file.header
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test___show_mpsub_error_dialog(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
-        self.dialog._show_mpsub_error_dialog()

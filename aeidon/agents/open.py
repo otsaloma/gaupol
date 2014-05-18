@@ -145,10 +145,6 @@ class OpenAgent(aeidon.Delegate):
         subtitles = self._read_file(self.main_file)
         self.subtitles, sort_count = self._sort_subtitles(subtitles)
         self.set_framerate(self.framerate, register=None)
-        if self.main_file.format == aeidon.formats.MPSUB:
-            # Get framerate from MPsub header.
-            if self.main_file.framerate is not None:
-                self.set_framerate(self.main_file.framerate, register=None)
         self.main_changed = 0
         # Deactivate possible translation file.
         self.tran_file = None

@@ -9,6 +9,6 @@ Terminal=false
 StartupNotify=true
 Icon=gaupol
 Type=Application
-MimeType=text/x-microdvd;text/x-mpsub;text/x-ssa;application/x-subrip;text/x-subviewer;
+MimeType=text/x-microdvd;text/x-ssa;application/x-subrip;text/x-subviewer;
 Categories=GTK;AudioVideo;Video;
 _X-GNOME-FullName=Gaupol Subtitle Editor

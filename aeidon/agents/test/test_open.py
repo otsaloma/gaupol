@@ -67,12 +67,6 @@ class TestOpenAgent(aeidon.TestCase):
 
         os.chmod(path, 0o777)
 
-    def test_open_main__mpsub(self):
-        self.project.remove_subtitles((0,))
-        path = self.new_temp_file(aeidon.formats.MPSUB, "mpsub-frame")
-        self.project.open_main(path, "ascii")
-        assert self.project.subtitles
-
     def test_open_main__parse_error(self):
         path = self.new_subrip_file()
         f = open(path, "w")

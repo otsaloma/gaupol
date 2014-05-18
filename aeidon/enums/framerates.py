@@ -26,28 +26,24 @@ __all__ = ("framerates",)
 class Framerate23976(aeidon.EnumerationItem):
 
     label = _("23.976 fps")
-    mpsub = "23.98"
     value = 24 / 1.001
 
 
 class Framerate24000(aeidon.EnumerationItem):
 
     label = _("24.000 fps")
-    mpsub = "24.00"
     value = 24.0
 
 
 class Framerate25000(aeidon.EnumerationItem):
 
     label = _("25.000 fps")
-    mpsub = "25.00"
     value = 25.0
 
 
 class Framerate29970(aeidon.EnumerationItem):
 
     label = _("29.970 fps")
-    mpsub = "29.97"
     value = 30 / 1.001
 
 

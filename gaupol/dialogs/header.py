@@ -129,19 +129,7 @@ class HeaderDialog(gaupol.BuilderDialog):
 
     def _save_header(self, file, header):
         """Save `header` for `file`."""
-        if file.format == aeidon.formats.MPSUB:
-            return self._save_header_mpsub(file, header)
         file.header = header
-
-    def _save_header_mpsub(self, file, header):
-        """Save `header` for MPsub format `file`."""
-        try:
-            file.set_header(header)
-        except ValueError:
-            return self._show_mpsub_error_dialog()
-        if file.framerate is None: return
-        page = self.application.get_current_page()
-        page.project.set_framerate(file.framerate, register=None)
 
     def _save_headers(self):
         """Save headers."""
@@ -162,15 +150,6 @@ class HeaderDialog(gaupol.BuilderDialog):
     def _set_translation_header(self, header):
         """Set translation `header` to text view."""
         self._tran_text_view.get_buffer().set_text(header)
-
-    def _show_mpsub_error_dialog(self):
-        """Show an error dialog for invalid MPsub header."""
-        title = _("Invalid header")
-        msg = _('MPsub header must contain a line of form "FORMAT=VALUE", '
-            'where VALUE is any of "TIME", "23.98", "25.00" or "29.97".')
-        dialog = gaupol.ErrorDialog(self._dialog, title, msg)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
-        gaupol.util.flash_dialog(dialog)
 
     @property
     def _tran_file(self):

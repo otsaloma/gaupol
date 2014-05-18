@@ -149,7 +149,6 @@ class RecentAction(Gtk.RecentAction, Action):
         # https://bugzilla.gnome.org/show_bug.cgi?id=695970
         recent_filter.add_mime_type("application/x-subrip")
         recent_filter.add_mime_type("text/x-microdvd")
-        recent_filter.add_mime_type("text/x-mpsub")
         recent_filter.add_mime_type("text/x-ssa")
         recent_filter.add_mime_type("text/x-subviewer")
         self.add_filter(recent_filter)

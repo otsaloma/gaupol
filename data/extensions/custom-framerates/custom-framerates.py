@@ -171,7 +171,6 @@ class CustomFrameratesExtension(gaupol.Extension):
             setattr(aeidon.framerates, name, aeidon.EnumerationItem())
             framerate = getattr(aeidon.framerates, name)
             framerate.label = _("{:.3f} fps").format(value)
-            framerate.mpsub = "{:.2f}".format(value)
             framerate.value = float(value)
             self._framerates.append(framerate)
             action_name = name.replace("FPS", "show_framerate")

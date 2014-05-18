@@ -64,17 +64,6 @@ class MPL2(aeidon.EnumerationItem):
     mode = aeidon.modes.TIME
 
 
-class MPsub(aeidon.EnumerationItem):
-
-    container = None
-    extension = ".sub"
-    has_header = True
-    identifier = r"^FORMAT=(TIME|[\d.]+)\s*$"
-    label = "MPsub"
-    mime_type = "text/x-mpsub"
-    mode = aeidon.modes.TIME
-
-
 class SubRip(aeidon.EnumerationItem):
 
     container = "subrip"
@@ -128,7 +117,6 @@ formats = aeidon.Enumeration()
 formats.ASS = AdvSubStationAlpha()
 formats.MICRODVD = MicroDVD()
 formats.MPL2 = MPL2()
-formats.MPSUB = MPsub()
 formats.SUBRIP = SubRip()
 formats.SSA = SubStationAlpha()
 formats.SUBVIEWER2 = SubViewer2()
