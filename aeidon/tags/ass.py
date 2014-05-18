@@ -38,10 +38,11 @@ class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
      * ``........{\\r[STYLE]}``
     """
 
+    format = aeidon.formats.ASS
+
     _closing_pattern = r"\{\\([biu])0\}"
     _opening_pattern = r"\{\\(?![biu]0)(b|i|u|c|fn|fs).*?\}"
-    _reset_pattern = r"\{\\r.*?\}"
-    format = aeidon.formats.ASS
+    _reset_pattern   = r"\{\\r.*?\}"
 
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
@@ -52,6 +53,5 @@ class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
     def underline(self, text, bounds=None):
         """Return underlined `text`."""
         a, z = bounds or (0, len(text))
-        return "".join((text[:a],
-                        "{{\\u1}}{}{{\\u0}}".format(text[a:z]),
-                        text[z:]))
+        target = "{{\\u1}}{}{{\\u0}}".format(text[a:z])
+        return "".join((text[:a], target, text[z:]))

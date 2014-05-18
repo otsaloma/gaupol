@@ -44,6 +44,29 @@ class MicroDVD(aeidon.Markup):
 
     format = aeidon.formats.MICRODVD
 
+    def bolden(self, text, bounds=None):
+        """Return bolded `text`."""
+        return self._style(text, "Y", "y", "b", bounds)
+
+    def colorize(self, text, color, bounds=None):
+        """Return `text` colorized to hexadecimal value."""
+        # Reverse the color value from RRGGBB to BBGGRR.
+        color = "${}{}{}".format(color[4:], color[2:4], color[:2])
+        return self._style(text, "C", "c", color, bounds)
+
+    def fontify(self, text, font, bounds=None):
+        """Return `text` changed to `font`."""
+        return self._style(text, "F", "f", font, bounds)
+
+    @property
+    def italic_tag(self):
+        """Regular expression for an italic markup tag."""
+        return self._get_regex(r"\{[Yy]:i\}")
+
+    def italicize(self, text, bounds=None):
+        """Return italicized `text`."""
+        return self._style(text, "Y", "y", "i", bounds)
+
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"\{([Yy]:b)\}(.*?)\{/\1\}", 2)
@@ -51,13 +74,15 @@ class MicroDVD(aeidon.Markup):
         text = self._decode_f(text, r"\{([Ff]:(.*?))\}(.*?)\{/\1\}", 2, 3)
         text = self._decode_i(text, r"\{([Yy]:i)\}(.*?)\{/\1\}", 2)
         text = self._decode_s(text, r"\{([Ss]:(.*?))\}(.*?)\{/\1\}", 2, 3)
-        return self._decode_u(text, r"\{([Yy]:u)\}(.*?)\{/\1\}", 2)
+        text = self._decode_u(text, r"\{([Yy]:u)\}(.*?)\{/\1\}", 2)
+        return text
 
     def _pre_decode(self, text):
         """Return `text` with markup prepared for decoding."""
         text = self._pre_decode_break(text)
         text = self._pre_decode_color(text)
-        return self._pre_decode_close(text)
+        text = self._pre_decode_close(text)
+        return text
 
     def _pre_decode_break(self, text):
         """
@@ -112,6 +137,10 @@ class MicroDVD(aeidon.Markup):
         text = regex.sub(r"{{\1#{}}}".format(color), text, 1)
         return self._pre_decode_color(text)
 
+    def scale(self, text, size, bounds=None):
+        """Return `text` scaled to `size`."""
+        return self._style(text, "S", "s", str(size), bounds)
+
     def _style(self, text, upper, lower, value, bounds=None):
         """Return `text` wrapped in ``upper`` or ``lower`` markup tag."""
         a, z = bounds or (0, len(text))
@@ -124,36 +153,9 @@ class MicroDVD(aeidon.Markup):
         if re_alpha.search(suffix): return text
         if (not "\n" in text) or ("\n" in text[a:z]):
             tag = "{{{}:{}}}".format(upper, value)
-        else: # Single line marked in a multiline subtitle.
+        else:
             tag = "{{{}:{}}}".format(lower, value)
         return "".join((text[:a], "{}{}".format(tag, text[a:])))
-
-    def bolden(self, text, bounds=None):
-        """Return bolded `text`."""
-        return self._style(text, "Y", "y", "b", bounds)
-
-    def colorize(self, text, color, bounds=None):
-        """Return `text` colorized to hexadecimal value."""
-        # Reverse the color value from RRGGBB to BBGGRR.
-        color = "${}{}{}".format(color[4:], color[2:4], color[:2])
-        return self._style(text, "C", "c", color, bounds)
-
-    def fontify(self, text, font, bounds=None):
-        """Return `text` changed to `font`."""
-        return self._style(text, "F", "f", font, bounds)
-
-    @property
-    def italic_tag(self):
-        """Regular expression for an italic markup tag."""
-        return self._get_regex(r"\{[Yy]:i\}")
-
-    def italicize(self, text, bounds=None):
-        """Return italicized `text`."""
-        return self._style(text, "Y", "y", "i", bounds)
-
-    def scale(self, text, size, bounds=None):
-        """Return `text` scaled to `size`."""
-        return self._style(text, "S", "s", str(size), bounds)
 
     @property
     def tag(self):

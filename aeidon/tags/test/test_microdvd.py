@@ -58,10 +58,10 @@ class TestMicroDVD(aeidon.TestCase):
             "<u>in this whore of cities.</u></i></b>")
 
     def test_decode__font(self):
-        text = ("{f:Sans}All things weird are normal\n"
+        text = ("{f:sans}All things weird are normal\n"
                 "in this whore of cities.")
         assert self.markup.decode(text) == (
-            "<font=Sans>All things weird are normal</font>\n"
+            "<font=sans>All things weird are normal</font>\n"
             "in this whore of cities.")
 
     def test_decode__italic(self):
@@ -100,10 +100,10 @@ class TestMicroDVD(aeidon.TestCase):
             "in this whore of cities.")
 
     def test_encode__font(self):
-        text = ("<font=Sans>All things weird are normal\n"
+        text = ("<font=sans>All things weird are normal\n"
                 "in this whore of cities.</font>")
         assert self.markup.encode(text) == (
-            "{F:Sans}All things weird are normal\n"
+            "{F:sans}All things weird are normal\n"
             "in this whore of cities.")
 
     def test_encode__italic(self):
@@ -128,8 +128,8 @@ class TestMicroDVD(aeidon.TestCase):
             "{y:u}in this whore of cities.")
 
     def test_fontify(self):
-        assert self.markup.fontify(self.text, "Sans") == (
-            "{F:Sans}All things weird are normal\n"
+        assert self.markup.fontify(self.text, "sans") == (
+            "{F:sans}All things weird are normal\n"
             "in this whore of cities.")
 
     def test_italic_tag(self):

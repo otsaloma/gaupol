@@ -55,9 +55,9 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
     """
     Model for subtitle data.
 
-    :ivar _delegations: Dictionary mapping method names to agent methods
     :ivar calc: Instance of :class:`aeidon.Calculator` used
     :ivar clipboard: Instance of :class:`aeidon.Clipboard` used
+    :ivar _delegations: Dictionary mapping method names to agent methods
     :ivar framerate: :attr:`aeidon.framerates` item corresponding to video
     :ivar main_changed: Integer, status of main document
 
@@ -107,22 +107,22 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
                "subtitles-changed",
                "translation-file-opened",
                "translation-file-saved",
-               "translation-texts-changed",)
+               "translation-texts-changed")
 
     def __getattr__(self, name):
         """Return method delegated to an agent."""
         try:
             return self._delegations[name]
-        except KeyError:
+        except LookupError:
             raise AttributeError
 
     def __init__(self, framerate=None, undo_limit=None):
         """Initialize a :class:`Project` instance."""
         aeidon.Observable.__init__(self)
         framerate = framerate or aeidon.framerates.FPS_23_976
-        self._delegations = {}
         self.calc = aeidon.Calculator(framerate)
         self.clipboard = aeidon.Clipboard()
+        self._delegations = {}
         self.framerate = framerate
         self.main_changed = 0
         self.main_file = None

@@ -58,10 +58,10 @@ class TestSubStationAlpha(aeidon.TestCase):
             "in this</i></b> whore of cities.")
 
     def test_decode__font(self):
-        text = ("All things {\\fnSans}weird{\\r} are normal\n"
+        text = ("All things {\\fnsans}weird{\\r} are normal\n"
                 "in this whore of cities.")
         assert self.markup.decode(text) == (
-            "All things <font=Sans>weird</font> are normal\n"
+            "All things <font=sans>weird</font> are normal\n"
             "in this whore of cities.")
 
     def test_decode__italic(self):
@@ -100,10 +100,10 @@ class TestSubStationAlpha(aeidon.TestCase):
             "in this whore of cities.")
 
     def test_encode__font(self):
-        text = ("<font=Sans>All things weird are normal\n"
+        text = ("<font=sans>All things weird are normal\n"
                 "in this whore of cities.</font>")
         assert self.markup.encode(text) == (
-            "{\\fnSans}All things weird are normal\n"
+            "{\\fnsans}All things weird are normal\n"
             "in this whore of cities.")
 
     def test_encode__italic(self):
@@ -126,8 +126,8 @@ class TestSubStationAlpha(aeidon.TestCase):
         assert self.markup.encode(text) == self.text
 
     def test_fontify(self):
-        assert self.markup.fontify(self.text, "Sans") == (
-            "{\\fnSans}All things weird are normal\n"
+        assert self.markup.fontify(self.text, "sans") == (
+            "{\\fnsans}All things weird are normal\n"
             "in this whore of cities.")
 
     def test_italic_tag(self):

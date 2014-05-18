@@ -40,14 +40,6 @@ class SubRip(aeidon.Markup):
     _flags = re.DOTALL | re.MULTILINE | re.IGNORECASE
     format = aeidon.formats.SUBRIP
 
-    def _main_decode(self, text):
-        """Return `text` with decodable markup decoded."""
-        text = self._decode_b(text, r"<b>(.*?)</b>", 1)
-        text = self._decode_i(text, r"<i>(.*?)</i>", 1)
-        text = self._decode_u(text, r"<u>(.*?)</u>", 1)
-        pattern = r'<font color="#([0-9a-fA-F]{6})">(.*?)</font>'
-        return self._decode_c(text, pattern, 1, 2)
-
     def bolden(self, text, bounds=None):
         """Return bolded `text`."""
         a, z = bounds or (0, len(text))
@@ -62,7 +54,8 @@ class SubRip(aeidon.Markup):
         # Remove or relocate space right after an opening tag.
         text = self._substitute(text, r" ?(<(?!/)[^>]+?>) ", r" \1")
         # Remove or relocate space right before a closing tag.
-        return self._substitute(text, r" (</[^>]+?>) ?", r"\1 ")
+        text = self._substitute(text, r" (</[^>]+?>) ?", r"\1 ")
+        return text
 
     def colorize(self, text, color, bounds=None):
         """Return `text` colorized to hexadecimal value."""
@@ -79,6 +72,14 @@ class SubRip(aeidon.Markup):
         """Return italicized `text`."""
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "<i>{}</i>".format(text[a:z]), text[z:]))
+
+    def _main_decode(self, text):
+        """Return `text` with decodable markup decoded."""
+        text = self._decode_b(text, r"<b>(.*?)</b>", 1)
+        text = self._decode_i(text, r"<i>(.*?)</i>", 1)
+        text = self._decode_u(text, r"<u>(.*?)</u>", 1)
+        pattern = r'<font color="#([0-9a-fA-F]{6})">(.*?)</font>'
+        return self._decode_c(text, pattern, 1, 2)
 
     @property
     def tag(self):

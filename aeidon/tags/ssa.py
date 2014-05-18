@@ -47,11 +47,44 @@ class SubStationAlpha(aeidon.Markup):
      e.g. ``ff00`` can be used instead of ``00ff00``.
     """
 
-    _closing_pattern = r"\{\\([bi])0\}"
     _flags = re.DOTALL | re.MULTILINE | re.IGNORECASE
-    _opening_pattern = r"\{\\(?![bi]0)(b|i|c|fn|fs).*?\}"
-    _reset_pattern = r"\{\\r\}"
     format = aeidon.formats.SSA
+
+    # Defined here so that AdvSubStationAlpha can override them.
+    _closing_pattern = r"\{\\([bi])0\}"
+    _opening_pattern = r"\{\\(?![bi]0)(b|i|c|fn|fs).*?\}"
+    _reset_pattern   = r"\{\\r\}"
+
+    def bolden(self, text, bounds=None):
+        """Return bolded `text`."""
+        a, z = bounds or (0, len(text))
+        target = "{{\\b1}}{}{{\\b0}}".format(text[a:z])
+        return "".join((text[:a], target, text[z:]))
+
+    def colorize(self, text, color, bounds=None):
+        """Return `text` colorized to hexadecimal value."""
+        a, z = bounds or (0, len(text))
+        # Reverse the color value from RRGGBB to BBGGRR.
+        color = "{}{}{}".format(color[4:], color[2:4], color[:2])
+        target = "{{\\c&H{}&}}{}".format(color, text[a:z])
+        return "".join((text[:a], target, text[z:]))
+
+    def fontify(self, text, font, bounds=None):
+        """Return `text` changed to `font`."""
+        a, z = bounds or (0, len(text))
+        target = "{{\\fn{}}}{}".format(font, text[a:z])
+        return "".join((text[:a], target, text[z:]))
+
+    @property
+    def italic_tag(self):
+        """Regular expression for an italic markup tag."""
+        return self._get_regex(r"\{\\i[01]\}")
+
+    def italicize(self, text, bounds=None):
+        """Return italicized `text`."""
+        a, z = bounds or (0, len(text))
+        target = "{{\\i1}}{}{{\\i0}}".format(text[a:z])
+        return "".join((text[:a], target, text[z:]))
 
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
@@ -59,7 +92,8 @@ class SubStationAlpha(aeidon.Markup):
         text = self._decode_c(text, r"\{\\c#(.+?)\}(.*?)\{\\c\\\}", 1, 2)
         text = self._decode_f(text, r"\{\\fn(.+?)\}(.*?)\{\\fn\\\}", 1, 2)
         text = self._decode_i(text, r"\{\\i1\}(.*?)\{\\i[0\\]\}", 1)
-        return self._decode_s(text, r"\{\\fs(\d+)\}(.*?)\{\\fs\\\}", 1, 2)
+        text = self._decode_s(text, r"\{\\fs(\d+)\}(.*?)\{\\fs\\\}", 1, 2)
+        return text
 
     def _post_decode(self, text):
         """Return `text` with markup finalized after decoding."""
@@ -70,7 +104,8 @@ class SubStationAlpha(aeidon.Markup):
         """Return `text` with markup prepared for decoding."""
         text = self._pre_decode_break(text)
         text = self._pre_decode_reset(text)
-        return self._pre_decode_color(text)
+        text = self._pre_decode_color(text)
+        return text
 
     def _pre_decode_break(self, text):
         """
@@ -129,39 +164,6 @@ class SubStationAlpha(aeidon.Markup):
             for j in reversed(range(len(opening_matches))):
                 parts[i] += "{{\\{}\\}}".format(opening_matches[j].group(1))
         return "".join(parts)
-
-    def bolden(self, text, bounds=None):
-        """Return bolded `text`."""
-        a, z = bounds or (0, len(text))
-        return "".join((text[:a],
-                        "{{\\b1}}{}{{\\b0}}".format(text[a:z]),
-                        text[z:]))
-
-    def colorize(self, text, color, bounds=None):
-        """Return `text` colorized to hexadecimal value."""
-        a, z = bounds or (0, len(text))
-        # Reverse the color value from RRGGBB to BBGGRR.
-        color = "{}{}{}".format(color[4:], color[2:4], color[:2])
-        target = "{{\\c&H{}&}}{}".format(color, text[a:z])
-        return "".join((text[:a], target, text[z:]))
-
-    def fontify(self, text, font, bounds=None):
-        """Return `text` changed to `font`."""
-        a, z = bounds or (0, len(text))
-        target = "{{\\fn{}}}{}".format(font, text[a:z])
-        return "".join((text[:a], target, text[z:]))
-
-    @property
-    def italic_tag(self):
-        """Regular expression for an italic markup tag."""
-        return self._get_regex(r"\{\\i[01]\}")
-
-    def italicize(self, text, bounds=None):
-        """Return italicized `text`."""
-        a, z = bounds or (0, len(text))
-        return "".join((text[:a],
-                        "{{\\i1}}{}{{\\i0}}".format(text[a:z]),
-                        text[z:]))
 
     def scale(self, text, size, bounds=None):
         """Return `text` scaled to `size`."""

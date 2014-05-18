@@ -39,6 +39,19 @@ class MPL2(aeidon.tags.MicroDVD):
 
     format = aeidon.formats.MPL2
 
+    def bolden(self, text, bounds=None):
+        """Return bolded `text`."""
+        return self._style_mpl2(text, "\\", bounds)
+
+    @property
+    def italic_tag(self):
+        """Regular expression for an italic markup tag."""
+        return self._get_regex(r"(^/)|(\{[Yy]:i\})")
+
+    def italicize(self, text, bounds=None):
+        """Return italicized `text`."""
+        return self._style_mpl2(text, "/", bounds)
+
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"<\\>(.*?)</\\>", 1)
@@ -82,19 +95,6 @@ class MPL2(aeidon.tags.MicroDVD):
         if re_alpha.search(suffix): return text
         styled_text = text[a:z].replace("\n", "\n{}".format(tag))
         return "".join((text[:a], tag, styled_text, text[z:]))
-
-    def bolden(self, text, bounds=None):
-        """Return bolded `text`."""
-        return self._style_mpl2(text, "\\", bounds)
-
-    @property
-    def italic_tag(self):
-        """Regular expression for an italic markup tag."""
-        return self._get_regex(r"(^/)|(\{[Yy]:i\})")
-
-    def italicize(self, text, bounds=None):
-        """Return italicized `text`."""
-        return self._style_mpl2(text, "/", bounds)
 
     @property
     def tag(self):

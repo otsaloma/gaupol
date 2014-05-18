@@ -26,7 +26,6 @@ class TestMPL2(TestMicroDVD):
             "in this whore of cities.")
 
     def setup_method(self, method):
-
         self.markup = aeidon.tags.new(aeidon.formats.MPL2)
 
     def test_bolden(self):

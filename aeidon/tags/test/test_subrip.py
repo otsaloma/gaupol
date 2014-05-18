@@ -91,7 +91,7 @@ class TestSubRip(aeidon.TestCase):
             'in this whore of cities.</font>')
 
     def test_encode__font(self):
-        text = ("<font=Sans>All things weird are normal\n"
+        text = ("<font=sans>All things weird are normal\n"
                 "in this whore of cities.</font>")
         assert self.markup.encode(text) == self.text
 
