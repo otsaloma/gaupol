@@ -275,7 +275,7 @@ def get_template_header(format):
     directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
     path = os.path.join(directory, format.name.lower())
     with silent(Exception):
-        header = read(path, encoding=None).rstrip()
+        header = read(path, encoding=None, quiet=True).rstrip()
         return normalize_newlines(header)
     directory = os.path.join(aeidon.DATA_DIR, "headers")
     path = os.path.join(directory, format.name.lower())
@@ -359,7 +359,7 @@ def print_write_unicode(exc_info, path, encoding):
           .format(path, encoding),
           file=sys.stderr)
 
-def read(path, encoding=None, fallback="utf_8"):
+def read(path, encoding=None, fallback="utf_8", quiet=False):
     """
     Read file at `path` and return text.
 
@@ -372,15 +372,17 @@ def read(path, encoding=None, fallback="utf_8"):
         with open(path, "r", encoding=encoding) as f:
             return f.read().strip()
     except IOError:
-        print_read_io(sys.exc_info(), path)
+        if not quiet:
+            print_read_io(sys.exc_info(), path)
         raise # IOError
     except UnicodeError:
         if not fallback in (encoding, None, ""):
-            return read(path, fallback, None)
-        print_read_unicode(sys.exc_info(), path, encoding)
+            return read(path, fallback, None, quiet)
+        if not quiet:
+            print_read_unicode(sys.exc_info(), path, encoding)
         raise # UnicodeError
 
-def readlines(path, encoding=None, fallback="utf_8"):
+def readlines(path, encoding=None, fallback="utf_8", quiet=False):
     """
     Read file at `path` and return lines.
 
@@ -388,7 +390,7 @@ def readlines(path, encoding=None, fallback="utf_8"):
     Raise :exc:`IOError` if reading fails.
     Raise :exc:`UnicodeError` if decoding fails.
     """
-    text = read(path, encoding, fallback)
+    text = read(path, encoding, fallback, quiet)
     text = normalize_newlines(text)
     return text.split("\n")
 
@@ -458,7 +460,7 @@ def uri_to_path(uri):
         return path.replace("/", "\\")
     return urllib.parse.urlsplit(uri)[2]
 
-def write(path, text, encoding=None, fallback="utf_8"):
+def write(path, text, encoding=None, fallback="utf_8", quiet=False):
     """
     Write `text` to file at `path`.
 
@@ -471,15 +473,17 @@ def write(path, text, encoding=None, fallback="utf_8"):
         with open(path, "w", encoding=encoding) as f:
             return f.write(text)
     except IOError:
-        print_write_io(sys.exc_info(), path)
+        if not quiet:
+            print_write_io(sys.exc_info(), path)
         raise # IOError
     except UnicodeError:
         if not fallback in (encoding, None, ""):
-            return write(path, text, fallback, None)
-        print_write_unicode(sys.exc_info(), path, encoding)
+            return write(path, text, fallback, None, quiet)
+        if not quiet:
+            print_write_unicode(sys.exc_info(), path, encoding)
         raise # UnicodeError
 
-def writelines(path, lines, encoding=None, fallback="utf_8"):
+def writelines(path, lines, encoding=None, fallback="utf_8", quiet=False):
     """
     Write `lines` of text to file at `path`.
 
@@ -488,4 +492,4 @@ def writelines(path, lines, encoding=None, fallback="utf_8"):
     Raise :exc:`UnicodeError` if encoding fails.
     """
     text = "\n".join(lines) + "\n"
-    return write(path, text, encoding, fallback)
+    return write(path, text, encoding, fallback, quiet)
