@@ -31,31 +31,31 @@ class SubStationAlpha(aeidon.SubtitleFile):
     :ivar event_fields: Tuple of field names for the ``[Events]`` section
     """
 
+    format = aeidon.formats.SSA
+    mode = aeidon.modes.TIME
+
     _re_file_time = re.compile(r"^(-?)(.+)$")
     _re_separator = re.compile(r",\s*")
     _re_subtitle_time = re.compile(r"(-?)\d(.{10})\d")
-    format = aeidon.formats.SSA
-    mode = aeidon.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
         """Initialize a :class:`SubStationAlpha` instance."""
         aeidon.SubtitleFile.__init__(self, path, encoding, newline)
-        self.event_fields = ("Marked",
-                             "Start",
-                             "End",
-                             "Style",
-                             "Name",
-                             "MarginL",
-                             "MarginR",
-                             "MarginV",
-                             "Effect",
-                             "Text",)
+        self.event_fields = (
+            "Marked", "Start", "End", "Style", "Name",
+            "MarginL", "MarginR", "MarginV", "Effect", "Text")
+
+    def copy_from(self, other):
+        """Copy generic properties from `other` file."""
+        aeidon.SubtitleFile.copy_from(self, other)
+        if self.format != other.format: return
+        self.event_fields = tuple(other.event_fields)
 
     def _decode_field(self, field_name, value, subtitle):
         """Save string `value` from file as a subtitle attribute."""
         if field_name == "Marked":
-            value = value.split("=")[-1]
-            return setattr(subtitle.ssa, "marked", int(value))
+            value = int(value.split("=")[-1])
+            return setattr(subtitle.ssa, "marked", value)
         if field_name == "Start":
             value = self._re_file_time.sub(r"\1\060\2\060", value)
             return setattr(subtitle, "start_time", value)
@@ -93,20 +93,6 @@ class SubStationAlpha(aeidon.SubtitleFile):
         name = aeidon.util.title_to_lower_case(field_name)
         return getattr(subtitle.ssa, name)
 
-    def _read_header(self, lines):
-        """Read header and remove its lines."""
-        self.header = ""
-        while not lines[0].startswith("[Events]"):
-            self.header += "\n"
-            self.header += lines.pop(0)
-        self.header = self.header.strip()
-
-    def copy_from(self, other):
-        """Copy generic properties from `other` file."""
-        aeidon.SubtitleFile.copy_from(self, other)
-        if self.format == other.format:
-            self.event_fields = tuple(other.event_fields)
-
     def read(self):
         """
         Read file and return subtitles.
@@ -117,24 +103,34 @@ class SubStationAlpha(aeidon.SubtitleFile):
         subtitles = []
         lines = self._read_lines()
         self._read_header(lines)
-        for line in (x for x in lines if x.startswith("Format:")):
+        for line in lines:
+            if not line.startswith("Format:"): continue
             line = line.replace("Format:", "").strip()
             fields = self._re_separator.split(line)
             indices = dict((x, fields.index(x)) for x in fields)
             max_split = len(fields) - 1
-        for line in (x for x in lines if x.startswith("Dialogue:")):
-            subtitle = self._get_subtitle()
+        for line in lines:
+            if not line.startswith("Dialogue:"): continue
             line = line.replace("Dialogue:", "").lstrip()
             values = self._re_separator.split(line, max_split)
+            subtitle = self._get_subtitle()
             for name, index in indices.items():
                 self._decode_field(name, values[index], subtitle)
             subtitles.append(subtitle)
         self.event_fields = tuple(fields)
         return subtitles
 
+    def _read_header(self, lines):
+        """Read header and remove its lines."""
+        self.header = ""
+        while not lines[0].startswith("[Events]"):
+            self.header += "\n"
+            self.header += lines.pop(0)
+        self.header = self.header.strip()
+
     def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `f`.
+        Write `subtitles` from `doc` to file `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

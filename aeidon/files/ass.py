@@ -35,16 +35,9 @@ class AdvSubStationAlpha(aeidon.files.SubStationAlpha):
     def __init__(self, path, encoding, newline=None):
         """Initialize an :class:`AdvSubStationAlpha` instance."""
         aeidon.files.SubStationAlpha.__init__(self, path, encoding, newline)
-        self.event_fields = ("Layer",
-                             "Start",
-                             "End",
-                             "Style",
-                             "Name",
-                             "MarginL",
-                             "MarginR",
-                             "MarginV",
-                             "Effect",
-                             "Text",)
+        self.event_fields = (
+            "Layer", "Start", "End", "Style", "Name",
+            "MarginL", "MarginR", "MarginV", "Effect", "Text")
 
     def _decode_field(self, field_name, value, subtitle):
         """Save `value` of field as a subtitle attribute."""

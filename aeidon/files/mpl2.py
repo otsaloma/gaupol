@@ -27,9 +27,9 @@ class MPL2(aeidon.SubtitleFile):
 
     """MPL2 file."""
 
-    _re_line = re.compile(r"^\[(-?\d+)\]\[(-?\d+)\](.*?)$")
     format = aeidon.formats.MPL2
     mode = aeidon.modes.TIME
+    _re_line = re.compile(r"^\[(-?\d+)\]\[(-?\d+)\](.*?)$")
 
     def read(self):
         """
@@ -51,7 +51,7 @@ class MPL2(aeidon.SubtitleFile):
 
     def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `f`.
+        Write `subtitles` from `doc` to file `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
@@ -59,6 +59,6 @@ class MPL2(aeidon.SubtitleFile):
         for subtitle in subtitles:
             text = subtitle.get_text(doc).replace("\n", "|")
             f.write(("[{:.0f}][{:.0f}]{}\n"
-                        .format(subtitle.start_seconds*10,
-                                subtitle.end_seconds*10,
-                                text)))
+                     .format(subtitle.start_seconds*10,
+                             subtitle.end_seconds*10,
+                             text)))

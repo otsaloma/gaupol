@@ -27,11 +27,10 @@ class SubViewer2(aeidon.SubtitleFile):
 
     """SubViewer 2.0 file."""
 
-    _re_time_line = re.compile((r"^(-?\d\d:\d\d:\d\d.\d\d)"
-                                r",(-?\d\d:\d\d:\d\d.\d\d)\s*$"))
-
     format = aeidon.formats.SUBVIEWER2
     mode = aeidon.modes.TIME
+    _re_time_line = re.compile((r"^(-?\d\d:\d\d:\d\d.\d\d)"
+                                r",(-?\d\d:\d\d:\d\d.\d\d)\s*$"))
 
     def read(self):
         """
@@ -53,14 +52,14 @@ class SubViewer2(aeidon.SubtitleFile):
             subtitle = self._get_subtitle()
             subtitle.start_time = match.group(1) + "0"
             subtitle.end_time = match.group(2) + "0"
-            text = lines[i + 1].replace("[br]", "\n")
+            text = lines[i+1].replace("[br]", "\n")
             subtitle.main_text = text
             subtitles.append(subtitle)
         return subtitles
 
     def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `f`.
+        Write `subtitles` from `doc` to file `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

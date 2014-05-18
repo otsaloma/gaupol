@@ -27,15 +27,6 @@ class TestSubStationAlpha(aeidon.TestCase):
                                      self.new_temp_file(self.format),
                                      "ascii")
 
-    def test_copy_from(self):
-        self.file.header = "test"
-        self.file.event_fields = ("Marked",)
-        path = self.new_temp_file(self.format)
-        new_file = aeidon.files.new(self.format, path, "ascii")
-        new_file.copy_from(self.file)
-        assert new_file.header == "test"
-        assert new_file.event_fields == ("Marked",)
-
     def test_read(self):
         assert self.file.read()
         assert self.file.header
@@ -43,5 +34,4 @@ class TestSubStationAlpha(aeidon.TestCase):
     def test_write(self):
         self.file.write(self.file.read(), aeidon.documents.MAIN)
         text = open(self.file.path, "r").read().strip()
-        reference = self.get_sample_text(self.format)
-        assert text == reference
+        assert text == self.get_sample_text(self.format)

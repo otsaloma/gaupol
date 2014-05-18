@@ -58,9 +58,9 @@ class SubtitleFile:
 
     def copy_from(self, other):
         """Copy generic properties from `other`."""
-        if self.format == other.format:
-            self.header = other.header
         self.has_utf_16_bom = other.has_utf_16_bom
+        if self.format != other.format: return
+        self.header = other.header
 
     def _get_subtitle(self):
         """Return a new subtitle instance with proper properties."""
@@ -143,7 +143,7 @@ class SubtitleFile:
 
     def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` with text from `doc` to open file object `f`.
+        Write `subtitles` with text from `doc` to file `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

@@ -27,6 +27,9 @@ class SubRip(aeidon.SubtitleFile):
 
     """SubRip file."""
 
+    format = aeidon.formats.SUBRIP
+    mode = aeidon.modes.TIME
+
     _re_time_line = re.compile((
             # Techically all these fields should have fixed widths, but in the
             # name of being liberal in accepting input, accept lesser widths
@@ -35,22 +38,6 @@ class SubRip(aeidon.SubtitleFile):
             r"^(-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3}) -->"
             r" (-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3})"
             r"(  X1:(\d+) X2:(\d+) Y1:(\d+) Y2:(\d+))?\s*$"))
-
-    format = aeidon.formats.SUBRIP
-    mode = aeidon.modes.TIME
-
-    def _read_lines(self):
-        """Read file to a unicoded list of lines."""
-        lines = ["\n"]
-        for line in aeidon.SubtitleFile._read_lines(self):
-            lines.append(line)
-            match = self._re_time_line.match(line)
-            if match is None: continue
-            # Remove numbers and blank lines above them.
-            if lines[-2].strip().isdigit():
-                if not lines[-3].strip(): lines.pop(-3)
-                lines.pop(-2)
-        return lines
 
     def read(self):
         """
@@ -78,9 +65,23 @@ class SubRip(aeidon.SubtitleFile):
             subtitles.append(subtitle)
         return subtitles
 
+    def _read_lines(self):
+        """Read file to a unicoded list of lines."""
+        lines = ["\n"]
+        for line in aeidon.SubtitleFile._read_lines(self):
+            lines.append(line)
+            match = self._re_time_line.match(line)
+            if match is None: continue
+            # Remove numbers and blank lines above them.
+            if lines[-2].strip().isdigit():
+                if not lines[-3].strip():
+                    lines.pop(-3)
+                lines.pop(-2)
+        return lines
+
     def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `f`.
+        Write `subtitles` from `doc` to file `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

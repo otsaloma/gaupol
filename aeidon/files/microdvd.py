@@ -27,9 +27,9 @@ class MicroDVD(aeidon.SubtitleFile):
 
     """MicroDVD file."""
 
-    _re_line = re.compile(r"^\{(-?\d+)\}\{(-?\d+)\}(.*?)$")
     format = aeidon.formats.MICRODVD
     mode = aeidon.modes.FRAME
+    _re_line = re.compile(r"^\{(-?\d+)\}\{(-?\d+)\}(.*?)$")
 
     def read(self):
         """
@@ -53,7 +53,7 @@ class MicroDVD(aeidon.SubtitleFile):
 
     def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `f`.
+        Write `subtitles` from `doc` to file `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
@@ -63,6 +63,6 @@ class MicroDVD(aeidon.SubtitleFile):
         for subtitle in subtitles:
             text = subtitle.get_text(doc).replace("\n", "|")
             f.write(("{{{:d}}}{{{:d}}}{}\n"
-                        .format(subtitle.start_frame,
-                                subtitle.end_frame,
-                                text)))
+                     .format(subtitle.start_frame,
+                             subtitle.end_frame,
+                             text)))

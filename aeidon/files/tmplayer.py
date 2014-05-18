@@ -27,21 +27,21 @@ class TMPlayer(aeidon.SubtitleFile):
 
     """TMPlayer file."""
 
-    _re_one_digit_hour = re.compile(r"^-?\d:\d\d:\d\d:")
-    _re_two_digit_hour = re.compile(r"^-?\d\d:\d\d:\d\d:")
     format = aeidon.formats.TMPLAYER
     mode = aeidon.modes.TIME
+    _re_one_digit_hour = re.compile(r"^-?\d:\d\d:\d\d:")
+    _re_two_digit_hour = re.compile(r"^-?\d\d:\d\d:\d\d:")
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize an :class:`MPsub` instance."""
+        """Initialize an :class:`TMPlayer` instance."""
         aeidon.SubtitleFile.__init__(self, path, encoding, newline)
         self.two_digit_hour = True
 
     def copy_from(self, other):
         """Copy generic properties from `other` file."""
         aeidon.SubtitleFile.copy_from(self, other)
-        if self.format == other.format:
-            self.two_digit_hour = other.two_digit_hour
+        if self.format != other.format: return
+        self.two_digit_hour = other.two_digit_hour
 
     def read(self):
         """
@@ -56,11 +56,13 @@ class TMPlayer(aeidon.SubtitleFile):
             if match is not None:
                 i = match.span()[1]
                 subtitle = self._get_subtitle()
-                subtitle.start_time = ("-0" + line[1:i - 1] + ".000"
-                                       if line.startswith("-") else
-                                       "0" + line[:i - 1] + ".000")
-
-                subtitles[-1].end_time = subtitle.start_time
+                sign = ("-" if line.startswith("-") else "")
+                time = line[:i-1] + ".000"
+                if time.startswith("-"):
+                    time = time[1:]
+                time = sign + "0" + time
+                subtitle.start_time = time
+                subtitles[-1].end_time = time
                 subtitle.main_text = line[i:].replace("|", "\n")
                 subtitles.append(subtitle)
                 self.two_digit_hour = False
@@ -68,7 +70,7 @@ class TMPlayer(aeidon.SubtitleFile):
             if match is not None:
                 i = match.span()[1]
                 subtitle = self._get_subtitle()
-                subtitle.start_time = line[:i - 1] + ".000"
+                subtitle.start_time = line[:i-1] + ".000"
                 subtitles[-1].end_time = subtitle.start_time
                 subtitle.main_text = line[i:].replace("|", "\n")
                 subtitles.append(subtitle)
@@ -79,7 +81,7 @@ class TMPlayer(aeidon.SubtitleFile):
 
     def write_to_file(self, subtitles, doc, f):
         """
-        Write `subtitles` from `doc` to `f`.
+        Write `subtitles` from `doc` to file `f`.
 
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.

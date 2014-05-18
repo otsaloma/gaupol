@@ -33,5 +33,4 @@ class TestMPL2(aeidon.TestCase):
     def test_write(self):
         self.file.write(self.file.read(), aeidon.documents.MAIN)
         text = open(self.file.path, "r").read().strip()
-        reference = self.get_sample_text(self.format)
-        assert text == reference
+        assert text == self.get_sample_text(self.format)
