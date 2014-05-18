@@ -48,10 +48,10 @@ class Clipboard:
         """Return texts as a list of strings."""
         return self._texts[:]
 
-    def set_texts(self, texts):
-        """Set the list of texts."""
-        self._texts = list(texts)
-
     def is_empty(self):
         """Return ``True`` if empty."""
         return not bool(self._texts)
+
+    def set_texts(self, texts):
+        """Set the list of texts."""
+        self._texts = list(texts)

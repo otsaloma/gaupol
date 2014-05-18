@@ -29,14 +29,14 @@ class PuppetObservable(aeidon.Observable):
 
 class TestObservable(aeidon.TestCase):
 
+    def on_do(self, obj):
+        assert obj is self.obs
+        self.do_count += 1
+
     def on_notify_x(self, obj, value):
         assert obj is self.obs
         assert value == self.obs.x
         self.notify_count += 1
-
-    def on_do(self, obj):
-        assert obj is self.obs
-        self.do_count += 1
 
     def setup_method(self, method):
         self.obs = PuppetObservable()
@@ -51,11 +51,15 @@ class TestObservable(aeidon.TestCase):
         self.obs.emit("do")
         assert self.do_count == 0
 
-    def test_block_all(self):
+    def test_block_all__emit(self):
         assert self.obs.block_all()
         assert not self.obs.block_all()
         self.obs.emit("do")
         assert self.do_count == 0
+
+    def test_block_all__notify(self):
+        assert self.obs.block_all()
+        assert not self.obs.block_all()
         self.obs.notify("x")
         assert self.notify_count == 0
 
@@ -99,11 +103,16 @@ class TestObservable(aeidon.TestCase):
         self.obs.emit("do")
         assert self.do_count == 1
 
-    def test_unblock_all(self):
+    def test_unblock_all__emit(self):
         self.obs.block_all()
         assert self.obs.unblock_all()
         assert not self.obs.unblock_all()
         self.obs.emit("do")
         assert self.do_count == 1
+
+    def test_unblock_all__notify(self):
+        self.obs.block_all()
+        assert self.obs.unblock_all()
+        assert not self.obs.unblock_all()
         self.obs.notify("x")
         assert self.notify_count == 1

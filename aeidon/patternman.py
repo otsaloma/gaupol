@@ -41,8 +41,8 @@ class PatternManager:
 
     def __init__(self, pattern_type):
         """Initialize a :class:`PatternManager` instance."""
-        self._patterns = {}
         self.pattern_type = pattern_type
+        self._patterns = {}
         self._read_patterns()
 
     def _assert_identifiers(self, script, language, country):
@@ -53,6 +53,7 @@ class PatternManager:
             assert aeidon.scripts.is_valid(script)
             assert aeidon.languages.is_valid(language)
         if country is not None:
+            assert aeidon.scripts.is_valid(script)
             assert aeidon.languages.is_valid(language)
             assert aeidon.countries.is_valid(country)
 
@@ -67,7 +68,7 @@ class PatternManager:
         located in the position of the earliest of such patterns.
         """
         filtered_patterns = []
-        for i, pattern in enumerate(patterns):
+        for pattern in patterns:
             name = pattern.get_name(False)
             policy = pattern.get_field("Policy")
             last_index = len(filtered_patterns) - 1
@@ -76,7 +77,7 @@ class PatternManager:
                     last_index = j
                     if policy == "Replace":
                         filtered_patterns[j] = None
-            filtered_patterns.insert(last_index + 1, pattern)
+            filtered_patterns.insert(last_index+1, pattern)
             while None in filtered_patterns:
                 filtered_patterns.remove(None)
         return filtered_patterns
@@ -89,15 +90,45 @@ class PatternManager:
         specific one last.
         """
         codes = ["Zyyy"]
-        if script is not None:
+        if not None in (script,):
             codes.append(script)
-        if language is not None:
-            code = "{}-{}".format(script, language)
-            codes.append(code)
-        if country is not None:
-            code = "{}-{}-{}".format(script, language, country)
-            codes.append(code)
+        if not None in (script, language):
+            codes.append("{}-{}".format(script, language))
+        if not None in (script, language, country):
+            codes.append("{}-{}-{}".format(script, language, country))
         return tuple(codes)
+
+    def get_countries(self, script, language):
+        """Return a sequence of countries for which patterns exist."""
+        codes = list(self._patterns.keys())
+        start = "{}-{}-".format(script, language)
+        codes = [x for x in codes if x.startswith(start)]
+        countries = [x.split("-")[2] for x in codes]
+        return tuple(aeidon.util.get_unique(countries))
+
+    def get_languages(self, script):
+        """Return a sequence of languages for which patterns exist."""
+        codes = list(self._patterns.keys())
+        start = "{}-".format(script)
+        codes = [x for x in codes if x.startswith(start)]
+        languages = [x.split("-")[1] for x in codes]
+        return tuple(aeidon.util.get_unique(languages))
+
+    def get_patterns(self, script=None, language=None, country=None):
+        """Return patterns for `script`, `language` and `country`."""
+        patterns = []
+        for code in self._get_codes(script, language, country):
+            for pattern in self._patterns.get(code, []):
+                patterns.append(pattern)
+        return self._filter_patterns(patterns)
+
+    def get_scripts(self):
+        """Return a sequence of scripts for which patterns exist."""
+        codes = list(self._patterns.keys())
+        while "Zyyy" in codes:
+            codes.remove("Zyyy")
+        scripts = [x.split("-")[0] for x in codes]
+        return tuple(aeidon.util.get_unique(scripts))
 
     def _read_config_from_directory(self, directory, encoding):
         """Read configurations from files in `directory`."""
@@ -175,6 +206,15 @@ class PatternManager:
                 name = (name[1:] if name.startswith("_") else name)
                 patterns[-1].set_field(name, value)
 
+    def save_config(self, script=None, language=None, country=None):
+        """Save pattern configurations to files."""
+        local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
+        with aeidon.util.silent(OSError):
+            aeidon.util.makedirs(local_dir)
+        codes = self._get_codes(script, language, country)
+        for code in (x for x in codes if x in self._patterns):
+            self._write_config_to_file(code, "utf_8")
+
     def _write_config_to_file(self, code, encoding):
         """Write configurations of all patterns to file."""
         local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
@@ -195,44 +235,3 @@ class PatternManager:
             text += 'enabled="{}"/>\n'.format(enabled)
         text += "</patterns>\n"
         aeidon.util.write(path, text, encoding)
-
-    def get_countries(self, script, language):
-        """Return a sequence of countries for which patterns exist."""
-        codes = list(self._patterns.keys())
-        start = "{}-{}-".format(script, language)
-        codes = [x for x in codes if x.startswith(start)]
-        countries = [x.split("-")[2] for x in codes]
-        return tuple(aeidon.util.get_unique(countries))
-
-    def get_languages(self, script):
-        """Return a sequence of languages for which patterns exist."""
-        codes = list(self._patterns.keys())
-        start = "{}-".format(script)
-        codes = [x for x in codes if x.startswith(start)]
-        languages = [x.split("-")[1] for x in codes]
-        return tuple(aeidon.util.get_unique(languages))
-
-    def get_patterns(self, script=None, language=None, country=None):
-        """Return patterns for `script`, `language` and `country`."""
-        patterns = []
-        for code in self._get_codes(script, language, country):
-            for pattern in self._patterns.get(code, []):
-                patterns.append(pattern)
-        patterns = self._filter_patterns(patterns)
-        return patterns
-
-    def get_scripts(self):
-        """Return a sequence of scripts for which patterns exist."""
-        codes = list(self._patterns.keys())
-        while "Zyyy" in codes:
-            codes.remove("Zyyy")
-        scripts = [x.split("-")[0] for x in codes]
-        return tuple(aeidon.util.get_unique(scripts))
-
-    def save_config(self, script=None, language=None, country=None):
-        """Save pattern configurations to files."""
-        local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
-        aeidon.deco.silent(OSError)(aeidon.util.makedirs)(local_dir)
-        codes = self._get_codes(script, language, country)
-        for code in (x for x in codes if x in self._patterns):
-            self._write_config_to_file(code, "utf_8")

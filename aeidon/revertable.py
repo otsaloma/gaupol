@@ -39,8 +39,8 @@ class RevertableAction:
         """
         Initialize a :class:`RevertableAction` instance.
 
-        `kwargs` can contain any of the names of public instance variables, of
-        which :attr:`description`, :attr:`docs`, :attr:`register` and
+        `kwargs` can contain any of the names of public instance variables,
+        of which :attr:`description`, :attr:`docs`, :attr:`register` and
         :attr:`revert_function` are required to be set eventually, either with
         `kwargs` or direct assignment later.
         """
@@ -82,9 +82,9 @@ class RevertableActionGroup:
         """
         Initialize a :class:`RevertableAction` instance.
 
-        `kwargs` can contain any of the names of public instance variables, of
-        which :attr:`actions` and :attr:`description` are required to be set
-        eventually, either with `kwargs` or direct assignment later.
+        `kwargs` can contain any of the names of public instance variables,
+        of which :attr:`actions` and :attr:`description` are required to be
+        set eventually, either with `kwargs` or direct assignment later.
         """
         self.actions = None
         self.description = None

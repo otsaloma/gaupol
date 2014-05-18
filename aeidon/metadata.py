@@ -44,38 +44,6 @@ class MetadataItem:
         """Initialize a :class:`MetadataItem` instance."""
         self.fields = fields or {}
 
-    def _get_localized_field(self, name):
-        """Return the localized value of field."""
-        locale = aeidon.locales.get_system_code()
-        modifier = aeidon.locales.get_system_modifier()
-        if locale is None:
-            return self.get_field(name)
-        # 'xx_YY@Zzzz', fall back to 'xx@Zzzz'.
-        if ("_" in locale) and (modifier is not None):
-            key = "{}[{}@{}]".format(name, locale, modifier)
-            if key in self.fields:
-                return self.get_field(key)
-            locale = locale[0:2]
-        # 'xx_YY', fall back to 'xx'.
-        if ("_" in locale) and (modifier is None):
-            key = "{}[{}]".format(name, locale)
-            if key in self.fields:
-                return self.get_field(key)
-            locale = locale[0:2]
-        # 'xx@Zzzz', fall back to unlocalized.
-        if (not "_" in locale) and (modifier is not None):
-            key = "{}[{}@{}]".format(name, locale, modifier)
-            if key in self.fields:
-                return self.get_field(key)
-            return self.get_field(name)
-        # 'xx', fall back to unlocalized.
-        if (not "_" in locale) and (modifier is None):
-            key = "{}[{}]".format(name, locale)
-            if key in self.fields:
-                return self.get_field(key)
-            return self.get_field(name)
-        return self.get_field(name)
-
     def get_description(self, localize=True):
         """Return description as defined by the ``Description`` field."""
         if not localize:
@@ -107,6 +75,38 @@ class MetadataItem:
         lst = self.fields[name].split(";")
         if not lst[-1]: lst.pop(-1)
         return lst
+
+    def _get_localized_field(self, name):
+        """Return the localized value of field."""
+        locale = aeidon.locales.get_system_code()
+        modifier = aeidon.locales.get_system_modifier()
+        if locale is None:
+            return self.get_field(name)
+        # 'xx_YY@Zzzz', fall back to 'xx@Zzzz'.
+        if ("_" in locale) and (modifier is not None):
+            key = "{}[{}@{}]".format(name, locale, modifier)
+            if key in self.fields:
+                return self.get_field(key)
+            locale = locale[0:2]
+        # 'xx_YY', fall back to 'xx'.
+        if ("_" in locale) and (modifier is None):
+            key = "{}[{}]".format(name, locale)
+            if key in self.fields:
+                return self.get_field(key)
+            locale = locale[0:2]
+        # 'xx@Zzzz', fall back to unlocalized.
+        if (not "_" in locale) and (modifier is not None):
+            key = "{}[{}@{}]".format(name, locale, modifier)
+            if key in self.fields:
+                return self.get_field(key)
+            return self.get_field(name)
+        # 'xx', fall back to unlocalized.
+        if (not "_" in locale) and (modifier is None):
+            key = "{}[{}]".format(name, locale)
+            if key in self.fields:
+                return self.get_field(key)
+            return self.get_field(name)
+        return self.get_field(name)
 
     def get_name(self, localize=True):
         """Return name as defined by the ``Name`` field."""

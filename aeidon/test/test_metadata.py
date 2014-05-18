@@ -47,27 +47,11 @@ class TestMetadataItem(aeidon.TestCase):
         assert self.item.get_field("Test") is None
         self.item.set_field("Test", "True")
         assert self.item.get_field_boolean("Test") is True
-        self.item.set_field("Test", "False")
-        assert self.item.get_field_boolean("Test") is False
-
-    def test_get_field_boolean__fallback(self):
-        assert self.item.get_field("Xxxx", False) is False
-
-    def test_get_field_boolean__value_error(self):
-        self.item.set_field("Test", "Xxxx")
-        self.assert_raises(ValueError,
-                           self.item.get_field_boolean,
-                           "Test")
 
     def test_get_field_list(self):
         assert self.item.get_field("Test") is None
-        self.item.set_field("Test", "Yee;Haw")
-        assert self.item.get_field_list("Test") == ["Yee", "Haw"]
         self.item.set_field("Test", "Yee;Haw;")
         assert self.item.get_field_list("Test") == ["Yee", "Haw"]
-
-    def test_get_field_list__fallback(self):
-        assert self.item.get_field("Xxxx", [3]) == [3]
 
     def test_get_name(self):
         self.item.set_field("Name", "test")
@@ -88,7 +72,7 @@ class TestMetadataItem(aeidon.TestCase):
 
     def test_has_field(self):
         assert not self.item.has_field("Test")
-        self.item.set_field("Test", "")
+        self.item.set_field("Test", "test")
         assert self.item.has_field("Test")
 
     def test_set_field(self):

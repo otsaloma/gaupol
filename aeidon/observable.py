@@ -35,8 +35,8 @@ class Observable:
     whenever the value of the corresponding instance variable changes.
 
     Notify signals will be emitted for mutable variables as well, which means
-    that care should be taken not to emit thousands of signals when e.g.
-    appending one-by-one to a large list. :meth:`freeze_notify` and
+    that care should be taken not to emit thousands of signals when
+    e.g. appending one-by-one to a large list. :meth:`freeze_notify` and
     :meth:`thaw_notify` will queue notify signals and emit only one of each
     once thawed.
 
@@ -79,17 +79,6 @@ class Observable:
     def _add_signal(self, signal):
         """Add `signal` to the list of signals emitted."""
         self._signal_handlers[signal] = []
-
-    def _validate(self, name, value):
-        """Return `value` or an observable version if `value` is mutable."""
-        args = (value, self, name)
-        if isinstance(value, dict):
-            return aeidon.ObservableDict(*args)
-        if isinstance(value, list):
-            return aeidon.ObservableList(*args)
-        if isinstance(value, set):
-            return aeidon.ObservableSet(*args)
-        return value
 
     def block(self, signal):
         """
@@ -203,3 +192,14 @@ class Observable:
             self._blocked_state = False
             return True
         return False
+
+    def _validate(self, name, value):
+        """Return `value` or an observable version if `value` is mutable."""
+        args = (value, self, name)
+        if isinstance(value, dict):
+            return aeidon.ObservableDict(*args)
+        if isinstance(value, list):
+            return aeidon.ObservableList(*args)
+        if isinstance(value, set):
+            return aeidon.ObservableSet(*args)
+        return value

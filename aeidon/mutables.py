@@ -17,7 +17,6 @@
 
 """Observable versions of built-in mutable objects."""
 
-import aeidon
 import copy
 import functools
 

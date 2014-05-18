@@ -37,8 +37,8 @@ class Calculator:
         """
         Initialize a :class:`Calculator` instance.
 
-        `framerate` can be either an :attr:`aeidon.framerates` item (preferred
-        to be able to reuse instances) or an exact float value.
+        `framerate` can be either an :attr:`aeidon.framerates` item
+        (preferred to be able to reuse instances) or an exact float value.
         """
         if framerate is None:
             framerate = aeidon.framerates.FPS_23_976
@@ -52,8 +52,8 @@ class Calculator:
         """
         Return possibly existing instance for `framerate`.
 
-        `framerate` can be either an :attr:`aeidon.framerates` item (preferred
-        to be able to reuse instances) or an exact float value.
+        `framerate` can be either an :attr:`aeidon.framerates` item
+        (preferred to be able to reuse instances) or an exact float value.
         """
         if framerate is None:
             framerate = aeidon.framerates.FPS_23_976
@@ -71,11 +71,9 @@ class Calculator:
             y = self.to_seconds(y)
             return self.seconds_to_time(x + y)
         if aeidon.is_frame(x):
-            y = self.to_frame(y)
-            return x + y
+            return x + self.to_frame(y)
         if aeidon.is_seconds(x):
-            y = self.to_seconds(y)
-            return x + y
+            return x + self.to_seconds(y)
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
@@ -117,11 +115,9 @@ class Calculator:
             x = self.time_to_seconds(x)
             return self.is_earlier(x, y)
         if aeidon.is_frame(x):
-            y = self.to_frame(y)
-            return (x < y)
+            return (x < self.to_frame(y))
         if aeidon.is_seconds(x):
-            y = self.to_seconds(y)
-            return (x < y)
+            return (x < self.to_seconds(y))
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
@@ -131,11 +127,9 @@ class Calculator:
             x = self.time_to_seconds(x)
             return self.is_later(x, y)
         if aeidon.is_frame(x):
-            y = self.to_frame(y)
-            return (x > y)
+            return (x > self.to_frame(y))
         if aeidon.is_seconds(x):
-            y = self.to_seconds(y)
-            return (x > y)
+            return (x > self.to_seconds(y))
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 
@@ -239,7 +233,7 @@ class Calculator:
                          .format(repr(type(pos))))
 
     def to_seconds(self, pos):
-        """Convert `pos` to secods."""
+        """Convert `pos` to seconds."""
         if aeidon.is_time(pos):
             return self.time_to_seconds(pos)
         if aeidon.is_frame(pos):

@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import copy
 import aeidon
+import copy
 
 
 class PuppetMaster:
@@ -65,7 +65,7 @@ class TestObservableDict(_TestObservable):
 
     def setup_method(self, method):
         _TestObservable.setup_method(self, method)
-        self.obs = aeidon.ObservableDict(((1, 1), (2, 2)), self.master, "")
+        self.obs = aeidon.ObservableDict({1:1, 2:2}, self.master, "")
 
     def test___delitem__(self):
         del self.obs[1]
@@ -86,7 +86,7 @@ class TestObservableDict(_TestObservable):
         self.obs.setdefault(1, 2)
 
     def test_update(self):
-        self.obs.update({1: 2})
+        self.obs.update({1:2, 3:3})
 
 
 class TestObservableList(_TestObservable):
@@ -102,7 +102,7 @@ class TestObservableList(_TestObservable):
         del self.obs[0]
 
     def test___iadd__(self):
-        self.obs += [4, 5]
+        self.obs += (4, 5)
 
     def test___imul__(self):
         self.obs *= 2
@@ -114,7 +114,7 @@ class TestObservableList(_TestObservable):
         self.obs.append(4)
 
     def test_extend(self):
-        self.obs.extend([4, 5])
+        self.obs.extend((4, 5))
 
     def test_insert(self):
         self.obs.insert(0, 0)

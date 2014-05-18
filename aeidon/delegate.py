@@ -28,13 +28,13 @@ class Delegate:
     :ivar master: Object to where attribute calls are dispatched
     """
 
-    def __init__(self, master):
-        """Initialize a :class:`Delegate` instance."""
-        object.__setattr__(self, "master", master)
-
     def __getattr__(self, name):
         """Return value of master attribute."""
         return getattr(self.master, name)
+
+    def __init__(self, master):
+        """Initialize a :class:`Delegate` instance."""
+        object.__setattr__(self, "master", master)
 
     def __setattr__(self, name, value):
         """Set value of master attribute."""
