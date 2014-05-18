@@ -87,7 +87,7 @@ def memoize(limit=100):
 
     Use ``None`` for `limit` for a boundless cache.
     """
-    # Since 3.2 Pyton has functools.lru_cache,
+    # Since 3.2 Python has functools.lru_cache,
     # but it doesn't seem to handle methods gracefully.
     def outer_wrapper(function):
         cache = collections.OrderedDict()

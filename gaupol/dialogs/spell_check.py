@@ -409,7 +409,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _write_replacements(self):
         """Write misspelled words and their replacements to file."""
         if not self._replacements: return
-        self._replacements = aeidon.util.get_unique(self._replacements, True)
+        self._replacements = aeidon.util.get_unique(self._replacements, keep_last=True)
         basename = "{}.repl".format(self._language)
         path = os.path.join(self._personal_dir, basename)
         if len(self._replacements) > self._max_replacements:

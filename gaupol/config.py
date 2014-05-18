@@ -18,6 +18,7 @@
 """Reading, writing and storing configurations."""
 
 import aeidon
+import copy
 import gaupol
 import json
 import os
@@ -296,7 +297,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
 
     def __init__(self):
         """Initialize a :class:`ConfigurationStore` instance."""
-        root = aeidon.util.copy_dict(self._defaults)
+        root = copy.deepcopy(self._defaults)
         gaupol.AttributeDictionary.__init__(self, root)
         self.path = None
 
@@ -304,7 +305,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         """Return a flattened version of `values` dictionary."""
         def flatten(deep, parent):
             flat_dict = {parent: {}}
-            deep = aeidon.util.copy_dict(deep)
+            deep = copy.deepcopy(deep)
             for key, value in deep.items():
                 if isinstance(value, dict):
                     key = "::".join((parent, key))
@@ -316,7 +317,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 del flat_dict[parent]
             return flat_dict
         final_dict = {}
-        values = aeidon.util.copy_dict(values)
+        values = copy.deepcopy(values)
         for key, value in values.items():
             if isinstance(value, dict):
                 final_dict.update(flatten(value, key))
@@ -461,7 +462,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         enumeration items that appear in options.
         """
         self._defaults["extensions"].update({name: defaults})
-        self.extensions.extend({name: aeidon.util.copy_dict(defaults)})
+        self.extensions.extend({name: copy.deepcopy(defaults)})
         self._enums["extensions"].update({name: enums or {}})
 
     def restore_defaults(self):

@@ -18,6 +18,7 @@
 """Miscellaneous functions."""
 
 import aeidon
+import collections
 import contextlib
 import inspect
 import locale
@@ -25,8 +26,8 @@ import os
 import random
 import re
 import shutil
-import subprocess
 import stat
+import subprocess
 import sys
 import urllib.parse
 
@@ -92,10 +93,8 @@ def atomic_open(path, mode="w", *args, **kwargs):
                     os.remove(path)
             shutil.move(temp_path, path)
     finally:
-        try:
+        with silent(Exception):
             os.remove(temp_path)
-        except Exception:
-            pass
 
 @aeidon.deco.once
 def chardet_available():
@@ -110,8 +109,8 @@ def compare_versions(x, y):
     """
     Compare version strings `x` and `y`.
 
-    Used version number formats are ``MAJOR.MINOR``, ``MAJOR.MINOR.PATCH`` and
-    ``MAJOR.MINOR.PATCH.DATE/REVISION``, where all items are integers.
+    Used version number formats are ``MAJOR.MINOR``, ``MAJOR.MINOR.PATCH``
+    and ``MAJOR.MINOR.PATCH.DATE/REVISION``, where all items are integers.
     Return 1 if `x` newer, 0 if equal or -1 if `y` newer.
     """
     compare = lambda a, b: (a > b) - (a < b)
@@ -135,30 +134,6 @@ def connect(observer, observable, signal, *args):
     if observer is not observable:
         observable = getattr(observer, observable)
     return observable.connect(signal, method, *args)
-
-def copy_dict(src):
-    """Copy `src` dictionary recursively and return copy."""
-    dst = src.copy()
-    for key, value in src.items():
-        if isinstance(value, dict):
-            dst[key] = copy_dict(value)
-        if isinstance(value, list):
-            dst[key] = copy_list(value)
-        if isinstance(value, set):
-            dst[key] = set(value)
-    return dst
-
-def copy_list(src):
-    """Copy `src` list recursively and return copy."""
-    dst = list(src)
-    for i, value in enumerate(src):
-        if isinstance(value, dict):
-            dst[i] = copy_dict(value)
-        if isinstance(value, list):
-            dst[i] = copy_list(value)
-        if isinstance(value, set):
-            dst[i] = set(value)
-    return dst
 
 def detect_format(path, encoding):
     """
@@ -268,7 +243,7 @@ def get_enchant_version():
 def get_encoding_alias(encoding):
     """Return proper Python alias for `encoding`."""
     from encodings.aliases import aliases
-    if encoding in aliases:
+    with silent(LookupError):
         return aliases[encoding]
     return encoding
 
@@ -280,26 +255,14 @@ def get_ranges(lst):
     [[1, 2, 3], [5, 6, 7], [9], [11, 12]]
     """
     if not lst: return []
-    lst = get_sorted_unique(lst)
+    lst = sorted(get_unique(lst))
     ranges = [[lst.pop(0)]]
     for item in lst:
         if item == ranges[-1][-1] + 1:
             ranges[-1].append(item)
-        else: ranges.append([item])
+        else:
+            ranges.append([item])
     return ranges
-
-def get_sorted_unique(lst):
-    """
-    Return sorted `lst` with duplicates removed.
-
-    >>> aeidon.util.get_sorted_unique([3, 2, 1, 2, 4, 4])
-    [1, 2, 3, 4]
-    """
-    lst = sorted(lst)
-    for i in reversed(range(1, len(lst))):
-        if lst[i] == lst[i - 1]:
-            lst.pop(i)
-    return lst
 
 @aeidon.deco.memoize(100)
 def get_template_header(format):
@@ -309,47 +272,23 @@ def get_template_header(format):
     Raise :exc:`IOError` if reading global header file fails.
     Raise :exc:`UnicodeError` if decoding global header file fails.
     """
-    header = None
     directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
     path = os.path.join(directory, format.name.lower())
-    if os.path.isfile(path):
-        try:
-            header = read(path, None).rstrip()
-        except IOError:
-            print_read_io(sys.exc_info(), path)
-        except UnicodeError:
-            print_read_unicode(sys.exc_info(),
-                               path,
-                               get_default_encoding())
-
-    if header is None:
-        directory = os.path.join(aeidon.DATA_DIR, "headers")
-        path = os.path.join(directory, format.name.lower())
-        header = read(path, "ascii").rstrip()
+    with silent(Exception):
+        header = read(path, encoding=None).rstrip()
+        return normalize_newlines(header)
+    directory = os.path.join(aeidon.DATA_DIR, "headers")
+    path = os.path.join(directory, format.name.lower())
+    header = read(path, "ascii").rstrip()
     return normalize_newlines(header)
 
 def get_unique(lst, keep_last=False):
     """
-    Return `lst` with duplicates removed.
-
-    Keep the last duplicate if `keep_last` is ``True``, else keep first.
-
-    >>> aeidon.util.get_unique([3, 2, 1, 2, 4, 4])
-    [3, 2, 1, 4]
-    >>> aeidon.util.get_unique([3, 2, 1, 2, 4, 4], keep_last=True)
-    [3, 1, 2, 4]
-    """
-    lst = lst[:]
+    Return `lst` with duplicates removed."""
     if keep_last:
-        lst.reverse()
-    for i in reversed(range(len(lst))):
-        for j in range(0, i):
-            if lst[j] == lst[i]:
-                lst.pop(i)
-                break
-    if keep_last:
-        lst.reverse()
-    return lst
+        return list(reversed(get_unique(list(reversed(lst)))))
+    # http://stackoverflow.com/a/7961425
+    return list(collections.OrderedDict.fromkeys(lst))
 
 def install_module(name, obj):
     """
@@ -360,12 +299,6 @@ def install_module(name, obj):
         aeidon.util.install_module("foo", lambda: None)
     """
     aeidon.__dict__[name] = inspect.getmodule(obj)
-
-def is_command(command):
-    """Return ``True`` if `command` exists as a file in ``$PATH``."""
-    dirs = os.environ.get("PATH", "").split(os.pathsep)
-    paths = [os.path.join(x, command) for x in dirs]
-    return any(map(os.path.isfile, paths))
 
 def last(iterator):
     """Return the last value from `iterator` or ``None``."""
@@ -379,16 +312,18 @@ def makedirs(directory):
 
     Raise :exc:`OSError` if unsuccessful.
     """
-    if not os.path.isdir(directory):
+    if os.path.isdir(directory): return
+    try:
         os.makedirs(directory)
+    except OSError as error:
+        print("Failed to create directory '{}': {}"
+              .format(directory, str(error)),
+              file=sys.stderr)
+
+        raise # OSError
 
 def normalize_newlines(text):
-    """
-    Convert all newlines in `text` to Unix newlines.
-
-    >>> aeidon.util.normalize_newlines("one\\r\\ntwo")
-    'one\\ntwo'
-    """
+    """Convert all newlines in `text` to "\\n"."""
     re_newline_char = re.compile(r"\r\n?")
     return re_newline_char.sub("\n", text)
 
@@ -409,12 +344,6 @@ def print_read_unicode(exc_info, path, encoding):
     encoding = encoding or get_default_encoding()
     print("Failed to decode file '{}' with codec '{}'"
           .format(path, encoding),
-          file=sys.stderr)
-
-def print_remove_os(exc_info, path):
-    """Print :exc:`OSError` message to standard error."""
-    print("Failed to remove file '{}': {}"
-          .format(path, exc_info[1].args[1]),
           file=sys.stderr)
 
 def print_write_io(exc_info, path):
@@ -442,9 +371,13 @@ def read(path, encoding=None, fallback="utf_8"):
     try:
         with open(path, "r", encoding=encoding) as f:
             return f.read().strip()
+    except IOError:
+        print_read_io(sys.exc_info(), path)
+        raise # IOError
     except UnicodeError:
         if not fallback in (encoding, None, ""):
             return read(path, fallback, None)
+        print_read_unicode(sys.exc_info(), path, encoding)
         raise # UnicodeError
 
 def readlines(path, encoding=None, fallback="utf_8"):
@@ -492,15 +425,13 @@ def start_process(command, **kwargs):
     Return :class:`subprocess.Popen` instance.
     """
     # Use no environment on Windows due to a subprocess bug.
-    # https://bugzilla.gnome.org/show_bug.cgi?id=605805
+    # http://bugzilla.gnome.org/show_bug.cgi?id=605805
+    env = (os.environ.copy() if sys.platform != "win32" else None)
     try:
         return subprocess.Popen(command,
                                 shell=(sys.platform != "win32"),
                                 cwd=os.getcwd(),
-                                env=(os.environ.copy()
-                                     if sys.platform != "win32"
-                                     else None),
-
+                                env=env,
                                 universal_newlines=True,
                                 **kwargs)
 
@@ -509,12 +440,7 @@ def start_process(command, **kwargs):
 
 @aeidon.deco.memoize(100)
 def title_to_lower_case(title_name):
-    """
-    Convert title case name to lower case with underscores.
-
-    >>> aeidon.util.title_to_lower_case('TitleCase')
-    'title_case'
-    """
+    """Convert title case name to lower case with underscores."""
     lower_name = ""
     for char in title_name:
         if char.isupper() and lower_name:
@@ -544,9 +470,13 @@ def write(path, text, encoding=None, fallback="utf_8"):
     try:
         with open(path, "w", encoding=encoding) as f:
             return f.write(text)
+    except IOError:
+        print_write_io(sys.exc_info(), path)
+        raise # IOError
     except UnicodeError:
         if not fallback in (encoding, None, ""):
             return write(path, text, fallback, None)
+        print_write_unicode(sys.exc_info(), path, encoding)
         raise # UnicodeError
 
 def writelines(path, lines, encoding=None, fallback="utf_8"):

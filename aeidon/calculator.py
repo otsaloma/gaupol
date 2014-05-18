@@ -87,15 +87,7 @@ class Calculator:
         return self.seconds_to_time(seconds)
 
     def get_middle(self, x, y):
-        """
-        Return time, frame or seconds halfway between `x` and `y`.
-
-        >>> calc = aeidon.Calculator()
-        >>> calc.get_middle(0, 100)
-        50
-        >>> calc.get_middle("00:00:00.000", "00:00:10.000")
-        '00:00:05.000'
-        """
+        """Return time, frame or seconds halfway between `x` and `y`."""
         if aeidon.is_time(x):
             x = self.time_to_seconds(x)
             y = self.to_seconds(y)
