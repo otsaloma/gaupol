@@ -18,9 +18,9 @@
 """Previewing subtitles with a video player."""
 
 import aeidon
+import mimetypes
 import os
 import string
-import subprocess
 
 
 class PreviewAgent(aeidon.Delegate):
@@ -31,6 +31,29 @@ class PreviewAgent(aeidon.Delegate):
         """Initialize a :class:`aeidon.PreviewAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         aeidon.util.connect(self, self, "notify::main_file")
+
+    @aeidon.deco.export
+    def find_video(self):
+        """
+        Find and return the video file path based on main file's path.
+
+        The video file is searched for in the same directory as the subtitle
+        file. The subtitle file's filename without extension is assumed to
+        start with or match the video file's filename without extension,
+        e.g. 'movie.avi' for 'movie.en.srt'.
+        """
+        if self.main_file is None: return None
+        dirname = os.path.dirname(self.main_file.path)
+        subname = os.path.basename(self.main_file.path)
+        for path in os.listdir(dirname):
+            basename = os.path.basename(path)
+            rootname = os.path.splitext(basename)[0]
+            if not subname.startswith(rootname): continue
+            type, encoding = mimetypes.guess_type(path)
+            if type and type.startswith("video/"):
+                self.video_path = path
+                return self.video_path
+        return None
 
     def _get_subtitle_path(self, doc, encoding=None, temp=False):
         """
@@ -56,54 +79,16 @@ class PreviewAgent(aeidon.Delegate):
             self.find_video()
 
     @aeidon.deco.export
-    def find_video(self, extensions=None):
-        """
-        Find and return the video file path based on main file's path.
-
-        `extensions` should be a sequence of video filename extensions or
-        ``None`` for defaults. The video file is searched for in the same
-        directory as the subtitle file. The subtitle file's filename without
-        extension is assumed to start with or match the video file's filename
-        without extension.
-        """
-        if self.main_file is None: return None
-        extensions = list(extensions or (
-                ".3ivx", ".asf", ".avi", ".divx", ".flv", ".m2v", ".mkv",
-                ".mov", ".mp4", ".mpeg", ".mpg", ".ogm", ".ogv", ".qt", ".rm",
-                ".rmvb", ".swf", ".vob", ".wmv",
-                # Keep extensions used by other file types than video at the
-                # end of the list, so that if there are multiple matches,
-                # ambiguous extensions would not be the ones chosen.
-                ".ogg", ".dat"))
-
-        # Add upper-case versions of all extensions.
-        extensions = aeidon.util.flatten([[x, x.upper()] for x in extensions])
-        dirname = os.path.dirname(self.main_file.path)
-        basename_sub = os.path.basename(self.main_file.path)
-        rootname_sub = os.path.splitext(basename_sub)[0]
-        for extension in extensions:
-            for video_path in os.listdir(dirname):
-                if not video_path.endswith(extension): continue
-                basename_video = os.path.basename(video_path)
-                rootname_video = os.path.splitext(basename_video)[0]
-                if not rootname_sub.startswith(rootname_video): continue
-                self.video_path = os.path.join(dirname, basename_video)
-                return self.video_path
-        return None
-
-    @aeidon.deco.export
     def preview(self, position, doc, command, offset, encoding=None, temp=False):
         """
         Start video player with `command` from `position`.
 
         `command` can have variables ``$MILLISECONDS``, ``$SECONDS``,
-        ``$SUBFILE`` and ``$VIDEOFILE``. `offset` should be the amount of
-        seconds before `position` to start, which can be used to take into
-        account that video players can usually seek only to keyframes, which
-        exist maybe ten seconds or so apart. `encoding` can be specified if
-        different from `doc` file encoding. Use ``True`` for `temp` to always
-        use a temporary file for preview regardless of whether the file is
-        changed or not.
+        ``$SUBFILE`` and ``$VIDEOFILE``. `offset` should be the amount
+        of seconds before `position` to start. `encoding` can be specified
+        if different from `doc` file encoding. Use ``True`` for `temp` to
+        always use a temporary file for preview regardless of whether
+        the file is changed or not.
 
         Return a three tuple of :class:`subprocess.POpen` instance, command
         with variables expanded and a file object to which process standard
@@ -115,16 +100,13 @@ class PreviewAgent(aeidon.Delegate):
         """
         sub_path = self._get_subtitle_path(doc, encoding, temp=temp)
         output_path = aeidon.temp.create(".output")
-        output_fobj = open(output_path, "w")
+        fout = open(output_path, "w")
         seconds = max(0, self.calc.to_seconds(position) - offset)
         command = string.Template(command).safe_substitute(
-            MILLISECONDS=("{:.0f}".format(seconds * 1000)),
+            MILLISECONDS=("{:.0f}".format(seconds*1000)),
             SECONDS=("{:.3f}".format(seconds)),
             SUBFILE=aeidon.util.shell_quote(sub_path),
             VIDEOFILE=aeidon.util.shell_quote(self.video_path))
 
-        process = aeidon.util.start_process(command,
-                                            stderr=subprocess.STDOUT,
-                                            stdout=output_fobj)
-
-        return process, command, output_fobj
+        process = aeidon.util.start_process(command, stderr=fout, stdout=fout)
+        return process, command, fout
