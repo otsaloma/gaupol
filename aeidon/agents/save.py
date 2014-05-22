@@ -24,26 +24,6 @@ class SaveAgent(aeidon.Delegate):
 
     """Writing subtitle data to file."""
 
-    def _convert_markup(self, doc, from_format, to_format):
-        """Convert markup in texts and return changed indices."""
-        indices = []
-        converter = aeidon.MarkupConverter(from_format, to_format)
-        for i, subtitle in enumerate(self.subtitles):
-            text = subtitle.get_text(doc)
-            new_text = converter.convert(text)
-            if new_text == text: continue
-            subtitle.set_text(doc, new_text)
-            indices.append(i)
-        return indices
-
-    def _ensure_mode(self, mode):
-        """Update mode of subtitles if necessary."""
-        if self.main_file is None: return
-        if mode == self.main_file.mode: return
-        for i, subtitle in enumerate(self.subtitles):
-            subtitle.mode = mode
-        self.emit("positions-changed", self.get_all_indices())
-
     def _save(self, doc, file, keep_changes):
         """
         Write subtitle data from `doc` to `file`.
@@ -55,8 +35,15 @@ class SaveAgent(aeidon.Delegate):
         current_format = self.get_format(doc)
         orig_texts = [x.get_text(doc) for x in self.subtitles]
         indices = []
-        if (current_format is not None) and (file.format != current_format):
-            indices = self._convert_markup(doc, current_format, file.format)
+        if current_format is not None and file.format != current_format:
+            # Convert markup if saving in different format.
+            converter = aeidon.MarkupConverter(current_format, file.format)
+            for i, subtitle in enumerate(self.subtitles):
+                text = subtitle.get_text(doc)
+                new_text = converter.convert(text)
+                if new_text == text: continue
+                subtitle.set_text(doc, new_text)
+                indices.append(i)
         file.write(self.subtitles, doc)
         if keep_changes: return indices
         for i, subtitle in enumerate(self.subtitles):
@@ -68,11 +55,7 @@ class SaveAgent(aeidon.Delegate):
         """
         Write subtitle data from `doc` to `file`.
 
-        `file` can be ``None`` to use existing file, i.e. :attr:`main_file` or
-        :attr:`tran_file`. If saving to a format different from the current,
-        changes might be needed in texts if there are markup tags that need to
-        be converted. Keep these markup changes if `keep_changes` is ``True``.
-
+        `file` can be ``None`` to use existing file.
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
@@ -80,19 +63,14 @@ class SaveAgent(aeidon.Delegate):
             return self.save_main(file, keep_changes)
         if doc == aeidon.documents.TRAN:
             return self.save_translation(file, keep_changes)
-        raise ValueError("Invalid document: {}"
-                         .format(repr(doc)))
+        raise ValueError("Invalid document: {}".format(repr(doc)))
 
     @aeidon.deco.export
     def save_main(self, file=None, keep_changes=True):
         """
         Write subtitle data from main document to `file`.
 
-        `file` can be ``None`` to use :attr:`main_file`. If saving to a format
-        different from the current, changes might be needed in texts if there
-        are markup tags that need to be converted. Keep these markup changes if
-        `keep_changes` is ``True``.
-
+        `file` can be ``None`` to use :attr:`main_file`.
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """
@@ -101,7 +79,12 @@ class SaveAgent(aeidon.Delegate):
             file.copy_from(self.main_file)
         indices = self._save(aeidon.documents.MAIN, file, keep_changes)
         if keep_changes:
-            self._ensure_mode(file.mode)
+            if (self.main_file is not None and
+                file.mode != self.main_file.mode):
+                # Apply possibly changed mode (times vs. frames).
+                for i, subtitle in enumerate(self.subtitles):
+                    subtitle.mode = file.mode
+                self.emit("positions-changed", self.get_all_indices())
             self.main_file = file
             self.main_changed = 0
             self.emit("main-texts-changed", indices)
@@ -112,11 +95,7 @@ class SaveAgent(aeidon.Delegate):
         """
         Write subtitle data from translation document to `file`.
 
-        `file` can be ``None`` to use :attr:`tran_file`. If saving to a format
-        different from the current, changes might be needed in texts if there
-        are markup tags that need to be converted. Keep these markup changes if
-        `keep_changes` is ``True``.
-
+        `file` can be ``None`` to use :attr:`tran_file`.
         Raise :exc:`IOError` if writing fails.
         Raise :exc:`UnicodeError` if encoding fails.
         """

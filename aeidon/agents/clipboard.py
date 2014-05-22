@@ -52,9 +52,7 @@ class ClipboardAgent(aeidon.Delegate):
         if new_count > 0:
             indices = list(range(length, length + new_count))
             self.insert_subtitles(indices, register=register)
-        indices = [index + i for i in range(len(texts))
-                   if texts[i] is not None]
-
+        indices = [index+i for i in range(len(texts)) if texts[i] is not None]
         new_texts = [x for x in texts if x is not None]
         self.replace_texts(indices, doc, new_texts, register=register)
         if new_count > 0:

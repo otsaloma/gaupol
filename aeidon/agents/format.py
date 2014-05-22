@@ -28,51 +28,6 @@ class FormatAgent(aeidon.Delegate):
 
     _re_alphanum = re.compile(r"\w")
 
-    def _change_case_first(self, parser, method):
-        """Change the case of the alphanumeric substring."""
-        match = self._re_alphanum.search(parser.text)
-        if match is None: return
-        a = match.start()
-        prefix = parser.text[:a]
-        text = getattr(parser.text[a:], method)()
-        parser.text = prefix + text
-
-    def _should_add_dialogue_dashes(self, indices, doc):
-        """Return ``True`` if dialogue dashes should be added to texts."""
-        re_tag = self.get_markup_tag_regex(doc)
-        for index in indices:
-            text = self.subtitles[index].get_text(doc)
-            for line in text.split("\n"):
-                # Strip all tags from line.
-                # If leftover doesn't start with "-",
-                # dialogue dashes should be added.
-                if re_tag is not None:
-                    line = re_tag.sub("", line)
-                if not line.startswith("-"):
-                    return True
-        return False
-
-    def _should_italicize(self, indices, doc):
-        """Return ``True`` if texts should be italicized."""
-        re_tag = self.get_markup_tag_regex(doc)
-        markup = self.get_markup(doc)
-        re_italic_tag = markup.italic_tag
-        for index in indices:
-            text = self.subtitles[index].get_text(doc)
-            # Remove tags from the start of the text,
-            # ending after all tags are removed
-            # or when an italic tag is found.
-            if re_tag is not None:
-                while re_tag.match(text) is not None:
-                    if re_italic_tag.match(text) is not None:
-                        break
-                    text = re_tag.sub("", text, 1)
-            # If there is no italic tag at the start of the text,
-            # all texts should be italicized.
-            if re_italic_tag.match(text) is None:
-                return True
-        return False
-
     @aeidon.deco.export
     @aeidon.deco.revertable
     def add_dialogue_dashes(self, indices, doc, register=-1):
@@ -111,6 +66,15 @@ class FormatAgent(aeidon.Delegate):
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Changing case"))
 
+    def _change_case_first(self, parser, method):
+        """Change the case of the alphanumeric substring."""
+        match = self._re_alphanum.search(parser.text)
+        if match is None: return
+        a = match.start()
+        prefix = parser.text[:a]
+        text = getattr(parser.text[a:], method)()
+        parser.text = prefix + text
+
     @aeidon.deco.export
     @aeidon.deco.revertable
     def italicize(self, indices, doc, register=-1):
@@ -141,6 +105,42 @@ class FormatAgent(aeidon.Delegate):
             new_texts.append(parser.get_text())
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Removing dialogue dashes"))
+
+    def _should_add_dialogue_dashes(self, indices, doc):
+        """Return ``True`` if dialogue dashes should be added to texts."""
+        re_tag = self.get_markup_tag_regex(doc)
+        for index in indices:
+            text = self.subtitles[index].get_text(doc)
+            for line in text.split("\n"):
+                # Strip all tags from line.
+                # If leftover doesn't start with "-",
+                # dialogue dashes should be added.
+                if re_tag is not None:
+                    line = re_tag.sub("", line)
+                if not line.startswith("-"):
+                    return True
+        return False
+
+    def _should_italicize(self, indices, doc):
+        """Return ``True`` if texts should be italicized."""
+        re_tag = self.get_markup_tag_regex(doc)
+        markup = self.get_markup(doc)
+        re_italic_tag = markup.italic_tag
+        for index in indices:
+            text = self.subtitles[index].get_text(doc)
+            # Remove tags from the start of the text,
+            # ending after all tags are removed
+            # or when an italic tag is found.
+            if re_tag is not None:
+                while re_tag.match(text) is not None:
+                    if re_italic_tag.match(text) is not None:
+                        break
+                    text = re_tag.sub("", text, 1)
+            # If there is no italic tag at the start of the text,
+            # all texts should be italicized.
+            if re_italic_tag.match(text) is None:
+                return True
+        return False
 
     @aeidon.deco.export
     @aeidon.deco.revertable

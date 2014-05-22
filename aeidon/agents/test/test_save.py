@@ -22,43 +22,24 @@ class TestSaveAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
-        self.delegate = self.project.save_main.__self__
-
-    def test_save__main(self):
-        self.project.save(aeidon.documents.MAIN)
-
-    def test_save__translation(self):
-        self.project.save(aeidon.documents.TRAN)
-
-    def test_save__value_error(self):
-        self.assert_raises(ValueError, self.project.save, None)
 
     def test_save_main(self):
         for format in aeidon.formats:
             self.project.clear_texts((0,), aeidon.documents.MAIN)
             path = self.project.main_file.path
             file = aeidon.files.new(format, path, "ascii")
-            self.project.save_main(file, False)
+            self.project.save_main(file, keep_changes=False)
             assert self.project.main_changed == 1
             file = aeidon.files.new(format, path, "ascii")
-            self.project.save_main(file, True)
+            self.project.save_main(file, keep_changes=True)
             assert self.project.main_changed == 0
-
-    def test_save_main__io_error(self):
-        file = aeidon.files.new(aeidon.formats.SUBRIP, "/////", "ascii")
-        self.assert_raises(IOError, self.project.save_main, file)
-
-    def test_save_main__unicode_error(self):
-        path = self.project.main_file.path
-        file = aeidon.files.new(aeidon.formats.SUBRIP, path, "undefined")
-        self.assert_raises(UnicodeError, self.project.save_main, file)
 
     def test_save_translation(self):
         for format in aeidon.formats:
             self.project.clear_texts((0,), aeidon.documents.TRAN)
             path = self.project.tran_file.path
             file = aeidon.files.new(format, path, "ascii")
-            self.project.save_translation(file, False)
+            self.project.save_translation(file, keep_changes=False)
             assert self.project.tran_changed == 1
-            self.project.save_translation(file, True)
+            self.project.save_translation(file, keep_changes=True)
             assert self.project.tran_changed == 0

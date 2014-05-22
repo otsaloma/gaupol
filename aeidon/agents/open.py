@@ -63,48 +63,14 @@ class OpenAgent(aeidon.Delegate):
             subtitles.pop(0)
             i += 1
 
-    def _read_file(self, file):
-        """
-        Read `file` and return subtitles.
-
-        Raise :exc:`IOError` if reading fails.
-        Raise :exc:`UnicodeError` if decoding fails.
-        Raise :exc:`aeidon.ParseError` if parsing fails.
-        """
-        try:
-            return file.read()
-        except (IOError, UnicodeError):
-            raise
-        except Exception:
-            raise aeidon.ParseError("Failed to parse file {}"
-                                    .format(repr(file.path)))
-
-    def _sort_subtitles(self, subtitles):
-        """
-        Sort and return `subtitles` and sort count.
-
-        `subtitles` are sorted according to their start positions. Sort count
-        is the amount of subtitles that needed to be moved in order to arrange
-        them in ascending chronological order.
-        """
-        sort_count = 0
-        sorted_subtitles = []
-        while subtitles:
-            subtitle = subtitles.pop(0)
-            index = bisect.bisect(sorted_subtitles, subtitle)
-            if index < len(sorted_subtitles):
-                sort_count += 1
-            sorted_subtitles.insert(index, subtitle)
-        return sorted_subtitles, sort_count
-
     @aeidon.deco.export
-    def open(self, doc, path, encoding=None, *args, **kwargs):
+    def open(self, doc, path, encoding=None, align_method=None):
         """
         Read and parse subtitle data for `doc` from `path`.
 
-        `encoding` can be ``None`` to use the system default encoding. Return
-        the amount of subtitles that needed to be moved in order to arrange
-        them in ascending chronological order.
+        `encoding` can be ``None`` to use the system default encoding.
+        Return the amount of subtitles that needed to be moved in order
+        to arrange them in ascending chronological order.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -112,9 +78,9 @@ class OpenAgent(aeidon.Delegate):
         Raise :exc:`aeidon.ParseError` if parsing fails.
         """
         if doc == aeidon.documents.MAIN:
-            return self.open_main(path, encoding, *args, **kwargs)
+            return self.open_main(path, encoding)
         if doc == aeidon.documents.TRAN:
-            return self.open_translation(path, encoding, *args, **kwargs)
+            return self.open_translation(path, encoding, align_method)
         raise ValueError("Invalid document: {}".format(repr(doc)))
 
     @aeidon.deco.export
@@ -123,9 +89,9 @@ class OpenAgent(aeidon.Delegate):
         """
         Read and parse subtitle data for main file from `path`.
 
-        `encoding` can be ``None`` to use the system default encoding. Return
-        the amount of subtitles that needed to be moved in order to arrange
-        them in ascending chronological order.
+        `encoding` can be ``None`` to use the system default encoding.
+        Return the amount of subtitles that needed to be moved in order
+        to arrange them in ascending chronological order.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -133,10 +99,6 @@ class OpenAgent(aeidon.Delegate):
         Raise :exc:`aeidon.ParseError` if parsing fails.
         """
         encoding = encoding or aeidon.util.get_default_encoding()
-        # Check for a Unicode BOM first to avoid getting a FormatError in the
-        # case where an unsuitable encoding decodes a file into garbage without
-        # raising a UnicodeDecodeError. If a Unicode BOM is found, use the
-        # corresponding Unicode encoding to open the file.
         bom_encoding = aeidon.encodings.detect_bom(path)
         if not bom_encoding in (encoding, None):
             return self.open_main(path, bom_encoding)
@@ -168,10 +130,10 @@ class OpenAgent(aeidon.Delegate):
         needed to have at least a rough chronological match. The latter thus
         takes into account that not all subtitles are translated, or vice versa
         and that one main subtitle may correspond to two translation subtitles,
-        or vice versa, as per length restrictions or whatever.
+        or vice versa, as per length restrictions etc.
 
-        Return the amount of subtitles that needed to be moved in order to
-        arrange them in ascending chronological order.
+        Return the amount of subtitles that needed to be moved in order
+        to arrange them in ascending chronological order.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -180,10 +142,6 @@ class OpenAgent(aeidon.Delegate):
         """
         encoding = encoding or aeidon.util.get_default_encoding()
         align_method = align_method or aeidon.align_methods.POSITION
-        # Check for a Unicode BOM first to avoid getting a FormatError in the
-        # case where an unsuitable encoding decodes a file into garbage without
-        # raising a UnicodeDecodeError. If a Unicode BOM is found, use the
-        # corresponding Unicode encoding to open the file.
         bom_encoding = aeidon.encodings.detect_bom(path)
         if bom_encoding not in (encoding, None):
             return self.open_translation(path, bom_encoding, align_method)
@@ -196,11 +154,40 @@ class OpenAgent(aeidon.Delegate):
         for subtitle in self.subtitles:
             subtitle.tran_text = ""
         blocked = self.block("subtitles-inserted")
-        if align_method == aeidon.align_methods.POSITION:
-            self._align_translations_by_position(subtitles)
         if align_method == aeidon.align_methods.NUMBER:
             self._align_translations_by_number(subtitles)
+        if align_method == aeidon.align_methods.POSITION:
+            self._align_translations_by_position(subtitles)
         self.unblock("subtitles-inserted", blocked)
         self.tran_changed = 0
         self.emit("translation-file-opened", self.tran_file)
         return sort_count
+
+    def _read_file(self, file):
+        """
+        Read `file` and return subtitles.
+
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
+        Raise :exc:`aeidon.ParseError` if parsing fails.
+        """
+        try:
+            return file.read()
+        except (IOError, UnicodeError):
+            raise
+        except Exception:
+            # It's difficult to tell the difference between a parse error,
+            # i.e. a syntactic problem in the file to be read and a bug
+            # in our own parsing code. Let's assume our code is bug-free!
+            raise aeidon.ParseError("Failed to parse file {}"
+                                    .format(repr(file.path)))
+
+    def _sort_subtitles(self, subtitles):
+        """Return sorted `subtitles` and sort count."""
+        sort_count = 0
+        sorted_starts = []
+        for start in (x.start_frame for x in subtitles):
+            bisect.insort(sorted_starts, start)
+            if sorted_starts[-1] != start:
+                sort_count += 1
+        return sorted(subtitles), sort_count

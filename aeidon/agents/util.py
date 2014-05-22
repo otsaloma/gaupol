@@ -18,7 +18,6 @@
 """Miscellaneous helper methods."""
 
 import aeidon
-import os
 
 
 class UtilityAgent(aeidon.Delegate):
@@ -129,13 +128,6 @@ class UtilityAgent(aeidon.Delegate):
             return "translation-texts-changed"
         raise ValueError("Invalid document: {}"
                          .format(repr(doc)))
-
-    @aeidon.deco.export
-    def new_revertable_action(self, register):
-        """Return a new :class:`aeidon.RevertableAction` instance."""
-        action = aeidon.RevertableAction()
-        action.register = register
-        return action
 
     @aeidon.deco.export
     def new_subtitle(self):

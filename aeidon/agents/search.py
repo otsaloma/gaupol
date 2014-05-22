@@ -58,10 +58,10 @@ class SearchAgent(aeidon.Delegate):
 
     def _find(self, index, doc, pos, next):
         """
-        Find pattern starting from given location.
+        Find pattern starting from given position.
 
         `pos` can be ``None`` for beginning or end.
-        `next` should be ``True`` to find next, ``False`` to find previous.
+        `next` should be ``True`` to find next, ``False`` for previous.
         Raise :exc:`StopIteration` if no match.
         Return tuple of index, document, match span.
         """
@@ -73,39 +73,62 @@ class SearchAgent(aeidon.Delegate):
         self._match_passed = False
         indices = self._indices or self.get_all_indices()
         while True:
-            try:
+            with aeidon.util.silent(ValueError):
                 # Return match in document after location.
                 return find(index, doc, pos)
-            except ValueError:
-                pass
             # Proceed to the next document or raise StopIteration.
             self._match_passed = True
             doc = self._get_document(doc, next)
             index = (min(indices) if next else max(indices))
             pos = None
 
+    @aeidon.deco.export
+    def find_next(self, index=None, doc=None, pos=None):
+        """
+        Find the next match starting from given position.
+
+        `index`, `doc` and `pos` can be ``None`` to start from beginning.
+        Raise :exc:`StopIteration` if no (more) matches exist.
+        Return tuple of index, document, match span.
+        """
+        index = (0 if index is None else index)
+        doc = (self._docs[0] if doc is None else doc)
+        return self._find(index, doc, pos, next=True)
+
+    @aeidon.deco.export
+    def find_previous(self, index=None, doc=None, pos=None):
+        """
+        Find the previous match starting from given position.
+
+        `index`, `doc` and `pos` can be ``None`` to start from end.
+        Raise :exc:`StopIteration` if no (more) matches exist.
+        Return tuple of index, document, match span.
+        """
+        index = (len(self.subtitles)-1 if index is None else index)
+        doc = (self._docs[-1] if doc is None else doc)
+        return self._find(index, doc, pos, next=False)
+
     def _get_document(self, doc, next):
         """
         Return the document to proceed to.
 
-        `next` should be ``True`` to find next, ``False`` to find previous.
+        `next` should be ``True`` to find next, ``False`` for previous.
         Raise :exc:`StopIteration` if nowhere to proceed.
         """
         if len(self._docs) == 1:
-            if self._wrap:
-                return doc
+            if self._wrap: return doc
             raise StopIteration
-        if next and (doc == aeidon.documents.MAIN):
+        if next and doc == aeidon.documents.MAIN:
             return aeidon.documents.TRAN
-        if next and (doc == aeidon.documents.TRAN):
+        if next and doc == aeidon.documents.TRAN:
             if self._wrap:
                 return aeidon.documents.MAIN
             raise StopIteration
-        if (not next) and (doc == aeidon.documents.MAIN):
+        if not next and doc == aeidon.documents.MAIN:
             if self._wrap:
                 return aeidon.documents.TRAN
             raise StopIteration
-        if (not next) and (doc == aeidon.documents.TRAN):
+        if not next and doc == aeidon.documents.TRAN:
             return aeidon.documents.MAIN
         raise ValueError("Invalid document: {} or invalid next: {}"
                          .format(repr(doc), repr(next)))
@@ -120,7 +143,7 @@ class SearchAgent(aeidon.Delegate):
         Return tuple of index, document, match span.
         """
         indices = self._indices or self.get_all_indices()
-        for index in range(index, max(indices) + 1):
+        for index in range(index, max(indices)+1):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:
@@ -145,8 +168,7 @@ class SearchAgent(aeidon.Delegate):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError("No more matches in document: {}"
-                         .format(repr(doc)))
+        raise ValueError("No more matches in document")
 
     def _previous_in_document(self, index, doc, pos=None):
         """
@@ -158,7 +180,7 @@ class SearchAgent(aeidon.Delegate):
         Return tuple of index, document, match span.
         """
         indices = self._indices or self.get_all_indices()
-        for index in reversed(range(min(indices), index + 1)):
+        for index in reversed(range(min(indices), index+1)):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:
@@ -183,34 +205,7 @@ class SearchAgent(aeidon.Delegate):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError("No more matches in document: {}"
-                         .format(repr(doc)))
-
-    @aeidon.deco.export
-    def find_next(self, index=None, doc=None, pos=None):
-        """
-        Find the next match starting from given location.
-
-        `index`, `doc` and `pos` can be ``None`` to start from beginning.
-        Raise :exc:`StopIteration` if no matches exist.
-        Return tuple of index, document, match span.
-        """
-        index = (0 if index is None else index)
-        doc = (self._docs[0] if doc is None else doc)
-        return self._find(index, doc, pos, True)
-
-    @aeidon.deco.export
-    def find_previous(self, index=None, doc=None, pos=None):
-        """
-        Find the previous match starting from given location.
-
-        `index`, `doc` and `pos` can be ``None`` to start from end.
-        Raise :exc:`StopIteration` if no matches exist.
-        Return tuple of index, document, match span.
-        """
-        index = (len(self.subtitles) - 1 if index is None else index)
-        doc = (self._docs[-1] if doc is None else doc)
-        return self._find(index, doc, pos, False)
+        raise ValueError("No more matches in document")
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -251,13 +246,13 @@ class SearchAgent(aeidon.Delegate):
                     new_indices.append(index)
                     new_texts.append(self._finder.text)
                     counts[doc] += sub_count
-            if new_indices:
-                self.replace_texts(new_indices,
-                                   doc,
-                                   new_texts,
-                                   register=register)
+            if not new_indices: continue
+            self.replace_texts(new_indices,
+                               doc,
+                               new_texts,
+                               register=register)
 
-                self.set_action_description(register, _("Replacing all"))
+            self.set_action_description(register, _("Replacing all"))
         if (len(list(counts.keys())) == 2) and all(counts.values()):
             self.group_actions(register, 2, _("Replacing all"))
         return sum(counts.values())
@@ -267,7 +262,6 @@ class SearchAgent(aeidon.Delegate):
         """
         Set the regular expression pattern to find.
 
-        The default value for `flags` is ``DOTALL`` and ``MULTILINE``.
         Raise :exc:`re.error` if bad pattern.
         """
         # Ignore case only if in flags.

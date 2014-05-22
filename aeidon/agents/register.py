@@ -28,10 +28,10 @@ To hook a method up with the undo/redo system, the following need to be done:
     an instance of :class:`aeidon.RevertableAction`. Calling this method takes
     care of the management of undo and redo stacks.
 
-(3) The method should be marked with the :func:`aeidon.revertable` decorator.
-    This decorator takes care of emitting an action signal once the method has
-    been run, cuts the undo and redo stacks if needed and defaults the
-    `register` keyword argument to :attr:`aeidon.registers.DO`.
+(3) The method should be marked with the :func:`aeidon.deco.revertable`
+    decorator. This decorator takes care of emitting an action signal once
+    the method has been run, cuts the undo and redo stacks if needed and
+    defaults the `register` keyword argument to :attr:`aeidon.registers.DO`.
 
 Each method marked as revertable should match exactly one action in the undo
 and redo stacks. Hence, if a method calls other revertable methods, the
@@ -60,68 +60,11 @@ class RegisterAgent(aeidon.Delegate):
         aeidon.util.connect(self, self, "notify::undo_limit")
 
     def _break_action_group(self, stack, index=0):
-        """
-        Break the action group in `stack` into individual actions.
-
-        Return the amount of actions broken into.
-        """
+        """Break the action group in `stack` and return amount broken into."""
         action_group = stack.pop(index)
         for action in reversed(action_group.actions):
             stack.insert(index, action)
         return len(action_group.actions)
-
-    def _get_destination_stack(self, register):
-        """Return the stack where the registered action will be placed."""
-        if register.shift == 1:
-            return self.undoables
-        if register.shift == -1:
-            return self.redoables
-        raise ValueError("Invalid register: {}"
-                         .format(repr(register)))
-
-    def _get_source_stack(self, register):
-        """Return the stack where the action to register is taken from."""
-        if register.shift == 1:
-            return self.redoables
-        if register.shift == -1:
-            return self.undoables
-        raise ValueError("Invalid register: {}"
-                         .format(repr(register)))
-
-    def _on_notify_undo_limit(self, *args):
-        """Cut reversion stacks if limit set."""
-        if self.undo_limit is not None:
-            self.cut_reversion_stacks()
-
-    def _revert_multiple(self, count, register):
-        """Revert multiple actions."""
-        self.block(register.signal)
-        stack = self._get_source_stack(register)
-        for i in range(count):
-            part_count = 1
-            if isinstance(stack[0], aeidon.RevertableActionGroup):
-                description = stack[0].description
-                part_count = self._break_action_group(stack)
-            for j in range(part_count):
-                self._do_description = stack[0].description
-                stack.pop(0).revert()
-            if part_count > 1:
-                self.group_actions(register, part_count, description)
-        self.unblock(register.signal)
-        self.cut_reversion_stacks()
-        self.emit_action_signal(register)
-
-    def _shift_changed_value(self, action, shift):
-        """Shift the values of changed attributes."""
-        if aeidon.documents.MAIN in action.docs:
-            self.main_changed += shift
-        if tuple(action.docs) == (aeidon.documents.TRAN,):
-            # Make translation document active.
-            if self.tran_changed is None:
-                self.tran_changed = 0
-        if aeidon.documents.TRAN in action.docs:
-            if self.tran_changed is not None:
-                self.tran_changed += shift
 
     @aeidon.deco.export
     def can_redo(self):
@@ -147,6 +90,24 @@ class RegisterAgent(aeidon.Delegate):
             self.emit(register.signal,
                       self._get_destination_stack(register)[0])
 
+    def _get_destination_stack(self, register):
+        """Return the stack where the registered action will be placed."""
+        if register.shift == 1:
+            return self.undoables
+        if register.shift == -1:
+            return self.redoables
+        raise ValueError("Invalid register: {}"
+                         .format(repr(register)))
+
+    def _get_source_stack(self, register):
+        """Return the stack where the action to register is taken from."""
+        if register.shift == 1:
+            return self.redoables
+        if register.shift == -1:
+            return self.undoables
+        raise ValueError("Invalid register: {}"
+                         .format(repr(register)))
+
     @aeidon.deco.export
     def group_actions(self, register, count, description):
         """Group the registered actions as one item in the stack."""
@@ -163,11 +124,16 @@ class RegisterAgent(aeidon.Delegate):
                 action_group.actions.append(action)
         stack.insert(0, action_group)
 
+    def _on_notify_undo_limit(self, *args):
+        """Cut reversion stacks if limit set."""
+        if self.undo_limit is not None:
+            self.cut_reversion_stacks()
+
     @aeidon.deco.export
     def redo(self, count=1):
         """Redo `count` amount of actions from the redoable stack."""
         group = aeidon.RevertableActionGroup
-        if (count > 1) or isinstance(self.redoables[0], group):
+        if count > 1 or isinstance(self.redoables[0], group):
             return self._revert_multiple(count, aeidon.registers.REDO)
         self._do_description = self.redoables[0].description
         self.redoables.pop(0).revert()
@@ -188,12 +154,42 @@ class RegisterAgent(aeidon.Delegate):
             action.description = self._do_description
             self._shift_changed_value(action, action.register.shift)
 
+    def _revert_multiple(self, count, register):
+        """Revert multiple actions."""
+        self.block(register.signal)
+        stack = self._get_source_stack(register)
+        for i in range(count):
+            part_count = 1
+            if isinstance(stack[0], aeidon.RevertableActionGroup):
+                description = stack[0].description
+                part_count = self._break_action_group(stack)
+            for j in range(part_count):
+                self._do_description = stack[0].description
+                stack.pop(0).revert()
+            if part_count > 1:
+                self.group_actions(register, part_count, description)
+        self.unblock(register.signal)
+        self.cut_reversion_stacks()
+        self.emit_action_signal(register)
+
     @aeidon.deco.export
     def set_action_description(self, register, description):
         """Set the description of the most recent registered action."""
         if register is None: return
         stack = self._get_destination_stack(register)
         stack[0].description = description
+
+    def _shift_changed_value(self, action, shift):
+        """Shift the values of changed attributes."""
+        if aeidon.documents.MAIN in action.docs:
+            self.main_changed += shift
+        if tuple(action.docs) == (aeidon.documents.TRAN,):
+            # Make translation document active.
+            if self.tran_changed is None:
+                self.tran_changed = 0
+        if aeidon.documents.TRAN in action.docs:
+            if self.tran_changed is not None:
+                self.tran_changed += shift
 
     @aeidon.deco.export
     def undo(self, count=1):

@@ -30,96 +30,8 @@ except Exception:
 class TextAgent(aeidon.Delegate):
 
     """Automatic correcting of texts."""
+
     _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)(?<!…)\w")
-
-    def _capitalize_first(self, parser, pos):
-        """
-        Capitalize the first alphanumeric character from `pos`.
-
-        Return ``True`` if something was capitalized, ``False`` if not.
-        """
-        match = self._re_capitalizable.search(parser.text[pos:])
-        if match is not None:
-            i = pos + match.end() - 1
-            prefix = parser.text[:i]
-            text = parser.text[i:i+1].capitalize()
-            suffix = parser.text[i+1:]
-            parser.text = prefix + text + suffix
-        return match is not None
-
-    def _capitalize_text(self, parser, pattern, cap_next):
-        """
-        Capitalize all matches of `pattern` in `parser`'s text.
-
-        Return ``True`` if the text of the next subtitle should be capitalized.
-        """
-        try:
-            a, z = parser.next()
-        except StopIteration:
-            return cap_next
-        if pattern.get_field("Capitalize") == "Start":
-            self._capitalize_first(parser, a)
-        if pattern.get_field("Capitalize") == "After":
-            cap_next = not self._capitalize_first(parser, z)
-        return self._capitalize_text(parser, pattern, cap_next)
-
-    def _get_enchant_checker(self, language):
-        """
-        Return an enchant spell-checker for `language`.
-
-        Raise :exc:`enchant.error` if dictionary instatiation fails.
-        """
-        dictionary = enchant.Dict(language)
-        # Sometimes enchant will initialize a dictionary that will not
-        # actually work when trying to use it, hence check something.
-        dictionary.check("aeidon")
-        return enchant.checker.SpellChecker(dictionary, "")
-
-    def _get_misspelled_indices(self, checker):
-        """Return a list of misspelled indices in `checker`'s text."""
-        i = [list(range(x.wordpos, x.wordpos + len(x.word))) for x in checker]
-        return aeidon.util.flatten(i)
-
-    def _get_penalties(self, patterns):
-        """Return a list of penalty definitions."""
-        return [dict(pattern=x.get_field("Pattern"),
-                     flags=x.get_flags(),
-                     group=int(x.get_field("Group")),
-                     value=float(x.get_field("Penalty"))) for x in patterns]
-
-    def _get_substitutions(self, patterns):
-        """Return a sequence of tuples of pattern, flags, replacement."""
-        return [(x.get_field("Pattern"),
-                 x.get_flags(),
-                 x.get_field("Replacement")) for x in patterns]
-
-    def _remove_leftover_hi(self, texts, parser):
-        """Remove leftover hearing impaired whitespace and junk."""
-        texts = texts[:]
-        for i, text in enumerate(texts):
-            parser.set_text(text)
-            # Remove leading and trailing spaces.
-            self._replace_all(parser, r"(^\s+|\s+$)", "")
-            # Consolidate multiple consequtive spaces.
-            self._replace_all(parser, r" {2,}", " ")
-            # Remove lines with no alphanumeric characters.
-            self._replace_all(parser, r"^\W*$", "")
-            # Remove empty lines.
-            self._replace_all(parser, r"(^\n|\n$)", "")
-            # Add space after dialogue dashes.
-            self._replace_all(parser, r"^([\-\–\—])(\S)", r"\1 \2")
-            # Remove dialogue dashes if not present on other lines.
-            self._replace_all(parser, r"^[\-\–\—] (.*?^[^\-\–\—])", r"\1")
-            # Remove dialogue dashes from single-line subtitles.
-            self._replace_all(parser, r"\A[\-\–\—] ([^\n]*)\Z", r"\1")
-            texts[i] = parser.get_text()
-        return texts
-
-    def _replace_all(self, parser, pattern, replacement):
-        """Replace all matches of `pattern` in `parser`'s text."""
-        parser.set_regex(pattern)
-        parser.replacement = replacement
-        parser.replace_all()
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -160,11 +72,11 @@ class TextAgent(aeidon.Delegate):
             lines = plain_text.split("\n")
             length = max(map(length_func, lines))
             line_count = len(lines)
-            if length <= max_skip_length:
-                if line_count <= max_skip_lines:
-                    # Skip subtitles that do not violate
-                    # any of the defined skip conditions.
-                    if skip: continue
+            if (length <= max_skip_length and
+                line_count <= max_skip_lines):
+                # Skip subtitles that do not violate
+                # any of the defined skip conditions.
+                if skip: continue
             text = liner.break_lines()
             if re_tag is not None:
                 plain_text = re_tag.sub("", text)
@@ -203,7 +115,7 @@ class TextAgent(aeidon.Delegate):
             for index in indices:
                 subtitle = self.subtitles[index]
                 parser.set_text(subtitle.get_text(doc))
-                if cap_next or (index == 0):
+                if cap_next or index == 0:
                     self._capitalize_first(parser, 0)
                     cap_next = False
                 for pattern in patterns:
@@ -211,10 +123,7 @@ class TextAgent(aeidon.Delegate):
                     flags = pattern.get_flags()
                     parser.set_regex(string, flags)
                     parser.pos = 0
-                    cap_next = self._capitalize_text(parser,
-                                                     pattern,
-                                                     cap_next)
-
+                    cap_next = self._capitalize_text(parser, pattern, cap_next)
                 text = parser.get_text()
                 if text != subtitle.get_text(doc):
                     new_indices.append(index)
@@ -222,6 +131,37 @@ class TextAgent(aeidon.Delegate):
         if not new_indices: return
         self.replace_texts(new_indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Capitalizing texts"))
+
+    def _capitalize_first(self, parser, pos):
+        """
+        Capitalize the first alphanumeric character from `pos`.
+
+        Return ``True`` if something was capitalized, ``False`` if not.
+        """
+        match = self._re_capitalizable.search(parser.text[pos:])
+        if match is not None:
+            i = pos + match.end() - 1
+            prefix = parser.text[:i]
+            text = parser.text[i:i+1].capitalize()
+            suffix = parser.text[i+1:]
+            parser.text = prefix + text + suffix
+        return match is not None
+
+    def _capitalize_text(self, parser, pattern, cap_next):
+        """
+        Capitalize all matches of `pattern` in `parser`'s text.
+
+        Return ``True`` if the text of the next subtitle should be capitalized.
+        """
+        try:
+            a, z = parser.next()
+        except StopIteration:
+            return cap_next
+        if pattern.get_field("Capitalize") == "Start":
+            self._capitalize_first(parser, a)
+        if pattern.get_field("Capitalize") == "After":
+            cap_next = not self._capitalize_first(parser, z)
+        return self._capitalize_text(parser, pattern, cap_next)
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -242,7 +182,8 @@ class TextAgent(aeidon.Delegate):
         for index in indices or self.get_all_indices():
             subtitle = self.subtitles[index]
             parser.set_text(subtitle.get_text(doc))
-            for i, (string, flags, replacement) in enumerate(re_patterns):
+            for i, item in enumerate(re_patterns):
+                string, flags, replacement = item
                 parser.set_regex(string, flags)
                 parser.replacement = replacement
                 count = parser.replace_all()
@@ -255,6 +196,38 @@ class TextAgent(aeidon.Delegate):
         if not new_indices: return
         self.replace_texts(new_indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Correcting common errors"))
+
+    def _get_enchant_checker(self, language):
+        """
+        Return an enchant spell-checker for `language`.
+
+        Raise :exc:`enchant.error` if dictionary instantiation fails.
+        """
+        dictionary = enchant.Dict(language)
+        # Sometimes enchant will initialize a dictionary that will not
+        # actually work when trying to use it, hence check something.
+        dictionary.check("aeidon")
+        return enchant.checker.SpellChecker(dictionary, "")
+
+    def _get_misspelled_indices(self, checker):
+        """Return a list of misspelled indices in `checker`'s text."""
+        i = [list(range(x.wordpos, x.wordpos + len(x.word))) for x in checker]
+        return aeidon.util.flatten(i)
+
+    def _get_penalties(self, patterns):
+        """Return a list of penalty definitions."""
+        return [dict(pattern=x.get_field("Pattern"),
+                     flags=x.get_flags(),
+                     group=int(x.get_field("Group")),
+                     value=float(x.get_field("Penalty")))
+                for x in patterns]
+
+    def _get_substitutions(self, patterns):
+        """Return a sequence of tuples of pattern, flags, replacement."""
+        return [(x.get_field("Pattern"),
+                 x.get_flags(),
+                 x.get_field("Replacement"))
+                for x in patterns]
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -294,6 +267,34 @@ class TextAgent(aeidon.Delegate):
         self.remove_subtitles(remove_indices, register=register)
         self.group_actions(register, 2, description)
 
+    def _remove_leftover_hi(self, texts, parser):
+        """Remove leftover hearing impaired whitespace and junk."""
+        texts = texts[:]
+        for i, text in enumerate(texts):
+            parser.set_text(text)
+            # Remove leading and trailing spaces.
+            self._replace_all(parser, r"(^\s+|\s+$)", "")
+            # Consolidate multiple consequtive spaces.
+            self._replace_all(parser, r" {2,}", " ")
+            # Remove lines with no alphanumeric characters.
+            self._replace_all(parser, r"^\W*$", "")
+            # Remove empty lines.
+            self._replace_all(parser, r"(^\n|\n$)", "")
+            # Add space after dialogue dashes.
+            self._replace_all(parser, r"^([\-\–\—])(\S)", r"\1 \2")
+            # Remove dialogue dashes if not present on other lines.
+            self._replace_all(parser, r"^[\-\–\—] (.*?^[^\-\–\—])", r"\1")
+            # Remove dialogue dashes from single-line subtitles.
+            self._replace_all(parser, r"\A[\-\–\—] ([^\n]*)\Z", r"\1")
+            texts[i] = parser.get_text()
+        return texts
+
+    def _replace_all(self, parser, pattern, replacement):
+        """Replace all matches of `pattern` in `parser`'s text."""
+        parser.set_regex(pattern)
+        parser.replacement = replacement
+        parser.replace_all()
+
     @aeidon.deco.export
     @aeidon.deco.revertable
     def spell_check_join_words(self, indices, doc, language, register=-1):
@@ -312,29 +313,25 @@ class TextAgent(aeidon.Delegate):
             text = subtitle.get_text(doc)
             text = re_multispace.sub(" ", text)
             checker.set_text(text)
-            while True:
-                try:
-                    next(checker)
-                except StopIteration:
-                    break
+            for error in checker:
                 text = checker.get_text()
                 a = checker.wordpos
                 z = checker.wordpos + len(checker.word)
                 ok_with_prev = ok_with_next = False
                 if checker.leading_context(1) == " ":
-                    seeker.set_text(text[:a - 1] + text[a:])
+                    seeker.set_text(text[:a-1] + text[a:])
                     poss = self._get_misspelled_indices(seeker)
-                    ok_with_prev = not (a - 1) in poss
+                    ok_with_prev = not a-1 in poss
                 if checker.trailing_context(1) == " ":
-                    seeker.set_text(text[:z] + text[z + 1:])
+                    seeker.set_text(text[:z] + text[z+1:])
                     poss = self._get_misspelled_indices(seeker)
                     ok_with_next = not a in poss
                 # Join backwards or forwards if only one direction,
                 # but not both, produce a correctly spelled result.
                 if ok_with_prev and not ok_with_next:
-                    checker.set_text(text[:a - 1] + text[a:])
+                    checker.set_text(text[:a-1] + text[a:])
                 if ok_with_next and not ok_with_prev:
-                    checker.set_text(text[:z] + text[z + 1:])
+                    checker.set_text(text[:z] + text[z+1:])
             new_text = checker.get_text()
             if new_text != text:
                 new_indices.append(index)
@@ -364,15 +361,10 @@ class TextAgent(aeidon.Delegate):
             text = subtitle.get_text(doc)
             text = re_multispace.sub(" ", text)
             checker.set_text(text)
-            while True:
-                try:
-                    next(checker)
-                except StopIteration:
-                    break
-                if checker.word.capitalize() == checker.word:
-                    # Skip capitalized words, which are usually names
-                    # and thus not always found in dictionaries.
-                    continue
+            for error in checker:
+                # Skip capitalized words, which are usually names
+                # and thus not always found in dictionaries.
+                if checker.word.capitalize() == checker.word: continue
                 suggestions = []
                 for i, suggestion in enumerate(checker.suggest()):
                     if suggestion.find(" ") > 0:

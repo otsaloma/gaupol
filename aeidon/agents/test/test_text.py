@@ -17,11 +17,6 @@
 
 import aeidon
 
-try:
-    import enchant
-except Exception:
-    pass
-
 
 class TestTextAgent(aeidon.TestCase):
 
@@ -32,8 +27,8 @@ class TestTextAgent(aeidon.TestCase):
         manager = aeidon.PatternManager("line-break")
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace(" ", "\n")
-        self.project.break_lines(self.project.get_all_indices(),
-                                 aeidon.documents.MAIN,
+        self.project.break_lines(indices=None,
+                                 doc=aeidon.documents.MAIN,
                                  patterns=manager.get_patterns("Latn"),
                                  length_func=len,
                                  max_length=44,
@@ -87,13 +82,6 @@ class TestTextAgent(aeidon.TestCase):
                                             doc=aeidon.documents.MAIN,
                                             language="en")
 
-    def test_spell_check_join_words__enchant_error(self):
-        self.assert_raises(enchant.Error,
-                           self.project.spell_check_join_words,
-                           indices=None,
-                           doc=aeidon.documents.MAIN,
-                           language="xx")
-
     def test_spell_check_split_words(self):
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace("s ", "s")
@@ -101,10 +89,3 @@ class TestTextAgent(aeidon.TestCase):
         self.project.spell_check_split_words(indices=None,
                                              doc=aeidon.documents.MAIN,
                                              language="en")
-
-    def test_spell_check_split_words__enchant_error(self):
-        self.assert_raises(enchant.Error,
-                           self.project.spell_check_split_words,
-                           indices=None,
-                           doc=aeidon.documents.MAIN,
-                           language="xx")

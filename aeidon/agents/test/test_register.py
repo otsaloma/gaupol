@@ -27,98 +27,36 @@ class TestRegisterAgent(aeidon.TestCase):
         self.project = self.new_project()
         self.delegate = self.project.undo.__self__
 
-    def test__on_notify_undo_limit(self):
-        self.project.clear_texts((0,), MAIN)
-        self.project.clear_texts((1,), MAIN)
-        assert len(self.project.undoables) == 2
-        self.project.undo_limit = 1
-        assert len(self.project.undoables) == 1
-
-    def test_can_redo(self):
-        assert not self.project.can_redo()
-        self.project.clear_texts((0,), MAIN)
-        assert not self.project.can_redo()
-        self.project.undo()
-        assert self.project.can_redo()
-
-    def test_can_undo(self):
-        assert not self.project.can_undo()
-        self.project.clear_texts((0,), MAIN)
-        assert self.project.can_undo()
-        self.project.undo()
-        assert not self.project.can_undo()
-
-    def test_cut_reversion_stacks(self):
-        self.project.clear_texts((0,), MAIN)
-        self.project.clear_texts((1,), MAIN)
-        self.project.cut_reversion_stacks()
-        self.project.undo_limit = 1
-        self.project.cut_reversion_stacks()
-
-    def test_emit_action_signal(self):
-        self.project.clear_texts((0,), MAIN)
-        self.project.emit_action_signal(aeidon.registers.DO)
-
-    def test_group_actions(self):
-        self.project.clear_texts((0,), MAIN)
-        self.project.clear_texts((1,), MAIN)
-        self.project.clear_texts((2,), MAIN)
-        self.project.group_actions(aeidon.registers.DO, 2, "")
-        assert len(self.project.undoables) == 2
-        assert self.project.undoables[0].description == ""
-        assert len(self.project.undoables[0].actions) == 2
-
     def test_redo(self):
+        text_0 = self.project.subtitles[0].main_text
+        text_1 = self.project.subtitles[1].main_text
+        text_2 = self.project.subtitles[2].main_text
         self.project.clear_texts((0,), MAIN)
         self.project.clear_texts((1,), MAIN)
         self.project.clear_texts((2,), MAIN)
         self.project.undo(3)
+        assert self.project.subtitles[0].main_text == text_0
+        assert self.project.subtitles[1].main_text == text_1
+        assert self.project.subtitles[2].main_text == text_2
         self.project.redo(1)
         self.project.redo(2)
-
-    def test_redo__multiple(self):
-        for i in range(6):
-            self.project.clear_texts([i], MAIN)
-        self.project.group_actions(aeidon.registers.DO, 3, "")
-        self.project.remove_subtitles((3, 4))
-        self.project.insert_subtitles((3,))
-        self.project.undo(6)
-        self.project.redo(6)
-
-    def test_register_action(self):
-        self.project.clear_texts((0,), TRAN)
-        self.project.clear_texts((1,), MAIN)
-        self.project.clear_texts((2,), MAIN)
-        self.project.undo(3)
-        self.project.redo(2)
-        assert len(self.project.undoables) == 2
-        assert len(self.project.redoables) == 1
-
-    def test_register_action__activate_translation(self):
-        path = self.new_subrip_file()
-        self.project.open_main(path, "ascii")
-        assert self.project.tran_changed is None
-        self.project.clear_texts((1,), TRAN)
-        assert self.project.tran_changed == 1
-
-    def test_set_action_description(self):
-        self.project.clear_texts((0,), MAIN)
-        self.project.set_action_description(aeidon.registers.DO, "")
-        assert self.project.undoables[0].description == ""
+        assert self.project.subtitles[0].main_text == ""
+        assert self.project.subtitles[1].main_text == ""
+        assert self.project.subtitles[2].main_text == ""
 
     def test_undo(self):
+        text_0 = self.project.subtitles[0].main_text
+        text_1 = self.project.subtitles[1].main_text
+        text_2 = self.project.subtitles[2].main_text
         self.project.clear_texts((0,), MAIN)
         self.project.clear_texts((1,), MAIN)
         self.project.clear_texts((2,), MAIN)
         self.project.undo(1)
         self.project.undo(2)
+        assert self.project.subtitles[0].main_text == text_0
+        assert self.project.subtitles[1].main_text == text_1
+        assert self.project.subtitles[2].main_text == text_2
         self.project.redo(3)
-
-    def test_undo__multiple(self):
-        for i in range(6):
-            self.project.clear_texts([i], MAIN)
-        self.project.group_actions(aeidon.registers.DO, 3, "")
-        self.project.remove_subtitles((3, 4))
-        self.project.insert_subtitles((3,))
-        self.project.undo(6)
-        self.project.redo(6)
+        assert self.project.subtitles[0].main_text == ""
+        assert self.project.subtitles[1].main_text == ""
+        assert self.project.subtitles[2].main_text == ""

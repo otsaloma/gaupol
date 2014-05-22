@@ -29,7 +29,7 @@ class SetAgent(aeidon.Delegate):
     def _move_if_needed(self, index):
         """Move subtitle for correct order and return new index."""
         subtitle = self.subtitles[index]
-        subtitles = self.subtitles[:index] + self.subtitles[index + 1:]
+        subtitles = self.subtitles[:index] + self.subtitles[index+1:]
         new_index = bisect.bisect_right(subtitles, subtitle)
         if new_index == index: return new_index
         subtitle = self.subtitles.pop(index)
@@ -45,14 +45,14 @@ class SetAgent(aeidon.Delegate):
         Set the value of duration position.
 
         `value` can be time, frame or seconds. Use :func:`aeidon.as_time`,
-        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary to
-        ensure correct type.
+        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary
+        to ensure correct type.
         """
         subtitle = self.subtitles[index]
         orig_end = subtitle.end
         subtitle.duration = value
         if subtitle.end == orig_end: return
-        action = self.new_revertable_action(register)
+        action = aeidon.RevertableAction(register=register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
         action.revert_function = self.set_end
@@ -67,14 +67,14 @@ class SetAgent(aeidon.Delegate):
         Set the value of end position.
 
         `value` can be time, frame or seconds. Use :func:`aeidon.as_time`,
-        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary to
-        ensure correct type.
+        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary
+        to ensure correct type.
         """
         subtitle = self.subtitles[index]
         orig_value = subtitle.end
         subtitle.end = value
         if subtitle.end == orig_value: return
-        action = self.new_revertable_action(register)
+        action = aeidon.RevertableAction(register=register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
         action.revert_function = self.set_end
@@ -99,15 +99,15 @@ class SetAgent(aeidon.Delegate):
         Set the value of start position.
 
         `value` can be time, frame or seconds. Use :func:`aeidon.as_time`,
-        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary to
-        ensure correct type.
+        :func:`aeidon.as_frame` or :func:`aeidon.as_seconds` if necessary
+        to ensure correct type.
         """
         subtitle = self.subtitles[index]
         orig_value = subtitle.start
         subtitle.start = value
         if subtitle.start == orig_value: return
         index = self._move_if_needed(index)
-        action = self.new_revertable_action(register)
+        action = aeidon.RevertableAction(register=register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
         action.revert_function = self.set_start
@@ -123,7 +123,7 @@ class SetAgent(aeidon.Delegate):
         orig_value = subtitle.get_text(doc)
         if value == orig_value: return
         subtitle.set_text(doc, value)
-        action = self.new_revertable_action(register)
+        action = aeidon.RevertableAction(register=register)
         action.docs = (doc,)
         action.description = _("Editing text")
         action.revert_function = self.set_text
