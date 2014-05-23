@@ -20,18 +20,17 @@ gtk-menu-images = 0
 gtk-theme-name = Adwaita
 
  * Install chardet compatible with Python 3
-   - https://github.com/bsidhom/python3-chardet
+   - http://github.com/bsidhom/python3-chardet
    - python3 setyp.py install_lib
  * Install PyEnchant
    - https://pypi.python.org/pypi/pyenchant
    - Keep libenchant-1.dll, but remove other DLLs since they seem
      to conflict with ones from pygi-aio
      o .../site-packages/enchant/*.dll
-   - Monkey patch to accomodate a frozen installation
-     o https://github.com/rfk/pyenchant/issues/25
- * Install cx_Freeze
+   - Monkey-patch to accomodate a frozen installation
+     o http://github.com/rfk/pyenchant/issues/25
+ * Install cx_Freeze and Inno Setup
    - http://cx-freeze.sourceforge.net/
- * Install Inno Setup
    - http://www.jrsoftware.org/isdl.php
 
 Releasing a New Version for Windows
@@ -56,5 +55,4 @@ Known Issues
  * Integrated video player needs some Windows-specific work
  * Most fonts look bad; default set to Verdana
  * Links don't open (Gtk.LinkButton etc.)
- * The installer contains a whole lot of unnecessary stuff because it's
-   difficult to tell which DLLs etc. are actually needed
+ * The installer contains a whole lot of unnecessary stuff
