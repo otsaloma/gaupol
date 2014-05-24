@@ -26,7 +26,7 @@ from gi.repository import Gtk
 
 class TestAddFramerateDialog(gaupol.TestCase):
 
-    def run__dialog(self):
+    def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
 
@@ -54,7 +54,7 @@ class TestAddFramerateDialog(gaupol.TestCase):
 
 class TestPreferencesDialog(gaupol.TestCase):
 
-    def run__dialog(self):
+    def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
 

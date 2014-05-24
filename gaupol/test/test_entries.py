@@ -22,7 +22,7 @@ from gi.repository import Gtk
 
 class TestTimeEntry(gaupol.TestCase):
 
-    def run__entry(self):
+    def run_entry(self):
         self.entry.set_text("12:34:56.789")
         window = Gtk.Window()
         window.connect("delete-event", Gtk.main_quit)

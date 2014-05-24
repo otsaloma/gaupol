@@ -25,7 +25,7 @@ from gaupol.dialogs.test.test_file import _TestFileDialog
 class TestMultiSaveDialog(_TestFileDialog):
 
     @aeidon.deco.silent(gaupol.Default)
-    def run__show_overwrite_question_dialog(self):
+    def run_show_overwrite_question_dialog(self):
         self.dialog._show_overwrite_question_dialog(3, "test")
 
     def run_dialog(self):

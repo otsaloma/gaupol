@@ -36,7 +36,7 @@ def while_errors(function):
 
 class TestSpellCheckDialog(gaupol.TestCase):
 
-    def run__show_error_dialog(self):
+    def run_show_error_dialog(self):
         self.dialog._show_error_dialog("test")
 
     def run_dialog(self):

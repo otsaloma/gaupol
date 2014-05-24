@@ -24,7 +24,7 @@ from gi.repository import Gtk
 
 class TestView(gaupol.TestCase):
 
-    def run__view_frame(self):
+    def run_view_frame(self):
         self.setup_frame()
         window = Gtk.Window()
         window.connect("delete-event", Gtk.main_quit)
@@ -34,7 +34,7 @@ class TestView(gaupol.TestCase):
         window.show_all()
         Gtk.main()
 
-    def run__view_time(self):
+    def run_view_time(self):
         self.setup_time()
         window = Gtk.Window()
         window.connect("delete-event", Gtk.main_quit)

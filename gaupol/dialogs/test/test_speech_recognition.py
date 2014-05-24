@@ -27,7 +27,7 @@ class TestSpeechRecognitionDialog(gaupol.TestCase):
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__show_bus_message_error_dialog(self):
+    def run_show_bus_message_error_dialog(self):
         self.dialog._show_bus_message_error_dialog("test")
 
     def setup_method(self, method):

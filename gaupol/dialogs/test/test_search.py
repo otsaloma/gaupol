@@ -23,10 +23,10 @@ from gi.repository import Gtk
 
 class TestSearchDialog(gaupol.TestCase):
 
-    def run__show_regex_error_dialog_pattern(self):
+    def run_show_regex_error_dialog_pattern(self):
         self.dialog._show_regex_error_dialog_pattern("test")
 
-    def run__show_regex_error_dialog_replacement(self):
+    def run_show_regex_error_dialog_replacement(self):
         self.dialog._show_regex_error_dialog_replacement("test")
 
     def run_dialog(self):

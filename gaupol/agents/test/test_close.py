@@ -24,12 +24,12 @@ from gi.repository import Gtk
 
 class TestCloseAgent(gaupol.TestCase):
 
-    def run__confirm_close_main(self):
+    def run_confirm_close_main(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
         self.delegate._confirm_close_main(page)
 
-    def run__confirm_close_translation(self):
+    def run_confirm_close_translation(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
         self.delegate._confirm_close_translation(page)

@@ -24,10 +24,10 @@ from gi.repository import Gtk
 
 class TestSaveAgent(gaupol.TestCase):
 
-    def run__show_encoding_error_dialog(self):
+    def run_show_encoding_error_dialog(self):
         self.delegate._show_encoding_error_dialog("test", "ascii")
 
-    def run__show_io_error_dialog(self):
+    def run_show_io_error_dialog(self):
         self.delegate._show_io_error_dialog("test", "test")
 
     def setup_method(self, method):

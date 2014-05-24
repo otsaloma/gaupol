@@ -22,7 +22,7 @@ from gi.repository import Gtk
 
 class TestFloatCellRenderer(gaupol.TestCase):
 
-    def run__renderer(self):
+    def run_renderer(self):
         tree_view = Gtk.TreeView()
         tree_view.set_headers_visible(False)
         store = Gtk.ListStore(float)

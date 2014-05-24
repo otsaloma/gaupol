@@ -26,7 +26,7 @@ from gi.repository import Gtk
 
 class TestAddBookmarkDialog(gaupol.TestCase):
 
-    def run__dialog(self):
+    def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
 

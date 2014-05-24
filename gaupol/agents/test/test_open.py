@@ -24,28 +24,28 @@ from gi.repository import Gtk
 
 class TestOpenAgent(gaupol.TestCase):
 
-    def run__show_encoding_error_dialog(self):
+    def run_show_encoding_error_dialog(self):
         self.delegate._show_encoding_error_dialog("test")
 
-    def run__show_format_error_dialog(self):
+    def run_show_format_error_dialog(self):
         self.delegate._show_format_error_dialog("test")
 
-    def run__show_io_error_dialog(self):
+    def run_show_io_error_dialog(self):
         self.delegate._show_io_error_dialog("test", "test")
 
-    def run__show_parse_error_dialog(self):
+    def run_show_parse_error_dialog(self):
         self.delegate._show_parse_error_dialog("test", aeidon.formats.SUBRIP)
 
     @aeidon.deco.silent(gaupol.Default)
-    def run__show_size_warning_dialog(self):
+    def run_show_size_warning_dialog(self):
         self.delegate._show_size_warning_dialog("test", 2)
 
     @aeidon.deco.silent(gaupol.Default)
-    def run__show_sort_warning_dialog(self):
+    def run_show_sort_warning_dialog(self):
         self.delegate._show_sort_warning_dialog("test", 3)
 
     @aeidon.deco.silent(gaupol.Default)
-    def run__show_translation_warning_dialog(self):
+    def run_show_translation_warning_dialog(self):
         page = self.application.get_current_page()
         self.delegate._show_translation_warning_dialog(page)
 

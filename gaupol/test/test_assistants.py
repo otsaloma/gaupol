@@ -39,7 +39,7 @@ class TestTextAssistantPage(gaupol.TestCase):
 
 class _TestBuilderPage(gaupol.TestCase):
 
-    def run__page(self):
+    def run_page(self):
         self.window.add(self.page)
         self.window.connect("delete-event", Gtk.main_quit)
         self.window.set_default_size(600, 400)
@@ -180,7 +180,7 @@ class TestHearingImpairedPage(_TestLocalePage):
 
 class TestJoinSplitWordsPage(_TestBuilderPage):
 
-    def run__show_error_dialog(self):
+    def run_show_error_dialog(self):
         self.page._show_error_dialog("test")
 
     def setup_method(self, method):
@@ -369,7 +369,7 @@ class TestConfirmationPage(_TestBuilderPage):
 
 class TestTextAssistant(gaupol.TestCase):
 
-    def run__assistant(self):
+    def run_assistant(self):
         self.assistant.show()
         for signal in ("delete-event", "apply", "cancel"):
             self.assistant.connect(signal, Gtk.main_quit)

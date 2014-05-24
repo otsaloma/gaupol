@@ -22,7 +22,7 @@ from gi.repository import Gtk
 
 class TestModule(gaupol.TestCase):
 
-    def run__text_view(self):
+    def run_text_view(self):
         text_view = Gtk.TextView()
         text_buffer = text_view.get_buffer()
         text = ("Everything has been said\n"

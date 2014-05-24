@@ -23,7 +23,7 @@ from gi.repository import Gtk
 
 class TestOutputWindow(gaupol.TestCase):
 
-    def run__window(self):
+    def run_window(self):
         self.window.connect("notify::visible", Gtk.main_quit)
         Gtk.main()
 

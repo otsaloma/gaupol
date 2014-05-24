@@ -24,13 +24,13 @@ from gi.repository import Gtk
 
 class TestPreviewAgent(gaupol.TestCase):
 
-    def run__show_encoding_error_dialog(self):
+    def run_show_encoding_error_dialog(self):
         self.delegate._show_encoding_error_dialog()
 
-    def run__show_io_error_dialog(self):
+    def run_show_io_error_dialog(self):
         self.delegate._show_io_error_dialog("test")
 
-    def run__show_process_error_dialog(self):
+    def run_show_process_error_dialog(self):
         self.delegate._show_process_error_dialog("test")
 
     def setup_method(self, method):

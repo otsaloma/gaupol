@@ -22,7 +22,7 @@ from gi.repository import Gtk
 
 class TestApplication(gaupol.TestCase):
 
-    def run__application(self):
+    def run_application(self):
         Gtk.main()
 
     def setup_method(self, method):
