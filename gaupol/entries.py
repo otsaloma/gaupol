@@ -19,7 +19,6 @@
 
 import aeidon
 import functools
-import gaupol
 import re
 
 from gi.repository import Gdk
@@ -40,7 +39,6 @@ def _blocked(function):
         entry.handler_unblock(entry._insert_handler)
         entry.handler_unblock(entry._delete_handler)
         return value
-
     return wrapper
 
 
@@ -80,18 +78,18 @@ class TimeEntry(Gtk.Entry):
         """Insert `value` as text after validation."""
         pos = self.get_position()
         text = self.get_text()
-        if (pos == 0) and value.startswith("-"):
+        if pos == 0 and value.startswith("-"):
             text = (text if text.startswith("-") else "-{}".format(text))
         length = len(value)
-        text = text[:pos] + value + text[pos + length:]
+        text = text[:pos] + value + text[pos+length:]
         text = text.replace(",", ".")
         if not self._re_time.match(text): return
         self.set_text(text)
         self.set_position(pos)
         if length != 1: return
-        self.set_position(pos + 1)
-        if (len(text) > (pos + 1)) and (text[pos + 1] in (":", ".")):
-            self.set_position(pos + 2)
+        self.set_position(pos+1)
+        if len(text) > pos+1 and text[pos+1] in (":", "."):
+            self.set_position(pos+2)
 
     def _on_cut_clipboard(self, entry):
         """Change "cut-clipboard" signal to "copy-clipboard"."""
@@ -104,7 +102,7 @@ class TimeEntry(Gtk.Entry):
         self.set_position(start_pos)
 
     def _on_key_press_event(self, entry, event):
-        """Change numbers to zero if ``BackSpace`` or ``Delete`` pressed."""
+        """Change numbers to zero if Backspace or Delete pressed."""
         keys = (Gdk.KEY_BackSpace, Gdk.KEY_Delete)
         if not event.keyval in keys: return
         self.stop_emission("key-press-event")
@@ -130,11 +128,11 @@ class TimeEntry(Gtk.Entry):
         pos = self.get_position()
         text = self.get_text()
         if pos >= len(text): return
-        if (pos == 0) and text.startswith("-"):
+        if pos == 0 and text.startswith("-"):
             self.set_text(text[1:])
             return self.set_position(0)
         if not text[pos].isdigit(): return
-        self.set_text(text[:pos] + "0" + text[pos + 1:])
+        self.set_text(text[:pos] + "0" + text[pos+1:])
         self.set_position(pos)
 
     @_blocked
@@ -143,13 +141,13 @@ class TimeEntry(Gtk.Entry):
         pos = self.get_position()
         text = self.get_text()
         if pos <= 0: return
-        if (pos == 1) and text.startswith("-"):
+        if pos == 1 and text.startswith("-"):
             self.set_text(text[1:])
             return self.set_position(0)
-        if not text[pos - 1].isdigit():
-            return self.set_position(pos - 1)
-        self.set_text(text[:pos - 1] + "0" + text[pos:])
-        self.set_position(pos - 1)
+        if not text[pos-1].isdigit():
+            return self.set_position(pos-1)
+        self.set_text(text[:pos-1] + "0" + text[pos:])
+        self.set_position(pos-1)
 
     @_blocked
     def _zero_selection(self):

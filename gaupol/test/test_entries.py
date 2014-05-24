@@ -34,8 +34,3 @@ class TestTimeEntry(gaupol.TestCase):
 
     def setup_method(self, method):
         self.entry = gaupol.TimeEntry()
-
-    def test_set_text(self):
-        self.entry.set_text("12:34:56.789")
-        self.entry.set_text("-12:34:56.789")
-        self.entry.set_text("12:34:56,789")

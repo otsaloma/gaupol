@@ -20,8 +20,8 @@ GTK+ user interface for the Gaupol subtitle editor.
 
 :var COMBO_SEPARATOR: String used as a separator for :class:`Gtk.ComboBox`
 
-   :attr:`COMBO_SEPARATOR` can be inserted into a combo box's model, and
-   :func:`gaupol.util.separate_combo` will recognize it.
+   :attr:`COMBO_SEPARATOR` can be inserted into a combo box's model,
+   and :func:`gaupol.util.separate_combo` will recognize it.
 
 :var BUG_REPORT_URL: Web page where to submit new bug reports
 :var EXTENSIONS_URL: Web page listing third party extensions

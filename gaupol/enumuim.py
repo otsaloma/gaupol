@@ -18,7 +18,7 @@
 """
 Dictionaries mapping enumeration items to UI manager action names.
 
-:var field_actions: Dictionary mapping :attr:`gaupol.formats` to actions
+:var field_actions: Dictionary mapping :attr:`aeidon.fields` to actions
 :var framerate_actions: Dictionary mapping :attr:`aeidon.framerates` to actions
 :var mode_actions: Dictionary mapping :attr:`aeidon.modes` to actions
 """
@@ -34,12 +34,12 @@ field_actions = {gaupol.fields.NUMBER:    "toggle_number_column",
                  gaupol.fields.END:       "toggle_end_column",
                  gaupol.fields.DURATION:  "toggle_duration_column",
                  gaupol.fields.MAIN_TEXT: "toggle_main_text_column",
-                 gaupol.fields.TRAN_TEXT: "toggle_translation_text_column",}
+                 gaupol.fields.TRAN_TEXT: "toggle_translation_text_column"}
 
 framerate_actions = {aeidon.framerates.FPS_23_976: "show_framerate_23_976",
                      aeidon.framerates.FPS_24_000: "show_framerate_24_000",
                      aeidon.framerates.FPS_25_000: "show_framerate_25_000",
-                     aeidon.framerates.FPS_29_970: "show_framerate_29_970",}
+                     aeidon.framerates.FPS_29_970: "show_framerate_29_970"}
 
 mode_actions = {aeidon.modes.TIME:  "show_times",
-                aeidon.modes.FRAME: "show_frames",}
+                aeidon.modes.FRAME: "show_frames"}
