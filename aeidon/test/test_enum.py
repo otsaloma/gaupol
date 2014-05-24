@@ -54,13 +54,9 @@ class TestEnumeration(aeidon.TestCase):
         self.fruits.APPLE.size = 10
         self.fruits.MANGO.size = 20
 
-    def test___contains____enum(self):
+    def test___contains__(self):
         assert self.fruits.APPLE in self.fruits
         assert self.fruits.MANGO in self.fruits
-
-    def test___contains____int(self):
-        assert 0 in self.fruits
-        assert 1 in self.fruits
 
     def test___delattr__(self):
         value = self.fruits.MANGO
