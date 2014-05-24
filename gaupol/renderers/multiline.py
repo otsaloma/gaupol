@@ -146,6 +146,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         # all. Let's try to keep this callback as fast as possible.
         self._text = self.props.text
         self.props.markup = self._text_to_markup(self.props.text,
+                                                 self._show_lengths,
                                                  gaupol.conf.editor.length_unit)
 
     def set_show_lengths(self, show_lengths):
@@ -154,14 +155,15 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         gaupol.conf.disconnect_notify("editor", "show_lengths_cell", self)
 
     @aeidon.deco.memoize(1000)
-    def _text_to_markup(self, text, length_unit):
+    def _text_to_markup(self, text, show_lengths, length_unit):
         """Return `text` renderer as markup for display."""
         # We don't actually use the length_unit argument,
-        # but do need it to be accounted for in memoized values.
+        # but do need it accounted for in memoized values.
         if not text: return ""
-        lengths = gaupol.ruler.get_lengths(text)
         text = GLib.markup_escape_text(text)
+        if not show_lengths: return text
         lines = text.split("\n")
+        lengths = gaupol.ruler.get_lengths(text)
         return "\n".join(("{} <small>[{:d}]</small>"
                           .format(lines[i], lengths[i])
                           if lines[i] else lines[i]
