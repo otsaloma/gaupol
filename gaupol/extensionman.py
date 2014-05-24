@@ -44,11 +44,16 @@ class ExtensionManager:
 
     def __init__(self, application):
         """Initialize an :class:`ExtensionManager` instance."""
-        self.application = application
         self._active = {}
+        self.application = application
         self._dependants = {}
         self._metadata = {}
         self._slaves = []
+
+    def find_extensions(self):
+        """Find all extensions and parse their metadata files."""
+        self._find_extensions_in_directory(self._global_dir)
+        self._find_extensions_in_directory(self._local_dir)
 
     def _find_extensions_in_directory(self, directory):
         """Find all extensions in `directory` and parse their metadata."""
@@ -56,7 +61,7 @@ class ExtensionManager:
             return (path.endswith(".extension") or
                     path.endswith(".extension.in"))
 
-        for (root, dirs, files) in os.walk(directory):
+        for root, dirs, files in os.walk(directory):
             files = list(filter(is_metadata_file, files))
             for name in [x for x in files if x.endswith(".in")]:
                 # If both untranslated and translated metadata files are found,
@@ -66,60 +71,6 @@ class ExtensionManager:
             for name in files:
                 path = os.path.abspath(os.path.join(root, name))
                 self._parse_metadata(path)
-
-    def _parse_metadata(self, path):
-        """Parse extension metadata file at `path`."""
-        try:
-            lines = aeidon.util.readlines(path, "utf_8", None)
-        except UnicodeError:
-            # Metadata file must be UTF-8.
-            return aeidon.util.print_read_unicode(sys.exc_info(),
-                                                  path,
-                                                  "utf_8")
-
-        lines = [self._re_comment.sub("", x) for x in lines]
-        lines = [x.strip() for x in lines]
-        metadata = ExtensionMetadata()
-        metadata.path = path
-        for line in [x for x in lines if x]:
-            if line.startswith("["): continue
-            name, value = line.split("=", 1)
-            name = (name[1:] if name.startswith("_") else name)
-            metadata.set_field(name, value)
-        self._store_metadata(path, metadata)
-
-    def _store_metadata(self, path, metadata):
-        """Store metadata to instance variables after validation."""
-        def discard_missing(name):
-            print(("Field '{}' missing in file '{}', dicarding extension"
-                   .format(name, path)),
-                  file=sys.stderr)
-
-        def discard_version():
-            print(("Discarding outdated extension '{}'. It needs to be "
-                   "ported to Python 3, GTK+ 3 and the PyGObject "
-                   "introspection bindings and finally the 'GaupolVersion' "
-                   "field bumped accordingly.".format(path)),
-                  file=sys.stderr)
-
-        if not metadata.has_field("GaupolVersion"):
-            return discard_missing("GaupolVersion")
-        if not metadata.has_field("Module"):
-            return discard_missing("Module")
-        if not metadata.has_field("Name"):
-            return discard_missing("Name")
-        if not metadata.has_field("Description"):
-            return discard_missing("Description")
-        version = metadata.get_field("GaupolVersion")
-        if aeidon.util.compare_versions(version, "0.19.91") < 0:
-            return discard_version()
-        module = metadata.get_field("Module")
-        self._metadata[module] = metadata
-
-    def find_extensions(self):
-        """Find all extensions and parse their metadata files."""
-        self._find_extensions_in_directory(self._global_dir)
-        self._find_extensions_in_directory(self._local_dir)
 
     def get_metadata(self, module):
         """Return an :class:`ExtensionMetadata` instance for `module`."""
@@ -145,19 +96,37 @@ class ExtensionManager:
         """Return ``True`` if extension is active, ``False`` if not."""
         return (module in self._active)
 
+    def _parse_metadata(self, path):
+        """Parse extension metadata file at `path`."""
+        try:
+            lines = aeidon.util.readlines(path, "utf_8", fallback=None)
+        except UnicodeError:
+            # Metadata file must be UTF-8.
+            return aeidon.util.print_read_unicode(sys.exc_info(), path, "utf_8")
+        lines = [self._re_comment.sub("", x) for x in lines]
+        lines = [x.strip() for x in lines]
+        metadata = ExtensionMetadata()
+        metadata.path = path
+        for line in (x for x in lines if x):
+            if line.startswith("["): continue
+            name, value = line.split("=", 1)
+            name = (name[1:] if name.startswith("_") else name)
+            metadata.set_field(name, value)
+        self._store_metadata(path, metadata)
+
     def setup_extension(self, module, slave=False):
         """
         Import and setup extension by module name.
 
-        `slave` should be ``True`` if called just to satisfy a dependency of
-        another extension. Setup also all modules required by `module`. Return
-        silently if `module` is already set up.
+        `slave` should be ``True`` if called just to satisfy a dependency
+        of another extension. Setup also all modules required by `module`.
+        Return silently if `module` is already set up.
         """
         if module in self._active: return
         metadata = self._metadata[module]
         for dependency in metadata.get_field_list("Requires", ()):
             if not dependency in self._active:
-                self.setup_extension(dependency, True)
+                self.setup_extension(dependency, slave=True)
             self._dependants[dependency].append(module)
         directory = os.path.dirname(metadata.path)
         sys.path.insert(0, directory)
@@ -165,7 +134,8 @@ class ExtensionManager:
             mobj = __import__(module, {}, {}, [])
         except ImportError:
             return traceback.print_exc()
-        finally: sys.path.pop(0)
+        finally:
+            sys.path.pop(0)
         for attribute in dir(mobj):
             if attribute.startswith("_"): continue
             value = getattr(mobj, attribute)
@@ -185,9 +155,10 @@ class ExtensionManager:
     def setup_extensions(self):
         """Import and setup all extensions configured as active."""
         for module in gaupol.conf.extensions.active:
-            if not module in self._metadata:
+            if module in self._metadata:
+                self.setup_extension(module)
+            else:
                 gaupol.conf.extensions.active.remove(module)
-            else: self.setup_extension(module)
 
     def show_help(self, module):
         """Show documentation on using extension."""
@@ -199,21 +170,40 @@ class ExtensionManager:
         extension = self._active[module]
         extension.show_preferences_dialog(parent)
 
+    def _store_metadata(self, path, metadata):
+        """Store metadata to instance variables after validation."""
+        for field in ("GaupolVersion", "Module", "Name", "Description"):
+            if not metadata.has_field(field):
+                print(("Field '{}' missing in file '{}', dicarding extension"
+                       .format(field, path)),
+                      file=sys.stderr)
+                return
+        version = metadata.get_field("GaupolVersion")
+        if aeidon.util.compare_versions(version, "0.19.91") < 0:
+            print(("Discarding outdated extension '{}'. It needs to be "
+                   "ported to Python 3, GTK+ 3 and the PyGObject "
+                   "introspection bindings and finally the 'GaupolVersion' "
+                   "field bumped accordingly.".format(path)),
+                  file=sys.stderr)
+            return
+        module = metadata.get_field("Module")
+        self._metadata[module] = metadata
+
     def teardown_extension(self, module, force=True):
         """
         Teardown extension by module name.
 
-        If not using `force` (which should only be used with care), raise
-        :exc:`gaupol.DependencyError` if module is required by other modules.
-        Teardown also no longer used dependencies of `module`. Return silently
-        if `module` is already torn down.
+        If not using `force` (which should only be used with care),
+        raise :exc:`gaupol.DependencyError` if module is required by
+        other modules. Teardown also no longer used dependencies of `module`.
+        Return silently if `module` is already torn down.
         """
         if not module in self._active: return
         if self._dependants[module]:
             if not force:
                 raise gaupol.DependencyError(
                     "Module {} is required by other modules"
-                   .format(repr(module)))
+                    .format(repr(module)))
 
             for user in self._dependants[module]:
                 self.teardown_extension(user, force=force)

@@ -38,7 +38,7 @@ class TestAttrDict(gaupol.TestCase):
         assert self.attr_dict.best == 2
         assert self.root["best"] == 2
 
-    def test_add_attribute__dict(self):
+    def test_add_attribute__nested(self):
         root = {"test": 1, "rest": 0}
         self.attr_dict.add_attribute("nest", root)
         assert self.attr_dict.nest.test == 1
@@ -56,7 +56,7 @@ class TestAttrDict(gaupol.TestCase):
         assert self.root["rest"] == 0
         assert self.root["pest"] == 4
 
-    def test_extend__dict(self):
+    def test_extend__nested(self):
         root = {"test": 1, "rest": 0}
         self.attr_dict.add_attribute("nest", root)
         root = {"nest": {"test": 3, "pest": 4}}
@@ -83,7 +83,7 @@ class TestAttrDict(gaupol.TestCase):
         assert self.root["rest"] == 0
         assert self.root["pest"] == 4
 
-    def test_update__dict(self):
+    def test_update__nested(self):
         root = {"test": 1, "rest": 0}
         self.attr_dict.add_attribute("nest", root)
         root = {"nest": {"test": 3, "pest": 4}}

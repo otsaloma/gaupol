@@ -27,10 +27,10 @@ class AttributeDictionary(aeidon.Observable):
     """
     Observable dictionary with attribute access to keys.
 
-    :class:`AttributeDictionary` is initialized from a root dictionary, which
-    is kept in sync with attribute values. This allows convenient attribute
-    access to dictionary keys and notifications of changes via the
-    :class:`aeidon.Observable` interface.
+    :class:`AttributeDictionary` is initialized from a root dictionary,
+    which is kept in sync with attribute values. This allows convenient
+    attribute access to dictionary keys and notifications of changes
+    via the :class:`aeidon.Observable` interface.
     """
 
     def __init__(self, root):
@@ -44,16 +44,12 @@ class AttributeDictionary(aeidon.Observable):
         self._root = root
         self.update(root)
 
-    def _on_notify(self, obj, value, name):
-        """Synchronize changed attribute value with root dictionary."""
-        self._root[name] = value
-
     def add_attribute(self, name, value):
         """Add instance attribute and corresponding root dictionary key."""
         self._root[name] = value
-        # In the case of dictionaries, set the original dictionary to the root
-        # dictionary, but instantiate an AttributeDictionary for use as the
-        # corresponding attribute.
+        # In the case of dictionaries, set the original dictionary
+        # to the root dictionary, but instantiate an AttributeDictionary
+        # for use as the corresponding attribute.
         if isinstance(value, dict):
             value = AttributeDictionary(value)
         setattr(self, name, value)
@@ -62,11 +58,16 @@ class AttributeDictionary(aeidon.Observable):
     def extend(self, root):
         """Add new values from another root dictionary."""
         for name, value in root.items():
-            if not hasattr(self, name):
-                self.add_attribute(name, value)
-            else: # Extend current value.
+            if hasattr(self, name):
                 if isinstance(value, dict):
                     getattr(self, name).extend(value)
+            else:
+                self.add_attribute(name, value)
+
+
+    def _on_notify(self, obj, value, name):
+        """Synchronize changed attribute value with root dictionary."""
+        self._root[name] = value
 
     def remove_attribute(self, name):
         """Remove instance attribute and corresponding root dictionary key."""
@@ -78,10 +79,10 @@ class AttributeDictionary(aeidon.Observable):
     def update(self, root):
         """Update values from another root dictionary."""
         for name, value in root.items():
-            if not hasattr(self, name):
-                self.add_attribute(name, value)
-            else: # Update current value.
+            if hasattr(self, name):
                 if isinstance(value, dict):
                     getattr(self, name).update(value)
-                else: # Set non-dictionary value.
+                else:
                     setattr(self, name, value)
+            else:
+                self.add_attribute(name, value)

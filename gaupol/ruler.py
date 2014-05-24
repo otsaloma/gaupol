@@ -44,22 +44,6 @@ class _Ruler:
         self._update_length_unit()
         gaupol.conf.connect_notify("editor", "length_unit", self)
 
-    def _on_conf_editor_notify_length_unit(self, *args):
-        """Update the length function used."""
-        self._update_length_unit()
-
-    def _update_em_length(self):
-        """Update the length of em based on font description size."""
-        self._layout = Gtk.Label().get_layout().copy()
-        font_desc = self._layout.get_context().get_font_description()
-        font_desc.merge(Pango.FontDescription("sans"), True)
-        self._layout.set_font_description(font_desc)
-        self._em_length = font_desc.get_size()
-
-    def _update_length_unit(self):
-        """Update the length function used."""
-        self._length_unit = gaupol.conf.editor.length_unit
-
     def get_char_length(self, text, strip=False, floor=False):
         """Return length of `text` measured in characters."""
         text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
@@ -97,11 +81,27 @@ class _Ruler:
         raise ValueError("Invalid length unit: {}"
                          .format(repr(self._length_unit)))
 
+    def _on_conf_editor_notify_length_unit(self, *args):
+        """Update the length function used."""
+        self._update_length_unit()
+
+    def _update_em_length(self):
+        """Update the length of em based on font description size."""
+        self._layout = Gtk.Label().get_layout().copy()
+        font_desc = self._layout.get_context().get_font_description()
+        font_desc.merge(Pango.FontDescription("sans"), True)
+        self._layout.set_font_description(font_desc)
+        self._em_length = font_desc.get_size()
+
+    def _update_length_unit(self):
+        """Update the length function used."""
+        self._length_unit = gaupol.conf.editor.length_unit
+
 
 _ruler = _Ruler()
 
 def _on_text_view_draw(text_view, cairoc):
-    """Calculate and show line lengths in the margin."""
+    """Calculate and show line lengths in text view margin."""
     text_buffer = text_view.get_buffer()
     start, end = text_buffer.get_bounds()
     text = text_buffer.get_text(start, end, False)
@@ -111,25 +111,25 @@ def _on_text_view_draw(text_view, cairoc):
     layout.set_markup("\n".join(str(x) for x in lengths), -1)
     layout.set_alignment(Pango.Alignment.RIGHT)
     width = layout.get_pixel_size()[0]
-    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 6)
+    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width+6)
     x, y = text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 4)
     x += text_view.get_border_width()
     style = text_view.get_style_context()
     Gtk.render_layout(style, cairoc, x, y, layout)
 
 def connect_text_view(text_view):
-    """Connect `text_view` to show line lengths in the margin."""
+    """Connect `text_view` to show line lengths in its margin."""
     context = text_view.get_pango_context()
     layout = Pango.Layout(context)
     layout.set_text("8", -1)
     width = layout.get_pixel_size()[0]
-    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 4)
+    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width+6)
     handler_id = text_view.connect("draw", _on_text_view_draw)
     text_view.gaupol_ruler_handler_id = handler_id
     return handler_id
 
 def disconnect_text_view(text_view):
-    """Disconnect `text_view` from showing line lengths in the margin."""
+    """Disconnect `text_view` from showing line lengths in its margin."""
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, 0)
     if not hasattr(text_view, "gaupol_ruler_handler_id"): return
     handler_id = text_view.gaupol_ruler_handler_id

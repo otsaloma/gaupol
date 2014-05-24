@@ -77,6 +77,15 @@ def _init_gettext():
     gettext.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
     gettext.textdomain("gaupol")
 
+def main(args):
+    """Parse arguments from `args` and start application."""
+    opts, args = _parse_args(args)
+    sys.excepthook = gaupol.util.show_exception
+    _init_gettext()
+    _init_configuration()
+    _init_application(opts, args)
+    Gtk.main()
+
 def _on_parser_list_encodings(*args):
     """List all available character encodings and exit."""
     encodings = [x[0] for x in aeidon.encodings.get_valid()]
@@ -100,7 +109,7 @@ def _parse_args(args):
         "--version",
         action="callback",
         callback=_on_parser_version,
-        help=_("show version number and exit"),)
+        help=_("show version number and exit"))
 
     parser.add_option(
         "-e", "--encoding",
@@ -109,13 +118,13 @@ def _parse_args(args):
         metavar=_("ENCODING"),
         dest="encoding",
         default=None,
-        help=_("set the character encoding used to open files"),)
+        help=_("set the character encoding used to open files"))
 
     parser.add_option(
         "--list-encodings",
         action="callback",
         callback=_on_parser_list_encodings,
-        help=_("list all available character encodings"),)
+        help=_("list all available character encodings"))
 
     parser.add_option(
         "-t", "--translation-file",
@@ -124,7 +133,7 @@ def _parse_args(args):
         metavar=_("FILE"),
         dest="translation_file",
         default=None,
-        help=_("open translation file"),)
+        help=_("open translation file"))
 
     parser.add_option(
         "-a", "--align-method",
@@ -134,7 +143,7 @@ def _parse_args(args):
         dest="align_method",
         default="position",
         help=_("method used to align translation subtitles: "
-               "'number' or 'position'"),)
+               "'number' or 'position'"))
 
     parser.add_option(
         "-v", "--video-file",
@@ -143,7 +152,7 @@ def _parse_args(args):
         metavar=_("FILE"),
         dest="video_file",
         default=None,
-        help=_("select video file"),)
+        help=_("select video file"))
 
     opts, args = parser.parse_args(args)
     # Translate encoding if an alias given.
@@ -161,12 +170,3 @@ def _parse_args(args):
         opts.jump = (max(0, int(arg[1:])-1) if arg[1:] else -1)
         args.remove(arg)
     return opts, args
-
-def main(args):
-    """Parse arguments from `args` and start application."""
-    opts, args = _parse_args(args)
-    sys.excepthook = gaupol.util.show_exception
-    _init_gettext()
-    _init_configuration()
-    _init_application(opts, args)
-    Gtk.main()
