@@ -8,8 +8,8 @@ Files from Foreign Sources
    authors [2] and released under the terms of either GNU LGPL v.3 or
    Creative Commons BY-SA 3.0 license.
 
-    [1] https://git.gnome.org/browse/gnome-icon-theme
-    [2] https://git.gnome.org/browse/gnome-icon-theme/tree/AUTHORS
+    [1] http://git.gnome.org/browse/gnome-icon-theme
+    [2] http://git.gnome.org/browse/gnome-icon-theme/tree/AUTHORS
 
  * data/iso-codes/iso_639.xml
  * data/iso-codes/iso_3166.xml
