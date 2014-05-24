@@ -40,35 +40,3 @@ class TestFloatingLabel(gaupol.TestCase):
         self.label = gaupol.FloatingLabel()
         self.overlay.add_overlay(self.label)
         self.window.show_all()
-
-    def test_flash_text(self):
-        self.label.flash_text("Test")
-
-    def test_get_text(self):
-        self.label.set_text("Test")
-        text = self.label.get_text()
-        assert text == "Test"
-
-    def test_hide(self):
-        self.label.set_text("Test")
-        self.label.show()
-        self.label.hide()
-        assert not self.label.props.visible
-
-    def test_register_hide_event(self):
-        self.label.show()
-        button = Gtk.Button()
-        self.label.register_hide_event(button, "clicked")
-        button.emit("clicked")
-        assert not self.label.props.visible
-
-    def test_set_text(self):
-        self.label.set_text("Test")
-        text = self.label.get_text()
-        assert text == "Test"
-
-    def test_show(self):
-        self.label.set_text("Test")
-        self.label.show()
-        assert self.label.props.visible
-        self.label.hide()

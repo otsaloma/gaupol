@@ -44,37 +44,6 @@ class FloatingLabel(Gtk.Box):
         self.props.valign = Gtk.Align.END
         self._init_widgets()
 
-    def _get_label_background_color(self):
-        """Return a background color to use for the label."""
-        entry = Gtk.Entry()
-        entry.show()
-        style = entry.get_style_context()
-        for name in ("theme_tooltip_bg_color", "tooltip_bg_color"):
-            found, color = style.lookup_color(name)
-            if found: return color
-        return style.get_foreground_color(Gtk.StateFlags.NORMAL)
-
-    def _get_label_color(self):
-        """Return a foreground color to use for the label."""
-        entry = Gtk.Entry()
-        entry.show()
-        style = entry.get_style_context()
-        for name in ("theme_tooltip_fg_color", "tooltip_fg_color"):
-            found, color = style.lookup_color(name)
-            if found: return color
-        return style.get_background_color(Gtk.StateFlags.NORMAL)
-
-    def _init_widgets(self):
-        """Initialize widgets contained in the box."""
-        fg = self._get_label_color()
-        bg = self._get_label_background_color()
-        self._label.override_color(Gtk.StateFlags.NORMAL, fg)
-        self._label.override_background_color(Gtk.StateFlags.NORMAL, bg)
-        self._label.set_name("gaupol-floating-label")
-        self._event_box.add(self._label)
-        self.pack_start(self._event_box, expand=False, fill=False, padding=0)
-        self._event_box.connect("enter-notify-event", self.hide)
-
     def flash_text(self, text, duration=6):
         """Show label with `text` for `duration` seconds."""
         self.set_text(text)
@@ -91,6 +60,13 @@ class FloatingLabel(Gtk.Box):
             widget, handler_id = self._handlers.pop()
             if widget.handler_is_connected(handler_id):
                 widget.handler_disconnect(handler_id)
+
+    def _init_widgets(self):
+        """Initialize widgets contained in the box."""
+        self._label.set_name("gaupol-floating-label")
+        self._event_box.add(self._label)
+        self.pack_start(self._event_box, expand=False, fill=False, padding=0)
+        self._event_box.connect("enter-notify-event", self.hide)
 
     def register_hide_event(self, widget, signal):
         """Register `widget`'s `signal` as cause to hide the label."""
