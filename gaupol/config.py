@@ -34,7 +34,7 @@ config_defaults = {
         "position": [0, 0],
         "show_main_toolbar": True,
         "size": [700, 433],
-        "toolbar_style": gaupol.toolbar_styles.DEFAULT,
+        "toolbar_style": gaupol.toolbar_styles.ICONS,
         },
     "capitalization": {
         "country": "",

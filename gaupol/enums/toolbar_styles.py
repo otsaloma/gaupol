@@ -34,11 +34,6 @@ class BothHoriz(aeidon.EnumerationItem):
     value = Gtk.ToolbarStyle.BOTH_HORIZ
 
 
-class Default(aeidon.EnumerationItem):
-
-    value = None
-
-
 class Icons(aeidon.EnumerationItem):
 
     value = Gtk.ToolbarStyle.ICONS
@@ -50,7 +45,6 @@ class Text(aeidon.EnumerationItem):
 
 
 toolbar_styles = aeidon.Enumeration()
-toolbar_styles.DEFAULT = Default()
 toolbar_styles.ICONS = Icons()
 toolbar_styles.TEXT = Text()
 toolbar_styles.BOTH = Both()
