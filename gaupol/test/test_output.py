@@ -28,34 +28,7 @@ class TestOutputWindow(gaupol.TestCase):
         Gtk.main()
 
     def setup_method(self, method):
-        self.conf = gaupol.conf.output_window
         self.window = gaupol.OutputWindow()
         text = self.get_sample_text(aeidon.formats.SUBRIP)
         self.window.set_output(text)
         self.window.show()
-
-    def test__init_sizes(self):
-        self.conf.maximized = True
-        self.window = gaupol.OutputWindow()
-
-    def test__on_close_button_clicked(self):
-        self.window._close_button.clicked()
-
-    def test__on_close_key_pressed(self):
-        self.window._on_close_key_pressed()
-
-    def test__on_delete_event(self):
-        self.window.emit("delete-event", None)
-
-    def test__on_notify_visibile(self):
-        self.window.hide()
-        assert not self.conf.show
-        self.window.show()
-        assert self.conf.show
-
-    def test__on_window_state_event(self):
-        self.window.maximize()
-        self.window.unmaximize()
-
-    def test_set_output(self):
-        self.window.set_output("test")

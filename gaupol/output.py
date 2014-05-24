@@ -35,9 +35,7 @@ class OutputWindow(Gtk.Window):
     def __init__(self):
         """Initialize an :class:`OutputWindow` instance."""
         GObject.GObject.__init__(self)
-        self._close_button = None
         self._text_view = None
-        self.set_border_width(12)
         self.set_title(_("Output"))
         self._init_widgets()
         self._init_sizes()
@@ -56,7 +54,6 @@ class OutputWindow(Gtk.Window):
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-        aeidon.util.connect(self, "_close_button", "clicked")
         aeidon.util.connect(self, self, "delete-event")
         aeidon.util.connect(self, self, "notify::visible")
         aeidon.util.connect(self, self, "window-state-event")
@@ -82,29 +79,8 @@ class OutputWindow(Gtk.Window):
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._text_view)
-        self._close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
-        button_box = Gtk.HButtonBox()
-        button_box.set_layout(Gtk.ButtonBoxStyle.END)
-        button_box.pack_start(self._close_button,
-                              expand=False,
-                              fill=False,
-                              padding=0)
-
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                       spacing=12)
-
-        vbox.pack_start(scroller,
-                        expand=True,
-                        fill=True,
-                        padding=0)
-
-        vbox.pack_start(button_box,
-                        expand=False,
-                        fill=False,
-                        padding=0)
-
-        vbox.show_all()
-        self.add(vbox)
+        scroller.show_all()
+        self.add(scroller)
 
     def _on_close_button_clicked(self, *args):
         """Hide window."""
