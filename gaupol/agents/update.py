@@ -48,8 +48,6 @@ class UpdateAgent(aeidon.Delegate):
         """Change the style of the main toolbar."""
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         style = gaupol.conf.application_window.toolbar_style
-        if style == gaupol.toolbar_styles.DEFAULT:
-            return toolbar.unset_style()
         toolbar.set_style(style.value)
 
     @aeidon.deco.export
