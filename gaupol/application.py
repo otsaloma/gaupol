@@ -210,16 +210,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         style = toolbar.get_style_context()
         style.add_class("primary-toolbar")
         toolbar_style = gaupol.conf.application_window.toolbar_style
+        toolbar.set_style(toolbar_style.value)
         if sys.platform == "win32":
-            # GTK+ lacks sane defaults for Windows and
-            # since 3.10 they can't be set via settings.ini.
-            if toolbar_style == gaupol.toolbar_styles.DEFAULT:
-                toolbar_style = gaupol.toolbar_styles.ICONS
-            toolbar.set_style(toolbar_style.value)
             toolbar.props.icon_size = Gtk.IconSize.MENU
-        else:
-            if toolbar_style != gaupol.toolbar_styles.DEFAULT:
-                toolbar.set_style(toolbar_style.value)
         gaupol.conf.connect_notify("application_window",
                                    "toolbar_style",
                                    self)
