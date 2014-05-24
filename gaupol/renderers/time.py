@@ -37,6 +37,21 @@ class TimeCellRenderer(Gtk.CellRendererText):
         GObject.GObject.__init__(self)
         self._in_editor_menu = False
 
+    def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
+        """Initialize and return a :class:`gaupol.TimeEntry` widget."""
+        editor = gaupol.TimeEntry()
+        editor.set_has_frame(False)
+        editor.set_alignment(self.props.xalign)
+        editor.modify_font(self.props.font_desc)
+        editor.set_text(self.props.text)
+        editor.select_region(0, -1)
+        editor.gaupol_path = path
+        editor.connect("focus-out-event", self._on_editor_focus_out_event)
+        editor.connect("key-press-event", self._on_editor_key_press_event)
+        editor.connect("populate-popup", self._on_editor_populate_popup)
+        editor.show()
+        return editor
+
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
         if self._in_editor_menu: return
@@ -62,18 +77,3 @@ class TimeCellRenderer(Gtk.CellRendererText):
         def on_menu_unmap(menu, self):
             self._in_editor_menu = False
         menu.connect("unmap", on_menu_unmap, self)
-
-    def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
-        """Initialize and return a :class:`gaupol.TimeEntry` widget."""
-        editor = gaupol.TimeEntry()
-        editor.set_has_frame(False)
-        editor.set_alignment(self.props.xalign)
-        editor.modify_font(self.props.font_desc)
-        editor.set_text(self.props.text)
-        editor.select_region(0, -1)
-        editor.gaupol_path = path
-        editor.connect("focus-out-event", self._on_editor_focus_out_event)
-        editor.connect("key-press-event", self._on_editor_key_press_event)
-        editor.connect("populate-popup", self._on_editor_populate_popup)
-        editor.show()
-        return editor

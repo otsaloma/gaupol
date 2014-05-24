@@ -90,6 +90,21 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         gaupol.conf.connect_notify("editor", "show_lengths_cell", self)
         aeidon.util.connect(self, self, "notify::text")
 
+    def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
+        """Initialize and return a :class:`CellTextView` widget."""
+        editor = CellTextView()
+        editor.modify_font(self.props.font_desc)
+        editor.set_text(self._text)
+        editor.set_size_request(cell_area.width, cell_area.height)
+        editor.props.left_margin = self.props.xpad
+        editor.props.right_margin = self.props.xpad
+        editor.gaupol_path = path
+        editor.connect("focus-out-event", self._on_editor_focus_out_event)
+        editor.connect("key-press-event", self._on_editor_key_press_event)
+        editor.connect("populate-popup", self._on_editor_populate_popup)
+        editor.show()
+        return editor
+
     def _on_conf_editor_notify_show_lengths_cell(self, *args):
         """Hide or show line lengths if ``conf`` changed."""
         self._show_lengths = gaupol.conf.editor.show_lengths_cell
@@ -133,6 +148,11 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         self.props.markup = self._text_to_markup(self.props.text,
                                                  gaupol.conf.editor.length_unit)
 
+    def set_show_lengths(self, show_lengths):
+        """Show or hide line lengths, overriding ``conf``."""
+        self._show_lengths = show_lengths
+        gaupol.conf.disconnect_notify("editor", "show_lengths_cell", self)
+
     @aeidon.deco.memoize(1000)
     def _text_to_markup(self, text, length_unit):
         """Return `text` renderer as markup for display."""
@@ -146,23 +166,3 @@ class MultilineCellRenderer(Gtk.CellRendererText):
                           .format(lines[i], lengths[i])
                           if lines[i] else lines[i]
                           for i in range(len(lines))))
-
-    def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
-        """Initialize and return a :class:`CellTextView` widget."""
-        editor = CellTextView()
-        editor.modify_font(self.props.font_desc)
-        editor.set_text(self._text)
-        editor.set_size_request(cell_area.width, cell_area.height)
-        editor.props.left_margin = self.props.xpad
-        editor.props.right_margin = self.props.xpad
-        editor.gaupol_path = path
-        editor.connect("focus-out-event", self._on_editor_focus_out_event)
-        editor.connect("key-press-event", self._on_editor_key_press_event)
-        editor.connect("populate-popup", self._on_editor_populate_popup)
-        editor.show()
-        return editor
-
-    def set_show_lengths(self, show_lengths):
-        """Show or hide line lengths, overriding ``conf``."""
-        self._show_lengths = show_lengths
-        gaupol.conf.disconnect_notify("editor", "show_lengths_cell", self)
