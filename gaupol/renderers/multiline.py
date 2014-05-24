@@ -97,8 +97,9 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
         if self._in_editor_menu: return
+        editor.editing_done()
         editor.remove_widget()
-        self.emit("editing-canceled")
+        self.emit("edited", editor.gaupol_path, editor.get_text())
 
     def _on_editor_key_press_event(self, editor, event):
         """End editing if ``Enter`` or ``Escape`` pressed."""
@@ -134,7 +135,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     @aeidon.deco.memoize(1000)
     def _text_to_markup(self, text):
         """Return `text` renderer as markup for display."""
-        if (not text) and (not self._show_lengths): return ""
+        if not text: return ""
         lengths = gaupol.ruler.get_lengths(text)
         text = GLib.markup_escape_text(text)
         lines = text.split("\n")
