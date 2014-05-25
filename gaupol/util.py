@@ -37,7 +37,7 @@ def char_to_px(nchar, font=None):
     if font is not None:
         set_widget_font(label, font)
     width = label.get_layout().get_pixel_size()[0]
-    return int(round(nchar * (width / 13)))
+    return int(round(nchar * width/13))
 
 def delay_add(delay, function, *args, **kwargs):
     """
@@ -47,7 +47,7 @@ def delay_add(delay, function, *args, **kwargs):
     """
     def call_function(*args, **kwargs):
         function(*args, **kwargs)
-        return False
+        return False # to not be called again.
     return GLib.timeout_add(delay, call_function, *args, **kwargs)
 
 def document_to_text_field(doc):
@@ -63,10 +63,10 @@ def flash_dialog(dialog):
     """
     Run `dialog`, destroy it and return response.
 
-    :func:`flash_dialog` or :func:`run_dialog` should be used always when a
-    :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
-    function with one that returns a specified response without waiting for
-    user input.
+    :func:`flash_dialog` or :func:`run_dialog` should be used always when
+    a :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
+    function with one that returns a specified response without waiting
+    for user input.
     """
     response = dialog.run()
     dialog.destroy()
@@ -144,10 +144,10 @@ def get_tree_view_size(tree_view):
 def get_zebra_color(tree_view):
     """Return background color to use for tree view zebra-stripes."""
     # Gtk.TreeView.set_rules_hint does not actually always produce
-    # zebra-stripes since some GTK+ theme authors have chosen to not allow
-    # them. To, at least provide the option to, clarify multiline text,
-    # we can calculate the colors theme-independently as a weighted mean of
-    # normal background and foreground colors and set those using
+    # zebra-stripes since some GTK+ theme authors have chosen to
+    # not allow them. To work around this, we can calculate
+    # the colors theme-independently as a weighted mean of normal
+    # background and foreground colors and set those using
     # Gtk.TreeViewColumn.set_cell_data_func.
     style = tree_view.get_style_context()
     fg = style.get_color(Gtk.StateFlags.NORMAL)
@@ -214,9 +214,7 @@ def hex_to_rgba(string):
     rgba = Gdk.RGBA()
     success = rgba.parse(string)
     if not success:
-        raise ValueError("Parsing string {} failed"
-                         .format(repr(string)))
-
+        raise ValueError("Parsing string {} failed".format(repr(string)))
     return rgba
 
 def install_module(name, obj):
@@ -264,12 +262,10 @@ def prepare_text_view(text_view):
         gaupol.conf.spell_check.inline):
         from gi.repository import GtkSpell
         language = gaupol.conf.spell_check.language
-        try:
+        with aeidon.util.silent(Exception):
             checker = GtkSpell.Checker()
             checker.set_language(language)
             checker.attach(text_view)
-        except Exception:
-            pass
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
         if gaupol.conf.editor.show_lengths_edit:
@@ -290,7 +286,7 @@ def prepare_text_view(text_view):
     update_spacing(None, None, text_view)
 
 def raise_default(expression):
-    """Raise :exc:`gaupol.Default` if expression evaluates to ``True``."""
+    """Raise :exc:`gaupol.Default` if `expression` evaluates to ``True``."""
     if expression:
         raise gaupol.Default
 
@@ -304,15 +300,15 @@ def run_dialog(dialog):
     """
     Run `dialog` and return response.
 
-    :func:`run_dialog` or :func:`flash_dialog` should be used always when a
-    :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
-    function with one that returns a specified response without waiting for
-    user input.
+    :func:`run_dialog` or :func:`flash_dialog` should be used always when
+    a :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
+    function with one that returns a specified response without waiting
+    for user input.
     """
     return dialog.run()
 
-def scale_to_content(widget, min_nchar=0, max_nchar=2**16, min_nlines=0,
-                     max_nlines=2**16, font=None):
+def scale_to_content(widget, min_nchar=0, max_nchar=32768,
+                     min_nlines=0, max_nlines=32768, font=None):
 
     """Set `widget's` size by content, but limited by `min` and `max`."""
     width, height = get_content_size(widget)
@@ -372,8 +368,7 @@ def show_exception(exctype, value, tb):
     """
     traceback.print_exception(exctype, value, tb)
     if not isinstance(value, Exception): return
-    try:
-        # to avoid recursion.
+    try: # to avoid recursion.
         dialog = gaupol.DebugDialog()
         dialog.set_text(exctype, value, tb)
         response = dialog.run()

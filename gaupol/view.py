@@ -48,10 +48,48 @@ class View(Gtk.TreeView):
         GObject.GObject.__init__(self)
         self._active_col_name = ""
         self._calc = aeidon.Calculator()
-        self._selection_changed_handlers = {}
         self.columns = aeidon.Enumeration()
+        self._selection_changed_handlers = {}
         self._init_signal_handlers()
         self._init_props(edit_mode)
+
+    def connect_selection_changed(self, callback):
+        """Connect to the "changed" signal of selection.
+
+        Using this instead of the tree selection's own ``connect`` method
+        allows signal handlers to be blocked while in the process of selecting
+        multiple rows, which should be significantly faster if actually doing
+        something in the signal handler.
+
+        Return signal handler ID.
+        """
+        selection = self.get_selection()
+        handler_id = selection.connect("changed", callback)
+        self._selection_changed_handlers[handler_id] = callback
+        return handler_id
+
+    def disconnect_selection_changed(self, callback):
+        """Disconnect from the "changed" signal of selection."""
+        selection = self.get_selection()
+        for handler_id in list(self._selection_changed_handlers):
+            if self._selection_changed_handlers[handler_id] is callback:
+                selection.handler_disconnect(handler_id)
+                self._selection_changed_handlers.pop(handler_id)
+
+    def get_focus(self):
+        """Return the row and column of the current focus."""
+        path, col = self.get_cursor()
+        row = gaupol.util.tree_path_to_row(path)
+        if col is not None:
+            col = self.get_columns().index(col)
+        return row, col
+
+    def get_header_label(self, text):
+        """Return a column header label from `text`."""
+        label = Gtk.Label(label=text)
+        label.props.xalign = 0
+        label.show()
+        return label
 
     def _get_renderer(self, field, edit_mode):
         """Initialize and return a new cell renderer for `field`."""
@@ -79,6 +117,11 @@ class View(Gtk.TreeView):
         renderer.props.ypad = 4
         return renderer
 
+    def get_selected_rows(self):
+        """Return a sequence of selected rows."""
+        paths = self.get_selection().get_selected_rows()[1]
+        return tuple(gaupol.util.tree_path_to_row(x) for x in paths)
+
     def _init_cell_data_functions(self):
         """Initialize functions to automatically update cell data."""
         # Set the data in the number column automatically.
@@ -98,10 +141,7 @@ class View(Gtk.TreeView):
         visible_fields = gaupol.conf.editor.visible_fields
         for field in gaupol.conf.editor.field_order:
             renderer = self._get_renderer(field, edit_mode)
-            column = Gtk.TreeViewColumn(field.label,
-                                        renderer,
-                                        text=field)
-
+            column = Gtk.TreeViewColumn(field.label, renderer, text=field)
             column.gaupol_id = field.name.lower()
             self.append_column(column)
             column.set_clickable(True)
@@ -147,6 +187,17 @@ class View(Gtk.TreeView):
         gaupol.conf.connect_notify("editor", "show_lengths_cell", self)
         gaupol.conf.connect_notify("editor", "use_custom_font", self)
 
+    def is_position_column(self, col):
+        """Return ``True`` if `col` is a position column."""
+        return col in (self.columns.START,
+                       self.columns.END,
+                       self.columns.DURATION)
+
+    def is_text_column(self, col):
+        """Return True if `col` is a text column."""
+        return col in (self.columns.MAIN_TEXT,
+                       self.columns.TRAN_TEXT)
+
     def _on_conf_editor_notify_custom_font(self, *args):
         """Apply the new font to all columns."""
         font = gaupol.util.get_font()
@@ -190,7 +241,7 @@ class View(Gtk.TreeView):
             gaupol.conf.editor.field_order = field_order
 
     def _on_cursor_changed(self, *args):
-        """Update the column header labels to refelect changed focus."""
+        """Update the column header labels to reflect changed focus."""
         self.update_headers()
 
     def _on_key_press_event(self, widget, event):
@@ -226,6 +277,14 @@ class View(Gtk.TreeView):
         self.columns.DURATION = None
         self.columns.MAIN_TEXT = None
         self.columns.TRAN_TEXT = None
+
+    def scroll_to_row(self, row):
+        """Scroll view until `row` is visible."""
+        self.scroll_to_cell(path=row,
+                            column=None,
+                            use_align=False,
+                            row_align=0.5,
+                            col_align=0)
 
     def _search_equals(self, store, column, key, itr, data):
         """Return ``False`` if `key` matches either subtitle number or time."""
@@ -273,69 +332,7 @@ class View(Gtk.TreeView):
             time_next = "99:59:59.999"
         return not (self._calc.time_to_seconds(time_iter)
                     <= self._calc.time_to_seconds(time_key)
-                    < self._calc.time_to_seconds(time_next))
-
-    def connect_selection_changed(self, callback):
-        """Connect to the "changed" signal of selection.
-
-        Using this instead of the tree selection's own ``connect`` method
-        allows signal handlers to be blocked while in the process of selecting
-        multiple rows, which should be significantly faster if actually doing
-        something in the signal handler.
-
-        Return signal handler ID.
-        """
-        selection = self.get_selection()
-        handler_id = selection.connect("changed", callback)
-        self._selection_changed_handlers[handler_id] = callback
-        return handler_id
-
-    def disconnect_selection_changed(self, callback):
-        """Disconnect from the "changed" signal of selection."""
-        selection = self.get_selection()
-        for handler_id in list(self._selection_changed_handlers):
-            if self._selection_changed_handlers[handler_id] is callback:
-                selection.handler_disconnect(handler_id)
-                self._selection_changed_handlers.pop(handler_id)
-
-    def get_focus(self):
-        """Return the row and column of the current focus."""
-        path, col = self.get_cursor()
-        row = gaupol.util.tree_path_to_row(path)
-        if col is not None:
-            col = self.get_columns().index(col)
-        return row, col
-
-    def get_header_label(self, text):
-        """Return a column header label from `text`."""
-        label = Gtk.Label(label=text)
-        label.props.xalign = 0
-        label.show()
-        return label
-
-    def get_selected_rows(self):
-        """Return a sequence of selected rows."""
-        paths = self.get_selection().get_selected_rows()[1]
-        return tuple(gaupol.util.tree_path_to_row(x) for x in paths)
-
-    def is_position_column(self, col):
-        """Return ``True`` if `col` is a position column."""
-        return col in (self.columns.START,
-                       self.columns.END,
-                       self.columns.DURATION)
-
-    def is_text_column(self, col):
-        """Return True if `col` is a text column."""
-        return col in (self.columns.MAIN_TEXT,
-                       self.columns.TRAN_TEXT)
-
-    def scroll_to_row(self, row):
-        """Scroll view until `row` is visible."""
-        self.scroll_to_cell(path=row,
-                            column=None,
-                            use_align=False,
-                            row_align=0.5,
-                            col_align=0)
+                    <  self._calc.time_to_seconds(time_next))
 
     def select_rows(self, rows):
         """Select `rows`, clearing previous selection."""
