@@ -124,7 +124,6 @@ config_defaults = {
         "country": "",
         "language": "",
         "length_unit": gaupol.length_units.EM,
-        "max_deviation": 0.16,
         "max_length": 28,
         "max_lines": 3,
         "script": "Latn",
@@ -193,11 +192,11 @@ config_defaults = {
         "seek_length": 30.0,
         "subtitle_alpha": 1.0,
         "subtitle_background": True,
-        "subtitle_color": "#ffffff",
+        "subtitle_color": "#FFFFFF",
         "subtitle_font": "PT Sans Caption 18",
         "time_alpha": 1.0,
         "time_background": True,
-        "time_color": "#ffffff",
+        "time_color": "#FFFFFF",
         "time_font": "PT Mono Bold 14",
         "volume": None,
         },
@@ -261,10 +260,10 @@ class EnumDecoder(json.JSONDecoder):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize a :class:`EnumDecoder` instance.
+        Initialize an :class:`EnumDecoder` instance.
 
-        `kwargs` should contain an "enum" key with a value of ``None`` if not
-        decoding an enumeration or the corresponding
+        `kwargs` should contain an "enum" key with a value of ``None``
+        if not decoding an enumeration or the corresponding
         :class:`aeidon.Enumeration` instance if decoding an enumeration.
         """
         self.enum = kwargs["enum"]
@@ -301,30 +300,6 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         gaupol.AttributeDictionary.__init__(self, root)
         self.path = None
 
-    def _flatten(self, values):
-        """Return a flattened version of `values` dictionary."""
-        def flatten(deep, parent):
-            flat_dict = {parent: {}}
-            deep = copy.deepcopy(deep)
-            for key, value in deep.items():
-                if isinstance(value, dict):
-                    key = "::".join((parent, key))
-                    value = flatten(value, key)
-                    flat_dict.update(value)
-                else: # Non-dictionary key.
-                    flat_dict[parent][key] = value
-            if not flat_dict[parent]:
-                del flat_dict[parent]
-            return flat_dict
-        final_dict = {}
-        values = copy.deepcopy(values)
-        for key, value in values.items():
-            if isinstance(value, dict):
-                final_dict.update(flatten(value, key))
-            else: # Non-dictionary key.
-                final_dict[key] = value
-        return final_dict
-
     def connect_notify(self, sections, option, obj, *args):
         """Connect `option`'s notify signal to `obj`'s callback method."""
         if isinstance(sections, str):
@@ -357,11 +332,35 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         method = getattr(obj, method_name)
         container.disconnect(signal, method)
 
+    def _flatten(self, values):
+        """Return a flattened version of `values` dictionary."""
+        def flatten(deep, parent):
+            flat_dict = {parent: {}}
+            deep = copy.deepcopy(deep)
+            for key, value in deep.items():
+                if isinstance(value, dict):
+                    key = "::".join((parent, key))
+                    value = flatten(value, key)
+                    flat_dict.update(value)
+                else: # Non-dictionary key.
+                    flat_dict[parent][key] = value
+            if not flat_dict[parent]:
+                del flat_dict[parent]
+            return flat_dict
+        final_dict = {}
+        values = copy.deepcopy(values)
+        for key, value in values.items():
+            if isinstance(value, dict):
+                final_dict.update(flatten(value, key))
+            else: # Non-dictionary key.
+                final_dict[key] = value
+        return final_dict
+
     def query_default(self, sections, option):
         """
         Return default value of configuration option.
 
-        Raise :exc:`KeyError` if section or option not found.
+        Raise :exc:`LookupError` if section or option not found.
         """
         if isinstance(sections, str):
             sections = (sections,)
@@ -385,8 +384,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             # Ignore all decoding errors, since all keys and all standard
             # values are all ASCII. This will only mangle recent etc.
             # filenames, which are always checked for existance anyway.
-            lines = open(self.path,
-                         "r",
+            lines = open(self.path, "r",
                          encoding=encoding,
                          errors="ignore").readlines()
 
@@ -418,11 +416,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 except (AttributeError, ValueError):
                     print(("Failed to parse value '{}' of option '{}.{}' "
                            "from configuration file '{}'."
-                           .format(value,
-                                   "::".join(sections),
-                                   option,
-                                   self.path)),
-
+                           .format(value, "::".join(sections), option, self.path)),
                           file=sys.stderr)
 
                     continue
@@ -433,11 +427,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                     # By discarding them here, we ensure a clean start.
                     print ("Discarding value '{}' of option '{}.{}' "
                            "from configuration file '{}'."
-                           .format(value,
-                                   "::".join(sections),
-                                   option,
-                                   self.path),
-
+                           .format(value, "::".join(sections), option, self.path),
                            file=sys.stderr)
 
                     continue
@@ -455,11 +445,11 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         """
         Add section and options for extension.
 
-        `name` should be preferrably the module name of the extension and it
-        will appear in the section name as ``extensions::name``. `defaults`
+        `name` should be preferrably the module name of the extension and
+        it will appear in the section name as ``extensions::name``. `defaults`
         should be a dictionary of default values for options. `enums` should be
-        a dictionary of :class:`aeidon.Enumeration` instances corresponding to
-        enumeration items that appear in options.
+        a dictionary of :class:`aeidon.Enumeration` instances corresponding
+        to enumeration items that appear in options.
         """
         self._defaults["extensions"].update({name: defaults})
         self.extensions.extend({name: copy.deepcopy(defaults)})
@@ -504,7 +494,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                     # Discard removed options, but always keep
                     # all options of all extensions.
                     continue
-                if (section in defaults) and (option in defaults[section]):
+                if section in defaults and option in defaults[section]:
                     if value == defaults[section][option]:
                         f.write("# ")
                 try:

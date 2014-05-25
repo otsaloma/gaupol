@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+"""Play video file using gaupol.VideoPlayer."""
+import os, sys
+file_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(file_dir, ".."))
+import aeidon, gaupol
+from gi.repository import Gtk
+player = gaupol.VideoPlayer()
+window = Gtk.Window()
+window.set_default_size(800, 480)
+window.connect("delete-event", Gtk.main_quit)
+window.add(player.widget)
+window.show_all()
+player.set_path(sys.argv[1])
+player.play()
+Gtk.main()

@@ -30,29 +30,7 @@ class TestConfigurationStore(gaupol.TestCase):
 
     def teardown_method(self, method):
         shutil.rmtree(self.directory)
-
-    def test_connect_notify(self):
-        class PuppetObserver:
-            def _on_conf_editor_notify_undo_limit(self, obj, value):
-                assert value == 99
-        puppet = PuppetObserver()
-        self.conf.connect_notify("editor", "undo_limit", puppet)
-        self.conf.editor.undo_limit = 99
-
-    def test_disconnect_notify(self):
-        class PuppetObserver:
-            def _on_conf_editor_notify_undo_limit(self, obj, value):
-                assert value == 99
-        puppet = PuppetObserver()
-        self.conf.connect_notify("editor", "undo_limit", puppet)
-        self.conf.editor.undo_limit = 99
-        self.conf.disconnect_notify("editor", "undo_limit", puppet)
-        self.conf.editor.undo_limit = 100
-
-    def test_query_default(self):
-        assert not self.conf.query_default("application_window", "maximized")
-        self.conf.application_window.maximized = True
-        assert not self.conf.query_default("application_window", "maximized")
+        gaupol.TestCase.teardown_method(self, method)
 
     def test_read_from_file(self):
         self.conf.write_to_file()
@@ -77,8 +55,3 @@ class TestConfigurationStore(gaupol.TestCase):
         self.conf.write_to_file()
         self.conf.restore_defaults()
         self.conf.read_from_file()
-
-    def test_write_to_file__io_error(self):
-        os.chmod(self.directory, 0o000)
-        self.assert_raises(IOError, self.conf.write_to_file)
-        os.chmod(self.directory, 0o777)

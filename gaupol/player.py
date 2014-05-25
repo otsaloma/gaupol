@@ -40,19 +40,19 @@ class VideoPlayer(aeidon.Observable):
     """
     GStreamer video player.
 
-    :ivar _in_default_segment: ``True`` if in the default playback segment
-    :ivar _info: :class:`Gst.DiscovererInfo` from current uri
-    :ivar _playbin: GStreamer "playbin" element
-    :ivar _prev_state: Previous state of `_playbin`
-    :ivar _text_overlay: GStreamer "textoverlay" element
-    :ivar _time_overlay: GStreamer "timeoverlay" element
-    :ivar _xid: `widget`'s X resource (window)
     :ivar audio_track: Current audio track as integer
     :ivar calc: The instance of :class:`aeidon.Calculator` used
+    :ivar _in_default_segment: ``True`` if in the default playback segment
+    :ivar _info: :class:`Gst.DiscovererInfo` from current URI
+    :ivar _playbin: GStreamer "playbin" element
+    :ivar _prev_state: Previous state of `_playbin`
     :ivar subtitle_text: Current text shown in the subtitle overlay
     :ivar subtitle_text_raw: `subtitle_text` before removal of tags
+    :ivar _text_overlay: GStreamer "textoverlay" element
+    :ivar _time_overlay: GStreamer "timeoverlay" element
     :ivar volume: Current audio stream volume
     :ivar widget: :class:`Gtk.DrawingArea` used to render video
+    :ivar _xid: `widget`'s X resource (window)
 
     Signals and their arguments for callback functions:
      * ``state-changed``: player new state
@@ -63,21 +63,35 @@ class VideoPlayer(aeidon.Observable):
     def __init__(self):
         """Initialize a :class:`VideoPlayer` instance."""
         aeidon.Observable.__init__(self)
+        self.calc = aeidon.Calculator()
         self._in_default_segment = True
         self._info = None
         self._playbin = None
         self._prev_state = None
+        self.subtitle_text_raw = ""
         self._text_overlay = None
         self._time_overlay = None
-        self._xid = None
-        self.calc = aeidon.Calculator()
-        self.subtitle_text_raw = ""
         self.widget = None
+        self._xid = None
         self._init_text_overlay()
         self._init_time_overlay()
         self._init_pipeline()
         self._init_bus()
         self._init_widget()
+
+    @property
+    def audio_track(self):
+        """Return number of the current audio track."""
+        track = self._playbin.props.current_audio
+        # If at the default value, the first track is used,
+        # which is (probably?) zero.
+        track = (0 if track == -1 else track)
+        return track
+
+    @audio_track.setter
+    def audio_track(self, track):
+        """Set the current audio track."""
+        self._playbin.props.current_audio = track
 
     def _ensure_default_segment(self):
         """
@@ -104,6 +118,49 @@ class VideoPlayer(aeidon.Observable):
 
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
         self._in_default_segment = True
+
+    def get_audio_languages(self):
+        """Return a sequence of audio languages or ``None``."""
+        if self._info is None: return None
+        return tuple(x.get_language() for x in self._info.get_audio_streams())
+
+    def get_duration(self, mode=None):
+        """
+        Return duration of video stream or ``None``.
+
+        `mode` can be ``None`` to return duration in internal :mod:`GStreamer`
+        units, which can be faster if data is fed back to :mod:`GStreamer`.
+        """
+        success, duration = self._playbin.query_duration(Gst.Format.TIME)
+        if not success: return None
+        if mode is None: return duration
+        duration = duration / Gst.SECOND
+        if mode == aeidon.modes.SECONDS:
+            return duration
+        if mode == aeidon.modes.TIME:
+            return self.calc.to_time(duration)
+        if mode == aeidon.modes.FRAME:
+            return self.calc.to_frame(duration)
+        raise ValueError("Invalid mode: {}".format(repr(mode)))
+
+    def get_position(self, mode=None):
+        """
+        Return current position in video stream or ``None``.
+
+        `mode` can be ``None`` to return position in internal :mod:`GStreamer`
+        units, which can be faster if data is fed back to :mod:`GStreamer`.
+        """
+        success, pos = self._playbin.query_position(Gst.Format.TIME)
+        if not success: return None
+        if mode is None: return pos
+        pos = pos / Gst.SECOND
+        if mode == aeidon.modes.SECONDS:
+            return pos
+        if mode == aeidon.modes.TIME:
+            return self.calc.to_time(pos)
+        if mode == aeidon.modes.FRAME:
+            return self.calc.to_frame(pos)
+        raise ValueError("Invalid mode: {}".format(repr(mode)))
 
     def _init_bus(self):
         """Initialize the GStreamer message bus."""
@@ -175,6 +232,16 @@ class VideoPlayer(aeidon.Observable):
         state = Gtk.StateFlags.NORMAL
         self.widget.override_background_color(state, color)
 
+    def is_playing(self):
+        """Return ``True`` if playing video."""
+        # GStreamer's state information is far too detailed for our purposes.
+        # Let's consider the state to be playing also if undergoing a state
+        # change and/or having a pending playing state.
+        success, current, pending = self._playbin.get_state(timeout=1)
+        return (success == Gst.StateChangeReturn.ASYNC or
+                current == Gst.State.PLAYING or
+                pending == Gst.State.PLAYING)
+
     def _on_bus_message_eos(self, bus, message):
         """Handle EOS message from the bus."""
         self._ensure_default_segment()
@@ -226,78 +293,6 @@ class VideoPlayer(aeidon.Observable):
        color = conf.time_color.replace("#", "")
        color = int(float.fromhex("".join((alpha, color))))
        self._time_overlay.props.color = color
-
-    @property
-    def audio_track(self):
-        """Return number of the current audio track."""
-        track = self._playbin.props.current_audio
-        # If at the default value, the first track is used,
-        # which is (probably?) zero.
-        track = (0 if track == -1 else track)
-        return track
-
-    @audio_track.setter
-    def audio_track(self, track):
-        """Set the current audio track."""
-        self._playbin.props.current_audio = track
-
-    def get_audio_languages(self):
-        """Return a sequence of audio languages or ``None``."""
-        if self._info is None: return None
-        # TODO: Maybe we should try to parse these language codes to human
-        # readable form, but the codes probably vary a lot by container.
-        return tuple(x.get_language() for x in
-                     self._info.get_audio_streams())
-
-    def get_duration(self, mode):
-        """
-        Return duration of video stream or ``None``.
-
-        `mode` can be ``None`` to return duration in internal :mod:`GStreamer`
-        units, which can be faster if data is fed back to :mod:`GStreamer`.
-        """
-        success, duration = self._playbin.query_duration(Gst.Format.TIME)
-        if not success: return None
-        if mode is None: return duration
-        duration = duration / Gst.SECOND
-        if mode == aeidon.modes.SECONDS:
-            return duration
-        if mode == aeidon.modes.TIME:
-            return self.calc.to_time(duration)
-        if mode == aeidon.modes.FRAME:
-            return self.calc.to_frame(duration)
-        raise ValueError("Invalid mode: {}"
-                         .format(repr(mode)))
-
-    def get_position(self, mode):
-        """
-        Return current position in video stream or ``None``.
-
-        `mode` can be ``None`` to return position in internal :mod:`GStreamer`
-        units, which can be faster if data is fed back to :mod:`GStreamer`.
-        """
-        success, pos = self._playbin.query_position(Gst.Format.TIME)
-        if not success: return None
-        if mode is None: return pos
-        pos = pos / Gst.SECOND
-        if mode == aeidon.modes.SECONDS:
-            return pos
-        if mode == aeidon.modes.TIME:
-            return self.calc.to_time(pos)
-        if mode == aeidon.modes.FRAME:
-            return self.calc.to_frame(pos)
-        raise ValueError("Invalid mode: {}"
-                         .format(repr(mode)))
-
-    def is_playing(self):
-        """Return ``True`` if playing video."""
-        # GStreamer's state information is far too detailed for our purposes.
-        # Let's consider the state to be playing also if undergoing a state
-        # change and/or having a pending playing state.
-        success, current, pending = self._playbin.get_state(timeout=1)
-        return (success == Gst.StateChangeReturn.ASYNC or
-                current == Gst.State.PLAYING or
-                pending == Gst.State.PLAYING)
 
     def pause(self):
         """Pause."""
@@ -370,7 +365,7 @@ class VideoPlayer(aeidon.Observable):
         You should have a window visible before calling `set_uri`.
         """
         self._playbin.props.uri = uri
-        # XXX: We need platform specific calls here.
+        # XXX: We need platform-specific calls here.
         self._xid = self.widget.props.window.get_xid()
         self.subtitle_text = ""
         try:
