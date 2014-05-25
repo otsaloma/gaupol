@@ -65,28 +65,20 @@ class Page(aeidon.Observable):
         self.update_tab_label()
         self.emit("view-created", self.view)
 
-    def _assert_store(self, fields=None):
-        """Assert that store's data matches project's."""
-        if fields is None:
-            fields = list(gaupol.fields)
-            fields.remove(gaupol.fields.NUMBER)
-        mode = self.edit_mode
-        store = self.view.get_model()
-        assert len(store) == len(self.project.subtitles)
-        for i, subtitle in enumerate(self.project.subtitles):
-            if gaupol.fields.START in fields:
-                assert store[i][1] == subtitle.get_start(mode)
-            if gaupol.fields.END in fields:
-                assert store[i][2] == subtitle.get_end(mode)
-            if gaupol.fields.DURATION in fields:
-                if mode == aeidon.modes.TIME:
-                    assert store[i][3] == subtitle.duration_seconds
-                if mode == aeidon.modes.FRAME:
-                    assert store[i][3] == subtitle.duration_frame
-            if gaupol.fields.MAIN_TEXT in fields:
-                assert store[i][4] == subtitle.main_text
-            if gaupol.fields.TRAN_TEXT in fields:
-                assert store[i][5] == subtitle.tran_text
+    def document_to_text_column(self, doc):
+        """Translate document enumeration to view's column enumeration."""
+        if doc == aeidon.documents.MAIN:
+            return self.view.columns.MAIN_TEXT
+        if doc == aeidon.documents.TRAN:
+            return self.view.columns.TRAN_TEXT
+        raise ValueError("Invalid document: {}"
+                         .format(repr(doc)))
+
+    def get_main_basename(self):
+        """Return basename of the main document."""
+        if self.project.main_file is not None:
+            return os.path.basename(self.project.main_file.path)
+        return self.untitle
 
     def _get_subtitle_value(self, row, field):
         """Return value of subtitle data for `row` and `field`."""
@@ -136,13 +128,24 @@ class Page(aeidon.Observable):
         button.set_tooltip_text(_("Close project"))
         return button
 
+    def get_translation_basename(self):
+        """Return basename of the translation document."""
+        if self.project.tran_file is not None:
+            return os.path.basename(self.project.tran_file.path)
+        basename = self.get_main_basename()
+        if self.project.main_file is not None:
+            extension = self.project.main_file.format.extension
+            if basename.endswith(extension):
+                basename = basename[:-len(extension)]
+        return _("{} translation").format(basename)
+
     def _init_project(self):
         """Initialize :class:`aeidon.Project` with proper properties."""
+        framerate = gaupol.conf.editor.framerate
         limit = gaupol.conf.editor.use_undo_limit
         levels = gaupol.conf.editor.undo_limit
         undo_limit = (levels if limit else None)
-        self.project = aeidon.Project(gaupol.conf.editor.framerate,
-                                      undo_limit)
+        self.project = aeidon.Project(framerate, undo_limit)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -186,9 +189,7 @@ class Page(aeidon.Observable):
         self.tab_label.set_size_request(width, -1)
         self.tab_label.set_tooltip_text(self.untitle)
         button = self._get_tab_close_button()
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
-                                  spacing=4)
-
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
         box.pack_start(self.tab_label, expand=True, fill=True, padding=0)
         box.pack_start(button, expand=False, fill=False, padding=0)
         box.gaupol_button = button
@@ -261,16 +262,16 @@ class Page(aeidon.Observable):
         if not rows: return
         store = self.view.get_model()
         if len(rows) > 50:
-            # Unset and later reset the model if removing a large amount of
-            # rows, because a large batch of separate live updates directly
-            # made to the view are slow.
+            # Unset and later reset the model if removing a large amount
+            # of rows, because a large batch of separate live updates
+            # directly made to the view are slow.
             self.view.set_model(None)
         for row in reversed(sorted(rows)):
             store.remove(store.get_iter(row))
         if len(rows) > 50:
             self.view.set_model(store)
         if self.project.subtitles:
-            row = min(rows[0], len(self.project.subtitles) - 1)
+            row = min(rows[0], len(self.project.subtitles)-1)
             col = self.view.get_focus()[1]
             self.view.set_focus(row, col)
         gaupol.util.iterate_main()
@@ -306,37 +307,6 @@ class Page(aeidon.Observable):
                 "<b>{}</b> {}".format(_("Newlines:"), newline.label)))
 
         return True # to show the tooltip.
-
-    def _update_undo_limit(self):
-        """Update project's undo level count to match global configuration."""
-        self.project.undo_limit = (gaupol.conf.editor.undo_limit if
-                                   gaupol.conf.editor.use_undo_limit else None)
-
-    def document_to_text_column(self, doc):
-        """Translate document enumeration to view's column enumeration."""
-        if doc == aeidon.documents.MAIN:
-            return self.view.columns.MAIN_TEXT
-        if doc == aeidon.documents.TRAN:
-            return self.view.columns.TRAN_TEXT
-        raise ValueError("Invalid document: {}"
-                         .format(repr(doc)))
-
-    def get_main_basename(self):
-        """Return basename of the main document."""
-        if self.project.main_file is not None:
-            return os.path.basename(self.project.main_file.path)
-        return self.untitle
-
-    def get_translation_basename(self):
-        """Return basename of the translation document."""
-        if self.project.tran_file is not None:
-            return os.path.basename(self.project.tran_file.path)
-        basename = self.get_main_basename()
-        if self.project.main_file is not None:
-            extension = self.project.main_file.format.extension
-            if basename.endswith(extension):
-                basename = basename[:-len(extension)]
-        return _("{} translation").format(basename)
 
     def reload_view(self, rows, fields):
         """Reload the view in `rows` and `fields`."""
@@ -384,3 +354,8 @@ class Page(aeidon.Observable):
         width = min(width, gaupol.util.char_to_px(32))
         self.tab_label.set_size_request(width, -1)
         return title
+
+    def _update_undo_limit(self):
+        """Update project's undo level count to match global configuration."""
+        self.project.undo_limit = (gaupol.conf.editor.undo_limit if
+                                   gaupol.conf.editor.use_undo_limit else None)
