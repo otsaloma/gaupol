@@ -64,9 +64,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     """
     GTK+ user interface controller for :class:`aeidon.Project`.
 
-    :ivar _delegations: Dictionary mapping method names to agent methods
     :ivar clipboard: Instance of :class:`aeidon.Clipboard` used
     :ivar counter: Iterator used for naming unsaved documents
+    :ivar _delegations: Dictionary mapping method names to agent methods
     :ivar extension_manager: Instance of :class:`gaupol.ExtensionManager` used
     :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
     :ivar notebook_separator: A :class:`Gtk.Separator` above the notebook
@@ -102,7 +102,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                "page-switched",
                "pages-reordered",
                "quit",
-               "text-assistant-request-pages",)
+               "text-assistant-request-pages")
 
     def __getattr__(self, name):
         """Return method delegated to an agent."""
@@ -111,15 +111,12 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         except KeyError:
             raise AttributeError
 
-    def __setattr__(self, name, value):
-        return aeidon.Observable.__setattr__(self, name, value)
-
     def __init__(self):
         """Initialize an :class:`Application` instance."""
         aeidon.Observable.__init__(self)
-        self._delegations = {}
         self.clipboard = aeidon.Clipboard()
         self.counter = itertools.count(1)
+        self._delegations = {}
         self.extension_manager = gaupol.ExtensionManager(self)
         self.notebook = None
         self.notebook_separator = None
@@ -143,6 +140,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.extension_manager.setup_extensions()
         self.update_gui()
         self.window.show()
+
+    def __setattr__(self, name, value):
+        """Set value of attribute `name`."""
+        return aeidon.Observable.__setattr__(self, name, value)
 
     def _finalize_uim_actions(self):
         """Connect UI manager actions to widgets and methods."""
@@ -213,22 +214,13 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         toolbar.set_style(toolbar_style.value)
         if sys.platform == "win32":
             toolbar.props.icon_size = Gtk.IconSize.MENU
-        gaupol.conf.connect_notify("application_window",
-                                   "toolbar_style",
-                                   self)
-
-        vbox.pack_start(toolbar,
-                        expand=False,
-                        fill=False,
-                        padding=0)
+        gaupol.conf.connect_notify("application_window", "toolbar_style", self)
+        vbox.pack_start(toolbar, expand=False, fill=False, padding=0)
 
     def _init_menubar(self, vbox):
         """Initialize the menubar."""
         menubar = self.uim.get_widget("/ui/menubar")
-        vbox.pack_start(menubar,
-                        expand=False,
-                        fill=False,
-                        padding=0)
+        vbox.pack_start(menubar, expand=False, fill=False, padding=0)
 
     def _init_notebook(self, paned):
         """Initialize the notebook."""
@@ -256,11 +248,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         overlay.add(self.notebook)
         self.statuslabel = gaupol.FloatingLabel()
         overlay.add_overlay(self.statuslabel)
-        vbox.pack_start(overlay,
-                        expand=True,
-                        fill=True,
-                        padding=0)
-
+        vbox.pack_start(overlay, expand=True, fill=True, padding=0)
         paned.add2(vbox)
 
     def _init_output_window(self):
@@ -291,7 +279,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         redo_button = self.get_tool_item("redo_action")
         if isinstance(redo_button, Gtk.MenuToolButton):
             # redo_button is not necessarily a menu tool button.
-            # https://bugzilla.gnome.org/show_bug.cgi?id=686608
+            # http://bugzilla.gnome.org/show_bug.cgi?id=686608
             redo_button.set_menu(Gtk.Menu())
             tip = _("Redo undone actions")
             redo_button.set_arrow_tooltip_text(tip)
@@ -343,7 +331,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         undo_button = self.get_tool_item("undo_action")
         if isinstance(undo_button, Gtk.MenuToolButton):
             # undo_button is not necessarily a menu tool button.
-            # https://bugzilla.gnome.org/show_bug.cgi?id=686608
+            # http://bugzilla.gnome.org/show_bug.cgi?id=686608
             undo_button.set_menu(Gtk.Menu())
             tip = _("Undo actions")
             undo_button.set_arrow_tooltip_text(tip)

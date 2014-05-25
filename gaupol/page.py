@@ -348,7 +348,8 @@ class Page(aeidon.Observable):
         title = self.get_main_basename()
         if self.project.main_changed or self.project.tran_changed:
             title = "*{}".format(title)
-        self.tab_label.set_text(title)
+        # Adwaita theme uses bold notebook tab labels since 3.12.
+        self.tab_label.set_markup("<b>{}</b>".format(title))
         self.tab_label.set_size_request(-1, -1)
         width = self.tab_label.get_preferred_width()[1]
         width = min(width, gaupol.util.char_to_px(32))
