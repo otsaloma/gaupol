@@ -18,8 +18,6 @@
 import gaupol
 import sys
 
-from gi.repository import Gtk
-
 
 class TestDebugDialog(gaupol.TestCase):
 
@@ -34,12 +32,3 @@ class TestDebugDialog(gaupol.TestCase):
         except AttributeError:
             self.dialog.set_text(*sys.exc_info())
         self.dialog.show()
-
-    def test__on_response__close(self):
-        self.dialog.response(Gtk.ResponseType.CLOSE)
-
-    def test__on_response__no(self):
-        self.dialog.response(Gtk.ResponseType.NO)
-
-    def test__on_response__yes(self):
-        self.dialog.response(Gtk.ResponseType.YES)

@@ -58,7 +58,7 @@ class DebugDialog(gaupol.BuilderDialog):
         """Initialize tags for the text buffer."""
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("bold", weight=Pango.Weight.BOLD)
-        text_buffer.create_tag("large", scale=1.2)
+        text_buffer.create_tag("large", scale=1.1)
         text_buffer.create_tag("monospace", family="monospace")
 
     def _insert_environment(self):
@@ -79,11 +79,10 @@ class DebugDialog(gaupol.BuilderDialog):
 
         pygobject_version = dotjoin(GObject.pygobject_version)
         gst_version = gaupol.util.get_gst_version()
-        ins = self._insert_text
-        ins("Python: {}\n".format(python_version))
-        ins("GTK+: {}\n".format(gtk_version))
-        ins("PyGObject: {}\n".format(pygobject_version))
-        ins("GStreamer: {}\n\n".format(gst_version))
+        self._insert_text("Python: {}\n".format(python_version))
+        self._insert_text("GTK+: {}\n".format(gtk_version))
+        self._insert_text("PyGObject: {}\n".format(pygobject_version))
+        self._insert_text("GStreamer: {}\n\n".format(gst_version))
 
     def _insert_link(self, path, lineno, *tags):
         """Insert `path` as a link into the text view."""
@@ -105,11 +104,12 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _insert_python_package_versions(self):
         """Insert version numbers of Python packages."""
-        ins = self._insert_text
-        ins("aeidon: {}\n".format(aeidon.__version__))
-        ins("gaupol: {}\n".format(gaupol.__version__))
-        ins("enchant: {}\n".format(aeidon.util.get_enchant_version()))
-        ins("chardet: {}\n".format(aeidon.util.get_chardet_version()))
+        enchant_version = aeidon.util.get_enchant_version()
+        chardet_version = aeidon.util.get_chardet_version()
+        self._insert_text("aeidon: {}\n".format(aeidon.__version__))
+        self._insert_text("gaupol: {}\n".format(gaupol.__version__))
+        self._insert_text("enchant: {}\n".format(enchant_version))
+        self._insert_text("chardet: {}\n".format(chardet_version))
 
     def _insert_text(self, text, *tags):
         """Insert `text` with `tags` to the text view."""
@@ -140,8 +140,7 @@ class DebugDialog(gaupol.BuilderDialog):
             self._insert_text("Line: {}\n".format(str(lineno)))
             self._insert_text("In: {}\n\n".format(name))
             if line.strip():
-                indent = "    "
-                self._insert_text("{}{}\n\n".format(indent, line))
+                self._insert_text("    {}\n\n".format(line))
             tb = tb.tb_next
         exception = traceback.format_exception_only(exctype, value)[0]
         exception, space, message = exception.partition(" ")
@@ -186,9 +185,7 @@ class DebugDialog(gaupol.BuilderDialog):
         """Open linked file in editor."""
         path = aeidon.util.shell_quote(tag.gaupol_path)
         command = string.Template(gaupol.conf.debug.text_editor)
-        command = command.safe_substitute(LINENO=tag.gaupol_lineno,
-                                          FILE=path)
-
+        command = command.safe_substitute(LINENO=tag.gaupol_lineno, FILE=path)
         process = aeidon.util.start_process(command)
         GLib.child_watch_add(process.pid, self._on_editor_exit, command)
         tag.props.foreground = "purple"
@@ -203,6 +200,9 @@ class DebugDialog(gaupol.BuilderDialog):
         self._insert_library_versions()
         self._insert_title("Python Packages")
         self._insert_python_package_versions()
+        self.resize(gaupol.util.char_to_px(40, font="monospace"),
+                    gaupol.util.lines_to_px(10, font="monospace"))
+
         gaupol.util.scale_to_content(self._text_view,
                                      min_nchar=40,
                                      max_nchar=100,
