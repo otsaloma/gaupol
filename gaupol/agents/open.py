@@ -481,6 +481,9 @@ class OpenAgent(aeidon.Delegate):
         self.add_to_recent_files(path, format, aeidon.documents.MAIN)
         gaupol.util.iterate_main()
         gaupol.util.set_cursor_normal(self.window)
+        # Refresh view to get row heights etc. correct.
+        page.view.set_focus(0, None)
+        page.view.scroll_to_row(0)
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
