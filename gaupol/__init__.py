@@ -28,7 +28,6 @@ GTK+ user interface for the Gaupol subtitle editor.
 :var HOMEPAGE_URL: Web page of the Gaupol project
 :var PREVIEW_HELP_URL: Documentation on the preview function
 :var REGEX_HELP_URL: Documentation on regular expressions
-:var SPEECH_RECOGNITION_HELP_URL: Documentation on speech recognition
 :var WIKI_URL: Wiki documentation
 
 :var fields: Enumerations for subtitle field types
@@ -113,7 +112,6 @@ from gaupol.dialogs.multi_close import *
 from gaupol.dialogs.multi_save import *
 from gaupol.dialogs.preferences import *
 from gaupol.dialogs.preview_error import *
-from gaupol.dialogs.speech_recognition import *
 from gaupol.dialogs.search import *
 from gaupol.dialogs.position_shift import *
 from gaupol.dialogs.spell_check import *

@@ -23,7 +23,6 @@ Website URLs.
 :var HOMEPAGE_URL: Web page of the Gaupol project
 :var PREVIEW_HELP_URL: Documentation on the preview function
 :var REGEX_HELP_URL: Documentation on regular expressions
-:var SPEECH_RECOGNITION_HELP_URL: Documentation on speech recognition
 :var WIKI_URL: Wiki documentation
 """
 
@@ -32,7 +31,6 @@ __all__ = ("BUG_REPORT_URL",
            "HOMEPAGE_URL",
            "PREVIEW_HELP_URL",
            "REGEX_HELP_URL",
-           "SPEECH_RECOGNITION_HELP_URL",
            "WIKI_URL")
 
 BUG_REPORT_URL = "http://bugzilla.gnome.org/enter_bug.cgi?product=gaupol"
@@ -40,5 +38,4 @@ EXTENSIONS_URL = "http://wiki.gnome.org/Gaupol/Extensions"
 HOMEPAGE_URL = "http://home.gna.org/gaupol/"
 PREVIEW_HELP_URL = "http://wiki.gnome.org/Gaupol/Preview"
 REGEX_HELP_URL = "http://docs.python.org/3/library/re.html#regular-expression-syntax"
-SPEECH_RECOGNITION_HELP_URL = "http://wiki.gnome.org/Gaupol/SpeechRecognition"
 WIKI_URL = "http://wiki.gnome.org/Gaupol"

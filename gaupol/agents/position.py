@@ -48,12 +48,6 @@ class PositionAgent(aeidon.Delegate):
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export
-    def _on_speech_recognition_activate(self, *args):
-        """Generate subtitles by voice and speech recognition."""
-        dialog = gaupol.SpeechRecognitionDialog(self.window, self)
-        gaupol.util.flash_dialog(dialog)
-
-    @aeidon.deco.export
     def _on_transform_positions_activate(self, *args):
         """Change positions by linear two-point correction."""
         page = self.get_current_page()

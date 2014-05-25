@@ -227,11 +227,6 @@
       <menuitem name="split_project" action="split_project"/>
       <placeholder name="4">
       </placeholder>
-      <separator/>
-      <!-- pocketsphinx is not available for GStreamer 1.0 -->
-      <!-- <menuitem name="speech_recognition" action="speech_recognition"/> -->
-      <placeholder name="5">
-      </placeholder>
     </menu>
     <placeholder name="1">
     </placeholder>

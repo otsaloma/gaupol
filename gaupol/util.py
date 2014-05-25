@@ -242,20 +242,6 @@ def lines_to_px(nlines, font=None):
     height = label.get_layout().get_pixel_size()[1]
     return int(round(nlines * height))
 
-@aeidon.deco.once
-def pocketsphinx_available():
-    """Return ``True`` if `pocketsphinx` GStreamer plugin is available."""
-    # XXX: Return False for now while waiting for pocketsphinx to be ported to
-    # GStreamer 1.0. Speech recognition code is technically already ported,
-    # but lacking pocketsphinx, it's completely untested.
-    # http://sourceforge.net/p/cmusphinx/discussion/help/thread/6a286ad1/
-    return False
-    try:
-        from gi.repository import Gst
-        return Gst.Plugin.load_by_name("pocketsphinx") is not None
-    except Exception:
-        return False
-
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
     if (gaupol.util.gtkspell_available() and

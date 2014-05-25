@@ -160,15 +160,6 @@ config_defaults = {
         "regex": False,
         "target": gaupol.targets.CURRENT,
         },
-    "speech_recognition": {
-        "acoustic_model": "",
-        "advance_length": 100,
-        "lang_model": "",
-        "noise_level": 256,
-        "phonetic_dict": "",
-        "silence_length": 300,
-        "use_custom_models": False,
-        },
     "spell_check": {
         "field": gaupol.fields.MAIN_TEXT,
         "inline": False,
