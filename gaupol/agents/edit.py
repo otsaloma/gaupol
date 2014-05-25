@@ -83,12 +83,6 @@ class EditAgent(aeidon.Delegate):
         self._sync_clipboards(page)
 
     @aeidon.deco.export
-    def _on_edit_headers_activate(self, *args):
-        """Edit file headers."""
-        dialog = gaupol.HeaderDialog(self.window, self)
-        gaupol.util.flash_dialog(dialog)
-
-    @aeidon.deco.export
     def _on_edit_next_value_activate(self, *args):
         """Edit the focused column of the next subtitle."""
         page = self.get_current_page()

@@ -104,7 +104,6 @@ from gaupol.dialogs.debug import *
 from gaupol.dialogs.duration_adjust import *
 from gaupol.dialogs.encoding import *
 from gaupol.dialogs.framerate_convert import *
-from gaupol.dialogs.header import *
 from gaupol.dialogs.insert import *
 from gaupol.dialogs.language import *
 from gaupol.dialogs.message import *

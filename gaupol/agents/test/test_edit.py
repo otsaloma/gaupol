@@ -45,13 +45,6 @@ class TestEditAgent(gaupol.TestCase):
         page.view.select_rows((0, 1, 2))
         self.application.get_action("cut_texts").activate()
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test__on_edit_headers_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
-        path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
-        self.application.open_main(path)
-        self.application.get_action("edit_headers").activate()
-
     def test__on_edit_next_value_activate(self):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)

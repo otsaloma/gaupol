@@ -33,9 +33,7 @@ class AppendFileAction(gaupol.Action):
         gaupol.Action.__init__(self, "append_file")
         self.props.label = _("_Append File…")
         self.props.stock_id = Gtk.STOCK_ADD
-        self.props.tooltip = _("Append subtitles from file "
-                               "to the current project")
-
+        self.props.tooltip = _("Append subtitles from file to the current project")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -78,32 +76,6 @@ class CloseProjectAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-
-
-class EditHeadersAction(gaupol.Action):
-
-    """Edit file headers."""
-
-    def __init__(self):
-        """Initialize an :class:`EditHeadersAction` instance."""
-        gaupol.Action.__init__(self, "edit_headers")
-        self.props.label = _("_Headers")
-        self.props.stock_id = Gtk.STOCK_PROPERTIES
-        self.props.tooltip = _("Edit file headers")
-        self.accelerator = "<Alt>Return"
-        self.action_group = "main-unsafe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        has_header_found = False
-        if page.project.main_file is not None:
-            if page.project.main_file.format.has_header:
-                has_header_found = True
-        if page.project.tran_file is not None:
-            if page.project.tran_file.format.has_header:
-                has_header_found = True
-        aeidon.util.affirm(has_header_found)
 
 
 class NewProjectAction(gaupol.Action):
@@ -247,9 +219,7 @@ class SaveAllDocumentsAsAction(gaupol.Action):
         gaupol.Action.__init__(self, "save_all_documents_as")
         self.props.label = _("Save _All As…")
         self.props.stock_id = Gtk.STOCK_SAVE_AS
-        self.props.tooltip = _("Save all open documents with "
-                               "different properties")
-
+        self.props.tooltip = _("Save all open documents with different properties")
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -287,9 +257,7 @@ class SaveMainDocumentAsAction(gaupol.Action):
         self.props.label = _("Save _As…")
         self.props.short_label = _("Save As")
         self.props.stock_id = Gtk.STOCK_SAVE_AS
-        self.props.tooltip = _("Save the current main document "
-                               "with a different name")
-
+        self.props.tooltip = _("Save the current main document with a different name")
         self.accelerator = "<Shift><Control>S"
         self.action_group = "main-safe"
 
@@ -326,9 +294,7 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
         self.props.label = _("Save Translat_ion As…")
         self.props.short_label = _("Save Translation As")
         self.props.stock_id = Gtk.STOCK_SAVE_AS
-        self.props.tooltip = _("Save the current translation document "
-                               "with a different name")
-
+        self.props.tooltip = _("Save the current translation document with a different name")
         self.accelerator = "<Shift><Control>T"
         self.action_group = "main-safe"
 

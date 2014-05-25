@@ -120,9 +120,7 @@ class ShowFramerate23976Action(gaupol.RadioAction):
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_23_976)
         self.props.label = _("2_3.976 fps")
-        self.props.tooltip = _("Calculate nonnative units "
-                               "with a framerate of 23.976 fps")
-
+        self.props.tooltip = _("Calculate nonnative units with a framerate of 23.976 fps")
         self.props.value = aeidon.framerates.FPS_23_976
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_23_976
@@ -144,9 +142,7 @@ class ShowFramerate24000Action(gaupol.RadioAction):
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_24_000)
         self.props.label = _("2_4.000 fps")
-        self.props.tooltip = _("Calculate nonnative units "
-                               "with a framerate of 24.000 fps")
-
+        self.props.tooltip = _("Calculate nonnative units with a framerate of 24.000 fps")
         self.props.value = aeidon.framerates.FPS_24_000
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_24_000
@@ -168,9 +164,7 @@ class ShowFramerate25000Action(gaupol.RadioAction):
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_25_000)
         self.props.label = _("2_5.000 fps")
-        self.props.tooltip = _("Calculate nonnative units "
-                               "with a framerate of 25.000 fps")
-
+        self.props.tooltip = _("Calculate nonnative units with a framerate of 25.000 fps")
         self.props.value = aeidon.framerates.FPS_25_000
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_25_000
@@ -192,9 +186,7 @@ class ShowFramerate29970Action(gaupol.RadioAction):
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_29_970)
         self.props.label = _("2_9.970 fps")
-        self.props.tooltip = _("Calculate nonnative units "
-                               "with a framerate of 29.970 fps")
-
+        self.props.tooltip = _("Calculate nonnative units with a framerate of 29.970 fps")
         self.props.value = aeidon.framerates.FPS_29_970
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_29_970

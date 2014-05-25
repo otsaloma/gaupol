@@ -19,13 +19,9 @@
       <placeholder name="3">
       </placeholder>
       <separator/>
-      <menuitem name="headers" action="edit_headers"/>
-      <placeholder name="4">
-      </placeholder>
-      <separator/>
       <menuitem name="close" action="close_project"/>
       <menuitem name="quit" action="quit"/>
-      <placeholder name="5">
+      <placeholder name="4">
       </placeholder>
     </menu>
     <menu name="edit" action="show_edit_menu">

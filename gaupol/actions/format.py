@@ -51,9 +51,7 @@ class ToggleDialogDashesAction(gaupol.Action):
         """Initialize a :class:`ToggleDialogDashesAction` instance."""
         gaupol.Action.__init__(self, "toggle_dialogue_dashes")
         self.props.label = _("_Dialogue")
-        self.props.tooltip = _("Add or remove dialogue dashes "
-                               "on the selected texts")
-
+        self.props.tooltip = _("Add or remove dialogue dashes on the selected texts")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

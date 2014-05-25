@@ -66,9 +66,7 @@ class PreviewAction(gaupol.Action):
         gaupol.Action.__init__(self, "preview")
         self.props.label = _("_Preview")
         self.props.stock_id = Gtk.STOCK_MEDIA_PLAY
-        self.props.tooltip = _("Preview from selected position "
-                               "with a video player")
-
+        self.props.tooltip = _("Preview from selected position with a video player")
         self.accelerator = "F5"
         self.action_group = "main-unsafe"
 
@@ -105,9 +103,7 @@ class TransformPositionsAction(gaupol.Action):
         """Initialize a :class:`TransformPositionsAction` instance."""
         gaupol.Action.__init__(self, "transform_positions")
         self.props.label = _("_Transform Positions…")
-        self.props.tooltip = _("Change positions by linear "
-                               "two-point correction")
-
+        self.props.tooltip = _("Change positions by linear two-point correction")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

@@ -199,9 +199,7 @@ class ExtendSelectionToBeginningAction(gaupol.Action):
         """Initialize an :class:`ExtendSelectionToBeginningAction` instance."""
         gaupol.Action.__init__(self, "extend_selection_to_beginning")
         self.props.label = _("Extend To _Beginning")
-        self.props.tooltip = _("Extend the current selection "
-                               "up to the first subtitle")
-
+        self.props.tooltip = _("Extend the current selection up to the first subtitle")
         self.accelerator = "<Shift><Control>Home"
         self.action_group = "main-unsafe"
 
@@ -220,9 +218,7 @@ class ExtendSelectionToEndAction(gaupol.Action):
         """Initialize an :class:`ExtendSelectionToEndAction` instance."""
         gaupol.Action.__init__(self, "extend_selection_to_end")
         self.props.label = _("Extend To _End")
-        self.props.tooltip = _("Extend the current selection "
-                               "up to the last subtitle")
-
+        self.props.tooltip = _("Extend the current selection up to the last subtitle")
         self.accelerator = "<Shift><Control>End"
         self.action_group = "main-unsafe"
 
