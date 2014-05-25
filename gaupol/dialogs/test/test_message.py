@@ -47,7 +47,8 @@ class TestQuestionDialog(_TestMessageDialog):
 
     def setup_method(self, method):
         self.dialog = gaupol.QuestionDialog(Gtk.Window(), "test", "test")
-        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.dialog.add_button(Gtk.STOCK_YES, Gtk.ResponseType.YES)
+        self.dialog.add_button(Gtk.STOCK_NO, Gtk.ResponseType.NO)
         self.dialog.show()
 
 

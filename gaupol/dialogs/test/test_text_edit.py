@@ -22,34 +22,14 @@ from gi.repository import Gtk
 
 class TestTextEditDialog(gaupol.TestCase):
 
-    def run_dialog__monospace(self):
-        gaupol.conf.editor.custom_font = "monospace"
-        gaupol.conf.editor.use_custom_font = True
-        self.dialog.destroy()
-        self.dialog = gaupol.TextEditDialog(Gtk.Window(), self.text)
-        self.dialog.run()
-        self.dialog.destroy()
-
-    def run_dialog__sans(self):
-        gaupol.conf.editor.custom_font = "sans"
-        gaupol.conf.editor.use_custom_font = True
-        self.dialog.destroy()
-        self.dialog = gaupol.TextEditDialog(Gtk.Window(), self.text)
+    def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
+        gaupol.conf.editor.custom_font = "monospace"
         gaupol.conf.editor.length_unit = gaupol.length_units.CHAR
-        self.text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu etaoin shrdlu"
-        self.dialog = gaupol.TextEditDialog(Gtk.Window(), self.text)
+        gaupol.conf.editor.use_custom_font = True
+        text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu etaoin shrdlu"
+        self.dialog = gaupol.TextEditDialog(Gtk.Window(), text)
         self.dialog.show()
-
-    def test_get_text(self):
-        self.dialog.set_text("test")
-        text = self.dialog.get_text()
-        assert text == "test"
-
-    def test_set_text(self):
-        self.dialog.set_text("test")
-        text = self.dialog.get_text()
-        assert text == "test"

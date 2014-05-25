@@ -37,6 +37,12 @@ class TextEditDialog(Gtk.Dialog):
         self._init_text_view()
         self.set_text(text)
 
+    def get_text(self):
+        """Return text in the text view."""
+        text_buffer = self._text_view.get_buffer()
+        start, end = text_buffer.get_bounds()
+        return text_buffer.get_text(start, end, False)
+
     def _init_dialog(self, parent):
         """Initialize the dialog."""
         self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
@@ -68,12 +74,6 @@ class TextEditDialog(Gtk.Dialog):
                                   font=font)
 
         box.show_all()
-
-    def get_text(self):
-        """Return text in the text view."""
-        text_buffer = self._text_view.get_buffer()
-        start, end = text_buffer.get_bounds()
-        return text_buffer.get_text(start, end, False)
 
     def set_text(self, text):
         """Set `text` to the text view."""

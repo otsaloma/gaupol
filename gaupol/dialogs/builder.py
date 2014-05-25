@@ -35,8 +35,8 @@ class BuilderDialog:
     All widgets defined in :attr:`_widgets` are assigned as instance variables
     with names preceded by a single underscore. All signals defined in the UI
     definition file are connected to ``self``. All :func:`getattr` calls not
-    found in ``self`` are delegated to :attr:`_dialog` allowing ``self`` to
-    look and act like a :class:`Gtk.Dialog`.
+    found in ``self`` are delegated to :attr:`self._dialog` allowing ``self``
+    to look and act like a :class:`Gtk.Dialog`.
     """
 
     _widgets = ()
@@ -57,15 +57,15 @@ class BuilderDialog:
             self._builder.connect_signals(self)
         self._set_attributes(self._widgets)
 
-    def _set_attributes(self, widgets, prefix=None):
-        """Assign all names in `widgets` as attributes of `self`."""
-        for name in widgets:
-            widget = self._builder.get_object(name)
-            if (prefix is not None) and (name.startswith(prefix)):
-                name = name.replace(prefix, "")
-            setattr(self, "_{}".format(name), widget)
-
     def run(self):
         """Show the dialog, run it and return response."""
         self._dialog.show()
         return self._dialog.run()
+
+    def _set_attributes(self, widgets, prefix=None):
+        """Assign all names in `widgets` as attributes of `self`."""
+        for name in widgets:
+            widget = self._builder.get_object(name)
+            if prefix is not None and name.startswith(prefix):
+                name = name.replace(prefix, "")
+            setattr(self, "_{}".format(name), widget)
