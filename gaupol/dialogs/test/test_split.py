@@ -33,46 +33,9 @@ class TestSplitDialog(gaupol.TestCase):
 
         self.dialog.show()
 
-    def test__on_response__frame_negative(self):
-        page = gaupol.Page()
-        page.project.open_main(self.new_microdvd_file(), "ascii")
-        self.application.add_page(page)
-        self.dialog = gaupol.SplitDialog(self.application.window,
-                                         self.application)
-
-        self.dialog.show()
-        self.dialog._subtitle_spin.set_value(2)
-        self.dialog.response(Gtk.ResponseType.OK)
-
-    def test__on_response__frame_positive(self):
-        page = gaupol.Page()
-        page.project.open_main(self.new_microdvd_file(), "ascii")
-        self.application.add_page(page)
-        self.dialog = gaupol.SplitDialog(self.application.window,
-                                         self.application)
-
+    def test__on_response(self):
+        npages = len(self.application.pages)
         self.dialog.show()
         self.dialog._subtitle_spin.set_value(5)
         self.dialog.response(Gtk.ResponseType.OK)
-
-    def test__on_response__time_negative(self):
-        page = gaupol.Page()
-        page.project.open_main(self.new_subrip_file(), "ascii")
-        self.application.add_page(page)
-        self.dialog = gaupol.SplitDialog(self.application.window,
-                                         self.application)
-
-        self.dialog.show()
-        self.dialog._subtitle_spin.set_value(2)
-        self.dialog.response(Gtk.ResponseType.OK)
-
-    def test__on_response__time_positive(self):
-        page = gaupol.Page()
-        page.project.open_main(self.new_subrip_file(), "ascii")
-        self.application.add_page(page)
-        self.dialog = gaupol.SplitDialog(self.application.window,
-                                         self.application)
-
-        self.dialog.show()
-        self.dialog._subtitle_spin.set_value(5)
-        self.dialog.response(Gtk.ResponseType.OK)
+        assert len(self.application.pages) == npages + 1

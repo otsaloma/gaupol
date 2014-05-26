@@ -72,13 +72,7 @@ class SplitDialog(gaupol.BuilderDialog):
 
     def _shift_destination(self, src, dst):
         """Shift subtitles in `dst` page."""
-        amount = src.project.subtitles[-1].end
-        if isinstance(amount, str):
-            amount = (amount[1:] if amount.startswith("-")
-                      else "-{}".format(amount))
-
-        if isinstance(amount, (int, float)):
-            amount = -1 * amount
+        amount = -1 * src.project.subtitles[-1].end_seconds
         dst.project.shift_positions(None, amount, register=None)
 
     def _split_project(self):

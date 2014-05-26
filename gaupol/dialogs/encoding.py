@@ -37,13 +37,20 @@ class EncodingDialog(gaupol.BuilderDialog):
         gaupol.BuilderDialog.__init__(self, "encoding-dialog.ui")
         self._init_tree_view()
         gaupol.util.scale_to_content(self._tree_view,
-                                     min_nchar=20,
-                                     max_nchar=80,
-                                     min_nlines=5,
+                                     min_nchar=50,
+                                     max_nchar=100,
+                                     min_nlines=10,
                                      max_nlines=20)
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.OK)
+
+    def get_encoding(self):
+        """Return the selected encoding or ``None``."""
+        selection = self._tree_view.get_selection()
+        store, itr = selection.get_selected()
+        if itr is None: return
+        return store.get_value(itr, 0)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
@@ -73,17 +80,15 @@ class EncodingDialog(gaupol.BuilderDialog):
         """Send response to select activated character encoding."""
         self.response(Gtk.ResponseType.OK)
 
-    def get_encoding(self):
-        """Return the selected encoding or ``None``."""
-        selection = self._tree_view.get_selection()
-        store, itr = selection.get_selected()
-        if itr is None: return
-        return store.get_value(itr, 0)
-
 
 class MenuEncodingDialog(EncodingDialog):
 
     """Dialog for selecting character encodings."""
+
+    def get_visible_encodings(self):
+        """Return encodings chosen to be visible."""
+        store = self._tree_view.get_model()
+        return [store[i][0] for i in range(len(store)) if store[i][3]]
 
     def _init_tree_view(self):
         """Initialize the tree view."""
@@ -122,8 +127,3 @@ class MenuEncodingDialog(EncodingDialog):
         """Toggle the value of the "Show in Menu" column."""
         store = self._tree_view.get_model()
         store[path][3] = not store[path][3]
-
-    def get_visible_encodings(self):
-        """Return encodings chosen to be visible."""
-        store = self._tree_view.get_model()
-        return [store[i][0] for i in range(len(store)) if store[i][3]]

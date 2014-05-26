@@ -70,12 +70,11 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         self._all_radio.set_active(target == gaupol.targets.ALL)
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if (not rows) and (target == gaupol.targets.SELECTED):
+        if not rows and target == gaupol.targets.SELECTED:
             self._current_radio.set_active(True)
         self._selected_radio.set_sensitive(bool(rows))
-        if page.project.video_path is None:
-            self._preview_button.set_sensitive(False)
-        if page.project.main_file is None:
+        if (page.project.video_path is None or
+            page.project.main_file is None):
             self._preview_button.set_sensitive(False)
         self._amount_spin.emit("value-changed")
 
