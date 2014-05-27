@@ -41,31 +41,3 @@ class TestLanguageDialog(gaupol.TestCase):
     def setup_method(self, method):
         self.dialog = gaupol.LanguageDialog(Gtk.Window())
         self.dialog.show()
-
-    def test___init__(self):
-        gaupol.conf.spell_check.language = "en"
-        gaupol.LanguageDialog(Gtk.Window(), show_target=True)
-        gaupol.LanguageDialog(Gtk.Window(), show_target=False)
-
-    def test__on_all_radio_toggled(self):
-        self.dialog._all_radio.set_active(True)
-        self.dialog._all_radio.set_active(False)
-
-    def test__on_current_radio_toggled(self):
-        self.dialog._current_radio.set_active(True)
-        self.dialog._current_radio.set_active(False)
-
-    def test__on_main_radio_toggled(self):
-        self.dialog._main_radio.set_active(True)
-        self.dialog._main_radio.set_active(False)
-
-    def test__on_tran_radio_toggled(self):
-        self.dialog._tran_radio.set_active(True)
-        self.dialog._tran_radio.set_active(False)
-
-    def test__on_tree_view_selection_changed(self):
-        store = self.dialog._tree_view.get_model()
-        selection = self.dialog._tree_view.get_selection()
-        store = self.dialog._tree_view.get_model()
-        for i in range(len(store)):
-            selection.select_path(i)

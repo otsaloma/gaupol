@@ -42,7 +42,7 @@ class LanguageDialog(gaupol.BuilderDialog):
                 "main_radio",
                 "target_vbox",
                 "tran_radio",
-                "tree_view",)
+                "tree_view")
 
     def __init__(self, parent, show_target=True):
         """Initialize a :class:`LanguageDialog` instance."""
@@ -51,9 +51,9 @@ class LanguageDialog(gaupol.BuilderDialog):
         self._init_tree_view()
         self._init_values()
         gaupol.util.scale_to_content(self._tree_view,
-                                     min_nchar=10,
-                                     max_nchar=40,
-                                     min_nlines=5,
+                                     min_nchar=30,
+                                     max_nchar=60,
+                                     min_nlines=6,
                                      max_nlines=20)
 
         self._dialog.set_transient_for(parent)
@@ -96,37 +96,19 @@ class LanguageDialog(gaupol.BuilderDialog):
             self._language_alignment.set_padding(0, 0, 0, 0)
             self._dialog.set_title(_("Set Language"))
 
-    def _on_all_radio_toggled(self, radio_button):
-        """Save the selected target."""
-        target = (gaupol.targets.ALL
-                  if radio_button.get_active() else
-                  gaupol.targets.CURRENT)
-
-        gaupol.conf.spell_check.target = target
-
     def _on_current_radio_toggled(self, radio_button):
         """Save the selected target."""
-        target = (gaupol.targets.CURRENT
-                  if radio_button.get_active() else
-                  gaupol.targets.ALL)
-
-        gaupol.conf.spell_check.target = target
+        gaupol.conf.spell_check.target = (
+            gaupol.targets.CURRENT
+            if radio_button.get_active()
+            else gaupol.targets.ALL)
 
     def _on_main_radio_toggled(self, radio_button):
         """Save the selected field."""
-        field = (gaupol.fields.MAIN_TEXT
-                 if radio_button.get_active() else
-                 gaupol.fields.TRAN_TEXT)
-
-        gaupol.conf.spell_check.field = field
-
-    def _on_tran_radio_toggled(self, radio_button):
-        """Save the selected field."""
-        field = (gaupol.fields.TRAN_TEXT
-                 if radio_button.get_active() else
-                 gaupol.fields.MAIN_TEXT)
-
-        gaupol.conf.spell_check.field = field
+        gaupol.conf.spell_check.field = (
+            gaupol.fields.MAIN_TEXT
+            if radio_button.get_active()
+            else gaupol.fields.TRAN_TEXT)
 
     def _on_tree_view_selection_changed(self, selection):
         """Save the selected language."""

@@ -37,9 +37,3 @@ class TestInsertDialog(gaupol.TestCase):
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.OK)
-
-    def test__on_response__no_subtitles(self):
-        page = self.application.get_current_page()
-        indices = list(range(len(page.project.subtitles)))
-        page.project.remove_subtitles(indices)
-        self.dialog.response(Gtk.ResponseType.OK)

@@ -44,11 +44,11 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
     def _convert_framerates(self):
         """Convert framerates in target projects."""
         target = self._get_target()
-        fri = aeidon.framerates[self._input_combo.get_active()]
-        fro = aeidon.framerates[self._output_combo.get_active()]
+        ifps = aeidon.framerates[self._input_combo.get_active()]
+        ofps = aeidon.framerates[self._output_combo.get_active()]
         for page in self.application.get_target_pages(target):
             self.application.set_current_page(page)
-            page.project.convert_framerate(None, fri, fro)
+            page.project.convert_framerate(None, ifps, ofps)
 
     def _get_target(self):
         """Return the selected target."""
