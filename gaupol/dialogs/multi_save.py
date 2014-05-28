@@ -51,6 +51,31 @@ class MultiSaveDialog(gaupol.FileDialog):
         self._filechooser_button.set_size_request(width, -1)
         self._init_values()
         self.set_transient_for(parent)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
+
+    def get_directory(self):
+        """Return the selected directory."""
+        return self._filechooser_button.get_filename()
+
+    def get_format(self):
+        """Return the selected format."""
+        index = self._format_combo.get_active()
+        return aeidon.formats[index]
+
+    def get_framerate(self):
+        """Return the selected framerate."""
+        index = self._framerate_combo.get_active()
+        return aeidon.framerates[index]
+
+    def get_newline(self):
+        """Return the selected newline."""
+        index = self._newline_combo.get_active()
+        return aeidon.newlines[index]
+
+    def _get_pages(self):
+        """Return a list of pages to consider."""
+        return [x for x in self.application.pages
+                if x.project.main_file is not None]
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
@@ -91,26 +116,24 @@ class MultiSaveDialog(gaupol.FileDialog):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-        pages = [x for x in self.application.pages
-                 if x.project.main_file is not None]
-
-        # Suggest format, encoding and newlines to match those
-        # from the first page to consider.
+        # Suggest format, encoding and newlines to match
+        # those from the first page to consider.
+        pages = self._get_pages()
         file = pages[0].project.main_file
         self.set_directory(os.path.dirname(file.path))
         self.set_format(file.format)
         self.set_encoding(file.encoding)
         self.set_newline(file.newline)
         self.set_framerate(gaupol.conf.editor.framerate)
-        visible = (len(set(self._modes)) > 1)
+        visible = len(set(self._modes)) > 1
         self._framerate_combo.props.visible = visible
         self._framerate_label.props.visible = visible
 
     def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""
         format = self.get_format()
-        modes = list(self._modes) + list((format.mode,))
-        visible = (len(set(modes)) > 1)
+        modes = list(self._modes) + [format.mode]
+        visible = len(set(modes)) > 1
         self._framerate_combo.props.visible = visible
         self._framerate_label.props.visible = visible
 
@@ -128,9 +151,7 @@ class MultiSaveDialog(gaupol.FileDialog):
     @aeidon.deco.silent(gaupol.Default)
     def _save_all_documents_as(self):
         """Save all documents with selected properties."""
-        pages = [x for x in self.application.pages
-                 if x.project.main_file is not None]
-
+        pages = self._get_pages()
         files = [None for x in pages]
         for i, page in enumerate(pages):
             if self._framerate_combo.props.visible:
@@ -147,49 +168,10 @@ class MultiSaveDialog(gaupol.FileDialog):
                                         self.get_encoding(),
                                         self.get_newline())
 
-        overwrite_count = sum(os.path.isfile(x.path) for x in files)
-        if overwrite_count > 0:
-            self._show_overwrite_question_dialog(overwrite_count,
-                                                 self.get_directory())
-
+        if sum(os.path.isfile(x.path) for x in files) > 0:
+            self._show_overwrite_question_dialog(files, self.get_directory())
         for i, page in enumerate(pages):
             self.application.save_main_as(page, files[i])
-
-    def _show_overwrite_question_dialog(self, overwrite_count, path):
-        """
-        Show a question dialog if about to overwrite files.
-
-        Raise :exc:`gaupol.Default` if opening cancelled.
-        """
-        title = _("{:d} of the files to be saved already exist. "
-            "Do you want to replace them?").format(overwrite_count)
-        message = _('The files already exist in "{}". '
-            'Replacing them will overwrite their contents.').format(path)
-        dialog = gaupol.QuestionDialog(self._dialog, title, message)
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
-        dialog.add_button(_("_Replace"), Gtk.ResponseType.YES)
-        dialog.set_default_response(Gtk.ResponseType.YES)
-        response = gaupol.util.flash_dialog(dialog)
-        gaupol.util.raise_default(response != Gtk.ResponseType.YES)
-
-    def get_directory(self):
-        """Return the selected directory."""
-        return self._filechooser_button.get_filename()
-
-    def get_format(self):
-        """Return the selected format."""
-        index = self._format_combo.get_active()
-        return aeidon.formats[index]
-
-    def get_framerate(self):
-        """Return the selected framerate."""
-        index = self._framerate_combo.get_active()
-        return aeidon.framerates[index]
-
-    def get_newline(self):
-        """Return the selected newline."""
-        index = self._newline_combo.get_active()
-        return aeidon.newlines[index]
 
     def set_directory(self, path):
         """Set the selected directory."""
@@ -209,3 +191,19 @@ class MultiSaveDialog(gaupol.FileDialog):
         """Set the selected newline."""
         if newline is None: return
         self._newline_combo.set_active(newline)
+
+    def _show_overwrite_question_dialog(self, files, path):
+        """
+        Show a question dialog if about to overwrite files.
+
+        Raise :exc:`gaupol.Default` if opening cancelled.
+        """
+        n = sum(os.path.isfile(x.path) for x in files)
+        title = _("{:d} of the files to be saved already exist. Do you want to replace them?").format(n)
+        message = _('The files already exist in "{}". Replacing them will overwrite their contents.').format(path)
+        dialog = gaupol.QuestionDialog(self._dialog, title, message)
+        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
+        dialog.add_button(_("_Replace"), Gtk.ResponseType.YES)
+        dialog.set_default_response(Gtk.ResponseType.YES)
+        response = gaupol.util.flash_dialog(dialog)
+        gaupol.util.raise_default(response != Gtk.ResponseType.YES)

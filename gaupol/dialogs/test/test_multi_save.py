@@ -26,7 +26,8 @@ class TestMultiSaveDialog(_TestFileDialog):
 
     @aeidon.deco.silent(gaupol.Default)
     def run_show_overwrite_question_dialog(self):
-        self.dialog._show_overwrite_question_dialog(3, "test")
+        files = [x.project.main_file for x in self.application.pages]
+        self.dialog._show_overwrite_question_dialog(files, "test")
 
     def run_dialog(self):
         self.dialog.run()
@@ -43,46 +44,5 @@ class TestMultiSaveDialog(_TestFileDialog):
 
         self.dialog.show()
 
-    def test__on_response__cancel(self):
+    def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.CANCEL)
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test__show_overwrite_question_dialog(self):
-        gaupol.util.flash_dialog = lambda dialog: Gtk.ResponseType.YES
-        self.dialog._show_overwrite_question_dialog(3, "test")
-
-    def test_get_format(self):
-        for format in aeidon.formats:
-            self.dialog.set_format(format)
-            value = self.dialog.get_format()
-            assert value == format
-
-    def test_get_framerate(self):
-        for framerate in aeidon.framerates:
-            self.dialog.set_framerate(framerate)
-            value = self.dialog.get_framerate()
-            assert value == framerate
-
-    def test_get_newline(self):
-        for newline in aeidon.newlines:
-            self.dialog.set_newline(newline)
-            value = self.dialog.get_newline()
-            assert value == newline
-
-    def test_set_format(self):
-        for format in aeidon.formats:
-            self.dialog.set_format(format)
-            value = self.dialog.get_format()
-            assert value == format
-
-    def test_set_framerate(self):
-        for framerate in aeidon.framerates:
-            self.dialog.set_framerate(framerate)
-            value = self.dialog.get_framerate()
-            assert value == framerate
-
-    def test_set_newline(self):
-        for newline in aeidon.newlines:
-            self.dialog.set_newline(newline)
-            value = self.dialog.get_newline()
-            assert value == newline
