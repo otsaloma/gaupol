@@ -1,13 +1,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Pavel Fric <pavelfric@seznam.cz>, 2013.
+# Pavel Fric <pavelfric@seznam.cz>, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-26 21:50+0200\n"
-"PO-Revision-Date: 2013-10-03 22:16+0300\n"
+"PO-Revision-Date: 2014-06-01 20:28+0200\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -449,11 +449,11 @@ msgstr "Editor"
 
 #: ../data/ui/preferences-dialog.ui.h:20
 msgid "Fonts"
-msgstr ""
+msgstr "Písma"
 
 #: ../data/ui/preferences-dialog.ui.h:21
 msgid "_Subtitles:"
-msgstr ""
+msgstr "_Titulky:"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "Pick the Subtitle Font"
@@ -461,7 +461,7 @@ msgstr "Vybrat písmo titulku"
 
 #: ../data/ui/preferences-dialog.ui.h:23
 msgid "_Time:"
-msgstr ""
+msgstr "Č_as:"
 
 #: ../data/ui/preferences-dialog.ui.h:24
 msgid "Pick the Time Font"
@@ -469,11 +469,11 @@ msgstr "Vybrat písmo času"
 
 #: ../data/ui/preferences-dialog.ui.h:25
 msgid "Colors"
-msgstr ""
+msgstr "Barvy"
 
 #: ../data/ui/preferences-dialog.ui.h:26
 msgid "Su_btitles:"
-msgstr ""
+msgstr "Tit_ulky:"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Pick the Time Color"
@@ -485,7 +485,7 @@ msgstr "_Použít pozadí za textem"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 msgid "Ti_me:"
-msgstr ""
+msgstr "Ča_s:"
 
 #: ../data/ui/preferences-dialog.ui.h:30
 msgid "Pick the Subtitle Color"
@@ -959,7 +959,7 @@ msgstr "Okay"
 
 #: ../data/patterns/Latn-en.common-error.in.h:12
 msgid "Spell two-letter forms of \"okay\" in all upper case"
-msgstr ""
+msgstr "Napište velkými písmeny dvojpísmennou podobu slova \"okay\""
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
@@ -1118,11 +1118,11 @@ msgstr "Odstranit mezeru po otevírací uvozovce a před uzavírací uvozovkou"
 
 #: ../data/patterns/Latn.common-error.in.h:23
 msgid "Spaces around musical notes"
-msgstr ""
+msgstr "Mezery okolo hudebních not"
 
 #: ../data/patterns/Latn.common-error.in.h:24
 msgid "Add spaces between musical note characters and lyrics"
-msgstr ""
+msgstr "Přidat mezery mezi znaky hudebních not a slova písně"
 
 #: ../data/patterns/Latn.common-error.in.h:25
 msgid "Multiple question- and exclamation marks"
@@ -1624,6 +1624,13 @@ msgid ""
 "with attention to batch processing of multiple documents and convenience of "
 "translating."
 msgstr ""
+"Gaupol je editor pro textově založené soubory titulků. Podporuje více "
+"formátů souborů titulků a poskytuje prostředky k vytváření titulků, "
+"upravování "
+"textů a časování titulků, aby odpovídaly obrazovému záznamu. Uživatelské "
+"rozhraní je navrženo "
+"s péčí o dávkové zpracování více dokumentů a o pohodlí při "
+"překládání."
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Gaupol"

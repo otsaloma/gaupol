@@ -16,6 +16,7 @@ Gaupol 0.26
      always been a dependency, its explicit mention was just forgotten
      when migrating from PyGTK to PyGObject)
  [X] Update Brazilian Portuguese translation (Rafael Ferreira)
+ [X] Update Czech translation (Pavel Fric)
 
 Gaupol 1.0
 ==========
