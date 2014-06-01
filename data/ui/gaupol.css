@@ -1,10 +1,9 @@
 
 #gaupol-floating-label {
-  background-color: #8AADD4;
+  background-color: #F0F080;
   border-top-right-radius: 5px;
-  box-shadow: inset -1px 1px alpha(black, 0.3);
-  color: #FFFFFF;
-  font-weight: bold;
+  box-shadow: inset -1px 1px #C4A000;
+  color: #2E3436;
   padding: 2px 12px;
 }
 
