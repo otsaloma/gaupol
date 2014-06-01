@@ -42,6 +42,26 @@ Repeat=True
 _Name=Space between digits
 _Description=Remove space between digits of a number
 Classes=OCR;
+# Remove spaces around thousand, decimal and time separators.
+Pattern=(\b\d+) +([,.:])(\d+)
+Flags=DOTALL;MULTILINE;
+Replacement=\1\2\3
+Repeat=False
+
+[Common Error Pattern]
+_Name=Space between digits
+_Description=Remove space between digits of a number
+Classes=OCR;
+# Remove spaces around time separators.
+Pattern=(\b\d+)([:]) +(\d+)
+Flags=DOTALL;MULTILINE;
+Replacement=\1\2\3
+Repeat=False
+
+[Common Error Pattern]
+_Name=Space between digits
+_Description=Remove space between digits of a number
+Classes=OCR;
 # Don't leave thousand separators for four-digit numbers.
 Pattern=(\b\d) +(\d\d\d\b)(?!.\d)
 Flags=DOTALL;MULTILINE;
