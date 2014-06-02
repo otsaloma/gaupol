@@ -272,6 +272,20 @@ class EnumDecoder(json.JSONDecoder):
         return getattr(self.enum, string)
 
 
+class EnumEncoder(json.JSONEncoder):
+
+    """JSON encoder for enumerations of :mod:`aeidon` and :mod:`gaupol`."""
+
+    def encode(self, obj):
+        """Return JSON string matching `obj`."""
+        if isinstance(obj, aeidon.EnumerationItem):
+            return str(obj)
+        if isinstance(obj, list) and obj:
+            if isinstance(obj[0], aeidon.EnumerationItem):
+                return "[{}]".format(", ".join(map(str, obj)))
+        return json.JSONEncoder.encode(self, obj)
+
+
 class ConfigurationStore(gaupol.AttributeDictionary):
 
     """
@@ -478,7 +492,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             f.write("\n[{}]\n".format(section))
             for option in sorted(root[section]):
                 value = root[section][option]
-                json_value = json.dumps(value, ensure_ascii=False)
+                json_value = json.dumps(value, cls=EnumEncoder, ensure_ascii=False)
                 if (not section.startswith("extensions::") and
                     (not section in defaults or
                      not option in defaults[section])):
