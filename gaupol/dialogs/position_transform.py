@@ -92,7 +92,7 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         self._selected_radio.set_active(target == gaupol.targets.SELECTED)
         self._current_radio.set_active(target == gaupol.targets.CURRENT)
         rows = page.view.get_selected_rows()
-        if (not rows) and (target == gaupol.targets.SELECTED):
+        if not rows and target == gaupol.targets.SELECTED:
             self._current_radio.set_active(True)
         self._selected_radio.set_sensitive(bool(rows))
         self._selected_radio.emit("toggled")
@@ -145,8 +145,8 @@ class PositionTransformDialog(gaupol.BuilderDialog):
             and len(rows) > 1
             and len(ranges) == 1
             and not self._output_edited()):
-            self._subtitle_spin_1.set_value(rows[ 0] + 1)
-            self._subtitle_spin_2.set_value(rows[-1] + 1)
+            self._subtitle_spin_1.set_value(rows[0]+1)
+            self._subtitle_spin_2.set_value(rows[-1]+1)
         elif not self._output_edited():
             self._subtitle_spin_1.set_value(1)
             self._subtitle_spin_2.set_value(len(page.project.subtitles))

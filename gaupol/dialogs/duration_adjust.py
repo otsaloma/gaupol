@@ -114,7 +114,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         self._all_radio.set_active(conf.target == gaupol.targets.ALL)
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if (not rows) and (conf.target == gaupol.targets.SELECTED):
+        if not rows and conf.target == gaupol.targets.SELECTED:
             self._current_radio.set_active(True)
         self._selected_radio.set_sensitive(bool(rows))
 

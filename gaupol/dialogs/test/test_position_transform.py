@@ -26,60 +26,14 @@ class _TestPositionTransformDialog(gaupol.TestCase):
         self.dialog.run()
         self.dialog.destroy()
 
-    def setup_method(self, method):
-        self.application = self.new_application()
-        page = self.application.get_current_page()
-        page.view.select_rows((1, 2, 3))
-        gaupol.conf.preview.use_custom_command = True
-        gaupol.conf.preview.custom_command = "echo"
-        page.project.video_path = self.new_subrip_file()
-
-    def test__init____no(self):
-        page = self.application.get_current_page()
-        page.project.video_path = None
-        page.project.main_file = None
-        page.view.select_rows(())
-        gaupol.conf.position_transform.target = gaupol.targets.SELECTED
-        self.dialog = self.dialog.__class__(self.application.window,
-                                            self.application)
-
-    def test__on_preview_button_1_clicked(self):
-        self.dialog._current_radio.set_active(True)
-        self.dialog._preview_button_1.emit("clicked")
-        self.dialog._selected_radio.set_active(True)
-        self.dialog._preview_button_1.emit("clicked")
-
-    def test__on_preview_button_2_clicked(self):
-        self.dialog._current_radio.set_active(True)
-        self.dialog._preview_button_2.emit("clicked")
-        self.dialog._selected_radio.set_active(True)
-        self.dialog._preview_button_2.emit("clicked")
-
-    def test__on_response__current(self):
-        self.dialog._current_radio.set_active(True)
+    def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.OK)
-
-    def test__on_response__selected(self):
-        self.dialog._selected_radio.set_active(True)
-        self.dialog.response(Gtk.ResponseType.OK)
-
-    def test__on_subtitle_spin_1_value_changed(self):
-        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_FORWARD, 1)
-        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_FORWARD, 1)
-        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_BACKWARD, 1)
-        self.dialog._subtitle_spin_1.spin(Gtk.SpinType.STEP_BACKWARD, 1)
-
-    def test__on_subtitle_spin_2_value_changed(self):
-        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_FORWARD, 1)
-        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_FORWARD, 1)
-        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_BACKWARD, 1)
-        self.dialog._subtitle_spin_2.spin(Gtk.SpinType.STEP_BACKWARD, 1)
 
 
 class TestFrameTransformDialog(_TestPositionTransformDialog):
 
     def setup_method(self, method):
-        _TestPositionTransformDialog.setup_method(self, method)
+        self.application = self.new_application()
         self.dialog = gaupol.FrameTransformDialog(self.application.window,
                                                   self.application)
 
@@ -89,7 +43,7 @@ class TestFrameTransformDialog(_TestPositionTransformDialog):
 class TestTimeTransformDialog(_TestPositionTransformDialog):
 
     def setup_method(self, method):
-        _TestPositionTransformDialog.setup_method(self, method)
+        self.application = self.new_application()
         self.dialog = gaupol.TimeTransformDialog(self.application.window,
                                                  self.application)
 
