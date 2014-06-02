@@ -45,10 +45,10 @@ class PreviewAgent(aeidon.Delegate):
         if self.main_file is None: return None
         dirname = os.path.dirname(self.main_file.path)
         subname = os.path.basename(self.main_file.path)
-        for path in os.listdir(dirname):
-            basename = os.path.basename(path)
-            rootname = os.path.splitext(basename)[0]
-            if not subname.startswith(rootname): continue
+        for name in os.listdir(dirname):
+            path = os.path.join(dirname, name)
+            root = os.path.splitext(name)[0]
+            if not subname.startswith(root): continue
             type, encoding = mimetypes.guess_type(path)
             if type and type.startswith("video/"):
                 self.video_path = path
