@@ -278,7 +278,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_main_check_toggled(self, check_button):
         """Save search target."""
-        gaupol.conf.search.fields = self._get_fields()
+        gaupol.conf.search.fields = list(self._get_fields())
         self._search_vbox.set_sensitive(bool(self._get_fields()))
 
     def _on_next_button_clicked(self, *args):
@@ -352,7 +352,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_tran_check_toggled(self, check_button):
         """Save search target."""
-        gaupol.conf.search.fields = self._get_fields()
+        gaupol.conf.search.fields = list(self._get_fields())
         self._search_vbox.set_sensitive(bool(self._get_fields()))
 
     def _read_history(self, name):

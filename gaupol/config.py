@@ -280,7 +280,7 @@ class EnumEncoder(json.JSONEncoder):
         """Return JSON string matching `obj`."""
         if isinstance(obj, aeidon.EnumerationItem):
             return str(obj)
-        if isinstance(obj, list) and obj:
+        if isinstance(obj, (list, tuple)) and obj:
             if isinstance(obj[0], aeidon.EnumerationItem):
                 return "[{}]".format(", ".join(map(str, obj)))
         return json.JSONEncoder.encode(self, obj)
@@ -304,6 +304,12 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         root = copy.deepcopy(self._defaults)
         gaupol.AttributeDictionary.__init__(self, root)
         self.path = None
+
+    def __setattr__(self, name, value):
+        """Avoid accidentally setting a tuple."""
+        if isinstance(value, tuple):
+            value = list(value)
+        return gaupol.AttributeDictionary.__setattr__(self, name, value)
 
     def connect_notify(self, sections, option, obj, *args):
         """Connect `option`'s notify signal to `obj`'s callback method."""
