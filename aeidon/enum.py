@@ -80,9 +80,8 @@ class Enumeration(list):
 
     def __contains__(self, item):
         """Return ``True`` is enumeration contains `item`."""
-        if isinstance(item, EnumerationItem):
-            if item.parent is not self:
-                return False
+        if not isinstance(item, EnumerationItem):
+            return False
         return list.__contains__(self, item)
 
     def __delattr__(self, name):
