@@ -37,56 +37,41 @@ class TestSaveDialog(_TestFileDialog):
 
         self.dialog.show()
 
-    def test__on_format_combo_changed(self):
-        path = self.new_subrip_file()
-        self.dialog.set_filename(path)
-        gaupol.util.iterate_main()
-        for format in aeidon.formats:
-            self.dialog.set_format(format)
+    def test_get_format(self):
+        self.dialog.set_format(aeidon.formats.SUBRIP)
+        value = self.dialog.get_format()
+        assert value == aeidon.formats.SUBRIP
+
+    def test_get_framerate(self):
+        self.dialog.set_framerate(aeidon.framerates.FPS_23_976)
+        value = self.dialog.get_framerate()
+        assert value == aeidon.framerates.FPS_23_976
+
+    def test_get_newline(self):
+        self.dialog.set_newline(aeidon.newlines.UNIX)
+        value = self.dialog.get_newline()
+        assert value == aeidon.newlines.UNIX
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.CANCEL)
 
-    def test_get_format(self):
-        for format in aeidon.formats:
-            self.dialog.set_format(format)
-            value = self.dialog.get_format()
-            assert value == format
-
-    def test_get_framerate(self):
-        for framerate in aeidon.framerates:
-            self.dialog.set_framerate(framerate)
-            value = self.dialog.get_framerate()
-            assert value == framerate
-
-    def test_get_newline(self):
-        for newline in aeidon.newlines:
-            self.dialog.set_newline(newline)
-            value = self.dialog.get_newline()
-            assert value == newline
-
     def test_set_format(self):
-        for format in aeidon.formats:
-            self.dialog.set_format(format)
-            value = self.dialog.get_format()
-            assert value == format
+        self.dialog.set_format(aeidon.formats.MICRODVD)
+        value = self.dialog.get_format()
+        assert value == aeidon.formats.MICRODVD
 
     def test_set_framerate(self):
-        for framerate in aeidon.framerates:
-            self.dialog.set_framerate(framerate)
-            value = self.dialog.get_framerate()
-            assert value == framerate
+        self.dialog.set_framerate(aeidon.framerates.FPS_25_000)
+        value = self.dialog.get_framerate()
+        assert value == aeidon.framerates.FPS_25_000
 
     def test_set_name__name__basename(self):
-        self.dialog.set_name("test")
         self.dialog.set_name("test")
 
     def test_set_name__name__path(self):
         self.dialog.set_name(self.new_subrip_file())
-        self.dialog.set_name(self.new_subrip_file())
 
     def test_set_newline(self):
-        for newline in aeidon.newlines:
-            self.dialog.set_newline(newline)
-            value = self.dialog.get_newline()
-            assert value == newline
+        self.dialog.set_newline(aeidon.newlines.WINDOWS)
+        value = self.dialog.get_newline()
+        assert value == aeidon.newlines.WINDOWS

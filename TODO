@@ -1,6 +1,7 @@
 Gaupol 0.26
 ===========
 
+ [X] Update file selection dialogs to work better with GTK+ 3.12
  [X] Default toolbar style to icons only (due to gtk-toolbar-style
      being deprecated since GTK+ 3.10)
  [X] Fix errors and lack of updates in multiline text cells and their
@@ -11,7 +12,7 @@ Gaupol 0.26
      render line length margin in text views
  [X] Remove header editing dialog
  [X] Remove non-functional speech recognition menu item
-     - http://www.mail-archive.com/gaupol-list@gna.org/msg00069.html
+     (see http://www.mail-archive.com/gaupol-list@gna.org/msg00069.html)
  [X] Drop support for the MPsub format
  [X] Add GTK+ to list of dependencies in the README file (GTK+ has
      always been a dependency, its explicit mention was just forgotten

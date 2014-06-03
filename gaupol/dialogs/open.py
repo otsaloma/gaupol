@@ -34,14 +34,20 @@ class OpenDialog(gaupol.FileDialog):
 
     def __init__(self, parent, title, doc):
         """Initialize an :class:`OpenDialog` instance."""
-        gaupol.FileDialog.__init__(self, "open-dialog.ui")
+        gaupol.FileDialog.__init__(self)
         self._use_autodetection = aeidon.util.chardet_available()
+        self._init_extra_widget()
         self._init_filters()
         self._init_encoding_combo()
         self._init_align_combo()
         self._init_values(doc)
         self.set_title(title)
         self.set_transient_for(parent)
+        self.set_action(Gtk.FileChooserAction.OPEN)
+        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.connect("response", self._on_response)
 
     def _init_align_combo(self):
         """Initialize the align method combo box."""
@@ -55,6 +61,21 @@ class OpenDialog(gaupol.FileDialog):
         renderer = Gtk.CellRendererText()
         self._align_combo.pack_start(renderer, expand=True)
         self._align_combo.add_attribute(renderer, "text", 0)
+
+    def _init_extra_widget(self):
+        """Initialize the extra widget from UI definition file."""
+        ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", "open-dialog.ui")
+        builder = Gtk.Builder()
+        builder.set_translation_domain("gaupol")
+        builder.add_from_file(ui_file_path)
+        builder.connect_signals(self)
+        for name in self._widgets:
+            widget = builder.get_object(name)
+            setattr(self, "_{}".format(name), widget)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        builder.get_object("main_vbox").reparent(vbox)
+        vbox.show_all()
+        self.set_extra_widget(vbox)
 
     def _init_values(self, doc):
         """Initialize default values for widgets."""

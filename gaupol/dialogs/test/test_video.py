@@ -27,7 +27,7 @@ class TestVideoDialog(gaupol.TestCase):
         self.dialog.destroy()
 
     def setup_method(self, method):
-        self.dialog = gaupol.VideoDialog(Gtk.Window(),
+        self.dialog = gaupol.VideoDialog(parent=Gtk.Window(),
                                          title="Select Video",
                                          button_label="Select")
 

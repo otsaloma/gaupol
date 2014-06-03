@@ -22,15 +22,27 @@ import gaupol
 _ = aeidon.i18n._
 
 from gi.repository import Gtk
+from gi.repository import GObject
 
 __all__ = ("FileDialog",)
 
 
-class FileDialog(gaupol.BuilderDialog):
+class FileDialog(Gtk.FileChooserDialog):
 
     """Base class for dialogs for selecting subtitle files."""
 
     _use_autodetection = False
+
+    def __init__(self):
+        """Initialize a :class:`FileDialog` instance."""
+        GObject.GObject.__init__(self)
+
+    def get_encoding(self):
+        """Return the selected encoding or ``None``."""
+        index = self._encoding_combo.get_active()
+        if index < 0: return None
+        store = self._encoding_combo.get_model()
+        return store[index][0]
 
     def _init_encoding_combo(self):
         """Initialize the character encoding combo box."""
@@ -77,7 +89,7 @@ class FileDialog(gaupol.BuilderDialog):
         """Show the encoding selection dialog."""
         encoding = self.get_encoding()
         if encoding != "other": return
-        dialog = gaupol.MenuEncodingDialog(self._dialog)
+        dialog = gaupol.MenuEncodingDialog(self)
         response = gaupol.util.run_dialog(dialog)
         encoding = dialog.get_encoding()
         visible = dialog.get_visible_encodings()
@@ -117,13 +129,6 @@ class FileDialog(gaupol.BuilderDialog):
         store = self._encoding_combo.get_model()
         for encoding in encodings:
             store.append(tuple(encoding))
-
-    def get_encoding(self):
-        """Return the selected encoding or ``None``."""
-        index = self._encoding_combo.get_active()
-        if index < 0: return None
-        store = self._encoding_combo.get_model()
-        return store[index][0]
 
     def set_encoding(self, encoding):
         """Set the selected encoding."""

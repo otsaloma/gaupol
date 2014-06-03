@@ -38,8 +38,9 @@ class SaveDialog(gaupol.FileDialog):
 
     def __init__(self, parent, title, mode):
         """Initialize a :class:`SaveDialog` instance."""
-        gaupol.FileDialog.__init__(self, "save-dialog.ui")
+        gaupol.FileDialog.__init__(self)
         self._mode = mode
+        self._init_extra_widget()
         self._init_filters()
         self._init_format_combo()
         self._init_encoding_combo()
@@ -48,6 +49,44 @@ class SaveDialog(gaupol.FileDialog):
         self._init_values()
         self.set_title(title)
         self.set_transient_for(parent)
+        self.set_action(Gtk.FileChooserAction.SAVE)
+        self.set_do_overwrite_confirmation(True)
+        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.connect("response", self._on_response)
+        save_button = self.get_widget_for_response(Gtk.ResponseType.OK)
+        save_button.connect("event", self._on_save_button_event)
+
+    def get_format(self):
+        """Return the selected format."""
+        index = self._format_combo.get_active()
+        return aeidon.formats[index]
+
+    def get_framerate(self):
+        """Return the selected framerate."""
+        index = self._framerate_combo.get_active()
+        return aeidon.framerates[index]
+
+    def get_newline(self):
+        """Return the selected newline."""
+        index = self._newline_combo.get_active()
+        return aeidon.newlines[index]
+
+    def _init_extra_widget(self):
+        """Initialize the extra widget from UI definition file."""
+        ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", "save-dialog.ui")
+        builder = Gtk.Builder()
+        builder.set_translation_domain("gaupol")
+        builder.add_from_file(ui_file_path)
+        builder.connect_signals(self)
+        for name in self._widgets:
+            widget = builder.get_object(name)
+            setattr(self, "_{}".format(name), widget)
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        builder.get_object("main_vbox").reparent(vbox)
+        vbox.show_all()
+        self.set_extra_widget(vbox)
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
@@ -132,21 +171,6 @@ class SaveDialog(gaupol.FileDialog):
         # lacking extension is added to the filename so that overwrite
         # confirmation check is done correctly.
         self._format_combo.emit("changed")
-
-    def get_format(self):
-        """Return the selected format."""
-        index = self._format_combo.get_active()
-        return aeidon.formats[index]
-
-    def get_framerate(self):
-        """Return the selected framerate."""
-        index = self._framerate_combo.get_active()
-        return aeidon.framerates[index]
-
-    def get_newline(self):
-        """Return the selected newline."""
-        index = self._newline_combo.get_active()
-        return aeidon.newlines[index]
 
     def set_format(self, format):
         """Set the selected format."""

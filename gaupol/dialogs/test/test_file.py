@@ -15,33 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
 import gaupol
-
-from gi.repository import Gtk
 
 
 class _TestFileDialog(gaupol.TestCase):
-
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
-    def test__on_encoding_combo_changed__cancel(self):
-        def run_dialog(dialog):
-            selection = dialog._tree_view.get_selection()
-            selection.select_path(0)
-            return Gtk.ResponseType.CANCEL
-        gaupol.util.run_dialog = run_dialog
-        store = self.dialog._encoding_combo.get_model()
-        self.dialog._encoding_combo.set_active(len(store) - 1)
-
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
-    def test__on_encoding_combo_changed__ok(self):
-        def run_dialog(dialog):
-            selection = dialog._tree_view.get_selection()
-            selection.select_path(0)
-            return Gtk.ResponseType.OK
-        gaupol.util.run_dialog = run_dialog
-        store = self.dialog._encoding_combo.get_model()
-        self.dialog._encoding_combo.set_active(len(store) - 1)
 
     def test_get_encoding(self):
         encoding = gaupol.conf.encoding.visible[0]
@@ -54,5 +31,5 @@ class _TestFileDialog(gaupol.TestCase):
         encoding = gaupol.conf.encoding.visible[0]
         self.dialog.set_encoding(encoding)
         assert self.dialog.get_encoding() == encoding
-        self.dialog.set_encoding("johab")
-        assert self.dialog.get_encoding() == "johab"
+        self.dialog.set_encoding("utf_8")
+        assert self.dialog.get_encoding() == "utf_8"
