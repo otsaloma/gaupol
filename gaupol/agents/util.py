@@ -32,21 +32,24 @@ class UtilityAgent(aeidon.Delegate):
         """Return action from UI manager by `name`."""
         for action_group in self.uim.get_action_groups():
             action = action_group.get_action(name)
-            if action is not None: return action
+            if action is not None:
+                return action
         raise ValueError("Action {} not found"
                          .format(repr(name)))
 
     @aeidon.deco.export
     def get_action_group(self, name):
         """Return action group from UI manager by `name`."""
-        groups = self.uim.get_action_groups()
-        return [x for x in groups if x.get_name() == name][0]
+        for group in self.uim.get_action_groups():
+            if group.get_name() == name:
+                return group
+        raise ValueError("Action group {} not found"
+                         .format(repr(name)))
 
     @aeidon.deco.export
     def get_column_action(self, field):
         """Return action from UI manager to hide or show column."""
-        name = gaupol.field_actions[field]
-        return self.get_action(name)
+        return self.get_action(gaupol.field_actions[field])
 
     @aeidon.deco.export
     def get_current_page(self):
@@ -58,20 +61,21 @@ class UtilityAgent(aeidon.Delegate):
     @aeidon.deco.export
     def get_framerate_action(self, framerate):
         """Return action from UI manager to select framerate."""
-        name = gaupol.framerate_actions[framerate]
-        return self.get_action(name)
+        return self.get_action(gaupol.framerate_actions[framerate])
 
     @aeidon.deco.export
     def get_menu_item(self, name):
         """Return menu item from UI manager by `name`."""
-        widgets = self.get_action(name).get_proxies()
-        return [x for x in widgets if isinstance(x, Gtk.MenuItem)][0]
+        for widget in self.get_action(name).get_proxies():
+            if isinstance(widget, Gtk.MenuItem):
+                return widget
+        raise ValueError("No menu item found for action {}"
+                         .format(name))
 
     @aeidon.deco.export
     def get_mode_action(self, mode):
         """Return action from UI manager to select mode."""
-        name = gaupol.mode_actions[mode]
-        return self.get_action(name)
+        return self.get_action(gaupol.mode_actions[mode])
 
     @aeidon.deco.export
     def get_target_pages(self, target):
@@ -95,8 +99,11 @@ class UtilityAgent(aeidon.Delegate):
     @aeidon.deco.export
     def get_tool_item(self, name):
         """Return tool item from UI manager by `name`."""
-        widgets = self.get_action(name).get_proxies()
-        return [x for x in widgets if isinstance(x, Gtk.ToolItem)][0]
+        for widget in self.get_action(name).get_proxies():
+            if isinstance(widget, Gtk.ToolItem):
+                return widget
+        raise ValueError("No menu item found for action {}"
+                         .format(name))
 
     @aeidon.deco.export
     def set_current_page(self, page):

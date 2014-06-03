@@ -33,12 +33,6 @@ class TestSpellCheckAgent(gaupol.TestCase):
         self.application.get_action("check_spelling").activate()
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
-    def test__on_check_spelling_activate__value_error(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
-        gaupol.conf.spell_check.language = "xx"
-        self.application.get_action("check_spelling").activate()
-
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__on_configure_spell_check_activate(self):
         gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("configure_spell_check").activate()

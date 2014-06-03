@@ -27,15 +27,13 @@ class AudioAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_volume_down_activate(self, *args):
         """Decrease volume."""
-        volume = self.player.volume
-        self.player.volume = volume - 0.05
+        self.player.volume = self.player.volume - 0.05
         self.volume_button.props.value = self.player.volume
         self.update_gui()
 
     @aeidon.deco.export
     def _on_volume_up_activate(self, *args):
         """Increase volume."""
-        volume = self.player.volume
-        self.player.volume = volume + 0.05
+        self.player.volume = self.player.volume + 0.05
         self.volume_button.props.value = self.player.volume
         self.update_gui()
