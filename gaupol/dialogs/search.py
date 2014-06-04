@@ -51,10 +51,10 @@ class SearchDialog(gaupol.BuilderDialog):
     :ivar _match_page: :class:`gaupol.Page` instance of the last match
     :ivar _match_row: Row in :attr:`_match_page` of the last match
     :ivar _match_span: Start, end position of the last match
-    :ivar _statuslabel: Instance of :class:`gaupol.FloatingLabel` used
-    :ivar _was_next: ``True`` if the last search was "next", else ``False``
     :ivar patterns: List of patterns previously searched for
     :ivar replacements: List of replacements previously used
+    :ivar _statuslabel: Instance of :class:`gaupol.FloatingLabel` used
+    :ivar _was_next: ``True`` if the last search was "next", else ``False``
     """
 
     _widgets = ("all_radio",
@@ -76,18 +76,18 @@ class SearchDialog(gaupol.BuilderDialog):
     def __init__(self, application):
         """Initialize a :class:`SearchDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "search-dialog.ui")
+        self.application = application
         self._handle_page_changes = True
         self._match_doc = None
         self._match_page = None
         self._match_row = None
         self._match_span = None
         self._pattern_entry = self._pattern_combo.get_child()
+        self.patterns = []
         self._replacement_entry = self._replacement_combo.get_child()
+        self.replacements = []
         self._statuslabel = gaupol.FloatingLabel()
         self._was_next = None
-        self.application = application
-        self.patterns = []
-        self.replacements = []
         self._read_history("patterns")
         self._read_history("replacements")
         self._init_text_view()
@@ -170,7 +170,7 @@ class SearchDialog(gaupol.BuilderDialog):
         docs = list(map(gaupol.util.text_field_to_document,
                         gaupol.conf.search.fields))
 
-        if (doc is None) or (not doc in docs):
+        if doc is None or not doc in docs:
             doc = (docs[0] if next else docs[-1])
         pos = self._get_cursor_offset(page, row, doc, next)
         return row, doc, pos
@@ -250,18 +250,44 @@ class SearchDialog(gaupol.BuilderDialog):
         self._current_radio.set_active(target == gaupol.targets.CURRENT)
         self._update_search_targets()
 
+    @aeidon.deco.silent(gaupol.Default)
+    def next(self):
+        """Find the next match of pattern."""
+        page = self.application.get_current_page()
+        row, doc, pos = self._get_position(next=True)
+        pages = self.application.pages[:]
+        i = pages.index(page)
+        # Loop twice over the current page,
+        # since starting in the middle.
+        for page in (pages[i:] + pages[:i+1]):
+            self._set_pattern(page)
+            try:
+                # Return match in page after position.
+                row, doc, span = page.project.find_next(row, doc, pos)
+                return self._set_success_state(page, row, doc, span, next=True)
+            except StopIteration:
+                target = gaupol.conf.search.target
+                if target == gaupol.targets.CURRENT:
+                    # Fail wrapped single-page search.
+                    return self._set_failure_state()
+                # Proceed to the next page.
+                row = doc = pos = None
+        # Fail wrapped search of all pages.
+        self._set_failure_state()
+
     def _on_all_radio_toggled(self, radio_button):
         """Save search target."""
         gaupol.conf.search.target = self._get_target()
 
     def _on_application_page_changed(self, application, page):
         """Invalidate the current search if underlying data has changed."""
-        # If data in page was changed from outside the search dialog, the
-        # current search must be invalidated to avoid making edits (especially
-        # via the text view's focus-out handler) based on data that no longer
-        # exists. All search dialog's data changing methods should be wrapped
-        # to disable this handling of application's page-changed signals.
-        if self._handle_page_changes and (self._match_page is not None):
+        # If data in page was changed from outside the search dialog,
+        # the current search must be invalidated to avoid making edits
+        # (especially via the text view's focus-out handler) based on data
+        # that no longer exists. All search dialog's data changing methods
+        # need to be wrapped to disable this handling of application's
+        # page-changed signals.
+        if self._handle_page_changes and self._match_page is not None:
             self._reset_properties()
 
     def _on_current_radio_toggled(self, radio_button):
@@ -355,6 +381,31 @@ class SearchDialog(gaupol.BuilderDialog):
         gaupol.conf.search.fields = list(self._get_fields())
         self._search_vbox.set_sensitive(bool(self._get_fields()))
 
+    @aeidon.deco.silent(gaupol.Default)
+    def previous(self):
+        """Find the previous match of pattern."""
+        page = self.application.get_current_page()
+        row, doc, pos = self._get_position(next=False)
+        pages = self.application.pages[::-1]
+        i = pages.index(page)
+        # Loop twice over the current page,
+        # since starting in the middle.
+        for page in (pages[i:] + pages[:i+1]):
+            self._set_pattern(page)
+            try:
+                # Return match in page before position.
+                row, doc, span = page.project.find_previous(row, doc, pos)
+                return self._set_success_state(page, row, doc, span, next=False)
+            except StopIteration:
+                target = gaupol.conf.search.target
+                if target == gaupol.targets.CURRENT:
+                    # Fail wrapped single-page search.
+                    return self._set_failure_state()
+                # Proceed to the previous page.
+                row = doc = pos = None
+        # Fail wrapped search of all pages.
+        self._set_failure_state()
+
     def _read_history(self, name):
         """Read history from file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
@@ -362,6 +413,45 @@ class SearchDialog(gaupol.BuilderDialog):
         if not os.path.isfile(path): return
         history = aeidon.util.readlines(path)
         setattr(self, name, history)
+
+    @page_changing
+    @aeidon.deco.silent(gaupol.Default)
+    def replace(self):
+        """Replace the current match of pattern."""
+        page = self.application.get_current_page()
+        if page is not self._match_page: return
+        self._set_replacement(page)
+        subtitle = page.project.subtitles[self._match_row]
+        length = len(subtitle.get_text(self._match_doc))
+        try:
+            page.project.replace()
+        except re.error as error:
+            return self._show_regex_error_dialog_replacement(str(error))
+        shift = (len(subtitle.get_text(self._match_doc)) - length)
+        self._match_span[1] += shift
+        if self._was_next:
+            return self.next()
+        return self.previous()
+
+    @page_changing
+    @aeidon.deco.silent(gaupol.Default)
+    def replace_all(self):
+        """Replace all matches of pattern."""
+        count = 0
+        target = gaupol.conf.search.target
+        for page in self.application.get_target_pages(target):
+            self._set_pattern(page)
+            self._set_replacement(page)
+            try:
+                count += page.project.replace_all()
+            except re.error as error:
+                self._show_regex_error_dialog_replacement(str(error))
+                break
+        self._reset_properties()
+        self._statuslabel.flash_text(aeidon.i18n.ngettext(
+                "Found and replaced {:d} occurence",
+                "Found and replaced {:d} occurences",
+                count).format(count))
 
     def _reset_properties(self):
         """Reset search properties to defaults."""
@@ -442,14 +532,14 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _show_regex_error_dialog_pattern(self, message):
         """Show an error dialog if regex pattern failed to compile."""
-        title = _('Error in regular expression pattern')
+        title = _("Error in regular expression pattern")
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_regex_error_dialog_replacement(self, message):
         """Show an error dialog if regex replacement is invalid."""
-        title = _('Error in regular expression replacement')
+        title = _("Error in regular expression replacement")
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -466,98 +556,9 @@ class SearchDialog(gaupol.BuilderDialog):
     def _write_history(self, name):
         """Write history to file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
-        try:
+        with aeidon.util.silent(OSError):
             aeidon.util.makedirs(directory)
-        except OSError:
-            return
-        path = os.path.join(directory, "{}.history".format(name))
-        history = getattr(self, name)
-        text = "\n".join(history) + "\n"
-        aeidon.util.write(path, text)
-
-    @aeidon.deco.silent(gaupol.Default)
-    def next(self):
-        """Find the next match of pattern."""
-        page = self.application.get_current_page()
-        row, doc, pos = self._get_position(True)
-        pages = self.application.pages[:]
-        i = pages.index(page)
-        # Loop twice over the current page,
-        # since starting in the middle.
-        for page in (pages[i:] + pages[:i + 1]):
-            self._set_pattern(page)
-            try:
-                # Return match in page after position.
-                row, doc, span = page.project.find_next(row, doc, pos)
-                return self._set_success_state(page, row, doc, span, True)
-            except StopIteration:
-                target = gaupol.conf.search.target
-                if target == gaupol.targets.CURRENT:
-                    # Fail wrapped single-page search.
-                    return self._set_failure_state()
-                # Proceed to the next page.
-                row = doc = pos = None
-        # Fail wrapped search of all pages.
-        self._set_failure_state()
-
-    @aeidon.deco.silent(gaupol.Default)
-    def previous(self):
-        """Find the previous match of pattern."""
-        page = self.application.get_current_page()
-        row, doc, pos = self._get_position(False)
-        pages = self.application.pages[::-1]
-        i = pages.index(page)
-        # Loop twice over the current page,
-        # since starting in the middle.
-        for page in (pages[i:] + pages[:i + 1]):
-            self._set_pattern(page)
-            try:
-                # Return match in page before position.
-                row, doc, span = page.project.find_previous(row, doc, pos)
-                return self._set_success_state(page, row, doc, span, False)
-            except StopIteration:
-                target = gaupol.conf.search.target
-                if target == gaupol.targets.CURRENT:
-                    # Fail wrapped single-page search.
-                    return self._set_failure_state()
-                # Proceed to the previous page.
-                row = doc = pos = None
-        # Fail wrapped search of all pages.
-        self._set_failure_state()
-
-    @page_changing
-    @aeidon.deco.silent(gaupol.Default)
-    def replace(self):
-        """Replace the current match of pattern."""
-        page = self.application.get_current_page()
-        if page is not self._match_page: return
-        self._set_replacement(page)
-        subtitle = page.project.subtitles[self._match_row]
-        length = len(subtitle.get_text(self._match_doc))
-        try:
-            page.project.replace()
-        except re.error as error:
-            return self._show_regex_error_dialog_replacement(str(error))
-        shift = (len(subtitle.get_text(self._match_doc)) - length)
-        self._match_span[1] += shift
-        (self.next if self._was_next else self.previous)()
-
-    @page_changing
-    @aeidon.deco.silent(gaupol.Default)
-    def replace_all(self):
-        """Replace all matches of pattern."""
-        count = 0
-        target = gaupol.conf.search.target
-        for page in self.application.get_target_pages(target):
-            self._set_pattern(page)
-            self._set_replacement(page)
-            try:
-                count += page.project.replace_all()
-            except re.error as error:
-                self._show_regex_error_dialog_replacement(str(error))
-                break
-        self._reset_properties()
-        self._statuslabel.flash_text(aeidon.i18n.ngettext(
-                "Found and replaced {:d} occurence",
-                "Found and replaced {:d} occurences",
-                count).format(count))
+            path = os.path.join(directory, "{}.history".format(name))
+            history = getattr(self, name)
+            text = "\n".join(history) + "\n"
+            aeidon.util.write(path, text)
