@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 import os
-import sys
 _ = aeidon.i18n._
 
 from gi.repository import Gtk
@@ -76,17 +75,21 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         Raise :exc:`ValueError` if dictionary initialization fails.
         """
         gaupol.BuilderDialog.__init__(self, "spell-check-dialog.ui")
+        self.application = application
         self._checker = None
         self._doc = None
         self._entry_handler = None
         self._language = gaupol.conf.spell_check.language
+        self._language_name = gaupol.conf.spell_check.language
         self._new_rows = []
         self._new_texts = []
         self._page = None
         self._pager = None
         self._replacements = []
         self._row = None
-        self.application = application
+        with aeidon.util.silent(LookupError):
+            name = aeidon.locales.code_to_name(self._language)
+            self._language_name = name
         self._init_spell_check()
         self._init_widgets()
         self._init_sensitivities()
@@ -191,8 +194,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
             dictionary.check("gaupol")
         except enchant.Error as error:
             self._show_error_dialog(str(error))
-            raise ValueError("Dictionary initialization failed "
-                             "for language {}".format(repr(self._language)))
+            raise ValueError("Dictionary initialization failed for language {}"
+                             .format(repr(self._language)))
 
         self._checker = enchant.checker.SpellChecker(dictionary, "")
 
@@ -201,13 +204,11 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         basename = "{}.repl".format(gaupol.conf.spell_check.language)
         path = os.path.join(self._personal_dir, basename)
         if not os.path.isfile(path): return
-        try:
+        with aeidon.util.silent(IOError, OSError):
             lines = aeidon.util.readlines(path)
-        except (IOError, OSError):
-            lines = []
-        for line in aeidon.util.get_unique(lines):
-            misspelled, correct  = line.strip().split("|", 1)
-            self._replacements.append((misspelled, correct))
+            for line in aeidon.util.get_unique(lines):
+                misspelled, correct  = line.strip().split("|", 1)
+                self._replacements.append((misspelled, correct))
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -225,11 +226,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         aeidon.util.makedirs(self._personal_dir)
         self._init_checker()
         self._init_replacements()
-        try:
-            name = aeidon.locales.code_to_name(self._language)
-        except LookupError:
-            name = self._language
-        self._language_label.set_markup("<b>{}</b>".format(name))
+        markup = "<b>{}</b>".format(self._language_name)
+        self._language_label.set_markup(markup)
 
     def _init_tree_view(self):
         """Initialize the suggestion tree view."""
@@ -250,16 +248,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         gaupol.util.set_widget_font(self._tree_view, font)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
-        gaupol.util.scale_to_size(self._text_view,
-                                  nchar=50,
-                                  nlines=4,
-                                  font=font)
-
-        gaupol.util.scale_to_size(self._tree_view,
-                                  nchar=20,
-                                  nlines=8,
-                                  font=font)
-
+        gaupol.util.scale_to_size(self._text_view, nchar=50, nlines=4, font=font)
+        gaupol.util.scale_to_size(self._tree_view, nchar=20, nlines=8, font=font)
         self._entry_handler = self._entry.connect("changed",
                                                   self._on_entry_changed)
 
@@ -345,9 +335,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _populate_tree_view(self, suggestions, select=True):
         """Populate the tree view with `suggestions`."""
         word = self._checker.word
-        replacements = [x[1] for x in reversed(self._replacements)
-                        if x[0] == word]
-
+        repl = reversed(self._replacements)
+        replacements = [x[1] for x in repl if x[0] == word]
         suggestions = list(replacements) + list(suggestions)
         suggestions = aeidon.util.get_unique(suggestions)
         store = self._tree_view.get_model()
@@ -356,7 +345,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         for suggestion in suggestions:
             store.append((suggestion,))
         self._tree_view.set_model(store)
-        if select and (len(store) > 0):
+        if select and len(store) > 0:
             self._tree_view.set_cursor(0)
             self._tree_view.scroll_to_cell(0)
 
@@ -369,7 +358,6 @@ class SpellCheckDialog(gaupol.BuilderDialog):
 
         self._page.project.set_action_description(
             aeidon.registers.DO, _("Spell-checking"))
-
         self._new_rows = []
         self._new_texts = []
 
@@ -391,11 +379,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
 
     def _show_error_dialog(self, message):
         """Show an error dialog after failing to load dictionary."""
-        try:
-            name = aeidon.locales.code_to_name(self._language)
-        except LookupError:
-            name = self._language
-        title = _('Failed to load dictionary for language "{}"').format(name)
+        title = _('Failed to load dictionary for language "{}"')
+        title = title.format(self._language_name)
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
@@ -409,14 +394,14 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _write_replacements(self):
         """Write misspelled words and their replacements to file."""
         if not self._replacements: return
-        self._replacements = aeidon.util.get_unique(self._replacements, keep_last=True)
+        self._replacements = aeidon.util.get_unique(self._replacements,
+                                                    keep_last=True)
+
         basename = "{}.repl".format(self._language)
         path = os.path.join(self._personal_dir, basename)
         if len(self._replacements) > self._max_replacements:
             # Discard the oldest of replacements.
             self._replacements[-self._max_replacements:]
-        text = "\n".join("|".join(x) for x in self._replacements)
-        try:
-            aeidon.util.write(path, text + "\n")
-        except (IOError, UnicodeError):
-            aeidon.util.print_write_io(sys.exc_info(), path)
+        text = "\n".join("|".join(x) for x in self._replacements) + "\n"
+        with aeidon.util.silent(IOError, OSError):
+            aeidon.util.write(path, text)

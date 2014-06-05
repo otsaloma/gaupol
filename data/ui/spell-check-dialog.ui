@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.2"/>
   <object class="GtkImage" id="add_button_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-add</property>
+  </object>
+  <object class="GtkImage" id="edit_button_image">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-edit</property>
   </object>
   <object class="GtkDialog" id="dialog">
     <property name="can_focus">False</property>
@@ -44,7 +50,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_join_back_button_clicked" swapped="no"/>
                   </object>
@@ -61,7 +66,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_join_forward_button_clicked" swapped="no"/>
                   </object>
@@ -78,7 +82,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="image">edit_button_image</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_edit_button_clicked" swapped="no"/>
@@ -96,7 +99,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_ignore_button_clicked" swapped="no"/>
                   </object>
@@ -113,7 +115,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_ignore_all_button_clicked" swapped="no"/>
                   </object>
@@ -130,7 +131,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_replace_button_clicked" swapped="no"/>
                   </object>
@@ -147,7 +147,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_replace_all_button_clicked" swapped="no"/>
                   </object>
@@ -164,7 +163,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="image">add_button_image</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_add_button_clicked" swapped="no"/>
@@ -179,7 +177,6 @@
               <packing>
                 <property name="left_attach">2</property>
                 <property name="top_attach">0</property>
-                <property name="width">1</property>
                 <property name="height">3</property>
               </packing>
             </child>
@@ -196,7 +193,6 @@
                 <property name="left_attach">1</property>
                 <property name="top_attach">3</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -210,8 +206,6 @@
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">3</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -229,8 +223,6 @@
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">2</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -246,8 +238,6 @@
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -272,7 +262,6 @@
                 <property name="left_attach">0</property>
                 <property name="top_attach">0</property>
                 <property name="width">2</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -285,8 +274,6 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -314,8 +301,6 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">2</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
           </object>
@@ -340,7 +325,6 @@
                 <property name="can_default">True</property>
                 <property name="receives_default">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -362,10 +346,5 @@
     <action-widgets>
       <action-widget response="-7">button1</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkImage" id="edit_button_image">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-edit</property>
   </object>
 </interface>
