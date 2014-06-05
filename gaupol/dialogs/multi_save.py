@@ -27,7 +27,7 @@ from gi.repository import Gtk
 __all__ = ("MultiSaveDialog",)
 
 
-class MultiSaveDialog(gaupol.FileDialog):
+class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
 
     """Dialog for selecting properties to save multiple files with."""
 
@@ -40,7 +40,7 @@ class MultiSaveDialog(gaupol.FileDialog):
 
     def __init__(self, parent, application, modes):
         """Initialize a :class:`MultiSaveDialog` instance."""
-        gaupol.FileDialog.__init__(self, "multi-save-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, "multi-save-dialog.ui")
         self.application = application
         self._modes = modes
         self._init_format_combo()

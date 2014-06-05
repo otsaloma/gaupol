@@ -21,12 +21,13 @@ import aeidon
 import gaupol
 import os
 
+from gi.repository import GObject
 from gi.repository import Gtk
 
 __all__ = ("SaveDialog",)
 
 
-class SaveDialog(gaupol.FileDialog):
+class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
@@ -38,7 +39,7 @@ class SaveDialog(gaupol.FileDialog):
 
     def __init__(self, parent, title, mode):
         """Initialize a :class:`SaveDialog` instance."""
-        gaupol.FileDialog.__init__(self)
+        GObject.GObject.__init__(self)
         self._mode = mode
         self._init_extra_widget()
         self._init_filters()

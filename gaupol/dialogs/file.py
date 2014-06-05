@@ -22,20 +22,15 @@ import gaupol
 _ = aeidon.i18n._
 
 from gi.repository import Gtk
-from gi.repository import GObject
 
 __all__ = ("FileDialog",)
 
 
-class FileDialog(Gtk.FileChooserDialog):
+class FileDialog:
 
     """Base class for dialogs for selecting subtitle files."""
 
     _use_autodetection = False
-
-    def __init__(self):
-        """Initialize a :class:`FileDialog` instance."""
-        GObject.GObject.__init__(self)
 
     def get_encoding(self):
         """Return the selected encoding or ``None``."""

@@ -21,12 +21,13 @@ import aeidon
 import gaupol
 import os
 
+from gi.repository import GObject
 from gi.repository import Gtk
 
 __all__ = ("OpenDialog",)
 
 
-class OpenDialog(gaupol.FileDialog):
+class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting subtitle files to open."""
 
@@ -34,7 +35,7 @@ class OpenDialog(gaupol.FileDialog):
 
     def __init__(self, parent, title, doc):
         """Initialize an :class:`OpenDialog` instance."""
-        gaupol.FileDialog.__init__(self)
+        GObject.GObject.__init__(self)
         self._use_autodetection = aeidon.util.chardet_available()
         self._init_extra_widget()
         self._init_filters()
