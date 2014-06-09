@@ -535,6 +535,7 @@ class SearchDialog(gaupol.BuilderDialog):
         title = _("Error in regular expression pattern")
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_regex_error_dialog_replacement(self, message):
@@ -542,6 +543,7 @@ class SearchDialog(gaupol.BuilderDialog):
         title = _("Error in regular expression replacement")
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _update_search_targets(self):

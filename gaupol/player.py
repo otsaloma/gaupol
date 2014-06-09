@@ -252,6 +252,7 @@ class VideoPlayer(aeidon.Observable):
         title, message = message.parse_error()
         dialog = gaupol.ErrorDialog(None, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _on_bus_message_state_changed(self, bus, message):

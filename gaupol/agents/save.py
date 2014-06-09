@@ -148,6 +148,7 @@ class SaveAgent(aeidon.Delegate):
             "a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, basename, message):
@@ -155,6 +156,7 @@ class SaveAgent(aeidon.Delegate):
         title = _('Failed to save file "{}"').format(basename)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export

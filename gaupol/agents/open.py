@@ -261,6 +261,7 @@ class OpenAgent(aeidon.Delegate):
             "different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_format_error_dialog(self, basename):
@@ -270,6 +271,7 @@ class OpenAgent(aeidon.Delegate):
             "subtitle file of a format supported by Gaupol.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, basename, message):
@@ -277,6 +279,7 @@ class OpenAgent(aeidon.Delegate):
         title = _('Failed to open file "{}"').format(basename)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_parse_error_dialog(self, basename, format):
@@ -286,6 +289,7 @@ class OpenAgent(aeidon.Delegate):
             "to open is a valid {} file.").format(format.label)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_size_warning_dialog(self, basename, size):

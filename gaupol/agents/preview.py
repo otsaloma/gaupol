@@ -57,6 +57,7 @@ class PreviewAgent(aeidon.Delegate):
             "save the subtitle file with a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, message):
@@ -65,6 +66,7 @@ class PreviewAgent(aeidon.Delegate):
             'directory "{}"').format(tempfile.gettempdir())
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_process_error_dialog(self, message):
@@ -72,6 +74,7 @@ class PreviewAgent(aeidon.Delegate):
         title = _("Failed to launch video player")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export

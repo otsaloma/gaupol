@@ -244,6 +244,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
                 message = message.format(store[path][2])
                 dialog = gaupol.ErrorDialog(self._dialog, title, message)
                 dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+                dialog.set_default_response(Gtk.ResponseType.OK)
                 gaupol.util.flash_dialog(dialog)
         else: # Activating extension.
             self.manager.setup_extension(module)
