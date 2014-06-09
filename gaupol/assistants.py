@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 import os
-import sys
 _ = aeidon.i18n._
 
 from gi.repository import Gdk
@@ -109,6 +108,24 @@ class IntroductionPage(BuilderPage):
         self._init_tree_view()
         self._init_values()
 
+    def get_field(self):
+        """Return the selected field."""
+        index = self._columns_combo.get_active()
+        return [gaupol.fields.MAIN_TEXT,
+                gaupol.fields.TRAN_TEXT][index]
+
+    def get_selected_pages(self):
+        """Return selected content pages."""
+        store = self._tree_view.get_model()
+        return [x[0] for x in store if x[1]]
+
+    def get_target(self):
+        """Return the selected target."""
+        index = self._subtitles_combo.get_active()
+        return [gaupol.targets.SELECTED,
+                gaupol.targets.CURRENT,
+                gaupol.targets.ALL][index]
+
     def _init_columns_combo(self):
         """Initalize the columns target combo box."""
         store = Gtk.ListStore(str)
@@ -177,24 +194,6 @@ class IntroductionPage(BuilderPage):
         pages = [x.handle for x in self.get_selected_pages()]
         gaupol.conf.text_assistant.pages = pages
 
-    def get_field(self):
-        """Return the selected field."""
-        index = self._columns_combo.get_active()
-        return [gaupol.fields.MAIN_TEXT,
-                gaupol.fields.TRAN_TEXT][index]
-
-    def get_selected_pages(self):
-        """Return selected content pages."""
-        store = self._tree_view.get_model()
-        return [x[0] for x in store if x[1]]
-
-    def get_target(self):
-        """Return the selected target."""
-        index = self._subtitles_combo.get_active()
-        return [gaupol.targets.SELECTED,
-                gaupol.targets.CURRENT,
-                gaupol.targets.ALL][index]
-
     def populate_tree_view(self, content_pages):
         """Populate the tree view with tasks from `content_pages`."""
         self._tree_view.get_model().clear()
@@ -214,6 +213,7 @@ class LocalePage(BuilderPage):
     """Page with script, language and coutry based pattern selection."""
 
     _ui_file_basename = NotImplementedError
+
     _widgets = ("country_combo",
                 "country_label",
                 "language_combo",
@@ -230,6 +230,10 @@ class LocalePage(BuilderPage):
         self._init_tree_view()
         self._init_combo_boxes()
         self._init_values()
+
+    def correct_texts(self, project, indices, doc):
+        """Correct texts in `project`."""
+        raise NotImplementedError
 
     def _filter_patterns(self, patterns):
         """Return a subset of `patterns` to show."""
@@ -316,7 +320,7 @@ class LocalePage(BuilderPage):
     def _on_language_combo_changed(self, combo_box):
         """Populate the tree view with a subset patterns."""
         language = self._get_language()
-        sensitive = (language is not None)
+        sensitive = language is not None
         self._populate_country_combo()
         self._country_combo.set_sensitive(sensitive)
         self._country_label.set_sensitive(sensitive)
@@ -326,12 +330,12 @@ class LocalePage(BuilderPage):
     def _on_script_combo_changed(self, combo_box):
         """Populate the tree view with a subset patterns."""
         script = self._get_script()
-        sensitive = (script is not None)
+        sensitive = script is not None
         self._populate_language_combo()
         self._language_combo.set_sensitive(sensitive)
         self._language_label.set_sensitive(sensitive)
         language = self._get_language()
-        sensitive = (sensitive and (language is not None))
+        sensitive = sensitive and language is not None
         self._populate_country_combo()
         self._country_combo.set_sensitive(sensitive)
         self._country_label.set_sensitive(sensitive)
@@ -364,7 +368,7 @@ class LocalePage(BuilderPage):
         store.append(("other", _("Other")))
         combo_box.set_active(len(store) - 1)
         for i in range(len(store)):
-            if (store[i][0] == active) and active:
+            if store[i][0] == active and active:
                 combo_box.set_active(i)
         combo_box.set_model(store)
 
@@ -400,15 +404,15 @@ class LocalePage(BuilderPage):
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
         store.clear()
-        patterns = self._manager.get_patterns(self._get_script(),
-                                              self._get_language(),
-                                              self._get_country())
-
+        script = self._get_script()
+        language = self._get_language()
+        country = self._get_country()
+        patterns = self._manager.get_patterns(script, language, country)
         patterns = self._filter_patterns(patterns)
         names_entered = set(())
         for pattern in patterns:
             name = pattern.get_name()
-            visible = not (name in names_entered)
+            visible = not name in names_entered
             names_entered.add(name)
             name = GLib.markup_escape_text(name)
             description = pattern.get_description()
@@ -417,16 +421,21 @@ class LocalePage(BuilderPage):
             store.append((pattern, visible, pattern.enabled, markup))
         self._tree_view.get_selection().unselect_all()
 
-    def correct_texts(self, project, indices, doc):
-        """Correct texts in `project`."""
-        raise NotImplementedError
-
 
 class CapitalizationPage(LocalePage):
 
     """Page for capitalizing texts in subtitles."""
 
     _ui_file_basename = "capitalization-page.ui"
+
+    def correct_texts(self, project, indices, doc):
+        """Correct texts in `project`."""
+        script = self._get_script()
+        language = self._get_language()
+        country = self._get_country()
+        self._manager.save_config(script, language, country)
+        patterns = self._manager.get_patterns(script, language, country)
+        project.capitalize(indices, doc, patterns)
 
     def _init_attributes(self):
         """Initialize values of page attributes."""
@@ -440,16 +449,6 @@ class CapitalizationPage(LocalePage):
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Capitalize texts")
 
-    def correct_texts(self, project, indices, doc):
-        """Correct texts in `project`."""
-        codes = (self._get_script(),
-                 self._get_language(),
-                 self._get_country())
-
-        self._manager.save_config(*codes)
-        patterns = self._manager.get_patterns(*codes)
-        project.capitalize(indices, doc, patterns)
-
 
 class CommonErrorPage(LocalePage):
 
@@ -457,6 +456,15 @@ class CommonErrorPage(LocalePage):
 
     _ui_file_basename = "common-error-page.ui"
     _widgets = ("human_check", "ocr_check") + LocalePage._widgets
+
+    def correct_texts(self, project, indices, doc):
+        """Correct texts in `project`."""
+        script = self._get_script()
+        language = self._get_language()
+        country = self._get_country()
+        self._manager.save_config(script, language, country)
+        patterns = self._manager.get_patterns(script, language, country)
+        project.correct_common_errors(indices, doc, patterns)
 
     def _init_attributes(self):
         """Initialize values of page attributes."""
@@ -476,7 +484,7 @@ class CommonErrorPage(LocalePage):
         """Return a subset of `patterns` to show."""
         def use_pattern(pattern):
             classes = set(pattern.get_field_list("Classes"))
-            return(bool(classes.intersection(set(self.conf.classes))))
+            return(bool(classes & set(self.conf.classes)))
         return list(filter(use_pattern, patterns))
 
     def _init_values(self):
@@ -502,22 +510,21 @@ class CommonErrorPage(LocalePage):
             self.conf.classes.remove("OCR")
         self._populate_tree_view()
 
-    def correct_texts(self, project, indices, doc):
-        """Correct texts in `project`."""
-        codes = (self._get_script(),
-                 self._get_language(),
-                 self._get_country())
-
-        self._manager.save_config(*codes)
-        patterns = self._manager.get_patterns(*codes)
-        project.correct_common_errors(indices, doc, patterns)
-
 
 class HearingImpairedPage(LocalePage):
 
     """Page for removing hearing impaired parts from subtitles."""
 
     _ui_file_basename = "hearing-impaired-page.ui"
+
+    def correct_texts(self, project, indices, doc):
+        """Correct texts in `project`."""
+        script = self._get_script()
+        language = self._get_language()
+        country = self._get_country()
+        self._manager.save_config(script, language, country)
+        patterns = self._manager.get_patterns(script, language, country)
+        project.remove_hearing_impaired(indices, doc, patterns)
 
     def _init_attributes(self):
         """Initialize values of page attributes."""
@@ -532,16 +539,6 @@ class HearingImpairedPage(LocalePage):
         self.page_title = _("Hearing Impaired Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Remove hearing impaired texts")
-
-    def correct_texts(self, project, indices, doc):
-        """Correct texts in `project`."""
-        codes = (self._get_script(),
-                 self._get_language(),
-                 self._get_country())
-
-        self._manager.save_config(*codes)
-        patterns = self._manager.get_patterns(*codes)
-        project.remove_hearing_impaired(indices, doc, patterns)
 
 
 class JoinSplitWordsPage(BuilderPage):
@@ -564,56 +561,6 @@ class JoinSplitWordsPage(BuilderPage):
         self.title = _("Join or Split Words")
         self._init_values()
 
-    def _init_values(self):
-        """Initialize default values for widgets."""
-        language = gaupol.conf.spell_check.language
-        try:
-            label = aeidon.locales.code_to_name(language)
-        except LookupError:
-            label = self._language_button.get_label()
-        self._set_language_button_label(label)
-        self._join_check.set_active(gaupol.conf.join_split_words.join)
-        self._split_check.set_active(gaupol.conf.join_split_words.split)
-
-    def _on_join_check_toggled(self, check_button, *args):
-        """Save value of join option."""
-        gaupol.conf.join_split_words.join = check_button.get_active()
-
-    def _on_language_button_clicked(self, button, *args):
-        """Show a language dialog and update `button` label."""
-        gaupol.util.set_cursor_busy(self.assistant)
-        dialog = gaupol.LanguageDialog(self.assistant, False)
-        gaupol.util.set_cursor_normal(self.assistant)
-        gaupol.util.flash_dialog(dialog)
-        language = gaupol.conf.spell_check.language
-        try:
-            label = aeidon.locales.code_to_name(language)
-        except LookupError:
-            label = self._language_button.get_label()
-        self._set_language_button_label(label)
-
-    def _on_split_check_toggled(self, check_button, *args):
-        """Save value of split option."""
-        gaupol.conf.join_split_words.split = check_button.get_active()
-
-    def _set_language_button_label(self, text):
-        """Set `text` as the language button label."""
-        box = self._language_button.get_child()
-        label = box.get_children()[0]
-        label.set_text(text)
-
-    def _show_error_dialog(self, message):
-        """Show an error dialog after failing to load dictionary."""
-        language = gaupol.conf.spell_check.language
-        try:
-            name = aeidon.locales.code_to_name(language)
-        except LookupError:
-            name = language
-        title = _('Failed to load dictionary for language "{}"').format(name)
-        dialog = gaupol.ErrorDialog(self.get_parent(), title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
-        gaupol.util.flash_dialog(dialog)
-
     def correct_texts(self, project, indices, doc):
         """Correct texts in `project`."""
         language = gaupol.conf.spell_check.language
@@ -628,12 +575,78 @@ class JoinSplitWordsPage(BuilderPage):
             except enchant.Error as error:
                 return self._show_error_dialog(str(error))
 
+    def _init_values(self):
+        """Initialize default values for widgets."""
+        label = self._language_button.get_label()
+        with aeidon.util.silent(LookupError):
+            language = gaupol.conf.spell_check.language
+            label = aeidon.locales.code_to_name(language)
+        self._set_language_button_label(label)
+        self._join_check.set_active(gaupol.conf.join_split_words.join)
+        self._split_check.set_active(gaupol.conf.join_split_words.split)
+
+    def _on_join_check_toggled(self, check_button, *args):
+        """Save value of join option."""
+        gaupol.conf.join_split_words.join = check_button.get_active()
+
+    def _on_language_button_clicked(self, button, *args):
+        """Show a language dialog and update `button` label."""
+        gaupol.util.set_cursor_busy(self.assistant)
+        dialog = gaupol.LanguageDialog(self.assistant, False)
+        gaupol.util.set_cursor_normal(self.assistant)
+        gaupol.util.flash_dialog(dialog)
+        label = self._language_button.get_label()
+        with aeidon.util.silent(LookupError):
+            language = gaupol.conf.spell_check.language
+            label = aeidon.locales.code_to_name(language)
+        self._set_language_button_label(label)
+
+    def _on_split_check_toggled(self, check_button, *args):
+        """Save value of split option."""
+        gaupol.conf.join_split_words.split = check_button.get_active()
+
+    def _set_language_button_label(self, text):
+        """Set `text` as the language button label."""
+        box = self._language_button.get_child()
+        label = box.get_children()[0]
+        label.set_text(text)
+
+    def _show_error_dialog(self, message):
+        """Show an error dialog after failing to load dictionary."""
+        name = gaupol.conf.spell_check.language
+        with aeidon.util.silent(LookupError):
+            name = aeidon.locales.code_to_name(name)
+        title = _('Failed to load dictionary for language "{}"').format(name)
+        dialog = gaupol.ErrorDialog(self.get_parent(), title, message)
+        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
+        gaupol.util.flash_dialog(dialog)
+
 
 class LineBreakPage(LocalePage):
 
     """Page for breaking text into lines."""
 
     _ui_file_basename = "line-break-page.ui"
+
+    def correct_texts(self, project, indices, doc):
+        """Correct texts in `project`."""
+        script = self._get_script()
+        language = self._get_language()
+        country = self._get_country()
+        self._manager.save_config(script, language, country)
+        patterns = self._manager.get_patterns(script, language, country)
+        length_func = gaupol.ruler.get_length_function(self.conf.length_unit)
+        skip = self.conf.use_skip_max_length or self.conf.use_skip_max_lines
+        project.break_lines(indices=indices,
+                            doc=doc,
+                            patterns=patterns,
+                            length_func=length_func,
+                            max_length=self.conf.max_length,
+                            max_lines=self.conf.max_lines,
+                            skip=skip,
+                            max_skip_length=self._max_skip_length,
+                            max_skip_lines=self._max_skip_lines)
 
     def _init_attributes(self):
         """Initialize values of page attributes."""
@@ -652,35 +665,14 @@ class LineBreakPage(LocalePage):
         """Return the maximum line length to skip."""
         if self.conf.use_skip_max_length:
             return self.conf.skip_max_length
-        return sys.maxsize
+        return 32768
 
     @property
     def _max_skip_lines(self):
         """Return the maximum amount of lines to skip."""
         if self.conf.use_skip_max_lines:
             return self.conf.skip_max_lines
-        return sys.maxsize
-
-    def correct_texts(self, project, indices, doc):
-        """Correct texts in `project`."""
-        codes = (self._get_script(),
-                 self._get_language(),
-                 self._get_country())
-
-        self._manager.save_config(*codes)
-        patterns = self._manager.get_patterns(*codes)
-        length_func = gaupol.ruler.get_length_function(self.conf.length_unit)
-        project.break_lines(indices=indices,
-                            doc=doc,
-                            patterns=patterns,
-                            length_func=length_func,
-                            max_length=self.conf.max_length,
-                            max_lines=self.conf.max_lines,
-                            skip=(self.conf.use_skip_max_length or
-                                  self.conf.use_skip_max_lines),
-
-                            max_skip_length=self._max_skip_length,
-                            max_skip_lines=self._max_skip_lines)
+        return 32768
 
 
 class LineBreakOptionsPage(BuilderPage):
@@ -777,10 +769,7 @@ class ProgressPage(BuilderPage):
 
     """Page for showing progress of text corrections."""
 
-    _widgets = ("message_label",
-                "progress_bar",
-                "status_label",
-                "task_label")
+    _widgets = ("message_label", "progress_bar", "status_label", "task_label")
 
     def __init__(self, assistant):
         """Initialize a :class:`ProgressPage` instance."""
@@ -799,9 +788,9 @@ class ProgressPage(BuilderPage):
         self._message_label.set_text(message)
         self.reset(100)
 
-    def bump_progress(self, n_tasks=1):
-        """Bump the current progress by `n_tasks`."""
-        self.set_progress(self._current_task + n_tasks)
+    def bump_progress(self, n=1):
+        """Bump the current progress by `n`."""
+        self.set_progress(self._current_task + n)
 
     def reset(self, total, clear_text=False):
         """Set `total` as the amount of tasks to be run."""
@@ -817,7 +806,7 @@ class ProgressPage(BuilderPage):
     def set_progress(self, current, total=None):
         """Set current as the task progress status."""
         total = total or self._total_tasks
-        fraction = (current / total if total > 0 else 0)
+        fraction = (current/total if total > 0 else 0)
         self._progress_bar.set_fraction(fraction)
         text = _("{current:d} of {total:d} tasks complete")
         self._progress_bar.set_text(text.format(**locals()))
@@ -828,15 +817,13 @@ class ProgressPage(BuilderPage):
     def set_project_name(self, name):
         """Set `name` as the currently checked project."""
         text = _("Project: {}").format(name)
-        text = GLib.markup_escape_text(text)
-        self._status_label.set_markup("<i>{}</i>".format(text))
+        self._status_label.set_text(text)
         gaupol.util.iterate_main()
 
     def set_task_name(self, name):
         """Set `name` as the currently performed task."""
         text = _("Task: {}").format(name)
-        text = GLib.markup_escape_text(text)
-        self._task_label.set_markup("<i>{}</i>".format(text))
+        self._task_label.set_text(text)
         gaupol.util.iterate_main()
 
 
@@ -885,7 +872,16 @@ class ConfirmationPage(BuilderPage):
         store = self._tree_view.get_model()
         page = store[row][0]
         if page is None: return False
-        return all((page.project.video_path, page.project.main_file))
+        return bool(page.project.video_path and page.project.main_file)
+
+    def get_confirmed_changes(self):
+        """Return a sequence of changes marked as accepted."""
+        changes = []
+        store = self._tree_view.get_model()
+        for row in (x for x in store if x[2]):
+            page, index, accept, orig, new = row
+            changes.append((page, index, orig, new))
+        return tuple(changes)
 
     def _get_selected_row(self):
         """Return the selected row in the tree view or ``None``."""
@@ -975,15 +971,6 @@ class ConfirmationPage(BuilderPage):
         for i in range(len(store)):
             store[i][2] = False
 
-    def get_confirmed_changes(self):
-        """Return a sequence of changes marked as accepted."""
-        changes = []
-        store = self._tree_view.get_model()
-        for row in (x for x in store if x[2]):
-            page, index, accept, orig, new = row
-            changes.append((page, index, orig, new))
-        return tuple(changes)
-
     def populate_tree_view(self, changes):
         """Populate the tree view of changes to texts."""
         self._tree_view.get_model().clear()
@@ -1013,6 +1000,29 @@ class TextAssistant(Gtk.Assistant):
         self.set_modal(True)
         self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.set_transient_for(parent)
+
+    def add_page(self, page):
+        """Add `page` and configure its properties."""
+        page.show_all()
+        self.append_page(page)
+        self.set_page_type(page, page.page_type)
+        self.set_page_title(page, page.page_title)
+        if page.page_type != Gtk.AssistantPageType.PROGRESS:
+            self.set_page_complete(page, True)
+
+    def add_pages(self, pages):
+        """
+        Add associated `pages` and configure their properties.
+
+        The first one of `pages` must have a "correct_texts" attribute.
+        The visibilities of other pages are kept in sync with the first page.
+        """
+        for page in pages:
+            self.add_page(page)
+        def on_notify_visible(page, prop, pages):
+            for page in pages[1:]:
+                page.props.visible = pages[0].props.visible
+        pages[0].connect("notify::visible", on_notify_visible, pages)
 
     def _copy_project(self, project):
         """Return a copy of `project` with some same properties."""
@@ -1055,7 +1065,6 @@ class TextAssistant(Gtk.Assistant):
 
     def _init_properties(self):
         """Initialize assistant properties."""
-        self.set_border_width(12)
         self.set_title(_("Correct Texts"))
         self.add_page(self._introduction_page)
         self.add_page(HearingImpairedPage(self))
@@ -1164,26 +1173,3 @@ class TextAssistant(Gtk.Assistant):
         """Save the geometry of the assistant window."""
         if not gaupol.conf.text_assistant.maximized:
             gaupol.conf.text_assistant.size = list(self.get_size())
-
-    def add_page(self, page):
-        """Add `page` and configure its properties."""
-        page.show_all()
-        self.append_page(page)
-        self.set_page_type(page, page.page_type)
-        self.set_page_title(page, page.page_title)
-        if page.page_type != Gtk.AssistantPageType.PROGRESS:
-            self.set_page_complete(page, True)
-
-    def add_pages(self, pages):
-        """
-        Add associated `pages` and configure their properties.
-
-        The first one of `pages` must have a "correct_texts" attribute.
-        The visibilities of other pages are kept in sync with the first page.
-        """
-        for page in pages:
-            self.add_page(page)
-        def on_notify_visible(page, prop, pages):
-            for page in pages[1:]:
-                page.props.visible = pages[0].props.visible
-        pages[0].connect("notify::visible", on_notify_visible, pages)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.2"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">-9999</property>
     <property name="upper">9999</property>
@@ -36,6 +37,7 @@
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">0</property>
+                <property name="secondary">True</property>
               </packing>
             </child>
             <child>
@@ -704,8 +706,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -714,7 +714,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="hexpand">True</property>
-                                <property name="font">Sans 12</property>
                                 <property name="preview_text"/>
                                 <property name="title" translatable="yes">Pick the Subtitle Font</property>
                                 <signal name="font-set" handler="_on_subtitle_font_button_font_set" swapped="no"/>
@@ -723,7 +722,6 @@
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">0</property>
                                 <property name="width">2</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -738,8 +736,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -748,7 +744,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="hexpand">True</property>
-                                <property name="font">Sans 12</property>
                                 <property name="preview_text"/>
                                 <property name="title" translatable="yes">Pick the Time Font</property>
                                 <signal name="font-set" handler="_on_time_font_button_font_set" swapped="no"/>
@@ -757,7 +752,6 @@
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">1</property>
                                 <property name="width">2</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                           </object>
@@ -821,8 +815,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -833,14 +825,11 @@
                                 <property name="halign">start</property>
                                 <property name="use_alpha">True</property>
                                 <property name="title" translatable="yes">Pick the Time Color</property>
-                                <property name="color">#ffffffffffff</property>
                                 <signal name="color-set" handler="_on_subtitle_color_button_color_set" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -858,8 +847,6 @@
                               <packing>
                                 <property name="left_attach">2</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -874,8 +861,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -886,14 +871,11 @@
                                 <property name="halign">start</property>
                                 <property name="use_alpha">True</property>
                                 <property name="title" translatable="yes">Pick the Subtitle Color</property>
-                                <property name="color">#ffffffffffff</property>
                                 <signal name="color-set" handler="_on_time_color_button_color_set" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -911,8 +893,6 @@
                               <packing>
                                 <property name="left_attach">2</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                           </object>
@@ -1003,8 +983,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -1019,8 +997,6 @@
                               <packing>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -1033,8 +1009,6 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">0</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -1054,14 +1028,11 @@ $SUBFILE
 $VIDEOFILE</property>
                                 <property name="hexpand">True</property>
                                 <property name="invisible_char">●</property>
-                                <property name="invisible_char_set">True</property>
                                 <signal name="changed" handler="_on_command_entry_changed" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">1</property>
-                                <property name="width">1</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                             <child>
@@ -1080,7 +1051,6 @@ $VIDEOFILE</property>
                                 <property name="left_attach">0</property>
                                 <property name="top_attach">2</property>
                                 <property name="width">2</property>
-                                <property name="height">1</property>
                               </packing>
                             </child>
                           </object>

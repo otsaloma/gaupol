@@ -237,6 +237,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         if active:
             try:
                 self.manager.teardown_extension(module)
+                gaupol.conf.extensions.active.remove(module)
             except gaupol.DependencyError:
                 title = _("Cannot deactivate extension")
                 message = _('Extension "{}" is required by other extensions.')
@@ -244,8 +245,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
                 dialog = gaupol.ErrorDialog(self._dialog, title, message)
                 dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
                 gaupol.util.flash_dialog(dialog)
-            else: # Deactivation successful.
-                gaupol.conf.extensions.active.remove(module)
         else: # Activating extension.
             self.manager.setup_extension(module)
             gaupol.conf.extensions.active.append(module)
@@ -585,7 +584,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
                      self._preview_page,
                      self._video_page):
 
-            for name in [x for x in dir(page) if x.startswith("_on_")]:
+            for name in (x for x in dir(page) if x.startswith("_on_")):
                 callbacks[name] = getattr(page, name)
         return callbacks
 
