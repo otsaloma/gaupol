@@ -1,10 +1,10 @@
 
 #gaupol-floating-label {
-  background-color: #F5F5BB;
+  background-color: #212526;
   border-top-right-radius: 5px;
-  box-shadow: inset -1px 1px #C4A000;
-  color: #2E3436;
-  padding: 2px 12px;
+  color: #FFFFFF;
+  padding: 4px 9px 4px 4px;
+  text-shadow: 1px 1px black;
 }
 
 #gaupol-tab-close-button {
