@@ -143,6 +143,8 @@ class ViewAgent(aeidon.Delegate):
                    button=event.button,
                    activate_time=event.time)
 
+        return True
+
     def _toggle_column(self, field):
         """Show or hide column corresponding to `field`."""
         page = self.get_current_page()

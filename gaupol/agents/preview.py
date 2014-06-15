@@ -30,23 +30,79 @@ class PreviewAgent(aeidon.Delegate):
 
     """Previewing subtitles with a video player."""
 
-    def _check_process_state(self, page, process, output_fobj, command):
+    def _check_process_state(self, page, process, fout, command):
         """Check if `process` has terminated or not."""
         if process.poll() is None: return True
-        self._handle_output(process, output_fobj, command)
+        self._handle_output(process, fout, command)
         return False # to not check again.
 
-    def _handle_output(self, process, output_fobj, command):
+    def _handle_output(self, process, fout, command):
         """Handle output of finished `process`."""
-        output_fobj.close()
-        with open(output_fobj.name, "r") as f:
+        fout.close()
+        with open(fout.name, "r") as f:
             output = f.read()
         output = "$ {}\n\n{}".format(command, output)
-        aeidon.temp.remove(output_fobj.name)
+        aeidon.temp.remove(fout.name)
         self.output_window.set_output(output)
         if process.returncode == 0: return
         dialog = gaupol.PreviewErrorDialog(self.window, output)
         gaupol.util.flash_dialog(dialog)
+
+    @aeidon.deco.export
+    def _on_preview_activate(self, *args):
+        """Preview from selected position with a video player."""
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        row = (rows[0] if rows else 0)
+        position = page.project.subtitles[row].start
+        col = page.view.get_focus()[1]
+        if col == page.view.columns.TRAN_TEXT:
+            doc = aeidon.documents.TRAN
+        else: # Any other column previews the main file.
+            doc = aeidon.documents.MAIN
+        self.preview(page, position, doc)
+
+    @aeidon.deco.export
+    def preview(self, page, position, doc, temp=False):
+        """
+        Preview from `position` with a video player.
+
+        Use ``True`` for `temp` to always use a temporary file for preview
+        regardless of whether the file is changed or not.
+        """
+        command = gaupol.util.get_preview_command()
+        offset = gaupol.conf.preview.offset
+        encoding = ("utf_8" if gaupol.conf.preview.force_utf_8 else None)
+        try:
+            out = page.project.preview(position, doc, command, offset, encoding, temp)
+            process, command, fout = out
+        except aeidon.ProcessError as error:
+            return self._show_process_error_dialog(str(error))
+        except (IOError, OSError) as error:
+            return self._show_io_error_dialog(str(error))
+        except UnicodeError:
+            return self._show_encoding_error_dialog()
+        # GLib.child_watch_add does not appear to work on Windows,
+        # so let's watch the process by polling it at regular intervals.
+        GLib.timeout_add(1000,
+                         self._check_process_state,
+                         page,
+                         process,
+                         fout,
+                         command)
+
+    @aeidon.deco.export
+    def preview_changes(self, page, row, doc, method, args=None, kwargs=None):
+        """Preview changes caused by `method` with a video player."""
+        subtitles = [x.copy() for x in page.project.subtitles]
+        framerate = page.project.framerate
+        blocked = page.project.block_all()
+        method(register=None, *(args or ()), **(kwargs or {}))
+        position = page.project.subtitles[row].start
+        page.project.unblock_all(blocked)
+        self.preview(page, position, doc, temp=True)
+        page.project.set_framerate(framerate, register=None)
+        page.project.subtitles = subtitles
 
     def _show_encoding_error_dialog(self):
         """Show an error dialog after failing to encode file."""
@@ -76,64 +132,3 @@ class PreviewAgent(aeidon.Delegate):
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
-
-    @aeidon.deco.export
-    def _on_preview_activate(self, *args):
-        """Preview from selected position with a video player."""
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        row = (rows[0] if rows else 0)
-        position = page.project.subtitles[row].start
-        col = page.view.get_focus()[1]
-        if col == page.view.columns.TRAN_TEXT:
-            doc = aeidon.documents.TRAN
-        else: # Any other column previews the main file.
-            doc = aeidon.documents.MAIN
-        self.preview(page, position, doc)
-
-    @aeidon.deco.export
-    def preview(self, page, position, doc, temp=False):
-        """
-        Preview from `position` with a video player.
-
-        Use ``True`` for `temp` to always use a temporary file for preview
-        regardless of whether the file is changed or not.
-        """
-        command = gaupol.util.get_preview_command()
-        offset = gaupol.conf.preview.offset
-        encoding = ("utf_8" if gaupol.conf.preview.force_utf_8 else None)
-        try:
-            process, command, output_fobj = page.project.preview(position,
-                                                                 doc,
-                                                                 command,
-                                                                 offset,
-                                                                 encoding,
-                                                                 temp)
-
-        except aeidon.ProcessError as error:
-            return self._show_process_error_dialog(str(error))
-        except (IOError, OSError) as error:
-            return self._show_io_error_dialog(str(error))
-        except UnicodeError:
-            return self._show_encoding_error_dialog()
-        # GLib.child_watch_add does not appear to work on Windows,
-        # so let's watch the process by polling it at regular intervals.
-        GLib.timeout_add(1000,
-                         self._check_process_state,
-                         page,
-                         process,
-                         output_fobj,
-                         command)
-
-    @aeidon.deco.export
-    def preview_changes(self, page, row, doc, method, args=None, kwargs=None):
-        """Preview changes caused by `method` with a video player."""
-        subtitles = [x.copy() for x in page.project.subtitles]
-        framerate = page.project.framerate
-        blocked = page.project.block_all()
-        method(register=None, *(args or ()), **(kwargs or {}))
-        position = page.project.subtitles[row].start
-        page.project.unblock_all(blocked)
-        self.preview(page, position, doc, temp=True)
-        page.project.set_framerate(framerate, register=None)
-        page.project.subtitles = subtitles

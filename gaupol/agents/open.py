@@ -30,6 +30,69 @@ class OpenAgent(aeidon.Delegate):
 
     """Opening subtitle files and creating new projects."""
 
+    @aeidon.deco.export
+    def add_page(self, page):
+        """Add `page` to the application."""
+        self.pages.append(page)
+        page.connect("close-request", self._on_page_close_request)
+        page.project.connect("action-done", self._on_project_action_done)
+        page.project.connect("action-redone", self._on_project_action_redone)
+        page.project.connect("action-undone", self._on_project_action_undone)
+        callback = self._on_tab_widget_button_press_event
+        page.tab_widget.connect("button-press-event", callback, page)
+        self.connect_view_signals(page.view)
+        page.project.clipboard.set_texts(self.clipboard.get_texts())
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
+        scroller.add(page.view)
+        self.notebook.append_page(scroller, page.tab_widget)
+        self.notebook.set_tab_reorderable(scroller, True)
+        self.notebook.show_all()
+        self.set_current_page(page)
+        self.emit("page-added", page)
+
+    @aeidon.deco.export
+    def add_to_recent_files(self, path, format, doc):
+        """Add `path` to recent files managed by the recent manager."""
+        uri = aeidon.util.path_to_uri(path)
+        if GObject.pygobject_version >= (3, 7, 4):
+            # Trying to set strings to struct fields
+            # fails with earlier versions of PyGObject.
+            # XXX: We still cannot set the group field.
+            # http://bugzilla.gnome.org/show_bug.cgi?id=678401
+            # http://bugzilla.gnome.org/show_bug.cgi?id=695970
+            recent_data = Gtk.RecentData()
+            recent_data.mime_type = format.mime_type
+            recent_data.app_name = "gaupol"
+            recent_data.app_exec = "gaupol %F"
+            self.recent_manager.add_full(uri, recent_data)
+        else:
+            self.recent_manager.add_item(uri)
+
+    @aeidon.deco.export
+    def append_file(self, path, encoding=None):
+        """
+        Append subtitles from file at `path` to the current project.
+
+        Raise :exc:`gaupol.Default` if cancelled or something goes wrong.
+        """
+        encodings = self._get_encodings(encoding)
+        doc = aeidon.documents.MAIN
+        temp = self._open_file(path, encodings, doc, check_open=False)
+        gaupol.util.set_cursor_busy(self.window)
+        current = self.get_current_page()
+        offset = current.project.subtitles[-1].end
+        temp.project.shift_positions(None, offset)
+        rows = self._append_subtitles(current, temp.project.subtitles)
+        amount = len(rows)
+        current.view.set_focus(rows[0], None)
+        current.view.select_rows(rows)
+        current.view.scroll_to_row(rows[0])
+        basename = temp.get_main_basename()
+        message = _('Appended {amount:d} subtitles from "{basename}"')
+        self.flash_message(message.format(**locals()))
+        gaupol.util.set_cursor_normal(self.window)
+
     def _append_subtitles(self, page, subtitles):
         """
         Append `subtitles` to `page`.
@@ -64,7 +127,7 @@ class OpenAgent(aeidon.Delegate):
 
     def _check_file_size(self, path):
         """Raise :exc:`gaupol.Default` if size of file at `path` too large."""
-        size_mb = os.stat(path)[6] / 1048576
+        size_mb = os.stat(path).st_size / 1048576
         if size_mb <= 1: return
         basename = os.path.basename(path)
         self._show_size_warning_dialog(basename, size_mb)
@@ -74,6 +137,24 @@ class OpenAgent(aeidon.Delegate):
         if sort_count <= 0: return
         basename = os.path.basename(path)
         self._show_sort_warning_dialog(basename, sort_count)
+
+    @aeidon.deco.export
+    def connect_view_signals(self, view):
+        """Connect to signals emitted by `view`."""
+        view.connect_selection_changed(self._on_view_selection_changed)
+        view.connect_after("move-cursor", self._on_view_move_cursor)
+        view.connect("button-press-event", self._on_view_button_press_event)
+        for column in view.get_columns():
+            renderer = column.get_cells()[0]
+            callback = self._on_view_renderer_edited
+            renderer.connect("edited", callback, column)
+            callback = self._on_view_renderer_editing_started
+            renderer.connect("editing-started", callback, column)
+            callback = self._on_view_renderer_editing_canceled
+            renderer.connect("editing-canceled", callback, column)
+            button = column.get_widget().get_ancestor(Gtk.Button)
+            callback = self._on_view_header_button_press_event
+            button.connect("button-press-event", callback)
 
     def _get_encodings(self, first=None):
         """Return a sequence of encodings to try when opening files."""
@@ -121,8 +202,7 @@ class OpenAgent(aeidon.Delegate):
 
         """Open main files from dragged URIs."""
         uris = selection_data.get_uris()
-        paths = list(map(aeidon.util.uri_to_path, uris))
-        self.open_main(paths)
+        self.open_main(list(map(aeidon.util.uri_to_path, uris)))
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
@@ -218,19 +298,60 @@ class OpenAgent(aeidon.Delegate):
                 else self.get_current_page)()
 
         for encoding in encodings:
-            try:
-                sort_count = self._try_open_file(page,
-                                                 doc,
-                                                 path,
-                                                 encoding)
-
-            except UnicodeError:
-                continue
-            self._check_sort_count(path, sort_count)
-            return page
+            with aeidon.util.silent(UnicodeError):
+                n = self._try_open_file(page, doc, path, encoding)
+                self._check_sort_count(path, n)
+                return page
         # Report if all codecs failed to decode file.
         self._show_encoding_error_dialog(basename)
         raise gaupol.Default
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def open_main(self, path, encoding=None):
+        """
+        Open file at `path` as a main file.
+
+        `path` can be a sequence of paths to open multiple files.
+        Use ``None`` for `encoding` to try the default sequence.
+        """
+        if gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields:
+            gaupol.conf.editor.visible_fields.remove(gaupol.fields.TRAN_TEXT)
+        if isinstance(path, (list, set, tuple)):
+            return [self.open_main(x, encoding) for x in sorted(path)]
+        encodings = self._get_encodings(encoding)
+        page = self._open_file(path, encodings, aeidon.documents.MAIN)
+        gaupol.util.set_cursor_busy(self.window)
+        self.add_page(page)
+        format = page.project.main_file.format
+        self.add_to_recent_files(path, format, aeidon.documents.MAIN)
+        gaupol.util.iterate_main()
+        gaupol.util.set_cursor_normal(self.window)
+        # Refresh view to get row heights etc. correct.
+        page.view.set_focus(0, None)
+        page.view.scroll_to_row(0)
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def open_translation(self, path, encoding=None, align_method=None):
+        """
+        Open file at `path` as a translation file.
+
+        Use ``None`` for `encoding` to try the default sequence.
+        Use ``None`` for `align_method` to use whatever happens to be as
+        :attr:`gaupol.conf.file.align_method`.
+        """
+        if align_method is not None:
+            gaupol.conf.file.align_method = align_method
+        encodings = self._get_encodings(encoding)
+        page = self._open_file(path, encodings, aeidon.documents.TRAN)
+        gaupol.util.set_cursor_busy(self.window)
+        col = page.view.columns.TRAN_TEXT
+        if not page.view.get_column(col).get_visible():
+            self.get_column_action(gaupol.fields.TRAN_TEXT).activate()
+        format = page.project.tran_file.format
+        self.add_to_recent_files(path, format, aeidon.documents.TRAN)
+        gaupol.util.set_cursor_normal(self.window)
 
     def _select_files(self, title, doc):
         """
@@ -241,7 +362,7 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         dialog = gaupol.OpenDialog(self.window, title, doc)
         page = self.get_current_page()
-        if (page is not None) and (page.project.main_file is not None):
+        if page is not None and page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
         gaupol.util.set_cursor_normal(self.window)
@@ -377,136 +498,3 @@ class OpenAgent(aeidon.Delegate):
         finally:
             gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default
-
-    @aeidon.deco.export
-    def add_page(self, page):
-        """Add `page` to the application."""
-        self.pages.append(page)
-        page.connect("close-request", self._on_page_close_request)
-        page.project.connect("action-done", self._on_project_action_done)
-        page.project.connect("action-redone", self._on_project_action_redone)
-        page.project.connect("action-undone", self._on_project_action_undone)
-        callback = self._on_tab_widget_button_press_event
-        page.tab_widget.connect("button-press-event", callback, page)
-        self.connect_view_signals(page.view)
-        page.project.clipboard.set_texts(self.clipboard.get_texts())
-        scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
-        scroller.add(page.view)
-        self.notebook.append_page(scroller, page.tab_widget)
-        self.notebook.set_tab_reorderable(scroller, True)
-        self.notebook.show_all()
-        self.set_current_page(page)
-        self.emit("page-added", page)
-
-    @aeidon.deco.export
-    def add_to_recent_files(self, path, format, doc):
-        """Add `path` to recent files managed by the recent manager."""
-        uri = aeidon.util.path_to_uri(path)
-        if GObject.pygobject_version >= (3, 7, 4):
-            # Trying to set strings to struct fields
-            # fails with earlier versions of PyGObject.
-            # https://bugzilla.gnome.org/show_bug.cgi?id=678401
-            recent_data = Gtk.RecentData()
-            recent_data.mime_type = format.mime_type
-            recent_data.app_name = "gaupol"
-            recent_data.app_exec = "gaupol %F"
-            # XXX: We still cannot set string lists (gchar**).
-            # https://bugzilla.gnome.org/show_bug.cgi?id=695970
-            # group = ("gaupol-translation"
-            #          if doc == aeidon.documents.TRAN
-            #          else "gaupol-main")
-
-            # recent_data.groups = (group,)
-            self.recent_manager.add_full(uri, recent_data)
-        else:
-            self.recent_manager.add_item(uri)
-
-    @aeidon.deco.export
-    def append_file(self, path, encoding=None):
-        """
-        Append subtitles from file at `path` to the current project.
-
-        Raise :exc:`gaupol.Default` if cancelled or something goes wrong.
-        """
-        encodings = self._get_encodings(encoding)
-        doc = aeidon.documents.MAIN
-        temp = self._open_file(path, encodings, doc, check_open=False)
-        gaupol.util.set_cursor_busy(self.window)
-        current = self.get_current_page()
-        offset = current.project.subtitles[-1].end
-        temp.project.shift_positions(None, offset)
-        rows = self._append_subtitles(current, temp.project.subtitles)
-        amount = len(rows)
-        current.view.set_focus(rows[0], None)
-        current.view.select_rows(rows)
-        current.view.scroll_to_row(rows[0])
-        basename = temp.get_main_basename()
-        message = _('Appended {amount:d} subtitles from "{basename}"')
-        self.flash_message(message.format(**locals()))
-        gaupol.util.set_cursor_normal(self.window)
-
-    @aeidon.deco.export
-    def connect_view_signals(self, view):
-        """Connect to signals emitted by `view`."""
-        view.connect_selection_changed(self._on_view_selection_changed)
-        view.connect_after("move-cursor", self._on_view_move_cursor)
-        view.connect("button-press-event", self._on_view_button_press_event)
-        for column in view.get_columns():
-            renderer = column.get_cells()[0]
-            callback = self._on_view_renderer_edited
-            renderer.connect("edited", callback, column)
-            callback = self._on_view_renderer_editing_started
-            renderer.connect("editing-started", callback, column)
-            callback = self._on_view_renderer_editing_canceled
-            renderer.connect("editing-canceled", callback, column)
-            button = column.get_widget().get_ancestor(Gtk.Button)
-            callback = self._on_view_header_button_press_event
-            button.connect("button-press-event", callback)
-
-    @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
-    def open_main(self, path, encoding=None):
-        """
-        Open file at `path` as a main file.
-
-        `path` can be a sequence of paths to open multiple files.
-        Use ``None`` for `encoding` to try the default sequence.
-        """
-        if gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields:
-            gaupol.conf.editor.visible_fields.remove(gaupol.fields.TRAN_TEXT)
-        if isinstance(path, (list, set, tuple)):
-            return [self.open_main(x, encoding) for x in sorted(path)]
-        encodings = self._get_encodings(encoding)
-        page = self._open_file(path, encodings, aeidon.documents.MAIN)
-        gaupol.util.set_cursor_busy(self.window)
-        self.add_page(page)
-        format = page.project.main_file.format
-        self.add_to_recent_files(path, format, aeidon.documents.MAIN)
-        gaupol.util.iterate_main()
-        gaupol.util.set_cursor_normal(self.window)
-        # Refresh view to get row heights etc. correct.
-        page.view.set_focus(0, None)
-        page.view.scroll_to_row(0)
-
-    @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
-    def open_translation(self, path, encoding=None, align_method=None):
-        """
-        Open file at `path` as a translation file.
-
-        Use ``None`` for `encoding` to try the default sequence.
-        Use ``None`` for `align_method` to use whatever happens to be as
-        :attr:`gaupol.conf.file.align_method`.
-        """
-        if align_method is not None:
-            gaupol.conf.file.align_method = align_method
-        encodings = self._get_encodings(encoding)
-        page = self._open_file(path, encodings, aeidon.documents.TRAN)
-        gaupol.util.set_cursor_busy(self.window)
-        col = page.view.columns.TRAN_TEXT
-        if not page.view.get_column(col).get_visible():
-            self.get_column_action(gaupol.fields.TRAN_TEXT).activate()
-        format = page.project.tran_file.format
-        self.add_to_recent_files(path, format, aeidon.documents.TRAN)
-        gaupol.util.set_cursor_normal(self.window)

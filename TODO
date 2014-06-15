@@ -7,6 +7,7 @@ Gaupol 0.26
  [X] Fix errors and lack of updates in multiline text cells and their
      line length calculation and display (#728575)
  [X] Fix initially incorrect row heights after opening a file
+ [X] Fix overlapping column header right-click menus
  [ ] Fix keeping track of recent files with GTK+ 3.10/3.12
  [X] Fix saving enumeration values to configuration file
  [X] Use Gtk.render_layout instead of deprecated Gtk.paint_layout to

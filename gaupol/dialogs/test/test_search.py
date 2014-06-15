@@ -22,15 +22,15 @@ from gi.repository import Gtk
 
 class TestSearchDialog(gaupol.TestCase):
 
-    def run_show_regex_error_dialog_pattern(self):
-        self.dialog._show_regex_error_dialog_pattern("test")
-
-    def run_show_regex_error_dialog_replacement(self):
-        self.dialog._show_regex_error_dialog_replacement("test")
-
     def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
+
+    def run__show_regex_error_dialog_pattern(self):
+        self.dialog._show_regex_error_dialog_pattern("test")
+
+    def run__show_regex_error_dialog_replacement(self):
+        self.dialog._show_regex_error_dialog_replacement("test")
 
     def setup_method(self, method):
         self.application = self.new_application()

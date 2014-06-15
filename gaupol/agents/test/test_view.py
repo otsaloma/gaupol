@@ -30,21 +30,17 @@ class TestViewAgent(gaupol.TestCase):
 
     def test__on_show_framerate_23_976_changed__frames(self):
         self.application.get_action("show_frames").activate()
-        for framerate in aeidon.framerates:
-            self.application.get_framerate_action(framerate).activate()
+        framerate = aeidon.framerates.FPS_25_000
+        self.application.get_framerate_action(framerate).activate()
 
     def test__on_show_framerate_23_976_changed__times(self):
         self.application.get_action("show_times").activate()
-        for framerate in aeidon.framerates:
-            self.application.get_framerate_action(framerate).activate()
+        framerate = aeidon.framerates.FPS_29_970
+        self.application.get_framerate_action(framerate).activate()
 
-    def test__on_show_times_changed__frame(self):
-        mode = aeidon.modes.FRAME
-        self.application.get_mode_action(mode).activate()
-
-    def test__on_show_times_changed__time(self):
-        mode = aeidon.modes.TIME
-        self.application.get_mode_action(mode).activate()
+    def test__on_show_times_changed(self):
+        self.application.get_action("show_frames").activate()
+        self.application.get_action("show_times").activate()
 
     def test__on_toggle_duration_column_toggled(self):
         name = "toggle_duration_column"

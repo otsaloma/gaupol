@@ -34,6 +34,19 @@ class UpdateAgent(aeidon.Delegate):
         self.show_message(None)
 
     @aeidon.deco.export
+    def flash_message(self, message, duration=6):
+        """Show `message` in statuslabel for `duration` seconds."""
+        self.statuslabel.flash_text(message, duration=duration)
+        # To minimize the disturbance, try to hide the statuslabel
+        # immediately after any kind of user input.
+        self.statuslabel.register_hide_event(self.window, "button-press-event")
+        self.statuslabel.register_hide_event(self.window, "key-press-event")
+        self.statuslabel.register_hide_event(self.window, "scroll-event")
+        with aeidon.util.silent(AttributeError):
+            view = self.get_current_page().view
+            self.statuslabel.register_hide_event(view, "button-press-event")
+
+    @aeidon.deco.export
     def _on_activate_next_project_activate(self, *args):
         """Activate the project in the next tab."""
         self.notebook.next_page()
@@ -56,7 +69,7 @@ class UpdateAgent(aeidon.Delegate):
         page = self.get_current_page()
         scroller = page.view.get_parent()
         index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index - 1)
+        self.notebook.reorder_child(scroller, index-1)
 
     @aeidon.deco.export
     def _on_move_tab_right_activate(self, *args):
@@ -64,7 +77,7 @@ class UpdateAgent(aeidon.Delegate):
         page = self.get_current_page()
         scroller = page.view.get_parent()
         index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index + 1)
+        self.notebook.reorder_child(scroller, index+1)
 
     @aeidon.deco.export
     def _on_notebook_page_reordered(self, notebook, scroller, index):
@@ -125,6 +138,20 @@ class UpdateAgent(aeidon.Delegate):
         maximized = bool(state & Gdk.WindowState.MAXIMIZED)
         gaupol.conf.application_window.maximized = maximized
 
+    @aeidon.deco.export
+    def push_message(self, message):
+        """A compatibility alias for :meth:`show_message`."""
+        self.show_message(message)
+
+    @aeidon.deco.export
+    def show_message(self, message):
+        """
+        Show `message` in the statuslabel until explicitly cleared.
+
+        Use ``None`` as `message` to hide the status label.
+        """
+        self.statuslabel.set_text(message)
+
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""
         rows = (page.view.get_selected_rows()
@@ -134,6 +161,15 @@ class UpdateAgent(aeidon.Delegate):
             action_group = self.get_action_group(name)
             for action in action_group.list_actions():
                 action.update_sensitivity(self, page, rows)
+
+    @aeidon.deco.export
+    def update_gui(self):
+        """Update widget sensitivities and states for the current page."""
+        page = self.get_current_page()
+        self._update_actions(page)
+        self._update_widgets(page)
+        self._update_revert(page)
+        self.extension_manager.update_extensions(page)
 
     def _update_revert(self, page):
         """Update tooltips for undo and redo actions."""
@@ -157,40 +193,3 @@ class UpdateAgent(aeidon.Delegate):
             col = getattr(page.view.columns, field.name)
             visible = page.view.get_column(col).props.visible
             self.get_column_action(field).set_active(visible)
-
-    @aeidon.deco.export
-    def flash_message(self, message, duration=6):
-        """Show `message` in statuslabel for `duration` seconds."""
-        self.statuslabel.flash_text(message, duration=duration)
-        # To minimize the disturbance, try to hide the statuslabel
-        # immediately after any kind of user input.
-        self.statuslabel.register_hide_event(self.window, "key-press-event")
-        self.statuslabel.register_hide_event(self.window, "scroll-event")
-        try:
-            view = self.get_current_page().view
-            self.statuslabel.register_hide_event(view, "button-press-event")
-        except AttributeError:
-            pass
-
-    @aeidon.deco.export
-    def push_message(self, message):
-        """A compatibility alias for :meth:`show_message`."""
-        self.show_message(message)
-
-    @aeidon.deco.export
-    def show_message(self, message):
-        """
-        Show `message` in the statuslabel until explicitly cleared.
-
-        Use ``None`` as `message` to hide the status label.
-        """
-        self.statuslabel.set_text(message)
-
-    @aeidon.deco.export
-    def update_gui(self):
-        """Update widget sensitivities and states for the current page."""
-        page = self.get_current_page()
-        self._update_actions(page)
-        self._update_widgets(page)
-        self._update_revert(page)
-        self.extension_manager.update_extensions(page)

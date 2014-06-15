@@ -24,14 +24,14 @@ from gaupol.dialogs.test.test_file import _TestFileDialog
 
 class TestMultiSaveDialog(_TestFileDialog):
 
-    @aeidon.deco.silent(gaupol.Default)
-    def run_show_overwrite_question_dialog(self):
-        files = [x.project.main_file for x in self.application.pages]
-        self.dialog._show_overwrite_question_dialog(files, "test")
-
     def run_dialog(self):
         self.dialog.run()
         self.dialog.destroy()
+
+    @aeidon.deco.silent(gaupol.Default)
+    def run__show_overwrite_question_dialog(self):
+        files = [x.project.main_file for x in self.application.pages]
+        self.dialog._show_overwrite_question_dialog(files, "test")
 
     def setup_method(self, method):
         self.application = self.new_application()

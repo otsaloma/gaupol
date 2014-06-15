@@ -92,7 +92,7 @@ class TestHearingImpairedPage(_TestLocalePage):
 
 class TestJoinSplitWordsPage(_TestBuilderPage):
 
-    def run_show_error_dialog(self):
+    def run__show_error_dialog(self):
         self.page._show_error_dialog("test")
 
     def setup_method(self, method):

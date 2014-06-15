@@ -25,25 +25,27 @@ class TestEditAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.delegate = self.application.undo.__self__
 
     def test__on_clear_texts_activate(self):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
-        page.view.select_rows((0, 1, 2))
+        page.view.select_rows((0,1,2))
         self.application.get_action("clear_texts").activate()
 
     def test__on_copy_texts_activate(self):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
-        page.view.select_rows((0, 1, 2))
+        page.view.select_rows((0,1,2))
         self.application.get_action("copy_texts").activate()
 
     def test__on_cut_texts_activate(self):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
-        page.view.select_rows((0, 1, 2))
+        page.view.select_rows((0,1,2))
         self.application.get_action("cut_texts").activate()
+        assert page.project.subtitles[0].main_text == ""
+        assert page.project.subtitles[1].main_text == ""
+        assert page.project.subtitles[2].main_text == ""
 
     def test__on_edit_next_value_activate(self):
         page = self.application.get_current_page()
@@ -53,7 +55,6 @@ class TestEditAgent(gaupol.TestCase):
     def test__on_edit_preferences_activate(self):
         self.application.get_action("edit_preferences").activate()
         self.application.get_action("edit_preferences").activate()
-        self.delegate._pref_dialog.response(Gtk.ResponseType.CLOSE)
 
     def test__on_edit_value_activate(self):
         page = self.application.get_current_page()
@@ -72,13 +73,17 @@ class TestEditAgent(gaupol.TestCase):
 
     def test__on_extend_selection_to_beginning_activate(self):
         page = self.application.get_current_page()
-        page.view.select_rows((4, 5))
+        page.view.select_rows((4,5))
         self.application.get_action("extend_selection_to_beginning").activate()
+        rows = page.view.get_selected_rows()
+        assert rows == tuple(range(0, 6))
 
     def test__on_extend_selection_to_end_activate(self):
         page = self.application.get_current_page()
-        page.view.select_rows((4, 5))
+        page.view.select_rows((4,5))
         self.application.get_action("extend_selection_to_end").activate()
+        rows = page.view.get_selected_rows()
+        assert rows == tuple(range(4, len(page.project.subtitles)))
 
     @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__on_insert_subtitles_activate(self):
@@ -88,65 +93,58 @@ class TestEditAgent(gaupol.TestCase):
         self.application.get_action("insert_subtitles").activate()
 
     def test__on_invert_selection_activate(self):
+        page = self.application.get_current_page()
+        page.view.select_rows((0,1,2))
         self.application.get_action("invert_selection").activate()
+        rows = page.view.get_selected_rows()
+        assert rows == tuple(range(3, len(page.project.subtitles)))
         self.application.get_action("invert_selection").activate()
+        rows = page.view.get_selected_rows()
+        assert rows == (0,1,2)
 
     def test__on_merge_subtitles_activate(self):
         page = self.application.get_current_page()
+        n = len(page.project.subtitles)
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
-        page.view.select_rows((0, 1))
+        page.view.select_rows((0,1))
         self.application.get_action("merge_subtitles").activate()
+        assert len(page.project.subtitles) == n-1
 
     def test__on_paste_texts_activate(self):
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
-        page.view.select_rows((0, 1, 2))
+        page.view.select_rows((0,1,2))
         self.application.get_action("copy_texts").activate()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("paste_texts").activate()
-
-    def test__on_paste_texts_activate__subtitles_added(self):
-        page = self.application.get_current_page()
-        page.view.set_focus(0, page.view.columns.MAIN_TEXT)
-        page.view.select_rows((0, 1, 2))
-        self.application.get_action("copy_texts").activate()
-        row = len(page.project.subtitles) - 1
-        page.view.set_focus(row, page.view.columns.MAIN_TEXT)
-        self.application.get_action("paste_texts").activate()
-
-    def test__on_project_action_done(self):
-        page = self.application.get_current_page()
-        page.project.remove_subtitles((0,))
-
-    def test__on_project_action_redone(self):
-        page = self.application.get_current_page()
-        page.project.remove_subtitles((0,))
-        self.application.undo()
-        self.application.redo()
-
-    def test__on_project_action_undone(self):
-        page = self.application.get_current_page()
-        page.project.remove_subtitles((0,))
-        self.application.undo()
 
     def test__on_redo_action_activate(self):
         page = self.application.get_current_page()
+        n = len(page.project.subtitles)
         page.project.remove_subtitles((0,))
         self.application.get_action("undo_action").activate()
         self.application.get_action("redo_action").activate()
+        assert len(page.project.subtitles) == n-1
 
     def test__on_remove_subtitles_activate(self):
         page = self.application.get_current_page()
-        page.view.select_rows((0, 1, 2))
+        n = len(page.project.subtitles)
+        page.view.select_rows((0,1,2))
         self.application.get_action("remove_subtitles").activate()
+        assert len(page.project.subtitles) == n-3
 
     def test__on_select_all_activate(self):
+        page = self.application.get_current_page()
         self.application.get_action("select_all").activate()
+        rows = page.view.get_selected_rows()
+        assert rows == tuple(range(0, len(page.project.subtitles)))
 
     def test__on_split_subtitle_activate(self):
         page = self.application.get_current_page()
+        n = len(page.project.subtitles)
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("split_subtitle").activate()
+        assert len(page.project.subtitles) == n+1
 
     def test__on_start_earlier_activate(self):
         self.application.get_action("start_earlier").activate()
@@ -160,69 +158,22 @@ class TestEditAgent(gaupol.TestCase):
 
     def test__on_undo_action_activate(self):
         page = self.application.get_current_page()
+        n = len(page.project.subtitles)
         page.project.remove_subtitles((0,))
         self.application.get_action("undo_action").activate()
-
-    def test__on_view_renderer_edited__position_frame(self):
-        page = self.application.get_current_page()
-        self.application.get_action("show_frames").activate()
-        for col in filter(page.view.is_position_column, page.view.columns):
-            column = page.view.get_column(col)
-            renderer = column.get_cells()[0]
-            renderer.emit("edited", 1, 0)
-            renderer.emit("edited", 1, "xxx")
-
-    def test__on_view_renderer_edited__position_time(self):
-        page = self.application.get_current_page()
-        self.application.get_action("show_times").activate()
-        for col in filter(page.view.is_position_column, page.view.columns):
-            column = page.view.get_column(col)
-            renderer = column.get_cells()[0]
-            renderer.emit("edited", 1, "00:00:00.000")
-
-    def test__on_view_renderer_edited__text(self):
-        page = self.application.get_current_page()
-        self.application.get_action("show_times").activate()
-        for col in filter(page.view.is_text_column, page.view.columns):
-            column = page.view.get_column(col)
-            renderer = column.get_cells()[0]
-            renderer.emit("edited", 1, "test")
-
-    def test__on_view_renderer_editing_canceled__position(self):
-        page = self.application.get_current_page()
-        for col in filter(page.view.is_position_column, page.view.columns):
-            column = page.view.get_column(col)
-            renderer = column.get_cells()[0]
-            renderer.emit("editing-canceled")
-
-    def test__on_view_renderer_editing_canceled__text(self):
-        page = self.application.get_current_page()
-        for col in filter(page.view.is_text_column, page.view.columns):
-            column = page.view.get_column(col)
-            renderer = column.get_cells()[0]
-            renderer.emit("editing-canceled")
-
-    def test__on_view_renderer_editing_started__position(self):
-        page = self.application.get_current_page()
-        for col in filter(page.view.is_position_column, page.view.columns):
-            column = page.view.get_column(col)
-            page.view.set_cursor(1, column, True)
-            gaupol.util.iterate_main()
-
-    def test__on_view_renderer_editing_started__text(self):
-        page = self.application.get_current_page()
-        for col in filter(page.view.is_text_column, page.view.columns):
-            column = page.view.get_column(col)
-            page.view.set_cursor(1, column, True)
-            gaupol.util.iterate_main()
+        assert len(page.project.subtitles) == n
 
     def test_redo(self):
         page = self.application.get_current_page()
+        n = len(page.project.subtitles)
         page.project.remove_subtitles((0,))
         self.application.undo()
         self.application.redo()
+        assert len(page.project.subtitles) == n-1
 
     def test_undo(self):
         page = self.application.get_current_page()
+        n = len(page.project.subtitles)
         page.project.remove_subtitles((0,))
         self.application.undo()
+        assert len(page.project.subtitles) == n

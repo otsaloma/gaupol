@@ -29,6 +29,41 @@ class CloseAgent(aeidon.Delegate):
 
     """Closing pages and quitting Gaupol."""
 
+    @aeidon.deco.export
+    def close(self, page, confirm=True):
+        """
+        Close `page` after asking to save its documents.
+
+        If `confirm` is ``False`` do not ask to save documents.
+        Raise :exc:`gaupol.Default` if asked to save, but cancelled
+        and `page` was not closed.
+        """
+        if confirm:
+            self._confirm_close(page)
+        if not page in self.pages: return
+        index = self.pages.index(page)
+        if self.notebook.get_current_page() == index:
+            self.notebook.next_page()
+        self.notebook.remove_page(index)
+        self.pages.remove(page)
+        self.update_gui()
+        self.emit("page-closed", page)
+
+    @aeidon.deco.export
+    def close_all(self, confirm=True):
+        """
+        Close all pages after asking to save their documents.
+
+        If `confirm` is ``False`` do not ask to save documents.
+        Raise :exc:`gaupol.Default` if asked to save, but cancelled
+        and not all pages are closed.
+        """
+        nconfirm = sum((len(self._need_confirmation(x)) for x in self.pages))
+        if confirm and nconfirm > 1:
+            return self._confirm_close_multiple(tuple(self.pages))
+        while self.pages:
+            self.close(self.pages[-1], confirm=confirm)
+
     def _confirm_close(self, page):
         """
         Close `page` after asking to save its documents.
@@ -140,6 +175,29 @@ class CloseAgent(aeidon.Delegate):
         self.quit()
         return True
 
+    @aeidon.deco.export
+    def quit(self, confirm=True):
+        """
+        Quit Gaupol.
+
+        If `confirm` is ``False`` do not ask to save documents.
+        Raise :exc:`gaupol.Default` if asked to save, but cancelled.
+        """
+        self.emit("quit")
+        nconfirm = sum((len(self._need_confirmation(x)) for x in self.pages))
+        if confirm and nconfirm > 1:
+            self._confirm_close_multiple(tuple(self.pages))
+        elif confirm:
+            for page in self.pages:
+                if self._need_confirmation(page):
+                    self._confirm_close(page)
+        self.extension_manager.teardown_extensions()
+        self._save_window_geometry()
+        try:
+            Gtk.main_quit()
+        except RuntimeError:
+            raise SystemExit(1)
+
     def _save_window_geometry(self):
         """Save the geometry of application and output windows."""
         if not gaupol.conf.application_window.maximized:
@@ -150,55 +208,3 @@ class CloseAgent(aeidon.Delegate):
             conf = gaupol.conf.output_window
             conf.size = list(self.output_window.get_size())
             conf.position = list(self.output_window.get_position())
-
-    @aeidon.deco.export
-    def close(self, page, confirm=True):
-        """
-        Close `page` after asking to save its documents.
-
-        If `confirm` is ``False`` do not ask to save documents.
-        Raise :exc:`gaupol.Default` if asked to save, but cancelled
-        and `page` was not closed.
-        """
-        if confirm:
-            self._confirm_close(page)
-        if not page in self.pages: return
-        index = self.pages.index(page)
-        if self.notebook.get_current_page() == index:
-            self.notebook.next_page()
-        self.notebook.remove_page(index)
-        self.pages.remove(page)
-        self.update_gui()
-        self.emit("page-closed", page)
-
-    @aeidon.deco.export
-    def close_all(self, confirm=True):
-        """
-        Close all pages after asking to save their documents.
-
-        If `confirm` is ``False`` do not ask to save documents.
-        Raise :exc:`gaupol.Default` if asked to save, but cancelled
-        and not all pages are closed.
-        """
-        nconfirm = sum((len(self._need_confirmation(x)) for x in self.pages))
-        if confirm and nconfirm > 1:
-            return self._confirm_close_multiple(tuple(self.pages))
-        while self.pages:
-            self.close(self.pages[-1], confirm=confirm)
-
-    @aeidon.deco.export
-    def quit(self, confirm=True):
-        """
-        Quit Gaupol.
-
-        If `confirm` is ``False`` do not ask to save documents.
-        Raise :exc:`gaupol.Default` if asked to save, but cancelled.
-        """
-        self.emit("quit")
-        self.close_all(confirm=confirm)
-        self.extension_manager.teardown_extensions()
-        self._save_window_geometry()
-        try:
-            Gtk.main_quit()
-        except RuntimeError:
-            raise SystemExit(1)

@@ -32,13 +32,12 @@ class SaveAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_save_all_documents_activate(self, *args):
         """Save all open documents."""
-        silent = aeidon.deco.silent(gaupol.Default)
-        save_main = silent(self.save_main)
-        save_tran = silent(self.save_translation)
         for page in self.pages:
-            save_main(page)
+            with aeidon.util.silent(gaupol.Default):
+                self.save_main(page)
             if page.project.tran_changed is not None:
-                save_tran(page)
+                with aeidon.util.silent(gaupol.Default):
+                    self.save_translation(page)
         self.update_gui()
 
     @aeidon.deco.export
@@ -106,6 +105,72 @@ class SaveAgent(aeidon.Delegate):
             gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default
 
+    @aeidon.deco.export
+    def save_main(self, page):
+        """
+        Save the main document of `page`.
+
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
+        """
+        if (page.project.main_file is None or
+            page.project.main_file.path is None or
+            page.project.main_file.encoding is None):
+            return self.save_main_as(page)
+        self._save_document(page, aeidon.documents.MAIN)
+
+    @aeidon.deco.export
+    def save_main_as(self, page, file=None):
+        """
+        Save the main document of `page` to a selected file.
+
+        If `file` is ``None`` show a filechooser dialog.
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
+        """
+        if file is None:
+            file = page.project.main_file
+            file = self._select_file(_("Save As"), page, file)
+        self._save_document(page, aeidon.documents.MAIN, file)
+        self.add_to_recent_files(page.project.main_file.path,
+                                 page.project.main_file.format,
+                                 aeidon.documents.MAIN)
+
+        basename = os.path.basename(page.project.main_file.path)
+        self.flash_message(_('Saved main document as "{}"')
+                           .format(basename))
+
+    @aeidon.deco.export
+    def save_translation(self, page):
+        """
+        Save the translation document of `page`.
+
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
+        """
+        if (page.project.tran_file is None or
+            page.project.tran_file.path is None or
+            page.project.tran_file.encoding is None):
+            return self.save_translation_as(page)
+        self._save_document(page, aeidon.documents.TRAN)
+
+    @aeidon.deco.export
+    def save_translation_as(self, page, file=None):
+        """
+        Save the translation document of `page` to a selected file.
+
+        If `file` is ``None`` show a filechooser dialog.
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
+        """
+        if file is None:
+            file = page.project.tran_file
+            file = self._select_file(_("Save Translation As"), page, file)
+        self._save_document(page, aeidon.documents.TRAN, file)
+        self.add_to_recent_files(page.project.tran_file.path,
+                                 page.project.tran_file.format,
+                                 aeidon.documents.TRAN)
+
+        basename = os.path.basename(page.project.tran_file.path)
+        self.flash_message(_('Saved translation document as "{}"')
+                           .format(basename))
+
     def _select_file(self, title, page, file=None):
         """
         Select a file and return a :class:`aeidon.SubtitleFile`.
@@ -158,75 +223,3 @@ class SaveAgent(aeidon.Delegate):
         dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
-
-    @aeidon.deco.export
-    def save_main(self, page):
-        """
-        Save the main document of `page`.
-
-        Raise :exc:`gaupol.Default` if cancelled or saving failed.
-        """
-        if (page.project.main_file is None or
-            page.project.main_file.path is None or
-            page.project.main_file.encoding is None):
-            return self.save_main_as(page)
-
-        self._save_document(page, aeidon.documents.MAIN)
-
-    @aeidon.deco.export
-    def save_main_as(self, page, file=None):
-        """
-        Save the main document of `page` to a selected file.
-
-        If `file` is ``None`` show a filechooser dialog.
-        Raise :exc:`gaupol.Default` if cancelled or saving failed.
-        """
-        if file is None:
-            file = self._select_file(_("Save As"),
-                                     page,
-                                     page.project.main_file)
-
-        self._save_document(page, aeidon.documents.MAIN, file)
-        self.add_to_recent_files(page.project.main_file.path,
-                                 page.project.main_file.format,
-                                 aeidon.documents.MAIN)
-
-        basename = os.path.basename(page.project.main_file.path)
-        self.flash_message(_('Saved main document as "{}"')
-                           .format(basename))
-
-    @aeidon.deco.export
-    def save_translation(self, page):
-        """
-        Save the translation document of `page`.
-
-        Raise :exc:`gaupol.Default` if cancelled or saving failed.
-        """
-        if (page.project.tran_file is None or
-            page.project.tran_file.path is None or
-            page.project.tran_file.encoding is None):
-            return self.save_translation_as(page)
-
-        self._save_document(page, aeidon.documents.TRAN)
-
-    @aeidon.deco.export
-    def save_translation_as(self, page, file=None):
-        """
-        Save the translation document of `page` to a selected file.
-
-        If `file` is ``None`` show a filechooser dialog.
-        Raise :exc:`gaupol.Default` if cancelled or saving failed.
-        """
-        if file is None:
-            file = self._select_file(_("Save Translation As"),
-                                     page,
-                                     page.project.tran_file)
-
-        self._save_document(page, aeidon.documents.TRAN, file)
-        self.add_to_recent_files(page.project.tran_file.path,
-                                 page.project.tran_file.format,
-                                 aeidon.documents.TRAN)
-
-        basename = os.path.basename(page.project.tran_file.path)
-        self.flash_message(_('Saved translation document as "{}"')
-                           .format(basename))

@@ -32,27 +32,6 @@ class EditAgent(aeidon.Delegate):
         aeidon.Delegate.__init__(self, master)
         self._pref_dialog = None
 
-    def _on_pref_dialog_response(self, *args):
-        """Destroy the preferences dialog."""
-        self._pref_dialog.destroy()
-        self._pref_dialog = None
-        gaupol.conf.write_to_file()
-
-    def _set_unsafe_sensitivities(self, sensitive):
-        """Set sensitivities of unsafe UI manager actions."""
-        action_group = self.get_action_group("main-unsafe")
-        action_group.set_sensitive(sensitive)
-
-    def _sync_clipboards(self, page):
-        """Synchronize all clipboards to match that of `page`."""
-        texts = page.project.clipboard.get_texts()
-        self.clipboard.set_texts(texts)
-        for item in self.pages:
-            item.project.clipboard.set_texts(texts)
-        text = page.project.clipboard.get_string()
-        self.x_clipboard.set_text(text, -1)
-        self.update_gui()
-
     @aeidon.deco.export
     def _on_clear_texts_activate(self, *args):
         """Clear the selected texts."""
@@ -119,7 +98,7 @@ class EditAgent(aeidon.Delegate):
         register = aeidon.registers.DO
         description = _("Stretching end position")
         page.project.set_action_description(register, description)
-        # Group repeated stretces as one action.
+        # Group repeated stretches as one action.
         if (len(page.project.undoables) > 1 and
             page.project.undoables[1].description ==
             page.project.undoables[0].description):
@@ -137,7 +116,7 @@ class EditAgent(aeidon.Delegate):
         register = aeidon.registers.DO
         description = _("Stretching end position")
         page.project.set_action_description(register, description)
-        # Group repeated stretces as one action.
+        # Group repeated stretches as one action.
         if (len(page.project.undoables) > 1 and
             page.project.undoables[1].description ==
             page.project.undoables[0].description):
@@ -214,11 +193,17 @@ class EditAgent(aeidon.Delegate):
         page.view.scroll_to_point(rect.x, rect.y)
         window.thaw_updates()
         count = len(page.project.subtitles) - length
-        if count > 0:
-            self.flash_message(aeidon.i18n.ngettext(
-                    "Inserted {:d} subtitle to fit clipboard contents",
-                    "Inserted {:d} subtitles to fit clipboard contents",
-                    count).format(count))
+        if count <= 0: return
+        self.flash_message(aeidon.i18n.ngettext(
+            "Inserted {:d} subtitle to fit clipboard contents",
+            "Inserted {:d} subtitles to fit clipboard contents",
+            count).format(count))
+
+    def _on_pref_dialog_response(self, *args):
+        """Destroy the preferences dialog."""
+        self._pref_dialog.destroy()
+        self._pref_dialog = None
+        gaupol.conf.write_to_file()
 
     @aeidon.deco.export
     def _on_project_action_done(self, *args):
@@ -294,7 +279,7 @@ class EditAgent(aeidon.Delegate):
         register = aeidon.registers.DO
         description = _("Stretching start position")
         page.project.set_action_description(register, description)
-        # Group repeated stretces as one action.
+        # Group repeated stretches as one action.
         if (len(page.project.undoables) > 1 and
             page.project.undoables[1].description ==
             page.project.undoables[0].description):
@@ -312,7 +297,7 @@ class EditAgent(aeidon.Delegate):
         register = aeidon.registers.DO
         description = _("Stretching start position")
         page.project.set_action_description(register, description)
-        # Group repeated stretces as one action.
+        # Group repeated stretches as one action.
         if (len(page.project.undoables) > 1 and
             page.project.undoables[1].description ==
             page.project.undoables[0].description):
@@ -334,10 +319,8 @@ class EditAgent(aeidon.Delegate):
         if page.view.is_position_column(col):
             if not value: return
             if page.edit_mode == aeidon.modes.FRAME:
-                try:
+                with aeidon.util.silent(ValueError):
                     value = aeidon.as_frame(value)
-                except ValueError:
-                    return
         if col == page.view.columns.START:
             return page.project.set_start(row, value)
         if col == page.view.columns.END:
@@ -345,10 +328,8 @@ class EditAgent(aeidon.Delegate):
         if col ==  page.view.columns.DURATION:
             if page.edit_mode == aeidon.modes.TIME:
                 value = value.replace(",", ".")
-                try:
+                with aeidon.util.silent(ValueError):
                     value = aeidon.as_seconds(value)
-                except ValueError:
-                    return
             return page.project.set_duration(row, value)
         doc = page.text_column_to_document(col)
         page.project.set_text(row, doc, value)
@@ -361,7 +342,6 @@ class EditAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def _on_view_renderer_editing_started(self, renderer, editor, path, column):
-
         """Set proper state for editing cell."""
         self._set_unsafe_sensitivities(False)
         page = self.get_current_page()
@@ -376,6 +356,21 @@ class EditAgent(aeidon.Delegate):
         page = self.get_current_page()
         page.project.redo(count)
         gaupol.util.set_cursor_normal(self.window)
+
+    def _set_unsafe_sensitivities(self, sensitive):
+        """Set sensitivities of unsafe UI manager actions."""
+        action_group = self.get_action_group("main-unsafe")
+        action_group.set_sensitive(sensitive)
+
+    def _sync_clipboards(self, page):
+        """Synchronize all clipboards to match that of `page`."""
+        texts = page.project.clipboard.get_texts()
+        self.clipboard.set_texts(texts)
+        for item in self.pages:
+            item.project.clipboard.set_texts(texts)
+        text = page.project.clipboard.get_string()
+        self.x_clipboard.set_text(text, -1)
+        self.update_gui()
 
     @aeidon.deco.export
     def undo(self, count=1):
