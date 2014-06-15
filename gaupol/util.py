@@ -108,6 +108,13 @@ def get_gtkspell_version():
     except Exception:
         return None
 
+def get_icon_image(name, stock, size):
+    """Return icon image from name in theme or stock as fallback."""
+    theme = Gtk.IconTheme.get_default()
+    if theme.has_icon(name):
+        return Gtk.Image(icon_name=name, icon_size=size)
+    return Gtk.Image.new_from_stock(stock, size)
+
 def get_preview_command():
     """Return command to use for lauching video player."""
     if gaupol.conf.preview.use_custom_command:
@@ -241,6 +248,37 @@ def lines_to_px(nlines, font=None):
         set_widget_font(label, font)
     height = label.get_layout().get_pixel_size()[1]
     return int(round(nlines * height))
+
+def new_hbox(spacing):
+    """Return a new horizontal :class:`Gtk.Box`."""
+    return Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
+                   spacing=spacing)
+
+def new_vbox(spacing):
+    """Return a new vertical :class:`Gtk.Box`."""
+    return Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                   spacing=spacing)
+
+def pack_start(box, widget, padding=0):
+    """Pack widget to box without fill or expand."""
+    box.pack_start(widget,
+                   expand=False,
+                   fill=False,
+                   padding=padding)
+
+def pack_start_expand(box, widget, padding=0):
+    """Pack widget to box with fill and expand."""
+    box.pack_start(widget,
+                   expand=True,
+                   fill=True,
+                   padding=padding)
+
+def pack_start_fill(box, widget, padding=0):
+    """Pack widget to box with fill, but no expand."""
+    box.pack_start(widget,
+                   expand=False,
+                   fill=True,
+                   padding=padding)
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""

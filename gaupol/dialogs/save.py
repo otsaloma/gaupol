@@ -84,7 +84,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         for name in self._widgets:
             widget = builder.get_object(name)
             setattr(self, "_{}".format(name), widget)
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        vbox = gaupol.util.new_vbox(spacing=0)
         builder.get_object("main_vbox").reparent(vbox)
         vbox.show_all()
         self.set_extra_widget(vbox)

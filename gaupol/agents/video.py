@@ -57,10 +57,10 @@ class VideoAgent(aeidon.Delegate):
 
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        vbox = gaupol.util.new_vbox(spacing=0)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
-        vbox.pack_start(self.player.widget, expand=True, fill=True, padding=0)
+        gaupol.util.pack_start_expand(vbox, self.player.widget)
         adjustment = Gtk.Adjustment(value=0,
                                     lower=0,
                                     upper=1,
@@ -73,7 +73,7 @@ class VideoAgent(aeidon.Delegate):
 
         self.seekbar.props.draw_value = False
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
-        vbox.pack_start(self.seekbar, expand=False, fill=True, padding=0)
+        gaupol.util.pack_start_fill(vbox, self.seekbar)
         self.player_toolbar = self.uim.get_widget("/ui/player_toolbar")
         self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
         separator = Gtk.SeparatorToolItem(draw=False)
@@ -88,8 +88,8 @@ class VideoAgent(aeidon.Delegate):
         item.add(self.volume_button)
         item.set_tooltip_text(_("Volume"))
         self.player_toolbar.insert(item, -1)
-        vbox.pack_start(self.player_toolbar, expand=False, fill=True, padding=0)
-        self.player_box.pack_start(vbox, expand=True, fill=True, padding=0)
+        gaupol.util.pack_start_fill(vbox, self.player_toolbar)
+        gaupol.util.pack_start_expand(self.player_hbox, vbox)
         self.player_box.show_all()
         self.paned.add1(self.player_box)
         orientation = self.paned.props.orientation

@@ -107,14 +107,9 @@ class Page(aeidon.Observable):
         """Initialize and return a tab close button."""
         button = Gtk.Button()
         button.set_name("gaupol-tab-close-button")
-        theme = Gtk.IconTheme.get_default()
-        if theme.has_icon("window-close-symbolic"):
-            image = Gtk.Image(icon_name="window-close-symbolic",
-                              icon_size=Gtk.IconSize.MENU)
-
-        else:
-            image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE,
-                                             Gtk.IconSize.MENU)
+        image = gaupol.util.get_icon_image("window-close-symbolic",
+                                           Gtk.STOCK_CLOSE,
+                                           Gtk.IconSize.MENU)
 
         button.add(image)
         button.set_relief(Gtk.ReliefStyle.NONE)
@@ -189,9 +184,9 @@ class Page(aeidon.Observable):
         self.tab_label.set_size_request(width, -1)
         self.tab_label.set_tooltip_text(self.untitle)
         button = self._get_tab_close_button()
-        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
-        box.pack_start(self.tab_label, expand=True, fill=True, padding=0)
-        box.pack_start(button, expand=False, fill=False, padding=0)
+        box = gaupol.util.new_hbox(spacing=4)
+        gaupol.util.pack_start_expand(box, self.tab_label)
+        gaupol.util.pack_start(box, button)
         box.gaupol_button = button
         self.tab_widget = Gtk.EventBox()
         self.tab_widget.add(box)

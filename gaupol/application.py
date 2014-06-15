@@ -187,7 +187,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_gui(self):
         """Initialize the user interface."""
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        vbox = gaupol.util.new_vbox(spacing=0)
         self._init_x_clipboard()
         self._init_window()
         self._init_css()
@@ -215,12 +215,12 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         if sys.platform == "win32":
             toolbar.props.icon_size = Gtk.IconSize.MENU
         gaupol.conf.connect_notify("application_window", "toolbar_style", self)
-        vbox.pack_start(toolbar, expand=False, fill=False, padding=0)
+        gaupol.util.pack_start(vbox, toolbar)
 
     def _init_menubar(self, vbox):
         """Initialize the menubar."""
         menubar = self.uim.get_widget("/ui/menubar")
-        vbox.pack_start(menubar, expand=False, fill=False, padding=0)
+        gaupol.util.pack_start(vbox, menubar)
 
     def _init_notebook(self, paned):
         """Initialize the notebook."""
@@ -238,17 +238,13 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.notebook.connect_after("switch-page", callback)
         orientation = Gtk.Orientation.HORIZONTAL
         self.notebook_separator = Gtk.Separator(orientation=orientation)
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        vbox.pack_start(self.notebook_separator,
-                        expand=False,
-                        fill=False,
-                        padding=0)
-
+        vbox = gaupol.util.new_vbox(spacing=0)
+        gaupol.util.pack_start(vbox, self.notebook_separator)
         overlay = Gtk.Overlay()
         overlay.add(self.notebook)
         self.statuslabel = gaupol.FloatingLabel()
         overlay.add_overlay(self.statuslabel)
-        vbox.pack_start(overlay, expand=True, fill=True, padding=0)
+        gaupol.util.pack_start_expand(vbox, overlay)
         paned.add2(vbox)
 
     def _init_output_window(self):
@@ -261,7 +257,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Intialize the paned layout."""
         orientation = gaupol.conf.application_window.layout
         self.paned = Gtk.Paned(orientation=orientation)
-        vbox.pack_start(self.paned, expand=True, fill=True, padding=0)
+        gaupol.util.pack_start_expand(vbox, self.paned)
 
     def _init_player_box(self, paned):
         """Initialize the video player horizontal box."""

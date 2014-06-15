@@ -65,7 +65,7 @@ class FloatingLabel(Gtk.Box):
         """Initialize widgets contained in the box."""
         self._label.set_name("gaupol-floating-label")
         self._event_box.add(self._label)
-        self.pack_start(self._event_box, expand=False, fill=False, padding=0)
+        gaupol.util.pack_start(self, self._event_box)
         self._event_box.connect("enter-notify-event", self.hide)
 
     def register_hide_event(self, widget, signal):
