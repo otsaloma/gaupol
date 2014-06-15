@@ -19,7 +19,6 @@ import aeidon
 import gaupol
 import os
 import sys
-import traceback
 
 from gi.repository import Gtk
 
@@ -34,18 +33,11 @@ class TestAddFramerateDialog(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("custom-framerates", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
-        self.dialog = mobj.AddFramerateDialog(Gtk.Window())
+        module = __import__("custom-framerates", {}, {}, [])
+        self.dialog = module.AddFramerateDialog(Gtk.Window())
         self.dialog.show()
 
-    def test__on_response__cancel(self):
-        self.dialog.response(Gtk.ResponseType.CANCEL)
-
-    def test__on_response__ok(self):
+    def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.OK)
 
     def test_get_framerate(self):
@@ -62,13 +54,9 @@ class TestPreferencesDialog(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("custom-framerates", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
+        module = __import__("custom-framerates", {}, {}, [])
         self.framerates = (20.0, 21.0, 22.0, 23.0)
-        self.dialog = mobj.PreferencesDialog(self.framerates, Gtk.Window())
+        self.dialog = module.PreferencesDialog(self.framerates, Gtk.Window())
         self.dialog.show()
 
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
@@ -90,14 +78,6 @@ class TestPreferencesDialog(gaupol.TestCase):
         framerates = self.dialog.get_framerates()
         assert len(framerates) == len(orig_framerates) - 1
 
-    def test__on_tree_view_selection_changed(self):
-        selection = self.dialog._tree_view.get_selection()
-        selection.unselect_all()
-        store = self.dialog._tree_view.get_model()
-        for i in range(len(store)):
-            path = gaupol.util.tree_row_to_path(i)
-            selection.select_path(path)
-
     def test_get_framerates(self):
         framerates = self.dialog.get_framerates()
         assert framerates == self.framerates
@@ -109,12 +89,8 @@ class TestCustomFrameratesExtension(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("custom-framerates", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
-        self.extension = mobj.CustomFrameratesExtension()
+        module = __import__("custom-framerates", {}, {}, [])
+        self.extension = module.CustomFrameratesExtension()
         self.application = self.new_application()
         self.extension.setup(self.application)
 

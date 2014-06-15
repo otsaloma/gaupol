@@ -31,17 +31,17 @@ class SidePane(aeidon.Observable):
     """
     A side pane object for the application window.
 
-    Side pane is installed as an attribute of :class:`gaupol.Application` and
-    thus accessible to extensions as ``application.side_pane``.
+    Side pane is installed as an attribute of :class:`gaupol.Application`
+    and thus accessible to extensions as ``application.side_pane``.
 
     Signals and their arguments for callback functions:
      * ``close-button-clicked``: side_pane
      * ``page-switched``: side_pane, new_page
     """
 
-    # Parts of the code dealing with the header's toggle button and the menu
-    # associated with it have been adapted from Nautilus, file
-    # 'nautilus-side-pane.c' with the following copyright statement and info.
+    # Parts of the code dealing with the header's toggle button and
+    # the menu associated with it have been adapted from Nautilus,
+    # file 'nautilus-side-pane.c' with the following copyright info.
     # Copyright (C) 2002 Ximian Inc.
     # Author: Dave Camp <dave@ximian.com>
 
@@ -50,6 +50,7 @@ class SidePane(aeidon.Observable):
     def __init__(self, application):
         """Initialize a :class:`SidePane` instance."""
         aeidon.Observable.__init__(self)
+        self.application = application
         self._conf = gaupol.conf.extensions.side_pane
         self._focus_handler_id = None
         self._has_focus = False
@@ -57,15 +58,39 @@ class SidePane(aeidon.Observable):
         self._notebook = Gtk.Notebook()
         self._paned = Gtk.HPaned()
         self._toggle_button = Gtk.ToggleButton()
-        self.application = application
         self._init_gui()
         self._init_signal_handlers()
 
+    def add_page(self, child, name, title):
+        """
+        Add `child` as a page to the side pane.
+
+        `name` should be a unique string and is used internally for saving
+        the active page name to the configuration file. Using the extension's
+        module name is a good idea since that should be unique anyway, or if
+        having multiple side pane pages per extension, then a name prefixed
+        with the module name. `title` is a string shown to the user.
+        """
+        child.gaupol_side_pane_extension_name = name
+        self._notebook.append_page(child, None)
+        self._notebook.set_tab_label_text(child, title)
+        if (self._notebook.get_n_pages() == 1 or
+            name == self._conf.page):
+            self.set_current_page(child)
+
+    def get_current_page(self):
+        """Return the child widget of the currently active page or ``None``."""
+        if self._notebook.get_n_pages() == 0: return None
+        page_num = self._notebook.get_current_page()
+        return self._notebook.get_nth_page(page_num)
+
+    def hide(self):
+        """Hide the side pane from the application window."""
+        self._paned.get_child1().hide()
+
     def _init_gui(self):
         """Initialize all widgets."""
-        side_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                            spacing=0)
-
+        side_vbox = gaupol.util.new_vbox(spacing=0)
         self._init_paned(side_vbox)
         self._init_header(side_vbox)
         self._init_notebook(side_vbox)
@@ -75,76 +100,41 @@ class SidePane(aeidon.Observable):
 
     def _init_header(self, side_vbox):
         """Initialize the side pane button header."""
-        header_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
-                              spacing=12)
-
+        header_hbox = gaupol.util.new_hbox(spacing=12)
         header_hbox.set_border_width(1)
         self._toggle_button.set_relief(Gtk.ReliefStyle.NONE)
         self._toggle_button.set_focus_on_click(False)
-        toggle_button_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
-                                     spacing=6)
-
-        toggle_button_hbox.pack_start(self._label,
-                                      expand=True,
-                                      fill=True,
-                                      padding=0)
-
+        toggle_button_hbox = gaupol.util.new_hbox(spacing=6)
+        gaupol.util.pack_start_expand(toggle_button_hbox, self._label)
         arrow = Gtk.Arrow(arrow_type=Gtk.ArrowType.DOWN,
                           shadow_type=Gtk.ShadowType.NONE)
 
-        toggle_button_hbox.pack_start(arrow,
-                                      expand=True,
-                                      fill=True,
-                                      padding=0)
-
+        gaupol.util.pack_start_expand(toggle_button_hbox, arrow)
         self._toggle_button.add(toggle_button_hbox)
         callback = self._on_header_toggle_button_button_press_event
         self._toggle_button.connect("button-press-event", callback)
         callback = self._on_header_toggle_button_key_press_event
         self._toggle_button.connect("key-press-event", callback)
-        header_hbox.pack_start(self._toggle_button,
-                               expand=False,
-                               fill=False,
-                               padding=0)
-
-        header_hbox.pack_start(Gtk.Label(),
-                               expand=True,
-                               fill=True,
-                               padding=0)
-
+        gaupol.util.pack_start(header_hbox, self._toggle_button)
+        gaupol.util.pack_start_expand(header_hbox, Gtk.Label())
         close_button = Gtk.Button()
-        theme = Gtk.IconTheme.get_default()
-        if theme.has_icon("window-close-symbolic"):
-            image = Gtk.Image(icon_name="window-close-symbolic",
-                              icon_size=Gtk.IconSize.MENU)
-
-        else:
-            image = Gtk.Image.new_from_stock(Gtk.STOCK_CLOSE,
-                                             Gtk.IconSize.MENU)
+        image = gaupol.util.get_icon_image("window-close-symbolic",
+                                           Gtk.STOCK_CLOSE,
+                                           Gtk.IconSize.MENU)
 
         close_button.add(image)
         close_button.set_relief(Gtk.ReliefStyle.NONE)
         close_button.set_focus_on_click(False)
         callback = self._on_header_close_button_clicked
         close_button.connect("clicked", callback)
-        header_hbox.pack_start(close_button,
-                               expand=False,
-                               fill=False,
-                               padding=0)
-
-        side_vbox.pack_start(header_hbox,
-                             expand=False,
-                             fill=False,
-                             padding=0)
+        gaupol.util.pack_start(header_hbox, close_button)
+        gaupol.util.pack_start(side_vbox, header_hbox)
 
     def _init_notebook(self, side_vbox):
         """Initialize the side pane notebook."""
         self._notebook.set_show_border(False)
         self._notebook.set_show_tabs(False)
-        side_vbox.pack_start(self._notebook,
-                             expand=True,
-                             fill=True,
-                             padding=0)
+        gaupol.util.pack_start_expand(side_vbox, self._notebook)
 
     def _init_paned(self, side_vbox):
         """Initialize the horizontal pane container."""
@@ -152,12 +142,10 @@ class SidePane(aeidon.Observable):
         main_notebook = main_vbox.get_children()[2]
         main_notebook.props.expand = True
         self._paned.pack1(side_vbox, resize=False, shrink=False)
-        main_notebook_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                                     spacing=0)
-
+        main_notebook_vbox = gaupol.util.new_vbox(spacing=0)
         main_notebook.reparent(main_notebook_vbox)
         self._paned.pack2(main_notebook_vbox, resize=True, shrink=False)
-        main_vbox.pack_start(self._paned, expand=True, fill=True, padding=0)
+        gaupol.util.pack_start_expand(main_vbox, self._paned)
         main_vbox.reorder_child(self._paned, 2)
         self._paned.set_position(self._conf.width)
 
@@ -225,53 +213,6 @@ class SidePane(aeidon.Observable):
         y += allocation.y + allocation.height
         return x, y, True
 
-    def _show_header_menu(self, event):
-        """Show a menu listing all side pane pages."""
-        menu = Gtk.Menu()
-        for i in range(self._notebook.get_n_pages()):
-            child = self._notebook.get_nth_page(i)
-            title = self._notebook.get_tab_label_text(child)
-            menu_item = Gtk.MenuItem(label=title)
-            menu_item.gaupol_child = child
-            menu_item.connect("activate", self._on_header_menu_item_activate)
-            menu.append(menu_item)
-        menu.connect("deactivate", self._on_header_menu_deactivate)
-        menu.show_all()
-        self._toggle_button.set_active(True)
-        menu.popup(parent_menu_shell=None,
-                   parent_menu_item=None,
-                   func=self._position_header_menu,
-                   data=None,
-                   button=event.button,
-                   activate_time=event.time)
-
-    def add_page(self, child, name, title):
-        """
-        Add `child` as a page to the side pane.
-
-        `name` should be a unique string and is used internally for saving the
-        active page name to the configuration file. Using the extension's
-        module name is a good idea since that should be unique anyway, or if
-        having multiple side pane pages per extension, then a name prefixed
-        with the module name. `title` is a string shown to the user.
-        """
-        child.gaupol_side_pane_extension_name = name
-        self._notebook.append_page(child, None)
-        self._notebook.set_tab_label_text(child, title)
-        if (self._notebook.get_n_pages() == 1 or
-            name == self._conf.page):
-            self.set_current_page(child)
-
-    def get_current_page(self):
-        """Return the child widget of the currently active page or ``None``."""
-        if self._notebook.get_n_pages() == 0: return None
-        page_num = self._notebook.get_current_page()
-        return self._notebook.get_nth_page(page_num)
-
-    def hide(self):
-        """Hide the side pane from the application window."""
-        self._paned.get_child1().hide()
-
     def remove(self):
         """
         Remove the entire side pane from the application window.
@@ -311,6 +252,26 @@ class SidePane(aeidon.Observable):
         """Show the side pane in the application window."""
         self._paned.get_child1().show()
 
+    def _show_header_menu(self, event):
+        """Show a menu listing all side pane pages."""
+        menu = Gtk.Menu()
+        for i in range(self._notebook.get_n_pages()):
+            child = self._notebook.get_nth_page(i)
+            title = self._notebook.get_tab_label_text(child)
+            menu_item = Gtk.MenuItem(label=title)
+            menu_item.gaupol_child = child
+            menu_item.connect("activate", self._on_header_menu_item_activate)
+            menu.append(menu_item)
+        menu.connect("deactivate", self._on_header_menu_deactivate)
+        menu.show_all()
+        self._toggle_button.set_active(True)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=self._position_header_menu,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
+
 
 class SidePaneExtension(gaupol.Extension):
 
@@ -319,9 +280,9 @@ class SidePaneExtension(gaupol.Extension):
     def __init__(self):
         """Initialize a :class:`SidePaneExtension` instance."""
         self._action_group = None
+        self.application = None
         self._conf = None
         self._uim_id = None
-        self.application = None
 
     def _on_side_pane_close_button_clicked(self, side_pane):
         """Update the state of the corresponding menu item."""
@@ -339,11 +300,8 @@ class SidePaneExtension(gaupol.Extension):
 
     def setup(self, application):
         """Setup extension for use with `application`."""
-        gaupol.conf.register_extension("side_pane",
-                                       {"width": 200,
-                                        "page": "",
-                                        "visible": True})
-
+        options = {"width": 200, "page": "", "visible": True}
+        gaupol.conf.register_extension("side_pane", options)
         self._conf = gaupol.conf.extensions.side_pane
         application.side_pane = SidePane(application)
         self._action_group = Gtk.ActionGroup(name="side-pane")

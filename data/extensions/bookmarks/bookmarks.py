@@ -43,6 +43,14 @@ class AddBookmarkDialog(gaupol.BuilderDialog):
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.OK)
 
+    def get_description(self):
+        """Return description of the bookmarked subtitle."""
+        return self._description_entry.get_text()
+
+    def get_row(self):
+        """Return index of the bookmarked subtitle."""
+        return self._subtitle_spin.get_value_as_int() - 1
+
     def _init_values(self, page):
         """Initialize default values for widgets."""
         self._subtitle_spin.set_range(1, len(page.project.subtitles))
@@ -53,14 +61,6 @@ class AddBookmarkDialog(gaupol.BuilderDialog):
         description = aeidon.RE_ANY_TAG.sub("", description)
         self._description_entry.set_text(description)
         self._description_entry.set_width_chars(30)
-
-    def get_description(self):
-        """Return description of the bookmarked subtitle."""
-        return self._description_entry.get_text()
-
-    def get_row(self):
-        """Return index of the bookmarked subtitle."""
-        return self._subtitle_spin.get_value_as_int() - 1
 
     def run(self):
         """Show the dialog, run it and return response."""
@@ -75,6 +75,7 @@ class BookmarksExtension(gaupol.Extension):
     def __init__(self):
         """Initialize a :class:`BookmarksExtension` instance."""
         self._action_group = None
+        self.application = None
         self._bookmarks = None
         self._conf = None
         self._search_entry = None
@@ -82,7 +83,6 @@ class BookmarksExtension(gaupol.Extension):
         self._side_vbox = None
         self._tree_view = None
         self._uim_id = None
-        self.application = None
 
     def _add_bookmark(self):
         """Add a bookmark for the selected subtitle in the current page."""
@@ -125,6 +125,7 @@ class BookmarksExtension(gaupol.Extension):
     def _clear_attributes(self):
         """Set values of attributes to ``None``."""
         self._action_group = None
+        self.application = None
         self._bookmarks = None
         self._conf = None
         self._search_entry = None
@@ -132,7 +133,6 @@ class BookmarksExtension(gaupol.Extension):
         self._side_vbox = None
         self._tree_view = None
         self._uim_id = None
-        self.application = None
 
     def _connect_page(self, page):
         """Connect to signals emitted by `page`."""
@@ -191,7 +191,7 @@ class BookmarksExtension(gaupol.Extension):
              self._on_next_bookmark_activate),
             ("previous_bookmark", None, _("_Previous"),
              None, _("Go to the previous bookmarked subtitle"),
-             self._on_previous_bookmark_activate),))
+             self._on_previous_bookmark_activate)))
 
         self._action_group.add_toggle_actions((
             ("toggle_bookmark_column", None, _("_Bookmark"),
@@ -208,59 +208,39 @@ class BookmarksExtension(gaupol.Extension):
     def _init_attributes(self, application):
         """Initialize default values for attributes."""
         self._action_group = Gtk.ActionGroup(name="bookmarks")
+        self.application = application
         self._bookmarks = {}
         self._conf = gaupol.conf.extensions.bookmarks
         self._search_entry = Gtk.Entry()
         self._side_container = Gtk.Alignment(xalign=0, yalign=0)
-        self._side_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                                  spacing=6)
-
+        self._side_vbox = gaupol.util.new_vbox(spacing=6)
         self._tree_view = Gtk.TreeView()
         self._uim_id = None
-        self.application = application
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
         self._side_vbox.set_border_width(2)
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,
-                       spacing=6)
-
+        hbox = gaupol.util.new_hbox(spacing=6)
         label = Gtk.Label(label=_("Search:"))
-        hbox.pack_start(label,
-                        expand=False,
-                        fill=False,
-                        padding=0)
-
-        hbox.pack_start(self._search_entry,
-                        expand=True,
-                        fill=True,
-                        padding=0)
-
-        self._side_vbox.pack_start(hbox,
-                                   expand=False,
-                                   fill=False,
-                                   padding=0)
-
+        gaupol.util.pack_start(hbox, label)
+        gaupol.util.pack_start_expand(hbox, self._search_entry)
+        gaupol.util.pack_start(self._side_vbox, hbox)
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._tree_view)
-        self._side_vbox.pack_start(scroller,
-                                   expand=True,
-                                   fill=True,
-                                   padding=0)
-
+        gaupol.util.pack_start_expand(self._side_vbox, scroller)
         self._side_container.set_padding(0, 6, 2, 0)
         self._side_container.add(self._side_vbox)
         self._side_container.show_all()
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-        aeidon.util.connect(self, "_search_entry", "changed")
-        aeidon.util.connect(self, "_tree_view", "key-press-event")
         aeidon.util.connect(self, "application", "page-added")
         aeidon.util.connect(self, "application", "page-closed")
         aeidon.util.connect(self, "application", "page-switched")
+        aeidon.util.connect(self, "_search_entry", "changed")
+        aeidon.util.connect(self, "_tree_view", "key-press-event")
 
     def _init_tree_view(self):
         """Initialize the side pane tree view."""
@@ -347,7 +327,7 @@ class BookmarksExtension(gaupol.Extension):
         """Update rows of bookmarks with `rows` inserted before them."""
         if not page in self._bookmarks: return
         for irow in rows:
-            for crow in sorted(self._bookmarks[page].keys(), reverse=True):
+            for crow in reversed(sorted(self._bookmarks[page].keys())):
                 if crow < irow: continue
                 description = self._bookmarks[page][crow]
                 del self._bookmarks[page][crow]
@@ -358,7 +338,8 @@ class BookmarksExtension(gaupol.Extension):
         """Remove bookmarks and update rows of those remaining."""
         if not page in self._bookmarks: return
         for crow in list(self._bookmarks[page].keys()):
-            if crow in rows: del self._bookmarks[page][crow]
+            if crow in rows:
+                del self._bookmarks[page][crow]
         for crow in sorted(self._bookmarks[page].keys()):
             count = sum(1 for x in rows if x < crow)
             if count == 0: continue
@@ -385,7 +366,7 @@ class BookmarksExtension(gaupol.Extension):
         store = store_filter.get_model()
         pattern = entry.get_text().lower()
         for i, (visible, number, description) in enumerate(store):
-            store[i][0] = (description.lower().find(pattern) >= 0)
+            store[i][0] = description.lower().find(pattern) >= 0
 
     def _on_toggle_bookmark_column_toggled(self, action, *args):
         """Show or hide the bookmark column."""
@@ -468,38 +449,10 @@ class BookmarksExtension(gaupol.Extension):
                 pixbuf = column.gaupol_pixbuf
         renderer.props.pixbuf = pixbuf
 
-    def _update_tree_view(self):
-        """Update tree view to display bookmarks for the current page."""
-        store_filter = self._tree_view.get_model()
-        store = store_filter.get_model()
-        store.clear()
-        page = self.application.get_current_page()
-        if not page in self._bookmarks: return
-        pattern = self._search_entry.get_text().lower()
-        for row in sorted(self._bookmarks[page].keys()):
-            description = self._bookmarks[page][row]
-            visible = (description.lower().find(pattern) >= 0)
-            store.append((visible, row+1, description))
-
-    def _write_bookmarks(self, page):
-        """Write bookmarks from `page` to a ``.bookmarks`` file."""
-        if not page in self._bookmarks: return
-        path = self._get_bookmark_file_path(page)
-        if path is None: return
-        if not self._bookmarks[page]:
-            # Remove bookmark file when all bookmarks are removed.
-            if os.path.isfile(path): os.remove(path)
-            return
-        lines = []
-        for row in sorted(self._bookmarks[page].keys()):
-            lines.append("{:d} {}".format(row+1, self._bookmarks[page][row]))
-        text = "\n".join(lines) + "\n"
-        encoding = page.project.main_file.encoding
-        aeidon.util.write(path, text, encoding)
-
     def setup(self, application):
         """Setup extension for use with `application`."""
-        gaupol.conf.register_extension("bookmarks", {"show_column": True})
+        options = {"show_column": True}
+        gaupol.conf.register_extension("bookmarks", options)
         self._init_attributes(application)
         self._init_tree_view()
         self._init_signal_handlers()
@@ -528,19 +481,45 @@ class BookmarksExtension(gaupol.Extension):
     def update(self, application, page):
         """Update state of extension for `application` and active `page`."""
         action = self._action_group.get_action("add_bookmark")
-        try:
-            action.set_sensitive(len(page.view.get_selected_rows()) == 1)
-        except AttributeError:
-            action.set_sensitive(False)
+        sensitive = False
+        with aeidon.util.silent(AttributeError):
+            sensitive = len(page.view.get_selected_rows()) == 1
+        action.set_sensitive(sensitive)
         action = self._action_group.get_action("edit_bookmarks")
         action.set_sensitive(page is not None)
         action = self._action_group.get_action("next_bookmark")
-        try:
-            action.set_sensitive(bool(self._bookmarks[page]))
-        except KeyError:
-            action.set_sensitive(False)
+        sensitive = False
+        with aeidon.util.silent(KeyError):
+            sensitive = bool(self._bookmarks[page])
+        action.set_sensitive(sensitive)
         action = self._action_group.get_action("previous_bookmark")
-        try:
-            action.set_sensitive(bool(self._bookmarks[page]))
-        except KeyError:
-            action.set_sensitive(False)
+        action.set_sensitive(sensitive)
+
+    def _update_tree_view(self):
+        """Update tree view to display bookmarks for the current page."""
+        store_filter = self._tree_view.get_model()
+        store = store_filter.get_model()
+        store.clear()
+        page = self.application.get_current_page()
+        if not page in self._bookmarks: return
+        pattern = self._search_entry.get_text().lower()
+        for row in sorted(self._bookmarks[page].keys()):
+            description = self._bookmarks[page][row]
+            visible = description.lower().find(pattern) >= 0
+            store.append((visible, row+1, description))
+
+    def _write_bookmarks(self, page):
+        """Write bookmarks from `page` to a ``.bookmarks`` file."""
+        if not page in self._bookmarks: return
+        path = self._get_bookmark_file_path(page)
+        if path is None: return
+        if not self._bookmarks[page]:
+            # Remove bookmark file when all bookmarks are removed.
+            if os.path.isfile(path): os.remove(path)
+            return
+        lines = []
+        for row in sorted(self._bookmarks[page].keys()):
+            lines.append("{:d} {}".format(row+1, self._bookmarks[page][row]))
+        text = "\n".join(lines) + "\n"
+        encoding = page.project.main_file.encoding
+        aeidon.util.write(path, text, encoding)

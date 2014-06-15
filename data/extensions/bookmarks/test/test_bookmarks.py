@@ -19,7 +19,6 @@ import aeidon
 import gaupol
 import os
 import sys
-import traceback
 
 from gi.repository import Gtk
 
@@ -34,26 +33,20 @@ class TestAddBookmarkDialog(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("bookmarks", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
+        module = __import__("bookmarks", {}, {}, [])
         self.application = self.new_application()
         self.page = self.application.get_current_page()
         self.page.view.select_rows((1,))
-        self.dialog = mobj.AddBookmarkDialog(Gtk.Window(), self.page)
+        self.dialog = module.AddBookmarkDialog(Gtk.Window(), self.page)
         self.dialog.show()
 
     def test_get_description(self):
         self.dialog._description_entry.set_text("test")
-        text = self.dialog.get_description()
-        assert text == "test"
+        assert self.dialog.get_description() == "test"
 
     def test_get_row(self):
         self.dialog._subtitle_spin.set_value(3)
-        row = self.dialog.get_row()
-        assert row == 2
+        assert self.dialog.get_row() == 2
 
 
 class TestBookmarksExtension(gaupol.TestCase):
@@ -68,33 +61,22 @@ class TestBookmarksExtension(gaupol.TestCase):
 
     def import_side_pane(self):
         directory = os.path.abspath(os.path.dirname(__file__))
-        directory = os.path.abspath(os.path.join(directory,
-                                                 "..",
-                                                 "..",
-                                                 "side-pane"))
-
+        directory = os.path.join(directory, "..", "..", "side-pane")
+        directory = os.path.abspath(directory)
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("side-pane", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
-        return(mobj)
+        module = __import__("side-pane", {}, {}, [])
+        return(module)
 
     def setup_method(self, method):
         self.application = self.new_application()
-        mobj_sp = self.import_side_pane()
-        self.extension_sp = mobj_sp.SidePaneExtension()
+        module_sp = self.import_side_pane()
+        self.extension_sp = module_sp.SidePaneExtension()
         self.extension_sp.setup(self.application)
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("bookmarks", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
-        self.extension = mobj.BookmarksExtension()
+        module = __import__("bookmarks", {}, {}, [])
+        self.extension = module.BookmarksExtension()
         self.extension.setup(self.application)
         self.page = self.application.get_current_page()
         self.bookmark_subtitles()
@@ -108,75 +90,20 @@ class TestBookmarksExtension(gaupol.TestCase):
     @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test__on_add_bookmark_activate(self):
         gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
-        action = self.application.get_action("add_bookmark")
-        action.activate()
-
-    def test__on_application_page_added(self):
-        self.application.open_main(self.new_subrip_file())
-
-    def test__on_application_page_closed(self):
-        self.application.close(self.page)
-
-    def test__on_application_page_switched(self):
-        self.application.open_main(self.new_subrip_file())
-        for page in self.application.pages:
-            self.application.set_current_page(page)
+        self.application.get_action("add_bookmark").activate()
 
     def test__on_edit_bookmarks_activate(self):
-        action = self.application.get_action("edit_bookmarks")
-        action.activate()
+        self.application.get_action("edit_bookmarks").activate()
 
     def test__on_next_bookmark_activate(self):
-        action = self.application.get_action("next_bookmark")
-        action.activate()
-        action.activate()
-        action.activate()
-
-    def test__on_project_main_file_saved(self):
-        self.application.save_main(self.page)
-
-    def test__on_project_subtitles_inserted(self):
-        self.page.project.insert_subtitles(list(range(7)))
-
-    def test__on_project_subtitles_removed(self):
-        self.bookmark_subtitles()
-        self.page.project.remove_subtitles(list(range(7)))
+        self.application.get_action("next_bookmark").activate()
+        self.application.get_action("next_bookmark").activate()
+        self.application.get_action("next_bookmark").activate()
 
     def test__on_previous_bookmark_activate(self):
-        action = self.application.get_action("previous_bookmark")
-        action.activate()
-        action.activate()
-        action.activate()
-
-    def test__on_search_entry_changed(self):
-        self.extension._search_entry.set_text("a")
-        self.extension._search_entry.set_text("x")
-
-    def test__on_tree_view_selection_changed(self):
-        selection = self.extension._tree_view.get_selection()
-        selection.select_path(1)
-        selection.select_path(2)
-        selection.select_path(3)
-
-    def test__read_bookmarks(self):
-        path = self.new_subrip_file()
-        path_bookmarks = path.replace(".srt", ".gaupol-bookmarks")
-        f = open(path_bookmarks, "a")
-        f.write("1 test\n")
-        f.write("2 test\n")
-        f.write("3 test\n")
-        f.close()
-        self.application.open_main(path)
-
-    def test_setup(self):
-        page = self.application.side_pane.get_current_page()
-        assert page is self.extension._side_container
-
-    def test_teardown(self):
-        self.extension.teardown(self.application)
-        page = self.application.side_pane.get_current_page()
-        assert page is None
-        self.extension.setup(self.application)
+        self.application.get_action("previous_bookmark").activate()
+        self.application.get_action("previous_bookmark").activate()
+        self.application.get_action("previous_bookmark").activate()
 
     def test_update(self):
         self.extension.update(self.application, self.page)

@@ -38,7 +38,7 @@ class AddFramerateDialog(gaupol.BuilderDialog):
         ui_file_path = os.path.join(directory, "add-framerate-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
         self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
+        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _on_response(self, *args):
         """Update spin button before dispatching response."""
@@ -70,6 +70,14 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
+
+    def get_framerates(self):
+        """Return the defined custom framerates."""
+        framerates = []
+        store = self._tree_view.get_model()
+        for i in range(len(store)):
+            framerates.append(store[i][0])
+        return tuple(sorted(framerates))
 
     def _get_selected_rows(self):
         """Return a sequence of the selected rows."""
@@ -122,14 +130,6 @@ class PreferencesDialog(gaupol.BuilderDialog):
         n = selection.count_selected_rows()
         self._remove_button.set_sensitive(n > 0)
 
-    def get_framerates(self):
-        """Return the defined custom framerates."""
-        framerates = []
-        store = self._tree_view.get_model()
-        for i in range(len(store)):
-            framerates.append(store[i][0])
-        return(tuple(sorted(framerates)))
-
 
 class CustomFrameratesExtension(gaupol.Extension):
 
@@ -176,7 +176,7 @@ class CustomFrameratesExtension(gaupol.Extension):
             action_name = name.replace("FPS", "show_framerate")
             action = Gtk.RadioAction(name=action_name,
                                      label=framerate.label,
-                                     tooltip=(tooltip.format(value)),
+                                     tooltip=tooltip.format(value),
                                      stock_id=None,
                                      value=int(framerate))
 
@@ -229,9 +229,8 @@ class CustomFrameratesExtension(gaupol.Extension):
 
     def setup(self, application):
         """Setup extension for use with `application`."""
-        gaupol.conf.register_extension("custom_framerates",
-                                       {"framerates": [48.0]})
-
+        options = {"framerates": [48.0]}
+        gaupol.conf.register_extension("custom_framerates", options)
         self._conf = gaupol.conf.extensions.custom_framerates
         self.application = application
         self._add_framerates()

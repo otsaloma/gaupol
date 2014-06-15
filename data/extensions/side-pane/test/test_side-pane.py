@@ -18,7 +18,6 @@
 import gaupol
 import os
 import sys
-import traceback
 
 from gi.repository import Gtk
 
@@ -29,33 +28,17 @@ class TestSidePane(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("side-pane", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
-        gaupol.conf.register_extension("side_pane",
-                                       {"width": 200,
-                                        "page": "",
-                                        "visible": True})
-
+        module = __import__("side-pane", {}, {}, [])
+        options = {"width": 200, "page": "", "visible": True}
+        gaupol.conf.register_extension("side_pane", options)
         self.application = self.new_application()
-        self.side_pane = mobj.SidePane(self.application)
-
-    def test__on_header_close_button_clicked(self):
-        side_vbox = self.side_pane._paned.get_child1()
-        header_hbox = side_vbox.get_children()[0]
-        button = header_hbox.get_children()[-1]
-        button.emit("clicked")
-        assert not side_vbox.props.visible
+        self.side_pane = module.SidePane(self.application)
+        self.page1 = Gtk.TextView()
+        self.page2 = Gtk.TextView()
+        self.side_pane.add_page(self.page1, "test1", "Test 1")
+        self.side_pane.add_page(self.page2, "test2", "Test 2")
 
     def test_add_page(self):
-        text_view = Gtk.TextView()
-        self.side_pane.add_page(text_view, "test", "Test")
-        page = self.side_pane.get_current_page()
-        assert page is text_view
-
-    def test_get_current_page(self):
         text_view = Gtk.TextView()
         self.side_pane.add_page(text_view, "test", "Test")
         page = self.side_pane.get_current_page()
@@ -64,38 +47,19 @@ class TestSidePane(gaupol.TestCase):
     def test_hide(self):
         self.side_pane.show()
         self.side_pane.hide()
-        side_vbox = self.side_pane._paned.get_child1()
-        assert not side_vbox.props.visible
 
     def test_remove(self):
-        text_view = Gtk.TextView()
-        self.side_pane.add_page(text_view, "test", "Test")
         self.side_pane.remove()
 
     def test_remove_page(self):
-        text_view = Gtk.TextView()
-        self.side_pane.add_page(text_view, "test", "Test")
+        self.side_pane.set_current_page(self.page1)
+        self.side_pane.remove_page(self.page1)
         page = self.side_pane.get_current_page()
-        assert page is text_view
-        self.side_pane.remove_page(text_view)
-        page = self.side_pane.get_current_page()
-        assert page is None
-
-    def test_set_current_page(self):
-        text_view_1 = Gtk.TextView()
-        text_view_2 = Gtk.TextView()
-        self.side_pane.add_page(text_view_1, "test_1", "Test 1")
-        self.side_pane.add_page(text_view_2, "test_2", "Test 2")
-        self.side_pane.set_current_page(text_view_1)
-        assert self.side_pane._conf.page == "test_1"
-        self.side_pane.set_current_page(text_view_2)
-        assert self.side_pane._conf.page == "test_2"
+        assert page is not self.page1
 
     def test_show(self):
         self.side_pane.hide()
         self.side_pane.show()
-        side_vbox = self.side_pane._paned.get_child1()
-        assert side_vbox.props.visible
 
 
 class TestSidePaneExtension(gaupol.TestCase):
@@ -104,12 +68,8 @@ class TestSidePaneExtension(gaupol.TestCase):
         directory = os.path.abspath(os.path.dirname(__file__))
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
-        try:
-            mobj = __import__("side-pane", {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally: sys.path.pop(0)
-        self.extension = mobj.SidePaneExtension()
+        module = __import__("side-pane", {}, {}, [])
+        self.extension = module.SidePaneExtension()
         self.application = self.new_application()
         self.extension.setup(self.application)
 

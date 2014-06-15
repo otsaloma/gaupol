@@ -94,11 +94,7 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.set_cursor_normal(self.window)
 
     def _append_subtitles(self, page, subtitles):
-        """
-        Append `subtitles` to `page`.
-
-        Return sequence of new indices in `page`.
-        """
+        """Append `subtitles` to `page` and return new indices."""
         project = page.project
         n = len(project.subtitles)
         indices = list(range(n, n + len(subtitles)))
@@ -473,7 +469,6 @@ class OpenAgent(aeidon.Delegate):
         Raise :exc:`gaupol.Default` if reading or parsing fails.
         Raise :exc:`UnicodeError`if decoding fails.
         """
-        gaupol.util.set_cursor_busy(self.window)
         basename = os.path.basename(path)
         if encoding == "auto":
             encoding = aeidon.encodings.detect(path)
@@ -481,6 +476,7 @@ class OpenAgent(aeidon.Delegate):
         if doc == aeidon.documents.TRAN:
             kwargs["align_method"] = gaupol.conf.file.align_method
         try:
+            gaupol.util.set_cursor_busy(self.window)
             return page.project.open(doc, path, encoding, **kwargs)
         except aeidon.FormatError:
             gaupol.util.set_cursor_normal(self.window)

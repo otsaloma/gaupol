@@ -82,7 +82,7 @@ class CloseAgent(aeidon.Delegate):
         """
         Close `page` after asking to save its main document.
 
-        Raise :exc:`gaupol.Default` if cancelled and page not closed.
+        Raise :exc:`gaupol.Default` if cancelled and `page` not closed.
         """
         title = _('Save changes to main document "{}" before closing?')
         title = title.format(page.get_main_basename())

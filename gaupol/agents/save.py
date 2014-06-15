@@ -84,14 +84,10 @@ class SaveAgent(aeidon.Delegate):
         self.update_gui()
 
     def _save_document(self, page, doc, file=None):
-        """
-        Save `doc` of `page` to `file`.
-
-        Raise :exc:`gaupol.Default` if saving failed.
-        """
+        """Save document to `file` or raise :exc:`gaupol.Default`."""
         file = file or page.project.get_file(doc)
-        gaupol.util.set_cursor_busy(self.window)
         try:
+            gaupol.util.set_cursor_busy(self.window)
             return page.project.save(doc, file)
         except IOError as error:
             gaupol.util.set_cursor_normal(self.window)
@@ -108,7 +104,7 @@ class SaveAgent(aeidon.Delegate):
     @aeidon.deco.export
     def save_main(self, page):
         """
-        Save the main document of `page`.
+        Save the main document of `page` to file.
 
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
@@ -141,7 +137,7 @@ class SaveAgent(aeidon.Delegate):
     @aeidon.deco.export
     def save_translation(self, page):
         """
-        Save the translation document of `page`.
+        Save the translation document of `page` to file.
 
         Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
@@ -172,11 +168,7 @@ class SaveAgent(aeidon.Delegate):
                            .format(basename))
 
     def _select_file(self, title, page, file=None):
-        """
-        Select a file and return a :class:`aeidon.SubtitleFile`.
-
-        Raise :exc:`gaupol.Default` if cancelled.
-        """
+        """Select a file to save or raise :exc:`gaupol.Default`."""
         gaupol.util.set_cursor_busy(self.window)
         mode = page.project.get_mode()
         dialog = gaupol.SaveDialog(self.window, title, mode)
