@@ -89,7 +89,7 @@ class VideoAgent(aeidon.Delegate):
         item.set_tooltip_text(_("Volume"))
         self.player_toolbar.insert(item, -1)
         gaupol.util.pack_start_fill(vbox, self.player_toolbar)
-        gaupol.util.pack_start_expand(self.player_hbox, vbox)
+        gaupol.util.pack_start_expand(self.player_box, vbox)
         self.player_box.show_all()
         self.paned.add1(self.player_box)
         orientation = self.paned.props.orientation
