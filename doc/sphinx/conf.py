@@ -114,8 +114,8 @@ private_members = False
 
 # Always include or exclude objects these names.
 include_members = ['__init__']
-exclude_members = ['_invariant']
-exclude_members_endswith = ['_require', '_ensure']
+exclude_members = []
+exclude_members_endswith = []
 
 # Path to the project root directory, relative to this directory.
 project_root = os.path.join('..', '..')
