@@ -8,7 +8,7 @@ Releasing a New Version
    - gaupol-i18n@gna.org
    - Wait at least a week for translations
  * Do final quality checks
-   $ pyflakes3 bin/gaupol *.py aeidon gaupol
+   $ pyflakes3 aeidon gaupol bin/gaupol data/extensions/*/*.py *.py
    $ py.test-3 --tb=no aeidon
    $ py.test-3 --tb=no gaupol
      - Faster in separate runs!?
