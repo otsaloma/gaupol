@@ -2,13 +2,9 @@ Preparing to Build Windows Installers
 =====================================
 
  * Install the latest Python 3.x.
-   - http://python.org/download/
- * Install Python for Windows Extensions
-   - http://sourceforge.net/projects/pywin32/
+ * Install Python for Windows Extensions (pywin32)
  * Install setuptools
-   - https://pypi.python.org/pypi/setuptools
- * Install PyGObject all-in-one for Windows
-   - http://sourceforge.net/projects/pygobjectwin32/files/
+ * Install PyGObject all-in-one for Windows (pygi-aio)
    - Fix GTK+3 theming for Windows
      o .../site-packages/gnome/etc/gtk-3.0/settings.ini
 
@@ -20,18 +16,9 @@ gtk-menu-images = 0
 gtk-theme-name = Adwaita
 
  * Install chardet compatible with Python 3
-   - http://github.com/bsidhom/python3-chardet
-   - python3 setyp.py install_lib
  * Install PyEnchant
-   - https://pypi.python.org/pypi/pyenchant
-   - Keep libenchant-1.dll, but remove other DLLs since they seem
-     to conflict with ones from pygi-aio
-     o .../site-packages/enchant/*.dll
-   - Monkey-patch to accomodate a frozen installation
-     o http://github.com/rfk/pyenchant/issues/25
+   - Check DLLs for conflicts with those in pygi-aio
  * Install cx_Freeze and Inno Setup
-   - http://cx-freeze.sourceforge.net/
-   - http://www.jrsoftware.org/isdl.php
 
 Releasing a New Version for Windows
 ===================================
