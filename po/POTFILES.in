@@ -5,7 +5,6 @@
 [type: gettext/glade]data/ui/duration-adjust-dialog.ui
 [type: gettext/glade]data/ui/encoding-dialog.ui
 [type: gettext/glade]data/ui/framerate-convert-dialog.ui
-[type: gettext/glade]data/ui/header-dialog.ui
 [type: gettext/glade]data/ui/insert-dialog.ui
 [type: gettext/glade]data/ui/language-dialog.ui
 [type: gettext/glade]data/ui/multi-close-dialog.ui
@@ -17,7 +16,6 @@
 [type: gettext/glade]data/ui/preview-error-dialog.ui
 [type: gettext/glade]data/ui/save-dialog.ui
 [type: gettext/glade]data/ui/search-dialog.ui
-[type: gettext/glade]data/ui/speech-recognition-dialog.ui
 [type: gettext/glade]data/ui/spell-check-dialog.ui
 [type: gettext/glade]data/ui/split-dialog.ui
 [type: gettext/glade]data/ui/text-assistant/capitalization-page.ui
@@ -61,7 +59,6 @@ aeidon/agents/util.py
 aeidon/calculator.py
 aeidon/clipboard.py
 aeidon/containers.py
-aeidon/contractual.py
 aeidon/converter.py
 aeidon/countries.py
 aeidon/deco.py
@@ -83,7 +80,6 @@ aeidon/files/__init__.py
 aeidon/files/ass.py
 aeidon/files/microdvd.py
 aeidon/files/mpl2.py
-aeidon/files/mpsub.py
 aeidon/files/ssa.py
 aeidon/files/subrip.py
 aeidon/files/subviewer2.py
@@ -110,7 +106,6 @@ aeidon/tags/__init__.py
 aeidon/tags/ass.py
 aeidon/tags/microdvd.py
 aeidon/tags/mpl2.py
-aeidon/tags/mpsub.py
 aeidon/tags/ssa.py
 aeidon/tags/subrip.py
 aeidon/tags/subviewer2.py
@@ -164,7 +159,6 @@ gaupol/dialogs/builder.py
 gaupol/dialogs/debug.py
 gaupol/dialogs/encoding.py
 gaupol/dialogs/file.py
-gaupol/dialogs/header.py
 gaupol/dialogs/insert.py
 gaupol/dialogs/language.py
 gaupol/dialogs/message.py
@@ -174,7 +168,6 @@ gaupol/dialogs/position_shift.py
 gaupol/dialogs/preferences.py
 gaupol/dialogs/save.py
 gaupol/dialogs/search.py
-gaupol/dialogs/speech_recognition.py
 gaupol/dialogs/spell_check.py
 gaupol/dialogs/split.py
 gaupol/dialogs/text_edit.py
@@ -189,7 +182,6 @@ gaupol/errors.py
 gaupol/extension.py
 gaupol/extensionman.py
 gaupol/main.py
-gaupol/meta.py
 gaupol/output.py
 gaupol/page.py
 gaupol/renderers/__init__.py
