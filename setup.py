@@ -10,27 +10,27 @@ the aeidon.paths module, (3) handling translating of various files and
 (1) Allowing separate installations of aeidon and gaupol are handled through
     global options --with-aeidon, --without-aeidon, --with-gaupol and
     --without-gaupol. See 'python3 setup.py --help' and the file
-    'README.aeidon' for documentation and the Distribution class defined in
-    this file for the implementation and logic of how that is handled.
+    'README.aeidon' for documentation and the Distribution class defined
+    in this file for the implementation and logic of how that is handled.
 
 (2) Gaupol finds non-Python files based on the paths written in module
     aeidon.paths. In aeidon/paths.py the paths default to the ones in the
     source directory. During the 'install_lib' command the file gets rewritten
     to build/aeidon/paths.py with the installation paths and that file will be
     installed. The paths are based on variable 'install_data' with the 'root'
-    variable stripped if it is given. If doing distro-packaging, make sure this
-    file gets correctly written.
+    variable stripped if it is given. If doing distro-packaging, make sure
+    this file gets correctly written.
 
 (3) During installation, the .po files are compiled into .mo files, appdata,
-    desktop, pattern and extension metadata files are translated. This
-    requires gettext and intltool, more specifically, executables 'msgfmt' and
-    'intltool-merge' in $PATH.
+    desktop, pattern and extension metadata files are translated.
+    This requires gettext and intltool, more specifically, executables 'msgfmt'
+    and 'intltool-merge' in $PATH.
 
 (4) Extensions are installed under the data directory. All python code included
     in the extensions are compiled during the 'install_data' command, using the
-    same arguments for 'byte_compile' as used by the 'install_lib' command. If
-    the 'install_lib' command was given the '--no-compile' option, then
-    extensions are not compiled either.
+    same arguments for 'byte_compile' as used by the 'install_lib' command.
+    If the 'install_lib' command was given the '--no-compile' option,
+    then extensions are not compiled either.
 """
 
 import distutils.command.clean
@@ -56,9 +56,7 @@ sdist = distutils.command.sdist.sdist
 
 
 global_options = (
-    ("mandir=", None, ("relative installation directory for man pages "
-                       "(defaults to 'share/man')")),
-
+    ("mandir=", None, "relative installation directory for man pages (defaults to 'share/man')"),
     ("with-aeidon", None, "install the aeidon package"),
     ("without-aeidon", None, "don't install the aeidon package"),
     ("with-gaupol", None, "install the gaupol package"),
@@ -122,6 +120,20 @@ class Distribution(distribution):
 
     """The core controller of distutils commands."""
 
+    def __init__(self, attrs=None):
+        """Initialize a :class:`Distribution` instance."""
+        if freezing:
+            self.executables = []
+        self.mandir = "share/man"
+        self.with_aeidon = True
+        self.with_gaupol = True
+        self.with_iso_codes = True
+        value = distribution.__init__(self, attrs)
+        self.data_files = []
+        self.packages = []
+        self.scripts = []
+        return value
+
     def __find_data_files(self, name):
         """Find data files to install for name."""
         fok = lambda x: not x.endswith((".in", ".pyc"))
@@ -159,20 +171,6 @@ class Distribution(distribution):
         """Find scripts to install for name."""
         if name == "gaupol":
             self.scripts.append("bin/gaupol")
-
-    def __init__(self, attrs=None):
-        """Initialize a :class:`Distribution` instance."""
-        if freezing:
-            self.executables = []
-        self.mandir = "share/man"
-        self.with_aeidon = True
-        self.with_gaupol = True
-        self.with_iso_codes = True
-        value = distribution.__init__(self, attrs)
-        self.data_files = []
-        self.packages = []
-        self.scripts = []
-        return value
 
     def parse_command_line(self):
         """Parse commands and options given as arguments."""
@@ -224,15 +222,15 @@ class Documentation(distutils.cmd.Command):
     user_options = [("format=", "f",
                      "type of documentation to create (try 'html')")]
 
-    def initialize_options(self):
-        """Initialize default values for options."""
-        self.format = None
-
     def finalize_options(self):
         """Ensure that options have valid values."""
         if self.format is None:
             log.warn("format not specified, using 'html'")
             self.format = "html"
+
+    def initialize_options(self):
+        """Initialize default values for options."""
+        self.format = None
 
     def run(self):
         """Build documentation from source code."""
@@ -354,12 +352,18 @@ class InstallLib(install_lib):
 
     """Command to install library files."""
 
+    def install(self):
+        """Install library files after writing changes."""
+        if self.distribution.with_aeidon:
+            self.__write_paths_module()
+        return install_lib.install(self)
+
     def __write_paths_module(self):
         """Write installation paths to build/aeidon/paths.py."""
         get_command_obj = self.distribution.get_command_obj
         root = get_command_obj("install").root
         prefix = get_command_obj("install").install_data
-        # Allow --root to be used like $DESTDIR.
+        # Allow --root to be used like DESTDIR.
         if root is not None:
             prefix = os.path.abspath(prefix)
             prefix = prefix.replace(os.path.abspath(root), "")
@@ -377,12 +381,6 @@ class InstallLib(install_lib):
         text = text.replace(patt, repl)
         assert text.count(repr(locale_dir)) > 0
         open(path, "w", encoding="utf_8").write(text)
-
-    def install(self):
-        """Install library files after writing changes."""
-        if self.distribution.with_aeidon:
-            self.__write_paths_module()
-        return install_lib.install(self)
 
 
 class SDistGna(sdist):

@@ -7,20 +7,21 @@ os.environ["GAUPOL_FREEZING"] = "1"
 from setup import *
 import cx_Freeze
 
-includes = ("aeidon", "gaupol", "gi")
-include_files = []
+includes = ["aeidon", "gaupol", "gi"]
+include_files = [(os.path.join("build", "usr", "share"), "share")]
 site_path = site.getsitepackages()[1]
+
 gnome_path = os.path.join(site_path, "gnome")
-enchant_path = os.path.join(site_path, "enchant")
 for dll in glob.glob("{}\\*.dll".format(gnome_path)):
-    include_files.append((dll, os.path.basename(dll)))
-for dll in glob.glob("{}\\*.dll".format(enchant_path)):
     include_files.append((dll, os.path.basename(dll)))
 for lib in ("etc", "lib", "share"):
     include_files.append((os.path.join(gnome_path, lib), lib))
+
+enchant_path = os.path.join(site_path, "enchant")
+for dll in glob.glob("{}\\*.dll".format(enchant_path)):
+    include_files.append((dll, os.path.basename(dll)))
 for lib in ("lib", "share"):
     include_files.append((os.path.join(enchant_path, lib), lib))
-include_files.append((os.path.join("build", "usr", "share"), "share"))
 
 setup_kwargs.update(dict(
     options=dict(build_exe=dict(compressed=False,
