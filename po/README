@@ -4,7 +4,7 @@ Translating Gaupol
 To avoid doing redundant work, first check the latest list of existing
 translations at the head of the master branch.
 
-    https://github.com/otsaloma/gaupol/tree/master/po
+    http://github.com/otsaloma/gaupol/tree/master/po
 
 To try your translation in the source directory, you can compile it to
 the 'locale' directory (which does not exist by default). To see a fully

@@ -28,9 +28,9 @@ Gaupol 1.0
 ==========
 
  * Apply new GNOME goals?
-   - https://wiki.gnome.org/Initiatives/GnomeGoals/HeaderBars
-   - https://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
-   - https://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
-   - https://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
+   - http://wiki.gnome.org/Initiatives/GnomeGoals/HeaderBars
+   - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
+   - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
+   - http://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
  * Allow using multiple dictionaries for spell-check
  * Add a GStreamer-based audio waveform display
