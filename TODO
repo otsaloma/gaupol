@@ -21,9 +21,6 @@ Gaupol 0.26
  [X] Update Brazilian Portuguese translation (Rafael Ferreira)
  [X] Update Czech translation (Pavel Fric)
 
- FIX:
-  * Line-breaker and multiline renderer report different line lengths
-
 Gaupol 1.0
 ==========
 

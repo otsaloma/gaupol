@@ -160,10 +160,11 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         # We don't actually use the length_unit argument,
         # but do need it accounted for in memoized values.
         if not text: return ""
-        text = GLib.markup_escape_text(text)
-        if not show_lengths: return text
-        lines = text.split("\n")
+        if not show_lengths:
+            return GLib.markup_escape_text(text)
         lengths = gaupol.ruler.get_lengths(text)
+        text = GLib.markup_escape_text(text)
+        lines = text.split("\n")
         return "\n".join(("{} <small>[{:d}]</small>"
                           .format(lines[i], lengths[i])
                           if lines[i] else lines[i]
