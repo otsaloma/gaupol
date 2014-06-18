@@ -4,6 +4,8 @@ Gaupol 0.26
  [X] Update file selection dialogs to work better with GTK+ 3.12
  [X] Default toolbar style to icons only (due to gtk-toolbar-style
      being deprecated since GTK+ 3.10)
+ [X] Allow using the dark GTK+ theme variant (you need to edit
+     ~/.config/gaupol/gaupol.conf to enable this)
  [X] Fix errors and lack of updates in multiline text cells and their
      line length calculation and display (#728575)
  [X] Fix initially incorrect row heights after opening a file

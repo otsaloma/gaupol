@@ -57,6 +57,9 @@ def _init_configuration():
     gaupol.conf.path = path
     gaupol.conf.read_from_file()
     atexit.register(gaupol.conf.write_to_file)
+    Gtk.Settings.get_default().set_property(
+        "gtk-application-prefer-dark_theme",
+        gaupol.conf.general.dark_theme)
 
 def _init_gettext():
     """Initialize translation settings."""

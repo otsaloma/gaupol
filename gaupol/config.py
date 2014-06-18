@@ -63,6 +63,7 @@ config_defaults = {
         "use_maximum": False,
         },
     "general": {
+        "dark_theme": False,
         "version": None,
         },
     "editor": {
