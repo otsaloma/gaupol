@@ -48,7 +48,7 @@ Gaupol 0.24
 ===========
 
  * Add action to set the end time from video position
-   (see also https://wiki.gnome.org/Gaupol/CreatingSubtitles)
+   (see also https://wiki.gnome.org/Apps/Gaupol/CreatingSubtitles)
  * Use a floating label for the statusbar
  * Show search dialog messages in a floating label
    in the search dialog
@@ -193,7 +193,7 @@ Gaupol 0.19
 ===========
 
  * Add speech recognition to allow generating subtitles from video
-   http://wiki.gnome.org/Gaupol/SpeechRecognition
+   http://wiki.gnome.org/Apps/Gaupol/SpeechRecognition
  * Fix installation of custom-framerates extension
  * Add optional dependency on gst-python (this also implies a
    dependency on one or more of gst-plugins-base, gst-plugins-good,
@@ -305,7 +305,7 @@ Gaupol 0.16
    numbers if the search string contains a colon (fixes #609176)
  * Add miscellaneous Latin common error corrections patterns
  * Add help menu item to browse wiki documentation at
-   http://wiki.gnome.org/Gaupol
+   http://wiki.gnome.org/Apps/Gaupol
  * Increase size of line length superscripts shown in list cells
  * Fix focus changing when pasting subtitles
  * Use gtk.RecentAction for recent file menus (fixes #615372 and

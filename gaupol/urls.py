@@ -34,8 +34,8 @@ __all__ = ("BUG_REPORT_URL",
            "WIKI_URL")
 
 BUG_REPORT_URL = "http://bugzilla.gnome.org/enter_bug.cgi?product=gaupol"
-EXTENSIONS_URL = "http://wiki.gnome.org/Gaupol/Extensions"
+EXTENSIONS_URL = "http://wiki.gnome.org/Apps/Gaupol/Extensions"
 HOMEPAGE_URL = "http://home.gna.org/gaupol/"
-PREVIEW_HELP_URL = "http://wiki.gnome.org/Gaupol/Preview"
+PREVIEW_HELP_URL = "http://wiki.gnome.org/Apps/Gaupol/Preview"
 REGEX_HELP_URL = "http://docs.python.org/3/library/re.html#regular-expression-syntax"
-WIKI_URL = "http://wiki.gnome.org/Gaupol"
+WIKI_URL = "http://wiki.gnome.org/Apps/Gaupol"
