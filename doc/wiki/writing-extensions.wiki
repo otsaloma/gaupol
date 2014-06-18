@@ -6,9 +6,9 @@
 
 Extensions, as the name implies, extend the features of Gaupol. Extensions are suitable for rarely used or obscure features and customizations of the user interface or behaviour.
 
-Gaupol is written in [[http://www.python.org/|Python]] and so are its extensions as well. Python is an expressive, dynamic programming language well suitable for rapid extension development. Gaupol's user interface is implemented with the [[http://www.gtk.org/|GTK+]] toolkit using the [[https://wiki.gnome.org/PyGObject|PyGObject]] bindings. The reader is expected to be familiar with both Python and PyGObject and able to read documentation on both. Relevant parts of Gaupol's API will be explained; for details, consult the [[http://download.gna.org/gaupol/doc/|full API documentation]].
+Gaupol is written in [[http://www.python.org/|Python]] and so are its extensions as well. Python is an expressive, dynamic programming language well suitable for rapid extension development. Gaupol's user interface is implemented with the [[http://www.gtk.org/|GTK+]] toolkit using the [[Projects/PyGObject|PyGObject]] bindings. The reader is expected to be familiar with both Python and PyGObject and able to read documentation on both. Relevant parts of Gaupol's API will be explained; for details, consult the [[http://download.gna.org/gaupol/doc/|full API documentation]].
 
-Extensions consist of two parts: a metadata file (with the filename extension `.extension`) and Python code. Gaupol looks for both files under both the global data directory and the user's home directory, which is `~/.local/share/gaupol/extensions` on Unix or `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista and 7. The metadata file contains information about the extension and tells Gaupol where to look for the corresponding Python code. The Python code contains the extension implementation as a subclass of `gaupol.Extension`.
+Extensions consist of two parts: a metadata file (with the filename extension `.extension`) and Python code. Gaupol looks for both files under both the global data directory and the user's home directory, which is `~/.local/share/gaupol/extensions` on Unix or `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista and later. The metadata file contains information about the extension and tells Gaupol where to look for the corresponding Python code. The Python code contains the extension implementation as a subclass of `gaupol.Extension`.
 
 Starting with 0.20 Gaupol uses Python 3, GTK+ 3 and Py''''''GObject bindings. This applies to extensions as well. If you read the previous instructions and wrote code for Python 2, GTK+ 2 and Py''''''GTK, you might also want to read
 
@@ -16,7 +16,7 @@ Starting with 0.20 Gaupol uses Python 3, GTK+ 3 and Py''''''GObject bindings. Th
 
  * [[http://developer.gnome.org/gtk3/stable/gtk-migrating-2-to-3.html|Migrating from GTK+ 2.x to GTK+ 3]] and
 
- * [[PyGObject/IntrospectionPorting|Porting to PyGObject introspection]].
+ * [[Projects/PyGObject/IntrospectionPorting|Porting to PyGObject introspection]].
 
 == The Hello World Extension ==
 
@@ -24,7 +24,7 @@ As customary, let us start with the simplest possible extension -- one that prin
 
 {{{
 [Gaupol Extension]
-GaupolVersion=0.20
+GaupolVersion=0.26
 Module=hello
 Name=Hello, World
 Description=Print greetings to standard output
@@ -62,13 +62,13 @@ The `update` method is called every time the application GUI is being updated (w
 The extension metadata file defines information about the extension, which need to be available without importing the actual extension code. Let us go over all the metadata fields using the bookmarks extension as an example.
 
 {{{
-[Gaupol Extension]
-GaupolVersion=0.20
+[Extension]
+GaupolVersion=0.26
 Module=bookmarks
 Requires=side-pane;
 Name=Bookmarks
 Description=Marking subtitles for easy navigation
-Version=0.20
+Version=0.26
 Authors=Osmo Salomaa <otsaloma@iki.fi>;
 Copyright=Copyright (C) 2008 Osmo Salomaa;
 Website=http://home.gna.org/gaupol
@@ -157,7 +157,7 @@ The bookmarks extension uses `set_cell_data_func` to display data in the column.
 To add a page to the side pane, all you need to do is add a dependency on the side-pane extension in the metadata file and in your extension's `setup` method, call `application.side_pane.add_page` with three arguments: the widget to be displayed in the side pane, the name of the page (use the module name of your extension) and the title to be shown in the side pane page selector.
 
 {{{
-[Gaupol Extension]
+[Extension]
 Requires=side-pane;
 }}}
 

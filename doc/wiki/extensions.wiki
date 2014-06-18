@@ -4,7 +4,7 @@
 
 This page contains a list of third party extensions. If you have written an extension that may be of interest for others, you can post a description of the extension and a link to where it can be downloaded from. If you have an idea for what would make an excellent extension, but cannot implement it yourself you can post that idea in the hope that someone would pick it up.
 
-To install one of the extensions, place the files in a directory under `~/.local/share/gaupol/extensions` on Unix or under `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or under `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista and 7. The files should include at least a `.extension` file and one or more `.py` files. To activate the extension, select ''Preferences'' from the ''Edit'' menu and go to the ''Extensions'' tab.
+To install one of the extensions, place the files in a directory under `~/.local/share/gaupol/extensions` on Unix or under `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or under `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista and later. The files should include at least a `.extension` file and one or more `.py` files. To activate the extension, select ''Preferences'' from the ''Edit'' menu and go to the ''Extensions'' tab.
 
 == Available Extensions ==
 
@@ -19,7 +19,7 @@ Author: Your Name<<BR>>
 
 == Deprecated Extensions ==
 
-The following extensions are deprecated and '''will not work with Gaupol 0.20 and later'''. They need to be ported to Python 3, GTK+ 3 and the Py''''''GObject introspection bindings. See the updated [[Gaupol/WritingExtensions|documentation on writing extensions]].
+The following extensions are deprecated and '''will not work with Gaupol 0.20 and later'''. They need to be ported to Python 3, GTK+ 3 and the Py''''''GObject introspection bindings. See the updated [[../WritingExtensions|documentation on writing extensions]].
 
 === Apertium ===
 Machine Translation suggestions through Apertium<<BR>>

@@ -23,7 +23,3 @@ Gaupol's built-in video player should provide necessary means to acquire subtitl
  6. Now all subtitles should match exactly what is spoken. You'll notice that short subtitles disappear too fast. Go to ''Tools'' / ''Adjust Durations''. Use at least minimum duration and gap and possibly lengthening to match reading speed to ensure that subtitles remain on screen long enough to be read.
 
  7. Done! Save your file! Share your work!
-
-== Speech Recognition ==
-
-[[Gaupol/SpeechRecognition|Speech Recognition]] might help, depending on the video source, with the spotting phase of the previous workflow, i.e. acquiring start and end times for subtitles.

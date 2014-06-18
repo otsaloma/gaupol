@@ -1,6 +1,6 @@
 = Adding Spell-Check Dictionaries =
 
-Gaupol uses the [[http://www.abisource.com/projects/enchant/|enchant]] library through the [[http://packages.python.org/pyenchant/|PyEnchant]] wrapper. enchant uses different backends (currently Aspell/Pspell, Ispell, My''''''Spell/Hunspell, Uspell, Hspell, Zemberek, Voikko and Apple''''''Spell) and thus allows the use of spell-check dictionaries made for any of the supported backends.
+Gaupol uses the [[http://www.abisource.com/projects/enchant/|enchant]] library through the [[https://pythonhosted.org/pyenchant/|PyEnchant]] wrapper. enchant uses different backends (currently Aspell/Pspell, Ispell, My''''''Spell/Hunspell, Uspell, Hspell, Zemberek, Voikko and Apple''''''Spell) and thus allows the use of spell-check dictionaries made for any of the supported backends.
 
 == Unix ==
 
@@ -8,4 +8,4 @@ On Unix-style operating systems, Gaupol will use whatever dictionaries installed
 
 == Windows ==
 
-The Windows version of Gaupol ships with the default Py''''''Enchant package of four dictionaries: British English, American English, German and French. For instructions on installing additional dictionaries, consult the [[http://packages.python.org/pyenchant/tutorial.html#adding-language-dictionaries|PyEnchant documentation]], with the exception, that the dictionary installation directory should be under `C:\Program Files\Gaupol\share\enchant`.
+The Windows version of Gaupol ships with the default Py''''''Enchant package of four dictionaries: British English, American English, German and French. For instructions on installing additional dictionaries, consult the [[https://pythonhosted.org/pyenchant/tutorial.html#adding-language-dictionaries|PyEnchant documentation]], with the exception, that the dictionary installation directory should be under `C:\Program Files\Gaupol\share\enchant` or `C:\Program Files (x86)\Gaupol\share\enchant`.
