@@ -404,11 +404,15 @@ def show_exception(exctype, value, tb):
 
 def show_uri(uri):
     """Open `uri` in default application."""
-    if sys.platform == "win32" and uri.startswith(("http://", "https://")):
-        # Gtk.show_uri (GTK+ 2.20) fails on Windows.
+    try:
+        return Gtk.show_uri(None, uri, Gdk.CURRENT_TIME)
+    except Exception:
+        # Gtk.show_uri fails on Windows and some misconfigured installations.
         # GError: No application is registered as handling this file
-        return webbrowser.open(uri)
-    return Gtk.show_uri(None, uri, Gdk.CURRENT_TIME)
+        # Gtk.show_uri: Operation not supported
+        if uri.startswith(("http://", "https://")):
+            return webbrowser.open(uri)
+        raise # whatever error encountered.
 
 def text_field_to_document(field):
     """Return :attr:`aeidon.documents` item corresponding to `field`."""
