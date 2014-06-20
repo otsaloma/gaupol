@@ -262,7 +262,8 @@ class Page(aeidon.Observable):
             # directly made to the view are slow.
             self.view.set_model(None)
         for row in reversed(sorted(rows)):
-            store.remove(store.get_iter(row))
+            path = gaupol.util.tree_row_to_path(row)
+            store.remove(store.get_iter(path))
         if len(rows) > 50:
             self.view.set_model(store)
         if self.project.subtitles:
