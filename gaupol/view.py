@@ -133,6 +133,8 @@ class View(Gtk.TreeView):
         renderer = column.get_cells()[0]
         column.set_cell_data_func(renderer, set_number, None)
         if gaupol.conf.editor.use_zebra_stripes:
+            column = self.get_column(self.columns.MAIN_TEXT)
+            renderer = column.get_cells()[0]
             callback = self._on_renderer_set_background
             column.set_cell_data_func(renderer, callback, None)
 
