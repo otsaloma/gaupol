@@ -1,10 +1,10 @@
 [Extension]
-GaupolVersion=0.25
+GaupolVersion=0.26
 Module=bookmarks
 Requires=side-pane;
 _Name=Bookmarks
 _Description=Marking subtitles for easy navigation
-Version=0.25
+Version=0.26
 Authors=Osmo Salomaa <otsaloma@iki.fi>;
 Copyright=Copyright (C) 2008 Osmo Salomaa;
 Website=http://home.gna.org/gaupol

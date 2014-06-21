@@ -1,29 +1,3 @@
-Gaupol 0.26
-===========
-
- [X] Update file selection dialogs to work better with GTK+ 3.12
- [X] Default toolbar style to icons only (due to gtk-toolbar-style
-     being deprecated since GTK+ 3.10)
- [X] Allow using the dark GTK+ theme variant (you need to edit
-     ~/.config/gaupol/gaupol.conf to enable this)
- [X] Fix errors and lack of updates in multiline text cells and their
-     line length calculation and display (#728575)
- [X] Fix initially incorrect row heights after opening a file
- [X] Fix updating subtitle numbers when inserting or removing subtitles
- [X] Fix overlapping column header right-click menus
- [X] Fix saving enumeration values to configuration file
- [X] Use Gtk.render_layout instead of deprecated Gtk.paint_layout to
-     render line length margin in text views
- [X] Remove header editing dialog
- [X] Remove non-functional speech recognition menu item
-     (see http://www.mail-archive.com/gaupol-list@gna.org/msg00069.html)
- [X] Drop support for the MPsub format
- [X] Add GTK+ (3.2 or greater) to list of dependencies in the README
-     file (GTK+ has always been a dependency, its explicit mention was
-     just forgotten when migrating from PyGTK to PyGObject)
- [X] Update Brazilian Portuguese translation (Rafael Ferreira)
- [X] Update Czech translation (Pavel Fric)
-
 Gaupol 1.0
 ==========
 
