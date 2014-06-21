@@ -112,9 +112,8 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
         if self._in_editor_menu: return
-        editor.editing_done()
         editor.remove_widget()
-        self.emit("edited", editor.gaupol_path, editor.get_text())
+        self.emit("editing-canceled")
 
     def _on_editor_key_press_event(self, editor, event):
         """End editing if ``Enter`` or ``Escape`` pressed."""
