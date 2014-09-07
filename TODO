@@ -1,3 +1,10 @@
+Gaupol 0.26.1
+=============
+
+ [ ] textoverlay and timeoverlay don't work together using
+     GStreamer 1.4.0 or 1.4.1; do we need to work around this?
+     https://bugzilla.gnome.org/show_bug.cgi?id=735800
+
 Gaupol 1.0
 ==========
 
