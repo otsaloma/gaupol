@@ -4,6 +4,8 @@ Gaupol 0.27
  [ ] Fix dialog paddings with GTK+ 3.14
  [ ] Remove use of deprecated stock items, GtkAlignment
      and gi.types.Boxed.__init__
+ [ ] Add dependency on a freedesktop.org compliant icon-theme?
+     - GTK+ 3.14 depends on adwaita-icon-theme, but earlier don't
 
 Gaupol 1.0
 ==========

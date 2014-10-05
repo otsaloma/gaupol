@@ -21,7 +21,7 @@ import gaupol
 class TestAttrDict(gaupol.TestCase):
 
     def setup_method(self, method):
-        self.root = {"test": 1, "rest": 0}
+        self.root = dict(test=1, rest=0)
         self.attr_dict = gaupol.AttributeDictionary(self.root)
 
     def test___getattr__(self):
@@ -39,7 +39,7 @@ class TestAttrDict(gaupol.TestCase):
         assert self.root["best"] == 2
 
     def test_add_attribute__nested(self):
-        root = {"test": 1, "rest": 0}
+        root = dict(test=1, rest=0)
         self.attr_dict.add_attribute("nest", root)
         assert self.attr_dict.nest.test == 1
         assert self.attr_dict.nest.rest == 0
@@ -47,7 +47,7 @@ class TestAttrDict(gaupol.TestCase):
         assert self.root["nest"]["rest"] == 0
 
     def test_extend(self):
-        root = {"test": 3, "pest": 4}
+        root = dict(test=3, pest=4)
         self.attr_dict.extend(root)
         assert self.attr_dict.test == 1
         assert self.attr_dict.rest == 0
@@ -57,9 +57,9 @@ class TestAttrDict(gaupol.TestCase):
         assert self.root["pest"] == 4
 
     def test_extend__nested(self):
-        root = {"test": 1, "rest": 0}
+        root = dict(test=1, rest=0)
         self.attr_dict.add_attribute("nest", root)
-        root = {"nest": {"test": 3, "pest": 4}}
+        root = dict(nest=dict(test=3, pest=4))
         self.attr_dict.extend(root)
         assert self.attr_dict.nest.test == 1
         assert self.attr_dict.nest.rest == 0
@@ -74,7 +74,7 @@ class TestAttrDict(gaupol.TestCase):
         assert "test" not in self.root
 
     def test_update(self):
-        root = {"test": 3, "pest": 4}
+        root = dict(test=3, pest=4)
         self.attr_dict.update(root)
         assert self.attr_dict.test == 3
         assert self.attr_dict.rest == 0
@@ -84,9 +84,9 @@ class TestAttrDict(gaupol.TestCase):
         assert self.root["pest"] == 4
 
     def test_update__nested(self):
-        root = {"test": 1, "rest": 0}
+        root = dict(test=1, rest=0)
         self.attr_dict.add_attribute("nest", root)
-        root = {"nest": {"test": 3, "pest": 4}}
+        root = dict(nest=dict(test=3, pest=4))
         self.attr_dict.update(root)
         assert self.attr_dict.nest.test == 3
         assert self.attr_dict.nest.rest == 0
