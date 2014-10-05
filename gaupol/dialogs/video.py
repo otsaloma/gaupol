@@ -37,7 +37,7 @@ class VideoDialog(Gtk.FileChooserDialog):
         self.set_title(title)
         self.set_transient_for(parent)
         self.set_action(Gtk.FileChooserAction.OPEN)
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         self.add_button(button_label, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self._init_filters()

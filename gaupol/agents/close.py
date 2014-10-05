@@ -89,8 +89,8 @@ class CloseAgent(aeidon.Delegate):
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("Close _Without Saving"), Gtk.ResponseType.NO)
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.YES)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        dialog.add_button(_("_Save"), Gtk.ResponseType.YES)
         dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
         if not response in (Gtk.ResponseType.YES, Gtk.ResponseType.NO):
@@ -120,8 +120,8 @@ class CloseAgent(aeidon.Delegate):
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("Close _Without Saving"), Gtk.ResponseType.NO)
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.YES)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        dialog.add_button(_("_Save"), Gtk.ResponseType.YES)
         dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
         if not response in (Gtk.ResponseType.YES, Gtk.ResponseType.NO):

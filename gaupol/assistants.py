@@ -618,7 +618,7 @@ class JoinSplitWordsPage(BuilderPage):
             name = aeidon.locales.code_to_name(name)
         title = _('Failed to load dictionary for language "{}"').format(name)
         dialog = gaupol.ErrorDialog(self.get_parent(), title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 

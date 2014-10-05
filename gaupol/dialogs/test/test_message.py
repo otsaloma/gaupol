@@ -31,7 +31,7 @@ class TestErrorDialog(_TestMessageDialog):
 
     def setup_method(self, method):
         self.dialog = gaupol.ErrorDialog(Gtk.Window(), "test", "test")
-        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         self.dialog.set_default_response(Gtk.ResponseType.OK)
         self.dialog.show()
 
@@ -40,7 +40,7 @@ class TestInfoDialog(_TestMessageDialog):
 
     def setup_method(self, method):
         self.dialog = gaupol.InfoDialog(Gtk.Window(), "test", "test")
-        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         self.dialog.set_default_response(Gtk.ResponseType.OK)
         self.dialog.show()
 
@@ -49,8 +49,8 @@ class TestQuestionDialog(_TestMessageDialog):
 
     def setup_method(self, method):
         self.dialog = gaupol.QuestionDialog(Gtk.Window(), "test", "test")
-        self.dialog.add_button(Gtk.STOCK_NO, Gtk.ResponseType.NO)
-        self.dialog.add_button(Gtk.STOCK_YES, Gtk.ResponseType.YES)
+        self.dialog.add_button("_No", Gtk.ResponseType.NO)
+        self.dialog.add_button("_Yes", Gtk.ResponseType.YES)
         self.dialog.set_default_response(Gtk.ResponseType.YES)
         self.dialog.show()
 
@@ -59,6 +59,6 @@ class TestWarningDialog(_TestMessageDialog):
 
     def setup_method(self, method):
         self.dialog = gaupol.WarningDialog(Gtk.Window(), "test", "test")
-        self.dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         self.dialog.set_default_response(Gtk.ResponseType.OK)
         self.dialog.show()

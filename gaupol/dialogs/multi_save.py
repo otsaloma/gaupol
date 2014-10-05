@@ -202,7 +202,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         title = _("{:d} of the files to be saved already exist. Do you want to replace them?").format(n)
         message = _('The files already exist in "{}". Replacing them will overwrite their contents.').format(path)
         dialog = gaupol.QuestionDialog(self._dialog, title, message)
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.NO)
         dialog.add_button(_("_Replace"), Gtk.ResponseType.YES)
         dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)

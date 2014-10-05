@@ -251,7 +251,7 @@ class VideoPlayer(aeidon.Observable):
         """Handle error message from the bus."""
         title, message = message.parse_error()
         dialog = gaupol.ErrorDialog(None, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 

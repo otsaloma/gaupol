@@ -377,7 +377,7 @@ class OpenAgent(aeidon.Delegate):
         message = _("Please try to open the file with a "
             "different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -387,7 +387,7 @@ class OpenAgent(aeidon.Delegate):
         message = _("Please check that the file you are trying to open is a "
             "subtitle file of a format supported by Gaupol.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -395,7 +395,7 @@ class OpenAgent(aeidon.Delegate):
         """Show an error dialog after failing to read file."""
         title = _('Failed to open file "{}"').format(basename)
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -405,7 +405,7 @@ class OpenAgent(aeidon.Delegate):
         message = _("Please check that the file you are trying "
             "to open is a valid {} file.").format(format.label)
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -420,8 +420,8 @@ class OpenAgent(aeidon.Delegate):
             "for a text-based subtitle file. Please, check that you are not "
             "trying to open a binary file.").format(size)
         dialog = gaupol.WarningDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
-        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.YES)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.NO)
+        dialog.add_button(_("_Open"), Gtk.ResponseType.YES)
         dialog.set_default_response(Gtk.ResponseType.NO)
         response = gaupol.util.flash_dialog(dialog)
         gaupol.util.raise_default(response != Gtk.ResponseType.YES)
@@ -437,8 +437,8 @@ class OpenAgent(aeidon.Delegate):
             "If {:d} sounds like a lot, the file may be erroneously composed.")
         message = message.format(count, count)
         dialog = gaupol.WarningDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.NO)
-        dialog.add_button(Gtk.STOCK_OPEN, Gtk.ResponseType.YES)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.NO)
+        dialog.add_button(_("_Open"), Gtk.ResponseType.YES)
         dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
         gaupol.util.raise_default(response != Gtk.ResponseType.YES)
@@ -454,8 +454,8 @@ class OpenAgent(aeidon.Delegate):
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("Open _Without Saving"), Gtk.ResponseType.NO)
-        dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        dialog.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.YES)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        dialog.add_button(_("_Save"), Gtk.ResponseType.YES)
         dialog.set_default_response(Gtk.ResponseType.YES)
         response = gaupol.util.flash_dialog(dialog)
         if response == Gtk.ResponseType.YES:

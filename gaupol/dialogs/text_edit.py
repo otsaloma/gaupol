@@ -45,8 +45,8 @@ class TextEditDialog(Gtk.Dialog):
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_OK"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
         self.set_border_width(6)

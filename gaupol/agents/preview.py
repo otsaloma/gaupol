@@ -112,7 +112,7 @@ class PreviewAgent(aeidon.Delegate):
             "for preview with the current character encoding. Please first "
             "save the subtitle file with a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -121,7 +121,7 @@ class PreviewAgent(aeidon.Delegate):
         title = _('Failed to save subtitle file to temporary '
             'directory "{}"').format(tempfile.gettempdir())
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
@@ -129,6 +129,6 @@ class PreviewAgent(aeidon.Delegate):
         """Show an error dialog after failing to launch video player."""
         title = _("Failed to launch video player")
         dialog = gaupol.ErrorDialog(self.window, title, message)
-        dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
