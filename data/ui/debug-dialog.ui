@@ -3,8 +3,9 @@
 <interface>
   <requires lib="gtk+" version="3.2"/>
   <object class="GtkDialog" id="dialog">
+    <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="border_width">6</property>
+    <property name="border_width">12</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
@@ -14,6 +15,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
+        <property name="spacing">18</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="hbuttonbox1">
             <property name="visible">True</property>
@@ -22,7 +24,6 @@
             <child>
               <object class="GtkButton" id="button1">
                 <property name="label">_Report Bug</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -37,13 +38,11 @@
             </child>
             <child>
               <object class="GtkButton" id="button2">
-                <property name="label">gtk-quit</property>
-                <property name="use_action_appearance">False</property>
+                <property name="label" translatable="yes">_Quit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -53,13 +52,12 @@
             </child>
             <child>
               <object class="GtkButton" id="button3">
-                <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
+                <property name="label" translatable="yes">_Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -79,7 +77,6 @@
           <object class="GtkBox" id="vbox2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="border_width">6</property>
             <property name="orientation">vertical</property>
             <property name="spacing">12</property>
             <child>
