@@ -127,7 +127,7 @@ def connect(observer, observable, signal, *args):
     method_name = signal.replace("-", "_").replace("::", "_")
     if observer is not observable:
         method_name = "_".join((observable, method_name))
-    method_name = ("_on_{}".format(method_name)).replace("__", "_")
+    method_name = "_on_{}".format(method_name).replace("__", "_")
     if not hasattr(observer, method_name):
         method_name = method_name[1:]
     method = getattr(observer, method_name)
@@ -283,8 +283,7 @@ def get_template_header(format):
     return normalize_newlines(header)
 
 def get_unique(lst, keep_last=False):
-    """
-    Return `lst` with duplicates removed."""
+    """Return `lst` with duplicates removed."""
     if keep_last:
         return list(reversed(get_unique(list(reversed(lst)))))
     # http://stackoverflow.com/a/7961425
@@ -319,7 +318,6 @@ def makedirs(directory):
         print("Failed to create directory '{}': {}"
               .format(directory, str(error)),
               file=sys.stderr)
-
         raise # OSError
 
 def normalize_newlines(text):

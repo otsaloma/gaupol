@@ -22,7 +22,6 @@ import aeidon
 __all__ = ("MPL2",)
 
 
-
 class MPL2(aeidon.tags.MicroDVD):
 
     """

@@ -18,8 +18,8 @@
 """
 Internationalization functions.
 
-Functions defined in this module are convenience aliases for functions of the
-:mod:`gettext` module with proper initialization ensured done.
+Functions defined in this module are convenience aliases for functions
+of the :mod:`gettext` module with proper initialization ensured done.
 """
 
 import aeidon

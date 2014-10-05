@@ -116,26 +116,23 @@ def monkey_patch(obj, name):
     """
     Decorator for functions that change `obj`'s `name` attribute.
 
-    Any changes done will be reverted after the function is run, i.e. `name`
-    attribute is either restored to its original value or deleted, if it didn't
-    originally exist.
+    Any changes done will be reverted after the function is run,
+    i.e. `name` attribute is either restored to its original value
+    or deleted, if it didn't originally exist.
     """
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
-            if _hasattr_def(obj, name):
-                attr = getattr(obj, name)
-                setattr(obj, name, copy.deepcopy(attr))
-                try:
-                    return function(*args, **kwargs)
-                finally:
-                    setattr(obj, name, attr)
-                    assert getattr(obj, name) == attr
-                    assert getattr(obj, name) is attr
-            else: # Attribute not defined.
-                try:
-                    return function(*args, **kwargs)
-                finally:
+            exists = _hasattr_def(obj, name)
+            value = getattr(obj, name) if exists else None
+            setattr(obj, name, copy.deepcopy(value))
+            try:
+                return function(*args, **kwargs)
+            finally:
+                setattr(obj, name, value)
+                assert getattr(obj, name) == value
+                assert getattr(obj, name) is value
+                if not exists:
                     delattr(obj, name)
                     assert not _hasattr_def(obj, name)
         return inner_wrapper

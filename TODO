@@ -1,11 +1,15 @@
 Gaupol 0.27
 ===========
 
- [ ] Fix minor issues with GTK+ 3.14
+ [ ] Fix dialog paddings with GTK+ 3.14
+ [ ] Remove use of deprecated stock items, GtkAlignment
+     and gi.types.Boxed.__init__
 
 Gaupol 1.0
 ==========
 
+ * Bump GTK+ dependency to 3.12
+   - Use Gtk.Widget's margin-start instead of margin-left
  * Apply new GNOME goals?
    - http://wiki.gnome.org/Initiatives/GnomeGoals/HeaderBars
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
