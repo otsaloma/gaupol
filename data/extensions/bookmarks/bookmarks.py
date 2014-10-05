@@ -180,7 +180,7 @@ class BookmarksExtension(gaupol.Extension):
         """Initialize UI manager actions."""
         self._action_group.add_actions((
             ("show_bookmarks_menu", None, _("_Bookmarks")),
-            ("add_bookmark", Gtk.STOCK_ADD, _("_Add…"),
+            ("add_bookmark", None, _("_Add…"),
              "<Control>D", _("Add a bookmark for the current subtitle"),
              self._on_add_bookmark_activate),
             ("edit_bookmarks", None, _("_Edit Bookmarks"),
@@ -226,7 +226,7 @@ class BookmarksExtension(gaupol.Extension):
         gaupol.util.pack_start_expand(hbox, self._search_entry)
         gaupol.util.pack_start(self._side_vbox, hbox)
         scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._tree_view)
         gaupol.util.pack_start_expand(self._side_vbox, scroller)
@@ -451,7 +451,7 @@ class BookmarksExtension(gaupol.Extension):
 
     def setup(self, application):
         """Setup extension for use with `application`."""
-        options = {"show_column": True}
+        options = dict(show_column=True)
         gaupol.conf.register_extension("bookmarks", options)
         self._init_attributes(application)
         self._init_tree_view()

@@ -138,18 +138,18 @@ class CustomFrameratesExtension(gaupol.Extension):
     def __init__(self):
         """Initialize a :class:`CustomFrameratesExtension` instance."""
         self._action_group = None
+        self.application = None
         self._conf = None
         self._framerates = []
         self._uim_ids = []
-        self.application = None
 
     def _clear_attributes(self):
         """Clear values of attributes."""
         self._action_group = None
+        self.application = None
         self._conf = None
         self._framerates = []
         self._uim_ids = []
-        self.application = None
 
     def _add_framerates(self):
         """Add custom framerates and corresponding UI elements."""
@@ -229,7 +229,7 @@ class CustomFrameratesExtension(gaupol.Extension):
 
     def setup(self, application):
         """Setup extension for use with `application`."""
-        options = {"framerates": [48.0]}
+        options = dict(framerates=[48.0])
         gaupol.conf.register_extension("custom_framerates", options)
         self._conf = gaupol.conf.extensions.custom_framerates
         self.application = application

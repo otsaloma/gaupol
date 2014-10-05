@@ -96,7 +96,7 @@ class SidePane(aeidon.Observable):
         self._init_notebook(side_vbox)
         self._paned.show_all()
         child = self._paned.get_child1()
-        child.props.visible = self._conf.visible
+        child.set_visible(self._conf.visible)
 
     def _init_header(self, side_vbox):
         """Initialize the side pane button header."""
@@ -119,7 +119,7 @@ class SidePane(aeidon.Observable):
         gaupol.util.pack_start_expand(header_hbox, Gtk.Label())
         close_button = Gtk.Button()
         image = gaupol.util.get_icon_image("window-close-symbolic",
-                                           Gtk.STOCK_CLOSE,
+                                           "window-close",
                                            Gtk.IconSize.MENU)
 
         close_button.add(image)
@@ -227,7 +227,7 @@ class SidePane(aeidon.Observable):
         if child is not None:
             self._conf.page = child.gaupol_side_pane_extension_name
         child = self._paned.get_child1()
-        self._conf.visible = child.props.visible
+        self._conf.visible = child.get_visible()
         main_vbox = self.application.window.get_children()[0]
         main_notebook = self._paned.get_child2().get_children()[0]
         main_vbox.remove(self._paned)
@@ -300,7 +300,7 @@ class SidePaneExtension(gaupol.Extension):
 
     def setup(self, application):
         """Setup extension for use with `application`."""
-        options = {"width": 200, "page": "", "visible": True}
+        options = dict(width=200, page="", visible=True)
         gaupol.conf.register_extension("side_pane", options)
         self._conf = gaupol.conf.extensions.side_pane
         application.side_pane = SidePane(application)

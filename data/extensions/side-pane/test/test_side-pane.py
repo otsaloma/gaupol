@@ -29,7 +29,7 @@ class TestSidePane(gaupol.TestCase):
         directory = os.path.abspath(os.path.join(directory, ".."))
         sys.path.insert(0, directory)
         module = __import__("side-pane", {}, {}, [])
-        options = {"width": 200, "page": "", "visible": True}
+        options = dict(width=200, page="", visible=True)
         gaupol.conf.register_extension("side_pane", options)
         self.application = self.new_application()
         self.side_pane = module.SidePane(self.application)
