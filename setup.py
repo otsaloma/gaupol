@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -253,7 +253,7 @@ class Install(install):
         root = get_command_obj("install").root
         data_dir = get_command_obj("install_data").install_dir
         # Assume we're actually installing if --root was not given.
-        if (root is not None) or (data_dir is None): return
+        if root is not None or data_dir is None: return
         directory = os.path.join(data_dir, "share", "applications")
         log.info("updating desktop database in '{}'".format(directory))
         run_command_or_warn('update-desktop-database "{}"'.format(directory))
@@ -277,18 +277,16 @@ class InstallData(install_data):
         """Return a tuple for translated appdata file."""
         path = os.path.join("data", "gaupol.appdata.xml")
         if not freezing:
-            run_command_or_exit("intltool-merge -x po {}.in {}"
-                                .format(path, path))
-
+            command = "intltool-merge -x po {}.in {}".format(path, path)
+            run_command_or_exit(command)
         return ("share/appdata", (path,))
 
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
         if not freezing:
-            run_command_or_exit("intltool-merge -d po {}.in {}"
-                                .format(path, path))
-
+            command = "intltool-merge -d po {}.in {}".format(path, path)
+            run_command_or_exit(command)
         return ("share/applications", (path,))
 
     def __get_extension_file(self, extension, extension_file):
@@ -296,9 +294,8 @@ class InstallData(install_data):
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
         if not freezing:
-            run_command_or_exit("intltool-merge -d po {}.in {}"
-                                .format(path, path))
-
+            command = "intltool-merge -d po {}.in {}".format(path, path)
+            run_command_or_exit(command)
         return ("share/gaupol/extensions/{}".format(extension), (path,))
 
     def __get_mo_file(self, po_file):
@@ -312,9 +309,8 @@ class InstallData(install_data):
         dest_dir = os.path.join("share", mo_dir)
         if not freezing:
             log.info("compiling '{}'".format(mo_file))
-            run_command_or_exit("msgfmt {} -o {}"
-                                .format(po_file, mo_file))
-
+            command = "msgfmt {} -o {}".format(po_file, mo_file)
+            run_command_or_exit(command)
         return (dest_dir, (mo_file,))
 
     def __get_pattern_file(self, pattern_file):
@@ -322,9 +318,8 @@ class InstallData(install_data):
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
         if not freezing:
-            run_command_or_exit("intltool-merge -d po {}.in {}"
-                                .format(path, path))
-
+            command = "intltool-merge -d po {}.in {}".format(path, path)
+            run_command_or_exit(command)
         return ("share/gaupol/patterns", (path,))
 
     def run(self):
@@ -441,14 +436,14 @@ setup_kwargs = dict(
     description="Editor for text-based subtitle files",
     license="GPL",
     distclass=Distribution,
-    cmdclass={
-        "clean": Clean,
-        "doc": Documentation,
-        "install": Install,
-        "install_data": InstallData,
-        "install_lib": InstallLib,
-        "sdist_gna": SDistGna,
-        })
+    cmdclass=dict(
+        clean=Clean,
+        doc=Documentation,
+        install=Install,
+        install_data=InstallData,
+        install_lib=InstallLib,
+        sdist_gna=SDistGna,
+    ))
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__) or ".")
