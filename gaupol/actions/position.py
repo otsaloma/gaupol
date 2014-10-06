@@ -21,8 +21,6 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
-from gi.repository import Gtk
-
 
 class AdjustDurationsAction(gaupol.Action):
 
@@ -31,8 +29,8 @@ class AdjustDurationsAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`AdjustDurationsAction` instance."""
         gaupol.Action.__init__(self, "adjust_durations")
-        self.props.label = _("Adjust _Durations…")
-        self.props.tooltip = _("Lengthen or shorten durations")
+        self.set_label(_("Adjust _Durations…"))
+        self.set_tooltip(_("Lengthen or shorten durations"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -47,8 +45,8 @@ class ConvertFramerateAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ConvertFramerateAction` instance."""
         gaupol.Action.__init__(self, "convert_framerate")
-        self.props.label = _("Convert _Framerate…")
-        self.props.tooltip = _("Change positions for a different framerate")
+        self.set_label(_("Convert _Framerate…"))
+        self.set_tooltip(_("Change positions for a different framerate"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -64,9 +62,9 @@ class PreviewAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`PreviewAction` instance."""
         gaupol.Action.__init__(self, "preview")
-        self.props.label = _("_Preview")
-        self.props.stock_id = Gtk.STOCK_MEDIA_PLAY
-        self.props.tooltip = _("Preview from selected position with a video player")
+        self.set_icon_name("media-playback-start")
+        self.set_label(_("_Preview"))
+        self.set_tooltip(_("Preview from selected position with a video player"))
         self.accelerator = "F5"
         self.action_group = "main-unsafe"
 
@@ -85,8 +83,8 @@ class ShiftPositionsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ShiftPositionsAction` instance."""
         gaupol.Action.__init__(self, "shift_positions")
-        self.props.label = _("_Shift Positions…")
-        self.props.tooltip = _("Make subtitles appear earlier or later")
+        self.set_label(_("_Shift Positions…"))
+        self.set_tooltip(_("Make subtitles appear earlier or later"))
         self.accelerator = "H"
         self.action_group = "main-unsafe"
 
@@ -102,8 +100,8 @@ class TransformPositionsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`TransformPositionsAction` instance."""
         gaupol.Action.__init__(self, "transform_positions")
-        self.props.label = _("_Transform Positions…")
-        self.props.tooltip = _("Change positions by linear two-point correction")
+        self.set_label(_("_Transform Positions…"))
+        self.set_tooltip(_("Change positions by linear two-point correction"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

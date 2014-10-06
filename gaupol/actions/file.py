@@ -21,8 +21,6 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
-from gi.repository import Gtk
-
 
 class AppendFileAction(gaupol.Action):
 
@@ -31,9 +29,8 @@ class AppendFileAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`AppendFileAction` instance."""
         gaupol.Action.__init__(self, "append_file")
-        self.props.label = _("_Append File…")
-        self.props.stock_id = Gtk.STOCK_ADD
-        self.props.tooltip = _("Append subtitles from file to the current project")
+        self.set_label(_("_Append File…"))
+        self.set_tooltip(_("Append subtitles from file to the current project"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -49,9 +46,9 @@ class CloseAllProjectsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`CloseAllProjectsAction` instance."""
         gaupol.Action.__init__(self, "close_all_projects")
-        self.props.label = _("_Close All")
-        self.props.stock_id = Gtk.STOCK_CLOSE
-        self.props.tooltip =  _("Close all open projects")
+        self.set_icon_name("window-close")
+        self.set_label(_("_Close All"))
+        self.set_tooltip( _("Close all open projects"))
         self.accelerator = "<Shift><Control>W"
         self.action_group = "main-safe"
 
@@ -67,9 +64,9 @@ class CloseProjectAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`CloseProjectAction` instance."""
         gaupol.Action.__init__(self, "close_project")
-        self.props.label = _("_Close")
-        self.props.stock_id = Gtk.STOCK_CLOSE
-        self.props.tooltip = _("Close the current project")
+        self.set_icon_name("window-close")
+        self.set_label(_("_Close"))
+        self.set_tooltip(_("Close the current project"))
         self.accelerator = "<Control>W"
         self.action_group = "main-safe"
 
@@ -85,9 +82,9 @@ class NewProjectAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`NewProjectAction` instance."""
         gaupol.Action.__init__(self, "new_project")
-        self.props.label = _("_New")
-        self.props.stock_id = Gtk.STOCK_NEW
-        self.props.tooltip = _("Create a new project")
+        self.set_icon_name("document-new")
+        self.set_label(_("_New"))
+        self.set_tooltip(_("Create a new project"))
         self.accelerator = "<Control>N"
         self.action_group = "main-safe"
 
@@ -101,11 +98,11 @@ class OpenMainFilesAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`OpenMainFilesAction` instance."""
         gaupol.Action.__init__(self, "open_main_files")
-        self.props.is_important = True
-        self.props.label = _("_Open…")
-        self.props.short_label = _("Open")
-        self.props.stock_id = Gtk.STOCK_OPEN
-        self.props.tooltip = _("Open main files")
+        self.set_icon_name("document-open")
+        self.set_is_important(True)
+        self.set_label(_("_Open…"))
+        self.set_short_label(_("Open"))
+        self.set_tooltip(_("Open main files"))
         self.accelerator = "<Control>O"
         self.action_group = "main-safe"
 
@@ -119,11 +116,11 @@ class OpenMainFilesRecentAction(gaupol.RecentAction):
     def __init__(self):
         """Initialize an :class:`OpenMainFilesRecentAction` instance."""
         gaupol.RecentAction.__init__(self, "open_main_files_recent")
-        self.props.is_important = True
-        self.props.label = _("_Open…")
-        self.props.short_label = _("Open")
-        self.props.stock_id = Gtk.STOCK_OPEN
-        self.props.tooltip = _("Open main files")
+        self.set_icon_name("document-open")
+        self.set_is_important(True)
+        self.set_label(_("_Open…"))
+        self.set_short_label(_("Open"))
+        self.set_tooltip(_("Open main files"))
         self.action_group = "main-safe"
 
 
@@ -136,8 +133,8 @@ class OpenRecentMainFileAction(gaupol.RecentAction):
     def __init__(self):
         """Initialize a :class:`OpenRecentMainFileAction` instance."""
         gaupol.RecentAction.__init__(self, "open_recent_main_file")
-        self.props.is_important = True
-        self.props.label = _("Open _Recent")
+        self.set_is_important(True)
+        self.set_label(_("Open _Recent"))
         self.action_group = "main-safe"
 
 
@@ -150,8 +147,8 @@ class OpenRecentTranslationFileAction(gaupol.RecentAction):
     def __init__(self):
         """Initialize a :class:`OpenRecentTranslationFileAction` instance."""
         gaupol.RecentAction.__init__(self, "open_recent_translation_file")
-        self.props.is_important = False
-        self.props.label = _("Open R_ecent Translation")
+        self.set_is_important(False)
+        self.set_label(_("Open R_ecent Translation"))
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -166,10 +163,10 @@ class OpenTranslationFileAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`OpenTranslationFileAction` instance."""
         gaupol.Action.__init__(self, "open_translation_file")
-        self.props.label = _("Open _Translation…")
-        self.props.short_label = _("Open Translation")
-        self.props.stock_id = Gtk.STOCK_OPEN
-        self.props.tooltip = _("Open a translation file")
+        self.set_icon_name("document-open")
+        self.set_label(_("Open _Translation…"))
+        self.set_short_label(_("Open Translation"))
+        self.set_tooltip(_("Open a translation file"))
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -185,9 +182,9 @@ class QuitAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`QuitAction` instance."""
         gaupol.Action.__init__(self, "quit")
-        self.props.label = _("_Quit")
-        self.props.stock_id = Gtk.STOCK_QUIT
-        self.props.tooltip = _("Quit Gaupol")
+        self.set_icon_name("application-exit")
+        self.set_label(_("_Quit"))
+        self.set_tooltip(_("Quit Gaupol"))
         self.accelerator = "<Control>Q"
         self.action_group = "main-safe"
 
@@ -199,9 +196,9 @@ class SaveAllDocumentsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveAllDocumentsAction` instance."""
         gaupol.Action.__init__(self, "save_all_documents")
-        self.props.label = _("_Save All")
-        self.props.stock_id = Gtk.STOCK_SAVE
-        self.props.tooltip = _("Save all open documents")
+        self.set_icon_name("document-save")
+        self.set_label(_("_Save All"))
+        self.set_tooltip(_("Save all open documents"))
         self.accelerator = "<Shift><Control>L"
         self.action_group = "main-safe"
 
@@ -217,9 +214,9 @@ class SaveAllDocumentsAsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveAllDocumentsAsAction` instance."""
         gaupol.Action.__init__(self, "save_all_documents_as")
-        self.props.label = _("Save _All As…")
-        self.props.stock_id = Gtk.STOCK_SAVE_AS
-        self.props.tooltip = _("Save all open documents with different properties")
+        self.set_icon_name("document-save")
+        self.set_label(_("Save _All As…"))
+        self.set_tooltip(_("Save all open documents with different properties"))
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -235,10 +232,10 @@ class SaveMainDocumentAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveMainDocumentAction` instance."""
         gaupol.Action.__init__(self, "save_main_document")
-        self.props.is_important = True
-        self.props.label = _("_Save")
-        self.props.stock_id = Gtk.STOCK_SAVE
-        self.props.tooltip = _("Save the current main document")
+        self.set_icon_name("document-save")
+        self.set_is_important(True)
+        self.set_label(_("_Save"))
+        self.set_tooltip(_("Save the current main document"))
         self.accelerator = "<Control>S"
         self.action_group = "main-safe"
 
@@ -254,10 +251,10 @@ class SaveMainDocumentAsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveMainDocumentAsAction` instance."""
         gaupol.Action.__init__(self, "save_main_document_as")
-        self.props.label = _("Save _As…")
-        self.props.short_label = _("Save As")
-        self.props.stock_id = Gtk.STOCK_SAVE_AS
-        self.props.tooltip = _("Save the current main document with a different name")
+        self.set_icon_name("document-save-as")
+        self.set_label(_("Save _As…"))
+        self.set_short_label(_("Save As"))
+        self.set_tooltip(_("Save the current main document with a different name"))
         self.accelerator = "<Shift><Control>S"
         self.action_group = "main-safe"
 
@@ -273,9 +270,9 @@ class SaveTranslationDocumentAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveTranslationDocumentAction` instance."""
         gaupol.Action.__init__(self, "save_translation_document")
-        self.props.label = _("Save Trans_lation")
-        self.props.stock_id = Gtk.STOCK_SAVE
-        self.props.tooltip = _("Save the current translation document")
+        self.set_icon_name("document-save")
+        self.set_label(_("Save Trans_lation"))
+        self.set_tooltip(_("Save the current translation document"))
         self.accelerator = "<Control>T"
         self.action_group = "main-safe"
 
@@ -291,10 +288,10 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SaveTranslationDocumentAsAction` instance."""
         gaupol.Action.__init__(self, "save_translation_document_as")
-        self.props.label = _("Save Translat_ion As…")
-        self.props.short_label = _("Save Translation As")
-        self.props.stock_id = Gtk.STOCK_SAVE_AS
-        self.props.tooltip = _("Save the current translation document with a different name")
+        self.set_icon_name("document-save-as")
+        self.set_label(_("Save Translat_ion As…"))
+        self.set_short_label(_("Save Translation As"))
+        self.set_tooltip(_("Save the current translation document with a different name"))
         self.accelerator = "<Shift><Control>T"
         self.action_group = "main-safe"
 
@@ -310,9 +307,8 @@ class SelectVideoFileAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SelectVideoFileAction` instance."""
         gaupol.Action.__init__(self, "select_video_file")
-        self.props.label = _("Select _Video…")
-        self.props.stock_id = Gtk.STOCK_FILE
-        self.props.tooltip = _("Select a video file")
+        self.set_label(_("Select _Video…"))
+        self.set_tooltip(_("Select a video file"))
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -328,8 +324,8 @@ class SplitProjectAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`SplitProjectAction` instance."""
         gaupol.Action.__init__(self, "split_project")
-        self.props.label = _("Spli_t Project…")
-        self.props.tooltip = _("Split the current project in two")
+        self.set_label(_("Spli_t Project…"))
+        self.set_tooltip(_("Split the current project in two"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

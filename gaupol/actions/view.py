@@ -31,8 +31,8 @@ class ActivateNextProjectAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`ActivateNextProjectAction` instance."""
         gaupol.Action.__init__(self, "activate_next_project")
-        self.props.label = _("_Next")
-        self.props.tooltip = _("Activate the project in the next tab")
+        self.set_label(_("_Next"))
+        self.set_tooltip(_("Activate the project in the next tab"))
         self.accelerator = "<Control>Page_Down"
         self.action_group = "main-safe"
 
@@ -50,8 +50,8 @@ class ActivatePreviousProjectAction(gaupol.Action):
     def __init__(self):
         """Initialize an :class:`ActivatePreviousProjectAction` instance."""
         gaupol.Action.__init__(self, "activate_previous_project")
-        self.props.label = _("_Previous")
-        self.props.tooltip = _("Activate the project in the previous tab")
+        self.set_label(_("_Previous"))
+        self.set_tooltip(_("Activate the project in the previous tab"))
         self.accelerator = "<Control>Page_Up"
         self.action_group = "main-safe"
 
@@ -68,8 +68,8 @@ class MoveTabLeftAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`MoveTabLeftAction` instance."""
         gaupol.Action.__init__(self, "move_tab_left")
-        self.props.label = _("Move Tab _Left")
-        self.props.tooltip = _("Move the current tab to the left")
+        self.set_label(_("Move Tab _Left"))
+        self.set_tooltip(_("Move the current tab to the left"))
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -85,8 +85,8 @@ class MoveTabRightAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`MoveTabRightAction` instance."""
         gaupol.Action.__init__(self, "move_tab_right")
-        self.props.label = _("Move Tab _Right")
-        self.props.tooltip = _("Move the current tab to the right")
+        self.set_label(_("Move Tab _Right"))
+        self.set_tooltip(_("Move the current tab to the right"))
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -102,7 +102,7 @@ class ShowColumnsMenuAction(gaupol.MenuAction):
     def __init__(self):
         """Initialize a :class:`ShowColumnsMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_columns_menu")
-        self.props.label = _("_Columns")
+        self.set_label(_("_Columns"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -118,9 +118,9 @@ class ShowFramerate23976Action(gaupol.RadioAction):
         """Initialize a :class:`ShowFramerate23976Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_23_976")
         framerate = gaupol.conf.editor.framerate
-        self.props.active = (framerate == aeidon.framerates.FPS_23_976)
-        self.props.label = _("2_3.976 fps")
-        self.props.tooltip = _("Calculate nonnative units with a framerate of 23.976 fps")
+        self.set_active(framerate == aeidon.framerates.FPS_23_976)
+        self.set_label(_("2_3.976 fps"))
+        self.set_tooltip(_("Calculate nonnative units with a framerate of 23.976 fps"))
         self.props.value = aeidon.framerates.FPS_23_976
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_23_976
@@ -140,9 +140,9 @@ class ShowFramerate24000Action(gaupol.RadioAction):
         """Initialize a :class:`ShowFramerate24000Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_24_000")
         framerate = gaupol.conf.editor.framerate
-        self.props.active = (framerate == aeidon.framerates.FPS_24_000)
-        self.props.label = _("2_4.000 fps")
-        self.props.tooltip = _("Calculate nonnative units with a framerate of 24.000 fps")
+        self.set_active(framerate == aeidon.framerates.FPS_24_000)
+        self.set_label(_("2_4.000 fps"))
+        self.set_tooltip(_("Calculate nonnative units with a framerate of 24.000 fps"))
         self.props.value = aeidon.framerates.FPS_24_000
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_24_000
@@ -162,9 +162,9 @@ class ShowFramerate25000Action(gaupol.RadioAction):
         """Initialize a :class:`ShowFramerate25000Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_25_000")
         framerate = gaupol.conf.editor.framerate
-        self.props.active = (framerate == aeidon.framerates.FPS_25_000)
-        self.props.label = _("2_5.000 fps")
-        self.props.tooltip = _("Calculate nonnative units with a framerate of 25.000 fps")
+        self.set_active(framerate == aeidon.framerates.FPS_25_000)
+        self.set_label(_("2_5.000 fps"))
+        self.set_tooltip(_("Calculate nonnative units with a framerate of 25.000 fps"))
         self.props.value = aeidon.framerates.FPS_25_000
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_25_000
@@ -184,9 +184,9 @@ class ShowFramerate29970Action(gaupol.RadioAction):
         """Initialize a :class:`ShowFramerate30Action` instance."""
         gaupol.RadioAction.__init__(self, "show_framerate_29_970")
         framerate = gaupol.conf.editor.framerate
-        self.props.active = (framerate == aeidon.framerates.FPS_29_970)
-        self.props.label = _("2_9.970 fps")
-        self.props.tooltip = _("Calculate nonnative units with a framerate of 29.970 fps")
+        self.set_active(framerate == aeidon.framerates.FPS_29_970)
+        self.set_label(_("2_9.970 fps"))
+        self.set_tooltip(_("Calculate nonnative units with a framerate of 29.970 fps"))
         self.props.value = aeidon.framerates.FPS_29_970
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_29_970
@@ -205,7 +205,7 @@ class ShowFramerateMenuAction(gaupol.MenuAction):
     def __init__(self):
         """Initialize a :class:`ShowFramerateMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_framerate_menu")
-        self.props.label = _("F_ramerate")
+        self.set_label(_("F_ramerate"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -221,10 +221,9 @@ class ShowFramesAction(gaupol.RadioAction):
     def __init__(self):
         """Initialize a :class:`ShowFramesAction` instance."""
         gaupol.RadioAction.__init__(self, "show_frames")
-        mode = gaupol.conf.editor.mode
-        self.props.active = (mode == aeidon.modes.FRAME)
-        self.props.label = _("_Frames")
-        self.props.tooltip = _("Show positions as frames")
+        self.set_active(gaupol.conf.editor.mode == aeidon.modes.FRAME)
+        self.set_label(_("_Frames"))
+        self.set_tooltip(_("Show positions as frames"))
         self.props.value = aeidon.modes.FRAME
         self.accelerator = "<Shift>T"
         self.action_group = "main-unsafe"
@@ -243,7 +242,7 @@ class ShowLayoutMenuAction(gaupol.MenuAction):
     def __init__(self):
         """Initialize a :class:`ShowLayoutMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_layout_menu")
-        self.props.label = _("_Layout")
+        self.set_label(_("_Layout"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -258,10 +257,9 @@ class ShowTimesAction(gaupol.RadioAction):
     def __init__(self):
         """Initialize a :class:`ShowTimesAction` instance."""
         gaupol.RadioAction.__init__(self, "show_times")
-        mode = gaupol.conf.editor.mode
-        self.props.active = (mode == aeidon.modes.TIME)
-        self.props.label = _("_Times")
-        self.props.tooltip = _("Show positions as times")
+        self.set_active(gaupol.conf.editor.mode == aeidon.modes.TIME)
+        self.set_label(_("_Times"))
+        self.set_tooltip(_("Show positions as times"))
         self.props.value = aeidon.modes.TIME
         self.accelerator = "T"
         self.action_group = "main-unsafe"
@@ -281,9 +279,9 @@ class ToggleDurationColumnAction(gaupol.ToggleAction):
         """Initialize a :class:`ToggleDurationColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_duration_column")
         fields = gaupol.conf.editor.visible_fields
-        self.props.active = gaupol.fields.DURATION in fields
-        self.props.label = _("_Duration")
-        self.props.tooltip = _('Show or hide the duration column')
+        self.set_active(gaupol.fields.DURATION in fields)
+        self.set_label(_("_Duration"))
+        self.set_tooltip(_('Show or hide the duration column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -299,9 +297,9 @@ class ToggleEndColumnAction(gaupol.ToggleAction):
         """Initialize a :class:`ToggleEndColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_end_column")
         fields = gaupol.conf.editor.visible_fields
-        self.props.active = gaupol.fields.END in fields
-        self.props.label = _("_End")
-        self.props.tooltip = _('Show or hide the end column')
+        self.set_active(gaupol.fields.END in fields)
+        self.set_label(_("_End"))
+        self.set_tooltip(_('Show or hide the end column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -317,9 +315,9 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
         """Initialize a :class:`ToggleMainTextColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_main_text_column")
         fields = gaupol.conf.editor.visible_fields
-        self.props.active = gaupol.fields.MAIN_TEXT in fields
-        self.props.label = _("_Main Text")
-        self.props.tooltip = _('Show or hide the main text column')
+        self.set_active(gaupol.fields.MAIN_TEXT in fields)
+        self.set_label(_("_Main Text"))
+        self.set_tooltip(_('Show or hide the main text column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -335,9 +333,9 @@ class ToggleMainToolbarAction(gaupol.ToggleAction):
         """Initialize a :class:`ToggleMainToolbarAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_main_toolbar")
         show = gaupol.conf.application_window.show_main_toolbar
-        self.props.active = show
-        self.props.label = _("Tool_bar")
-        self.props.tooltip = _("Show or hide the toolbar")
+        self.set_active(show)
+        self.set_label(_("Tool_bar"))
+        self.set_tooltip(_("Show or hide the toolbar"))
         self.action_group = "main-safe"
 
 
@@ -349,9 +347,9 @@ class ToggleNumberColumnAction(gaupol.ToggleAction):
         """Initialize a :class:`ToggleNumberColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_number_column")
         fields = gaupol.conf.editor.visible_fields
-        self.props.active = gaupol.fields.NUMBER in fields
-        self.props.label = _("_No.")
-        self.props.tooltip = _('Show or hide the number column')
+        self.set_active(gaupol.fields.NUMBER in fields)
+        self.set_label(_("_No."))
+        self.set_tooltip(_('Show or hide the number column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -368,10 +366,10 @@ class TogglePlayerAction(gaupol.ToggleAction):
     def __init__(self):
         """Initialize a :class:`TogglePlayerAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_player")
-        self.props.active = False
-        self.props.label = _("_Video Player")
+        self.set_active(False)
+        self.set_label(_("_Video Player"))
         self.set_icon_name("video")
-        self.props.tooltip = _("Show or hide the video player")
+        self.set_tooltip(_("Show or hide the video player"))
         self.action_group = "main-safe"
         self.tool_item_type = Gtk.ToggleToolButton
 
@@ -387,9 +385,9 @@ class ToggleOutputWindowAction(gaupol.ToggleAction):
     def __init__(self):
         """Initialize a :class:`ToggleOutputWindowAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_output_window")
-        self.props.active = gaupol.conf.output_window.show
-        self.props.label = _("_Output Window")
-        self.props.tooltip = _("Show or hide the output window")
+        self.set_active(gaupol.conf.output_window.show)
+        self.set_label(_("_Output Window"))
+        self.set_tooltip(_("Show or hide the output window"))
         self.action_group = "main-safe"
 
 
@@ -401,9 +399,9 @@ class ToggleStartColumnAction(gaupol.ToggleAction):
         """Initialize a :class:`ToggleStartColumnAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_start_column")
         fields = gaupol.conf.editor.visible_fields
-        self.props.active = gaupol.fields.START in fields
-        self.props.label = _("_Start")
-        self.props.tooltip = _('Show or hide the start column')
+        self.set_active(gaupol.fields.START in fields)
+        self.set_label(_("_Start"))
+        self.set_tooltip(_('Show or hide the start column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -420,9 +418,9 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
         name = "toggle_translation_text_column"
         gaupol.ToggleAction.__init__(self, name)
         fields = gaupol.conf.editor.visible_fields
-        self.props.active = gaupol.fields.TRAN_TEXT in fields
-        self.props.label = _("_Translation Text")
-        self.props.tooltip = _('Show or hide the translation text column')
+        self.set_active(gaupol.fields.TRAN_TEXT in fields)
+        self.set_label(_("_Translation Text"))
+        self.set_tooltip(_('Show or hide the translation text column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -438,9 +436,9 @@ class UseHorizontalLayoutAction(gaupol.RadioAction):
         """Initialize a :class:`UseHorizontalLayoutAction` instance."""
         gaupol.RadioAction.__init__(self, "use_horizontal_layout")
         layout = gaupol.conf.application_window.layout
-        self.props.active = (layout == gaupol.orientation.HORIZONTAL)
-        self.props.label = _("_Horizontal")
-        self.props.tooltip = _("Split window horizontally")
+        self.set_active((layout == gaupol.orientation.HORIZONTAL))
+        self.set_label(_("_Horizontal"))
+        self.set_tooltip(_("Split window horizontally"))
         self.props.value = gaupol.orientation.HORIZONTAL
         self.action_group = "main-unsafe"
         self.group = "UseHorizontalLayoutAction"
@@ -459,9 +457,9 @@ class UseVerticalLayoutAction(gaupol.RadioAction):
         """Initialize a :class:`UseVerticalLayoutAction` instance."""
         gaupol.RadioAction.__init__(self, "use_vertical_layout")
         layout = gaupol.conf.application_window.layout
-        self.props.active = (layout == gaupol.orientation.VERTICAL)
-        self.props.label = _("_Vertical")
-        self.props.tooltip = _("Split window vertically")
+        self.set_active((layout == gaupol.orientation.VERTICAL))
+        self.set_label(_("_Vertical"))
+        self.set_tooltip(_("Split window vertically"))
         self.props.value = gaupol.orientation.VERTICAL
         self.action_group = "main-unsafe"
         self.group = "UseHorizontalLayoutAction"

@@ -39,9 +39,9 @@ class Action(Gtk.Action):
 
     :ivar accelerator: Accelerator string or ``None``
 
-       :attr:`accelerator` defines a string in the format understood by
-       :func:`Gtk.accelerator_parse`, ``None`` to use the stock accelerator
-       or unset to use a blank string, i.e. undefined.
+       :attr:`accelerator` defines a string in the format understood
+       by :func:`Gtk.accelerator_parse`, leave undefined to fall back
+       on a blank string, i.e. no accelerator.
 
     :ivar action_group: Name of action group to place action into
 

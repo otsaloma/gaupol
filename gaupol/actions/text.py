@@ -21,8 +21,6 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
-from gi.repository import Gtk
-
 
 class ConfigureSpellCheckAction(gaupol.Action):
 
@@ -31,8 +29,8 @@ class ConfigureSpellCheckAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ConfigureSpellCheckAction` instance."""
         gaupol.Action.__init__(self, "configure_spell_check")
-        self.props.label = _("Co_nfigure Spell-check…")
-        self.props.tooltip = _("Set language and spell-check target")
+        self.set_label(_("Co_nfigure Spell-check…"))
+        self.set_tooltip(_("Set language and spell-check target"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -47,10 +45,10 @@ class CheckSpellingAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`CheckSpellingAction` instance."""
         gaupol.Action.__init__(self, "check_spelling")
-        self.props.label = _("_Check Spelling")
-        self.props.short_label = _("Spelling")
-        self.props.stock_id = Gtk.STOCK_SPELL_CHECK
-        self.props.tooltip = _("Check for incorrect spelling")
+        self.set_icon_name("tools-check-spelling")
+        self.set_label(_("_Check Spelling"))
+        self.set_short_label(_("Spelling"))
+        self.set_tooltip(_("Check for incorrect spelling"))
         self.accelerator = "F7"
         self.action_group = "main-unsafe"
 
@@ -68,8 +66,8 @@ class CorrectTextsAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`CorrectTextsAction` instance."""
         gaupol.Action.__init__(self, "correct_texts")
-        self.props.label = _("C_orrect Texts…")
-        self.props.tooltip = _("Find and correct errors in texts")
+        self.set_label(_("C_orrect Texts…"))
+        self.set_tooltip(_("Find and correct errors in texts"))
         self.accelerator = "F8"
         self.action_group = "main-unsafe"
 

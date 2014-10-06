@@ -21,8 +21,6 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
-from gi.repository import Gtk
-
 
 class FindAndReplaceAction(gaupol.Action):
 
@@ -31,10 +29,10 @@ class FindAndReplaceAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`FindAndReplaceAction` instance."""
         gaupol.Action.__init__(self, "find_and_replace")
-        self.props.label = _("_Find And Replace…")
-        self.props.short_label = _("Find")
-        self.props.stock_id = Gtk.STOCK_FIND_AND_REPLACE
-        self.props.tooltip = _("Search for and replace text")
+        self.set_icon_name("edit-find-replace")
+        self.set_label(_("_Find And Replace…"))
+        self.set_short_label(_("Find"))
+        self.set_tooltip(_("Search for and replace text"))
         self.accelerator = "<Control>F"
         self.action_group = "main-unsafe"
 
@@ -50,8 +48,8 @@ class FindNextAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`FindNextAction` instance."""
         gaupol.Action.__init__(self, "find_next")
-        self.props.label = _("Find _Next")
-        self.props.tooltip = _("Search forwards for same text")
+        self.set_label(_("Find _Next"))
+        self.set_tooltip(_("Search forwards for same text"))
         self.accelerator = "<Control>G"
         self.action_group = "main-unsafe"
 
@@ -68,8 +66,8 @@ class FindPreviousAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`FindPreviousAction` instance."""
         gaupol.Action.__init__(self, "find_previous")
-        self.props.label = _("Find Pre_vious")
-        self.props.tooltip = _("Search backwards for same text")
+        self.set_label(_("Find Pre_vious"))
+        self.set_tooltip(_("Search backwards for same text"))
         self.accelerator = "<Shift><Control>G"
         self.action_group = "main-unsafe"
 

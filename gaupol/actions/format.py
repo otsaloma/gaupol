@@ -21,8 +21,6 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
-from gi.repository import Gtk
-
 
 class ShowCaseMenuAction(gaupol.MenuAction):
 
@@ -31,7 +29,7 @@ class ShowCaseMenuAction(gaupol.MenuAction):
     def __init__(self):
         """Initialize a :class:`ShowCaseMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_case_menu")
-        self.props.label = _("Ca_se")
+        self.set_label(_("Ca_se"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -50,8 +48,8 @@ class ToggleDialogDashesAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ToggleDialogDashesAction` instance."""
         gaupol.Action.__init__(self, "toggle_dialogue_dashes")
-        self.props.label = _("_Dialogue")
-        self.props.tooltip = _("Add or remove dialogue dashes on the selected texts")
+        self.set_label(_("_Dialogue"))
+        self.set_tooltip(_("Add or remove dialogue dashes on the selected texts"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -70,9 +68,9 @@ class ToggleItalicizationAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ToggleItalicizationAction` instance."""
         gaupol.Action.__init__(self, "toggle_italicization")
-        self.props.label = _("_Italic")
-        self.props.stock_id = Gtk.STOCK_ITALIC
-        self.props.tooltip = _("Italicize or unitalicize the selected texts")
+        self.set_icon_name("format-text-italic")
+        self.set_label(_("_Italic"))
+        self.set_tooltip(_("Italicize or unitalicize the selected texts"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -95,8 +93,8 @@ class UseLowerCaseAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`UseLowerCaseAction` instance."""
         gaupol.Action.__init__(self, "use_lower_case")
-        self.props.label = _("_Lower")
-        self.props.tooltip = _("Change the selected texts to lower case")
+        self.set_label(_("_Lower"))
+        self.set_tooltip(_("Change the selected texts to lower case"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -115,8 +113,8 @@ class UseSentenceCaseAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`UseSentenceCaseAction` instance."""
         gaupol.Action.__init__(self, "use_sentence_case")
-        self.props.label = _("_Sentence")
-        self.props.tooltip = _("Change the selected texts to sentence case")
+        self.set_label(_("_Sentence"))
+        self.set_tooltip(_("Change the selected texts to sentence case"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -135,8 +133,8 @@ class UseTitleCaseAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`UseTitleCaseAction` instance."""
         gaupol.Action.__init__(self, "use_title_case")
-        self.props.label = _("_Title")
-        self.props.tooltip = _("Change the selected texts to title case")
+        self.set_label(_("_Title"))
+        self.set_tooltip(_("Change the selected texts to title case"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -155,8 +153,8 @@ class UseUpperCaseAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`UseUpperCaseAction` instance."""
         gaupol.Action.__init__(self, "use_upper_case")
-        self.props.label = _("_Upper")
-        self.props.tooltip = _("Change the selected texts to upper case")
+        self.set_label(_("_Upper"))
+        self.set_tooltip(_("Change the selected texts to upper case"))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

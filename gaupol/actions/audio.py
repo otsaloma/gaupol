@@ -29,7 +29,7 @@ class ShowAudioTrackMenuAction(gaupol.MenuAction):
     def __init__(self):
         """Initialize a :class:`ShowAudioTrackMenuAction` instance."""
         gaupol.MenuAction.__init__(self, "show_audio_track_menu")
-        self.props.label = _("_Language")
+        self.set_label(_("_Language"))
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -46,8 +46,8 @@ class VolumeDownAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`VolumeDownAction` instance."""
         gaupol.Action.__init__(self, "volume_down")
-        self.props.label = _("Volume _Down")
-        self.props.tooltip = _("Decrease volume")
+        self.set_label(_("Volume _Down"))
+        self.set_tooltip(_("Decrease volume"))
         self.accelerator = "<Ctrl>minus"
         self.action_group = "main-unsafe"
 
@@ -63,8 +63,8 @@ class VolumeUpAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`VolumeUpAction` instance."""
         gaupol.Action.__init__(self, "volume_up")
-        self.props.label = _("Volume _Up")
-        self.props.tooltip = _("Increase volume")
+        self.set_label(_("Volume _Up"))
+        self.set_tooltip(_("Increase volume"))
         self.accelerator = "<Ctrl>plus"
         self.action_group = "main-unsafe"
 

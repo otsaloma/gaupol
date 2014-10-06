@@ -21,8 +21,6 @@ import aeidon
 import gaupol
 _ = aeidon.i18n._
 
-from gi.repository import Gtk
-
 
 class BrowseWikiDocumentationAction(gaupol.Action):
 
@@ -31,9 +29,9 @@ class BrowseWikiDocumentationAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`BrowseWikiDocumentationAction` instance."""
         gaupol.Action.__init__(self, "browse_wiki_documentation")
-        self.props.label = _("_Wiki Documentation")
-        self.props.stock_id = Gtk.STOCK_HELP
-        self.props.tooltip = _("Browse wiki documentation")
+        self.set_icon_name("help-contents")
+        self.set_label(_("_Wiki Documentation"))
+        self.set_tooltip(_("Browse wiki documentation"))
         self.action_group = "main-safe"
 
 
@@ -44,8 +42,8 @@ class ReportABugAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ReportABugAction` instance."""
         gaupol.Action.__init__(self, "report_a_bug")
-        self.props.label = _("_Report A Bug")
-        self.props.tooltip = _("Submit a bug report")
+        self.set_label(_("_Report A Bug"))
+        self.set_tooltip(_("Submit a bug report"))
         self.action_group = "main-safe"
 
 
@@ -56,9 +54,9 @@ class ViewAboutDialogAction(gaupol.Action):
     def __init__(self):
         """Initialize a :class:`ViewAboutDialogAction` instance."""
         gaupol.Action.__init__(self, "view_about_dialog")
-        self.props.label = _("_About")
-        self.props.stock_id = Gtk.STOCK_ABOUT
-        self.props.tooltip = _("Show information about Gaupol")
+        self.set_icon_name("help-about")
+        self.set_label(_("_About"))
+        self.set_tooltip(_("Show information about Gaupol"))
         self.action_group = "main-safe"
 
 
