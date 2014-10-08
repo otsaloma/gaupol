@@ -29,19 +29,19 @@ class FloatingLabel(Gtk.Box):
 
     """Floating label that can be overlaid on another widget."""
 
-    # FloatingLabel is inspired by, but not an implementation of
+    # FloatingLabel is inspired by, but not an implementation of,
     # the floating statusbar found in nautilus.
     # https://git.gnome.org/browse/nautilus/tree/src/nautilus-floating-bar.c
 
     def __init__(self):
         """Initialize a :class:`FloatingLabel` instance."""
         GObject.GObject.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
-        self._label = Gtk.Label()
         self._event_box = Gtk.EventBox()
         self._handlers = []
         self._hide_id = None
-        self.props.halign = Gtk.Align.START
-        self.props.valign = Gtk.Align.END
+        self._label = Gtk.Label()
+        self.set_halign(Gtk.Align.START)
+        self.set_valign(Gtk.Align.END)
         self._init_widgets()
 
     def flash_text(self, text, duration=6):
@@ -80,7 +80,3 @@ class FloatingLabel(Gtk.Box):
         if not text: return self.hide()
         self._label.set_text(text)
         self.show()
-
-    def show(self, *args):
-        """Show the label."""
-        self.props.visible = True
