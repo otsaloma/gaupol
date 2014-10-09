@@ -96,8 +96,8 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         editor.modify_font(self.props.font_desc)
         editor.set_text(self._text)
         editor.set_size_request(cell_area.width, cell_area.height)
-        editor.props.left_margin = self.props.xpad
-        editor.props.right_margin = self.props.xpad
+        editor.set_left_margin(self.props.xpad)
+        editor.set_right_margin(self.props.xpad)
         editor.gaupol_path = path
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)

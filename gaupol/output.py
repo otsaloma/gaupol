@@ -76,7 +76,7 @@ class OutputWindow(Gtk.Window):
         self._text_view.set_pixels_below_lines(1)
         gaupol.util.set_widget_font(self._text_view, "monospace")
         scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._text_view)
         scroller.show_all()
