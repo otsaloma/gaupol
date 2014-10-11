@@ -372,12 +372,6 @@ class View(Gtk.TreeView):
             text = GLib.markup_escape_text(label.get_text())
             label.set_markup("{}".format(text))
         if fcol is not None:
-            # We used to set the focused column header bold here,
-            # but since GTK+3/GNOME3 the default Adwaita theme
-            # makes all column headers bold by default and uses a
-            # light color that's hard to read in normal weight.
-            # Hence, we'll use italic instead and hope it works
-            # all right across different themes.
             label = self.get_column(fcol).get_widget()
             text = GLib.markup_escape_text(label.get_text())
             label.set_markup("<i>{}</i>".format(text))

@@ -86,10 +86,7 @@ class PreviewAgent(aeidon.Delegate):
         # so let's watch the process by polling it at regular intervals.
         GLib.timeout_add(1000,
                          self._check_process_state,
-                         page,
-                         process,
-                         fout,
-                         command)
+                         page, process, fout, command)
 
     @aeidon.deco.export
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):

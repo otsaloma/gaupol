@@ -55,7 +55,7 @@ class ViewAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         page.edit_mode = edit_mode
         gaupol.conf.editor.mode = edit_mode
-        has_focus = page.view.get_has_focus()
+        has_focus = page.view.has_focus()
         focus_row, focus_col = page.view.get_focus()
         selected_rows = page.view.get_selected_rows()
         scroller = page.view.get_parent()

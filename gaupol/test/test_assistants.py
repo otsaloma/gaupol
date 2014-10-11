@@ -167,7 +167,6 @@ class TestTextAssistant(gaupol.TestCase):
     def setup_method(self, method):
         gaupol.conf.text_assistant.pages = ["common-error"]
         self.application = self.new_application()
-        self.assistant = gaupol.TextAssistant(self.application.window,
-                                              self.application)
-
+        self.assistant = gaupol.TextAssistant(
+            self.application.window, self.application)
         self.assistant.show()

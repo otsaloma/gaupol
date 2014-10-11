@@ -577,11 +577,10 @@ class JoinSplitWordsPage(BuilderPage):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-        label = self._language_button.get_label()
+        language = gaupol.conf.spell_check.language
         with aeidon.util.silent(LookupError):
-            language = gaupol.conf.spell_check.language
-            label = aeidon.locales.code_to_name(language)
-        self._set_language_button_label(label)
+            language = aeidon.locales.code_to_name(language)
+        self._language_button.set_label(language)
         self._join_check.set_active(gaupol.conf.join_split_words.join)
         self._split_check.set_active(gaupol.conf.join_split_words.split)
 
@@ -595,21 +594,14 @@ class JoinSplitWordsPage(BuilderPage):
         dialog = gaupol.LanguageDialog(self.assistant, False)
         gaupol.util.set_cursor_normal(self.assistant)
         gaupol.util.flash_dialog(dialog)
-        label = self._language_button.get_label()
+        language = gaupol.conf.spell_check.language
         with aeidon.util.silent(LookupError):
-            language = gaupol.conf.spell_check.language
-            label = aeidon.locales.code_to_name(language)
-        self._set_language_button_label(label)
+            language = aeidon.locales.code_to_name(language)
+        self._language_button.set_label(language)
 
     def _on_split_check_toggled(self, check_button, *args):
         """Save value of split option."""
         gaupol.conf.join_split_words.split = check_button.get_active()
-
-    def _set_language_button_label(self, text):
-        """Set `text` as the language button label."""
-        box = self._language_button.get_child()
-        label = box.get_children()[0]
-        label.set_text(text)
 
     def _show_error_dialog(self, message):
         """Show an error dialog after failing to load dictionary."""

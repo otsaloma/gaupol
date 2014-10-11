@@ -26,12 +26,14 @@ class TestCloseAgent(gaupol.TestCase):
     def run__confirm_close_main(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
-        self.delegate.close(page)
+        with aeidon.util.silent(gaupol.Default):
+            self.application.close(page)
 
     def run__confirm_close_translation(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
-        self.delegate.close(page)
+        with aeidon.util.silent(gaupol.Default):
+            self.application.close(page)
 
     def setup_method(self, method):
         self.application = self.new_application()
