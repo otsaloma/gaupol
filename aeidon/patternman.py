@@ -208,9 +208,6 @@ class PatternManager:
 
     def save_config(self, script=None, language=None, country=None):
         """Save pattern configurations to files."""
-        local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
-        with aeidon.util.silent(OSError):
-            aeidon.util.makedirs(local_dir)
         codes = self._get_codes(script, language, country)
         for code in (x for x in codes if x in self._patterns):
             self._write_config_to_file(code, "utf_8")
@@ -218,7 +215,6 @@ class PatternManager:
     def _write_config_to_file(self, code, encoding):
         """Write configurations of all patterns to file."""
         local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
-        if not os.path.isdir(local_dir): return
         basename = "{}.{}.conf".format(code, self.pattern_type)
         path = os.path.join(local_dir, basename)
         text = '<?xml version="1.0" encoding="utf-8"?>\n'

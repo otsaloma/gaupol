@@ -466,6 +466,8 @@ def write(path, text, encoding=None, fallback="utf_8", quiet=False):
     Raise :exc:`IOError` if writing fails.
     Raise :exc:`UnicodeError` if encoding fails.
     """
+    if not os.path.isdir(os.path.dirname(path)):
+        makedirs(os.path.dirname(path))
     encoding = encoding or get_default_encoding()
     try:
         with open(path, "w", encoding=encoding) as f:
