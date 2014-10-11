@@ -95,19 +95,6 @@ def get_gst_version():
     except Exception:
         return None
 
-def get_gtkspell_version():
-    """
-    Return :mod:`GtkSpell` version number as string or ``None``.
-
-    Please try not to use this.
-    """
-    try:
-        from gi.repository import GtkSpell
-        # XXX: Not public!?
-        return GtkSpell._version
-    except Exception:
-        return None
-
 def get_icon_image(name, fallback, size):
     """Return icon image from `name` or `fallback` in theme."""
     theme = Gtk.IconTheme.get_default()
