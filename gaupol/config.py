@@ -481,12 +481,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         """
         if self.path is None: return
         self.general.version = gaupol.__version__
-        if not os.path.isdir(os.path.dirname(self.path)):
-            try:
-                aeidon.util.makedirs(os.path.dirname(self.path))
-            except (IOError, OSError):
-                aeidon.util.print_write_io(sys.exc_info(), self.path)
-                raise # IOError, OSError
+        with aeidon.util.silent(OSError):
+            aeidon.util.makedirs(os.path.dirname(self.path))
         encoding = aeidon.util.get_default_encoding()
         try:
             f = open(self.path, "w", encoding=encoding)
