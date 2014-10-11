@@ -61,7 +61,6 @@ class SpellCheckDialog(gaupol.BuilderDialog):
                 "ignore_button",
                 "join_back_button",
                 "join_forward_button",
-                "language_label",
                 "replace_all_button",
                 "replace_button",
                 "grid",
@@ -226,8 +225,6 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         aeidon.util.makedirs(self._personal_dir)
         self._init_checker()
         self._init_replacements()
-        markup = "<b>{}</b>".format(self._language_name)
-        self._language_label.set_markup(markup)
 
     def _init_tree_view(self):
         """Initialize the suggestion tree view."""
@@ -249,7 +246,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
         gaupol.util.scale_to_size(self._text_view, nchar=50, nlines=4, font=font)
-        gaupol.util.scale_to_size(self._tree_view, nchar=20, nlines=8, font=font)
+        gaupol.util.scale_to_size(self._tree_view, nchar=20, nlines=6, font=font)
         self._entry_handler = self._entry.connect("changed",
                                                   self._on_entry_changed)
 
