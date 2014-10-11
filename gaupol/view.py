@@ -88,7 +88,7 @@ class View(Gtk.TreeView):
     def get_header_label(self, text):
         """Return a column header label from `text`."""
         label = Gtk.Label(label=text)
-        label.props.xalign = 0
+        label.set_halign(Gtk.Align.START)
         label.show()
         return label
 
