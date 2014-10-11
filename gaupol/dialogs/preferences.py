@@ -306,18 +306,18 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
         theme = Gtk.IconTheme.get_default()
         # Tool buttons in the UI file are specified as symbolic icons
-        # by name. These have been checked to be found in gnome-icon-theme,
+        # by name. These have been checked to be found in adwaita-icon-theme,
         # but might be missing in other themes. If even one is missing
-        # fall back to using GTK+ stock icons.
+        # fall back to using non-symbolic icons.
         if not all((theme.has_icon(self._add_button.get_icon_name()),
                     theme.has_icon(self._remove_button.get_icon_name()),
                     theme.has_icon(self._up_button.get_icon_name()),
                     theme.has_icon(self._down_button.get_icon_name()))):
 
-            self._add_button.set_stock_id(Gtk.STOCK_ADD)
-            self._remove_button.set_stock_id(Gtk.STOCK_REMOVE)
-            self._up_button.set_stock_id(Gtk.STOCK_GO_UP)
-            self._down_button.set_stock_id(Gtk.STOCK_GO_DOWN)
+            self._add_button.set_icon_name("list-add")
+            self._remove_button.set_icon_name("list-remove")
+            self._up_button.set_icon_name("go-up")
+            self._down_button.set_icon_name("go-down")
 
     def _init_tree_view(self):
         """Initialize the fallback encoding tree view."""

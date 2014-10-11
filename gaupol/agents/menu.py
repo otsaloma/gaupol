@@ -52,7 +52,6 @@ class MenuAgent(aeidon.Delegate):
         action = Gtk.RadioAction(name=name,
                                  label=label,
                                  tooltip=tooltip,
-                                 stock_id=None,
                                  value=index)
 
         action_group = self.get_action_group("audio-tracks")
@@ -74,7 +73,6 @@ class MenuAgent(aeidon.Delegate):
         action = Gtk.RadioAction(name=name,
                                  label=label,
                                  tooltip=tooltip,
-                                 stock_id=None,
                                  value=index)
 
         action_group = self.get_action_group("projects")

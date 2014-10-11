@@ -177,7 +177,6 @@ class CustomFrameratesExtension(gaupol.Extension):
             action = Gtk.RadioAction(name=action_name,
                                      label=framerate.label,
                                      tooltip=tooltip.format(value),
-                                     stock_id=None,
                                      value=int(framerate))
 
             group = "show_framerate_23_976"

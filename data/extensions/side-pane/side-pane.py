@@ -140,7 +140,8 @@ class SidePane(aeidon.Observable):
         """Initialize the horizontal pane container."""
         main_vbox = self.application.window.get_children()[0]
         main_notebook = main_vbox.get_children()[2]
-        main_notebook.props.expand = True
+        main_notebook.set_hexpand(True)
+        main_notebook.set_vexpand(True)
         self._paned.pack1(side_vbox, resize=False, shrink=False)
         main_notebook_vbox = gaupol.util.new_vbox(spacing=0)
         main_notebook.reparent(main_notebook_vbox)
