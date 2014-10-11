@@ -54,7 +54,8 @@ class View(Gtk.TreeView):
         self._init_props(edit_mode)
 
     def connect_selection_changed(self, callback):
-        """Connect to the "changed" signal of selection.
+        """
+        Connect to the "changed" signal of selection.
 
         Using this instead of the tree selection's own ``connect`` method
         allows signal handlers to be blocked while in the process of selecting

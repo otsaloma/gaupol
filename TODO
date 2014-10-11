@@ -8,6 +8,7 @@ Gaupol 0.27
  [ ] Add dependency on a freedesktop.org compliant icon-theme?
      - GTK+ 3.14 depends on adwaita-icon-theme, but earlier don't
 
+ * Gtk.Label.props.xalign is deprecated
  * Remove pointless actions (e.g. move tab left)
  * Remove pointless hidden preferences
  * Remove gaupol.util.get_gtkspell_version
