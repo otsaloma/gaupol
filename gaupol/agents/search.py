@@ -39,7 +39,7 @@ class SearchAgent(aeidon.Delegate):
         """Search for and replace text."""
         if self._search_dialog is not None:
             return self._search_dialog.present()
-        self._search_dialog = gaupol.SearchDialog(self)
+        self._search_dialog = gaupol.SearchDialog(self.window, self)
         aeidon.util.connect(self, "_search_dialog", "response")
         # Do not destroy the dialog, but rather hide based on response.
         self._search_dialog.connect("delete-event", lambda *args: True)

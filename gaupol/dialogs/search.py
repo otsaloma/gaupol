@@ -73,7 +73,7 @@ class SearchDialog(gaupol.BuilderDialog):
                 "text_view",
                 "tran_check")
 
-    def __init__(self, application):
+    def __init__(self, parent, application):
         """Initialize a :class:`SearchDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "search-dialog.ui")
         self.application = application
@@ -100,7 +100,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self._overlay.add_overlay(self._statuslabel)
         self._overlay.show_all()
         self._statuslabel.set_text(None)
-        self._dialog.set_transient_for(None)
+        self._dialog.set_transient_for(parent)
         self._dialog.set_type_hint(Gdk.WindowTypeHint.NORMAL)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
