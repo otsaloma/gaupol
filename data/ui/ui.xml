@@ -238,14 +238,9 @@
       <placeholder name="2">
       </placeholder>
       <separator/>
-      <menuitem name="move_tab_left" action="move_tab_left"/>
-      <menuitem name="move_tab_right" action="move_tab_right"/>
-      <placeholder name="3">
-      </placeholder>
-      <separator/>
       <placeholder name="open">
       </placeholder>
-      <placeholder name="4">
+      <placeholder name="3">
       </placeholder>
     </menu>
     <menu name="help" action="show_help_menu">

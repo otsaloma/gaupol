@@ -8,8 +8,6 @@ Gaupol 0.27
  [ ] Add dependency on a freedesktop.org compliant icon-theme?
      - GTK+ 3.14 depends on adwaita-icon-theme, but earlier don't
 
- * Remove pointless actions (e.g. move tab left)
- * Remove pointless hidden preferences
  * Remove gaupol.util.get_gtkspell_version
  * makedirs?
  * props?
