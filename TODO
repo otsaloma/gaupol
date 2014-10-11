@@ -8,7 +8,6 @@ Gaupol 0.27
  [ ] Add dependency on a freedesktop.org compliant icon-theme?
      - GTK+ 3.14 depends on adwaita-icon-theme, but earlier don't
 
- * props?
  * Check no stock remains
  * Profile!
  * Test!

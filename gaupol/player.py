@@ -367,7 +367,7 @@ class VideoPlayer(aeidon.Observable):
         """
         self._playbin.props.uri = uri
         # XXX: We need platform-specific calls here.
-        self._xid = self.widget.props.window.get_xid()
+        self._xid = self.widget.get_window().get_xid()
         self.subtitle_text = ""
         try:
             # Find out the exact framerate to be able

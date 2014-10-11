@@ -86,8 +86,8 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
             self.set_current_folder(gaupol.conf.file.directory)
         self.set_encoding(gaupol.conf.file.encoding)
         self._align_combo.set_active(gaupol.conf.file.align_method)
-        self._align_combo.props.visible = (doc == aeidon.documents.TRAN)
-        self._align_label.props.visible = (doc == aeidon.documents.TRAN)
+        self._align_combo.set_visible(doc == aeidon.documents.TRAN)
+        self._align_label.set_visible(doc == aeidon.documents.TRAN)
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""

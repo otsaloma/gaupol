@@ -100,7 +100,7 @@ class OutputWindow(Gtk.Window):
 
     def _on_notify_visible(self, *args):
         """Save window visibility."""
-        gaupol.conf.output_window.show = self.props.visible
+        gaupol.conf.output_window.show = self.get_visible()
 
     def _on_window_state_event(self, window, event):
         """Save window maximization."""

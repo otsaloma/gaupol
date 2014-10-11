@@ -212,7 +212,7 @@ class FrameTransformDialog(PositionTransformDialog):
         text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_1.set_text(text)
         self._text_label_1.set_tooltip_text(subtitle.main_text)
-        self._subtitle_spin_2.props.adjustment.props.lower = row + 2
+        self._subtitle_spin_2.get_adjustment().set_lower(row + 2)
 
     def _on_subtitle_spin_2_value_changed(self, spin_button):
         """Update subtitle data in widgets."""
@@ -225,7 +225,7 @@ class FrameTransformDialog(PositionTransformDialog):
         text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_2.set_text(text)
         self._text_label_2.set_tooltip_text(subtitle.main_text)
-        self._subtitle_spin_1.props.adjustment.props.upper = row
+        self._subtitle_spin_1.get_adjustment().set_upper(row)
 
     def _output_edited(self):
         """Return ``True`` if output of either point has been edited."""
@@ -281,7 +281,7 @@ class TimeTransformDialog(PositionTransformDialog):
         text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_1.set_text(text)
         self._text_label_1.set_tooltip_text(subtitle.main_text)
-        self._subtitle_spin_2.props.adjustment.props.lower = row + 2
+        self._subtitle_spin_2.get_adjustment().set_lower(row + 2)
         # Allow the GLib.idle_add-using TimeEntry to update.
         gaupol.util.iterate_main()
 
@@ -296,7 +296,7 @@ class TimeTransformDialog(PositionTransformDialog):
         text = aeidon.RE_ANY_TAG.sub("", text)
         self._text_label_2.set_text(text)
         self._text_label_2.set_tooltip_text(subtitle.main_text)
-        self._subtitle_spin_1.props.adjustment.props.upper = row
+        self._subtitle_spin_1.get_adjustment().set_upper(row)
         # Allow the GLib.idle_add-using TimeEntry to update.
         gaupol.util.iterate_main()
 

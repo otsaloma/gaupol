@@ -126,16 +126,16 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         self.set_newline(file.newline)
         self.set_framerate(gaupol.conf.editor.framerate)
         visible = len(set(self._modes)) > 1
-        self._framerate_combo.props.visible = visible
-        self._framerate_label.props.visible = visible
+        self._framerate_combo.set_visible(visible)
+        self._framerate_label.set_visible(visible)
 
     def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""
         format = self.get_format()
         modes = list(self._modes) + [format.mode]
         visible = len(set(modes)) > 1
-        self._framerate_combo.props.visible = visible
-        self._framerate_label.props.visible = visible
+        self._framerate_combo.set_visible(visible)
+        self._framerate_label.set_visible(visible)
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
@@ -154,7 +154,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         pages = self._get_pages()
         files = [None for x in pages]
         for i, page in enumerate(pages):
-            if self._framerate_combo.props.visible:
+            if self._framerate_combo.get_visible():
                 # Set framerate to the selected one.
                 framerate = self.get_framerate()
                 self.application.set_current_page(page)

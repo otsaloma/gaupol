@@ -176,12 +176,12 @@ class UpdateAgent(aeidon.Delegate):
         if page is None: return
         if page.project.can_undo():
             action = self.get_action("undo_action")
-            action.props.tooltip = _('Undo "{}"').format(
-                page.project.undoables[0].description)
+            action.set_tooltip(_('Undo "{}"').format(
+                page.project.undoables[0].description))
         if page.project.can_redo():
             action = self.get_action("redo_action")
-            action.props.tooltip = _('Redo "{}"').format(
-                page.project.redoables[0].description)
+            action.set_tooltip(_('Redo "{}"').format(
+                page.project.redoables[0].description))
 
     def _update_widgets(self, page):
         """Update states of all widgets for `page`."""
@@ -191,5 +191,5 @@ class UpdateAgent(aeidon.Delegate):
         self.get_framerate_action(page.project.framerate).set_active(True)
         for field in gaupol.fields:
             col = getattr(page.view.columns, field.name)
-            visible = page.view.get_column(col).props.visible
+            visible = page.view.get_column(col).get_visible()
             self.get_column_action(field).set_active(visible)

@@ -38,7 +38,7 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
                 "editor_length_combo",
                 "editor_length_edit_check",
                 "editor_length_hbox",
-                "editor_spell_check_check",)
+                "editor_spell_check_check")
 
     def __init__(self, master, application):
         """Initialize an :class:`EditorPage` instance."""
@@ -309,10 +309,10 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         # by name. These have been checked to be found in gnome-icon-theme,
         # but might be missing in other themes. If even one is missing
         # fall back to using GTK+ stock icons.
-        if not all((theme.has_icon(self._add_button.props.icon_name),
-                    theme.has_icon(self._remove_button.props.icon_name),
-                    theme.has_icon(self._up_button.props.icon_name),
-                    theme.has_icon(self._down_button.props.icon_name))):
+        if not all((theme.has_icon(self._add_button.get_icon_name()),
+                    theme.has_icon(self._remove_button.get_icon_name()),
+                    theme.has_icon(self._up_button.get_icon_name()),
+                    theme.has_icon(self._down_button.get_icon_name()))):
 
             self._add_button.set_stock_id(Gtk.STOCK_ADD)
             self._remove_button.set_stock_id(Gtk.STOCK_REMOVE)

@@ -368,7 +368,7 @@ class SearchDialog(gaupol.BuilderDialog):
         if self._match_page is None: return
         if self._match_row  is None: return
         if self._match_doc  is None: return
-        if not self._text_view.props.sensitive: return
+        if not self._text_view.get_sensitive(): return
         page = self.application.get_current_page()
         if page is not self._match_page: return
         text_buffer = text_view.get_buffer()

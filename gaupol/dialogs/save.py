@@ -137,8 +137,8 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.set_format(gaupol.conf.file.format)
         self.set_newline(gaupol.conf.file.newline)
         self.set_framerate(gaupol.conf.editor.framerate)
-        self._framerate_combo.props.visible = False
-        self._framerate_label.props.visible = False
+        self._framerate_combo.hide()
+        self._framerate_label.hide()
 
     def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""
@@ -154,8 +154,8 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
                 self.set_current_name(basename)
                 self.set_filename(path)
         visible = (format.mode != self._mode)
-        self._framerate_combo.props.visible = visible
-        self._framerate_label.props.visible = visible
+        self._framerate_combo.set_visible(visible)
+        self._framerate_label.set_visible(visible)
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""

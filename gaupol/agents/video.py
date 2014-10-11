@@ -71,7 +71,7 @@ class VideoAgent(aeidon.Delegate):
         self.seekbar = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL,
                                  adjustment=adjustment)
 
-        self.seekbar.props.draw_value = False
+        self.seekbar.set_draw_value(False)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
         gaupol.util.pack_start_fill(vbox, self.seekbar)
         self.player_toolbar = self.uim.get_widget("/ui/player_toolbar")
@@ -80,9 +80,10 @@ class VideoAgent(aeidon.Delegate):
         self.player_toolbar.insert(separator, -1)
         self.player_toolbar.child_set_property(separator, "expand", True)
         self.volume_button = Gtk.VolumeButton()
-        self.volume_button.props.adjustment.props.lower = 0
-        self.volume_button.props.adjustment.props.upper = 1
-        self.volume_button.props.value = self.player.volume
+        adjustment = self.volume_button.get_adjustment()
+        adjustment.set_lower(0)
+        adjustment.set_upper(1)
+        adjustment.set_value(self.player.volume)
         aeidon.util.connect(self, "volume_button", "value-changed")
         item = Gtk.ToolItem()
         item.add(self.volume_button)
@@ -92,11 +93,11 @@ class VideoAgent(aeidon.Delegate):
         gaupol.util.pack_start_expand(self.player_box, vbox)
         self.player_box.show_all()
         self.paned.add1(self.player_box)
-        orientation = self.paned.props.orientation
+        orientation = self.paned.get_orientation()
         if orientation == Gtk.Orientation.HORIZONTAL:
-            size = self.notebook.props.window.get_width()
+            size = self.notebook.get_window().get_width()
         if orientation == Gtk.Orientation.VERTICAL:
-            size = self.notebook.props.window.get_height()
+            size = self.notebook.get_window().get_height()
         self.paned.set_position(int(size/2))
 
     def _init_update_handlers(self):
@@ -139,7 +140,7 @@ class VideoAgent(aeidon.Delegate):
             if self.player.is_playing():
                 action = self.get_action("play_pause")
                 action.activate()
-            adjustment = self.seekbar.props.adjustment
+            adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(0)
             self.player.stop()
         self.player.set_path(path)
@@ -170,13 +171,13 @@ class VideoAgent(aeidon.Delegate):
         """Update UI to match `state` of `player`."""
         if state == Gst.State.NULL:
             action = self.get_action("play_pause")
-            action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
+            action.set_icon_name("media-playback-start")
         if state == Gst.State.PLAYING:
             action = self.get_action("play_pause")
-            action.props.stock_id = Gtk.STOCK_MEDIA_PAUSE
+            action.set_icon_name("media-playback-pause")
         if state == Gst.State.PAUSED:
             action = self.get_action("play_pause")
-            action.props.stock_id = Gtk.STOCK_MEDIA_PLAY
+            action.set_icon_name("media-playback-start")
 
     def _on_player_update_seekbar(self, data=None):
         """Update seekbar from video position."""
@@ -204,7 +205,7 @@ class VideoAgent(aeidon.Delegate):
 
     def _on_player_update_volume(self, data=None):
         """Update volume from player."""
-        self.volume_button.props.value = self.player.volume
+        self.volume_button.set_value(self.player.volume)
         return True # to be called again.
 
     @aeidon.deco.export

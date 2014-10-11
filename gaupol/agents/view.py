@@ -29,7 +29,7 @@ class ViewAgent(aeidon.Delegate):
     def _on_output_window_notify_visible(self, output_window, visible):
         """Sync menu item to output window's visibility."""
         action = self.get_action("toggle_output_window")
-        action.set_active(output_window.props.visible)
+        action.set_active(output_window.get_visible())
 
     @aeidon.deco.export
     def _on_show_framerate_23_976_changed(self, item, active_item):
@@ -55,7 +55,7 @@ class ViewAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         page.edit_mode = edit_mode
         gaupol.conf.editor.mode = edit_mode
-        has_focus = page.view.props.has_focus
+        has_focus = page.view.get_has_focus()
         focus_row, focus_col = page.view.get_focus()
         selected_rows = page.view.get_selected_rows()
         scroller = page.view.get_parent()
@@ -92,8 +92,8 @@ class ViewAgent(aeidon.Delegate):
     def _on_toggle_main_toolbar_toggled(self, *args):
         """Show or hide the main toolbar."""
         toolbar = self.uim.get_widget("/ui/main_toolbar")
-        visible = toolbar.props.visible
-        toolbar.props.visible = not visible
+        visible = toolbar.get_visible()
+        toolbar.set_visible(not visible)
         gaupol.conf.application_window.show_main_toolbar = not visible
 
     @aeidon.deco.export
@@ -104,22 +104,20 @@ class ViewAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_toggle_output_window_toggled(self, *args):
         """Show or hide the output window."""
-        visible = self.output_window.props.visible
+        visible = self.output_window.get_visible()
         action = self.get_action("toggle_output_window")
         active = action.get_active()
         if visible is active: return
-        if self.output_window.props.visible:
-            return self.output_window.hide()
-        self.output_window.show()
+        self.output_window.set_visible(not visible)
 
     @aeidon.deco.export
     def _on_toggle_player_toggled(self, *args):
         """Show or hide the video player."""
         action = self.get_action("toggle_player")
         visible = action.get_active()
-        self.player_box.props.visible = visible
+        self.player_box.set_visible(visible)
         self.notebook.set_show_tabs(not visible)
-        self.notebook_separator.props.visible = visible
+        self.notebook_separator.set_visible(visible)
 
     @aeidon.deco.export
     def _on_toggle_start_column_toggled(self, *args):
@@ -170,9 +168,9 @@ class ViewAgent(aeidon.Delegate):
         """Change how window is split to video and subtitles."""
         orientation = active_item.orientation
         if orientation == gaupol.orientation.HORIZONTAL:
-            self.paned.props.orientation = gaupol.orientation.HORIZONTAL
+            self.paned.set_orientation(gaupol.orientation.HORIZONTAL)
             self.player_box.orientation = gaupol.orientation.VERTICAL
         if orientation == gaupol.orientation.VERTICAL:
-            self.paned.props.orientation = gaupol.orientation.VERTICAL
+            self.paned.set_orientation(gaupol.orientation.VERTICAL)
             self.player_box.orientation = gaupol.orientation.HORIZONTAL
         gaupol.conf.application_window.layout = orientation

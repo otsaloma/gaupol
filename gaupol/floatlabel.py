@@ -43,6 +43,7 @@ class FloatingLabel(Gtk.Box):
         self.set_halign(Gtk.Align.START)
         self.set_valign(Gtk.Align.END)
         self._init_widgets()
+        self.connect("hide", self._on_hide)
 
     def flash_text(self, text, duration=6):
         """Show label with `text` for `duration` seconds."""
@@ -53,20 +54,19 @@ class FloatingLabel(Gtk.Box):
         """Return text shown in the label."""
         return self._label.get_text()
 
-    def hide(self, *args):
-        """Hide the label."""
-        self.props.visible = False
-        while self._handlers:
-            widget, handler_id = self._handlers.pop()
-            if widget.handler_is_connected(handler_id):
-                widget.handler_disconnect(handler_id)
-
     def _init_widgets(self):
         """Initialize widgets contained in the box."""
         self._label.set_name("gaupol-floating-label")
         self._event_box.add(self._label)
         gaupol.util.pack_start(self, self._event_box)
         self._event_box.connect("enter-notify-event", self.hide)
+
+    def _on_hide(self, *args):
+        """Disconnect signal handlers."""
+        while self._handlers:
+            widget, handler_id = self._handlers.pop()
+            if widget.handler_is_connected(handler_id):
+                widget.handler_disconnect(handler_id)
 
     def register_hide_event(self, widget, signal):
         """Register `widget`'s `signal` as cause to hide the label."""

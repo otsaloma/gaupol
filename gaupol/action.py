@@ -93,7 +93,7 @@ class Action(Gtk.Action):
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        callback = "_on_{}_activate".format(self.props.name)
+        callback = "_on_{}_activate".format(self.get_name())
         self.connect("activate", getattr(application, callback))
 
     def set_sensitive(self, sensitive):
@@ -118,7 +118,7 @@ class MenuAction(Action):
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        callback = "_on_{}_activate".format(self.props.name)
+        callback = "_on_{}_activate".format(self.get_name())
         if hasattr(application, callback):
             self.connect("activate", getattr(application, callback))
 
@@ -157,10 +157,10 @@ class RecentAction(Gtk.RecentAction, Action):
     def finalize(self, application):
         """Connect action to widgets of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        callback = "_on_{}_activate".format(self.props.name)
+        callback = "_on_{}_activate".format(self.get_name())
         if hasattr(application, callback):
             self.connect("activate", getattr(application, callback))
-        callback = "_on_{}_item_activated".format(self.props.name)
+        callback = "_on_{}_item_activated".format(self.get_name())
         self.connect("item-activated", getattr(application, callback))
 
 
@@ -175,7 +175,7 @@ class ToggleAction(Gtk.ToggleAction, Action):
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        callback = "_on_{}_toggled".format(self.props.name)
+        callback = "_on_{}_toggled".format(self.get_name())
         self.connect("toggled", getattr(application, callback))
 
 
@@ -206,5 +206,5 @@ class RadioAction(Gtk.RadioAction, Action):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
         if self.__class__.__name__ == self.group:
-            callback = "_on_{}_changed".format(self.props.name)
+            callback = "_on_{}_changed".format(self.get_name())
             self.connect("changed", getattr(application, callback))

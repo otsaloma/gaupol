@@ -190,7 +190,7 @@ class IntroductionPage(BuilderPage):
         """Toggle and save task check button value."""
         store = self._tree_view.get_model()
         store[path][1] = not store[path][1]
-        store[path][0].props.visible = store[path][1]
+        store[path][0].set_visible(store[path][1])
         pages = [x.handle for x in self.get_selected_pages()]
         gaupol.conf.text_assistant.pages = pages
 
@@ -203,7 +203,7 @@ class IntroductionPage(BuilderPage):
             title = GLib.markup_escape_text(page.title)
             description = GLib.markup_escape_text(page.description)
             markup = "<b>{}</b>\n{}".format(title, description)
-            page.props.visible = (page.handle in pages)
+            page.set_visible(page.handle in pages)
             store.append((page, page.handle in pages, markup))
         self._tree_view.get_selection().unselect_all()
 
@@ -241,7 +241,7 @@ class LocalePage(BuilderPage):
 
     def _get_country(self):
         """Return the selected country or ``None``."""
-        if not self._country_combo.props.sensitive: return None
+        if not self._country_combo.get_sensitive(): return None
         index = self._country_combo.get_active()
         if index < 0: return None
         store = self._country_combo.get_model()
@@ -250,7 +250,7 @@ class LocalePage(BuilderPage):
 
     def _get_language(self):
         """Return the selected language or ``None``."""
-        if not self._language_combo.props.sensitive: return None
+        if not self._language_combo.get_sensitive(): return None
         index = self._language_combo.get_active()
         if index < 0: return None
         store = self._language_combo.get_model()
@@ -259,7 +259,7 @@ class LocalePage(BuilderPage):
 
     def _get_script(self):
         """Return the selected script or ``None``."""
-        if not self._script_combo.props.sensitive: return None
+        if not self._script_combo.get_sensitive(): return None
         index = self._script_combo.get_active()
         if index < 0: return None
         store = self._script_combo.get_model()
@@ -862,7 +862,7 @@ class ConfirmationPage(BuilderPage):
         renderer.props.ypad = 4
         column = Gtk.TreeViewColumn(title, renderer, text=index)
         column.set_resizable(True)
-        column.props.expand = True
+        column.set_expand(True)
         self._tree_view.append_column(column)
 
     def _can_preview(self):
@@ -1021,7 +1021,7 @@ class TextAssistant(Gtk.Assistant):
             self.add_page(page)
         def on_notify_visible(page, prop, pages):
             for page in pages[1:]:
-                page.props.visible = pages[0].props.visible
+                page.set_visible(pages[0].get_visible())
         pages[0].connect("notify::visible", on_notify_visible, pages)
 
     def _copy_project(self, project):

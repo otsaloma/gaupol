@@ -47,18 +47,18 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         store = self._init_tree_view(self._main_tree_view)
         for page in (x for x in self.pages if x.project.main_changed):
             store.append((page, True, page.get_main_basename()))
-        self._main_vbox.props.visible = (len(store) > 0)
+        self._main_vbox.set_visible(len(store) > 0)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
-        if self._main_vbox.props.visible:
+        if self._main_vbox.get_visible():
             gaupol.util.scale_to_content(self._main_tree_view,
                                          min_nchar=20,
                                          max_nchar=40,
                                          min_nlines=2,
                                          max_nlines=6)
 
-        if self._tran_vbox.props.visible:
+        if self._tran_vbox.get_visible():
             gaupol.util.scale_to_content(self._tran_tree_view,
                                          min_nchar=20,
                                          max_nchar=40,
@@ -70,7 +70,7 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         store = self._init_tree_view(self._tran_tree_view)
         for page in (x for x in self.pages if x.project.tran_changed):
             store.append((page, True, page.get_translation_basename()))
-        self._tran_vbox.props.visible = (len(store) > 0)
+        self._tran_vbox.set_visible(len(store) > 0)
 
     def _init_tree_view(self, tree_view):
         """Initialize `tree_view` and return its model."""

@@ -51,8 +51,8 @@ class TestSearchDialog(gaupol.TestCase):
         self.dialog.next()
         page = self.application.get_current_page()
         page.project.remove_subtitles((self.dialog._match_row,))
-        assert not self.dialog._text_view.props.sensitive
-        assert not self.dialog._replace_button.props.sensitive
+        assert not self.dialog._text_view.get_sensitive()
+        assert not self.dialog._replace_button.get_sensitive()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.HELP)

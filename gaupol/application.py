@@ -213,7 +213,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         toolbar_style = gaupol.conf.application_window.toolbar_style
         toolbar.set_style(toolbar_style.value)
         if sys.platform == "win32":
-            toolbar.props.icon_size = Gtk.IconSize.MENU
+            toolbar.set_icon_size(Gtk.IconSize.MENU)
         gaupol.conf.connect_notify("application_window", "toolbar_style", self)
         gaupol.util.pack_start(vbox, toolbar)
 
@@ -251,7 +251,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize the output window."""
         self.output_window = gaupol.OutputWindow()
         aeidon.util.connect(self, "output_window", "notify::visible")
-        self.output_window.props.visible = gaupol.conf.output_window.show
+        self.output_window.set_visible(gaupol.conf.output_window.show)
 
     def _init_paned(self, vbox):
         """Intialize the paned layout."""
@@ -338,8 +338,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize visibilities of hideable widgets."""
         conf = gaupol.conf.application_window
         toolbar = self.uim.get_widget("/ui/main_toolbar")
-        toolbar.props.visible = conf.show_main_toolbar
-        self.notebook_separator.props.visible = False
+        toolbar.set_visible(conf.show_main_toolbar)
+        self.notebook_separator.set_visible(False)
         self.show_message(None)
 
     def _init_window(self):
