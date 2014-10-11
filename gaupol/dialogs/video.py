@@ -52,8 +52,6 @@ class VideoDialog(Gtk.FileChooserDialog):
         video_filter.add_mime_type("video/*")
         video_filter.set_name(_("Video files"))
         self.add_filter(video_filter)
-        if sys.platform == "win32":
-            # Mimetype detection seems unreliable on Windows.
-            self.set_filter(all_filter)
-        else:
-            self.set_filter(video_filter)
+        # Mimetype detection seems unreliable on Windows.
+        self.set_filter(all_filter if sys.platform == "win32"
+                        else video_filter)

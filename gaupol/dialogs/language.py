@@ -37,7 +37,7 @@ class LanguageDialog(gaupol.BuilderDialog):
 
     _widgets = ("all_radio",
                 "current_radio",
-                "language_alignment",
+                "language_scroller",
                 "language_title_label",
                 "main_radio",
                 "target_vbox",
@@ -93,7 +93,7 @@ class LanguageDialog(gaupol.BuilderDialog):
         if not show_target:
             self._language_title_label.hide()
             self._target_vbox.hide()
-            self._language_alignment.set_padding(0, 0, 0, 0)
+            self._language_scroller.set_margin_left(0)
             self._dialog.set_title(_("Set Language"))
 
     def _on_current_radio_toggled(self, radio_button):

@@ -13,7 +13,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">18</property>
+        <property name="spacing">12</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="hbuttonbox1">
             <property name="visible">True</property>
@@ -76,7 +76,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScrolledWindow" id="scrolledwindow1">
+                      <object class="GtkScrolledWindow" id="language_scroller">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="margin_left">12</property>
@@ -284,7 +284,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
