@@ -49,7 +49,7 @@ class TextEditDialog(Gtk.Dialog):
         self.add_button(_("_OK"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
-        self.set_border_width(12)
+        self.set_border_width(18)
         self.set_modal(True)
         self.set_title(_("Edit Text"))
 
@@ -66,7 +66,7 @@ class TextEditDialog(Gtk.Dialog):
         scroller.set_shadow_type(Gtk.ShadowType.IN)
         scroller.add(self._text_view)
         box = self.get_content_area()
-        box.set_spacing(12)
+        box.set_spacing(18)
         gaupol.util.pack_start_expand(box, scroller)
         gaupol.util.scale_to_size(self._text_view,
                                   nchar=60,

@@ -34,9 +34,8 @@ class TestSearchDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.dialog = gaupol.SearchDialog(self.application.window,
-                                          self.application)
-
+        self.dialog = gaupol.SearchDialog(
+            self.application.window, self.application)
         self.dialog.show()
 
     def test_next(self):

@@ -24,17 +24,15 @@ class TestLanguageDialog(gaupol.TestCase):
 
     def run_dialog__hide_target(self):
         self.dialog.destroy()
-        self.dialog = gaupol.LanguageDialog(Gtk.Window(),
-                                            show_target=False)
-
+        self.dialog = gaupol.LanguageDialog(
+            Gtk.Window(), show_target=False)
         self.dialog.run()
         self.dialog.destroy()
 
     def run_dialog__show_target(self):
         self.dialog.destroy()
-        self.dialog = gaupol.LanguageDialog(Gtk.Window(),
-                                            show_target=True)
-
+        self.dialog = gaupol.LanguageDialog(
+            Gtk.Window(), show_target=True)
         self.dialog.run()
         self.dialog.destroy()
 

@@ -38,9 +38,8 @@ class TestSpellCheckDialog(gaupol.TestCase):
                 subtitle.main_text = subtitle.main_text.replace("a", "x")
                 subtitle.tran_text = subtitle.tran_text.replace("a", "x")
             page.reload_view_all()
-        self.dialog = gaupol.SpellCheckDialog(self.application.window,
-                                              self.application)
-
+        self.dialog = gaupol.SpellCheckDialog(
+            self.application.window, self.application)
         # Avoid adding words to either enchant's or a backend's
         # personal word list or gaupol's personal replacement list.
         self.dialog._checker.dict.add = lambda *args: None

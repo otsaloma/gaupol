@@ -188,9 +188,8 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         for module in self.manager.get_modules():
             metadata = self.manager.get_metadata(module)
             if metadata.get_field_boolean("Hidden", False): continue
-            markup = "<b>{}</b>\n{}".format(metadata.get_name(),
-                                            metadata.get_description())
-
+            markup = "<b>{}</b>\n{}".format(
+                metadata.get_name(), metadata.get_description())
             extensions.append((module, markup))
         extensions.sort(key=lambda x: x[1])
         for module, markup in extensions:
@@ -306,9 +305,8 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
         theme = Gtk.IconTheme.get_default()
         # Tool buttons in the UI file are specified as symbolic icons
-        # by name. These have been checked to be found in adwaita-icon-theme,
-        # but might be missing in other themes. If even one is missing
-        # fall back to using non-symbolic icons.
+        # by name, found in adwaita-icon-theme, if missing in another
+        # theme fall back to non-symbolic icons.
         if not all((theme.has_icon(self._add_button.get_icon_name()),
                     theme.has_icon(self._remove_button.get_icon_name()),
                     theme.has_icon(self._up_button.get_icon_name()),

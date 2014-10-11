@@ -34,9 +34,8 @@ class TestFrameTransformDialog(_TestPositionTransformDialog):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.dialog = gaupol.FrameTransformDialog(self.application.window,
-                                                  self.application)
-
+        self.dialog = gaupol.FrameTransformDialog(
+            self.application.window, self.application)
         self.dialog.show()
 
 
@@ -44,7 +43,6 @@ class TestTimeTransformDialog(_TestPositionTransformDialog):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.dialog = gaupol.TimeTransformDialog(self.application.window,
-                                                 self.application)
-
+        self.dialog = gaupol.TimeTransformDialog(
+            self.application.window, self.application)
         self.dialog.show()

@@ -26,7 +26,6 @@ class TestPreferencesDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.dialog = gaupol.PreferencesDialog(self.application.window,
-                                               self.application)
-
+        self.dialog = gaupol.PreferencesDialog(
+            self.application.window, self.application)
         self.dialog.show()

@@ -205,8 +205,8 @@ class DebugDialog(gaupol.BuilderDialog):
                     gaupol.util.lines_to_px(10, font="monospace"))
 
         gaupol.util.scale_to_content(self._text_view,
-                                     min_nchar=60,
+                                     min_nchar=80,
                                      max_nchar=120,
                                      min_nlines=10,
-                                     max_nlines=30,
+                                     max_nlines=25,
                                      font="monospace")

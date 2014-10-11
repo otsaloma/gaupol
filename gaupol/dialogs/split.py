@@ -65,9 +65,8 @@ class SplitDialog(gaupol.BuilderDialog):
         indices = list(range(index, len(page.project.subtitles)))
         page.project.block("action-done")
         page.project.remove_subtitles(indices)
-        page.project.set_action_description(aeidon.registers.DO,
-                                            _("Splitting project"))
-
+        page.project.set_action_description(
+            aeidon.registers.DO, _("Splitting project"))
         page.project.unblock("action-done")
 
     def _shift_destination(self, src, dst):

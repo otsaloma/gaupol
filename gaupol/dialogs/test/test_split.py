@@ -28,9 +28,8 @@ class TestSplitDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.dialog = gaupol.SplitDialog(self.application.window,
-                                         self.application)
-
+        self.dialog = gaupol.SplitDialog(
+            self.application.window, self.application)
         self.dialog.show()
 
     def test__on_response(self):

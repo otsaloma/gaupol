@@ -229,8 +229,8 @@ class FrameTransformDialog(PositionTransformDialog):
 
     def _output_edited(self):
         """Return ``True`` if output of either point has been edited."""
-        in_1 = aeidon.as_frame(self._input_entry_1.get_text())
-        in_2 = aeidon.as_frame(self._input_entry_2.get_text())
+        in_1  = aeidon.as_frame(self._input_entry_1.get_text())
+        in_2  = aeidon.as_frame(self._input_entry_2.get_text())
         out_1 = aeidon.as_frame(self._output_spin_1.get_value_as_int())
         out_2 = aeidon.as_frame(self._output_spin_2.get_value_as_int())
         return (out_1 != in_1 or out_2 != in_2)
@@ -302,8 +302,8 @@ class TimeTransformDialog(PositionTransformDialog):
 
     def _output_edited(self):
         """Return ``True`` if output of either point has been edited."""
-        in_1 = aeidon.as_time(self._input_entry_1.get_text())
-        in_2 = aeidon.as_time(self._input_entry_2.get_text())
+        in_1  = aeidon.as_time(self._input_entry_1.get_text())
+        in_2  = aeidon.as_time(self._input_entry_2.get_text())
         out_1 = aeidon.as_time(self._output_entry_1.get_text())
         out_2 = aeidon.as_time(self._output_entry_2.get_text())
         return (out_1 != in_1 or out_2 != in_2)

@@ -30,9 +30,8 @@ class TestInsertDialog(gaupol.TestCase):
         self.application = self.new_application()
         page = self.application.get_current_page()
         page.view.select_rows((2,))
-        self.dialog = gaupol.InsertDialog(self.application.window,
-                                          self.application)
-
+        self.dialog = gaupol.InsertDialog(
+            self.application.window, self.application)
         self.dialog.show()
 
     def test__on_response(self):
