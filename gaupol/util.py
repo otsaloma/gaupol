@@ -84,8 +84,8 @@ def get_content_size(widget):
 def get_font():
     """Return custom font or blank string."""
     return (gaupol.conf.editor.custom_font if
-            (gaupol.conf.editor.use_custom_font and
-             gaupol.conf.editor.custom_font) else "")
+            gaupol.conf.editor.use_custom_font and
+            gaupol.conf.editor.custom_font else "")
 
 def get_gst_version():
     """Return :mod:`Gst` version number as string or ``None``."""
@@ -133,8 +133,8 @@ def get_text_view_size(text_view, font=None):
         set_widget_font(label, font)
     label.show()
     return (label.get_preferred_width()[1]
-            + text_view.props.left_margin
-            + text_view.props.right_margin,
+            + text_view.get_left_margin()
+            + text_view.get_right_margin(),
             label.get_preferred_height()[1])
 
 def get_tree_view_size(tree_view):
@@ -150,12 +150,6 @@ def get_tree_view_size(tree_view):
 @aeidon.deco.once
 def get_zebra_color(tree_view):
     """Return background color to use for tree view zebra-stripes."""
-    # Gtk.TreeView.set_rules_hint does not actually always produce
-    # zebra-stripes since some GTK+ theme authors have chosen to
-    # not allow them. To work around this, we can calculate
-    # the colors theme-independently as a weighted mean of normal
-    # background and foreground colors and set those using
-    # Gtk.TreeViewColumn.set_cell_data_func.
     style = tree_view.get_style_context()
     fg = style.get_color(Gtk.StateFlags.NORMAL)
     bg = style.get_background_color(Gtk.StateFlags.NORMAL)
@@ -175,33 +169,29 @@ def gst_available():
     """
     try:
         from gi.repository import Gst
-        if not Gst.ElementFactory.find("playbin"):
-            print("GStreamer found, but playbin missing.",
-                  "Try installing gst-plugins-base.",
-                  file=sys.stderr)
-
-            raise Exception
-        if not Gst.ElementFactory.find("textoverlay"):
-            print("GStreamer found, but textoverlay missing.",
-                  "Try installing gst-plugins-base.",
-                  file=sys.stderr)
-
-            raise Exception
-        if not Gst.ElementFactory.find("timeoverlay"):
-            print("GStreamer found, but timeoverlay missing.",
-                  "Try installing gst-plugins-base.",
-                  file=sys.stderr)
-
-            raise Exception
-        if not Gst.ElementFactory.find("autovideosink"):
-            print("GStreamer found, but autovideosink missing.",
-                  "Try installing gst-plugins-good.",
-                  file=sys.stderr)
-
-            raise Exception
-        return True
     except Exception:
         return False
+    if not Gst.ElementFactory.find("playbin"):
+        print("GStreamer found, but playbin missing.",
+              "Try installing gst-plugins-base.",
+              file=sys.stderr)
+        return False
+    if not Gst.ElementFactory.find("textoverlay"):
+        print("GStreamer found, but textoverlay missing.",
+              "Try installing gst-plugins-base.",
+              file=sys.stderr)
+        return False
+    if not Gst.ElementFactory.find("timeoverlay"):
+        print("GStreamer found, but timeoverlay missing.",
+              "Try installing gst-plugins-base.",
+              file=sys.stderr)
+        return False
+    if not Gst.ElementFactory.find("autovideosink"):
+        print("GStreamer found, but autovideosink missing.",
+              "Try installing gst-plugins-good.",
+              file=sys.stderr)
+        return False
+    return True
 
 @aeidon.deco.once
 def gtkspell_available():
