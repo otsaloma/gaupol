@@ -2,6 +2,7 @@ Gaupol 0.27
 ===========
 
  [X] Fix dialog paddings with GTK+ 3.14
+ [X] Fix text view line length display with GTK+ 3.14
  [X] Remove use of deprecated stock items, GtkAlignment,
      gi.types.Boxed.__init__ and non-transient dialogs
  [ ] Add dependency on a freedesktop.org compliant icon-theme?
@@ -15,8 +16,7 @@ Gaupol 1.0
 
  * Bump GTK+ dependency to 3.12
    - Use Gtk.Widget's margin-start instead of margin-left
- * Apply new GNOME goals?
-   - http://wiki.gnome.org/Initiatives/GnomeGoals/HeaderBars
+ * Apply new GNOME goals
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
    - http://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
