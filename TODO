@@ -3,6 +3,7 @@ Gaupol 0.27
 
  [X] Fix dialog paddings with GTK+ 3.14
  [X] Fix text view line length display with GTK+ 3.14
+ [X] Avoid column resizing upon opening file
  [X] Remove use of deprecated stock items, GtkAlignment,
      gi.types.Boxed.__init__ and non-transient dialogs
 
