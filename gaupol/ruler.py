@@ -102,6 +102,7 @@ _ruler = _Ruler()
 
 def _on_text_view_draw(text_view, cairoc):
     """Calculate and show line lengths in text view margin."""
+    # XXX: This doesn't seem to work with GTK+ 3.14.
     text_buffer = text_view.get_buffer()
     start, end = text_buffer.get_bounds()
     text = text_buffer.get_text(start, end, False)

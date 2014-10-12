@@ -2,7 +2,6 @@ Gaupol 0.27
 ===========
 
  [X] Fix dialog paddings with GTK+ 3.14
- [ ] Fix text view line length display with GTK+ 3.14
  [X] Remove use of deprecated stock items, GtkAlignment,
      gi.types.Boxed.__init__ and non-transient dialogs
  [ ] Add dependency on a freedesktop.org compliant icon-theme?
