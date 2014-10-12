@@ -195,6 +195,7 @@ class CloseAgent(aeidon.Delegate):
         self._save_window_geometry()
         try:
             Gtk.main_quit()
+            raise SystemExit(0)
         except RuntimeError:
             raise SystemExit(1)
 
