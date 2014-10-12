@@ -313,19 +313,19 @@ class OpenAgent(aeidon.Delegate):
         """
         if gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields:
             gaupol.conf.editor.visible_fields.remove(gaupol.fields.TRAN_TEXT)
-        if isinstance(path, (list, set, tuple)):
-            return [self.open_main(x, encoding) for x in sorted(path)]
+        is_sequence = isinstance(path, (list, set, tuple))
+        paths = (path if is_sequence else (path,))
         encodings = self._get_encodings(encoding)
-        page = self._open_file(path, encodings, aeidon.documents.MAIN)
         gaupol.util.set_cursor_busy(self.window)
-        self.add_page(page)
-        format = page.project.main_file.format
-        self.add_to_recent_files(path, format, aeidon.documents.MAIN)
-        gaupol.util.iterate_main()
+        for path in paths:
+            page = self._open_file(path, encodings, aeidon.documents.MAIN)
+            self.add_page(page)
+            format = page.project.main_file.format
+            self.add_to_recent_files(path, format, aeidon.documents.MAIN)
+            # Refresh view to get row heights etc. correct.
+            page.view.set_focus(0, None)
+            page.view.scroll_to_row(0)
         gaupol.util.set_cursor_normal(self.window)
-        # Refresh view to get row heights etc. correct.
-        page.view.set_focus(0, None)
-        page.view.scroll_to_row(0)
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
@@ -476,21 +476,15 @@ class OpenAgent(aeidon.Delegate):
         if doc == aeidon.documents.TRAN:
             kwargs["align_method"] = gaupol.conf.file.align_method
         try:
-            gaupol.util.set_cursor_busy(self.window)
             return page.project.open(doc, path, encoding, **kwargs)
         except aeidon.FormatError:
-            gaupol.util.set_cursor_normal(self.window)
             self._show_format_error_dialog(basename)
         except IOError as error:
-            gaupol.util.set_cursor_normal(self.window)
             self._show_io_error_dialog(basename, str(error))
         except aeidon.ParseError:
-            gaupol.util.set_cursor_normal(self.window)
             bom_encoding = aeidon.encodings.detect_bom(path)
             encoding = bom_encoding or encoding
             silent = aeidon.deco.silent(Exception)
             format = silent(aeidon.util.detect_format)(path, encoding)
             self._show_parse_error_dialog(basename, format)
-        finally:
-            gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default

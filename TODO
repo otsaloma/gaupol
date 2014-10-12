@@ -5,10 +5,7 @@ Gaupol 0.27
  [X] Fix text view line length display with GTK+ 3.14
  [X] Remove use of deprecated stock items, GtkAlignment,
      gi.types.Boxed.__init__ and non-transient dialogs
- [ ] Add dependency on a freedesktop.org compliant icon-theme?
-     - GTK+ 3.14 depends on adwaita-icon-theme, but earlier don't
 
- * Profile!
  * Test!
 
 Gaupol 1.0

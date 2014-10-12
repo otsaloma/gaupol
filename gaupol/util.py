@@ -343,15 +343,20 @@ def separate_combo(store, itr, data=None):
 
 def set_cursor_busy(window):
     """Set mouse pointer busy when above window."""
+    cursor = window.get_window().get_cursor()
+    if (cursor is not None and cursor.get_cursor_type() ==
+        Gdk.CursorType.WATCH): return
     cursor = Gdk.Cursor(cursor_type=Gdk.CursorType.WATCH)
     window.get_window().set_cursor(cursor)
     iterate_main()
 
 def set_cursor_normal(window):
     """Set mouse pointer normal when above window."""
+    cursor = window.get_window().get_cursor()
+    if (cursor is not None and cursor.get_cursor_type() ==
+        Gdk.CursorType.LEFT_PTR): return
     cursor = Gdk.Cursor(cursor_type=Gdk.CursorType.LEFT_PTR)
     window.get_window().set_cursor(cursor)
-    iterate_main()
 
 def set_widget_font(widget, font):
     """Use `font` for `widget`."""
