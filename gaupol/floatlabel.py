@@ -43,40 +43,40 @@ class FloatingLabel(Gtk.Box):
         self.set_halign(Gtk.Align.START)
         self.set_valign(Gtk.Align.END)
         self._init_widgets()
-        self.connect("hide", self._on_hide)
 
     def flash_text(self, text, duration=6):
         """Show label with `text` for `duration` seconds."""
         self.set_text(text)
-        self._hide_id = gaupol.util.delay_add(duration*1000, self.hide)
+        self._hide_id = gaupol.util.delay_add(duration*1000, self._hide)
 
     def get_text(self):
         """Return text shown in the label."""
         return self._label.get_text()
+
+    def _hide(self, *args):
+        """Hide and disconnect handlers."""
+        self.hide()
+        while self._handlers:
+            widget, handler_id = self._handlers.pop()
+            if widget.handler_is_connected(handler_id):
+                widget.handler_disconnect(handler_id)
 
     def _init_widgets(self):
         """Initialize widgets contained in the box."""
         self._label.set_name("gaupol-floating-label")
         self._event_box.add(self._label)
         gaupol.util.pack_start(self, self._event_box)
-        self._event_box.connect("enter-notify-event", self.hide)
-
-    def _on_hide(self, *args):
-        """Disconnect signal handlers."""
-        while self._handlers:
-            widget, handler_id = self._handlers.pop()
-            if widget.handler_is_connected(handler_id):
-                widget.handler_disconnect(handler_id)
+        self._event_box.connect("enter-notify-event", self._hide)
 
     def register_hide_event(self, widget, signal):
         """Register `widget`'s `signal` as cause to hide the label."""
-        handler_id = widget.connect(signal, self.hide)
+        handler_id = widget.connect(signal, self._hide)
         self._handlers.append((widget, handler_id))
 
     def set_text(self, text):
         """Show `text` in the label."""
         if self._hide_id is not None:
             GObject.source_remove(self._hide_id)
-        if not text: return self.hide()
+        if not text: return self._hide()
         self._label.set_text(text)
         self.show()
