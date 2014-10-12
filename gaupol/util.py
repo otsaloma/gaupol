@@ -201,6 +201,17 @@ def hex_to_rgba(string):
         raise ValueError("Parsing string {} failed".format(repr(string)))
     return rgba
 
+def idle_add(function, *args, **kwargs):
+    """
+    Call `function` with `args` and `kwargs` when idle.
+
+    Return integer ID of the event source from :func:`GLib.idle_add`.
+    """
+    def call_function(*args, **kwargs):
+        function(*args, **kwargs)
+        return False # to not be called again.
+    return GLib.idle_add(call_function, *args, **kwargs)
+
 def install_module(name, obj):
     """
     Install `obj`'s module into the :mod:`gaupol` namespace.

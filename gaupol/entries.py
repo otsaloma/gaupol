@@ -19,10 +19,10 @@
 
 import aeidon
 import functools
+import gaupol
 import re
 
 from gi.repository import Gdk
-from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -107,16 +107,16 @@ class TimeEntry(Gtk.Entry):
         if not event.keyval in keys: return
         self.stop_emission("key-press-event")
         if self.get_selection_bounds():
-            GLib.idle_add(self._zero_selection)
+            gaupol.util.idle_add(self._zero_selection)
         elif event.keyval == Gdk.KEY_BackSpace:
-            GLib.idle_add(self._zero_previous)
+            gaupol.util.idle_add(self._zero_previous)
         elif event.keyval == Gdk.KEY_Delete:
-            GLib.idle_add(self._zero_next)
+            gaupol.util.idle_add(self._zero_next)
 
     def _on_insert_text(self, entry, text, length, pos):
         """Insert `text` after validation."""
         self.stop_emission("insert-text")
-        GLib.idle_add(self._insert_text, text)
+        gaupol.util.idle_add(self._insert_text, text)
 
     def _on_toggle_overwrite(self, entry):
         """Do not allow toggling overwrite."""
