@@ -85,9 +85,15 @@ class View(Gtk.TreeView):
             col = self.get_columns().index(col)
         return row, col
 
-    def get_header_label(self, text):
+    def get_header_label(self, field):
         """Return a column header label from `text`."""
-        label = Gtk.Label(label=text)
+        label = Gtk.Label(label=field.label)
+        if field == gaupol.fields.NUMBER:
+            # Avoid column resizing by "preallocating"
+            # sufficient width for four digits.
+            size_label = Gtk.Label(label="8888")
+            width = size_label.get_layout().get_pixel_size()[0]
+            label.set_size_request(width, -1)
         label.set_halign(Gtk.Align.START)
         label.show()
         return label
@@ -152,7 +158,7 @@ class View(Gtk.TreeView):
             column.set_reorderable(True)
             column.set_expand(field.is_text)
             column.set_visible(field in visible_fields)
-            label = self.get_header_label(field.label)
+            label = self.get_header_label(field)
             label.set_tooltip_text(field.tooltip)
             column.set_widget(label)
 
