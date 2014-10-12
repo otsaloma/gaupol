@@ -21,5 +21,5 @@ import aeidon, gaupol, cProfile, pstats
 cProfile.run("gaupol.main.main(sys.argv[1:])", "gaupol.prof")
 stats = pstats.Stats("gaupol.prof")
 stats.sort_stats("cumulative")
-stats.print_stats("gaupol", .1)
+stats.print_stats(.1)
 os.remove("gaupol.prof")
