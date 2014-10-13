@@ -318,7 +318,11 @@ class OpenAgent(aeidon.Delegate):
         encodings = self._get_encodings(encoding)
         gaupol.util.set_cursor_busy(self.window)
         for path in paths:
-            page = self._open_file(path, encodings, aeidon.documents.MAIN)
+            try:
+                page = self._open_file(path, encodings, aeidon.documents.MAIN)
+            except gaupol.Default:
+                gaupol.util.set_cursor_normal(self.window)
+                raise # gaupol.Default
             self.add_page(page)
             format = page.project.main_file.format
             self.add_to_recent_files(path, format, aeidon.documents.MAIN)
