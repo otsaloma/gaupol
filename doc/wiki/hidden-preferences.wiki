@@ -44,13 +44,6 @@ dark_theme = false
  * '''`dark_theme`''' allows using the dark GTK+ theme variant.
 
 {{{
-[search]
-max_history = 10
-}}}
-
- * '''`max_history`''' defines the maximum amount of search history items to show in search dialog's pattern and replacement drop-down entries.
-
-{{{
 [video_player]
 context_length = 1.0
 line_alignment = "center"

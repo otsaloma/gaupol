@@ -18,5 +18,6 @@ Gaupol 1.0
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
    - http://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
+   - https://wiki.gnome.org/HowDoI/
  * Allow using multiple dictionaries for spell-check
  * Add a GStreamer-based audio waveform display

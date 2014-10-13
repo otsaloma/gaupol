@@ -82,6 +82,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self._match_page = None
         self._match_row = None
         self._match_span = None
+        self.max_history = 10
         self._pattern_entry = self._pattern_combo.get_child()
         self.patterns = []
         self._replacement_entry = self._replacement_combo.get_child()
@@ -112,7 +113,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self.application.pattern = pattern
         self.patterns.insert(0, pattern)
         self.patterns = aeidon.util.get_unique(self.patterns)
-        del self.patterns[gaupol.conf.search.max_history:]
+        del self.patterns[self.max_history:]
         store.clear()
         for pattern in self.patterns:
             store.append((pattern,))
@@ -127,7 +128,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self.application.replacement = replacement
         self.replacements.insert(0, replacement)
         self.replacements = aeidon.util.get_unique(self.replacements)
-        del self.replacements[gaupol.conf.search.max_history:]
+        del self.replacements[self.max_history:]
         store.clear()
         for replacement in self.replacements:
             store.append((replacement,))

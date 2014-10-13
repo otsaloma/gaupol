@@ -157,7 +157,6 @@ config_defaults = {
     "search": {
         "fields": [gaupol.fields.MAIN_TEXT],
         "ignore_case": True,
-        "max_history": 10,
         "regex": False,
         "target": gaupol.targets.CURRENT,
         },
