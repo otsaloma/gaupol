@@ -31,10 +31,9 @@
     <property name="page_increment">5</property>
   </object>
   <object class="GtkWindow" id="window">
-    <property name="visible">True</property>
+    <property name="visible">False</property>
     <property name="can_focus">False</property>
     <property name="border_width">18</property>
-    <property name="resizable">False</property>
     <child>
       <object class="GtkBox" id="main_container">
         <property name="visible">True</property>

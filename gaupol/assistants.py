@@ -81,7 +81,10 @@ class BuilderPage(TextAssistantPage):
         self._builder.add_from_file(ui_file_path)
         self._builder.connect_signals(self)
         self._set_attributes(self._widgets)
-        self._builder.get_object("main_container").reparent(self)
+        container = self._builder.get_object("main_container")
+        window = container.get_parent()
+        container.reparent(self)
+        gaupol.util.idle_add(window.destroy)
 
     def _set_attributes(self, widgets):
         """Assign all names in `widgets` as attributes of `self`."""
