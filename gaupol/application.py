@@ -249,9 +249,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_output_window(self):
         """Initialize the output window."""
-        self.output_window = gaupol.OutputWindow()
+        self.output_window = gaupol.OutputWindow(self.window)
         aeidon.util.connect(self, "output_window", "notify::visible")
-        self.output_window.set_visible(gaupol.conf.output_window.show)
+        self.output_window.set_visible(False)
 
     def _init_paned(self, vbox):
         """Intialize the paned layout."""

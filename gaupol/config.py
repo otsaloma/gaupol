@@ -131,9 +131,6 @@ config_defaults = {
         "use_skip_max_lines": True,
         },
     "output_window": {
-        "maximized": False,
-        "position": [0, 0],
-        "show": False,
         "size": [600, 371],
         },
     "position_shift": {

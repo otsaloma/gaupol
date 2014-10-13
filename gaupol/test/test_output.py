@@ -28,7 +28,7 @@ class TestOutputWindow(gaupol.TestCase):
         Gtk.main()
 
     def setup_method(self, method):
-        self.window = gaupol.OutputWindow()
+        self.window = gaupol.OutputWindow(Gtk.Window())
         text = self.get_sample_text(aeidon.formats.SUBRIP)
         self.window.set_output(text)
         self.window.show()

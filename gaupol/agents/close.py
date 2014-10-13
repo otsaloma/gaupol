@@ -205,7 +205,4 @@ class CloseAgent(aeidon.Delegate):
             conf = gaupol.conf.application_window
             conf.size = list(self.window.get_size())
             conf.position = list(self.window.get_position())
-        if not gaupol.conf.output_window.maximized:
-            conf = gaupol.conf.output_window
-            conf.size = list(self.output_window.get_size())
-            conf.position = list(self.output_window.get_position())
+        self.output_window.save_geometry()

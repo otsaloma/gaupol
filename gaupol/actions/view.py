@@ -385,7 +385,7 @@ class ToggleOutputWindowAction(gaupol.ToggleAction):
     def __init__(self):
         """Initialize a :class:`ToggleOutputWindowAction` instance."""
         gaupol.ToggleAction.__init__(self, "toggle_output_window")
-        self.set_active(gaupol.conf.output_window.show)
+        self.set_active(False)
         self.set_label(_("_Output Window"))
         self.set_tooltip(_("Show or hide the output window"))
         self.action_group = "main-safe"

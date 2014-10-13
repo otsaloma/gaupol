@@ -32,13 +32,13 @@ class OutputWindow(Gtk.Window):
 
     """Window for standard output from external applications."""
 
-    def __init__(self):
+    def __init__(self, parent):
         """Initialize an :class:`OutputWindow` instance."""
         GObject.GObject.__init__(self)
         self._text_view = None
         self.set_title(_("Output"))
         self._init_widgets()
-        self._init_sizes()
+        self._init_sizes(parent)
         self._init_signal_handlers()
         self._init_keys()
 
@@ -55,15 +55,17 @@ class OutputWindow(Gtk.Window):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
         aeidon.util.connect(self, self, "delete-event")
-        aeidon.util.connect(self, self, "notify::visible")
-        aeidon.util.connect(self, self, "window-state-event")
 
-    def _init_sizes(self):
+    def _init_sizes(self, parent):
         """Initialize widget sizes."""
-        self.resize(*gaupol.conf.output_window.size)
-        self.move(*gaupol.conf.output_window.position)
-        if gaupol.conf.output_window.maximized:
-            self.maximize()
+        width, height = gaupol.conf.output_window.size
+        self.resize(width, height)
+        with aeidon.util.silent(Exception):
+            pwidth, pheight = parent.get_size()
+            px, py  = parent.get_position()
+            xoffset = pwidth/2 - width/2
+            yoffset = pheight/2 - height/2
+            self.move(px + xoffset, py + yoffset)
 
     def _init_widgets(self):
         """Initialize all contained widgets."""
@@ -84,35 +86,26 @@ class OutputWindow(Gtk.Window):
 
     def _on_close_button_clicked(self, *args):
         """Hide window."""
-        self._save_geometry()
+        self.save_geometry()
         self.hide()
 
     def _on_close_key_pressed(self, *args):
         """Hide window."""
-        self._save_geometry()
+        self.save_geometry()
         self.hide()
 
     def _on_delete_event(self, *args):
         """Hide window."""
-        self._save_geometry()
+        self.save_geometry()
         self.hide()
         return True
 
-    def _on_notify_visible(self, *args):
-        """Save window visibility."""
-        gaupol.conf.output_window.show = self.get_visible()
-
-    def _on_window_state_event(self, window, event):
-        """Save window maximization."""
-        state = event.new_window_state
-        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
-        gaupol.conf.output_window.maximized = maximized
-
-    def _save_geometry(self):
-        """Save window size and position."""
-        if gaupol.conf.output_window.maximized: return
+    def save_geometry(self):
+        """Save window size."""
+        with aeidon.util.silent(AttributeError):
+            # is_maximized was added in GTK+ 3.12.
+            if self.is_maximized(): return
         gaupol.conf.output_window.size = list(self.get_size())
-        gaupol.conf.output_window.position = list(self.get_position())
 
     def set_output(self, output):
         """Display `output` in text view."""
