@@ -152,7 +152,7 @@ class RecentAction(Gtk.RecentAction, Action):
         recent_filter.add_mime_type("text/x-subviewer")
         self.add_filter(recent_filter)
         self.set_filter(recent_filter)
-        self.set_limit(gaupol.conf.file.max_recent)
+        self.set_limit(10)
 
     def finalize(self, application):
         """Connect action to widgets of `application`."""

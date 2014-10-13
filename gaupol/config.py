@@ -106,7 +106,6 @@ config_defaults = {
         "directory": "",
         "encoding": aeidon.util.get_default_encoding() or "utf_8",
         "format": aeidon.formats.SUBRIP,
-        "max_recent": 10,
         "newline": aeidon.util.get_default_newline(),
         },
     "framerate_convert": {

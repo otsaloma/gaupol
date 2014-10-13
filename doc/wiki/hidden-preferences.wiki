@@ -30,13 +30,6 @@ use_zebra_stripes = true
  * '''`use_zebra_stripes`''' defines whether to use alternating background colors for odd and even rows in subtitle list displays. These background colors can greatly clarify the display with multiline text, but it comes at a slight cost in speed.
 
 {{{
-[file]
-max_recent = 10
-}}}
-
- * '''`max_recent`''' defines the maximum amount of recent files to show in the file menu and the open button drop-down on the main toolbar.
-
-{{{
 [general]
 dark_theme = false
 }}}
