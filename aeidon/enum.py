@@ -38,16 +38,16 @@ class EnumerationItem(int):
     harmonous with the rest of the items should be left up to the parent list.
     """
 
-    def __bool__(self):
-        """For consistency, always return ``True``."""
-        return True
-
     def __new__(cls, value=0, name="", parent=None):
         """Return integer instance with additional attributes."""
         instance = int.__new__(cls, value)
         instance.name = name
         instance.parent = parent
         return instance
+
+    def __bool__(self):
+        """For consistency, always return ``True``."""
+        return True
 
     def __str__(self):
         """Return name as the string representation."""

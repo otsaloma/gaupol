@@ -109,13 +109,6 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
                "translation-file-saved",
                "translation-texts-changed")
 
-    def __getattr__(self, name):
-        """Return method delegated to an agent."""
-        try:
-            return self._delegations[name]
-        except LookupError:
-            raise AttributeError
-
     def __init__(self, framerate=None, undo_limit=None):
         """Initialize a :class:`Project` instance."""
         aeidon.Observable.__init__(self)
@@ -134,6 +127,13 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
         self.undoables = []
         self.video_path = None
         self._init_delegations()
+
+    def __getattr__(self, name):
+        """Return method delegated to an agent."""
+        try:
+            return self._delegations[name]
+        except LookupError:
+            raise AttributeError
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""

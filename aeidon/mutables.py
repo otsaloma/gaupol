@@ -42,6 +42,11 @@ class ObservableDict(dict):
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
 
+    def __init__(self, *args, **kwargs):
+        dict.__init__(self, *args[:-2], **kwargs)
+        self.master = args[-2]
+        self.name = args[-1]
+
     def __copy__(self):
         dic = dict(copy.copy(x) for  x in self.items())
         return self.__class__(dic, self.master, self.name)
@@ -53,11 +58,6 @@ class ObservableDict(dict):
     @_mutation
     def __delitem__(self, *args, **kwargs):
         return dict.__delitem__(self, *args, **kwargs)
-
-    def __init__(self, *args, **kwargs):
-        dict.__init__(self, *args[:-2], **kwargs)
-        self.master = args[-2]
-        self.name = args[-1]
 
     @_mutation
     def __setitem__(self, *args, **kwargs):
@@ -93,6 +93,11 @@ class ObservableList(list):
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
 
+    def __init__(self, *args, **kwargs):
+        list.__init__(self, *args[:-2], **kwargs)
+        self.master = args[-2]
+        self.name = args[-1]
+
     def __copy__(self):
         lst = list(copy.copy(x) for x in self)
         return self.__class__(lst, self.master, self.name)
@@ -112,11 +117,6 @@ class ObservableList(list):
     @_mutation
     def __imul__(self, *args, **kwargs):
         return list.__imul__(self, *args, **kwargs)
-
-    def __init__(self, *args, **kwargs):
-        list.__init__(self, *args[:-2], **kwargs)
-        self.master = args[-2]
-        self.name = args[-1]
 
     @_mutation
     def __setitem__(self, *args, **kwargs):
@@ -160,6 +160,11 @@ class ObservableSet(set):
     :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
 
+    def __init__(self, *args, **kwargs):
+        set.__init__(self, *args[:-2], **kwargs)
+        self.master = args[-2]
+        self.name = args[-1]
+
     def __copy__(self):
         zet = set(copy.copy(x) for x in self)
         return self.__class__(zet, self.master, self.name)
@@ -171,11 +176,6 @@ class ObservableSet(set):
     @_mutation
     def __iand__(self, *args, **kwargs):
         return set.__iand__(self, *args, **kwargs)
-
-    def __init__(self, *args, **kwargs):
-        set.__init__(self, *args[:-2], **kwargs)
-        self.master = args[-2]
-        self.name = args[-1]
 
     @_mutation
     def __ior__(self, *args, **kwargs):

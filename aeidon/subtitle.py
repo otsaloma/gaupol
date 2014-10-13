@@ -56,6 +56,18 @@ class Subtitle:
     instantiation and excessive memory use when handling simpler formats.
     """
 
+    def __init__(self, mode=None, framerate=None):
+        """Initialize a :class:`Subtitle` instance."""
+        self._start = None
+        self._end = None
+        self._main_text = ""
+        self._tran_text = ""
+        self._mode = mode or aeidon.modes.TIME
+        self._framerate = framerate or aeidon.framerates.FPS_23_976
+        self.calc = aeidon.Calculator(self._framerate)
+        self.start = "00:00:00.000"
+        self.end = "00:00:00.000"
+
     def __eq__(self, other):
         """Compare subtitle equality by value."""
         if not isinstance(other, Subtitle):
@@ -94,18 +106,6 @@ class Subtitle:
             return self.start_frame > other.start_frame
         raise ValueError("Invalid mode: {}"
                          .format(repr(self._mode)))
-
-    def __init__(self, mode=None, framerate=None):
-        """Initialize a :class:`Subtitle` instance."""
-        self._start = None
-        self._end = None
-        self._main_text = ""
-        self._tran_text = ""
-        self._mode = mode or aeidon.modes.TIME
-        self._framerate = framerate or aeidon.framerates.FPS_23_976
-        self.calc = aeidon.Calculator(self._framerate)
-        self.start = "00:00:00.000"
-        self.end = "00:00:00.000"
 
     def __le__(self, other):
         """Compare start positions."""

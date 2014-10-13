@@ -104,13 +104,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                "quit",
                "text-assistant-request-pages")
 
-    def __getattr__(self, name):
-        """Return method delegated to an agent."""
-        try:
-            return self._delegations[name]
-        except KeyError:
-            raise AttributeError
-
     def __init__(self):
         """Initialize an :class:`Application` instance."""
         aeidon.Observable.__init__(self)
@@ -140,6 +133,13 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.extension_manager.setup_extensions()
         self.update_gui()
         self.window.show()
+
+    def __getattr__(self, name):
+        """Return method delegated to an agent."""
+        try:
+            return self._delegations[name]
+        except KeyError:
+            raise AttributeError
 
     def __setattr__(self, name, value):
         """Set value of attribute `name`."""
