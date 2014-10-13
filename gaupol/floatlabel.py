@@ -44,8 +44,17 @@ class FloatingLabel(Gtk.Box):
         self.set_valign(Gtk.Align.END)
         self._init_widgets()
 
+    def _clear_hide_events(self):
+        """Disconnect registered hide events."""
+        while self._handlers:
+            widget, handler_id = self._handlers.pop()
+            if widget.handler_is_connected(handler_id):
+                widget.handler_disconnect(handler_id)
+
     def flash_text(self, text, duration=6):
         """Show label with `text` for `duration` seconds."""
+        if not text:
+            return self._hide()
         self.set_text(text)
         self._hide_id = gaupol.util.delay_add(duration*1000, self._hide)
 
@@ -56,10 +65,8 @@ class FloatingLabel(Gtk.Box):
     def _hide(self, *args):
         """Hide and disconnect handlers."""
         self.hide()
-        while self._handlers:
-            widget, handler_id = self._handlers.pop()
-            if widget.handler_is_connected(handler_id):
-                widget.handler_disconnect(handler_id)
+        self._hide_id = None
+        self._clear_hide_events()
 
     def _init_widgets(self):
         """Initialize widgets contained in the box."""
@@ -75,8 +82,9 @@ class FloatingLabel(Gtk.Box):
 
     def set_text(self, text):
         """Show `text` in the label."""
+        if not text:
+            return self._hide()
         if self._hide_id is not None:
             GObject.source_remove(self._hide_id)
-        if not text: return self._hide()
         self._label.set_text(text)
         self.show()
