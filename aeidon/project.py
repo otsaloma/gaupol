@@ -109,7 +109,7 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
                "translation-file-saved",
                "translation-texts-changed")
 
-    def __init__(self, framerate=None, undo_limit=None):
+    def __init__(self, framerate=None):
         """Initialize a :class:`Project` instance."""
         aeidon.Observable.__init__(self)
         framerate = framerate or aeidon.framerates.FPS_23_976
@@ -123,7 +123,7 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
         self.subtitles = []
         self.tran_changed = None
         self.tran_file = None
-        self.undo_limit = undo_limit
+        self.undo_limit = 100000
         self.undoables = []
         self.video_path = None
         self._init_delegations()

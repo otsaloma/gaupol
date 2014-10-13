@@ -18,14 +18,8 @@ text_editor = "gedit +$LINENO $FILE"
 
 {{{
 [editor]
-undo_limit = 50
-use_undo_limit = false
 use_zebra_stripes = true
 }}}
-
- * '''`undo_limit`''' defines the maximum amount of undoable (and redoable) actions if `use_undo_limit` is `true`.
-
- * '''`use_undo_limit`''' allows limiting the amount of undoable actions. This might be useful for computers with very little memory, although it is not tested whether or not it has any actual relevant benefit -- probably not.
 
  * '''`use_zebra_stripes`''' defines whether to use alternating background colors for odd and even rows in subtitle list displays. These background colors can greatly clarify the display with multiline text, but it comes at a slight cost in speed.
 

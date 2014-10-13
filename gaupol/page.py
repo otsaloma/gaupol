@@ -137,16 +137,12 @@ class Page(aeidon.Observable):
     def _init_project(self):
         """Initialize :class:`aeidon.Project` with proper properties."""
         framerate = gaupol.conf.editor.framerate
-        limit = gaupol.conf.editor.use_undo_limit
-        levels = gaupol.conf.editor.undo_limit
-        undo_limit = (levels if limit else None)
-        self.project = aeidon.Project(framerate, undo_limit)
+        self.project = aeidon.Project(framerate)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
         self._init_signal_handlers_for_data()
         self._init_signal_handlers_for_tab_label()
-        self._init_signal_handlers_for_undo()
 
     def _init_signal_handlers_for_data(self):
         """Initialize signal handlers for project data updates."""
@@ -167,13 +163,6 @@ class Page(aeidon.Observable):
         self.project.connect("main-file-saved", update_label, self)
         self.project.connect("notify::main_changed", update_label, self)
         self.project.connect("notify::tran_changed", update_label, self)
-
-    def _init_signal_handlers_for_undo(self):
-        """Initialize signal handlers for undo level updates."""
-        connect = gaupol.conf.editor.connect
-        update_levels = lambda *args: args[-1]._update_undo_limit()
-        connect("notify::use_undo_limit", update_levels, self)
-        connect("notify::undo_limit", update_levels, self)
 
     def _init_widgets(self):
         """Initialize widgets to use in a notebook tab."""
@@ -351,8 +340,3 @@ class Page(aeidon.Observable):
         width = min(width, gaupol.util.char_to_px(32))
         self.tab_label.set_size_request(width, -1)
         return title
-
-    def _update_undo_limit(self):
-        """Update project's undo level count to match global configuration."""
-        self.project.undo_limit = (gaupol.conf.editor.undo_limit if
-                                   gaupol.conf.editor.use_undo_limit else None)
