@@ -370,6 +370,8 @@ class View(Gtk.TreeView):
             col = self.get_column(col)
         path = gaupol.util.tree_row_to_path(row)
         self.set_cursor(path, col, start_editing=False)
+        if col is not None:
+            self.update_headers()
 
     def update_headers(self):
         """Update the attributes of all column header labels."""
