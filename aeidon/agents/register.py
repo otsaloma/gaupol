@@ -67,14 +67,14 @@ class RegisterAgent(aeidon.Delegate):
         return len(action_group.actions)
 
     @aeidon.deco.export
-    def can_redo(self):
+    def can_redo(self, count=1):
         """Return ``True`` if one or more actions can be redone."""
-        return bool(self.redoables)
+        return len(self.redoables) >= count
 
     @aeidon.deco.export
-    def can_undo(self):
+    def can_undo(self, count=1):
         """Return ``True`` if one or more actions can be undone."""
-        return bool(self.undoables)
+        return len(self.undoables) >= count
 
     @aeidon.deco.export
     def cut_reversion_stacks(self):

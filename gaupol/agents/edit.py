@@ -354,7 +354,8 @@ class EditAgent(aeidon.Delegate):
         """Redo `count` amount of actions."""
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
-        page.project.redo(count)
+        if page.project.can_redo(count):
+            page.project.redo(count)
         gaupol.util.set_cursor_normal(self.window)
 
     def _set_unsafe_sensitivities(self, sensitive):
@@ -377,5 +378,6 @@ class EditAgent(aeidon.Delegate):
         """Undo `count` amount of actions."""
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
-        page.project.undo(count)
+        if page.project.can_undo(count):
+            page.project.undo(count)
         gaupol.util.set_cursor_normal(self.window)
