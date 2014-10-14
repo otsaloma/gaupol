@@ -42,6 +42,7 @@
         <menuitem name="end_earlier" action="end_earlier"/>
         <menuitem name="end_later" action="end_later"/>
       </menu>
+      <menuitem name="set_end_from_video" action="set_end_from_video_position"/>
       <placeholder name="3">
       </placeholder>
       <separator/>
@@ -51,13 +52,9 @@
       </placeholder>
       <separator/>
       <menuitem name="insert" action="insert_subtitles"/>
+      <menuitem name="insert_video" action="insert_subtitle_at_video_position"/>
       <menuitem name="remove" action="remove_subtitles"/>
       <placeholder name="5">
-      </placeholder>
-      <separator/>
-      <menuitem name="insert_video" action="insert_subtitle_at_video_position"/>
-      <menuitem name="set_end_from_video" action="set_end_from_video_position"/>
-      <placeholder name="6">
       </placeholder>
       <separator/>
       <menu name="selection" action="show_selection_menu">
@@ -69,11 +66,11 @@
         <placeholder name="1">
         </placeholder>
       </menu>
-      <placeholder name="7">
+      <placeholder name="6">
       </placeholder>
       <separator/>
       <menuitem name="preferences" action="edit_preferences"/>
-      <placeholder name="8">
+      <placeholder name="7">
       </placeholder>
     </menu>
     <menu name="view" action="show_view_menu">
