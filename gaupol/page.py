@@ -337,6 +337,6 @@ class Page(aeidon.Observable):
         self.tab_label.set_markup("<b>{}</b>".format(title))
         self.tab_label.set_size_request(-1, -1)
         width = self.tab_label.get_preferred_width()[1]
-        width = min(width, gaupol.util.char_to_px(32))
+        width = min(width+12, gaupol.util.char_to_px(32))
         self.tab_label.set_size_request(width, -1)
         return title

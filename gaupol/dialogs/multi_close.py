@@ -53,15 +53,15 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         """Initialize widget sizes."""
         if self._main_vbox.get_visible():
             gaupol.util.scale_to_content(self._main_tree_view,
-                                         min_nchar=20,
-                                         max_nchar=40,
+                                         min_nchar=30,
+                                         max_nchar=60,
                                          min_nlines=2,
                                          max_nlines=6)
 
         if self._tran_vbox.get_visible():
             gaupol.util.scale_to_content(self._tran_tree_view,
-                                         min_nchar=20,
-                                         max_nchar=40,
+                                         min_nchar=30,
+                                         max_nchar=60,
                                          min_nlines=2,
                                          max_nlines=6)
 
