@@ -21,6 +21,7 @@ Gaupol 1.0
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
    - http://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
    - https://wiki.gnome.org/HowDoI/
-   - Use a header bar for preferences and search dialogs
+ * Use a header bar or do something else about dialogs with only close
+   and maybe help buttons in the dialog action area?
  * Allow using multiple dictionaries for spell-check
  * Add a GStreamer-based audio waveform display
