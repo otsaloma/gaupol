@@ -219,14 +219,12 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
-        # self._side_vbox.set_border_width(2)
         gaupol.util.pack_start(self._side_vbox, self._search_entry)
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._tree_view)
         gaupol.util.pack_start_expand(self._side_vbox, scroller)
-        # self._side_container.set_padding(0, 6, 2, 0)
         self._side_container.add(self._side_vbox)
         self._side_container.show_all()
 
