@@ -53,20 +53,21 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     """Dialog for editing a list of custom framerates."""
 
-    _widgets = ("add_button", "remove_button", "tree_view")
+    _widgets = ("add_button", "remove_button", "toolbar", "tree_view")
 
     def __init__(self, framerates, parent):
         """Initialize a :class:`PreferencesDialog` instance."""
         directory = os.path.abspath(os.path.dirname(__file__))
         ui_file_path = os.path.join(directory, "preferences-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
+        self._init_toolbar()
         self._init_tree_view(framerates)
         self._remove_button.set_sensitive(False)
         gaupol.util.scale_to_content(self._tree_view,
-                                     min_nchar=10,
-                                     max_nchar=40,
-                                     min_nlines=10,
-                                     max_nlines=20)
+                                     min_nchar=30,
+                                     max_nchar=60,
+                                     min_nlines=8,
+                                     max_nlines=16)
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
@@ -84,6 +85,20 @@ class PreferencesDialog(gaupol.BuilderDialog):
         selection = self._tree_view.get_selection()
         paths = selection.get_selected_rows()[1]
         return list(map(gaupol.util.tree_path_to_row, paths))
+
+    def _init_toolbar(self):
+        """Initialize the tree view inline toolbar."""
+        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
+        style = self._toolbar.get_style_context()
+        style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
+        theme = Gtk.IconTheme.get_default()
+        # Tool buttons in the UI file are specified as symbolic icons
+        # by name, found in adwaita-icon-theme, if missing in another
+        # theme fall back to non-symbolic icons.
+        if not (theme.has_icon(self._add_button.get_icon_name()) and
+                theme.has_icon(self._remove_button.get_icon_name())):
+            self._add_button.set_icon_name("list-add")
+            self._remove_button.set_icon_name("list-remove")
 
     def _init_tree_view(self, framerates):
         """Initialize the tree view."""
