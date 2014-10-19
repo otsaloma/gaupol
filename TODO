@@ -10,8 +10,6 @@ Gaupol 0.27
  [X] Remove use of deprecated stock items, Gtk.Alignment,
      gi.types.Boxed.__init__ and non-transient dialogs
 
- * Test!
-
 Gaupol 1.0
 ==========
 
@@ -20,13 +18,13 @@ Gaupol 1.0
  * Bump GTK+ dependency to 3.14
    - Make zebra coloring faster by using CSS as since 3.14 we can rely
      on certain basic named colors being available
-     o https://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
-     o https://git.gnome.org/browse/gtk+/tree/gtk/resources/theme/Adwaita/_colors-public.scss
+     o http://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
+     o http://git.gnome.org/browse/gtk+/tree/gtk/resources/theme/Adwaita/_colors-public.scss
  * Apply new GNOME goals
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
    - http://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
-   - https://wiki.gnome.org/HowDoI/
+   - http://wiki.gnome.org/HowDoI/
  * Use a header bar or do something else about dialogs with only close
    and maybe help buttons in the dialog action area (at least preferences,
    search, spell-check)
