@@ -202,6 +202,7 @@ class SidePane(aeidon.Observable):
         spaces = (Gdk.KEY_space, Gdk.KEY_KP_Space)
         enters = (Gdk.KEY_Return, Gdk.KEY_KP_Enter)
         if not event.keyval in (spaces + enters): return False
+        event.button = 1
         self._show_header_menu(event)
         return True
 
@@ -255,6 +256,7 @@ class SidePane(aeidon.Observable):
 
     def _show_header_menu(self, event):
         """Show a menu listing all side pane pages."""
+        # XXX: Since GTK+ 3.14 this no longer seems to work.
         menu = Gtk.Menu()
         for i in range(self._notebook.get_n_pages()):
             child = self._notebook.get_nth_page(i)

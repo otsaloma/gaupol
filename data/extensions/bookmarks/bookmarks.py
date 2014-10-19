@@ -112,7 +112,7 @@ class BookmarksExtension(gaupol.Extension):
         column.set_resizable(False)
         column.set_reorderable(True)
         column.set_visible(self._conf.show_column)
-        label = page.view.get_header_label(_("Bm."))
+        label = page.view.get_header_label(title=_("Bm."))
         label.set_tooltip_text(_("Bookmark"))
         column.set_widget(label)
         column.gaupol_id = "bookmark"
@@ -213,24 +213,20 @@ class BookmarksExtension(gaupol.Extension):
         self._conf = gaupol.conf.extensions.bookmarks
         self._search_entry = Gtk.Entry()
         self._side_container = Gtk.Alignment(xalign=0, yalign=0)
-        self._side_vbox = gaupol.util.new_vbox(spacing=6)
+        self._side_vbox = gaupol.util.new_vbox(spacing=0)
         self._tree_view = Gtk.TreeView()
         self._uim_id = None
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
-        self._side_vbox.set_border_width(2)
-        hbox = gaupol.util.new_hbox(spacing=6)
-        label = Gtk.Label(label=_("Search:"))
-        gaupol.util.pack_start(hbox, label)
-        gaupol.util.pack_start_expand(hbox, self._search_entry)
-        gaupol.util.pack_start(self._side_vbox, hbox)
+        # self._side_vbox.set_border_width(2)
+        gaupol.util.pack_start(self._side_vbox, self._search_entry)
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._tree_view)
         gaupol.util.pack_start_expand(self._side_vbox, scroller)
-        self._side_container.set_padding(0, 6, 2, 0)
+        # self._side_container.set_padding(0, 6, 2, 0)
         self._side_container.add(self._side_vbox)
         self._side_container.show_all()
 

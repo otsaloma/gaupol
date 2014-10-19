@@ -85,9 +85,10 @@ class View(Gtk.TreeView):
             col = self.get_columns().index(col)
         return row, col
 
-    def get_header_label(self, field):
+    def get_header_label(self, field=None, title=None):
         """Return a column header label from `text`."""
-        label = Gtk.Label(label=field.label)
+        title = title or field.label
+        label = Gtk.Label(label=title)
         # Avoid column resizing by "preallocating"
         # sufficient width for usual expected data.
         if field == gaupol.fields.NUMBER:
