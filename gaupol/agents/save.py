@@ -199,7 +199,7 @@ class SaveAgent(aeidon.Delegate):
     def _show_encoding_error_dialog(self, basename, codec):
         """Show an error dialog after failing to encode file."""
         codec = aeidon.encodings.code_to_name(codec)
-        title = _('Failed to encode file "{basename} with codec "{codec}"').format(**locals())
+        title = _('Failed to encode file "{basename}" with codec "{codec}"').format(**locals())
         message = _("Please try to save the file with a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)

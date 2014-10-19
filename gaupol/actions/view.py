@@ -316,8 +316,8 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
         gaupol.ToggleAction.__init__(self, "toggle_main_text_column")
         fields = gaupol.conf.editor.visible_fields
         self.set_active(gaupol.fields.MAIN_TEXT in fields)
-        self.set_label(_("_Main Text"))
-        self.set_tooltip(_('Show or hide the main text column'))
+        self.set_label(_("_Text"))
+        self.set_tooltip(_('Show or hide the text column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
@@ -419,8 +419,8 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
         gaupol.ToggleAction.__init__(self, name)
         fields = gaupol.conf.editor.visible_fields
         self.set_active(gaupol.fields.TRAN_TEXT in fields)
-        self.set_label(_("_Translation Text"))
-        self.set_tooltip(_('Show or hide the translation text column'))
+        self.set_label(_("T_ranslation"))
+        self.set_tooltip(_('Show or hide the translation column'))
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):

@@ -184,6 +184,7 @@ gaupol/extensionman.py
 gaupol/main.py
 gaupol/output.py
 gaupol/page.py
+gaupol/player.py
 gaupol/renderers/__init__.py
 gaupol/renderers/float.py
 gaupol/renderers/multiline.py

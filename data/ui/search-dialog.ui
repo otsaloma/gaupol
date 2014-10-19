@@ -357,7 +357,7 @@
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkCheckButton" id="main_check">
-                            <property name="label" translatable="yes">Find in _main text column</property>
+                            <property name="label" translatable="yes">Find in _text column</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -374,7 +374,7 @@
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="tran_check">
-                            <property name="label" translatable="yes">Find in _translation text column</property>
+                            <property name="label" translatable="yes">Find in t_ranslation column</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>

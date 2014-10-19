@@ -61,16 +61,16 @@ class MainText(aeidon.EnumerationItem):
 
     is_position = False
     is_text = True
-    label = _("Main Text")
-    tooltip = _("Main text")
+    label = _("Text")
+    tooltip = _("Text")
 
 
 class TranslationText(aeidon.EnumerationItem):
 
     is_position = False
     is_text = True
-    label = _("Translation Text")
-    tooltip = _("Translation text")
+    label = _("Translation")
+    tooltip = _("Translation")
 
 
 fields = aeidon.Enumeration()

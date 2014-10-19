@@ -161,7 +161,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="hexpand">True</property>
-                            <property name="text" translatable="yes">1</property>
+                            <property name="text" translatable="no">1</property>
                             <property name="adjustment">adjustment1</property>
                             <property name="climb_rate">1</property>
                             <property name="numeric">True</property>
@@ -355,7 +355,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="hexpand">True</property>
-                            <property name="text" translatable="yes">1</property>
+                            <property name="text" translatable="no">1</property>
                             <property name="adjustment">adjustment2</property>
                             <property name="climb_rate">1</property>
                             <property name="numeric">True</property>

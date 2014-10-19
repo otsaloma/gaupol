@@ -145,7 +145,7 @@
                           <object class="GtkSpinButton" id="speed_spin">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="text" translatable="yes">15,0</property>
+                            <property name="text" translatable="no">15,0</property>
                             <property name="adjustment">adjustment1</property>
                             <property name="climb_rate">1</property>
                             <property name="digits">1</property>
@@ -307,7 +307,7 @@
                       <object class="GtkSpinButton" id="min_spin">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="text" translatable="yes">1,000</property>
+                        <property name="text" translatable="no">1,000</property>
                         <property name="adjustment">adjustment2</property>
                         <property name="climb_rate">1</property>
                         <property name="digits">3</property>
@@ -336,7 +336,7 @@
                       <object class="GtkSpinButton" id="max_spin">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="text" translatable="yes">1,000</property>
+                        <property name="text" translatable="no">1,000</property>
                         <property name="adjustment">adjustment3</property>
                         <property name="climb_rate">1</property>
                         <property name="digits">3</property>
@@ -365,7 +365,7 @@
                       <object class="GtkSpinButton" id="gap_spin">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="text" translatable="yes">1,000</property>
+                        <property name="text" translatable="no">1,000</property>
                         <property name="adjustment">adjustment4</property>
                         <property name="climb_rate">1</property>
                         <property name="digits">3</property>

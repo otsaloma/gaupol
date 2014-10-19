@@ -133,8 +133,8 @@ class IntroductionPage(BuilderPage):
         """Initalize the columns target combo box."""
         store = Gtk.ListStore(str)
         self._columns_combo.set_model(store)
-        store.append((_("Correct texts in main text column"),))
-        store.append((_("Correct texts in translation text column"),))
+        store.append((_("Correct texts in the text column"),))
+        store.append((_("Correct texts in the translation column"),))
         renderer = Gtk.CellRendererText()
         self._columns_combo.pack_start(renderer, expand=True)
         self._columns_combo.add_attribute(renderer, "text", 0)

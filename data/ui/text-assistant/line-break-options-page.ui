@@ -113,7 +113,7 @@
                   <object class="GtkSpinButton" id="max_length_spin">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="text" translatable="yes">1</property>
+                    <property name="text" translatable="no">1</property>
                     <property name="adjustment">adjustment2</property>
                     <property name="numeric">True</property>
                     <property name="value">1</property>
@@ -128,7 +128,7 @@
                   <object class="GtkSpinButton" id="max_lines_spin">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="text" translatable="yes">1</property>
+                    <property name="text" translatable="no">1</property>
                     <property name="adjustment">adjustment1</property>
                     <property name="numeric">True</property>
                     <property name="value">1</property>
@@ -229,7 +229,7 @@
                   <object class="GtkSpinButton" id="max_skip_length_spin">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="text" translatable="yes">1</property>
+                    <property name="text" translatable="no">1</property>
                     <property name="adjustment">adjustment3</property>
                     <property name="numeric">True</property>
                     <property name="value">1</property>
@@ -244,7 +244,7 @@
                   <object class="GtkSpinButton" id="max_skip_lines_spin">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="text" translatable="yes">1</property>
+                    <property name="text" translatable="no">1</property>
                     <property name="adjustment">adjustment4</property>
                     <property name="numeric">True</property>
                     <property name="value">1</property>
