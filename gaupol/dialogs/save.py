@@ -86,7 +86,9 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
             widget = builder.get_object(name)
             setattr(self, "_{}".format(name), widget)
         vbox = gaupol.util.new_vbox(spacing=0)
-        builder.get_object("main_vbox").reparent(vbox)
+        main_vbox = builder.get_object("main_vbox")
+        main_vbox.get_parent().remove(main_vbox)
+        vbox.add(main_vbox)
         vbox.show_all()
         self.set_extra_widget(vbox)
 

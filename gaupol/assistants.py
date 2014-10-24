@@ -83,7 +83,8 @@ class BuilderPage(TextAssistantPage):
         self._set_attributes(self._widgets)
         container = self._builder.get_object("main_container")
         window = container.get_parent()
-        container.reparent(self)
+        window.remove(container)
+        self.add(container)
         gaupol.util.idle_add(window.destroy)
 
     def _set_attributes(self, widgets):

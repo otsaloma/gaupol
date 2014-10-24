@@ -144,7 +144,8 @@ class SidePane(aeidon.Observable):
         main_notebook.set_vexpand(True)
         self._paned.pack1(side_vbox, resize=False, shrink=False)
         main_notebook_vbox = gaupol.util.new_vbox(spacing=0)
-        main_notebook.reparent(main_notebook_vbox)
+        main_vbox.remove(main_notebook)
+        main_notebook_vbox.add(main_notebook)
         self._paned.pack2(main_notebook_vbox, resize=True, shrink=False)
         gaupol.util.pack_start_expand(main_vbox, self._paned)
         main_vbox.reorder_child(self._paned, 2)
@@ -231,9 +232,11 @@ class SidePane(aeidon.Observable):
         child = self._paned.get_child1()
         self._conf.visible = child.get_visible()
         main_vbox = self.application.window.get_children()[0]
-        main_notebook = self._paned.get_child2().get_children()[0]
+        main_notebook_vbox = self._paned.get_child2()
+        main_notebook = main_notebook_vbox.get_children()[0]
         main_vbox.remove(self._paned)
-        main_notebook.reparent(main_vbox)
+        main_notebook_vbox.remove(main_notebook)
+        main_vbox.add(main_notebook)
         main_vbox.reorder_child(main_notebook, 2)
         self._paned.destroy()
 
