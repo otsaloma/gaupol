@@ -179,7 +179,6 @@ class View(Gtk.TreeView):
         self._init_cell_data_functions()
         self.set_name("gaupol-view")
         self.set_headers_visible(True)
-        self.set_rules_hint(False)
         self.set_rubber_banding(True)
         selection = self.get_selection()
         selection.set_mode(Gtk.SelectionMode.MULTIPLE)

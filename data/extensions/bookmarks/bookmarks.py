@@ -243,7 +243,6 @@ class BookmarksExtension(gaupol.Extension):
         store_filter.set_visible_column(0)
         self._tree_view.set_model(store_filter)
         self._tree_view.set_headers_visible(False)
-        self._tree_view.set_rules_hint(True)
         self._tree_view.set_enable_search(False)
         selection = self._tree_view.get_selection()
         selection.set_mode(Gtk.SelectionMode.SINGLE)

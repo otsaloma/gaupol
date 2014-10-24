@@ -891,7 +891,6 @@ class ConfirmationPage(BuilderPage):
         # page, index, accept, original text, new text
         store = Gtk.ListStore(object, int, bool, str, str)
         self._tree_view.set_model(store)
-        self._tree_view.set_rules_hint(False)
         selection = self._tree_view.get_selection()
         selection.set_mode(Gtk.SelectionMode.SINGLE)
         selection.connect("changed", self._on_tree_view_selection_changed)
