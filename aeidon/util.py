@@ -156,9 +156,9 @@ def detect_format(path, encoding):
 def detect_newlines(path):
     """Detect and return the newline type of file at `path` or ``None``."""
     try:
-        f = open(path, "r", newline="")
-        f.read()
-        chars = f.newlines
+        with open(path, "r", newline="") as f:
+            f.read()
+            chars = f.newlines
     except Exception:
         return None
     if chars is None:

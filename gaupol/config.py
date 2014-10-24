@@ -389,9 +389,10 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             # Ignore all decoding errors, since all keys and all standard
             # values are all ASCII. This will only mangle recent etc.
             # filenames, which are always checked for existance anyway.
-            lines = open(self.path, "r",
-                         encoding=encoding,
-                         errors="ignore").readlines()
+            with open(self.path, "r",
+                      encoding=encoding,
+                      errors="ignore") as f:
+                lines = f.readlines()
 
         except IOError:
             aeidon.util.print_read_io(sys.exc_info(), self.path)
@@ -505,3 +506,5 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                            "to configuration file '{}'."
                            .format(value, section, option, self.path)),
                           file=sys.stderr)
+
+        f.close()

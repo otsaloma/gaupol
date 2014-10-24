@@ -210,7 +210,8 @@ def detect(path):
 
 def detect_bom(path):
     """Return corresponding encoding if BOM found, else ``None``."""
-    line = open(path, "rb").readline()
+    with open(path, "rb") as f:
+        line = f.readline()
     if (line.startswith(codecs.BOM_UTF32_BE) and
         is_valid_code("utf_32_be")):
         return "utf_32_be"
