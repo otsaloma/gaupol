@@ -9,6 +9,7 @@ Gaupol 0.27
      by holding Ctrl+(Shift)+Z pressed
  [X] Remove use of deprecated stock items, Gtk.Alignment,
      gi.types.Boxed.__init__ and non-transient dialogs
+ [X] Update Spanish translation (Carlos Mella)
 
 Gaupol 1.0
 ==========

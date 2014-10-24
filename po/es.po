@@ -1,15 +1,15 @@
 # Spanish translation of gaupol.
-# Copyright (C) 2005-2013 Osmo Salomaa.
+# Copyright (C) 2005-2014 Osmo Salomaa.
 # This file is distributed under the same license as the gaupol package.
 # Miguel Latorre <kuan@graffiti.net>, 2006.
 # Carlos Mella <cmellib@gmail.com>, 2010-2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.25\n"
+"Project-Id-Version: gaupol 0.27\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-19 17:51+0300\n"
-"PO-Revision-Date: 2014-02-08 16:15+0200\n"
+"PO-Revision-Date: 2014-10-24 20:35-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -35,7 +35,7 @@ msgstr "Añadir marcador"
 #: ../gaupol/dialogs/open.py:49 ../gaupol/dialogs/save.py:56
 #: ../gaupol/dialogs/text_edit.py:48 ../gaupol/dialogs/video.py:40
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:3
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
@@ -66,7 +66,7 @@ msgstr "fps"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
 msgid "Framerates"
-msgstr ""
+msgstr "Frecuencias de fotogramas"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 #: ../data/ui/debug-dialog.ui.h:2 ../data/ui/language-dialog.ui.h:2
@@ -77,7 +77,7 @@ msgstr "_Cerrar"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:3
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:4
 #: ../gaupol/actions/edit.py:363
@@ -193,7 +193,7 @@ msgstr "Codificación de caracteres"
 #: ../gaupol/dialogs/search.py:546 ../gaupol/dialogs/spell_check.py:382
 #: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:254
 msgid "_OK"
-msgstr ""
+msgstr "_Aceptar"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:1
 msgid "Convert Framerate"
@@ -253,11 +253,11 @@ msgstr "Columnas"
 
 #: ../data/ui/language-dialog.ui.h:5
 msgid "Check _text column"
-msgstr ""
+msgstr "Comprobar la columna t_exto"
 
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Check t_ranslation column"
-msgstr ""
+msgstr "Comprobar la columna t_raducción"
 
 #: ../data/ui/language-dialog.ui.h:8
 msgid "Check c_urrent project"
@@ -619,11 +619,11 @@ msgstr "Buscar"
 
 #: ../data/ui/search-dialog.ui.h:14
 msgid "Find in _text column"
-msgstr ""
+msgstr "Buscar en la columna t_exto"
 
 #: ../data/ui/search-dialog.ui.h:15
 msgid "Find in t_ranslation column"
-msgstr ""
+msgstr "Buscar en la columna t_raducción"
 
 #: ../data/ui/search-dialog.ui.h:17
 msgid "Find in c_urrent project"
@@ -916,7 +916,7 @@ msgstr "Título personal"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr ""
+msgstr "No divide después de un título personal, como «Dr.»"
 
 #: ../data/patterns/Latn-en.line-break.in.h:3
 msgid "Article"
@@ -1572,7 +1572,7 @@ msgid ""
 "translating."
 msgstr ""
 "Gaupol es un editor de archivos de subtítulos basados en texto. Con soporte "
-"para diversos formatos de archivos, proporciona los medios para crear, "
+"para diversos formatos de subtítulos, proporciona los medios para crear, "
 "editar y sincronizar subtítulos a un vídeo. Su interfaz de usuario está "
 "diseñada con especial énfasis en el procesamiento por lotes de múltiples "
 "documentos y comodidad para la traducción de texto."
@@ -1587,7 +1587,7 @@ msgstr "Editor de subtítulos"
 
 #: ../data/gaupol.desktop.in.h:3
 msgid "Edit subtitle files"
-msgstr "Edita archivos de subtítulos"
+msgstr "Edite archivos de subtítulos"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:5
@@ -2322,7 +2322,7 @@ msgstr "Muestra u oculta la columna fin"
 
 #: ../gaupol/actions/view.py:320
 msgid "Show or hide the text column"
-msgstr ""
+msgstr "Muestra u oculta la columna texto"
 
 #: ../gaupol/actions/view.py:337
 msgid "Tool_bar"
@@ -2366,11 +2366,11 @@ msgstr "Muestra u oculta la columna inicio"
 
 #: ../gaupol/actions/view.py:422
 msgid "T_ranslation"
-msgstr ""
+msgstr "T_raducción"
 
 #: ../gaupol/actions/view.py:423
 msgid "Show or hide the translation column"
-msgstr ""
+msgstr "Muestra u oculta la columna traducción"
 
 #: ../gaupol/actions/view.py:440
 msgid "_Horizontal"
@@ -2503,12 +2503,12 @@ msgid ""
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
 "El tamaño del archivo es {:.1f} MB, que es excesivamente grande para un "
-"archivo de subtítulos. Verifique que no es un archivo binario."
+"archivo de subtítulos. Verifique que no sea un archivo binario."
 
 #: ../gaupol/agents/open.py:428 ../gaupol/agents/open.py:445
 #: ../gaupol/dialogs/open.py:50
 msgid "_Open"
-msgstr ""
+msgstr "_Abrir"
 
 #: ../gaupol/agents/open.py:439
 msgid "Open unsorted file \"{}\"?"
@@ -2519,8 +2519,9 @@ msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
 msgstr ""
-"Es necesario corregir el orden de {:d} subtítulos. Si considera que {:d} es "
-"una gran cantidad, es posible que el archivo fue creado de forma incorrecta."
+"Es necesario cambiar el orden de {:d} subtítulos. Si considera que {:d} es "
+"una gran cantidad, es posible que el archivo fuera creado de forma "
+"incorrecta."
 
 #: ../gaupol/agents/open.py:456
 msgid "Save changes to translation document \"{}\" before opening a new one?"
@@ -2608,23 +2609,23 @@ msgstr "Tareas y alcance"
 
 #: ../gaupol/assistants.py:136
 msgid "Correct texts in the text column"
-msgstr ""
+msgstr "Corregir en la columna texto"
 
 #: ../gaupol/assistants.py:137
 msgid "Correct texts in the translation column"
-msgstr ""
+msgstr "Corregir en la columna traducción"
 
 #: ../gaupol/assistants.py:146
 msgid "Correct texts in selected subtitles"
-msgstr "Corregir los subtítulos seleccionados"
+msgstr "Corregir en los subtítulos seleccionados"
 
 #: ../gaupol/assistants.py:147
 msgid "Correct texts in current project"
-msgstr "Corregir el proyecto actual"
+msgstr "Corregir en el proyecto actual"
 
 #: ../gaupol/assistants.py:148
 msgid "Correct texts in all open projects"
-msgstr "Corregir todos los proyectos abiertos"
+msgstr "Corregir en todos los proyectos abiertos"
 
 #: ../gaupol/assistants.py:371
 msgid "Other"
@@ -2704,7 +2705,7 @@ msgstr "Divide el texto en líneas de un largo máximo especificado"
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:654
 msgid "Line-Break Patterns"
-msgstr "Reglas de división de líneas"
+msgstr "Reglas de dividir líneas"
 
 #: ../gaupol/assistants.py:656
 msgid "Break lines"
@@ -2957,11 +2958,11 @@ msgstr "Duración"
 
 #: ../gaupol/enums/fields.py:64 ../gaupol/enums/fields.py:65
 msgid "Text"
-msgstr ""
+msgstr "Texto"
 
 #: ../gaupol/enums/fields.py:72 ../gaupol/enums/fields.py:73
 msgid "Translation"
-msgstr ""
+msgstr "Traducción"
 
 #: ../gaupol/enums/units.py:28
 msgid "characters"
@@ -3043,172 +3044,3 @@ msgstr "Codificación:"
 #: ../gaupol/page.py:292
 msgid "Newlines:"
 msgstr "Salto de línea:"
-
-#~ msgid "Correct texts in main text column"
-#~ msgstr "Corregir la columna de texto principal"
-
-#~ msgid "Correct texts in translation text column"
-#~ msgstr "Corregir la columna de traducción"
-
-#~ msgid "Show or hide the main text column"
-#~ msgstr "Muestra u oculta la columna texto principal"
-
-#~ msgid "Show or hide the translation text column"
-#~ msgstr "Muestra u oculta la columna traducción"
-
-#~ msgid "Check _main text column"
-#~ msgstr "Comprobar la columna de texto pr_incipal"
-
-#~ msgid "Check _translation text column"
-#~ msgstr "Comprobar la columna de t_raducción"
-
-#~ msgid "Find in _main text column"
-#~ msgstr "Buscar en la columna de texto pr_incipal"
-
-#~ msgid "Find in _translation text column"
-#~ msgstr "Buscar en la columna de t_raducción"
-
-#~ msgid "_Main Text"
-#~ msgstr "T_exto principal"
-
-#~ msgid "_Translation Text"
-#~ msgstr "_Traducción"
-
-#~ msgid "Main Text"
-#~ msgstr "Texto principal"
-
-#~ msgid "Main text"
-#~ msgstr "Texto principal"
-
-#~ msgid "Translation Text"
-#~ msgstr "Traducción"
-
-#~ msgid "Translation text"
-#~ msgstr "Traducción"
-
-#~ msgid "Pick the Editor Font"
-#~ msgstr "Seleccionar el tipo de letra del editor"
-
-#~ msgid "Pick the Subtitle Font"
-#~ msgstr "Seleccionar el tipo de letra de los subtítulos"
-
-#~ msgid "Pick the Time Font"
-#~ msgstr "Seleccionar el tipo de letra de los tiempos"
-
-#~ msgid "Pick the Time Color"
-#~ msgstr "Seleccionar el color de los tiempos"
-
-#~ msgid "Pick the Subtitle Color"
-#~ msgstr "Seleccionar el color de los subtítulos"
-
-#~ msgid "Language:"
-#~ msgstr "Idioma:"
-
-#~ msgid "Search:"
-#~ msgstr "Buscar:"
-
-#~ msgid "_Framerates:"
-#~ msgstr "_Frecuencias de fotogramas:"
-
-#~ msgid "Headers"
-#~ msgstr "Encabezado"
-
-#~ msgid "_Main file:"
-#~ msgstr "Archivo pri_ncipal:"
-
-#~ msgid "_Revert"
-#~ msgstr "_Revertir"
-
-#~ msgid "I_nsert Template"
-#~ msgstr "In_sertar plantilla"
-
-#~ msgid "_Translation file:"
-#~ msgstr "Archivo de _traducción:"
-
-#~ msgid "Re_vert"
-#~ msgstr "_Revertir"
-
-#~ msgid "In_sert Template"
-#~ msgstr "In_sertar plantilla"
-
-#~ msgid "Cle_ar"
-#~ msgstr "_Borrar"
-
-#~ msgid "O_utput:"
-#~ msgstr "S_alida:"
-
-#~ msgid "Speech Recognition"
-#~ msgstr "Reconocimiento de lenguaje"
-
-#~ msgid "S_tart"
-#~ msgstr "_Iniciar"
-
-#~ msgid "Video or Audio Source"
-#~ msgstr "Fuente de audio o vídeo"
-
-#~ msgid "_File:"
-#~ msgstr "_Archivo:"
-
-#~ msgid "Select a Video or Audio File"
-#~ msgstr "Seleccionar el archivo de audio o vídeo"
-
-#~ msgid "Voice Recognition"
-#~ msgstr "Reconocimiento de voz"
-
-#~ msgid "_Noise level:"
-#~ msgstr "_Nivel de ruido:"
-
-#~ msgid "Sil_ence length:"
-#~ msgstr "Sil_encio entre diálogos:"
-
-#~ msgid "A_dvance length:"
-#~ msgstr "Aparición pre_via:"
-
-#~ msgid "ms"
-#~ msgstr "ms"
-
-#~ msgid "_Use default models"
-#~ msgstr "_Usar modelos predeterminados"
-
-#~ msgid "_Acoustic model:"
-#~ msgstr "M_odelo acústico:"
-
-#~ msgid "_Phonetic dictionary:"
-#~ msgstr "Diccionario _fonético:"
-
-#~ msgid "_Language model:"
-#~ msgstr "Modelo del _lenguaje:"
-
-#~ msgid "Select an Acoustic Model Directory"
-#~ msgstr "Seleccionar el modelo acústico"
-
-#~ msgid "Select a Phonetic Dictionary File"
-#~ msgstr "Seleccionar el diccionario fonético"
-
-#~ msgid "Select a Language Model File"
-#~ msgstr "Seleccionar el modelo del lenguaje"
-
-#~ msgid "Do not break after a title, e.g.\" Dr.\""
-#~ msgstr "No dívide después de un título personal, como «Dr.»"
-
-#~ msgid "_Headers"
-#~ msgstr "_Encabezado"
-
-#~ msgid "Edit file headers"
-#~ msgstr "Edita el encabezado de los archivos"
-
-#~ msgid "Sp_eech Recognition…"
-#~ msgstr "Reconocimiento de _voz…"
-
-#~ msgid "Generate subtitles by voice and speech recognition"
-#~ msgstr "Contruye subtítulos mediante el reconocimiento de voz"
-
-#~ msgid "Invalid header"
-#~ msgstr "Encabezado inválido"
-
-#~ msgid ""
-#~ "MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is "
-#~ "any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
-#~ msgstr ""
-#~ "Un encabezado MPsub debe contener una línea de la forma «FORMAT=VALUE», "
-#~ "donde VALUE es reemplazado por «TIME», «23.98», «25.00» o «29.97»."
