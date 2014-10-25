@@ -47,6 +47,8 @@ class OpenAgent(aeidon.Delegate):
         scroller.add(page.view)
         self.notebook.append_page(scroller, page.tab_widget)
         self.notebook.set_tab_reorderable(scroller, True)
+        self.notebook.child_set_property(scroller, "tab-expand", True)
+        self.notebook.child_set_property(scroller, "tab-fill", True)
         self.notebook.show_all()
         self.set_current_page(page)
         self.emit("page-added", page)

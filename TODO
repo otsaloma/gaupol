@@ -3,6 +3,7 @@ Gaupol 0.27
 
  [X] Fix dialog paddings with GTK+ 3.14
  [X] Fix text view line length display with GTK+ 3.14
+ [X] Expand tabs to fill window width, use 24 characters at minimum
  [X] Pack video player toolbar and seekbar horizontally
  [X] Avoid column resizing upon opening file
  [X] Fix "IndexError: list index out of range" when undoing or redoing
