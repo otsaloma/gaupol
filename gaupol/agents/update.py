@@ -187,6 +187,9 @@ class UpdateAgent(aeidon.Delegate):
         """Update states of all widgets for `page`."""
         if page is None: return self._disable_widgets()
         self.window.set_title(page.tab_label.get_text())
+        tabs = len(self.pages) > 1 and not self.player_box.get_visible()
+        self.notebook.set_show_tabs(tabs)
+        self.notebook_separator.set_visible(not tabs)
         self.get_mode_action(page.edit_mode).set_active(True)
         self.get_framerate_action(page.project.framerate).set_active(True)
         for field in gaupol.fields:
