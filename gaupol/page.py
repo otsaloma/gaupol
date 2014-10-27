@@ -170,8 +170,8 @@ class Page(aeidon.Observable):
         self.tab_label.set_halign(Gtk.Align.START)
         self.tab_label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
         # Set minimum width for tab label. The actual width taken
-        # depends on windows size, amount of tabs and notebook
-        # child properties tab-expand and tab-fill.
+        # depends on window size, amount of tabs and notebook
+        # child properties 'tab-expand' and 'tab-fill'.
         width = gaupol.util.char_to_px(24)
         self.tab_label.set_size_request(width, -1)
         self.tab_label.set_tooltip_text(self.untitle)

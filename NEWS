@@ -1,3 +1,18 @@
+Gaupol 0.27
+===========
+
+ * Hide tabs when only one tab is open
+ * Expand tabs to fill window width, use 24 characters at minimum
+ * Fix dialog paddings with GTK+ 3.14
+ * Fix text view line length display with GTK+ 3.14
+ * Pack video player toolbar and seekbar horizontally
+ * Avoid column resizing upon opening file
+ * Fix "IndexError: list index out of range" when undoing or redoing
+   by holding Ctrl+(Shift)+Z pressed
+ * Remove use of deprecated stock items, Gtk.Alignment,
+   gi.types.Boxed.__init__ and non-transient dialogs
+ * Update Spanish translation (Carlos Mella)
+
 Gaupol 0.26
 ===========
 

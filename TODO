@@ -1,29 +1,12 @@
-Gaupol 0.27
-===========
-
- [X] Fix dialog paddings with GTK+ 3.14
- [X] Fix text view line length display with GTK+ 3.14
- [X] Hide tabs when only one tab is open
- [X] Expand tabs to fill window width, use 24 characters at minimum
- [X] Pack video player toolbar and seekbar horizontally
- [X] Avoid column resizing upon opening file
- [X] Fix "IndexError: list index out of range" when undoing or redoing
-     by holding Ctrl+(Shift)+Z pressed
- [X] Remove use of deprecated stock items, Gtk.Alignment,
-     gi.types.Boxed.__init__ and non-transient dialogs
- [X] Update Spanish translation (Carlos Mella)
-
 Gaupol 1.0
 ==========
 
- * Bump GTK+ dependency to 3.12
-   - Use Gtk.Widget's margin-start instead of margin-left
  * Bump GTK+ dependency to 3.14
    - Make zebra coloring faster by using CSS as since 3.14 we can rely
      on certain basic named colors being available
      o http://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
      o http://git.gnome.org/browse/gtk+/tree/gtk/resources/theme/Adwaita/_colors-public.scss
- * Apply new GNOME goals
+ * Apply new GNOME goals and migrate away from deprecated widgets
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
    - http://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
