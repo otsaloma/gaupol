@@ -167,7 +167,7 @@ class Page(aeidon.Observable):
     def _init_widgets(self):
         """Initialize widgets to use in a notebook tab."""
         self.tab_label = Gtk.Label()
-        self.tab_label.set_halign(Gtk.Align.START)
+        self.tab_label.set_halign(Gtk.Align.CENTER)
         self.tab_label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
         # Set minimum width for tab label. The actual width taken
         # depends on window size, amount of tabs and notebook
