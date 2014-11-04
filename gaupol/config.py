@@ -102,7 +102,7 @@ config_defaults = {
     "file": {
         "align_method": aeidon.align_methods.POSITION,
         "directory": "",
-        "encoding": aeidon.util.get_default_encoding() or "utf_8",
+        "encoding": "utf_8",
         "format": aeidon.formats.SUBRIP,
         "newline": aeidon.util.get_default_newline(),
         },
@@ -157,7 +157,7 @@ config_defaults = {
     "spell_check": {
         "field": gaupol.fields.MAIN_TEXT,
         "inline": False,
-        "language": aeidon.locales.get_system_code() or "en",
+        "language": "en",
         "target": gaupol.targets.CURRENT,
         },
     "subtitle_insert": {
