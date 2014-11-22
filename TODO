@@ -4,6 +4,7 @@ Gaupol 0.28
  [X] Add target in the position shift dialog to shift subtitles
      from selection to end (#734198)
  [X] Center tab labels
+ [X] Fix mouse use in the cell text editor to not cause losing focus
  [X] Fix bookmarks not being cleared when a file with bookmarks
      is closed (#740481)
  [X] Remove buggy text-shadow use from CSS (#740527)

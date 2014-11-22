@@ -57,7 +57,9 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
     def do_start_editing(self, *args):
         """Start editing."""
-        pass
+        # Don't let anyone else handle button-press-events
+        # that happen within the text view.
+        self.connect_after("button-press-event", lambda *args: True)
 
     def get_text(self):
         """Return text."""
