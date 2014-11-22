@@ -82,6 +82,8 @@ class UtilityAgent(aeidon.Delegate):
         """Return a sequence of pages corresponding to `target`."""
         if target == gaupol.targets.SELECTED:
             return (self.get_current_page(),)
+        if target == gaupol.targets.SELECTED_TO_END:
+            return (self.get_current_page(),)
         if target == gaupol.targets.CURRENT:
             return (self.get_current_page(),)
         if target == gaupol.targets.ALL:
@@ -92,9 +94,19 @@ class UtilityAgent(aeidon.Delegate):
     @aeidon.deco.export
     def get_target_rows(self, target):
         """Return rows corresponding to `target` or ``None`` for all."""
-        if target != gaupol.targets.SELECTED: return None
-        page = self.get_current_page()
-        return page.view.get_selected_rows()
+        if target == gaupol.targets.SELECTED:
+            page = self.get_current_page()
+            return page.view.get_selected_rows()
+        if target == gaupol.targets.SELECTED_TO_END:
+            page = self.get_current_page()
+            rows = page.view.get_selected_rows()
+            return list(range(min(rows), len(page.project.subtitles)))
+        if target == gaupol.targets.CURRENT:
+            return None
+        if target == gaupol.targets.ALL:
+            return None
+        raise ValueError("Invalid target: {}"
+                         .format(repr(target)))
 
     @aeidon.deco.export
     def get_tool_item(self, name):

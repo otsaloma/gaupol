@@ -1,6 +1,8 @@
-Gaupol 0.27.1
-=============
+Gaupol 0.28
+===========
 
+ [X] Add target in the position shift dialog to shift subtitles
+     from selection to end (#734198)
  [X] Center tab labels
  [X] Fix bookmarks not being cleared when a file with bookmarks
      is closed (#740481)

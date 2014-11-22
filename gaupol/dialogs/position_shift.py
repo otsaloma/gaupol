@@ -30,11 +30,11 @@ class PositionShiftDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for shifting positions."""
 
-    _widgets = ("all_radio",
-                "amount_spin",
+    _widgets = ("amount_spin",
                 "current_radio",
                 "preview_button",
                 "selected_radio",
+                "to_end_radio",
                 "unit_label")
 
     def __init__(self, parent, application):
@@ -56,23 +56,26 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         """Return the selected target."""
         if self._selected_radio.get_active():
             return gaupol.targets.SELECTED
+        if self._to_end_radio.get_active():
+            return gaupol.targets.SELECTED_TO_END
         if self._current_radio.get_active():
             return gaupol.targets.CURRENT
-        if self._all_radio.get_active():
-            return gaupol.targets.ALL
         raise ValueError("Invalid target radio state")
 
     def _init_values(self):
         """Intialize default values for widgets."""
         target = gaupol.conf.position_shift.target
         self._selected_radio.set_active(target == gaupol.targets.SELECTED)
+        self._to_end_radio.set_active(target == gaupol.targets.SELECTED_TO_END)
         self._current_radio.set_active(target == gaupol.targets.CURRENT)
-        self._all_radio.set_active(target == gaupol.targets.ALL)
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if not rows and target == gaupol.targets.SELECTED:
+        if not rows and target in (
+                gaupol.targets.SELECTED,
+                gaupol.targets.SELECTED_TO_END):
             self._current_radio.set_active(True)
         self._selected_radio.set_sensitive(bool(rows))
+        self._to_end_radio.set_sensitive(bool(rows))
         if (page.project.video_path is None or
             page.project.main_file is None):
             self._preview_button.set_sensitive(False)

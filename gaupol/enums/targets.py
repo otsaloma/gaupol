@@ -27,6 +27,11 @@ class Selected(aeidon.EnumerationItem):
     pass
 
 
+class SelectedToEnd(aeidon.EnumerationItem):
+
+    pass
+
+
 class Current(aeidon.EnumerationItem):
 
     pass
@@ -39,5 +44,6 @@ class All(aeidon.EnumerationItem):
 
 targets = aeidon.Enumeration()
 targets.SELECTED = Selected()
+targets.SELECTED_TO_END = SelectedToEnd()
 targets.CURRENT = Current()
 targets.ALL = All()
