@@ -4,6 +4,7 @@ Gaupol 0.27.1
  [X] Center tab labels
  [X] Fix bookmarks not being cleared when a file with bookmarks
      is closed (#740481)
+ [X] Remove buggy text-shadow use from CSS (#740527)
 
 Gaupol 1.0
 ==========
