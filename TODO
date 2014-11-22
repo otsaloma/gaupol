@@ -2,6 +2,8 @@ Gaupol 0.27.1
 =============
 
  [X] Center tab labels
+ [X] Fix bookmarks not being cleared when a file with bookmarks
+     is closed (#740481)
 
 Gaupol 1.0
 ==========

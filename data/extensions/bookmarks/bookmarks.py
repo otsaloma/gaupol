@@ -271,6 +271,7 @@ class BookmarksExtension(gaupol.Extension):
         """Remove all data stored for `page`."""
         if page in self._bookmarks:
             del self._bookmarks[page]
+        self._update_tree_view()
 
     def _on_application_page_switched(self, application, page):
         """Update the side pane to show `page`'s bookmarks."""
@@ -389,6 +390,7 @@ class BookmarksExtension(gaupol.Extension):
         path = store.get_path(itr)
         row = store[path][1] - 1
         page = self.application.get_current_page()
+        if page is None: return
         col = page.view.get_focus()[1]
         page.view.set_focus(row, col)
         page.view.scroll_to_row(row)
