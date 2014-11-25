@@ -180,7 +180,7 @@ class IntroductionPage(BuilderPage):
                  gaupol.targets.CURRENT: 1,
                  gaupol.targets.ALL: 2}[target]
 
-        self._subtitles_combo.set_active(target)
+        self._subtitles_combo.set_active(index)
 
     def _on_columns_combo_changed(self, *args):
         """Save the selected field."""
