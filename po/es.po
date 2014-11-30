@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.27\n"
+"Project-Id-Version: gaupol 0.28\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-30 00:46+0200\n"
-"PO-Revision-Date: 2014-10-24 20:35-0300\n"
+"PO-Revision-Date: 2014-11-29 22:48-0300\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -169,7 +169,7 @@ msgstr "Subtítulos"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:17
 msgid "Adj_ust selected subtitles"
-msgstr "Ajustar subtítulos s_eleccionados"
+msgstr "Ajustar los subtítulos s_eleccionados"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:18
 msgid "Adjus_t current project"
@@ -348,11 +348,11 @@ msgstr "_Vista previa"
 
 #: ../data/ui/position-shift-dialog.ui.h:8
 msgid "Shift s_elected subtitles"
-msgstr "Desplazar subtítulos s_eleccionados"
+msgstr "Desplazar los subtítulos s_eleccionados"
 
 #: ../data/ui/position-shift-dialog.ui.h:9
 msgid "Shift su_btitles from selection to end"
-msgstr ""
+msgstr "De_splazar a partir de los subtítulos seleccionados"
 
 #: ../data/ui/position-shift-dialog.ui.h:10
 msgid "Shift c_urrent project"
@@ -396,7 +396,7 @@ msgstr "_Vista previa"
 
 #: ../data/ui/position-transform-dialog.ui.h:14
 msgid "Transform se_lected subtitles"
-msgstr "Ajustar subtítulos s_eleccionados"
+msgstr "Ajustar los subtítulos s_eleccionados"
 
 #: ../data/ui/position-transform-dialog.ui.h:15
 msgid "Transform c_urrent project"
@@ -3044,6 +3044,3 @@ msgstr "Codificación:"
 #: ../gaupol/page.py:295
 msgid "Newlines:"
 msgstr "Salto de línea:"
-
-#~ msgid "Shift all _open projects"
-#~ msgstr "Desplazar en _todos los proyectos abiertos"
