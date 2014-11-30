@@ -2,15 +2,15 @@ Translating Gaupol
 ==================
 
 To avoid doing redundant work, first check the latest list of existing
-translations at the head of the master branch.
+translations at the [head of the master branch][1].
 
-    http://github.com/otsaloma/gaupol/tree/master/po
+ [1]: http://github.com/otsaloma/gaupol/tree/master/po
 
 To try your translation in the source directory, you can compile it to
-the 'locale' directory (which does not exist by default). To see a fully
+the "locale" directory (which does not exist by default). To see a fully
 translated user interface, also desktop-style data files need to be
 "compiled", which is most conveniently done using setup.py's
-'install_data' command.
+`install_data` command.
 
     mkdir -p locale/XX/LC_MESSAGES
     msgfmt -cv po/XX.po -o locale/XX/LC_MESSAGES/gaupol.mo
@@ -30,9 +30,9 @@ When done, send your translation by email to <otsaloma@iki.fi>, or,
 if you find it more convenient, fork the repository on GitHub and send
 a pull request.
 
-Upcoming releases are announced on the gaupol-i18n mailing list.
+Upcoming releases are announced on the [gaupol-i18n][2] mailing list.
 Subscribe to this list if you want to keep updating your translation
 prior to new releases. You can also use this list to ask questions
 or report problems related to translating.
 
-    http://mail.gna.org/listinfo/gaupol-i18n/
+ [2]: http://mail.gna.org/listinfo/gaupol-i18n/

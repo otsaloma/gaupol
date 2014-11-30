@@ -25,7 +25,7 @@ be placed before any commands.
 Dependencies of aeidon and gaupol as Separate Packages
 ======================================================
 
-Of the dependencies listed in the 'README' file, Python, PyEnchant,
+Of the dependencies listed in the 'README.md' file, Python, PyEnchant,
 iso-codes and chardet are to be associated with aeidon. If aeidon is
 installed using the '--without-iso-codes' switch, then iso-codes is
 required instead of optional.

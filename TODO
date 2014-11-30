@@ -7,7 +7,8 @@ Gaupol 0.28
  [X] Fix mouse use in the cell text editor to not cause losing focus
  [X] Fix bookmarks not being cleared when a file with bookmarks
      is closed (#740481)
- [X] Remove buggy text-shadow use from CSS (#740527)
+ [X] Remove buggy `text-shadow` use from CSS (#740527)
+ [X] Use markdown for README and NEWS files
  [X] Update Spanish translation (Carlos Mella)
 
 Gaupol 1.0

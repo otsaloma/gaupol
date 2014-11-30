@@ -18,7 +18,7 @@ Releasing a New Version
  * Make final edits to files
    $ $EDITOR */__init__.py
    $ $EDITOR data/extensions/*/*.extension.in
-   $ $EDITOR NEWS TODO
+   $ $EDITOR NEWS.md TODO
 
  * Check that tarballs can be built
    $ python3 setup.py clean sdist_gna --formats tar

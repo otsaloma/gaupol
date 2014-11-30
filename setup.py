@@ -420,7 +420,7 @@ class SDistGna(sdist):
         source = os.path.join("..", "..", "ChangeLog")
         shutil.copyfile(source, "{}.changes".format(basename))
         log.info("creating '{}.news'".format(basename))
-        source = os.path.join("..", "..", "NEWS")
+        source = os.path.join("..", "..", "NEWS.md")
         shutil.copyfile(source, "{}.news".format(basename))
         log.info("signing '{}.tar.xz'".format(basename))
         run_command_or_exit("gpg --detach {}.tar.xz".format(basename))
