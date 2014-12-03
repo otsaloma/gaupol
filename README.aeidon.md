@@ -19,15 +19,15 @@ of the following commands
     python3 setup.py --without-gaupol clean install [--prefix=...]
     python3 setup.py --without-aeidon clean install [--prefix=...]
 
-Note that the --with-* and --without-* are global options and must
+Note that the `--with-*` and `--without-*` are global options and must
 be placed before any commands.
 
 Dependencies of aeidon and gaupol as Separate Packages
 ======================================================
 
-Of the dependencies listed in the 'README.md' file, Python, PyEnchant,
+Of the dependencies listed in the README.md file, Python, PyEnchant,
 iso-codes and chardet are to be associated with aeidon. If aeidon is
-installed using the '--without-iso-codes' switch, then iso-codes is
+installed using the `--without-iso-codes` switch, then iso-codes is
 required instead of optional.
 
 Likewise, Python, PyGObject, GTK+, GStreamer, GtkSpell, MPlayer, VLC

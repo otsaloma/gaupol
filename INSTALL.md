@@ -10,7 +10,7 @@ To install, run command
     python3 setup.py clean install [--prefix=...]
 
 Developers or packagers interested in installing aeidon and gaupol
-separately, see the file 'README.aeidon'.
+separately, see the file README.aeidon.md.
 
 Uninstallation
 ==============

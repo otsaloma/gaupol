@@ -5,11 +5,11 @@ This directory contains specifications and documentation saved for
 preservation purposes. The files and sources they were retrieved from
 are as follows.
 
- * ass-specs.doc: documenting SSA and ASS formats
+ * ass-specs.doc: documenting SSA and ASS formats:
    http://moodub.free.fr/video/ass-specs.doc
 
- * mdvddoc.html: documenting the MicroDVD format
+ * mdvddoc.html: documenting the MicroDVD format:
    http://netti.nic.fi/~temp/easydivx/help/mdvddoc
 
- * mpl2-eng.html: documenting the MPL2 format
+ * mpl2-eng.html: documenting the MPL2 format:
    http://lexx.eu.org/~izbkp/napisy/mpl2-eng.html

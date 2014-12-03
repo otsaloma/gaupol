@@ -1,15 +1,16 @@
 Gaupol 0.28
 ===========
 
- [X] Add target in the position shift dialog to shift subtitles
-     from selection to end (#734198)
- [X] Center tab labels
- [X] Fix mouse use in the cell text editor to not cause losing focus
- [X] Fix bookmarks not being cleared when a file with bookmarks
-     is closed (#740481)
- [X] Remove buggy `text-shadow` use from CSS (#740527)
- [X] Use markdown for README and NEWS files
- [X] Update Spanish translation (Carlos Mella)
+ * [X] Add target in the position shift dialog to shift subtitles
+       from selection to end (#734198)
+ * [X] Center tab labels
+ * [X] Fix mouse use in the cell text editor to not cause losing focus
+       and thus cancelling editing
+ * [X] Fix bookmarks not being cleared when a file with bookmarks
+       is closed (#740481)
+ * [X] Remove buggy `text-shadow` use from CSS (#740527)
+ * [X] Use markdown for documentation files (README etc.)
+ * [X] Update Spanish translation (Carlos Mella)
 
 Gaupol 1.0
 ==========
@@ -17,8 +18,8 @@ Gaupol 1.0
  * Bump GTK+ dependency to 3.14
    - Make zebra coloring faster by using CSS as since 3.14 we can rely
      on certain basic named colors being available
-     o http://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
-     o http://git.gnome.org/browse/gtk+/tree/gtk/resources/theme/Adwaita/_colors-public.scss
+     * http://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
+     * http://git.gnome.org/browse/gtk+/tree/gtk/resources/theme/Adwaita/_colors-public.scss
  * Apply new GNOME goals and migrate away from deprecated widgets
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication

@@ -327,7 +327,7 @@ Gaupol 0.16.1
  * Fix cropped close icons on tabs
  * Fix AttributeError related to locale functions on Windows
  * Fix launching web browser on Windows
- * Clarify dependencies of aeidon and gaupol in README.aeidon
+ * Clarify dependencies of aeidon and gaupol in README.aeidon.md
  * Add Russian translation (Алекс)
 
 Gaupol 0.16
@@ -338,7 +338,7 @@ Gaupol 0.16
    GTK+ user interface code under the package "gaupol". Allow
    installation of these two packages separate of one another.
    Developers and packagers are encouraged to read `./setup.py --help`
-   message and the file README.aeidon. (Fixes #595809 and should
+   message and the file README.aeidon.md. (Fixes #595809 and should
    allow fixing the likes of Debian bug #569983.)
  * Save menu item keybindings to a GtkAccelMap rc-file in the user's
    configuration directory
@@ -626,7 +626,7 @@ Gaupol 0.7.0
    restored (bug #6316)
  * Fixed error launching preview if no column focused
  * Improved blank line handling of subtitle merge
- * setup.py: AUTHORS, COPYING and README.md files no longer installed
+ * setup.py: AUTHORS.md, COPYING and README.md files no longer installed
 
 Gaupol 0.6.0
 ============

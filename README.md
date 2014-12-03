@@ -9,7 +9,7 @@ convenience of translating.
 
 Gaupol contains aeidon, a separately installable general-purpose
 Python package for reading, writing and manipulating text-based
-subtitle files. See the file README.aeidon for details.
+subtitle files. See the file README.aeidon.md for details.
 
 Gaupol is free software released under the GNU General Public License
 (GPL), see the file COPYING for details.
@@ -51,4 +51,4 @@ Running
 
 To try Gaupol from the source directory without installation, use
 command `python3 bin/gaupol`. For installing Gaupol, see the file
-INSTALL.
+INSTALL.md.

@@ -1,0 +1,50 @@
+Releasing a New Version
+=======================
+
+ * Update translations, check and inform translators
+   - `tools/update-translations`
+   - `emacs po/fi.po`
+   - `git commit -a -m "Update translations for X.Y.Z."`
+   - gaupol-i18n@gna.org
+   - Wait at least a week for translations
+
+ * Do final quality checks
+   - `python3 -Wd bin/gaupol`
+   - `pyflakes3 aeidon gaupol bin/gaupol data/extensions/*/*.py *.py`
+   - `py.test-3 --tb=no aeidon`
+   - `py.test-3 --tb=no gaupol`
+   - `py.test-3 --tb=no data/extensions`
+
+ * Make final edits to files
+   - `$EDITOR */__init__.py`
+   - `$EDITOR data/extensions/*/*.extension.in`
+   - `$EDITOR NEWS.md TODO.md`
+
+ * Check that tarballs can be built
+   - `python3 setup.py clean sdist_gna --formats tar`
+
+ * Check that installation of above tarball works
+   - `sudo python3 setup.py clean install --prefix=/usr/local`
+   - `sudo python3 setup.py clean`
+   - `/usr/local/bin/gaupol`
+
+ * Commit changes
+   - `git commit -a -m "RELEASE X.Y.Z"`
+   - `git tag -s gaupol-X.Y.Z`
+   - `git push`
+   - `git push --tags`
+
+ * Build final tarballs, edit related files and upload
+   - `python3 setup.py clean sdist_gna --formats tar`
+   - `$EDITOR dist/*/*.news dist/*/*.changes`
+   - download.gna.org:/upload/gaupol/
+
+ * Generate API documentation and upload
+   - `python3 setup.py clean doc --format html`
+   - download.gna.org:/upload/gaupol/
+
+ * Send announcements and update web sites
+   - http://home.gna.org/gaupol
+   - http://wiki.gnome.org/Apps/Gaupol
+   - http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
+   - gaupol-announcements@gna.org

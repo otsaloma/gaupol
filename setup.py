@@ -10,7 +10,7 @@ the aeidon.paths module, (3) handling translating of various files and
 (1) Allowing separate installations of aeidon and gaupol are handled through
     global options --with-aeidon, --without-aeidon, --with-gaupol and
     --without-gaupol. See 'python3 setup.py --help' and the file
-    'README.aeidon' for documentation and the Distribution class defined
+    'README.aeidon.md' for documentation and the Distribution class defined
     in this file for the implementation and logic of how that is handled.
 
 (2) Gaupol finds non-Python files based on the paths written in module
