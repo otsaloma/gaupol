@@ -24,14 +24,14 @@ dependencies follow.
  * [GStreamer][4] 1.0 or greater (at least the core, gst-plugins-base
    and gst-plugins-good; and for good container and codec support
    preferrably each of gst-plugins-bad, gst-plugins-ugly and gst-libav)
-   -- required for the integrated video player
- * [PyEnchant][5] 1.4.0 or greater -- required for spell-checking
- * [GtkSpell][6] 3.0.0 or greater -- required for inline spell-checking
- * [iso-codes][7] -- required to translate language and country names
- * [Universal Encoding Detector][8] (a.k.a. chardet) -- required for
+   – required for the integrated video player
+ * [PyEnchant][5] 1.4.0 or greater – required for spell-checking
+ * [GtkSpell][6] 3.0.0 or greater – required for inline spell-checking
+ * [iso-codes][7] – required to translate language and country names
+ * [Universal Encoding Detector][8] (a.k.a. chardet) – required for
    character encoding auto-detection
- * [MPlayer][9] or [VLC][10] -- recommended for preview
- * [PT Sans Caption and PT Mono fonts][11] -- recommended and used by
+ * [MPlayer][9] or [VLC][10] – recommended for preview
+ * [PT Sans Caption and PT Mono fonts][11] – recommended and used by
    default for integrated video player's subtitle and timecode overlays
 
   [1]: http://www.python.org/
