@@ -7,9 +7,9 @@ translations at the [head of the master branch][1].
  [1]: http://github.com/otsaloma/gaupol/tree/master/po
 
 To try your translation in the source directory, you can compile it to
-the "locale" directory (which does not exist by default). To see a fully
+the `locale` directory (which does not exist by default). To see a fully
 translated user interface, also desktop-style data files need to be
-"compiled", which is most conveniently done using setup.py's
+"compiled", which is most conveniently done using `setup.py`'s
 `install_data` command.
 
     mkdir -p locale/XX/LC_MESSAGES

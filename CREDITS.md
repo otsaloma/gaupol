@@ -1,9 +1,9 @@
 Files from Foreign Sources
 ==========================
 
- * data/icons/hicolor/*/actions/video.png
+ * `data/icons/hicolor/*/actions/video.png`
 
-    This video icon is copied unmodified [from gnome-icon-theme][1],
+    This video icon is copied unmodified from [gnome-icon-theme][1],
     mimetype icon "video-x-generic". Icon made by gnome-icon-theme
     [authors][2] and released under the terms of either GNU LGPL v.3
     or Creative Commons BY-SA 3.0 license.
@@ -11,9 +11,7 @@ Files from Foreign Sources
  [1]: http://git.gnome.org/browse/gnome-icon-theme
  [2]: http://git.gnome.org/browse/gnome-icon-theme/tree/AUTHORS
 
- * data/iso-codes/iso_639.xml
- * data/iso-codes/iso_3166.xml
- * data/iso-codes/iso_15924.xml
+ * `data/iso-codes/`: `iso_639.xml`, `iso_3166.xml`, `iso_15924.xml`
 
     These files are written by various authors and are copied
     unmodified from [iso-codes][3]. The files are released under
@@ -22,7 +20,7 @@ Files from Foreign Sources
 
  [3]: http://pkg-isocodes.alioth.debian.org/
 
- * extensions/bookmarks/bookmark.png
+ * `extensions/bookmarks/bookmark.png`
 
     This bookmark icon is copied unmodified from the document-manager
     plugin of [Anjuta][4]. Image made by "tpgww@onepost.net"

@@ -2,31 +2,30 @@ Gaupol 0.28
 ===========
 
  * [X] Add target in the position shift dialog to shift subtitles
-       from selection to end (#734198)
+       from selection to end ([#734198][])
  * [X] Center tab labels
  * [X] Fix mouse use in the cell text editor to not cause losing focus
        and thus cancelling editing
  * [X] Fix bookmarks not being cleared when a file with bookmarks
-       is closed (#740481)
- * [X] Remove buggy `text-shadow` use from CSS (#740527)
- * [X] Use markdown for documentation files (README etc.)
+       is closed ([#740481][])
+ * [X] Remove buggy `text-shadow` use from CSS ([#740527][])
+ * [X] Use markdown for documentation files (`README` etc.)
  * [X] Update Spanish translation (Carlos Mella)
+
+[#734198]: https://bugzilla.gnome.org/show_bug.cgi?id=734198
+[#740481]: https://bugzilla.gnome.org/show_bug.cgi?id=740481
+[#740527]: https://bugzilla.gnome.org/show_bug.cgi?id=740527
 
 Gaupol 1.0
 ==========
 
- * Bump GTK+ dependency to 3.14
-   - Make zebra coloring faster by using CSS as since 3.14 we can rely
-     on certain basic named colors being available
+ * Use CSS for zebra colors (public named colors added in GTK+ 3.14!)
      * http://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
-     * http://git.gnome.org/browse/gtk+/tree/gtk/resources/theme/Adwaita/_colors-public.scss
+     * http://git.gnome.org/browse/gtk+/tree/gtk/theme/Adwaita
  * Apply new GNOME goals and migrate away from deprecated widgets
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGMenu
    - http://wiki.gnome.org/Initiatives/GnomeGoals/PortToGtkApplication
-   - http://mail.gnome.org/archives/gtk-devel-list/2013-July/msg00016.html
    - http://wiki.gnome.org/HowDoI/
- * Use a header bar or do something else about dialogs with only close
-   and maybe help buttons in the dialog action area (at least preferences,
-   search, spell-check)
+ * Get rid of unnecessary dialog action areas
  * Allow using multiple dictionaries for spell-check
  * Add a GStreamer-based audio waveform display
