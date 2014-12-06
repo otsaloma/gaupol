@@ -9,7 +9,6 @@ recursive-include tools *
 include AUTHORS.md
 include ChangeLog
 include COPYING
-include CREDITS.md
 include INSTALL.md
 include MANIFEST.in
 include NEWS.md
