@@ -30,7 +30,7 @@ class _TestPositionShiftDialog(gaupol.TestCase):
         raise NotImplementedError
 
     def test__on_response(self):
-        self.dialog._all_radio.set_active(True)
+        self.dialog._current_radio.set_active(True)
         self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
         self.dialog.response(Gtk.ResponseType.OK)
 
