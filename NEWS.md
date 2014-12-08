@@ -1,3 +1,21 @@
+Gaupol 0.28
+===========
+
+ * Add target in the position shift dialog to shift subtitles
+   from selection to end ([#734198][])
+ * Center tab labels
+ * Fix mouse use in the cell text editor to not cause losing focus
+   and thus cancelling editing
+ * Fix bookmarks not being cleared when a file with bookmarks
+   is closed ([#740481][])
+ * Remove buggy `text-shadow` use from CSS ([#740527][])
+ * Use markdown for documentation files (`README` etc.)
+ * Update Spanish translation (Carlos Mella)
+
+ [#734198]: http://bugzilla.gnome.org/show_bug.cgi?id=734198
+ [#740481]: http://bugzilla.gnome.org/show_bug.cgi?id=740481
+ [#740527]: http://bugzilla.gnome.org/show_bug.cgi?id=740527
+
 Gaupol 0.27
 ===========
 
