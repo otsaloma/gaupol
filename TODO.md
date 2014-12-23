@@ -1,3 +1,8 @@
+Gaupol 0.28.1
+=============
+
+ [X] Update Hungarian translation (Andrássy László)
+
 Gaupol 1.0
 ==========
 
