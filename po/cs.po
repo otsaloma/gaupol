@@ -1820,7 +1820,7 @@ msgstr "Vytvořit nový projekt"
 
 #: ../gaupol/actions/file.py:103 ../gaupol/actions/file.py:121
 msgid "_Open…"
-msgstr "_Otevřít..."
+msgstr "_Otevřít…"
 
 #: ../gaupol/actions/file.py:104 ../gaupol/actions/file.py:122
 #: ../gaupol/agents/open.py:210 ../gaupol/agents/open.py:218
@@ -1841,7 +1841,7 @@ msgstr "Otevřít _nynější překlad"
 
 #: ../gaupol/actions/file.py:167
 msgid "Open _Translation…"
-msgstr "Otevřít _překlad..."
+msgstr "Otevřít _překlad…"
 
 #: ../gaupol/actions/file.py:168 ../gaupol/agents/open.py:253
 msgid "Open Translation"
@@ -2787,7 +2787,7 @@ msgstr "Zjištěno automaticky"
 
 #: ../gaupol/dialogs/file.py:122
 msgid "Other…"
-msgstr "Další..."
+msgstr "Další…"
 
 #: ../gaupol/dialogs/insert.py:48
 msgid "Above selection"

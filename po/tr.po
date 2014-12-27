@@ -1477,7 +1477,7 @@ msgstr "Yer _İmleri"
 
 #: ../data/extensions/bookmarks/bookmarks.py:183
 msgid "_Add…"
-msgstr "_Ekle..."
+msgstr "_Ekle…"
 
 #: ../data/extensions/bookmarks/bookmarks.py:184
 msgid "Add a bookmark for the current subtitle"
@@ -1803,7 +1803,7 @@ msgstr "Yeni proje oluştur"
 
 #: ../gaupol/actions/file.py:103 ../gaupol/actions/file.py:121
 msgid "_Open…"
-msgstr "_Aç..."
+msgstr "_Aç…"
 
 #: ../gaupol/actions/file.py:104 ../gaupol/actions/file.py:122
 #: ../gaupol/agents/open.py:210 ../gaupol/agents/open.py:218
@@ -1824,7 +1824,7 @@ msgstr "Geç_miş Çevirleri Aç"
 
 #: ../gaupol/actions/file.py:167
 msgid "Open _Translation…"
-msgstr "Çeviri Aç..."
+msgstr "Çeviri Aç…"
 
 #: ../gaupol/actions/file.py:168 ../gaupol/agents/open.py:253
 msgid "Open Translation"
@@ -1880,7 +1880,7 @@ msgstr "Şimdiki çeviri dökümanını kaydet"
 
 #: ../gaupol/actions/file.py:292
 msgid "Save Translat_ion As…"
-msgstr "Çev_iriyi farklı kaydet..."
+msgstr "Çev_iriyi farklı kaydet…"
 
 #: ../gaupol/actions/file.py:293 ../gaupol/agents/save.py:160
 msgid "Save Translation As"
@@ -1892,7 +1892,7 @@ msgstr "Şimdiki çeviri dosyasını farklı isimle kaydet"
 
 #: ../gaupol/actions/file.py:310
 msgid "Select _Video…"
-msgstr "_Video Seç..."
+msgstr "_Video Seç…"
 
 #: ../gaupol/actions/file.py:311
 msgid "Select a video file"
@@ -1900,7 +1900,7 @@ msgstr "Video dosyası seç"
 
 #: ../gaupol/actions/file.py:327
 msgid "Spli_t Project…"
-msgstr "Projeyi B_öl..."
+msgstr "Projeyi B_öl…"
 
 #: ../gaupol/actions/file.py:328
 msgid "Split the current project in two"
@@ -2012,7 +2012,7 @@ msgstr "_Görünüş"
 
 #: ../gaupol/actions/position.py:32
 msgid "Adjust _Durations…"
-msgstr "Süreçleri Ayarla..."
+msgstr "Süreçleri Ayarla…"
 
 #: ../gaupol/actions/position.py:33
 msgid "Lengthen or shorten durations"
@@ -2020,7 +2020,7 @@ msgstr "Daha uzun ya da kısa süreçler"
 
 #: ../gaupol/actions/position.py:48
 msgid "Convert _Framerate…"
-msgstr "_Kare Hızını Çevir..."
+msgstr "_Kare Hızını Çevir…"
 
 #: ../gaupol/actions/position.py:49
 msgid "Change positions for a different framerate"
@@ -2040,7 +2040,7 @@ msgstr "Alt yazıyı daha erken ya da geç göster"
 
 #: ../gaupol/actions/position.py:103
 msgid "_Transform Positions…"
-msgstr "Durumları Dönüş_tür..."
+msgstr "Durumları Dönüş_tür…"
 
 #: ../gaupol/actions/position.py:104
 msgid "Change positions by linear two-point correction"
@@ -2048,7 +2048,7 @@ msgstr "İki noktalı düzeltme kullanarak durumu değiştir"
 
 #: ../gaupol/actions/search.py:33
 msgid "_Find And Replace…"
-msgstr "Bul ve Değiştir..."
+msgstr "Bul ve Değiştir…"
 
 #: ../gaupol/actions/search.py:35
 msgid "Search for and replace text"
@@ -2088,7 +2088,7 @@ msgstr "Yazım yanlışlarını kontrol et"
 
 #: ../gaupol/actions/text.py:69
 msgid "C_orrect Texts…"
-msgstr "Yazıyı Düzelt..."
+msgstr "Yazıyı Düzelt…"
 
 #: ../gaupol/actions/text.py:70
 msgid "Find and correct errors in texts"
@@ -2767,7 +2767,7 @@ msgstr "Otomatik algıla"
 
 #: ../gaupol/dialogs/file.py:122
 msgid "Other…"
-msgstr "Diğer..."
+msgstr "Diğer…"
 
 #: ../gaupol/dialogs/insert.py:48
 msgid "Above selection"
