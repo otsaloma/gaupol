@@ -3,6 +3,7 @@ Gaupol 0.28.1
 
  * [X] Update Hungarian translation (Andrássy László)
  * [X] Update French translation (RyDroid)
+ * [X] Update Brazilian Portuguese translation (Rafael Ferreira)
 
 Gaupol 1.0
 ==========
