@@ -1,6 +1,7 @@
-Gaupol 0.28.1
-=============
+Gaupol 0.28.1/0.29
+==================
 
+ * [ ] Have the spell-check dialog remember its size
  * [X] Update Hungarian translation (Andrássy László)
  * [X] Update French translation (RyDroid)
  * [X] Update Brazilian Portuguese translation (Rafael Ferreira)
