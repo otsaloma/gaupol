@@ -4,7 +4,7 @@ Gaupol 0.28.1/0.29
  * [ ] Have the spell-check dialog remember its size
  * [X] Update Hungarian translation (Andrássy László)
  * [X] Update French translation (RyDroid)
- * [X] Update Brazilian Portuguese translation (Rafael Ferreira)
+ * [X] Update Brazilian Portuguese translation (Rafael Ferreira, Felipe Braga)
 
 Gaupol 1.0
 ==========
