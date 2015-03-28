@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: gaupol 0.28\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-30 00:46+0200\n"
-"PO-Revision-Date: 2014-12-28 13:44-0300\n"
-"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
+"PO-Revision-Date: 2015-03-26 19:58-0300\n"
+"Last-Translator: Felipe Braga <fbobraga@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.7.4\n"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:1
 msgid "Add Bookmark"
@@ -424,7 +424,7 @@ msgstr "Fonte"
 
 #: ../data/ui/preferences-dialog.ui.h:12
 msgid "Use _default theme font"
-msgstr "Usar fonte pa_drão do tema"
+msgstr "Usar fonte _padrão do tema"
 
 #: ../data/ui/preferences-dialog.ui.h:13
 msgid "_Editor font:"
@@ -436,15 +436,15 @@ msgstr "Tamanho das linhas"
 
 #: ../data/ui/preferences-dialog.ui.h:15
 msgid "_Show line lengths in list cells"
-msgstr "Mo_strar tamanhos das linhas nas células da lista"
+msgstr "Mostrar comprimentos das linhas nas _células da lista"
 
 #: ../data/ui/preferences-dialog.ui.h:16
 msgid "S_how line lengths in editable text fields"
-msgstr "Mostrar taman_hos das linhas em campos texto editáveis"
+msgstr "Mostrar comprimentos das linhas em c_ampos texto editáveis"
 
 #: ../data/ui/preferences-dialog.ui.h:17
 msgid "_Length unit:"
-msgstr "Unidade de _medida:"
+msgstr "Unidade de _comprimento:"
 
 #: ../data/ui/preferences-dialog.ui.h:18
 msgid "Spell-Check"
@@ -2071,33 +2071,39 @@ msgstr "Reproduzir _seleção"
 msgid "Play the selected subtitles"
 msgstr "Reproduz as legendas selecionadas"
 
+# a ação na interface corresponde à "Voltar vídeo"
 #: ../gaupol/actions/video.py:87
 msgid "Seek _Backward"
-msgstr "Procurar para _trás"
+msgstr "Ir para _trás"
 
+# a ação na interface corresponde à "Voltar vídeo"
 #: ../gaupol/actions/video.py:88
 msgid "Seek backward"
-msgstr "Procura para trás"
+msgstr "Ir para trás"
 
+# a ação na interface corresponde à "Correr vídeo"
 #: ../gaupol/actions/video.py:105
 msgid "Seek _Forward"
-msgstr "Procurar para _frente"
+msgstr "Ir para _frente"
 
+# a ação na interface corresponde à "Correr vídeo"
 #: ../gaupol/actions/video.py:106
 msgid "Seek forward"
-msgstr "Procura para frente"
+msgstr "Ir para frente"
 
+# a ação na interface usa o tempo inicial da legenda
 #: ../gaupol/actions/video.py:123
 msgid "Seek _Next"
-msgstr "Procurar _próxima"
+msgstr "Procurar _próxima legenda"
 
 #: ../gaupol/actions/video.py:124
 msgid "Seek to the start of the next subtitle"
 msgstr "Procura o início da próxima legenda"
 
+# a ação na interface usa o tempo inicial da legenda
 #: ../gaupol/actions/video.py:141
 msgid "Seek _Previous"
-msgstr "Procurar _anterior"
+msgstr "Procurar legenda _anterior"
 
 #: ../gaupol/actions/video.py:142
 msgid "Seek to the start of the previous subtitle"
@@ -2672,6 +2678,7 @@ msgid "translator-credits"
 msgstr ""
 "Átila Camurça <camurca.home@gmail.com>\n"
 "Darlildo Lima <darlildo.cefetce@gmail.com>\n"
+"Felipe Braga <fbobraga@gmail.com>\n"
 "Rafael Ferreira <rafael.f.f1@gmail.com>"
 
 #: ../gaupol/dialogs/about.py:55
@@ -2771,7 +2778,7 @@ msgstr "\"{}\" não encontrado(a)"
 
 #: ../gaupol/dialogs/search.py:536
 msgid "Error in regular expression pattern"
-msgstr "Erro no padrão da expressão regular de substituição"
+msgstr "Erro no formato da expressão regular"
 
 #: ../gaupol/dialogs/search.py:544
 msgid "Error in regular expression replacement"
