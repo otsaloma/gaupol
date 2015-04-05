@@ -1,13 +1,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Pavel Fric <pavelfric@seznam.cz>, 2013, 2014.
+# Pavel Fric <pavelfric@seznam.cz>, 2013, 2014, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-11-30 00:46+0200\n"
-"PO-Revision-Date: 2014-06-01 20:28+0200\n"
+"PO-Revision-Date: 2015-04-05 19:14+0200\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -36,7 +36,7 @@ msgstr "Přidat záložku"
 #: ../gaupol/dialogs/open.py:49 ../gaupol/dialogs/save.py:56
 #: ../gaupol/dialogs/text_edit.py:48 ../gaupol/dialogs/video.py:40
 msgid "_Cancel"
-msgstr ""
+msgstr "_Zrušit"
 
 #: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:3
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
@@ -67,7 +67,7 @@ msgstr "fps"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
 msgid "Framerates"
-msgstr ""
+msgstr "Rychlosti opakování obrázků"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 #: ../data/ui/debug-dialog.ui.h:2 ../data/ui/language-dialog.ui.h:2
@@ -78,7 +78,7 @@ msgstr "_Zavřít"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:3
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:4
 #: ../gaupol/actions/edit.py:363
@@ -193,7 +193,7 @@ msgstr "Kódování znaků"
 #: ../gaupol/dialogs/search.py:546 ../gaupol/dialogs/spell_check.py:382
 #: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:254
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:1
 msgid "Convert Framerate"
@@ -253,11 +253,11 @@ msgstr "Sloupce"
 
 #: ../data/ui/language-dialog.ui.h:5
 msgid "Check _text column"
-msgstr ""
+msgstr "Přezkoušet _textový sloupec"
 
 #: ../data/ui/language-dialog.ui.h:6
 msgid "Check t_ranslation column"
-msgstr ""
+msgstr "Přezkoušet _překladový sloupec"
 
 #: ../data/ui/language-dialog.ui.h:8
 msgid "Check c_urrent project"
@@ -352,7 +352,7 @@ msgstr "Posunout _vybrané titulky"
 
 #: ../data/ui/position-shift-dialog.ui.h:9
 msgid "Shift su_btitles from selection to end"
-msgstr ""
+msgstr "Posunout _titulky z výběru na konec"
 
 #: ../data/ui/position-shift-dialog.ui.h:10
 msgid "Shift c_urrent project"
@@ -616,11 +616,11 @@ msgstr "Najít"
 
 #: ../data/ui/search-dialog.ui.h:14
 msgid "Find in _text column"
-msgstr ""
+msgstr "Najít v _textovém sloupci"
 
 #: ../data/ui/search-dialog.ui.h:15
 msgid "Find in t_ranslation column"
-msgstr ""
+msgstr "Najít v _překladovém sloupci"
 
 #: ../data/ui/search-dialog.ui.h:17
 msgid "Find in c_urrent project"
@@ -905,7 +905,7 @@ msgstr "Titul"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr ""
+msgstr "Nezalamovat po titulu, např. \" Dr.\""
 
 #: ../data/patterns/Latn-en.line-break.in.h:3
 msgid "Article"
@@ -2285,7 +2285,7 @@ msgstr "Ukázat nebo skrýt sloupec Konec"
 
 #: ../gaupol/actions/view.py:320
 msgid "Show or hide the text column"
-msgstr ""
+msgstr "Ukázat nebo skrýt sloupec Text"
 
 #: ../gaupol/actions/view.py:337
 msgid "Tool_bar"
@@ -2329,11 +2329,11 @@ msgstr "Ukázat nebo skrýt sloupec Začátek"
 
 #: ../gaupol/actions/view.py:422
 msgid "T_ranslation"
-msgstr ""
+msgstr "_Překlad"
 
 #: ../gaupol/actions/view.py:423
 msgid "Show or hide the translation column"
-msgstr ""
+msgstr "Ukázat nebo skrýt sloupec Překlad"
 
 #: ../gaupol/actions/view.py:440
 msgid "_Horizontal"
@@ -2469,7 +2469,7 @@ msgstr ""
 #: ../gaupol/agents/open.py:430 ../gaupol/agents/open.py:447
 #: ../gaupol/dialogs/open.py:50
 msgid "_Open"
-msgstr ""
+msgstr "_Otevřít"
 
 #: ../gaupol/agents/open.py:441
 msgid "Open unsorted file \"{}\"?"
@@ -2562,11 +2562,11 @@ msgstr "Úkoly a cíl"
 
 #: ../gaupol/assistants.py:137
 msgid "Correct texts in the text column"
-msgstr ""
+msgstr "Opravit texty v textovém sloupci"
 
 #: ../gaupol/assistants.py:138
 msgid "Correct texts in the translation column"
-msgstr ""
+msgstr "Opravit texty v překladovém sloupci"
 
 #: ../gaupol/assistants.py:147
 msgid "Correct texts in selected subtitles"
@@ -2910,11 +2910,11 @@ msgstr "Doba trvání"
 
 #: ../gaupol/enums/fields.py:64 ../gaupol/enums/fields.py:65
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: ../gaupol/enums/fields.py:72 ../gaupol/enums/fields.py:73
 msgid "Translation"
-msgstr ""
+msgstr "Překlad"
 
 #: ../gaupol/enums/units.py:28
 msgid "characters"
