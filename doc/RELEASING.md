@@ -25,7 +25,7 @@ Releasing a New Version
    - `/usr/local/bin/gaupol`
  * Commit changes
    - `git commit -a -m "RELEASE X.Y.Z"`
-   - `git tag -s gaupol-X.Y.Z`
+   - `git tag -s X.Y.Z`
    - `git push`
    - `git push --tags`
  * Build final tarballs, edit related files and upload
@@ -36,6 +36,7 @@ Releasing a New Version
    - `python3 setup.py clean doc --format html`
    - `download.gna.org:/upload/gaupol/`
  * Send announcements and update web sites
+   - http://github.com/otsaloma/gaupol/releases
    - http://home.gna.org/gaupol
    - http://wiki.gnome.org/Apps/Gaupol
    - http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
