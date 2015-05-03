@@ -175,10 +175,10 @@ class VideoPlayer(aeidon.Observable):
 
     def _init_pipeline(self):
         """Initialize the GStreamer playback pipeline."""
-        self._playbin = Gst.ElementFactory.make("playbin", name=None)
+        self._playbin = Gst.ElementFactory.make("playbin", None)
         if gaupol.conf.video_player.volume is not None:
             self.volume = gaupol.conf.video_player.volume
-        sink = Gst.ElementFactory.make("autovideosink", name=None)
+        sink = Gst.ElementFactory.make("autovideosink", None)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
         bin.add(self._text_overlay)
@@ -203,7 +203,7 @@ class VideoPlayer(aeidon.Observable):
 
     def _init_text_overlay(self):
         """Initialize the text overlay element."""
-        self._text_overlay = Gst.ElementFactory.make("textoverlay", name=None)
+        self._text_overlay = Gst.ElementFactory.make("textoverlay", None)
         conf = gaupol.conf.video_player
         callback = self._on_conf_notify_subtitle_property
         conf.connect("notify::subtitle_font", callback)
@@ -214,7 +214,7 @@ class VideoPlayer(aeidon.Observable):
 
     def _init_time_overlay(self):
         """Initialize the time overlay element."""
-        self._time_overlay = Gst.ElementFactory.make("timeoverlay", name=None)
+        self._time_overlay = Gst.ElementFactory.make("timeoverlay", None)
         conf = gaupol.conf.video_player
         callback = self._on_conf_notify_time_property
         conf.connect("notify::time_font", callback)
