@@ -1,3 +1,16 @@
+Gaupol 0.28.1
+=============
+
+ * Have the spell-check dialog remember its size
+ * Work around a destructive override in gst-python that broke
+   Gaupol's built-in video player ([#748813][])
+ * Update Hungarian translation (Andrássy László)
+ * Update French translation (RyDroid)
+ * Update Brazilian Portuguese translation (Rafael Ferreira, Felipe Braga)
+ * Update Czech translation (Pavel Fric)
+
+ [#748813]: http://bugzilla.gnome.org/show_bug.cgi?id=748813
+
 Gaupol 0.28
 ===========
 
