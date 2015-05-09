@@ -1,7 +1,7 @@
-Gaupol 0.28.1/0.29
-==================
+Gaupol 0.28.1
+=============
 
- * [ ] Have the spell-check dialog remember its size
+ * [X] Have the spell-check dialog remember its size
  * [X] Work around a destructive override in gst-python that broke
        Gaupol's built-in video player ([#748813][])
  * [X] Update Hungarian translation (Andrássy László)

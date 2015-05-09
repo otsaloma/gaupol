@@ -92,6 +92,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._init_spell_check()
         self._init_widgets()
         self._init_sensitivities()
+        self.resize(*gaupol.conf.spell_check.size)
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
         self._start()
@@ -245,8 +246,6 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         gaupol.util.set_widget_font(self._tree_view, font)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
-        gaupol.util.scale_to_size(self._text_view, nchar=50, nlines=4, font=font)
-        gaupol.util.scale_to_size(self._tree_view, nchar=20, nlines=6, font=font)
         self._entry_handler = self._entry.connect("changed",
                                                   self._on_entry_changed)
 
@@ -318,6 +317,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _on_response(self, dialog, response):
         """Apply changes to the current page."""
         self._register_changes()
+        self._save_geometry()
         self._set_done()
 
     def _on_tree_view_selection_changed(self, *args):
@@ -357,6 +357,13 @@ class SpellCheckDialog(gaupol.BuilderDialog):
             aeidon.registers.DO, _("Spell-checking"))
         self._new_rows = []
         self._new_texts = []
+
+    def _save_geometry(self):
+        """Save dialog size."""
+        with aeidon.util.silent(AttributeError):
+            # is_maximized was added in GTK+ 3.12.
+            if self.is_maximized(): return
+        gaupol.conf.spell_check.size = list(self.get_size())
 
     def _set_done(self):
         """Set state of widgets for finished spell-check."""
