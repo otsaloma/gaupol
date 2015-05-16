@@ -1,3 +1,8 @@
+Gaupol 0.28.2
+=============
+
+ * Fix text view size in spell check dialog
+
 Gaupol 0.28.1
 =============
 

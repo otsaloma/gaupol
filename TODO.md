@@ -1,8 +1,3 @@
-Gaupol 0.28.2
-=============
-
- * [X] Fix spell check dialog size
-
 Gaupol 1.0
 ==========
 

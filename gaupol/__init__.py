@@ -43,7 +43,7 @@ GTK+ user interface for the Gaupol subtitle editor.
 :var conf: Instance of :class:`gaupol.ConfigurationStore` used
 """
 
-__version__ = "0.28.1"
+__version__ = "0.28.2"
 COMBO_SEPARATOR = "<separator/>"
 
 import aeidon
