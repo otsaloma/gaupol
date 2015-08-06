@@ -1,3 +1,10 @@
+Gaupol 0.28.3/0.29
+==================
+
+ * [X] Only force theme variant if `dark_theme` in config file is
+       `true`, thus respecting any global settings (#753315)
+ * [ ] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
+
 Gaupol 1.0
 ==========
 
