@@ -4,6 +4,8 @@ Gaupol 0.28.3/0.29
  * [X] Only force theme variant if `dark_theme` in config file is
        `true`, thus respecting any global settings (#753315)
  * [ ] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
+ * [ ] Have the text view right-click spell-check language menu
+       set the language permanently
 
 Gaupol 1.0
 ==========
@@ -13,5 +15,6 @@ Gaupol 1.0
  * Use CSS for zebra colors (public named colors added in GTK+ 3.14!)
      * <http://bugzilla.gnome.org/show_bug.cgi?id=709617#c1>
      * <http://git.gnome.org/browse/gtk+/tree/gtk/theme/Adwaita>
+ * Restore speech recognition? (#757743)
  * Allow using multiple dictionaries for spell-check
  * Add a GStreamer-based audio waveform display
