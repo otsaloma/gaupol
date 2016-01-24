@@ -6,6 +6,8 @@ Gaupol 0.28.3/0.29
  * [ ] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
  * [ ] Have the text view right-click spell-check language menu
        set the language permanently
+ * [ ] Move the "Use Shift+Return for line-break" instruction so that
+       it doesn't obstruct what is being edited
 
 Gaupol 1.0
 ==========
