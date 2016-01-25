@@ -8,6 +8,7 @@ Gaupol 0.28.3/0.29
        set the language permanently
  * [ ] Move the "Use Shift+Return for line-break" instruction so that
        it doesn't obstruct what is being edited
+ * [ ] Add seek length to preferences dialog? (or something else)
 
 Gaupol 1.0
 ==========
