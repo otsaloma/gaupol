@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2013 Osmo Salomaa <otsaloma@iki.fi> -->
-<application>
-  <id type="desktop">gaupol.desktop</id>
-  <metadata_license>CC0</metadata_license>
+<component type="desktop">
+  <id>gaupol.desktop</id>
+  <translation type="gettext">gaupol</translation>
+  <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <description>
     <_p>Gaupol is an editor for text-based subtitle files. It supports
@@ -12,8 +13,14 @@
     multiple documents and convenience of translating.</_p>
   </description>
   <screenshots>
-    <screenshot type="default">http://home.gna.org/gaupol/screenshots/appdata.png</screenshot>
+    <screenshot type="default">
+      <image>http://home.gna.org/gaupol/screenshots/appdata.png</image>
+      <_caption>Main window</_caption>
+    </screenshot>
   </screenshots>
   <url type="homepage">http://home.gna.org/gaupol/</url>
-  <updatecontact>gaupol-list@gna.org</updatecontact>
-</application>
+  <update_contact>gaupol-list@gna.org</update_contact>
+  <developer_name>Osmo Salomaa</developer_name>
+  <url type="bugtracker">https://bugzilla.gnome.org/browse.cgi?product=gaupol</url>
+  <url type="help">https://wiki.gnome.org/Apps/Gaupol</url>
+</component>
