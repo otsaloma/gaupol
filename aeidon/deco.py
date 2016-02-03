@@ -95,7 +95,8 @@ def memoize(limit=100):
         def inner_wrapper(*args, **kwargs):
             params = (args, kwargs)
             if _is_method(function, args):
-                params = (id(args[0]), args[1:], kwargs)
+                # XXX: Is id + hash together unique enough?
+                params = (id(args[0]), hash(args[0]), args[1:], kwargs)
             key = pickle.dumps(params)
             with aeidon.util.silent(KeyError):
                 return cache[key]
