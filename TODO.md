@@ -1,7 +1,7 @@
 Gaupol 0.28.3/0.29
 ==================
 
- * [X] Only force theme variant if `dark_theme` in config file is
+ * [x] Only force theme variant if `dark_theme` in config file is
        `true`, thus respecting any global settings (#753315)
  * [ ] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
  * [ ] Have the text view right-click spell-check language menu
@@ -9,6 +9,7 @@ Gaupol 0.28.3/0.29
  * [ ] Move the "Use Shift+Return for line-break" instruction so that
        it doesn't obstruct what is being edited
  * [ ] Add seek length to preferences dialog? (or something else)
+ * [x] Add Serbian translation (Miroslav Nikolić)
 
 Gaupol 1.0
 ==========
