@@ -121,5 +121,5 @@ from gaupol.extension import *
 from gaupol.extensionman import *
 from gaupol import agents
 from gaupol.application import *
-from gaupol import main
+from gaupol.main import main
 from gaupol.unittest import *
