@@ -18,8 +18,9 @@ Dependencies
 ============
 
 Gaupol requires [Python][1] 3.2 or greater, [PyGObject][2] 3.6.0 or
-greater and [GTK+][3] 3.2 or greater. Optional, but strongly recommended
-dependencies follow.
+greater, [GTK+][3] 3.2 or greater and adwaita-icon-theme or some other
+freedesktop.org compatible icon theme. Optional, but strongly
+recommended dependencies follow.
 
  * [GStreamer][4] 1.0 or greater (at least the core, gst-plugins-base
    and gst-plugins-good; and for good container and codec support
