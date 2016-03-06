@@ -36,7 +36,7 @@ class TestModule(aeidon.TestCase):
 
     def test_code_to_name(self):
         language = d_("iso_639", "Mongolian")
-        country = d_t("iso_3166", "Mongolia")
+        country = d_("iso_3166", "Mongolia")
         name = _("{language} ({country})").format(**locals())
         assert aeidon.locales.code_to_name("mn_MN") == name
         assert aeidon.locales.code_to_name("mn") == language

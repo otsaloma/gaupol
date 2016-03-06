@@ -25,14 +25,6 @@ from aeidon.i18n import d_
 _countries = {}
 
 
-def code_to_name(code):
-    """
-    Convert ISO 639 `code` to localized country name.
-
-    Raise :exc:`LookupError` if `code` not found.
-    """
-    return d_("iso_3166", _countries[code])
-
 def _init_countries():
     """Initialize the dictionary mapping codes to names."""
     import xml.etree.ElementTree as ET
@@ -43,12 +35,21 @@ def _init_countries():
     for element in ET.parse(path).findall("iso_3166_entry"):
         code = element.get("alpha_2_code", None)
         name = element.get("name", None)
-        if code is not None and name is not None:
-            _countries[code] = name
+        if not code or not name: continue
+        _countries[code] = name
+
+def code_to_name(code):
+    """
+    Convert ISO 639 `code` to localized country name.
+
+    Raise :exc:`LookupError` if `code` not found.
+    """
+    if not _countries:
+        _init_countries()
+    return d_("iso_3166", _countries[code])
 
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 3166 country code."""
-    return (code in _countries)
-
-
-_init_countries()
+    if not _countries:
+        _init_countries()
+    return code in _countries

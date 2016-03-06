@@ -25,14 +25,6 @@ from aeidon.i18n import d_
 _scripts = {}
 
 
-def code_to_name(code):
-    """
-    Convert ISO 15924 `code` to localized script name.
-
-    Raise :exc:`LookupError` if code not found.
-    """
-    return d_("iso_15924", _scripts[code])
-
 def _init_scripts():
     """Initialize the dictionary mapping codes to scripts."""
     import xml.etree.ElementTree as ET
@@ -43,12 +35,21 @@ def _init_scripts():
     for element in ET.parse(path).findall("iso_15924_entry"):
         code = element.get("alpha_4_code", None)
         name = element.get("name", None)
-        if code is not None and name is not None:
-            _scripts[code] = name
+        if not code or not name: continue
+        _scripts[code] = name
+
+def code_to_name(code):
+    """
+    Convert ISO 15924 `code` to localized script name.
+
+    Raise :exc:`LookupError` if code not found.
+    """
+    if not _scripts:
+        _init_scripts()
+    return d_("iso_15924", _scripts[code])
 
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 15924 script code."""
-    return (code in _scripts)
-
-
-_init_scripts()
+    if not _scripts:
+        _init_scripts()
+    return code in _scripts

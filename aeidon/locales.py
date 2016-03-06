@@ -20,7 +20,7 @@ Names and codes for locales and conversions between them.
 
 Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
 ``BB`` a country code and ``Cccc`` a script. See :mod:`aeidon.languages`,
-:mod:`aeidon.countries` and :mod:`aeidon.scripts` for the details.
+:mod:`aeidon.countries` and :mod:`aeidon.scripts` for details.
 """
 
 import aeidon
@@ -44,6 +44,7 @@ def code_to_language(code):
 
     Raise :exc:`LookupError` if `code` not found.
     """
+    if len(code) < 2: return None
     return aeidon.languages.code_to_name(code[:2])
 
 def code_to_name(code):
@@ -51,7 +52,6 @@ def code_to_name(code):
     Convert locale `code` to localized name.
 
     Raise :exc:`LookupError` if `code` not found.
-    Return localized ``LANGUAGE (COUNTRY)``.
     """
     language = code_to_language(code)
     country = code_to_country(code)
@@ -62,15 +62,15 @@ def code_to_name(code):
 def get_system_code():
     """Return the locale code preferred by system or ``None``."""
     import locale
-    language, encoding = locale.getdefaultlocale()
-    return language
+    return locale.getdefaultlocale()[0]
 
 @aeidon.deco.once
 def get_system_modifier():
-    """Return the script modifier of system or ``None``."""
+    """Return the system default script modifier or ``None``."""
     for name in ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"):
         value = os.environ.get(name, None)
-        if value is not None and value.count("@") == 1:
+        if value and value.count("@") == 1:
             i = value.index("@")
             return value[i+1:i+5]
+    # No script modifier found implies the language default script.
     return None
