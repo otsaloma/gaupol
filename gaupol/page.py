@@ -195,7 +195,7 @@ class Page(aeidon.Observable):
         if not rows: return
         fields = (gaupol.fields.MAIN_TEXT,)
         self.reload_view(rows, fields)
-        if self.view.get_focus()[0] not in rows:
+        if not self.view.get_focus()[0] in rows:
             col = self.view.columns.MAIN_TEXT
             self.view.set_focus(rows[0], col)
         self.view.select_rows(rows)
@@ -207,7 +207,7 @@ class Page(aeidon.Observable):
         enum = gaupol.fields
         fields = (enum.START, enum.END, enum.DURATION)
         self.reload_view(rows, fields)
-        if self.view.get_focus()[0] not in rows:
+        if not self.view.get_focus()[0] in rows:
             self.view.set_focus(rows[0])
         self.view.select_rows(rows)
         gaupol.util.iterate_main()
@@ -218,7 +218,7 @@ class Page(aeidon.Observable):
         fields = [x for x in gaupol.fields]
         fields.remove(gaupol.fields.NUMBER)
         self.reload_view(rows, fields)
-        if self.view.get_focus()[0] not in rows:
+        if not self.view.get_focus()[0] in rows:
             self.view.set_focus(rows[0])
         self.view.select_rows(rows)
         gaupol.util.iterate_main()
@@ -274,7 +274,7 @@ class Page(aeidon.Observable):
         if not rows: return
         fields = (gaupol.fields.TRAN_TEXT,)
         self.reload_view(rows, fields)
-        if self.view.get_focus()[0] not in rows:
+        if not self.view.get_focus()[0] in rows:
             col = self.view.columns.TRAN_TEXT
             self.view.set_focus(rows[0], col)
         self.view.select_rows(rows)

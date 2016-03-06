@@ -71,7 +71,7 @@ class TestAttrDict(gaupol.TestCase):
     def test_remove_attribute(self):
         self.attr_dict.remove_attribute("test")
         assert not hasattr(self.attr_dict, "test")
-        assert "test" not in self.root
+        assert not "test" in self.root
 
     def test_update(self):
         root = dict(test=3, pest=4)

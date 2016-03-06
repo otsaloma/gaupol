@@ -143,7 +143,7 @@ class OpenAgent(aeidon.Delegate):
         encoding = encoding or aeidon.util.get_default_encoding()
         align_method = align_method or aeidon.align_methods.POSITION
         bom_encoding = aeidon.encodings.detect_bom(path)
-        if bom_encoding not in (encoding, None):
+        if not bom_encoding in (encoding, None):
             return self.open_translation(path, bom_encoding, align_method)
         format = aeidon.util.detect_format(path, encoding)
         self.tran_file = aeidon.files.new(format, path, encoding)

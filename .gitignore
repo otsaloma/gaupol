@@ -1,5 +1,6 @@
 *.py[co]
 *~
+.cache
 .coverage
 .hidden
 __pycache__

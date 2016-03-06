@@ -15,14 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Paths to files and directories used.
-
-:var CONFIG_HOME_DIR: Path to the user's local configuration directory
-:var DATA_DIR: Path to the global data directory
-:var DATA_HOME_DIR: Path to the user's local data directory
-:var LOCALE_DIR: Path to the global locale directory
-"""
+"""Paths to files and directories used."""
 
 import os
 import sys
@@ -45,7 +38,7 @@ def get_config_home_directory_windows():
 
 def get_config_home_directory_xdg():
     """Return path to the user's XDG configuration directory."""
-    directory = os.path.join(os.path.expanduser("~"), ".config")
+    directory = os.path.expanduser("~/.config")
     directory = os.environ.get("XDG_CONFIG_HOME", directory)
     directory = os.path.join(directory, "gaupol")
     return os.path.abspath(directory)
@@ -84,7 +77,7 @@ def get_data_home_directory_windows():
 
 def get_data_home_directory_xdg():
     """Return path to the user's XDG data directory."""
-    directory = os.path.join(os.path.expanduser("~"), ".local", "share")
+    directory = os.path.expanduser("~/.local/share")
     directory = os.environ.get("XDG_DATA_HOME", directory)
     directory = os.path.join(directory, "gaupol")
     return os.path.abspath(directory)
@@ -107,7 +100,6 @@ def get_locale_directory_source():
     directory = os.path.abspath(os.path.join(directory, ".."))
     directory = os.path.join(directory, "locale")
     return os.path.abspath(directory)
-
 
 CONFIG_HOME_DIR = get_config_home_directory()
 DATA_DIR = get_data_directory()

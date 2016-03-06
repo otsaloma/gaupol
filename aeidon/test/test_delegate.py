@@ -36,7 +36,7 @@ class TestDelegate(aeidon.TestCase):
     def test___setattr____delegate(self):
         self.delegate.none = None
         assert "none" in self.delegate.__dict__
-        assert "none" not in self.master.__dict__
+        assert not "none" in self.master.__dict__
 
     def test___setattr____master(self):
         self.delegate.name = "slave"

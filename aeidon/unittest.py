@@ -25,13 +25,7 @@ __all__ = ("TestCase",)
 
 class TestCase:
 
-    """
-    Base class for unit test cases.
-
-    Unit tests are designed to be run with ``py.test``, ``nose`` or something
-    compatible. Tests should use plain ``assert`` statements to allow multiple
-    different tools to be used to run the tests.
-    """
+    """Base class for unit test cases."""
 
     def assert_raises(self, exception, function, *args, **kwargs):
         """Assert that calling `function` raises `exception`."""
@@ -58,7 +52,7 @@ class TestCase:
             return f.read().strip()
 
     def new_microdvd_file(self):
-        """Return path to a new temporary ``MicroDVD`` file."""
+        """Return path to a new temporary MicroDVD file."""
         return self.new_temp_file(aeidon.formats.MICRODVD)
 
     def new_project(self):
@@ -69,7 +63,7 @@ class TestCase:
         return project
 
     def new_subrip_file(self):
-        """Return path to a new temporary ``SubRip`` file."""
+        """Return path to a new temporary SubRip file."""
         return self.new_temp_file(aeidon.formats.SUBRIP)
 
     def new_temp_file(self, format, name=None):
