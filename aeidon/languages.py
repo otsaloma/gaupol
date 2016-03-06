@@ -20,6 +20,8 @@
 import aeidon
 import os
 
+from aeidon.i18n import d_
+
 _languages = {}
 
 
@@ -29,7 +31,7 @@ def code_to_name(code):
 
     Raise :exc:`LookupError` if `code` not found.
     """
-    return aeidon.i18n.dgettext("iso_639", _languages[code])
+    return d_("iso_639", _languages[code])
 
 def _init_languages():
     """Initialize the dictionary mapping codes to names."""

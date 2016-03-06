@@ -20,8 +20,8 @@
 import aeidon
 import gaupol
 import os
-_ = aeidon.i18n._
 
+from aeidon.i18n   import _, n_
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
@@ -1138,7 +1138,7 @@ class TextAssistant(Gtk.Assistant):
     def _prepare_confirmation_page(self, doc, changes):
         """Present `changes` and activate confirmation page."""
         count = len(changes)
-        title = aeidon.i18n.ngettext("Confirm {:d} Change",
+        title = n_("Confirm {:d} Change",
                                      "Confirm {:d} Changes",
                                      count).format(count)
 

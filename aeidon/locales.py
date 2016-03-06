@@ -25,7 +25,8 @@ Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
 
 import aeidon
 import os
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 
 def code_to_country(code):

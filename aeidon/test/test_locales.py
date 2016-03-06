@@ -18,24 +18,25 @@
 import aeidon
 import imp
 import os
-_ = aeidon.i18n._
+
+from aeidon.i18n import _, d_
 
 
 class TestModule(aeidon.TestCase):
 
     def test_code_to_country(self):
-        country = aeidon.i18n.dgettext("iso_3166", "South Africa")
+        country = d_("iso_3166", "South Africa")
         assert aeidon.locales.code_to_country("af_ZA") == country
         assert aeidon.locales.code_to_country("af") is None
 
     def test_code_to_language(self):
-        language = aeidon.i18n.dgettext("iso_639", "Icelandic")
+        language = d_("iso_639", "Icelandic")
         assert aeidon.locales.code_to_language("is_IS") == language
         assert aeidon.locales.code_to_language("is") == language
 
     def test_code_to_name(self):
-        language = aeidon.i18n.dgettext("iso_639", "Mongolian")
-        country = aeidon.i18n.dgettext("iso_3166", "Mongolia")
+        language = d_("iso_639", "Mongolian")
+        country = d_t("iso_3166", "Mongolia")
         name = _("{language} ({country})").format(**locals())
         assert aeidon.locales.code_to_name("mn_MN") == name
         assert aeidon.locales.code_to_name("mn") == language

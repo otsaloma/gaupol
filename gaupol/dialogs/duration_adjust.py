@@ -19,8 +19,8 @@
 
 import aeidon
 import gaupol
-_ = aeidon.i18n._
 
+from aeidon.i18n   import _, n_
 from gi.repository import Gtk
 
 __all__ = ("DurationAdjustDialog",)
@@ -67,7 +67,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
                 minimum=(conf.minimum if conf.use_minimum else None),
                 gap=(conf.gap if conf.use_gap else None))
 
-            self.application.flash_message(aeidon.i18n.ngettext(
+            self.application.flash_message(n_(
                     "Adjusted duration of {:d} subtitle",
                     "Adjusted durations of {:d} subtitles",
                     len(rows)).format(len(rows)))

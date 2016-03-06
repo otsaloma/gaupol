@@ -22,8 +22,8 @@ import functools
 import gaupol
 import os
 import re
-_ = aeidon.i18n._
 
+from aeidon.i18n   import _, n_
 from gi.repository import Gdk
 from gi.repository import Gtk
 
@@ -449,7 +449,7 @@ class SearchDialog(gaupol.BuilderDialog):
                 self._show_regex_error_dialog_replacement(str(error))
                 break
         self._reset_properties()
-        self._statuslabel.flash_text(aeidon.i18n.ngettext(
+        self._statuslabel.flash_text(n_(
                 "Found and replaced {:d} occurence",
                 "Found and replaced {:d} occurences",
                 count).format(count))

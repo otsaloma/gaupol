@@ -18,7 +18,8 @@
 """Storing text to the clipboard and pasting from it."""
 
 import aeidon
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 
 class ClipboardAgent(aeidon.Delegate):

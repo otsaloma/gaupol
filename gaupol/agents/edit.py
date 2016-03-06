@@ -20,7 +20,8 @@
 import aeidon
 import bisect
 import gaupol
-_ = aeidon.i18n._
+
+from aeidon.i18n import _, n_
 
 
 class EditAgent(aeidon.Delegate):
@@ -194,7 +195,7 @@ class EditAgent(aeidon.Delegate):
         window.thaw_updates()
         count = len(page.project.subtitles) - length
         if count <= 0: return
-        self.flash_message(aeidon.i18n.ngettext(
+        self.flash_message(n_(
             "Inserted {:d} subtitle to fit clipboard contents",
             "Inserted {:d} subtitles to fit clipboard contents",
             count).format(count))

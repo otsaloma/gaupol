@@ -21,8 +21,8 @@ import aeidon
 import gaupol
 import os
 import sys
-_ = aeidon.i18n._
 
+from aeidon.i18n   import _
 from gi.repository import Gtk
 
 

@@ -25,8 +25,8 @@ import platform
 import string
 import sys
 import traceback
-_ = aeidon.i18n._
 
+from aeidon.i18n   import _
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject

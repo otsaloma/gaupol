@@ -19,7 +19,8 @@
 
 import aeidon
 import gaupol
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 __all__ = ("AppendDialog",)
 

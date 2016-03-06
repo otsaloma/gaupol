@@ -18,7 +18,8 @@
 """Manipulating times and frames."""
 
 import aeidon
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 
 class PositionAgent(aeidon.Delegate):

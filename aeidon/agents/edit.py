@@ -18,7 +18,8 @@
 """Basic editing of entire subtitles."""
 
 import aeidon
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 
 class EditAgent(aeidon.Delegate):

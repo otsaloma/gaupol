@@ -25,7 +25,9 @@ import aeidon
 import codecs
 import locale
 import re
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
+
 
 # Tuples of code, name and description for each supported character encoding.
 # Codes are the official names used by Python. Names are mostly taken from

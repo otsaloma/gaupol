@@ -19,7 +19,8 @@
 
 import aeidon
 import bisect
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 
 class SetAgent(aeidon.Delegate):

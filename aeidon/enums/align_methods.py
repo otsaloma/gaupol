@@ -18,7 +18,8 @@
 """Enumerations for subtitle align methods."""
 
 import aeidon
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 __all__ = ("align_methods",)
 

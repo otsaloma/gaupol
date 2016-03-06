@@ -17,13 +17,15 @@
 
 import aeidon
 
+from aeidon.i18n import d_
+
 
 class TestModule(aeidon.TestCase):
 
     def test_code_to_name(self):
-        name = aeidon.i18n.dgettext("iso_3166", "Ireland")
+        name = d_("iso_3166", "Ireland")
         assert aeidon.countries.code_to_name("IE") == name
-        name = aeidon.i18n.dgettext("iso_3166", "Yemen")
+        name = d_("iso_3166", "Yemen")
         assert aeidon.countries.code_to_name("YE") == name
 
     def test_is_valid(self):

@@ -20,8 +20,8 @@
 import aeidon
 import gaupol
 import os
-_ = aeidon.i18n._
 
+from aeidon.i18n   import _
 from gi.repository import Gtk
 from gi.repository import Pango
 

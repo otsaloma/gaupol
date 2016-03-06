@@ -18,7 +18,8 @@
 """Enumerations for length unit types."""
 
 import aeidon
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 __all__ = ("length_units",)
 

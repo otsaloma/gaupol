@@ -19,7 +19,8 @@
 
 import aeidon
 import re
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 try:
     import enchant.checker

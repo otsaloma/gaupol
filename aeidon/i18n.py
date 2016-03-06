@@ -15,31 +15,42 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-Internationalization functions.
-
-Functions defined in this module are convenience aliases for functions
-of the :mod:`gettext` module with proper initialization ensured done.
-"""
+"""Internationalization functions."""
 
 import aeidon
 import gettext
+import locale
 
-__all__ = ("_", "dgettext", "ngettext")
+_translation = gettext.NullTranslations()
 
-_translation = gettext.translation("gaupol",
-                                   aeidon.LOCALE_DIR,
-                                   fallback=True)
 
+def bind():
+    """Bind translation domains and initialize gettext."""
+    global _translation
+    d = aeidon.LOCALE_DIR
+    with aeidon.util.silent(Exception):
+        # Might fail with misconfigured locales.
+        locale.setlocale(locale.LC_ALL, "")
+    with aeidon.util.silent(Exception):
+        # Not available on all platforms. Seems to be
+        # needed by GTK+ applications and probably others
+        # with C library dependencies that use gettext.
+        locale.bindtextdomain("gaupol", d)
+        locale.textdomain("gaupol")
+    gettext.bindtextdomain("gaupol", d)
+    gettext.textdomain("gaupol")
+    _translation = gettext.translation("gaupol",
+                                       localedir=d,
+                                       fallback=True)
 
 def _(message):
     """Return the localized translation of `message`."""
     return _translation.gettext(message)
 
-def dgettext(domain, message):
+def d_(domain, message):
     """Return the localized translation of `message` from `domain`."""
     return gettext.dgettext(domain, message)
 
-def ngettext(singular, plural, n):
+def n_(singular, plural, n):
     """Return the localized translation of `singular` or `plural`."""
     return _translation.ngettext(singular, plural, n)

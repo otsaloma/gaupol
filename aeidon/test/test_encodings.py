@@ -17,7 +17,8 @@
 
 import aeidon
 import codecs
-_ = aeidon.i18n._
+
+from aeidon.i18n import _
 
 
 class TestModule(aeidon.TestCase):

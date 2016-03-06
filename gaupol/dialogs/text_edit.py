@@ -19,7 +19,7 @@
 
 import aeidon
 import gaupol
-_ = aeidon.i18n._
+
 
 from gi.repository import GObject
 from gi.repository import Gtk

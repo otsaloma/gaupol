@@ -20,8 +20,8 @@
 import aeidon
 import gaupol
 import re
-_ = aeidon.i18n._
 
+from aeidon.i18n   import _
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject

@@ -20,6 +20,8 @@
 import aeidon
 import os
 
+from aeidon.i18n import d_
+
 _scripts = {}
 
 
@@ -29,7 +31,7 @@ def code_to_name(code):
 
     Raise :exc:`LookupError` if code not found.
     """
-    return aeidon.i18n.dgettext("iso_15924", _scripts[code])
+    return d_("iso_15924", _scripts[code])
 
 def _init_scripts():
     """Initialize the dictionary mapping codes to scripts."""
