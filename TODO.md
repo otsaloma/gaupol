@@ -2,6 +2,7 @@ Gaupol 1.0
 ==========
 
  * [x] Restore speech recognition (#757743)
+ * [ ] Add mpv for preview with precise seek (--hr-seek)
  * [x] Only force theme variant if `dark_theme` in config file is
        `true`, thus respecting any global settings (#753315)
  * [ ] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
