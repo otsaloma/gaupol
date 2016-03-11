@@ -118,7 +118,7 @@ from aeidon.file import *
 from aeidon import files
 from aeidon.markup import *
 from aeidon import tags
-from aeidon.converter import *
+from aeidon.markupconv import *
 from aeidon.pattern import *
 from aeidon.patternman import *
 from aeidon.clipboard import *
