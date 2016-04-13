@@ -1,7 +1,6 @@
 # French translations for gaupol package.
 # Copyright (C) 2013 THE Gaupol'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Gaupol package.
-# Spanti Nicola (RyDroid) <rydroid_trans@yahoo.fr>, 2013, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gaupol\n"
@@ -2784,7 +2783,7 @@ msgstr "Éditeur de sous-titres"
 #. lines seperated by newlines (\n).
 #: ../gaupol/dialogs/about.py:52
 msgid "translator-credits"
-msgstr "Jean van Kasteel <vankasteelj@gmail.com>"
+msgstr "Jean van Kasteel <vankasteelj@gmail.com>\nSpanti Nicola (RyDroid) <rydroid_trans@yahoo.fr>"
 
 #: ../gaupol/dialogs/about.py:55
 msgid "Gaupol Website"
