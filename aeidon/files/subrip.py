@@ -99,7 +99,7 @@ class SubRip(aeidon.SubtitleFile):
                 x2 = subtitle.subrip.x2
                 y1 = subtitle.subrip.y1
                 y2 = subtitle.subrip.y2
-                if not (x1 == x2 == y1 == y2 == 0):
+                if not x1 == x2 == y1 == y2 == 0:
                     f.write("  X1:{:03d} X2:{:03d}".format(x1, x2))
                     f.write( " Y1:{:03d} Y2:{:03d}".format(y1, y2))
             f.write("\n{}\n".format(subtitle.get_text(doc)))

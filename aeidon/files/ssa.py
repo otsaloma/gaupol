@@ -140,7 +140,6 @@ class SubStationAlpha(aeidon.SubtitleFile):
         fields = ", ".join(self.event_fields)
         f.write("Format: {}\n".format(fields))
         for subtitle in subtitles:
-            values = [self._encode_field(x, subtitle, doc)
-                      for x in self.event_fields]
-
-            f.write("Dialogue: {}\n".format(",".join(values)))
+            f.write("Dialogue: {}\n".format(",".join([
+                self._encode_field(x, subtitle, doc)
+                for x in self.event_fields])))

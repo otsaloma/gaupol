@@ -104,6 +104,7 @@ def _on_parser_version(*args):
 
 def _parse_args(args):
     """Parse and return options and arguments from `args`."""
+    # TODO: Use argparse?
     parser = optparse.OptionParser(
         formatter=optparse.IndentedHelpFormatter(2, 42),
         usage=_("gaupol [OPTION...] [FILE...] [+[NUM]]"))
