@@ -112,6 +112,13 @@ def _get_mplayer_executable():
         return aeidon.util.shell_quote(path)
     return "mplayer"
 
+def _get_mpv_executable():
+    if sys.platform == "win32":
+        directory = os.environ.get("PROGRAMFILES", "C:\\Program Files")
+        path = os.path.join(directory, "MPV", "mpv.exe")
+        return aeidon.util.shell_quote(path)
+    return "mpv"
+
 def _get_vlc_executable():
     if sys.platform == "win32":
         directory = os.environ.get("PROGRAMFILES", "C:\\Program Files")
@@ -136,7 +143,6 @@ class PlayerMPlayer(aeidon.EnumerationItem):
         command = "{} < /dev/null".format(command)
 
     command_utf_8 = " ".join((_get_mplayer_executable(),
-                              "-identify",
                               "-osdlevel 2",
                               "-ss $SECONDS",
                               "-slang",
@@ -152,6 +158,24 @@ class PlayerMPlayer(aeidon.EnumerationItem):
         command_utf_8 = "{} < /dev/null".format(command_utf_8)
 
     label = "MPlayer"
+
+class PlayerMPV(aeidon.EnumerationItem):
+    command = " ".join((_get_mpv_executable(),
+                        "--osd-level=2",
+                        "--hr-seek=yes",
+                        "--start=$SECONDS",
+                        "--sub-file=$SUBFILE",
+                        "$VIDEOFILE",))
+
+    command_utf_8 = " ".join((_get_mpv_executable(),
+                              "--osd-level=2",
+                              "--hr-seek=yes",
+                              "--start=$SECONDS",
+                              "--sub-file=$SUBFILE",
+                              "--sub-codepage=utf-8:utf-8-broken",
+                              "$VIDEOFILE",))
+
+    label = "mpv"
 
 class PlayerVLC(aeidon.EnumerationItem):
     command = " ".join((_get_vlc_executable(),
@@ -169,6 +193,7 @@ class PlayerVLC(aeidon.EnumerationItem):
 
 players = aeidon.Enumeration()
 players.MPLAYER = PlayerMPlayer()
+players.MPV = PlayerMPV()
 players.VLC = PlayerVLC()
 
 

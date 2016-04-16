@@ -142,9 +142,9 @@ config_defaults = {
     "preview": {
         "custom_command": "",
         "force_utf_8": True,
-        "offset": 5.0,
+        "offset": 1.0,
         "player": (aeidon.players.VLC if sys.platform == "win32"
-                   else aeidon.players.MPLAYER),
+                   else aeidon.players.MPV),
 
         "use_custom_command": False,
         },
