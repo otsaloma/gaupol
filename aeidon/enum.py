@@ -79,7 +79,7 @@ class Enumeration(list):
     NONE = None
 
     def __contains__(self, item):
-        """Return ``True`` is enumeration contains `item`."""
+        """Return ``True`` if enumeration contains `item`."""
         return list.__contains__(self, item)
 
     def __delattr__(self, name):
