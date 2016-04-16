@@ -31,8 +31,8 @@ recommended dependencies follow.
  * [iso-codes][7] – required to translate language and country names
  * [Universal Encoding Detector][8] (a.k.a. chardet) – required for
    character encoding auto-detection
- * [MPlayer][9] or [VLC][10] – recommended for preview
- * [PT Sans Caption and PT Mono fonts][11] – recommended and used by
+ * [mpv][9], [MPlayer][10] or [VLC][11] – recommended for preview
+ * [PT Sans Caption and PT Mono fonts][12] – recommended and used by
    default for integrated video player's subtitle and timecode overlays
 
   [1]: http://www.python.org/
@@ -43,9 +43,10 @@ recommended dependencies follow.
   [6]: http://gtkspell.sourceforge.net/
   [7]: http://pkg-isocodes.alioth.debian.org/
   [8]: http://pypi.python.org/pypi/chardet
-  [9]: http://www.mplayerhq.hu/
- [10]: http://www.videolan.org/vlc/
- [11]: http://www.paratype.com/public/
+  [9]: http://mpv.io/
+ [10]: http://www.mplayerhq.hu/
+ [11]: http://www.videolan.org/vlc/
+ [12]: http://www.paratype.com/public/
 
 Running
 =======
