@@ -7,38 +7,23 @@ data/extensions/custom-framerates/*.*
 [share/gaupol/extensions/side-pane]
 data/extensions/side-pane/*.*
 
-[share/gaupol/icons/hicolor/16x16/actions]
-data/icons/hicolor/16x16/actions/*.png
-
-[share/gaupol/icons/hicolor/22x22/actions]
-data/icons/hicolor/22x22/actions/*.png
-
-[share/gaupol/icons/hicolor/24x24/actions]
-data/icons/hicolor/24x24/actions/*.png
-
-[share/gaupol/icons/hicolor/32x32/actions]
-data/icons/hicolor/32x32/actions/*.png
-
-[share/gaupol/icons/hicolor/48x48/actions]
-data/icons/hicolor/48x48/actions/*.png
-
 [share/icons/hicolor/16x16/apps]
-data/icons/hicolor/16x16/apps/*.png
+data/icons/16x16/*.png
 
 [share/icons/hicolor/22x22/apps]
-data/icons/hicolor/22x22/apps/*.png
+data/icons/22x22/*.png
 
 [share/icons/hicolor/24x24/apps]
-data/icons/hicolor/24x24/apps/*.png
+data/icons/24x24/*.png
 
 [share/icons/hicolor/32x32/apps]
-data/icons/hicolor/32x32/apps/*.png
+data/icons/32x32/*.png
 
 [share/icons/hicolor/48x48/apps]
-data/icons/hicolor/48x48/apps/*.png
+data/icons/48x48/*.png
 
 [share/icons/hicolor/256x256/apps]
-data/icons/hicolor/256x256/apps/*.png
+data/icons/256x256/*.png
 
 [share/gaupol/ui]
 data/ui/*.*
