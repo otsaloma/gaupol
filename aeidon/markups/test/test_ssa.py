@@ -24,7 +24,7 @@ class TestSubStationAlpha(aeidon.TestCase):
             "in this whore of cities.")
 
     def setup_method(self, method):
-        self.markup = aeidon.tags.new(aeidon.formats.SSA)
+        self.markup = aeidon.markups.new(aeidon.formats.SSA)
 
     def test_bolden(self):
         assert self.markup.bolden(self.text) == (

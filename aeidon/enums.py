@@ -23,7 +23,7 @@ import sys
 
 from aeidon.i18n import _
 
-__all__ = (
+__all__ = [
     "align_methods",
     "documents",
     "formats",
@@ -32,7 +32,7 @@ __all__ = (
     "newlines",
     "players",
     "registers",
-)
+]
 
 
 class AlignMethodNumber(aeidon.EnumerationItem):

@@ -80,21 +80,21 @@ class UtilityAgent(aeidon.Delegate):
         """Return `doc`'s markup instance or ``None``."""
         format = self.get_format(doc)
         if format is None: return None
-        return aeidon.tags.new(format)
+        return aeidon.markups.new(format)
 
     @aeidon.deco.export
     def get_markup_clean_func(self, doc):
         """Return the function to clean markup or ``None``."""
         format = self.get_format(doc)
         if format is None: return None
-        return aeidon.tags.new(format).clean
+        return aeidon.markups.new(format).clean
 
     @aeidon.deco.export
     def get_markup_tag_regex(self, doc):
         """Return the regular expression for a markup tag or ``None``."""
         format = self.get_format(doc)
         if format is None: return None
-        return aeidon.tags.new(format).tag
+        return aeidon.markups.new(format).tag
 
     @aeidon.deco.export
     def get_mode(self):

@@ -22,7 +22,7 @@ import aeidon
 __all__ = ("SubViewer2",)
 
 
-class SubViewer2(aeidon.tags.SubRip):
+class SubViewer2(aeidon.markups.SubRip):
 
     """
     Text markup for the SubViewer 2.0 format.

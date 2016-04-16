@@ -17,7 +17,7 @@
 
 import aeidon
 
-from aeidon.tags.test.test_ssa import TestSubStationAlpha
+from aeidon.markups.test.test_ssa import TestSubStationAlpha
 
 
 class TestAdvSubStationAlpha(TestSubStationAlpha):
@@ -26,7 +26,7 @@ class TestAdvSubStationAlpha(TestSubStationAlpha):
             "in this whore of cities.")
 
     def setup_method(self, method):
-        self.markup = aeidon.tags.new(aeidon.formats.ASS)
+        self.markup = aeidon.markups.new(aeidon.formats.ASS)
 
     def test_decode__bold_weight(self):
         text = ("All things weird are normal\n"

@@ -24,7 +24,7 @@ class TestMicroDVD(aeidon.TestCase):
             "in this whore of cities.")
 
     def setup_method(self, method):
-        self.markup = aeidon.tags.new(aeidon.formats.MICRODVD)
+        self.markup = aeidon.markups.new(aeidon.formats.MICRODVD)
 
     def test_bolden(self):
         assert self.markup.bolden(self.text, (0, 27)) == (

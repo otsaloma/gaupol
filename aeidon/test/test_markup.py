@@ -38,11 +38,11 @@ class TestMarkup(aeidon.TestCase):
         assert self.markup.encode(text) == self.text
 
     def test_encode__color(self):
-        text = "<color=#FFFFFF>All</color> things weird are normal\nin this whore of cities."
+        text = "<color=#ffffff>All</color> things weird are normal\nin this whore of cities."
         assert self.markup.encode(text) == self.text
 
     def test_encode__font(self):
-        text = "<font=Sans>All things weird are normal\nin this whore of cities.</font>"
+        text = "<font=sans>All things weird are normal\nin this whore of cities.</font>"
         assert self.markup.encode(text) == self.text
 
     def test_encode__i(self):

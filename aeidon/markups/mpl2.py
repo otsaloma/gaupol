@@ -22,7 +22,7 @@ import aeidon
 __all__ = ("MPL2",)
 
 
-class MPL2(aeidon.tags.MicroDVD):
+class MPL2(aeidon.markups.MicroDVD):
 
     """
     Text markup for the MPL2 format.
@@ -56,12 +56,12 @@ class MPL2(aeidon.tags.MicroDVD):
         text = self._decode_b(text, r"<\\>(.*?)</\\>", 1)
         text = self._decode_i(text, r"</>(.*?)<//>", 1)
         text = self._decode_u(text, r"<_>(.*?)</_>", 1)
-        return aeidon.tags.MicroDVD._main_decode(self, text)
+        return aeidon.markups.MicroDVD._main_decode(self, text)
 
     def _pre_decode(self, text):
         """Return `text` with markup prepared for decoding."""
         text = self._pre_decode_identify(text)
-        return aeidon.tags.MicroDVD._pre_decode(self, text)
+        return aeidon.markups.MicroDVD._pre_decode(self, text)
 
     def _pre_decode_identify(self, text):
         """

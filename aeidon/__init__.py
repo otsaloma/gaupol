@@ -110,7 +110,7 @@ from aeidon.subtitle import *
 from aeidon.file import *
 from aeidon import files
 from aeidon.markup import *
-from aeidon import tags
+from aeidon import markups
 from aeidon.markupconv import *
 from aeidon.pattern import *
 from aeidon.patternman import *

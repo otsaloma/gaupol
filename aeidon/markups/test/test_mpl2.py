@@ -17,7 +17,7 @@
 
 import aeidon
 
-from aeidon.tags.test.test_microdvd import TestMicroDVD
+from aeidon.markups.test.test_microdvd import TestMicroDVD
 
 
 class TestMPL2(TestMicroDVD):
@@ -26,7 +26,7 @@ class TestMPL2(TestMicroDVD):
             "in this whore of cities.")
 
     def setup_method(self, method):
-        self.markup = aeidon.tags.new(aeidon.formats.MPL2)
+        self.markup = aeidon.markups.new(aeidon.formats.MPL2)
 
     def test_bolden(self):
         assert self.markup.bolden(self.text, (0, 27)) == (

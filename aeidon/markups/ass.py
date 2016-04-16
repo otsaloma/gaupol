@@ -22,7 +22,7 @@ import aeidon
 __all__ = ("AdvSubStationAlpha",)
 
 
-class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
+class AdvSubStationAlpha(aeidon.markups.SubStationAlpha):
 
     """
     Text markup for the Advanced Sub Station Alpha format.
@@ -48,7 +48,7 @@ class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
         """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"\{\\b[1-9]\d*\}(.*?)\{\\b[0\\]\}", 1)
         text = self._decode_u(text, r"\{\\u1\}(.*?)\{\\u[0\\]\}", 1)
-        return aeidon.tags.SubStationAlpha._main_decode(self, text)
+        return aeidon.markups.SubStationAlpha._main_decode(self, text)
 
     def underline(self, text, bounds=None):
         """Return underlined `text`."""

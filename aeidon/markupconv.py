@@ -33,8 +33,8 @@ class MarkupConverter:
         `from_format` and `to_format` should be :attr:`aeidon.formats`
         enumeration items.
         """
-        self._from = aeidon.tags.new(from_format)
-        self._to = aeidon.tags.new(to_format)
+        self._from = aeidon.markups.new(from_format)
+        self._to = aeidon.markups.new(to_format)
 
     def convert(self, text):
         """Return `text` with markup converted."""
