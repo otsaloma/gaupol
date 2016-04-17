@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Common Error Pattern]
 _Name=Period after title
 _Description=Add period after a shortened title, such as "Mr" and "Dr"

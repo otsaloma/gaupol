@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Common Error Pattern]
 _Name=Leading and trailing spaces
 _Description=Remove spaces from the beginning and end of lines

@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Hearing Impaired Pattern]
 _Name=Uppercase speaker before a colon
 _Description=Replace the uppercase name of the speaker before a colon with a dialogue dash

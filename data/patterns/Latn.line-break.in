@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Line Break Pattern]
 _Name=Dialogue
 _Description=Break according to dialogue separated by dashes

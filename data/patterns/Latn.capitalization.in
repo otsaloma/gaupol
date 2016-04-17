@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Capitalization Pattern]
 _Name=Sentence
 _Description=Capitalize the first word of a sentence

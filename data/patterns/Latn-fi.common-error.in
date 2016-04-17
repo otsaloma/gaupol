@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Common Error Pattern]
 _Name=Space after punctuation marks
 _Description=Add space after various punctuation marks

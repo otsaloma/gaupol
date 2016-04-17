@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Common Error Pattern]
 _Name=Spaces around guillemets
 _Description=Add spaces around guillemets

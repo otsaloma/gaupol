@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Hearing Impaired Pattern]
 _Name=Sound in brackets
 _Description=Remove description of a sound between square brackets

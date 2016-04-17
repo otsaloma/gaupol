@@ -1,3 +1,5 @@
+# -*- conf -*-
+
 [Common Error Pattern]
 _Name=Letter "I" in a lower case word
 _Description=Replace letter "I" with letter "l" in a lower case word
