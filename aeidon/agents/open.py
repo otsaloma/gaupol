@@ -164,21 +164,15 @@ class OpenAgent(aeidon.Delegate):
         return sort_count
 
     def _read_file(self, file):
-        """
-        Read `file` and return subtitles.
-
-        Raise :exc:`IOError` if reading fails.
-        Raise :exc:`UnicodeError` if decoding fails.
-        Raise :exc:`aeidon.ParseError` if parsing fails.
-        """
+        """Read `file` and return subtitles."""
         try:
             return file.read()
         except (IOError, UnicodeError):
             raise
         except Exception:
-            # It's difficult to tell the difference between a parse error,
-            # i.e. a syntactic problem in the file to be read and a bug
-            # in our own parsing code. Let's assume our code is bug-free!
+            # It's difficult to tell the difference between a syntactic
+            # problem in the file to be read and a bug in our own parsing
+            # code. Raise both as parse errors.
             raise aeidon.ParseError("Failed to parse file {}"
                                     .format(repr(file.path)))
 

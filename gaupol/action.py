@@ -24,12 +24,14 @@ import sys
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("Action",
-           "MenuAction",
-           "RadioAction",
-           "RecentAction",
-           "ToggleAction",
-           "TopMenuAction")
+__all__ = (
+    "Action",
+    "MenuAction",
+    "RadioAction",
+    "RecentAction",
+    "ToggleAction",
+    "TopMenuAction",
+)
 
 
 class Action(Gtk.Action):

@@ -26,12 +26,14 @@ Website URLs.
 :var WIKI_URL: Wiki documentation
 """
 
-__all__ = ("BUG_REPORT_URL",
-           "EXTENSIONS_URL",
-           "HOMEPAGE_URL",
-           "PREVIEW_HELP_URL",
-           "REGEX_HELP_URL",
-           "WIKI_URL")
+__all__ = (
+    "BUG_REPORT_URL",
+    "EXTENSIONS_URL",
+    "HOMEPAGE_URL",
+    "PREVIEW_HELP_URL",
+    "REGEX_HELP_URL",
+    "WIKI_URL",
+)
 
 BUG_REPORT_URL = "http://bugzilla.gnome.org/enter_bug.cgi?product=gaupol"
 EXTENSIONS_URL = "http://wiki.gnome.org/Apps/Gaupol/Extensions"

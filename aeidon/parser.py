@@ -148,7 +148,7 @@ class Parser(aeidon.Finder):
         # shift) inside tags and remove strings (negative shift) after tags.
         pos_with_tags = pos
         for tag_pos, tag in self._tags:
-            if (shift > 0) and closing:
+            if shift > 0 and closing:
                 if tag_pos < pos_with_tags:
                     pos_with_tags += len(tag)
             elif tag_pos <= pos_with_tags:

@@ -57,21 +57,23 @@ class SearchDialog(gaupol.BuilderDialog):
     :ivar _was_next: ``True`` if the last search was "next", else ``False``
     """
 
-    _widgets = ("all_radio",
-                "current_radio",
-                "ignore_case_check",
-                "main_check",
-                "next_button",
-                "overlay",
-                "pattern_combo",
-                "previous_button",
-                "regex_check",
-                "replace_all_button",
-                "replace_button",
-                "replacement_combo",
-                "search_vbox",
-                "text_view",
-                "tran_check")
+    _widgets = (
+        "all_radio",
+        "current_radio",
+        "ignore_case_check",
+        "main_check",
+        "next_button",
+        "overlay",
+        "pattern_combo",
+        "previous_button",
+        "regex_check",
+        "replace_all_button",
+        "replace_button",
+        "replacement_combo",
+        "search_vbox",
+        "text_view",
+        "tran_check",
+    )
 
     def __init__(self, parent, application):
         """Initialize a :class:`SearchDialog` instance."""

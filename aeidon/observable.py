@@ -45,11 +45,13 @@ class Observable:
     .. _GObject: http://developer.gnome.org/gobject/
     """
 
-    __slots__ = ("_blocked_signals",
-                 "_blocked_state",
-                 "_notify_frozen",
-                 "_notify_queue",
-                 "_signal_handlers",)
+    __slots__ = (
+        "_blocked_signals",
+        "_blocked_state",
+        "_notify_frozen",
+        "_notify_queue",
+        "_signal_handlers",
+    )
 
     signals = ()
 

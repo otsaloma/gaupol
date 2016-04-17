@@ -218,13 +218,15 @@ class LocalePage(BuilderPage):
 
     _ui_file_basename = NotImplementedError
 
-    _widgets = ("country_combo",
-                "country_label",
-                "language_combo",
-                "language_label",
-                "script_combo",
-                "script_label",
-                "tree_view")
+    _widgets = (
+        "country_combo",
+        "country_label",
+        "language_combo",
+        "language_label",
+        "script_combo",
+        "script_label",
+        "tree_view",
+    )
 
     def __init__(self, assistant):
         """Initialize a :class:`LocalePage` instance."""
@@ -675,14 +677,16 @@ class LineBreakOptionsPage(BuilderPage):
 
     """Page for editing line-break options."""
 
-    _widgets = ("max_length_spin",
-                "max_lines_spin",
-                "max_skip_length_spin",
-                "max_skip_lines_spin",
-                "skip_length_check",
-                "skip_lines_check",
-                "skip_unit_combo",
-                "unit_combo")
+    _widgets = (
+        "max_length_spin",
+        "max_lines_spin",
+        "max_skip_length_spin",
+        "max_skip_lines_spin",
+        "skip_length_check",
+        "skip_lines_check",
+        "skip_unit_combo",
+        "unit_combo",
+    )
 
     def __init__(self, assistant):
         """Initialize a :class:`LineBreakOptionsPage` instance."""
@@ -827,11 +831,13 @@ class ConfirmationPage(BuilderPage):
 
     """Page to confirm changes made after performing all tasks."""
 
-    _widgets = ("mark_all_button",
-                "preview_button",
-                "remove_check",
-                "tree_view",
-                "unmark_all_button")
+    _widgets = (
+        "mark_all_button",
+        "preview_button",
+        "remove_check",
+        "tree_view",
+        "unmark_all_button",
+    )
 
     def __init__(self, assistant):
         """Initialize a :class:`ConfirmationPage` instance."""

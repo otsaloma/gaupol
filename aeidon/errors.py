@@ -17,11 +17,13 @@
 
 """All :mod:`aeidon` error classes."""
 
-__all__ = ("Error",
-           "AffirmationError",
-           "FormatError",
-           "ParseError",
-           "ProcessError",)
+__all__ = (
+    "Error",
+    "AffirmationError",
+    "FormatError",
+    "ParseError",
+    "ProcessError",
+)
 
 
 class Error(Exception):

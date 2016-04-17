@@ -75,7 +75,7 @@ class PreviewAgent(aeidon.Delegate):
 
     def _on_notify_main_file(self, *args):
         """Try to find the video file path if unset."""
-        if not self.video_path:
+        if self.video_path is None:
             self.find_video()
 
     @aeidon.deco.export
@@ -99,8 +99,7 @@ class PreviewAgent(aeidon.Delegate):
         Raise :exc:`aeidon.ProcessError` if unable to start process.
         """
         sub_path = self._get_subtitle_path(doc, encoding, temp=temp)
-        output_path = aeidon.temp.create(".output")
-        fout = open(output_path, "w")
+        fout = open(aeidon.temp.create(".output"), "w")
         seconds = max(0, self.calc.to_seconds(position) - offset)
         command = string.Template(command).safe_substitute(
             MILLISECONDS=("{:.0f}".format(seconds*1000)),

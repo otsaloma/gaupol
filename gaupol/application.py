@@ -96,13 +96,15 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
      * ``text-assistant-request-pages``: application, assistant
     """
 
-    signals = ("page-added",
-               "page-changed",
-               "page-closed",
-               "page-switched",
-               "pages-reordered",
-               "quit",
-               "text-assistant-request-pages")
+    signals = (
+        "page-added",
+        "page-changed",
+        "page-closed",
+        "page-switched",
+        "pages-reordered",
+        "quit",
+        "text-assistant-request-pages",
+    )
 
     def __init__(self):
         """Initialize an :class:`Application` instance."""

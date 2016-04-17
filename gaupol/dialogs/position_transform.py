@@ -31,20 +31,22 @@ class PositionTransformDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for transforming positions."""
 
-    _widgets = ("correction_hbox_1",
-                "correction_hbox_2",
-                "correction_label_1",
-                "correction_label_2",
-                "current_radio",
-                "input_entry_1",
-                "input_entry_2",
-                "preview_button_1",
-                "preview_button_2",
-                "selected_radio",
-                "subtitle_spin_1",
-                "subtitle_spin_2",
-                "text_label_1",
-                "text_label_2")
+    _widgets = (
+        "correction_hbox_1",
+        "correction_hbox_2",
+        "correction_label_1",
+        "correction_label_2",
+        "current_radio",
+        "input_entry_1",
+        "input_entry_2",
+        "preview_button_1",
+        "preview_button_2",
+        "selected_radio",
+        "subtitle_spin_1",
+        "subtitle_spin_2",
+        "text_label_1",
+        "text_label_2",
+    )
 
     def __init__(self, parent, application):
         """Initialize a :class:`PositionTransformDialog` instance."""

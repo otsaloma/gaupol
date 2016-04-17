@@ -64,9 +64,11 @@ global_options = (
     ("with-iso-codes", None, "install iso-codes XML files"),
     ("without-iso-codes", None, "don't install iso-codes XML files"))
 
-negative_opt = {"without-aeidon": "with-aeidon",
-                "without-gaupol": "with-gaupol",
-                "without-iso-codes": "with-iso-codes"}
+negative_opt = {
+    "without-aeidon": "with-aeidon",
+    "without-gaupol": "with-gaupol",
+    "without-iso-codes": "with-iso-codes",
+}
 
 distribution.global_options.extend(global_options)
 distribution.negative_opt.update(negative_opt)

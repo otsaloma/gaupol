@@ -25,7 +25,6 @@ class TestSearchAgent(aeidon.TestCase):
 
     ######### 0000000000111111111122222222223333333333444444444
     ######### 0123456789012345678901234567890123456789012345678
-
     texts = ("God has promised you that\nyou will go to Heaven?",
              "So you are certain of\nbeing saved?",
              "Be careful,\nit's a dangerous answer.")

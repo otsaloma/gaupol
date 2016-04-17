@@ -95,19 +95,21 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
      * ``translation-texts-changed``: project, indices
     """
 
-    signals = ("action-done",
-               "action-redone",
-               "action-undone",
-               "main-file-opened",
-               "main-file-saved",
-               "main-texts-changed",
-               "positions-changed",
-               "subtitles-inserted",
-               "subtitles-removed",
-               "subtitles-changed",
-               "translation-file-opened",
-               "translation-file-saved",
-               "translation-texts-changed")
+    signals = (
+        "action-done",
+        "action-redone",
+        "action-undone",
+        "main-file-opened",
+        "main-file-saved",
+        "main-texts-changed",
+        "positions-changed",
+        "subtitles-inserted",
+        "subtitles-removed",
+        "subtitles-changed",
+        "translation-file-opened",
+        "translation-file-saved",
+        "translation-texts-changed",
+    )
 
     def __init__(self, framerate=None):
         """Initialize a :class:`Project` instance."""

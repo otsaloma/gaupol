@@ -24,12 +24,14 @@
 # argument types, all in a way which is compatible with the old ambiguous way
 # of using int, float and str directly.
 
-__all__ = ("as_frame",
-           "as_seconds",
-           "as_time",
-           "is_frame",
-           "is_seconds",
-           "is_time")
+__all__ = (
+    "as_frame",
+    "as_seconds",
+    "as_time",
+    "is_frame",
+    "is_seconds",
+    "is_time",
+)
 
 def as_frame(pos):
     """Return `pos` as type frame."""

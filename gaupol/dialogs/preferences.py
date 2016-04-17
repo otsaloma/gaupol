@@ -31,14 +31,16 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Editor preferences page."""
 
-    _widgets = ("editor_default_font_check",
-                "editor_font_button",
-                "editor_font_hbox",
-                "editor_length_cell_check",
-                "editor_length_combo",
-                "editor_length_edit_check",
-                "editor_length_hbox",
-                "editor_spell_check_check")
+    _widgets = (
+        "editor_default_font_check",
+        "editor_font_button",
+        "editor_font_hbox",
+        "editor_length_cell_check",
+        "editor_length_combo",
+        "editor_length_edit_check",
+        "editor_length_hbox",
+        "editor_spell_check_check",
+    )
 
     def __init__(self, master, application):
         """Initialize an :class:`EditorPage` instance."""
@@ -125,12 +127,14 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Extension activation and preferences page."""
 
-    _widgets = ("extensions_about_button",
-                "extensions_help_button",
-                "extensions_link_button",
-                "extensions_preferences_button",
-                "extensions_toolbar",
-                "extensions_tree_view")
+    _widgets = (
+        "extensions_about_button",
+        "extensions_help_button",
+        "extensions_link_button",
+        "extensions_preferences_button",
+        "extensions_toolbar",
+        "extensions_tree_view",
+    )
 
     def __init__(self, master, application):
         """Initialize an :class:`ExtensionPage` instance."""
@@ -272,14 +276,16 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """File preferences page."""
 
-    _widgets = ("file_add_button",
-                "file_auto_check",
-                "file_down_button",
-                "file_tree_view",
-                "file_locale_check",
-                "file_remove_button",
-                "file_toolbar",
-                "file_up_button")
+    _widgets = (
+        "file_add_button",
+        "file_auto_check",
+        "file_down_button",
+        "file_tree_view",
+        "file_locale_check",
+        "file_remove_button",
+        "file_toolbar",
+        "file_up_button",
+    )
 
     def __init__(self, master, application):
         """Initialize a :class:`FilePage` instance."""
@@ -409,10 +415,12 @@ class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Preview preferences page."""
 
-    _widgets = ("preview_app_combo",
-                "preview_command_entry",
-                "preview_force_utf_8_check",
-                "preview_offset_spin")
+    _widgets = (
+        "preview_app_combo",
+        "preview_command_entry",
+        "preview_force_utf_8_check",
+        "preview_offset_spin",
+    )
 
     def __init__(self, master, application):
         """Initialize a :class:`PreviewPage` instance."""
@@ -479,12 +487,14 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Video preferences page."""
 
-    _widgets = ("video_subtitle_bg_check",
-                "video_subtitle_color_button",
-                "video_subtitle_font_button",
-                "video_time_bg_check",
-                "video_time_color_button",
-                "video_time_font_button")
+    _widgets = (
+        "video_subtitle_bg_check",
+        "video_subtitle_color_button",
+        "video_subtitle_font_button",
+        "video_time_bg_check",
+        "video_time_color_button",
+        "video_time_font_button",
+    )
 
     def __init__(self, master, application):
         """Initialize a :class:`PreviewPage` instance."""

@@ -45,18 +45,6 @@ class PatternManager:
         self._patterns = {}
         self._read_patterns()
 
-    def _assert_identifiers(self, script, language, country):
-        """Assert that codes are valid and parents are defined."""
-        if script is not None:
-            assert aeidon.scripts.is_valid(script)
-        if language is not None:
-            assert aeidon.scripts.is_valid(script)
-            assert aeidon.languages.is_valid(language)
-        if country is not None:
-            assert aeidon.scripts.is_valid(script)
-            assert aeidon.languages.is_valid(language)
-            assert aeidon.countries.is_valid(country)
-
     def _filter_patterns(self, patterns):
         """
         Return `patterns` with name-clashes resolved.
@@ -86,7 +74,7 @@ class PatternManager:
         """
         Return a sequence of all codes to be used by arguments.
 
-        ``Zyyy``, which is always included,  is the first code and the most
+        ``Zyyy``, which is always included, is the first code and the most
         specific one last.
         """
         codes = ["Zyyy"]

@@ -22,7 +22,9 @@ from .integer   import IntegerCellRenderer
 from .multiline import MultilineCellRenderer
 from .time      import TimeCellRenderer
 
-__all__ = ("FloatCellRenderer",
-           "IntegerCellRenderer",
-           "MultilineCellRenderer",
-           "TimeCellRenderer")
+__all__ = (
+    "FloatCellRenderer",
+    "IntegerCellRenderer",
+    "MultilineCellRenderer",
+    "TimeCellRenderer",
+)

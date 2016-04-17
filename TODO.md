@@ -22,6 +22,8 @@ XXX:
 * Add seek length to preferences dialog? (or something else)
 * Apply new GNOME goals and migrate away from deprecated widgets
     - <http://wiki.gnome.org/HowDoI/>
+* Resolve or move open bugs
+* Profile opening a subtitle file
 
 Gaupol 2.0
 ==========

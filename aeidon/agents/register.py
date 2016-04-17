@@ -195,7 +195,7 @@ class RegisterAgent(aeidon.Delegate):
     def undo(self, count=1):
         """Undo `count` amount of actions from the undoable stack."""
         group = aeidon.RevertableActionGroup
-        if (count > 1) or isinstance(self.undoables[0], group):
+        if count > 1 or isinstance(self.undoables[0], group):
             return self._revert_multiple(count, aeidon.registers.UNDO)
         self._do_description = self.undoables[0].description
         self.undoables.pop(0).revert()
