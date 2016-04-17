@@ -14,13 +14,12 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image>http://home.gna.org/gaupol/screenshots/appdata.png</image>
+      <image>http://otsaloma.io/gaupol/screenshot-appdata.png</image>
       <_caption>Main window</_caption>
     </screenshot>
   </screenshots>
-  <url type="homepage">http://home.gna.org/gaupol/</url>
-  <update_contact>gaupol-list@gna.org</update_contact>
+  <url type="homepage">http://otsaloma.io/gaupol/</url>
+  <url type="bugtracker">https://github.com/otsaloma/gaupol/issues</url>
+  <update_contact>otsaloma@iki.fi</update_contact>
   <developer_name>Osmo Salomaa</developer_name>
-  <url type="bugtracker">https://bugzilla.gnome.org/browse.cgi?product=gaupol</url>
-  <url type="help">https://wiki.gnome.org/Apps/Gaupol</url>
 </component>

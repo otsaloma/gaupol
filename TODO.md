@@ -6,6 +6,7 @@ Gaupol 1.0
       and set the default preview offset to one second
 * [x] Only force theme variant if `dark_theme` in config file is
       `true`, thus respecting any global settings [#753315][]
+* [x] Update AppData file
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
 
