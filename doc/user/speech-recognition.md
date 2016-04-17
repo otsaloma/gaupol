@@ -37,22 +37,22 @@ There are three parameters to control the voice recognition, i.e. the
 detection of the difference between speech and silence and splitting
 detected speech into subtitle length pieces.
 
- * **Noise level** defines the noise volume level. Anything below that
-   level will be considered noise and above it speech. Lowering this
-   level will cause more possible speech detected and raising this level
-   will cause less possible speech detected.
+* **Noise level** defines the noise volume level. Anything below that
+  level will be considered noise and above it speech. Lowering this
+  level will cause more possible speech detected and raising this level
+  will cause less possible speech detected.
 
- * **Silence length** is the minimum amount (in milliseconds) of silence
-   required to terminate the current subtitle and start a new one.
-   Decreasing this length will result in a large amount of short
-   subtitles and increasing this length will result in a small amount of
-   long subtitles.
+* **Silence length** is the minimum amount (in milliseconds) of silence
+  required to terminate the current subtitle and start a new one.
+  Decreasing this length will result in a large amount of short
+  subtitles and increasing this length will result in a small amount of
+  long subtitles.
 
- * **Advance length** is the amount (in milliseconds) by which detected
-   subtitles are made to appear earlier (if the previous subtitle allows
-   it). You might want subtitles to appear slightly before speech, since
-   it takes a moment for the viewer to react to the appearance of a
-   subtitle.
+* **Advance length** is the amount (in milliseconds) by which detected
+  subtitles are made to appear earlier (if the previous subtitle allows
+  it). You might want subtitles to appear slightly before speech, since
+  it takes a moment for the viewer to react to the appearance of a
+  subtitle.
 
 ### Speech Recognition
 
