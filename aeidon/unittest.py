@@ -37,7 +37,6 @@ class TestCase:
                              .format(repr(function),
                                      repr(exception)))
 
-    @aeidon.deco.memoize(100)
     def get_sample_text(self, format, name=None):
         """
         Return sample text for subtitle file `format`.

@@ -32,8 +32,8 @@ import pickle
 # Specifically, let's use the 'decorator_apply' function as instructed [2] to
 # avoid rewriting our standard-form decorators.
 #
-#  [1] http://pypi.python.org/pypi/decorator/
-#  [2] http://micheles.googlecode.com/hg/decorator/documentation.html
+# [1] http://pypi.python.org/pypi/decorator/
+# [2] http://pythonhosted.org/decorator/
 
 
 def decorator_apply(dec, fun):
@@ -95,8 +95,10 @@ def memoize(limit=100):
         def inner_wrapper(*args, **kwargs):
             params = (args, kwargs)
             if _is_method(function, args):
-                # XXX: Is id + hash together unique enough?
-                params = (id(args[0]), hash(args[0]), args[1:], kwargs)
+                # XXX: Is id + hash + repr together unique enough?
+                params = (id(args[0]), hash(args[0]), repr(args[0]),
+                          args[1:], kwargs)
+
             key = pickle.dumps(params)
             with aeidon.util.silent(KeyError):
                 return cache[key]

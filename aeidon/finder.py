@@ -175,9 +175,7 @@ class Finder:
 
         The default value for `flags` is ``DOTALL`` and ``MULTILINE``.
         ``IGNORECASE`` is automatically added to flags if :attr:`ignore_case`
-        is ``True``.
-
-        Raise :exc:`re.error` if bad pattern.
+        is ``True``. Raise :exc:`re.error` if bad pattern.
         """
         if self.ignore_case:
             flags = flags | re.IGNORECASE

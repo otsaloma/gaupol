@@ -264,7 +264,6 @@ def get_ranges(lst):
             ranges.append([item])
     return ranges
 
-@aeidon.deco.memoize(100)
 def get_template_header(format):
     """
     Read and return the template header for `format`.
@@ -438,7 +437,6 @@ def start_process(command, **kwargs):
     except OSError as error:
         raise aeidon.ProcessError(str(error.args))
 
-@aeidon.deco.memoize(100)
 def title_to_lower_case(title_name):
     """Convert title case name to lower case with underscores."""
     lower_name = ""
