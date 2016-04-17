@@ -25,6 +25,7 @@ XXX:
     - <http://wiki.gnome.org/HowDoI/>
 * Resolve or move open bugs
 * Profile opening a subtitle file
+* Remove GNOME wiki pages
 
 Gaupol 2.0
 ==========
