@@ -68,12 +68,11 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def insert_subtitles(self, indices, subtitles=None, register=-1):
-        """
-        Insert `subtitles` at `indices`.
+        """Insert `subtitles` at `indices`.
 
-        If `subtitles` is ``None``, insert blank subtitles with sensible
-        equal duration positions within given window or with 3 second durations
-        if window not limited.
+        If `subtitles` is ``None``, insert blank subtitles at `indices` with
+        equal durations within time window before the next subtitle or with
+        3 second durations if inserting subtitles at the end.
         """
         if subtitles is None:
             return self._insert_blank_subtitles(indices, register=register)

@@ -54,8 +54,8 @@ class FormatAgent(aeidon.Delegate):
         """
         Change the case of texts with `method`.
 
-        `method` should be "title", "capitalize", "upper" or "lower", which
-        correspond to the built-in Python string methods.
+        `method` should be a string: either "title", "capitalize", "upper" or
+        "lower", which correspond to the built-in Python string methods.
         """
         new_texts = []
         parser = self.get_parser(doc)

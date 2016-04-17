@@ -22,11 +22,6 @@ import re
 
 from aeidon.i18n import _
 
-try:
-    import enchant.checker
-except Exception:
-    pass
-
 
 class TextAgent(aeidon.Delegate):
 
@@ -134,11 +129,7 @@ class TextAgent(aeidon.Delegate):
         self.set_action_description(register, _("Capitalizing texts"))
 
     def _capitalize_first(self, parser, pos):
-        """
-        Capitalize the first alphanumeric character from `pos`.
-
-        Return ``True`` if something was capitalized, ``False`` if not.
-        """
+        """Capitalize the first alphanumeric character from `pos`."""
         match = self._re_capitalizable.search(parser.text[pos:])
         if match is not None:
             i = pos + match.end() - 1
@@ -149,11 +140,7 @@ class TextAgent(aeidon.Delegate):
         return match is not None
 
     def _capitalize_text(self, parser, pattern, cap_next):
-        """
-        Capitalize all matches of `pattern` in `parser`'s text.
-
-        Return ``True`` if the text of the next subtitle should be capitalized.
-        """
+        """Capitalize all matches of `pattern` in `parser`'s text."""
         try:
             a, z = parser.next()
         except StopIteration:
@@ -202,8 +189,10 @@ class TextAgent(aeidon.Delegate):
         """
         Return an enchant spell-checker for `language`.
 
+        Raise :exc:`ImportError` if enchant not found.
         Raise :exc:`enchant.error` if dictionary instantiation fails.
         """
+        import enchant.checker
         dictionary = enchant.Dict(language)
         # Sometimes enchant will initialize a dictionary that will not
         # actually work when trying to use it, hence check something.
