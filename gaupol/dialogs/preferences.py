@@ -186,7 +186,8 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-        self._link_button.set_uri(gaupol.EXTENSIONS_URL)
+        # XXX: Remove!
+        # self._link_button.set_uri(gaupol.EXTENSIONS_URL)
         store = self._tree_view.get_model()
         extensions = []
         for module in self.manager.get_modules():
@@ -605,5 +606,6 @@ class PreferencesDialog(gaupol.BuilderDialog):
     def _on_response(self, dialog, response):
         """Do not send response if browsing help."""
         if response == Gtk.ResponseType.HELP:
-            gaupol.util.show_uri(gaupol.PREVIEW_HELP_URL)
+            # XXX: Remove?
+            # gaupol.util.show_uri(gaupol.PREVIEW_HELP_URL)
             self.stop_emission("response")

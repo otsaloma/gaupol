@@ -18,26 +18,20 @@
 """
 Website URLs.
 
-:var BUG_REPORT_URL: Web page where to submit new bug reports
-:var EXTENSIONS_URL: Web page listing third party extensions
-:var HOMEPAGE_URL: Web page of the Gaupol project
-:var PREVIEW_HELP_URL: Documentation on the preview function
+:var BUG_REPORT_URL: Web page where to submit bug reports
+:var DOCUMENTATION_URL: Documentation for users
+:var HOMEPAGE_URL: Gaupol web pages
 :var REGEX_HELP_URL: Documentation on regular expressions
-:var WIKI_URL: Wiki documentation
 """
 
 __all__ = (
     "BUG_REPORT_URL",
-    "EXTENSIONS_URL",
+    "DOCUMENTATION_URL",
     "HOMEPAGE_URL",
-    "PREVIEW_HELP_URL",
     "REGEX_HELP_URL",
-    "WIKI_URL",
 )
 
-BUG_REPORT_URL = "http://bugzilla.gnome.org/enter_bug.cgi?product=gaupol"
-EXTENSIONS_URL = "http://wiki.gnome.org/Apps/Gaupol/Extensions"
-HOMEPAGE_URL = "http://home.gna.org/gaupol/"
-PREVIEW_HELP_URL = "http://wiki.gnome.org/Apps/Gaupol/Preview"
-REGEX_HELP_URL = "http://docs.python.org/3/library/re.html#regular-expression-syntax"
-WIKI_URL = "http://wiki.gnome.org/Apps/Gaupol"
+BUG_REPORT_URL = "https://github.com/otsaloma/gaupol/issues"
+DOCUMENTATION_URL = "https://github.com/otsaloma/gaupol/tree/master/doc/user"
+HOMEPAGE_URL = "http://otsaloma.io/gaupol/"
+REGEX_HELP_URL = "https://docs.python.org/3/library/re.html#regular-expression-syntax"

@@ -23,12 +23,10 @@ GTK+ user interface for the Gaupol subtitle editor.
    :attr:`COMBO_SEPARATOR` can be inserted into a combo box's model,
    and :func:`gaupol.util.separate_combo` will recognize it.
 
-:var BUG_REPORT_URL: Web page where to submit new bug reports
-:var EXTENSIONS_URL: Web page listing third party extensions
-:var HOMEPAGE_URL: Web page of the Gaupol project
-:var PREVIEW_HELP_URL: Documentation on the preview function
+:var BUG_REPORT_URL: Web page where to submit bug reports
+:var DOCUMENTATION_URL: Documentation for users
+:var HOMEPAGE_URL: Gaupol web pages
 :var REGEX_HELP_URL: Documentation on regular expressions
-:var WIKI_URL: Wiki documentation
 
 :var fields: Enumerations for subtitle field types
 :var length_units: Enumerations for length unit types
