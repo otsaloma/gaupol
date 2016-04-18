@@ -3,4 +3,4 @@ unmodified from [iso-codes][1]. The files are released under the GNU
 Lesser General Public License (LGPL). See the headers of the files in
 question for full copyright and license information.
 
- [1]: http://pkg-isocodes.alioth.debian.org/
+[1]: http://pkg-isocodes.alioth.debian.org/

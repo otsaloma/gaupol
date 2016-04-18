@@ -72,11 +72,7 @@ except Exception:
 
 from gaupol.urls import *
 from gaupol import util
-from gaupol.enums.fields import *
-from gaupol.enums.orientation import *
-from gaupol.enums.targets import *
-from gaupol.enums.toolbar_styles import *
-from gaupol.enums.units import *
+from gaupol.enums import *
 from gaupol.enumuim import *
 from gaupol.errors import *
 from gaupol.attrdict import *
