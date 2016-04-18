@@ -39,9 +39,8 @@ def bind():
         locale.textdomain("gaupol")
     gettext.bindtextdomain("gaupol", d)
     gettext.textdomain("gaupol")
-    _translation = gettext.translation("gaupol",
-                                       localedir=d,
-                                       fallback=True)
+    _translation = gettext.translation(
+        "gaupol", localedir=d, fallback=True)
 
 def _(message):
     """Return the localized translation of `message`."""

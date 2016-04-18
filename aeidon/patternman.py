@@ -71,12 +71,7 @@ class PatternManager:
         return filtered_patterns
 
     def _get_codes(self, script=None, language=None, country=None):
-        """
-        Return a sequence of all codes to be used by arguments.
-
-        ``Zyyy``, which is always included, is the first code and the most
-        specific one last.
-        """
+        """Return a sequence of all codes to be used by arguments."""
         codes = ["Zyyy"]
         if not None in (script,):
             codes.append(script)

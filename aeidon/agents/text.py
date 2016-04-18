@@ -34,7 +34,6 @@ class TextAgent(aeidon.Delegate):
     def break_lines(self, indices, doc, patterns, length_func, max_length,
                     max_lines, skip=False, max_skip_length=32768,
                     max_skip_lines=32768, register=-1):
-
         """
         Break lines to fit defined maximum line length and count.
 
@@ -186,12 +185,7 @@ class TextAgent(aeidon.Delegate):
         self.set_action_description(register, _("Correcting common errors"))
 
     def _get_enchant_checker(self, language):
-        """
-        Return an enchant spell-checker for `language`.
-
-        Raise :exc:`ImportError` if enchant not found.
-        Raise :exc:`enchant.error` if dictionary instantiation fails.
-        """
+        """Return an enchant spell-checker for `language`."""
         import enchant.checker
         dictionary = enchant.Dict(language)
         # Sometimes enchant will initialize a dictionary that will not
@@ -206,18 +200,20 @@ class TextAgent(aeidon.Delegate):
 
     def _get_penalties(self, patterns):
         """Return a list of penalty definitions."""
-        return [dict(pattern=x.get_field("Pattern"),
-                     flags=x.get_flags(),
-                     group=int(x.get_field("Group")),
-                     value=float(x.get_field("Penalty")))
-                for x in patterns]
+        return [{
+            "pattern": x.get_field("Pattern"),
+            "flags": x.get_flags(),
+            "group": int(x.get_field("Group")),
+            "value": float(x.get_field("Penalty")),
+        } for x in patterns]
 
     def _get_substitutions(self, patterns):
-        """Return a sequence of tuples of pattern, flags, replacement."""
-        return [(x.get_field("Pattern"),
-                 x.get_flags(),
-                 x.get_field("Replacement"))
-                for x in patterns]
+        """Return a list of substitution definitions."""
+        return [(
+            x.get_field("Pattern"),
+            x.get_flags(),
+            x.get_field("Replacement"),
+        ) for x in patterns]
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -291,6 +287,7 @@ class TextAgent(aeidon.Delegate):
         """
         Join misspelled words based on spell-checker suggestions.
 
+        `indices` can be ``None`` to process all subtitles.
         Raise :exc:`enchant.Error` if dictionary instatiation fails.
         """
         new_indices = []
@@ -337,8 +334,7 @@ class TextAgent(aeidon.Delegate):
         """
         Split misspelled words based on spell-checker suggestions.
 
-        Using this is usually not a good idea unless you have an insane
-        dictionary that contains all possible compound words in `language`.
+        `indices` can be ``None`` to process all subtitles.
         Raise :exc:`enchant.Error` if dictionary instatiation fails.
         """
         new_indices = []

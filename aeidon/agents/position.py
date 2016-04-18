@@ -37,8 +37,8 @@ class PositionAgent(aeidon.Delegate):
         `indices` can be ``None`` to process all subtitles. `speed` is reading
         speed in characters per second. `lengthen` is ``True`` to increase
         durations to match reading speed. `shorten` is ``True`` to decrease
-        durations to match reading speed. `maximum` is the greatest allowed
-        duration in seconds. `minimum` is the smallest allowed duration in
+        durations to match reading speed. `maximum` is the longest allowed
+        duration in seconds. `minimum` is the shortest allowed duration in
         seconds. `gap` is seconds to be left between consecutive subtitles.
         Using a gap of at least zero is always a good idea if overlapping
         is not desired. Return changed indices.
@@ -51,20 +51,19 @@ class PositionAgent(aeidon.Delegate):
             if speed is not None:
                 length = self.get_text_length(index, aeidon.documents.MAIN)
                 optimal_duration = length / speed
-                if lengthen and end - start < optimal_duration:
-                    end = start + optimal_duration
-                if shorten and end - start > optimal_duration:
-                    end = start + optimal_duration
-            if minimum and end - start < minimum:
-                end = start + minimum
-            if maximum and end - start > maximum:
-                end = start + maximum
+                dol = lengthen and end - start < optimal_duration
+                dos = shorten  and end - start > optimal_duration
+                end = start + optimal_duration if dol or dos else end
+            domin = minimum and end - start < minimum
+            domax = maximum and end - start > maximum
+            end = start + minimum if domin else end
+            end = start + maximum if domax else end
             end_max = (self.subtitles[index+1].start_seconds
                        if index < len(self.subtitles) - 1
                        else 360000)
 
-            if gap is not None and end_max - end < gap:
-                end = max(start, end_max - gap)
+            dogap = gap is not None and end_max - end < gap
+            end = max(start, end_max - gap) if dogap else end
             if end != self.subtitles[index].end_seconds:
                 new_indices.append(index)
                 subtitle = self.subtitles[index].copy()
@@ -82,11 +81,12 @@ class PositionAgent(aeidon.Delegate):
         """
         Set the value of framerate and convert subtitles to it.
 
-        `indices` can be ``None`` to process all subtitles.
+        `indices` can be ``None`` to process all subtitles. `framerate_in` and
+        `framerate_out` should be constants from :attr:`aeidon.framerates`.
         """
-        self.set_framerate(framerate_in, register=None)
         new_subtitles = []
         indices = indices or self.get_all_indices()
+        self.set_framerate(framerate_in, register=None)
         for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.convert_framerate(framerate_out)
@@ -96,12 +96,7 @@ class PositionAgent(aeidon.Delegate):
         self.group_actions(register, 2, _("Converting framerate"))
 
     def _get_frame_transform(self, p1, p2):
-        """
-        Return a formula for linear transformation of positions.
-
-        Return coefficient and constant, with which all subtitles
-        should be scaled and shifted by to apply correction.
-        """
+        """Return a formula for linear correction of positions."""
         # Think of this as a linear transformation where input positions
         # are located on the x-axis and output positions on the y-axis.
         x1 = self.subtitles[p1[0]].start_frame
@@ -113,12 +108,7 @@ class PositionAgent(aeidon.Delegate):
         return coefficient, constant
 
     def _get_seconds_transform(self, p1, p2):
-        """
-        Return a formula for linear transformation of positions.
-
-        Return coefficient and constant, with which all subtitles should be
-        scaled and shifted by to apply correction.
-        """
+        """Return a formula for linear correction of positions."""
         # Think of this as a linear transformation where input positions
         # are located on the x-axis and output positions on the y-axis.
         x1 = self.subtitles[p1[0]].start_seconds
@@ -130,15 +120,17 @@ class PositionAgent(aeidon.Delegate):
         return coefficient, constant
 
     def _get_time_transform(self, p1, p2):
-        """
-        Return a formula for linear correction of positions.
-
-        Return coefficient and constant, with which all subtitles should be
-        scaled and shifted by to apply correction.
-        """
+        """Return a formula for linear correction of positions."""
         p1 = [p1[0], self.calc.time_to_seconds(p1[1])]
         p2 = [p2[0], self.calc.time_to_seconds(p2[1])]
         return self._get_seconds_transform(p1, p2)
+
+    def _get_transform(self, p1, p2):
+        """Return a formula for linear correction of positions."""
+        if aeidon.is_time(p1[1]): return self._get_time_transform(p1, p2)
+        if aeidon.is_frame(p1[1]): return self._get_frame_transform(p1, p2)
+        if aeidon.is_seconds(p1[1]): return self._get_seconds_transform(p1, p2)
+        raise ValueError("Bad position argument: {}".format(repr(p1)))
 
     @aeidon.deco.export
     @aeidon.deco.revertable
@@ -163,6 +155,8 @@ class PositionAgent(aeidon.Delegate):
         Make subtitles appear earlier or later.
 
         `indices` can be ``None`` to process all subtitles.
+        `value` can be any valid position type, negative to make subtitles
+        appear ealier, positive to make subtitles appear later.
         """
         new_subtitles = []
         indices = indices or self.get_all_indices()
@@ -179,18 +173,12 @@ class PositionAgent(aeidon.Delegate):
         """
         Change positions by a linear two-point correction.
 
-        `indices` can be ``None`` to process all subtitles. `p1` and `p2`
-        should be tuples of index, position.
+        `indices` can be ``None`` to process all subtitles.
+        `p1` and `p2` should be tuples of index, position.
         """
-        if aeidon.is_time(p1[1]):
-            method = self._get_time_transform
-        if aeidon.is_frame(p1[1]):
-            method = self._get_frame_transform
-        if aeidon.is_seconds(p1[1]):
-            method = self._get_seconds_transform
-        coefficient, constant = method(p1, p2)
         new_subtitles = []
         indices = indices or self.get_all_indices()
+        coefficient, constant = self._get_transform(p1, p2)
         for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.scale_positions(coefficient)
