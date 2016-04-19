@@ -1,5 +1,8 @@
+/* -*- coding: utf-8-unix -*- */
 
 #gaupol-floating-label {
+  /* TODO: Use named colors from GTK+. */
+  /* https://github.com/GNOME/gtk/blob/master/gtk/theme/Adwaita/_colors-public.scss */
   background-color: #212526;
   border-top-right-radius: 5px;
   color: #ffffff;
