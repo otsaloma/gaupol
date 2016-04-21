@@ -1,11 +1,7 @@
-*.py[co]
 *~
 .cache
-.coverage
-.hidden
 __pycache__
-build/
-ChangeLog
+build
 data/extensions/*/*.extension
 data/gaupol.appdata.xml
 data/gaupol.desktop
@@ -13,10 +9,8 @@ data/patterns/*.capitalization
 data/patterns/*.common-error
 data/patterns/*.hearing-impaired
 data/patterns/*.line-break
-dist/
+dist
 doc/sphinx/_build
 doc/sphinx/api
 doc/sphinx/index.rst
-locale/
-MANIFEST
-TAGS
+locale
