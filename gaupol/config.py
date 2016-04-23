@@ -130,9 +130,6 @@ config_defaults = {
         "use_skip_max_length": True,
         "use_skip_max_lines": True,
         },
-    "output_window": {
-        "size": [600, 371],
-        },
     "position_shift": {
         "target": gaupol.targets.CURRENT,
         },

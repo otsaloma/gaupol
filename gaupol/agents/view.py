@@ -26,12 +26,6 @@ class ViewAgent(aeidon.Delegate):
     """Changing the visual appearance of application and its documents."""
 
     @aeidon.deco.export
-    def _on_output_window_notify_visible(self, output_window, visible):
-        """Sync menu item to output window's visibility."""
-        action = self.get_action("toggle_output_window")
-        action.set_active(output_window.get_visible())
-
-    @aeidon.deco.export
     def _on_show_framerate_23_976_changed(self, item, active_item):
         """Change the framerate with which nonnative units are calculated."""
         page = self.get_current_page()
@@ -100,15 +94,6 @@ class ViewAgent(aeidon.Delegate):
     def _on_toggle_number_column_toggled(self, *args):
         """Show or hide the number column."""
         self._toggle_column(gaupol.fields.NUMBER)
-
-    @aeidon.deco.export
-    def _on_toggle_output_window_toggled(self, *args):
-        """Show or hide the output window."""
-        visible = self.output_window.get_visible()
-        action = self.get_action("toggle_output_window")
-        active = action.get_active()
-        if visible is active: return
-        self.output_window.set_visible(not visible)
 
     @aeidon.deco.export
     def _on_toggle_player_toggled(self, *args):

@@ -103,7 +103,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         editor.gaupol_path = path
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)
-        editor.connect("populate-popup", self._on_editor_populate_popup)
+        editor.connect("populate-popup",  self._on_editor_populate_popup)
         editor.show()
         return editor
 
@@ -157,7 +157,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
 
     @aeidon.deco.memoize(1000)
     def _text_to_markup(self, text, show_lengths, length_unit):
-        """Return `text` renderer as markup for display."""
+        """Return `text` rendered as markup for display."""
         # We don't actually use the length_unit argument,
         # but do need it accounted for in memoized values.
         if not text: return ""

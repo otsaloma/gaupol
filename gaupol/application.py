@@ -70,7 +70,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar extension_manager: Instance of :class:`gaupol.ExtensionManager` used
     :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
     :ivar notebook_separator: A :class:`Gtk.Separator` above the notebook
-    :ivar output_window: A :class:`Gtk.Window` for external process output
     :ivar pages: List of :class:`gaupol.Page` currently open
     :ivar paned: A :class:`Gtk.Paned` to hold player and subtitles
     :ivar pattern: Last used search pattern or blank if not used
@@ -115,7 +114,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.extension_manager = gaupol.ExtensionManager(self)
         self.notebook = None
         self.notebook_separator = None
-        self.output_window = None
         self.pages = []
         self.pattern = ""
         self.player = None
@@ -199,7 +197,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_paned(vbox)
         self._init_player_box(self.paned)
         self._init_notebook(self.paned)
-        self._init_output_window()
         self.window.add(vbox)
         vbox.show_all()
         self._init_visibilities()
@@ -249,12 +246,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         overlay.add_overlay(self.statuslabel)
         gaupol.util.pack_start_expand(vbox, overlay)
         paned.add2(vbox)
-
-    def _init_output_window(self):
-        """Initialize the output window."""
-        self.output_window = gaupol.OutputWindow(self.window)
-        aeidon.util.connect(self, "output_window", "notify::visible")
-        self.output_window.set_visible(False)
 
     def _init_paned(self, vbox):
         """Intialize the paned layout."""

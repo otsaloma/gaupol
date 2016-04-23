@@ -85,7 +85,6 @@ from gaupol import ruler
 from gaupol.entries import *
 from gaupol.renderers import *
 from gaupol.floatlabel import *
-from gaupol.output import *
 from gaupol.view import *
 from gaupol.page import *
 from gaupol.player import *

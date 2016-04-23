@@ -25,6 +25,8 @@ from aeidon.i18n   import _
 from gi.repository import GLib
 from gi.repository import Gtk
 
+# TODO: Remove output window, output to stdout/stderr.
+
 
 class PreviewAgent(aeidon.Delegate):
 

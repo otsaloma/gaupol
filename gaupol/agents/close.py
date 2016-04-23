@@ -200,9 +200,8 @@ class CloseAgent(aeidon.Delegate):
             raise SystemExit(1)
 
     def _save_window_geometry(self):
-        """Save the geometry of application and output windows."""
+        """Save the geometry of the application window."""
         if not gaupol.conf.application_window.maximized:
             conf = gaupol.conf.application_window
             conf.size = list(self.window.get_size())
             conf.position = list(self.window.get_position())
-        self.output_window.save_geometry()

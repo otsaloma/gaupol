@@ -7,6 +7,8 @@ Gaupol 1.0
 * [x] Only force theme variant if `dark_theme` in config file is
       `true`, thus respecting any global settings [#753315][]
 * [x] Update AppData file
+* [x] Remove external video player output window (if you want to see
+      that output, start Gaupol from a terminal)
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
 
@@ -25,8 +27,20 @@ XXX:
     - <http://wiki.gnome.org/HowDoI/>
 * Resolve or move open bugs
 * Profile opening a subtitle file
-* Remove GNOME wiki pages
 * Test mpv
+* Use CSS instead of `modify_font`
+* Fix remaining deprecations (see `python3 -Wd bin/nfoview`)
+* Use margin-start instead of deprecated margin-left
+
+Infrastructure:
+
+* Move web pages otsaloma.io
+* Move release to GitHub
+* Use Travis CI
+* Use Transifex
+* Use Gitter
+* Remove GNOME wiki pages
+* Close mailing lists
 
 Gaupol 2.0
 ==========
