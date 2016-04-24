@@ -38,10 +38,9 @@ class TestConfigurationStore(gaupol.TestCase):
         self.conf.read_from_file()
 
     def test_register_extension(self):
-        self.conf.register_extension("test",
-                                     dict(x=1, mode=aeidon.modes.TIME),
-                                     dict(mode=aeidon.modes))
-
+        defaults = dict(x=1, mode=aeidon.modes.TIME)
+        enums = dict(mode=aeidon.modes)
+        self.conf.register_extension("test", defaults, enums)
         assert self.conf.extensions.test.x == 1
         assert self.conf.extensions.test.mode == aeidon.modes.TIME
 

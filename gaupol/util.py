@@ -37,7 +37,7 @@ def char_to_px(nchar, font=None):
     if font is not None:
         set_widget_font(label, font)
     width = label.get_layout().get_pixel_size()[0]
-    return int(round(nchar * width/13))
+    return int(round(nchar * width/len(label.props.label)))
 
 def delay_add(delay, function, *args, **kwargs):
     """
@@ -100,7 +100,7 @@ def get_icon_image(name, fallback, size):
     theme = Gtk.IconTheme.get_default()
     if theme.has_icon(name):
         return Gtk.Image(icon_name=name, icon_size=size)
-    return Gtk.Image(icon_name=name, icon_size=size)
+    return Gtk.Image(icon_name=fallback, icon_size=size)
 
 def get_preview_command():
     """Return command to use for lauching video player."""
@@ -137,13 +137,17 @@ def get_tree_view_size(tree_view):
 @aeidon.deco.once
 def get_zebra_color(tree_view):
     """Return background color to use for tree view zebra-stripes."""
+    # XXX: Zebra stripes would be faster and cleaner done with CSS
+    # selectors :nth-child(odd) and :nth-child(even), but they don't
+    # seem to work, might even be deliberately broken.
+    # https://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
     style = tree_view.get_style_context()
     fg = style.get_color(Gtk.StateFlags.NORMAL)
     bg = style.get_background_color(Gtk.StateFlags.NORMAL)
     color = Gdk.RGBA()
-    color.red =   0.9 * bg.red   + 0.1 * fg.red
-    color.green = 0.9 * bg.green + 0.1 * fg.green
-    color.blue =  0.9 * bg.blue  + 0.1 * fg.blue
+    color.red =   0.92 * bg.red   + 0.1 * fg.red
+    color.green = 0.92 * bg.green + 0.1 * fg.green
+    color.blue =  0.92 * bg.blue  + 0.1 * fg.blue
     return(color)
 
 @aeidon.deco.once
@@ -381,7 +385,7 @@ def show_exception(exctype, value, tb):
     """
     Show exception traceback in :class:`gaupol.DebugDialog`.
 
-    This function can be set as a :func:`sys.excepthook`.
+    `show_exception` can be set as a :func:`sys.excepthook`.
     """
     traceback.print_exception(exctype, value, tb)
     if not isinstance(value, Exception): return
@@ -405,7 +409,7 @@ def show_uri(uri):
         # Gtk.show_uri: Operation not supported
         if uri.startswith(("http://", "https://")):
             return webbrowser.open(uri)
-        raise # whatever error encountered.
+        raise # Exception
 
 def text_field_to_document(field):
     """Return :attr:`aeidon.documents` item corresponding to `field`."""
@@ -425,9 +429,9 @@ def tree_path_to_row(path):
     """
     if path is None: return None
     if isinstance(path, Gtk.TreePath):
-        return(path.get_indices()[0])
+        return path.get_indices()[0]
     if isinstance(path, str):
-        return(int(path))
+        return int(path)
     raise TypeError("Bad type {} for path {}"
                     .format(repr(type(path)), repr(path)))
 

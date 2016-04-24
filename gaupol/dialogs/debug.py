@@ -183,6 +183,7 @@ class DebugDialog(gaupol.BuilderDialog):
 
     def _open_link(self, tag):
         """Open linked file in editor."""
+        # TODO: No more debug.text_editor, no links?
         path = aeidon.util.shell_quote(tag.gaupol_path)
         command = string.Template(gaupol.conf.debug.text_editor)
         command = command.safe_substitute(LINENO=tag.gaupol_lineno, FILE=path)

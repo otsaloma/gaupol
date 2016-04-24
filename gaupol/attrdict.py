@@ -34,12 +34,7 @@ class AttributeDictionary(aeidon.Observable):
     """
 
     def __init__(self, root):
-        """
-        Initialize an :class:`AttributeDictionary` instance.
-
-        All subdictionaries of `root` are initialized as instances of
-        :class:`AttributeDictionary` as well.
-        """
+        """Initialize an :class:`AttributeDictionary` instance."""
         aeidon.Observable.__init__(self)
         self._root = root
         self.update(root)
@@ -58,31 +53,22 @@ class AttributeDictionary(aeidon.Observable):
     def extend(self, root):
         """Add new values from another root dictionary."""
         for name, value in root.items():
-            if hasattr(self, name):
-                if isinstance(value, dict):
-                    getattr(self, name).extend(value)
-            else:
+            if not hasattr(self, name):
                 self.add_attribute(name, value)
-
+        for name, value in root.items():
+            if isinstance(value, dict):
+                getattr(self, name).extend(value)
 
     def _on_notify(self, obj, value, name):
         """Synchronize changed attribute value with root dictionary."""
         self._root[name] = value
 
-    def remove_attribute(self, name):
-        """Remove instance attribute and corresponding root dictionary key."""
-        self.disconnect("notify::{}".format(name), self._on_notify)
-        delattr(self, name)
-        if name in self._root:
-            del self._root[name]
-
     def update(self, root):
         """Update values from another root dictionary."""
+        self.extend(root)
         for name, value in root.items():
-            if hasattr(self, name):
-                if isinstance(value, dict):
-                    getattr(self, name).update(value)
-                else:
-                    setattr(self, name, value)
-            else:
-                self.add_attribute(name, value)
+            if not isinstance(value, dict):
+                setattr(self, name, value)
+        for name, value in root.items():
+            if isinstance(value, dict):
+                getattr(self, name).update(value)
