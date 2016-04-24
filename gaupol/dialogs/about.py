@@ -17,7 +17,6 @@
 
 """Dialog for displaying credits and information."""
 
-import aeidon
 import gaupol
 
 from aeidon.i18n   import _
@@ -39,11 +38,11 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_artists(("Osmo Salomaa <otsaloma@iki.fi>",))
         self.set_authors(("Osmo Salomaa <otsaloma@iki.fi>",))
         self.set_comments(_("Subtitle editor"))
-        self.set_copyright("Copyright © 2005-2014 Osmo Salomaa")
+        self.set_copyright("Copyright © 2005-2016 Osmo Salomaa")
         self.set_license_type(Gtk.License.GPL_3_0)
         self.set_logo_icon_name("gaupol")
         self.set_program_name("Gaupol")
-        # Translators: This is a special message that shouldn't be translated
+        # TRANSLATORS: This is a special message that shouldn't be translated
         # literally. It is used in the about dialog to give credits to the
         # translators. Thus, you should translate it to your name and email
         # address. You can also include other translators who have contributed
