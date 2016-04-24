@@ -1,6 +1,7 @@
 Gaupol 1.0
 ==========
 
+* [ ] Use header bars for dialogs
 * [x] Add mpv for preview with precise seek (`--hr-seek=yes`)
 * [x] Make mpv the default preview video player on non-Windows systems
       and set the default preview offset to one second
@@ -31,6 +32,7 @@ XXX:
 * Use CSS instead of `modify_font`
 * Fix remaining deprecations (see `python3 -Wd bin/nfoview`)
 * Use margin-start instead of deprecated margin-left
+* Does gaupol.util.char_to_px return correct value?
 
 Infrastructure:
 

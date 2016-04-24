@@ -17,10 +17,9 @@
 
 """Dialog for editing text of a single subtitle."""
 
-import aeidon
 import gaupol
 
-
+from aeidon.i18n   import _
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -31,7 +30,7 @@ class TextEditDialog(Gtk.Dialog):
 
     def __init__(self, parent, text=""):
         """Initialize a :class:`TextEditDialog` instance."""
-        GObject.GObject.__init__(self)
+        GObject.GObject.__init__(self, use_header_bar=True)
         self._text_view = Gtk.TextView()
         self._init_dialog(parent)
         self._init_text_view()
@@ -49,7 +48,6 @@ class TextEditDialog(Gtk.Dialog):
         self.add_button(_("_OK"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
-        self.set_border_width(18)
         self.set_modal(True)
         self.set_title(_("Edit Text"))
 
@@ -63,10 +61,9 @@ class TextEditDialog(Gtk.Dialog):
         font = gaupol.util.get_font()
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.IN)
+        scroller.set_shadow_type(Gtk.ShadowType.NONE)
         scroller.add(self._text_view)
         box = self.get_content_area()
-        box.set_spacing(18)
         gaupol.util.pack_start_expand(box, scroller)
         gaupol.util.scale_to_size(self._text_view,
                                   nchar=60,

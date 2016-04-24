@@ -21,7 +21,7 @@ from gi.repository import Gtk
 
 __all__ = ("ErrorDialog", "InfoDialog", "QuestionDialog", "WarningDialog")
 
-_FLAGS = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT
+FLAGS = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT
 
 
 class ErrorDialog(Gtk.MessageDialog):
@@ -32,7 +32,7 @@ class ErrorDialog(Gtk.MessageDialog):
         """Initialize an :class:`ErrorDialog` instance."""
         Gtk.MessageDialog.__init__(self,
                                    parent=parent,
-                                   flags=_FLAGS,
+                                   flags=FLAGS,
                                    type=Gtk.MessageType.ERROR,
                                    buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)
@@ -49,7 +49,7 @@ class InfoDialog(Gtk.MessageDialog):
         """Initialize an :class:`InfoDialog` instance."""
         Gtk.MessageDialog.__init__(self,
                                    parent=parent,
-                                   flags=_FLAGS,
+                                   flags=FLAGS,
                                    type=Gtk.MessageType.INFO,
                                    buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)
@@ -66,7 +66,7 @@ class QuestionDialog(Gtk.MessageDialog):
         """Initialize a :class:`QuestionDialog` instance."""
         Gtk.MessageDialog.__init__(self,
                                    parent=parent,
-                                   flags=_FLAGS,
+                                   flags=FLAGS,
                                    type=Gtk.MessageType.QUESTION,
                                    buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)
@@ -83,7 +83,7 @@ class WarningDialog(Gtk.MessageDialog):
         """Initialize a :class:`WarningDialog` instance."""
         Gtk.MessageDialog.__init__(self,
                                    parent=parent,
-                                   flags=_FLAGS,
+                                   flags=FLAGS,
                                    type=Gtk.MessageType.WARNING,
                                    buttons=Gtk.ButtonsType.NONE,
                                    message_format=title)

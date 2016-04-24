@@ -66,6 +66,6 @@ class BuilderDialog:
         """Assign all names in `widgets` as attributes of `self`."""
         for name in widgets:
             widget = self._builder.get_object(name)
-            if prefix is not None and name.startswith(prefix):
+            if prefix and name.startswith(prefix):
                 name = name.replace(prefix, "")
             setattr(self, "_{}".format(name), widget)
