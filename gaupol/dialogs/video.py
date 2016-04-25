@@ -17,7 +17,6 @@
 
 """Dialog for selecting a video file."""
 
-import aeidon
 import sys
 
 from aeidon.i18n   import _

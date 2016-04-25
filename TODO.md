@@ -10,6 +10,7 @@ Gaupol 1.0
 * [x] Update AppData file
 * [x] Remove external video player output window (if you want to see
       that output, start Gaupol from a terminal)
+* [x] Bump GTK+ dependency to 3.12 or greater
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
 
