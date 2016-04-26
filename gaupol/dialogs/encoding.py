@@ -21,29 +21,27 @@ import aeidon
 import gaupol
 
 from aeidon.i18n   import _
+from gi.repository import GObject
 from gi.repository import Gtk
 
 __all__ = ("EncodingDialog", "MenuEncodingDialog")
 
 
-class EncodingDialog(gaupol.BuilderDialog):
+class EncodingDialog(Gtk.Dialog):
 
     """Dialog for selecting a character encoding."""
 
-    _widgets = ("tree_view",)
-
     def __init__(self, parent):
         """Initialize an :class:`EncodingDialog` instance."""
-        gaupol.BuilderDialog.__init__(self, "encoding-dialog.ui")
+        GObject.GObject.__init__(self, use_header_bar=True)
+        self._tree_view = Gtk.TreeView()
+        self._init_dialog(parent)
         self._init_tree_view()
         gaupol.util.scale_to_content(self._tree_view,
                                      min_nchar=50,
                                      max_nchar=100,
                                      min_nlines=10,
-                                     max_nlines=20)
-
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.OK)
+                                     max_nlines=18)
 
     def get_encoding(self):
         """Return the selected encoding or ``None``."""
@@ -52,8 +50,24 @@ class EncodingDialog(gaupol.BuilderDialog):
         if itr is None: return
         return store.get_value(itr, 0)
 
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_OK"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_modal(True)
+        self.set_title(_("Character Encodings"))
+
     def _init_tree_view(self):
-        """Initialize the tree view."""
+        """Initialize the character encoding tree view."""
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
+        scroller.set_shadow_type(Gtk.ShadowType.NONE)
+        scroller.add(self._tree_view)
+        box = self.get_content_area()
+        gaupol.util.pack_start_expand(box, scroller)
+        box.show_all()
         selection = self._tree_view.get_selection()
         selection.set_mode(Gtk.SelectionMode.SINGLE)
         store = Gtk.ListStore(str, str, str)
@@ -75,6 +89,7 @@ class EncodingDialog(gaupol.BuilderDialog):
         column.set_clickable(True)
         column.set_sort_column_id(2)
         self._tree_view.append_column(column)
+        aeidon.util.connect(self, "_tree_view", "row-activated")
 
     def _on_tree_view_row_activated(self, *args):
         """Send response to select activated character encoding."""
@@ -91,7 +106,14 @@ class MenuEncodingDialog(EncodingDialog):
         return [store[i][0] for i in range(len(store)) if store[i][3]]
 
     def _init_tree_view(self):
-        """Initialize the tree view."""
+        """Initialize the character encoding tree view."""
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
+        scroller.set_shadow_type(Gtk.ShadowType.NONE)
+        scroller.add(self._tree_view)
+        box = self.get_content_area()
+        gaupol.util.pack_start_expand(box, scroller)
+        box.show_all()
         selection = self._tree_view.get_selection()
         selection.set_mode(Gtk.SelectionMode.SINGLE)
         store = Gtk.ListStore(str, str, str, bool)
@@ -122,6 +144,7 @@ class MenuEncodingDialog(EncodingDialog):
 
         column.set_sort_column_id(3)
         self._tree_view.append_column(column)
+        aeidon.util.connect(self, "_tree_view", "row-activated")
 
     def _on_tree_view_cell_toggled(self, renderer, path):
         """Toggle the value of the "Show in Menu" column."""
