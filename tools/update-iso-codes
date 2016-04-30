@@ -4,6 +4,6 @@
 DIRNAME=$(dirname "$0")
 cd "$DIRNAME/.." || exit 1
 
-cp -uv /usr/share/xml/iso-codes/iso_639.xml   data/iso-codes
-cp -uv /usr/share/xml/iso-codes/iso_3166.xml  data/iso-codes
-cp -uv /usr/share/xml/iso-codes/iso_15924.xml data/iso-codes
+cp -fv /usr/share/xml/iso-codes/iso_639.xml   data/iso-codes
+cp -fv /usr/share/xml/iso-codes/iso_3166.xml  data/iso-codes
+cp -fv /usr/share/xml/iso-codes/iso_15924.xml data/iso-codes

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
+
+WARNING: THIS FILE IS DEPRECATED.
+
+PLEASE USE THE JSON DATA INSTEAD.
+
+Usually, this data can be found in /usr/share/iso-codes/json.
+
 This file gives a list of all script names in the ISO 15924
 standard, and is used to provide translations via gettext
 
@@ -38,6 +45,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 
 <iso_15924_entries>
 	<iso_15924_entry
+		alpha_4_code="Adlm"
+		numeric_code="166"
+		name="Adlam" />
+	<iso_15924_entry
 		alpha_4_code="Afak"
 		numeric_code="439"
 		name="Afaka" />
@@ -48,11 +59,15 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 	<iso_15924_entry
 		alpha_4_code="Ahom"
 		numeric_code="338"
-		name="Ahom" />
+		name="Ahom, Tai Ahom" />
 	<iso_15924_entry
 		alpha_4_code="Arab"
 		numeric_code="160"
 		name="Arabic" />
+	<iso_15924_entry
+		alpha_4_code="Aran"
+		numeric_code="161"
+		name="Arabic (Nastaliq variant)" />
 	<iso_15924_entry
 		alpha_4_code="Armi"
 		numeric_code="124"
@@ -85,6 +100,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Beng"
 		numeric_code="325"
 		name="Bengali" />
+	<iso_15924_entry
+		alpha_4_code="Bhks"
+		numeric_code="334"
+		name="Bhaiksuki" />
 	<iso_15924_entry
 		alpha_4_code="Blis"
 		numeric_code="550"
@@ -160,7 +179,7 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 	<iso_15924_entry
 		alpha_4_code="Dupl"
 		numeric_code="755"
-	   name="Duployan shorthand, Duployan stenography" />
+		name="Duployan shorthand, Duployan stenography" />
 	<iso_15924_entry
 		alpha_4_code="Egyd"
 		numeric_code="070"
@@ -182,13 +201,13 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="430"
 		name="Ethiopic (Geʻez)" />
 	<iso_15924_entry
-		alpha_4_code="Geor"
-		numeric_code="240"
-		name="Georgian (Mkhedruli)" />
-	<iso_15924_entry
 		alpha_4_code="Geok"
 		numeric_code="241"
 		name="Khutsuri (Asomtavruli and Nuskhuri)" />
+	<iso_15924_entry
+		alpha_4_code="Geor"
+		numeric_code="240"
+		name="Georgian (Mkhedruli)" />
 	<iso_15924_entry
 		alpha_4_code="Glag"
 		numeric_code="225"
@@ -198,13 +217,13 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="206"
 		name="Gothic" />
 	<iso_15924_entry
-		alpha_4_code="Grek"
-		numeric_code="200"
-		name="Greek" />
-	<iso_15924_entry
 		alpha_4_code="Gran"
 		numeric_code="343"
 		name="Grantha" />
+	<iso_15924_entry
+		alpha_4_code="Grek"
+		numeric_code="200"
+		name="Greek" />
 	<iso_15924_entry
 		alpha_4_code="Gujr"
 		numeric_code="320"
@@ -213,6 +232,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Guru"
 		numeric_code="310"
 		name="Gurmukhi" />
+	<iso_15924_entry
+		alpha_4_code="Hanb"
+		numeric_code="503"
+		name="Han with Bopomofo (alias for Han + Bopomofo)" />
 	<iso_15924_entry
 		alpha_4_code="Hang"
 		numeric_code="286"
@@ -270,6 +293,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="210"
 		name="Old Italic (Etruscan, Oscan, etc.)" />
 	<iso_15924_entry
+		alpha_4_code="Jamo"
+		numeric_code="284"
+		name="Jamo (alias for Jamo subset of Hangul)" />
+	<iso_15924_entry
 		alpha_4_code="Java"
 		numeric_code="361"
 		name="Javanese" />
@@ -298,13 +325,21 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="355"
 		name="Khmer" />
 	<iso_15924_entry
-		alpha_4_code="Knda"
-		numeric_code="345"
-		name="Kannada" />
-	<iso_15924_entry
 		alpha_4_code="Khoj"
 		numeric_code="322"
 		name="Khojki" />
+	<iso_15924_entry
+		alpha_4_code="Kitl"
+		numeric_code="505"
+		name="Khitan large script" />
+	<iso_15924_entry
+		alpha_4_code="Kits"
+		numeric_code="288"
+		name="Khitan small script" />
+	<iso_15924_entry
+		alpha_4_code="Knda"
+		numeric_code="345"
+		name="Kannada" />
 	<iso_15924_entry
 		alpha_4_code="Kore"
 		numeric_code="287"
@@ -337,6 +372,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Latn"
 		numeric_code="215"
 		name="Latin" />
+	<iso_15924_entry
+		alpha_4_code="Leke"
+		numeric_code="364"
+		name="Leke" />
 	<iso_15924_entry
 		alpha_4_code="Lepc"
 		numeric_code="335"
@@ -382,6 +421,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="139"
 		name="Manichaean" />
 	<iso_15924_entry
+		alpha_4_code="Marc"
+		numeric_code="332"
+		name="Marchen" />
+	<iso_15924_entry
 		alpha_4_code="Maya"
 		numeric_code="090"
 		name="Mayan hieroglyphs" />
@@ -403,16 +446,16 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		name="Malayalam" />
 	<iso_15924_entry
 		alpha_4_code="Modi"
-		numeric_code="323"
+		numeric_code="324"
 		name="Modi, Moḍī" />
-	<iso_15924_entry
-		alpha_4_code="Moon"
-		numeric_code="218"
-		name="Moon (Moon code, Moon script, Moon type)" />
 	<iso_15924_entry
 		alpha_4_code="Mong"
 		numeric_code="145"
 		name="Mongolian" />
+	<iso_15924_entry
+		alpha_4_code="Moon"
+		numeric_code="218"
+		name="Moon (Moon code, Moon script, Moon type)" />
 	<iso_15924_entry
 		alpha_4_code="Mroo"
 		numeric_code="199"
@@ -437,6 +480,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Nbat"
 		numeric_code="159"
 		name="Nabataean" />
+	<iso_15924_entry
+		alpha_4_code="Newa"
+		numeric_code="333"
+		name="Newa, Newar, Newari, Nepāla lipi" />
 	<iso_15924_entry
 		alpha_4_code="Nkgb"
 		numeric_code="420"
@@ -465,6 +512,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Orya"
 		numeric_code="327"
 		name="Oriya" />
+	<iso_15924_entry
+		alpha_4_code="Osge"
+		numeric_code="219"
+		name="Osage" />
 	<iso_15924_entry
 		alpha_4_code="Osma"
 		numeric_code="260"
@@ -501,6 +552,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Phnx"
 		numeric_code="115"
 		name="Phoenician" />
+	<iso_15924_entry
+		alpha_4_code="Piqd"
+		numeric_code="293"
+		name="Klingon (KLI pIqaD)" />
 	<iso_15924_entry
 		alpha_4_code="Plrd"
 		numeric_code="282"
@@ -559,7 +614,7 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		name="Sharada, Śāradā" />
 	<iso_15924_entry
 		alpha_4_code="Sidd"
-		numeric_code="303"
+		numeric_code="302"
 		name="Siddham, Siddhaṃ, Siddhamātṛkā" />
 	<iso_15924_entry
 		alpha_4_code="Sind"
@@ -697,6 +752,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Zmth"
 		numeric_code="995"
 		name="Mathematical notation" />
+	<iso_15924_entry
+		alpha_4_code="Zsye"
+		numeric_code="993"
+		name="Symbols (Emoji variant)" />
 	<iso_15924_entry
 		alpha_4_code="Zsym"
 		numeric_code="996"
