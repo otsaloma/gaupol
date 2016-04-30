@@ -34,7 +34,7 @@ from aeidon.i18n import _
 # IANA. Descriptions are mostly copied from gedit.
 
 _encodings = (
-    # Translators: Most of the character encoding descriptions are copied from
+    # TRANSLATORS: Most of the character encoding descriptions are copied from
     # gedit, which is translated to very many languages. Check the gedit .po
     # files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
     ("ascii"          , "US-ASCII"        , _("English")),
@@ -135,14 +135,7 @@ _re_illegal = re.compile(r"[^a-z0-9_]")
 
 
 def code_to_description(code):
-    """
-    Convert encoding `code` to localized description.
-
-    Raise :exc:`ValueError` if not found.
-
-    >>> aeidon.encodings.code_to_description("utf_8")
-    'Unicode'
-    """
+    """Convert encoding `code` to localized description."""
     for item in _encodings:
         if item[CODE] == code:
             return item[DESC]
@@ -150,15 +143,7 @@ def code_to_description(code):
                      .format(repr(code)))
 
 def code_to_long_name(code):
-    """
-    Convert encoding `code` to localized long name.
-
-    Raise :exc:`ValueError` if not found.
-    Return localized ``DESCRIPTION (DISPLAY NAME)``.
-
-    >>> aeidon.encodings.code_to_long_name("utf_8")
-    'Unicode (UTF-8)'
-    """
+    """Convert encoding `code` to localized long name."""
     for item in _encodings:
         if item[CODE] == code:
             return (_("{description} ({name})")
@@ -169,14 +154,7 @@ def code_to_long_name(code):
                      .format(repr(code)))
 
 def code_to_name(code):
-    """
-    Convert encoding `code` to name.
-
-    Raise :exc:`ValueError` if not found.
-
-    >>> aeidon.encodings.code_to_name("utf_8")
-    'UTF-8'
-    """
+    """Convert encoding `code` to name."""
     for item in _encodings:
         if item[CODE] == code:
             return item[NAME]
@@ -242,22 +220,13 @@ def get_locale_code():
 
 @aeidon.deco.once
 def get_locale_long_name():
-    """
-    Return localized long name for locale encoding.
-
-    Raise :exc:`ValueError` if not found.
-    Return localized ``Current locale (NAME)``.
-    """
+    """Return localized long name for locale encoding."""
     name = code_to_name(get_locale_code())
     return _("Current locale ({})").format(name)
 
 @aeidon.deco.once
 def get_valid():
-    """
-    Return a sequence of valid encodings.
-
-    Return a list of tuples of code, name, description.
-    """
+    """Return a list of code, name, description of valid encodings."""
     valid_encodings = []
     for i, item in enumerate(_encodings):
         if is_valid_code(item[CODE]):
@@ -273,14 +242,7 @@ def is_valid_code(code):
         return False
 
 def name_to_code(name):
-    """
-    Convert encoding `name` to code.
-
-    Raise :exc:`ValueError` if not found.
-
-    >>> aeidon.encodings.name_to_code("UTF-8")
-    'utf_8'
-    """
+    """Convert encoding `name` to code."""
     for item in _encodings:
         if item[NAME] == name:
             return item[CODE]
@@ -288,15 +250,7 @@ def name_to_code(name):
                      .format(repr(name)))
 
 def translate_code(code):
-    """
-    Translate weird encoding `code`.
-
-    Raise :exc:`ValueError` if not found.
-    Return normalized encoding code.
-
-    >>> aeidon.encodings.translate_code("ISO-8859-1")
-    'latin_1'
-    """
+    """Return normalized encoding `code`."""
     code = _re_illegal.sub("_", code.lower())
     code = aeidon.util.get_encoding_alias(code)
     for item in _encodings:

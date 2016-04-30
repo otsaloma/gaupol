@@ -81,16 +81,13 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._doc = None
         self._entry_handler = None
         self._language = gaupol.conf.spell_check.language
-        self._language_name = gaupol.conf.spell_check.language
+        self._language_name = aeidon.locales.code_to_name(self._language)
         self._new_rows = []
         self._new_texts = []
         self._page = None
         self._pager = None
         self._replacements = []
         self._row = None
-        with aeidon.util.silent(LookupError):
-            name = aeidon.locales.code_to_name(self._language)
-            self._language_name = name
         self._init_spell_check()
         self._init_widgets()
         self._init_sensitivities()

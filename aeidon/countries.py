@@ -30,7 +30,8 @@ def _init_countries():
     import xml.etree.ElementTree as ET
     path = "/usr/share/xml/iso-codes/iso_3166.xml"
     if not os.path.isfile(path):
-        # Use local, possibly outdated copy, only as a fallback.
+        # Prefer files part of the iso-codes installation,
+        # use bundled copy as fallback.
         path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_3166.xml")
     for element in ET.parse(path).findall("iso_3166_entry"):
         code = element.get("alpha_2_code", None)
@@ -39,14 +40,12 @@ def _init_countries():
         _countries[code] = name
 
 def code_to_name(code):
-    """
-    Convert ISO 639 `code` to localized country name.
-
-    Raise :exc:`LookupError` if `code` not found.
-    """
+    """Convert ISO 3166 `code` to localized country name."""
     if not _countries:
         _init_countries()
-    return d_("iso_3166", _countries[code])
+    with aeidon.util.silent(LookupError):
+        return d_("iso_3166", _countries[code])
+    return code
 
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 3166 country code."""

@@ -105,7 +105,7 @@ class BookmarksExtension(gaupol.Extension):
         directory = os.path.abspath(os.path.dirname(__file__))
         pixbuf_path = os.path.join(directory, "bookmark.png")
         pixbuf = GdkPixbuf.Pixbuf.new_from_file(pixbuf_path)
-        # Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
+        # TRANSLATORS: 'Bm.' is short for 'Bookmark'. It is used in the header
         # of a tree view column that contains 16 pixels wide icons.
         column = Gtk.TreeViewColumn(_("Bm."), renderer)
         column.set_clickable(True)

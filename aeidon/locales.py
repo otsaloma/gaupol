@@ -30,33 +30,22 @@ from aeidon.i18n import _
 
 
 def code_to_country(code):
-    """
-    Convert locale `code` to localized country name or ``None``.
-
-    Raise :exc:`LookupError` if `code` not found.
-    """
+    """Convert locale `code` to localized country name or ``None``."""
     if len(code) < 5: return None
     return aeidon.countries.code_to_name(code[-2:])
 
 def code_to_language(code):
-    """
-    Convert locale `code` to localized language name.
-
-    Raise :exc:`LookupError` if `code` not found.
-    """
+    """Convert locale `code` to localized language name."""
     if len(code) < 2: return None
     return aeidon.languages.code_to_name(code[:2])
 
 def code_to_name(code):
-    """
-    Convert locale `code` to localized name.
-
-    Raise :exc:`LookupError` if `code` not found.
-    """
-    language = code_to_language(code)
-    country = code_to_country(code)
-    if country is None: return language
-    return _("{language} ({country})").format(**locals())
+    """Convert locale `code` to localized name."""
+    if len(code) < 5:
+        return code_to_language(code)
+    return (_("{language} ({country})")
+            .format(language=code_to_language(code),
+                    country=code_to_country(code)))
 
 @aeidon.deco.once
 def get_system_code():

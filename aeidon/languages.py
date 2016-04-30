@@ -30,7 +30,8 @@ def _init_languages():
     import xml.etree.ElementTree as ET
     path = "/usr/share/xml/iso-codes/iso_639.xml"
     if not os.path.isfile(path):
-        # Use local, possibly outdated copy, only as a fallback.
+        # Prefer files part of the iso-codes installation,
+        # use bundled copy as fallback.
         path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_639.xml")
     for element in ET.parse(path).findall("iso_639_entry"):
         code = element.get("iso_639_1_code", None)
@@ -39,14 +40,12 @@ def _init_languages():
         _languages[code] = name
 
 def code_to_name(code):
-    """
-    Convert ISO 639 `code` to localized language name.
-
-    Raise :exc:`LookupError` if `code` not found.
-    """
+    """Convert ISO 639 `code` to localized language name."""
     if not _languages:
         _init_languages()
-    return d_("iso_639", _languages[code])
+    with aeidon.util.silent(LookupError):
+        return d_("iso_639", _languages[code])
+    return code
 
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 639 language code."""

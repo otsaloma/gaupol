@@ -130,8 +130,5 @@ class LanguageDialog(gaupol.BuilderDialog):
                 enchant.Dict(locale).check("gaupol")
             except enchant.Error:
                 continue
-            try:
-                name = aeidon.locales.code_to_name(locale)
-            except LookupError:
-                name = locale
+            name = aeidon.locales.code_to_name(locale)
             store.append((locale, name))

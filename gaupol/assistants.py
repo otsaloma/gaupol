@@ -103,7 +103,7 @@ class IntroductionPage(BuilderPage):
     def __init__(self, assistant):
         """Initialize a :class:`IntroductionPage` instance."""
         BuilderPage.__init__(self, assistant, "introduction-page.ui")
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Tasks and Target")
         self.page_type = Gtk.AssistantPageType.INTRO
@@ -449,7 +449,7 @@ class CapitalizationPage(LocalePage):
         self.conf = gaupol.conf.capitalization
         self.description = _("Capitalize texts written in lower case")
         self.handle = "capitalization"
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Capitalization Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
@@ -480,7 +480,7 @@ class CommonErrorPage(LocalePage):
                              "or image recognition software")
 
         self.handle = "common-error"
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Common Error Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
@@ -540,7 +540,7 @@ class HearingImpairedPage(LocalePage):
                              "for the hearing impaired")
 
         self.handle = "hearing-impaired"
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Hearing Impaired Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
@@ -560,7 +560,7 @@ class JoinSplitWordsPage(BuilderPage):
                              "detection errors of image recognition software")
 
         self.handle = "join-split-words"
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Joining and Splitting Words")
         self.page_type = Gtk.AssistantPageType.CONTENT
@@ -584,8 +584,7 @@ class JoinSplitWordsPage(BuilderPage):
     def _init_values(self):
         """Initialize default values for widgets."""
         language = gaupol.conf.spell_check.language
-        with aeidon.util.silent(LookupError):
-            language = aeidon.locales.code_to_name(language)
+        language = aeidon.locales.code_to_name(language)
         self._language_button.set_label(language)
         self._join_check.set_active(gaupol.conf.join_split_words.join)
         self._split_check.set_active(gaupol.conf.join_split_words.split)
@@ -601,8 +600,7 @@ class JoinSplitWordsPage(BuilderPage):
         gaupol.util.set_cursor_normal(self.assistant)
         gaupol.util.flash_dialog(dialog)
         language = gaupol.conf.spell_check.language
-        with aeidon.util.silent(LookupError):
-            language = aeidon.locales.code_to_name(language)
+        language = aeidon.locales.code_to_name(language)
         self._language_button.set_label(language)
 
     def _on_split_check_toggled(self, check_button, *args):
@@ -612,8 +610,7 @@ class JoinSplitWordsPage(BuilderPage):
     def _show_error_dialog(self, message):
         """Show an error dialog after failing to load dictionary."""
         name = gaupol.conf.spell_check.language
-        with aeidon.util.silent(LookupError):
-            name = aeidon.locales.code_to_name(name)
+        name = aeidon.locales.code_to_name(name)
         title = _('Failed to load dictionary for language "{}"').format(name)
         dialog = gaupol.ErrorDialog(self.get_parent(), title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
@@ -652,7 +649,7 @@ class LineBreakPage(LocalePage):
         self.conf = gaupol.conf.line_break
         self.description = _("Break text into lines of defined length")
         self.handle = "line-break"
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Line-Break Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
@@ -692,7 +689,7 @@ class LineBreakOptionsPage(BuilderPage):
         """Initialize a :class:`LineBreakOptionsPage` instance."""
         BuilderPage.__init__(self, assistant, "line-break-options-page.ui")
         self.conf = gaupol.conf.line_break
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Line-Break Options")
         self.page_type = Gtk.AssistantPageType.CONTENT
@@ -776,7 +773,7 @@ class ProgressPage(BuilderPage):
         BuilderPage.__init__(self, assistant, "progress-page.ui")
         self._current_task = None
         self._total_tasks = None
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Correcting Texts")
         self.page_type = Gtk.AssistantPageType.PROGRESS
@@ -845,7 +842,7 @@ class ConfirmationPage(BuilderPage):
         self.application = None
         self.conf = gaupol.conf.text_assistant
         self.doc = None
-        # Translators: Keep these page titles short, since they
+        # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
         self.page_title = _("Confirm Changes")
         self.page_type = Gtk.AssistantPageType.CONFIRM

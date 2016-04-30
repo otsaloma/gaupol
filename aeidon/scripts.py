@@ -30,7 +30,8 @@ def _init_scripts():
     import xml.etree.ElementTree as ET
     path = "/usr/share/xml/iso-codes/iso_15924.xml"
     if not os.path.isfile(path):
-        # Use local, possibly outdated copy, only as a fallback.
+        # Prefer files part of the iso-codes installation,
+        # use bundled copy as fallback.
         path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_15924.xml")
     for element in ET.parse(path).findall("iso_15924_entry"):
         code = element.get("alpha_4_code", None)
@@ -39,14 +40,12 @@ def _init_scripts():
         _scripts[code] = name
 
 def code_to_name(code):
-    """
-    Convert ISO 15924 `code` to localized script name.
-
-    Raise :exc:`LookupError` if code not found.
-    """
+    """Convert ISO 15924 `code` to localized script name."""
     if not _scripts:
         _init_scripts()
-    return d_("iso_15924", _scripts[code])
+    with aeidon.util.silent(LookupError):
+        return d_("iso_15924", _scripts[code])
+    return code
 
 def is_valid(code):
     """Return ``True`` if `code` is a valid ISO 15924 script code."""
