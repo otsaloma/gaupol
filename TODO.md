@@ -38,15 +38,10 @@ XXX:
 Infrastructure:
 
 * Move web pages otsaloma.io
+* Close GNOME Bugzilla
 * Move release to GitHub
 * Use Travis CI
 * Use Transifex
 * Use Gitter
 * Remove GNOME wiki pages
 * Close mailing lists
-
-Gaupol 2.0
-==========
-
-* Allow using multiple dictionaries for spell-check
-* Add a GStreamer-based audio waveform display

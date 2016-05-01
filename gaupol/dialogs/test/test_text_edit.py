@@ -30,6 +30,6 @@ class TestTextEditDialog(gaupol.TestCase):
         gaupol.conf.editor.custom_font = "monospace"
         gaupol.conf.editor.length_unit = gaupol.length_units.CHAR
         gaupol.conf.editor.use_custom_font = True
-        text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu etaoin shrdlu"
+        text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu"
         self.dialog = gaupol.TextEditDialog(Gtk.Window(), text)
         self.dialog.show()

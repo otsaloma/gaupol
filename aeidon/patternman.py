@@ -200,17 +200,18 @@ class PatternManager:
         local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
         basename = "{}.{}.conf".format(code, self.pattern_type)
         path = os.path.join(local_dir, basename)
-        text = '<?xml version="1.0" encoding="utf-8"?>\n'
-        text += '<patterns>\n'
+        lines = ['<?xml version="1.0" encoding="utf-8"?>']
+        lines.append('<patterns>')
         written_names = set()
         for pattern in self._patterns[code]:
-            name = pattern.get_name(False)
+            name = pattern.get_name(localize=False)
             if name in written_names: continue
             written_names.add(name)
             name = name.replace("&", "&amp;")
             name = name.replace('"', "&quot;")
             enabled = ("true" if pattern.enabled else "false")
-            text += '  <pattern name="{}" '.format(name)
-            text += 'enabled="{}"/>\n'.format(enabled)
-        text += "</patterns>\n"
-        aeidon.util.write(path, text, encoding)
+            lines.append('  <pattern name="{}" enabled="{}"/>'
+                         .format(name, enabled))
+
+        lines.append('</patterns>')
+        aeidon.util.writelines(path, lines, encoding)
