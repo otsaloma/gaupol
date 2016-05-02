@@ -49,7 +49,6 @@ class TextEditDialog(Gtk.Dialog):
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
         self.set_modal(True)
-        self.set_title(_("Edit Text"))
 
     def _init_text_view(self):
         """Initialize the text view."""

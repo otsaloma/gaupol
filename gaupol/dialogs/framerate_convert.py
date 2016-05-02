@@ -20,6 +20,7 @@
 import aeidon
 import gaupol
 
+from aeidon.i18n   import _
 from gi.repository import Gtk
 
 __all__ = ("FramerateConvertDialog",)
@@ -35,11 +36,10 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
         """Initialize a :class:`FramerateConvertDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "framerate-convert-dialog.ui")
         self.application = application
+        self._init_dialog(parent)
         self._init_input_combo()
         self._init_output_combo()
         self._init_values()
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _convert_framerates(self):
         """Convert framerates in target projects."""
@@ -57,6 +57,14 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
         if self._all_radio.get_active():
             return gaupol.targets.ALL
         raise ValueError("Invalid target radio state")
+
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("Co_nvert"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_modal(True)
 
     def _init_input_combo(self):
         """Initialize the input framerate combo box."""
@@ -91,15 +99,15 @@ class FramerateConvertDialog(gaupol.BuilderDialog):
         """Set response sensitivity."""
         index_in = self._input_combo.get_active()
         index_out = self._output_combo.get_active()
-        sensitive = (index_in != index_out)
-        self._dialog.set_response_sensitive(Gtk.ResponseType.OK, sensitive)
+        self._dialog.set_response_sensitive(Gtk.ResponseType.OK,
+                                            index_in != index_out)
 
     def _on_output_combo_changed(self, *args):
         """Set response sensitivity."""
         index_in = self._input_combo.get_active()
         index_out = self._output_combo.get_active()
-        sensitive = (index_in != index_out)
-        self._dialog.set_response_sensitive(Gtk.ResponseType.OK, sensitive)
+        self._dialog.set_response_sensitive(Gtk.ResponseType.OK,
+                                            index_in != index_out)
 
     def _on_response(self, dialog, response):
         """Save target and convert framerates."""
