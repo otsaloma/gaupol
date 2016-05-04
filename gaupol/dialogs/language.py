@@ -23,11 +23,6 @@ import gaupol
 from aeidon.i18n   import _
 from gi.repository import Gtk
 
-try:
-    import enchant
-except Exception:
-    pass
-
 __all__ = ("LanguageDialog",)
 
 
@@ -49,6 +44,7 @@ class LanguageDialog(gaupol.BuilderDialog):
     def __init__(self, parent, show_target=True):
         """Initialize a :class:`LanguageDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "language-dialog.ui")
+        self._init_dialog(parent)
         self._init_visibilities(show_target)
         self._init_tree_view()
         self._init_values()
@@ -58,8 +54,11 @@ class LanguageDialog(gaupol.BuilderDialog):
                                      min_nlines=6,
                                      max_nlines=20)
 
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.set_default_response(Gtk.ResponseType.CLOSE)
+        self.set_transient_for(parent)
+        self.set_modal(True)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
@@ -95,7 +94,6 @@ class LanguageDialog(gaupol.BuilderDialog):
         if not show_target:
             self._language_title_label.hide()
             self._target_vbox.hide()
-            self._language_scroller.set_margin_left(0)
             self._dialog.set_title(_("Set Language"))
 
     def _on_current_radio_toggled(self, radio_button):
@@ -121,14 +119,12 @@ class LanguageDialog(gaupol.BuilderDialog):
 
     def _populate_store(self, store):
         """Add all available languages to `store`."""
-        try:
-            locales = set(enchant.list_languages())
-        except enchant.Error:
-            return
+        locales = []
+        with aeidon.util.silent(Exception):
+            import enchant
+            locales = enchant.list_languages()
         for locale in locales:
-            try:
+            with aeidon.util.silent(enchant.Error):
                 enchant.Dict(locale).check("gaupol")
-            except enchant.Error:
-                continue
-            name = aeidon.locales.code_to_name(locale)
-            store.append((locale, name))
+                name = aeidon.locales.code_to_name(locale)
+                store.append((locale, name))
