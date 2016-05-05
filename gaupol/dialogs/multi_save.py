@@ -21,7 +21,7 @@ import aeidon
 import gaupol
 import os
 
-
+from aeidon.i18n   import _
 from gi.repository import Gtk
 
 __all__ = ("MultiSaveDialog",)
@@ -45,6 +45,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         gaupol.BuilderDialog.__init__(self, "multi-save-dialog.ui")
         self.application = application
         self._modes = modes
+        self._init_dialog(parent)
         self._init_format_combo()
         self._init_encoding_combo()
         self._init_newline_combo()
@@ -52,8 +53,6 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         width = gaupol.util.char_to_px(60)
         self._filechooser_button.set_size_request(width, -1)
         self._init_values()
-        self.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def get_directory(self):
         """Return the selected directory."""
@@ -78,6 +77,14 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         """Return a list of pages to consider."""
         return [x for x in self.application.pages
                 if x.project.main_file is not None]
+
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Save"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_modal(True)
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
