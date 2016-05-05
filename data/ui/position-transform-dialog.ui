@@ -24,6 +24,7 @@
     <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
+    <property name="use_header_bar">1</property>
     <signal name="response" handler="_on_response" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="vbox1">
@@ -32,45 +33,12 @@
         <property name="orientation">vertical</property>
         <property name="spacing">18</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="hbuttonbox1">
-            <property name="visible">True</property>
+          <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button1">
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button2">
-                <property name="label" translatable="yes">_Transform</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
+            <property name="fill">False</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -90,8 +58,8 @@
                   <object class="GtkLabel" id="label29">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">First Point</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -119,10 +87,10 @@
                           <object class="GtkLabel" id="label31">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">_Subtitle:</property>
                             <property name="use_underline">True</property>
                             <property name="mnemonic_widget">subtitle_spin_1</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -133,9 +101,9 @@
                           <object class="GtkLabel" id="correction_label_1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">C_orrection:</property>
                             <property name="use_underline">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -146,10 +114,10 @@
                           <object class="GtkLabel" id="label34">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="ypad">4</property>
                             <property name="label" translatable="yes">Text:</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -161,7 +129,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="hexpand">True</property>
-                            <property name="text" translatable="no">1</property>
+                            <property name="text">1</property>
                             <property name="adjustment">adjustment1</property>
                             <property name="climb_rate">1</property>
                             <property name="numeric">True</property>
@@ -217,10 +185,10 @@
                           <object class="GtkLabel" id="text_label_1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="ellipsize">end</property>
                             <property name="single_line_mode">True</property>
                             <property name="max_width_chars">3</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -284,8 +252,8 @@
                   <object class="GtkLabel" id="label36">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Second Point</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -313,10 +281,10 @@
                           <object class="GtkLabel" id="label38">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">Su_btitle:</property>
                             <property name="use_underline">True</property>
                             <property name="mnemonic_widget">subtitle_spin_2</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -327,9 +295,9 @@
                           <object class="GtkLabel" id="correction_label_2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">Co_rrection:</property>
                             <property name="use_underline">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -340,10 +308,10 @@
                           <object class="GtkLabel" id="label41">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="ypad">4</property>
                             <property name="label" translatable="yes">Text:</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -355,7 +323,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="hexpand">True</property>
-                            <property name="text" translatable="no">1</property>
+                            <property name="text">1</property>
                             <property name="adjustment">adjustment2</property>
                             <property name="climb_rate">1</property>
                             <property name="numeric">True</property>
@@ -371,10 +339,10 @@
                           <object class="GtkLabel" id="text_label_2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="ellipsize">end</property>
                             <property name="single_line_mode">True</property>
                             <property name="max_width_chars">3</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
@@ -478,8 +446,8 @@
                   <object class="GtkLabel" id="label43">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Subtitles</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -555,9 +523,5 @@
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="-6">button1</action-widget>
-      <action-widget response="-5">button2</action-widget>
-    </action-widgets>
   </object>
 </interface>

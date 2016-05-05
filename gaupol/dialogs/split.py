@@ -38,8 +38,6 @@ class SplitDialog(gaupol.BuilderDialog):
         self.application = application
         self._init_dialog(parent)
         self._init_subtitle_spin()
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""

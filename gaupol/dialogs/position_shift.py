@@ -46,8 +46,6 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         self._init_dialog(parent)
         self._init_widgets()
         self._init_values()
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _get_preview_row(self):
         """Return row to start preview from."""
