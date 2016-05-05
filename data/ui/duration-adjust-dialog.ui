@@ -29,61 +29,27 @@
   </object>
   <object class="GtkDialog" id="dialog">
     <property name="can_focus">False</property>
-    <property name="border_width">18</property>
+    <property name="border_width">12</property>
     <property name="title" translatable="yes">Adjust Durations</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
+    <property name="use_header_bar">1</property>
     <signal name="response" handler="_on_response" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="vbox13">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">18</property>
+        <property name="spacing">12</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="hbuttonbox1">
-            <property name="visible">True</property>
+          <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="button3">
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button4">
-                <property name="label" translatable="yes">_Adjust</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="has_focus">True</property>
-                <property name="is_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
+            <property name="fill">False</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -92,7 +58,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
-            <property name="spacing">18</property>
+            <property name="spacing">12</property>
             <child>
               <object class="GtkBox" id="vbox15">
                 <property name="visible">True</property>
@@ -103,8 +69,8 @@
                   <object class="GtkLabel" id="label28">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Theoretic Duration</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -131,9 +97,9 @@
                           <object class="GtkLabel" id="label30">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">_Reading speed:</property>
                             <property name="use_underline">True</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -145,7 +111,7 @@
                           <object class="GtkSpinButton" id="speed_spin">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="text" translatable="no">15,0</property>
+                            <property name="text">15,0</property>
                             <property name="adjustment">adjustment1</property>
                             <property name="climb_rate">1</property>
                             <property name="digits">1</property>
@@ -162,8 +128,8 @@
                           <object class="GtkLabel" id="label31">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="xalign">0</property>
                             <property name="label" translatable="yes">characters per second</property>
+                            <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -236,8 +202,8 @@
                   <object class="GtkLabel" id="label32">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Limits</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -307,7 +273,7 @@
                       <object class="GtkSpinButton" id="min_spin">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="text" translatable="no">1,000</property>
+                        <property name="text">1,000</property>
                         <property name="adjustment">adjustment2</property>
                         <property name="climb_rate">1</property>
                         <property name="digits">3</property>
@@ -323,9 +289,9 @@
                       <object class="GtkLabel" id="label34">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">s_econds</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -336,7 +302,7 @@
                       <object class="GtkSpinButton" id="max_spin">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="text" translatable="no">1,000</property>
+                        <property name="text">1,000</property>
                         <property name="adjustment">adjustment3</property>
                         <property name="climb_rate">1</property>
                         <property name="digits">3</property>
@@ -352,9 +318,9 @@
                       <object class="GtkLabel" id="label35">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">seco_nds</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -365,7 +331,7 @@
                       <object class="GtkSpinButton" id="gap_spin">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="text" translatable="no">1,000</property>
+                        <property name="text">1,000</property>
                         <property name="adjustment">adjustment4</property>
                         <property name="climb_rate">1</property>
                         <property name="digits">3</property>
@@ -381,9 +347,9 @@
                       <object class="GtkLabel" id="label36">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">secon_ds</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -414,8 +380,8 @@
                   <object class="GtkLabel" id="label37">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">Subtitles</property>
+                    <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -507,9 +473,5 @@
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="-6">button3</action-widget>
-      <action-widget response="-5">button4</action-widget>
-    </action-widgets>
   </object>
 </interface>

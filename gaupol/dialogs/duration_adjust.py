@@ -17,7 +17,6 @@
 
 """Dialog for lengthening or shortening durations."""
 
-import aeidon
 import gaupol
 
 from aeidon.i18n   import _, n_
@@ -49,10 +48,9 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         """Initialize a :class:`DurationAdjustDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "duration-adjust-dialog.ui")
         self.application = application
+        self._init_dialog(parent)
         self._init_values()
         self._init_sensitivities()
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.OK)
 
     def _adjust_durations(self):
         """Adjust durations of subtitles."""
@@ -68,11 +66,10 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
                 maximum=(conf.maximum if conf.use_maximum else None),
                 minimum=(conf.minimum if conf.use_minimum else None),
                 gap=(conf.gap if conf.use_gap else None))
-
             self.application.flash_message(n_(
-                    "Adjusted duration of {:d} subtitle",
-                    "Adjusted durations of {:d} subtitles",
-                    len(rows)).format(len(rows)))
+                "Adjusted duration of {:d} subtitle",
+                "Adjusted durations of {:d} subtitles",
+                len(rows)).format(len(rows)))
 
     def _get_target(self):
         """Return the selected target."""
@@ -83,6 +80,14 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         if self._all_radio.get_active():
             return gaupol.targets.ALL
         raise ValueError("Invalid target radio state")
+
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Adjust"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_modal(True)
 
     def _init_sensitivities(self):
         """Initialize sensitivities of widgets."""
