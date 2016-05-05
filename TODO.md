@@ -10,6 +10,9 @@ Gaupol 1.0
 * [x] Update AppData file
 * [x] Remove external video player output window (if you want to see
       that output, start Gaupol from a terminal)
+* [x] Add support for IBM273, IBM1125, KOI8-T and KZ1048 character
+      encodings (whether these are actually available depends on your
+      version of Python)
 * [x] Bump GTK+ dependency to 3.12 or greater
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
