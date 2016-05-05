@@ -43,6 +43,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         """Initialize a :class:`PositionShiftDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "position-shift-dialog.ui")
         self.application = application
+        self._init_dialog(parent)
         self._init_widgets()
         self._init_values()
         self._dialog.set_transient_for(parent)
@@ -63,6 +64,14 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         if self._current_radio.get_active():
             return gaupol.targets.CURRENT
         raise ValueError("Invalid target radio state")
+
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Shift"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_modal(True)
 
     def _init_values(self):
         """Intialize default values for widgets."""
