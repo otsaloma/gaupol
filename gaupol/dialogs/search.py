@@ -63,6 +63,7 @@ class SearchDialog(gaupol.BuilderDialog):
         "ignore_case_check",
         "main_check",
         "next_button",
+        "notebook",
         "overlay",
         "pattern_combo",
         "previous_button",
@@ -85,14 +86,15 @@ class SearchDialog(gaupol.BuilderDialog):
         self._match_row = None
         self._match_span = None
         self.max_history = 10
-        self._pattern_entry = self._pattern_combo.get_child()
+        self._pattern_entry = None
         self.patterns = []
-        self._replacement_entry = self._replacement_combo.get_child()
+        self._replacement_entry = None
         self.replacements = []
         self._statuslabel = gaupol.FloatingLabel()
         self._was_next = None
         self._read_history("patterns")
         self._read_history("replacements")
+        self._init_dialog(parent)
         self._init_text_view()
         self._init_pattern_combo()
         self._init_replacement_combo()
@@ -103,9 +105,6 @@ class SearchDialog(gaupol.BuilderDialog):
         self._overlay.add_overlay(self._statuslabel)
         self._overlay.show_all()
         self._statuslabel.set_text(None)
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_type_hint(Gdk.WindowTypeHint.NORMAL)
-        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
 
     def _add_pattern_to_history(self):
         """Add current pattern to the pattern combo box."""
@@ -186,6 +185,35 @@ class SearchDialog(gaupol.BuilderDialog):
             return gaupol.targets.ALL
         raise ValueError("Invalid target radio state")
 
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.add_button(_("_Help"), Gtk.ResponseType.HELP)
+        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
+        self._dialog.set_transient_for(parent)
+        self.set_modal(False)
+        # Hide the tabs of the notebook and use a toggle button toolbar
+        # in the header bar instead. We should really use a Gtk.StackSwitcher
+        # for this, but it looks difficult while Glade doesn't support
+        # any of it and the XML would need to be written by hand.
+        toolbar = Gtk.Toolbar()
+        toolbar.set_name("gaupol-header-bar-toolbar")
+        toolbar.set_style(Gtk.ToolbarStyle.TEXT)
+        style = toolbar.get_style_context()
+        style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
+        find_button = Gtk.ToggleToolButton(label=_("Find"), active=True)
+        target_button = Gtk.ToggleToolButton(label=_("Target"))
+        find_button.gaupol_other_button = target_button
+        target_button.gaupol_other_button = find_button
+        find_button.gaupol_page_num = 0
+        target_button.gaupol_page_num = 1
+        find_button.connect("toggled", self._on_toolbutton_toggled)
+        target_button.connect("toggled", self._on_toolbutton_toggled)
+        toolbar.insert(find_button, -1)
+        toolbar.insert(target_button, -1)
+        toolbar.show_all()
+        header = self._dialog.get_header_bar()
+        header.set_custom_title(toolbar)
+
     def _init_keys(self):
         """Initialize keyboard shortcuts."""
         accel_group = Gtk.AccelGroup()
@@ -203,6 +231,7 @@ class SearchDialog(gaupol.BuilderDialog):
         for pattern in self.patterns:
             store.append((pattern,))
         self._pattern_combo.set_entry_text_column(0)
+        self._pattern_entry = self._pattern_combo.get_child()
 
     def _init_replacement_combo(self):
         """Initialize the replacement combo box."""
@@ -211,6 +240,7 @@ class SearchDialog(gaupol.BuilderDialog):
         for replacement in self.replacements:
             store.append((replacement,))
         self._replacement_combo.set_entry_text_column(0)
+        self._replacement_entry = self._replacement_combo.get_child()
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -290,8 +320,9 @@ class SearchDialog(gaupol.BuilderDialog):
         # that no longer exists. All search dialog's data changing methods
         # need to be wrapped to disable this handling of application's
         # page-changed signals.
-        if self._handle_page_changes and self._match_page is not None:
-            self._reset_properties()
+        if self._handle_page_changes:
+            if self._match_page is not None:
+                self._reset_properties()
 
     def _on_current_radio_toggled(self, radio_button):
         """Save search target."""
@@ -379,6 +410,12 @@ class SearchDialog(gaupol.BuilderDialog):
         text = text_buffer.get_text(start, end, False)
         page.project.set_text(self._match_row, self._match_doc, text)
 
+    def _on_toolbutton_toggled(self, button, *args):
+        """Switch to the notebook page matching activated toolbutton."""
+        if button.get_active():
+            button.gaupol_other_button.set_active(False)
+            self._notebook.set_current_page(button.gaupol_page_num)
+
     def _on_tran_check_toggled(self, check_button):
         """Save search target."""
         gaupol.conf.search.fields = list(self._get_fields())
@@ -452,9 +489,9 @@ class SearchDialog(gaupol.BuilderDialog):
                 break
         self._reset_properties()
         self._statuslabel.flash_text(n_(
-                "Found and replaced {:d} occurence",
-                "Found and replaced {:d} occurences",
-                count).format(count))
+            "Found and replaced {:d} occurence",
+            "Found and replaced {:d} occurences",
+            count).format(count))
 
     def _reset_properties(self):
         """Reset search properties to defaults."""

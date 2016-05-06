@@ -9,6 +9,12 @@
   padding: 4px 9px 4px 4px;
 }
 
+#gaupol-header-bar-toolbar {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 #gaupol-tab-close-button {
   -GtkButton-default-border: 0;
   -GtkButton-default-outside-border: 0;

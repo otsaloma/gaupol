@@ -37,6 +37,7 @@ XXX:
 * Fix remaining deprecations (see `python3 -Wd bin/nfoview`)
 * Use margin-start instead of deprecated margin-left
 * Does gaupol.util.char_to_px return correct value?
+* Set the default font to monospace?
 
 Infrastructure:
 
