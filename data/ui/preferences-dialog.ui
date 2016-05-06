@@ -10,7 +10,7 @@
   </object>
   <object class="GtkDialog" id="dialog">
     <property name="can_focus">False</property>
-    <property name="border_width">18</property>
+    <property name="border_width">12</property>
     <property name="title" translatable="yes">Preferences</property>
     <property name="window_position">center-on-parent</property>
     <property name="destroy_with_parent">True</property>
@@ -79,7 +79,7 @@
                 <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
-                <property name="spacing">18</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkBox" id="vbox3">
                     <property name="visible">True</property>
@@ -333,7 +333,7 @@
                 <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
-                <property name="spacing">18</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkBox" id="vbox7">
                     <property name="visible">True</property>
@@ -635,7 +635,7 @@
                 <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
-                <property name="spacing">18</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkBox" id="box1">
                     <property name="visible">True</property>
@@ -898,7 +898,7 @@
                 <property name="vexpand">True</property>
                 <property name="border_width">12</property>
                 <property name="orientation">vertical</property>
-                <property name="spacing">18</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkBox" id="vbox12">
                     <property name="visible">True</property>
