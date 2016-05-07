@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class TestFloatingLabel(gaupol.TestCase):
 
     def run(self):
-        self.label.flash_text("Testing...")
+        self.label.flash_text("Testing floating label")
         self.window.connect("notify::visible", Gtk.main_quit)
         Gtk.main()
 

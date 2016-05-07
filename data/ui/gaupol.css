@@ -1,11 +1,9 @@
 /* -*- coding: utf-8-unix -*- */
 
-#gaupol-floating-label {
-  /* TODO: Use named colors from GTK+. */
-  /* https://github.com/GNOME/gtk/blob/master/gtk/theme/Adwaita/_colors-public.scss */
-  background-color: #212526;
+.gaupol-floating-label {
+  background-color: @theme_fg_color;
   border-top-right-radius: 5px;
-  color: #ffffff;
+  color: @theme_bg_color;
   padding: 4px 9px 4px 4px;
 }
 
@@ -16,11 +14,11 @@
 }
 
 #gaupol-tab-close-button {
-  -GtkButton-default-border: 0;
-  -GtkButton-default-outside-border: 0;
-  -GtkButton-inner-border: 0;
-  -GtkWidget-focus-line-width: 0;
-  -GtkWidget-focus-padding: 0;
+  /* -GtkButton-default-border: 0; */
+  /* -GtkButton-default-outside-border: 0; */
+  /* -GtkButton-inner-border: 0; */
+  /* -GtkWidget-focus-line-width: 0; */
+  /* -GtkWidget-focus-padding: 0; */
   margin: 0;
   padding: 0;
 }

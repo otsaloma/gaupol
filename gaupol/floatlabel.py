@@ -70,7 +70,8 @@ class FloatingLabel(Gtk.Box):
 
     def _init_widgets(self):
         """Initialize widgets contained in the box."""
-        self._label.set_name("gaupol-floating-label")
+        style = self._label.get_style_context()
+        style.add_class("gaupol-floating-label")
         self._event_box.add(self._label)
         gaupol.util.pack_start(self, self._event_box)
         self._event_box.connect("enter-notify-event", self._hide)

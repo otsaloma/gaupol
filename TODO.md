@@ -39,6 +39,7 @@ XXX:
 * Does gaupol.util.char_to_px return correct value?
 * Review dialog default sizes
 * Set the default font to monospace?
+* https://wiki.gnome.org/Projects/gspell
 
 Infrastructure:
 
