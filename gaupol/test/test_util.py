@@ -22,6 +22,13 @@ from gi.repository import Gdk
 
 class TestModule(gaupol.TestCase):
 
+    def test_char_to_px(self):
+        px1 = gaupol.util.char_to_px(1)
+        px2 = gaupol.util.char_to_px(2)
+        assert 2 < px1 < 10
+        assert 4 < px2 < 20
+        assert abs(2*px1 - px2) <= 1
+
     def test_hex_to_rgba(self):
         color = gaupol.util.hex_to_rgba("#ff0000")
         assert color.equal(Gdk.RGBA(red=1, green=0, blue=0, alpha=1))

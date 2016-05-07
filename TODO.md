@@ -36,8 +36,6 @@ XXX:
 * Use CSS instead of `modify_font`
 * Fix remaining deprecations (see `python3 -Wd bin/nfoview`)
 * Use margin-start instead of deprecated margin-left
-* Does gaupol.util.char_to_px return correct value?
-* Review dialog default sizes
 * Set the default font to monospace?
 * https://wiki.gnome.org/Projects/gspell
 

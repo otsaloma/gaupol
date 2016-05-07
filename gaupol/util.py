@@ -36,6 +36,7 @@ def char_to_px(nchar, font=None):
     label = Gtk.Label(label="etaoin shrdlu")
     if font is not None:
         set_widget_font(label, font)
+    label.show()
     width = label.get_layout().get_pixel_size()[0]
     return int(round(nchar * width/len(label.props.label)))
 
@@ -382,11 +383,7 @@ def set_widget_font(widget, font):
     widget.override_font(font_desc)
 
 def show_exception(exctype, value, tb):
-    """
-    Show exception traceback in :class:`gaupol.DebugDialog`.
-
-    `show_exception` can be set as a :func:`sys.excepthook`.
-    """
+    """A `sys.excepthook` to show traceback in :class:`gaupol.DebugDialog`."""
     traceback.print_exception(exctype, value, tb)
     if not isinstance(value, Exception): return
     try: # to avoid recursion.
