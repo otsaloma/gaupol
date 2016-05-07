@@ -37,7 +37,7 @@ def char_to_px(nchar, font=None):
     if font is not None:
         set_widget_font(label, font)
     label.show()
-    width = label.get_layout().get_pixel_size()[0]
+    width = label.get_preferred_width()[1]
     return int(round(nchar * width/len(label.props.label)))
 
 def delay_add(delay, function, *args, **kwargs):
@@ -146,9 +146,9 @@ def get_zebra_color(tree_view):
     fg = style.get_color(Gtk.StateFlags.NORMAL)
     bg = style.get_background_color(Gtk.StateFlags.NORMAL)
     color = Gdk.RGBA()
-    color.red =   0.92 * bg.red   + 0.1 * fg.red
-    color.green = 0.92 * bg.green + 0.1 * fg.green
-    color.blue =  0.92 * bg.blue  + 0.1 * fg.blue
+    color.red =   0.92 * bg.red   + 0.08 * fg.red
+    color.green = 0.92 * bg.green + 0.08 * fg.green
+    color.blue =  0.92 * bg.blue  + 0.08 * fg.blue
     return(color)
 
 @aeidon.deco.once
@@ -239,7 +239,8 @@ def lines_to_px(nlines, font=None):
     label = Gtk.Label(label=text)
     if font is not None:
         set_widget_font(label, font)
-    height = label.get_layout().get_pixel_size()[1]
+    label.show()
+    height = label.get_preferred_height()[1]
     return int(round(nlines * height))
 
 def new_hbox(spacing):
@@ -333,24 +334,20 @@ def scale_to_content(widget, min_nchar=0, max_nchar=32768,
     width = min(width, char_to_px(max_nchar, font))
     height = max(height, lines_to_px(min_nlines, font))
     height = min(height, lines_to_px(max_nlines, font))
-    if isinstance(widget.get_parent(), Gtk.ScrolledWindow):
-        # It seems that for tree views and text views
-        # we need to set the size request of the scrolled window.
+    parent = widget.get_parent()
+    if isinstance(parent, Gtk.ScrolledWindow):
         # Vaguely account for possible scrollbars.
-        widget = widget.get_parent()
-        width, height = width + 24, height + 24
+        return parent.set_size_request(width+24, height+24)
     widget.set_size_request(width, height)
 
 def scale_to_size(widget, nchar, nlines, font=None):
     """Set `widget`'s size to `nchar` and `nlines`."""
     width = char_to_px(nchar, font)
     height = lines_to_px(nlines, font)
-    if isinstance(widget.get_parent(), Gtk.ScrolledWindow):
-        # It seems that for tree views and text views
-        # we need to set the size request of the scrolled window.
+    parent = widget.get_parent()
+    if isinstance(parent, Gtk.ScrolledWindow):
         # Vaguely account for possible scrollbars.
-        widget = widget.get_parent()
-        width, height = width + 24, height + 24
+        return parent.set_size_request(width+24, height+24)
     widget.set_size_request(width, height)
 
 def separate_combo(store, itr, data=None):

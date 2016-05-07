@@ -33,6 +33,13 @@ class TestModule(gaupol.TestCase):
         color = gaupol.util.hex_to_rgba("#ff0000")
         assert color.equal(Gdk.RGBA(red=1, green=0, blue=0, alpha=1))
 
+    def test_lines_to_px(self):
+        px1 = gaupol.util.lines_to_px(1)
+        px2 = gaupol.util.lines_to_px(2)
+        assert 10 < px1 < 30
+        assert 20 < px2 < 60
+        assert abs(2*px1 - px2) <= 1
+
     def test_rgba_to_hex(self):
         rgba = Gdk.RGBA(red=1, green=0, blue=1)
         color = gaupol.util.rgba_to_hex(rgba)
