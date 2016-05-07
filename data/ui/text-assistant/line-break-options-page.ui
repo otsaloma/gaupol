@@ -52,7 +52,7 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Limits</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -75,7 +75,7 @@
                   <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="label" translatable="yes">_Maximum line length:</property>
                     <property name="use_underline">True</property>
                     <property name="mnemonic_widget">max_length_spin</property>
@@ -89,7 +89,7 @@
                   <object class="GtkLabel" id="label19">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="label" translatable="yes">_Preferred maximum amount of lines:</property>
                     <property name="use_underline">True</property>
                     <property name="mnemonic_widget">max_lines_spin</property>
@@ -174,7 +174,7 @@
               <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Subtitles</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -200,7 +200,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="_on_skip_length_check_toggled" swapped="no"/>
                   </object>
@@ -216,7 +216,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="_on_skip_lines_check_toggled" swapped="no"/>
                   </object>

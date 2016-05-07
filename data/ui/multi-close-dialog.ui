@@ -107,7 +107,7 @@
                   <object class="GtkLabel" id="label7">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="label" translatable="yes">Select the _main documents you want to save:</property>
                     <property name="use_underline">True</property>
                     <property name="wrap">True</property>
@@ -159,7 +159,7 @@
                   <object class="GtkLabel" id="label10">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="label" translatable="yes">Select the _translation documents you want to save:</property>
                     <property name="use_underline">True</property>
                     <property name="wrap">True</property>
@@ -205,7 +205,7 @@
               <object class="GtkLabel" id="label11">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">If you don't save, changes will be permanently lost.</property>
                 <property name="wrap">True</property>
               </object>

@@ -90,7 +90,7 @@
                             <property name="label" translatable="yes">_Search for:</property>
                             <property name="use_underline">True</property>
                             <property name="mnemonic_widget">pattern_combo_entry</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -104,7 +104,7 @@
                             <property name="label" translatable="yes">Replace _with:</property>
                             <property name="use_underline">True</property>
                             <property name="mnemonic_widget">replacement_combo_entry</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
@@ -245,7 +245,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0.5</property>
+                        <property name="halign">center</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="_on_regex_check_toggled" swapped="no"/>
                       </object>
@@ -262,7 +262,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0.5</property>
+                        <property name="halign">center</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="_on_ignore_case_check_toggled" swapped="no"/>
                       </object>
@@ -309,7 +309,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Columns</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -334,7 +334,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="_on_main_check_toggled" swapped="no"/>
                           </object>
@@ -351,7 +351,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="_on_tran_check_toggled" swapped="no"/>
                           </object>
@@ -386,7 +386,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Subtitles</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -411,7 +411,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="_on_current_radio_toggled" swapped="no"/>
@@ -429,7 +429,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                             <property name="group">current_radio</property>
                             <signal name="toggled" handler="_on_all_radio_toggled" swapped="no"/>

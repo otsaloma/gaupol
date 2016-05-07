@@ -47,7 +47,7 @@
                 <property name="label" translatable="yes">_Amount:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">amount_spin</property>
-                <property name="xalign">1</property>
+                <property name="halign">end</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -61,7 +61,7 @@
                 <property name="label" translatable="yes">_Position:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">position_combo</property>
-                <property name="xalign">1</property>
+                <property name="halign">end</property>
               </object>
               <packing>
                 <property name="left_attach">0</property>

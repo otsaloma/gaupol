@@ -18,7 +18,7 @@
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xalign">0</property>
+            <property name="halign">start</property>
             <property name="label" translatable="yes">S_elect parts to capitalize:</property>
             <property name="use_underline">True</property>
             <property name="mnemonic_widget">tree_view</property>
@@ -62,7 +62,7 @@
               <object class="GtkLabel" id="script_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">_Script:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">script_combo</property>
@@ -76,7 +76,7 @@
               <object class="GtkLabel" id="language_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">_Language:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">language_combo</property>
@@ -90,7 +90,7 @@
               <object class="GtkLabel" id="country_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Co_untry:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">country_combo</property>

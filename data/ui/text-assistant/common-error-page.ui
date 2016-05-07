@@ -18,7 +18,7 @@
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xalign">0</property>
+            <property name="halign">start</property>
             <property name="label" translatable="yes">S_elect errors to correct:</property>
             <property name="use_underline">True</property>
             <property name="mnemonic_widget">tree_view</property>
@@ -62,7 +62,7 @@
               <object class="GtkLabel" id="script_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">_Script:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">script_combo</property>
@@ -76,7 +76,7 @@
               <object class="GtkLabel" id="language_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">_Language:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">language_combo</property>
@@ -90,7 +90,7 @@
               <object class="GtkLabel" id="country_label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Co_untry:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">country_combo</property>
@@ -104,7 +104,7 @@
               <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Error types:</property>
               </object>
               <packing>
@@ -160,7 +160,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="_on_human_check_toggled" swapped="no"/>
                   </object>
@@ -177,7 +177,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="_on_ocr_check_toggled" swapped="no"/>
                   </object>

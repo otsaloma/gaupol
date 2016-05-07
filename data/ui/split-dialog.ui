@@ -47,7 +47,7 @@
                 <property name="label" translatable="yes">_First subtitle of new project:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">subtitle_spin</property>
-                <property name="xalign">1</property>
+                <property name="halign">end</property>
               </object>
               <packing>
                 <property name="expand">False</property>

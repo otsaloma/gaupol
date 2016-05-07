@@ -24,7 +24,7 @@
               <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">_Select corrections to perform on texts:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">tree_view</property>
@@ -75,7 +75,7 @@
               <object class="GtkLabel" id="label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Colu_mns:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">columns_combo</property>
@@ -89,7 +89,7 @@
               <object class="GtkLabel" id="label3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">S_ubtitles:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">subtitles_combo</property>

@@ -70,7 +70,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Theoretic Duration</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -99,7 +99,7 @@
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">_Reading speed:</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -129,7 +129,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">characters per second</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -151,7 +151,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="_on_lengthen_check_toggled" swapped="no"/>
                       </object>
@@ -168,7 +168,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="_on_shorten_check_toggled" swapped="no"/>
                       </object>
@@ -203,7 +203,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Limits</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -228,7 +228,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="_on_min_check_toggled" swapped="no"/>
                       </object>
@@ -244,7 +244,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="_on_max_check_toggled" swapped="no"/>
                       </object>
@@ -260,7 +260,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="_on_gap_check_toggled" swapped="no"/>
                       </object>
@@ -291,7 +291,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">s_econds</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -320,7 +320,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">seco_nds</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -349,7 +349,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">secon_ds</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">2</property>
@@ -381,7 +381,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Subtitles</property>
-                    <property name="xalign">0</property>
+                    <property name="halign">start</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -406,7 +406,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
                       </object>
@@ -423,7 +423,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="draw_indicator">True</property>
                         <property name="group">selected_radio</property>
                       </object>
@@ -440,7 +440,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
+                        <property name="halign">start</property>
                         <property name="draw_indicator">True</property>
                         <property name="group">selected_radio</property>
                       </object>
