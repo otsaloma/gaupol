@@ -362,7 +362,8 @@ def set_cursor_busy(window):
     cursor = window.get_window().get_cursor()
     if (cursor is not None and cursor.get_cursor_type() ==
         Gdk.CursorType.WATCH): return
-    cursor = Gdk.Cursor(cursor_type=Gdk.CursorType.WATCH)
+    cursor = Gdk.Cursor.new_for_display(
+        Gdk.Display.get_default(), Gdk.CursorType.WATCH)
     window.get_window().set_cursor(cursor)
     iterate_main()
 
@@ -371,8 +372,10 @@ def set_cursor_normal(window):
     cursor = window.get_window().get_cursor()
     if (cursor is not None and cursor.get_cursor_type() ==
         Gdk.CursorType.LEFT_PTR): return
-    cursor = Gdk.Cursor(cursor_type=Gdk.CursorType.LEFT_PTR)
+    cursor = Gdk.Cursor.new_for_display(
+        Gdk.Display.get_default(), Gdk.CursorType.LEFT_PTR)
     window.get_window().set_cursor(cursor)
+    iterate_main()
 
 def set_widget_font(widget, font):
     """Use `font` for `widget`."""
