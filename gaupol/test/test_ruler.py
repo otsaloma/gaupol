@@ -76,6 +76,5 @@ class TestModule(gaupol.TestCase):
     def test_get_lengths__em(self):
         unit = gaupol.length_units.EM
         gaupol.conf.editor.length_unit = unit
-        gaupol.conf.editor.use_custom_font = False
-        lengths = gaupol.ruler.get_lengths("MMM\n<i>i</i>")
-        assert tuple(lengths) == (3, 0)
+        lengths = gaupol.ruler.get_lengths("MMM\n<i>iii</i>")
+        assert -1 < lengths[1] < 1 < lengths[0]

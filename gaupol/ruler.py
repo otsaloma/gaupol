@@ -26,19 +26,12 @@ from gi.repository import Pango
 
 class _Ruler:
 
-    """
-    Measurer of line lengths in various units.
-
-    The "sans" font (whatever it happens to be) is used for size calculations
-    in em units, as subtitles are commonly shown in a some sans serif font.
-    This is an approximation, but should be far more accurate than using
-    characters, at least in Latin and other variable width character scripts.
-    """
+    """Measurer of line lengths in various units."""
 
     def __init__(self):
         """Initialize a :class:`_Ruler` instance."""
         self._em_length = None
-        self._layout = None
+        self._label = Gtk.Label()
         self._length_unit = None
         self._update_em_length()
         self._update_length_unit()
@@ -58,8 +51,9 @@ class _Ruler:
         """Return length of `text` measured in ems."""
         text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
         text = text.replace("\n", " ")
-        self._layout.set_text(text, -1)
-        length = self._layout.get_size()[0] / self._em_length
+        self._label.set_text(text)
+        width = self._label.get_preferred_width()[1]
+        length = width / self._em_length
         return (int(length) if floor else length)
 
     def get_em_lengths(self, text, strip=False, floor=False):
@@ -67,8 +61,9 @@ class _Ruler:
         text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
         lengths = []
         for line in text.split("\n"):
-            self._layout.set_text(line, -1)
-            length = self._layout.get_size()[0] / self._em_length
+            self._label.set_text(line)
+            width = self._label.get_preferred_width()[1]
+            length = width / self._em_length
             lengths.append(int(length) if floor else length)
         return tuple(lengths)
 
@@ -87,11 +82,13 @@ class _Ruler:
 
     def _update_em_length(self):
         """Update the length of em based on font description size."""
-        self._layout = Gtk.Label().get_layout().copy()
-        font_desc = self._layout.get_context().get_font_description()
-        font_desc.merge(Pango.FontDescription("sans"), True)
-        self._layout.set_font_description(font_desc)
-        self._em_length = font_desc.get_size()
+        text = "abcdefghijklmnopqrstuvwxyz"
+        self._label.set_text(text)
+        self._label.show()
+        width = self._label.get_preferred_width()[1]
+        # About 0.55 em per a-z average character.
+        # https://bug763589.bugzilla-attachments.gnome.org/attachment.cgi?id=325466
+        self._em_length = width / (0.55 * len(text))
 
     def _update_length_unit(self):
         """Update the length function used."""
