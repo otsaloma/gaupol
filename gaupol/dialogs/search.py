@@ -63,7 +63,6 @@ class SearchDialog(gaupol.BuilderDialog):
         "ignore_case_check",
         "main_check",
         "next_button",
-        "notebook",
         "overlay",
         "pattern_combo",
         "previous_button",
@@ -191,28 +190,6 @@ class SearchDialog(gaupol.BuilderDialog):
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
         self._dialog.set_transient_for(parent)
         self.set_modal(False)
-        # Hide the tabs of the notebook and use a toggle button toolbar
-        # in the header bar instead. We should really use a Gtk.StackSwitcher
-        # for this, but it looks difficult while Glade doesn't support
-        # any of it and the XML would need to be written by hand.
-        toolbar = Gtk.Toolbar()
-        toolbar.set_name("gaupol-header-bar-toolbar")
-        toolbar.set_style(Gtk.ToolbarStyle.TEXT)
-        style = toolbar.get_style_context()
-        style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
-        find_button = Gtk.ToggleToolButton(label=_("Find"), active=True)
-        target_button = Gtk.ToggleToolButton(label=_("Target"))
-        find_button.gaupol_other_button = target_button
-        target_button.gaupol_other_button = find_button
-        find_button.gaupol_page_num = 0
-        target_button.gaupol_page_num = 1
-        find_button.connect("toggled", self._on_toolbutton_toggled)
-        target_button.connect("toggled", self._on_toolbutton_toggled)
-        toolbar.insert(find_button, -1)
-        toolbar.insert(target_button, -1)
-        toolbar.show_all()
-        header = self._dialog.get_header_bar()
-        header.set_custom_title(toolbar)
 
     def _init_keys(self):
         """Initialize keyboard shortcuts."""
@@ -265,7 +242,11 @@ class SearchDialog(gaupol.BuilderDialog):
     def _init_text_view(self):
         """Initialize the text view."""
         gaupol.util.prepare_text_view(self._text_view)
-        gaupol.util.scale_to_size(self._text_view, nchar=60, nlines=4)
+        gaupol.util.scale_to_size(self._text_view,
+                                  nchar=55,
+                                  nlines=5,
+                                  font="custom")
+
         text_buffer = self._text_view.get_buffer()
         text_buffer.connect("changed", self._on_text_buffer_changed)
 
@@ -409,12 +390,6 @@ class SearchDialog(gaupol.BuilderDialog):
         start, end = text_buffer.get_bounds()
         text = text_buffer.get_text(start, end, False)
         page.project.set_text(self._match_row, self._match_doc, text)
-
-    def _on_toolbutton_toggled(self, button, *args):
-        """Switch to the notebook page matching activated toolbutton."""
-        if button.get_active():
-            button.gaupol_other_button.set_active(False)
-            self._notebook.set_current_page(button.gaupol_page_num)
 
     def _on_tran_check_toggled(self, check_button):
         """Save search target."""
