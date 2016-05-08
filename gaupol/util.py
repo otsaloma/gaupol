@@ -27,25 +27,19 @@ import webbrowser
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import Gtk
-from gi.repository import Pango
 
 
 def char_to_px(nchar, font=None):
     """Convert characters to pixels."""
     if nchar < 0: return nchar
     label = Gtk.Label(label="etaoin shrdlu")
-    if font is not None:
-        set_widget_font(label, font)
+    gaupol.style.add_font_class(label, font)
     label.show()
     width = label.get_preferred_width()[1]
     return int(round(nchar * width/len(label.props.label)))
 
 def delay_add(delay, function, *args, **kwargs):
-    """
-    Call `function` with `args` and `kwargs` once after `delay` (ms).
-
-    Return integer ID of the event source from :func:`GLib.timeout_add`.
-    """
+    """Call `function` with `args` and `kwargs` once after `delay` (ms)."""
     def call_function(*args, **kwargs):
         function(*args, **kwargs)
         return False # to not be called again.
@@ -61,14 +55,7 @@ def document_to_text_field(doc):
                      .format(repr(doc)))
 
 def flash_dialog(dialog):
-    """
-    Run `dialog`, destroy it and return response.
-
-    :func:`flash_dialog` or :func:`run_dialog` should be used always when
-    a :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
-    function with one that returns a specified response without waiting
-    for user input.
-    """
+    """Run `dialog`, destroy it and return response."""
     response = dialog.run()
     dialog.destroy()
     return response
@@ -117,8 +104,7 @@ def get_text_view_size(text_view, font=None):
     start, end = text_buffer.get_bounds()
     text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
-    if font is not None:
-        set_widget_font(label, font)
+    gaupol.style.add_font_class(label, font)
     label.show()
     return (label.get_preferred_width()[1]
             + text_view.get_left_margin()
@@ -146,19 +132,14 @@ def get_zebra_color(tree_view):
     fg = style.get_color(Gtk.StateFlags.NORMAL)
     bg = style.get_background_color(Gtk.StateFlags.NORMAL)
     color = Gdk.RGBA()
-    color.red =   0.92 * bg.red   + 0.08 * fg.red
+    color.red   = 0.92 * bg.red   + 0.08 * fg.red
     color.green = 0.92 * bg.green + 0.08 * fg.green
-    color.blue =  0.92 * bg.blue  + 0.08 * fg.blue
+    color.blue  = 0.92 * bg.blue  + 0.08 * fg.blue
     return(color)
 
 @aeidon.deco.once
 def gst_available():
-    """
-    Return ``True`` if :mod:`Gst` module is available.
-
-    Also check that required elements from gst-plugins-base and
-    gst-plugins-good are available.
-    """
+    """Return ``True`` if :mod:`Gst` and needed plugins are available."""
     try:
         from gi.repository import Gst
     except Exception:
@@ -195,11 +176,7 @@ def gtkspell_available():
         return False
 
 def hex_to_rgba(string):
-    """
-    Return a :class:`Gdk.RGBA` for hexadecimal `string`.
-
-    Raise :exc:`ValueError` if parsing `string` fails.
-    """
+    """Return a :class:`Gdk.RGBA` for hexadecimal `string`."""
     rgba = Gdk.RGBA()
     success = rgba.parse(string)
     if not success:
@@ -207,11 +184,7 @@ def hex_to_rgba(string):
     return rgba
 
 def idle_add(function, *args, **kwargs):
-    """
-    Call `function` with `args` and `kwargs` when idle.
-
-    Return integer ID of the event source from :func:`GLib.idle_add`.
-    """
+    """Call `function` with `args` and `kwargs` when idle."""
     def call_function(*args, **kwargs):
         function(*args, **kwargs)
         return False # to not be called again.
@@ -237,8 +210,7 @@ def lines_to_px(nlines, font=None):
     if nlines < 0: return nlines
     text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     label = Gtk.Label(label=text)
-    if font is not None:
-        set_widget_font(label, font)
+    gaupol.style.add_font_class(label, font)
     label.show()
     height = label.get_preferred_height()[1]
     return int(round(nlines * height))
@@ -292,7 +264,8 @@ def prepare_text_view(text_view):
     connect("notify::show_lengths_edit", update_margin, text_view)
     update_margin(None, None, text_view)
     def update_font(section, value, text_view):
-        set_widget_font(text_view, get_font())
+        text_view.reset_style()
+    gaupol.style.add_font_class(text_view, "custom")
     connect("notify::use_custom_font", update_font, text_view)
     connect("notify::custom_font", update_font, text_view)
     update_font(None, None, text_view)
@@ -315,23 +288,15 @@ def rgba_to_hex(color):
                                         int(color.blue  * 255))
 
 def run_dialog(dialog):
-    """
-    Run `dialog` and return response.
-
-    :func:`run_dialog` or :func:`flash_dialog` should be used always when
-    a :class:`Gtk.Dialog` is run so that unit tests can monkey patch this
-    function with one that returns a specified response without waiting
-    for user input.
-    """
+    """Run `dialog` and return response."""
     return dialog.run()
 
-def scale_to_content(widget, min_nchar=0, max_nchar=32768,
-                     min_nlines=0, max_nlines=32768, font=None):
-
+def scale_to_content(widget, min_nchar=0,  max_nchar=32768,
+                             min_nlines=0, max_nlines=32768, font=None):
     """Set `widget's` size by content, but limited by `min` and `max`."""
     width, height = get_content_size(widget)
-    width = max(width, char_to_px(min_nchar, font))
-    width = min(width, char_to_px(max_nchar, font))
+    width  = max(width, char_to_px(min_nchar, font))
+    width  = min(width, char_to_px(max_nchar, font))
     height = max(height, lines_to_px(min_nlines, font))
     height = min(height, lines_to_px(max_nlines, font))
     parent = widget.get_parent()
@@ -342,7 +307,7 @@ def scale_to_content(widget, min_nchar=0, max_nchar=32768,
 
 def scale_to_size(widget, nchar, nlines, font=None):
     """Set `widget`'s size to `nchar` and `nlines`."""
-    width = char_to_px(nchar, font)
+    width  = char_to_px(nchar, font)
     height = lines_to_px(nlines, font)
     parent = widget.get_parent()
     if isinstance(parent, Gtk.ScrolledWindow):
@@ -374,16 +339,8 @@ def set_cursor_normal(window):
     window.get_window().set_cursor(cursor)
     iterate_main()
 
-def set_widget_font(widget, font):
-    """Use `font` for `widget`."""
-    context = widget.get_pango_context()
-    font_desc = context.get_font_description()
-    custom_font_desc = Pango.FontDescription(font)
-    font_desc.merge(custom_font_desc, True)
-    widget.override_font(font_desc)
-
 def show_exception(exctype, value, tb):
-    """A `sys.excepthook` to show traceback in :class:`gaupol.DebugDialog`."""
+    """A :class:`gaupol.DebugDialog` :attr`sys.excepthook`."""
     traceback.print_exception(exctype, value, tb)
     if not isinstance(value, Exception): return
     try: # to avoid recursion.

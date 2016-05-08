@@ -154,14 +154,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_css(self):
         """Init custom CSS theming rules for screen."""
-        provider = Gtk.CssProvider.get_default()
-        path = os.path.join(aeidon.DATA_DIR, "ui", "gaupol.css")
-        provider.load_from_path(path)
-        style = self.window.get_style_context()
-        priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        style.add_provider_for_screen(self.window.get_screen(),
-                                      provider,
-                                      priority)
+        gaupol.style.load_css(self.window)
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""

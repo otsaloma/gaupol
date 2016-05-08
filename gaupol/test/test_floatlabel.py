@@ -28,10 +28,8 @@ class TestFloatingLabel(gaupol.TestCase):
         Gtk.main()
 
     def setup_method(self, method):
-        # We need an application to load our custom CSS.
-        # See Application._init_css.
-        self.application = self.new_application()
         self.window = Gtk.Window()
+        gaupol.style.load_css(self.window)
         self.window.set_default_size(800, 480)
         self.window.connect("delete-event", Gtk.main_quit)
         self.overlay = Gtk.Overlay()

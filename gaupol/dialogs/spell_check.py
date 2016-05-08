@@ -239,10 +239,9 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _init_widgets(self):
         """Initialize widget properties."""
         self._init_tree_view()
-        font = gaupol.util.get_font()
-        gaupol.util.set_widget_font(self._entry, font)
-        gaupol.util.set_widget_font(self._text_view, font)
-        gaupol.util.set_widget_font(self._tree_view, font)
+        gaupol.style.use_custom_font(self._entry)
+        gaupol.style.use_custom_font(self._text_view)
+        gaupol.style.use_custom_font(self._tree_view)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
         gaupol.util.scale_to_size(self._text_view, nchar=50, nlines=4, font=font)

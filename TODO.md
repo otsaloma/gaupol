@@ -5,6 +5,7 @@ Gaupol 1.0
 * [x] Add mpv for preview with precise seek (`--hr-seek=yes`)
 * [x] Make mpv the default preview video player on non-Windows systems
       and set the default preview offset to one second
+* [x] Use a monospace font by default
 * [x] Only force theme variant if `dark_theme` in config file is
       `true`, thus respecting any global settings [#753315][]
 * [x] Update AppData file
@@ -33,11 +34,7 @@ XXX:
 * Resolve or move open bugs
 * Profile opening a subtitle file
 * Test mpv
-* Use CSS instead of `modify_font`
 * Fix remaining deprecations (see `python3 -Wd bin/nfoview`)
-* Use margin-start instead of deprecated margin-left
-* Set the default font to monospace?
-* https://wiki.gnome.org/Projects/gspell
 
 Infrastructure:
 

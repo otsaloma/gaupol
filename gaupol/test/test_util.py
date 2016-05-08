@@ -29,6 +29,13 @@ class TestModule(gaupol.TestCase):
         assert 4 < px2 < 20
         assert abs(2*px1 - px2) <= 1
 
+    def test_char_to_px__font(self):
+        deft = gaupol.util.char_to_px(100)
+        cust = gaupol.util.char_to_px(100, font="custom")
+        mono = gaupol.util.char_to_px(100, font="monospace")
+        assert 200 < deft < cust
+        assert 200 < deft < mono
+
     def test_hex_to_rgba(self):
         color = gaupol.util.hex_to_rgba("#ff0000")
         assert color.equal(Gdk.RGBA(red=1, green=0, blue=0, alpha=1))
@@ -39,6 +46,14 @@ class TestModule(gaupol.TestCase):
         assert 10 < px1 < 30
         assert 20 < px2 < 60
         assert abs(2*px1 - px2) <= 1
+
+    def test_lines_to_px__font(self):
+        deft = gaupol.util.lines_to_px(10)
+        cust = gaupol.util.lines_to_px(10, font="custom")
+        mono = gaupol.util.lines_to_px(10, font="monospace")
+        assert 50 < deft < 200
+        assert 50 < cust < 200
+        assert 50 < mono < 200
 
     def test_rgba_to_hex(self):
         rgba = Gdk.RGBA(red=1, green=0, blue=1)

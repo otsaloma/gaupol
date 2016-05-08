@@ -81,6 +81,7 @@ from gaupol.errors import *
 from gaupol.attrdict import *
 from gaupol.config import *
 conf = ConfigurationStore()
+from gaupol import style
 from gaupol import ruler
 from gaupol.entries import *
 from gaupol.renderers import *

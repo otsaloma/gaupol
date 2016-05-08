@@ -58,7 +58,6 @@ class TextEditDialog(Gtk.Dialog):
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
-        font = gaupol.util.get_font()
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.NONE)
@@ -66,9 +65,9 @@ class TextEditDialog(Gtk.Dialog):
         box = self.get_content_area()
         gaupol.util.pack_start_expand(box, scroller)
         gaupol.util.scale_to_size(self._text_view,
-                                  nchar=60,
-                                  nlines=5,
-                                  font=font)
+                                  nchar=55,
+                                  nlines=7,
+                                  font="custom")
 
         box.show_all()
 
