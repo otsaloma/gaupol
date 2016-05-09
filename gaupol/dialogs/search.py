@@ -241,6 +241,10 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _init_text_view(self):
         """Initialize the text view."""
+        with aeidon.util.silent(AttributeError):
+            # Top and bottom margins available since GTK+ 3.18.
+            self._text_view.set_top_margin(6)
+            self._text_view.set_bottom_margin(6)
         gaupol.util.prepare_text_view(self._text_view)
         gaupol.util.scale_to_size(self._text_view,
                                   nchar=55,

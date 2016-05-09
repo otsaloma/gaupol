@@ -105,12 +105,17 @@ def _on_text_view_draw(text_view, cairoc):
     if not text: return
     lengths = get_lengths(text)
     layout = Pango.Layout(text_view.get_pango_context())
+    # XXX: Lines overlap if we don't set a spacing!?
+    layout.set_spacing(2*Pango.SCALE)
     layout.set_markup("\n".join(str(x) for x in lengths), -1)
     layout.set_alignment(Pango.Alignment.RIGHT)
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width+6)
     x, y = text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 4)
     x += text_view.get_border_width()
+    with aeidon.util.silent(AttributeError):
+        # Top margin available since GTK+ 3.18.
+        y += text_view.props.top_margin
     style = text_view.get_style_context()
     Gtk.render_layout(style, cairoc, x, y, layout)
 

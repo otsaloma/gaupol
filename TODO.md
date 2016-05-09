@@ -6,6 +6,7 @@ Gaupol 1.0
 * [x] Make mpv the default preview video player on non-Windows systems
       and set the default preview offset to one second
 * [x] Use a monospace font by default
+* [x] Fix line length measure em to be narrower [#763589][]
 * [x] Only force theme variant if `dark_theme` in config file is
       `true`, thus respecting any global settings [#753315][]
 * [x] Update AppData file

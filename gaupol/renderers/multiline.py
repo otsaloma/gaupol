@@ -100,6 +100,10 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         editor.set_size_request(cell_area.width, cell_area.height)
         editor.set_left_margin(self.props.xpad)
         editor.set_right_margin(self.props.xpad)
+        with aeidon.util.silent(AttributeError):
+            # Top and bottom margins available since GTK+ 3.18.
+            editor.set_top_margin(self.props.ypad)
+            editor.set_bottom_margin(self.props.ypad)
         editor.gaupol_path = path
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)

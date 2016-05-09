@@ -17,6 +17,7 @@
 
 """Dialog for editing text of a single subtitle."""
 
+import aeidon
 import gaupol
 
 from aeidon.i18n   import _
@@ -58,6 +59,10 @@ class TextEditDialog(Gtk.Dialog):
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
+        with aeidon.util.silent(AttributeError):
+            # Top and bottom margins available since GTK+ 3.18.
+            self._text_view.set_top_margin(6)
+            self._text_view.set_bottom_margin(6)
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.NONE)
