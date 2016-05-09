@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkAdjustment" id="adjustment1">
@@ -44,10 +44,10 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">end</property>
                 <property name="label" translatable="yes">_First subtitle of new project:</property>
                 <property name="use_underline">True</property>
                 <property name="mnemonic_widget">subtitle_spin</property>
-                <property name="halign">end</property>
               </object>
               <packing>
                 <property name="expand">False</property>

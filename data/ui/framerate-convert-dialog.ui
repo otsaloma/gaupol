@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkDialog" id="dialog">
@@ -44,8 +44,8 @@
                   <object class="GtkLabel" id="label6">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Framerate</property>
                     <property name="halign">start</property>
+                    <property name="label" translatable="yes">Framerate</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -67,11 +67,11 @@
                       <object class="GtkLabel" id="label8">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="halign">start</property>
                         <property name="label" translatable="yes">_Input:</property>
                         <property name="use_underline">True</property>
                         <property name="justify">center</property>
                         <property name="mnemonic_widget">input_combo</property>
-                        <property name="halign">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -82,10 +82,10 @@
                       <object class="GtkLabel" id="label9">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="halign">start</property>
                         <property name="label" translatable="yes">_Output:</property>
                         <property name="use_underline">True</property>
                         <property name="mnemonic_widget">output_combo</property>
-                        <property name="halign">start</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -125,7 +125,7 @@
                 </child>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
@@ -140,8 +140,8 @@
                   <object class="GtkLabel" id="label10">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Subtitles</property>
                     <property name="halign">start</property>
+                    <property name="label" translatable="yes">Subtitles</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
                     </attributes>
@@ -165,8 +165,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_underline">True</property>
                         <property name="halign">start</property>
+                        <property name="use_underline">True</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
                       </object>
@@ -182,8 +182,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_underline">True</property>
                         <property name="halign">start</property>
+                        <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <property name="group">current_radio</property>
                       </object>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkDialog" id="dialog">
@@ -46,8 +46,8 @@
                       <object class="GtkLabel" id="language_title_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Language</property>
                         <property name="halign">start</property>
+                        <property name="label" translatable="yes">Language</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -104,8 +104,8 @@
                           <object class="GtkLabel" id="label7">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Columns</property>
                             <property name="halign">start</property>
+                            <property name="label" translatable="yes">Columns</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
                             </attributes>
@@ -129,8 +129,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
                                 <property name="halign">start</property>
+                                <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="_on_main_radio_toggled" swapped="no"/>
@@ -147,8 +147,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
                                 <property name="halign">start</property>
+                                <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">main_radio</property>
                               </object>
@@ -182,8 +182,8 @@
                           <object class="GtkLabel" id="label5">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Subtitles</property>
                             <property name="halign">start</property>
+                            <property name="label" translatable="yes">Subtitles</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
                             </attributes>
@@ -207,8 +207,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
                                 <property name="halign">start</property>
+                                <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <signal name="toggled" handler="_on_current_radio_toggled" swapped="no"/>
@@ -225,8 +225,8 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
                                 <property name="halign">start</property>
+                                <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">current_radio</property>
                               </object>

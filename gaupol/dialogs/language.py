@@ -51,7 +51,7 @@ class LanguageDialog(gaupol.BuilderDialog):
         gaupol.util.scale_to_content(self._tree_view,
                                      min_nchar=30,
                                      max_nchar=60,
-                                     min_nlines=6,
+                                     min_nlines=8,
                                      max_nlines=20)
 
     def _init_dialog(self, parent):
