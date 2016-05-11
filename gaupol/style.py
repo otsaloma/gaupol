@@ -43,16 +43,19 @@ def get_editor_font_css():
     """Return CSS for custom editor font."""
     if not gaupol.conf.editor.custom_font: return ""
     if not gaupol.conf.editor.use_custom_font: return ""
-    font = gaupol.conf.editor.custom_font
+    font = gaupol.conf.editor.custom_font or "monospace"
     font_desc = Pango.FontDescription(font)
-    family = font_desc.get_family()
-    size = font_desc.get_size() / Pango.SCALE
     css = """
     .gaupol-custom-font {{
-      font-family: {};
-      font-size: {:d}px;
-    }}""".format(family, int(round(size)))
+      font-family: {family},monospace;
+      font-size: {size}px;
+      font-weight: {weight};
+    }}""".format(family=font_desc.get_family().split(",")[0],
+                 size=int(round(font_desc.get_size() / Pango.SCALE)),
+                 weight=int(font_desc.get_weight()))
+
     css = css.replace("font-size: 0px;", "")
+    css = css.replace("font-weight: 0;", "")
     return css
 
 def load_css(widget):
