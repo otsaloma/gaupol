@@ -62,12 +62,6 @@ def _dump_subtitles(subtitles):
                   subtitle._tran_text,
                   subtitle._framerate) for subtitle in subtitles)
 
-def _hasattr_def(obj, name):
-    """Return ``True`` if `obj` has attribute `name` defined."""
-    if hasattr(obj, "__dict__"):
-        return name in obj.__dict__
-    return hasattr(obj, name)
-
 def _is_method(function, args):
     """
     Return ``True`` if `function` to be decorated is a method.
@@ -108,36 +102,6 @@ def memoize(limit=100):
                     cache.popitem(last=False)
             return cache[key]
         inner_wrapper.original = function
-        return inner_wrapper
-    if aeidon.RUNNING_SPHINX:
-        _outer_wrapper = outer_wrapper
-        def outer_wrapper(function):
-            return decorator_apply(_outer_wrapper, function)
-    return outer_wrapper
-
-def monkey_patch(obj, name):
-    """
-    Decorator for functions that change `obj`'s `name` attribute.
-
-    Any changes done will be reverted after the function is run,
-    i.e. `name` attribute is either restored to its original value
-    or deleted, if it didn't originally exist.
-    """
-    def outer_wrapper(function):
-        @functools.wraps(function)
-        def inner_wrapper(*args, **kwargs):
-            exists = _hasattr_def(obj, name)
-            value = getattr(obj, name) if exists else None
-            setattr(obj, name, copy.deepcopy(value))
-            try:
-                return function(*args, **kwargs)
-            finally:
-                setattr(obj, name, value)
-                assert getattr(obj, name) == value
-                assert getattr(obj, name) is value
-                if not exists:
-                    delattr(obj, name)
-                    assert not _hasattr_def(obj, name)
         return inner_wrapper
     if aeidon.RUNNING_SPHINX:
         _outer_wrapper = outer_wrapper

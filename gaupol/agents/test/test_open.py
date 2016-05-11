@@ -19,6 +19,7 @@ import aeidon
 import gaupol
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 
 class TestOpenAgent(gaupol.TestCase):
@@ -68,9 +69,8 @@ class TestOpenAgent(gaupol.TestCase):
         self.application.get_action("new_project").activate()
         assert len(self.application.pages) == n+1
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_split_project_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         page.view.select_rows((3,))
         self.application.get_action("split_project").activate()

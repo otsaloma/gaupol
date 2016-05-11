@@ -48,6 +48,7 @@ class DebugDialog(gaupol.BuilderDialog):
         self._init_text_tags()
         self._init_signal_handlers()
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
+        # TODO: Top and bottom margins
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""

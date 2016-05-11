@@ -19,6 +19,7 @@ import aeidon
 import gaupol
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 
 class TestEditAgent(gaupol.TestCase):
@@ -85,9 +86,8 @@ class TestEditAgent(gaupol.TestCase):
         rows = page.view.get_selected_rows()
         assert rows == tuple(range(4, len(page.project.subtitles)))
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_insert_subtitles_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         page = self.application.get_current_page()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("insert_subtitles").activate()

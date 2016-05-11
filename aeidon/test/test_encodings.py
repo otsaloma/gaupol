@@ -18,7 +18,8 @@
 import aeidon
 import codecs
 
-from aeidon.i18n import _
+from aeidon.i18n   import _
+from unittest.mock import patch
 
 
 class TestModule(aeidon.TestCase):
@@ -49,45 +50,40 @@ class TestModule(aeidon.TestCase):
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding is None
 
-    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
+    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
     def test_detect_bom__utf_16_be(self):
-        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
         open(path, "wb").write(codecs.BOM_UTF16_BE + blob)
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_16_be"
 
-    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
+    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
     def test_detect_bom__utf_16_le(self):
-        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
         open(path, "wb").write(codecs.BOM_UTF16_LE + blob)
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_16_le"
 
-    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
+    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
     def test_detect_bom__utf_32_be(self):
-        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
         open(path, "wb").write(codecs.BOM_UTF32_BE + blob)
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_32_be"
 
-    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
+    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
     def test_detect_bom__utf_32_le(self):
-        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
         open(path, "wb").write(codecs.BOM_UTF32_LE + blob)
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_32_le"
 
-    @aeidon.deco.monkey_patch(aeidon.encodings, "is_valid_encoding")
+    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
     def test_detect_bom__utf_8_sig(self):
-        aeidon.encodings.is_valid_encoding = lambda x: True
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
         open(path, "wb").write(codecs.BOM_UTF8 + blob)

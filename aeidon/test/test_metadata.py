@@ -17,18 +17,18 @@
 
 import aeidon
 
+from unittest.mock import patch
+
 
 class TestMetadataItem(aeidon.TestCase):
 
-    @aeidon.deco.monkey_patch(aeidon.locales, "get_system_code")
-    @aeidon.deco.monkey_patch(aeidon.locales, "get_system_modifier")
     def assert_name_in_locale(self, code, modifier):
-        aeidon.locales.get_system_code = lambda: code
-        aeidon.locales.get_system_modifier = lambda: modifier
-        self.item.set_field("Name", "system")
-        key = ("{}@{}".format(code, modifier) if modifier else code)
-        self.item.set_field("Name[{}]".format(key), "local")
-        assert self.item.get_name(localize=True) == "local"
+        with patch("aeidon.locales.get_system_code", lambda: code):
+            with patch("aeidon.locales.get_system_modifier", lambda: modifier):
+                self.item.set_field("Name", "system")
+                key = ("{}@{}".format(code, modifier) if modifier else code)
+                self.item.set_field("Name[{}]".format(key), "local")
+                assert self.item.get_name(localize=True) == "local"
 
     def setup_method(self, method):
         self.item = aeidon.MetadataItem()
@@ -64,9 +64,8 @@ class TestMetadataItem(aeidon.TestCase):
         self.assert_name_in_locale("en", "Latn")
         self.assert_name_in_locale("en", None)
 
-    @aeidon.deco.monkey_patch(aeidon.locales, "get_system_code")
+    @patch("aeidon.locales.get_system_code", lambda: None)
     def test_get_name__no_locale(self):
-        aeidon.locales.get_system_code = lambda: None
         self.item.set_field("Name", "system")
         assert self.item.get_name() == "system"
 

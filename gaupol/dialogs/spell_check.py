@@ -95,6 +95,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
         self._start()
+        # TODO: Top and bottom margins
 
     def _advance(self):
         """Advance to the next spelling error."""

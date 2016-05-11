@@ -21,6 +21,7 @@ import os
 import sys
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 
 class TestAddBookmarkDialog(gaupol.TestCase):
@@ -51,9 +52,8 @@ class TestAddBookmarkDialog(gaupol.TestCase):
 
 class TestBookmarksExtension(gaupol.TestCase):
 
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    @patch("gaupol.util.run_dialog", lambda *args: Gtk.ResponseType.OK)
     def bookmark_subtitles(self):
-        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         action = self.application.get_action("add_bookmark")
         for i in range(5):
             self.page.view.select_rows((i,))
@@ -87,9 +87,8 @@ class TestBookmarksExtension(gaupol.TestCase):
         self.extension_sp.teardown(self.application)
         gaupol.TestCase.teardown_method(self, self.application)
 
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    @patch("gaupol.util.run_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_add_bookmark_activate(self):
-        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("add_bookmark").activate()
 
     def test__on_edit_bookmarks_activate(self):

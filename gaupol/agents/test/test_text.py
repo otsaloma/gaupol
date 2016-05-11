@@ -19,6 +19,7 @@ import aeidon
 import gaupol
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 
 class TestSpellCheckAgent(gaupol.TestCase):
@@ -26,18 +27,15 @@ class TestSpellCheckAgent(gaupol.TestCase):
     def setup_method(self, method):
         self.application = self.new_application()
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_check_spelling_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         gaupol.conf.spell_check.language = "en"
         self.application.get_action("check_spelling").activate()
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_configure_spell_check_activate(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.OK
         self.application.get_action("configure_spell_check").activate()
 
-    @aeidon.deco.monkey_patch(gaupol.TextAssistant, "show")
+    @patch("gaupol.TextAssistant.show", lambda *args: None)
     def test__on_correct_texts_activate(self):
-        gaupol.TextAssistant.show = lambda *args: None
         self.application.get_action("correct_texts").activate()

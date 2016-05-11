@@ -21,6 +21,7 @@ import os
 import sys
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 
 class TestAddFramerateDialog(gaupol.TestCase):
@@ -59,9 +60,8 @@ class TestPreferencesDialog(gaupol.TestCase):
         self.dialog = module.PreferencesDialog(self.framerates, Gtk.Window())
         self.dialog.show()
 
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    @patch("gaupol.util.run_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_add_button_clicked(self):
-        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.OK
         orig_framerates = self.dialog.get_framerates()
         self.dialog._add_button.emit("clicked")
         framerates = self.dialog.get_framerates()
@@ -101,9 +101,8 @@ class TestCustomFrameratesExtension(gaupol.TestCase):
     def test_setup(self):
         assert hasattr(aeidon.framerates, "FPS_48_000")
 
-    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    @patch("gaupol.util.run_dialog", lambda *args: Gtk.ResponseType.CLOSE)
     def test_show_preferences_dialog(self):
-        gaupol.util.run_dialog = lambda *args: Gtk.ResponseType.CLOSE
         self.extension.show_preferences_dialog(self.application.window)
 
     def test_teardown(self):

@@ -19,7 +19,8 @@ import aeidon
 import imp
 import os
 
-from aeidon.i18n import _, d_
+from aeidon.i18n   import _, d_
+from unittest.mock import patch
 
 
 class TestModule(aeidon.TestCase):
@@ -44,14 +45,12 @@ class TestModule(aeidon.TestCase):
     def test_get_system_code(self):
         assert aeidon.locales.get_system_code()
 
-    @aeidon.deco.monkey_patch(os, "environ")
+    @patch.dict("os.environ", dict(LANGUAGE="sr@Latn"))
     def test_get_system_modifier__latn(self):
-        os.environ["LANGUAGE"] = "sr@Latn"
         imp.reload(aeidon.locales)
         assert aeidon.locales.get_system_modifier() == "Latn"
 
-    @aeidon.deco.monkey_patch(os, "environ")
+    @patch.dict("os.environ", dict(LANGUAGE="en"))
     def test_get_system_modifier__none(self):
-        os.environ["LANGUAGE"] = "en"
         imp.reload(aeidon.locales)
         assert aeidon.locales.get_system_modifier() is None

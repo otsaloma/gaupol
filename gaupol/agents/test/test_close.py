@@ -19,6 +19,7 @@ import aeidon
 import gaupol
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 
 class TestCloseAgent(gaupol.TestCase):
@@ -38,17 +39,15 @@ class TestCloseAgent(gaupol.TestCase):
     def setup_method(self, method):
         self.application = self.new_application()
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
     @aeidon.deco.silent(gaupol.Default)
     def test_close(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.CANCEL
         self.application.pages[-1].project.remove_subtitles((0,))
         self.application.close(self.application.pages[-1], confirm=True)
 
-    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.NO)
     @aeidon.deco.silent(gaupol.Default)
     def test_close_all(self):
-        gaupol.util.flash_dialog = lambda *args: Gtk.ResponseType.NO
         for page in self.application.pages:
             page.project.remove_subtitles((0,))
         self.application.close_all()

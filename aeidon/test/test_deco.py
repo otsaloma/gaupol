@@ -25,28 +25,6 @@ class TestModule(aeidon.TestCase):
     def setup_method(self, method):
         self.project = self.new_project()
 
-    def test_monkey_patch__no_attribute(self):
-        @aeidon.deco.monkey_patch(sys, "aeidon")
-        def modify_aeidon():
-            sys.aeidon = True
-        modify_aeidon()
-        assert not hasattr(sys, "aeidon")
-
-    def test_monkey_patch__os_environ(self):
-        @aeidon.deco.monkey_patch(os, "environ")
-        def modify_environment():
-            os.environ["AEIDON_TEST"] = "1"
-        modify_environment()
-        assert not "AEIDON_TEST" in os.environ
-
-    def test_monkey_patch__sys_platform(self):
-        platform = sys.platform
-        @aeidon.deco.monkey_patch(sys, "platform")
-        def modify_platform():
-            sys.platform = "commodore_64"
-        modify_platform()
-        assert sys.platform == platform
-
     def test_silent(self):
         function = lambda: [].remove(None)
         aeidon.deco.silent(ValueError)(function)()
