@@ -17,7 +17,6 @@
 
 import aeidon
 import imp
-import os
 
 from aeidon.i18n   import _, d_
 from unittest.mock import patch

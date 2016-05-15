@@ -50,7 +50,7 @@ class TestModule(aeidon.TestCase):
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding is None
 
-    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
+    @patch("aeidon.encodings.is_valid_code", lambda x: True)
     def test_detect_bom__utf_16_be(self):
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
@@ -58,7 +58,7 @@ class TestModule(aeidon.TestCase):
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_16_be"
 
-    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
+    @patch("aeidon.encodings.is_valid_code", lambda x: True)
     def test_detect_bom__utf_16_le(self):
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
@@ -66,7 +66,7 @@ class TestModule(aeidon.TestCase):
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_16_le"
 
-    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
+    @patch("aeidon.encodings.is_valid_code", lambda x: True)
     def test_detect_bom__utf_32_be(self):
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
@@ -74,7 +74,7 @@ class TestModule(aeidon.TestCase):
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_32_be"
 
-    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
+    @patch("aeidon.encodings.is_valid_code", lambda x: True)
     def test_detect_bom__utf_32_le(self):
         path = self.new_subrip_file()
         blob = open(path, "rb").read()
@@ -82,7 +82,7 @@ class TestModule(aeidon.TestCase):
         encoding = aeidon.encodings.detect_bom(path)
         assert encoding == "utf_32_le"
 
-    @patch("aeidon.encodings.is_valid_encoding", lambda x: True)
+    @patch("aeidon.encodings.is_valid_code", lambda x: True)
     def test_detect_bom__utf_8_sig(self):
         path = self.new_subrip_file()
         blob = open(path, "rb").read()

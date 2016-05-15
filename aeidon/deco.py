@@ -19,7 +19,6 @@
 
 import aeidon
 import collections
-import copy
 import functools
 import pickle
 
