@@ -18,6 +18,7 @@
 """Cell renderer for float data with fixed precision."""
 
 import aeidon
+import gaupol
 
 from gi.repository import GLib
 from gi.repository import GObject

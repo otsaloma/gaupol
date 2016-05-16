@@ -18,6 +18,7 @@
 """Cell renderer for integer data."""
 
 import aeidon
+import gaupol
 
 from gi.repository import GObject
 from gi.repository import Gtk

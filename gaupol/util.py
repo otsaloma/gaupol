@@ -60,12 +60,12 @@ def flash_dialog(dialog):
     dialog.destroy()
     return response
 
-def get_content_size(widget):
+def get_content_size(widget, font=None):
     """Return the width and height desired by `widget`."""
     if isinstance(widget, Gtk.TextView):
-        return get_text_view_size(widget)
+        return get_text_view_size(widget, font)
     if isinstance(widget, Gtk.TreeView):
-        return get_tree_view_size(widget)
+        return get_tree_view_size(widget, font)
     raise ValueError("Unsupported container type: {}"
                      .format(repr(type(widget))))
 
@@ -111,7 +111,7 @@ def get_text_view_size(text_view, font=None):
             + text_view.get_right_margin(),
             label.get_preferred_height()[1])
 
-def get_tree_view_size(tree_view):
+def get_tree_view_size(tree_view, font=None):
     """Return the width and height desired by `tree_view`."""
     scroller = tree_view.get_parent()
     policy = scroller.get_policy()
@@ -294,7 +294,7 @@ def run_dialog(dialog):
 def scale_to_content(widget, min_nchar=0,  max_nchar=32768,
                              min_nlines=0, max_nlines=32768, font=None):
     """Set `widget's` size by content, but limited by `min` and `max`."""
-    width, height = get_content_size(widget)
+    width, height = get_content_size(widget, font)
     width  = max(width, char_to_px(min_nchar, font))
     width  = min(width, char_to_px(max_nchar, font))
     height = max(height, lines_to_px(min_nlines, font))
