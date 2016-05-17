@@ -22,7 +22,6 @@ import gaupol
 import linecache
 import platform
 import sys
-import textwrap
 import traceback
 
 from aeidon.i18n   import _
@@ -33,13 +32,17 @@ from gi.repository import Pango
 __all__ = ("DebugDialog",)
 
 
-class DebugDialog(Gtk.Dialog):
+class DebugDialog(Gtk.MessageDialog):
 
     """Dialog for displaying a traceback in case of an unhandled exception."""
 
     def __init__(self):
         """Initialize a :class:`DebugDialog` instance."""
-        GObject.GObject.__init__(self, use_header_bar=True)
+        GObject.GObject.__init__(self,
+                                 message_type=Gtk.MessageType.ERROR,
+                                 text=_("Something went wrong"),
+                                 secondary_text=_("You have probably discovered a bug. Please report it by providing the below information and a description of what you were doing."))
+
         self._text_view = Gtk.TextView()
         self._init_dialog()
         self._init_text_view()
@@ -47,8 +50,8 @@ class DebugDialog(Gtk.Dialog):
     def _init_dialog(self):
         """Initialize the dialog."""
         self.add_button(_("_Report Bug"), Gtk.ResponseType.HELP)
-        self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
         self.add_button(_("_Quit"), Gtk.ResponseType.NO)
+        self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
         self.set_default_response(Gtk.ResponseType.CLOSE)
         self.set_modal(True)
         aeidon.util.connect(self, self, "response")
@@ -68,12 +71,11 @@ class DebugDialog(Gtk.Dialog):
         text_buffer.create_tag("monospace", family="monospace")
         text_buffer.create_tag("bold", weight=Pango.Weight.BOLD)
         text_buffer.create_tag("large", scale=1.1)
-        text_buffer.create_tag("huge", scale=1.25)
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.NONE)
+        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._text_view)
-        box = self.get_content_area()
+        box = self.get_message_area()
         gaupol.util.pack_start_expand(box, scroller)
         box.show_all()
 
@@ -113,12 +115,7 @@ class DebugDialog(Gtk.Dialog):
         tags = tags + ("monospace",)
         text_buffer.insert_with_tags_by_name(itr, text, *tags)
 
-    def _insert_title1(self, text):
-        """Insert `text` as a title to the text view."""
-        self._insert_text(text, "huge", "bold")
-        self._insert_text("\n\n")
-
-    def _insert_title2(self, text):
+    def _insert_title(self, text):
         """Insert `text` as a title to the text view."""
         self._insert_text(text, "large", "bold")
         self._insert_text("\n\n")
@@ -151,15 +148,11 @@ class DebugDialog(Gtk.Dialog):
 
     def set_text(self, exctype, value, tb):
         """Set text from `tb` to the text view."""
-        self._insert_title1(_("Something went wrong"))
-        intro = _("You have probably discovered a bug. Please report it by providing the below information and a description of what you were doing.")
-        self._insert_text(textwrap.fill(intro, 72))
-        self._insert_text("\n\n")
-        self._insert_title2("Traceback")
+        self._insert_title("Traceback")
         self._insert_traceback(exctype, value, tb)
-        self._insert_title2("Environment")
+        self._insert_title("Environment")
         self._insert_environment()
-        self._insert_title2("Dependencies")
+        self._insert_title("Dependencies")
         self._insert_dependencies()
         gaupol.util.scale_to_content(self._text_view,
                                      min_nchar=60,

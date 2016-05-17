@@ -21,7 +21,9 @@ Gaupol 1.0
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
 
+[#14]: https://github.com/otsaloma/gaupol/issues/14
 [#753315]: https://bugzilla.gnome.org/show_bug.cgi?id=753315
+[#763589]: https://bugzilla.gnome.org/show_bug.cgi?id=763589
 
 XXX:
 
