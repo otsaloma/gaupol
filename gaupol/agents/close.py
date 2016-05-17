@@ -169,10 +169,10 @@ class CloseAgent(aeidon.Delegate):
         self.quit()
 
     @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
     def _on_window_delete_event(self, *args):
         """Quit Gaupol."""
-        self.quit()
+        with aeidon.util.silent(gaupol.Default):
+            self.quit()
         return True
 
     @aeidon.deco.export

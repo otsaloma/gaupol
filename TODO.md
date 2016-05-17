@@ -15,6 +15,8 @@ Gaupol 1.0
 * [x] Add support for IBM273, IBM1125, KOI8-T and KZ1048 character
       encodings (whether these are actually available depends on your
       version of Python)
+* [x] Fix Cancel button behaviour when quitting Gaupol by closing the
+      main window and having unsaved changes (#14)
 * [x] Bump GTK+ dependency to 3.12 or greater
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
