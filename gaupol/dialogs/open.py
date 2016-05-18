@@ -38,18 +38,12 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Initialize an :class:`OpenDialog` instance."""
         GObject.GObject.__init__(self)
         self._use_autodetection = aeidon.util.chardet_available()
+        self._init_dialog(parent, title)
         self._init_extra_widget()
         self._init_filters()
         self._init_encoding_combo()
         self._init_align_combo()
         self._init_values(doc)
-        self.set_title(title)
-        self.set_transient_for(parent)
-        self.set_action(Gtk.FileChooserAction.OPEN)
-        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        self.add_button(_("_Open"), Gtk.ResponseType.OK)
-        self.set_default_response(Gtk.ResponseType.OK)
-        self.connect("response", self._on_response)
 
     def _init_align_combo(self):
         """Initialize the align method combo box."""
@@ -63,6 +57,16 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         renderer = Gtk.CellRendererText()
         self._align_combo.pack_start(renderer, expand=True)
         self._align_combo.add_attribute(renderer, "text", 0)
+
+    def _init_dialog(self, parent, title):
+        """Initialize the dialog."""
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Open"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_title(title)
+        self.connect("response", self._on_response)
+        self.set_action(Gtk.FileChooserAction.OPEN)
 
     def _init_extra_widget(self):
         """Initialize the extra widget from UI definition file."""

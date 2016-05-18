@@ -44,6 +44,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Initialize a :class:`SaveDialog` instance."""
         GObject.GObject.__init__(self)
         self._mode = mode
+        self._init_dialog(parent, title)
         self._init_extra_widget()
         self._init_filters()
         self._init_format_combo()
@@ -51,16 +52,6 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._init_newline_combo()
         self._init_framerate_combo()
         self._init_values()
-        self.set_title(title)
-        self.set_transient_for(parent)
-        self.set_action(Gtk.FileChooserAction.SAVE)
-        self.set_do_overwrite_confirmation(True)
-        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        self.add_button(_("_Save"), Gtk.ResponseType.OK)
-        self.set_default_response(Gtk.ResponseType.OK)
-        self.connect("response", self._on_response)
-        save_button = self.get_widget_for_response(Gtk.ResponseType.OK)
-        save_button.connect("event", self._on_save_button_event)
 
     def get_format(self):
         """Return the selected format."""
@@ -76,6 +67,19 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Return the selected newline."""
         index = self._newline_combo.get_active()
         return aeidon.newlines[index]
+
+    def _init_dialog(self, parent, title):
+        """Initialize the dialog."""
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Save"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_title(title)
+        self.connect("response", self._on_response)
+        save_button = self.get_widget_for_response(Gtk.ResponseType.OK)
+        save_button.connect("event", self._on_save_button_event)
+        self.set_action(Gtk.FileChooserAction.SAVE)
+        self.set_do_overwrite_confirmation(True)
 
     def _init_extra_widget(self):
         """Initialize the extra widget from UI definition file."""

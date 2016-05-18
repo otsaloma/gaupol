@@ -33,13 +33,17 @@ class VideoDialog(Gtk.FileChooserDialog):
     def __init__(self, parent, title, button_label):
         """Initialize a :class:`VideoDialog` instance."""
         GObject.GObject.__init__(self)
-        self.set_title(title)
-        self.set_transient_for(parent)
-        self.set_action(Gtk.FileChooserAction.OPEN)
+        self._init_dialog(parent, title, button_label)
+        self._init_filters()
+
+    def _init_dialog(self, parent, title, button_label):
+        """Initialize the dialog."""
         self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         self.add_button(button_label, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
-        self._init_filters()
+        self.set_transient_for(parent)
+        self.set_title(title)
+        self.set_action(Gtk.FileChooserAction.OPEN)
 
     def _init_filters(self):
         """Intialize the file filters."""
