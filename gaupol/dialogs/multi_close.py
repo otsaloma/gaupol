@@ -20,46 +20,64 @@
 import aeidon
 import gaupol
 
+from aeidon.i18n   import _
+from gi.repository import GObject
 from gi.repository import Gtk
 
 __all__ = ("MultiCloseDialog",)
 
 
-class MultiCloseDialog(gaupol.BuilderDialog):
+class MultiCloseDialog(Gtk.MessageDialog):
 
     """Dialog for warning when closing multiple documents."""
 
-    _widgets = ("main_tree_view", "main_vbox", "tran_tree_view", "tran_vbox")
-
     def __init__(self, parent, application, pages):
         """Initialize a :class:`MultiCloseDialog` instance."""
-        gaupol.BuilderDialog.__init__(self, "multi-close-dialog.ui")
+        GObject.GObject.__init__(self,
+                                 message_type=Gtk.MessageType.ERROR,
+                                 text=_("Save changes to documents before closing?"),
+                                 secondary_text=_("If you don't save, changes will be permanently lost."))
+
         self.application = application
+        self._main_tree_view = Gtk.TreeView()
+        self._main_vbox = gaupol.util.new_vbox(6)
         self.pages = tuple(pages)
+        self._tran_tree_view = Gtk.TreeView()
+        self._tran_vbox = gaupol.util.new_vbox(6)
+        self._init_dialog(parent)
         self._init_main_tree_view()
         self._init_tran_tree_view()
-        self._init_sizes()
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.YES)
+
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.add_button(_("Close _Without Saving"), Gtk.ResponseType.NO)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Save"), Gtk.ResponseType.YES)
+        self.set_default_response(Gtk.ResponseType.YES)
+        self.set_transient_for(parent)
+        self.set_modal(True)
+        aeidon.util.connect(self, self, "response")
 
     def _init_main_tree_view(self):
         """Initialize the main tree view."""
         store = self._init_tree_view(self._main_tree_view)
         for page in (x for x in self.pages if x.project.main_changed):
             store.append((page, True, page.get_main_basename()))
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
+        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
+        scroller.add(self._main_tree_view)
+        label = Gtk.Label(label=_("Select the _main documents you want to save:"))
+        label.props.xalign = 0
+        label.set_use_underline(True)
+        label.set_mnemonic_widget(self._main_tree_view)
+        gaupol.util.pack_start(self._main_vbox, label)
+        gaupol.util.pack_start_expand(self._main_vbox, scroller)
+        gaupol.util.pack_start_expand(self.get_message_area(), self._main_vbox)
         self._main_vbox.set_visible(len(store) > 0)
-
-    def _init_sizes(self):
-        """Initialize widget sizes."""
-        if self._main_vbox.get_visible():
+        if len(store) > 0:
+            self._main_vbox.show_all()
             gaupol.util.scale_to_content(self._main_tree_view,
-                                         min_nchar=30,
-                                         max_nchar=60,
-                                         min_nlines=2,
-                                         max_nlines=6)
-
-        if self._tran_vbox.get_visible():
-            gaupol.util.scale_to_content(self._tran_tree_view,
                                          min_nchar=30,
                                          max_nchar=60,
                                          min_nlines=2,
@@ -70,10 +88,30 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         store = self._init_tree_view(self._tran_tree_view)
         for page in (x for x in self.pages if x.project.tran_changed):
             store.append((page, True, page.get_translation_basename()))
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
+        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
+        scroller.add(self._tran_tree_view)
+        label = Gtk.Label(label=_("Select the _translation documents you want to save:"))
+        label.props.xalign = 0
+        label.set_use_underline(True)
+        label.set_mnemonic_widget(self._tran_tree_view)
+        gaupol.util.pack_start(self._tran_vbox, label)
+        gaupol.util.pack_start_expand(self._tran_vbox, scroller)
+        gaupol.util.pack_start_expand(self.get_message_area(), self._tran_vbox)
         self._tran_vbox.set_visible(len(store) > 0)
+        if len(store) > 0:
+            self._tran_vbox.show_all()
+            gaupol.util.scale_to_content(self._tran_tree_view,
+                                         min_nchar=30,
+                                         max_nchar=60,
+                                         min_nlines=2,
+                                         max_nlines=6)
 
     def _init_tree_view(self, tree_view):
         """Initialize `tree_view` and return its model."""
+        tree_view.set_headers_visible(False)
+        tree_view.set_enable_search(False)
         store = Gtk.ListStore(object, bool, str)
         tree_view.set_model(store)
         selection = tree_view.get_selection()
