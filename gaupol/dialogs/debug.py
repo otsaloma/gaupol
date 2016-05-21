@@ -60,6 +60,7 @@ class DebugDialog(Gtk.MessageDialog):
         """Initialize the text view."""
         self._text_view.set_wrap_mode(Gtk.WrapMode.WORD)
         self._text_view.set_editable(False)
+        self._text_view.set_cursor_visible(False)
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)

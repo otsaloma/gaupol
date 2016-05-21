@@ -248,7 +248,7 @@ class SearchDialog(gaupol.BuilderDialog):
         gaupol.util.prepare_text_view(self._text_view)
         gaupol.util.scale_to_size(self._text_view,
                                   nchar=55,
-                                  nlines=5,
+                                  nlines=6,
                                   font="custom")
 
         text_buffer = self._text_view.get_buffer()

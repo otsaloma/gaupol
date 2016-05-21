@@ -25,29 +25,30 @@ from gi.repository import GObject
 from gi.repository import Gtk
 
 
-class PreviewErrorDialog(Gtk.Dialog):
+class PreviewErrorDialog(Gtk.MessageDialog):
 
     """Dialog for informing that preview failed."""
 
     def __init__(self, parent, output):
         """Initialize a :class:`PreviewErrorDialog` instance."""
-        GObject.GObject.__init__(self, use_header_bar=True)
+        GObject.GObject.__init__(self,
+                                 message_type=Gtk.MessageType.ERROR,
+                                 text=_("Preview in video player failed"),
+                                 secondary_text=_("There is probably a problem with either the video file or the preview command."))
+
         self._text_view = Gtk.TextView()
         self._init_dialog(parent)
         self._init_text_view(output)
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
-        self.set_default_response(Gtk.ResponseType.OK)
+        self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
+        self.set_default_response(Gtk.ResponseType.CLOSE)
         self.set_transient_for(parent)
         self.set_modal(True)
-        self.set_title(_("Preview Failed"))
 
     def _init_text_view(self, output):
         """Initialize the text view."""
-        text_buffer = self._text_view.get_buffer()
-        text_buffer.set_text(output)
-        gaupol.style.add_font_class(self._text_view, "monospace")
         self._text_view.set_wrap_mode(Gtk.WrapMode.WORD)
         self._text_view.set_editable(False)
         self._text_view.set_cursor_visible(False)
@@ -58,17 +59,20 @@ class PreviewErrorDialog(Gtk.Dialog):
             # Available since GTK+ 3.18.
             self._text_view.set_top_margin(6)
             self._text_view.set_bottom_margin(6)
+        text_buffer = self._text_view.get_buffer()
+        text_buffer.set_text(output)
+        gaupol.style.add_font_class(self._text_view, "monospace")
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.NONE)
+        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
         scroller.add(self._text_view)
-        box = self.get_content_area()
+        box = self.get_message_area()
         gaupol.util.pack_start_expand(box, scroller)
         gaupol.util.scale_to_content(self._text_view,
                                      min_nchar=60,
-                                     max_nchar=120,
+                                     max_nchar=100,
                                      min_nlines=10,
-                                     max_nlines=30,
+                                     max_nlines=25,
                                      font="monospace")
 
         box.show_all()
