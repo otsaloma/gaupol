@@ -95,7 +95,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return a :class:`CellTextView` widget."""
         editor = CellTextView()
-        gaupol.style.use_custom_font(editor)
+        gaupol.style.use_font(editor, "custom")
         editor.set_text(self._text)
         editor.set_size_request(cell_area.width, cell_area.height)
         editor.set_left_margin(self.props.xpad)

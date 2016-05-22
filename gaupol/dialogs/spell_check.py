@@ -239,9 +239,9 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _init_widgets(self):
         """Initialize widget properties."""
         self._init_tree_view()
-        gaupol.style.use_custom_font(self._entry)
-        gaupol.style.use_custom_font(self._text_view)
-        gaupol.style.use_custom_font(self._tree_view)
+        gaupol.style.use_font(self._entry, "custom")
+        gaupol.style.use_font(self._text_view, "custom")
+        gaupol.style.use_font(self._tree_view, "custom")
         with aeidon.util.silent(AttributeError):
             # Top and bottom margins available since GTK+ 3.18.
             self._text_view.set_top_margin(6)

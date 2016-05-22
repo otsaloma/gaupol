@@ -40,7 +40,7 @@ class TimeCellRenderer(Gtk.CellRendererText):
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return a :class:`gaupol.TimeEntry` widget."""
         editor = gaupol.TimeEntry()
-        gaupol.style.use_custom_font(editor)
+        gaupol.style.use_font(editor, "custom")
         editor.set_has_frame(False)
         editor.set_alignment(self.props.xalign)
         editor.set_text(self.props.text)

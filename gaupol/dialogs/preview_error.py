@@ -61,7 +61,7 @@ class PreviewErrorDialog(Gtk.MessageDialog):
             self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(output)
-        gaupol.style.add_font_class(self._text_view, "monospace")
+        gaupol.style.use_font(self._text_view, "monospace")
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)

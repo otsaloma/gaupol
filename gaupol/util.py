@@ -33,7 +33,7 @@ def char_to_px(nchar, font=None):
     """Convert characters to pixels."""
     if nchar < 0: return nchar
     label = Gtk.Label(label="etaoin shrdlu")
-    gaupol.style.add_font_class(label, font)
+    gaupol.style.use_font(label, font)
     label.show()
     width = label.get_preferred_width()[1]
     return int(round(nchar * width/len(label.props.label)))
@@ -104,7 +104,7 @@ def get_text_view_size(text_view, font=None):
     start, end = text_buffer.get_bounds()
     text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
-    gaupol.style.add_font_class(label, font)
+    gaupol.style.use_font(label, font)
     label.show()
     return (label.get_preferred_width()[1]
             + text_view.get_left_margin()
@@ -210,7 +210,7 @@ def lines_to_px(nlines, font=None):
     if nlines < 0: return nlines
     text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     label = Gtk.Label(label=text)
-    gaupol.style.add_font_class(label, font)
+    gaupol.style.use_font(label, font)
     label.show()
     height = label.get_preferred_height()[1]
     return int(round(nlines * height))
@@ -265,7 +265,7 @@ def prepare_text_view(text_view):
     update_margin(None, None, text_view)
     def update_font(section, value, text_view):
         text_view.reset_style()
-    gaupol.style.add_font_class(text_view, "custom")
+    gaupol.style.use_font(text_view, "custom")
     connect("notify::use_custom_font", update_font, text_view)
     connect("notify::custom_font", update_font, text_view)
     update_font(None, None, text_view)

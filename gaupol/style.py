@@ -29,17 +29,7 @@ with open(CSS_FILE, "r") as f:
     CSS = f.read()
 
 
-def add_font_class(widget, font):
-    """Add CSS font class to style `widget`."""
-    if not font: return
-    load_css(widget)
-    style = widget.get_style_context()
-    if font == "custom":
-        style.add_class("gaupol-custom-font")
-    if font == "monospace":
-        style.add_class("monospace")
-
-def get_editor_font_css():
+def _get_editor_font_css():
     """Return CSS for custom editor font."""
     if not gaupol.conf.editor.custom_font: return ""
     if not gaupol.conf.editor.use_custom_font: return ""
@@ -61,7 +51,7 @@ def get_editor_font_css():
 def load_css(widget):
     """Load CSS rules from file and conf for `widget`."""
     provider = Gtk.CssProvider.get_default()
-    css = "\n".join((CSS, get_editor_font_css()))
+    css = "\n".join((CSS, _get_editor_font_css()))
     provider.load_from_data(bytes(css.encode()))
     style = widget.get_style_context()
     priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -69,15 +59,21 @@ def load_css(widget):
                                   provider,
                                   priority)
 
-def update_css(*args, **kwargs):
+def _update_css(*args, **kwargs):
     """Update CSS rules for the default provider."""
     provider = Gtk.CssProvider.get_default()
-    provider.load_from_data(bytes(get_editor_font_css().encode()))
+    provider.load_from_data(bytes(_get_editor_font_css().encode()))
 
-def use_custom_font(widget):
-    """Use custom editor font for `widget`."""
-    widget.get_style_context().add_class("gaupol-custom-font")
+def use_font(widget, font):
+    """Use `font` ("custom" or "monospace") for `widget`."""
+    if not font: return
+    load_css(widget)
+    style = widget.get_style_context()
+    if font == "custom":
+        style.add_class("gaupol-custom-font")
+    if font == "monospace":
+        style.add_class("monospace")
 
 
-gaupol.conf.editor.connect("notify::custom_font", update_css)
-gaupol.conf.editor.connect("notify::use_custom_font", update_css)
+gaupol.conf.editor.connect("notify::custom_font", _update_css)
+gaupol.conf.editor.connect("notify::use_custom_font", _update_css)
