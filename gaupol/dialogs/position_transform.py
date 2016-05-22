@@ -112,6 +112,9 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         last_subtitle = len(page.project.subtitles)
         self._subtitle_spin_1.set_range(1, last_subtitle)
         self._subtitle_spin_2.set_range(1, last_subtitle)
+        with aeidon.util.silent(AttributeError):
+            self._text_label_1.props.xalign = 0
+            self._text_label_2.props.xalign = 0
 
     def _on_preview_button_1_clicked(self, *args):
         """Preview changes from the first point."""
