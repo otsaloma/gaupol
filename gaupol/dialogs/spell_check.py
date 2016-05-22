@@ -25,11 +25,6 @@ from aeidon.i18n   import _
 from gi.repository import Gtk
 from gi.repository import Pango
 
-try:
-    import enchant.checker
-except Exception:
-    pass
-
 __all__ = ("SpellCheckDialog",)
 
 
@@ -88,14 +83,12 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._pager = None
         self._replacements = []
         self._row = None
+        self._init_dialog(parent)
         self._init_spell_check()
         self._init_widgets()
         self._init_sensitivities()
         self.resize(*gaupol.conf.spell_check.size)
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
         self._start()
-        # TODO: Top and bottom margins
 
     def _advance(self):
         """Advance to the next spelling error."""
@@ -188,16 +181,22 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         Raise :exc:`ValueError` if dictionary initialization fails.
         """
         try:
+            import enchant.checker
             dictionary = enchant.Dict(self._language)
             # Sometimes enchant will initialize a dictionary that will not
             # actually work when trying to use it, hence check something.
             dictionary.check("gaupol")
+            self._checker = enchant.checker.SpellChecker(dictionary, "")
         except enchant.Error as error:
             self._show_error_dialog(str(error))
             raise ValueError("Dictionary initialization failed for language {}"
                              .format(repr(self._language)))
 
-        self._checker = enchant.checker.SpellChecker(dictionary, "")
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.set_default_response(Gtk.ResponseType.CLOSE)
+        self.set_transient_for(parent)
+        self.set_modal(True)
 
     def _init_replacements(self):
         """Read misspelled words and their replacements from file."""
@@ -243,12 +242,17 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         gaupol.style.use_custom_font(self._entry)
         gaupol.style.use_custom_font(self._text_view)
         gaupol.style.use_custom_font(self._tree_view)
+        with aeidon.util.silent(AttributeError):
+            # Top and bottom margins available since GTK+ 3.18.
+            self._text_view.set_top_margin(6)
+            self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
-        gaupol.util.scale_to_size(self._text_view, nchar=50, nlines=4, font=font)
-        gaupol.util.scale_to_size(self._tree_view, nchar=20, nlines=6, font=font)
-        self._entry_handler = self._entry.connect("changed",
-                                                  self._on_entry_changed)
+        scale = gaupol.util.scale_to_size
+        scale(self._text_view, nchar=55, nlines=5, font="custom")
+        scale(self._tree_view, nchar=20, nlines=6, font="custom")
+        self._entry_handler = self._entry.connect(
+            "changed", self._on_entry_changed)
 
     def _on_add_button_clicked(self, *args):
         """Add the current word to the user dictionary."""
@@ -361,9 +365,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
 
     def _save_geometry(self):
         """Save dialog size."""
-        with aeidon.util.silent(AttributeError):
-            # is_maximized was added in GTK+ 3.12.
-            if self.is_maximized(): return
+        if not self.is_maximized(): return
         gaupol.conf.spell_check.size = list(self.get_size())
 
     def _set_done(self):
@@ -400,9 +402,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _write_replacements(self):
         """Write misspelled words and their replacements to file."""
         if not self._replacements: return
-        self._replacements = aeidon.util.get_unique(self._replacements,
-                                                    keep_last=True)
-
+        self._replacements = aeidon.util.get_unique(
+            self._replacements, keep_last=True)
         basename = "{}.repl".format(self._language)
         path = os.path.join(self._personal_dir, basename)
         if len(self._replacements) > self._max_replacements:

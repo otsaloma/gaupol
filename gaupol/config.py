@@ -154,7 +154,7 @@ CONFIG_DEFAULTS = {
         "field": gaupol.fields.MAIN_TEXT,
         "inline": False,
         "language": "en",
-        "size": [600, 371],
+        "size": [500, 309],
         "target": gaupol.targets.CURRENT,
     },
     "subtitle_insert": {
