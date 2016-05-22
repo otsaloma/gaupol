@@ -22,28 +22,6 @@ from gi.repository import Gtk
 
 class TestModule(gaupol.TestCase):
 
-    def run_text_view(self):
-        text_view = Gtk.TextView()
-        text_buffer = text_view.get_buffer()
-        text = ("Everything has been said\n"
-                "provided words do not change\n"
-                "their meanings\n"
-                "and meanings their words")
-
-        text_buffer.insert_at_cursor(text)
-        gaupol.ruler.connect_text_view(text_view)
-        scroller = Gtk.ScrolledWindow()
-        scroller.set_shadow_type(Gtk.ShadowType.IN)
-        scroller.add(text_view)
-        window = Gtk.Window()
-        window.connect("delete-event", Gtk.main_quit)
-        window.set_position(Gtk.WindowPosition.CENTER)
-        window.set_default_size(300, 120)
-        window.set_border_width(12)
-        window.add(scroller)
-        window.show_all()
-        Gtk.main()
-
     def test_connect_text_view(self):
         text_view = Gtk.TextView()
         gaupol.ruler.connect_text_view(text_view)

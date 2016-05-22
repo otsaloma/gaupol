@@ -32,67 +32,30 @@ class _Ruler:
         """Initialize a :class:`_Ruler` instance."""
         self._em_length = None
         self._label = Gtk.Label()
-        self._length_unit = None
         self._update_em_length()
-        self._update_length_unit()
-        gaupol.conf.connect_notify("editor", "length_unit", self)
 
     def get_char_length(self, text, strip=False, floor=False):
         """Return length of `text` measured in characters."""
         text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
         return len(text.replace("\n", " "))
 
-    def get_char_lengths(self, text, strip=False, floor=False):
-        """Return line lengths of `text` measured in characters."""
-        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
-        return tuple(len(x) for x in text.split("\n"))
-
     def get_em_length(self, text, strip=False, floor=False):
         """Return length of `text` measured in ems."""
         text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
-        text = text.replace("\n", " ")
-        self._label.set_text(text)
+        self._label.set_text(text.replace("\n", " "))
         width = self._label.get_preferred_width()[1]
         length = width / self._em_length
         return (int(length) if floor else length)
 
-    def get_em_lengths(self, text, strip=False, floor=False):
-        """Return line lengths of `text` measured in ems."""
-        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
-        lengths = []
-        for line in text.split("\n"):
-            self._label.set_text(line)
-            width = self._label.get_preferred_width()[1]
-            length = width / self._em_length
-            lengths.append(int(length) if floor else length)
-        return tuple(lengths)
-
-    def get_lengths(self, text, strip=False, floor=False):
-        """Return line lengths of `text` measured in default units."""
-        if self._length_unit == gaupol.length_units.CHAR:
-            return self.get_char_lengths(text, strip, floor)
-        if self._length_unit == gaupol.length_units.EM:
-            return self.get_em_lengths(text, strip, floor)
-        raise ValueError("Invalid length unit: {}"
-                         .format(repr(self._length_unit)))
-
-    def _on_conf_editor_notify_length_unit(self, *args):
-        """Update the length function used."""
-        self._update_length_unit()
-
     def _update_em_length(self):
-        """Update the length of em based on font description size."""
+        """Update the length of em based on font rendering."""
         text = "abcdefghijklmnopqrstuvwxyz"
         self._label.set_text(text)
         self._label.show()
         width = self._label.get_preferred_width()[1]
         # About 0.55 em per a-z average character.
-        # https://bug763589.bugzilla-attachments.gnome.org/attachment.cgi?id=325466
+        # https://bugzilla.gnome.org/show_bug.cgi?id=763589
         self._em_length = width / (0.55 * len(text))
-
-    def _update_length_unit(self):
-        """Update the length function used."""
-        self._length_unit = gaupol.conf.editor.length_unit
 
 
 _ruler = _Ruler()
@@ -149,4 +112,5 @@ def get_length_function(unit):
 
 def get_lengths(text):
     """Return a sequence of floored line lengths without tags."""
-    return _ruler.get_lengths(text, strip=True, floor=True)
+    fun = get_length_function(gaupol.conf.editor.length_unit)
+    return [fun(line, strip=True, floor=True) for line in text.split("\n")]
