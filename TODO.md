@@ -1,7 +1,7 @@
 Gaupol 1.0
 ==========
 
-* [ ] Use header bars for dialogs
+* [x] Use header bars for dialogs
 * [x] Add mpv for preview with precise seek (`--hr-seek=yes`)
 * [x] Make mpv the default preview video player on non-Windows systems
       and set the default preview offset to one second
@@ -18,6 +18,7 @@ Gaupol 1.0
 * [x] Fix Cancel button behaviour when quitting Gaupol by closing the
       main window and having unsaved changes (#14)
 * [x] Bump GTK+ dependency to 3.12 or greater
+* [x] Drop optional dependencies on PT fonts
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
 

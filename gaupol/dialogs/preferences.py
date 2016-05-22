@@ -130,7 +130,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
     _widgets = (
         "extensions_about_button",
         "extensions_help_button",
-        "extensions_link_button",
         "extensions_preferences_button",
         "extensions_toolbar",
         "extensions_tree_view",
@@ -186,8 +185,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-        # XXX: Remove!
-        # self._link_button.set_uri(gaupol.EXTENSIONS_URL)
         store = self._tree_view.get_model()
         extensions = []
         for module in self.manager.get_modules():
@@ -281,10 +278,10 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         "file_add_button",
         "file_auto_check",
         "file_down_button",
-        "file_tree_view",
         "file_locale_check",
         "file_remove_button",
         "file_toolbar",
+        "file_tree_view",
         "file_up_button",
     )
 
@@ -312,7 +309,7 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
         theme = Gtk.IconTheme.get_default()
         # Tool buttons in the UI file are specified as symbolic icons
-        # by name, found in adwaita-icon-theme, if missing in another
+        # by name, found in adwaita-icon-theme. If missing in another
         # theme fall back to non-symbolic icons.
         if not all((theme.has_icon(self._add_button.get_icon_name()),
                     theme.has_icon(self._remove_button.get_icon_name()),
@@ -579,11 +576,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self._preview_page = PreviewPage(self, application)
         self._video_page = VideoPage(self, application)
         self._builder.connect_signals(self._get_callbacks())
-        self.connect("response", self._on_response)
-        aeidon.util.connect(self, "_notebook", "switch-page")
-        self.set_transient_for(parent)
-        self.set_default_response(Gtk.ResponseType.CLOSE)
-        self.set_response_sensitive(Gtk.ResponseType.HELP, False)
+        self._init_dialog(parent)
 
     def _get_callbacks(self):
         """Return a dictionary mapping names to callback methods."""
@@ -598,14 +591,8 @@ class PreferencesDialog(gaupol.BuilderDialog):
                 callbacks[name] = getattr(page, name)
         return callbacks
 
-    def _on_notebook_switch_page(self, notebook, page, index):
-        """Set sensitivity of the help button."""
-        # Use help on the preview page, which is the fourth.
-        self.set_response_sensitive(Gtk.ResponseType.HELP, index == 3)
-
-    def _on_response(self, dialog, response):
-        """Do not send response if browsing help."""
-        if response == Gtk.ResponseType.HELP:
-            # XXX: Remove?
-            # gaupol.util.show_uri(gaupol.PREVIEW_HELP_URL)
-            self.stop_emission("response")
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+        self.set_default_response(Gtk.ResponseType.CLOSE)
+        self.set_transient_for(parent)
+        self.set_modal(True)

@@ -32,8 +32,6 @@ recommended dependencies follow.
  * [Universal Encoding Detector][8] (a.k.a. chardet) – required for
    character encoding auto-detection
  * [mpv][9], [MPlayer][10] or [VLC][11] – recommended for preview
- * [PT Sans Caption and PT Mono fonts][12] – recommended and used by
-   default for integrated video player's subtitle and timecode overlays
 
   [1]: http://www.python.org/
   [2]: http://wiki.gnome.org/Projects/PyGObject
@@ -46,7 +44,6 @@ recommended dependencies follow.
   [9]: http://mpv.io/
  [10]: http://www.mplayerhq.hu/
  [11]: http://www.videolan.org/vlc/
- [12]: http://www.paratype.com/public/
 
 Running
 =======
