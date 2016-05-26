@@ -21,7 +21,6 @@ import aeidon
 import gaupol
 import re
 
-from aeidon.i18n   import _
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
@@ -93,11 +92,13 @@ class View(Gtk.TreeView):
         # sufficient width for usual expected data.
         if field == gaupol.fields.NUMBER:
             size_label = Gtk.Label(label="8888")
-            width = size_label.get_layout().get_pixel_size()[0]
+            size_label.show()
+            width = size_label.get_preferred_width()[1]
             label.set_size_request(width, -1)
         if field == gaupol.fields.DURATION:
             size_label = Gtk.Label(label="88.888")
-            width = size_label.get_layout().get_pixel_size()[0]
+            size_label.show()
+            width = size_label.get_preferred_width()[1]
             label.set_size_request(width, -1)
         label.set_halign(Gtk.Align.START)
         label.show()
@@ -343,9 +344,9 @@ class View(Gtk.TreeView):
             time_next = store[row+1][col]
         except IndexError:
             time_next = "99:59:59.999"
-        return not (self._calc.time_to_seconds(time_iter)
-                    <= self._calc.time_to_seconds(time_key)
-                    <  self._calc.time_to_seconds(time_next))
+        return not (self._calc.time_to_seconds(time_iter) <=
+                    self._calc.time_to_seconds(time_key) <
+                    self._calc.time_to_seconds(time_next))
 
     def select_rows(self, rows):
         """Select `rows`, clearing previous selection."""
