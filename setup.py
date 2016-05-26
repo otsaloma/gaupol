@@ -158,7 +158,7 @@ class Distribution(distribution):
         while mandir.endswith("/"):
             mandir = mandir[:-1]
         dest = "/".join((mandir, "man1"))
-        self.data_files.append((dest, ("doc/gaupol.1",)))
+        self.data_files.append((dest, ("data/gaupol.1",)))
 
     def __find_packages(self, name):
         """Find Python packages to install for name."""
@@ -214,33 +214,6 @@ class Distribution(distribution):
             if isinstance(value, str):
                 setattr(self, option, strtobool(value))
         return value
-
-
-class Documentation(distutils.cmd.Command):
-
-    """Command to build documentation from source code."""
-
-    description = "build documentation from source code"
-    user_options = [("format=", "f",
-                     "type of documentation to create (try 'html')")]
-
-    def finalize_options(self):
-        """Ensure that options have valid values."""
-        if self.format is None:
-            log.warn("format not specified, using 'html'")
-            self.format = "html"
-
-    def initialize_options(self):
-        """Initialize default values for options."""
-        self.format = None
-
-    def run(self):
-        """Build documentation from source code."""
-        os.chdir(os.path.join("doc", "sphinx"))
-        if self.dry_run: return
-        run_command_or_exit("python3 autogen.py aeidon gaupol")
-        run_command_or_exit("sphinx-build -b {} . _build/{}"
-                            .format(self.format, self.format))
 
 
 class Install(install):
@@ -440,7 +413,6 @@ setup_kwargs = dict(
     distclass=Distribution,
     cmdclass=dict(
         clean=Clean,
-        doc=Documentation,
         install=Install,
         install_data=InstallData,
         install_lib=InstallLib,

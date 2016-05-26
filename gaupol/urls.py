@@ -32,6 +32,6 @@ __all__ = (
 )
 
 BUG_REPORT_URL = "https://github.com/otsaloma/gaupol/issues"
-DOCUMENTATION_URL = "https://github.com/otsaloma/gaupol/tree/master/doc/user"
+DOCUMENTATION_URL = "https://github.com/otsaloma/gaupol/tree/master/doc"
 HOMEPAGE_URL = "http://otsaloma.io/gaupol/"
 REGEX_HELP_URL = "https://docs.python.org/3/library/re.html#regular-expression-syntax"

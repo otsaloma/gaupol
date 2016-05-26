@@ -15,9 +15,6 @@ data/patterns/*.common-error
 data/patterns/*.hearing-impaired
 data/patterns/*.line-break
 dist
-doc/sphinx/api
-doc/sphinx/_build
-doc/sphinx/index.rst
 locale
 po/*~
 ChangeLog

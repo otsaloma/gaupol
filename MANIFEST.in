@@ -6,17 +6,11 @@ recursive-include gaupol *.py
 recursive-include manifests *
 recursive-include po *
 recursive-include tools *
-include AUTHORS.md
+include *.md
+include *.py
 include ChangeLog
 include COPYING
-include INSTALL.md
 include MANIFEST.in
-include NEWS.md
-include README.md
-include README.aeidon.md
-include setup.py
-include TODO.md
-include winsetup.py
 global-exclude *~
 global-exclude .hidden
 global-exclude __pycache__

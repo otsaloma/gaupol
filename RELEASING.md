@@ -32,9 +32,6 @@ Releasing a New Version
    - `python3 setup.py clean sdist_gna --formats tar`
    - `$EDITOR dist/*/*.news dist/*/*.changes`
    - `download.gna.org:/upload/gaupol/`
- * Generate API documentation and upload
-   - `python3 setup.py clean doc --format html`
-   - `download.gna.org:/upload/gaupol/`
  * Send announcements and update web sites
    - http://github.com/otsaloma/gaupol/releases
    - http://home.gna.org/gaupol
