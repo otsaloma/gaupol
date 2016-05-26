@@ -51,27 +51,20 @@ import gi
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 
-try:
+with aeidon.util.silent(Exception):
     gi.require_version("GdkX11", "3.0")
     gi.require_version("Gst", "1.0")
     gi.require_version("GstPbutils", "1.0")
-except Exception:
-    pass
-
-from gi.repository import Gtk
-Gtk.IconTheme.get_default().append_search_path(
-    os.path.abspath(os.path.join(aeidon.DATA_DIR, "icons")))
 
 from gi.repository import GLib
 from gi.repository import GObject
+
 GLib.threads_init()
 GObject.threads_init()
 
-try:
+with aeidon.util.silent(Exception):
     from gi.repository import Gst
     Gst.init(None)
-except Exception:
-    pass
 
 from gaupol.urls import *
 from gaupol import util
