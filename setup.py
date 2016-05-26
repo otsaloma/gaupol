@@ -37,7 +37,6 @@ import distutils.command.clean
 import distutils.command.install
 import distutils.command.install_data
 import distutils.command.install_lib
-import distutils.command.sdist
 import glob
 import os
 import re
@@ -52,7 +51,6 @@ install = distutils.command.install.install
 install_data = distutils.command.install_data.install_data
 install_lib = distutils.command.install_lib.install_lib
 log = distutils.log
-sdist = distutils.command.sdist.sdist
 
 
 global_options = (
@@ -353,54 +351,6 @@ class InstallLib(install_lib):
         open(path, "w", encoding="utf_8").write(text)
 
 
-class SDistGna(sdist):
-
-    description = "create source distribution for gna.org"
-
-    def finalize_options(self):
-        """Set the distribution directory to 'dist/X.Y'."""
-        version = get_gaupol_version()
-        sdist.finalize_options(self)
-        branch = ".".join(version.split(".")[:2])
-        self.dist_dir = os.path.join(self.dist_dir, branch)
-
-    def run(self):
-        version = get_gaupol_version()
-        if os.path.isfile("ChangeLog"):
-            os.remove("ChangeLog")
-        run_command_or_exit("tools/generate-change-log > ChangeLog")
-        assert os.path.isfile("ChangeLog")
-        assert open("ChangeLog", "r").read().strip()
-        sdist.run(self)
-        basename = "gaupol-{}".format(version)
-        tarballs = os.listdir(self.dist_dir)
-        os.chdir(self.dist_dir)
-        # Compare tarball contents with working copy.
-        temp_dir = tempfile.gettempdir()
-        test_dir = os.path.join(temp_dir, basename)
-        tobj = tarfile.open(tarballs[-1], "r")
-        for member in tobj.getmembers():
-            tobj.extract(member, temp_dir)
-        log.info("comparing tarball (tmp) with working copy (../..)")
-        os.system('diff -qr -x ".*" -x "*.pyc" ../.. {}'.format(test_dir))
-        response = input("Are all files in the tarball [Y/n]? ")
-        if response.lower() == "n":
-            raise SystemExit("Must edit MANIFEST.in")
-        shutil.rmtree(test_dir)
-        # Create extra distribution files.
-        os.system("xz {}.tar".format(basename))
-        log.info("calculating md5sums")
-        run_command_or_exit("md5sum * > {}.md5sum".format(basename))
-        log.info("creating '{}.changes'".format(basename))
-        source = os.path.join("..", "..", "ChangeLog")
-        shutil.copyfile(source, "{}.changes".format(basename))
-        log.info("creating '{}.news'".format(basename))
-        source = os.path.join("..", "..", "NEWS.md")
-        shutil.copyfile(source, "{}.news".format(basename))
-        log.info("signing '{}.tar.xz'".format(basename))
-        run_command_or_exit("gpg --detach {}.tar.xz".format(basename))
-
-
 setup_kwargs = dict(
     name="gaupol",
     version=get_gaupol_version(),
@@ -416,7 +366,6 @@ setup_kwargs = dict(
         install=Install,
         install_data=InstallData,
         install_lib=InstallLib,
-        sdist_gna=SDistGna,
     ))
 
 if __name__ == "__main__":
