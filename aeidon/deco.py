@@ -21,6 +21,7 @@ import aeidon
 import collections
 import functools
 import pickle
+import traceback
 
 # Python decorators normally do not preserve the signature of the original
 # function. We, however, absolutely need those function signatures kept to able
@@ -201,7 +202,7 @@ if aeidon.RUNNING_SPHINX:
         return decorator_apply(_revertable, function)
     revertable.__doc__ = _revertable.__doc__
 
-def silent(*exceptions):
+def silent(*exceptions, tb=False):
     """
     Decorator for ignoring `exceptions` raised  by function.
 
@@ -216,6 +217,8 @@ def silent(*exceptions):
             try:
                 return function(*args, **kwargs)
             except exceptions:
+                if tb:
+                    traceback.print_exc()
                 return None
         return inner_wrapper
     if aeidon.RUNNING_SPHINX:

@@ -19,18 +19,11 @@
 
 import aeidon
 
-__all__ = ("Default", "DependencyError")
+__all__ = ("Default",)
 
 
 class Default(aeidon.Error):
 
     """Cancelled or something of the sort."""
-
-    pass
-
-
-class DependencyError(aeidon.Error):
-
-    """Unsatisfiable dependecies or dependants."""
 
     pass

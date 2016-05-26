@@ -236,18 +236,9 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         module = store[path][0]
         active = store[path][1]
         if active:
-            try:
-                self.manager.teardown_extension(module)
-                gaupol.conf.extensions.active.remove(module)
-            except gaupol.DependencyError:
-                title = _("Cannot deactivate extension")
-                message = _('Extension "{}" is required by other extensions.')
-                message = message.format(store[path][2])
-                dialog = gaupol.ErrorDialog(self._dialog, title, message)
-                dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
-                dialog.set_default_response(Gtk.ResponseType.OK)
-                gaupol.util.flash_dialog(dialog)
-        else: # Activating extension.
+            self.manager.teardown_extension(module)
+            gaupol.conf.extensions.active.remove(module)
+        else:
             self.manager.setup_extension(module)
             gaupol.conf.extensions.active.append(module)
         for row in store:

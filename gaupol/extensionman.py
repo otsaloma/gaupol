@@ -19,6 +19,7 @@
 
 import aeidon
 import gaupol
+import importlib.machinery
 import inspect
 import os
 import re
@@ -60,7 +61,6 @@ class ExtensionManager:
         def is_metadata_file(path):
             return (path.endswith(".extension") or
                     path.endswith(".extension.in"))
-
         for root, dirs, files in os.walk(directory):
             files = list(filter(is_metadata_file, files))
             for name in [x for x in files if x.endswith(".in")]:
@@ -98,11 +98,7 @@ class ExtensionManager:
 
     def _parse_metadata(self, path):
         """Parse extension metadata file at `path`."""
-        try:
-            lines = aeidon.util.readlines(path, "utf_8", fallback=None)
-        except UnicodeError:
-            # Metadata file must be UTF-8.
-            return aeidon.util.print_read_unicode(sys.exc_info(), path, "utf_8")
+        lines = aeidon.util.readlines(path, "utf_8", fallback=None)
         lines = [self._re_comment.sub("", x) for x in lines]
         lines = [x.strip() for x in lines]
         metadata = ExtensionMetadata()
@@ -112,53 +108,42 @@ class ExtensionManager:
             name, value = line.split("=", 1)
             name = (name[1:] if name.startswith("_") else name)
             metadata.set_field(name, value)
-        self._store_metadata(path, metadata)
+        module = metadata.get_field("Module")
+        self._metadata[module] = metadata
 
+    @aeidon.deco.silent(ImportError, tb=True)
     def setup_extension(self, module, slave=False):
-        """
-        Import and setup extension by module name.
-
-        `slave` should be ``True`` if called just to satisfy a dependency
-        of another extension. Setup also all modules required by `module`.
-        Return silently if `module` is already set up.
-        """
+        """Import and setup extension by module name."""
         if module in self._active: return
         metadata = self._metadata[module]
         for dependency in metadata.get_field_list("Requires", ()):
             if not dependency in self._active:
                 self.setup_extension(dependency, slave=True)
+                self._slaves.append(dependency)
             self._dependants[dependency].append(module)
         directory = os.path.dirname(metadata.path)
-        sys.path.insert(0, directory)
-        try:
-            mobj = __import__(module, {}, {}, [])
-        except ImportError:
-            return traceback.print_exc()
-        finally:
-            sys.path.pop(0)
-        for attribute in dir(mobj):
+        name = "gaupol.extension.{:s}".format(module)
+        path = os.path.join(directory, "{}.py".format(module))
+        loader = importlib.machinery.SourceFileLoader(name, path)
+        module_object = loader.load_module(name)
+        for attribute in dir(module_object):
             if attribute.startswith("_"): continue
-            value = getattr(mobj, attribute)
+            value = getattr(module_object, attribute)
             if not inspect.isclass(value): continue
             if issubclass(value, gaupol.Extension):
                 extension = value()
                 extension.setup(self.application)
                 self._active[module] = extension
                 self._dependants[module] = []
-        if slave:
-            self._slaves.append(module)
-        else: # master
-            if module in self._slaves:
-                self._slaves.remove(module)
         self.application.update_gui()
 
     def setup_extensions(self):
         """Import and setup all extensions configured as active."""
-        for module in gaupol.conf.extensions.active:
-            if module in self._metadata:
-                self.setup_extension(module)
-            else:
-                gaupol.conf.extensions.active.remove(module)
+        active = gaupol.conf.extensions.active[:]
+        gaupol.conf.extensions.active.clear()
+        for module in sorted(set(active) & self._metadata.keys()):
+            self.setup_extension(module)
+            gaupol.conf.extensions.active.append(module)
 
     def show_help(self, module):
         """Show documentation on using extension."""
@@ -170,43 +155,12 @@ class ExtensionManager:
         extension = self._active[module]
         extension.show_preferences_dialog(parent)
 
-    def _store_metadata(self, path, metadata):
-        """Store metadata to instance variables after validation."""
-        for field in ("GaupolVersion", "Module", "Name", "Description"):
-            if not metadata.has_field(field):
-                print(("Field '{}' missing in file '{}', dicarding extension"
-                       .format(field, path)),
-                      file=sys.stderr)
-                return
-        version = metadata.get_field("GaupolVersion")
-        if aeidon.util.compare_versions(version, "0.19.91") < 0:
-            print(("Discarding outdated extension '{}'. It needs to be "
-                   "ported to Python 3, GTK+ 3 and the PyGObject "
-                   "introspection bindings and finally the 'GaupolVersion' "
-                   "field bumped accordingly.".format(path)),
-                  file=sys.stderr)
-            return
-        module = metadata.get_field("Module")
-        self._metadata[module] = metadata
-
-    def teardown_extension(self, module, force=True):
-        """
-        Teardown extension by module name.
-
-        If not using `force` (which should only be used with care),
-        raise :exc:`gaupol.DependencyError` if module is required by
-        other modules. Teardown also no longer used dependencies of `module`.
-        Return silently if `module` is already torn down.
-        """
+    def teardown_extension(self, module):
+        """Teardown extension by module name."""
         if not module in self._active: return
-        if self._dependants[module]:
-            if not force:
-                raise gaupol.DependencyError(
-                    "Module {} is required by other modules"
-                    .format(repr(module)))
-
-            for user in self._dependants[module]:
-                self.teardown_extension(user, force=force)
+        for user in self._dependants[module]:
+            # Teardown all extensions depending on this one.
+            self.teardown_extension(user)
         if not module in self._active: return
         extension = self._active[module]
         extension.teardown(self.application)
@@ -226,7 +180,7 @@ class ExtensionManager:
     def teardown_extensions(self):
         """Teardown all active extensions."""
         for module in list(self._active.keys()):
-            self.teardown_extension(module, force=True)
+            self.teardown_extension(module)
 
     def update_extensions(self, page):
         """Call ``update`` on all active extensions."""
