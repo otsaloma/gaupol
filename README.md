@@ -1,6 +1,8 @@
 General Information
 ===================
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/otsaloma/gaupol)
+
 Gaupol is an editor for text-based subtitle files. It supports multiple
 subtitle file formats and provides means of creating subtitles, editing
 texts and timing subtitles to match video. The user interface is

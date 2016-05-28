@@ -40,6 +40,7 @@ class PreviewAgent(aeidon.Delegate):
 
     def _handle_output(self, process, fout, command):
         """Handle output of finished `process`."""
+        # TODO: Print to stdout/stderr instead of output window.
         fout.close()
         with open(fout.name, "r") as f:
             output = f.read()
