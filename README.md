@@ -1,17 +1,15 @@
-General Information
-===================
+Gaupol
+======
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/otsaloma/gaupol)
 
 Gaupol is an editor for text-based subtitle files. It supports multiple
-subtitle file formats and provides means of creating subtitles, editing
-texts and timing subtitles to match video. The user interface is
-designed with attention to batch processing of multiple documents and
-convenience of translating.
+subtitle file formats and provides means of creating, editing and
+translating subtitles and timing subtitles to match video.
 
-Gaupol contains aeidon, a separately installable general-purpose
-Python package for reading, writing and manipulating text-based
-subtitle files. See the file `README.aeidon.md` for details.
+Gaupol also contains Aeidon, a separately installable general-purpose
+Python package for reading, writing and manipulating text-based subtitle
+files. See the file `README.aeidon.md` for details.
 
 Gaupol is free software released under the GNU General Public License
 (GPL), see the file `COPYING` for details.
@@ -19,37 +17,34 @@ Gaupol is free software released under the GNU General Public License
 Dependencies
 ============
 
-Gaupol requires [Python][1] 3.2 or greater, [PyGObject][2] 3.6.0 or
-greater, [GTK+][3] 3.2 or greater and adwaita-icon-theme or some other
-freedesktop.org compatible icon theme. Optional, but strongly
-recommended dependencies follow.
+Gaupol requires [Python](https://www.python.org/) 3.2 or greater,
+[PyGObject](https://wiki.gnome.org/Projects/PyGObject) 3.6.0 or greater
+and [GTK+](http://www.gtk.org/) 3.12 or greater. Optional, but strongly
+recommended dependencies include:
 
- * [GStreamer][4] 1.0 or greater (at least the core, gst-plugins-base
-   and gst-plugins-good; and for good container and codec support
-   preferrably each of gst-plugins-bad, gst-plugins-ugly and gst-libav)
-   – required for the integrated video player
- * [PyEnchant][5] 1.4.0 or greater – required for spell-checking
- * [GtkSpell][6] 3.0.0 or greater – required for inline spell-checking
- * [iso-codes][7] – required to translate language and country names
- * [Universal Encoding Detector][8] (a.k.a. chardet) – required for
-   character encoding auto-detection
- * [mpv][9], [MPlayer][10] or [VLC][11] – recommended for preview
+ * [GStreamer](https://gstreamer.freedesktop.org/) 1.0 or greater (at
+   least the core, gst-plugins-base and gst-plugins-good; and for good
+   container and codec support preferrably each of gst-plugins-bad,
+   gst-plugins-ugly and gst-libav) – required for the integrated video
+   player
 
-  [1]: http://www.python.org/
-  [2]: http://wiki.gnome.org/Projects/PyGObject
-  [3]: http://www.gtk.org/
-  [4]: http://gstreamer.freedesktop.org/
-  [5]: http://pythonhosted.org/pyenchant/
-  [6]: http://gtkspell.sourceforge.net/
-  [7]: http://pkg-isocodes.alioth.debian.org/
-  [8]: http://pypi.python.org/pypi/chardet
-  [9]: http://mpv.io/
- [10]: http://www.mplayerhq.hu/
- [11]: http://www.videolan.org/vlc/
+ * [PyEnchant](http://pythonhosted.org/pyenchant/) 1.4.0 or greater –
+   required for spell-checking
+
+ * [GtkSpell](http://gtkspell.sourceforge.net/) 3.0.0 or greater –
+   required for inline spell-checking
+
+ * [iso-codes](http://pkg-isocodes.alioth.debian.org/) – required to
+   translate language and country names
+
+ * [Universal Encoding Detector](https://pypi.python.org/pypi/chardet)
+   (a.k.a. chardet) – required for character encoding auto-detection
+
+ * [mpv](https://mpv.io/), [MPlayer](http://www.mplayerhq.hu/) or
+   [VLC](http://www.videolan.org/vlc/) – recommended for preview
 
 Running
 =======
 
 To try Gaupol from the source directory without installation, use
-command `python3 bin/gaupol`. For installing Gaupol, see the file
-`INSTALL.md`.
+command `bin/gaupol`. For installing Gaupol, see the file `INSTALL.md`.

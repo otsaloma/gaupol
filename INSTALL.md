@@ -1,13 +1,11 @@
 Installation
 ============
 
-The installation process requires that you have Python, gettext and
-intltool installed. Depending on your distro's Python packaging you
-may also need a package called python-dev or python-devel.
-
 To install, run command
 
-    python3 setup.py clean install [--prefix=...]
+    python3 setup.py install [--prefix=...]
+
+You'll need Python, gettext and intltool.
 
 Developers or packagers interested in installing aeidon and gaupol
 separately, see the file `README.aeidon.md`.
@@ -18,10 +16,10 @@ Uninstallation
 To uninstall, remove files and directories
 
     .../bin/gaupol
-    .../lib/pythonX.Y/dist-packages/aeidon*
-    .../lib/pythonX.Y/dist-packages/gaupol*
-    .../lib/pythonX.Y/site-packages/aeidon*
-    .../lib/pythonX.Y/site-packages/gaupol*
+    .../lib/python3.*/dist-packages/aeidon*
+    .../lib/python3.*/dist-packages/gaupol*
+    .../lib/python3.*/site-packages/aeidon*
+    .../lib/python3.*/site-packages/gaupol*
     .../share/appdata/gaupol.appdata.xml
     .../share/applications/gaupol.desktop
     .../share/icons/hicolor/*/apps/gaupol.*
