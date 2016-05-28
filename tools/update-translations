@@ -1,18 +1,12 @@
 #!/bin/sh
-# Update the pot-file and all existing po-files with new strings.
-# Requires gettext and intltool.
-
-DIRNAME=$(dirname "$0")
-cd "$DIRNAME/../po" || exit 1
-
-echo "Checking for missing source files..."
-intltool-update -m || exit 1
-sleep 3 && [ -f missing ] && exit 1
-
+# Update all translations with new strings.
+cd "$(dirname "$0")/../po" || exit 1
+echo "Searching for missing files..."
+intltool-update -m
+sleep 3 && [ -f missing ] && echo "Files missing." && exit 1
 echo "Updating gaupol.pot..."
-intltool-update -p -g gaupol -x || exit 1
-
-for FNAME in *.po; do
-    echo "Updating $FNAME..."
-    msgmerge -U -N -v "$FNAME" gaupol.pot
+intltool-update -p -g gaupol
+for X in *.po; do
+    echo "Updating $X..."
+    msgmerge -UNq "$X" gaupol.pot
 done

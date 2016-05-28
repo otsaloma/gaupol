@@ -1,9 +1,6 @@
 #!/bin/sh
 # Update iso-codes XML files from /usr/share/xml/iso-codes.
-
-DIRNAME=$(dirname "$0")
-cd "$DIRNAME/.." || exit 1
-
+cd "$(dirname "$0")/.." || exit 1
 cp -fv /usr/share/xml/iso-codes/iso_639.xml   data/iso-codes
 cp -fv /usr/share/xml/iso-codes/iso_3166.xml  data/iso-codes
 cp -fv /usr/share/xml/iso-codes/iso_15924.xml data/iso-codes

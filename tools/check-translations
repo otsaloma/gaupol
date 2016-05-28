@@ -14,6 +14,8 @@ os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
 for name in sorted(glob.glob("*.po")):
     if args and not name in args:
         continue
+    print("--\n{}:".format(name))
+    os.system("msgfmt -c {} --statistics -o /dev/null".format(name))
     fobj = open(name, "r", encoding="utf_8")
     lineno = 0
     nbad = 0

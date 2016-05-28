@@ -7,7 +7,7 @@ import aeidon, gaupol
 from gi.repository import Gtk
 player = gaupol.VideoPlayer()
 window = Gtk.Window()
-window.set_default_size(800, 480)
+window.set_default_size(1280, 720)
 window.connect("delete-event", Gtk.main_quit)
 window.add(player.widget)
 window.show_all()
