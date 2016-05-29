@@ -113,5 +113,11 @@ from gaupol.extension import *
 from gaupol.extensionman import *
 from gaupol import agents
 from gaupol.application import *
-from gaupol.main import main
+from gaupol.applicationman import *
 from gaupol.unittest import *
+
+def main(args):
+    """Initialize application."""
+    global appman
+    appman = ApplicationManager(args)
+    raise SystemExit(appman.run())
