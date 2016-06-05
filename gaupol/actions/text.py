@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 
-
 class ClearTextsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "clear_texts")
@@ -166,6 +165,5 @@ class UseUpperCaseAction(gaupol.Action):
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
-
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

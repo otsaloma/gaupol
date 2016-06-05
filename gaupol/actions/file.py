@@ -23,23 +23,6 @@ import gaupol
 from aeidon.i18n import _
 
 
-class AppendFileAction(gaupol.Action):
-
-    """Append subtitles from file to the current project."""
-
-    def __init__(self):
-        """Initialize an :class:`AppendFileAction` instance."""
-        gaupol.Action.__init__(self, "append_file")
-        self.set_label(_("_Append File…"))
-        self.set_tooltip(_("Append subtitles from file to the current project"))
-        self.action_group = "main-unsafe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(len(page.project.subtitles) > 0)
-
-
 class CloseAllProjectsAction(gaupol.Action):
 
     """Close all open projects."""
@@ -299,40 +282,6 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-
-
-class SelectVideoFileAction(gaupol.Action):
-
-    """Select a video file."""
-
-    def __init__(self):
-        """Initialize a :class:`SelectVideoFileAction` instance."""
-        gaupol.Action.__init__(self, "select_video_file")
-        self.set_label(_("Select _Video…"))
-        self.set_tooltip(_("Select a video file"))
-        self.action_group = "main-safe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.project.main_file is not None)
-
-
-class SplitProjectAction(gaupol.Action):
-
-    """Split the current project in two."""
-
-    def __init__(self):
-        """Initialize a :class:`SplitProjectAction` instance."""
-        gaupol.Action.__init__(self, "split_project")
-        self.set_label(_("Spli_t Project…"))
-        self.set_tooltip(_("Split the current project in two"))
-        self.action_group = "main-unsafe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(len(page.project.subtitles) > 1)
 
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

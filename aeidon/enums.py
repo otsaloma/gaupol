@@ -128,6 +128,7 @@ def _get_vlc_executable():
 
 class PlayerMPlayer(aeidon.EnumerationItem):
     command = " ".join((_get_mplayer_executable(),
+                        "-quiet",
                         "-identify",
                         "-osdlevel 2",
                         "-ss $SECONDS",
@@ -143,6 +144,7 @@ class PlayerMPlayer(aeidon.EnumerationItem):
         command = "{} < /dev/null".format(command)
 
     command_utf_8 = " ".join((_get_mplayer_executable(),
+                              "-quiet",
                               "-osdlevel 2",
                               "-ss $SECONDS",
                               "-slang",
@@ -161,6 +163,7 @@ class PlayerMPlayer(aeidon.EnumerationItem):
 
 class PlayerMPV(aeidon.EnumerationItem):
     command = " ".join((_get_mpv_executable(),
+                        "--quiet",
                         "--osd-level=2",
                         "--hr-seek=yes",
                         "--start=$SECONDS",
@@ -168,6 +171,7 @@ class PlayerMPV(aeidon.EnumerationItem):
                         "$VIDEOFILE",))
 
     command_utf_8 = " ".join((_get_mpv_executable(),
+                              "--quiet",
                               "--osd-level=2",
                               "--hr-seek=yes",
                               "--start=$SECONDS",

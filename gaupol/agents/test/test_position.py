@@ -19,6 +19,7 @@ import aeidon
 import gaupol
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 
 class TestPositionAgent(gaupol.TestCase):

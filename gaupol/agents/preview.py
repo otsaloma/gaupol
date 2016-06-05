@@ -25,8 +25,6 @@ from aeidon.i18n   import _
 from gi.repository import GLib
 from gi.repository import Gtk
 
-# TODO: Remove output window, output to stdout/stderr.
-
 
 class PreviewAgent(aeidon.Delegate):
 
@@ -40,13 +38,12 @@ class PreviewAgent(aeidon.Delegate):
 
     def _handle_output(self, process, fout, command):
         """Handle output of finished `process`."""
-        # TODO: Print to stdout/stderr instead of output window.
         fout.close()
         with open(fout.name, "r") as f:
-            output = f.read()
-        output = "$ {}\n\n{}".format(command, output)
+            output = f.read().splitlines()
+        output = "\n".join(output[:100])
+        print("$ {}\n{}".format(command, output))
         aeidon.temp.remove(fout.name)
-        self.output_window.set_output(output)
         if process.returncode == 0: return
         dialog = gaupol.PreviewErrorDialog(self.window, output)
         gaupol.util.flash_dialog(dialog)
@@ -67,18 +64,13 @@ class PreviewAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def preview(self, page, position, doc, temp=False):
-        """
-        Preview from `position` with a video player.
-
-        Use ``True`` for `temp` to always use a temporary file for preview
-        regardless of whether the file is changed or not.
-        """
+        """Preview from `position` with a video player."""
         command = gaupol.util.get_preview_command()
         offset = gaupol.conf.preview.offset
         encoding = ("utf_8" if gaupol.conf.preview.force_utf_8 else None)
         try:
-            out = page.project.preview(position, doc, command, offset, encoding, temp)
-            process, command, fout = out
+            process, command, fout = page.project.preview(
+                position, doc, command, offset, encoding, temp)
         except aeidon.ProcessError as error:
             return self._show_process_error_dialog(str(error))
         except (IOError, OSError) as error:
@@ -106,11 +98,8 @@ class PreviewAgent(aeidon.Delegate):
 
     def _show_encoding_error_dialog(self):
         """Show an error dialog after failing to encode file."""
-        title = _('Failed to encode subtitle file to temporary '
-            'directory "{}"').format(tempfile.gettempdir())
-        message = _("Subtitle data could not be encoded to a temporary file "
-            "for preview with the current character encoding. Please first "
-            "save the subtitle file with a different character encoding.")
+        title = _('Failed to encode subtitle file to temporary directory "{}"').format(tempfile.gettempdir())
+        message = _("Subtitle data could not be encoded to a temporary file for preview with the current character encoding. Please first save the subtitle file with a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
@@ -118,8 +107,7 @@ class PreviewAgent(aeidon.Delegate):
 
     def _show_io_error_dialog(self, message):
         """Show an error dialog after failing to write file."""
-        title = _('Failed to save subtitle file to temporary '
-            'directory "{}"').format(tempfile.gettempdir())
+        title = _('Failed to save subtitle file to temporary directory "{}"').format(tempfile.gettempdir())
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
