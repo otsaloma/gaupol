@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Dictionaries mapping enumeration items to UI manager action names.
+Dictionaries mapping enumeration items to action names.
 
 :var field_actions: Dictionary mapping :attr:`aeidon.fields` to actions
 :var framerate_actions: Dictionary mapping :attr:`aeidon.framerates` to actions

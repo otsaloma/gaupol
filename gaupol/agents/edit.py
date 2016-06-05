@@ -360,7 +360,7 @@ class EditAgent(aeidon.Delegate):
         gaupol.util.set_cursor_normal(self.window)
 
     def _set_unsafe_sensitivities(self, sensitive):
-        """Set sensitivities of unsafe UI manager actions."""
+        """Set sensitivities of unsafe actions."""
         action_group = self.get_action_group("main-unsafe")
         action_group.set_sensitive(sensitive)
 

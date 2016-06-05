@@ -69,7 +69,7 @@ with aeidon.util.silent(Exception):
 from gaupol.urls import *
 from gaupol import util
 from gaupol.enums import *
-from gaupol.enumuim import *
+from gaupol.enum_actions import *
 from gaupol.errors import *
 from gaupol.attrdict import *
 from gaupol.config import *
