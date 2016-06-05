@@ -24,72 +24,6 @@ from aeidon.i18n   import _
 from gi.repository import Gtk
 
 
-class ClearTextsAction(gaupol.Action):
-
-    """Clear the selected texts."""
-
-    def __init__(self):
-        """Initialize a :class:`ClearTextsAction` instance."""
-        gaupol.Action.__init__(self, "clear_texts")
-        self.set_icon_name("edit-clear")
-        self.set_label(_("Cl_ear"))
-        self.set_tooltip(_("Clear the selected texts"))
-        self.accelerator = "C"
-        self.action_group = "main-unsafe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(selected_rows)
-        col = page.view.get_focus()[1]
-        aeidon.util.affirm(col is not None)
-        aeidon.util.affirm(page.view.is_text_column(col))
-
-
-class CopyTextsAction(gaupol.Action):
-
-    """Copy the selected texts to the clipboard."""
-
-    def __init__(self):
-        """Initialize a :class:`CopyTextsAction` instance."""
-        gaupol.Action.__init__(self, "copy_texts")
-        self.set_icon_name("edit-copy")
-        self.set_label(_("_Copy"))
-        self.set_tooltip(_("Copy the selected texts to the clipboard"))
-        self.accelerator = "<Control>C"
-        self.action_group = "main-unsafe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(selected_rows)
-        col = page.view.get_focus()[1]
-        aeidon.util.affirm(col is not None)
-        aeidon.util.affirm(page.view.is_text_column(col))
-
-
-class CutTextsAction(gaupol.Action):
-
-    """Cut the selected texts to the clipboard."""
-
-    def __init__(self):
-        """Initialize a :class:`CutTextsAction` instance."""
-        gaupol.Action.__init__(self, "cut_texts")
-        self.set_icon_name("edit-cut")
-        self.set_label(_("Cu_t"))
-        self.set_tooltip(_("Cut the selected texts to the clipboard"))
-        self.accelerator = "<Control>X"
-        self.action_group = "main-unsafe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(selected_rows)
-        col = page.view.get_focus()[1]
-        aeidon.util.affirm(col is not None)
-        aeidon.util.affirm(page.view.is_text_column(col))
-
-
 class EditPreferencesAction(gaupol.Action):
 
     """Configure Gaupol."""
@@ -304,29 +238,6 @@ class MergeSubtitlesAction(gaupol.Action):
         aeidon.util.affirm(len(selected_rows) > 1)
         block = list(range(selected_rows[0], selected_rows[-1]+1))
         aeidon.util.affirm(list(selected_rows) == block)
-
-
-class PasteTextsAction(gaupol.Action):
-
-    """Paste texts from the clipboard."""
-
-    def __init__(self):
-        """Initialize a :class:`PasteTextsAction` instance."""
-        gaupol.Action.__init__(self, "paste_texts")
-        self.set_icon_name("edit-paste")
-        self.set_label(_("_Paste"))
-        self.set_tooltip(_("Paste texts from the clipboard"))
-        self.accelerator = "<Control>V"
-        self.action_group = "main-unsafe"
-
-    def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(not application.clipboard.is_empty())
-        aeidon.util.affirm(selected_rows)
-        col = page.view.get_focus()[1]
-        aeidon.util.affirm(col is not None)
-        aeidon.util.affirm(page.view.is_text_column(col))
 
 
 class RedoActionAction(gaupol.Action):

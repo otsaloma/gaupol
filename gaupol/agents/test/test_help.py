@@ -20,6 +20,7 @@ import gaupol
 from gi.repository import Gtk
 from unittest.mock import patch
 
+
 class TestHelpAgent(gaupol.TestCase):
 
     def setup_method(self, method):

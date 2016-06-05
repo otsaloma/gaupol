@@ -15,66 +15,157 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""Text processing actions for :class:`gaupol.Application`."""
+"""Text formatting actions for :class:`gaupol.Application`."""
 
 import aeidon
 import gaupol
 
-from aeidon.i18n import _
 
-
-class ConfigureSpellCheckAction(gaupol.Action):
-
-    """Set languages and spell-check targets."""
-
+class ClearTextsAction(gaupol.Action):
     def __init__(self):
-        """Initialize a :class:`ConfigureSpellCheckAction` instance."""
-        gaupol.Action.__init__(self, "configure_spell_check")
-        self.set_label(_("Co_nfigure Spell-check…"))
-        self.set_tooltip(_("Set language and spell-check target"))
+        gaupol.Action.__init__(self, "clear_texts")
+        self.accelerators = ["C"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(aeidon.util.enchant_available())
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
 
-
-class CheckSpellingAction(gaupol.Action):
-
-    """Check for incorrect spelling."""
-
+class CopyTextsAction(gaupol.Action):
     def __init__(self):
-        """Initialize a :class:`CheckSpellingAction` instance."""
-        gaupol.Action.__init__(self, "check_spelling")
-        self.set_icon_name("tools-check-spelling")
-        self.set_label(_("_Check Spelling"))
-        self.set_short_label(_("Spelling"))
-        self.set_tooltip(_("Check for incorrect spelling"))
-        self.accelerator = "F7"
+        gaupol.Action.__init__(self, "copy_texts")
+        self.accelerators = ["<Control>C"]
         self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
 
+class CutTextsAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "cut_texts")
+        self.accelerators = ["<Control>X"]
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
+
+class FindAndReplaceAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "find_and_replace")
+        self.accelerators = ["<Control>F", "<Control>H"]
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+
+class FindNextAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "find_next")
+        self.accelerators = ["<Control>G"]
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(application.pattern)
+
+class FindPreviousAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "find_previous")
+        self.accelerators = ["<Shift><Control>G"]
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(application.pattern)
+
+class PasteTextsAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "paste_texts")
+        self.accelerators = ["<Control>V"]
+        self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(aeidon.util.enchant_available())
-        aeidon.util.affirm(gaupol.conf.spell_check.language)
+        aeidon.util.affirm(not application.clipboard.is_empty())
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
 
-
-class CorrectTextsAction(gaupol.Action):
-
-    """Find and correct errors in texts."""
-
+class ToggleDialogDashesAction(gaupol.Action):
     def __init__(self):
-        """Initialize a :class:`CorrectTextsAction` instance."""
-        gaupol.Action.__init__(self, "correct_texts")
-        self.set_label(_("C_orrect Texts…"))
-        self.set_tooltip(_("Find and correct errors in texts"))
-        self.accelerator = "F8"
+        gaupol.Action.__init__(self, "toggle_dialogue_dashes")
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
+
+class ToggleItalicizationAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "toggle_italicization")
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
+        doc = page.text_column_to_document(col)
+        markup = page.project.get_markup(doc)
+        aeidon.util.affirm(markup is not None)
+        aeidon.util.affirm(markup.italic_tag is not None)
+
+class UseLowerCaseAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "use_lower_case")
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
+
+class UseSentenceCaseAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "use_sentence_case")
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
+
+class UseTitleCaseAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "use_title_case")
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
+
+class UseUpperCaseAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "use_upper_case")
+        self.action_group = "main-unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(selected_rows)
+        col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
+        aeidon.util.affirm(page.view.is_text_column(col))
 
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

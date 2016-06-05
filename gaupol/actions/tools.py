@@ -39,6 +39,43 @@ class AdjustDurationsAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
 
 
+class CheckSpellingAction(gaupol.Action):
+
+    """Check for incorrect spelling."""
+
+    def __init__(self):
+        """Initialize a :class:`CheckSpellingAction` instance."""
+        gaupol.Action.__init__(self, "check_spelling")
+        self.set_icon_name("tools-check-spelling")
+        self.set_label(_("_Check Spelling"))
+        self.set_short_label(_("Spelling"))
+        self.set_tooltip(_("Check for incorrect spelling"))
+        self.accelerator = "F7"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(aeidon.util.enchant_available())
+        aeidon.util.affirm(gaupol.conf.spell_check.language)
+
+
+class ConfigureSpellCheckAction(gaupol.Action):
+
+    """Set languages and spell-check targets."""
+
+    def __init__(self):
+        """Initialize a :class:`ConfigureSpellCheckAction` instance."""
+        gaupol.Action.__init__(self, "configure_spell_check")
+        self.set_label(_("Co_nfigure Spell-check…"))
+        self.set_tooltip(_("Set language and spell-check target"))
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(aeidon.util.enchant_available())
+
+
 class ConvertFramerateAction(gaupol.Action):
 
     """Change positions for a different framerate."""
@@ -54,6 +91,23 @@ class ConvertFramerateAction(gaupol.Action):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
+
+
+class CorrectTextsAction(gaupol.Action):
+
+    """Find and correct errors in texts."""
+
+    def __init__(self):
+        """Initialize a :class:`CorrectTextsAction` instance."""
+        gaupol.Action.__init__(self, "correct_texts")
+        self.set_label(_("C_orrect Texts…"))
+        self.set_tooltip(_("Find and correct errors in texts"))
+        self.accelerator = "F8"
+        self.action_group = "main-unsafe"
+
+    def _affirm_doable(self, application, page, selected_rows):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
 
 
 class PreviewAction(gaupol.Action):
