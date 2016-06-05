@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 
-from aeidon.i18n   import _
 from gi.repository import Gdk
 
 
@@ -43,8 +42,8 @@ class UpdateAgent(aeidon.Delegate):
         self.statuslabel.register_hide_event(self.window, "key-press-event")
         self.statuslabel.register_hide_event(self.window, "scroll-event")
         with aeidon.util.silent(AttributeError):
-            view = self.get_current_page().view
-            self.statuslabel.register_hide_event(view, "button-press-event")
+            self.statuslabel.register_hide_event(
+                self.get_current_page().view, "button-press-event")
 
     @aeidon.deco.export
     def _on_activate_next_project_activate(self, *args):
@@ -59,9 +58,10 @@ class UpdateAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_conf_application_window_notify_toolbar_style(self, *args):
         """Change the style of the main toolbar."""
-        toolbar = self.uim.get_widget("/ui/main_toolbar")
-        style = gaupol.conf.application_window.toolbar_style
-        toolbar.set_style(style.value)
+        print("TODO: _on_conf_application_window_notify_toolbar_style")
+        # toolbar = self.uim.get_widget("/ui/main_toolbar")
+        # style = gaupol.conf.application_window.toolbar_style
+        # toolbar.set_style(style.value)
 
     @aeidon.deco.export
     def _on_move_tab_left_activate(self, *args):
@@ -101,25 +101,26 @@ class UpdateAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_view_button_press_event(self, view, event):
         """Display a right-click pop-up menu to edit data."""
-        if event.button != 3: return
-        x = int(event.x)
-        y = int(event.y)
-        value = view.get_path_at_pos(x, y)
-        if value is None: return
-        path, column, x, y = value
-        row = gaupol.util.tree_path_to_row(path)
-        if not row in view.get_selected_rows():
-            view.set_cursor(path, column)
-            view.update_headers()
-        menu = self.uim.get_widget("/ui/view_popup")
-        menu.popup(parent_menu_shell=None,
-                   parent_menu_item=None,
-                   func=None,
-                   data=None,
-                   button=event.button,
-                   activate_time=event.time)
+        print("TODO: _on_view_button_press_event")
+        # if event.button != 3: return
+        # x = int(event.x)
+        # y = int(event.y)
+        # value = view.get_path_at_pos(x, y)
+        # if value is None: return
+        # path, column, x, y = value
+        # row = gaupol.util.tree_path_to_row(path)
+        # if not row in view.get_selected_rows():
+        #     view.set_cursor(path, column)
+        #     view.update_headers()
+        # menu = self.uim.get_widget("/ui/view_popup")
+        # menu.popup(parent_menu_shell=None,
+        #            parent_menu_item=None,
+        #            func=None,
+        #            data=None,
+        #            button=event.button,
+        #            activate_time=event.time)
 
-        return True
+        # return True
 
     @aeidon.deco.export
     def _on_view_move_cursor(self, *args):
@@ -139,61 +140,38 @@ class UpdateAgent(aeidon.Delegate):
         gaupol.conf.application_window.maximized = maximized
 
     @aeidon.deco.export
-    def push_message(self, message):
-        """A compatibility alias for :meth:`show_message`."""
-        self.show_message(message)
-
-    @aeidon.deco.export
     def show_message(self, message):
-        """
-        Show `message` in the statuslabel until explicitly cleared.
-
-        Use ``None`` as `message` to hide the status label.
-        """
+        """Show `message` in the statuslabel or hide label with `None`."""
         self.statuslabel.set_text(message)
 
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""
         rows = (page.view.get_selected_rows()
                 if page is not None and page.view is not None else ())
-
-        for name in ("main-safe", "main-unsafe"):
-            action_group = self.get_action_group(name)
-            for action in action_group.list_actions():
-                action.update_sensitivity(self, page, rows)
+        for name in self.window.list_actions():
+            action = self.get_action(name)
+            action.update_enabled(self, page, rows)
 
     @aeidon.deco.export
     def update_gui(self):
         """Update widget sensitivities and states for the current page."""
-        print("TODO: update_gui")
-        # page = self.get_current_page()
-        # self._update_actions(page)
-        # self._update_widgets(page)
-        # self._update_revert(page)
-        # self.extension_manager.update_extensions(page)
-
-    def _update_revert(self, page):
-        """Update tooltips for undo and redo actions."""
-        if page is None: return
-        if page.project.can_undo():
-            action = self.get_action("undo-action")
-            action.set_tooltip(_('Undo "{}"').format(
-                page.project.undoables[0].description))
-        if page.project.can_redo():
-            action = self.get_action("redo-action")
-            action.set_tooltip(_('Redo "{}"').format(
-                page.project.redoables[0].description))
+        page = self.get_current_page()
+        self._update_actions(page)
+        self._update_widgets(page)
+        self.extension_manager.update_extensions(page)
 
     def _update_widgets(self, page):
         """Update states of all widgets for `page`."""
-        if page is None: return self._disable_widgets()
+        if page is None:
+            return self._disable_widgets()
         self.window.set_title(page.tab_label.get_text())
         tabs = len(self.pages) > 1 and not self.player_box.get_visible()
         self.notebook.set_show_tabs(tabs)
         self.notebook_separator.set_visible(not tabs)
-        self.get_mode_action(page.edit_mode).set_active(True)
-        self.get_framerate_action(page.project.framerate).set_active(True)
-        for field in gaupol.fields:
-            col = getattr(page.view.columns, field.name)
-            visible = page.view.get_column(col).get_visible()
-            self.get_column_action(field).set_active(visible)
+        # TODO:
+        # self.get_mode_action(page.edit_mode).set_active(True)
+        # self.get_framerate_action(page.project.framerate).set_active(True)
+        # for field in gaupol.fields:
+        #     col = getattr(page.view.columns, field.name)
+        #     visible = page.view.get_column(col).get_visible()
+        #     self.get_column_action(field).set_active(visible)

@@ -36,14 +36,14 @@ class Action(Gio.SimpleAction):
         self.accelerators = []
         self.action_group = "main-unsafe"
 
-    def _affirm_doable(self, application):
+    def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`gaupol.AffirmationError` if action cannot be done."""
         pass
 
-    def update_enabled(self, application):
+    def update_enabled(self, application, page, selected_rows):
         """Update the "enabled" property to match `application`."""
         try:
-            self._affirm_doable(application)
+            self._affirm_doable(application, page, selected_rows)
             self.set_enabled(True)
         except aeidon.AffirmationError:
             self.set_enabled(False)
