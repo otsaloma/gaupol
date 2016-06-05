@@ -176,11 +176,11 @@ class UpdateAgent(aeidon.Delegate):
         """Update tooltips for undo and redo actions."""
         if page is None: return
         if page.project.can_undo():
-            action = self.get_action("undo_action")
+            action = self.get_action("undo-action")
             action.set_tooltip(_('Undo "{}"').format(
                 page.project.undoables[0].description))
         if page.project.can_redo():
-            action = self.get_action("redo_action")
+            action = self.get_action("redo-action")
             action.set_tooltip(_('Redo "{}"').format(
                 page.project.redoables[0].description))
 

@@ -29,7 +29,7 @@ class CloseAllProjectsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`CloseAllProjectsAction` instance."""
-        gaupol.Action.__init__(self, "close_all_projects")
+        gaupol.Action.__init__(self, "close-all-projects")
         self.set_icon_name("window-close")
         self.set_label(_("_Close All"))
         self.set_tooltip( _("Close all open projects"))
@@ -47,7 +47,7 @@ class SaveAllDocumentsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveAllDocumentsAction` instance."""
-        gaupol.Action.__init__(self, "save_all_documents")
+        gaupol.Action.__init__(self, "save-all-documents")
         self.set_icon_name("document-save")
         self.set_label(_("_Save All"))
         self.set_tooltip(_("Save all open documents"))
@@ -65,7 +65,7 @@ class SaveAllDocumentsAsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveAllDocumentsAsAction` instance."""
-        gaupol.Action.__init__(self, "save_all_documents_as")
+        gaupol.Action.__init__(self, "save-all-documents-as")
         self.set_icon_name("document-save")
         self.set_label(_("Save _All As…"))
         self.set_tooltip(_("Save all open documents with different properties"))

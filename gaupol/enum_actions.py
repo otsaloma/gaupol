@@ -30,22 +30,22 @@ __all__ = ("field_actions", "framerate_actions", "mode_actions")
 
 
 field_actions = {
-    gaupol.fields.NUMBER:    "toggle_number_column",
-    gaupol.fields.START:     "toggle_start_column",
-    gaupol.fields.END:       "toggle_end_column",
-    gaupol.fields.DURATION:  "toggle_duration_column",
-    gaupol.fields.MAIN_TEXT: "toggle_main_text_column",
-    gaupol.fields.TRAN_TEXT: "toggle_translation_text_column",
+    gaupol.fields.NUMBER:    "toggle-number-column",
+    gaupol.fields.START:     "toggle-start-column",
+    gaupol.fields.END:       "toggle-end-column",
+    gaupol.fields.DURATION:  "toggle-duration-column",
+    gaupol.fields.MAIN_TEXT: "toggle-main-text-column",
+    gaupol.fields.TRAN_TEXT: "toggle-translation-text-column",
 }
 
 framerate_actions = {
-    aeidon.framerates.FPS_23_976: "show_framerate_23_976",
-    aeidon.framerates.FPS_24_000: "show_framerate_24_000",
-    aeidon.framerates.FPS_25_000: "show_framerate_25_000",
-    aeidon.framerates.FPS_29_970: "show_framerate_29_970",
+    aeidon.framerates.FPS_23_976: "show-framerate-23-976",
+    aeidon.framerates.FPS_24_000: "show-framerate-24-000",
+    aeidon.framerates.FPS_25_000: "show-framerate-25-000",
+    aeidon.framerates.FPS_29_970: "show-framerate-29-970",
 }
 
 mode_actions = {
-    aeidon.modes.TIME:  "show_times",
-    aeidon.modes.FRAME: "show_frames",
+    aeidon.modes.TIME:  "show-times",
+    aeidon.modes.FRAME: "show-frames",
 }

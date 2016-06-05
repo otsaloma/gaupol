@@ -29,12 +29,12 @@ class TestSpellCheckAgent(gaupol.TestCase):
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_check_spelling_activate(self):
         gaupol.conf.spell_check.language = "en"
-        self.application.get_action("check_spelling").activate()
+        self.application.get_action("check-spelling").activate()
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_configure_spell_check_activate(self):
-        self.application.get_action("configure_spell_check").activate()
+        self.application.get_action("configure-spell-check").activate()
 
     @patch("gaupol.TextAssistant.show", lambda *args: None)
     def test__on_correct_texts_activate(self):
-        self.application.get_action("correct_texts").activate()
+        self.application.get_action("correct-texts").activate()

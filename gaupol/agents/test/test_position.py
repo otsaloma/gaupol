@@ -29,32 +29,32 @@ class TestPositionAgent(gaupol.TestCase):
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
     def test__on_adjust_durations_activate(self):
-        self.application.get_action("adjust_durations").activate()
+        self.application.get_action("adjust-durations").activate()
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
     def test__on_convert_framerate_activate(self):
-        self.application.get_action("convert_framerate").activate()
+        self.application.get_action("convert-framerate").activate()
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
     def test__on_shift_positions_activate__frame(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.FRAME
-        self.application.get_action("shift_positions").activate()
+        self.application.get_action("shift-positions").activate()
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
     def test__on_shift_positions_activate__time(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.TIME
-        self.application.get_action("shift_positions").activate()
+        self.application.get_action("shift-positions").activate()
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
     def test__on_transform_positions_activate__frame(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.FRAME
-        self.application.get_action("transform_positions").activate()
+        self.application.get_action("transform-positions").activate()
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
     def test__on_transform_positions_activate__time(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.TIME
-        self.application.get_action("transform_positions").activate()
+        self.application.get_action("transform-positions").activate()

@@ -23,13 +23,13 @@ import gaupol
 from aeidon.i18n import _
 
 
-class ShowAudioTrackMenuAction(gaupol.MenuAction):
+class ShowAudioTrackMenuAction(gaupol.Action):
 
     """Show the audio track menu."""
 
     def __init__(self):
         """Initialize a :class:`ShowAudioTrackMenuAction` instance."""
-        gaupol.MenuAction.__init__(self, "show_audio_track_menu")
+        gaupol.Action.__init__(self, "show-audio-track-menu")
         self.set_label(_("_Language"))
         self.action_group = "main-safe"
 
@@ -46,7 +46,7 @@ class VolumeDownAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`VolumeDownAction` instance."""
-        gaupol.Action.__init__(self, "volume_down")
+        gaupol.Action.__init__(self, "volume-down")
         self.set_label(_("Volume _Down"))
         self.set_tooltip(_("Decrease volume"))
         self.accelerator = "<Ctrl>minus"
@@ -63,7 +63,7 @@ class VolumeUpAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`VolumeUpAction` instance."""
-        gaupol.Action.__init__(self, "volume_up")
+        gaupol.Action.__init__(self, "volume-up")
         self.set_label(_("Volume _Up"))
         self.set_tooltip(_("Increase volume"))
         self.accelerator = "<Ctrl>plus"

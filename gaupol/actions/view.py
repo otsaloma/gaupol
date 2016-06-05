@@ -30,7 +30,7 @@ class ActivateNextProjectAction(gaupol.Action):
 
     def __init__(self):
         """Initialize an :class:`ActivateNextProjectAction` instance."""
-        gaupol.Action.__init__(self, "activate_next_project")
+        gaupol.Action.__init__(self, "activate-next-project")
         self.set_label(_("_Next"))
         self.set_tooltip(_("Activate the project in the next tab"))
         self.accelerator = "<Control>Page_Down"
@@ -49,7 +49,7 @@ class ActivatePreviousProjectAction(gaupol.Action):
 
     def __init__(self):
         """Initialize an :class:`ActivatePreviousProjectAction` instance."""
-        gaupol.Action.__init__(self, "activate_previous_project")
+        gaupol.Action.__init__(self, "activate-previous-project")
         self.set_label(_("_Previous"))
         self.set_tooltip(_("Activate the project in the previous tab"))
         self.accelerator = "<Control>Page_Up"
@@ -67,7 +67,7 @@ class MoveTabLeftAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`MoveTabLeftAction` instance."""
-        gaupol.Action.__init__(self, "move_tab_left")
+        gaupol.Action.__init__(self, "move-tab-left")
         self.set_label(_("Move Tab _Left"))
         self.set_tooltip(_("Move the current tab to the left"))
         self.action_group = "main-safe"
@@ -84,7 +84,7 @@ class MoveTabRightAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`MoveTabRightAction` instance."""
-        gaupol.Action.__init__(self, "move_tab_right")
+        gaupol.Action.__init__(self, "move-tab-right")
         self.set_label(_("Move Tab _Right"))
         self.set_tooltip(_("Move the current tab to the right"))
         self.action_group = "main-safe"
@@ -96,12 +96,12 @@ class MoveTabRightAction(gaupol.Action):
         aeidon.util.affirm(index in range(len(application.pages)))
 
 
-class ShowColumnsMenuAction(gaupol.MenuAction):
+class ShowColumnsMenuAction(gaupol.Action):
 
     """Show the "Columns" menu."""
     def __init__(self):
         """Initialize a :class:`ShowColumnsMenuAction` instance."""
-        gaupol.MenuAction.__init__(self, "show_columns_menu")
+        gaupol.Action.__init__(self, "show-columns-menu")
         self.set_label(_("_Columns"))
         self.action_group = "main-unsafe"
 
@@ -198,13 +198,13 @@ class ShowFramerate29970Action(gaupol.RadioAction):
         aeidon.util.affirm(page.project.main_file is not None)
 
 
-class ShowFramerateMenuAction(gaupol.MenuAction):
+class ShowFramerateMenuAction(gaupol.Action):
 
     """Show the "Framerate" menu."""
 
     def __init__(self):
         """Initialize a :class:`ShowFramerateMenuAction` instance."""
-        gaupol.MenuAction.__init__(self, "show_framerate_menu")
+        gaupol.Action.__init__(self, "show-framerate-menu")
         self.set_label(_("F_ramerate"))
         self.action_group = "main-unsafe"
 
@@ -235,13 +235,13 @@ class ShowFramesAction(gaupol.RadioAction):
         aeidon.util.affirm(page is not None)
 
 
-class ShowLayoutMenuAction(gaupol.MenuAction):
+class ShowLayoutMenuAction(gaupol.Action):
 
     """Show the "Layout" menu."""
 
     def __init__(self):
         """Initialize a :class:`ShowLayoutMenuAction` instance."""
-        gaupol.MenuAction.__init__(self, "show_layout_menu")
+        gaupol.Action.__init__(self, "show-layout-menu")
         self.set_label(_("_Layout"))
         self.action_group = "main-unsafe"
 

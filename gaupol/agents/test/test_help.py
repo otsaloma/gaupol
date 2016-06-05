@@ -27,11 +27,11 @@ class TestHelpAgent(gaupol.TestCase):
         self.application = self.new_application()
 
     def test__on_browse_documentation_activate(self):
-        self.application.get_action("browse_documentation").activate()
+        self.application.get_action("browse-documentation").activate()
 
     def test__on_report_a_bug_activate(self):
-        self.application.get_action("report_a_bug").activate()
+        self.application.get_action("report-a-bug").activate()
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.DELETE_EVENT)
     def test__on_view_about_dialog_activate(self):
-        self.application.get_action("view_about_dialog").activate()
+        self.application.get_action("view-about-dialog").activate()

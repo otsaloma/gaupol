@@ -54,7 +54,7 @@ class TestBookmarksExtension(gaupol.TestCase):
 
     @patch("gaupol.util.run_dialog", lambda *args: Gtk.ResponseType.OK)
     def bookmark_subtitles(self):
-        action = self.application.get_action("add_bookmark")
+        action = self.application.get_action("add-bookmark")
         for i in range(5):
             self.page.view.select_rows((i,))
             action.activate()
@@ -89,20 +89,20 @@ class TestBookmarksExtension(gaupol.TestCase):
 
     @patch("gaupol.util.run_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_add_bookmark_activate(self):
-        self.application.get_action("add_bookmark").activate()
+        self.application.get_action("add-bookmark").activate()
 
     def test__on_edit_bookmarks_activate(self):
-        self.application.get_action("edit_bookmarks").activate()
+        self.application.get_action("edit-bookmarks").activate()
 
     def test__on_next_bookmark_activate(self):
-        self.application.get_action("next_bookmark").activate()
-        self.application.get_action("next_bookmark").activate()
-        self.application.get_action("next_bookmark").activate()
+        self.application.get_action("next-bookmark").activate()
+        self.application.get_action("next-bookmark").activate()
+        self.application.get_action("next-bookmark").activate()
 
     def test__on_previous_bookmark_activate(self):
-        self.application.get_action("previous_bookmark").activate()
-        self.application.get_action("previous_bookmark").activate()
-        self.application.get_action("previous_bookmark").activate()
+        self.application.get_action("previous-bookmark").activate()
+        self.application.get_action("previous-bookmark").activate()
+        self.application.get_action("previous-bookmark").activate()
 
     def test_update(self):
         self.extension.update(self.application, self.page)

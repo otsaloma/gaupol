@@ -279,7 +279,7 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_edit_bookmarks_activate(self, *args):
         """Show the bookmarks page in the side pane."""
-        action = self.application.get_action("toggle_side_pane")
+        action = self.application.get_action("toggle-side-pane")
         action.set_active(True)
         self.application.side_pane.set_current_page(self._side_container)
         self._search_entry.grab_focus()
@@ -475,19 +475,19 @@ class BookmarksExtension(gaupol.Extension):
 
     def update(self, application, page):
         """Update state of extension for `application` and active `page`."""
-        action = self._action_group.get_action("add_bookmark")
+        action = self._action_group.get_action("add-bookmark")
         sensitive = False
         with aeidon.util.silent(AttributeError):
             sensitive = len(page.view.get_selected_rows()) == 1
         action.set_sensitive(sensitive)
-        action = self._action_group.get_action("edit_bookmarks")
+        action = self._action_group.get_action("edit-bookmarks")
         action.set_sensitive(page is not None)
-        action = self._action_group.get_action("next_bookmark")
+        action = self._action_group.get_action("next-bookmark")
         sensitive = False
         with aeidon.util.silent(KeyError):
             sensitive = bool(self._bookmarks[page])
         action.set_sensitive(sensitive)
-        action = self._action_group.get_action("previous_bookmark")
+        action = self._action_group.get_action("previous-bookmark")
         action.set_sensitive(sensitive)
 
     def _update_tree_view(self):

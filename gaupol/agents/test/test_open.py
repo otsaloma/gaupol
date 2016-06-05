@@ -66,14 +66,14 @@ class TestOpenAgent(gaupol.TestCase):
 
     def test__on_new_project_activate(self):
         n = len(self.application.pages)
-        self.application.get_action("new_project").activate()
+        self.application.get_action("new-project").activate()
         assert len(self.application.pages) == n+1
 
     @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_split_project_activate(self):
         page = self.application.get_current_page()
         page.view.select_rows((3,))
-        self.application.get_action("split_project").activate()
+        self.application.get_action("split-project").activate()
 
     def test_open_main(self):
         n = len(self.application.pages)

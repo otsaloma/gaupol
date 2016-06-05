@@ -292,7 +292,7 @@ class SidePaneExtension(gaupol.Extension):
 
     def _on_side_pane_close_button_clicked(self, side_pane):
         """Update the state of the corresponding menu item."""
-        path = "/ui/menubar/view/1/side_pane"
+        path = "/ui/menubar/view/1/side-pane"
         action = self.application.uim.get_action(path)
         action.set_active(False)
 

@@ -195,7 +195,7 @@ class CustomFrameratesExtension(gaupol.Extension):
                                      stock_id=None,
                                      value=int(framerate))
 
-            group = "show_framerate_23_976"
+            group = "show-framerate-23-976"
             action.join_group(self.application.get_action(group))
             action.framerate = framerate
             self._action_group.add_action(action)

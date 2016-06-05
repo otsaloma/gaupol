@@ -22,7 +22,7 @@ import gaupol
 
 class ClearTextsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "clear_texts")
+        gaupol.Action.__init__(self, "clear-texts")
         self.accelerators = ["C"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -34,7 +34,7 @@ class ClearTextsAction(gaupol.Action):
 
 class CopyTextsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "copy_texts")
+        gaupol.Action.__init__(self, "copy-texts")
         self.accelerators = ["<Control>C"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -46,7 +46,7 @@ class CopyTextsAction(gaupol.Action):
 
 class CutTextsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "cut_texts")
+        gaupol.Action.__init__(self, "cut-texts")
         self.accelerators = ["<Control>X"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -58,7 +58,7 @@ class CutTextsAction(gaupol.Action):
 
 class FindAndReplaceAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "find_and_replace")
+        gaupol.Action.__init__(self, "find-and-replace")
         self.accelerators = ["<Control>F", "<Control>H"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -66,7 +66,7 @@ class FindAndReplaceAction(gaupol.Action):
 
 class FindNextAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "find_next")
+        gaupol.Action.__init__(self, "find-next")
         self.accelerators = ["<Control>G"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -75,7 +75,7 @@ class FindNextAction(gaupol.Action):
 
 class FindPreviousAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "find_previous")
+        gaupol.Action.__init__(self, "find-previous")
         self.accelerators = ["<Shift><Control>G"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -84,7 +84,7 @@ class FindPreviousAction(gaupol.Action):
 
 class PasteTextsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "paste_texts")
+        gaupol.Action.__init__(self, "paste-texts")
         self.accelerators = ["<Control>V"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -98,7 +98,7 @@ class PasteTextsAction(gaupol.Action):
 
 class ToggleDialogDashesAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "toggle_dialogue_dashes")
+        gaupol.Action.__init__(self, "toggle-dialogue-dashes")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -109,7 +109,7 @@ class ToggleDialogDashesAction(gaupol.Action):
 
 class ToggleItalicizationAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "toggle_italicization")
+        gaupol.Action.__init__(self, "toggle-italicization")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -124,7 +124,7 @@ class ToggleItalicizationAction(gaupol.Action):
 
 class UseLowerCaseAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "use_lower_case")
+        gaupol.Action.__init__(self, "use-lower-case")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -135,7 +135,7 @@ class UseLowerCaseAction(gaupol.Action):
 
 class UseSentenceCaseAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "use_sentence_case")
+        gaupol.Action.__init__(self, "use-sentence-case")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -146,7 +146,7 @@ class UseSentenceCaseAction(gaupol.Action):
 
 class UseTitleCaseAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "use_title_case")
+        gaupol.Action.__init__(self, "use-title-case")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -157,7 +157,7 @@ class UseTitleCaseAction(gaupol.Action):
 
 class UseUpperCaseAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "use_upper_case")
+        gaupol.Action.__init__(self, "use-upper-case")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)

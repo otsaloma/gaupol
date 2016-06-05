@@ -56,7 +56,7 @@ class MenuAgent(aeidon.Delegate):
                                  value=index)
 
         action_group = self.get_action_group("audio-tracks")
-        group = action_group.get_action("activate_audio_track_0")
+        group = action_group.get_action("activate-audio-track-0")
         if group is not None: action.join_group(group)
         action_group.add_action(action)
         action.connect("changed", self._on_audio_tracks_action_changed)
@@ -78,7 +78,7 @@ class MenuAgent(aeidon.Delegate):
                                  value=index)
 
         action_group = self.get_action_group("projects")
-        group = action_group.get_action("activate_project_0")
+        group = action_group.get_action("activate-project-0")
         if group is not None: action.join_group(group)
         accel = ("<alt>{:d}".format(index+1) if index < 9 else None)
         action_group.add_action_with_accel(action, accel)

@@ -28,6 +28,7 @@ class UtilityAgent(aeidon.Delegate):
     @aeidon.deco.export
     def get_action(self, name):
         """Return user-activatable action by `name`."""
+        name = name.replace("_", "-")
         return self.window.lookup_action(name)
 
     @aeidon.deco.export

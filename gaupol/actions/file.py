@@ -29,7 +29,7 @@ class CloseAllProjectsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`CloseAllProjectsAction` instance."""
-        gaupol.Action.__init__(self, "close_all_projects")
+        gaupol.Action.__init__(self, "close-all-projects")
         self.set_icon_name("window-close")
         self.set_label(_("_Close All"))
         self.set_tooltip( _("Close all open projects"))
@@ -47,7 +47,7 @@ class CloseProjectAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`CloseProjectAction` instance."""
-        gaupol.Action.__init__(self, "close_project")
+        gaupol.Action.__init__(self, "close-project")
         self.set_icon_name("window-close")
         self.set_label(_("_Close"))
         self.set_tooltip(_("Close the current project"))
@@ -65,7 +65,7 @@ class NewProjectAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`NewProjectAction` instance."""
-        gaupol.Action.__init__(self, "new_project")
+        gaupol.Action.__init__(self, "new-project")
         self.set_icon_name("document-new")
         self.set_label(_("_New"))
         self.set_tooltip(_("Create a new project"))
@@ -81,7 +81,7 @@ class OpenMainFilesAction(gaupol.Action):
 
     def __init__(self):
         """Initialize an :class:`OpenMainFilesAction` instance."""
-        gaupol.Action.__init__(self, "open_main_files")
+        gaupol.Action.__init__(self, "open-main-files")
         self.set_icon_name("document-open")
         self.set_is_important(True)
         self.set_label(_("_Open…"))
@@ -146,7 +146,7 @@ class OpenTranslationFileAction(gaupol.Action):
 
     def __init__(self):
         """Initialize an :class:`OpenTranslationFileAction` instance."""
-        gaupol.Action.__init__(self, "open_translation_file")
+        gaupol.Action.__init__(self, "open-translation-file")
         self.set_icon_name("document-open")
         self.set_label(_("Open _Translation…"))
         self.set_short_label(_("Open Translation"))
@@ -179,7 +179,7 @@ class SaveAllDocumentsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveAllDocumentsAction` instance."""
-        gaupol.Action.__init__(self, "save_all_documents")
+        gaupol.Action.__init__(self, "save-all-documents")
         self.set_icon_name("document-save")
         self.set_label(_("_Save All"))
         self.set_tooltip(_("Save all open documents"))
@@ -197,7 +197,7 @@ class SaveAllDocumentsAsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveAllDocumentsAsAction` instance."""
-        gaupol.Action.__init__(self, "save_all_documents_as")
+        gaupol.Action.__init__(self, "save-all-documents-as")
         self.set_icon_name("document-save")
         self.set_label(_("Save _All As…"))
         self.set_tooltip(_("Save all open documents with different properties"))
@@ -215,7 +215,7 @@ class SaveMainDocumentAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveMainDocumentAction` instance."""
-        gaupol.Action.__init__(self, "save_main_document")
+        gaupol.Action.__init__(self, "save-main-document")
         self.set_icon_name("document-save")
         self.set_is_important(True)
         self.set_label(_("_Save"))
@@ -234,7 +234,7 @@ class SaveMainDocumentAsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveMainDocumentAsAction` instance."""
-        gaupol.Action.__init__(self, "save_main_document_as")
+        gaupol.Action.__init__(self, "save-main-document-as")
         self.set_icon_name("document-save-as")
         self.set_label(_("Save _As…"))
         self.set_short_label(_("Save As"))
@@ -253,7 +253,7 @@ class SaveTranslationDocumentAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveTranslationDocumentAction` instance."""
-        gaupol.Action.__init__(self, "save_translation_document")
+        gaupol.Action.__init__(self, "save-translation-document")
         self.set_icon_name("document-save")
         self.set_label(_("Save Trans_lation"))
         self.set_tooltip(_("Save the current translation document"))
@@ -271,7 +271,7 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SaveTranslationDocumentAsAction` instance."""
-        gaupol.Action.__init__(self, "save_translation_document_as")
+        gaupol.Action.__init__(self, "save-translation-document-as")
         self.set_icon_name("document-save-as")
         self.set_label(_("Save Translat_ion As…"))
         self.set_short_label(_("Save Translation As"))

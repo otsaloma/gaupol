@@ -29,7 +29,7 @@ class LoadVideoAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`LoadVideoAction` instance."""
-        gaupol.Action.__init__(self, "load_video")
+        gaupol.Action.__init__(self, "load-video")
         self.set_label(_("_Load Video…"))
         self.set_tooltip(_("Load a video file"))
         self.accelerator = "<Control>L"
@@ -47,7 +47,7 @@ class PlayPauseAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`PlayPauseAction` instance."""
-        gaupol.Action.__init__(self, "play_pause")
+        gaupol.Action.__init__(self, "play-pause")
         self.set_icon_name("media-playback-start")
         self.set_label(_("_Play/Pause"))
         self.set_tooltip(_("Play or pause video"))
@@ -65,7 +65,7 @@ class PlaySelectionAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`PlaySelectionAction`."""
-        gaupol.Action.__init__(self, "play_selection")
+        gaupol.Action.__init__(self, "play-selection")
         self.set_label(_("Play _Selection"))
         self.set_tooltip(_("Play the selected subtitles"))
         self.accelerator = "O"
@@ -83,7 +83,7 @@ class SeekBackwardAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SeekBackwardAction` instance."""
-        gaupol.Action.__init__(self, "seek_backward")
+        gaupol.Action.__init__(self, "seek-backward")
         self.set_icon_name("media-seek-backward")
         self.set_label(_("Seek _Backward"))
         self.set_tooltip(_("Seek backward"))
@@ -101,7 +101,7 @@ class SeekForwardAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SeekForwardAction` instance."""
-        gaupol.Action.__init__(self, "seek_forward")
+        gaupol.Action.__init__(self, "seek-forward")
         self.set_icon_name("media-seek-forward")
         self.set_label(_("Seek _Forward"))
         self.set_tooltip(_("Seek forward"))
@@ -119,7 +119,7 @@ class SeekNextAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SeekNextAction` instance."""
-        gaupol.Action.__init__(self, "seek_next")
+        gaupol.Action.__init__(self, "seek-next")
         self.set_icon_name("media-skip-forward")
         self.set_label(_("Seek _Next"))
         self.set_tooltip(_("Seek to the start of the next subtitle"))
@@ -137,7 +137,7 @@ class SeekPreviousAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SeekPreviousAction` instance."""
-        gaupol.Action.__init__(self, "seek_previous")
+        gaupol.Action.__init__(self, "seek-previous")
         self.set_icon_name("media-skip-backward")
         self.set_label(_("Seek _Previous"))
         self.set_tooltip(_("Seek to the start of the previous subtitle"))
@@ -155,7 +155,7 @@ class SeekSelectionEndAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SeekSelectionEnd` instance."""
-        gaupol.Action.__init__(self, "seek_selection_end")
+        gaupol.Action.__init__(self, "seek-selection-end")
         self.set_label(_("See_k Selection End"))
         self.set_tooltip(_("Seek the end of selection"))
         self.accelerator = "<Ctrl>Down"
@@ -173,7 +173,7 @@ class SeekSelectionStartAction(gaupol.Action):
 
     def __init__(self):
         """Initialize a :class:`SeekSelectionStart` instance."""
-        gaupol.Action.__init__(self, "seek_selection_start")
+        gaupol.Action.__init__(self, "seek-selection-start")
         self.set_label(_("S_eek Selection Start"))
         self.set_tooltip(_("Seek the start of selection"))
         self.accelerator = "<Ctrl>Up"

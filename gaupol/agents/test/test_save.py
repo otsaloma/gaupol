@@ -30,13 +30,13 @@ class TestSaveAgent(gaupol.TestCase):
         self.application = self.new_application()
 
     def test__on_save_all_documents_activate(self):
-        self.application.get_action("save_all_documents").activate()
+        self.application.get_action("save-all-documents").activate()
 
     def test__on_save_main_document_activate(self):
-        self.application.get_action("save_main_document").activate()
+        self.application.get_action("save-main-document").activate()
 
     def test__on_save_translation_document_activate(self):
-        self.application.get_action("save_translation_document").activate()
+        self.application.get_action("save-translation-document").activate()
 
     def test_save_main(self):
         page = self.application.get_current_page()

@@ -25,50 +25,50 @@ class TestViewAgent(gaupol.TestCase):
         self.application = self.new_application()
 
     def test__on_show_framerate_23_976_changed__frames(self):
-        self.application.get_action("show_frames").activate()
+        self.application.get_action("show-frames").activate()
         framerate = aeidon.framerates.FPS_25_000
         self.application.get_framerate_action(framerate).activate()
 
     def test__on_show_framerate_23_976_changed__times(self):
-        self.application.get_action("show_times").activate()
+        self.application.get_action("show-times").activate()
         framerate = aeidon.framerates.FPS_29_970
         self.application.get_framerate_action(framerate).activate()
 
     def test__on_show_times_changed(self):
-        self.application.get_action("show_frames").activate()
-        self.application.get_action("show_times").activate()
+        self.application.get_action("show-frames").activate()
+        self.application.get_action("show-times").activate()
 
     def test__on_toggle_duration_column_toggled(self):
-        name = "toggle_duration_column"
+        name = "toggle-duration-column"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
     def test__on_toggle_end_column_toggled(self):
-        name = "toggle_end_column"
+        name = "toggle-end-column"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
     def test__on_toggle_main_text_column_toggled(self):
-        name = "toggle_main_text_column"
+        name = "toggle-main-text-column"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
     def test__on_toggle_main_toolbar_toggled(self):
-        name = "toggle_main_toolbar"
+        name = "toggle-main-toolbar"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
     def test__on_toggle_number_column_toggled(self):
-        name = "toggle_number_column"
+        name = "toggle-number-column"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
     def test__on_toggle_start_column_toggled(self):
-        name = "toggle_start_column"
+        name = "toggle-start-column"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
     def test__on_toggle_translation_text_column_toggled(self):
-        name = "toggle_translation_text_column"
+        name = "toggle-translation-text-column"
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()

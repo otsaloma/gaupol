@@ -141,13 +141,13 @@ class VideoAgent(aeidon.Delegate):
             self._update_subtitle_cache()
         else: # Player exists
             if self.player.is_playing():
-                action = self.get_action("play_pause")
+                action = self.get_action("play-pause")
                 action.activate()
             adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(0)
             self.player.stop()
         self.player.set_path(path)
-        action = self.get_action("toggle_player")
+        action = self.get_action("toggle-player")
         action.set_active(True)
         self.update_gui()
         self.player.play()
@@ -173,13 +173,13 @@ class VideoAgent(aeidon.Delegate):
     def _on_player_state_changed(self, player, state):
         """Update UI to match `state` of `player`."""
         if state == Gst.State.NULL:
-            action = self.get_action("play_pause")
+            action = self.get_action("play-pause")
             action.set_icon_name("media-playback-start")
         if state == Gst.State.PLAYING:
-            action = self.get_action("play_pause")
+            action = self.get_action("play-pause")
             action.set_icon_name("media-playback-pause")
         if state == Gst.State.PAUSED:
-            action = self.get_action("play_pause")
+            action = self.get_action("play-pause")
             action.set_icon_name("media-playback-start")
 
     def _on_player_update_seekbar(self, data=None):

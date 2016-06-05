@@ -21,17 +21,17 @@ import gaupol
 
 class BrowseDocumentationAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "browse_documentation")
+        gaupol.Action.__init__(self, "browse-documentation")
         self.action_group = "main-safe"
 
 class ReportABugAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "report_a_bug")
+        gaupol.Action.__init__(self, "report-a-bug")
         self.action_group = "main-safe"
 
 class ViewAboutDialogAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "view_about_dialog")
+        gaupol.Action.__init__(self, "view-about-dialog")
         self.action_group = "main-safe"
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

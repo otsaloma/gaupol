@@ -361,8 +361,9 @@ class EditAgent(aeidon.Delegate):
 
     def _set_unsafe_sensitivities(self, sensitive):
         """Set sensitivities of unsafe actions."""
-        action_group = self.get_action_group("main-unsafe")
-        action_group.set_sensitive(sensitive)
+        print("TODO: _set_unsafe_sensitivities")
+        # action_group = self.get_action_group("main-unsafe")
+        # action_group.set_sensitive(sensitive)
 
     def _sync_clipboards(self, page):
         """Synchronize all clipboards to match that of `page`."""

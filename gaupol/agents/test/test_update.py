@@ -30,19 +30,19 @@ class TestUpdateAgent(gaupol.TestCase):
 
     def test__on_activate_next_project_activate(self):
         self.application.notebook.set_current_page(0)
-        self.application.get_action("activate_next_project").activate()
+        self.application.get_action("activate-next-project").activate()
 
     def test__on_activate_previous_project_activate(self):
         self.application.notebook.set_current_page(-1)
-        self.application.get_action("activate_previous_project").activate()
+        self.application.get_action("activate-previous-project").activate()
 
     def test__on_move_tab_left_activate(self):
         self.application.notebook.set_current_page(-1)
-        self.application.get_action("move_tab_left").activate()
+        self.application.get_action("move-tab-left").activate()
 
     def test__on_move_tab_right_activate(self):
         self.application.notebook.set_current_page(0)
-        self.application.get_action("move_tab_right").activate()
+        self.application.get_action("move-tab-right").activate()
 
     def test_show_message(self):
         self.application.show_message("")

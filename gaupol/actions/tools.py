@@ -22,14 +22,14 @@ import gaupol
 
 class AdjustDurationsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "adjust_durations")
+        gaupol.Action.__init__(self, "adjust-durations")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
 class AppendFileAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "append_file")
+        gaupol.Action.__init__(self, "append-file")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -37,7 +37,7 @@ class AppendFileAction(gaupol.Action):
 
 class CheckSpellingAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "check_spelling")
+        gaupol.Action.__init__(self, "check-spelling")
         self.accelerators = ["F7"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -47,14 +47,14 @@ class CheckSpellingAction(gaupol.Action):
 
 class ConfigureSpellCheckAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "configure_spell_check")
+        gaupol.Action.__init__(self, "configure-spell-check")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(aeidon.util.enchant_available())
 
 class ConvertFramerateAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "convert_framerate")
+        gaupol.Action.__init__(self, "convert-framerate")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -62,7 +62,7 @@ class ConvertFramerateAction(gaupol.Action):
 
 class CorrectTextsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "correct_texts")
+        gaupol.Action.__init__(self, "correct-texts")
         self.accelerators = ["F8"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -81,7 +81,7 @@ class PreviewAction(gaupol.Action):
 
 class SelectVideoFileAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "select_video_file")
+        gaupol.Action.__init__(self, "select-video-file")
         self.action_group = "main-safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -89,7 +89,7 @@ class SelectVideoFileAction(gaupol.Action):
 
 class ShiftPositionsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "shift_positions")
+        gaupol.Action.__init__(self, "shift-positions")
         self.accelerators = ["H"]
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
@@ -97,7 +97,7 @@ class ShiftPositionsAction(gaupol.Action):
 
 class SplitProjectAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "split_project")
+        gaupol.Action.__init__(self, "split-project")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -105,7 +105,7 @@ class SplitProjectAction(gaupol.Action):
 
 class TransformPositionsAction(gaupol.Action):
     def __init__(self):
-        gaupol.Action.__init__(self, "transform_positions")
+        gaupol.Action.__init__(self, "transform-positions")
         self.action_group = "main-unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
