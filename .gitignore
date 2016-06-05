@@ -10,7 +10,4 @@ data/patterns/*.common-error
 data/patterns/*.hearing-impaired
 data/patterns/*.line-break
 dist
-doc/sphinx/_build
-doc/sphinx/api
-doc/sphinx/index.rst
 locale

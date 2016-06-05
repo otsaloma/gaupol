@@ -17,8 +17,8 @@
 
 """Initializing and managing Gaupol windows."""
 
-# For historical reasons gaupol.Application has been a subclass
-# of Gtk.Window. So, the later introduced Gtk.Application is for
+# For historical reasons gaupol.Application has been effectively
+# a Gtk.Window. So, the later introduced Gtk.Application is for
 # us a gaupol.ApplicationManager and it doesn't actually manage
 # much, but is more of a main function in the form of a class.
 
@@ -77,12 +77,19 @@ class ApplicationManager(Gtk.Application):
             Gtk.Settings.get_default().set_property(
                 "gtk-application-prefer-dark_theme", True)
 
+    def _init_menubar(self):
+        """Initialize the window menubar."""
+        path = os.path.join(aeidon.DATA_DIR, "ui", "menubar.ui")
+        builder = Gtk.Builder.new_from_file(path)
+        self.set_menubar(builder.get_object("menubar"))
+
     def _on_activate(self, manager, args):
         """Initialize application and open files from `args`."""
         opts, args = self._parse_args(args)
         sys.excepthook = gaupol.util.show_exception
         aeidon.i18n.bind()
         self._init_configuration()
+        self._init_menubar()
         self._init_application(opts, args)
 
     def _on_shutdown(self, manager):

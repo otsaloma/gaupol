@@ -17,48 +17,21 @@
 
 """Help actions for :class:`gaupol.Application`."""
 
-import aeidon
 import gaupol
 
-from aeidon.i18n import _
-
-
-class BrowseWikiDocumentationAction(gaupol.Action):
-
-    """Browse wiki documentation."""
-
+class BrowseDocumentationAction(gaupol.Action):
     def __init__(self):
-        """Initialize a :class:`BrowseWikiDocumentationAction` instance."""
-        gaupol.Action.__init__(self, "browse_wiki_documentation")
-        self.set_icon_name("help-contents")
-        self.set_label(_("_Wiki Documentation"))
-        self.set_tooltip(_("Browse wiki documentation"))
+        gaupol.Action.__init__(self, "browse_documentation")
         self.action_group = "main-safe"
-
 
 class ReportABugAction(gaupol.Action):
-
-    """Submit a bug report."""
-
     def __init__(self):
-        """Initialize a :class:`ReportABugAction` instance."""
         gaupol.Action.__init__(self, "report_a_bug")
-        self.set_label(_("_Report A Bug"))
-        self.set_tooltip(_("Submit a bug report"))
         self.action_group = "main-safe"
-
 
 class ViewAboutDialogAction(gaupol.Action):
-
-    """Show information about Gaupol."""
-
     def __init__(self):
-        """Initialize a :class:`ViewAboutDialogAction` instance."""
         gaupol.Action.__init__(self, "view_about_dialog")
-        self.set_icon_name("help-about")
-        self.set_label(_("_About"))
-        self.set_tooltip(_("Show information about Gaupol"))
         self.action_group = "main-safe"
-
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

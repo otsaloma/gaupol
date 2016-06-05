@@ -72,7 +72,6 @@ class TestView(gaupol.TestCase):
                           subtitle.main_text,
                           subtitle.tran_text))
 
-
     def test_select_rows(self):
         self.view.select_rows(())
         assert self.view.get_selected_rows() == ()

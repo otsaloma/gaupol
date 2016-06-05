@@ -26,8 +26,8 @@ class HelpAgent(aeidon.Delegate):
     """Help and information."""
 
     @aeidon.deco.export
-    def _on_browse_wiki_documentation_activate(self, *args):
-        """Open web browser to view wiki documentation."""
+    def _on_browse_documentation_activate(self, *args):
+        """Open web browser to view documentation."""
         gaupol.util.show_uri(gaupol.DOCUMENTATION_URL)
 
     @aeidon.deco.export

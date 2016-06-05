@@ -1,5 +1,5 @@
-Gaupol 1.0
-==========
+Gaupol 0.91
+===========
 
 * [x] Use header bars for dialogs
 * [ ] Migrate from deprecated `Gtk.UIManager`, `Gtk.Action` etc.

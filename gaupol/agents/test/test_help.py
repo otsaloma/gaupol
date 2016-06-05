@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
 import gaupol
 
 from gi.repository import Gtk
@@ -26,8 +25,8 @@ class TestHelpAgent(gaupol.TestCase):
     def setup_method(self, method):
         self.application = self.new_application()
 
-    def test__on_browse_wiki_documentation_activate(self):
-        self.application.get_action("browse_wiki_documentation").activate()
+    def test__on_browse_documentation_activate(self):
+        self.application.get_action("browse_documentation").activate()
 
     def test__on_report_a_bug_activate(self):
         self.application.get_action("report_a_bug").activate()

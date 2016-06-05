@@ -23,8 +23,6 @@ import importlib.machinery
 import inspect
 import os
 import re
-import sys
-import traceback
 
 __all__ = ("ExtensionManager", "ExtensionMetadata",)
 

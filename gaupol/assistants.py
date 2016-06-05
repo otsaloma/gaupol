@@ -1070,7 +1070,6 @@ class TextAssistant(Gtk.Assistant):
             self.add_page(JoinSplitWordsPage(self))
         self.add_page(CommonErrorPage(self))
         self.add_page(CapitalizationPage(self))
-        self.application.emit("text-assistant-request-pages", self)
         self.add_pages((LineBreakPage(self), LineBreakOptionsPage(self)))
         self.add_page(self._progress_page)
         self.add_page(self._confirmation_page)

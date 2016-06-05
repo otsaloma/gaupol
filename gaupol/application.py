@@ -18,13 +18,9 @@
 """GTK+ user interface controller for :class:`aeidon.Project`."""
 
 import aeidon
-import atexit
 import gaupol
 import itertools
-import os
-import sys
 
-from aeidon.i18n   import _
 from gi.repository import Gdk
 from gi.repository import Gtk
 
@@ -80,9 +76,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar replacement: Last used search replacement or blank if not used
     :ivar seekbar: Video player seekbar (a :class:`Gtk.Scale` instance)
     :ivar statuslabel: Instance of :class:`gaupol.FloatingLabel` used
-    :ivar uim: Instance of :class:`Gtk.UIManager` used
     :ivar volume_button: A :class:`Gtk.VolumeButton` in the player toolbar
-    :ivar window: A :class:`Gtk.Window` used to hold all the widgets
+    :ivar window: A :class:`Gtk.ApplicationWindow` used to hold all the widgets
     :ivar x_clipboard: A :class:`Gtk.Clipboard` used for desktop-wide copying
 
     Signals and their arguments for callback functions:
@@ -92,7 +87,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
      * ``page-switched``: application, page
      * ``pages-reordered``: application, page, number
      * ``quit``: application
-     * ``text-assistant-request-pages``: application, assistant
     """
 
     signals = (
@@ -102,7 +96,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         "page-switched",
         "pages-reordered",
         "quit",
-        "text-assistant-request-pages",
     )
 
     def __init__(self):
@@ -123,7 +116,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.replacement = ""
         self.seekbar = None
         self.statuslabel = None
-        self.uim = None
         self.volume_button = None
         self.window = None
         self.x_clipboard = None
@@ -145,16 +137,18 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Set value of attribute `name`."""
         return aeidon.Observable.__setattr__(self, name, value)
 
-    def _finalize_uim_actions(self):
-        """Connect UI manager actions to widgets and methods."""
-        for name in ("main-safe", "main-unsafe"):
-            action_group = self.get_action_group(name)
-            for action in action_group.list_actions():
-                action.finalize(self)
-
-    def _init_css(self):
-        """Init custom CSS theming rules for screen."""
-        gaupol.style.load_css(self.window)
+    def _init_actions(self):
+        """Initialize user-activatable actions."""
+        for name in gaupol.actions.__all__:
+            action = getattr(gaupol.actions, name)()
+            name = "win.{}".format(action.props.name)
+            if hasattr(gaupol, "appman"):
+                gaupol.appman.set_accels_for_action(
+                    name, action.accelerators)
+            callback = "_on_{}_activate".format(
+                action.props.name.replace("-", "_"))
+            action.connect("activate", getattr(self, callback))
+            self.window.add_action(action)
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""
@@ -183,9 +177,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         vbox = gaupol.util.new_vbox(spacing=0)
         self._init_x_clipboard()
         self._init_window()
-        self._init_css()
-        self._init_uim()
-        self._init_menubar(vbox)
+        self._init_actions()
         self._init_main_toolbar(vbox)
         self._init_paned(vbox)
         self._init_player_box(self.paned)
@@ -193,26 +185,21 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.window.add(vbox)
         vbox.show_all()
         self._init_visibilities()
-        self._finalize_uim_actions()
 
     def _init_main_toolbar(self, vbox):
         """Initialize the main toolbar."""
-        self._init_undo_button()
-        self._init_redo_button()
-        toolbar = self.uim.get_widget("/ui/main_toolbar")
-        style = toolbar.get_style_context()
-        style.add_class("primary-toolbar")
-        toolbar_style = gaupol.conf.application_window.toolbar_style
-        toolbar.set_style(toolbar_style.value)
-        if sys.platform == "win32":
-            toolbar.set_icon_size(Gtk.IconSize.MENU)
-        gaupol.conf.connect_notify("application_window", "toolbar_style", self)
-        gaupol.util.pack_start(vbox, toolbar)
-
-    def _init_menubar(self, vbox):
-        """Initialize the menubar."""
-        menubar = self.uim.get_widget("/ui/menubar")
-        gaupol.util.pack_start(vbox, menubar)
+        print("TODO: _init_main_toolbar")
+        # self._init_undo_button()
+        # self._init_redo_button()
+        # toolbar = self.uim.get_widget("/ui/main_toolbar")
+        # style = toolbar.get_style_context()
+        # style.add_class("primary-toolbar")
+        # toolbar_style = gaupol.conf.application_window.toolbar_style
+        # toolbar.set_style(toolbar_style.value)
+        # if sys.platform == "win32":
+        #     toolbar.set_icon_size(Gtk.IconSize.MENU)
+        # gaupol.conf.connect_notify("application_window", "toolbar_style", self)
+        # gaupol.util.pack_start(vbox, toolbar)
 
     def _init_notebook(self, paned):
         """Initialize the notebook."""
@@ -248,90 +235,53 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_player_box(self, paned):
         """Initialize the video player horizontal box."""
-        # This will actually be added to paned
-        # once a video is loaded for use.
-        conf = gaupol.conf.application_window
-        if conf.layout == Gtk.Orientation.HORIZONTAL:
-            orientation = Gtk.Orientation.VERTICAL
-        if conf.layout == Gtk.Orientation.VERTICAL:
-            orientation = Gtk.Orientation.HORIZONTAL
-        self.player_box = Gtk.Box(orientation=orientation)
+        # This will actually be added to paned once a video is loaded.
+        layout = gaupol.conf.application_window.layout
+        if layout == Gtk.Orientation.HORIZONTAL:
+            self.player_box = gaupol.util.new_vbox(spacing=0)
+        if layout == Gtk.Orientation.VERTICAL:
+            self.player_box = gaupol.util.new_hbox(spacing=0)
 
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""
-        redo_button = self.get_tool_item("redo_action")
-        if isinstance(redo_button, Gtk.MenuToolButton):
-            # redo_button is not necessarily a menu tool button.
-            # http://bugzilla.gnome.org/show_bug.cgi?id=686608
-            redo_button.set_menu(Gtk.Menu())
-            tip = _("Redo undone actions")
-            redo_button.set_arrow_tooltip_text(tip)
-            callback = self._on_redo_button_show_menu
-            redo_button.connect("show-menu", callback)
-
-    def _init_uim(self):
-        """Initialize the UI manager."""
-        self.uim = Gtk.UIManager()
-        safe_group = Gtk.ActionGroup(name="main-safe")
-        unsafe_group = Gtk.ActionGroup(name="main-unsafe")
-        for name in gaupol.actions.__all__:
-            action = getattr(gaupol.actions, name)()
-            args = (action, action.accelerator)
-            if action.action_group == "main-safe":
-                safe_group.add_action_with_accel(*args)
-            if action.action_group == "main-unsafe":
-                unsafe_group.add_action_with_accel(*args)
-        self._init_uim_radio_groups(safe_group)
-        self._init_uim_radio_groups(unsafe_group)
-        self.uim.insert_action_group(safe_group, 0)
-        self.uim.insert_action_group(unsafe_group, 1)
-        action_group = Gtk.ActionGroup(name="audio-tracks")
-        self.uim.insert_action_group(action_group, -1)
-        action_group = Gtk.ActionGroup(name="projects")
-        self.uim.insert_action_group(action_group, -1)
-        ui_xml_file = os.path.join(aeidon.DATA_DIR, "ui", "ui.xml")
-        self.uim.add_ui_from_file(ui_xml_file)
-        self.window.add_accel_group(self.uim.get_accel_group())
-        path = os.path.join(aeidon.CONFIG_HOME_DIR, "accels.conf")
-        if os.path.isfile(path):
-            Gtk.AccelMap.load(path)
-        atexit.register(Gtk.AccelMap.save, path)
-        self.uim.ensure_update()
-
-    def _init_uim_radio_groups(self, action_group):
-        """Initialize the groups of radio actions in action group."""
-        actions = action_group.list_actions()
-        actions = [x for x in actions if isinstance(x, Gtk.RadioAction)]
-        for group in set(x.group for x in actions):
-            instance = None
-            for action in (x for x in actions if x.group == group):
-                if instance is not None:
-                    action.join_group(instance)
-                instance = instance or action
+        print("TODO: _init_redo_button")
+        # redo_button = self.get_tool_item("redo_action")
+        # if isinstance(redo_button, Gtk.MenuToolButton):
+        #     # redo_button is not necessarily a menu tool button.
+        #     # http://bugzilla.gnome.org/show_bug.cgi?id=686608
+        #     redo_button.set_menu(Gtk.Menu())
+        #     tip = _("Redo undone actions")
+        #     redo_button.set_arrow_tooltip_text(tip)
+        #     callback = self._on_redo_button_show_menu
+        #     redo_button.connect("show-menu", callback)
 
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
-        undo_button = self.get_tool_item("undo_action")
-        if isinstance(undo_button, Gtk.MenuToolButton):
-            # undo_button is not necessarily a menu tool button.
-            # http://bugzilla.gnome.org/show_bug.cgi?id=686608
-            undo_button.set_menu(Gtk.Menu())
-            tip = _("Undo actions")
-            undo_button.set_arrow_tooltip_text(tip)
-            callback = self._on_undo_button_show_menu
-            undo_button.connect("show-menu", callback)
+        print("TODO: _init_undo_button")
+        # undo_button = self.get_tool_item("undo_action")
+        # if isinstance(undo_button, Gtk.MenuToolButton):
+        #     # undo_button is not necessarily a menu tool button.
+        #     # http://bugzilla.gnome.org/show_bug.cgi?id=686608
+        #     undo_button.set_menu(Gtk.Menu())
+        #     tip = _("Undo actions")
+        #     undo_button.set_arrow_tooltip_text(tip)
+        #     callback = self._on_undo_button_show_menu
+        #     undo_button.connect("show-menu", callback)
 
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""
-        conf = gaupol.conf.application_window
-        toolbar = self.uim.get_widget("/ui/main_toolbar")
-        toolbar.set_visible(conf.show_main_toolbar)
+        # XXX:
+        # conf = gaupol.conf.application_window
+        # toolbar = self.uim.get_widget("/ui/main_toolbar")
+        # toolbar.set_visible(conf.show_main_toolbar)
         self.notebook_separator.set_visible(False)
         self.show_message(None)
 
     def _init_window(self):
         """Initialize the main window."""
-        self.window = Gtk.Window()
+        self.window = Gtk.ApplicationWindow(
+            application=getattr(gaupol, "appman", None))
+        self.window.set_show_menubar(True)
         self.window.set_icon_name("gaupol")
         Gtk.Window.set_default_icon_name("gaupol")
         self.window.resize(*gaupol.conf.application_window.size)
@@ -340,6 +290,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             self.window.maximize()
         aeidon.util.connect(self, "window", "delete-event")
         aeidon.util.connect(self, "window", "window-state-event")
+        gaupol.style.load_css(self.window)
 
     def _init_x_clipboard(self):
         """Initialize the desktop-wide, persistent clipboard."""
