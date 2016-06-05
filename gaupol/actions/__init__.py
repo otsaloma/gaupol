@@ -22,7 +22,6 @@
 # from gaupol.actions.file     import *
 # from gaupol.actions.format   import *
 from gaupol.actions.help     import *
-# from gaupol.actions.menu     import *
 # from gaupol.actions.position import *
 # from gaupol.actions.search   import *
 # from gaupol.actions.text     import *
