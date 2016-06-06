@@ -1,10 +1,11 @@
 Creating Subtitles from Scratch
 ===============================
 
-Gaupol's built-in video player should provide necessary means to acquire
-subtitle start and end times as well as decipher the texts and various
-tools provided should help with necessary automatic post-processing.
-There are many possible work-flows for subtitling; here's one.
+Gaupol's built-in video player should provide necessary means to
+interpret start and end times and texts of subtitles from viewing the
+video and the various tools provided should help with often necessary
+automatic post-processing. There are many possible work-flows for
+subtitling; here's one.
 
 1. Open Gaupol and create a blank document: <kbd>File</kbd> /
    <kbd>New</kbd>.

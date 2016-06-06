@@ -17,8 +17,8 @@ can be finished by usual manual methods. With most video sources, the
 actual speech recognition cannot be expected to perform well, but voice
 recognition should provide decent results for the start and end times of
 subtitles. The extraction of those start and end times is the primary
-point for this feature to exist in Gaupol and the sensible use for this
-feature in a subtitling workflow.
+point for this feature to exist in Gaupol and the likely sensible use
+for this feature in a subtitling workflow.
 
 Gaupol's speech recognition uses the [CMU Sphinx][sphinx] speech
 recognition toolkit developed at Carnegie Mellon University – to be
@@ -126,7 +126,7 @@ set it to extend durations to match a reasonable reading speed.
 
 After the automatic processing you'll need to manually go over the
 subtitles checking the times and typing the text. See the documentation
-on [creating subtitles][creating-subtitles.md] on how to best do that.
+on [creating subtitles](creating-subtitles.md) on how to best do that.
 
 ## Problems
 
@@ -164,7 +164,7 @@ gst-inspect pocketsphinx
 
 should both give a long output of the properties of those elements.
 
-[gstreamer]: http://gstreamer.freedesktop.org/
+[gstreamer]: https://gstreamer.freedesktop.org/
 [sphinx]: http://cmusphinx.sourceforge.net/
 [sphinx-models]: https://sourceforge.net/projects/cmusphinx/files/Acoustic%20and%20Language%20Models/
 [sphinx-wiki]: http://cmusphinx.sourceforge.net/wiki/
