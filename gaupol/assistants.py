@@ -28,11 +28,6 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 
-try:
-    import enchant
-except Exception:
-    pass
-
 __all__ = ("TextAssistant", "TextAssistantPage")
 
 
@@ -71,14 +66,10 @@ class BuilderPage(TextAssistantPage):
     def __init__(self, assistant, basename):
         """Initialize a :class:`BuilderPage` instance."""
         TextAssistantPage.__init__(self, assistant)
-        ui_file_path = os.path.join(aeidon.DATA_DIR,
-                                    "ui",
-                                    "text-assistant",
-                                    basename)
-
         self._builder = Gtk.Builder()
         self._builder.set_translation_domain("gaupol")
-        self._builder.add_from_file(ui_file_path)
+        self._builder.add_from_file(os.path.join(
+            aeidon.DATA_DIR, "ui", "text-assistant", basename))
         self._builder.connect_signals(self)
         self._set_attributes(self._widgets)
         container = self._builder.get_object("main_container")
@@ -170,17 +161,15 @@ class IntroductionPage(BuilderPage):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-        field = gaupol.conf.text_assistant.field
-        index = {gaupol.fields.MAIN_TEXT: 0,
-                 gaupol.fields.TRAN_TEXT: 1}[field]
-
-        self._columns_combo.set_active(index)
-        target = gaupol.conf.text_assistant.target
-        index = {gaupol.targets.SELECTED: 0,
-                 gaupol.targets.CURRENT: 1,
-                 gaupol.targets.ALL: 2}[target]
-
-        self._subtitles_combo.set_active(index)
+        self._columns_combo.set_active({
+            gaupol.fields.MAIN_TEXT: 0,
+            gaupol.fields.TRAN_TEXT: 1,
+        }[gaupol.conf.text_assistant.field])
+        self._subtitles_combo.set_active({
+            gaupol.targets.SELECTED: 0,
+            gaupol.targets.CURRENT: 1,
+            gaupol.targets.ALL: 2,
+        }[gaupol.conf.text_assistant.target])
 
     def _on_columns_combo_changed(self, *args):
         """Save the selected field."""
@@ -476,9 +465,7 @@ class CommonErrorPage(LocalePage):
         """Initialize values of page attributes."""
         self._manager = aeidon.PatternManager("common-error")
         self.conf = gaupol.conf.common_error
-        self.description = _("Correct common errors made by humans "
-                             "or image recognition software")
-
+        self.description = _("Correct common errors made by humans or image recognition software")
         self.handle = "common-error"
         # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
@@ -536,9 +523,7 @@ class HearingImpairedPage(LocalePage):
         """Initialize values of page attributes."""
         self._manager = aeidon.PatternManager("hearing-impaired")
         self.conf = gaupol.conf.hearing_impaired
-        self.description = _("Remove explanatory texts meant "
-                             "for the hearing impaired")
-
+        self.description = _("Remove explanatory texts meant for the hearing impaired")
         self.handle = "hearing-impaired"
         # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
@@ -556,9 +541,7 @@ class JoinSplitWordsPage(BuilderPage):
     def __init__(self, assistant):
         """Initialize a :class:`JoinSplitWordsPage` instance."""
         BuilderPage.__init__(self, assistant, "join-split-page.ui")
-        self.description = _("Use spell-check suggestions to fix whitespace "
-                             "detection errors of image recognition software")
-
+        self.description = _("Use spell-check suggestions to fix whitespace detection errors of image recognition software")
         self.handle = "join-split-words"
         # TRANSLATORS: Keep these page titles short, since they
         # affect the width of the text correction assistant sidebar.
@@ -569,6 +552,7 @@ class JoinSplitWordsPage(BuilderPage):
 
     def correct_texts(self, project, indices, doc):
         """Correct texts in `project`."""
+        import enchant
         language = gaupol.conf.spell_check.language
         if gaupol.conf.join_split_words.join:
             try:
@@ -1009,12 +993,7 @@ class TextAssistant(Gtk.Assistant):
             self.set_page_complete(page, True)
 
     def add_pages(self, pages):
-        """
-        Add associated `pages` and configure their properties.
-
-        The first one of `pages` must have a "correct_texts" attribute.
-        The visibilities of other pages are kept in sync with the first page.
-        """
+        """Add associated `pages` and configure their properties."""
         for page in pages:
             self.add_page(page)
         def on_notify_visible(page, prop, pages):
@@ -1141,8 +1120,8 @@ class TextAssistant(Gtk.Assistant):
         """Present `changes` and activate confirmation page."""
         count = len(changes)
         title = n_("Confirm {:d} Change",
-                                     "Confirm {:d} Changes",
-                                     count).format(count)
+                   "Confirm {:d} Changes",
+                   count).format(count)
 
         self.set_page_title(self._confirmation_page, title)
         self._confirmation_page.application = self.application

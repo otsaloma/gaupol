@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
   <object class="GtkWindow" id="window">
     <property name="visible">False</property>
     <property name="can_focus">False</property>
-    <property name="border_width">18</property>
+    <property name="border_width">12</property>
     <child>
       <object class="GtkBox" id="main_container">
         <property name="visible">True</property>
@@ -159,8 +159,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
                     <property name="halign">start</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="_on_human_check_toggled" swapped="no"/>
                   </object>
@@ -176,8 +176,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
                     <property name="halign">start</property>
+                    <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="_on_ocr_check_toggled" swapped="no"/>
                   </object>
