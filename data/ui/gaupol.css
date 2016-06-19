@@ -12,6 +12,10 @@
   padding: 0;
 }
 
+.gaupol-video-background {
+  background-color: black;
+}
+
 .monospace {
   font-family: monospace;
 }

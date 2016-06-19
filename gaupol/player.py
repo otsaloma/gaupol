@@ -85,8 +85,7 @@ class VideoPlayer(aeidon.Observable):
         track = self._playbin.props.current_audio
         # If at the default value, the first track is used,
         # which is (probably?) zero.
-        track = (0 if track == -1 else track)
-        return track
+        return (0 if track == -1 else track)
 
     @audio_track.setter
     def audio_track(self, track):
@@ -125,12 +124,7 @@ class VideoPlayer(aeidon.Observable):
         return tuple(x.get_language() for x in self._info.get_audio_streams())
 
     def get_duration(self, mode=None):
-        """
-        Return duration of video stream or ``None``.
-
-        `mode` can be ``None`` to return duration in internal :mod:`GStreamer`
-        units, which can be faster if data is fed back to :mod:`GStreamer`.
-        """
+        """Return duration of video stream or ``None``."""
         success, duration = self._playbin.query_duration(Gst.Format.TIME)
         if not success: return None
         if mode is None: return duration
@@ -144,12 +138,7 @@ class VideoPlayer(aeidon.Observable):
         raise ValueError("Invalid mode: {}".format(repr(mode)))
 
     def get_position(self, mode=None):
-        """
-        Return current position in video stream or ``None``.
-
-        `mode` can be ``None`` to return position in internal :mod:`GStreamer`
-        units, which can be faster if data is fed back to :mod:`GStreamer`.
-        """
+        """Return current position in video stream or ``None``."""
         success, pos = self._playbin.query_position(Gst.Format.TIME)
         if not success: return None
         if mode is None: return pos
@@ -170,8 +159,7 @@ class VideoPlayer(aeidon.Observable):
         bus.add_signal_watch()
         bus.connect("message::eos", self._on_bus_message_eos)
         bus.connect("message::error", self._on_bus_message_error)
-        bus.connect("message::state-changed",
-                    self._on_bus_message_state_changed)
+        bus.connect("message::state-changed", self._on_bus_message_state_changed)
 
     def _init_pipeline(self):
         """Initialize the GStreamer playback pipeline."""
@@ -192,7 +180,7 @@ class VideoPlayer(aeidon.Observable):
         # want embedded subtitles to be displayed, but rather what we
         # explicitly set to our own overlays. Since Gst.PlayFlags is not
         # available via introspection, we need to use Gst.util_set_object_arg.
-        # Playbin's default values can be found via 'gst-inspect playbin'.
+        # Playbin's default values can be found via 'gst-inspect-1.0 playbin'.
         Gst.util_set_object_arg(self._playbin,
                                 "flags",
                                 "+".join(("soft-colorbalance",
@@ -226,11 +214,9 @@ class VideoPlayer(aeidon.Observable):
     def _init_widget(self):
         """Initialize the rendering widget."""
         self.widget = Gtk.DrawingArea()
-        color = Gdk.RGBA()
-        success = color.parse("black")
-        if not success: return
-        state = Gtk.StateFlags.NORMAL
-        self.widget.override_background_color(state, color)
+        style = self.widget.get_style_context()
+        style.add_class("gaupol-video-background")
+        gaupol.style.load_css(self.widget)
 
     def is_playing(self):
         """Return ``True`` if playing video."""
@@ -304,11 +290,7 @@ class VideoPlayer(aeidon.Observable):
         self._playbin.set_state(Gst.State.PLAYING)
 
     def play_segment(self, start, end):
-        """
-        Play from `start` to `end`.
-
-        `start` and `end` can be either time, frame or seconds.
-        """
+        """Play from `start` to `end`."""
         self._in_default_segment = False
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         start = max(0, self.calc.to_seconds(start)) * Gst.SECOND
@@ -325,22 +307,14 @@ class VideoPlayer(aeidon.Observable):
         self.play()
 
     def seek(self, pos):
-        """
-        Seek to `pos`.
-
-        `pos` can be either time, frame or seconds.
-        """
+        """Seek to `pos`."""
         self._ensure_default_segment()
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         pos = self.calc.to_seconds(pos) * Gst.SECOND
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
     def seek_relative(self, offset):
-        """
-        Seek to `offset` relative to current position.
-
-        `offset` can be either time, frame or seconds.
-        """
+        """Seek to `offset` relative to current position."""
         self._ensure_default_segment()
         pos = self.get_position(aeidon.modes.SECONDS)
         duration = self.get_duration(aeidon.modes.SECONDS)
@@ -352,21 +326,15 @@ class VideoPlayer(aeidon.Observable):
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
     def set_path(self, path):
-        """
-        Set the path of the file to play.
-
-        You should have a window visible before calling `set_path`.
-        """
+        """Set the path of the file to play."""
         self.set_uri(aeidon.util.path_to_uri(path))
 
     def set_uri(self, uri):
-        """
-        Set the URI of the file to play.
-
-        You should have a window visible before calling `set_uri`.
-        """
+        """Set the URI of the file to play."""
+        # XXX: We need platform-specific calls here. At least
+        # Windows doesn't work with GdkX11 and XIDs, maybe other
+        # non-X systems (Wayland, macOS) will fail too?
         self._playbin.props.uri = uri
-        # XXX: We need platform-specific calls here.
         self._xid = self.widget.get_window().get_xid()
         self.subtitle_text = ""
         try:
