@@ -20,169 +20,80 @@
 import aeidon
 import gaupol
 
-from aeidon.i18n import _
-
-
 class LoadVideoAction(gaupol.Action):
-
-    """Load a video file."""
-
     def __init__(self):
-        """Initialize a :class:`LoadVideoAction` instance."""
         gaupol.Action.__init__(self, "load-video")
-        self.set_label(_("_Load Video…"))
-        self.set_tooltip(_("Load a video file"))
-        self.accelerator = "<Control>L"
+        self.accelerators = ["<Control>L"]
         self.action_group = "main-safe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(gaupol.util.gst_available())
         aeidon.util.affirm(page is not None)
 
-
 class PlayPauseAction(gaupol.Action):
-
-    """Play or pause video."""
-
     def __init__(self):
-        """Initialize a :class:`PlayPauseAction` instance."""
         gaupol.Action.__init__(self, "play-pause")
-        self.set_icon_name("media-playback-start")
-        self.set_label(_("_Play/Pause"))
-        self.set_tooltip(_("Play or pause video"))
-        self.accelerator = "P"
+        self.accelerators = ["P"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-
 
 class PlaySelectionAction(gaupol.Action):
-
-    """Play the selected subtitles."""
-
     def __init__(self):
-        """Initialize a :class:`PlaySelectionAction`."""
         gaupol.Action.__init__(self, "play-selection")
-        self.set_label(_("Play _Selection"))
-        self.set_tooltip(_("Play the selected subtitles"))
-        self.accelerator = "O"
+        self.accelerators = ["O"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(selected_rows)
-
 
 class SeekBackwardAction(gaupol.Action):
-
-    """Seek backward."""
-
     def __init__(self):
-        """Initialize a :class:`SeekBackwardAction` instance."""
         gaupol.Action.__init__(self, "seek-backward")
-        self.set_icon_name("media-seek-backward")
-        self.set_label(_("Seek _Backward"))
-        self.set_tooltip(_("Seek backward"))
-        self.accelerator = "<Shift><Ctrl>Left"
+        self.accelerators = ["<Shift><Ctrl>Left"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-
 
 class SeekForwardAction(gaupol.Action):
-
-    """Seek forward."""
-
     def __init__(self):
-        """Initialize a :class:`SeekForwardAction` instance."""
         gaupol.Action.__init__(self, "seek-forward")
-        self.set_icon_name("media-seek-forward")
-        self.set_label(_("Seek _Forward"))
-        self.set_tooltip(_("Seek forward"))
-        self.accelerator = "<Shift><Ctrl>Right"
+        self.accelerators = ["<Shift><Ctrl>Right"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-
 
 class SeekNextAction(gaupol.Action):
-
-    """Seek to the start of the next subtitle."""
-
     def __init__(self):
-        """Initialize a :class:`SeekNextAction` instance."""
         gaupol.Action.__init__(self, "seek-next")
-        self.set_icon_name("media-skip-forward")
-        self.set_label(_("Seek _Next"))
-        self.set_tooltip(_("Seek to the start of the next subtitle"))
-        self.accelerator = "<Ctrl>Right"
+        self.accelerators = ["<Ctrl>Right"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-
 
 class SeekPreviousAction(gaupol.Action):
-
-    """Seek to the start of the previous subtitle."""
-
     def __init__(self):
-        """Initialize a :class:`SeekPreviousAction` instance."""
         gaupol.Action.__init__(self, "seek-previous")
-        self.set_icon_name("media-skip-backward")
-        self.set_label(_("Seek _Previous"))
-        self.set_tooltip(_("Seek to the start of the previous subtitle"))
-        self.accelerator = "<Ctrl>Left"
+        self.accelerators = ["<Ctrl>Left"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-
 
 class SeekSelectionEndAction(gaupol.Action):
-
-    """Seek the end of selection."""
-
     def __init__(self):
-        """Initialize a :class:`SeekSelectionEnd` instance."""
         gaupol.Action.__init__(self, "seek-selection-end")
-        self.set_label(_("See_k Selection End"))
-        self.set_tooltip(_("Seek the end of selection"))
-        self.accelerator = "<Ctrl>Down"
+        self.accelerators = ["<Ctrl>Down"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(selected_rows)
-
 
 class SeekSelectionStartAction(gaupol.Action):
-
-    """Seek the start of selection."""
-
     def __init__(self):
-        """Initialize a :class:`SeekSelectionStart` instance."""
         gaupol.Action.__init__(self, "seek-selection-start")
-        self.set_label(_("S_eek Selection Start"))
-        self.set_tooltip(_("Seek the start of selection"))
-        self.accelerator = "<Ctrl>Up"
+        self.accelerators = ["<Ctrl>Up"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(selected_rows)
-
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

@@ -20,58 +20,29 @@
 import aeidon
 import gaupol
 
-from aeidon.i18n import _
-
-
 class ShowAudioTrackMenuAction(gaupol.Action):
-
-    """Show the audio track menu."""
-
     def __init__(self):
-        """Initialize a :class:`ShowAudioTrackMenuAction` instance."""
         gaupol.Action.__init__(self, "show-audio-track-menu")
-        self.set_label(_("_Language"))
         self.action_group = "main-safe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
         languages = application.player.get_audio_languages()
         aeidon.util.affirm(languages is not None)
 
-
 class VolumeDownAction(gaupol.Action):
-
-    """Decrease volume."""
-
     def __init__(self):
-        """Initialize a :class:`VolumeDownAction` instance."""
         gaupol.Action.__init__(self, "volume-down")
-        self.set_label(_("Volume _Down"))
-        self.set_tooltip(_("Decrease volume"))
-        self.accelerator = "<Ctrl>minus"
+        self.accelerators = ["<Ctrl>minus"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-
 
 class VolumeUpAction(gaupol.Action):
-
-    """Increase volume."""
-
     def __init__(self):
-        """Initialize a :class:`VolumeUpAction` instance."""
         gaupol.Action.__init__(self, "volume-up")
-        self.set_label(_("Volume _Up"))
-        self.set_tooltip(_("Increase volume"))
-        self.accelerator = "<Ctrl>plus"
+        self.accelerators = ["<Ctrl>plus"]
         self.action_group = "main-unsafe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.player is not None)
-
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

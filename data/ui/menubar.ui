@@ -280,6 +280,74 @@
       </section>
     </submenu>
     <submenu>
+      <attribute name="label" translatable="yes">Vi_deo</attribute>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Load Video…</attribute>
+          <attribute name="action">win.load-video</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">_Play/Pause</attribute>
+          <attribute name="action">win.play-pause</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Play _Selection</attribute>
+          <attribute name="action">win.play-selection</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Seek _Previous</attribute>
+          <attribute name="action">win.seek-previous</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Seek _Next</attribute>
+          <attribute name="action">win.seek-next</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Seek _Backward</attribute>
+          <attribute name="action">win.seek-backward</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Seek _Forward</attribute>
+          <attribute name="action">win.seek-forward</attribute>
+        </item>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">S_eek Selection Start</attribute>
+          <attribute name="action">win.seek-selection-start</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">See_k Selection End</attribute>
+          <attribute name="action">win.seek-selection-end</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
+      <attribute name="label" translatable="yes">_Audio</attribute>
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes">_Language</attribute>
+          <attribute name="action">win.show-audio-track-menu</attribute>
+        </submenu>
+      </section>
+      <section>
+        <item>
+          <attribute name="label" translatable="yes">Volume _Down</attribute>
+          <attribute name="action">win.volume-down</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="yes">Volume _Up</attribute>
+          <attribute name="action">win.volume-up</attribute>
+        </item>
+      </section>
+    </submenu>
+    <submenu>
       <attribute name="label" translatable="yes">T_ools</attribute>
       <section>
         <item>

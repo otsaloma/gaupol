@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 
-
 class SetFramerateAction(gaupol.RadioAction):
     def __new__(cls):
         action = gaupol.RadioAction.new("set-framerate")

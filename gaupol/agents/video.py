@@ -25,10 +25,8 @@ from aeidon.i18n   import _
 from gi.repository import GLib
 from gi.repository import Gtk
 
-try:
+with aeidon.util.silent(Exception):
     from gi.repository import Gst
-except Exception:
-    pass
 
 
 class VideoAgent(aeidon.Delegate):
@@ -73,34 +71,35 @@ class VideoAgent(aeidon.Delegate):
 
         self.seekbar.set_draw_value(False)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
-        self.player_toolbar = self.uim.get_widget("/ui/player_toolbar")
-        self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
-        separator = Gtk.SeparatorToolItem()
-        self.player_toolbar.insert(separator, -1)
-        self.volume_button = Gtk.VolumeButton()
-        self.volume_button.props.use_symbolic = False
-        adjustment = self.volume_button.get_adjustment()
-        adjustment.set_lower(0)
-        adjustment.set_upper(1)
-        adjustment.set_value(self.player.volume)
-        aeidon.util.connect(self, "volume_button", "value-changed")
-        item = Gtk.ToolItem()
-        item.add(self.volume_button)
-        item.set_tooltip_text(_("Volume"))
-        self.player_toolbar.insert(item, -1)
-        item = Gtk.ToolItem()
-        item.set_expand(True)
-        item.add(self.seekbar)
-        self.player_toolbar.insert(item, -1)
-        gaupol.util.pack_start_fill(vbox, self.player_toolbar)
+        # TODO:
+        # self.player_toolbar = self.uim.get_widget("/ui/player_toolbar")
+        # self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
+        # separator = Gtk.SeparatorToolItem()
+        # self.player_toolbar.insert(separator, -1)
+        # self.volume_button = Gtk.VolumeButton()
+        # self.volume_button.props.use_symbolic = False
+        # adjustment = self.volume_button.get_adjustment()
+        # adjustment.set_lower(0)
+        # adjustment.set_upper(1)
+        # adjustment.set_value(self.player.volume)
+        # aeidon.util.connect(self, "volume_button", "value-changed")
+        # item = Gtk.ToolItem()
+        # item.add(self.volume_button)
+        # item.set_tooltip_text(_("Volume"))
+        # self.player_toolbar.insert(item, -1)
+        # item = Gtk.ToolItem()
+        # item.set_expand(True)
+        # item.add(self.seekbar)
+        # self.player_toolbar.insert(item, -1)
+        # gaupol.util.pack_start_fill(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
         self.player_box.show_all()
         self.paned.add1(self.player_box)
         orientation = self.paned.get_orientation()
-        if orientation == Gtk.Orientation.HORIZONTAL:
-            size = self.notebook.get_window().get_width()
-        if orientation == Gtk.Orientation.VERTICAL:
-            size = self.notebook.get_window().get_height()
+        size = (
+            self.notebook.get_window().get_width()
+            if orientation == Gtk.Orientation.HORIZONTAL
+            else self.notebook.get_window().get_height())
         self.paned.set_position(int(size/2))
 
     def _init_update_handlers(self):
