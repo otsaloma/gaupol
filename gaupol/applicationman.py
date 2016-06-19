@@ -73,7 +73,8 @@ class ApplicationManager(Gtk.Application):
         gaupol.conf.path = os.path.join(
             aeidon.CONFIG_HOME_DIR, "gaupol.conf")
         gaupol.conf.read_from_file()
-        if gaupol.conf.general.dark_theme:
+        if (gaupol.conf.general.dark_theme or
+            os.getenv("GTK_THEME", "").endswith(":dark")):
             Gtk.Settings.get_default().set_property(
                 "gtk-application-prefer-dark_theme", True)
 

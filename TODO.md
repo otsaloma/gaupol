@@ -12,7 +12,7 @@ Gaupol 0.91
 * [x] Fix line length measure em to be narrower [#763589][]
 * [x] Only force theme variant if `dark_theme` in config file is
       `true`, thus respecting any global settings [#753315][]
-* [ ] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
+* [x] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
 * [x] Remove external video player output window (if you want to see
       that output, start Gaupol from a terminal)
 * [x] Add support for IBM273, IBM1125, KOI8-T and KZ1048 character
