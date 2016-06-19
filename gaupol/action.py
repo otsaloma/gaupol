@@ -23,7 +23,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-__all__ = ("Action", "ToggleAction")
+__all__ = ("Action", "RadioAction", "ToggleAction")
 
 
 class Action(Gio.SimpleAction):
@@ -47,6 +47,30 @@ class Action(Gio.SimpleAction):
             self.set_enabled(True)
         except aeidon.AffirmationError:
             self.set_enabled(False)
+
+
+class RadioAction(Action):
+
+    """Baseclass for user-activatable radio actions."""
+
+    # Gio's abstraction makes radio action instantiation and
+    # management of string state values look really stupid
+    # in Python. For proper instantiation, subclasses need to
+    # define __new__, call new and assign to __class__.
+
+    @staticmethod
+    def new(name, parameter_type=None):
+        """Return a new radio action."""
+        return Gio.SimpleAction.new_stateful(
+            name, parameter_type, GLib.Variant("s", ""))
+
+    def get_state(self):
+        """Return the current string state."""
+        return Action.get_state(self).get_string()
+
+    def set_state(self, value):
+        """Set a new string state."""
+        Action.set_state(self, GLib.Variant("s", value))
 
 
 class ToggleAction(Action):
