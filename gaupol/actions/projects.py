@@ -20,15 +20,10 @@
 import aeidon
 import gaupol
 
-from aeidon.i18n import _
-
-
 class ActivateNextProjectAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "activate-next-project")
-        self.set_label(_("_Next"))
-        self.set_tooltip(_("Activate the project in the next tab"))
-        self.accelerator = "<Control>Page_Down"
+        self.accelerators = ["<Control>Page_Down"]
         self.action_group = "main-safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -38,37 +33,23 @@ class ActivateNextProjectAction(gaupol.Action):
 class ActivatePreviousProjectAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "activate-previous-project")
-        self.set_label(_("_Previous"))
-        self.set_tooltip(_("Activate the project in the previous tab"))
-        self.accelerator = "<Control>Page_Up"
+        self.accelerators = ["<Control>Page_Up"]
         self.action_group = "main-safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
 
 class CloseAllProjectsAction(gaupol.Action):
-
-    """Close all open projects."""
-
     def __init__(self):
-        """Initialize a :class:`CloseAllProjectsAction` instance."""
         gaupol.Action.__init__(self, "close-all-projects")
-        self.set_icon_name("window-close")
-        self.set_label(_("_Close All"))
-        self.set_tooltip( _("Close all open projects"))
-        self.accelerator = "<Shift><Control>W"
+        self.accelerators = ["<Shift><Control>W"]
         self.action_group = "main-safe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.pages)
-
 
 class MoveTabLeftAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "move-tab-left")
-        self.set_label(_("Move Tab _Left"))
-        self.set_tooltip(_("Move the current tab to the left"))
         self.action_group = "main-safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -77,8 +58,6 @@ class MoveTabLeftAction(gaupol.Action):
 class MoveTabRightAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "move-tab-right")
-        self.set_label(_("Move Tab _Right"))
-        self.set_tooltip(_("Move the current tab to the right"))
         self.action_group = "main-safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -86,39 +65,19 @@ class MoveTabRightAction(gaupol.Action):
         aeidon.util.affirm(index in range(len(application.pages)))
 
 class SaveAllDocumentsAction(gaupol.Action):
-
-    """Save all open documents."""
-
     def __init__(self):
-        """Initialize a :class:`SaveAllDocumentsAction` instance."""
         gaupol.Action.__init__(self, "save-all-documents")
-        self.set_icon_name("document-save")
-        self.set_label(_("_Save All"))
-        self.set_tooltip(_("Save all open documents"))
-        self.accelerator = "<Shift><Control>L"
+        self.accelerators = ["<Shift><Control>L"]
         self.action_group = "main-safe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(application.pages)
 
-
 class SaveAllDocumentsAsAction(gaupol.Action):
-
-    """Save all open documents with different properties."""
-
     def __init__(self):
-        """Initialize a :class:`SaveAllDocumentsAsAction` instance."""
         gaupol.Action.__init__(self, "save-all-documents-as")
-        self.set_icon_name("document-save")
-        self.set_label(_("Save _All As…"))
-        self.set_tooltip(_("Save all open documents with different properties"))
         self.action_group = "main-safe"
-
     def _affirm_doable(self, application, page, selected_rows):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm([x for x in application.pages
                             if x.project.main_file is not None])
-
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

@@ -136,57 +136,60 @@ class MenuAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_show_audio_track_menu_activate(self, *args):
         """Show the audio track menu."""
-        action_group = self.get_action_group("audio-tracks")
-        for action in action_group.list_actions():
-            action_group.remove_action(action)
-        if self._audio_tracks_id is not None:
-            self.uim.remove_ui(self._audio_tracks_id)
-        if self.player is None: return
-        ui  = '<ui><menubar name="menubar">'
-        ui += '<menu name="audio" action="show_audio_menu">'
-        ui += '<menu name="audio_track" action="show_audio_track_menu">'
-        ui += '<placeholder name="audio_tracks">'
-        for i, language in enumerate(self.player.get_audio_languages()):
-            language = language or _("Undefined")
-            name = self._add_audio_track_action(i, language)
-            ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
-        ui += '</placeholder></menu></menu></menubar></ui>'
-        self._audio_tracks_id = self.uim.add_ui_from_string(ui)
-        self.uim.ensure_update()
+        print("TODO: _on_show_audio_track_menu_activate")
+        # action_group = self.get_action_group("audio-tracks")
+        # for action in action_group.list_actions():
+        #     action_group.remove_action(action)
+        # if self._audio_tracks_id is not None:
+        #     self.uim.remove_ui(self._audio_tracks_id)
+        # if self.player is None: return
+        # ui  = '<ui><menubar name="menubar">'
+        # ui += '<menu name="audio" action="show_audio_menu">'
+        # ui += '<menu name="audio_track" action="show_audio_track_menu">'
+        # ui += '<placeholder name="audio_tracks">'
+        # for i, language in enumerate(self.player.get_audio_languages()):
+        #     language = language or _("Undefined")
+        #     name = self._add_audio_track_action(i, language)
+        #     ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
+        # ui += '</placeholder></menu></menu></menubar></ui>'
+        # self._audio_tracks_id = self.uim.add_ui_from_string(ui)
+        # self.uim.ensure_update()
 
     @aeidon.deco.export
     def _on_show_projects_menu_activate(self, *args):
         """Update all project actions in the projects menu."""
-        action_group = self.get_action_group("projects")
-        for action in action_group.list_actions():
-            action_group.remove_action(action)
-        if self._projects_id is not None:
-            self.uim.remove_ui(self._projects_id)
-        page = self.get_current_page()
-        if page is None: return
-        ui  = '<ui><menubar name="menubar">'
-        ui += '<menu name="projects" action="show_projects_menu">'
-        ui += '<placeholder name="open">'
-        for i, page in enumerate(self.pages):
-            name = self._add_project_action(i, page)
-            ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
-        ui += '</placeholder></menu></menubar></ui>'
-        self._projects_id = self.uim.add_ui_from_string(ui)
-        self.uim.ensure_update()
+        print("TODO: _on_show_projects_menu_activate")
+        # action_group = self.get_action_group("projects")
+        # for action in action_group.list_actions():
+        #     action_group.remove_action(action)
+        # if self._projects_id is not None:
+        #     self.uim.remove_ui(self._projects_id)
+        # page = self.get_current_page()
+        # if page is None: return
+        # ui  = '<ui><menubar name="menubar">'
+        # ui += '<menu name="projects" action="show_projects_menu">'
+        # ui += '<placeholder name="open">'
+        # for i, page in enumerate(self.pages):
+        #     name = self._add_project_action(i, page)
+        #     ui += '<menuitem name="{:d}" action="{}"/>'.format(i, name)
+        # ui += '</placeholder></menu></menubar></ui>'
+        # self._projects_id = self.uim.add_ui_from_string(ui)
+        # self.uim.ensure_update()
 
     @aeidon.deco.export
     def _on_tab_widget_button_press_event(self, button, event, page):
         """Display a pop-up menu with tab-related actions."""
-        if event.button != 3: return
-        if page is not self.get_current_page():
-            self.set_current_page(page)
-        menu = self.uim.get_widget("/ui/tab_popup")
-        menu.popup(parent_menu_shell=None,
-                   parent_menu_item=None,
-                   func=None,
-                   data=None,
-                   button=event.button,
-                   activate_time=event.time)
+        print("TODO: _on_tab_widget_button_press_event")
+        # if event.button != 3: return
+        # if page is not self.get_current_page():
+        #     self.set_current_page(page)
+        # menu = self.uim.get_widget("/ui/tab_popup")
+        # menu.popup(parent_menu_shell=None,
+        #            parent_menu_item=None,
+        #            func=None,
+        #            data=None,
+        #            button=event.button,
+        #            activate_time=event.time)
 
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):
