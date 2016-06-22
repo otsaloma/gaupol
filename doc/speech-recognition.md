@@ -3,8 +3,9 @@ Using Speech Recognition to Generate Subtitles from Video
 
 **WARNING:** Speech recognition is only available in Gaupol 0.19.x.
 Earlier versions don't have that feature and later versions are
-currently waiting for the `pocketsphinx` speech recognition library to
-be ported to GStreamer 1.0.
+currently waiting for the feature to be restored after the long delay it
+took to port the `pocketsphinx` speech recognition library to GStreamer
+1.0.
 
 Making subtitles from scratch usually consists of two tedious tasks: (1)
 figuring out the times when someone starts and ends speaking – in
