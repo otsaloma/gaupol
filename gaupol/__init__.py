@@ -15,46 +15,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""
-GTK+ user interface for the Gaupol subtitle editor.
-
-:var COMBO_SEPARATOR: String used as a separator for :class:`Gtk.ComboBox`
-
-   :attr:`COMBO_SEPARATOR` can be inserted into a combo box's model,
-   and :func:`gaupol.util.separate_combo` will recognize it.
-
-:var BUG_REPORT_URL: Web page where to submit bug reports
-:var DOCUMENTATION_URL: Documentation for users
-:var HOMEPAGE_URL: Gaupol web pages
-:var REGEX_HELP_URL: Documentation on regular expressions
-
-:var fields: Enumerations for subtitle field types
-:var length_units: Enumerations for length unit types
-:var orientation: Enumerations for orientation types
-:var targets: Enumerations for action target types
-:var toolbar_styles: Enumerations for toolbar style types
-
-:var field_actions: Dictionary mapping :attr:`gaupol.formats` to actions
-:var framerate_actions: Dictionary mapping :attr:`aeidon.framerates` to actions
-:var mode_actions: Dictionary mapping :attr:`aeidon.modes` to actions
-
-:var conf: Instance of :class:`gaupol.ConfigurationStore` used
-"""
+"""GTK+ user interface for the Gaupol subtitle editor."""
 
 __version__ = "0.28.2"
 COMBO_SEPARATOR = "<separator/>"
 
 import aeidon
-import os
 
 import gi
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 
-with aeidon.util.silent(Exception):
-    gi.require_version("GdkX11", "3.0")
-    gi.require_version("Gst", "1.0")
-    gi.require_version("GstPbutils", "1.0")
+for module, version in {
+    "Gst": "1.0",
+    "GstPbutils": "1.0",
+    "GdkX11": "3.0",
+}.items():
+    with aeidon.util.silent(Exception):
+        gi.require_version(module, version)
 
 from gi.repository import GLib
 from gi.repository import GObject

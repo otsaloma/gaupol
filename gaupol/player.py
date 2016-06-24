@@ -24,13 +24,12 @@ from aeidon.i18n   import _
 from gi.repository import Gdk
 from gi.repository import Gtk
 
-try:
-    from gi.repository import GdkX11
+with aeidon.util.silent(Exception):
     from gi.repository import Gst
-    from gi.repository import GstPbutils
     from gi.repository import GstVideo
-except Exception:
-    pass
+
+with aeidon.util.silent(Exception):
+    from gi.repository import GdkX11
 
 __all__ = ("VideoPlayer",)
 
@@ -340,6 +339,7 @@ class VideoPlayer(aeidon.Observable):
         try:
             # Find out the exact framerate to be able
             # to convert between position types.
+            from gi.repository import GstPbutils
             discoverer = GstPbutils.Discoverer()
             self._info = discoverer.discover_uri(uri)
             stream = self._info.get_video_streams()[0]
