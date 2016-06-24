@@ -193,11 +193,8 @@ class CloseAgent(aeidon.Delegate):
                     self._confirm_close(page)
         self.extension_manager.teardown_extensions()
         self._save_window_geometry()
-        try:
-            Gtk.main_quit()
-            raise SystemExit(0)
-        except RuntimeError:
-            raise SystemExit(1)
+        if hasattr(gaupol, "appman"):
+            gaupol.appman.remove_window(self.window)
 
     def _save_window_geometry(self):
         """Save the geometry of the application window."""

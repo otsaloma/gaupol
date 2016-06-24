@@ -69,10 +69,10 @@ def use_font(widget, font):
     if not font: return
     load_css(widget)
     style = widget.get_style_context()
-    if font == "custom":
-        style.add_class("gaupol-custom-font")
-    if font == "monospace":
-        style.add_class("monospace")
+    style.add_class({
+        "custom": "gaupol-custom-font",
+        "monospace": "monospace",
+    }[font])
 
 
 gaupol.conf.editor.connect("notify::custom_font", _update_css)

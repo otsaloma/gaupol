@@ -29,6 +29,7 @@ gi.require_version("Gtk", "3.0")
 for module, version in {
     "Gst": "1.0",
     "GstPbutils": "1.0",
+    "GstVideo": "1.0",
     "GdkX11": "3.0",
 }.items():
     with aeidon.util.silent(Exception):

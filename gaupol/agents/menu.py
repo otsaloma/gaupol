@@ -91,6 +91,10 @@ class MenuAgent(aeidon.Delegate):
         index = int(active_item.get_name().split("_")[-1])
         self.player.audio_track = index
 
+    @aeidon.deco.export
+    def _on_open_button_show_menu(self, *args):
+        print("TODO: _on_open_button_show_menu")
+
     def _on_projects_action_changed(self, item, active_item):
         """Change the page in the notebook to the selected project."""
         index = int(active_item.get_name().split("_")[-1])
@@ -99,23 +103,24 @@ class MenuAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_redo_button_show_menu(self, *args):
         """Show a menu listing all redoable actions."""
-        menu = Gtk.Menu()
-        self._redo_menu_items = []
-        page = self.get_current_page()
-        for i, action in enumerate(page.project.redoables):
-            item = Gtk.MenuItem(label=action.description)
-            item.gaupol_index = i
-            item.gaupol_tooltip = _('Redo "{}"').format(action.description)
-            callback = self._on_redo_menu_item_activate
-            item.connect("activate", callback)
-            callback = self._on_redo_menu_item_enter_notify_event
-            item.connect("enter-notify-event", callback)
-            callback = self._on_redo_menu_item_leave_notify_event
-            item.connect("leave-notify-event", callback)
-            self._redo_menu_items.append(item)
-            menu.append(item)
-        menu.show_all()
-        self.get_tool_item("redo_action").set_menu(menu)
+        print("TODO: _on_redo_button_show_menu")
+        # menu = Gtk.Menu()
+        # self._redo_menu_items = []
+        # page = self.get_current_page()
+        # for i, action in enumerate(page.project.redoables):
+        #     item = Gtk.MenuItem(label=action.description)
+        #     item.gaupol_index = i
+        #     item.gaupol_tooltip = _('Redo "{}"').format(action.description)
+        #     callback = self._on_redo_menu_item_activate
+        #     item.connect("activate", callback)
+        #     callback = self._on_redo_menu_item_enter_notify_event
+        #     item.connect("enter-notify-event", callback)
+        #     callback = self._on_redo_menu_item_leave_notify_event
+        #     item.connect("leave-notify-event", callback)
+        #     self._redo_menu_items.append(item)
+        #     menu.append(item)
+        # menu.show_all()
+        # self.get_tool_item("redo_action").set_menu(menu)
 
     def _on_redo_menu_item_activate(self, menu_item):
         """Redo the selected action and all those above it."""
@@ -194,23 +199,24 @@ class MenuAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):
         """Show a menu listing all undoable actions."""
-        menu = Gtk.Menu()
-        self._undo_menu_items = []
-        page = self.get_current_page()
-        for i, action in enumerate(page.project.undoables):
-            item = Gtk.MenuItem(label=action.description)
-            item.gaupol_index = i
-            item.gaupol_tooltip = _('Undo "{}"').format(action.description)
-            callback = self._on_undo_menu_item_activate
-            item.connect("activate", callback)
-            callback = self._on_undo_menu_item_enter_notify_event
-            item.connect("enter-notify-event", callback)
-            callback = self._on_undo_menu_item_leave_notify_event
-            item.connect("leave-notify-event", callback)
-            self._undo_menu_items.append(item)
-            menu.append(item)
-        menu.show_all()
-        self.get_tool_item("undo_action").set_menu(menu)
+        print("TODO: _on_undo_button_show_menu")
+        # menu = Gtk.Menu()
+        # self._undo_menu_items = []
+        # page = self.get_current_page()
+        # for i, action in enumerate(page.project.undoables):
+        #     item = Gtk.MenuItem(label=action.description)
+        #     item.gaupol_index = i
+        #     item.gaupol_tooltip = _('Undo "{}"').format(action.description)
+        #     callback = self._on_undo_menu_item_activate
+        #     item.connect("activate", callback)
+        #     callback = self._on_undo_menu_item_enter_notify_event
+        #     item.connect("enter-notify-event", callback)
+        #     callback = self._on_undo_menu_item_leave_notify_event
+        #     item.connect("leave-notify-event", callback)
+        #     self._undo_menu_items.append(item)
+        #     menu.append(item)
+        # menu.show_all()
+        # self.get_tool_item("undo_action").set_menu(menu)
 
     def _on_undo_menu_item_activate(self, menu_item):
         """Undo the selected action and all those above it."""

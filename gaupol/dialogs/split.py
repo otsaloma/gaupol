@@ -94,9 +94,7 @@ class SplitDialog(gaupol.BuilderDialog):
         self._remove_from_source(src, index)
         self._shift_destination(src, dst)
         self.application.add_page(dst)
-        message = (_('Split {amount:d} subtitles to project "{name}"')
-                   .format(amount=len(dst.project.subtitles),
-                           name=dst.untitle))
-
+        message = _('Split {amount:d} subtitles to project "{name}"').format(
+            amount=len(dst.project.subtitles), name=dst.untitle)
         self.application.flash_message(message)
         gaupol.util.set_cursor_normal(self.application.window)

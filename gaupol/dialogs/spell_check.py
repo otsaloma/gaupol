@@ -354,10 +354,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _register_changes(self):
         """Register changes to the current page."""
         if not self._new_rows: return
-        self._page.project.replace_texts(self._new_rows,
-                                         self._doc,
-                                         self._new_texts)
-
+        self._page.project.replace_texts(
+            self._new_rows, self._doc, self._new_texts)
         self._page.project.set_action_description(
             aeidon.registers.DO, _("Spell-checking"))
         self._new_rows = []

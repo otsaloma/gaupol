@@ -38,7 +38,7 @@ class ExtensionManager:
     :ivar _slaves: List of modules activated to satisfy a dependency
     """
     _global_dir = os.path.join(aeidon.DATA_DIR, "extensions")
-    _local_dir = os.path.join(aeidon.DATA_HOME_DIR, "extensions")
+    _local_dir  = os.path.join(aeidon.DATA_HOME_DIR, "extensions")
     _re_comment = re.compile(r"#.*$")
 
     def __init__(self, application):

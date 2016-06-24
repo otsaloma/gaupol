@@ -202,11 +202,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         self._newline_combo.set_active(newline)
 
     def _show_overwrite_question_dialog(self, files, path):
-        """
-        Show a question dialog if about to overwrite files.
-
-        Raise :exc:`gaupol.Default` if opening cancelled.
-        """
+        """Show a question dialog if about to overwrite files."""
         n = sum(os.path.isfile(x.path) for x in files)
         title = _("{:d} of the files to be saved already exist. Do you want to replace them?").format(n)
         message = _('The files already exist in "{}". Replacing them will overwrite their contents.').format(path)

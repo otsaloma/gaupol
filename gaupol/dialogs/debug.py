@@ -153,7 +153,7 @@ class DebugDialog(Gtk.MessageDialog):
         self._insert_traceback(exctype, value, tb)
         self._insert_title("Environment")
         self._insert_environment()
-        self._insert_title("Dependencies")
+        self._insert_title("Versions")
         self._insert_dependencies()
         gaupol.util.scale_to_content(self._text_view,
                                      min_nchar=60,
