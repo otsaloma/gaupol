@@ -24,16 +24,6 @@ class TestViewAgent(gaupol.TestCase):
     def setup_method(self, method):
         self.application = self.new_application()
 
-    def test__on_show_framerate_23_976_changed__frames(self):
-        self.application.get_action("show-frames").activate()
-        framerate = aeidon.framerates.FPS_25_000
-        self.application.get_framerate_action(framerate).activate()
-
-    def test__on_show_framerate_23_976_changed__times(self):
-        self.application.get_action("show-times").activate()
-        framerate = aeidon.framerates.FPS_29_970
-        self.application.get_framerate_action(framerate).activate()
-
     def test__on_show_times_changed(self):
         self.application.get_action("show-frames").activate()
         self.application.get_action("show-times").activate()

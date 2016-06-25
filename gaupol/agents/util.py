@@ -28,13 +28,19 @@ class UtilityAgent(aeidon.Delegate):
     @aeidon.deco.export
     def get_action(self, name):
         """Return user-activatable action by `name`."""
-        name = name.replace("_", "-")
         return self.window.lookup_action(name)
 
     @aeidon.deco.export
     def get_column_action(self, field):
         """Return action to hide or show column."""
-        return self.get_action(gaupol.field_actions[field])
+        return self.get_action({
+            gaupol.fields.NUMBER:    "toggle-number-column",
+            gaupol.fields.START:     "toggle-start-column",
+            gaupol.fields.END:       "toggle-end-column",
+            gaupol.fields.DURATION:  "toggle-duration-column",
+            gaupol.fields.MAIN_TEXT: "toggle-main-text-column",
+            gaupol.fields.TRAN_TEXT: "toggle-translation-text-column",
+        }[field])
 
     @aeidon.deco.export
     def get_current_page(self):
@@ -42,16 +48,6 @@ class UtilityAgent(aeidon.Delegate):
         index = self.notebook.get_current_page()
         if index < 0: return None
         return self.pages[index]
-
-    @aeidon.deco.export
-    def get_framerate_action(self, framerate):
-        """Return action to select framerate."""
-        return self.get_action(gaupol.framerate_actions[framerate])
-
-    @aeidon.deco.export
-    def get_mode_action(self, mode):
-        """Return action to select mode."""
-        return self.get_action(gaupol.mode_actions[mode])
 
     @aeidon.deco.export
     def get_target_pages(self, target):

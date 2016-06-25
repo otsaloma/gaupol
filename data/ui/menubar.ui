@@ -185,12 +185,12 @@
             <item>
               <attribute name="label" translatable="yes">_Horizontal</attribute>
               <attribute name="action">win.set-layout</attribute>
-              <attribute name="target">horizontal</attribute>
+              <attribute name="target">HORIZONTAL</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">_Vertical</attribute>
               <attribute name="action">win.set-layout</attribute>
-              <attribute name="target">vertical</attribute>
+              <attribute name="target">VERTICAL</attribute>
             </item>
           </section>
         </submenu>
@@ -198,13 +198,13 @@
       <section>
         <item>
           <attribute name="label" translatable="yes">_Times</attribute>
-          <attribute name="action">win.set-position-units</attribute>
-          <attribute name="target">times</attribute>
+          <attribute name="action">win.set-edit-mode</attribute>
+          <attribute name="target">TIME</attribute>
         </item>
         <item>
           <attribute name="label" translatable="yes">_Frames</attribute>
-          <attribute name="action">win.set-position-units</attribute>
-          <attribute name="target">frames</attribute>
+          <attribute name="action">win.set-edit-mode</attribute>
+          <attribute name="target">FRAME</attribute>
         </item>
       </section>
       <section>
@@ -215,22 +215,22 @@
             <item>
               <attribute name="label" translatable="yes">2_3.976 fps</attribute>
               <attribute name="action">win.set-framerate</attribute>
-              <attribute name="target">23.976</attribute>
+              <attribute name="target">FPS_23_976</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">2_4.000 fps</attribute>
               <attribute name="action">win.set-framerate</attribute>
-              <attribute name="target">24.000</attribute>
+              <attribute name="target">FPS_24_000</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">2_5.000 fps</attribute>
               <attribute name="action">win.set-framerate</attribute>
-              <attribute name="target">25.000</attribute>
+              <attribute name="target">FPS_25_000</attribute>
             </item>
             <item>
               <attribute name="label" translatable="yes">2_9.970 fps</attribute>
               <attribute name="action">win.set-framerate</attribute>
-              <attribute name="target">29.970</attribute>
+              <attribute name="target">FPS_29_970</attribute>
             </item>
           </section>
         </submenu>

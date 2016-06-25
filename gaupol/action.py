@@ -59,7 +59,7 @@ class RadioAction(Action):
     # define __new__, call new and assign to __class__.
 
     @staticmethod
-    def new(name, parameter_type=None):
+    def new(name, parameter_type=GLib.VariantType.new("s")):
         """Return a new radio action."""
         return Gio.SimpleAction.new_stateful(
             name, parameter_type, GLib.Variant("s", ""))

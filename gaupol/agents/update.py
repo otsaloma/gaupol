@@ -19,13 +19,20 @@
 
 import aeidon
 import gaupol
+import os
 
 from gi.repository import Gdk
+from gi.repository import Gtk
 
 
 class UpdateAgent(aeidon.Delegate):
 
     """Updating the application GUI."""
+
+    def __init__(self, master):
+        """Initialize an :class:`UpdateAgent` instance."""
+        aeidon.Delegate.__init__(self, master)
+        self._view_popup = None
 
     def _disable_widgets(self):
         """Make widgets insensitive and blank."""
@@ -36,8 +43,6 @@ class UpdateAgent(aeidon.Delegate):
     def flash_message(self, message, duration=6):
         """Show `message` in statuslabel for `duration` seconds."""
         self.statuslabel.flash_text(message, duration=duration)
-        # To minimize the disturbance, try to hide the statuslabel
-        # immediately after any kind of user input.
         self.statuslabel.register_hide_event(self.window, "button-press-event")
         self.statuslabel.register_hide_event(self.window, "key-press-event")
         self.statuslabel.register_hide_event(self.window, "scroll-event")
@@ -58,10 +63,8 @@ class UpdateAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_conf_application_window_notify_toolbar_style(self, *args):
         """Change the style of the main toolbar."""
-        print("TODO: _on_conf_application_window_notify_toolbar_style")
-        # toolbar = self.uim.get_widget("/ui/main_toolbar")
-        # style = gaupol.conf.application_window.toolbar_style
-        # toolbar.set_style(style.value)
+        style = gaupol.conf.application_window.toolbar_style
+        self.main_toolbar.set_style(style.value)
 
     @aeidon.deco.export
     def _on_move_tab_left_activate(self, *args):
@@ -101,26 +104,30 @@ class UpdateAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_view_button_press_event(self, view, event):
         """Display a right-click pop-up menu to edit data."""
-        print("TODO: _on_view_button_press_event")
-        # if event.button != 3: return
-        # x = int(event.x)
-        # y = int(event.y)
-        # value = view.get_path_at_pos(x, y)
-        # if value is None: return
-        # path, column, x, y = value
-        # row = gaupol.util.tree_path_to_row(path)
-        # if not row in view.get_selected_rows():
-        #     view.set_cursor(path, column)
-        #     view.update_headers()
-        # menu = self.uim.get_widget("/ui/view_popup")
-        # menu.popup(parent_menu_shell=None,
-        #            parent_menu_item=None,
-        #            func=None,
-        #            data=None,
-        #            button=event.button,
-        #            activate_time=event.time)
+        if event.button != 3: return
+        x = int(event.x)
+        y = int(event.y)
+        value = view.get_path_at_pos(x, y)
+        if value is None: return
+        path, column, x, y = value
+        row = gaupol.util.tree_path_to_row(path)
+        if not row in view.get_selected_rows():
+            view.set_cursor(path, column)
+            view.update_headers()
+        if self._view_popup is None:
+            path = os.path.join(aeidon.DATA_DIR, "ui", "view-popup.ui")
+            builder = Gtk.Builder.new_from_file(path)
+            self._view_popup = builder.get_object("view-popup")
+        menu = Gtk.Menu.new_from_model(self._view_popup)
+        menu.attach_to_widget(view, None)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=None,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
 
-        # return True
+        return True
 
     @aeidon.deco.export
     def _on_view_move_cursor(self, *args):
@@ -146,8 +153,9 @@ class UpdateAgent(aeidon.Delegate):
 
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""
-        rows = (page.view.get_selected_rows()
-                if page is not None and page.view is not None else ())
+        rows = []
+        with aeidon.util.silent(AttributeError):
+            rows = page.view.get_selected_rows()
         for name in self.window.list_actions():
             action = self.get_action(name)
             action.update_enabled(self, page, rows)
@@ -168,10 +176,9 @@ class UpdateAgent(aeidon.Delegate):
         tabs = len(self.pages) > 1 and not self.player_box.get_visible()
         self.notebook.set_show_tabs(tabs)
         self.notebook_separator.set_visible(not tabs)
-        # TODO:
-        # self.get_mode_action(page.edit_mode).set_active(True)
-        # self.get_framerate_action(page.project.framerate).set_active(True)
-        # for field in gaupol.fields:
-        #     col = getattr(page.view.columns, field.name)
-        #     visible = page.view.get_column(col).get_visible()
-        #     self.get_column_action(field).set_active(visible)
+        self.get_action("set-edit-mode").set_state(str(page.edit_mode))
+        self.get_action("set-framerate").set_state(str(page.project.framerate))
+        for field in gaupol.fields:
+            col = getattr(page.view.columns, field.name)
+            visible = page.view.get_column(col).get_visible()
+            self.get_column_action(field).set_state(visible)

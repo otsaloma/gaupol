@@ -191,8 +191,9 @@ class SaveAgent(aeidon.Delegate):
         if format.mode != mode:
             # Set framerate to the selected one.
             self.set_current_page(page)
-            action = self.get_framerate_action(framerate)
-            action.set_active(True)
+            action = self.get_action("set-framerate")
+            action.set_state(str(framerate))
+            action.activate()
         gaupol.util.iterate_main()
         return aeidon.files.new(format, path, encoding, newline)
 

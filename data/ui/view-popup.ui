@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="view-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Split Subtitle</attribute>
+        <attribute name="action">win.split-subtitle</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Merge Subtitles</attribute>
+        <attribute name="action">win.merge-subtitles</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Insert Subtitles…</attribute>
+        <attribute name="action">win.insert-subtitles</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Rem_ove Subtitles</attribute>
+        <attribute name="action">win.remove-subtitles</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Play _Selection</attribute>
+        <attribute name="action">win.play-selection</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">S_eek Selection Start</attribute>
+        <attribute name="action">win.seek-selection-start</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preview</attribute>
+        <attribute name="action">win.preview</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

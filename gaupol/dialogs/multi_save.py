@@ -167,8 +167,9 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
                 # Set framerate to the selected one.
                 framerate = self.get_framerate()
                 self.application.set_current_page(page)
-                action = self.application.get_framerate_action(framerate)
-                action.set_active(True)
+                action = self.get_action("set-framerate")
+                action.set_state(str(framerate))
+                action.activate()
             path = os.path.basename(page.project.main_file.path)
             path = aeidon.util.replace_extension(path, self.get_format())
             path = os.path.join(self.get_directory(), path)
