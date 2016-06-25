@@ -257,6 +257,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         remove_button.set_action_name("win.remove-subtitles")
         self.main_toolbar.insert(remove_button, -1)
         self.main_toolbar.insert(Gtk.SeparatorToolItem(), -1)
+        # win.find-and-replace
+        find_button = Gtk.ToolButton(
+            label=_("Find"), icon_name="edit-find")
+        find_button.set_action_name("win.find-and-replace")
+        self.main_toolbar.insert(find_button, -1)
         # win.toggle-player
         video_button = Gtk.ToggleToolButton(
             label=_("Video"), icon_name="video-x-generic")
