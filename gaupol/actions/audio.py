@@ -20,15 +20,6 @@
 import aeidon
 import gaupol
 
-class ShowAudioTrackMenuAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "show-audio-track-menu")
-        self.action_group = "main-safe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(application.player is not None)
-        languages = application.player.get_audio_languages()
-        aeidon.util.affirm(languages is not None)
-
 class VolumeDownAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "volume-down")

@@ -9,6 +9,7 @@ Gaupol 0.91
       and set the default preview offset to one second
 * [x] Use a monospace editing font by default
 * [x] Add find and replace to the toolbar
+* [x] Move list of projects from the Projects menu to the tab right-lick menu
 * [x] Have both Ctrl+F and Ctrl+H open the find and replace dialog
 * [x] Fix line length measure em to be narrower [#763589][]
 * [x] Only force theme variant if `dark_theme` in config file is

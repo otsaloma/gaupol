@@ -38,8 +38,6 @@ class OpenAgent(aeidon.Delegate):
         page.project.connect("action-done", self._on_project_action_done)
         page.project.connect("action-redone", self._on_project_action_redone)
         page.project.connect("action-undone", self._on_project_action_undone)
-        callback = self._on_tab_widget_button_press_event
-        page.tab_widget.connect("button-press-event", callback, page)
         self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()

@@ -57,28 +57,6 @@ class SetLayoutAction(gaupol.RadioAction):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
-class ShowColumnsMenuAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "show-columns-menu")
-        self.action_group = "main-unsafe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(page is not None)
-
-class ShowFramerateMenuAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "show-framerate-menu")
-        self.action_group = "main-unsafe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.project.main_file is not None)
-
-class ShowLayoutMenuAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "show-layout-menu")
-        self.action_group = "main-unsafe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(application.player is not None)
-
 class ToggleDurationColumnAction(gaupol.ToggleAction):
     def __new__(cls):
         action = gaupol.ToggleAction.new("toggle-duration-column")

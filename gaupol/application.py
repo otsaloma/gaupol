@@ -279,6 +279,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.notebook.set_scrollable(True)
         self.notebook.set_show_border(False)
         self.notebook.set_show_tabs(False)
+        self.notebook.popup_enable()
         self.notebook.drag_dest_set(flags=Gtk.DestDefaults.ALL,
                                     targets=None,
                                     actions=Gdk.DragAction.COPY)

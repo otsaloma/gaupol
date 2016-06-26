@@ -44,6 +44,7 @@ class ApplicationManager(Gtk.Application):
     def __init__(self, args):
         """Initialize an :class:`ApplicationManager` instance."""
         GObject.GObject.__init__(self)
+        self.menubar_builder = None
         self.set_flags(Gio.ApplicationFlags.NON_UNIQUE)
         self.connect("activate", self._on_activate, args)
         self.connect("shutdown", self._on_shutdown)
@@ -81,8 +82,8 @@ class ApplicationManager(Gtk.Application):
     def _init_menubar(self):
         """Initialize the window menubar."""
         path = os.path.join(aeidon.DATA_DIR, "ui", "menubar.ui")
-        builder = Gtk.Builder.new_from_file(path)
-        self.set_menubar(builder.get_object("menubar"))
+        self.menubar_builder = Gtk.Builder.new_from_file(path)
+        self.set_menubar(self.menubar_builder.get_object("menubar"))
 
     def _on_activate(self, manager, args):
         """Initialize application and open files from `args`."""

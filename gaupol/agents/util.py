@@ -50,6 +50,12 @@ class UtilityAgent(aeidon.Delegate):
         return self.pages[index]
 
     @aeidon.deco.export
+    def get_menubar_section(self, id):
+        """Return menubar section by its `id` attribute."""
+        if not hasattr(gaupol, "appman"): return None
+        return gaupol.appman.menubar_builder.get_object(id)
+
+    @aeidon.deco.export
     def get_target_pages(self, target):
         """Return a sequence of pages corresponding to `target`."""
         if target == gaupol.targets.SELECTED:

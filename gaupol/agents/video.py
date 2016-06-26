@@ -138,6 +138,8 @@ class VideoAgent(aeidon.Delegate):
             self._init_cache_updates()
             self._init_update_handlers()
             self._update_subtitle_cache()
+            # TODO: _init_menus
+            # menu = self.get_menubar_section("audio-languages-placeholder")
         else: # Player exists
             if self.player.is_playing():
                 action = self.get_action("play-pause")

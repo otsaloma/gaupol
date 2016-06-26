@@ -172,23 +172,6 @@ class SetEndFromVideoPositionAction(gaupol.Action):
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(len(selected_rows) == 1)
 
-class ShowSelectionMenuAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "show-selection-menu")
-        self.action_group = "main-unsafe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.project.subtitles)
-
-class ShowStretchMenuAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "show-stretch-menu")
-        self.action_group = "main-unsafe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(page.project.subtitles)
-        aeidon.util.affirm(len(selected_rows) == 1)
-
 class SplitSubtitleAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "split-subtitle")

@@ -81,7 +81,6 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes">Stretc_h</attribute>
-          <attribute name="action">win.show-stretch-menu</attribute>
           <section>
             <item>
               <attribute name="label" translatable="yes">_Start Earlier</attribute>
@@ -135,7 +134,6 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes">Sele_ction</attribute>
-          <attribute name="action">win.show-selection-menu</attribute>
           <section>
             <item>
               <attribute name="label" translatable="yes">Select _All</attribute>
@@ -180,7 +178,6 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes">_Layout</attribute>
-          <attribute name="action">win.show-layout-menu</attribute>
           <section>
             <item>
               <attribute name="label" translatable="yes">_Horizontal</attribute>
@@ -210,7 +207,6 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes">F_ramerate</attribute>
-          <attribute name="action">win.show-framerate-menu</attribute>
           <section>
             <item>
               <attribute name="label" translatable="yes">2_3.976 fps</attribute>
@@ -236,7 +232,6 @@
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes">_Columns</attribute>
-          <attribute name="action">win.show-columns-menu</attribute>
           <section>
             <item>
               <attribute name="label" translatable="yes">_No.</attribute>
@@ -388,7 +383,8 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes">_Language</attribute>
-          <attribute name="action">win.show-audio-track-menu</attribute>
+          <section id="audio-languages-placeholder">
+          </section>
         </submenu>
       </section>
       <section>
@@ -482,6 +478,8 @@
           <attribute name="label" translatable="yes">_Next</attribute>
           <attribute name="action">win.activate-next-project</attribute>
         </item>
+      </section>
+      <section id="projects-placeholder">
       </section>
     </submenu>
     <submenu>

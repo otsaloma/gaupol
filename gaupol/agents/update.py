@@ -19,20 +19,13 @@
 
 import aeidon
 import gaupol
-import os
 
 from gi.repository import Gdk
-from gi.repository import Gtk
 
 
 class UpdateAgent(aeidon.Delegate):
 
     """Updating the application GUI."""
-
-    def __init__(self, master):
-        """Initialize an :class:`UpdateAgent` instance."""
-        aeidon.Delegate.__init__(self, master)
-        self._view_popup = None
 
     def _disable_widgets(self):
         """Make widgets insensitive and blank."""
@@ -102,34 +95,6 @@ class UpdateAgent(aeidon.Delegate):
         self.emit("page-switched", page)
 
     @aeidon.deco.export
-    def _on_view_button_press_event(self, view, event):
-        """Display a right-click pop-up menu to edit data."""
-        if event.button != 3: return
-        x = int(event.x)
-        y = int(event.y)
-        value = view.get_path_at_pos(x, y)
-        if value is None: return
-        path, column, x, y = value
-        row = gaupol.util.tree_path_to_row(path)
-        if not row in view.get_selected_rows():
-            view.set_cursor(path, column)
-            view.update_headers()
-        if self._view_popup is None:
-            path = os.path.join(aeidon.DATA_DIR, "ui", "view-popup.ui")
-            builder = Gtk.Builder.new_from_file(path)
-            self._view_popup = builder.get_object("view-popup")
-        menu = Gtk.Menu.new_from_model(self._view_popup)
-        menu.attach_to_widget(view, None)
-        menu.popup(parent_menu_shell=None,
-                   parent_menu_item=None,
-                   func=None,
-                   data=None,
-                   button=event.button,
-                   activate_time=event.time)
-
-        return True
-
-    @aeidon.deco.export
     def _on_view_move_cursor(self, *args):
         """Update GUI after moving cursor in the view."""
         self.update_gui()
@@ -173,6 +138,8 @@ class UpdateAgent(aeidon.Delegate):
         if page is None:
             return self._disable_widgets()
         self.window.set_title(page.tab_label.get_text())
+        self.notebook.set_menu_label_text(
+            page.view.get_parent(), page.tab_label.get_text())
         tabs = len(self.pages) > 1 and not self.player_box.get_visible()
         self.notebook.set_show_tabs(tabs)
         self.notebook_separator.set_visible(not tabs)
