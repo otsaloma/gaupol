@@ -73,6 +73,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar pages: List of :class:`gaupol.Page` currently open
     :ivar paned: A :class:`Gtk.Paned` to hold player and subtitles
     :ivar pattern: Last used search pattern or blank if not used
+    :ivar play_button: The play/pause button on the video player toolbar
     :ivar player: A :class:`gaupol.VideoPlayer` instance or ``None``
     :ivar player_box: Box containing video player etc.
     :ivar player_toolbar: A :class:`Gtk.Toolbar` for video player actions
@@ -117,6 +118,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.open_button = None
         self.pages = []
         self.pattern = ""
+        self.play_button = None
         self.player = None
         self.player_box = None
         self.player_toolbar = None
@@ -210,68 +212,77 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         gaupol.conf.connect_notify("application_window", "toolbar_style", self)
         gaupol.util.pack_start(vbox, self.main_toolbar)
         # win.open-main-files
-        open_button = Gtk.MenuToolButton(
+        button = Gtk.MenuToolButton(
             label=_("Open"), icon_name="document-open")
-        open_button.set_menu(Gtk.Menu())
-        open_button.set_is_important(True)
-        open_button.set_action_name("win.open-main-files")
+        button.set_menu(Gtk.Menu())
+        button.set_is_important(True)
+        button.set_action_name("win.open-main-files")
+        button.set_tooltip_text(_("Open main files"))
         callback = self._on_open_button_show_menu
-        open_button.connect("show-menu", callback)
-        self.main_toolbar.insert(open_button, -1)
-        self.open_button = open_button
+        button.connect("show-menu", callback)
+        self.main_toolbar.insert(button, -1)
+        self.open_button = button
         # win.save-main-document
-        save_button = Gtk.ToolButton(
+        button = Gtk.ToolButton(
             label=_("Save"), icon_name="document-save")
-        save_button.set_is_important(True)
-        save_button.set_action_name("win.save-main-document")
-        self.main_toolbar.insert(save_button, -1)
+        button.set_is_important(True)
+        button.set_action_name("win.save-main-document")
+        button.set_tooltip_text(_("Save the current main document"))
+        self.main_toolbar.insert(button, -1)
         self.main_toolbar.insert(Gtk.SeparatorToolItem(), -1)
         # win.undo-action
-        undo_button = Gtk.MenuToolButton(
+        button = Gtk.MenuToolButton(
             label=_("Undo"), icon_name="edit-undo")
-        undo_button.set_menu(Gtk.Menu())
-        undo_button.set_is_important(True)
-        undo_button.set_action_name("win.undo-action")
+        button.set_menu(Gtk.Menu())
+        button.set_is_important(True)
+        button.set_action_name("win.undo-action")
+        button.set_tooltip_text(_("Undo the last action"))
         callback = self._on_undo_button_show_menu
-        undo_button.connect("show-menu", callback)
-        self.main_toolbar.insert(undo_button, -1)
-        self.undo_button = undo_button
+        button.connect("show-menu", callback)
+        self.main_toolbar.insert(button, -1)
+        self.undo_button = button
         # win.redo-action
-        redo_button = Gtk.MenuToolButton(
+        button = Gtk.MenuToolButton(
             label=_("Redo"), icon_name="edit-redo")
-        redo_button.set_menu(Gtk.Menu())
-        redo_button.set_action_name("win.redo-action")
+        button.set_menu(Gtk.Menu())
+        button.set_action_name("win.redo-action")
+        button.set_tooltip_text(_("Redo the last undone action"))
         callback = self._on_redo_button_show_menu
-        redo_button.connect("show-menu", callback)
-        self.main_toolbar.insert(redo_button, -1)
-        self.redo_button = redo_button
+        button.connect("show-menu", callback)
+        self.main_toolbar.insert(button, -1)
+        self.redo_button = button
         self.main_toolbar.insert(Gtk.SeparatorToolItem(), -1)
         # win.insert-subtitles
-        insert_button = Gtk.ToolButton(
+        button = Gtk.ToolButton(
             label=_("Insert"), icon_name="list-add")
-        insert_button.set_action_name("win.insert-subtitles")
-        self.main_toolbar.insert(insert_button, -1)
+        button.set_action_name("win.insert-subtitles")
+        button.set_tooltip_text(_("Insert new subtitles"))
+        self.main_toolbar.insert(button, -1)
         # win.remove-subtitles
-        remove_button = Gtk.ToolButton(
+        button = Gtk.ToolButton(
             label=_("Remove"), icon_name="list-remove")
-        remove_button.set_action_name("win.remove-subtitles")
-        self.main_toolbar.insert(remove_button, -1)
+        button.set_action_name("win.remove-subtitles")
+        button.set_tooltip_text(_("Remove the selected subtitles"))
+        self.main_toolbar.insert(button, -1)
         self.main_toolbar.insert(Gtk.SeparatorToolItem(), -1)
         # win.find-and-replace
-        find_button = Gtk.ToolButton(
+        button = Gtk.ToolButton(
             label=_("Find"), icon_name="edit-find")
-        find_button.set_action_name("win.find-and-replace")
-        self.main_toolbar.insert(find_button, -1)
+        button.set_action_name("win.find-and-replace")
+        button.set_tooltip_text(_("Search for and replace text"))
+        self.main_toolbar.insert(button, -1)
         # win.toggle-player
-        video_button = Gtk.ToggleToolButton(
+        button = Gtk.ToggleToolButton(
             label=_("Video"), icon_name="video-x-generic")
-        video_button.set_action_name("win.toggle-player")
-        self.main_toolbar.insert(video_button, -1)
+        button.set_action_name("win.toggle-player")
+        button.set_tooltip_text(_("Show or hide the video player"))
+        self.main_toolbar.insert(button, -1)
         # win.preview
-        preview_button = Gtk.ToolButton(
+        button = Gtk.ToolButton(
             label=_("Preview"), icon_name="media-playback-start")
-        preview_button.set_action_name("win.preview")
-        self.main_toolbar.insert(preview_button, -1)
+        button.set_action_name("win.preview")
+        button.set_tooltip_text(_("Preview from selected position with a video player"))
+        self.main_toolbar.insert(button, -1)
 
     def _init_notebook(self, paned):
         """Initialize the notebook."""

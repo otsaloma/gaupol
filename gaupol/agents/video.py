@@ -20,6 +20,7 @@
 import aeidon
 import gaupol
 import os
+import sys
 
 from aeidon.i18n   import _
 from gi.repository import GLib
@@ -53,45 +54,83 @@ class VideoAgent(aeidon.Delegate):
         self.connect("page-closed",   self._update_subtitle_cache)
         self.connect("page-switched", self._update_subtitle_cache)
 
+    def _init_player_toolbar(self):
+        """Initialize the video player toolbar."""
+        self.player_toolbar = Gtk.Toolbar()
+        self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
+        if sys.platform == "win32":
+            self.player_toolbar.set_icon_size(Gtk.IconSize.MENU)
+        # win.play-pause
+        button = Gtk.ToolButton(
+            label=_("_Play/Pause"), icon_name="media-playback-start")
+        button.set_action_name("win.play-pause")
+        button.set_tooltip_text(_("Play or pause video"))
+        self.player_toolbar.insert(button, -1)
+        self.player_toolbar.insert(Gtk.SeparatorToolItem(), -1)
+        self.play_button = button
+        # win.seek-previous
+        button = Gtk.ToolButton(
+            label=_("Seek _Previous"), icon_name="media-skip-backward")
+        button.set_action_name("win.seek-previous")
+        button.set_tooltip_text(_("Seek to the start of the previous subtitle"))
+        self.player_toolbar.insert(button, -1)
+        # win.seek-next
+        button = Gtk.ToolButton(
+            label=_("Seek _Next"), icon_name="media-skip-forward")
+        button.set_action_name("win.seek-next")
+        button.set_tooltip_text(_("Seek to the start of the next subtitle"))
+        self.player_toolbar.insert(button, -1)
+        self.player_toolbar.insert(Gtk.SeparatorToolItem(), -1)
+        # win.seek-backward
+        button = Gtk.ToolButton(
+            label=_("Seek _Backward"), icon_name="media-seek-backward")
+        button.set_action_name("win.seek-backward")
+        button.set_tooltip_text(_("Seek backward"))
+        self.player_toolbar.insert(button, -1)
+        # win.seek-forward
+        button = Gtk.ToolButton(
+            label=_("Seek _Forward"), icon_name="media-seek-forward")
+        button.set_action_name("win.seek-forward")
+        button.set_tooltip_text(_("Seek forward"))
+        self.player_toolbar.insert(button, -1)
+        self.player_toolbar.insert(Gtk.SeparatorToolItem(), -1)
+        # Volume button
+        self.volume_button = Gtk.VolumeButton()
+        self.volume_button.props.use_symbolic = False
+        adjustment = self.volume_button.get_adjustment()
+        adjustment.set_lower(0)
+        adjustment.set_upper(1)
+        adjustment.set_value(self.player.volume)
+        aeidon.util.connect(self, "volume_button", "value-changed")
+        item = Gtk.ToolItem()
+        item.add(self.volume_button)
+        item.set_tooltip_text(_("Volume"))
+        self.player_toolbar.insert(item, -1)
+        # Seekbar
+        self.seekbar = Gtk.Scale(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            adjustment=Gtk.Adjustment(value=0,
+                                      lower=0,
+                                      upper=1,
+                                      step_increment=0.01,
+                                      page_increment=0.05,
+                                      page_size=0.05))
+
+        self.seekbar.set_draw_value(False)
+        self.seekbar.connect("change-value", self._on_seekbar_change_value)
+        item = Gtk.ToolItem()
+        item.set_expand(True)
+        item.add(self.seekbar)
+        self.player_toolbar.insert(item, -1)
+
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
         vbox = gaupol.util.new_vbox(spacing=0)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(vbox, self.player.widget)
-        adjustment = Gtk.Adjustment(value=0,
-                                    lower=0,
-                                    upper=1,
-                                    step_increment=0.01,
-                                    page_increment=0.05,
-                                    page_size=0.05)
-
-        self.seekbar = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL,
-                                 adjustment=adjustment)
-
-        self.seekbar.set_draw_value(False)
-        self.seekbar.connect("change-value", self._on_seekbar_change_value)
-        # TODO:
-        # self.player_toolbar = self.uim.get_widget("/ui/player_toolbar")
-        # self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
-        # separator = Gtk.SeparatorToolItem()
-        # self.player_toolbar.insert(separator, -1)
-        # self.volume_button = Gtk.VolumeButton()
-        # self.volume_button.props.use_symbolic = False
-        # adjustment = self.volume_button.get_adjustment()
-        # adjustment.set_lower(0)
-        # adjustment.set_upper(1)
-        # adjustment.set_value(self.player.volume)
-        # aeidon.util.connect(self, "volume_button", "value-changed")
-        # item = Gtk.ToolItem()
-        # item.add(self.volume_button)
-        # item.set_tooltip_text(_("Volume"))
-        # self.player_toolbar.insert(item, -1)
-        # item = Gtk.ToolItem()
-        # item.set_expand(True)
-        # item.add(self.seekbar)
-        # self.player_toolbar.insert(item, -1)
-        # gaupol.util.pack_start_fill(vbox, self.player_toolbar)
+        self._init_player_toolbar()
+        gaupol.util.pack_start_fill(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
         self.player_box.show_all()
         self.paned.add1(self.player_box)
@@ -117,11 +156,8 @@ class VideoAgent(aeidon.Delegate):
         """Load a video file."""
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
-        path = page.project.video_path
-        dialog = gaupol.VideoDialog(self.window,
-                                    title=_("Load Video"),
-                                    button_label=_("_Load"))
-
+        dialog = gaupol.VideoDialog(
+            self.window, title=_("Load Video"), button_label=_("_Load"))
         if page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
@@ -138,18 +174,16 @@ class VideoAgent(aeidon.Delegate):
             self._init_cache_updates()
             self._init_update_handlers()
             self._update_subtitle_cache()
-            # TODO: _init_menus
-            # menu = self.get_menubar_section("audio-languages-placeholder")
         else: # Player exists
             if self.player.is_playing():
-                action = self.get_action("play-pause")
-                action.activate()
+                self.get_action("play-pause").activate()
             adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(0)
             self.player.stop()
         self.player.set_path(path)
-        action = self.get_action("toggle-player")
-        action.set_active(True)
+        self._update_languages_menu()
+        if not self.get_action("toggle-player").get_state():
+            self.get_action("toggle-player").activate()
         self.update_gui()
         self.player.play()
 
@@ -173,15 +207,10 @@ class VideoAgent(aeidon.Delegate):
 
     def _on_player_state_changed(self, player, state):
         """Update UI to match `state` of `player`."""
-        if state == Gst.State.NULL:
-            action = self.get_action("play-pause")
-            action.set_icon_name("media-playback-start")
-        if state == Gst.State.PLAYING:
-            action = self.get_action("play-pause")
-            action.set_icon_name("media-playback-pause")
-        if state == Gst.State.PAUSED:
-            action = self.get_action("play-pause")
-            action.set_icon_name("media-playback-start")
+        self.play_button.set_icon_name(
+            "media-playback-pause"
+            if state == Gst.State.PLAYING
+            else "media-playback-start")
 
     def _on_player_update_seekbar(self, data=None):
         """Update seekbar from video position."""
@@ -273,10 +302,40 @@ class VideoAgent(aeidon.Delegate):
         if duration is None: return
         self.player.seek(value * duration)
 
+    @aeidon.deco.export
+    def _on_set_audio_language_activate(self, action, parameter):
+        """Set the audio language to use."""
+        index = int(parameter.get_string())
+        self.player.audio_track = index
+
     def _on_volume_button_value_changed(self, button, value):
         """Update video player volume."""
         self.player.volume = value
         self.update_gui()
+
+    @aeidon.deco.export
+    def _on_volume_down_activate(self, *args):
+        """Decrease volume."""
+        self.player.volume = self.player.volume - 0.05
+        self.volume_button.set_value(self.player.volume)
+        self.update_gui()
+
+    @aeidon.deco.export
+    def _on_volume_up_activate(self, *args):
+        """Increase volume."""
+        self.player.volume = self.player.volume + 0.05
+        self.volume_button.set_value(self.player.volume)
+        self.update_gui()
+
+    def _update_languages_menu(self):
+        """Update the audio language selection menu."""
+        menu = self.get_menubar_section("audio-languages-placeholder")
+        menu.remove_all()
+        languages = self.player.get_audio_languages()
+        for i, language in enumerate(languages):
+            language = language or _("Undefined")
+            action = "win.set-audio-language::{:d}".format(i)
+            menu.append(language, action)
 
     def _update_subtitle_cache(self, *args, **kwargs):
         """Update subtitle position and text cache."""
