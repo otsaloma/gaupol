@@ -312,7 +312,7 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_view_renderer_edited(self, renderer, path, value, column):
         """Save changes made while editing cell."""
-        self._set_unsafe_sensitivities(True)
+        self._set_unsafe_enabled(True)
         self.show_message(None)
         page = self.get_current_page()
         row = gaupol.util.tree_path_to_row(path)
@@ -338,13 +338,13 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_view_renderer_editing_canceled(self, *args):
         """Unset state set for editing cell."""
-        self._set_unsafe_sensitivities(True)
+        self._set_unsafe_enabled(True)
         self.show_message(None)
 
     @aeidon.deco.export
     def _on_view_renderer_editing_started(self, renderer, editor, path, column):
         """Set proper state for editing cell."""
-        self._set_unsafe_sensitivities(False)
+        self._set_unsafe_enabled(False)
         page = self.get_current_page()
         col = page.view.get_columns().index(column)
         if not page.view.is_text_column(col): return
@@ -359,11 +359,12 @@ class EditAgent(aeidon.Delegate):
             page.project.redo(count)
         gaupol.util.set_cursor_normal(self.window)
 
-    def _set_unsafe_sensitivities(self, sensitive):
-        """Set sensitivities of unsafe actions."""
-        print("TODO: _set_unsafe_sensitivities")
-        # action_group = self.get_action_group("main-unsafe")
-        # action_group.set_sensitive(sensitive)
+    def _set_unsafe_enabled(self, enabled):
+        """Set enabled states of unsafe actions."""
+        for name in self.window.list_actions():
+            action = self.get_action(name)
+            if action.action_group == "main-unsafe":
+                action.set_enabled(enabled)
 
     def _sync_clipboards(self, page):
         """Synchronize all clipboards to match that of `page`."""
