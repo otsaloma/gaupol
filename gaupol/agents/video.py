@@ -307,6 +307,7 @@ class VideoAgent(aeidon.Delegate):
         """Set the audio language to use."""
         index = int(parameter.get_string())
         self.player.audio_track = index
+        self._update_languages_menu()
 
     def _on_volume_button_value_changed(self, button, value):
         """Update video player volume."""
@@ -336,6 +337,9 @@ class VideoAgent(aeidon.Delegate):
             language = language or _("Undefined")
             action = "win.set-audio-language::{:d}".format(i)
             menu.append(language, action)
+            if i == self.player.audio_track:
+                action = self.get_action("set-audio-language")
+                action.set_state(str(i))
 
     def _update_subtitle_cache(self, *args, **kwargs):
         """Update subtitle position and text cache."""

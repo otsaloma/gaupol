@@ -91,6 +91,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
      * ``page-added``: application, page
      * ``page-changed``: application, page
      * ``page-closed``: application, page
+     * ``page-saved``: application, page
      * ``page-switched``: application, page
      * ``pages-reordered``: application, page, number
      * ``quit``: application
@@ -100,6 +101,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         "page-added",
         "page-changed",
         "page-closed",
+        "page-saved",
         "page-switched",
         "pages-reordered",
         "quit",
@@ -290,7 +292,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.notebook.set_scrollable(True)
         self.notebook.set_show_border(False)
         self.notebook.set_show_tabs(False)
-        self.notebook.popup_enable()
         self.notebook.drag_dest_set(flags=Gtk.DestDefaults.ALL,
                                     targets=None,
                                     actions=Gdk.DragAction.COPY)

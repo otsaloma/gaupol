@@ -38,6 +38,8 @@ class OpenAgent(aeidon.Delegate):
         page.project.connect("action-done", self._on_project_action_done)
         page.project.connect("action-redone", self._on_project_action_redone)
         page.project.connect("action-undone", self._on_project_action_undone)
+        callback = self._on_tab_widget_button_press_event
+        page.tab_widget.connect("button-press-event", callback, page)
         self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()
@@ -208,37 +210,37 @@ class OpenAgent(aeidon.Delegate):
         paths, encoding = self._select_files(_("Open"), doc)
         self.open_main(paths, encoding)
 
-    @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
-    def _on_open_main_files_recent_activate(self, *args):
-        """Open main files."""
-        doc = aeidon.documents.MAIN
-        paths, encoding = self._select_files(_("Open"), doc)
-        self.open_main(paths, encoding)
+    # @aeidon.deco.export
+    # @aeidon.deco.silent(gaupol.Default)
+    # def _on_open_main_files_recent_activate(self, *args):
+    #     """Open main files."""
+    #     doc = aeidon.documents.MAIN
+    #     paths, encoding = self._select_files(_("Open"), doc)
+    #     self.open_main(paths, encoding)
 
-    @aeidon.deco.export
-    def _on_open_main_files_recent_item_activated(self, chooser):
-        """Open a recent main file."""
-        uri = chooser.get_current_uri()
-        path = aeidon.util.uri_to_path(uri)
-        self.open_main(path)
+    # @aeidon.deco.export
+    # def _on_open_main_files_recent_item_activated(self, chooser):
+    #     """Open a recent main file."""
+    #     uri = chooser.get_current_uri()
+    #     path = aeidon.util.uri_to_path(uri)
+    #     self.open_main(path)
 
-    @aeidon.deco.export
-    def _on_open_recent_main_file_item_activated(self, chooser):
-        """Open a recent main file."""
-        uri = chooser.get_current_uri()
-        path = aeidon.util.uri_to_path(uri)
-        self.open_main(path)
+    # @aeidon.deco.export
+    # def _on_open_recent_main_file_item_activated(self, chooser):
+    #     """Open a recent main file."""
+    #     uri = chooser.get_current_uri()
+    #     path = aeidon.util.uri_to_path(uri)
+    #     self.open_main(path)
 
-    @aeidon.deco.export
-    def _on_open_recent_translation_file_item_activated(self, chooser):
-        """Open a recent translation file."""
-        uri = chooser.get_current_uri()
-        path = aeidon.util.uri_to_path(uri)
-        align_method = aeidon.align_methods.POSITION
-        self.open_translation(path,
-                              encoding=None,
-                              align_method=align_method)
+    # @aeidon.deco.export
+    # def _on_open_recent_translation_file_item_activated(self, chooser):
+    #     """Open a recent translation file."""
+    #     uri = chooser.get_current_uri()
+    #     path = aeidon.util.uri_to_path(uri)
+    #     align_method = aeidon.align_methods.POSITION
+    #     self.open_translation(path,
+    #                           encoding=None,
+    #                           align_method=align_method)
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)

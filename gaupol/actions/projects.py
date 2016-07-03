@@ -39,6 +39,17 @@ class ActivatePreviousProjectAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
 
+class ActivateProjectAction(gaupol.RadioAction):
+    def __new__(cls):
+        action = gaupol.RadioAction.new("activate-project")
+        action.__class__ = cls
+        return action
+    def __init__(self):
+        gaupol.RadioAction.__init__(self, "activate-project")
+        self.set_state(str(0))
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(application.pages)
+
 class CloseAllProjectsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "close-all-projects")

@@ -123,6 +123,7 @@ class SaveAgent(aeidon.Delegate):
             page.project.main_file.encoding is None):
             return self.save_main_as(page)
         self._save_document(page, aeidon.documents.MAIN)
+        self.emit("page-saved", self, page)
 
     @aeidon.deco.export
     def save_main_as(self, page, file=None):
@@ -136,6 +137,7 @@ class SaveAgent(aeidon.Delegate):
             file = page.project.main_file
             file = self._select_file(_("Save As"), page, file)
         self._save_document(page, aeidon.documents.MAIN, file)
+        self.emit("page-saved", self, page)
         self.add_to_recent_files(page.project.main_file.path,
                                  page.project.main_file.format,
                                  aeidon.documents.MAIN)
@@ -156,6 +158,7 @@ class SaveAgent(aeidon.Delegate):
             page.project.tran_file.encoding is None):
             return self.save_translation_as(page)
         self._save_document(page, aeidon.documents.TRAN)
+        self.emit("page-saved", self, page)
 
     @aeidon.deco.export
     def save_translation_as(self, page, file=None):
@@ -169,6 +172,7 @@ class SaveAgent(aeidon.Delegate):
             file = page.project.tran_file
             file = self._select_file(_("Save Translation As"), page, file)
         self._save_document(page, aeidon.documents.TRAN, file)
+        self.emit("page-saved", self, page)
         self.add_to_recent_files(page.project.tran_file.path,
                                  page.project.tran_file.format,
                                  aeidon.documents.TRAN)

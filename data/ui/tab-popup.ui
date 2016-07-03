@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="tab-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Move Tab _Left</attribute>
+        <attribute name="action">win.move-tab-left</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Move Tab _Right</attribute>
+        <attribute name="action">win.move-tab-right</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Close</attribute>
+        <attribute name="action">win.close-project</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

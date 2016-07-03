@@ -33,9 +33,12 @@ class MenuAgent(aeidon.Delegate):
         """Initialize a :class:`MenuAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._redo_menu_items = []
+        self._tab_popup = None
         self._undo_menu_items = []
         self._view_popup = None
+        self._init_signal_handlers()
 
+    @aeidon.deco.once
     def _get_recent_chooser_menu(self):
         """Return a new recent chooser menu."""
         menu = Gtk.RecentChooserMenu()
@@ -55,6 +58,22 @@ class MenuAgent(aeidon.Delegate):
         menu.set_limit(10)
         return menu
 
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+        self.connect("page-added", self._update_projects_menu)
+        self.connect("page-closed", self._update_projects_menu)
+        self.connect("page-saved", self._update_projects_menu)
+        self.connect("page-switched", self._update_projects_menu)
+        self.connect("pages-reordered", self._update_projects_menu)
+        self.connect("page-added", self._update_recent_menus)
+        self.connect("page-saved", self._update_recent_menus)
+
+    @aeidon.deco.export
+    def _on_activate_project_activate(self, action, parameter):
+        """Activate the requested page."""
+        index = int(parameter.get_string())
+        self.set_current_page(self.pages[index])
+
     @aeidon.deco.export
     def _on_open_button_show_menu(self, *args):
         """Show a menu listing recent files to open."""
@@ -63,12 +82,22 @@ class MenuAgent(aeidon.Delegate):
             self.open_button.get_menu().detach()
         self.open_button.set_menu(menu)
 
+    @aeidon.deco.export
+    def _on_open_recent_main_file_activate(self, action, *args):
+        """Open recent file as main document."""
+        self.open_main(action.gaupol_path)
+
     def _on_recent_menu_item_activated(self, chooser, *args):
         """Open recent file as main document."""
         uri = chooser.get_current_uri()
         path = aeidon.util.uri_to_path(uri)
         self.open_button.get_menu().hide()
         self.open_main(path)
+
+    @aeidon.deco.export
+    def _on_open_recent_translation_file_activate(self, action, *args):
+        """Open recent file as translation document."""
+        self.open_translation(action.gaupol_path)
 
     @aeidon.deco.export
     def _on_redo_button_show_menu(self, *args):
@@ -105,6 +134,25 @@ class MenuAgent(aeidon.Delegate):
         index = menu_item.gaupol_index
         for item in self._redo_menu_items[:index]:
             item.set_state(Gtk.StateType.NORMAL)
+
+    @aeidon.deco.export
+    def _on_tab_widget_button_press_event(self, button, event, page):
+        """Display a pop-up menu with tab-related actions."""
+        if event.button != 3: return
+        if self._tab_popup is None:
+            path = os.path.join(aeidon.DATA_DIR, "ui", "tab-popup.ui")
+            builder = Gtk.Builder.new_from_file(path)
+            self._tab_popup = builder.get_object("tab-popup")
+        menu = Gtk.Menu.new_from_model(self._tab_popup)
+        menu.attach_to_widget(self.notebook, None)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=None,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
+
+        return True
 
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):
@@ -169,3 +217,63 @@ class MenuAgent(aeidon.Delegate):
                    activate_time=event.time)
 
         return True
+
+    def _update_projects_menu(self, *args):
+        """Update the project menu list of projects."""
+        menu = self.get_menubar_section("projects-placeholder")
+        menu.remove_all()
+        current = self.get_current_page()
+        for i, page in enumerate(self.pages):
+            label = page.get_main_basename()
+            if len(label) > 100:
+                label = label[:100] + "…"
+            action = "win.activate-project::{:d}".format(i)
+            menu.append(label, action)
+            if page is current:
+                action = self.get_action("activate-project")
+                action.set_state(str(i))
+
+    def _update_recent_main_menu(self, *args):
+        """Update the file menu list of recent main files."""
+        menu = self.get_menubar_section("open-recent-main-placeholder")
+        menu.remove_all()
+        recent = self._get_recent_chooser_menu()
+        for i, uri in enumerate(recent.get_uris()):
+            path = aeidon.util.uri_to_path(uri)
+            label = os.path.basename(path)
+            if len(label) > 100:
+                label = label[:100] + "…"
+            action = "win.open-recent-main-file-{:d}".format(i)
+            menu.append(label, action)
+            action = action.replace("win.", "")
+            if not self.get_action(action):
+                ao = gaupol.Action(action)
+                callback = self._on_open_recent_main_file_activate
+                ao.connect("activate", callback)
+                self.window.add_action(ao)
+            self.get_action(action).gaupol_path = path
+
+    def _update_recent_menus(self, *args):
+        """Update the file menu lists of recent files."""
+        self._update_recent_main_menu()
+        self._update_recent_translation_menu()
+
+    def _update_recent_translation_menu(self, *args):
+        """Update the file menu list of recent translation files."""
+        menu = self.get_menubar_section("open-recent-translation-placeholder")
+        menu.remove_all()
+        recent = self._get_recent_chooser_menu()
+        for i, uri in enumerate(recent.get_uris()):
+            path = aeidon.util.uri_to_path(uri)
+            label = os.path.basename(path)
+            if len(label) > 100:
+                label = label[:100] + "…"
+            action = "win.open-recent-translation-file-{:d}".format(i)
+            menu.append(label, action)
+            action = action.replace("win.", "")
+            if not self.get_action(action):
+                ao = gaupol.Action(action)
+                callback = self._on_open_recent_translation_file_activate
+                ao.connect("activate", callback)
+                self.window.add_action(ao)
+            self.get_action(action).gaupol_path = path

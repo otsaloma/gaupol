@@ -18,14 +18,16 @@
         </item>
       </section>
       <section>
-        <item>
+        <submenu>
           <attribute name="label" translatable="yes">Open _Recent</attribute>
-          <attribute name="action">win.open-recent-main-file</attribute>
-        </item>
-        <item>
+          <section id="open-recent-main-placeholder">
+          </section>
+        </submenu>
+        <submenu>
           <attribute name="label" translatable="yes">Open R_ecent Translation</attribute>
-          <attribute name="action">win.open-recent-translation-file</attribute>
-        </item>
+          <section id="open-recent-translation-placeholder">
+          </section>
+        </submenu>
       </section>
       <section>
         <item>

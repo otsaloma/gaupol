@@ -46,8 +46,8 @@ class CloseAgent(aeidon.Delegate):
     @aeidon.deco.export
     def close_all(self, confirm=True):
         """Close all pages after asking to save their documents."""
-        if confirm and sum((len(self._need_confirmation(
-                x)) for x in self.pages)) > 1:
+        if confirm and sum(len(self._need_confirmation(
+                x)) for x in self.pages) > 1:
             return self._confirm_close_multiple(tuple(self.pages))
         while self.pages:
             self.close(self.pages[-1], confirm=confirm)
@@ -55,9 +55,11 @@ class CloseAgent(aeidon.Delegate):
     def _confirm_close(self, page):
         """Close `page` after asking to save its documents."""
         docs = self._need_confirmation(page)
+        if len(docs) == 0: return
+        if len(docs) == 1:
+            self._confirm_close_document(page, docs[0])
         if len(docs) > 1:
-            return self._confirm_close_multiple((page,))
-        return self._confirm_close_document(page, docs[0])
+            self._confirm_close_multiple((page,))
 
     def _confirm_close_document(self, page, doc):
         """Close `page` after asking to save `doc`."""
@@ -134,8 +136,8 @@ class CloseAgent(aeidon.Delegate):
     def quit(self, confirm=True):
         """Quit Gaupol."""
         self.emit("quit")
-        if confirm and sum((len(self._need_confirmation(
-                x)) for x in self.pages)) > 1:
+        if confirm and sum(len(self._need_confirmation(
+                x)) for x in self.pages) > 1:
             self._confirm_close_multiple(tuple(self.pages))
         elif confirm:
             for page in self.pages:

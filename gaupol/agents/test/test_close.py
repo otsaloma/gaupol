@@ -24,15 +24,21 @@ from unittest.mock import patch
 
 class TestCloseAgent(gaupol.TestCase):
 
-    def run__confirm_close_main(self):
+    def run__confirm_close_both(self):
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
         with aeidon.util.silent(gaupol.Default):
             self.application.close(page)
 
+    def run__confirm_close_main(self):
+        page = self.application.get_current_page()
+        page.project.set_text(0, aeidon.documents.MAIN, "")
+        with aeidon.util.silent(gaupol.Default):
+            self.application.close(page)
+
     def run__confirm_close_translation(self):
         page = self.application.get_current_page()
-        page.project.remove_subtitles((0,))
+        page.project.set_text(0, aeidon.documents.TRAN, "")
         with aeidon.util.silent(gaupol.Default):
             self.application.close(page)
 
