@@ -83,6 +83,16 @@ class SaveAgent(aeidon.Delegate):
         self.save_translation_as(page)
         self.update_gui()
 
+    @aeidon.deco.export
+    def save(self, page, doc):
+        """Save `doc` of `page` to file."""
+        if doc == aeidon.documents.MAIN:
+            return self.save_main(page)
+        if doc == aeidon.documents.TRAN:
+            return self.save_translation(page)
+        raise ValueError("Invalid document: {}"
+                         .format(repr(doc)))
+
     def _save_document(self, page, doc, file=None):
         """Save document to `file` or raise :exc:`gaupol.Default`."""
         file = file or page.project.get_file(doc)

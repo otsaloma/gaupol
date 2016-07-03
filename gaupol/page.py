@@ -74,6 +74,15 @@ class Page(aeidon.Observable):
         raise ValueError("Invalid document: {}"
                          .format(repr(doc)))
 
+    def get_basename(self, doc):
+        """Return basename of `doc`."""
+        if doc == aeidon.documents.MAIN:
+            return self.get_main_basename()
+        if doc == aeidon.documents.TRAN:
+            return self.get_translation_basename()
+        raise ValueError("Invalid document: {}"
+                         .format(repr(doc)))
+
     def get_main_basename(self):
         """Return basename of the main document."""
         if self.project.main_file is not None:
