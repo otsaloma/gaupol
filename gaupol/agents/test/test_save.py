@@ -28,6 +28,7 @@ class TestSaveAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
+        self.delegate = self.application.save.__self__
 
     def test__on_save_all_documents_activate(self):
         self.application.get_action("save-all-documents").activate()
