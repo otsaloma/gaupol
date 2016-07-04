@@ -7,8 +7,8 @@ To install, run command
 
 You'll need Python, gettext and intltool.
 
-Developers or packagers interested in installing aeidon and gaupol
-separately, see the file `README.aeidon.md`.
+Developers or packagers interested in installing Python packages aeidon
+and gaupol separately, see the file `README.aeidon.md`.
 
 Uninstallation
 ==============

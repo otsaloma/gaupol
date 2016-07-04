@@ -25,8 +25,6 @@ in its set. New items can always be added to an enumeration.
 
 __all__ = ("EnumerationItem", "Enumeration",)
 
-# TODO: Dump this code and use the enum module added in Python 3.4?
-
 
 class EnumerationItem(int):
 

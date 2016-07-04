@@ -1,8 +1,8 @@
-Aeidon
+aeidon
 ======
 
-Aeidon is a Python package for reading, writing and manipulating
-text-based subtitle files. It is used by the Gaupol package, which
+aeidon is a Python package for reading, writing and manipulating
+text-based subtitle files. It is used by the gaupol package, which
 provides a a subtitle editor application with a GTK+ user interface.
 
 Separating a user-interface independent general-purpose subtitle editing
@@ -13,7 +13,7 @@ maintained code.
 Installation
 ============
 
-To install only either the Aeidon or the Gaupol package, use one
+To install only either the aeidon or the gaupol package, use one
 of the following commands
 
     python3 setup.py --without-gaupol install [--prefix=...]
@@ -26,7 +26,7 @@ Dependencies
 ============
 
 Of the dependencies listed in the `README.md` file, Python, PyEnchant,
-iso-codes and chardet are to be associated with Aeidon. If aeidon is
+iso-codes and chardet are to be associated with aeidon. If aeidon is
 installed using the `--without-iso-codes` switch, then iso-codes is
-required instead of optional. Gaupol should depend on the remaining
-dependencies as well as Aeidon of the same version.
+required instead of optional. gaupol should depend on the remaining
+dependencies as well as aeidon of the same version.
