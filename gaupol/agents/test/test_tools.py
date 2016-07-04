@@ -21,39 +21,55 @@ import gaupol
 from gi.repository import Gtk
 from unittest.mock import patch
 
+OK = lambda *args: Gtk.ResponseType.OK
+CANCEL = lambda *args: Gtk.ResponseType.CANCEL
 
-class TestPositionAgent(gaupol.TestCase):
+
+class TestToolsAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
 
-    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
+    @patch("gaupol.util.flash_dialog", CANCEL)
     def test__on_adjust_durations_activate(self):
         self.application.get_action("adjust-durations").activate()
 
-    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
+    @patch("gaupol.util.flash_dialog", OK)
+    def test__on_check_spelling_activate(self):
+        gaupol.conf.spell_check.language = "en"
+        self.application.get_action("check-spelling").activate()
+
+    @patch("gaupol.util.flash_dialog", OK)
+    def test__on_configure_spell_check_activate(self):
+        self.application.get_action("configure-spell-check").activate()
+
+    @patch("gaupol.util.flash_dialog", CANCEL)
     def test__on_convert_framerate_activate(self):
         self.application.get_action("convert-framerate").activate()
 
-    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
+    @patch("gaupol.TextAssistant.show", lambda *args: None)
+    def test__on_correct_texts_activate(self):
+        self.application.get_action("correct-texts").activate()
+
+    @patch("gaupol.util.flash_dialog", CANCEL)
     def test__on_shift_positions_activate__frame(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.FRAME
         self.application.get_action("shift-positions").activate()
 
-    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
+    @patch("gaupol.util.flash_dialog", CANCEL)
     def test__on_shift_positions_activate__time(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.TIME
         self.application.get_action("shift-positions").activate()
 
-    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
+    @patch("gaupol.util.flash_dialog", CANCEL)
     def test__on_transform_positions_activate__frame(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.FRAME
         self.application.get_action("transform-positions").activate()
 
-    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.CANCEL)
+    @patch("gaupol.util.flash_dialog", CANCEL)
     def test__on_transform_positions_activate__time(self):
         page = self.application.get_current_page()
         page.edit_mode = aeidon.modes.TIME

@@ -23,11 +23,10 @@ from .format   import FormatAgent
 from .help     import HelpAgent
 from .menu     import MenuAgent
 from .open     import OpenAgent
-from .position import PositionAgent
 from .preview  import PreviewAgent
 from .save     import SaveAgent
 from .search   import SearchAgent
-from .text     import TextAgent
+from .tools    import ToolsAgent
 from .update   import UpdateAgent
 from .util     import UtilityAgent
 from .video    import VideoAgent
