@@ -255,6 +255,9 @@ def prepare_text_view(text_view):
         with aeidon.util.silent(Exception):
             checker = GtkSpell.Checker()
             checker.set_language(language)
+            def on_language_changed(checker, lang, *args):
+                gaupol.conf.spell_check.language = lang
+            checker.connect("language-changed", on_language_changed)
             checker.attach(text_view)
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
