@@ -221,6 +221,8 @@ class MenuAgent(aeidon.Delegate):
     def _update_projects_menu(self, *args):
         """Update the project menu list of projects."""
         menu = self.get_menubar_section("projects-placeholder")
+        # Menubar not available when running unit tests.
+        if menu is None: return
         menu.remove_all()
         current = self.get_current_page()
         for i, page in enumerate(self.pages):
@@ -236,6 +238,8 @@ class MenuAgent(aeidon.Delegate):
     def _update_recent_main_menu(self, *args):
         """Update the file menu list of recent main files."""
         menu = self.get_menubar_section("open-recent-main-placeholder")
+        # Menubar not available when running unit tests.
+        if menu is None: return
         menu.remove_all()
         recent = self._get_recent_chooser_menu()
         for i, uri in enumerate(recent.get_uris()):
@@ -261,6 +265,8 @@ class MenuAgent(aeidon.Delegate):
     def _update_recent_translation_menu(self, *args):
         """Update the file menu list of recent translation files."""
         menu = self.get_menubar_section("open-recent-translation-placeholder")
+        # Menubar not available when running unit tests.
+        if menu is None: return
         menu.remove_all()
         recent = self._get_recent_chooser_menu()
         for i, uri in enumerate(recent.get_uris()):

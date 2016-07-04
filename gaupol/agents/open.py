@@ -23,7 +23,6 @@ import os
 
 from aeidon.i18n   import _
 from gi.repository import Gtk
-from gi.repository import GObject
 
 
 class OpenAgent(aeidon.Delegate):
@@ -43,7 +42,8 @@ class OpenAgent(aeidon.Delegate):
         self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,) * 2))
+        policy = Gtk.PolicyType.AUTOMATIC
+        scroller.set_policy(policy, policy)
         scroller.add(page.view)
         self.notebook.append_page(scroller, page.tab_widget)
         self.notebook.set_tab_reorderable(scroller, True)
@@ -56,28 +56,19 @@ class OpenAgent(aeidon.Delegate):
     @aeidon.deco.export
     def add_to_recent_files(self, path, format, doc):
         """Add `path` to recent files managed by the recent manager."""
+        # XXX: The group field is not available for Python,
+        # we cannot differentiate between main and translation files.
+        # http://bugzilla.gnome.org/show_bug.cgi?id=695970
         uri = aeidon.util.path_to_uri(path)
-        if GObject.pygobject_version >= (3, 7, 4):
-            # Trying to set strings to struct fields
-            # fails with earlier versions of PyGObject.
-            # XXX: We still cannot set the group field.
-            # http://bugzilla.gnome.org/show_bug.cgi?id=678401
-            # http://bugzilla.gnome.org/show_bug.cgi?id=695970
-            recent_data = Gtk.RecentData()
-            recent_data.mime_type = format.mime_type
-            recent_data.app_name = "gaupol"
-            recent_data.app_exec = "gaupol %F"
-            self.recent_manager.add_full(uri, recent_data)
-        else:
-            self.recent_manager.add_item(uri)
+        recent = Gtk.RecentData()
+        recent.mime_type = format.mime_type
+        recent.app_name = "gaupol"
+        recent.app_exec = "gaupol %F"
+        self.recent_manager.add_full(uri, recent)
 
     @aeidon.deco.export
     def append_file(self, path, encoding=None):
-        """
-        Append subtitles from file at `path` to the current project.
-
-        Raise :exc:`gaupol.Default` if cancelled or something goes wrong.
-        """
+        """Append subtitles from file at `path` to the current project."""
         encodings = self._get_encodings(encoding)
         doc = aeidon.documents.MAIN
         temp = self._open_file(path, encodings, doc, check_open=False)
@@ -97,15 +88,13 @@ class OpenAgent(aeidon.Delegate):
 
     def _append_subtitles(self, page, subtitles):
         """Append `subtitles` to `page` and return new indices."""
-        project = page.project
-        n = len(project.subtitles)
+        n = len(page.project.subtitles)
         indices = list(range(n, n + len(subtitles)))
-        project.block("action-done")
-        project.insert_subtitles(indices, subtitles)
-        project.set_action_description(aeidon.registers.DO,
-                                       _("Appending file"))
-
-        project.unblock("action-done")
+        page.project.block("action-done")
+        page.project.insert_subtitles(indices, subtitles)
+        page.project.set_action_description(
+            aeidon.registers.DO, _("Appending file"))
+        page.project.unblock("action-done")
         return tuple(indices)
 
     def _check_file_exists(self, path):
@@ -115,8 +104,8 @@ class OpenAgent(aeidon.Delegate):
     def _check_file_not_open(self, path):
         """Raise :exc:`gaupol.Default` if file at `path` already open."""
         for page in self.pages:
-            files = (page.project.main_file, page.project.tran_file)
-            paths = [x.path for x in [y for y in files if y]]
+            files = [page.project.main_file, page.project.tran_file]
+            paths = [x.path for x in files if x]
             if not path in paths: continue
             self.set_current_page(page)
             message = _('File "{}" is already open')
@@ -164,8 +153,7 @@ class OpenAgent(aeidon.Delegate):
         try_auto = gaupol.conf.encoding.try_auto
         if try_auto and aeidon.util.chardet_available():
             encodings.append("auto")
-        while None in encodings:
-            encodings.remove(None)
+        encodings = list(filter(None, encodings))
         encodings = encodings or ["utf_8"]
         return tuple(aeidon.util.get_unique(encodings))
 
@@ -210,38 +198,6 @@ class OpenAgent(aeidon.Delegate):
         paths, encoding = self._select_files(_("Open"), doc)
         self.open_main(paths, encoding)
 
-    # @aeidon.deco.export
-    # @aeidon.deco.silent(gaupol.Default)
-    # def _on_open_main_files_recent_activate(self, *args):
-    #     """Open main files."""
-    #     doc = aeidon.documents.MAIN
-    #     paths, encoding = self._select_files(_("Open"), doc)
-    #     self.open_main(paths, encoding)
-
-    # @aeidon.deco.export
-    # def _on_open_main_files_recent_item_activated(self, chooser):
-    #     """Open a recent main file."""
-    #     uri = chooser.get_current_uri()
-    #     path = aeidon.util.uri_to_path(uri)
-    #     self.open_main(path)
-
-    # @aeidon.deco.export
-    # def _on_open_recent_main_file_item_activated(self, chooser):
-    #     """Open a recent main file."""
-    #     uri = chooser.get_current_uri()
-    #     path = aeidon.util.uri_to_path(uri)
-    #     self.open_main(path)
-
-    # @aeidon.deco.export
-    # def _on_open_recent_translation_file_item_activated(self, chooser):
-    #     """Open a recent translation file."""
-    #     uri = chooser.get_current_uri()
-    #     path = aeidon.util.uri_to_path(uri)
-    #     align_method = aeidon.align_methods.POSITION
-    #     self.open_translation(path,
-    #                           encoding=None,
-    #                           align_method=align_method)
-
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def _on_open_translation_file_activate(self, *args):
@@ -259,10 +215,9 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         path = page.project.video_path
-        dialog = gaupol.VideoDialog(self.window,
-                                    title=_("Select Video"),
-                                    button_label=_("_Select"))
-
+        title = _("Select Video"),
+        label = _("_Select")
+        dialog = gaupol.VideoDialog(self.window, title, label)
         if page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
@@ -282,19 +237,14 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.flash_dialog(gaupol.SplitDialog(self.window, self))
 
     def _open_file(self, path, encodings, doc, check_open=True):
-        """
-        Open file at `path` and return corresponding page if successful.
-
-        Raise :exc:`gaupol.Default` if cancelled or file cannot be opened.
-        """
+        """Open file at `path` and return corresponding page if successful."""
         self._check_file_exists(path)
         if check_open:
             self._check_file_not_open(path)
         self._check_file_size(path)
         basename = os.path.basename(path)
-        page = (gaupol.Page if doc == aeidon.documents.MAIN
-                else self.get_current_page)()
-
+        page = (gaupol.Page() if doc == aeidon.documents.MAIN
+                else self.get_current_page())
         for encoding in encodings:
             with aeidon.util.silent(UnicodeError):
                 n = self._try_open_file(page, doc, path, encoding)
@@ -307,19 +257,12 @@ class OpenAgent(aeidon.Delegate):
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def open_main(self, path, encoding=None):
-        """
-        Open file at `path` as a main file.
-
-        `path` can be a sequence of paths to open multiple files.
-        Use ``None`` for `encoding` to try the default sequence.
-        """
+        """Open file at `path` as a main file."""
         if gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields:
             gaupol.conf.editor.visible_fields.remove(gaupol.fields.TRAN_TEXT)
-        is_sequence = isinstance(path, (list, set, tuple))
-        paths = (path if is_sequence else (path,))
         encodings = self._get_encodings(encoding)
         gaupol.util.set_cursor_busy(self.window)
-        for path in paths:
+        for path in aeidon.util.flatten([path]):
             try:
                 page = self._open_file(path, encodings, aeidon.documents.MAIN)
             except gaupol.Default:
@@ -336,13 +279,7 @@ class OpenAgent(aeidon.Delegate):
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def open_translation(self, path, encoding=None, align_method=None):
-        """
-        Open file at `path` as a translation file.
-
-        Use ``None`` for `encoding` to try the default sequence.
-        Use ``None`` for `align_method` to use whatever happens to be as
-        :attr:`gaupol.conf.file.align_method`.
-        """
+        """Open file at `path` as a translation file."""
         if align_method is not None:
             gaupol.conf.file.align_method = align_method
         encodings = self._get_encodings(encoding)
@@ -356,11 +293,7 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.set_cursor_normal(self.window)
 
     def _select_files(self, title, doc):
-        """
-        Show a :class:`gaupol.OpenDialog` to select files.
-
-        Raise :exc:`gaupol.Default` if cancelled.
-        """
+        """Show a :class:`gaupol.OpenDialog` to select files."""
         gaupol.util.set_cursor_busy(self.window)
         dialog = gaupol.OpenDialog(self.window, title, doc)
         page = self.get_current_page()
@@ -378,10 +311,8 @@ class OpenAgent(aeidon.Delegate):
 
     def _show_encoding_error_dialog(self, basename):
         """Show an error dialog after failing to decode file."""
-        title = _('Failed to decode file "{}" with all '
-            'attempted codecs').format(basename)
-        message = _("Please try to open the file with a "
-            "different character encoding.")
+        title = _('Failed to decode file "{}" with all attempted codecs').format(basename)
+        message = _("Please try to open the file with a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
@@ -390,8 +321,7 @@ class OpenAgent(aeidon.Delegate):
     def _show_format_error_dialog(self, basename):
         """Show an error dialog after failing to recognize file format."""
         title = _('Failed to recognize format of file "{}"').format(basename)
-        message = _("Please check that the file you are trying to open is a "
-            "subtitle file of a format supported by Gaupol.")
+        message = _("Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
@@ -408,23 +338,16 @@ class OpenAgent(aeidon.Delegate):
     def _show_parse_error_dialog(self, basename, format):
         """Show an error dialog after failing to parse file."""
         title = _('Failed to parse file "{}"').format(basename)
-        message = _("Please check that the file you are trying "
-            "to open is a valid {} file.").format(format.label)
+        message = _("Please check that the file you are trying to open is a valid {} file.").format(format.label)
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
     def _show_size_warning_dialog(self, basename, size):
-        """
-        Show a warning dialog when trying to open a large file.
-
-        Raise :exc:`gaupol.Default` if opening cancelled.
-        """
+        """Show a warning dialog when trying to open a large file."""
         title = _('Open abnormally large file "{}"?').format(basename)
-        message = _("Size of the file is {:.1f} MB, which is abnormally large "
-            "for a text-based subtitle file. Please, check that you are not "
-            "trying to open a binary file.").format(size)
+        message = _("Size of the file is {:.1f} MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file.").format(size)
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("_Cancel"), Gtk.ResponseType.NO)
         dialog.add_button(_("_Open"), Gtk.ResponseType.YES)
@@ -433,14 +356,9 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
     def _show_sort_warning_dialog(self, basename, count):
-        """
-        Show a warning dialog when subtitles have been sorted.
-
-        Raise :exc:`gaupol.Default` if opening cancelled.
-        """
+        """Show a warning dialog when subtitles have been sorted."""
         title = _('Open unsorted file "{}"?').format(basename)
-        message = _("The order of {:d} subtitles needs to be changed. "
-            "If {:d} sounds like a lot, the file may be erroneously composed.")
+        message = _("The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, the file may be erroneously composed.")
         message = message.format(count, count)
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("_Cancel"), Gtk.ResponseType.NO)
@@ -450,13 +368,8 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.raise_default(response != Gtk.ResponseType.YES)
 
     def _show_translation_warning_dialog(self, page):
-        """
-        Show a warning dialog if opening a new translation file.
-
-        Raise :exc:`gaupol.Default` if opening cancelled.
-        """
-        title = _('Save changes to translation document "{}" before '
-            'opening a new one?').format(page.get_translation_basename())
+        """Show a warning dialog if opening a new translation file."""
+        title = _('Save changes to translation document "{}" before opening a new one?').format(page.get_translation_basename())
         message = _("If you don't save, changes will be permanently lost.")
         dialog = gaupol.WarningDialog(self.window, title, message)
         dialog.add_button(_("Open _Without Saving"), Gtk.ResponseType.NO)
@@ -469,18 +382,12 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.raise_default(response != Gtk.ResponseType.NO)
 
     def _try_open_file(self, page, doc, path, encoding, **kwargs):
-        """
-        Try to open file at `path` and return subtitle sort count.
-
-        Raise :exc:`gaupol.Default` if reading or parsing fails.
-        Raise :exc:`UnicodeError`if decoding fails.
-        """
-        basename = os.path.basename(path)
+        """Try to open file at `path` and return subtitle sort count."""
         if encoding == "auto":
             encoding = aeidon.encodings.detect(path)
             if encoding is None: raise UnicodeError
-        if doc == aeidon.documents.TRAN:
-            kwargs["align_method"] = gaupol.conf.file.align_method
+        kwargs["align_method"] = gaupol.conf.file.align_method
+        basename = os.path.basename(path)
         try:
             return page.project.open(doc, path, encoding, **kwargs)
         except aeidon.FormatError:
@@ -490,7 +397,7 @@ class OpenAgent(aeidon.Delegate):
         except aeidon.ParseError:
             bom_encoding = aeidon.encodings.detect_bom(path)
             encoding = bom_encoding or encoding
-            silent = aeidon.deco.silent(Exception)
-            format = silent(aeidon.util.detect_format)(path, encoding)
+            with aeidon.util.silent(Exception):
+                format = aeidon.util.detect_format(path, encoding)
             self._show_parse_error_dialog(basename, format)
         raise gaupol.Default

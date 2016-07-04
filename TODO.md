@@ -33,6 +33,7 @@ Gaupol 0.91
       documentation: <https://github.com/otsaloma/gaupol/tree/master/doc>
 * [x] Update AppData file
 * [x] Bump GTK+ dependency to 3.12 or greater
+* [x] Bump PyGObject dependency to 3.12 or greater
 * [x] Drop optional dependencies on PT fonts
 * [x] Add Serbian translation (Miroslav Nikolić)
 * [x] Update French translation (Jean van Kasteel)
