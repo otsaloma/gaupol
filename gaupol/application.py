@@ -161,9 +161,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                     name, action.accelerators)
             callback = "_on_{}_activate".format(
                 action.props.name.replace("-", "_"))
-            if hasattr(self, callback):
-                # Actions that open submenus don't have callbacks.
-                action.connect("activate", getattr(self, callback))
+            action.connect("activate", getattr(self, callback))
             self.window.add_action(action)
 
     def _init_delegations(self):
