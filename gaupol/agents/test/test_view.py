@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
 import gaupol
 
 
@@ -23,10 +22,6 @@ class TestViewAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-
-    def test__on_show_times_changed(self):
-        self.application.get_action("show-frames").activate()
-        self.application.get_action("show-times").activate()
 
     def test__on_toggle_duration_column_toggled(self):
         name = "toggle-duration-column"

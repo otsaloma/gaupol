@@ -32,6 +32,7 @@ class MenuAgent(aeidon.Delegate):
     def __init__(self, master):
         """Initialize a :class:`MenuAgent` instance."""
         aeidon.Delegate.__init__(self, master)
+        self._columns_popup = None
         self._redo_menu_items = []
         self._tab_popup = None
         self._undo_menu_items = []
@@ -209,6 +210,25 @@ class MenuAgent(aeidon.Delegate):
             self._view_popup = builder.get_object("view-popup")
         menu = Gtk.Menu.new_from_model(self._view_popup)
         menu.attach_to_widget(view, None)
+        menu.popup(parent_menu_shell=None,
+                   parent_menu_item=None,
+                   func=None,
+                   data=None,
+                   button=event.button,
+                   activate_time=event.time)
+
+        return True
+
+    @aeidon.deco.export
+    def _on_view_header_button_press_event(self, button, event):
+        """Display a column visibility pop-up menu."""
+        if event.button != 3: return
+        if self._columns_popup is None:
+            path = os.path.join(aeidon.DATA_DIR, "ui", "columns-popup.ui")
+            builder = Gtk.Builder.new_from_file(path)
+            self._columns_popup = builder.get_object("columns-popup")
+        menu = Gtk.Menu.new_from_model(self._columns_popup)
+        menu.attach_to_widget(self.get_current_page().view, None)
         menu.popup(parent_menu_shell=None,
                    parent_menu_item=None,
                    func=None,

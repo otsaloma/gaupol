@@ -145,6 +145,9 @@ class UpdateAgent(aeidon.Delegate):
         self.notebook_separator.set_visible(not tabs)
         self.get_action("set-edit-mode").set_state(str(page.edit_mode))
         self.get_action("set-framerate").set_state(str(page.project.framerate))
+        if self.player is not None:
+            layout = gaupol.conf.application_window.layout
+            self.get_action("set-layout").set_state(str(layout))
         for field in gaupol.fields:
             col = getattr(page.view.columns, field.name)
             visible = page.view.get_column(col).get_visible()

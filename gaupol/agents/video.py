@@ -140,6 +140,7 @@ class VideoAgent(aeidon.Delegate):
             if orientation == Gtk.Orientation.HORIZONTAL
             else self.notebook.get_window().get_height())
         self.paned.set_position(int(size/2))
+        self.get_action("toggle-player").set_state(True)
 
     def _init_update_handlers(self):
         """Initialize timed updates of widgets."""
@@ -182,8 +183,6 @@ class VideoAgent(aeidon.Delegate):
             self.player.stop()
         self.player.set_path(path)
         self._update_languages_menu()
-        if not self.get_action("toggle-player").get_state():
-            self.get_action("toggle-player").activate()
         self.update_gui()
         self.player.play()
 

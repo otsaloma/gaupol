@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="columns-popup">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_No.</attribute>
+        <attribute name="action">win.toggle-number-column</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Start</attribute>
+        <attribute name="action">win.toggle-start-column</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_End</attribute>
+        <attribute name="action">win.toggle-end-column</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Duration</attribute>
+        <attribute name="action">win.toggle-duration-column</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Text</attribute>
+        <attribute name="action">win.toggle-main-text-column</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">T_ranslation</attribute>
+        <attribute name="action">win.toggle-translation-text-column</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
