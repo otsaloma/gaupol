@@ -31,21 +31,22 @@ with open(CSS_FILE, "r") as f:
 
 def _get_editor_font_css():
     """Return CSS for custom editor font."""
-    if not gaupol.conf.editor.custom_font: return ""
-    if not gaupol.conf.editor.use_custom_font: return ""
-    font = gaupol.conf.editor.custom_font or "monospace"
-    font_desc = Pango.FontDescription(font)
+    font_desc = Pango.FontDescription("monospace")
+    if (gaupol.conf.editor.custom_font and
+        gaupol.conf.editor.use_custom_font):
+        font_desc = Pango.FontDescription(gaupol.conf.editor.custom_font)
     css = """
     .gaupol-custom-font {{
       font-family: {family},monospace;
       font-size: {size}px;
       font-weight: {weight};
-    }}""".format(family=font_desc.get_family().split(",")[0],
-                 size=int(round(font_desc.get_size() / Pango.SCALE)),
-                 weight=int(font_desc.get_weight()))
-
+    }}""".format(
+        family=font_desc.get_family().split(",")[0],
+        size=int(round(font_desc.get_size() / Pango.SCALE)),
+        weight=int(font_desc.get_weight()))
     css = css.replace("font-size: 0px;", "")
     css = css.replace("font-weight: 0;", "")
+    css = "\n".join(filter(lambda x: x.strip(), css.splitlines()))
     return css
 
 def load_css(widget):

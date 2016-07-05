@@ -79,7 +79,7 @@ CONFIG_DEFAULTS = {
         "show_lengths_cell": True,
         "show_lengths_edit": True,
         "stretch_length": 0.05,
-        "use_custom_font": True,
+        "use_custom_font": False,
         "use_zebra_stripes": True,
         "visible_fields": [
             gaupol.fields.NUMBER,
