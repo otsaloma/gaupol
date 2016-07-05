@@ -142,7 +142,6 @@ class UpdateAgent(aeidon.Delegate):
             page.view.get_parent(), page.tab_label.get_text())
         tabs = len(self.pages) > 1 and not self.player_box.get_visible()
         self.notebook.set_show_tabs(tabs)
-        self.notebook_separator.set_visible(not tabs)
         self.get_action("set-edit-mode").set_state(str(page.edit_mode))
         self.get_action("set-framerate").set_state(str(page.project.framerate))
         if self.player is not None:
