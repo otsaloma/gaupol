@@ -329,6 +329,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize visibilities of hideable widgets."""
         conf = gaupol.conf.application_window
         self.main_toolbar.set_visible(conf.show_main_toolbar)
+        self.notebook_separator.set_visible(conf.show_main_toolbar)
         self.show_message(None)
 
     def _init_window(self):

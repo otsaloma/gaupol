@@ -102,6 +102,7 @@ class ViewAgent(aeidon.Delegate):
         """Show or hide the main toolbar."""
         visible = self.main_toolbar.get_visible()
         self.main_toolbar.set_visible(not visible)
+        self.notebook_separator.set_visible(not visible)
         gaupol.conf.application_window.show_main_toolbar = not visible
         self.get_action("toggle-main-toolbar").set_state(not visible)
 
