@@ -87,7 +87,7 @@ class MenuAgent(aeidon.Delegate):
         """Open recent file as main document."""
         uri = chooser.get_current_uri()
         path = aeidon.util.uri_to_path(uri)
-        self.open_button.get_menu().hide()
+        self.open_button.get_menu().deactivate()
         self.open_main(path)
 
     @aeidon.deco.export
@@ -119,7 +119,7 @@ class MenuAgent(aeidon.Delegate):
     def _on_redo_menu_item_activate(self, menu_item):
         """Redo the selected action and all those above it."""
         self.redo(menu_item.gaupol_index + 1)
-        self.redo_button.get_menu().hide()
+        self.redo_button.get_menu().deactivate()
 
     def _on_redo_menu_item_enter_notify_event(self, menu_item, event):
         """Select all actions above `menu_item`."""
@@ -176,7 +176,7 @@ class MenuAgent(aeidon.Delegate):
     def _on_undo_menu_item_activate(self, menu_item):
         """Undo the selected action and all those above it."""
         self.undo(menu_item.gaupol_index + 1)
-        self.undo_button.get_menu().hide()
+        self.undo_button.get_menu().deactivate()
 
     def _on_undo_menu_item_enter_notify_event(self, menu_item, event):
         """Select all actions above `menu_item`."""
