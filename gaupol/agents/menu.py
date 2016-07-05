@@ -76,8 +76,6 @@ class MenuAgent(aeidon.Delegate):
     def _on_open_button_show_menu(self, *args):
         """Show a menu listing recent files to open."""
         menu = self._get_recent_chooser_menu()
-        if self.open_button.get_menu():
-            self.open_button.get_menu().detach()
         self.open_button.set_menu(menu)
 
     @aeidon.deco.export
@@ -100,7 +98,11 @@ class MenuAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_redo_button_show_menu(self, *args):
         """Show a menu listing all redoable actions."""
-        menu = Gtk.Menu()
+        if not self.redo_button.get_menu():
+            self.redo_button.set_menu(Gtk.Menu())
+        menu = self.redo_button.get_menu()
+        for item in menu.get_children():
+            menu.remove(item)
         self._redo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.redoables):
@@ -112,8 +114,6 @@ class MenuAgent(aeidon.Delegate):
             self._redo_menu_items.append(item)
             menu.append(item)
         menu.show_all()
-        if self.redo_button.get_menu():
-            self.redo_button.get_menu().detach()
         self.redo_button.set_menu(menu)
 
     def _on_redo_menu_item_activate(self, menu_item):
@@ -155,7 +155,11 @@ class MenuAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):
         """Show a menu listing all undoable actions."""
-        menu = Gtk.Menu()
+        if not self.undo_button.get_menu():
+            self.undo_button.set_menu(Gtk.Menu())
+        menu = self.undo_button.get_menu()
+        for item in menu.get_children():
+            menu.remove(item)
         self._undo_menu_items = []
         page = self.get_current_page()
         for i, action in enumerate(page.project.undoables):
@@ -167,8 +171,6 @@ class MenuAgent(aeidon.Delegate):
             self._undo_menu_items.append(item)
             menu.append(item)
         menu.show_all()
-        if self.undo_button.get_menu():
-            self.undo_button.get_menu().detach()
         self.undo_button.set_menu(menu)
 
     def _on_undo_menu_item_activate(self, menu_item):

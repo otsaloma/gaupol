@@ -22,7 +22,7 @@ Gaupol requires [Python](https://www.python.org/) ≥ 3.2,
 [GTK+](http://www.gtk.org/) ≥ 3.12. Optional, but strongly recommended
 dependencies include:
 
-| Dependency | Version | Required For |
+| Dependency | Version | Required for |
 | :--------- | :------ | :----------- |
 | [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.0 | integrated video player |
 | [PyEnchant](http://pythonhosted.org/pyenchant/) | ≥ 1.4.0 | spell-check |
