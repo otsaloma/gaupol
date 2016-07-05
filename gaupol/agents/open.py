@@ -215,7 +215,7 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         path = page.project.video_path
-        title = _("Select Video"),
+        title = _("Select Video")
         label = _("_Select")
         dialog = gaupol.VideoDialog(self.window, title, label)
         if page.project.main_file is not None:
