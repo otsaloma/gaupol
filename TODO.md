@@ -9,6 +9,7 @@ Gaupol 0.91
       and set the default preview offset to one second
 * [x] Add find and replace to the toolbar
 * [x] Have both Ctrl+F and Ctrl+H open the find and replace dialog
+* [x] Have both Ctrl++, Ctrl+- and numpad equivalents control volume
 * [x] Remove external video player output window (if you want to see
       that output, start Gaupol from a terminal)
 * [x] Use a monospace editing font by default
