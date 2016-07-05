@@ -4,8 +4,7 @@
 """
 There are four relevant customizations to the standard distutils installation
 process: (1) allowing separate installations of aeidon and gaupol, (2) writing
-the aeidon.paths module, (3) handling translating of various files and
-(4) installing extensions.
+the aeidon.paths module, (3) handling translations and (4) extensions.
 
 (1) Allowing separate installations of aeidon and gaupol are handled through
     global options --with-aeidon, --without-aeidon, --with-gaupol and
@@ -18,19 +17,18 @@ the aeidon.paths module, (3) handling translating of various files and
     source directory. During the 'install_lib' command the file gets rewritten
     to build/aeidon/paths.py with the installation paths and that file will be
     installed. The paths are based on variable 'install_data' with the 'root'
-    variable stripped if it is given. If doing distro-packaging, make sure
-    this file gets correctly written.
+    variable stripped if it is given. If doing distro-packaging, make sure this
+    file gets correctly written.
 
-(3) During installation, the .po files are compiled into .mo files, appdata,
-    desktop, pattern and extension metadata files are translated.
-    This requires gettext and intltool, more specifically, executables 'msgfmt'
-    and 'intltool-merge' in $PATH.
+(3) During installation, the .po files are compiled into .mo files and the
+    appdata, desktop, pattern and extension metadata files are translated.
+    This requires gettext and intltool, commands 'msgfmt' and 'intltool-merge'.
 
 (4) Extensions are installed under the data directory. All python code included
     in the extensions are compiled during the 'install_data' command, using the
     same arguments for 'byte_compile' as used by the 'install_lib' command.
-    If the 'install_lib' command was given the '--no-compile' option,
-    then extensions are not compiled either.
+    If the 'install_lib' command was given the '--no-compile' option, then
+    extensions are not compiled either.
 """
 
 import distutils.command.clean
@@ -41,35 +39,29 @@ import glob
 import os
 import re
 import shutil
-import tarfile
-import tempfile
 
 clean = distutils.command.clean.clean
 distribution = distutils.dist.Distribution
-freezing = "GAUPOL_FREEZING" in os.environ
 install = distutils.command.install.install
 install_data = distutils.command.install_data.install_data
 install_lib = distutils.command.install_lib.install_lib
 log = distutils.log
 
-
-global_options = (
+distribution.global_options.extend([
     ("mandir=", None, "relative installation directory for man pages (defaults to 'share/man')"),
     ("with-aeidon", None, "install the aeidon package"),
     ("without-aeidon", None, "don't install the aeidon package"),
     ("with-gaupol", None, "install the gaupol package"),
     ("without-gaupol", None, "don't install the gaupol package"),
     ("with-iso-codes", None, "install iso-codes XML files"),
-    ("without-iso-codes", None, "don't install iso-codes XML files"))
+    ("without-iso-codes", None, "don't install iso-codes XML files"),
+])
 
-negative_opt = {
+distribution.negative_opt.update({
     "without-aeidon": "with-aeidon",
     "without-gaupol": "with-gaupol",
     "without-iso-codes": "with-iso-codes",
-}
-
-distribution.global_options.extend(global_options)
-distribution.negative_opt.update(negative_opt)
+})
 
 
 def get_aeidon_version():
@@ -84,16 +76,16 @@ def get_gaupol_version():
     text = open(path, "r", encoding="utf_8").read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
-def run_command_or_exit(command):
+def run_or_exit(cmd):
     """Run command in shell and raise SystemExit if it fails."""
-    if os.system(command) != 0:
-        log.error("command {} failed".format(repr(command)))
+    if os.system(cmd) != 0:
+        log.error("command {} failed".format(repr(cmd)))
         raise SystemExit(1)
 
-def run_command_or_warn(command):
-    """Run command in shell and raise SystemExit if it fails."""
-    if os.system(command) != 0:
-        log.warn("command {} failed".format(repr(command)))
+def run_or_warn(cmd):
+    """Run command in shell and warn if it fails."""
+    if os.system(cmd) != 0:
+        log.warn("command {} failed".format(repr(cmd)))
 
 
 class Clean(clean):
@@ -122,17 +114,14 @@ class Distribution(distribution):
 
     def __init__(self, attrs=None):
         """Initialize a :class:`Distribution` instance."""
-        if freezing:
-            self.executables = []
         self.mandir = "share/man"
         self.with_aeidon = True
         self.with_gaupol = True
         self.with_iso_codes = True
-        value = distribution.__init__(self, attrs)
+        distribution.__init__(self, attrs)
         self.data_files = []
         self.packages = []
         self.scripts = []
-        return value
 
     def __find_data_files(self, name):
         """Find data files to install for name."""
@@ -155,12 +144,12 @@ class Distribution(distribution):
         mandir = self.mandir
         while mandir.endswith("/"):
             mandir = mandir[:-1]
-        dest = "/".join((mandir, "man1"))
+        dest = "{}/man1".format(mandir)
         self.data_files.append((dest, ("data/gaupol.1",)))
 
     def __find_packages(self, name):
         """Find Python packages to install for name."""
-        for (root, dirs, files) in os.walk(name):
+        for root, dirs, files in os.walk(name):
             init_path = os.path.join(root, "__init__.py")
             if not os.path.isfile(init_path): continue
             path = root.replace(os.sep, ".")
@@ -175,26 +164,24 @@ class Distribution(distribution):
     def parse_command_line(self):
         """Parse commands and options given as arguments."""
         value = distribution.parse_command_line(self)
-        # Configuration files are parsed before the command line,
-        # so once the command line is parsed, all options have
-        # their final values and thus files corresponding to
-        # the packages to install can finally be set.
+        # Configuration files are parsed before the command line, so once the
+        # command line is parsed, all options have their final values and thus
+        # files corresponding to the packages to install can finally be set.
         if self.with_aeidon:
             self.__find_data_files("aeidon")
             self.__find_packages("aeidon")
-            if self.with_iso_codes:
-                self.__find_data_files("iso-codes")
+        if self.with_aeidon and self.with_iso_codes:
+            self.__find_data_files("iso-codes")
         if self.with_gaupol:
             self.__find_data_files("gaupol")
             self.__find_man_pages()
             self.__find_packages("gaupol")
             self.__find_scripts("gaupol")
-        # Redefine name, version and requires metadata attributes.
-        # These are used in the egg-info file written by distutils.
-        # While egg-info files appear completely useless, it needs
-        # to be ensured that if aeidon and gaupol are installed
-        # separately, they install differently named egg-info files
-        # in order to avoid overwriting each other.
+        # Redefine name, version and requires metadata attributes. These are
+        # used in the egg-info file written by distutils. While egg-info files
+        # appear completely useless, it needs to be ensured that if aeidon and
+        # gaupol are installed separately, they install differently named
+        # egg-info files in order to avoid overwriting each other.
         if self.with_gaupol:
             self.metadata.name = "gaupol"
             self.metadata.version = get_gaupol_version()
@@ -226,10 +213,10 @@ class Install(install):
         root = get_command_obj("install").root
         data_dir = get_command_obj("install_data").install_dir
         # Assume we're actually installing if --root was not given.
-        if root is not None or data_dir is None: return
+        if (root is not None) or (data_dir is None): return
         directory = os.path.join(data_dir, "share", "applications")
         log.info("updating desktop database in '{}'".format(directory))
-        run_command_or_warn('update-desktop-database "{}"'.format(directory))
+        run_or_warn('update-desktop-database "{}"'.format(directory))
 
 
 class InstallData(install_data):
@@ -249,26 +236,20 @@ class InstallData(install_data):
     def __get_appdata_file(self):
         """Return a tuple for translated appdata file."""
         path = os.path.join("data", "gaupol.appdata.xml")
-        if not freezing:
-            command = "intltool-merge -x po {}.in {}".format(path, path)
-            run_command_or_exit(command)
+        run_or_exit("intltool-merge -x po {}.in {}".format(path, path))
         return ("share/appdata", (path,))
 
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
-        if not freezing:
-            command = "intltool-merge -d po {}.in {}".format(path, path)
-            run_command_or_exit(command)
+        run_or_exit("intltool-merge -d po {}.in {}".format(path, path))
         return ("share/applications", (path,))
 
     def __get_extension_file(self, extension, extension_file):
         """Return a tuple for translated extension metadata file."""
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
-        if not freezing:
-            command = "intltool-merge -d po {}.in {}".format(path, path)
-            run_command_or_exit(command)
+        run_or_exit("intltool-merge -d po {}.in {}".format(path, path))
         return ("share/gaupol/extensions/{}".format(extension), (path,))
 
     def __get_mo_file(self, po_file):
@@ -280,19 +261,15 @@ class InstallData(install_data):
             os.makedirs(mo_dir)
         mo_file = os.path.join(mo_dir, "gaupol.mo")
         dest_dir = os.path.join("share", mo_dir)
-        if not freezing:
-            log.info("compiling '{}'".format(mo_file))
-            command = "msgfmt {} -o {}".format(po_file, mo_file)
-            run_command_or_exit(command)
+        log.info("compiling '{}'".format(mo_file))
+        run_or_exit("msgfmt {} -o {}".format(po_file, mo_file))
         return (dest_dir, (mo_file,))
 
     def __get_pattern_file(self, pattern_file):
         """Return a tuple for the translated pattern file."""
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
-        if not freezing:
-            command = "intltool-merge -d po {}.in {}".format(path, path)
-            run_command_or_exit(command)
+        run_or_exit("intltool-merge -d po {}.in {}".format(path, path))
         return ("share/gaupol/patterns", (path,))
 
     def run(self):
@@ -307,8 +284,8 @@ class InstallData(install_data):
                 pattern = "data/extensions/{}/*.extension.in"
                 pattern = pattern.format(extension)
                 for extension_file in glob.glob(pattern):
-                    t = self.__get_extension_file(extension, extension_file)
-                    self.data_files.append(t)
+                    self.data_files.append(self.__get_extension_file(
+                        extension, extension_file))
             self.data_files.append(self.__get_appdata_file())
             self.data_files.append(self.__get_desktop_file())
         install_data.run(self)
@@ -340,14 +317,14 @@ class InstallLib(install_lib):
         # Write changes to the aeidon.paths module.
         path = os.path.join(self.build_dir, "aeidon", "paths.py")
         text = open(path, "r", encoding="utf_8").read()
-        patt = "DATA_DIR = get_data_directory()"
+        patt = r"^DATA_DIR = .*$"
         repl = "DATA_DIR = {}".format(repr(data_dir))
-        text = text.replace(patt, repl)
-        assert text.count(repr(data_dir)) > 0
-        patt = "LOCALE_DIR = get_locale_directory()"
+        text = re.sub(patt, repl, text, flags=re.MULTILINE)
+        assert text.count(repl) == 1
+        patt = r"^LOCALE_DIR = .*$"
         repl = "LOCALE_DIR = {}".format(repr(locale_dir))
-        text = text.replace(patt, repl)
-        assert text.count(repr(locale_dir)) > 0
+        text = re.sub(patt, repl, text, flags=re.MULTILINE)
+        assert text.count(repl) == 1
         open(path, "w", encoding="utf_8").write(text)
 
 
@@ -357,7 +334,7 @@ setup_kwargs = dict(
     platforms=("Platform Independent",),
     author="Osmo Salomaa",
     author_email="otsaloma@iki.fi",
-    url="http://home.gna.org/gaupol/",
+    url="http://otsaloma.io/gaupol/",
     description="Editor for text-based subtitle files",
     license="GPL",
     distclass=Distribution,
