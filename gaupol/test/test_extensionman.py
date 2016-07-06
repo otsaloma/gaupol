@@ -24,7 +24,7 @@ class TestExtensionManager(gaupol.TestCase):
     def setup_method(self, method):
         gaupol.conf.path = aeidon.temp.create(".conf")
         self.manager = gaupol.ExtensionManager(self.new_application())
-        gaupol.conf.extensions.active = ["bookmarks", "none"]
+        gaupol.conf.extensions.active = ["custom-framerates", "none"]
         self.manager.find_extensions()
         self.manager.setup_extensions()
 
@@ -33,10 +33,10 @@ class TestExtensionManager(gaupol.TestCase):
         gaupol.TestCase.teardown_method(self, method)
 
     def test_setup_extension(self):
-        self.manager.setup_extension("bookmarks")
-        assert self.manager.is_active("bookmarks")
+        self.manager.setup_extension("custom-framerates")
+        assert self.manager.is_active("custom-framerates")
 
     def test_teardown_extension(self):
-        self.manager.setup_extension("bookmarks")
-        self.manager.teardown_extension("bookmarks")
-        assert not self.manager.is_active("bookmarks")
+        self.manager.setup_extension("custom-framerates")
+        self.manager.teardown_extension("custom-framerates")
+        assert not self.manager.is_active("custom-framerates")

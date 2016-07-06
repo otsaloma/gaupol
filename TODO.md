@@ -16,6 +16,7 @@ Gaupol 0.91
 * [x] Add support for IBM273, IBM1125, KOI8-T and KZ1048 character
       encodings (whether these are actually available depends on your
       version of Python)
+* [x] Drop the bookmarks extension
 * [x] Fix Cancel button behaviour when quitting Gaupol by closing the
       main window and having unsaved changes (#14)
 * [x] Fix line length measure em to be narrower [#763589][]

@@ -1,9 +1,0 @@
-<ui>
-  <menubar name="menubar">
-    <menu name="view" action="show_view_menu">
-      <placeholder name="1">
-        <menuitem name="side_pane" action="toggle_side_pane"/>
-      </placeholder>
-    </menu>
-  </menubar>
-</ui>
