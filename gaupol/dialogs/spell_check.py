@@ -249,7 +249,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
         scale = gaupol.util.scale_to_size
-        scale(self._text_view, nchar=55, nlines=5, font="custom")
+        scale(self._text_view, nchar=55, nlines=4, font="custom")
         scale(self._tree_view, nchar=20, nlines=6, font="custom")
         self._entry_handler = self._entry.connect(
             "changed", self._on_entry_changed)
@@ -363,7 +363,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
 
     def _save_geometry(self):
         """Save dialog size."""
-        if not self.is_maximized(): return
+        if self.is_maximized(): return
         gaupol.conf.spell_check.size = list(self.get_size())
 
     def _set_done(self):
