@@ -39,9 +39,6 @@ for module, version in {
 from gi.repository import GLib
 from gi.repository import GObject
 
-GLib.threads_init()
-GObject.threads_init()
-
 with aeidon.util.silent(Exception):
     from gi.repository import Gst
     Gst.init(None)

@@ -37,7 +37,7 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
                              "Editing canceled",
                              "Editing canceled",
                              False,
-                             GObject.PARAM_READWRITE),
+                             GObject.ParamFlags.READWRITE),
 
     }
     __gtype_name__ = "CellTextView"
