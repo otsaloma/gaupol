@@ -231,6 +231,8 @@
               <attribute name="target">FPS_29_970</attribute>
             </item>
           </section>
+          <section id="custom-framerates-placeholder">
+          </section>
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes">_Columns</attribute>

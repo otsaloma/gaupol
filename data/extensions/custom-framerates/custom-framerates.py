@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 import os
-import sys
 
 from aeidon.i18n   import _
 from gi.repository import Gtk
@@ -37,8 +36,11 @@ class AddFramerateDialog(gaupol.BuilderDialog):
         directory = os.path.abspath(os.path.dirname(__file__))
         ui_file_path = os.path.join(directory, "add-framerate-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.OK)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Add"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+        self.set_transient_for(parent)
+        self.set_modal(True)
 
     def _on_response(self, *args):
         """Update spin button before dispatching response."""
@@ -60,6 +62,9 @@ class PreferencesDialog(gaupol.BuilderDialog):
         directory = os.path.abspath(os.path.dirname(__file__))
         ui_file_path = os.path.join(directory, "preferences-dialog.ui")
         gaupol.BuilderDialog.__init__(self, ui_file_path)
+        self.set_default_response(Gtk.ResponseType.CLOSE)
+        self.set_transient_for(parent)
+        self.set_modal(True)
         self._init_toolbar()
         self._init_tree_view(framerates)
         self._remove_button.set_sensitive(False)
@@ -69,16 +74,13 @@ class PreferencesDialog(gaupol.BuilderDialog):
                                      min_nlines=8,
                                      max_nlines=16)
 
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(Gtk.ResponseType.CLOSE)
-
     def get_framerates(self):
         """Return the defined custom framerates."""
         framerates = []
         store = self._tree_view.get_model()
         for i in range(len(store)):
             framerates.append(store[i][0])
-        return tuple(sorted(framerates))
+        return sorted(framerates)
 
     def _get_selected_rows(self):
         """Return a sequence of the selected rows."""
@@ -95,8 +97,8 @@ class PreferencesDialog(gaupol.BuilderDialog):
         # Tool buttons in the UI file are specified as symbolic icons
         # by name, found in adwaita-icon-theme, if missing in another
         # theme fall back to non-symbolic icons.
-        if not (theme.has_icon(self._add_button.get_icon_name()) and
-                theme.has_icon(self._remove_button.get_icon_name())):
+        if not all((theme.has_icon(self._add_button.get_icon_name()),
+                    theme.has_icon(self._remove_button.get_icon_name()))):
             self._add_button.set_icon_name("list-add")
             self._remove_button.set_icon_name("list-remove")
 
@@ -152,109 +154,63 @@ class CustomFrameratesExtension(gaupol.Extension):
 
     def __init__(self):
         """Initialize a :class:`CustomFrameratesExtension` instance."""
-        self._action_group = None
         self.application = None
-        self._conf = None
-        self._framerates = []
-        self._uim_ids = []
-
-    def _clear_attributes(self):
-        """Clear values of attributes."""
-        self._action_group = None
-        self.application = None
-        self._conf = None
-        self._framerates = []
-        self._uim_ids = []
+        self.conf = None
+        self.framerates = []
 
     def _add_framerates(self):
         """Add custom framerates and corresponding UI elements."""
-        self._action_group = Gtk.ActionGroup(name="custom-framerates")
-        self.application.uim.insert_action_group(self._action_group, -1)
-        tooltip = _("Calculate nonnative units with a framerate of {:.3f} fps")
-        directory = os.path.abspath(os.path.dirname(__file__))
-        ui_file_path = os.path.join(directory, "custom-framerates.ui.xml")
-        ui_xml_template = open(ui_file_path, "r").read()
-        self._framerates = []
-        self._uim_ids = []
-        for value in sorted(self._conf.framerates):
+        self.framerates = []
+        menu = self.application.get_menubar_section(
+            "custom-framerates-placeholder")
+        for value in sorted(self.conf.framerates):
             name = "FPS_{:.3f}".format(value).replace(".", "_")
-            if hasattr(aeidon.framerates, name):
-                print("Framerate {:.3f} already exists!".format(value),
-                      file=sys.stderr)
-
-                continue
+            if hasattr(aeidon.framerates, name): continue
             setattr(aeidon.framerates, name, aeidon.EnumerationItem())
             framerate = getattr(aeidon.framerates, name)
             framerate.label = _("{:.3f} fps").format(value)
             framerate.value = float(value)
-            self._framerates.append(framerate)
-            action_name = name.replace("FPS", "show_framerate")
-            action = Gtk.RadioAction(name=action_name,
-                                     label=framerate.label,
-                                     tooltip=tooltip.format(value),
-                                     stock_id=None,
-                                     value=int(framerate))
-
-            group = "show-framerate-23-976"
-            action.join_group(self.application.get_action(group))
-            action.framerate = framerate
-            self._action_group.add_action(action)
-            ui_xml = ui_xml_template.format(name=name.replace("FPS_", ""),
-                                            action=action.get_name())
-
-            uim_id = self.application.uim.add_ui_from_string(ui_xml)
-            self._uim_ids.append(uim_id)
-            gaupol.framerate_actions[framerate] = action.get_name()
-        self.application.uim.ensure_update()
+            self.framerates.append(framerate)
+            with aeidon.util.silent(AttributeError):
+                # Menubar not available when running unit tests.
+                action = "win.set-framerate::{}".format(name)
+                menu.append(framerate.label, action)
 
     def _remove_framerates(self):
         """Remove custom framerates and corresponding UI elements."""
         fallback = aeidon.framerates.FPS_23_976
-        for framerate in reversed(self._framerates):
-            if gaupol.conf.editor.framerate == framerate:
-                gaupol.conf.editor.framerate = fallback
-            if self.application.pages:
-                # Go through all application's pages and reset those set to
-                # the custom framerate back to the default framerate.
-                orig_page = self.application.get_current_page()
-                for page in self.application.pages:
-                    self.application.set_current_page(page)
-                    if page.project.framerate != framerate: next
-                    action = self.application.get_framerate_action(fallback)
-                    action.set_active(True)
-                self.application.set_current_page(orig_page)
-            elif self.application.get_framerate_action(framerate).get_active():
-                # If no pages are open, but the framerate is set to a custom
-                # one, reset back to the default framerate, but without
-                # triggering callbacks that assume there are pages.
-                action = self.application.get_framerate_action(fallback)
-                callback = self.application._on_show_framerate_23_976_changed
-                action.handler_block_by_func(callback)
-                action.set_active(True)
-                action.handler_unblock_by_func(callback)
-            # Remove UI elements created for the custom framerate and finally
-            # remove the custom framerate from its enumeration.
-            del gaupol.framerate_actions[framerate]
-            name = "FPS_{:.3f}".format(framerate.value).replace(".", "_")
-            delattr(aeidon.framerates, name)
-        for uim_id in self._uim_ids:
-            self.application.uim.remove_ui(uim_id)
-        self.application.uim.remove_action_group(self._action_group)
-        self.application.uim.ensure_update()
+        if gaupol.conf.editor.framerate in self.framerates:
+            gaupol.conf.editor.framerate = fallback
+        # Go through all application's pages and reset those set
+        # to a custom framerate back to the default framerate.
+        orig_page = self.application.get_current_page()
+        for page in self.application.pages:
+            if not page.project.framerate in self.framerates: continue
+            self.application.set_current_page(page)
+            action = self.application.get_action("set-framerate")
+            action.activate(str(fallback))
+        self.application.set_current_page(orig_page)
+        for framerate in self.framerates:
+            delattr(aeidon.framerates, str(framerate))
+        with aeidon.util.silent(AttributeError):
+            # Menubar not available when running unit tests.
+            menu = self.application.get_menubar_section(
+                "custom-framerates-placeholder").remove_all()
 
     def setup(self, application):
         """Setup extension for use with `application`."""
         options = dict(framerates=[48.0])
         gaupol.conf.register_extension("custom_framerates", options)
-        self._conf = gaupol.conf.extensions.custom_framerates
+        self.conf = gaupol.conf.extensions.custom_framerates
         self.application = application
+        self.framerates = []
         self._add_framerates()
 
     def show_preferences_dialog(self, parent):
         """Show a dialog to edit list of custom framerates."""
-        dialog = PreferencesDialog(self._conf.framerates, parent)
+        dialog = PreferencesDialog(self.conf.framerates, parent)
         gaupol.util.run_dialog(dialog)
-        self._conf.framerates = list(dialog.get_framerates())
+        self.conf.framerates = list(dialog.get_framerates())
         dialog.destroy()
         self._remove_framerates()
         self._add_framerates()
@@ -262,4 +218,6 @@ class CustomFrameratesExtension(gaupol.Extension):
     def teardown(self, application):
         """End use of extension with `application`."""
         self._remove_framerates()
-        self._clear_attributes()
+        self.application = None
+        self.conf = None
+        self.framerates = []

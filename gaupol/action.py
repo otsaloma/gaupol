@@ -58,6 +58,10 @@ class RadioAction(Action):
     # in Python. For proper instantiation, subclasses need to
     # define __new__, call new and assign to __class__.
 
+    def activate(self, parameter):
+        """Activate action with `parameter`."""
+        return Gio.SimpleAction.activate(self, GLib.Variant("s", parameter))
+
     @staticmethod
     def new(name, parameter_type=GLib.VariantType.new("s")):
         """Return a new radio action."""

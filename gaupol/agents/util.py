@@ -87,5 +87,6 @@ class UtilityAgent(aeidon.Delegate):
     @aeidon.deco.export
     def set_current_page(self, page):
         """Set the currently active page."""
+        if page is None: return
         index = self.pages.index(page)
         self.notebook.set_current_page(index)
