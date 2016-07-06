@@ -24,7 +24,7 @@ class ActivateNextProjectAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "activate-next-project")
         self.accelerators = ["<Control>Page_Down"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         index = application.pages.index(page) + 1
@@ -34,7 +34,7 @@ class ActivatePreviousProjectAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "activate-previous-project")
         self.accelerators = ["<Control>Page_Up"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
@@ -54,14 +54,14 @@ class CloseAllProjectsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "close-all-projects")
         self.accelerators = ["<Shift><Control>W"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.pages)
 
 class MoveTabLeftAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "move-tab-left")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
@@ -69,7 +69,7 @@ class MoveTabLeftAction(gaupol.Action):
 class MoveTabRightAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "move-tab-right")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         index = application.pages.index(page) + 1
@@ -79,14 +79,14 @@ class SaveAllDocumentsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "save-all-documents")
         self.accelerators = ["<Shift><Control>L"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.pages)
 
 class SaveAllDocumentsAsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "save-all-documents-as")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm([x for x in application.pages
                             if x.project.main_file is not None])

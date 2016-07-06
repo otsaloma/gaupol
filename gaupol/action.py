@@ -34,7 +34,7 @@ class Action(Gio.SimpleAction):
         """Initialize an :class:`Action` instance."""
         GObject.GObject.__init__(self, name=name)
         self.accelerators = []
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
 
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`gaupol.AffirmationError` if action cannot be done."""

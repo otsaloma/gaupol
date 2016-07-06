@@ -23,14 +23,14 @@ import gaupol
 class AdjustDurationsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "adjust-durations")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
 class AppendFileAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "append-file")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.project.subtitles) > 0)
@@ -39,7 +39,7 @@ class CheckSpellingAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "check-spelling")
         self.accelerators = ["F7"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(aeidon.util.enchant_available())
@@ -48,14 +48,14 @@ class CheckSpellingAction(gaupol.Action):
 class ConfigureSpellCheckAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "configure-spell-check")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(aeidon.util.enchant_available())
 
 class ConvertFramerateAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "convert-framerate")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -64,7 +64,7 @@ class CorrectTextsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "correct-texts")
         self.accelerators = ["F8"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
@@ -72,7 +72,7 @@ class PreviewAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "preview")
         self.accelerators = ["F5"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.video_path is not None)
@@ -82,7 +82,7 @@ class PreviewAction(gaupol.Action):
 class SelectVideoFileAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "select-video-file")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -91,14 +91,14 @@ class ShiftPositionsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "shift-positions")
         self.accelerators = ["H"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
 class SplitProjectAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "split-project")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.project.subtitles) > 1)
@@ -106,7 +106,7 @@ class SplitProjectAction(gaupol.Action):
 class TransformPositionsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "transform-positions")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.project.subtitles) > 1)

@@ -24,7 +24,7 @@ class CloseProjectAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "close-project")
         self.accelerators = ["<Control>W"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
@@ -32,18 +32,18 @@ class NewProjectAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "new-project")
         self.accelerators = ["<Control>N"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
 
 class OpenMainFilesAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "open-main-files")
         self.accelerators = ["<Control>O"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
 
 class OpenTranslationFileAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "open-translation-file")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
@@ -52,13 +52,13 @@ class QuitAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "quit")
         self.accelerators = ["<Control>Q"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
 
 class SaveMainDocumentAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "save-main-document")
         self.accelerators = ["<Control>S"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
@@ -66,7 +66,7 @@ class SaveMainDocumentAsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "save-main-document-as")
         self.accelerators = ["<Shift><Control>S"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
@@ -74,7 +74,7 @@ class SaveTranslationDocumentAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "save-translation-document")
         self.accelerators = ["<Control>T"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
@@ -82,7 +82,7 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "save-translation-document-as")
         self.accelerators = ["<Shift><Control>T"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 

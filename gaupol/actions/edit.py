@@ -25,13 +25,13 @@ from gi.repository import Gtk
 class EditPreferencesAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "edit-preferences")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
 
 class EditNextValueAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "edit-next-value")
         self.accelerators = ["space"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         row, col = page.view.get_focus()
@@ -46,7 +46,7 @@ class EditValueAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "edit-value")
         self.accelerators = ["Return"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         row, col = page.view.get_focus()
@@ -60,7 +60,7 @@ class EndEarlierAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "end-earlier")
         self.accelerators = ["E"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -70,7 +70,7 @@ class EndLaterAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "end-later")
         self.accelerators = ["R"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -80,7 +80,7 @@ class ExtendSelectionToBeginningAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "extend-selection-to-beginning")
         self.accelerators = ["<Shift><Control>Home"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -90,7 +90,7 @@ class ExtendSelectionToEndAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "extend-selection-to-end")
         self.accelerators = ["<Shift><Control>End"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -100,7 +100,7 @@ class InsertSubtitleAtVideoPositionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "insert-subtitle-at-video-position")
         self.accelerators = ["J"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.player is not None)
@@ -109,7 +109,7 @@ class InsertSubtitlesAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "insert-subtitles")
         self.accelerators = ["I"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         if page.project.subtitles:
@@ -119,7 +119,7 @@ class InvertSelectionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "invert-selection")
         self.accelerators = ["<Control>I"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -128,7 +128,7 @@ class MergeSubtitlesAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "merge-subtitles")
         self.accelerators = ["M"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(selected_rows) > 1)
@@ -139,7 +139,7 @@ class RedoActionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "redo-action")
         self.accelerators = ["<Shift><Control>Z"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.can_redo())
@@ -148,7 +148,7 @@ class RemoveSubtitlesAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "remove-subtitles")
         self.accelerators = ["Delete"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(selected_rows)
@@ -157,7 +157,7 @@ class SelectAllAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "select-all")
         self.accelerators = ["<Control>A"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -166,7 +166,7 @@ class SetEndFromVideoPositionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "set-end-from-video-position")
         self.accelerators = ["K"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.player is not None)
@@ -176,7 +176,7 @@ class SplitSubtitleAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "split-subtitle")
         self.accelerators = ["S"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(selected_rows) == 1)
@@ -185,7 +185,7 @@ class StartEarlierAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "start-earlier")
         self.accelerators = ["Q"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -195,7 +195,7 @@ class StartLaterAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "start-later")
         self.accelerators = ["W"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
@@ -205,7 +205,7 @@ class UndoActionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "undo-action")
         self.accelerators = ["<Control>Z"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.can_undo())

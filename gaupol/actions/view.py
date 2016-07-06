@@ -39,7 +39,7 @@ class SetFramerateAction(gaupol.RadioAction):
         return action
     def __init__(self):
         gaupol.RadioAction.__init__(self, "set-framerate")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(str(gaupol.conf.editor.framerate))
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -52,7 +52,7 @@ class SetLayoutAction(gaupol.RadioAction):
         return action
     def __init__(self):
         gaupol.RadioAction.__init__(self, "set-layout")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(str(gaupol.conf.application_window.layout))
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
@@ -64,7 +64,7 @@ class ToggleDurationColumnAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-duration-column")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(gaupol.fields.DURATION in gaupol.conf.editor.visible_fields)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -76,7 +76,7 @@ class ToggleEndColumnAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-end-column")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(gaupol.fields.END in gaupol.conf.editor.visible_fields)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -88,7 +88,7 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-main-text-column")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(gaupol.fields.MAIN_TEXT in gaupol.conf.editor.visible_fields)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -100,7 +100,7 @@ class ToggleMainToolbarAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-main-toolbar")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
         self.set_state(gaupol.conf.application_window.show_main_toolbar)
 
 class ToggleNumberColumnAction(gaupol.ToggleAction):
@@ -110,7 +110,7 @@ class ToggleNumberColumnAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-number-column")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(gaupol.fields.NUMBER in gaupol.conf.editor.visible_fields)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -122,7 +122,7 @@ class TogglePlayerAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-player")
-        self.action_group = "main-safe"
+        self.action_group = "safe"
         self.set_state(False)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
@@ -134,7 +134,7 @@ class ToggleStartColumnAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-start-column")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(gaupol.fields.START in gaupol.conf.editor.visible_fields)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
@@ -146,7 +146,7 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
         return action
     def __init__(self):
         gaupol.ToggleAction.__init__(self, "toggle-translation-text-column")
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
         self.set_state(gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)

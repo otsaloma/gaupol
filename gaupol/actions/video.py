@@ -24,7 +24,7 @@ class LoadVideoAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "load-video")
         self.accelerators = ["<Control>L"]
-        self.action_group = "main-safe"
+        self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(gaupol.util.gst_available())
         aeidon.util.affirm(page is not None)
@@ -33,7 +33,7 @@ class PlayPauseAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "play-pause")
         self.accelerators = ["P"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
@@ -41,7 +41,7 @@ class PlaySelectionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "play-selection")
         self.accelerators = ["O"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(selected_rows)
@@ -50,7 +50,7 @@ class SeekBackwardAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "seek-backward")
         self.accelerators = ["<Shift><Ctrl>Left"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
@@ -58,7 +58,7 @@ class SeekForwardAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "seek-forward")
         self.accelerators = ["<Shift><Ctrl>Right"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
@@ -66,7 +66,7 @@ class SeekNextAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "seek-next")
         self.accelerators = ["<Ctrl>Right"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
@@ -74,7 +74,7 @@ class SeekPreviousAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "seek-previous")
         self.accelerators = ["<Ctrl>Left"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
@@ -82,7 +82,7 @@ class SeekSelectionEndAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "seek-selection-end")
         self.accelerators = ["<Ctrl>Down"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(selected_rows)
@@ -91,7 +91,7 @@ class SeekSelectionStartAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "seek-selection-start")
         self.accelerators = ["<Ctrl>Up"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(selected_rows)

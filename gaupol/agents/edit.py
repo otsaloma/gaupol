@@ -363,7 +363,7 @@ class EditAgent(aeidon.Delegate):
         """Set enabled states of unsafe actions."""
         for name in self.window.list_actions():
             action = self.get_action(name)
-            if action.action_group == "main-unsafe":
+            if action.action_group == "unsafe":
                 action.set_enabled(enabled)
 
     def _sync_clipboards(self, page):

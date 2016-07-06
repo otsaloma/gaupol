@@ -35,7 +35,7 @@ class VolumeDownAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "volume-down")
         self.accelerators = ["<Ctrl>minus", "<Ctrl>KP_Subtract"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
@@ -43,7 +43,7 @@ class VolumeUpAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "volume-up")
         self.accelerators = ["<Ctrl>plus", "<Ctrl>KP_Add"]
-        self.action_group = "main-unsafe"
+        self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
