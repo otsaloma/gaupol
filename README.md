@@ -1,6 +1,7 @@
 Gaupol
 ======
 
+[![Build Status](https://travis-ci.org/otsaloma/gaupol.svg)](https://travis-ci.org/otsaloma/gaupol)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/otsaloma/gaupol)
 
 Gaupol is an editor for text-based subtitle files. It supports multiple

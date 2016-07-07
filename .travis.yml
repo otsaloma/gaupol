@@ -1,0 +1,16 @@
+language: python
+python:
+  - 3.2
+  - 3.3
+  - 3.4
+  - 3.5
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y gettext gir1.2-gtk-3.0 intltool python3-gi xvfb
+virtualenv:
+  system_site_packages: true
+script:
+  # XXX: Travis CI has GTK+ 3.4, which is too old to run unit tests.
+  # - xvfb-run py.test aeidon gaupol
+  - python setup.py clean
+  - python setup.py install --prefix=/tmp/usr
