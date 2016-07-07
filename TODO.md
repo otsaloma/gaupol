@@ -31,8 +31,9 @@ Gaupol 0.91
 * [ ] Move web pages to <http://otsaloma.io/gaupol/>
 * [x] Move releases to <https://github.com/otsaloma/gaupol/releases>
 * [x] Move bug tracker to <https://github.com/otsaloma/gaupol/issues>
-* [ ] Move documentation to <https://github.com/otsaloma/gaupol/tree/master/doc>
+* [x] Move documentation to <https://github.com/otsaloma/gaupol/tree/master/doc>
 * [x] Close mailing lists, use Gitter instead: <https://gitter.im/otsaloma/gaupol>
+* [x] Use Transifex for translations: <http://www.transifex.com/otsaloma/gaupol/>
 * [x] Update AppData file
 * [x] Bump GTK+ dependency to ≥ 3.12
 * [x] Bump PyGObject dependency to ≥ 3.12

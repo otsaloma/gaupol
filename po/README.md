@@ -1,38 +1,19 @@
 Translating Gaupol
 ==================
 
-To avoid doing redundant work, first check the latest list of existing
-translations at the [head of the master branch][1].
+Translations are available at [Transifex][1]. Please use that to add and
+update translations.
 
- [1]: http://github.com/otsaloma/gaupol/tree/master/po
+To try your translation, get the gaupol source code from [GitHub][2],
+download the translation from Transifex, place it in the `po` directory
+and compile that translation to the `locale` directory (which does not
+exist by default).
 
-To try your translation in the source directory, you can compile it to
-the `locale` directory (which does not exist by default). To see a fully
-translated user interface, also desktop-style data files need to be
-"compiled", which is most conveniently done using `setup.py`'s
-`install_data` command.
+```bash
+mkdir -p locale/xx/LC_MESSAGES
+msgfmt -cv po/xx.po -o locale/xx/LC_MESSAGES/gaupol.mo
+LANG=xx bin/gaupol
+```
 
-    mkdir -p locale/XX/LC_MESSAGES
-    msgfmt -cv po/XX.po -o locale/XX/LC_MESSAGES/gaupol.mo
-    python3 setup.py install_data -d /tmp/gaupol
-    python3 bin/gaupol
-
-Submitting Your Translation
-===========================
-
-A script has been written to check translation files for some common
-potential errors. You can use it to check your translation using the
-following command.
-
-    python3 tools/check-translations [XX...]
-
-When done, send your translation by email to <otsaloma@iki.fi>, or,
-if you find it more convenient, fork the repository on GitHub and send
-a pull request.
-
-Upcoming releases are announced on the [gaupol-i18n][2] mailing list.
-Subscribe to this list if you want to keep updating your translation
-prior to new releases. You can also use this list to ask questions
-or report problems related to translating.
-
- [2]: http://mail.gna.org/listinfo/gaupol-i18n/
+[1]: http://www.transifex.com/otsaloma/gaupol/
+[2]: http://github.com/otsaloma/gaupol
