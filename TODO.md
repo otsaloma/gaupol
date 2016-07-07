@@ -7,6 +7,7 @@ Gaupol 0.91
 * [x] Add mpv for preview with precise seek (`--hr-seek=yes`)
 * [x] Make mpv the default preview video player on non-Windows systems
       and set the default preview offset to one second
+* [x] Make seek length configurable in the preferences dialog
 * [x] Add find and replace to the toolbar
 * [x] Have both Ctrl+F and Ctrl+H open the find and replace dialog
 * [x] Have both Ctrl++, Ctrl+- and numpad equivalents control volume

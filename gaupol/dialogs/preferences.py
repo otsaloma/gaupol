@@ -477,6 +477,7 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
     """Video preferences page."""
 
     _widgets = (
+        "video_seek_spin",
         "video_subtitle_bg_check",
         "video_subtitle_color_button",
         "video_subtitle_font_button",
@@ -491,8 +492,7 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
         self._set_attributes(self._widgets, "video_")
         self.application = application
         self.conf = gaupol.conf.video_player
-        self._init_subtitle_values()
-        self._init_time_values()
+        self._init_values()
 
     def _get_custom_font(self, font):
         """Return custom font as string."""
@@ -502,23 +502,25 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
         font_desc.merge(custom_font_desc, True)
         return font_desc.to_string()
 
-    def _init_subtitle_values(self):
-        """Initialize default values for subtitle widgets."""
+    def _init_values(self):
+        """Initialize default values for widgets."""
+        font = self._get_custom_font(self.conf.subtitle_font)
+        self._subtitle_font_button.set_font_name(font)
+        font = self._get_custom_font(self.conf.time_font)
+        self._time_font_button.set_font_name(font)
         self._subtitle_bg_check.set_active(self.conf.subtitle_background)
         color = gaupol.util.hex_to_rgba(self.conf.subtitle_color)
         color.alpha = self.conf.subtitle_alpha
         self._subtitle_color_button.set_rgba(color)
-        font = self._get_custom_font(self.conf.subtitle_font)
-        self._subtitle_font_button.set_font_name(font)
-
-    def _init_time_values(self):
-        """Initialize default values for time widgets."""
         self._time_bg_check.set_active(self.conf.time_background)
         color = gaupol.util.hex_to_rgba(self.conf.time_color)
         color.alpha = self.conf.time_alpha
         self._time_color_button.set_rgba(color)
-        font = self._get_custom_font(self.conf.time_font)
-        self._time_font_button.set_font_name(font)
+        self._seek_spin.set_value(self.conf.seek_length)
+
+    def _on_seek_spin_value_changed(self, spin_button):
+        """Save seek length."""
+        self.conf.seek_length = spin_button.get_value()
 
     def _on_subtitle_bg_check_toggled(self, check_button):
         """Save subtitle background use."""
