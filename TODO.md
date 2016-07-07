@@ -23,6 +23,8 @@ Gaupol 0.91
 * [x] Fix line length measure em to be narrower [#763589][]
 * [x] Have the text view right-click spell-check language menu
       set the language permanently
+* [x] Don't show the "Use Shift+Return for line-break" help message
+      if it's likely to overlap with the text being edited
 * [x] Only force theme variant if `dark_theme` in config file is
       `true`, thus respecting any global settings [#753315][]
 * [x] Make `GTK_THEME=Adwaita:dark gaupol` work correctly

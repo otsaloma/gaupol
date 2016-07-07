@@ -348,7 +348,11 @@ class EditAgent(aeidon.Delegate):
         page = self.get_current_page()
         col = page.view.get_columns().index(column)
         if not page.view.is_text_column(col): return
-        self.show_message(_("Use Shift+Return for line-break"))
+        start, end = page.view.get_visible_range()
+        end = gaupol.util.tree_path_to_row(end)
+        if gaupol.util.tree_path_to_row(path) < end - 1:
+            # Don't show help text if it would overlap with text being edited.
+            self.show_message(_("Use Shift+Return for line-break"))
 
     @aeidon.deco.export
     def redo(self, count=1):
