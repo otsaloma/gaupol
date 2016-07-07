@@ -1,3 +1,6 @@
+aeidon/test/test_countries.py
 aeidon/test/test_encodings.py
+aeidon/test/test_languages.py
 aeidon/test/test_locales.py
+aeidon/test/test_scripts.py
 gaupol/test/test_page.py

@@ -1,66 +1,32 @@
-# Spanish translation of gaupol.
-# Copyright (C) 2005-2014 Osmo Salomaa.
-# This file is distributed under the same license as the gaupol package.
-# Miguel Latorre <kuan@graffiti.net>, 2006.
-# Carlos Mella <cmellib@gmail.com>, 2010-2014.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gaupol 0.28\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-30 00:46+0200\n"
-"PO-Revision-Date: 2014-11-29 22:48-0300\n"
-"Last-Translator: Carlos Mella <cmellib@gmail.com>\n"
-"Language-Team: Spanish\n"
+"POT-Creation-Date: 2016-07-07 04:37+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
+"Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:1
-msgid "Add Bookmark"
-msgstr "Añadir marcador"
-
-#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:2
-#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
-#: ../data/ui/duration-adjust-dialog.ui.h:2 ../data/ui/encoding-dialog.ui.h:2
-#: ../data/ui/framerate-convert-dialog.ui.h:2 ../data/ui/insert-dialog.ui.h:2
-#: ../data/ui/multi-close-dialog.ui.h:2 ../data/ui/multi-save-dialog.ui.h:2
-#: ../data/ui/position-shift-dialog.ui.h:2
-#: ../data/ui/position-transform-dialog.ui.h:2 ../data/ui/split-dialog.ui.h:2
-#: ../gaupol/agents/close.py:92 ../gaupol/agents/close.py:123
-#: ../gaupol/agents/open.py:429 ../gaupol/agents/open.py:446
-#: ../gaupol/agents/open.py:463 ../gaupol/dialogs/multi_save.py:205
-#: ../gaupol/dialogs/open.py:49 ../gaupol/dialogs/save.py:56
-#: ../gaupol/dialogs/text_edit.py:48 ../gaupol/dialogs/video.py:40
-msgid "_Cancel"
-msgstr "_Cancelar"
-
-#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:3
-#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
-#: ../data/ui/spell-check-dialog.ui.h:10
-msgid "_Add"
-msgstr "Aña_dir"
-
-#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:4
-#: ../data/ui/position-transform-dialog.ui.h:5
-msgid "_Subtitle:"
-msgstr "_Subtítulo:"
-
-#: ../data/extensions/bookmarks/add-bookmark-dialog.ui.h:5
-msgid "_Description:"
-msgstr "_Descripción:"
-
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
 msgstr "Añadir frecuencia de fotogramas"
 
-#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:4
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
 msgid "_Framerate:"
 msgstr "_Frecuencia de fotogramas:"
 
-#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:5
+#: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
 msgid "fps"
 msgstr "fps"
 
@@ -69,157 +35,133 @@ msgid "Framerates"
 msgstr "Frecuencias de fotogramas"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
-#: ../data/ui/debug-dialog.ui.h:2 ../data/ui/language-dialog.ui.h:2
-#: ../data/ui/preferences-dialog.ui.h:3 ../data/ui/search-dialog.ui.h:3
-#: ../data/ui/spell-check-dialog.ui.h:2 ../gaupol/actions/file.py:68
-msgid "_Close"
-msgstr "_Cerrar"
-
-#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:3
 msgid "Add"
 msgstr "Añadir"
 
-#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:4
-#: ../gaupol/actions/edit.py:363
+#: ../data/extensions/custom-framerates/preferences-dialog.ui.h:3
+#: ../gaupol/application.py:263
 msgid "Remove"
 msgstr "Eliminar"
 
-#: ../data/ui/debug-dialog.ui.h:1 ../gaupol/actions/file.py:186
-msgid "_Quit"
-msgstr "_Salir"
+#: ../data/ui/columns-popup.ui.h:1 ../data/ui/menubar.ui.h:49
+msgid "_No."
+msgstr "_Nº"
 
-#: ../data/ui/debug-dialog.ui.h:3
-msgid "Something went wrong"
-msgstr "Algo salió mal"
+#: ../data/ui/columns-popup.ui.h:2 ../data/ui/menubar.ui.h:50
+msgid "_Start"
+msgstr "_Inicio"
 
-#: ../data/ui/debug-dialog.ui.h:4
-msgid ""
-"You have probably discovered a bug. Please report it by providing the above "
-"information and a description of what you were doing."
-msgstr ""
-"Probablemente descubrió un error. Por favor informe de esto describiendo la "
-"tarea que se encontraba realizando, y adjunte la información arriba "
-"presentada."
+#: ../data/ui/columns-popup.ui.h:3 ../data/ui/menubar.ui.h:51
+msgid "_End"
+msgstr "_Fin"
+
+#: ../data/ui/columns-popup.ui.h:4 ../data/ui/menubar.ui.h:52
+msgid "_Duration"
+msgstr "_Duración"
+
+#: ../data/ui/columns-popup.ui.h:5 ../data/ui/menubar.ui.h:53
+msgid "_Text"
+msgstr "_Texto"
+
+#: ../data/ui/columns-popup.ui.h:6 ../data/ui/menubar.ui.h:54
+msgid "T_ranslation"
+msgstr "T_raducción"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:1
 msgid "Adjust Durations"
 msgstr "Ajustar duración"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:3
-msgid "_Adjust"
-msgstr "_Ajustar"
-
-#: ../data/ui/duration-adjust-dialog.ui.h:4
+#: ../data/ui/duration-adjust-dialog.ui.h:2
 msgid "Theoretic Duration"
 msgstr "Duración teórica"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:5
+#: ../data/ui/duration-adjust-dialog.ui.h:3
 msgid "_Reading speed:"
 msgstr "_Velocidad de lectura:"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:6
+#: ../data/ui/duration-adjust-dialog.ui.h:4
 msgid "characters per second"
 msgstr "caracteres por segundo"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:7
+#: ../data/ui/duration-adjust-dialog.ui.h:5
 msgid "_Lengthen duration to match reading speed"
 msgstr "Au_mentar duración hasta alcanzar la velocidad de lectura"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:8
+#: ../data/ui/duration-adjust-dialog.ui.h:6
 msgid "_Shorten duration to match reading speed"
 msgstr "_Reducir duración hasta alcanzar la velocidad de lectura"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:9
+#: ../data/ui/duration-adjust-dialog.ui.h:7
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:1
 msgid "Limits"
 msgstr "Límites"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:10
+#: ../data/ui/duration-adjust-dialog.ui.h:8
 msgid "_Minimum duration:"
 msgstr "Duración mí_nima:"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:11
+#: ../data/ui/duration-adjust-dialog.ui.h:9
 msgid "Ma_ximum duration:"
 msgstr "Duración má_xima:"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:12
+#: ../data/ui/duration-adjust-dialog.ui.h:10
 msgid "_Gap between subtitles:"
 msgstr "_Pausa entre subtítulos:"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:13
+#: ../data/ui/duration-adjust-dialog.ui.h:11
 msgid "s_econds"
 msgstr "segun_dos"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:14
+#: ../data/ui/duration-adjust-dialog.ui.h:12
 msgid "seco_nds"
 msgstr "segund_os"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:15
+#: ../data/ui/duration-adjust-dialog.ui.h:13
 msgid "secon_ds"
 msgstr "segundo_s"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:16
-#: ../data/ui/framerate-convert-dialog.ui.h:7
-#: ../data/ui/language-dialog.ui.h:7 ../data/ui/position-shift-dialog.ui.h:7
-#: ../data/ui/position-transform-dialog.ui.h:13
-#: ../data/ui/search-dialog.ui.h:16
+#: ../data/ui/duration-adjust-dialog.ui.h:14
+#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
+#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/position-transform-dialog.ui.h:11
+#: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
 msgid "Subtitles"
 msgstr "Subtítulos"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:17
+#: ../data/ui/duration-adjust-dialog.ui.h:15
 msgid "Adj_ust selected subtitles"
 msgstr "Ajustar los subtítulos s_eleccionados"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:18
+#: ../data/ui/duration-adjust-dialog.ui.h:16
 msgid "Adjus_t current project"
 msgstr "Ajustar en el proyecto act_ual"
 
-#: ../data/ui/duration-adjust-dialog.ui.h:19
+#: ../data/ui/duration-adjust-dialog.ui.h:17
 msgid "Adjust all _open projects"
 msgstr "Ajustar en _todos los proyectos abiertos"
-
-#: ../data/ui/encoding-dialog.ui.h:1 ../data/ui/preferences-dialog.ui.h:4
-msgid "Character Encodings"
-msgstr "Codificación de caracteres"
-
-#: ../data/ui/encoding-dialog.ui.h:3 ../data/ui/preview-error-dialog.ui.h:1
-#: ../gaupol/agents/open.py:386 ../gaupol/agents/open.py:396
-#: ../gaupol/agents/open.py:404 ../gaupol/agents/open.py:414
-#: ../gaupol/agents/preview.py:112 ../gaupol/agents/preview.py:121
-#: ../gaupol/agents/preview.py:129 ../gaupol/agents/save.py:205
-#: ../gaupol/agents/save.py:213 ../gaupol/assistants.py:617
-#: ../gaupol/dialogs/preferences.py:245 ../gaupol/dialogs/search.py:538
-#: ../gaupol/dialogs/search.py:546 ../gaupol/dialogs/spell_check.py:382
-#: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:254
-msgid "_OK"
-msgstr "_Aceptar"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:1
 msgid "Convert Framerate"
 msgstr "Cambiar framerate"
 
-#: ../data/ui/framerate-convert-dialog.ui.h:3
-msgid "Co_nvert"
-msgstr "Co_nvertir"
-
-#: ../data/ui/framerate-convert-dialog.ui.h:4
+#: ../data/ui/framerate-convert-dialog.ui.h:2
 msgid "Framerate"
 msgstr "Frecuencia de fotogramas"
 
-#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:3
 msgid "_Input:"
 msgstr "_Entrada:"
 
-#: ../data/ui/framerate-convert-dialog.ui.h:6
+#: ../data/ui/framerate-convert-dialog.ui.h:4
 msgid "_Output:"
 msgstr "_Salida:"
 
-#: ../data/ui/framerate-convert-dialog.ui.h:8
+#: ../data/ui/framerate-convert-dialog.ui.h:6
 msgid "Convert c_urrent project"
 msgstr "Cambiar en el proyecto act_ual"
 
-#: ../data/ui/framerate-convert-dialog.ui.h:9
+#: ../data/ui/framerate-convert-dialog.ui.h:7
 msgid "Convert _all open projects"
 msgstr "Cambiar en _todos los proyectos abiertos"
 
@@ -227,15 +169,11 @@ msgstr "Cambiar en _todos los proyectos abiertos"
 msgid "Insert Subtitles"
 msgstr "Insertar subtítulos"
 
-#: ../data/ui/insert-dialog.ui.h:3
-msgid "_Insert"
-msgstr "_Insertar"
-
-#: ../data/ui/insert-dialog.ui.h:4 ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/insert-dialog.ui.h:2 ../data/ui/position-shift-dialog.ui.h:3
 msgid "_Amount:"
 msgstr "C_antidad:"
 
-#: ../data/ui/insert-dialog.ui.h:5
+#: ../data/ui/insert-dialog.ui.h:3
 msgid "_Position:"
 msgstr "_Posición:"
 
@@ -243,85 +181,453 @@ msgstr "_Posición:"
 msgid "Configure Spell-Check"
 msgstr "Configurar corrector ortográfico"
 
-#: ../data/ui/language-dialog.ui.h:3
+#: ../data/ui/language-dialog.ui.h:2
 msgid "Language"
 msgstr "Idioma"
 
-#: ../data/ui/language-dialog.ui.h:4 ../data/ui/search-dialog.ui.h:13
+#: ../data/ui/language-dialog.ui.h:3 ../data/ui/search-dialog.ui.h:10
 msgid "Columns"
 msgstr "Columnas"
 
-#: ../data/ui/language-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:4
 msgid "Check _text column"
 msgstr "Comprobar la columna t_exto"
 
-#: ../data/ui/language-dialog.ui.h:6
+#: ../data/ui/language-dialog.ui.h:5
 msgid "Check t_ranslation column"
 msgstr "Comprobar la columna t_raducción"
 
-#: ../data/ui/language-dialog.ui.h:8
+#: ../data/ui/language-dialog.ui.h:7
 msgid "Check c_urrent project"
 msgstr "Comprobar el proyecto act_ual"
 
-#: ../data/ui/language-dialog.ui.h:9
+#: ../data/ui/language-dialog.ui.h:8
 msgid "Check _all open projects"
 msgstr "Comprobar _todos los proyectos abiertos"
 
-#: ../data/ui/multi-close-dialog.ui.h:1 ../gaupol/agents/close.py:91
-#: ../gaupol/agents/close.py:122
-msgid "Close _Without Saving"
-msgstr "Cerrar _sin guardar"
+#: ../data/ui/menubar.ui.h:1
+msgid "_File"
+msgstr "_Archivo"
 
-#: ../data/ui/multi-close-dialog.ui.h:3 ../data/ui/multi-save-dialog.ui.h:3
-#: ../gaupol/actions/file.py:237 ../gaupol/agents/close.py:93
-#: ../gaupol/agents/close.py:124 ../gaupol/agents/open.py:464
-#: ../gaupol/dialogs/save.py:57
+#: ../data/ui/menubar.ui.h:2
+msgid "_New"
+msgstr "_Nuevo"
+
+#: ../data/ui/menubar.ui.h:3
+msgid "_Open…"
+msgstr "_Abrir…"
+
+#: ../data/ui/menubar.ui.h:4
+msgid "Open _Translation…"
+msgstr "Abrir _traducción…"
+
+#: ../data/ui/menubar.ui.h:5
+msgid "Open _Recent"
+msgstr "Abrir _reciente"
+
+#: ../data/ui/menubar.ui.h:6
+msgid "Open R_ecent Translation"
+msgstr "Abrir traducción rec_iente"
+
+#: ../data/ui/menubar.ui.h:7 ../gaupol/agents/close.py:72
+#: ../gaupol/agents/open.py:377 ../gaupol/dialogs/multi_close.py:55
+#: ../gaupol/dialogs/multi_save.py:84 ../gaupol/dialogs/save.py:74
 msgid "_Save"
 msgstr "_Guardar"
 
-#: ../data/ui/multi-close-dialog.ui.h:4
-msgid "Save changes to documents before closing?"
-msgstr "¿Desea guardar los cambios en los documentos antes de salir?"
+#: ../data/ui/menubar.ui.h:8
+msgid "Save _As…"
+msgstr "Gu_ardar como…"
 
-#: ../data/ui/multi-close-dialog.ui.h:5
-msgid "Select the _main documents you want to save:"
-msgstr "Seleccione los docu_mentos que quiera guardar:"
+#: ../data/ui/menubar.ui.h:9
+msgid "Save Trans_lation"
+msgstr "Guardar tra_ducción"
 
-#: ../data/ui/multi-close-dialog.ui.h:6
-msgid "Select the _translation documents you want to save:"
-msgstr "Seleccione los documentos de _traducción que quiera guardar:"
+#: ../data/ui/menubar.ui.h:10
+msgid "Save Translat_ion As…"
+msgstr "Guardar traducción c_omo…"
 
-#: ../data/ui/multi-close-dialog.ui.h:7 ../gaupol/agents/close.py:89
-#: ../gaupol/agents/close.py:120 ../gaupol/agents/open.py:460
-msgid "If you don't save, changes will be permanently lost."
-msgstr "Si no guarda, todos los cambios se perderán."
+#: ../data/ui/menubar.ui.h:11 ../data/ui/tab-popup.ui.h:3
+#: ../gaupol/dialogs/debug.py:54 ../gaupol/dialogs/preview_error.py:45
+msgid "_Close"
+msgstr "_Cerrar"
+
+#: ../data/ui/menubar.ui.h:12 ../gaupol/dialogs/debug.py:53
+msgid "_Quit"
+msgstr "_Salir"
+
+#: ../data/ui/menubar.ui.h:13 ../data/ui/spell-check-dialog.ui.h:4
+msgid "_Edit"
+msgstr "_Editar"
+
+#: ../data/ui/menubar.ui.h:14
+msgid "_Undo"
+msgstr "_Deshacer"
+
+#: ../data/ui/menubar.ui.h:15
+msgid "_Redo"
+msgstr "_Rehacer"
+
+#: ../data/ui/menubar.ui.h:16
+msgid "_Edit Cell"
+msgstr "_Editar celda"
+
+#: ../data/ui/menubar.ui.h:17
+msgid "Edit _Next Cell"
+msgstr "Edi_tar la siguiente celda"
+
+#: ../data/ui/menubar.ui.h:18
+msgid "Stretc_h"
+msgstr ""
+
+#: ../data/ui/menubar.ui.h:19
+msgid "_Start Earlier"
+msgstr "_Iniciar antes"
+
+#: ../data/ui/menubar.ui.h:20
+msgid "S_tart Later"
+msgstr "I_niciar después"
+
+#: ../data/ui/menubar.ui.h:21
+msgid "E_nd Earlier"
+msgstr "_Finalizar antes"
+
+#: ../data/ui/menubar.ui.h:22
+msgid "En_d Later"
+msgstr "Fin_alizar después"
+
+#: ../data/ui/menubar.ui.h:23
+msgid "Set En_d From Video Position"
+msgstr "Definir posición _final según la posición del vídeo"
+
+#: ../data/ui/menubar.ui.h:24 ../data/ui/view-popup.ui.h:1
+msgid "_Split Subtitle"
+msgstr "Dividir _subtítulo"
+
+#: ../data/ui/menubar.ui.h:25 ../data/ui/view-popup.ui.h:2
+msgid "_Merge Subtitles"
+msgstr "Co_mbinar subtítulos"
+
+#: ../data/ui/menubar.ui.h:26 ../data/ui/view-popup.ui.h:3
+msgid "_Insert Subtitles…"
+msgstr "_Insertar subtítulos…"
+
+#: ../data/ui/menubar.ui.h:27
+msgid "Inser_t Subtitle At Video Position"
+msgstr "Insertar subtítulo según la posición del _vídeo"
+
+#: ../data/ui/menubar.ui.h:28 ../data/ui/view-popup.ui.h:4
+msgid "Rem_ove Subtitles"
+msgstr "E_liminar subtítulos"
+
+#: ../data/ui/menubar.ui.h:29
+msgid "Sele_ction"
+msgstr "Sele_cción"
+
+#: ../data/ui/menubar.ui.h:30
+msgid "Select _All"
+msgstr "Seleccionar _todo"
+
+#: ../data/ui/menubar.ui.h:31
+msgid "_Invert Selection"
+msgstr "I_nvertir selección"
+
+#: ../data/ui/menubar.ui.h:32
+msgid "Extend To _Beginning"
+msgstr "Extender desde el _inicio"
+
+#: ../data/ui/menubar.ui.h:33
+msgid "Extend To _End"
+msgstr "Extender hasta el _final"
+
+#: ../data/ui/menubar.ui.h:34
+msgid "_Preferences"
+msgstr "Prefere_ncias"
+
+#: ../data/ui/menubar.ui.h:35
+msgid "_View"
+msgstr "_Ver"
+
+#: ../data/ui/menubar.ui.h:36
+msgid "Tool_bar"
+msgstr "Barra de _herramientas"
+
+#: ../data/ui/menubar.ui.h:37
+msgid "_Video Player"
+msgstr "Ví_deo"
+
+#: ../data/ui/menubar.ui.h:38
+msgid "_Layout"
+msgstr "Disp_osición"
+
+#: ../data/ui/menubar.ui.h:39
+msgid "_Horizontal"
+msgstr "_Horizontal"
+
+#: ../data/ui/menubar.ui.h:40
+msgid "_Vertical"
+msgstr "_Vertical"
+
+#: ../data/ui/menubar.ui.h:41
+msgid "_Times"
+msgstr "_Tiempos"
+
+#: ../data/ui/menubar.ui.h:42
+msgid "_Frames"
+msgstr "_Fotogramas"
+
+#: ../data/ui/menubar.ui.h:43
+msgid "F_ramerate"
+msgstr "F_recuencia de fotogramas"
+
+#: ../data/ui/menubar.ui.h:44
+msgid "2_3.976 fps"
+msgstr "2_3,976 fps"
+
+#: ../data/ui/menubar.ui.h:45
+msgid "2_4.000 fps"
+msgstr "2_4,000 fps"
+
+#: ../data/ui/menubar.ui.h:46
+msgid "2_5.000 fps"
+msgstr "2_5,000 fps"
+
+#: ../data/ui/menubar.ui.h:47
+msgid "2_9.970 fps"
+msgstr "2_9,970 fps"
+
+#: ../data/ui/menubar.ui.h:48
+msgid "_Columns"
+msgstr "_Columnas"
+
+#: ../data/ui/menubar.ui.h:55
+msgid "Cu_t"
+msgstr "Cor_tar"
+
+#: ../data/ui/menubar.ui.h:56
+msgid "_Copy"
+msgstr "_Copiar"
+
+#: ../data/ui/menubar.ui.h:57
+msgid "_Paste"
+msgstr "_Pegar"
+
+#: ../data/ui/menubar.ui.h:58
+msgid "Cl_ear"
+msgstr "_Borrar"
+
+#: ../data/ui/menubar.ui.h:59
+msgid "_Find And Replace…"
+msgstr "Buscar y _reemplazar…"
+
+#: ../data/ui/menubar.ui.h:60 ../data/ui/search-dialog.ui.h:3
+msgid "Find _Next"
+msgstr "Buscar _siguiente"
+
+#: ../data/ui/menubar.ui.h:61
+msgid "Find Pre_vious"
+msgstr "Buscar _anterior"
+
+#: ../data/ui/menubar.ui.h:62
+msgid "_Italic"
+msgstr "Curs_iva"
+
+#: ../data/ui/menubar.ui.h:63
+msgid "_Dialogue"
+msgstr "_Diálogo"
+
+#: ../data/ui/menubar.ui.h:64
+msgid "Ca_se"
+msgstr "Capitali_zación"
+
+#: ../data/ui/menubar.ui.h:65
+msgid "_Title"
+msgstr "_Título"
+
+#: ../data/ui/menubar.ui.h:66
+msgid "_Sentence"
+msgstr "_Frase"
+
+#: ../data/ui/menubar.ui.h:67
+msgid "_Upper"
+msgstr "M_ayúsculas"
+
+#: ../data/ui/menubar.ui.h:68
+msgid "_Lower"
+msgstr "M_inúsculas"
+
+#: ../data/ui/menubar.ui.h:69
+msgid "Vi_deo"
+msgstr "Vi_deo"
+
+#: ../data/ui/menubar.ui.h:70
+msgid "_Load Video…"
+msgstr "Abrir _vídeo…"
+
+#: ../data/ui/menubar.ui.h:71 ../gaupol/agents/video.py:65
+msgid "_Play/Pause"
+msgstr "_Reproducir o pausar"
+
+#: ../data/ui/menubar.ui.h:72 ../data/ui/view-popup.ui.h:5
+msgid "Play _Selection"
+msgstr "Reproducir sele_cción"
+
+#: ../data/ui/menubar.ui.h:73 ../gaupol/agents/video.py:73
+msgid "Seek _Previous"
+msgstr "Saltar al _anterior"
+
+#: ../data/ui/menubar.ui.h:74 ../gaupol/agents/video.py:79
+msgid "Seek _Next"
+msgstr "Saltar al _siguiente"
+
+#: ../data/ui/menubar.ui.h:75 ../gaupol/agents/video.py:86
+msgid "Seek _Backward"
+msgstr "Saltar hacia a_trás"
+
+#: ../data/ui/menubar.ui.h:76 ../gaupol/agents/video.py:92
+msgid "Seek _Forward"
+msgstr "Saltar hacia a_delante"
+
+#: ../data/ui/menubar.ui.h:77 ../data/ui/view-popup.ui.h:6
+msgid "S_eek Selection Start"
+msgstr "Saltar al _inicio de la selección"
+
+#: ../data/ui/menubar.ui.h:78
+msgid "See_k Selection End"
+msgstr "Saltar al _fin de la selección"
+
+#: ../data/ui/menubar.ui.h:79
+msgid "_Audio"
+msgstr "Audi_o"
+
+#: ../data/ui/menubar.ui.h:80
+msgid "_Language"
+msgstr "_Idioma"
+
+#: ../data/ui/menubar.ui.h:81
+msgid "Volume _Down"
+msgstr "_Bajar volumen"
+
+#: ../data/ui/menubar.ui.h:82
+msgid "Volume _Up"
+msgstr "_Subir volumen"
+
+#: ../data/ui/menubar.ui.h:83
+msgid "T_ools"
+msgstr "_Herramientas"
+
+#: ../data/ui/menubar.ui.h:84
+#: ../data/ui/text-assistant/confirmation-page.ui.h:4
+#: ../data/ui/view-popup.ui.h:7
+msgid "_Preview"
+msgstr "_Vista previa"
+
+#: ../data/ui/menubar.ui.h:85
+msgid "Select _Video…"
+msgstr "Seleccionar _vídeo…"
+
+#: ../data/ui/menubar.ui.h:86
+msgid "_Check Spelling"
+msgstr "Comprobar _ortografía"
+
+#: ../data/ui/menubar.ui.h:87
+msgid "Co_nfigure Spell-check…"
+msgstr "_Configurar corrector ortográfico…"
+
+#: ../data/ui/menubar.ui.h:88
+msgid "C_orrect Texts…"
+msgstr "Corregir _texto…"
+
+#: ../data/ui/menubar.ui.h:89
+msgid "_Shift Positions…"
+msgstr "_Desplazar posiciones…"
+
+#: ../data/ui/menubar.ui.h:90
+msgid "_Transform Positions…"
+msgstr "Ajustar po_siciones…"
+
+#: ../data/ui/menubar.ui.h:91
+msgid "Adjust _Durations…"
+msgstr "Ajustar _duraciones…"
+
+#: ../data/ui/menubar.ui.h:92
+msgid "Convert _Framerate…"
+msgstr "Cambiar _frecuencia de fotogramas…"
+
+#: ../data/ui/menubar.ui.h:93
+msgid "_Append File…"
+msgstr "_Añadir desde archivo…"
+
+#: ../data/ui/menubar.ui.h:94
+msgid "Spli_t Project…"
+msgstr "D_ividir proyecto…"
+
+#: ../data/ui/menubar.ui.h:95
+msgid "_Projects"
+msgstr "_Proyectos"
+
+#: ../data/ui/menubar.ui.h:96
+msgid "_Save All"
+msgstr "Guardar _todo"
+
+#: ../data/ui/menubar.ui.h:97
+msgid "Save _All As…"
+msgstr "Guardar todo c_omo…"
+
+#: ../data/ui/menubar.ui.h:98
+msgid "_Close All"
+msgstr "_Cerrar todo"
+
+#: ../data/ui/menubar.ui.h:99
+msgid "_Previous"
+msgstr "_Anterior"
+
+#: ../data/ui/menubar.ui.h:100
+msgid "_Next"
+msgstr "_Siguiente"
+
+#: ../data/ui/menubar.ui.h:101 ../gaupol/dialogs/search.py:189
+msgid "_Help"
+msgstr "Ay_uda"
+
+#: ../data/ui/menubar.ui.h:102
+msgid "_Documentation"
+msgstr ""
+
+#: ../data/ui/menubar.ui.h:103
+msgid "_Report A Bug"
+msgstr "Informar de un _error"
+
+#: ../data/ui/menubar.ui.h:104
+msgid "_About"
+msgstr "Acerca _de"
 
 #: ../data/ui/multi-save-dialog.ui.h:1
 msgid "Save All As"
 msgstr "Guardar todo como"
 
-#: ../data/ui/multi-save-dialog.ui.h:4
+#: ../data/ui/multi-save-dialog.ui.h:2
 msgid "Save in _folder:"
 msgstr "G_uardar en la carpeta:"
 
-#: ../data/ui/multi-save-dialog.ui.h:5 ../data/ui/save-dialog.ui.h:1
+#: ../data/ui/multi-save-dialog.ui.h:3 ../data/ui/save-dialog.ui.h:1
 msgid "For_mat:"
 msgstr "_Formato:"
 
-#: ../data/ui/multi-save-dialog.ui.h:6 ../data/ui/open-dialog.ui.h:1
+#: ../data/ui/multi-save-dialog.ui.h:4 ../data/ui/open-dialog.ui.h:1
 #: ../data/ui/save-dialog.ui.h:2
 msgid "_Encoding:"
 msgstr "Co_dificación:"
 
-#: ../data/ui/multi-save-dialog.ui.h:7 ../data/ui/save-dialog.ui.h:3
+#: ../data/ui/multi-save-dialog.ui.h:5 ../data/ui/save-dialog.ui.h:3
 msgid "Ne_wlines:"
 msgstr "Salto de _línea:"
 
-#: ../data/ui/multi-save-dialog.ui.h:8
+#: ../data/ui/multi-save-dialog.ui.h:6
 msgid "Select A Folder"
 msgstr "Seleccionar carpeta"
 
-#: ../data/ui/multi-save-dialog.ui.h:9 ../data/ui/save-dialog.ui.h:4
+#: ../data/ui/multi-save-dialog.ui.h:7 ../data/ui/save-dialog.ui.h:4
 msgid "F_ramerate:"
 msgstr "F_recuencia de fotogramas:"
 
@@ -333,28 +639,24 @@ msgstr "Aj_ustar según:"
 msgid "Shift Positions"
 msgstr "Desplazar posiciones"
 
-#: ../data/ui/position-shift-dialog.ui.h:3
-msgid "_Shift"
-msgstr "_Desplazar"
-
-#: ../data/ui/position-shift-dialog.ui.h:4
+#: ../data/ui/position-shift-dialog.ui.h:2
 msgid "Shift"
 msgstr "Desplazamiento"
 
-#: ../data/ui/position-shift-dialog.ui.h:6
-#: ../data/ui/position-transform-dialog.ui.h:8
+#: ../data/ui/position-shift-dialog.ui.h:4
+#: ../data/ui/position-transform-dialog.ui.h:6
 msgid "_Preview Changes"
 msgstr "_Vista previa"
 
-#: ../data/ui/position-shift-dialog.ui.h:8
+#: ../data/ui/position-shift-dialog.ui.h:6
 msgid "Shift s_elected subtitles"
 msgstr "Desplazar los subtítulos s_eleccionados"
 
-#: ../data/ui/position-shift-dialog.ui.h:9
+#: ../data/ui/position-shift-dialog.ui.h:7
 msgid "Shift su_btitles from selection to end"
 msgstr "De_splazar a partir de los subtítulos seleccionados"
 
-#: ../data/ui/position-shift-dialog.ui.h:10
+#: ../data/ui/position-shift-dialog.ui.h:8
 msgid "Shift c_urrent project"
 msgstr "Desplazar en el proyecto act_ual"
 
@@ -362,43 +664,43 @@ msgstr "Desplazar en el proyecto act_ual"
 msgid "Transform Positions"
 msgstr "Ajustar posiciones"
 
-#: ../data/ui/position-transform-dialog.ui.h:3
-msgid "_Transform"
-msgstr "_Ajustar"
-
-#: ../data/ui/position-transform-dialog.ui.h:4
+#: ../data/ui/position-transform-dialog.ui.h:2
 msgid "First Point"
 msgstr "Primer punto"
 
-#: ../data/ui/position-transform-dialog.ui.h:6
+#: ../data/ui/position-transform-dialog.ui.h:3
+msgid "_Subtitle:"
+msgstr "_Subtítulo:"
+
+#: ../data/ui/position-transform-dialog.ui.h:4
 msgid "C_orrection:"
 msgstr "Ajus_te:"
 
-#: ../data/ui/position-transform-dialog.ui.h:7
+#: ../data/ui/position-transform-dialog.ui.h:5
 msgid "Text:"
 msgstr "Texto:"
 
-#: ../data/ui/position-transform-dialog.ui.h:9
+#: ../data/ui/position-transform-dialog.ui.h:7
 msgid "Second Point"
 msgstr "Segundo punto"
 
-#: ../data/ui/position-transform-dialog.ui.h:10
+#: ../data/ui/position-transform-dialog.ui.h:8
 msgid "Su_btitle:"
 msgstr "_Subtítulo:"
 
-#: ../data/ui/position-transform-dialog.ui.h:11
+#: ../data/ui/position-transform-dialog.ui.h:9
 msgid "Co_rrection:"
 msgstr "Ajus_te:"
 
-#: ../data/ui/position-transform-dialog.ui.h:12
+#: ../data/ui/position-transform-dialog.ui.h:10
 msgid "Pre_view Changes"
 msgstr "_Vista previa"
 
-#: ../data/ui/position-transform-dialog.ui.h:14
+#: ../data/ui/position-transform-dialog.ui.h:12
 msgid "Transform se_lected subtitles"
 msgstr "Ajustar los subtítulos s_eleccionados"
 
-#: ../data/ui/position-transform-dialog.ui.h:15
+#: ../data/ui/position-transform-dialog.ui.h:13
 msgid "Transform c_urrent project"
 msgstr "Ajustar en el proyecto act_ual"
 
@@ -406,234 +708,222 @@ msgstr "Ajustar en el proyecto act_ual"
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: ../data/ui/preferences-dialog.ui.h:2 ../data/ui/search-dialog.ui.h:2
-#: ../gaupol/actions/menu.py:65
-msgid "_Help"
-msgstr "Ay_uda"
+#: ../data/ui/preferences-dialog.ui.h:2 ../gaupol/dialogs/encoding.py:60
+msgid "Character Encodings"
+msgstr "Codificación de caracteres"
 
-#: ../data/ui/preferences-dialog.ui.h:5
+#: ../data/ui/preferences-dialog.ui.h:3
 msgid "When opening files, try encodings in the following order:"
 msgstr "Al abrir archivos, probar con las siguientes codificaciones:"
 
-#: ../data/ui/preferences-dialog.ui.h:6
+#: ../data/ui/preferences-dialog.ui.h:4
 msgid "Curr_ent locale encoding"
 msgstr "La c_odificación dada por la configuración regional actual"
 
-#: ../data/ui/preferences-dialog.ui.h:7
+#: ../data/ui/preferences-dialog.ui.h:5
 msgid "_Fallback encodings:"
 msgstr "Codificacio_nes alternativas:"
 
-#: ../data/ui/preferences-dialog.ui.h:8
+#: ../data/ui/preferences-dialog.ui.h:6
 msgid "Aut_o-detection"
 msgstr "_Detectar automáticamente"
 
-#: ../data/ui/preferences-dialog.ui.h:9
+#: ../data/ui/preferences-dialog.ui.h:7
 msgid "Encoding specified in the open dialog will always be tried first."
 msgstr ""
 "La codificación especificada en el diálogo «Abrir» será siempre la primera "
 "en usarse."
 
-#: ../data/ui/preferences-dialog.ui.h:10
+#: ../data/ui/preferences-dialog.ui.h:8
 msgid "File"
 msgstr "Archivo"
 
-#: ../data/ui/preferences-dialog.ui.h:11
+#: ../data/ui/preferences-dialog.ui.h:9
 msgid "Font"
 msgstr "Tipografía"
 
-#: ../data/ui/preferences-dialog.ui.h:12
-msgid "Use _default theme font"
-msgstr "Utilizar el _tipo de letra predeterminado del sistema"
+#: ../data/ui/preferences-dialog.ui.h:10
+msgid "Use _default theme fixed width font"
+msgstr ""
 
-#: ../data/ui/preferences-dialog.ui.h:13
+#: ../data/ui/preferences-dialog.ui.h:11
 msgid "_Editor font:"
 msgstr "Tipo de letra del e_ditor:"
 
-#: ../data/ui/preferences-dialog.ui.h:14
+#: ../data/ui/preferences-dialog.ui.h:12
 msgid "Line Lengths"
 msgstr "Largo de líneas"
 
-#: ../data/ui/preferences-dialog.ui.h:15
+#: ../data/ui/preferences-dialog.ui.h:13
 msgid "_Show line lengths in list cells"
 msgstr "_Mostrar el largo de las líneas en las celdas"
 
-#: ../data/ui/preferences-dialog.ui.h:16
+#: ../data/ui/preferences-dialog.ui.h:14
 msgid "S_how line lengths in editable text fields"
 msgstr ""
 "Mo_strar el largo de las líneas en los campos de texto mientras se escribe"
 
-#: ../data/ui/preferences-dialog.ui.h:17
+#: ../data/ui/preferences-dialog.ui.h:15
 msgid "_Length unit:"
 msgstr "_Unidad de medida:"
 
-#: ../data/ui/preferences-dialog.ui.h:18
+#: ../data/ui/preferences-dialog.ui.h:16
 msgid "Spell-Check"
 msgstr "Corrector ortográfico"
 
-#: ../data/ui/preferences-dialog.ui.h:19
+#: ../data/ui/preferences-dialog.ui.h:17
 msgid "Chec_k spelling as you type"
 msgstr "Revisar _ortografía mientras se escribe"
 
-#: ../data/ui/preferences-dialog.ui.h:20
+#: ../data/ui/preferences-dialog.ui.h:18
 msgid "Editor"
 msgstr "Editor"
 
-#: ../data/ui/preferences-dialog.ui.h:21
+#: ../data/ui/preferences-dialog.ui.h:19
 msgid "Fonts"
 msgstr "Tipografía"
 
-#: ../data/ui/preferences-dialog.ui.h:22
+#: ../data/ui/preferences-dialog.ui.h:20
 msgid "_Subtitles:"
 msgstr "_Subtítulos:"
 
-#: ../data/ui/preferences-dialog.ui.h:23
+#: ../data/ui/preferences-dialog.ui.h:21
 msgid "_Time:"
 msgstr "_Tiempo:"
 
-#: ../data/ui/preferences-dialog.ui.h:24
+#: ../data/ui/preferences-dialog.ui.h:22
 msgid "Colors"
 msgstr "Colores"
 
-#: ../data/ui/preferences-dialog.ui.h:25
+#: ../data/ui/preferences-dialog.ui.h:23
 msgid "Su_btitles:"
 msgstr "S_ubtítulos:"
 
-#: ../data/ui/preferences-dialog.ui.h:26
+#: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Use a background behind text"
 msgstr "_Mostrar un fondo tras el texto"
 
-#: ../data/ui/preferences-dialog.ui.h:27
+#: ../data/ui/preferences-dialog.ui.h:25
 msgid "Ti_me:"
 msgstr "T_iempo:"
 
-#: ../data/ui/preferences-dialog.ui.h:28
+#: ../data/ui/preferences-dialog.ui.h:26
 msgid "Us_e a background behind text"
 msgstr "M_ostrar un fondo tras el texto"
 
+#: ../data/ui/preferences-dialog.ui.h:27
+msgid "Seek"
+msgstr ""
+
+#: ../data/ui/preferences-dialog.ui.h:28
+msgid "_Length:"
+msgstr ""
+
 #: ../data/ui/preferences-dialog.ui.h:29
+#: ../gaupol/dialogs/position_shift.py:163
+msgid "seconds"
+msgstr "segundos"
+
+#: ../data/ui/preferences-dialog.ui.h:30 ../gaupol/application.py:276
 msgid "Video"
 msgstr "Vídeo"
 
-#: ../data/ui/preferences-dialog.ui.h:30
+#: ../data/ui/preferences-dialog.ui.h:31
 msgid "Video Player"
 msgstr "Reproductor de vídeo"
 
-#: ../data/ui/preferences-dialog.ui.h:31
+#: ../data/ui/preferences-dialog.ui.h:32
 msgid "_Application:"
 msgstr "_Aplicación:"
 
-#: ../data/ui/preferences-dialog.ui.h:32
+#: ../data/ui/preferences-dialog.ui.h:33
 msgid "Co_mmand:"
 msgstr "Co_mando:"
 
-#: ../data/ui/preferences-dialog.ui.h:33
+#. Translators: Only the title is to be translated, field names not.
+#: ../data/ui/preferences-dialog.ui.h:35
 msgid ""
 "Fields:\n"
-"$MILLISECONDS\n"
-"$SECONDS\n"
-"$SUBFILE\n"
-"$VIDEOFILE"
+"                            $MILLISECONDS\n"
+"                            $SECONDS\n"
+"                            $SUBFILE\n"
+"                            $VIDEOFILE"
 msgstr ""
-"Variables:\n"
-"$MILLISECONDS\n"
-"$SECONDS\n"
-"$SUBFILE\n"
-"$VIDEOFILE"
 
-#: ../data/ui/preferences-dialog.ui.h:38
+#: ../data/ui/preferences-dialog.ui.h:40
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "Usar _siempre la codificación de caracteres UTF-8"
 
-#: ../data/ui/preferences-dialog.ui.h:39
+#: ../data/ui/preferences-dialog.ui.h:41
 msgid "Start Position"
 msgstr "Posición inicial"
 
-#: ../data/ui/preferences-dialog.ui.h:40
+#: ../data/ui/preferences-dialog.ui.h:42
 msgid "_Offset:"
 msgstr "_Desplazamiento:"
 
-#: ../data/ui/preferences-dialog.ui.h:41
+#: ../data/ui/preferences-dialog.ui.h:43
 msgid "seconds before selection"
 msgstr "segundos antes de la selección"
 
-#: ../data/ui/preferences-dialog.ui.h:42
+#: ../data/ui/preferences-dialog.ui.h:44 ../gaupol/application.py:282
 msgid "Preview"
 msgstr "Vista previa"
-
-#: ../data/ui/preferences-dialog.ui.h:43
-msgid "A_vailable extensions:"
-msgstr "C_omplementos disponibles:"
-
-#: ../data/ui/preferences-dialog.ui.h:44
-msgid "Get more extensions"
-msgstr "Obtener más complementos"
 
 #: ../data/ui/preferences-dialog.ui.h:45
 msgid "Extensions"
 msgstr "Complementos"
 
-#: ../data/ui/preview-error-dialog.ui.h:2
-msgid "Preview in video player failed"
-msgstr "No fue posible realizar la vista previa en el reproductor de vídeo"
-
 #: ../data/ui/search-dialog.ui.h:1
-msgid "Find And Replace"
-msgstr "Buscar y reemplazar"
-
-#: ../data/ui/search-dialog.ui.h:4
 msgid "_Search for:"
 msgstr "_Buscar por:"
 
-#: ../data/ui/search-dialog.ui.h:5 ../data/ui/spell-check-dialog.ui.h:12
+#: ../data/ui/search-dialog.ui.h:2 ../data/ui/spell-check-dialog.ui.h:11
 msgid "Replace _with:"
 msgstr "Ree_mplazar con:"
 
-#: ../data/ui/search-dialog.ui.h:6 ../gaupol/actions/search.py:51
-msgid "Find _Next"
-msgstr "Buscar _siguiente"
-
-#: ../data/ui/search-dialog.ui.h:7
+#: ../data/ui/search-dialog.ui.h:4
 msgid "Find _Previous"
 msgstr "Buscar _anterior"
 
-#: ../data/ui/search-dialog.ui.h:8 ../data/ui/spell-check-dialog.ui.h:8
-#: ../gaupol/dialogs/multi_save.py:206
+#: ../data/ui/search-dialog.ui.h:5 ../data/ui/spell-check-dialog.ui.h:7
+#: ../gaupol/dialogs/multi_save.py:212
 msgid "_Replace"
 msgstr "_Reemplazar"
 
-#: ../data/ui/search-dialog.ui.h:9
+#: ../data/ui/search-dialog.ui.h:6
 msgid "Replace _All"
 msgstr "Reemplazar _todo"
 
-#: ../data/ui/search-dialog.ui.h:10
+#: ../data/ui/search-dialog.ui.h:7
 msgid "R_egular expression"
 msgstr "_Expresión regular"
 
-#: ../data/ui/search-dialog.ui.h:11
+#: ../data/ui/search-dialog.ui.h:8
 msgid "_Ignore case"
 msgstr "Ignorar _capitalización"
 
-#: ../data/ui/search-dialog.ui.h:12 ../gaupol/actions/search.py:34
+#: ../data/ui/search-dialog.ui.h:9 ../gaupol/application.py:270
 msgid "Find"
 msgstr "Buscar"
 
-#: ../data/ui/search-dialog.ui.h:14
+#: ../data/ui/search-dialog.ui.h:11
 msgid "Find in _text column"
 msgstr "Buscar en la columna t_exto"
 
-#: ../data/ui/search-dialog.ui.h:15
+#: ../data/ui/search-dialog.ui.h:12
 msgid "Find in t_ranslation column"
 msgstr "Buscar en la columna t_raducción"
 
-#: ../data/ui/search-dialog.ui.h:17
+#: ../data/ui/search-dialog.ui.h:14
 msgid "Find in c_urrent project"
 msgstr "Buscar en el proyecto act_ual"
 
-#: ../data/ui/search-dialog.ui.h:18
+#: ../data/ui/search-dialog.ui.h:15
 msgid "Find in _all open projects"
 msgstr "Buscar en _todos los proyectos abiertos"
 
-#: ../data/ui/search-dialog.ui.h:19
+#: ../data/ui/search-dialog.ui.h:16
 msgid "Target"
 msgstr "Objetivo"
 
@@ -641,31 +931,32 @@ msgstr "Objetivo"
 msgid "Check Spelling"
 msgstr "Comprobar ortografía"
 
-#: ../data/ui/spell-check-dialog.ui.h:3
+#: ../data/ui/spell-check-dialog.ui.h:2
 msgid "Join _Back"
 msgstr "Unir con _anterior"
 
-#: ../data/ui/spell-check-dialog.ui.h:4
+#: ../data/ui/spell-check-dialog.ui.h:3
 msgid "Join _Forward"
 msgstr "Unir con _siguiente"
 
-#: ../data/ui/spell-check-dialog.ui.h:5 ../gaupol/actions/menu.py:43
-msgid "_Edit"
-msgstr "_Editar"
-
-#: ../data/ui/spell-check-dialog.ui.h:6
+#: ../data/ui/spell-check-dialog.ui.h:5
 msgid "_Ignore"
 msgstr "_Ignorar"
 
-#: ../data/ui/spell-check-dialog.ui.h:7
+#: ../data/ui/spell-check-dialog.ui.h:6
 msgid "Ig_nore All"
 msgstr "Ig_norar todo"
 
-#: ../data/ui/spell-check-dialog.ui.h:9
+#: ../data/ui/spell-check-dialog.ui.h:8
 msgid "Rep_lace All"
 msgstr "Reemplazar _todo"
 
-#: ../data/ui/spell-check-dialog.ui.h:11
+#: ../data/ui/spell-check-dialog.ui.h:9
+#: ../data/extensions/custom-framerates/custom-framerates.py:40
+msgid "_Add"
+msgstr "Aña_dir"
+
+#: ../data/ui/spell-check-dialog.ui.h:10
 msgid "_Suggestions:"
 msgstr "S_ugerencias:"
 
@@ -673,13 +964,17 @@ msgstr "S_ugerencias:"
 msgid "Split Project"
 msgstr "Dividir proyecto"
 
-#: ../data/ui/split-dialog.ui.h:3
-msgid "_Split"
-msgstr "_Dividir"
-
-#: ../data/ui/split-dialog.ui.h:4
+#: ../data/ui/split-dialog.ui.h:2
 msgid "_First subtitle of new project:"
 msgstr "_Primer subtítulo del proyecto nuevo:"
+
+#: ../data/ui/tab-popup.ui.h:1
+msgid "Move Tab _Left"
+msgstr "Mover solapa a la _izquierda"
+
+#: ../data/ui/tab-popup.ui.h:2
+msgid "Move Tab _Right"
+msgstr "Mover solapa a la _derecha"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:1
 msgid "S_elect parts to capitalize:"
@@ -735,13 +1030,6 @@ msgstr "_Marcar todo"
 msgid "_Unmark All"
 msgstr "_Desmarcar todo"
 
-#: ../data/ui/text-assistant/confirmation-page.ui.h:4
-#: ../gaupol/actions/position.py:66
-msgid "_Preview"
-msgstr "_Vista previa"
-
-# Se separó en dos líneas de texto por el poco espacio disponible en el
-# cuadro de diálogo.
 #: ../data/ui/text-assistant/confirmation-page.ui.h:5
 msgid "_Remove all blank subtitles"
 msgstr ""
@@ -802,15 +1090,6 @@ msgstr "Ign_orar subtítulos con un número de líneas menor o igual a:"
 msgid "S_elect preferred line-break points:"
 msgstr "S_eleccione los puntos de división de líneas preferidos:"
 
-#: ../data/extensions/bookmarks/bookmarks.extension.in.h:1
-#: ../data/extensions/bookmarks/bookmarks.py:460
-msgid "Bookmarks"
-msgstr "Marcadores"
-
-#: ../data/extensions/bookmarks/bookmarks.extension.in.h:2
-msgid "Marking subtitles for easy navigation"
-msgstr "Use marcadores en subtítulos para una navegación rápida"
-
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:1
 msgid "Custom Framerates"
 msgstr "Frecuencias de fotogramas personalizadas"
@@ -819,14 +1098,6 @@ msgstr "Frecuencias de fotogramas personalizadas"
 msgid "Allow use of non-standard framerates"
 msgstr ""
 "Permite el uso de frecuencias de fotogramas («framerates») poco frecuentes"
-
-#: ../data/extensions/side-pane/side-pane.extension.in.h:1
-msgid "Side Pane"
-msgstr "Panel lateral"
-
-#: ../data/extensions/side-pane/side-pane.extension.in.h:2
-msgid "A side pane that can be used by other extensions"
-msgstr "Un panel lateral disponible para otros complementos"
 
 #: ../data/patterns/Latn-en-US.common-error.in.h:1
 msgid "Period after title"
@@ -1125,7 +1396,6 @@ msgstr ""
 msgid "One-line song lyrics between number signs"
 msgstr "Letras de canciones entre almohadillas por línea"
 
-# Se ha forzado la división de líneas para presentar
 #: ../data/patterns/Latn.hearing-impaired.in.h:8
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr ""
@@ -1198,19 +1468,19 @@ msgstr "Notas musicales"
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Reemplaza caracteres Unicode de notas musicales con signos numéricos"
 
-#: ../aeidon/agents/clipboard.py:43
+#: ../aeidon/agents/clipboard.py:44
 msgid "Cutting texts"
 msgstr "Cortar texto"
 
-#: ../aeidon/agents/clipboard.py:60
+#: ../aeidon/agents/clipboard.py:61
 msgid "Pasting texts"
 msgstr "Pegar texto"
 
-#: ../aeidon/agents/edit.py:34
+#: ../aeidon/agents/edit.py:35
 msgid "Clearing texts"
 msgstr "Borrar texto"
 
-#: ../aeidon/agents/edit.py:60 ../aeidon/agents/edit.py:83
+#: ../aeidon/agents/edit.py:61 ../aeidon/agents/edit.py:83
 msgid "Inserting subtitles"
 msgstr "Insertar subtítulos"
 
@@ -1234,23 +1504,23 @@ msgstr "Reemplazar texto"
 msgid "Splitting subtitle"
 msgstr "Dividir subtítulo"
 
-#: ../aeidon/agents/format.py:48
+#: ../aeidon/agents/format.py:49
 msgid "Adding dialogue dashes"
 msgstr "Agregar rayas de diálogo"
 
-#: ../aeidon/agents/format.py:67
+#: ../aeidon/agents/format.py:68
 msgid "Changing case"
 msgstr "Cambiar capitalización"
 
-#: ../aeidon/agents/format.py:91
+#: ../aeidon/agents/format.py:92
 msgid "Italicizing"
 msgstr "Aplicar cursiva"
 
-#: ../aeidon/agents/format.py:107
+#: ../aeidon/agents/format.py:108
 msgid "Removing dialogue dashes"
 msgstr "Quitar rayas de diálogo"
 
-#: ../aeidon/agents/format.py:173
+#: ../aeidon/agents/format.py:174
 msgid "Unitalicizing"
 msgstr "Quitar cursiva"
 
@@ -1258,310 +1528,271 @@ msgstr "Quitar cursiva"
 msgid "Adjusting durations"
 msgstr "Ajustar posiciones"
 
-#: ../aeidon/agents/position.py:95
+#: ../aeidon/agents/position.py:96
 msgid "Converting framerate"
 msgstr "Cambiar frecuencia de fotogramas"
 
-#: ../aeidon/agents/position.py:153
+#: ../aeidon/agents/position.py:146
 msgid "Setting framerate"
 msgstr "Definir frecuencia de fotogramas"
 
-#: ../aeidon/agents/position.py:173
+#: ../aeidon/agents/position.py:168
 msgid "Shifting positions"
 msgstr "Desplazar posiciones"
 
-#: ../aeidon/agents/position.py:199
+#: ../aeidon/agents/position.py:188
 msgid "Transforming positions"
 msgstr "Ajustar posiciones"
 
-#: ../aeidon/agents/search.py:226
+#: ../aeidon/agents/search.py:227
 msgid "Replacing"
 msgstr "Reemplazar"
 
-#: ../aeidon/agents/search.py:255 ../aeidon/agents/search.py:257
+#: ../aeidon/agents/search.py:256 ../aeidon/agents/search.py:258
 msgid "Replacing all"
 msgstr "Reemplazar todo"
 
-#: ../aeidon/agents/set.py:57 ../aeidon/agents/set.py:79
-#: ../aeidon/agents/set.py:112
+#: ../aeidon/agents/set.py:58 ../aeidon/agents/set.py:80
+#: ../aeidon/agents/set.py:113
 msgid "Editing position"
 msgstr "Editar posición"
 
-#: ../aeidon/agents/set.py:128
+#: ../aeidon/agents/set.py:129
 msgid "Editing text"
 msgstr "Editar texto"
 
-#: ../aeidon/agents/text.py:96
+#: ../aeidon/agents/text.py:91
 msgid "Breaking lines"
 msgstr "Dividir líneas"
 
-#: ../aeidon/agents/text.py:133
+#: ../aeidon/agents/text.py:128
 msgid "Capitalizing texts"
 msgstr "Capitalizar texto"
 
-#: ../aeidon/agents/text.py:198
+#: ../aeidon/agents/text.py:185
 msgid "Correcting common errors"
 msgstr "Corregir errores frecuentes"
 
-#: ../aeidon/agents/text.py:261
+#: ../aeidon/agents/text.py:247
 msgid "Removing hearing impaired texts"
 msgstr "Eliminar texto para sordos"
 
-#: ../aeidon/agents/text.py:341
+#: ../aeidon/agents/text.py:328
 msgid "Joining words by spell-check suggestions"
 msgstr "Unir palabras según sugerencias del corrector ortográfico"
 
-#: ../aeidon/agents/text.py:386
+#: ../aeidon/agents/text.py:372
 msgid "Splitting words by spell-check suggestions"
 msgstr "Dividir palabras según sugerencias del corrector ortográfico"
 
-#. Translators: Most of the character encoding descriptions are copied from
+#. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
 #. files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
-#: ../aeidon/encodings.py:38 ../aeidon/encodings.py:41
-#: ../aeidon/encodings.py:43
+#: ../aeidon/encodings.py:40 ../aeidon/encodings.py:43
+#: ../aeidon/encodings.py:46
 msgid "English"
 msgstr "Inglés"
 
-#: ../aeidon/encodings.py:39 ../aeidon/encodings.py:40
-#: ../aeidon/encodings.py:65
+#: ../aeidon/encodings.py:41 ../aeidon/encodings.py:42
+#: ../aeidon/encodings.py:68
 msgid "Chinese traditional"
 msgstr "Chino tradicional"
 
-#: ../aeidon/encodings.py:42 ../aeidon/encodings.py:51
-#: ../aeidon/encodings.py:55 ../aeidon/encodings.py:74
-#: ../aeidon/encodings.py:100
+#: ../aeidon/encodings.py:44
+msgid "German"
+msgstr ""
+
+#: ../aeidon/encodings.py:45 ../aeidon/encodings.py:54
+#: ../aeidon/encodings.py:58 ../aeidon/encodings.py:78
+#: ../aeidon/encodings.py:104
 msgid "Hebrew"
 msgstr "Hebreo"
 
-#: ../aeidon/encodings.py:44 ../aeidon/encodings.py:48
-#: ../aeidon/encodings.py:68 ../aeidon/encodings.py:71
-#: ../aeidon/encodings.py:93 ../aeidon/encodings.py:105
-#: ../aeidon/encodings.py:113
+#: ../aeidon/encodings.py:47 ../aeidon/encodings.py:51
+#: ../aeidon/encodings.py:72 ../aeidon/encodings.py:75
+#: ../aeidon/encodings.py:97 ../aeidon/encodings.py:109
+#: ../aeidon/encodings.py:119
 msgid "Western"
 msgstr "Occidental"
 
-#: ../aeidon/encodings.py:45 ../aeidon/encodings.py:57
-#: ../aeidon/encodings.py:75 ../aeidon/encodings.py:98
+#: ../aeidon/encodings.py:48 ../aeidon/encodings.py:60
+#: ../aeidon/encodings.py:79 ../aeidon/encodings.py:102
 msgid "Arabic"
 msgstr "Árabe"
 
-#: ../aeidon/encodings.py:46 ../aeidon/encodings.py:60
-#: ../aeidon/encodings.py:62 ../aeidon/encodings.py:72
-#: ../aeidon/encodings.py:99 ../aeidon/encodings.py:110
+#: ../aeidon/encodings.py:49 ../aeidon/encodings.py:63
+#: ../aeidon/encodings.py:65 ../aeidon/encodings.py:76
+#: ../aeidon/encodings.py:103 ../aeidon/encodings.py:116
 msgid "Greek"
 msgstr "Griego"
 
-#: ../aeidon/encodings.py:47 ../aeidon/encodings.py:76
-#: ../aeidon/encodings.py:96 ../aeidon/encodings.py:103
+#: ../aeidon/encodings.py:50 ../aeidon/encodings.py:80
+#: ../aeidon/encodings.py:100 ../aeidon/encodings.py:107
 msgid "Baltic"
 msgstr "Báltico"
 
-#: ../aeidon/encodings.py:49 ../aeidon/encodings.py:69
-#: ../aeidon/encodings.py:94 ../aeidon/encodings.py:112
+#: ../aeidon/encodings.py:52 ../aeidon/encodings.py:73
+#: ../aeidon/encodings.py:98 ../aeidon/encodings.py:118
 msgid "Central European"
 msgstr "Centroeuropeo"
 
-#: ../aeidon/encodings.py:50 ../aeidon/encodings.py:70
-#: ../aeidon/encodings.py:97 ../aeidon/encodings.py:109
+#: ../aeidon/encodings.py:53 ../aeidon/encodings.py:74
+#: ../aeidon/encodings.py:101 ../aeidon/encodings.py:115
 msgid "Cyrillic"
 msgstr "Cirílico"
 
-#: ../aeidon/encodings.py:52 ../aeidon/encodings.py:67
-#: ../aeidon/encodings.py:73 ../aeidon/encodings.py:101
-#: ../aeidon/encodings.py:114
+#: ../aeidon/encodings.py:55 ../aeidon/encodings.py:70
+#: ../aeidon/encodings.py:77 ../aeidon/encodings.py:105
+#: ../aeidon/encodings.py:120
 msgid "Turkish"
 msgstr "Turco"
 
-#: ../aeidon/encodings.py:53
+#: ../aeidon/encodings.py:56
 msgid "Portuguese"
 msgstr "Portugués"
 
-#: ../aeidon/encodings.py:54 ../aeidon/encodings.py:111
+#: ../aeidon/encodings.py:57 ../aeidon/encodings.py:117
 msgid "Icelandic"
 msgstr "Islandés"
 
-#: ../aeidon/encodings.py:56
+#: ../aeidon/encodings.py:59
 msgid "Canadian"
 msgstr "Canadiense"
 
-#: ../aeidon/encodings.py:58 ../aeidon/encodings.py:102
+#: ../aeidon/encodings.py:61 ../aeidon/encodings.py:106
 msgid "Nordic"
 msgstr "Nórdico"
 
-#: ../aeidon/encodings.py:59 ../aeidon/encodings.py:107
+#: ../aeidon/encodings.py:62 ../aeidon/encodings.py:111
 msgid "Russian"
 msgstr "Ruso"
 
-#: ../aeidon/encodings.py:61
+#: ../aeidon/encodings.py:64
 msgid "Thai"
 msgstr "Tailandés"
 
-#: ../aeidon/encodings.py:63 ../aeidon/encodings.py:78
-#: ../aeidon/encodings.py:79 ../aeidon/encodings.py:80
-#: ../aeidon/encodings.py:86 ../aeidon/encodings.py:87
-#: ../aeidon/encodings.py:88 ../aeidon/encodings.py:89
+#: ../aeidon/encodings.py:66 ../aeidon/encodings.py:82
+#: ../aeidon/encodings.py:83 ../aeidon/encodings.py:84
 #: ../aeidon/encodings.py:90 ../aeidon/encodings.py:91
-#: ../aeidon/encodings.py:116 ../aeidon/encodings.py:117
-#: ../aeidon/encodings.py:118
+#: ../aeidon/encodings.py:92 ../aeidon/encodings.py:93
+#: ../aeidon/encodings.py:94 ../aeidon/encodings.py:95
+#: ../aeidon/encodings.py:122 ../aeidon/encodings.py:123
+#: ../aeidon/encodings.py:124
 msgid "Japanese"
 msgstr "Japonés"
 
-#: ../aeidon/encodings.py:64 ../aeidon/encodings.py:81
-#: ../aeidon/encodings.py:92 ../aeidon/encodings.py:106
+#: ../aeidon/encodings.py:67 ../aeidon/encodings.py:85
+#: ../aeidon/encodings.py:96 ../aeidon/encodings.py:110
 msgid "Korean"
 msgstr "Coreano"
 
-#: ../aeidon/encodings.py:66
+#: ../aeidon/encodings.py:69
 msgid "Urdu"
 msgstr "Urdú"
 
-#: ../aeidon/encodings.py:77
-msgid "Vietnamese"
-msgstr "Vietnamita"
-
-#: ../aeidon/encodings.py:82 ../aeidon/encodings.py:85
-msgid "Chinese simplified"
-msgstr "Chino simplificado"
-
-#: ../aeidon/encodings.py:83 ../aeidon/encodings.py:84
-msgid "Chinese unified"
-msgstr "Chino unificado"
-
-#: ../aeidon/encodings.py:95
-msgid "South European"
-msgstr "Sureuropeo"
-
-#: ../aeidon/encodings.py:104
-msgid "Celtic"
-msgstr "Céltico"
-
-#: ../aeidon/encodings.py:108
+#: ../aeidon/encodings.py:71 ../aeidon/encodings.py:113
 msgid "Ukrainian"
 msgstr "Ucraniano"
 
-#: ../aeidon/encodings.py:115
+#: ../aeidon/encodings.py:81
+msgid "Vietnamese"
+msgstr "Vietnamita"
+
+#: ../aeidon/encodings.py:86 ../aeidon/encodings.py:89
+msgid "Chinese simplified"
+msgstr "Chino simplificado"
+
+#: ../aeidon/encodings.py:87 ../aeidon/encodings.py:88
+msgid "Chinese unified"
+msgstr "Chino unificado"
+
+#: ../aeidon/encodings.py:99
+msgid "South European"
+msgstr "Sureuropeo"
+
+#: ../aeidon/encodings.py:108
+msgid "Celtic"
+msgstr "Céltico"
+
+#: ../aeidon/encodings.py:112
+msgid "Tajik"
+msgstr ""
+
+#: ../aeidon/encodings.py:114
+msgid "Kazakh"
+msgstr ""
+
+#: ../aeidon/encodings.py:121
 msgid "Cyrillic Asian"
 msgstr "Cirílico asiático"
 
-#: ../aeidon/encodings.py:119 ../aeidon/encodings.py:120
-#: ../aeidon/encodings.py:121 ../aeidon/encodings.py:122
-#: ../aeidon/encodings.py:123 ../aeidon/encodings.py:124
 #: ../aeidon/encodings.py:125 ../aeidon/encodings.py:126
-#: ../aeidon/encodings.py:127
+#: ../aeidon/encodings.py:127 ../aeidon/encodings.py:128
+#: ../aeidon/encodings.py:129 ../aeidon/encodings.py:130
+#: ../aeidon/encodings.py:131 ../aeidon/encodings.py:132
+#: ../aeidon/encodings.py:133
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../aeidon/encodings.py:162
+#: ../aeidon/encodings.py:153
 #, python-brace-format
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
-#: ../aeidon/encodings.py:250
+#: ../aeidon/encodings.py:229
 msgid "Current locale ({})"
 msgstr "Configuración regional actual ({})"
 
-#: ../aeidon/enums/align_methods.py:28 ../gaupol/enums/fields.py:31
+#: ../aeidon/enums.py:39 ../gaupol/enums.py:38
 msgid "Subtitle number"
 msgstr "Número del subtítulo"
 
-#: ../aeidon/enums/align_methods.py:33
+#: ../aeidon/enums.py:42
 msgid "Subtitle position"
 msgstr "Posición del subtítulo"
 
-#: ../aeidon/enums/framerates.py:28
+#: ../aeidon/enums.py:58
 msgid "23.976 fps"
 msgstr "23,976 fps"
 
-#: ../aeidon/enums/framerates.py:34
+#: ../aeidon/enums.py:62
 msgid "24.000 fps"
 msgstr "24,000 fps"
 
-#: ../aeidon/enums/framerates.py:40
+#: ../aeidon/enums.py:66
 msgid "25.000 fps"
 msgstr "25,000 fps"
 
-#: ../aeidon/enums/framerates.py:46
+#: ../aeidon/enums.py:70
 msgid "29.970 fps"
 msgstr "29,970 fps"
 
-#: ../aeidon/enums/newlines.py:28
+#: ../aeidon/enums.py:91
 msgid "Mac (classic)"
 msgstr "Mac (clásico)"
 
-#: ../aeidon/locales.py:58
+#: ../aeidon/locales.py:46
 #, python-brace-format
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
-#. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
-#. of a tree view column that contains 16 pixels wide icons.
-#: ../data/extensions/bookmarks/bookmarks.py:110
-#: ../data/extensions/bookmarks/bookmarks.py:115
-msgid "Bm."
-msgstr "Md."
+#: ../data/extensions/custom-framerates/custom-framerates.py:39
+#: ../gaupol/agents/close.py:71 ../gaupol/agents/open.py:352
+#: ../gaupol/agents/open.py:364 ../gaupol/agents/open.py:376
+#: ../gaupol/dialogs/duration_adjust.py:86 ../gaupol/dialogs/encoding.py:55
+#: ../gaupol/dialogs/framerate_convert.py:63 ../gaupol/dialogs/insert.py:44
+#: ../gaupol/dialogs/multi_close.py:54 ../gaupol/dialogs/multi_save.py:83
+#: ../gaupol/dialogs/multi_save.py:211 ../gaupol/dialogs/open.py:63
+#: ../gaupol/dialogs/position_shift.py:68
+#: ../gaupol/dialogs/position_transform.py:69 ../gaupol/dialogs/save.py:73
+#: ../gaupol/dialogs/split.py:44 ../gaupol/dialogs/text_edit.py:48
+#: ../gaupol/dialogs/video.py:41
+msgid "_Cancel"
+msgstr "_Cancelar"
 
-#: ../data/extensions/bookmarks/bookmarks.py:116
-msgid "Bookmark"
-msgstr "Marcador"
-
-#: ../data/extensions/bookmarks/bookmarks.py:182
-msgid "_Bookmarks"
-msgstr "_Marcadores"
-
-#: ../data/extensions/bookmarks/bookmarks.py:183
-msgid "_Add…"
-msgstr "Aña_dir…"
-
-#: ../data/extensions/bookmarks/bookmarks.py:184
-msgid "Add a bookmark for the current subtitle"
-msgstr "Agrega un marcador al subtítulo actual"
-
-#: ../data/extensions/bookmarks/bookmarks.py:186
-msgid "_Edit Bookmarks"
-msgstr "_Editar marcadores"
-
-#: ../data/extensions/bookmarks/bookmarks.py:189 ../gaupol/actions/view.py:34
-msgid "_Next"
-msgstr "_Siguiente"
-
-#: ../data/extensions/bookmarks/bookmarks.py:190
-msgid "Go to the next bookmarked subtitle"
-msgstr "Avanza hasta el siguiente subtítulo en marcadores"
-
-#: ../data/extensions/bookmarks/bookmarks.py:192 ../gaupol/actions/view.py:53
-msgid "_Previous"
-msgstr "_Anterior"
-
-#: ../data/extensions/bookmarks/bookmarks.py:193
-msgid "Go to the previous bookmarked subtitle"
-msgstr "Retrocede hasta el anterior subtítulo en marcadores"
-
-#: ../data/extensions/bookmarks/bookmarks.py:197
-msgid "_Bookmark"
-msgstr "_Marcador"
-
-#: ../data/extensions/bookmarks/bookmarks.py:198
-msgid "Show or hide the bookmark column"
-msgstr "Muestra u oculta la columna marcador"
-
-#: ../data/extensions/custom-framerates/custom-framerates.py:173
-msgid "Calculate nonnative units with a framerate of {:.3f} fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de {:.3f} fotogramas por "
-"segundo"
-
-#: ../data/extensions/custom-framerates/custom-framerates.py:188
+#: ../data/extensions/custom-framerates/custom-framerates.py:171
 msgid "{:.3f} fps"
 msgstr "{:.3f} fps"
-
-#: ../data/extensions/side-pane/side-pane.py:315
-msgid "Si_de Pane"
-msgstr "Panel _lateral"
-
-#: ../data/extensions/side-pane/side-pane.py:316
-msgid "Show or hide the side pane"
-msgstr "Muestra u oculta el panel lateral"
 
 #: ../data/gaupol.appdata.xml.in.h:1
 msgid ""
@@ -1577,903 +1808,107 @@ msgstr ""
 "diseñada con especial énfasis en el procesamiento por lotes de múltiples "
 "documentos y comodidad para la traducción de texto."
 
-#: ../data/gaupol.desktop.in.h:1
-msgid "Gaupol"
-msgstr "Gaupol"
+#: ../data/gaupol.appdata.xml.in.h:2
+msgid "Main window"
+msgstr ""
 
-#: ../data/gaupol.desktop.in.h:2
+#: ../data/gaupol.desktop.in.h:1
 msgid "Subtitle Editor"
 msgstr "Editor de subtítulos"
 
-#: ../data/gaupol.desktop.in.h:3
+#: ../data/gaupol.desktop.in.h:2
 msgid "Edit subtitle files"
 msgstr "Edite archivos de subtítulos"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: ../data/gaupol.desktop.in.h:5
+#: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr "vídeo;subtítulos;"
 
-#: ../data/gaupol.desktop.in.h:6
+#: ../data/gaupol.desktop.in.h:5
 msgid "Gaupol Subtitle Editor"
 msgstr "Editor de subtítulos Gaupol"
 
-#: ../gaupol/actions/audio.py:32
-msgid "_Language"
-msgstr "_Idioma"
-
-#: ../gaupol/actions/audio.py:49
-msgid "Volume _Down"
-msgstr "_Bajar volumen"
-
-#: ../gaupol/actions/audio.py:50
-msgid "Decrease volume"
-msgstr "Disminuye el volumen"
-
-#: ../gaupol/actions/audio.py:66
-msgid "Volume _Up"
-msgstr "_Subir volumen"
-
-#: ../gaupol/actions/audio.py:67
-msgid "Increase volume"
-msgstr "Aumenta el volumen"
-
-#: ../gaupol/actions/edit.py:35
-msgid "Cl_ear"
-msgstr "_Borrar"
-
-#: ../gaupol/actions/edit.py:36
-msgid "Clear the selected texts"
-msgstr "Borra el texto de los subtítulos seleccionados"
-
-#: ../gaupol/actions/edit.py:57
-msgid "_Copy"
-msgstr "_Copiar"
-
-#: ../gaupol/actions/edit.py:58
-msgid "Copy the selected texts to the clipboard"
-msgstr "Copia el texto de los subtítulos seleccionados al portapapeles"
-
-#: ../gaupol/actions/edit.py:79
-msgid "Cu_t"
-msgstr "Cor_tar"
-
-#: ../gaupol/actions/edit.py:80
-msgid "Cut the selected texts to the clipboard"
-msgstr "Corta el texto de los subtítulos seleccionados al portapapeles"
-
-#: ../gaupol/actions/edit.py:101
-msgid "_Preferences"
-msgstr "Prefere_ncias"
-
-#: ../gaupol/actions/edit.py:102
-msgid "Configure Gaupol"
-msgstr "Configura Gaupol"
-
-#: ../gaupol/actions/edit.py:113
-msgid "Edit _Next Cell"
-msgstr "Edi_tar la siguiente celda"
-
-#: ../gaupol/actions/edit.py:114
-msgid "Edit the focused column of the next subtitle"
-msgstr "Edita el siguiente subtítulo en la columna seleccionada"
-
-#: ../gaupol/actions/edit.py:139
-msgid "_Edit Cell"
-msgstr "_Editar celda"
-
-#: ../gaupol/actions/edit.py:140
-msgid "Edit the focused cell"
-msgstr "Edita la celda seleccionada"
-
-#: ../gaupol/actions/edit.py:162
-msgid "E_nd Earlier"
-msgstr "_Finalizar antes"
-
-#: ../gaupol/actions/edit.py:163
-msgid "End the selected subtitle earlier"
-msgstr "Adelanta la desaparición del subtítulo seleccionado"
-
-#: ../gaupol/actions/edit.py:181
-msgid "En_d Later"
-msgstr "Fin_alizar después"
-
-#: ../gaupol/actions/edit.py:182
-msgid "End the selected subtitle later"
-msgstr "Retrasa la desaparición del subtítulo seleccionado"
-
-#: ../gaupol/actions/edit.py:200
-msgid "Extend To _Beginning"
-msgstr "Extender desde el _inicio"
-
-#: ../gaupol/actions/edit.py:201
-msgid "Extend the current selection up to the first subtitle"
-msgstr "Extiende la selección actual desde el primer subtítulo"
-
-#: ../gaupol/actions/edit.py:219
-msgid "Extend To _End"
-msgstr "Extender hasta el _final"
-
-#: ../gaupol/actions/edit.py:220
-msgid "Extend the current selection up to the last subtitle"
-msgstr "Extiende la selección actual hasta el último subtítulo"
-
-#: ../gaupol/actions/edit.py:239
-msgid "Inser_t Subtitle At Video Position"
-msgstr "Insertar subtítulo según la posición del _vídeo"
-
-#: ../gaupol/actions/edit.py:240
-msgid "Insert a new subtitle at video position"
-msgstr "Inserta un subtítulo nuevo dada la posición actual del vídeo"
-
-#: ../gaupol/actions/edit.py:258
-msgid "_Insert Subtitles…"
-msgstr "_Insertar subtítulos…"
-
-#: ../gaupol/actions/edit.py:259
-msgid "Insert"
-msgstr "Insertar"
-
-#: ../gaupol/actions/edit.py:260
-msgid "Insert new subtitles"
-msgstr "Inserta subtítulos nuevos"
-
-#: ../gaupol/actions/edit.py:278
-msgid "_Invert Selection"
-msgstr "I_nvertir selección"
-
-#: ../gaupol/actions/edit.py:279
-msgid "Invert the current selection"
-msgstr "Invierte la selección actual"
-
-#: ../gaupol/actions/edit.py:296
-msgid "_Merge Subtitles"
-msgstr "Co_mbinar subtítulos"
-
-#: ../gaupol/actions/edit.py:297
-msgid "Merge the selected subtitles"
-msgstr "Combina los subtítulos seleccionados"
-
-#: ../gaupol/actions/edit.py:317
-msgid "_Paste"
-msgstr "_Pegar"
-
-#: ../gaupol/actions/edit.py:318
-msgid "Paste texts from the clipboard"
-msgstr "Pega texto desde el portapapeles"
-
-#: ../gaupol/actions/edit.py:342
-msgid "_Redo"
-msgstr "_Rehacer"
-
-#: ../gaupol/actions/edit.py:343
-msgid "Redo the last undone action"
-msgstr "Rehace la última acción"
-
-#: ../gaupol/actions/edit.py:362
-msgid "Rem_ove Subtitles"
-msgstr "E_liminar subtítulos"
-
-#: ../gaupol/actions/edit.py:364
-msgid "Remove the selected subtitles"
-msgstr "Elimina los subtítulos seleccionados"
-
-#: ../gaupol/actions/edit.py:382
-msgid "Select _All"
-msgstr "Seleccionar _todo"
-
-#: ../gaupol/actions/edit.py:383
-msgid "Select all subtitles"
-msgstr "Selecciona todos los subtítulos"
-
-#: ../gaupol/actions/edit.py:400
-msgid "Set En_d From Video Position"
-msgstr "Definir posición _final según la posición del vídeo"
-
-#: ../gaupol/actions/edit.py:401
-msgid "Set subtitle end from video position"
-msgstr "Finaliza el subtítulo seleccionado en la posición actual del vídeo"
-
-#: ../gaupol/actions/edit.py:419
-msgid "Sele_ction"
-msgstr "Sele_cción"
-
-#: ../gaupol/actions/edit.py:435
-msgid "Stretc_h Subtitle"
-msgstr "_Ajustar subtítulo"
-
-#: ../gaupol/actions/edit.py:452
-msgid "_Split Subtitle"
-msgstr "Dividir _subtítulo"
-
-#: ../gaupol/actions/edit.py:453
-msgid "Split the selected subtitle"
-msgstr "Divide el subtítulo seleccionado"
-
-#: ../gaupol/actions/edit.py:470
-msgid "_Start Earlier"
-msgstr "_Iniciar antes"
-
-#: ../gaupol/actions/edit.py:471
-msgid "Start the selected subtitle earlier"
-msgstr "Adelanta la aparición del subtítulo seleccionado"
-
-#: ../gaupol/actions/edit.py:489
-msgid "S_tart Later"
-msgstr "I_niciar después"
-
-#: ../gaupol/actions/edit.py:490
-msgid "Start the selected subtitle later"
-msgstr "Retrasa la aparición del subtítulo seleccionado"
-
-#: ../gaupol/actions/edit.py:512
-msgid "_Undo"
-msgstr "_Deshacer"
-
-#: ../gaupol/actions/edit.py:513
-msgid "Undo the last action"
-msgstr "Deshace la última acción"
-
-#: ../gaupol/actions/file.py:32
-msgid "_Append File…"
-msgstr "_Añadir desde archivo…"
-
-#: ../gaupol/actions/file.py:33
-msgid "Append subtitles from file to the current project"
-msgstr "Agrega los subtítulos de un archivo al proyecto actual"
-
-#: ../gaupol/actions/file.py:50
-msgid "_Close All"
-msgstr "_Cerrar todo"
-
-#: ../gaupol/actions/file.py:51
-msgid "Close all open projects"
-msgstr "Cierra todos los proyectos abiertos"
-
-#: ../gaupol/actions/file.py:69
-msgid "Close the current project"
-msgstr "Cierra el proyecto actual"
-
-#: ../gaupol/actions/file.py:86
-msgid "_New"
-msgstr "_Nuevo"
-
-#: ../gaupol/actions/file.py:87
-msgid "Create a new project"
-msgstr "Crea un proyecto nuevo"
-
-#: ../gaupol/actions/file.py:103 ../gaupol/actions/file.py:121
-msgid "_Open…"
-msgstr "_Abrir…"
-
-#: ../gaupol/actions/file.py:104 ../gaupol/actions/file.py:122
-#: ../gaupol/agents/open.py:210 ../gaupol/agents/open.py:218
-msgid "Open"
-msgstr "Abrir"
-
-#: ../gaupol/actions/file.py:105 ../gaupol/actions/file.py:123
-msgid "Open main files"
-msgstr "Abre archivos de subtítulos"
-
-#: ../gaupol/actions/file.py:137
-msgid "Open _Recent"
-msgstr "Abrir _reciente"
-
-#: ../gaupol/actions/file.py:151
-msgid "Open R_ecent Translation"
-msgstr "Abrir traducción rec_iente"
-
-#: ../gaupol/actions/file.py:167
-msgid "Open _Translation…"
-msgstr "Abrir _traducción…"
-
-#: ../gaupol/actions/file.py:168 ../gaupol/agents/open.py:253
-msgid "Open Translation"
-msgstr "Abrir traducción"
-
-#: ../gaupol/actions/file.py:169
-msgid "Open a translation file"
-msgstr "Abre un archivo de traducción"
-
-#: ../gaupol/actions/file.py:187
-msgid "Quit Gaupol"
-msgstr "Finaliza Guapol"
-
-#: ../gaupol/actions/file.py:200
-msgid "_Save All"
-msgstr "Guardar _todo"
-
-#: ../gaupol/actions/file.py:201
-msgid "Save all open documents"
-msgstr "Guarda todos los documentos abiertos"
-
-#: ../gaupol/actions/file.py:218
-msgid "Save _All As…"
-msgstr "Guardar todo c_omo…"
-
-#: ../gaupol/actions/file.py:219
-msgid "Save all open documents with different properties"
-msgstr "Guarda todos los documentos abiertos con propiedades diferentes"
-
-#: ../gaupol/actions/file.py:238
-msgid "Save the current main document"
-msgstr "Guarda el documento principal actual"
-
-#: ../gaupol/actions/file.py:255
-msgid "Save _As…"
-msgstr "Gu_ardar como…"
-
-#: ../gaupol/actions/file.py:256 ../gaupol/agents/save.py:127
-msgid "Save As"
-msgstr "Guardar como"
-
-#: ../gaupol/actions/file.py:257
-msgid "Save the current main document with a different name"
-msgstr "Guarda el documento principal actual con un nombre diferente"
-
-#: ../gaupol/actions/file.py:274
-msgid "Save Trans_lation"
-msgstr "Guardar tra_ducción"
-
-#: ../gaupol/actions/file.py:275
-msgid "Save the current translation document"
-msgstr "Guarda el documento de traducción actual"
-
-#: ../gaupol/actions/file.py:292
-msgid "Save Translat_ion As…"
-msgstr "Guardar traducción c_omo…"
-
-#: ../gaupol/actions/file.py:293 ../gaupol/agents/save.py:160
-msgid "Save Translation As"
-msgstr "Guardar traducción como"
-
-#: ../gaupol/actions/file.py:294
-msgid "Save the current translation document with a different name"
-msgstr "Guarda el documento de traducción actual con un nombre diferente"
-
-#: ../gaupol/actions/file.py:310
-msgid "Select _Video…"
-msgstr "Seleccionar _vídeo…"
-
-#: ../gaupol/actions/file.py:311
-msgid "Select a video file"
-msgstr "Selecciona un archivo de vídeo"
-
-#: ../gaupol/actions/file.py:327
-msgid "Spli_t Project…"
-msgstr "D_ividir proyecto…"
-
-#: ../gaupol/actions/file.py:328
-msgid "Split the current project in two"
-msgstr "Divide el proyecto actual en dos"
-
-#: ../gaupol/actions/format.py:32
-msgid "Ca_se"
-msgstr "Capitali_zación"
-
-#: ../gaupol/actions/format.py:51
-msgid "_Dialogue"
-msgstr "_Diálogo"
-
-#: ../gaupol/actions/format.py:52
-msgid "Add or remove dialogue dashes on the selected texts"
-msgstr "Agrega o elimina rayas de diálogo en los subtítulos seleccionados"
-
-#: ../gaupol/actions/format.py:72
-msgid "_Italic"
-msgstr "Curs_iva"
-
-#: ../gaupol/actions/format.py:73
-msgid "Italicize or unitalicize the selected texts"
-msgstr "Cambia la italización del texto en los subtítulos seleccionados"
-
-#: ../gaupol/actions/format.py:96
-msgid "_Lower"
-msgstr "M_inúsculas"
-
-#: ../gaupol/actions/format.py:97
-msgid "Change the selected texts to lower case"
-msgstr "Cambia el texto a minúsculas en los subtítulos seleccionados"
-
-#: ../gaupol/actions/format.py:116
-msgid "_Sentence"
-msgstr "_Frase"
-
-#: ../gaupol/actions/format.py:117
-msgid "Change the selected texts to sentence case"
+#: ../gaupol/agents/close.py:66
+msgid "Save changes to document \"{}\" before closing?"
 msgstr ""
-"Cambia la capitalización del texto a frase en los subtítulos seleccionados"
 
-#: ../gaupol/actions/format.py:136
-msgid "_Title"
-msgstr "_Título"
+#: ../gaupol/agents/close.py:68 ../gaupol/agents/open.py:373
+#: ../gaupol/dialogs/multi_close.py:39
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Si no guarda, todos los cambios se perderán."
 
-#: ../gaupol/actions/format.py:137
-msgid "Change the selected texts to title case"
-msgstr ""
-"Cambia la capitalización del texto a título en los subtítulos seleccionados"
+#: ../gaupol/agents/close.py:70 ../gaupol/dialogs/multi_close.py:53
+msgid "Close _Without Saving"
+msgstr "Cerrar _sin guardar"
 
-#: ../gaupol/actions/format.py:156
-msgid "_Upper"
-msgstr "M_ayúsculas"
-
-#: ../gaupol/actions/format.py:157
-msgid "Change the selected texts to upper case"
-msgstr "Cambia el texto a mayúsculas en los subtítulos seleccionados"
-
-#: ../gaupol/actions/help.py:33
-msgid "_Wiki Documentation"
-msgstr "_Wiki de documentación"
-
-#: ../gaupol/actions/help.py:34
-msgid "Browse wiki documentation"
-msgstr "Explora la wiki de documentación"
-
-#: ../gaupol/actions/help.py:45
-msgid "_Report A Bug"
-msgstr "Informar de un _error"
-
-#: ../gaupol/actions/help.py:46
-msgid "Submit a bug report"
-msgstr "Envía un informe de error"
-
-#: ../gaupol/actions/help.py:58
-msgid "_About"
-msgstr "Acerca _de"
-
-#: ../gaupol/actions/help.py:59
-msgid "Show information about Gaupol"
-msgstr "Muestra información acerca de Gaupol"
-
-#: ../gaupol/actions/menu.py:32
-msgid "_Audio"
-msgstr "Audi_o"
-
-#: ../gaupol/actions/menu.py:54
-msgid "_File"
-msgstr "_Archivo"
-
-#: ../gaupol/actions/menu.py:76
-msgid "_Projects"
-msgstr "_Proyectos"
-
-#: ../gaupol/actions/menu.py:87 ../gaupol/actions/view.py:319
-msgid "_Text"
-msgstr "_Texto"
-
-#: ../gaupol/actions/menu.py:98
-msgid "T_ools"
-msgstr "_Herramientas"
-
-#: ../gaupol/actions/menu.py:109
-msgid "Vi_deo"
-msgstr "Vi_deo"
-
-#: ../gaupol/actions/menu.py:120
-msgid "_View"
-msgstr "_Ver"
-
-#: ../gaupol/actions/position.py:32
-msgid "Adjust _Durations…"
-msgstr "Ajustar _duraciones…"
-
-#: ../gaupol/actions/position.py:33
-msgid "Lengthen or shorten durations"
-msgstr "Alarga o acorta la duración de subtítulos"
-
-#: ../gaupol/actions/position.py:48
-msgid "Convert _Framerate…"
-msgstr "Cambiar _frecuencia de fotogramas…"
-
-#: ../gaupol/actions/position.py:49
-msgid "Change positions for a different framerate"
-msgstr ""
-"Ajusta posiciones dada una frecuencia de fotogramas («framerate») diferente"
-
-#: ../gaupol/actions/position.py:67
-msgid "Preview from selected position with a video player"
-msgstr "Vista previa en un reproductor de vídeo desde la posición seleccionada"
-
-#: ../gaupol/actions/position.py:86
-msgid "_Shift Positions…"
-msgstr "_Desplazar posiciones…"
-
-#: ../gaupol/actions/position.py:87
-msgid "Make subtitles appear earlier or later"
-msgstr "Adelanta o retrasa subtítulos"
-
-#: ../gaupol/actions/position.py:103
-msgid "_Transform Positions…"
-msgstr "Ajustar po_siciones…"
-
-#: ../gaupol/actions/position.py:104
-msgid "Change positions by linear two-point correction"
-msgstr ""
-"Ajusta la posición de subtítulos mediante una aproximación lineal entre dos "
-"puntos"
-
-#: ../gaupol/actions/search.py:33
-msgid "_Find And Replace…"
-msgstr "Buscar y _reemplazar…"
-
-#: ../gaupol/actions/search.py:35
-msgid "Search for and replace text"
-msgstr "Busca y reemplaza texto"
-
-#: ../gaupol/actions/search.py:52
-msgid "Search forwards for same text"
-msgstr "Busca hacia adelante por el mismo texto"
-
-#: ../gaupol/actions/search.py:69
-msgid "Find Pre_vious"
-msgstr "Buscar _anterior"
-
-#: ../gaupol/actions/search.py:70
-msgid "Search backwards for same text"
-msgstr "Busca hacia atrás por el mismo texto"
-
-#: ../gaupol/actions/text.py:32
-msgid "Co_nfigure Spell-check…"
-msgstr "_Configurar corrector ortográfico…"
-
-#: ../gaupol/actions/text.py:33
-msgid "Set language and spell-check target"
-msgstr "Define idioma y alcance del corrector ortográfico"
-
-#: ../gaupol/actions/text.py:49
-msgid "_Check Spelling"
-msgstr "Comprobar _ortografía"
-
-#: ../gaupol/actions/text.py:50
-msgid "Spelling"
-msgstr "Ortografía"
-
-#: ../gaupol/actions/text.py:51
-msgid "Check for incorrect spelling"
-msgstr "Busca errores ortográficos"
-
-#: ../gaupol/actions/text.py:69
-msgid "C_orrect Texts…"
-msgstr "Corregir _texto…"
-
-#: ../gaupol/actions/text.py:70
-msgid "Find and correct errors in texts"
-msgstr "Busca y corrige problemas en los subtítulos"
-
-#: ../gaupol/actions/video.py:32
-msgid "_Load Video…"
-msgstr "Abrir _vídeo…"
-
-#: ../gaupol/actions/video.py:33
-msgid "Load a video file"
-msgstr "Abre un archivo de vídeo"
-
-#: ../gaupol/actions/video.py:51
-msgid "_Play/Pause"
-msgstr "_Reproducir o pausar"
-
-#: ../gaupol/actions/video.py:52
-msgid "Play or pause video"
-msgstr "Reproduce o pausa el vídeo"
-
-#: ../gaupol/actions/video.py:68
-msgid "Play _Selection"
-msgstr "Reproducir sele_cción"
-
-#: ../gaupol/actions/video.py:69
-msgid "Play the selected subtitles"
-msgstr "Reproduce los subtítulos seleccionados"
-
-#: ../gaupol/actions/video.py:87
-msgid "Seek _Backward"
-msgstr "Saltar hacia a_trás"
-
-#: ../gaupol/actions/video.py:88
-msgid "Seek backward"
-msgstr "Salta hacia atrás"
-
-#: ../gaupol/actions/video.py:105
-msgid "Seek _Forward"
-msgstr "Saltar hacia a_delante"
-
-#: ../gaupol/actions/video.py:106
-msgid "Seek forward"
-msgstr "Salta hacia adelante"
-
-#: ../gaupol/actions/video.py:123
-msgid "Seek _Next"
-msgstr "Saltar al _siguiente"
-
-#: ../gaupol/actions/video.py:124
-msgid "Seek to the start of the next subtitle"
-msgstr "Salta al inicio del subtítulo siguiente"
-
-#: ../gaupol/actions/video.py:141
-msgid "Seek _Previous"
-msgstr "Saltar al _anterior"
-
-#: ../gaupol/actions/video.py:142
-msgid "Seek to the start of the previous subtitle"
-msgstr "Salta al inicio del subtítulo anterior"
-
-#: ../gaupol/actions/video.py:158
-msgid "See_k Selection End"
-msgstr "Saltar al _fin de la selección"
-
-#: ../gaupol/actions/video.py:159
-msgid "Seek the end of selection"
-msgstr "Salta al último subtítulo seleccionado"
-
-#: ../gaupol/actions/video.py:176
-msgid "S_eek Selection Start"
-msgstr "Saltar al _inicio de la selección"
-
-#: ../gaupol/actions/video.py:177
-msgid "Seek the start of selection"
-msgstr "Salta al primer subtítulo seleccionado"
-
-#: ../gaupol/actions/view.py:35
-msgid "Activate the project in the next tab"
-msgstr "Activa el proyecto de la solapa siguiente"
-
-#: ../gaupol/actions/view.py:54
-msgid "Activate the project in the previous tab"
-msgstr "Activa el proyecto de la solapa anterior"
-
-#: ../gaupol/actions/view.py:71
-msgid "Move Tab _Left"
-msgstr "Mover solapa a la _izquierda"
-
-#: ../gaupol/actions/view.py:72
-msgid "Move the current tab to the left"
-msgstr "Mueve la solapa actual hacia la izquierda"
-
-#: ../gaupol/actions/view.py:88
-msgid "Move Tab _Right"
-msgstr "Mover solapa a la _derecha"
-
-#: ../gaupol/actions/view.py:89
-msgid "Move the current tab to the right"
-msgstr "Mueve la solapa actual hacia la derecha"
-
-#: ../gaupol/actions/view.py:105
-msgid "_Columns"
-msgstr "_Columnas"
-
-#: ../gaupol/actions/view.py:122
-msgid "2_3.976 fps"
-msgstr "2_3,976 fps"
-
-#: ../gaupol/actions/view.py:123
-msgid "Calculate nonnative units with a framerate of 23.976 fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de 23,976 fotogramas por "
-"segundo"
-
-#: ../gaupol/actions/view.py:144
-msgid "2_4.000 fps"
-msgstr "2_4,000 fps"
-
-#: ../gaupol/actions/view.py:145
-msgid "Calculate nonnative units with a framerate of 24.000 fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de 24,000 fotogramas por "
-"segundo"
-
-#: ../gaupol/actions/view.py:166
-msgid "2_5.000 fps"
-msgstr "2_5,000 fps"
-
-#: ../gaupol/actions/view.py:167
-msgid "Calculate nonnative units with a framerate of 25.000 fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de 25,000 fotogramas por "
-"segundo"
-
-#: ../gaupol/actions/view.py:188
-msgid "2_9.970 fps"
-msgstr "2_9,970 fps"
-
-#: ../gaupol/actions/view.py:189
-msgid "Calculate nonnative units with a framerate of 29.970 fps"
-msgstr ""
-"Calcula unidades no nativas con una frecuencia de 29,970 fotogramas por "
-"segundo"
-
-#: ../gaupol/actions/view.py:208
-msgid "F_ramerate"
-msgstr "F_recuencia de fotogramas"
-
-#: ../gaupol/actions/view.py:225
-msgid "_Frames"
-msgstr "_Fotogramas"
-
-#: ../gaupol/actions/view.py:226
-msgid "Show positions as frames"
-msgstr "Usa fotogramas («frames») para posicionar subtítulos"
-
-#: ../gaupol/actions/view.py:245
-msgid "_Layout"
-msgstr "Disp_osición"
-
-#: ../gaupol/actions/view.py:261
-msgid "_Times"
-msgstr "_Tiempos"
-
-#: ../gaupol/actions/view.py:262
-msgid "Show positions as times"
-msgstr "Usa instantes de tiempo para posicionar subtítulos"
-
-#: ../gaupol/actions/view.py:283
-msgid "_Duration"
-msgstr "_Duración"
-
-#: ../gaupol/actions/view.py:284
-msgid "Show or hide the duration column"
-msgstr "Muestra u oculta la columna duración"
-
-#: ../gaupol/actions/view.py:301
-msgid "_End"
-msgstr "_Fin"
-
-#: ../gaupol/actions/view.py:302
-msgid "Show or hide the end column"
-msgstr "Muestra u oculta la columna fin"
-
-#: ../gaupol/actions/view.py:320
-msgid "Show or hide the text column"
-msgstr "Muestra u oculta la columna texto"
-
-#: ../gaupol/actions/view.py:337
-msgid "Tool_bar"
-msgstr "Barra de _herramientas"
-
-#: ../gaupol/actions/view.py:338
-msgid "Show or hide the toolbar"
-msgstr "Muestra u oculta la barra de herramientas"
-
-#: ../gaupol/actions/view.py:351
-msgid "_No."
-msgstr "_Nº"
-
-#: ../gaupol/actions/view.py:352
-msgid "Show or hide the number column"
-msgstr "Muestra u oculta la columna número del subtítulo"
-
-#: ../gaupol/actions/view.py:370
-msgid "_Video Player"
-msgstr "Ví_deo"
-
-#: ../gaupol/actions/view.py:372
-msgid "Show or hide the video player"
-msgstr "Muestra u oculta el vídeo integrado"
-
-#: ../gaupol/actions/view.py:389
-msgid "_Output Window"
-msgstr "Ventana de _salida"
-
-#: ../gaupol/actions/view.py:390
-msgid "Show or hide the output window"
-msgstr "Muestra u oculta la ventana de salida"
-
-#: ../gaupol/actions/view.py:403
-msgid "_Start"
-msgstr "_Inicio"
-
-#: ../gaupol/actions/view.py:404
-msgid "Show or hide the start column"
-msgstr "Muestra u oculta la columna inicio"
-
-#: ../gaupol/actions/view.py:422
-msgid "T_ranslation"
-msgstr "T_raducción"
-
-#: ../gaupol/actions/view.py:423
-msgid "Show or hide the translation column"
-msgstr "Muestra u oculta la columna traducción"
-
-#: ../gaupol/actions/view.py:440
-msgid "_Horizontal"
-msgstr "_Horizontal"
-
-#: ../gaupol/actions/view.py:441
-msgid "Split window horizontally"
-msgstr "Divide la ventana horizontalmente"
-
-#: ../gaupol/actions/view.py:461
-msgid "_Vertical"
-msgstr "_Vertical"
-
-#: ../gaupol/actions/view.py:462
-msgid "Split window vertically"
-msgstr "Divide la ventana verticalmente"
-
-#: ../gaupol/agents/close.py:87
-msgid "Save changes to main document \"{}\" before closing?"
-msgstr "¿Guardar los cambios en el documento principal «{}» antes de salir?"
-
-#: ../gaupol/agents/close.py:118
-msgid "Save changes to translation document \"{}\" before closing?"
-msgstr ""
-"¿Guardar los cambios en el documento de traducción «{}» antes de salir?"
-
-#: ../gaupol/agents/edit.py:99 ../gaupol/agents/edit.py:117
+#: ../gaupol/agents/edit.py:100 ../gaupol/agents/edit.py:118
 msgid "Stretching end position"
 msgstr "Ajustar posición final"
 
-#: ../gaupol/agents/edit.py:198
-msgid "Inserted {:d} subtitle to fit clipboard contents"
-msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
-msgstr[0] ""
-"{:d} subtítulo nuevo insertado para coincidir con el contenido del "
-"portapapeles"
-msgstr[1] ""
-"{:d} subtítulos nuevos insertados para coincidir con el contenido del "
-"portapapeles"
-
-#: ../gaupol/agents/edit.py:280 ../gaupol/agents/edit.py:298
+#: ../gaupol/agents/edit.py:281 ../gaupol/agents/edit.py:299
 msgid "Stretching start position"
 msgstr "Ajustar posición inicial"
 
-#: ../gaupol/agents/edit.py:350
+#. Don't show help text if it would overlap with text being edited.
+#: ../gaupol/agents/edit.py:355
 msgid "Use Shift+Return for line-break"
 msgstr "Use Mayús+Intro para insertar un salto de línea"
 
-#: ../gaupol/agents/menu.py:51
-msgid "Select \"{}\""
-msgstr "Selecciona «{}»"
-
-#: ../gaupol/agents/menu.py:73
-msgid "Activate \"{}\""
-msgstr "Activa «{}»"
-
-#: ../gaupol/agents/menu.py:108 ../gaupol/agents/update.py:183
-msgid "Redo \"{}\""
-msgstr "Rehace «{}»"
-
-#: ../gaupol/agents/menu.py:150
-msgid "Undefined"
-msgstr "Indeterminado"
-
-#: ../gaupol/agents/menu.py:200 ../gaupol/agents/update.py:179
-msgid "Undo \"{}\""
-msgstr "Deshace «{}»"
-
-#: ../gaupol/agents/open.py:94
+#: ../gaupol/agents/open.py:85
 #, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "{amount:d} subtítulos añadidos desde «{basename}»"
 
-#: ../gaupol/agents/open.py:106
+#: ../gaupol/agents/open.py:96
 msgid "Appending file"
 msgstr "Añadiendo archivo"
 
-#: ../gaupol/agents/open.py:122
+#: ../gaupol/agents/open.py:111
 msgid "File \"{}\" is already open"
 msgstr "El archivo «{}» ya está abierto"
 
-#: ../gaupol/agents/open.py:263
+#: ../gaupol/agents/open.py:198 ../gaupol/application.py:216
+msgid "Open"
+msgstr "Abrir"
+
+#: ../gaupol/agents/open.py:209
+msgid "Open Translation"
+msgstr "Abrir traducción"
+
+#: ../gaupol/agents/open.py:218
 msgid "Select Video"
 msgstr "Seleccionar el archivo de vídeo"
 
-#: ../gaupol/agents/open.py:264
+#: ../gaupol/agents/open.py:219
 msgid "_Select"
 msgstr "_Seleccionar"
 
-#: ../gaupol/agents/open.py:381
+#: ../gaupol/agents/open.py:314
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "No fue posible decodificar el archivo «{}» con los códecs disponibles"
 
-#: ../gaupol/agents/open.py:383
+#: ../gaupol/agents/open.py:315
 msgid "Please try to open the file with a different character encoding."
 msgstr ""
 "Intente abrir el archivo usando una codificación de caracteres diferente."
 
-#: ../gaupol/agents/open.py:392
+#: ../gaupol/agents/open.py:317 ../gaupol/agents/open.py:326
+#: ../gaupol/agents/open.py:334 ../gaupol/agents/open.py:343
+#: ../gaupol/agents/preview.py:104 ../gaupol/agents/preview.py:112
+#: ../gaupol/agents/preview.py:120 ../gaupol/agents/save.py:198
+#: ../gaupol/agents/save.py:206 ../gaupol/assistants.py:600
+#: ../gaupol/dialogs/encoding.py:56 ../gaupol/dialogs/search.py:556
+#: ../gaupol/dialogs/search.py:564 ../gaupol/dialogs/spell_check.py:390
+#: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:239
+msgid "_OK"
+msgstr "_Aceptar"
+
+#: ../gaupol/agents/open.py:323
 msgid "Failed to recognize format of file \"{}\""
 msgstr "No fue posible reconocer el formato del archivo «{}»"
 
-#: ../gaupol/agents/open.py:393
+#: ../gaupol/agents/open.py:324
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
@@ -2481,23 +1916,23 @@ msgstr ""
 "Verifique que el archivo que intenta abrir está en un formato soportado por "
 "Gaupol."
 
-#: ../gaupol/agents/open.py:402
+#: ../gaupol/agents/open.py:332
 msgid "Failed to open file \"{}\""
 msgstr "No fue posible abrir el archivo «{}»"
 
-#: ../gaupol/agents/open.py:410
+#: ../gaupol/agents/open.py:340
 msgid "Failed to parse file \"{}\""
 msgstr "No fue posible analizar el archivo «{}»"
 
-#: ../gaupol/agents/open.py:411
+#: ../gaupol/agents/open.py:341
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr "Verifique que el archivo que intenta abrir es un archivo {} válido."
 
-#: ../gaupol/agents/open.py:424
+#: ../gaupol/agents/open.py:349
 msgid "Open abnormally large file \"{}\"?"
 msgstr "¿Abrir el archivo de gran tamaño «{}»?"
 
-#: ../gaupol/agents/open.py:425
+#: ../gaupol/agents/open.py:350
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -2505,16 +1940,16 @@ msgstr ""
 "El tamaño del archivo es {:.1f} MB, que es excesivamente grande para un "
 "archivo de subtítulos. Verifique que no sea un archivo binario."
 
-#: ../gaupol/agents/open.py:430 ../gaupol/agents/open.py:447
-#: ../gaupol/dialogs/open.py:50
+#: ../gaupol/agents/open.py:353 ../gaupol/agents/open.py:365
+#: ../gaupol/dialogs/open.py:64
 msgid "_Open"
 msgstr "_Abrir"
 
-#: ../gaupol/agents/open.py:441
+#: ../gaupol/agents/open.py:360
 msgid "Open unsorted file \"{}\"?"
 msgstr "¿Abrir el archivo desordenado «{}»?"
 
-#: ../gaupol/agents/open.py:442
+#: ../gaupol/agents/open.py:361
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
@@ -2523,22 +1958,22 @@ msgstr ""
 "una gran cantidad, es posible que el archivo fuera creado de forma "
 "incorrecta."
 
-#: ../gaupol/agents/open.py:458
+#: ../gaupol/agents/open.py:372
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
 "¿Guardar cambios en el documento de traducción «{}» antes de abrir uno nuevo?"
 
-#: ../gaupol/agents/open.py:462
+#: ../gaupol/agents/open.py:375
 msgid "Open _Without Saving"
 msgstr "Abrir _sin guardar"
 
-#: ../gaupol/agents/preview.py:106
+#: ../gaupol/agents/preview.py:101
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
 "No fue posible codificar el archivo de subtítulos en el directorio temporal "
 "«{}»"
 
-#: ../gaupol/agents/preview.py:108
+#: ../gaupol/agents/preview.py:102
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
@@ -2548,134 +1983,255 @@ msgstr ""
 "previa usando la codificación de caracteres actual. Intente guardar el "
 "archivo de subtítulos con una codificación de caracteres diferente."
 
-#: ../gaupol/agents/preview.py:118
+#: ../gaupol/agents/preview.py:110
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
 "No fue posible guardar el archivo de subtítulos en el directorio temporal "
 "«{}»"
 
-#: ../gaupol/agents/preview.py:127
+#: ../gaupol/agents/preview.py:118
 msgid "Failed to launch video player"
 msgstr "No fue posible ejecutar el reproductor de vídeo"
 
-#: ../gaupol/agents/save.py:134
+#: ../gaupol/agents/save.py:129
+msgid "Save As"
+msgstr "Guardar como"
+
+#: ../gaupol/agents/save.py:135
 msgid "Saved main document as \"{}\""
 msgstr "Documento principal guardado como «{}»"
 
-#: ../gaupol/agents/save.py:167
+#: ../gaupol/agents/save.py:153
+msgid "Save Translation As"
+msgstr "Guardar traducción como"
+
+#: ../gaupol/agents/save.py:159
 msgid "Saved translation document as \"{}\""
 msgstr "Documento de traducción guardado como «{}»"
 
-#: ../gaupol/agents/save.py:202
+#: ../gaupol/agents/save.py:195
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr ""
 "No fue posible codificar el archivo «{basename}» usando el códec «{codec}»"
 
-#: ../gaupol/agents/save.py:203
+#: ../gaupol/agents/save.py:196
 msgid "Please try to save the file with a different character encoding."
 msgstr ""
 "Intente guardar el archivo usando una codificación de caracteres diferente."
 
-#: ../gaupol/agents/save.py:211
+#: ../gaupol/agents/save.py:204
 msgid "Failed to save file \"{}\""
 msgstr "No fue posible guardar el archivo «{}»"
 
-#: ../gaupol/agents/video.py:89
+#: ../gaupol/agents/video.py:67
+msgid "Play or pause video"
+msgstr "Reproduce o pausa el vídeo"
+
+#: ../gaupol/agents/video.py:75
+msgid "Seek to the start of the previous subtitle"
+msgstr "Salta al inicio del subtítulo anterior"
+
+#: ../gaupol/agents/video.py:81
+msgid "Seek to the start of the next subtitle"
+msgstr "Salta al inicio del subtítulo siguiente"
+
+#: ../gaupol/agents/video.py:88
+msgid "Seek backward"
+msgstr "Salta hacia atrás"
+
+#: ../gaupol/agents/video.py:94
+msgid "Seek forward"
+msgstr "Salta hacia adelante"
+
+#: ../gaupol/agents/video.py:107
 msgid "Volume"
 msgstr "Volumen"
 
-#: ../gaupol/agents/video.py:123
+#: ../gaupol/agents/video.py:161
 msgid "Load Video"
 msgstr "Abrir vídeo"
 
-#: ../gaupol/agents/video.py:124
+#: ../gaupol/agents/video.py:161
 msgid "_Load"
 msgstr "_Abrir"
 
-#: ../gaupol/application.py:281
-msgid "Redo undone actions"
-msgstr "Rehace acciones deshechas"
+#: ../gaupol/agents/video.py:336
+msgid "Undefined"
+msgstr "Indeterminado"
 
-#: ../gaupol/application.py:333
-msgid "Undo actions"
-msgstr "Deshace acciones"
+#: ../gaupol/application.py:220
+msgid "Open main files"
+msgstr "Abre archivos de subtítulos"
 
-#. Translators: Keep these page titles short, since they
+#: ../gaupol/application.py:227
+msgid "Save"
+msgstr ""
+
+#: ../gaupol/application.py:230
+msgid "Save the current main document"
+msgstr "Guarda el documento principal actual"
+
+#: ../gaupol/application.py:235
+msgid "Undo"
+msgstr ""
+
+#: ../gaupol/application.py:239
+msgid "Undo the last action"
+msgstr "Deshace la última acción"
+
+#: ../gaupol/application.py:246
+msgid "Redo"
+msgstr ""
+
+#: ../gaupol/application.py:249
+msgid "Redo the last undone action"
+msgstr "Rehace la última acción"
+
+#: ../gaupol/application.py:257
+msgid "Insert"
+msgstr "Insertar"
+
+#: ../gaupol/application.py:259
+msgid "Insert new subtitles"
+msgstr "Inserta subtítulos nuevos"
+
+#: ../gaupol/application.py:265
+msgid "Remove the selected subtitles"
+msgstr "Elimina los subtítulos seleccionados"
+
+#: ../gaupol/application.py:272
+msgid "Search for and replace text"
+msgstr "Busca y reemplaza texto"
+
+#: ../gaupol/application.py:278
+msgid "Show or hide the video player"
+msgstr "Muestra u oculta el vídeo integrado"
+
+#: ../gaupol/application.py:284
+msgid "Preview from selected position with a video player"
+msgstr "Vista previa en un reproductor de vídeo desde la posición seleccionada"
+
+#: ../gaupol/applicationman.py:104
+msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
+msgstr "gaupol [OPCIÓN...] [ARCHIVO...] [+[NUM]]"
+
+#: ../gaupol/applicationman.py:108
+msgid "FILE..."
+msgstr ""
+
+#: ../gaupol/applicationman.py:111
+msgid "subtitle files to open"
+msgstr ""
+
+#: ../gaupol/applicationman.py:121
+msgid "ENCODING"
+msgstr "CODIFICACIÓN"
+
+#: ../gaupol/applicationman.py:124
+msgid "set the character encoding used to open files"
+msgstr "establece la codificación de caracteres usada para abrir archivos"
+
+#: ../gaupol/applicationman.py:131
+msgid "list all available character encodings"
+msgstr "lista todas las codificaciones de caracteres disponibles"
+
+#: ../gaupol/applicationman.py:136 ../gaupol/applicationman.py:153
+msgid "FILE"
+msgstr "ARCHIVO"
+
+#: ../gaupol/applicationman.py:139
+msgid "open translation file"
+msgstr "abre el archivo de traducción"
+
+#: ../gaupol/applicationman.py:144
+msgid "METHOD"
+msgstr "MÉTODO"
+
+#: ../gaupol/applicationman.py:148
+msgid "method used to align translation subtitles: 'number' or 'position'"
+msgstr ""
+"método usado para ajustar los subtítulos de traducción: 'number' o 'position'"
+
+#: ../gaupol/applicationman.py:156
+msgid "select video file"
+msgstr "selecciona el archivo de vídeo"
+
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:108
+#: ../gaupol/assistants.py:99
 msgid "Tasks and Target"
 msgstr "Tareas y alcance"
 
-#: ../gaupol/assistants.py:137
+#: ../gaupol/assistants.py:128
 msgid "Correct texts in the text column"
 msgstr "Corregir en la columna texto"
 
-#: ../gaupol/assistants.py:138
+#: ../gaupol/assistants.py:129
 msgid "Correct texts in the translation column"
 msgstr "Corregir en la columna traducción"
 
-#: ../gaupol/assistants.py:147
+#: ../gaupol/assistants.py:138
 msgid "Correct texts in selected subtitles"
 msgstr "Corregir en los subtítulos seleccionados"
 
-#: ../gaupol/assistants.py:148
+#: ../gaupol/assistants.py:139
 msgid "Correct texts in current project"
 msgstr "Corregir en el proyecto actual"
 
-#: ../gaupol/assistants.py:149
+#: ../gaupol/assistants.py:140
 msgid "Correct texts in all open projects"
 msgstr "Corregir en todos los proyectos abiertos"
 
-#: ../gaupol/assistants.py:372
+#: ../gaupol/assistants.py:363
 msgid "Other"
 msgstr "Otro"
 
-#: ../gaupol/assistants.py:448
+#: ../gaupol/assistants.py:439
 msgid "Capitalize texts written in lower case"
 msgstr "Capitaliza el texto escrito en minúsculas"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:452
+#: ../gaupol/assistants.py:443
 msgid "Capitalization Patterns"
 msgstr "Reglas de capitalización"
 
-#: ../gaupol/assistants.py:454
+#: ../gaupol/assistants.py:445
 msgid "Capitalize texts"
 msgstr "Capitalizar texto"
 
-#: ../gaupol/assistants.py:477
+#: ../gaupol/assistants.py:468
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
 "Corrige errores frecuentes propios de un humano o un software reconocedor de "
 "imágenes"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:483
+#: ../gaupol/assistants.py:472
 msgid "Common Error Patterns"
 msgstr "Reglas de errores frecuentes"
 
-#: ../gaupol/assistants.py:485
+#: ../gaupol/assistants.py:474
 msgid "Correct common errors"
 msgstr "Corregir errores frecuentes"
 
-#: ../gaupol/assistants.py:537
+#: ../gaupol/assistants.py:526
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr "Elimina el texto explicativo para personas con problemas de audición"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:543
+#: ../gaupol/assistants.py:530
 msgid "Hearing Impaired Patterns"
 msgstr "Reglas de texto para sordos"
 
-#: ../gaupol/assistants.py:545
+#: ../gaupol/assistants.py:532
 msgid "Remove hearing impaired texts"
 msgstr "Eliminar texto para sordos"
 
-#: ../gaupol/assistants.py:557
+#: ../gaupol/assistants.py:544
 msgid ""
 "Use spell-check suggestions to fix whitespace detection errors of image "
 "recognition software"
@@ -2683,141 +2239,153 @@ msgstr ""
 "Usa sugerencias del corrector ortográfico para corregir los espacios en\n"
 "blanco detectados por un software reconocedor de imágenes"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:563
+#: ../gaupol/assistants.py:548
 msgid "Joining and Splitting Words"
 msgstr "Unir o dividir palabras"
 
-#: ../gaupol/assistants.py:565
+#: ../gaupol/assistants.py:550
 msgid "Join or Split Words"
 msgstr "Unir o dividir palabras"
 
-#: ../gaupol/assistants.py:615 ../gaupol/dialogs/spell_check.py:379
+#: ../gaupol/assistants.py:598 ../gaupol/dialogs/spell_check.py:387
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "No fue posible abrir el diccionario para el idioma «{}»"
 
-#: ../gaupol/assistants.py:651
+#: ../gaupol/assistants.py:634
 msgid "Break text into lines of defined length"
 msgstr "Divide el texto en líneas de un largo máximo especificado"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:655
+#: ../gaupol/assistants.py:638
 msgid "Line-Break Patterns"
 msgstr "Reglas de dividir líneas"
 
-#: ../gaupol/assistants.py:657
+#: ../gaupol/assistants.py:640
 msgid "Break lines"
 msgstr "Dividir líneas"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:693
+#: ../gaupol/assistants.py:678
 msgid "Line-Break Options"
 msgstr "Opciones de dividir líneas"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:777
+#: ../gaupol/assistants.py:762
 msgid "Correcting Texts"
 msgstr "Corrigiendo textos"
 
-#: ../gaupol/assistants.py:783
+#: ../gaupol/assistants.py:768
 msgid "Each task is now being run on each project."
 msgstr "Aplicando las tareas seleccionadas a cada proyecto."
 
-#: ../gaupol/assistants.py:807
+#: ../gaupol/assistants.py:792
 #, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "{current:d} de {total:d} tareas completadas"
 
-#: ../gaupol/assistants.py:815
+#: ../gaupol/assistants.py:800
 msgid "Project: {}"
 msgstr "Proyecto: {}"
 
-#: ../gaupol/assistants.py:821
+#: ../gaupol/assistants.py:806
 msgid "Task: {}"
 msgstr "Tarea: {}"
 
-#. Translators: Keep these page titles short, since they
+#. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: ../gaupol/assistants.py:844
+#: ../gaupol/assistants.py:831
 msgid "Confirm Changes"
 msgstr "Confirmar cambios"
 
-#: ../gaupol/assistants.py:902
+#: ../gaupol/assistants.py:889
 msgid "Accept"
 msgstr "Aceptar"
 
-#: ../gaupol/assistants.py:908
+#: ../gaupol/assistants.py:895
 msgid "Original Text"
 msgstr "Texto original"
 
-#: ../gaupol/assistants.py:909
+#: ../gaupol/assistants.py:896
 msgid "Corrected Text"
 msgstr "Texto corregido"
 
-#: ../gaupol/assistants.py:1063
+#: ../gaupol/assistants.py:1045
 msgid "Correct Texts"
 msgstr "Corregir Texto"
 
-#: ../gaupol/assistants.py:1091
+#: ../gaupol/assistants.py:1072
 msgid "Correcting texts"
 msgstr "Corregir texto"
 
-#: ../gaupol/assistants.py:1107
+#: ../gaupol/assistants.py:1088
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "{edits:d} subtítulos editados, {removals:d} eliminados"
 
-#: ../gaupol/assistants.py:1141
-msgid "Confirm {:d} Change"
-msgid_plural "Confirm {:d} Changes"
-msgstr[0] "{:d} cambio por confirmar"
-msgstr[1] "{:d} cambios por confirmar"
-
-#: ../gaupol/dialogs/about.py:37
+#: ../gaupol/dialogs/about.py:36
 msgid "About Gaupol"
 msgstr "Acerca de Gaupol"
 
-#: ../gaupol/dialogs/about.py:41
+#: ../gaupol/dialogs/about.py:40
 msgid "Subtitle editor"
 msgstr "Editor de subtítulos"
 
-#. Translators: This is a special message that shouldn't be translated
+#. TRANSLATORS: This is a special message that shouldn't be translated
 #. literally. It is used in the about dialog to give credits to the
 #. translators. Thus, you should translate it to your name and email
 #. address. You can also include other translators who have contributed
 #. to this translation; in that case, please write them on separate
 #. lines seperated by newlines (\n).
-#: ../gaupol/dialogs/about.py:52
+#: ../gaupol/dialogs/about.py:51
 msgid "translator-credits"
 msgstr ""
 "Carlos Mella <cmellib@gmail.com>\n"
 "Miguel Latorre <kuan@graffiti.net>"
 
-#: ../gaupol/dialogs/about.py:55
+#: ../gaupol/dialogs/about.py:54
 msgid "Gaupol Website"
 msgstr "Sitio web de Gaupol"
 
-#: ../gaupol/dialogs/append.py:34
+#: ../gaupol/dialogs/append.py:35
 msgid "Append File"
 msgstr "Añadir desde archivo"
 
-#: ../gaupol/dialogs/encoding.py:64 ../gaupol/dialogs/encoding.py:103
+#: ../gaupol/dialogs/debug.py:43
+msgid "Something went wrong"
+msgstr "Algo salió mal"
+
+#: ../gaupol/dialogs/debug.py:44
+msgid ""
+"You have probably discovered a bug. Please report it by providing the below "
+"information and a description of what you were doing."
+msgstr ""
+
+#: ../gaupol/dialogs/debug.py:52
+msgid "_Report Bug"
+msgstr ""
+
+#: ../gaupol/dialogs/duration_adjust.py:87
+msgid "_Adjust"
+msgstr "_Ajustar"
+
+#: ../gaupol/dialogs/encoding.py:78 ../gaupol/dialogs/encoding.py:125
 msgid "Description"
 msgstr "Descripción"
 
-#: ../gaupol/dialogs/encoding.py:71 ../gaupol/dialogs/encoding.py:110
+#: ../gaupol/dialogs/encoding.py:85 ../gaupol/dialogs/encoding.py:132
 msgid "Encoding"
 msgstr "Codificación"
 
-#: ../gaupol/dialogs/encoding.py:119
+#: ../gaupol/dialogs/encoding.py:141
 msgid "Show in Menu"
 msgstr "Mostrar en el menú"
 
-#: ../gaupol/dialogs/file.py:59 ../gaupol/dialogs/video.py:49
+#: ../gaupol/dialogs/file.py:59 ../gaupol/dialogs/video.py:52
 msgid "All files"
 msgstr "Todos los archivos"
 
@@ -2838,11 +2406,19 @@ msgstr "Detectar automáticamente"
 msgid "Other…"
 msgstr "Otro…"
 
-#: ../gaupol/dialogs/insert.py:48
+#: ../gaupol/dialogs/framerate_convert.py:64
+msgid "Co_nvert"
+msgstr "Co_nvertir"
+
+#: ../gaupol/dialogs/insert.py:45
+msgid "_Insert"
+msgstr "_Insertar"
+
+#: ../gaupol/dialogs/insert.py:54
 msgid "Above selection"
 msgstr "Sobre la selección"
 
-#: ../gaupol/dialogs/insert.py:49
+#: ../gaupol/dialogs/insert.py:55
 msgid "Below selection"
 msgstr "Bajo la selección"
 
@@ -2850,12 +2426,24 @@ msgstr "Bajo la selección"
 msgid "Set Language"
 msgstr "Definir idioma"
 
-#: ../gaupol/dialogs/multi_save.py:202
+#: ../gaupol/dialogs/multi_close.py:38
+msgid "Save changes to documents before closing?"
+msgstr "¿Desea guardar los cambios en los documentos antes de salir?"
+
+#: ../gaupol/dialogs/multi_close.py:70
+msgid "Select the _main documents you want to save:"
+msgstr "Seleccione los docu_mentos que quiera guardar:"
+
+#: ../gaupol/dialogs/multi_close.py:95
+msgid "Select the _translation documents you want to save:"
+msgstr "Seleccione los documentos de _traducción que quiera guardar:"
+
+#: ../gaupol/dialogs/multi_save.py:208
 msgid ""
 "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr "{:d} de los archivos por guardarse ya existen. ¿Desea reemplazarlos?"
 
-#: ../gaupol/dialogs/multi_save.py:203
+#: ../gaupol/dialogs/multi_save.py:209
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
@@ -2863,184 +2451,143 @@ msgstr ""
 "Los archivos ya existen en «{}». Al reemplazarlos sobreescribirá su "
 "contenido."
 
-#: ../gaupol/dialogs/position_shift.py:136
+#: ../gaupol/dialogs/position_shift.py:69
+msgid "_Shift"
+msgstr "_Desplazar"
+
+#: ../gaupol/dialogs/position_shift.py:145
 msgid "frames"
 msgstr "fotogramas"
 
-#: ../gaupol/dialogs/position_shift.py:154
-msgid "seconds"
-msgstr "segundos"
+#: ../gaupol/dialogs/position_transform.py:70
+msgid "_Transform"
+msgstr "_Ajustar"
 
-#: ../gaupol/dialogs/preferences.py:215
+#: ../gaupol/dialogs/preferences.py:217
 msgid "{} Extension Website"
 msgstr "Sitio web de {}"
 
-#: ../gaupol/dialogs/preferences.py:241
-msgid "Cannot deactivate extension"
-msgstr "No es posible deshabilitar el complemento"
-
-#: ../gaupol/dialogs/preferences.py:242
-msgid "Extension \"{}\" is required by other extensions."
-msgstr "El complemento «{}» es utilizado por otros complementos."
-
-#: ../gaupol/dialogs/preferences.py:432
+#: ../gaupol/dialogs/preferences.py:429
 msgid "Custom"
 msgstr "Personalizado"
 
-#: ../gaupol/dialogs/search.py:453
-msgid "Found and replaced {:d} occurence"
-msgid_plural "Found and replaced {:d} occurences"
-msgstr[0] "{:d} aparición encontrada y reemplazada"
-msgstr[1] "{:d} apariciones encontradas y reemplazadas"
+#: ../gaupol/dialogs/preview_error.py:36
+msgid "Preview in video player failed"
+msgstr "No fue posible realizar la vista previa en el reproductor de vídeo"
 
-#: ../gaupol/dialogs/search.py:470
+#: ../gaupol/dialogs/preview_error.py:37
+msgid ""
+"There is probably a problem with either the video file or the preview "
+"command."
+msgstr ""
+
+#: ../gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
 msgstr "No se encontró «{}»"
 
-#: ../gaupol/dialogs/search.py:536
+#: ../gaupol/dialogs/search.py:554
 msgid "Error in regular expression pattern"
 msgstr "Error con la expresión regular de búsqueda"
 
-#: ../gaupol/dialogs/search.py:544
+#: ../gaupol/dialogs/search.py:562
 msgid "Error in regular expression replacement"
 msgstr "Error con la expresión regular de reemplazo"
 
-#: ../gaupol/dialogs/spell_check.py:357
+#: ../gaupol/dialogs/spell_check.py:360
 msgid "Spell-checking"
 msgstr "Corrigiendo ortografía"
 
-#: ../gaupol/dialogs/split.py:69
+#: ../gaupol/dialogs/split.py:45
+msgid "_Split"
+msgstr "_Dividir"
+
+#: ../gaupol/dialogs/split.py:76
 msgid "Splitting project"
 msgstr "Dividiendo proyecto"
 
-#: ../gaupol/dialogs/split.py:90
+#: ../gaupol/dialogs/split.py:97
 #, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "{amount:d} subtítulos movidos al proyecto nuevo «{name}»"
 
-#: ../gaupol/dialogs/text_edit.py:54
+#: ../gaupol/dialogs/text_edit.py:53
 msgid "Edit Text"
 msgstr "Editar texto"
 
-#: ../gaupol/dialogs/video.py:53
+#: ../gaupol/dialogs/video.py:56
 msgid "Video files"
 msgstr "Archivos de vídeo"
 
-#: ../gaupol/enums/fields.py:30
+#: ../gaupol/enums.py:37
 msgid "No."
 msgstr "Nº"
 
-#: ../gaupol/enums/fields.py:38
+#: ../gaupol/enums.py:43
 msgid "Start"
 msgstr "Inicio"
 
-#: ../gaupol/enums/fields.py:39
+#: ../gaupol/enums.py:44
 msgid "Start position"
 msgstr "Posición inicial"
 
-#: ../gaupol/enums/fields.py:46
+#: ../gaupol/enums.py:49
 msgid "End"
 msgstr "Fin"
 
-#: ../gaupol/enums/fields.py:47
+#: ../gaupol/enums.py:50
 msgid "End position"
 msgstr "Posición final"
 
-#. Translators: 'Dur.' is short for duration. It is used in the header
+#. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
 #. of a tree view column that contains numbers five characters wide.
-#: ../gaupol/enums/fields.py:56
+#: ../gaupol/enums.py:57
 msgid "Dur."
 msgstr "Dur."
 
-#: ../gaupol/enums/fields.py:57
+#: ../gaupol/enums.py:58
 msgid "Duration"
 msgstr "Duración"
 
-#: ../gaupol/enums/fields.py:64 ../gaupol/enums/fields.py:65
+#: ../gaupol/enums.py:63 ../gaupol/enums.py:64
 msgid "Text"
 msgstr "Texto"
 
-#: ../gaupol/enums/fields.py:72 ../gaupol/enums/fields.py:73
+#: ../gaupol/enums.py:69 ../gaupol/enums.py:70
 msgid "Translation"
 msgstr "Traducción"
 
-#: ../gaupol/enums/units.py:28
+#: ../gaupol/enums.py:82
 msgid "characters"
 msgstr "caracteres"
 
-#: ../gaupol/enums/units.py:33
+#: ../gaupol/enums.py:85
 msgid "ems"
 msgstr "ems"
-
-#: ../gaupol/main.py:109
-msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
-msgstr "gaupol [OPCIÓN...] [ARCHIVO...] [+[NUM]]"
-
-#: ../gaupol/main.py:115
-msgid "show version number and exit"
-msgstr "informa de la versión y finaliza"
-
-#: ../gaupol/main.py:121
-msgid "ENCODING"
-msgstr "CODIFICACIÓN"
-
-#: ../gaupol/main.py:124
-msgid "set the character encoding used to open files"
-msgstr "establece la codificación de caracteres usada para abrir archivos"
-
-#: ../gaupol/main.py:130
-msgid "list all available character encodings"
-msgstr "lista todas las codificaciones de caracteres disponibles"
-
-#: ../gaupol/main.py:136 ../gaupol/main.py:155
-msgid "FILE"
-msgstr "ARCHIVO"
-
-#: ../gaupol/main.py:139
-msgid "open translation file"
-msgstr "abre el archivo de traducción"
-
-#: ../gaupol/main.py:145
-msgid "METHOD"
-msgstr "MÉTODO"
-
-#: ../gaupol/main.py:148
-msgid "method used to align translation subtitles: 'number' or 'position'"
-msgstr ""
-"método usado para ajustar los subtítulos de traducción: 'number' o 'position'"
-
-#: ../gaupol/main.py:158
-msgid "select video file"
-msgstr "selecciona el archivo de vídeo"
-
-#: ../gaupol/output.py:39
-msgid "Output"
-msgstr "Ventana de salida"
 
 #: ../gaupol/page.py:60
 msgid "Untitled {:d}"
 msgstr "Sin título {:d}"
 
-#: ../gaupol/page.py:123
+#: ../gaupol/page.py:133
 msgid "Close project"
 msgstr "Cerrar proyecto"
 
-#: ../gaupol/page.py:135
+#: ../gaupol/page.py:145
 msgid "{} translation"
 msgstr "traducción de {}"
 
-#: ../gaupol/page.py:292
+#: ../gaupol/page.py:302
 msgid "Path:"
 msgstr "Ruta:"
 
-#: ../gaupol/page.py:293
+#: ../gaupol/page.py:303
 msgid "Format:"
 msgstr "Formato:"
 
-#: ../gaupol/page.py:294
+#: ../gaupol/page.py:304
 msgid "Encoding:"
 msgstr "Codificación:"
 
-#: ../gaupol/page.py:295
+#: ../gaupol/page.py:305
 msgid "Newlines:"
 msgstr "Salto de línea:"

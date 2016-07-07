@@ -1,23 +1,21 @@
-[type: gettext/glade]data/extensions/bookmarks/add-bookmark-dialog.ui
 [type: gettext/glade]data/extensions/custom-framerates/add-framerate-dialog.ui
 [type: gettext/glade]data/extensions/custom-framerates/preferences-dialog.ui
-[type: gettext/glade]data/ui/debug-dialog.ui
+[type: gettext/glade]data/ui/columns-popup.ui
 [type: gettext/glade]data/ui/duration-adjust-dialog.ui
-[type: gettext/glade]data/ui/encoding-dialog.ui
 [type: gettext/glade]data/ui/framerate-convert-dialog.ui
 [type: gettext/glade]data/ui/insert-dialog.ui
 [type: gettext/glade]data/ui/language-dialog.ui
-[type: gettext/glade]data/ui/multi-close-dialog.ui
+[type: gettext/glade]data/ui/menubar.ui
 [type: gettext/glade]data/ui/multi-save-dialog.ui
 [type: gettext/glade]data/ui/open-dialog.ui
 [type: gettext/glade]data/ui/position-shift-dialog.ui
 [type: gettext/glade]data/ui/position-transform-dialog.ui
 [type: gettext/glade]data/ui/preferences-dialog.ui
-[type: gettext/glade]data/ui/preview-error-dialog.ui
 [type: gettext/glade]data/ui/save-dialog.ui
 [type: gettext/glade]data/ui/search-dialog.ui
 [type: gettext/glade]data/ui/spell-check-dialog.ui
 [type: gettext/glade]data/ui/split-dialog.ui
+[type: gettext/glade]data/ui/tab-popup.ui
 [type: gettext/glade]data/ui/text-assistant/capitalization-page.ui
 [type: gettext/glade]data/ui/text-assistant/common-error-page.ui
 [type: gettext/glade]data/ui/text-assistant/confirmation-page.ui
@@ -27,9 +25,8 @@
 [type: gettext/glade]data/ui/text-assistant/line-break-options-page.ui
 [type: gettext/glade]data/ui/text-assistant/line-break-page.ui
 [type: gettext/glade]data/ui/text-assistant/progress-page.ui
-[type: gettext/ini]data/extensions/bookmarks/bookmarks.extension.in
+[type: gettext/glade]data/ui/view-popup.ui
 [type: gettext/ini]data/extensions/custom-framerates/custom-framerates.extension.in
-[type: gettext/ini]data/extensions/side-pane/side-pane.extension.in
 [type: gettext/ini]data/patterns/Latn-en-US.common-error.in
 [type: gettext/ini]data/patterns/Latn-en.capitalization.in
 [type: gettext/ini]data/patterns/Latn-en.common-error.in
@@ -59,21 +56,12 @@ aeidon/agents/util.py
 aeidon/calculator.py
 aeidon/clipboard.py
 aeidon/containers.py
-aeidon/converter.py
 aeidon/countries.py
 aeidon/deco.py
 aeidon/delegate.py
 aeidon/encodings.py
 aeidon/enum.py
-aeidon/enums/__init__.py
-aeidon/enums/align_methods.py
-aeidon/enums/documents.py
-aeidon/enums/formats.py
-aeidon/enums/framerates.py
-aeidon/enums/modes.py
-aeidon/enums/newlines.py
-aeidon/enums/players.py
-aeidon/enums/registers.py
+aeidon/enums.py
 aeidon/errors.py
 aeidon/file.py
 aeidon/files/__init__.py
@@ -90,6 +78,14 @@ aeidon/languages.py
 aeidon/liner.py
 aeidon/locales.py
 aeidon/markup.py
+aeidon/markups/__init__.py
+aeidon/markups/ass.py
+aeidon/markups/microdvd.py
+aeidon/markups/mpl2.py
+aeidon/markups/ssa.py
+aeidon/markups/subrip.py
+aeidon/markups/subviewer2.py
+aeidon/markups/tmplayer.py
 aeidon/metadata.py
 aeidon/mutables.py
 aeidon/observable.py
@@ -102,20 +98,10 @@ aeidon/revertable.py
 aeidon/scripts.py
 aeidon/singleton.py
 aeidon/subtitle.py
-aeidon/markups/__init__.py
-aeidon/markups/ass.py
-aeidon/markups/microdvd.py
-aeidon/markups/mpl2.py
-aeidon/markups/ssa.py
-aeidon/markups/subrip.py
-aeidon/markups/subviewer2.py
-aeidon/markups/tmplayer.py
 aeidon/temp.py
 aeidon/unittest.py
 aeidon/util.py
-data/extensions/bookmarks/bookmarks.py
 data/extensions/custom-framerates/custom-framerates.py
-data/extensions/side-pane/side-pane.py
 data/gaupol.appdata.xml.in
 data/gaupol.desktop.in
 gaupol/__init__.py
@@ -124,11 +110,7 @@ gaupol/actions/__init__.py
 gaupol/actions/audio.py
 gaupol/actions/edit.py
 gaupol/actions/file.py
-gaupol/actions/format.py
 gaupol/actions/help.py
-gaupol/actions/menu.py
-gaupol/actions/position.py
-gaupol/actions/search.py
 gaupol/actions/text.py
 gaupol/actions/video.py
 gaupol/actions/view.py
@@ -139,16 +121,15 @@ gaupol/agents/format.py
 gaupol/agents/help.py
 gaupol/agents/menu.py
 gaupol/agents/open.py
-gaupol/agents/position.py
 gaupol/agents/preview.py
 gaupol/agents/save.py
 gaupol/agents/search.py
-gaupol/agents/text.py
 gaupol/agents/update.py
 gaupol/agents/util.py
 gaupol/agents/video.py
 gaupol/agents/view.py
 gaupol/application.py
+gaupol/applicationman.py
 gaupol/assistants.py
 gaupol/attrdict.py
 gaupol/config.py
@@ -157,15 +138,20 @@ gaupol/dialogs/about.py
 gaupol/dialogs/append.py
 gaupol/dialogs/builder.py
 gaupol/dialogs/debug.py
+gaupol/dialogs/duration_adjust.py
 gaupol/dialogs/encoding.py
 gaupol/dialogs/file.py
+gaupol/dialogs/framerate_convert.py
 gaupol/dialogs/insert.py
 gaupol/dialogs/language.py
 gaupol/dialogs/message.py
+gaupol/dialogs/multi_close.py
 gaupol/dialogs/multi_save.py
 gaupol/dialogs/open.py
 gaupol/dialogs/position_shift.py
+gaupol/dialogs/position_transform.py
 gaupol/dialogs/preferences.py
+gaupol/dialogs/preview_error.py
 gaupol/dialogs/save.py
 gaupol/dialogs/search.py
 gaupol/dialogs/spell_check.py
@@ -173,16 +159,10 @@ gaupol/dialogs/split.py
 gaupol/dialogs/text_edit.py
 gaupol/dialogs/video.py
 gaupol/entries.py
-gaupol/enums/__init__.py
-gaupol/enums/fields.py
-gaupol/enums/targets.py
-gaupol/enums/units.py
-gaupol/enumuim.py
+gaupol/enums.py
 gaupol/errors.py
 gaupol/extension.py
 gaupol/extensionman.py
-gaupol/main.py
-gaupol/output.py
 gaupol/page.py
 gaupol/player.py
 gaupol/renderers/__init__.py
