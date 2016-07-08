@@ -64,7 +64,9 @@ CONFIG_DEFAULTS = {
         "version": None,
     },
     "editor": {
-        "custom_font": "monospace",
+        "custom_font": ("Consolas 9" if sys.platform == "win32"
+                        else "monospace"),
+
         "field_order": [
             gaupol.fields.NUMBER,
             gaupol.fields.START,
@@ -79,7 +81,7 @@ CONFIG_DEFAULTS = {
         "show_lengths_cell": True,
         "show_lengths_edit": True,
         "stretch_length": 0.05,
-        "use_custom_font": False,
+        "use_custom_font": True,
         "use_zebra_stripes": True,
         "visible_fields": [
             gaupol.fields.NUMBER,
