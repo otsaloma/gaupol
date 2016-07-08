@@ -359,6 +359,8 @@ class EditAgent(aeidon.Delegate):
         """Redo `count` amount of actions."""
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
+        # Avoid problems if holding down Ctrl+Shift+Z.
+        gaupol.util.iterate_main()
         if page.project.can_redo(count):
             page.project.redo(count)
         gaupol.util.set_cursor_normal(self.window)
@@ -385,6 +387,8 @@ class EditAgent(aeidon.Delegate):
         """Undo `count` amount of actions."""
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
+        # Avoid problems if holding down Ctrl+Z.
+        gaupol.util.iterate_main()
         if page.project.can_undo(count):
             page.project.undo(count)
         gaupol.util.set_cursor_normal(self.window)
