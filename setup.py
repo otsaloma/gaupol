@@ -40,6 +40,8 @@ import os
 import re
 import shutil
 
+freezing = "GAUPOL_FREEZING" in os.environ
+
 clean = distutils.command.clean.clean
 distribution = distutils.dist.Distribution
 install = distutils.command.install.install
@@ -78,6 +80,12 @@ def get_gaupol_version():
 
 def run_or_exit(cmd):
     """Run command in shell and raise SystemExit if it fails."""
+    if freezing and cmd.startswith("intltool-merge"):
+        # intltool-merge is not available on Windows.
+        ifile, ofile = re.split(" +", cmd)[-2:]
+        text = open(ifile, "r", encoding="utf_8").read()
+        return open(ofile, "w", encoding="utf_8").write(
+            re.sub("^_", "", text, flags=re.MULTILINE))
     if os.system(cmd) != 0:
         log.error("command {} failed".format(repr(cmd)))
         raise SystemExit(1)
@@ -114,6 +122,8 @@ class Distribution(distribution):
 
     def __init__(self, attrs=None):
         """Initialize a :class:`Distribution` instance."""
+        if freezing:
+            self.executables = []
         self.mandir = "share/man"
         self.with_aeidon = True
         self.with_gaupol = True
@@ -276,6 +286,7 @@ class InstallData(install_data):
         """Install data files after translating them."""
         if self.distribution.with_aeidon:
             for po_file in glob.glob("po/*.po"):
+                if freezing: continue
                 self.data_files.append(self.__get_mo_file(po_file))
             for pattern_file in glob.glob("data/patterns/*.in"):
                 self.data_files.append(self.__get_pattern_file(pattern_file))

@@ -1,7 +1,13 @@
+__pycache__
 */__pycache__
 */*/__pycache__
 */*/*/__pycache__
 */*/*/*/__pycache__
+.cache
+*/.cache
+*/*/.cache
+*/*/*/.cache
+*/*/*/*/.cache
 build
 data/extensions/*/*.extension
 data/gaupol.appdata.xml
@@ -14,3 +20,4 @@ dist
 locale
 po/*~
 MANIFEST
+winsetup.log
