@@ -17,7 +17,7 @@
 
 """GTK+ user interface for the Gaupol subtitle editor."""
 
-__version__ = "0.28.2"
+__version__ = "0.90"
 COMBO_SEPARATOR = "<separator/>"
 
 import aeidon
@@ -31,6 +31,7 @@ for module, version in {
     "GstPbutils": "1.0",
     "GstVideo": "1.0",
     "GdkX11": "3.0",
+    "GdkWin32": "3.0",
     "GtkSpell": "3.0",
 }.items():
     with aeidon.util.silent(Exception):

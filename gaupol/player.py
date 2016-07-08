@@ -19,6 +19,7 @@
 
 import aeidon
 import gaupol
+import sys
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
@@ -30,6 +31,7 @@ with aeidon.util.silent(Exception):
 
 with aeidon.util.silent(Exception):
     from gi.repository import GdkX11
+    from gi.repository import GdkWin32
 
 __all__ = ("VideoPlayer",)
 
@@ -330,10 +332,10 @@ class VideoPlayer(aeidon.Observable):
 
     def set_uri(self, uri):
         """Set the URI of the file to play."""
-        # XXX: We need platform-specific calls here. At least
-        # Windows doesn't work with GdkX11 and XIDs, maybe other
-        # non-X systems (Wayland, macOS) will fail too?
         self._playbin.props.uri = uri
+        # XXX: On Windows, we'd need HWND instead of XID,
+        # but there seems to be no clear way to do this.
+        # http://stackoverflow.com/q/23021327/653825
         self._xid = self.widget.get_window().get_xid()
         self.subtitle_text = ""
         try:
