@@ -19,14 +19,14 @@ Gaupol 0.91
       version of Python)
 * [x] Drop the bookmarks extension
 * [x] Fix Cancel button behaviour when quitting Gaupol by closing the
-      main window and having unsaved changes (#14)
-* [x] Fix line length measure em to be narrower [#763589][]
+      main window and having unsaved changes ([#14][])
+* [x] Fix line length measure em to be narrower ([#763589][])
 * [x] Have the text view right-click spell-check language menu
       set the language permanently
 * [x] Don't show the "Use Shift+Return for line-break" help message
       if it's likely to overlap with the text being edited
 * [x] Only force theme variant if `dark_theme` in config file is
-      `true`, thus respecting any global settings [#753315][]
+      `true`, thus respecting any global settings ([#753315][])
 * [x] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
 * [ ] Move web pages to <http://otsaloma.io/gaupol/>
 * [x] Move releases to <https://github.com/otsaloma/gaupol/releases>
