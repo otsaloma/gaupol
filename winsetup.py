@@ -16,7 +16,7 @@ include_files = [(os.path.join("build", "usr", "share"), "share")]
 site_path = site.getsitepackages()[1]
 
 gnome_path = os.path.join(site_path, "gnome")
-for dll in glob.glob("{}\\*.dll".format(gnome_path)):
+for dll in glob.glob("{}/*.dll".format(gnome_path)):
     include_files.append((dll, os.path.basename(dll)))
 include_files.append((os.path.join(gnome_path, "etc"), "etc"))
 include_files.append((os.path.join(gnome_path, "lib"), "lib"))
@@ -42,5 +42,15 @@ setup_kwargs.update(dict(
     )],
 ))
 
+def patch_build():
+    # Enable header bars on builtin GTK+ dialogs such as file dialogs,
+    # assistants, color and font pickers for consistency with Gaupol's
+    # own dialogs, which use header bars.
+    path = glob.glob("build/exe.*/etc/gtk-3.0/settings.ini")[0]
+    print("patching {}".format(path))
+    with open(path, "a", encoding="us_ascii") as f:
+        f.write("\ngtk-dialogs-use-header = 1\n")
+
 if __name__ == "__main__":
     cx_Freeze.setup(**setup_kwargs)
+    patch_build()
