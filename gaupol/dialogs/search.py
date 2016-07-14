@@ -577,7 +577,7 @@ class SearchDialog(gaupol.BuilderDialog):
     def _write_history(self, name):
         """Write history to file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
-        with aeidon.util.silent(OSError):
+        with aeidon.util.silent(OSError, tb=True):
             path = os.path.join(directory, "{}.history".format(name))
             history = getattr(self, name)
             text = "\n".join(history) + "\n"

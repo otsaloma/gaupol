@@ -203,7 +203,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         basename = "{}.repl".format(gaupol.conf.spell_check.language)
         path = os.path.join(self._personal_dir, basename)
         if not os.path.isfile(path): return
-        with aeidon.util.silent(IOError, OSError):
+        with aeidon.util.silent(IOError, OSError, tb=True):
             lines = aeidon.util.readlines(path)
             for line in aeidon.util.get_unique(lines):
                 misspelled, correct  = line.strip().split("|", 1)
@@ -408,5 +408,5 @@ class SpellCheckDialog(gaupol.BuilderDialog):
             # Discard the oldest of replacements.
             self._replacements[-self._max_replacements:]
         text = "\n".join("|".join(x) for x in self._replacements) + "\n"
-        with aeidon.util.silent(IOError, OSError):
+        with aeidon.util.silent(IOError, OSError, tb=True):
             aeidon.util.write(path, text)

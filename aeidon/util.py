@@ -29,6 +29,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import traceback
 import urllib.parse
 
 
@@ -408,12 +409,12 @@ def shell_quote(path):
     return '"{}"'.format(path)
 
 @contextlib.contextmanager
-def silent(*exceptions):
+def silent(*exceptions, tb=False):
     """Try to execute body, ignoring `exceptions`."""
     try:
         yield
     except exceptions:
-        pass
+        if tb: traceback.print_exc()
 
 def start_process(command, **kwargs):
     """
