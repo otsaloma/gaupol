@@ -194,7 +194,7 @@ class CustomFrameratesExtension(gaupol.Extension):
             delattr(aeidon.framerates, str(framerate))
         with aeidon.util.silent(AttributeError):
             # Menubar not available when running unit tests.
-            menu = self.application.get_menubar_section(
+            self.application.get_menubar_section(
                 "custom-framerates-placeholder").remove_all()
 
     def setup(self, application):
