@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-07 04:37+0300\n"
+"POT-Creation-Date: 2016-07-16 20:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Hebrew (https://www.transifex.com/otsaloma/teams/64879/he/)\n"
@@ -1866,7 +1866,7 @@ msgstr "נא לנסות לפתוח את הקובץ עם קידוד תווים ש
 #: ../gaupol/agents/save.py:206 ../gaupol/assistants.py:600
 #: ../gaupol/dialogs/encoding.py:56 ../gaupol/dialogs/search.py:556
 #: ../gaupol/dialogs/search.py:564 ../gaupol/dialogs/spell_check.py:390
-#: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:239
+#: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:241
 msgid "_OK"
 msgstr ""
 

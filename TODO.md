@@ -28,7 +28,7 @@ Gaupol 0.91
 * [x] Only force theme variant if `dark_theme` in config file is
       `true`, thus respecting any global settings ([#753315][])
 * [x] Make `GTK_THEME=Adwaita:dark gaupol` work correctly
-* [ ] Move web pages to <http://otsaloma.io/gaupol/>
+* [x] Move web pages to <http://otsaloma.io/gaupol/>
 * [x] Move releases to <https://github.com/otsaloma/gaupol/releases>
 * [x] Move bug tracker to <https://github.com/otsaloma/gaupol/issues>
 * [x] Move documentation to <https://github.com/otsaloma/gaupol/tree/master/doc>
