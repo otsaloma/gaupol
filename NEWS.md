@@ -1,3 +1,50 @@
+2016-07-16: Gaupol 0.91
+=======================
+
+* Use header bars for dialogs
+* Migrate from deprecated `Gtk.UIManager`, `Gtk.Action` etc.
+  to `Gtk.Application`, `Gio.Action` etc.
+* Add mpv for preview with precise seek (`--hr-seek=yes`)
+* Make mpv the default preview video player on non-Windows systems
+  and set the default preview offset to one second
+* Make seek length configurable in the preferences dialog
+* Add find and replace to the toolbar
+* Have both Ctrl+F and Ctrl+H open the find and replace dialog
+* Have both Ctrl++, Ctrl+- and numpad equivalents control volume
+* Remove external video player output window (if you want to see
+  that output, start Gaupol from a terminal)
+* Use a monospace editing font by default
+* Add support for IBM273, IBM1125, KOI8-T and KZ1048 character
+  encodings (whether these are actually available depends on your
+  version of Python)
+* Drop the bookmarks extension
+* Fix Cancel button behaviour when quitting Gaupol by closing the
+  main window and having unsaved changes ([#14][])
+* Fix line length measure em to be narrower ([#763589][])
+* Have the text view right-click spell-check language menu
+  set the language permanently
+* Don't show the "Use Shift+Return for line-break" help message
+  if it's likely to overlap with the text being edited
+* Only force theme variant if `dark_theme` in config file is
+  `true`, thus respecting any global settings ([#753315][])
+* Make `GTK_THEME=Adwaita:dark gaupol` work correctly
+* Move web pages to <http://otsaloma.io/gaupol/>
+* Move releases to <https://github.com/otsaloma/gaupol/releases>
+* Move bug tracker to <https://github.com/otsaloma/gaupol/issues>
+* Move documentation to <https://github.com/otsaloma/gaupol/tree/master/doc>
+* Close mailing lists, use Gitter instead: <https://gitter.im/otsaloma/gaupol>
+* Use Transifex for translations: <http://www.transifex.com/otsaloma/gaupol/>
+* Update AppData file
+* Bump GTK+ dependency to ≥ 3.12
+* Bump PyGObject dependency to ≥ 3.12
+* Drop optional dependencies on PT fonts
+* Add Serbian translation (Miroslav Nikolić)
+* Update French translation (Jean van Kasteel)
+
+[#14]: https://github.com/otsaloma/gaupol/issues/14
+[#753315]: https://bugzilla.gnome.org/show_bug.cgi?id=753315
+[#763589]: https://bugzilla.gnome.org/show_bug.cgi?id=763589
+
 Gaupol 0.28.2
 =============
 

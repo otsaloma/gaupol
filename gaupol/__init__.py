@@ -17,7 +17,7 @@
 
 """GTK+ user interface for the Gaupol subtitle editor."""
 
-__version__ = "0.90"
+__version__ = "0.91"
 COMBO_SEPARATOR = "<separator/>"
 
 import sys

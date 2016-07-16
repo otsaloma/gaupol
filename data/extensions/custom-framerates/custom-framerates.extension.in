@@ -1,9 +1,9 @@
 [Extension]
-GaupolVersion=0.90
+GaupolVersion=0.91
 Module=custom-framerates
 _Name=Custom Framerates
 _Description=Allow use of non-standard framerates
-Version=0.90
+Version=0.91
 Authors=Osmo Salomaa <otsaloma@iki.fi>;
 Copyright=Copyright © 2011 Osmo Salomaa;
 Website=http://otsaloma.io/gaupol/
