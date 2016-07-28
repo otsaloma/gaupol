@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-16 20:15+0300\n"
-"PO-Revision-Date: 2016-07-28 21:30+0100\n"
+"PO-Revision-Date: 2016-07-28 21:42+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <>\n"
 "Language: cs\n"
@@ -297,7 +297,7 @@ msgstr "_Ukončit později"
 
 #: ../data/ui/menubar.ui.h:23
 msgid "Set En_d From Video Position"
-msgstr "Nastavit kon_ec z polohy videa"
+msgstr "Nastavit kon_ec z polohy obrazového záznamu"
 
 #: ../data/ui/menubar.ui.h:24 ../data/ui/view-popup.ui.h:1
 msgid "_Split Subtitle"
@@ -313,7 +313,7 @@ msgstr "_Vložit titulky..."
 
 #: ../data/ui/menubar.ui.h:27
 msgid "Inser_t Subtitle At Video Position"
-msgstr "_Vložit titulek v poloze videa"
+msgstr "_Vložit titulek v poloze obrazového záznamu"
 
 #: ../data/ui/menubar.ui.h:28 ../data/ui/view-popup.ui.h:4
 msgid "Rem_ove Subtitles"
@@ -353,7 +353,7 @@ msgstr "Nástrojový _pruh"
 
 #: ../data/ui/menubar.ui.h:37
 msgid "_Video Player"
-msgstr "Přehrávač _videa"
+msgstr "Přehrávač _obrazového záznamu"
 
 #: ../data/ui/menubar.ui.h:38
 msgid "_Layout"
@@ -461,7 +461,7 @@ msgstr "_Obraz"
 
 #: ../data/ui/menubar.ui.h:70
 msgid "_Load Video…"
-msgstr "Nahrát video…"
+msgstr "Nahrát obrazový záznam…"
 
 #: ../data/ui/menubar.ui.h:71 ../gaupol/agents/video.py:65
 msgid "_Play/Pause"
@@ -809,7 +809,7 @@ msgstr "P_oužít pozadí za textem"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Seek"
-msgstr "Hledat"
+msgstr "Přetočit"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Length:"
@@ -818,11 +818,11 @@ msgstr "_Délka"
 #: ../data/ui/preferences-dialog.ui.h:29
 #: ../gaupol/dialogs/position_shift.py:163
 msgid "seconds"
-msgstr "Sekundy"
+msgstr "sekund"
 
 #: ../data/ui/preferences-dialog.ui.h:30 ../gaupol/application.py:276
 msgid "Video"
-msgstr "Video"
+msgstr "Obraz"
 
 #: ../data/ui/preferences-dialog.ui.h:31
 msgid "Video Player"
@@ -2089,7 +2089,7 @@ msgstr "Ukázat nebo skrýt přehrávač obrazového záznamu"
 
 #: ../gaupol/application.py:284
 msgid "Preview from selected position with a video player"
-msgstr "Náhled od vybrané polohy v přehrávači videa"
+msgstr "Náhled od vybrané polohy v přehrávači obrazového záznamu"
 
 #: ../gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
@@ -2135,7 +2135,7 @@ msgstr ""
 
 #: ../gaupol/applicationman.py:156
 msgid "select video file"
-msgstr "Vybrat obrazový soubor"
+msgstr "Vybrat soubor s obrazovým záznamem"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -2453,7 +2453,7 @@ msgstr "Vlastní"
 
 #: ../gaupol/dialogs/preview_error.py:36
 msgid "Preview in video player failed"
-msgstr "Náhled v přehrávači videa se nezdařil"
+msgstr "Náhled v přehrávači obrazového záznamu se nezdařil"
 
 #: ../gaupol/dialogs/preview_error.py:37
 msgid ""
@@ -2498,7 +2498,7 @@ msgstr "Upravit text"
 
 #: ../gaupol/dialogs/video.py:56
 msgid "Video files"
-msgstr "Obrazové soubory"
+msgstr "Soubory s obrazovým záznamem"
 
 #: ../gaupol/enums.py:37
 msgid "No."
