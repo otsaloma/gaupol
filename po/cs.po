@@ -1,22 +1,21 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Pavel Fric <pavelfric@seznam.cz>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-16 20:15+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
-"Language-Team: Czech (https://www.transifex.com/otsaloma/teams/64879/cs/)\n"
+"PO-Revision-Date: 2016-07-28 21:30+0100\n"
+"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Language-Team: Czech <>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
@@ -278,7 +277,7 @@ msgstr "Upravit _další buňku"
 
 #: ../data/ui/menubar.ui.h:18
 msgid "Stretc_h"
-msgstr ""
+msgstr "&Natáhnout"
 
 #: ../data/ui/menubar.ui.h:19
 msgid "_Start Earlier"
@@ -592,7 +591,7 @@ msgstr "_Nápověda"
 
 #: ../data/ui/menubar.ui.h:102
 msgid "_Documentation"
-msgstr ""
+msgstr "_Dokumentace"
 
 #: ../data/ui/menubar.ui.h:103
 msgid "_Report A Bug"
@@ -742,7 +741,7 @@ msgstr "Písmo"
 
 #: ../data/ui/preferences-dialog.ui.h:10
 msgid "Use _default theme fixed width font"
-msgstr ""
+msgstr "Použít písmo s pevnou šířkou u _výchozího motivu"
 
 #: ../data/ui/preferences-dialog.ui.h:11
 msgid "_Editor font:"
@@ -810,11 +809,11 @@ msgstr "P_oužít pozadí za textem"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Seek"
-msgstr ""
+msgstr "Hledat"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Length:"
-msgstr ""
+msgstr "_Délka"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 #: ../gaupol/dialogs/position_shift.py:163
@@ -846,6 +845,11 @@ msgid ""
 "                            $SUBFILE\n"
 "                            $VIDEOFILE"
 msgstr ""
+"Pole:\n"
+"                            $MILLISECONDS\n"
+"                            $SECONDS\n"
+"                            $SUBFILE\n"
+"                            $VIDEOFILE"
 
 #: ../data/ui/preferences-dialog.ui.h:40
 msgid "Al_ways use UTF-8 character encoding"
@@ -1581,7 +1585,7 @@ msgstr "Tradiční čínština"
 
 #: ../aeidon/encodings.py:44
 msgid "German"
-msgstr ""
+msgstr "Němčina"
 
 #: ../aeidon/encodings.py:45 ../aeidon/encodings.py:54
 #: ../aeidon/encodings.py:58 ../aeidon/encodings.py:78
@@ -1697,11 +1701,11 @@ msgstr "Keltština"
 
 #: ../aeidon/encodings.py:112
 msgid "Tajik"
-msgstr ""
+msgstr "Tádžičtina"
 
 #: ../aeidon/encodings.py:114
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazaština"
 
 #: ../aeidon/encodings.py:121
 msgid "Cyrillic Asian"
@@ -1791,7 +1795,7 @@ msgstr ""
 
 #: ../data/gaupol.appdata.xml.in.h:2
 msgid "Main window"
-msgstr ""
+msgstr "Hlavní okno"
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Subtitle Editor"
@@ -1812,7 +1816,7 @@ msgstr "Editor titulků Gaupol"
 
 #: ../gaupol/agents/close.py:66
 msgid "Save changes to document \"{}\" before closing?"
-msgstr ""
+msgstr "Uložit před zavřením změny do dokumentu \"{}\"?"
 
 #: ../gaupol/agents/close.py:68 ../gaupol/agents/open.py:373
 #: ../gaupol/dialogs/multi_close.py:39
@@ -2041,7 +2045,7 @@ msgstr "Otevřít hlavní soubory"
 
 #: ../gaupol/application.py:227
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: ../gaupol/application.py:230
 msgid "Save the current main document"
@@ -2049,7 +2053,7 @@ msgstr "Uložit nynější hlavní dokument"
 
 #: ../gaupol/application.py:235
 msgid "Undo"
-msgstr ""
+msgstr "Zpět"
 
 #: ../gaupol/application.py:239
 msgid "Undo the last action"
@@ -2057,7 +2061,7 @@ msgstr "Vrátit předchozí krok"
 
 #: ../gaupol/application.py:246
 msgid "Redo"
-msgstr ""
+msgstr "Znovu"
 
 #: ../gaupol/application.py:249
 msgid "Redo the last undone action"
@@ -2093,11 +2097,11 @@ msgstr "gaupol [VOLBA...] [SOUBOR...] [+[ČÍSLO]]"
 
 #: ../gaupol/applicationman.py:108
 msgid "FILE..."
-msgstr ""
+msgstr "SOUBOR..."
 
 #: ../gaupol/applicationman.py:111
 msgid "subtitle files to open"
-msgstr ""
+msgstr "Soubory s titulky k otevření"
 
 #: ../gaupol/applicationman.py:121
 msgid "ENCODING"
@@ -2337,10 +2341,13 @@ msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr ""
+"Pravděpodobně jste objevil chybu. Nahlašte ji, prosím. Poskytněte informace "
+"níže "
+"a popište, co jste dělal."
 
 #: ../gaupol/dialogs/debug.py:52
 msgid "_Report Bug"
-msgstr ""
+msgstr "_Nahlásit chybu"
 
 #: ../gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -2453,6 +2460,8 @@ msgid ""
 "There is probably a problem with either the video file or the preview "
 "command."
 msgstr ""
+"Pravděpodobné potíže buď se souborem s obrazovým záznamem "
+"nebo s příkazem pro náhled."
 
 #: ../gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -2564,3 +2573,4 @@ msgstr "Kódování:"
 #: ../gaupol/page.py:305
 msgid "Newlines:"
 msgstr "Zalomení řádků:"
+
