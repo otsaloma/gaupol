@@ -104,8 +104,13 @@ class MenuAgent(aeidon.Delegate):
         for item in menu.get_children():
             menu.remove(item)
         self._redo_menu_items = []
-        page = self.get_current_page()
-        for i, action in enumerate(page.project.redoables):
+        redoables = []
+        with aeidon.util.silent(AttributeError):
+            # XXX: Gtk.Actionable.set_action_name doesn't affect the dropdown
+            # arrow making it clickable even when there's nothing to redo.
+            page = self.get_current_page()
+            redoables = page.project.redoables
+        for i, action in enumerate(redoables):
             item = Gtk.MenuItem(label=action.description)
             item.gaupol_index = i
             item.connect("activate", self._on_redo_menu_item_activate)
@@ -161,8 +166,13 @@ class MenuAgent(aeidon.Delegate):
         for item in menu.get_children():
             menu.remove(item)
         self._undo_menu_items = []
-        page = self.get_current_page()
-        for i, action in enumerate(page.project.undoables):
+        undoables = []
+        with aeidon.util.silent(AttributeError):
+            # XXX: Gtk.Actionable.set_action_name doesn't affect the dropdown
+            # arrow making it clickable even when there's nothing to undo.
+            page = self.get_current_page()
+            undoables = page.project.undoables
+        for i, action in enumerate(undoables):
             item = Gtk.MenuItem(label=action.description)
             item.gaupol_index = i
             item.connect("activate", self._on_undo_menu_item_activate)
