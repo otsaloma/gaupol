@@ -174,13 +174,23 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         gaupol.conf.file.format = self.get_format()
         gaupol.conf.file.newline = self.get_newline()
         gaupol.conf.editor.framerate = self.get_framerate()
+        if (response == Gtk.ResponseType.OK and
+            not self.get_filename().endswith(self.get_format().extension)):
+            # If the filename is lacking the extension, add it, stop this
+            # response and emit a new one so that overwrite confirmation gets
+            # called with the full filename. The filename extension might have
+            # already been added in self._on_save_button_event, but not
+            # necessarily if the user hit Enter on the keyboard.
+            self._format_combo.emit("changed")
+            gaupol.util.iterate_main()
+            self.stop_emission("response")
+            return self.response(Gtk.ResponseType.OK)
 
     def _on_save_button_event(self, button, event):
         """Ensure that the filename contains an extension."""
-        # Catch all events on save button to ensure that a possibly
-        # lacking extension is added to the filename so that overwrite
-        # confirmation check is done correctly.
+        # Add possibly lacking extension to the filename.
         self._format_combo.emit("changed")
+        gaupol.util.iterate_main()
 
     def set_format(self, format):
         """Set the selected format."""
