@@ -334,12 +334,14 @@ class EditAgent(aeidon.Delegate):
             return page.project.set_duration(row, value)
         doc = page.text_column_to_document(col)
         page.project.set_text(row, doc, value)
+        self.update_gui()
 
     @aeidon.deco.export
     def _on_view_renderer_editing_canceled(self, *args):
         """Unset state set for editing cell."""
         self._set_unsafe_enabled(True)
         self.show_message(None)
+        self.update_gui()
 
     @aeidon.deco.export
     def _on_view_renderer_editing_started(self, renderer, editor, path, column):
