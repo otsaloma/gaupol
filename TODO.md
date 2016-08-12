@@ -8,6 +8,7 @@ Gaupol 0.92
 * [x] Fix action states after subtitle cell editing cancelled ([#30][])
 * [x] Fix recent file menu states to update correctly ([#31][])
 * [x] Fix save as dialog to always add filename extension ([#32][])
+* [x] Update AppData file
 
 [#28]: https://github.com/otsaloma/gaupol/issues/28
 [#29]: https://github.com/otsaloma/gaupol/issues/29
