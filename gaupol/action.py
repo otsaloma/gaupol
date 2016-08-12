@@ -23,7 +23,12 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-__all__ = ("Action", "RadioAction", "ToggleAction")
+__all__ = (
+    "Action",
+    "OpenRecentTranslationFileAction",
+    "RadioAction",
+    "ToggleAction",
+)
 
 
 class Action(Gio.SimpleAction):
@@ -47,6 +52,15 @@ class Action(Gio.SimpleAction):
             self.set_enabled(True)
         except aeidon.AffirmationError:
             self.set_enabled(False)
+
+
+class OpenRecentTranslationFileAction(Action):
+
+    """Baseclass for a dynamic menu of recent translation files to open."""
+
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.main_file is not None)
 
 
 class RadioAction(Action):

@@ -63,6 +63,7 @@ class MenuAgent(aeidon.Delegate):
         self.connect("page-saved", self._update_projects_menu)
         self.connect("page-switched", self._update_projects_menu)
         self.connect("pages-reordered", self._update_projects_menu)
+        self.connect("init-done", self._update_recent_menus)
         self.connect("page-added", self._update_recent_menus)
         self.connect("page-saved", self._update_recent_menus)
 
@@ -290,6 +291,8 @@ class MenuAgent(aeidon.Delegate):
         """Update the file menu lists of recent files."""
         self._update_recent_main_menu()
         self._update_recent_translation_menu()
+        # Update enabled states of added actions.
+        self.update_gui()
 
     def _update_recent_translation_menu(self, *args):
         """Update the file menu list of recent translation files."""
@@ -307,7 +310,7 @@ class MenuAgent(aeidon.Delegate):
             menu.append(label, action)
             action = action.replace("win.", "")
             if not self.get_action(action):
-                ao = gaupol.Action(action)
+                ao = gaupol.OpenRecentTranslationFileAction(action)
                 callback = self._on_open_recent_translation_file_activate
                 ao.connect("activate", callback)
                 self.window.add_action(ao)

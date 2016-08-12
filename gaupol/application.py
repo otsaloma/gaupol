@@ -88,6 +88,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar x_clipboard: A :class:`Gtk.Clipboard` used for desktop-wide copying
 
     Signals and their arguments for callback functions:
+     * ``init-done``: application
      * ``page-added``: application, page
      * ``page-changed``: application, page
      * ``page-closed``: application, page
@@ -98,6 +99,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     """
 
     signals = (
+        "init-done",
         "page-added",
         "page-changed",
         "page-closed",
@@ -139,6 +141,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.extension_manager.setup_extensions()
         self.update_gui()
         self.window.show()
+        self.emit("init-done")
 
     def __getattr__(self, name):
         """Return method delegated to an agent."""
