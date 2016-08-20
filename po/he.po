@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Hebrew (https://www.transifex.com/otsaloma/teams/64879/he/)\n"
-"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
@@ -121,8 +121,8 @@ msgid "secon_ds"
 msgstr "שניו_ת"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
-#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -1163,7 +1163,8 @@ msgstr "הגדלת שם הדובר לרשיות לפני נקודתיים"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
 msgstr "החלפת השם באותיות רשיות של הדובר לפני הנקודתיים במקף דו־שיח"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
@@ -1246,8 +1247,7 @@ msgid "Spelling of a.m. and p.m."
 msgstr "איות של a.m.‎ ו־p.m.‎"
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "שינוי צורות האיות השונות של פרקי 12 השעות ל־״a.m.‎״ ו־״p.m.‎״"
 
 #: ../data/patterns/Latn.common-error.in.h:3
@@ -1787,7 +1787,8 @@ msgstr "עורך הכתוביות"
 msgid "Edit subtitle files"
 msgstr "עריכת קובצי הכתוביות"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr ""
@@ -1901,8 +1902,8 @@ msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"גודל הקובץ הוא {:.1f} מ״ב, שזהו גודל גדול באופן חריג עבור קובץ כתוביות מבוסס "
-"טקסט. נא לבדוק שזהו אינו קובץ בינרי."
+"גודל הקובץ הוא {:.1f} מ״ב, שזהו גודל גדול באופן חריג עבור קובץ כתוביות מבוסס"
+" טקסט. נא לבדוק שזהו אינו קובץ בינרי."
 
 #: ../gaupol/agents/open.py:353 ../gaupol/agents/open.py:365
 #: ../gaupol/dialogs/open.py:64
