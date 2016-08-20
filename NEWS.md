@@ -1,3 +1,22 @@
+2016-08-20: Gaupol 0.92
+=======================
+
+* Fix error saving document from a time-based format to a
+  frame-based or vice versa ([#28][])
+* Fix error clicking undo or redo button dropdown arrow when no
+  document is yet open ([#29][])
+* Fix action states after subtitle cell editing cancelled ([#30][])
+* Fix recent file menu states to update correctly ([#31][])
+* Fix save as dialog to always add filename extension ([#32][])
+* Update AppData file
+* Update translations
+
+[#28]: https://github.com/otsaloma/gaupol/issues/28
+[#29]: https://github.com/otsaloma/gaupol/issues/29
+[#30]: https://github.com/otsaloma/gaupol/issues/30
+[#31]: https://github.com/otsaloma/gaupol/issues/31
+[#32]: https://github.com/otsaloma/gaupol/issues/32
+
 2016-07-16: Gaupol 0.91
 =======================
 
