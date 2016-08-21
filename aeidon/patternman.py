@@ -100,8 +100,13 @@ class PatternManager:
     def get_patterns(self, script=None, language=None, country=None):
         """Return patterns for `script`, `language` and `country`."""
         patterns = []
-        for code in self._get_codes(script, language, country):
+        codes = self._get_codes(script, language, country)
+        for code in codes:
             for pattern in self._patterns.get(code, []):
+                # Skip patterns that define exceptions to their use
+                # that match a more speficic group being requested.
+                skip = pattern.get_field_list("SkipIn", [])
+                if set(skip) & set(codes): continue
                 patterns.append(pattern)
         return self._filter_patterns(patterns)
 

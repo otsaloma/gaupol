@@ -69,6 +69,7 @@ Pattern=(\b\d) +(\d\d\d\b)(?!.\d)
 Flags=DOTALL;MULTILINE;
 Replacement=\1\2
 Repeat=True
+SkipIn=Latn-fr;
 
 [Common Error Pattern]
 # Many subtitle fonts don't support Unicode note characters and many
