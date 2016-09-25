@@ -19,7 +19,6 @@
 
 import aeidon
 import gaupol
-import sys
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
@@ -47,6 +46,7 @@ class VideoPlayer(aeidon.Observable):
     :ivar _info: :class:`Gst.DiscovererInfo` from current URI
     :ivar _playbin: GStreamer "playbin" element
     :ivar _prev_state: Previous state of `_playbin`
+    :ivar ready: ``True`` if a file is loaded and ready to play
     :ivar subtitle_text: Current text shown in the subtitle overlay
     :ivar subtitle_text_raw: `subtitle_text` before removal of tags
     :ivar _text_overlay: GStreamer "textoverlay" element
@@ -69,6 +69,7 @@ class VideoPlayer(aeidon.Observable):
         self._info = None
         self._playbin = None
         self._prev_state = None
+        self.ready = False
         self.subtitle_text_raw = ""
         self._text_overlay = None
         self._time_overlay = None
@@ -121,7 +122,6 @@ class VideoPlayer(aeidon.Observable):
 
     def get_audio_languages(self):
         """Return a sequence of audio languages or ``None``."""
-        if self._info is None: return None
         return tuple(x.get_language() for x in self._info.get_audio_streams())
 
     def get_duration(self, mode=None):
@@ -332,6 +332,7 @@ class VideoPlayer(aeidon.Observable):
 
     def set_uri(self, uri):
         """Set the URI of the file to play."""
+        self.ready = False
         self._playbin.props.uri = uri
         # XXX: On Windows, we'd need HWND instead of XID,
         # but there seems to be no clear way to do this.
@@ -348,10 +349,13 @@ class VideoPlayer(aeidon.Observable):
             num = float(stream.get_framerate_num())
             denom = float(stream.get_framerate_denom())
             self.calc = aeidon.Calculator(num/denom)
-        except Exception:
-            # If any of this fails, playback probably fails
-            # as well and we'll show an error dialog then.
-            pass
+            self.ready = True
+        except Exception as error:
+            title = _("Failed to initialize playback")
+            dialog = gaupol.ErrorDialog(None, title, str(error))
+            dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
+            dialog.set_default_response(Gtk.ResponseType.OK)
+            gaupol.util.flash_dialog(dialog)
 
     def stop(self):
         """Stop."""

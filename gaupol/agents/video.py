@@ -182,6 +182,9 @@ class VideoAgent(aeidon.Delegate):
             adjustment.set_value(0)
             self.player.stop()
         self.player.set_path(path)
+        # Playback initialization can fail, e.g. due to missing codecs,
+        # in which case the player itself has shown an error dialog.
+        if not self.player.ready: return
         self._update_languages_menu()
         self.update_gui()
         self.player.play()
