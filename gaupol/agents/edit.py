@@ -32,6 +32,7 @@ class EditAgent(aeidon.Delegate):
         """Initialize an :class:`EditAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._pref_dialog = None
+        self._revert_in_progress = False
 
     @aeidon.deco.export
     def _on_clear_texts_activate(self, *args):
@@ -359,13 +360,20 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def redo(self, count=1):
         """Redo `count` amount of actions."""
-        gaupol.util.set_cursor_busy(self.window)
-        page = self.get_current_page()
         # Avoid problems if holding down Ctrl+Shift+Z.
-        gaupol.util.iterate_main()
-        if page.project.can_redo(count):
-            page.project.redo(count)
-        gaupol.util.set_cursor_normal(self.window)
+        if self._revert_in_progress: return
+        self._revert_in_progress = True
+        try:
+            gaupol.util.set_cursor_busy(self.window)
+            page = self.get_current_page()
+            # Make sure the UI is given time to update
+            # after the previous redone action.
+            gaupol.util.iterate_main()
+            if page.project.can_redo(count):
+                page.project.redo(count)
+            gaupol.util.set_cursor_normal(self.window)
+        finally:
+            self._revert_in_progress = False
 
     def _set_unsafe_enabled(self, enabled):
         """Set enabled states of unsafe actions."""
@@ -387,10 +395,17 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def undo(self, count=1):
         """Undo `count` amount of actions."""
-        gaupol.util.set_cursor_busy(self.window)
-        page = self.get_current_page()
         # Avoid problems if holding down Ctrl+Z.
-        gaupol.util.iterate_main()
-        if page.project.can_undo(count):
-            page.project.undo(count)
-        gaupol.util.set_cursor_normal(self.window)
+        if self._revert_in_progress: return
+        self._revert_in_progress = True
+        try:
+            gaupol.util.set_cursor_busy(self.window)
+            page = self.get_current_page()
+            # Make sure the UI is given time to update
+            # after the previous undone action.
+            gaupol.util.iterate_main()
+            if page.project.can_undo(count):
+                page.project.undo(count)
+            gaupol.util.set_cursor_normal(self.window)
+        finally:
+            self._revert_in_progress = False
