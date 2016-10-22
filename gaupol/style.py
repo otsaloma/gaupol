@@ -35,16 +35,19 @@ def _get_editor_font_css():
     if (gaupol.conf.editor.custom_font and
         gaupol.conf.editor.use_custom_font):
         font_desc = Pango.FontDescription(gaupol.conf.editor.custom_font)
+    # They fucking broke theming again with GTK+ 3.22.
+    unit = "pt" if Gtk.check_version(3, 22, 0) is None else "px"
     css = """
     .gaupol-custom-font {{
       font-family: {family},monospace;
-      font-size: {size}px;
+      font-size: {size}{unit};
       font-weight: {weight};
     }}""".format(
         family=font_desc.get_family().split(",")[0],
         size=int(round(font_desc.get_size() / Pango.SCALE)),
+        unit=unit,
         weight=int(font_desc.get_weight()))
-    css = css.replace("font-size: 0px;", "")
+    css = css.replace("font-size: 0{unit};".format(unit=unit), "")
     css = css.replace("font-weight: 0;", "")
     css = "\n".join(filter(lambda x: x.strip(), css.splitlines()))
     return css
