@@ -1,3 +1,12 @@
+2016-10-29: Gaupol 1.0
+======================
+
+* Fix size of custom font with GTK+ 3.22 (#40)
+* Show an error dialog if the integrated video player fails
+  to initialize playback due to e.g. missing codecs
+* Fix error trying to undo more actions than exist when holding down
+  Ctrl+Z (#38)
+
 2016-08-20: Gaupol 0.92
 =======================
 
