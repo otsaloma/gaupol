@@ -6,4 +6,3 @@ Gaupol 1.0
       to initialize playback due to e.g. missing codecs
 * [x] Fix error trying to undo more actions than exist when holding down
       Ctrl+Z (#38)
-* [ ] Update translations

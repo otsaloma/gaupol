@@ -101,7 +101,7 @@ for name in sorted(glob.glob("*.po")):
                     print("{}:{:d}: formatting mismatch in".format(*pos))
                     print('"{}"'.format(msgid))
                     print('"{}"'.format(msgstr))
-                    print("")
+                    raise SystemExit("Fatal error!")
 
     print("{}: {:d} bad, {:d} good messages"
           .format(name, nbad, ntotal - nbad))

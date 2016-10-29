@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-16 20:15+0300\n"
+"POT-Creation-Date: 2016-10-29 21:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Russian (https://www.transifex.com/otsaloma/teams/64879/ru/)\n"
@@ -41,7 +41,7 @@ msgid "Add"
 msgstr ""
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:3
-#: ../gaupol/application.py:263
+#: ../gaupol/application.py:266
 msgid "Remove"
 msgstr "Удалить"
 
@@ -823,7 +823,7 @@ msgstr ""
 msgid "seconds"
 msgstr "сек."
 
-#: ../data/ui/preferences-dialog.ui.h:30 ../gaupol/application.py:276
+#: ../data/ui/preferences-dialog.ui.h:30 ../gaupol/application.py:279
 msgid "Video"
 msgstr "Видео"
 
@@ -865,7 +865,7 @@ msgstr "_Сдвиг на:"
 msgid "seconds before selection"
 msgstr "сек. до начала выделения"
 
-#: ../data/ui/preferences-dialog.ui.h:44 ../gaupol/application.py:282
+#: ../data/ui/preferences-dialog.ui.h:44 ../gaupol/application.py:285
 msgid "Preview"
 msgstr "Просмотр"
 
@@ -902,7 +902,7 @@ msgstr "_Регулярное выражение"
 msgid "_Ignore case"
 msgstr "_Без учета регистра"
 
-#: ../data/ui/search-dialog.ui.h:9 ../gaupol/application.py:270
+#: ../data/ui/search-dialog.ui.h:9 ../gaupol/application.py:273
 msgid "Find"
 msgstr "Найти"
 
@@ -1811,16 +1811,16 @@ msgstr "Несохраненные изменения будут навсегд�
 msgid "Close _Without Saving"
 msgstr "Закрыть _без сохранения"
 
-#: ../gaupol/agents/edit.py:100 ../gaupol/agents/edit.py:118
+#: ../gaupol/agents/edit.py:101 ../gaupol/agents/edit.py:119
 msgid "Stretching end position"
 msgstr ""
 
-#: ../gaupol/agents/edit.py:281 ../gaupol/agents/edit.py:299
+#: ../gaupol/agents/edit.py:282 ../gaupol/agents/edit.py:300
 msgid "Stretching start position"
 msgstr ""
 
 #. Don't show help text if it would overlap with text being edited.
-#: ../gaupol/agents/edit.py:355
+#: ../gaupol/agents/edit.py:358
 msgid "Use Shift+Return for line-break"
 msgstr "Для переноса текста используйте Shift+Enter"
 
@@ -1837,7 +1837,7 @@ msgstr "Добавление файла"
 msgid "File \"{}\" is already open"
 msgstr "Файл \"{}\" уже открыт"
 
-#: ../gaupol/agents/open.py:198 ../gaupol/application.py:216
+#: ../gaupol/agents/open.py:198 ../gaupol/application.py:219
 msgid "Open"
 msgstr "Открыть"
 
@@ -1864,11 +1864,12 @@ msgstr "Попробуйте открыть файл, указав другую 
 #: ../gaupol/agents/open.py:317 ../gaupol/agents/open.py:326
 #: ../gaupol/agents/open.py:334 ../gaupol/agents/open.py:343
 #: ../gaupol/agents/preview.py:104 ../gaupol/agents/preview.py:112
-#: ../gaupol/agents/preview.py:120 ../gaupol/agents/save.py:198
-#: ../gaupol/agents/save.py:206 ../gaupol/assistants.py:600
+#: ../gaupol/agents/preview.py:120 ../gaupol/agents/save.py:197
+#: ../gaupol/agents/save.py:205 ../gaupol/assistants.py:600
 #: ../gaupol/dialogs/encoding.py:56 ../gaupol/dialogs/search.py:556
 #: ../gaupol/dialogs/search.py:564 ../gaupol/dialogs/spell_check.py:390
 #: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:241
+#: ../gaupol/player.py:356
 msgid "_OK"
 msgstr ""
 
@@ -1968,16 +1969,16 @@ msgstr "Сохранить перевод как"
 msgid "Saved translation document as \"{}\""
 msgstr "Перевод был сохранен под именем \"{}\""
 
-#: ../gaupol/agents/save.py:195
+#: ../gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "Не удалось закодировать файл \"{basename}\" с помощью \"{codec}\""
 
-#: ../gaupol/agents/save.py:196
+#: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
 msgstr "Попробуйте сохранить файл в другой кодировке символов."
 
-#: ../gaupol/agents/save.py:204
+#: ../gaupol/agents/save.py:203
 msgid "Failed to save file \"{}\""
 msgstr "Не удалось сохранить файл \"{}\""
 
@@ -2013,59 +2014,59 @@ msgstr ""
 msgid "_Load"
 msgstr ""
 
-#: ../gaupol/agents/video.py:336
+#: ../gaupol/agents/video.py:339
 msgid "Undefined"
 msgstr ""
 
-#: ../gaupol/application.py:220
+#: ../gaupol/application.py:223
 msgid "Open main files"
 msgstr "Открыть основной файл"
 
-#: ../gaupol/application.py:227
+#: ../gaupol/application.py:230
 msgid "Save"
 msgstr ""
 
-#: ../gaupol/application.py:230
+#: ../gaupol/application.py:233
 msgid "Save the current main document"
 msgstr "Сохранить текущий документ"
 
-#: ../gaupol/application.py:235
+#: ../gaupol/application.py:238
 msgid "Undo"
 msgstr ""
 
-#: ../gaupol/application.py:239
+#: ../gaupol/application.py:242
 msgid "Undo the last action"
 msgstr "Отмена последнего действия"
 
-#: ../gaupol/application.py:246
+#: ../gaupol/application.py:249
 msgid "Redo"
 msgstr ""
 
-#: ../gaupol/application.py:249
+#: ../gaupol/application.py:252
 msgid "Redo the last undone action"
 msgstr "Повторить последнее отмененное действие"
 
-#: ../gaupol/application.py:257
+#: ../gaupol/application.py:260
 msgid "Insert"
 msgstr "Вставить"
 
-#: ../gaupol/application.py:259
+#: ../gaupol/application.py:262
 msgid "Insert new subtitles"
 msgstr "Вставить новые субтитры"
 
-#: ../gaupol/application.py:265
+#: ../gaupol/application.py:268
 msgid "Remove the selected subtitles"
 msgstr "Удалить выделенные субтитры"
 
-#: ../gaupol/application.py:272
+#: ../gaupol/application.py:275
 msgid "Search for and replace text"
 msgstr "Поиск и замена текста"
 
-#: ../gaupol/application.py:278
+#: ../gaupol/application.py:281
 msgid "Show or hide the video player"
 msgstr ""
 
-#: ../gaupol/application.py:284
+#: ../gaupol/application.py:287
 msgid "Preview from selected position with a video player"
 msgstr "Просмотр с выделенной позиции в видеоплеере"
 
@@ -2543,3 +2544,7 @@ msgstr ""
 #: ../gaupol/page.py:305
 msgid "Newlines:"
 msgstr "Новые строки:"
+
+#: ../gaupol/player.py:354
+msgid "Failed to initialize playback"
+msgstr ""

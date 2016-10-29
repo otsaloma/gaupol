@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-16 20:15+0300\n"
+"POT-Creation-Date: 2016-10-29 21:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
@@ -39,7 +39,7 @@ msgid "Add"
 msgstr "Añadir"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:3
-#: ../gaupol/application.py:263
+#: ../gaupol/application.py:266
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -121,8 +121,8 @@ msgid "secon_ds"
 msgstr "segundo_s"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5
-#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
+#: ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -824,7 +824,7 @@ msgstr "_Largo:"
 msgid "seconds"
 msgstr "segundos"
 
-#: ../data/ui/preferences-dialog.ui.h:30 ../gaupol/application.py:276
+#: ../data/ui/preferences-dialog.ui.h:30 ../gaupol/application.py:279
 msgid "Video"
 msgstr "Vídeo"
 
@@ -871,7 +871,7 @@ msgstr "_Desplazamiento:"
 msgid "seconds before selection"
 msgstr "segundos antes de la selección"
 
-#: ../data/ui/preferences-dialog.ui.h:44 ../gaupol/application.py:282
+#: ../data/ui/preferences-dialog.ui.h:44 ../gaupol/application.py:285
 msgid "Preview"
 msgstr "Vista previa"
 
@@ -908,7 +908,7 @@ msgstr "_Expresión regular"
 msgid "_Ignore case"
 msgstr "Ignorar _capitalización"
 
-#: ../data/ui/search-dialog.ui.h:9 ../gaupol/application.py:270
+#: ../data/ui/search-dialog.ui.h:9 ../gaupol/application.py:273
 msgid "Find"
 msgstr "Buscar"
 
@@ -1111,8 +1111,7 @@ msgstr "Punto después de títulos personales"
 #: ../data/patterns/Latn-en-US.common-error.in.h:2
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
 msgstr ""
-"Agrega un punto después de un título personal abreviado, tal como «Mr» o "
-"«Dr»"
+"Agrega un punto después de un título personal abreviado, tal como «Mr» o «Dr»"
 
 #: ../data/patterns/Latn-en.capitalization.in.h:1
 msgid "First person pronoun"
@@ -1147,8 +1146,7 @@ msgstr "Cero en palabras en mayúsculas"
 #: ../data/patterns/Latn-en.common-error.in.h:6
 msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr ""
-"Reemplaza el número cero dentro de una palabra en mayúsculas por la letra "
-"«O»"
+"Reemplaza el número cero dentro de una palabra en mayúsculas por la letra «O»"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
 #: ../data/patterns/Latn.common-error.in.h:5
@@ -1183,8 +1181,7 @@ msgstr "Hablante en mayúsculas antes de dos puntos"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue "
-"dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue dash"
 msgstr ""
 "Reemplaza el nombre en mayúsculas del hablante antes de dos puntos por una "
 "raya de diálogo"
@@ -1269,7 +1266,8 @@ msgid "Spelling of a.m. and p.m."
 msgstr "«a.m.» y «p.m.»"
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid ""
+"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
 "Convierte varias formas de escribir períodos de 12 horas a «a.m.» y «p.m.»"
 
@@ -1325,8 +1323,7 @@ msgstr "Espacio a continuación de puntos suspensivos iniciales"
 #: ../data/patterns/Latn.common-error.in.h:20
 msgid "Remove space after an ellipsis that starts a line"
 msgstr ""
-"Elimina el espacio en blanco después de puntos suspensivos al inicio de "
-"línea"
+"Elimina el espacio en blanco después de puntos suspensivos al inicio de línea"
 
 #: ../data/patterns/Latn.common-error.in.h:21
 msgid "Spaces around a quotation mark"
@@ -1397,8 +1394,8 @@ msgstr "Letras de canciones entre almohadillas"
 #: ../data/patterns/Latn.hearing-impaired.in.h:6
 msgid "Remove song lyrics starting with or between number signs"
 msgstr ""
-"Elimina letras de canciones que comienzan o se encuentran entre almohadillas"
-" (#)"
+"Elimina letras de canciones que comienzan o se encuentran entre almohadillas "
+"(#)"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:7
 msgid "One-line song lyrics between number signs"
@@ -1828,8 +1825,7 @@ msgstr "Editor de subtítulos"
 msgid "Edit subtitle files"
 msgstr "Edite archivos de subtítulos"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or
-#. localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr "vídeo;subtítulos;"
@@ -1851,16 +1847,16 @@ msgstr "Si no guarda, todos los cambios se perderán."
 msgid "Close _Without Saving"
 msgstr "Cerrar _sin guardar"
 
-#: ../gaupol/agents/edit.py:100 ../gaupol/agents/edit.py:118
+#: ../gaupol/agents/edit.py:101 ../gaupol/agents/edit.py:119
 msgid "Stretching end position"
 msgstr "Ajustar posición final"
 
-#: ../gaupol/agents/edit.py:281 ../gaupol/agents/edit.py:299
+#: ../gaupol/agents/edit.py:282 ../gaupol/agents/edit.py:300
 msgid "Stretching start position"
 msgstr "Ajustar posición inicial"
 
 #. Don't show help text if it would overlap with text being edited.
-#: ../gaupol/agents/edit.py:355
+#: ../gaupol/agents/edit.py:358
 msgid "Use Shift+Return for line-break"
 msgstr "Use Mayús+Intro para insertar un salto de línea"
 
@@ -1877,7 +1873,7 @@ msgstr "Añadiendo archivo"
 msgid "File \"{}\" is already open"
 msgstr "El archivo «{}» ya está abierto"
 
-#: ../gaupol/agents/open.py:198 ../gaupol/application.py:216
+#: ../gaupol/agents/open.py:198 ../gaupol/application.py:219
 msgid "Open"
 msgstr "Abrir"
 
@@ -1905,11 +1901,12 @@ msgstr ""
 #: ../gaupol/agents/open.py:317 ../gaupol/agents/open.py:326
 #: ../gaupol/agents/open.py:334 ../gaupol/agents/open.py:343
 #: ../gaupol/agents/preview.py:104 ../gaupol/agents/preview.py:112
-#: ../gaupol/agents/preview.py:120 ../gaupol/agents/save.py:198
-#: ../gaupol/agents/save.py:206 ../gaupol/assistants.py:600
+#: ../gaupol/agents/preview.py:120 ../gaupol/agents/save.py:197
+#: ../gaupol/agents/save.py:205 ../gaupol/assistants.py:600
 #: ../gaupol/dialogs/encoding.py:56 ../gaupol/dialogs/search.py:556
 #: ../gaupol/dialogs/search.py:564 ../gaupol/dialogs/spell_check.py:390
 #: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:241
+#: ../gaupol/player.py:356
 msgid "_OK"
 msgstr "_Aceptar"
 
@@ -1970,8 +1967,7 @@ msgstr ""
 #: ../gaupol/agents/open.py:372
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"¿Guardar cambios en el documento de traducción «{}» antes de abrir uno "
-"nuevo?"
+"¿Guardar cambios en el documento de traducción «{}» antes de abrir uno nuevo?"
 
 #: ../gaupol/agents/open.py:375
 msgid "Open _Without Saving"
@@ -1989,8 +1985,8 @@ msgid ""
 "current character encoding. Please first save the subtitle file with a "
 "different character encoding."
 msgstr ""
-"No fue posible codificar los subtítulos en un archivo temporal para su vista"
-" previa usando la codificación de caracteres actual. Intente guardar el "
+"No fue posible codificar los subtítulos en un archivo temporal para su vista "
+"previa usando la codificación de caracteres actual. Intente guardar el "
 "archivo de subtítulos con una codificación de caracteres diferente."
 
 #: ../gaupol/agents/preview.py:110
@@ -2019,18 +2015,18 @@ msgstr "Guardar traducción como"
 msgid "Saved translation document as \"{}\""
 msgstr "Documento de traducción guardado como «{}»"
 
-#: ../gaupol/agents/save.py:195
+#: ../gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr ""
 "No fue posible codificar el archivo «{basename}» usando el códec «{codec}»"
 
-#: ../gaupol/agents/save.py:196
+#: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
 msgstr ""
 "Intente guardar el archivo usando una codificación de caracteres diferente."
 
-#: ../gaupol/agents/save.py:204
+#: ../gaupol/agents/save.py:203
 msgid "Failed to save file \"{}\""
 msgstr "No fue posible guardar el archivo «{}»"
 
@@ -2066,62 +2062,61 @@ msgstr "Abrir vídeo"
 msgid "_Load"
 msgstr "_Abrir"
 
-#: ../gaupol/agents/video.py:336
+#: ../gaupol/agents/video.py:339
 msgid "Undefined"
 msgstr "Indeterminado"
 
-#: ../gaupol/application.py:220
+#: ../gaupol/application.py:223
 msgid "Open main files"
 msgstr "Abre archivos de subtítulos"
 
-#: ../gaupol/application.py:227
+#: ../gaupol/application.py:230
 msgid "Save"
 msgstr "Guardar"
 
-#: ../gaupol/application.py:230
+#: ../gaupol/application.py:233
 msgid "Save the current main document"
 msgstr "Guarda el documento principal actual"
 
-#: ../gaupol/application.py:235
+#: ../gaupol/application.py:238
 msgid "Undo"
 msgstr "Deshacer"
 
-#: ../gaupol/application.py:239
+#: ../gaupol/application.py:242
 msgid "Undo the last action"
 msgstr "Deshace los efectos de la última acción"
 
-#: ../gaupol/application.py:246
+#: ../gaupol/application.py:249
 msgid "Redo"
 msgstr "Rehacer"
 
-#: ../gaupol/application.py:249
+#: ../gaupol/application.py:252
 msgid "Redo the last undone action"
 msgstr "Rehace la última acción deshecha"
 
-#: ../gaupol/application.py:257
+#: ../gaupol/application.py:260
 msgid "Insert"
 msgstr "Insertar"
 
-#: ../gaupol/application.py:259
+#: ../gaupol/application.py:262
 msgid "Insert new subtitles"
 msgstr "Inserta subtítulos nuevos"
 
-#: ../gaupol/application.py:265
+#: ../gaupol/application.py:268
 msgid "Remove the selected subtitles"
 msgstr "Elimina los subtítulos seleccionados"
 
-#: ../gaupol/application.py:272
+#: ../gaupol/application.py:275
 msgid "Search for and replace text"
 msgstr "Busca y reemplaza texto"
 
-#: ../gaupol/application.py:278
+#: ../gaupol/application.py:281
 msgid "Show or hide the video player"
 msgstr "Muestra u oculta el vídeo integrado"
 
-#: ../gaupol/application.py:284
+#: ../gaupol/application.py:287
 msgid "Preview from selected position with a video player"
-msgstr ""
-"Vista previa en un reproductor de vídeo desde la posición seleccionada"
+msgstr "Vista previa en un reproductor de vídeo desde la posición seleccionada"
 
 #: ../gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
@@ -2162,8 +2157,7 @@ msgstr "MÉTODO"
 #: ../gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
-"método usado para ajustar los subtítulos de traducción: 'number' o "
-"'position'"
+"método usado para ajustar los subtítulos de traducción: 'number' o 'position'"
 
 #: ../gaupol/applicationman.py:156
 msgid "select video file"
@@ -2216,8 +2210,8 @@ msgstr "Capitalizar texto"
 #: ../gaupol/assistants.py:468
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
-"Corrige errores frecuentes propios de un humano o un software reconocedor de"
-" imágenes"
+"Corrige errores frecuentes propios de un humano o un software reconocedor de "
+"imágenes"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -2608,3 +2602,7 @@ msgstr "Codificación:"
 #: ../gaupol/page.py:305
 msgid "Newlines:"
 msgstr "Salto de línea:"
+
+#: ../gaupol/player.py:354
+msgid "Failed to initialize playback"
+msgstr ""
