@@ -7,8 +7,7 @@ python:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y gettext intltool
-virtualenv:
-  system_site_packages: true
+  - pip install chardet pyenchant
 script:
   - py.test aeidon
   - python setup.py clean
