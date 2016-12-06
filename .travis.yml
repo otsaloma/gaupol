@@ -6,7 +6,7 @@ python:
   - 3.5
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y gettext intltool
+  - sudo apt-get install -y enchant gettext intltool
   - pip install chardet pyenchant
 script:
   - py.test aeidon
