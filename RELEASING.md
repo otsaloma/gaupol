@@ -6,7 +6,8 @@ Releasing a New Version
     - `tools/update-translations`
     - `virtaal po/fi.po`
     - `tools/check-translations`
-    - `tx push -stf`
+    - `tx push -s`
+    - `tx push -tf -l fi`
     - `git commit -a -m "Update translations for X.Y.Z"`
 * Do final quality checks
     - `python3 -Wd bin/gaupol`
