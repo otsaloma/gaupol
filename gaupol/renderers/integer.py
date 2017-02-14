@@ -19,6 +19,7 @@
 
 import aeidon
 import gaupol
+import re
 
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -35,7 +36,14 @@ class IntegerCellRenderer(Gtk.CellRendererText):
     def __init__(self):
         """Initialize a :class:`IntegerCellRenderer` instance."""
         GObject.GObject.__init__(self)
+        aeidon.util.connect(self, self, "edited")
         aeidon.util.connect(self, self, "editing-started")
+
+    def _on_edited(self, renderer, path, text):
+        """Check `text` for validity before sending onwards."""
+        if re.match(r"[+-]?\d+", text) is None:
+            renderer.stop_emission("edited")
+            renderer.stop_editing(True)
 
     def _on_editing_started(self, renderer, editor, path):
         """Set `editor` to use same font as `self`."""
