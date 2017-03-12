@@ -386,7 +386,8 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="CZ"
 		alpha_3_code="CZE"
 		numeric_code="203"
-		name="Czech Republic" />
+		name="Czechia"
+		official_name="Czech Republic" />
 	<iso_3166_entry
 		alpha_2_code="DE"
 		alpha_3_code="DEU"
