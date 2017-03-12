@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,723 +10,723 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-29 21:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
-"Language-Team: Catalan (https://www.transifex.com/otsaloma/teams/64879/ca/)\n"
-"Language: ca\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2016\n"
+"Language-Team: Icelandic (https://www.transifex.com/otsaloma/teams/64879/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: is\n"
+"Plural-Forms: nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
-msgstr ""
+msgstr "Setja inn rammatíðni"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:2
 msgid "_Framerate:"
-msgstr ""
+msgstr "_Rammatíðni:"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:3
 msgid "fps"
-msgstr ""
+msgstr "r/sek"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:1
 msgid "Framerates"
-msgstr ""
+msgstr "Rammatíðnir"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:2
 msgid "Add"
-msgstr ""
+msgstr "Bæta við"
 
 #: ../data/extensions/custom-framerates/preferences-dialog.ui.h:3
 #: ../gaupol/application.py:266
 msgid "Remove"
-msgstr ""
+msgstr "Fjarlægja"
 
 #: ../data/ui/columns-popup.ui.h:1 ../data/ui/menubar.ui.h:49
 msgid "_No."
-msgstr "_Nº"
+msgstr "_Nr."
 
 #: ../data/ui/columns-popup.ui.h:2 ../data/ui/menubar.ui.h:50
 msgid "_Start"
-msgstr ""
+msgstr "U_pphaf"
 
 #: ../data/ui/columns-popup.ui.h:3 ../data/ui/menubar.ui.h:51
 msgid "_End"
-msgstr ""
+msgstr "_Endir"
 
 #: ../data/ui/columns-popup.ui.h:4 ../data/ui/menubar.ui.h:52
 msgid "_Duration"
-msgstr "_Duració"
+msgstr "Tímalen_gd"
 
 #: ../data/ui/columns-popup.ui.h:5 ../data/ui/menubar.ui.h:53
 msgid "_Text"
-msgstr ""
+msgstr "_Texti"
 
 #: ../data/ui/columns-popup.ui.h:6 ../data/ui/menubar.ui.h:54
 msgid "T_ranslation"
-msgstr ""
+msgstr "Þýðin_g"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:1
 msgid "Adjust Durations"
-msgstr ""
+msgstr "Aðlaga tímalengdir"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:2
 msgid "Theoretic Duration"
-msgstr ""
+msgstr "Marktímalengd"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:3
 msgid "_Reading speed:"
-msgstr ""
+msgstr "Lesh_raði:"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:4
 msgid "characters per second"
-msgstr ""
+msgstr "stafir á sekúndu"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:5
 msgid "_Lengthen duration to match reading speed"
-msgstr ""
+msgstr "_Lengja tíma til að samsvara leshraða"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:6
 msgid "_Shorten duration to match reading speed"
-msgstr ""
+msgstr "_Stytta tíma til að samsvara leshraða"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:7
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:1
 msgid "Limits"
-msgstr ""
+msgstr "Takmörk"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:8
 msgid "_Minimum duration:"
-msgstr ""
+msgstr "_Minnsta tímalengd:"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:9
 msgid "Ma_ximum duration:"
-msgstr ""
+msgstr "_Hámarks tímalengd:"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:10
 msgid "_Gap between subtitles:"
-msgstr ""
+msgstr "_Bil á milli skjátexta:"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:11
 msgid "s_econds"
-msgstr ""
+msgstr "s_ekúndur"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:12
 msgid "seco_nds"
-msgstr ""
+msgstr "sekú_ndur"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:13
 msgid "secon_ds"
-msgstr ""
+msgstr "sekún_dur"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
-#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
 msgid "Subtitles"
-msgstr ""
+msgstr "Skjátextar"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:15
 msgid "Adj_ust selected subtitles"
-msgstr ""
+msgstr "Aðlaga val_da skjátexta"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:16
 msgid "Adjus_t current project"
-msgstr ""
+msgstr "Aðlaga þe_tta verkefni"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:17
 msgid "Adjust all _open projects"
-msgstr ""
+msgstr "Aðlaga öll _opin verkefni"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:1
 msgid "Convert Framerate"
-msgstr ""
+msgstr "Umbreyta rammatíðni"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:2
 msgid "Framerate"
-msgstr ""
+msgstr "Rammatíðni"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:3
 msgid "_Input:"
-msgstr ""
+msgstr "_Inntak:"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:4
 msgid "_Output:"
-msgstr ""
+msgstr "Útta_k:"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:6
 msgid "Convert c_urrent project"
-msgstr ""
+msgstr "_Umbreyta þessu verkefni"
 
 #: ../data/ui/framerate-convert-dialog.ui.h:7
 msgid "Convert _all open projects"
-msgstr ""
+msgstr "Umbreyt_a öllum opnum verkefnum"
 
 #: ../data/ui/insert-dialog.ui.h:1
 msgid "Insert Subtitles"
-msgstr "Insereix els subtítols"
+msgstr "Setja inn skjátexta"
 
 #: ../data/ui/insert-dialog.ui.h:2 ../data/ui/position-shift-dialog.ui.h:3
 msgid "_Amount:"
-msgstr "Qu_antitat:"
+msgstr "_Magn:"
 
 #: ../data/ui/insert-dialog.ui.h:3
 msgid "_Position:"
-msgstr "_Posició:"
+msgstr "_Staða:"
 
 #: ../data/ui/language-dialog.ui.h:1
 msgid "Configure Spell-Check"
-msgstr ""
+msgstr "Stilla stafsetningaryfirferð"
 
 #: ../data/ui/language-dialog.ui.h:2
 msgid "Language"
-msgstr ""
+msgstr "Tungumál"
 
 #: ../data/ui/language-dialog.ui.h:3 ../data/ui/search-dialog.ui.h:10
 msgid "Columns"
-msgstr ""
+msgstr "Dálkar"
 
 #: ../data/ui/language-dialog.ui.h:4
 msgid "Check _text column"
-msgstr ""
+msgstr "Yfirfara _textadálk"
 
 #: ../data/ui/language-dialog.ui.h:5
 msgid "Check t_ranslation column"
-msgstr ""
+msgstr "Yfirfara þýðinga_rdálk"
 
 #: ../data/ui/language-dialog.ui.h:7
 msgid "Check c_urrent project"
-msgstr "Comprova el projecte act_ual"
+msgstr "_Yfirfara þetta verkefni"
 
 #: ../data/ui/language-dialog.ui.h:8
 msgid "Check _all open projects"
-msgstr "Comprov_a tots els projectes oberts"
+msgstr "Yfirf_ara öll opin verkefni"
 
 #: ../data/ui/menubar.ui.h:1
 msgid "_File"
-msgstr "_Fitxer"
+msgstr "_Skrá"
 
 #: ../data/ui/menubar.ui.h:2
 msgid "_New"
-msgstr "_Nou"
+msgstr "_Nýtt"
 
 #: ../data/ui/menubar.ui.h:3
 msgid "_Open…"
-msgstr ""
+msgstr "_Opna…"
 
 #: ../data/ui/menubar.ui.h:4
 msgid "Open _Translation…"
-msgstr ""
+msgstr "Op_na þýðingu…"
 
 #: ../data/ui/menubar.ui.h:5
 msgid "Open _Recent"
-msgstr ""
+msgstr "O_pna nýlegt"
 
 #: ../data/ui/menubar.ui.h:6
 msgid "Open R_ecent Translation"
-msgstr ""
+msgstr "Opn_a nýlega þýðingu"
 
 #: ../data/ui/menubar.ui.h:7 ../gaupol/agents/close.py:72
 #: ../gaupol/agents/open.py:377 ../gaupol/dialogs/multi_close.py:55
 #: ../gaupol/dialogs/multi_save.py:84 ../gaupol/dialogs/save.py:74
 msgid "_Save"
-msgstr "_Desa"
+msgstr "Vi_sta"
 
 #: ../data/ui/menubar.ui.h:8
 msgid "Save _As…"
-msgstr ""
+msgstr "Vist_a sem..."
 
 #: ../data/ui/menubar.ui.h:9
 msgid "Save Trans_lation"
-msgstr ""
+msgstr "Vista þýðin_gu"
 
 #: ../data/ui/menubar.ui.h:10
 msgid "Save Translat_ion As…"
-msgstr ""
+msgstr "V_ista þýðingu sem…"
 
 #: ../data/ui/menubar.ui.h:11 ../data/ui/tab-popup.ui.h:3
 #: ../gaupol/dialogs/debug.py:54 ../gaupol/dialogs/preview_error.py:45
 msgid "_Close"
-msgstr "_Tanca"
+msgstr "_Loka"
 
 #: ../data/ui/menubar.ui.h:12 ../gaupol/dialogs/debug.py:53
 msgid "_Quit"
-msgstr "_Surt"
+msgstr "_Hætta"
 
 #: ../data/ui/menubar.ui.h:13 ../data/ui/spell-check-dialog.ui.h:4
 msgid "_Edit"
-msgstr "_Edita"
+msgstr "Br_eyta"
 
 #: ../data/ui/menubar.ui.h:14
 msgid "_Undo"
-msgstr "_Torna a fer"
+msgstr "_Afturkalla"
 
 #: ../data/ui/menubar.ui.h:15
 msgid "_Redo"
-msgstr "_Desfés"
+msgstr "Endu_rtaka"
 
 #: ../data/ui/menubar.ui.h:16
 msgid "_Edit Cell"
-msgstr ""
+msgstr "Br_eyta reit"
 
 #: ../data/ui/menubar.ui.h:17
 msgid "Edit _Next Cell"
-msgstr ""
+msgstr "Breyta _næsta reit"
 
 #: ../data/ui/menubar.ui.h:18
 msgid "Stretc_h"
-msgstr ""
+msgstr "Tey_gja"
 
 #: ../data/ui/menubar.ui.h:19
 msgid "_Start Earlier"
-msgstr ""
+msgstr "_Byrja fyrr"
 
 #: ../data/ui/menubar.ui.h:20
 msgid "S_tart Later"
-msgstr ""
+msgstr "B_yrja síðar"
 
 #: ../data/ui/menubar.ui.h:21
 msgid "E_nd Earlier"
-msgstr ""
+msgstr "E_nda fyrr"
 
 #: ../data/ui/menubar.ui.h:22
 msgid "En_d Later"
-msgstr ""
+msgstr "En_da síðar"
 
 #: ../data/ui/menubar.ui.h:23
 msgid "Set En_d From Video Position"
-msgstr ""
+msgstr "Setja en_da út frá stað í myndskeiði"
 
 #: ../data/ui/menubar.ui.h:24 ../data/ui/view-popup.ui.h:1
 msgid "_Split Subtitle"
-msgstr ""
+msgstr "_Skipta upp skjátexta"
 
 #: ../data/ui/menubar.ui.h:25 ../data/ui/view-popup.ui.h:2
 msgid "_Merge Subtitles"
-msgstr ""
+msgstr "Sa_meina skjátexta"
 
 #: ../data/ui/menubar.ui.h:26 ../data/ui/view-popup.ui.h:3
 msgid "_Insert Subtitles…"
-msgstr ""
+msgstr "Setja _inn skjátexta…"
 
 #: ../data/ui/menubar.ui.h:27
 msgid "Inser_t Subtitle At Video Position"
-msgstr ""
+msgstr "Se_tja inn skjátexta á stað í myndskeiði"
 
 #: ../data/ui/menubar.ui.h:28 ../data/ui/view-popup.ui.h:4
 msgid "Rem_ove Subtitles"
-msgstr ""
+msgstr "F_jarlægja skjátexta"
 
 #: ../data/ui/menubar.ui.h:29
 msgid "Sele_ction"
-msgstr ""
+msgstr "_Valið"
 
 #: ../data/ui/menubar.ui.h:30
 msgid "Select _All"
-msgstr ""
+msgstr "Velja _allt"
 
 #: ../data/ui/menubar.ui.h:31
 msgid "_Invert Selection"
-msgstr ""
+msgstr "_Umhverfa vali"
 
 #: ../data/ui/menubar.ui.h:32
 msgid "Extend To _Beginning"
-msgstr ""
+msgstr "Fram_lengja að upphafi"
 
 #: ../data/ui/menubar.ui.h:33
 msgid "Extend To _End"
-msgstr ""
+msgstr "Framlengja til _enda"
 
 #: ../data/ui/menubar.ui.h:34
 msgid "_Preferences"
-msgstr ""
+msgstr "_Kjörstillingar"
 
 #: ../data/ui/menubar.ui.h:35
 msgid "_View"
-msgstr "_Visualitza"
+msgstr "S_koða"
 
 #: ../data/ui/menubar.ui.h:36
 msgid "Tool_bar"
-msgstr ""
+msgstr "_Verkfærastika"
 
 #: ../data/ui/menubar.ui.h:37
 msgid "_Video Player"
-msgstr ""
+msgstr "M_yndskeiðaspilari"
 
 #: ../data/ui/menubar.ui.h:38
 msgid "_Layout"
-msgstr ""
+msgstr "_Framsetning"
 
 #: ../data/ui/menubar.ui.h:39
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Lárétt"
 
 #: ../data/ui/menubar.ui.h:40
 msgid "_Vertical"
-msgstr ""
+msgstr "Lóð_rétt"
 
 #: ../data/ui/menubar.ui.h:41
 msgid "_Times"
-msgstr ""
+msgstr "_Tími"
 
 #: ../data/ui/menubar.ui.h:42
 msgid "_Frames"
-msgstr ""
+msgstr "_Rammar:"
 
 #: ../data/ui/menubar.ui.h:43
 msgid "F_ramerate"
-msgstr ""
+msgstr "_Rammatíðni"
 
 #: ../data/ui/menubar.ui.h:44
 msgid "2_3.976 fps"
-msgstr "2_3.976 fps"
+msgstr "2_3.976 r/sek"
 
 #: ../data/ui/menubar.ui.h:45
 msgid "2_4.000 fps"
-msgstr ""
+msgstr "2_4.000 r/sek"
 
 #: ../data/ui/menubar.ui.h:46
 msgid "2_5.000 fps"
-msgstr ""
+msgstr "2_5.000 r/sek"
 
 #: ../data/ui/menubar.ui.h:47
 msgid "2_9.970 fps"
-msgstr ""
+msgstr "2_9.970 r/sek"
 
 #: ../data/ui/menubar.ui.h:48
 msgid "_Columns"
-msgstr "_Columnes"
+msgstr "_Dálkar"
 
 #: ../data/ui/menubar.ui.h:55
 msgid "Cu_t"
-msgstr "Re_talla"
+msgstr "_Klippa"
 
 #: ../data/ui/menubar.ui.h:56
 msgid "_Copy"
-msgstr "_Copia"
+msgstr "_Afrita"
 
 #: ../data/ui/menubar.ui.h:57
 msgid "_Paste"
-msgstr "_Enganxa"
+msgstr "_Líma"
 
 #: ../data/ui/menubar.ui.h:58
 msgid "Cl_ear"
-msgstr ""
+msgstr "Hr_einsa"
 
 #: ../data/ui/menubar.ui.h:59
 msgid "_Find And Replace…"
-msgstr ""
+msgstr "_Finna og skipta út…"
 
 #: ../data/ui/menubar.ui.h:60 ../data/ui/search-dialog.ui.h:3
 msgid "Find _Next"
-msgstr ""
+msgstr "Finna _næsta"
 
 #: ../data/ui/menubar.ui.h:61
 msgid "Find Pre_vious"
-msgstr ""
+msgstr "Finna f_yrri"
 
 #: ../data/ui/menubar.ui.h:62
 msgid "_Italic"
-msgstr "Curs_iva"
+msgstr "_Skáletrað"
 
 #: ../data/ui/menubar.ui.h:63
 msgid "_Dialogue"
-msgstr ""
+msgstr "Samskipta_gluggi"
 
 #: ../data/ui/menubar.ui.h:64
 msgid "Ca_se"
-msgstr ""
+msgstr "_Stafstaða"
 
 #: ../data/ui/menubar.ui.h:65
 msgid "_Title"
-msgstr "_Títol"
+msgstr "_Fremst í orðum"
 
 #: ../data/ui/menubar.ui.h:66
 msgid "_Sentence"
-msgstr "_Frase"
+msgstr "_Byrja setningu á hástaf"
 
 #: ../data/ui/menubar.ui.h:67
 msgid "_Upper"
-msgstr "Ma_júscules"
+msgstr "_Hástafir"
 
 #: ../data/ui/menubar.ui.h:68
 msgid "_Lower"
-msgstr "_Minúscules"
+msgstr "_Lágstafir"
 
 #: ../data/ui/menubar.ui.h:69
 msgid "Vi_deo"
-msgstr ""
+msgstr "_Myndskeið"
 
 #: ../data/ui/menubar.ui.h:70
 msgid "_Load Video…"
-msgstr ""
+msgstr "H_laða inn myndskeiði..."
 
 #: ../data/ui/menubar.ui.h:71 ../gaupol/agents/video.py:65
 msgid "_Play/Pause"
-msgstr ""
+msgstr "S_pila/stöðva"
 
 #: ../data/ui/menubar.ui.h:72 ../data/ui/view-popup.ui.h:5
 msgid "Play _Selection"
-msgstr ""
+msgstr "_Spila valið"
 
 #: ../data/ui/menubar.ui.h:73 ../gaupol/agents/video.py:73
 msgid "Seek _Previous"
-msgstr ""
+msgstr "Leita að f_yrra"
 
 #: ../data/ui/menubar.ui.h:74 ../gaupol/agents/video.py:79
 msgid "Seek _Next"
-msgstr ""
+msgstr "Leita að _næsta"
 
 #: ../data/ui/menubar.ui.h:75 ../gaupol/agents/video.py:86
 msgid "Seek _Backward"
-msgstr ""
+msgstr "Leita afturá_bak"
 
 #: ../data/ui/menubar.ui.h:76 ../gaupol/agents/video.py:92
 msgid "Seek _Forward"
-msgstr ""
+msgstr "Leita á_fram"
 
 #: ../data/ui/menubar.ui.h:77 ../data/ui/view-popup.ui.h:6
 msgid "S_eek Selection Start"
-msgstr ""
+msgstr "L_eita að upphafi vals"
 
 #: ../data/ui/menubar.ui.h:78
 msgid "See_k Selection End"
-msgstr ""
+msgstr "Leita að en_da vals"
 
 #: ../data/ui/menubar.ui.h:79
 msgid "_Audio"
-msgstr ""
+msgstr "_Hljóð"
 
 #: ../data/ui/menubar.ui.h:80
 msgid "_Language"
-msgstr ""
+msgstr "Tungumá_l"
 
 #: ../data/ui/menubar.ui.h:81
 msgid "Volume _Down"
-msgstr ""
+msgstr "_Lækka hljóðstyrk"
 
 #: ../data/ui/menubar.ui.h:82
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Hækka hljóðstyrk"
 
 #: ../data/ui/menubar.ui.h:83
 msgid "T_ools"
-msgstr ""
+msgstr "Verk_færi"
 
 #: ../data/ui/menubar.ui.h:84
 #: ../data/ui/text-assistant/confirmation-page.ui.h:4
 #: ../data/ui/view-popup.ui.h:7
 msgid "_Preview"
-msgstr "_Previsualització"
+msgstr "_Forskoðun"
 
 #: ../data/ui/menubar.ui.h:85
 msgid "Select _Video…"
-msgstr ""
+msgstr "_Veldu myndskeið..."
 
 #: ../data/ui/menubar.ui.h:86
 msgid "_Check Spelling"
-msgstr "_Comprova l'ortografia"
+msgstr "_Athuga stafsetningu"
 
 #: ../data/ui/menubar.ui.h:87
 msgid "Co_nfigure Spell-check…"
-msgstr ""
+msgstr "Stilla sta_fsetningaryfirferð…"
 
 #: ../data/ui/menubar.ui.h:88
 msgid "C_orrect Texts…"
-msgstr ""
+msgstr "Le_iðrétta texta..."
 
 #: ../data/ui/menubar.ui.h:89
 msgid "_Shift Positions…"
-msgstr ""
+msgstr "Hliðra _staðsetningum..."
 
 #: ../data/ui/menubar.ui.h:90
 msgid "_Transform Positions…"
-msgstr ""
+msgstr "_Umbreyta staðsetningum..."
 
 #: ../data/ui/menubar.ui.h:91
 msgid "Adjust _Durations…"
-msgstr ""
+msgstr "Aðla_ga tímalengdir…"
 
 #: ../data/ui/menubar.ui.h:92
 msgid "Convert _Framerate…"
-msgstr ""
+msgstr "Um_breyta rammatíðni…"
 
 #: ../data/ui/menubar.ui.h:93
 msgid "_Append File…"
-msgstr ""
+msgstr "_Bæta við skrá…"
 
 #: ../data/ui/menubar.ui.h:94
 msgid "Spli_t Project…"
-msgstr ""
+msgstr "Skip_ta upp verkefni…"
 
 #: ../data/ui/menubar.ui.h:95
 msgid "_Projects"
-msgstr "_Projectes"
+msgstr "_Verkefni"
 
 #: ../data/ui/menubar.ui.h:96
 msgid "_Save All"
-msgstr "Desa-ho _tot"
+msgstr "Vi_sta allt"
 
 #: ../data/ui/menubar.ui.h:97
 msgid "Save _All As…"
-msgstr ""
+msgstr "Vista _allt sem…"
 
 #: ../data/ui/menubar.ui.h:98
 msgid "_Close All"
-msgstr "_Tanca-ho tot"
+msgstr "_Loka öllu"
 
 #: ../data/ui/menubar.ui.h:99
 msgid "_Previous"
-msgstr "_Previ"
+msgstr "_Fyrra"
 
 #: ../data/ui/menubar.ui.h:100
 msgid "_Next"
-msgstr "Següe_nt:"
+msgstr "_Næsta"
 
 #: ../data/ui/menubar.ui.h:101 ../gaupol/dialogs/search.py:189
 msgid "_Help"
-msgstr "A_juda"
+msgstr "_Hjálp"
 
 #: ../data/ui/menubar.ui.h:102
 msgid "_Documentation"
-msgstr ""
+msgstr "_Hjálparskjöl"
 
 #: ../data/ui/menubar.ui.h:103
 msgid "_Report A Bug"
-msgstr "_Reporta un error"
+msgstr "Til_kynna um villu"
 
 #: ../data/ui/menubar.ui.h:104
 msgid "_About"
-msgstr "_Quant a"
+msgstr "_Um hugbúnaðinn"
 
 #: ../data/ui/multi-save-dialog.ui.h:1
 msgid "Save All As"
-msgstr ""
+msgstr "Vista allt sem"
 
 #: ../data/ui/multi-save-dialog.ui.h:2
 msgid "Save in _folder:"
-msgstr ""
+msgstr "Vista í _möppu:"
 
 #: ../data/ui/multi-save-dialog.ui.h:3 ../data/ui/save-dialog.ui.h:1
 msgid "For_mat:"
-msgstr ""
+msgstr "S_nið:"
 
 #: ../data/ui/multi-save-dialog.ui.h:4 ../data/ui/open-dialog.ui.h:1
 #: ../data/ui/save-dialog.ui.h:2
 msgid "_Encoding:"
-msgstr ""
+msgstr "St_afatafla:"
 
 #: ../data/ui/multi-save-dialog.ui.h:5 ../data/ui/save-dialog.ui.h:3
 msgid "Ne_wlines:"
-msgstr "Noves línies:"
+msgstr "Ný_línumerki:"
 
 #: ../data/ui/multi-save-dialog.ui.h:6
 msgid "Select A Folder"
-msgstr ""
+msgstr "Veldu möppu"
 
 #: ../data/ui/multi-save-dialog.ui.h:7 ../data/ui/save-dialog.ui.h:4
 msgid "F_ramerate:"
-msgstr ""
+msgstr "_Rammatíðni:"
 
 #: ../data/ui/open-dialog.ui.h:2
 msgid "Align _method:"
-msgstr ""
+msgstr "_Aðferð við jöfnun:"
 
 #: ../data/ui/position-shift-dialog.ui.h:1
 msgid "Shift Positions"
-msgstr ""
+msgstr "Hliðra staðsetningum"
 
 #: ../data/ui/position-shift-dialog.ui.h:2
 msgid "Shift"
-msgstr ""
+msgstr "Hliðra"
 
 #: ../data/ui/position-shift-dialog.ui.h:4
 #: ../data/ui/position-transform-dialog.ui.h:6
 msgid "_Preview Changes"
-msgstr ""
+msgstr "Fors_koða breytingar"
 
 #: ../data/ui/position-shift-dialog.ui.h:6
 msgid "Shift s_elected subtitles"
-msgstr ""
+msgstr "_Hliðra völdum skjátextum"
 
 #: ../data/ui/position-shift-dialog.ui.h:7
 msgid "Shift su_btitles from selection to end"
-msgstr ""
+msgstr "Hliðra skjátextum frá vali að en_da"
 
 #: ../data/ui/position-shift-dialog.ui.h:8
 msgid "Shift c_urrent project"
-msgstr ""
+msgstr "Hliðra þess_u verkefni"
 
 #: ../data/ui/position-transform-dialog.ui.h:1
 msgid "Transform Positions"
-msgstr ""
+msgstr "Umbreyta staðsetningum"
 
 #: ../data/ui/position-transform-dialog.ui.h:2
 msgid "First Point"
-msgstr ""
+msgstr "Fyrsti punktur"
 
 #: ../data/ui/position-transform-dialog.ui.h:3
 msgid "_Subtitle:"
-msgstr ""
+msgstr "_Skjátexti:"
 
 #: ../data/ui/position-transform-dialog.ui.h:4
 msgid "C_orrection:"
-msgstr ""
+msgstr "Leiðrétting:"
 
 #: ../data/ui/position-transform-dialog.ui.h:5
 msgid "Text:"
-msgstr ""
+msgstr "Texti:"
 
 #: ../data/ui/position-transform-dialog.ui.h:7
 msgid "Second Point"
-msgstr ""
+msgstr "Annar punktur"
 
 #: ../data/ui/position-transform-dialog.ui.h:8
 msgid "Su_btitle:"
-msgstr ""
+msgstr "Skjáte_xti:"
 
 #: ../data/ui/position-transform-dialog.ui.h:9
 msgid "Co_rrection:"
-msgstr ""
+msgstr "Leið_rétting:"
 
 #: ../data/ui/position-transform-dialog.ui.h:10
 msgid "Pre_view Changes"
-msgstr ""
+msgstr "Forskoða _breytingar"
 
 #: ../data/ui/position-transform-dialog.ui.h:12
 msgid "Transform se_lected subtitles"
-msgstr ""
+msgstr "Umbreyta vö_ldum skjátextum"
 
 #: ../data/ui/position-transform-dialog.ui.h:13
 msgid "Transform c_urrent project"
-msgstr ""
+msgstr "Umbreyta þess_u verkefni"
 
 #: ../data/ui/preferences-dialog.ui.h:1
 msgid "Preferences"
-msgstr "Preferències"
+msgstr "Kjörstillingar"
 
 #: ../data/ui/preferences-dialog.ui.h:2 ../gaupol/dialogs/encoding.py:60
 msgid "Character Encodings"
-msgstr "Codificacions de caràcter"
+msgstr "Stafatöflur"
 
 #: ../data/ui/preferences-dialog.ui.h:3
 msgid "When opening files, try encodings in the following order:"
-msgstr ""
+msgstr "Þegar skrár eru opnaðar, prófa stafatöflur í eftirfarandi röð:"
 
 #: ../data/ui/preferences-dialog.ui.h:4
 msgid "Curr_ent locale encoding"
-msgstr ""
+msgstr "St_afatöflu núverandi staðfærslu"
 
 #: ../data/ui/preferences-dialog.ui.h:5
 msgid "_Fallback encodings:"
-msgstr ""
+msgstr "Stafatö_flur til vara:"
 
 #: ../data/ui/preferences-dialog.ui.h:6
 msgid "Aut_o-detection"
-msgstr ""
+msgstr "Sjálfvirk _greining"
 
 #: ../data/ui/preferences-dialog.ui.h:7
 msgid "Encoding specified in the open dialog will always be tried first."
@@ -734,23 +734,23 @@ msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:8
 msgid "File"
-msgstr "Fitxer"
+msgstr "Skrá"
 
 #: ../data/ui/preferences-dialog.ui.h:9
 msgid "Font"
-msgstr ""
+msgstr "Letur"
 
 #: ../data/ui/preferences-dialog.ui.h:10
 msgid "Use _default theme fixed width font"
-msgstr ""
+msgstr "Nota _jafnbreitt letur úr sjálfgefnu þema"
 
 #: ../data/ui/preferences-dialog.ui.h:11
 msgid "_Editor font:"
-msgstr "Tipus de lletra de l'_editor:"
+msgstr "L_eturgerð ritils:"
 
 #: ../data/ui/preferences-dialog.ui.h:12
 msgid "Line Lengths"
-msgstr ""
+msgstr "Lengdir lína"
 
 #: ../data/ui/preferences-dialog.ui.h:13
 msgid "_Show line lengths in list cells"
@@ -762,80 +762,80 @@ msgstr ""
 
 #: ../data/ui/preferences-dialog.ui.h:15
 msgid "_Length unit:"
-msgstr ""
+msgstr "_Lengdareining:"
 
 #: ../data/ui/preferences-dialog.ui.h:16
 msgid "Spell-Check"
-msgstr ""
+msgstr "Stafsetningaryfirferð"
 
 #: ../data/ui/preferences-dialog.ui.h:17
 msgid "Chec_k spelling as you type"
-msgstr ""
+msgstr "Kanna stafsetningu jafnóðum"
 
 #: ../data/ui/preferences-dialog.ui.h:18
 msgid "Editor"
-msgstr "Editor"
+msgstr "Ritill"
 
 #: ../data/ui/preferences-dialog.ui.h:19
 msgid "Fonts"
-msgstr ""
+msgstr "Leturgerðir"
 
 #: ../data/ui/preferences-dialog.ui.h:20
 msgid "_Subtitles:"
-msgstr ""
+msgstr "_Skjátextar:"
 
 #: ../data/ui/preferences-dialog.ui.h:21
 msgid "_Time:"
-msgstr ""
+msgstr "_Tími:"
 
 #: ../data/ui/preferences-dialog.ui.h:22
 msgid "Colors"
-msgstr ""
+msgstr "Litir"
 
 #: ../data/ui/preferences-dialog.ui.h:23
 msgid "Su_btitles:"
-msgstr ""
+msgstr "Skját_extar:"
 
 #: ../data/ui/preferences-dialog.ui.h:24
 msgid "_Use a background behind text"
-msgstr ""
+msgstr "N_ota bakgrunnsfyllingu aftan við texta"
 
 #: ../data/ui/preferences-dialog.ui.h:25
 msgid "Ti_me:"
-msgstr ""
+msgstr "Tí_mi:"
 
 #: ../data/ui/preferences-dialog.ui.h:26
 msgid "Us_e a background behind text"
-msgstr ""
+msgstr "Not_a bakgrunnsfyllingu fyrir framan texta"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Seek"
-msgstr ""
+msgstr "Leita"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Length:"
-msgstr ""
+msgstr "_Lengd:"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 #: ../gaupol/dialogs/position_shift.py:163
 msgid "seconds"
-msgstr ""
+msgstr "sekúndur"
 
 #: ../data/ui/preferences-dialog.ui.h:30 ../gaupol/application.py:279
 msgid "Video"
-msgstr ""
+msgstr "Myndskeið"
 
 #: ../data/ui/preferences-dialog.ui.h:31
 msgid "Video Player"
-msgstr ""
+msgstr "Myndskeiðaspilari"
 
 #: ../data/ui/preferences-dialog.ui.h:32
 msgid "_Application:"
-msgstr ""
+msgstr "_Forrit"
 
 #: ../data/ui/preferences-dialog.ui.h:33
 msgid "Co_mmand:"
-msgstr "Co_manda:"
+msgstr "Ski_pun:"
 
 #. Translators: Only the title is to be translated, field names not.
 #: ../data/ui/preferences-dialog.ui.h:35
@@ -846,143 +846,148 @@ msgid ""
 "                            $SUBFILE\n"
 "                            $VIDEOFILE"
 msgstr ""
+"Gagnasvið:\n"
+"                            $MILLISECONDS\n"
+"                            $SECONDS\n"
+"                            $SUBFILE\n"
+"                            $VIDEOFILE"
 
 #: ../data/ui/preferences-dialog.ui.h:40
 msgid "Al_ways use UTF-8 character encoding"
-msgstr ""
+msgstr "Alltaf nota UTF-_8 stafatöflu"
 
 #: ../data/ui/preferences-dialog.ui.h:41
 msgid "Start Position"
-msgstr ""
+msgstr "Upphafsstaða"
 
 #: ../data/ui/preferences-dialog.ui.h:42
 msgid "_Offset:"
-msgstr "_Desplaçament:"
+msgstr "_Hliðrun:"
 
 #: ../data/ui/preferences-dialog.ui.h:43
 msgid "seconds before selection"
-msgstr "segons abans de seleccionar"
+msgstr "sekúndur á undan vali"
 
 #: ../data/ui/preferences-dialog.ui.h:44 ../gaupol/application.py:285
 msgid "Preview"
-msgstr "Previsualització"
+msgstr "Forskoðun"
 
 #: ../data/ui/preferences-dialog.ui.h:45
 msgid "Extensions"
-msgstr ""
+msgstr "Viðbætur"
 
 #: ../data/ui/search-dialog.ui.h:1
 msgid "_Search for:"
-msgstr ""
+msgstr "_Leita að:"
 
 #: ../data/ui/search-dialog.ui.h:2 ../data/ui/spell-check-dialog.ui.h:11
 msgid "Replace _with:"
-msgstr "Reemplaça a_mb:"
+msgstr "Skipta út _með: "
 
 #: ../data/ui/search-dialog.ui.h:4
 msgid "Find _Previous"
-msgstr ""
+msgstr "Finna f_yrri"
 
 #: ../data/ui/search-dialog.ui.h:5 ../data/ui/spell-check-dialog.ui.h:7
 #: ../gaupol/dialogs/multi_save.py:212
 msgid "_Replace"
-msgstr "_Reemplaça"
+msgstr "_Skipta út"
 
 #: ../data/ui/search-dialog.ui.h:6
 msgid "Replace _All"
-msgstr ""
+msgstr "Skipt_a út öllu"
 
 #: ../data/ui/search-dialog.ui.h:7
 msgid "R_egular expression"
-msgstr ""
+msgstr "Re_gluleg segð"
 
 #: ../data/ui/search-dialog.ui.h:8
 msgid "_Ignore case"
-msgstr ""
+msgstr "_Hunsa há/lágstafi"
 
 #: ../data/ui/search-dialog.ui.h:9 ../gaupol/application.py:273
 msgid "Find"
-msgstr ""
+msgstr "Finna"
 
 #: ../data/ui/search-dialog.ui.h:11
 msgid "Find in _text column"
-msgstr ""
+msgstr "Finna í _textadálki"
 
 #: ../data/ui/search-dialog.ui.h:12
 msgid "Find in t_ranslation column"
-msgstr ""
+msgstr "Finna í þýðinga_rdálki"
 
 #: ../data/ui/search-dialog.ui.h:14
 msgid "Find in c_urrent project"
-msgstr ""
+msgstr "Finna í þess_u verkefni"
 
 #: ../data/ui/search-dialog.ui.h:15
 msgid "Find in _all open projects"
-msgstr ""
+msgstr "Finn_a í öllum opnum verkefnum"
 
 #: ../data/ui/search-dialog.ui.h:16
 msgid "Target"
-msgstr ""
+msgstr "Útkoma"
 
 #: ../data/ui/spell-check-dialog.ui.h:1
 msgid "Check Spelling"
-msgstr "Comprova la ortografia"
+msgstr "Athuga stafsetningu"
 
 #: ../data/ui/spell-check-dialog.ui.h:2
 msgid "Join _Back"
-msgstr ""
+msgstr "Sameina til _baka"
 
 #: ../data/ui/spell-check-dialog.ui.h:3
 msgid "Join _Forward"
-msgstr ""
+msgstr "Sameina á_fram"
 
 #: ../data/ui/spell-check-dialog.ui.h:5
 msgid "_Ignore"
-msgstr "_Ignora"
+msgstr "_Hunsa"
 
 #: ../data/ui/spell-check-dialog.ui.h:6
 msgid "Ig_nore All"
-msgstr ""
+msgstr "Hunsa _allt"
 
 #: ../data/ui/spell-check-dialog.ui.h:8
 msgid "Rep_lace All"
-msgstr ""
+msgstr "S_kipta út öllu"
 
 #: ../data/ui/spell-check-dialog.ui.h:9
 #: ../data/extensions/custom-framerates/custom-framerates.py:40
 msgid "_Add"
-msgstr "_Afegeix"
+msgstr "Bæt_a við"
 
 #: ../data/ui/spell-check-dialog.ui.h:10
 msgid "_Suggestions:"
-msgstr "_Suggerències:"
+msgstr "_Uppástungur:"
 
 #: ../data/ui/split-dialog.ui.h:1
 msgid "Split Project"
-msgstr ""
+msgstr "Skipta upp verkefni"
 
 #: ../data/ui/split-dialog.ui.h:2
 msgid "_First subtitle of new project:"
-msgstr ""
+msgstr "_Fyrsti skjátexti nýs verkefnis:"
 
 #: ../data/ui/tab-popup.ui.h:1
 msgid "Move Tab _Left"
-msgstr ""
+msgstr "Færa f_lipa til hægri"
 
 #: ../data/ui/tab-popup.ui.h:2
 msgid "Move Tab _Right"
-msgstr ""
+msgstr "Fæ_ra flipa til hægri"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:1
 msgid "S_elect parts to capitalize:"
-msgstr ""
+msgstr "V_eldu þá hluta sem á að setja í hástafi:"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:2
 #: ../data/ui/text-assistant/common-error-page.ui.h:2
 #: ../data/ui/text-assistant/hearing-impaired-page.ui.h:2
 #: ../data/ui/text-assistant/line-break-page.ui.h:2
 msgid "_Script:"
-msgstr ""
+msgstr "_Ritun:"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:3
 #: ../data/ui/text-assistant/common-error-page.ui.h:3
@@ -990,94 +995,94 @@ msgstr ""
 #: ../data/ui/text-assistant/join-split-page.ui.h:2
 #: ../data/ui/text-assistant/line-break-page.ui.h:3
 msgid "_Language:"
-msgstr ""
+msgstr "Tungumá_l:"
 
 #: ../data/ui/text-assistant/capitalization-page.ui.h:4
 #: ../data/ui/text-assistant/common-error-page.ui.h:4
 #: ../data/ui/text-assistant/hearing-impaired-page.ui.h:4
 #: ../data/ui/text-assistant/line-break-page.ui.h:4
 msgid "Co_untry:"
-msgstr ""
+msgstr "_Land:"
 
 #: ../data/ui/text-assistant/common-error-page.ui.h:1
 msgid "S_elect errors to correct:"
-msgstr ""
+msgstr "V_eldu villur til að leiðrétta:"
 
 #: ../data/ui/text-assistant/common-error-page.ui.h:5
 msgid "Error types:"
-msgstr ""
+msgstr "Gerðir af villum:"
 
 #: ../data/ui/text-assistant/common-error-page.ui.h:6
 msgid "_Human errors"
-msgstr ""
+msgstr "_Mannlegar"
 
 #: ../data/ui/text-assistant/common-error-page.ui.h:7
 msgid "_Image recognition errors"
-msgstr ""
+msgstr "Myndgre_iningarvillur"
 
 #: ../data/ui/text-assistant/confirmation-page.ui.h:1
 msgid "Acc_ept, discard or edit changes:"
-msgstr ""
+msgstr "Samþykkja, h_enda eða laga breytingar:"
 
 #: ../data/ui/text-assistant/confirmation-page.ui.h:2
 msgid "_Mark All"
-msgstr ""
+msgstr "_Merkja allt"
 
 #: ../data/ui/text-assistant/confirmation-page.ui.h:3
 msgid "_Unmark All"
-msgstr ""
+msgstr "A_fmerkja allt"
 
 #: ../data/ui/text-assistant/confirmation-page.ui.h:5
 msgid "_Remove all blank subtitles"
-msgstr ""
+msgstr "Fja_rlægja alla auða skjátexta"
 
 #: ../data/ui/text-assistant/hearing-impaired-page.ui.h:1
 msgid "S_elect parts to remove:"
-msgstr ""
+msgstr "V_eldu þá hluta sem á að fjarlægja:"
 
 #: ../data/ui/text-assistant/introduction-page.ui.h:1
 msgid "_Select corrections to perform on texts:"
-msgstr ""
+msgstr "_Veldu þær leiðréttingar sem á að beita á texta:"
 
 #: ../data/ui/text-assistant/introduction-page.ui.h:2
 msgid "Colu_mns:"
-msgstr ""
+msgstr "_Dálkar:"
 
 #: ../data/ui/text-assistant/introduction-page.ui.h:3
 msgid "S_ubtitles:"
-msgstr ""
+msgstr "S_kjátextar:"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:1
 msgid "Spell-Check Dictionary"
-msgstr ""
+msgstr "Stafsetningarorðasafn"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:3
 msgid "Corrections"
-msgstr ""
+msgstr "Leiðréttingar"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:4
 msgid "_Join words not found in spell-check dictionary"
-msgstr ""
+msgstr "Sameina _orð sem ekki finnast í stafsetningarorðasafni"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:5
 msgid "_Split words not found in spell-check dictionary"
-msgstr ""
+msgstr "_Skipta upp orðum sem ekki finnast í stafsetningarorðasafni"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:2
 msgid "_Maximum line length:"
-msgstr ""
+msgstr "Há_markslengd lína:"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:3
 msgid "_Preferred maximum amount of lines:"
-msgstr ""
+msgstr "Leið_beinandi hámarksfjöldi lína:"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:5
 msgid "_Skip subtitles with maximum line length of:"
-msgstr ""
+msgstr "_Sleppa skjátextum með hámarkslengd lína:"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:6
 msgid "S_kip subtitles with maximum line amount of:"
-msgstr ""
+msgstr "Sleppa s_kjátextum með hámarkslínufjölda:"
 
 #: ../data/ui/text-assistant/line-break-page.ui.h:1
 msgid "S_elect preferred line-break points:"
@@ -1085,23 +1090,23 @@ msgstr ""
 
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:1
 msgid "Custom Framerates"
-msgstr ""
+msgstr "Sérsniðin rammatíðni"
 
 #: ../data/extensions/custom-framerates/custom-framerates.extension.in.h:2
 msgid "Allow use of non-standard framerates"
-msgstr ""
+msgstr "Leyfa að nota óstaðlaðar rammatíðnir"
 
 #: ../data/patterns/Latn-en-US.common-error.in.h:1
 msgid "Period after title"
-msgstr ""
+msgstr "Punktur á eftir titli"
 
 #: ../data/patterns/Latn-en-US.common-error.in.h:2
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
-msgstr ""
+msgstr "Bæta við punkti á eftir titli eins og \"Hr\" and \"Dr\""
 
 #: ../data/patterns/Latn-en.capitalization.in.h:1
 msgid "First person pronoun"
-msgstr ""
+msgstr "Fyrstu persónu fornafn"
 
 #: ../data/patterns/Latn-en.capitalization.in.h:2
 msgid "Capitalize the first person pronoun \"I\""
@@ -1134,20 +1139,20 @@ msgstr ""
 #: ../data/patterns/Latn-en.common-error.in.h:7
 #: ../data/patterns/Latn.common-error.in.h:5
 msgid "Space between number and unit"
-msgstr ""
+msgstr "Fjarlægja bil á milli tölustafa og mælieininga"
 
 #: ../data/patterns/Latn-en.common-error.in.h:8
 #: ../data/patterns/Latn.common-error.in.h:6
 msgid "Add or remove space between a number and the associated unit"
-msgstr ""
+msgstr "Bæta við eða fjarlægja bil á milli tölustafa og mælieininga"
 
 #: ../data/patterns/Latn-en.common-error.in.h:9
 msgid "Spaces around an apostrophe"
-msgstr ""
+msgstr "Bil í kringum úrfellingarmerki"
 
 #: ../data/patterns/Latn-en.common-error.in.h:10
 msgid "Remove spaces around an apostrophe"
-msgstr ""
+msgstr "Fjarlægja bil í kringum úrfellingarmerki"
 
 #: ../data/patterns/Latn-en.common-error.in.h:11
 msgid "Okay"
@@ -1159,16 +1164,17 @@ msgstr ""
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
-msgstr ""
+msgstr "Nafn mælandans í hástöfum á undan tvípunkti"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
-msgstr ""
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
+msgstr "Skipta út nafni mælandans í hástöfum á undan tvípunkti og þankastriki"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
-msgstr ""
+msgstr "Titill"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 msgid "Do not break after a title, e.g. \" Dr.\""
@@ -1176,7 +1182,7 @@ msgstr ""
 
 #: ../data/patterns/Latn-en.line-break.in.h:3
 msgid "Article"
-msgstr ""
+msgstr "Greinir"
 
 #: ../data/patterns/Latn-en.line-break.in.h:4
 msgid "Do not break after an article"
@@ -1184,7 +1190,7 @@ msgstr ""
 
 #: ../data/patterns/Latn-en.line-break.in.h:5
 msgid "Preposition"
-msgstr ""
+msgstr "Forsetning"
 
 #: ../data/patterns/Latn-en.line-break.in.h:6
 msgid "Do not break after a preposition"
@@ -1227,7 +1233,7 @@ msgstr ""
 
 #: ../data/patterns/Latn.capitalization.in.h:1
 msgid "Sentence"
-msgstr ""
+msgstr "Setning"
 
 #: ../data/patterns/Latn.capitalization.in.h:2
 msgid "Capitalize the first word of a sentence"
@@ -1235,19 +1241,18 @@ msgstr ""
 
 #: ../data/patterns/Latn.capitalization.in.h:3
 msgid "Ellipsis"
-msgstr ""
+msgstr "Brottfellingarpunktar"
 
 #: ../data/patterns/Latn.capitalization.in.h:4
 msgid "Capitalize after an ellipsis"
-msgstr ""
+msgstr "Hástafur á eftir brottfellingarpunktum"
 
 #: ../data/patterns/Latn.common-error.in.h:1
 msgid "Spelling of a.m. and p.m."
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:3
@@ -1260,51 +1265,51 @@ msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
-msgstr ""
+msgstr "Tvöfalt úrfellingarmerki"
 
 #: ../data/patterns/Latn.common-error.in.h:8
 msgid "Replace a double apostrophe with a quotation mark"
-msgstr ""
+msgstr "Skipta út tvöföldu úrfellingarmerki fyrir gæsalappir"
 
 #: ../data/patterns/Latn.common-error.in.h:9
 msgid "Spaces around brackets"
-msgstr ""
+msgstr "Bil í kringum sviga"
 
 #: ../data/patterns/Latn.common-error.in.h:10
 msgid "Add or remove spaces around parantheses and square brackets"
-msgstr ""
+msgstr "Bæta við eða fjarlægja bil í kringum sviga og hornklofa"
 
 #: ../data/patterns/Latn.common-error.in.h:11
 msgid "Space after a dialogue dash"
-msgstr ""
+msgstr "Bil á eftir þankastriki"
 
 #: ../data/patterns/Latn.common-error.in.h:12
 msgid "Add space after a dialogue dash"
-msgstr ""
+msgstr "Bæta við bili á eftir þankastriki"
 
 #: ../data/patterns/Latn.common-error.in.h:14
 msgid "Remove space before various punctuation marks"
-msgstr ""
+msgstr "Fjarlægja bil á undan margskonar greinamerkjum"
 
 #: ../data/patterns/Latn.common-error.in.h:17
 msgid "Space after an ellipsis"
-msgstr ""
+msgstr "Bil á eftir brottfellingarpunktum"
 
 #: ../data/patterns/Latn.common-error.in.h:18
 msgid "Add space after an ellipsis"
-msgstr ""
+msgstr "Bæta við bili á eftir brottfellingarpunktum"
 
 #: ../data/patterns/Latn.common-error.in.h:19
 msgid "Space after a starting ellipsis"
-msgstr ""
+msgstr "Bil á eftir brottfellingarpunktum í upphafi setningar"
 
 #: ../data/patterns/Latn.common-error.in.h:20
 msgid "Remove space after an ellipsis that starts a line"
-msgstr ""
+msgstr "Fjarlægja bil á eftir brottfellingarpunktum í upphafi setningar"
 
 #: ../data/patterns/Latn.common-error.in.h:21
 msgid "Spaces around a quotation mark"
-msgstr ""
+msgstr "Bil í kringum gæsalappir"
 
 #: ../data/patterns/Latn.common-error.in.h:22
 msgid "Remove space after a starting- and before an ending quotation mark"
@@ -1312,7 +1317,7 @@ msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:23
 msgid "Spaces around musical notes"
-msgstr ""
+msgstr "Bil í kringum nótnaskrift"
 
 #: ../data/patterns/Latn.common-error.in.h:24
 msgid "Add spaces between musical note characters and lyrics"
@@ -1345,19 +1350,19 @@ msgstr ""
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:1
 msgid "Sound in brackets"
-msgstr ""
+msgstr "Hljóð í hornklofum"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:2
 msgid "Remove description of a sound between square brackets"
-msgstr ""
+msgstr "Fjarlægja lýsingu á hljóði milli hornklofa"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:3
 msgid "Sound in parantheses"
-msgstr ""
+msgstr "Hljóð í svigum"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:4
 msgid "Remove description of a sound between parantheses"
-msgstr ""
+msgstr "Fjarlægja lýsingu á hljóði milli sviga"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:5
 msgid "Song lyrics between number signs"
@@ -1377,15 +1382,15 @@ msgstr ""
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:9
 msgid "Speaker before a colon"
-msgstr ""
+msgstr "Nafn mælandans á undan tvípunkti"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:10
 msgid "Replace the name of the speaker before a colon with a dialogue dash"
-msgstr ""
+msgstr "Skipta út nafni mælandans á undan tvípunkti og þankastriki"
 
 #: ../data/patterns/Latn.line-break.in.h:1
 msgid "Dialogue"
-msgstr ""
+msgstr "Samtal"
 
 #: ../data/patterns/Latn.line-break.in.h:2
 msgid "Break according to dialogue separated by dashes"
@@ -1401,40 +1406,40 @@ msgstr ""
 
 #: ../data/patterns/Latn.line-break.in.h:5
 msgid "Number and unit"
-msgstr ""
+msgstr "Tala og eining"
 
 #: ../data/patterns/Latn.line-break.in.h:6
 msgid "Do not break between a number and associated unit"
-msgstr ""
+msgstr "Ekki rjúfa á milli tölustafa og mælieininga þeirra"
 
 #: ../data/patterns/Zyyy.common-error.in.h:1
 msgid "Leading and trailing spaces"
-msgstr ""
+msgstr "Bil á undan og aftan við línu"
 
 #: ../data/patterns/Zyyy.common-error.in.h:2
 msgid "Remove spaces from the beginning and end of lines"
-msgstr ""
+msgstr "Fjarlægja bil í upphafi og enda lína"
 
 #: ../data/patterns/Zyyy.common-error.in.h:3
 msgid "Multiple consecutive spaces"
-msgstr ""
+msgstr "Mörg samhangandi bil"
 
 #: ../data/patterns/Zyyy.common-error.in.h:4
 msgid "Replace multiple consecutive spaces with only one"
-msgstr ""
+msgstr "Skipta út mörgum samhangandi bilum með aðeins einu bili"
 
 #: ../data/patterns/Zyyy.common-error.in.h:5
 msgid "Space between digits"
-msgstr ""
+msgstr "Bil á milli tölustafa"
 
 #: ../data/patterns/Zyyy.common-error.in.h:6
 msgid "Remove space between digits of a number"
-msgstr ""
+msgstr "Fjarlægja bil á milli tölustafa"
 
 #. system of fallback fonts to provide missing characters.
 #: ../data/patterns/Zyyy.common-error.in.h:8
 msgid "Musical notes"
-msgstr ""
+msgstr "Nótnaskrift"
 
 #: ../data/patterns/Zyyy.common-error.in.h:9
 msgid "Replace Unicode musical note characters with number signs"
@@ -1442,120 +1447,120 @@ msgstr ""
 
 #: ../aeidon/agents/clipboard.py:44
 msgid "Cutting texts"
-msgstr "Tallant textos"
+msgstr "Klippi texta"
 
 #: ../aeidon/agents/clipboard.py:61
 msgid "Pasting texts"
-msgstr "Enganxant textos"
+msgstr "Lími texta"
 
 #: ../aeidon/agents/edit.py:35
 msgid "Clearing texts"
-msgstr "Netejant textos"
+msgstr "Hreinsa texta"
 
 #: ../aeidon/agents/edit.py:61 ../aeidon/agents/edit.py:83
 msgid "Inserting subtitles"
-msgstr "Inserint subtítols"
+msgstr "Set inn skjátexta"
 
 #: ../aeidon/agents/edit.py:103
 msgid "Merging subtitles"
-msgstr ""
+msgstr "Sameina skjátexta"
 
 #: ../aeidon/agents/edit.py:114
 msgid "Removing subtitles"
-msgstr "Eliminant subtítols"
+msgstr "Fjarlægi skjátexta"
 
 #: ../aeidon/agents/edit.py:131
 msgid "Replacing positions"
-msgstr ""
+msgstr "Skipti út staðsetningum"
 
 #: ../aeidon/agents/edit.py:147
 msgid "Replacing texts"
-msgstr "Reemplaçant textos"
+msgstr "Skipti um texta"
 
 #: ../aeidon/agents/edit.py:171
 msgid "Splitting subtitle"
-msgstr ""
+msgstr "Skipti upp skjátexta"
 
 #: ../aeidon/agents/format.py:49
 msgid "Adding dialogue dashes"
-msgstr ""
+msgstr "Bæti við þankastrikum"
 
 #: ../aeidon/agents/format.py:68
 msgid "Changing case"
-msgstr "Canviant de cas"
+msgstr "Breyti stafstöðu"
 
 #: ../aeidon/agents/format.py:92
 msgid "Italicizing"
-msgstr ""
+msgstr "Skáletra"
 
 #: ../aeidon/agents/format.py:108
 msgid "Removing dialogue dashes"
-msgstr ""
+msgstr "Fjarlægi þankastrik"
 
 #: ../aeidon/agents/format.py:174
 msgid "Unitalicizing"
-msgstr ""
+msgstr "Fjarlægi skáletrun"
 
 #: ../aeidon/agents/position.py:74
 msgid "Adjusting durations"
-msgstr ""
+msgstr "Aðlaga tímalengdir"
 
 #: ../aeidon/agents/position.py:96
 msgid "Converting framerate"
-msgstr ""
+msgstr "Umbreyting á rammatíðni"
 
 #: ../aeidon/agents/position.py:146
 msgid "Setting framerate"
-msgstr ""
+msgstr "Stilli rammatíðni"
 
 #: ../aeidon/agents/position.py:168
 msgid "Shifting positions"
-msgstr ""
+msgstr "Hliðra staðsetningum"
 
 #: ../aeidon/agents/position.py:188
 msgid "Transforming positions"
-msgstr ""
+msgstr "Umbreyting staðsetninga"
 
 #: ../aeidon/agents/search.py:227
 msgid "Replacing"
-msgstr ""
+msgstr "Skipti út"
 
 #: ../aeidon/agents/search.py:256 ../aeidon/agents/search.py:258
 msgid "Replacing all"
-msgstr ""
+msgstr "Skipti út öllu"
 
 #: ../aeidon/agents/set.py:58 ../aeidon/agents/set.py:80
 #: ../aeidon/agents/set.py:113
 msgid "Editing position"
-msgstr ""
+msgstr "Breyti staðsetningu"
 
 #: ../aeidon/agents/set.py:129
 msgid "Editing text"
-msgstr "Editant el text"
+msgstr "Breyting texta"
 
 #: ../aeidon/agents/text.py:91
 msgid "Breaking lines"
-msgstr ""
+msgstr "Skipti línum"
 
 #: ../aeidon/agents/text.py:128
 msgid "Capitalizing texts"
-msgstr ""
+msgstr "Textar í hástafi"
 
 #: ../aeidon/agents/text.py:185
 msgid "Correcting common errors"
-msgstr ""
+msgstr "Leiðrétting algengra villna"
 
 #: ../aeidon/agents/text.py:247
 msgid "Removing hearing impaired texts"
-msgstr ""
+msgstr "Fjarlægi texta fyrir heyrnarskerta"
 
 #: ../aeidon/agents/text.py:328
 msgid "Joining words by spell-check suggestions"
-msgstr ""
+msgstr "Sameina orð miðað við uppástungur"
 
 #: ../aeidon/agents/text.py:372
 msgid "Splitting words by spell-check suggestions"
-msgstr ""
+msgstr "Skipta upp orðum miðað við uppástungur"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
@@ -1563,85 +1568,85 @@ msgstr ""
 #: ../aeidon/encodings.py:40 ../aeidon/encodings.py:43
 #: ../aeidon/encodings.py:46
 msgid "English"
-msgstr "Anglés"
+msgstr "Enska"
 
 #: ../aeidon/encodings.py:41 ../aeidon/encodings.py:42
 #: ../aeidon/encodings.py:68
 msgid "Chinese traditional"
-msgstr "Xinés tradicional"
+msgstr "Hefðbundin kínverska"
 
 #: ../aeidon/encodings.py:44
 msgid "German"
-msgstr ""
+msgstr "Þýska"
 
 #: ../aeidon/encodings.py:45 ../aeidon/encodings.py:54
 #: ../aeidon/encodings.py:58 ../aeidon/encodings.py:78
 #: ../aeidon/encodings.py:104
 msgid "Hebrew"
-msgstr "Hebreu"
+msgstr "Hebreska"
 
 #: ../aeidon/encodings.py:47 ../aeidon/encodings.py:51
 #: ../aeidon/encodings.py:72 ../aeidon/encodings.py:75
 #: ../aeidon/encodings.py:97 ../aeidon/encodings.py:109
 #: ../aeidon/encodings.py:119
 msgid "Western"
-msgstr "Occidental"
+msgstr "Vestrænt"
 
 #: ../aeidon/encodings.py:48 ../aeidon/encodings.py:60
 #: ../aeidon/encodings.py:79 ../aeidon/encodings.py:102
 msgid "Arabic"
-msgstr "Àrab"
+msgstr "Arabíska"
 
 #: ../aeidon/encodings.py:49 ../aeidon/encodings.py:63
 #: ../aeidon/encodings.py:65 ../aeidon/encodings.py:76
 #: ../aeidon/encodings.py:103 ../aeidon/encodings.py:116
 msgid "Greek"
-msgstr "Grec"
+msgstr "Gríska"
 
 #: ../aeidon/encodings.py:50 ../aeidon/encodings.py:80
 #: ../aeidon/encodings.py:100 ../aeidon/encodings.py:107
 msgid "Baltic"
-msgstr "Bàltic"
+msgstr "Balkneskt"
 
 #: ../aeidon/encodings.py:52 ../aeidon/encodings.py:73
 #: ../aeidon/encodings.py:98 ../aeidon/encodings.py:118
 msgid "Central European"
-msgstr "Europeu central"
+msgstr "Mið-evrópskt"
 
 #: ../aeidon/encodings.py:53 ../aeidon/encodings.py:74
 #: ../aeidon/encodings.py:101 ../aeidon/encodings.py:115
 msgid "Cyrillic"
-msgstr "Cirílic"
+msgstr "Kýrílískt"
 
 #: ../aeidon/encodings.py:55 ../aeidon/encodings.py:70
 #: ../aeidon/encodings.py:77 ../aeidon/encodings.py:105
 #: ../aeidon/encodings.py:120
 msgid "Turkish"
-msgstr "Turc"
+msgstr "Tyrkneska"
 
 #: ../aeidon/encodings.py:56
 msgid "Portuguese"
-msgstr ""
+msgstr "Portúgalska"
 
 #: ../aeidon/encodings.py:57 ../aeidon/encodings.py:117
 msgid "Icelandic"
-msgstr "Islandés"
+msgstr "Íslenska"
 
 #: ../aeidon/encodings.py:59
 msgid "Canadian"
-msgstr "Canadenc"
+msgstr "Kanadíska"
 
 #: ../aeidon/encodings.py:61 ../aeidon/encodings.py:106
 msgid "Nordic"
-msgstr "Nòrdic"
+msgstr "Norrænt"
 
 #: ../aeidon/encodings.py:62 ../aeidon/encodings.py:111
 msgid "Russian"
-msgstr "Rus"
+msgstr "Rússneska"
 
 #: ../aeidon/encodings.py:64
 msgid "Thai"
-msgstr "Thai"
+msgstr "Tælenska"
 
 #: ../aeidon/encodings.py:66 ../aeidon/encodings.py:82
 #: ../aeidon/encodings.py:83 ../aeidon/encodings.py:84
@@ -1651,52 +1656,52 @@ msgstr "Thai"
 #: ../aeidon/encodings.py:122 ../aeidon/encodings.py:123
 #: ../aeidon/encodings.py:124
 msgid "Japanese"
-msgstr "Japonés"
+msgstr "Japanska"
 
 #: ../aeidon/encodings.py:67 ../aeidon/encodings.py:85
 #: ../aeidon/encodings.py:96 ../aeidon/encodings.py:110
 msgid "Korean"
-msgstr "Coreà"
+msgstr "Kóreska"
 
 #: ../aeidon/encodings.py:69
 msgid "Urdu"
-msgstr "Urdú"
+msgstr "Úrdú"
 
 #: ../aeidon/encodings.py:71 ../aeidon/encodings.py:113
 msgid "Ukrainian"
-msgstr "Ucrainés"
+msgstr "Úkraínska"
 
 #: ../aeidon/encodings.py:81
 msgid "Vietnamese"
-msgstr "Vietnamita"
+msgstr "Víetnamska"
 
 #: ../aeidon/encodings.py:86 ../aeidon/encodings.py:89
 msgid "Chinese simplified"
-msgstr "Xinés simplificat"
+msgstr "Einfölduð kínverska"
 
 #: ../aeidon/encodings.py:87 ../aeidon/encodings.py:88
 msgid "Chinese unified"
-msgstr "Xinés unificat"
+msgstr "Sameinuð kínverska"
 
 #: ../aeidon/encodings.py:99
 msgid "South European"
-msgstr "Sud europeu"
+msgstr "Suður-evrópskt"
 
 #: ../aeidon/encodings.py:108
 msgid "Celtic"
-msgstr "Cèlitc"
+msgstr "Keltneskt"
 
 #: ../aeidon/encodings.py:112
 msgid "Tajik"
-msgstr ""
+msgstr "Tadzjikiska"
 
 #: ../aeidon/encodings.py:114
 msgid "Kazakh"
-msgstr ""
+msgstr "Kasakíska"
 
 #: ../aeidon/encodings.py:121
 msgid "Cyrillic Asian"
-msgstr "Cirílic asiàtic"
+msgstr "Kýrílískt asískt"
 
 #: ../aeidon/encodings.py:125 ../aeidon/encodings.py:126
 #: ../aeidon/encodings.py:127 ../aeidon/encodings.py:128
@@ -1704,49 +1709,49 @@ msgstr "Cirílic asiàtic"
 #: ../aeidon/encodings.py:131 ../aeidon/encodings.py:132
 #: ../aeidon/encodings.py:133
 msgid "Unicode"
-msgstr "Unicode"
+msgstr "Unicode (UTF-8)"
 
 #: ../aeidon/encodings.py:153
 #, python-brace-format
 msgid "{description} ({name})"
-msgstr ""
+msgstr "{description} ({name})"
 
 #: ../aeidon/encodings.py:229
 msgid "Current locale ({})"
-msgstr "Local actual ({})"
+msgstr "Núverandi staðfærsla ({})"
 
 #: ../aeidon/enums.py:39 ../gaupol/enums.py:38
 msgid "Subtitle number"
-msgstr ""
+msgstr "Númer skjátexta"
 
 #: ../aeidon/enums.py:42
 msgid "Subtitle position"
-msgstr ""
+msgstr "Staðsetning skjátexta"
 
 #: ../aeidon/enums.py:58
 msgid "23.976 fps"
-msgstr "23.976 fps"
+msgstr "23.976 r/sek"
 
 #: ../aeidon/enums.py:62
 msgid "24.000 fps"
-msgstr ""
+msgstr "24.000 r/sek"
 
 #: ../aeidon/enums.py:66
 msgid "25.000 fps"
-msgstr ""
+msgstr "25.000 r/sek"
 
 #: ../aeidon/enums.py:70
 msgid "29.970 fps"
-msgstr ""
+msgstr "29.970 r/sek"
 
 #: ../aeidon/enums.py:91
 msgid "Mac (classic)"
-msgstr ""
+msgstr "Mac (klassísk)"
 
 #: ../aeidon/locales.py:46
 #, python-brace-format
 msgid "{language} ({country})"
-msgstr ""
+msgstr "{language} ({country})"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:39
 #: ../gaupol/agents/close.py:71 ../gaupol/agents/open.py:352
@@ -1760,11 +1765,11 @@ msgstr ""
 #: ../gaupol/dialogs/split.py:44 ../gaupol/dialogs/text_edit.py:48
 #: ../gaupol/dialogs/video.py:41
 msgid "_Cancel"
-msgstr ""
+msgstr "_Hætta við"
 
 #: ../data/extensions/custom-framerates/custom-framerates.py:171
 msgid "{:.3f} fps"
-msgstr ""
+msgstr "{:.3f} r/sek"
 
 #: ../data/gaupol.appdata.xml.in.h:1
 msgid ""
@@ -1774,92 +1779,98 @@ msgid ""
 "with attention to batch processing of multiple documents and convenience of "
 "translating."
 msgstr ""
+"Gaupol er ritill til meðhöndlunar á skjátextaskrám á textaformi. Hann styður"
+" margar gerðir skjátextaskráa og býður upp á að útbúa nýja skjátexta, "
+"breytingar texta og tímasetningu þeirra svo að þeir samsvari myndskeiðum. "
+"Notandaviðmótið er hannað með það í huga aðauðvelt sé að magnvinna margar "
+"skrár í einu og að einfalt sé að þýða texta."
 
 #: ../data/gaupol.appdata.xml.in.h:2
 msgid "Main window"
-msgstr ""
+msgstr "Aðalgluggi"
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Subtitle Editor"
-msgstr ""
+msgstr "Skjátextaritill"
 
 #: ../data/gaupol.desktop.in.h:2
 msgid "Edit subtitle files"
-msgstr ""
+msgstr "Sýsla með skjátextaskrár"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
-msgstr ""
+msgstr "myndskeið;skjátextar;þýðingartextar"
 
 #: ../data/gaupol.desktop.in.h:5
 msgid "Gaupol Subtitle Editor"
-msgstr ""
+msgstr "Gaupol skjátextaritill"
 
 #: ../gaupol/agents/close.py:66
 msgid "Save changes to document \"{}\" before closing?"
-msgstr ""
+msgstr "Viltu vista breytingar á skjalinu “{}“ áður en þú lokar því?"
 
 #: ../gaupol/agents/close.py:68 ../gaupol/agents/open.py:373
 #: ../gaupol/dialogs/multi_close.py:39
 msgid "If you don't save, changes will be permanently lost."
-msgstr "Si no deses, els canvis es perderan permanentment."
+msgstr "Ef þú vistar ekki, tapast allar breytingar endanlega."
 
 #: ../gaupol/agents/close.py:70 ../gaupol/dialogs/multi_close.py:53
 msgid "Close _Without Saving"
-msgstr "Tanca _sense desar"
+msgstr "Loka án þess að _vista"
 
 #: ../gaupol/agents/edit.py:101 ../gaupol/agents/edit.py:119
 msgid "Stretching end position"
-msgstr ""
+msgstr "Teygi endastöðu"
 
 #: ../gaupol/agents/edit.py:282 ../gaupol/agents/edit.py:300
 msgid "Stretching start position"
-msgstr ""
+msgstr "Teygi upphafsstöðu"
 
 #. Don't show help text if it would overlap with text being edited.
 #: ../gaupol/agents/edit.py:358
 msgid "Use Shift+Return for line-break"
-msgstr ""
+msgstr "Notaðu Shift+Enter fyrir línuskil"
 
 #: ../gaupol/agents/open.py:85
 #, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
-msgstr ""
+msgstr "Bætti við {amount:d} skjátextum úr \"{basename}\""
 
 #: ../gaupol/agents/open.py:96
 msgid "Appending file"
-msgstr ""
+msgstr "Viðbæting skráar"
 
 #: ../gaupol/agents/open.py:111
 msgid "File \"{}\" is already open"
-msgstr "El fitxer \"{}\" ja està obert"
+msgstr "Skráin \"{}\" er þegar opin"
 
 #: ../gaupol/agents/open.py:198 ../gaupol/application.py:219
 msgid "Open"
-msgstr "Obre"
+msgstr "Opna"
 
 #: ../gaupol/agents/open.py:209
 msgid "Open Translation"
-msgstr "Obre una traducció"
+msgstr "Opna þýðingu"
 
 #: ../gaupol/agents/open.py:218
 msgid "Select Video"
-msgstr "Vídeo seleccionat"
+msgstr "Veldu myndskeið"
 
 #: ../gaupol/agents/open.py:219
 msgid "_Select"
-msgstr ""
+msgstr "_Velja"
 
 #: ../gaupol/agents/open.py:314
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr ""
-"S'ha produït un error al decodificar el fitxer \"{}\" amb tots els "
-"codificadors provats"
+"Mistókst að afkóða skrána \"{}\" með öllum þeim stafatöflum sem prófaðar "
+"voru"
 
 #: ../gaupol/agents/open.py:315
 msgid "Please try to open the file with a different character encoding."
-msgstr "Prova d'obrir el fitxer amb una codificació de caràcter diferent."
+msgstr "Prófaðu að opna skrána með annarri stafatöflu."
 
 #: ../gaupol/agents/open.py:317 ../gaupol/agents/open.py:326
 #: ../gaupol/agents/open.py:334 ../gaupol/agents/open.py:343
@@ -1871,52 +1882,53 @@ msgstr "Prova d'obrir el fitxer amb una codificació de caràcter diferent."
 #: ../gaupol/dialogs/text_edit.py:49 ../gaupol/player.py:241
 #: ../gaupol/player.py:356
 msgid "_OK"
-msgstr ""
+msgstr "Í _lagi"
 
 #: ../gaupol/agents/open.py:323
 msgid "Failed to recognize format of file \"{}\""
-msgstr "Format de fitxer desconegut per al fitxer \"{}\""
+msgstr "Þekki ekki snið skrárinnar \"{}\""
 
 #: ../gaupol/agents/open.py:324
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
-"Comprova que el fitxer que estàs intentant d'obrir és un fitxer de subtítols "
-"d'un format suportat pel Gaupol."
+"Athugaðu hvort að skráin sem þú ert að reyna að opna sé skjátextaskrá á "
+"sniði sem Gaupol styður."
 
 #: ../gaupol/agents/open.py:332
 msgid "Failed to open file \"{}\""
-msgstr "S'ha produït un error al obrir el fitxer \"{}\""
+msgstr "Mistókst að opna skrá \"{}\""
 
 #: ../gaupol/agents/open.py:340
 msgid "Failed to parse file \"{}\""
-msgstr ""
+msgstr "Mistókst að þátta skrána \"{}\""
 
 #: ../gaupol/agents/open.py:341
 msgid "Please check that the file you are trying to open is a valid {} file."
-msgstr ""
+msgstr "Athugaðu hvort að skráin sem þú ert að reyna að opna sé gild \"{}\" skrá."
 
 #: ../gaupol/agents/open.py:349
 msgid "Open abnormally large file \"{}\"?"
-msgstr "Obrir el fitxer desmesuradament llarg \"{}\"?"
+msgstr "Opna óeðlilega stóra skrá \"{}\"?"
 
 #: ../gaupol/agents/open.py:350
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"La mida d'aquest fitxer és {:.1f} Mb, que és desmesuradament gran per a un "
-"fitxer de subtítols. Comprova que no estiguis obrint un fitxer binari."
+"Stærð skrárinnar er {:.1f} MB, sem er óeðlilega stórt fyrir textaskrá með "
+"skjátextum. Athugaðu hvort þú sért nokkuð að reyna að opna tvíundakerfisskrá"
+" (binary)."
 
 #: ../gaupol/agents/open.py:353 ../gaupol/agents/open.py:365
 #: ../gaupol/dialogs/open.py:64
 msgid "_Open"
-msgstr ""
+msgstr "_Opna"
 
 #: ../gaupol/agents/open.py:360
 msgid "Open unsorted file \"{}\"?"
-msgstr ""
+msgstr "Opna óraðaða skrá \"{}\"?"
 
 #: ../gaupol/agents/open.py:361
 msgid ""
@@ -1926,18 +1938,15 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:372
 msgid "Save changes to translation document \"{}\" before opening a new one?"
-msgstr ""
-"Desar els canvis al document de traducció \"{}\" abans d'obrir-ne un de nou?"
+msgstr "Vista breytingar á þýðingarskrá \"{}\" áður en ný er opnuð?"
 
 #: ../gaupol/agents/open.py:375
 msgid "Open _Without Saving"
-msgstr "Obrir _sense desar"
+msgstr "Opna án þess að _vista"
 
 #: ../gaupol/agents/preview.py:101
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
-"S'ha produït un error al codificar el fitxer de subtítols al directori "
-"temporal \"{}\""
 
 #: ../gaupol/agents/preview.py:102
 msgid ""
@@ -1949,28 +1958,26 @@ msgstr ""
 #: ../gaupol/agents/preview.py:110
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
-"S'ha produït un error al desar el fitxer de subtítols en un directori "
-"temporal \"{}\""
 
 #: ../gaupol/agents/preview.py:118
 msgid "Failed to launch video player"
-msgstr ""
+msgstr "Mistókst að ræsa myndspilara"
 
 #: ../gaupol/agents/save.py:129
 msgid "Save As"
-msgstr "Anomena i desa"
+msgstr "Vista sem"
 
 #: ../gaupol/agents/save.py:135
 msgid "Saved main document as \"{}\""
-msgstr "Desat el document principal com a \"{}\""
+msgstr "Vistaði aðalskjal sem \"{}\""
 
 #: ../gaupol/agents/save.py:153
 msgid "Save Translation As"
-msgstr "Anomena i desa la traducció"
+msgstr "Vista þýðingu sem"
 
 #: ../gaupol/agents/save.py:159
 msgid "Saved translation document as \"{}\""
-msgstr "Desada la traducció com a \"{}\""
+msgstr "Vistaði þýðingarskjal sem \"{}\""
 
 #: ../gaupol/agents/save.py:194
 #, python-brace-format
@@ -1979,100 +1986,99 @@ msgstr ""
 
 #: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
-msgstr "Prova de desar el fitxer amb una codificació de caràcter diferent."
+msgstr "Prófaðu að vista skrána með annarri stafatöflu."
 
 #: ../gaupol/agents/save.py:203
 msgid "Failed to save file \"{}\""
-msgstr "S'ha produït un error al desar \"{}\""
+msgstr "Tókst ekki að vista skrá \"{}\""
 
 #: ../gaupol/agents/video.py:67
 msgid "Play or pause video"
-msgstr ""
+msgstr "Spila eða setja myndskeið í bið"
 
 #: ../gaupol/agents/video.py:75
 msgid "Seek to the start of the previous subtitle"
-msgstr ""
+msgstr "Fara í byrjun fyrri skjátexta"
 
 #: ../gaupol/agents/video.py:81
 msgid "Seek to the start of the next subtitle"
-msgstr ""
+msgstr "Fara í byrjun næsta skjátexta"
 
 #: ../gaupol/agents/video.py:88
 msgid "Seek backward"
-msgstr ""
+msgstr "Leita afturábak"
 
 #: ../gaupol/agents/video.py:94
 msgid "Seek forward"
-msgstr ""
+msgstr "Leita áfram"
 
 #: ../gaupol/agents/video.py:107
 msgid "Volume"
-msgstr ""
+msgstr "Hljóðstyrkur"
 
 #: ../gaupol/agents/video.py:161
 msgid "Load Video"
-msgstr ""
+msgstr "Hlaða inn myndskeiði"
 
 #: ../gaupol/agents/video.py:161
 msgid "_Load"
-msgstr ""
+msgstr "_Hlaða inn"
 
 #: ../gaupol/agents/video.py:339
 msgid "Undefined"
-msgstr ""
+msgstr "Óskilgreint"
 
 #: ../gaupol/application.py:223
 msgid "Open main files"
-msgstr "Obre els fitxers principals"
+msgstr "Opna aðalskrár"
 
 #: ../gaupol/application.py:230
 msgid "Save"
-msgstr ""
+msgstr "Vista"
 
 #: ../gaupol/application.py:233
 msgid "Save the current main document"
-msgstr "Desa el document principal actual"
+msgstr "Vista í virku aðalskjali"
 
 #: ../gaupol/application.py:238
 msgid "Undo"
-msgstr "Desfés"
+msgstr "Afturkalla"
 
 #: ../gaupol/application.py:242
 msgid "Undo the last action"
-msgstr "Desfés l'última acció"
+msgstr "Hætta við síðustu aðgerð"
 
 #: ../gaupol/application.py:249
 msgid "Redo"
-msgstr "Torna a fer"
+msgstr "Endurtaka"
 
 #: ../gaupol/application.py:252
 msgid "Redo the last undone action"
-msgstr "Torna a fer l'última acció"
+msgstr "Endurtaka síðustu afturkölluðu aðgerð"
 
 #: ../gaupol/application.py:260
 msgid "Insert"
-msgstr ""
+msgstr "Setja inn"
 
 #: ../gaupol/application.py:262
 msgid "Insert new subtitles"
-msgstr ""
+msgstr "Setja inn nýja skjátexta"
 
 #: ../gaupol/application.py:268
 msgid "Remove the selected subtitles"
-msgstr "Elimina els subtítols seleccionats"
+msgstr "Fjarlægja valda skjátexta"
 
 #: ../gaupol/application.py:275
 msgid "Search for and replace text"
-msgstr ""
+msgstr "Leita að og skipta út texta"
 
 #: ../gaupol/application.py:281
 msgid "Show or hide the video player"
-msgstr ""
+msgstr "Birta eða fela myndspilara"
 
 #: ../gaupol/application.py:287
 msgid "Preview from selected position with a video player"
 msgstr ""
-"Previsualitza des de la posició seleccionada amb un reproductor de vídeo"
 
 #: ../gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
@@ -2080,15 +2086,15 @@ msgstr ""
 
 #: ../gaupol/applicationman.py:108
 msgid "FILE..."
-msgstr ""
+msgstr "SKRÁ..."
 
 #: ../gaupol/applicationman.py:111
 msgid "subtitle files to open"
-msgstr ""
+msgstr "skjátextaskrár sem á að opna"
 
 #: ../gaupol/applicationman.py:121
 msgid "ENCODING"
-msgstr ""
+msgstr "STAFATAFLA"
 
 #: ../gaupol/applicationman.py:124
 msgid "set the character encoding used to open files"
@@ -2100,15 +2106,15 @@ msgstr ""
 
 #: ../gaupol/applicationman.py:136 ../gaupol/applicationman.py:153
 msgid "FILE"
-msgstr ""
+msgstr "SKRÁ"
 
 #: ../gaupol/applicationman.py:139
 msgid "open translation file"
-msgstr ""
+msgstr "opna þýðingarskrá"
 
 #: ../gaupol/applicationman.py:144
 msgid "METHOD"
-msgstr ""
+msgstr "AÐFERÐ"
 
 #: ../gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
@@ -2116,13 +2122,13 @@ msgstr ""
 
 #: ../gaupol/applicationman.py:156
 msgid "select video file"
-msgstr ""
+msgstr "veldu myndskeiðaskrá"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:99
 msgid "Tasks and Target"
-msgstr ""
+msgstr "Verk og útkoma"
 
 #: ../gaupol/assistants.py:128
 msgid "Correct texts in the text column"
@@ -2146,7 +2152,7 @@ msgstr ""
 
 #: ../gaupol/assistants.py:363
 msgid "Other"
-msgstr ""
+msgstr "Annað"
 
 #: ../gaupol/assistants.py:439
 msgid "Capitalize texts written in lower case"
@@ -2156,11 +2162,11 @@ msgstr ""
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:443
 msgid "Capitalization Patterns"
-msgstr ""
+msgstr "Mynstur við hástafaritun"
 
 #: ../gaupol/assistants.py:445
 msgid "Capitalize texts"
-msgstr ""
+msgstr "Setja texta í hástafi"
 
 #: ../gaupol/assistants.py:468
 msgid "Correct common errors made by humans or image recognition software"
@@ -2170,11 +2176,11 @@ msgstr ""
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:472
 msgid "Common Error Patterns"
-msgstr ""
+msgstr "Algeng villumynstur"
 
 #: ../gaupol/assistants.py:474
 msgid "Correct common errors"
-msgstr ""
+msgstr "Leiðrétta algengar villur"
 
 #: ../gaupol/assistants.py:526
 msgid "Remove explanatory texts meant for the hearing impaired"
@@ -2184,11 +2190,11 @@ msgstr ""
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:530
 msgid "Hearing Impaired Patterns"
-msgstr ""
+msgstr "Mynstur fyrir heyrnarskerta"
 
 #: ../gaupol/assistants.py:532
 msgid "Remove hearing impaired texts"
-msgstr ""
+msgstr "Fjarlægja texta fyrir heyrnarskerta"
 
 #: ../gaupol/assistants.py:544
 msgid ""
@@ -2200,41 +2206,41 @@ msgstr ""
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:548
 msgid "Joining and Splitting Words"
-msgstr ""
+msgstr "Sameining eða skipting orða"
 
 #: ../gaupol/assistants.py:550
 msgid "Join or Split Words"
-msgstr ""
+msgstr "Sameina eða skipta orðum"
 
 #: ../gaupol/assistants.py:598 ../gaupol/dialogs/spell_check.py:387
 msgid "Failed to load dictionary for language \"{}\""
-msgstr ""
+msgstr "Það mistókst að hlaða inn orðasafni fyrir tungumálið \"{}\""
 
 #: ../gaupol/assistants.py:634
 msgid "Break text into lines of defined length"
-msgstr ""
+msgstr "Skipta texta í línur af skilgreindri lengd"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:638
 msgid "Line-Break Patterns"
-msgstr ""
+msgstr "Mynstur línuskila"
 
 #: ../gaupol/assistants.py:640
 msgid "Break lines"
-msgstr ""
+msgstr "Skipta línum"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:678
 msgid "Line-Break Options"
-msgstr ""
+msgstr "Valkostir línuskila"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:762
 msgid "Correcting Texts"
-msgstr ""
+msgstr "Leiðrétting texta"
 
 #: ../gaupol/assistants.py:768
 msgid "Each task is now being run on each project."
@@ -2243,54 +2249,54 @@ msgstr ""
 #: ../gaupol/assistants.py:792
 #, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
-msgstr ""
+msgstr "{current:d} af {total:d} verkum lokið"
 
 #: ../gaupol/assistants.py:800
 msgid "Project: {}"
-msgstr ""
+msgstr "Verkefni: {}"
 
 #: ../gaupol/assistants.py:806
 msgid "Task: {}"
-msgstr ""
+msgstr "Verk: {}"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
 #: ../gaupol/assistants.py:831
 msgid "Confirm Changes"
-msgstr ""
+msgstr "Staðfesta breytingar"
 
 #: ../gaupol/assistants.py:889
 msgid "Accept"
-msgstr ""
+msgstr "Samþykkja"
 
 #: ../gaupol/assistants.py:895
 msgid "Original Text"
-msgstr ""
+msgstr "Upprunalegur texti"
 
 #: ../gaupol/assistants.py:896
 msgid "Corrected Text"
-msgstr ""
+msgstr "Leiðréttur texti"
 
 #: ../gaupol/assistants.py:1045
 msgid "Correct Texts"
-msgstr ""
+msgstr "Leiðréttir textar"
 
 #: ../gaupol/assistants.py:1072
 msgid "Correcting texts"
-msgstr ""
+msgstr "Leiðrétting texta"
 
 #: ../gaupol/assistants.py:1088
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
-msgstr ""
+msgstr "Breytti {edits:d} og fjarlægði {removals:d} skjátexta"
 
 #: ../gaupol/dialogs/about.py:36
 msgid "About Gaupol"
-msgstr ""
+msgstr "Um Gaupol"
 
 #: ../gaupol/dialogs/about.py:40
 msgid "Subtitle editor"
-msgstr "Editor de subtítols"
+msgstr "Skjátextaritill"
 
 #. TRANSLATORS: This is a special message that shouldn't be translated
 #. literally. It is used in the about dialog to give credits to the
@@ -2300,133 +2306,139 @@ msgstr "Editor de subtítols"
 #. lines seperated by newlines (\n).
 #: ../gaupol/dialogs/about.py:51
 msgid "translator-credits"
-msgstr "Gil Forcada <gilforcada@guifi.net>"
+msgstr "Sveinn í Felli 2016, sv1@fellsnet.is"
 
 #: ../gaupol/dialogs/about.py:54
 msgid "Gaupol Website"
-msgstr ""
+msgstr "Vefsvæði Gaupol"
 
 #: ../gaupol/dialogs/append.py:35
 msgid "Append File"
-msgstr ""
+msgstr "Bæta við skrá"
 
 #: ../gaupol/dialogs/debug.py:43
 msgid "Something went wrong"
-msgstr ""
+msgstr "Úbbs! Eitthvað fór úrskeiðis"
 
 #: ../gaupol/dialogs/debug.py:44
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr ""
+"Þú hefur líklega rekist á villu. Endilega tilkynntu um hana og láttu þá "
+"fylgja með upplýsingarnar hér fyrir neðan ásamt stuttri lýsingu á því sem þú"
+" varst að gera þegar hún kom upp."
 
 #: ../gaupol/dialogs/debug.py:52
 msgid "_Report Bug"
-msgstr ""
+msgstr "Til_kynna um villu"
 
 #: ../gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
-msgstr ""
+msgstr "_Aðlaga"
 
 #: ../gaupol/dialogs/encoding.py:78 ../gaupol/dialogs/encoding.py:125
 msgid "Description"
-msgstr "Descripció"
+msgstr "Lýsing"
 
 #: ../gaupol/dialogs/encoding.py:85 ../gaupol/dialogs/encoding.py:132
 msgid "Encoding"
-msgstr "Codificació"
+msgstr "Stafatafla"
 
 #: ../gaupol/dialogs/encoding.py:141
 msgid "Show in Menu"
-msgstr ""
+msgstr "Birta í valmynd"
 
 #: ../gaupol/dialogs/file.py:59 ../gaupol/dialogs/video.py:52
 msgid "All files"
-msgstr "Tots els fitxers"
+msgstr "Allar skrár"
 
 #: ../gaupol/dialogs/file.py:63
 msgid "All supported files"
-msgstr ""
+msgstr "Allar studdar skrár"
 
 #: ../gaupol/dialogs/file.py:77
 #, python-brace-format
 msgid "{format} (*{extension})"
-msgstr ""
+msgstr "{format} (*{extension})"
 
 #: ../gaupol/dialogs/file.py:120
 msgid "Auto-detected"
-msgstr ""
+msgstr "Sjálfuppgötvað"
 
 #: ../gaupol/dialogs/file.py:122
 msgid "Other…"
-msgstr ""
+msgstr "Annað…"
 
 #: ../gaupol/dialogs/framerate_convert.py:64
 msgid "Co_nvert"
-msgstr ""
+msgstr "Um_breyta"
 
 #: ../gaupol/dialogs/insert.py:45
 msgid "_Insert"
-msgstr ""
+msgstr "Setja _inn"
 
 #: ../gaupol/dialogs/insert.py:54
 msgid "Above selection"
-msgstr ""
+msgstr "Fyrir ofan valið"
 
 #: ../gaupol/dialogs/insert.py:55
 msgid "Below selection"
-msgstr ""
+msgstr "Fyrir neðan valið"
 
 #: ../gaupol/dialogs/language.py:97
 msgid "Set Language"
-msgstr ""
+msgstr "Stilla tungumál"
 
 #: ../gaupol/dialogs/multi_close.py:38
 msgid "Save changes to documents before closing?"
-msgstr ""
+msgstr "Vista breytingar á skjölum áður en lokað er?"
 
 #: ../gaupol/dialogs/multi_close.py:70
 msgid "Select the _main documents you want to save:"
-msgstr "Selecciona els docu_ments principals que vols desar:"
+msgstr "Veldu aðals_kjölin sem þú vilt vista:"
 
 #: ../gaupol/dialogs/multi_close.py:95
 msgid "Select the _translation documents you want to save:"
-msgstr "Selecciona els documents de _traducció que vols desar:"
+msgstr "Vel_du þýðingarskjölin sem þú vilt vista:"
 
 #: ../gaupol/dialogs/multi_save.py:208
 msgid ""
 "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
+"{:d} af skjölunum sem á að vista eru þegar til staðar. Viltu skipta þeim út?"
 
 #: ../gaupol/dialogs/multi_save.py:209
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
+"Þessar skrár eru þegar til í \"{}\". Verði þeim skipt út verður skrifað yfir"
+" innihald þeirra."
 
 #: ../gaupol/dialogs/position_shift.py:69
 msgid "_Shift"
-msgstr ""
+msgstr "_Hliðra"
 
 #: ../gaupol/dialogs/position_shift.py:145
 msgid "frames"
-msgstr ""
+msgstr "rammar"
 
 #: ../gaupol/dialogs/position_transform.py:70
 msgid "_Transform"
-msgstr ""
+msgstr "_Ummynda"
 
 #: ../gaupol/dialogs/preferences.py:217
 msgid "{} Extension Website"
-msgstr ""
+msgstr "Vefsvæði {} viðbótar"
 
 #: ../gaupol/dialogs/preferences.py:429
 msgid "Custom"
-msgstr ""
+msgstr "Sérsniðið"
 
 #: ../gaupol/dialogs/preview_error.py:36
 msgid "Preview in video player failed"
-msgstr ""
+msgstr "Forskoðun í myndspilara mistókst"
 
 #: ../gaupol/dialogs/preview_error.py:37
 msgid ""
@@ -2436,114 +2448,114 @@ msgstr ""
 
 #: ../gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
-msgstr ""
+msgstr "\"{}\" fannst ekki"
 
 #: ../gaupol/dialogs/search.py:554
 msgid "Error in regular expression pattern"
-msgstr ""
+msgstr "Villa í mynstri reglulegrar segðar"
 
 #: ../gaupol/dialogs/search.py:562
 msgid "Error in regular expression replacement"
-msgstr ""
+msgstr "Villa í reglulegri segð til útskiptingar"
 
 #: ../gaupol/dialogs/spell_check.py:360
 msgid "Spell-checking"
-msgstr "Verificador ortogràfic"
+msgstr "Stafsetningaryfirferð"
 
 #: ../gaupol/dialogs/split.py:45
 msgid "_Split"
-msgstr ""
+msgstr "_Skipta"
 
 #: ../gaupol/dialogs/split.py:76
 msgid "Splitting project"
-msgstr ""
+msgstr "Skipta upp verkefni"
 
 #: ../gaupol/dialogs/split.py:97
 #, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
-msgstr ""
+msgstr "Skipta {amount:d} skjátextum yfir í verkefnið \"{name}\""
 
 #: ../gaupol/dialogs/text_edit.py:53
 msgid "Edit Text"
-msgstr ""
+msgstr "Breyta texta"
 
 #: ../gaupol/dialogs/video.py:56
 msgid "Video files"
-msgstr "Fitxers de vídeo"
+msgstr "Myndskeiðasskrár"
 
 #: ../gaupol/enums.py:37
 msgid "No."
-msgstr "Nº"
+msgstr "Nr."
 
 #: ../gaupol/enums.py:43
 msgid "Start"
-msgstr ""
+msgstr "Upphaf"
 
 #: ../gaupol/enums.py:44
 msgid "Start position"
-msgstr ""
+msgstr "Upphafsstaða"
 
 #: ../gaupol/enums.py:49
 msgid "End"
-msgstr ""
+msgstr "Endir"
 
 #: ../gaupol/enums.py:50
 msgid "End position"
-msgstr ""
+msgstr "Endastaða"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
 #. of a tree view column that contains numbers five characters wide.
 #: ../gaupol/enums.py:57
 msgid "Dur."
-msgstr ""
+msgstr "Len."
 
 #: ../gaupol/enums.py:58
 msgid "Duration"
-msgstr "Duració"
+msgstr "Tímalengd"
 
 #: ../gaupol/enums.py:63 ../gaupol/enums.py:64
 msgid "Text"
-msgstr ""
+msgstr "Texti"
 
 #: ../gaupol/enums.py:69 ../gaupol/enums.py:70
 msgid "Translation"
-msgstr ""
+msgstr "Þýðing"
 
 #: ../gaupol/enums.py:82
 msgid "characters"
-msgstr ""
+msgstr "stafir"
 
 #: ../gaupol/enums.py:85
 msgid "ems"
-msgstr ""
+msgstr "ems"
 
 #: ../gaupol/page.py:60
 msgid "Untitled {:d}"
-msgstr "{:d} desconegut"
+msgstr "Ónefnt {:d}"
 
 #: ../gaupol/page.py:133
 msgid "Close project"
-msgstr ""
+msgstr "Loka verkefni"
 
 #: ../gaupol/page.py:145
 msgid "{} translation"
-msgstr "{} traducció"
+msgstr "{} þýðing"
 
 #: ../gaupol/page.py:302
 msgid "Path:"
-msgstr ""
+msgstr "Slóð:"
 
 #: ../gaupol/page.py:303
 msgid "Format:"
-msgstr ""
+msgstr "Snið:"
 
 #: ../gaupol/page.py:304
 msgid "Encoding:"
-msgstr ""
+msgstr "Stafatafla:"
 
 #: ../gaupol/page.py:305
 msgid "Newlines:"
-msgstr ""
+msgstr "Nýlínumerki:"
 
 #: ../gaupol/player.py:354
 msgid "Failed to initialize playback"

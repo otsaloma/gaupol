@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -10,12 +10,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-29 21:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
+"Last-Translator: Yann Domingo <yann.domingo@gmail.com>, 2016\n"
 "Language-Team: French (https://www.transifex.com/otsaloma/teams/64879/fr/)\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
@@ -121,8 +121,8 @@ msgid "secon_ds"
 msgstr "secon_des"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
-#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -592,7 +592,7 @@ msgstr "_Aide"
 
 #: ../data/ui/menubar.ui.h:102
 msgid "_Documentation"
-msgstr ""
+msgstr "_Documentation"
 
 #: ../data/ui/menubar.ui.h:103
 msgid "_Report A Bug"
@@ -714,7 +714,8 @@ msgstr "Encodages de caractère"
 
 #: ../data/ui/preferences-dialog.ui.h:3
 msgid "When opening files, try encodings in the following order:"
-msgstr "À l'ouverture de fichiers, tester les encodages dans l'ordre suivant :"
+msgstr ""
+"À l'ouverture de fichiers, tester les encodages dans l'ordre suivant :"
 
 #: ../data/ui/preferences-dialog.ui.h:4
 msgid "Curr_ent locale encoding"
@@ -812,7 +813,7 @@ msgstr "Utilis_er un fond derrière le texte"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Seek"
-msgstr ""
+msgstr "Chercher"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Length:"
@@ -1119,8 +1120,7 @@ msgstr "Lettre \"I\" dans un mot en minuscules"
 
 #: ../data/patterns/Latn-en.common-error.in.h:2
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
-msgstr ""
-"Remplacer la lettre \"I\" par la lettre \"l\" dans un mot en minuscules"
+msgstr "Remplacer la lettre \"I\" par la lettre \"l\" dans un mot en minuscules"
 
 #: ../data/patterns/Latn-en.common-error.in.h:3
 msgid "Letter \"l\" in an upper case word"
@@ -1128,8 +1128,7 @@ msgstr "Lettre \"l\" dans un mot en majuscules"
 
 #: ../data/patterns/Latn-en.common-error.in.h:4
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
-msgstr ""
-"Remplacer la lettre \"l\" par la lettre \"I\" dans un mot en majuscules"
+msgstr "Remplacer la lettre \"l\" par la lettre \"I\" dans un mot en majuscules"
 
 #: ../data/patterns/Latn-en.common-error.in.h:5
 msgid "Zero in an upper case word"
@@ -1172,10 +1171,11 @@ msgstr "Nom en majuscules avant un deux-points"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
 msgstr ""
-"Remplacer le nom de l'intervenant en majuscules précédant un deux-points par "
-"un tiret de dialogue"
+"Remplacer le nom de l'intervenant en majuscules précédant un deux-points par"
+" un tiret de dialogue"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
@@ -1258,11 +1258,10 @@ msgid "Spelling of a.m. and p.m."
 msgstr "Façon d'épeler a.m. et p.m."
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
-"Modifier les différentes façons d'épeler les périodes de 12 heures en \"a.m."
-"\" et \"p.m.\""
+"Modifier les différentes façons d'épeler les périodes de 12 heures en "
+"\"a.m.\" et \"p.m.\""
 
 #: ../data/patterns/Latn.common-error.in.h:3
 msgid "Letter \"O\" in a number"
@@ -1599,7 +1598,7 @@ msgstr "Chinois (traditionnel)"
 
 #: ../aeidon/encodings.py:44
 msgid "German"
-msgstr ""
+msgstr "Allemand"
 
 #: ../aeidon/encodings.py:45 ../aeidon/encodings.py:54
 #: ../aeidon/encodings.py:58 ../aeidon/encodings.py:78
@@ -1715,11 +1714,11 @@ msgstr "Celtique"
 
 #: ../aeidon/encodings.py:112
 msgid "Tajik"
-msgstr ""
+msgstr "Tadjik"
 
 #: ../aeidon/encodings.py:114
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazakh"
 
 #: ../aeidon/encodings.py:121
 msgid "Cyrillic Asian"
@@ -1802,14 +1801,14 @@ msgid ""
 "translating."
 msgstr ""
 "Gaupol est un éditeur de sous-titres textuels. Il supporte de nombreux "
-"formats de fichiers et permet la création de sous-titre, ainsi que l'édition "
-"des textes et des minutages pour correspondre à une vidéo. L'interface "
+"formats de fichiers et permet la création de sous-titre, ainsi que l'édition"
+" des textes et des minutages pour correspondre à une vidéo. L'interface "
 "utilisateur est prévue pour traiter à la chaîne de nombreux documents et "
 "faciliter la traduction."
 
 #: ../data/gaupol.appdata.xml.in.h:2
 msgid "Main window"
-msgstr ""
+msgstr "Fenêtre principale"
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Subtitle Editor"
@@ -1819,7 +1818,8 @@ msgstr "Éditeur de sous-titres"
 msgid "Edit subtitle files"
 msgstr "Éditer des fichiers de sous-titres"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr "video;subtitles;sous-titre;captions;"
@@ -1830,7 +1830,7 @@ msgstr "Éditeur de sous-titres Gaupol"
 
 #: ../gaupol/agents/close.py:66
 msgid "Save changes to document \"{}\" before closing?"
-msgstr ""
+msgstr "Voulez-vous enregistrer les modifications dans \"{}\" avant de quitter ?"
 
 #: ../gaupol/agents/close.py:68 ../gaupol/agents/open.py:373
 #: ../gaupol/dialogs/multi_close.py:39
@@ -1886,8 +1886,7 @@ msgstr "_Sélectionner"
 
 #: ../gaupol/agents/open.py:314
 msgid "Failed to decode file \"{}\" with all attempted codecs"
-msgstr ""
-"Impossible de décoder le fichier \"{}\", tous les codecs ont été essayés"
+msgstr "Impossible de décoder le fichier \"{}\", tous les codecs ont été essayés"
 
 #: ../gaupol/agents/open.py:315
 msgid "Please try to open the file with a different character encoding."
@@ -2017,8 +2016,7 @@ msgstr "Traduction enregistrée en \"{}\""
 #: ../gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr ""
-"Impossible d'encoder le fichier \"{basename}\" avec le codec \"{codec}\""
+msgstr "Impossible d'encoder le fichier \"{basename}\" avec le codec \"{codec}\""
 
 #: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
@@ -2072,7 +2070,7 @@ msgstr "Ouvrir"
 
 #: ../gaupol/application.py:230
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: ../gaupol/application.py:233
 msgid "Save the current main document"
@@ -2080,7 +2078,7 @@ msgstr "Enregistrer le document principal actuel"
 
 #: ../gaupol/application.py:238
 msgid "Undo"
-msgstr ""
+msgstr "Annuler"
 
 #: ../gaupol/application.py:242
 msgid "Undo the last action"
@@ -2088,7 +2086,7 @@ msgstr "Annuler la dernière action"
 
 #: ../gaupol/application.py:249
 msgid "Redo"
-msgstr ""
+msgstr "Refaire"
 
 #: ../gaupol/application.py:252
 msgid "Redo the last undone action"
@@ -2124,7 +2122,7 @@ msgstr "gaupol [OPTION...] [FICHIER...] [+[NUM]]"
 
 #: ../gaupol/applicationman.py:108
 msgid "FILE..."
-msgstr ""
+msgstr "FICHIER..."
 
 #: ../gaupol/applicationman.py:111
 msgid "subtitle files to open"
@@ -2211,7 +2209,8 @@ msgstr "Capitaliser les textes"
 #: ../gaupol/assistants.py:468
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
-"Corriger les erreurs fréquentes ou dues à une mauvaise reconnaissance d'image"
+"Corriger les erreurs fréquentes ou dues à une mauvaise reconnaissance "
+"d'image"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -2370,10 +2369,13 @@ msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr ""
+"Il semble que vous ayez découvert un problème. Veuillez le signaler en nous "
+"transmettant les informations, affichées ci-dessous ainsi qu'une description"
+" de ce que vous étiez en train de faire lorsque le problème est apparu."
 
 #: ../gaupol/dialogs/debug.py:52
 msgid "_Report Bug"
-msgstr ""
+msgstr "_Signaler un Problème"
 
 #: ../gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"

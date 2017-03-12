@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: German (https://www.transifex.com/otsaloma/teams/64879/de/)\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
@@ -121,8 +121,8 @@ msgid "secon_ds"
 msgstr "Se_kunden"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
-#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -731,7 +731,8 @@ msgstr "Auto_matische Erkennung"
 
 #: ../data/ui/preferences-dialog.ui.h:7
 msgid "Encoding specified in the open dialog will always be tried first."
-msgstr "Die im Öffnen-Dialog angegebenen Kodierung wird immer zuerst probiert."
+msgstr ""
+"Die im Öffnen-Dialog angegebenen Kodierung wird immer zuerst probiert."
 
 #: ../data/ui/preferences-dialog.ui.h:8
 msgid "File"
@@ -1065,8 +1066,8 @@ msgstr ""
 #: ../data/ui/text-assistant/join-split-page.ui.h:5
 msgid "_Split words not found in spell-check dictionary"
 msgstr ""
-"Wö_rter teilen, die nicht im Wörterbuch für die Rechtschreibprüfung gefunden "
-"wurden"
+"Wö_rter teilen, die nicht im Wörterbuch für die Rechtschreibprüfung gefunden"
+" wurden"
 
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:2
 msgid "_Maximum line length:"
@@ -1119,8 +1120,8 @@ msgstr "Buchstabe »I« in einem kleingeschriebenen Wort"
 #: ../data/patterns/Latn-en.common-error.in.h:2
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
 msgstr ""
-"Den Buchstaben »I« durch den Buchstaben »l« in einem kleingeschriebenen Wort "
-"ersetzen"
+"Den Buchstaben »I« durch den Buchstaben »l« in einem kleingeschriebenen Wort"
+" ersetzen"
 
 #: ../data/patterns/Latn-en.common-error.in.h:3
 msgid "Letter \"l\" in an upper case word"
@@ -1138,7 +1139,8 @@ msgstr "Null in einem großgeschriebenen Wort"
 
 #: ../data/patterns/Latn-en.common-error.in.h:6
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr "Null durch den Buchstaben »O« in einem großgeschriebenen Wort ersetzen"
+msgstr ""
+"Null durch den Buchstaben »O« in einem großgeschriebenen Wort ersetzen"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
 #: ../data/patterns/Latn.common-error.in.h:5
@@ -1174,7 +1176,8 @@ msgstr "Großgeschriebener Sprecher vor einem Doppelpunkt"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
 msgstr ""
 "Den großgeschriebenen Namen des Sprechers vor einem Doppelpunkt mit einem "
 "Dialog-Halbgeviertstrich ersetzen"
@@ -1259,11 +1262,10 @@ msgid "Spelling of a.m. and p.m."
 msgstr "Schreibweise von a.m. und p.m."
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
-"Die verschiedenen Schreibweisen von Perioden à 12 Stunden auf »a.m.« und »p."
-"m.« ändern"
+"Die verschiedenen Schreibweisen von Perioden à 12 Stunden auf »a.m.« und "
+"»p.m.« ändern"
 
 #: ../data/patterns/Latn.common-error.in.h:3
 msgid "Letter \"O\" in a number"
@@ -1810,7 +1812,8 @@ msgstr "Untertiteleditor"
 msgid "Edit subtitle files"
 msgstr "Untertiteldateien bearbeiten"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr ""
@@ -1946,15 +1949,15 @@ msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
 msgstr ""
-"Die Reihenfolge von {:d} Untertiteln muss geändert werden. Wenn {:d} klingt, "
-"als ob es viel sei, könnte die Datei irrtümlicherweise zusammengesetzt "
+"Die Reihenfolge von {:d} Untertiteln muss geändert werden. Wenn {:d} klingt,"
+" als ob es viel sei, könnte die Datei irrtümlicherweise zusammengesetzt "
 "worden sein."
 
 #: ../gaupol/agents/open.py:372
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"Änderungen in der Übersetzungsdatei »{}« speichern, bevor eine neue geöffnet "
-"wird?"
+"Änderungen in der Übersetzungsdatei »{}« speichern, bevor eine neue geöffnet"
+" wird?"
 
 #: ../gaupol/agents/open.py:375
 msgid "Open _Without Saving"
@@ -1963,7 +1966,8 @@ msgstr "Öffnen _ohne zu speichern"
 #: ../gaupol/agents/preview.py:101
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
-"Kodieren der Untertiteldatei in das temporäre Verzeichnis »{}« fehlgeschlagen"
+"Kodieren der Untertiteldatei in das temporäre Verzeichnis »{}« "
+"fehlgeschlagen"
 
 #: ../gaupol/agents/preview.py:102
 msgid ""
@@ -1972,8 +1976,8 @@ msgid ""
 "different character encoding."
 msgstr ""
 "Untertiteldaten konnten nicht für die Vorschau mit einer anderen "
-"Zeichenkodierung in eine temporäre Datei kodiert werden. Bitte speichern Sie "
-"die Untertiteldatei zuerst mit einer anderen Zeichenkodierung."
+"Zeichenkodierung in eine temporäre Datei kodiert werden. Bitte speichern Sie"
+" die Untertiteldatei zuerst mit einer anderen Zeichenkodierung."
 
 #: ../gaupol/agents/preview.py:110
 msgid "Failed to save subtitle file to temporary directory \"{}\""
@@ -2009,7 +2013,8 @@ msgstr "Kodieren der Datei »{basename}« mit Codec »{codec}« fehlgeschlagen"
 #: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
 msgstr ""
-"Bitte versuchen Sie die Datei mit einer anderen ZeichenKodierung zu speichern"
+"Bitte versuchen Sie die Datei mit einer anderen ZeichenKodierung zu "
+"speichern"
 
 #: ../gaupol/agents/save.py:203
 msgid "Failed to save file \"{}\""

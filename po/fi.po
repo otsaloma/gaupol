@@ -1,21 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Osmo Salomaa <otsaloma@iki.fi>, 2016.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-29 21:19+0300\n"
-"PO-Revision-Date: 2016-10-29 21:20+0300\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
-"Language-Team: fi\n"
-"Language: fi\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
+"Language-Team: Finnish (https://www.transifex.com/otsaloma/teams/64879/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
@@ -120,8 +121,8 @@ msgid "secon_ds"
 msgstr "sekun_tia"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
-#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -1167,7 +1168,8 @@ msgstr "Isolla kirjoitettu puhuja ennen kaksoispistettä"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
 msgstr ""
 "Korvaa kokonaan isolla kirjoitettu puhujan nimi ennen kaksoispistettä "
 "vuoropuheluviivalla"
@@ -1252,8 +1254,7 @@ msgid "Spelling of a.m. and p.m."
 msgstr "Aamu- ja iltapäivien kirjoitusasu"
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "Muuta 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m.\""
 
 #: ../data/patterns/Latn.common-error.in.h:3
@@ -1802,7 +1803,8 @@ msgstr "Tekstitysmuokkain"
 msgid "Edit subtitle files"
 msgstr "Muokkaa tekstitystiedostoja"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr "video;tekstitys;"
@@ -1868,8 +1870,7 @@ msgstr "_Valitse"
 
 #: ../gaupol/agents/open.py:314
 msgid "Failed to decode file \"{}\" with all attempted codecs"
-msgstr ""
-"Tiedoston \"{}\" purkaminen epäonnistui kaikilla kokeilluilla koodekeilla"
+msgstr "Tiedoston \"{}\" purkaminen epäonnistui kaikilla kokeilluilla koodekeilla"
 
 #: ../gaupol/agents/open.py:315
 msgid "Please try to open the file with a different character encoding."
@@ -1896,8 +1897,8 @@ msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
-"Tarkista että tiedosto, jota yrität avata on tekstitystiedosto, jonka muotoa "
-"Gaupol tukee."
+"Tarkista että tiedosto, jota yrität avata on tekstitystiedosto, jonka muotoa"
+" Gaupol tukee."
 
 #: ../gaupol/agents/open.py:332
 msgid "Failed to open file \"{}\""
@@ -1909,7 +1910,8 @@ msgstr "Tiedoston \"{}\" tulkinta epäonnistui"
 
 #: ../gaupol/agents/open.py:341
 msgid "Please check that the file you are trying to open is a valid {} file."
-msgstr "Tarkista, että tiedosto, jota yrität avata on kelvollinen {} tiedosto."
+msgstr ""
+"Tarkista, että tiedosto, jota yrität avata on kelvollinen {} tiedosto."
 
 #: ../gaupol/agents/open.py:349
 msgid "Open abnormally large file \"{}\"?"
@@ -1951,8 +1953,7 @@ msgstr "_Avaa tallentamatta"
 
 #: ../gaupol/agents/preview.py:101
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
-msgstr ""
-"Tekstitystiedoston koodaaminen väliaikaishakemistoon \"{}\" epäonnistui"
+msgstr "Tekstitystiedoston koodaaminen väliaikaishakemistoon \"{}\" epäonnistui"
 
 #: ../gaupol/agents/preview.py:102
 msgid ""
@@ -1966,8 +1967,7 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:110
 msgid "Failed to save subtitle file to temporary directory \"{}\""
-msgstr ""
-"Tekstitystiedoston tallentaminen väliaikaishakemistoon \"{}\" epäonnistui"
+msgstr "Tekstitystiedoston tallentaminen väliaikaishakemistoon \"{}\" epäonnistui"
 
 #: ../gaupol/agents/preview.py:118
 msgid "Failed to launch video player"
@@ -1992,8 +1992,7 @@ msgstr "Tallennettiin käännösasiakirja nimellä \"{}\""
 #: ../gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr ""
-"Tiedoston \"{basename}\" koodaaminen koodekilla \"{codec}\" epäonnistui"
+msgstr "Tiedoston \"{basename}\" koodaaminen koodekilla \"{codec}\" epäonnistui"
 
 #: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
@@ -2130,8 +2129,8 @@ msgstr "MENETELMÄ"
 #: ../gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
-"käännöksen kappaleiden tasaamiseen käytettävä menetelmä: "
-"'number' (numero)tai 'position' (kohta)"
+"käännöksen kappaleiden tasaamiseen käytettävä menetelmä: 'number' "
+"(numero)tai 'position' (kohta)"
 
 #: ../gaupol/applicationman.py:156
 msgid "select video file"

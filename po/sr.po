@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -12,12 +12,11 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Serbian (https://www.transifex.com/otsaloma/teams/64879/sr/)\n"
-"Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: sr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
@@ -122,8 +121,8 @@ msgid "secon_ds"
 msgstr "секун_де"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
-#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -1164,9 +1163,11 @@ msgstr "Говорник великим словом пре двотачке"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
 msgstr ""
-"Замените име говорника исписано великим словима пре двотачке цртицом дијалога"
+"Замените име говорника исписано великим словима пре двотачке цртицом "
+"дијалога"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
@@ -1248,8 +1249,7 @@ msgid "Spelling of a.m. and p.m."
 msgstr "Исписивање „a.m.“ и „p.m.“"
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "Измените разна исписивања 12-часовних раздобља у „a.m.“ и „p.m.“"
 
 #: ../data/patterns/Latn.common-error.in.h:3
@@ -1377,7 +1377,8 @@ msgstr "Једноредни текстови песама између знак
 #: ../data/patterns/Latn.hearing-impaired.in.h:8
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr ""
-"Уклоните једноредне текстове песама који почињу или су између знакова бројева"
+"Уклоните једноредне текстове песама који почињу или су између знакова "
+"бројева"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:9
 msgid "Speaker before a colon"
@@ -1781,8 +1782,8 @@ msgstr ""
 "Гаупол је уређивач за датотеке текстуалних титлова. Подржава више записа "
 "датотека титлова и обезбеђује средства за стварање титлова, уређивање "
 "текстова и дотеривање времена титлова да одговарају времену филмова. "
-"Корисничко сучеље је осмишљено са освртом на скупну обраду више докумената и "
-"погодност превођења."
+"Корисничко сучеље је осмишљено са освртом на скупну обраду више докумената и"
+" погодност превођења."
 
 #: ../data/gaupol.appdata.xml.in.h:2
 msgid "Main window"
@@ -1796,7 +1797,8 @@ msgstr "Уређивач титлова"
 msgid "Edit subtitle files"
 msgstr "Уређујте датотеке титлова"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr "превод;титл;филм;снимање;"
@@ -2122,8 +2124,8 @@ msgstr "НАЧИН"
 #: ../gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
-"начин коришћен за поравнање титлова превода: „number“ (број) или "
-"„position“ (положај)"
+"начин коришћен за поравнање титлова превода: „number“ (број) или „position“ "
+"(положај)"
 
 #: ../gaupol/applicationman.py:156
 msgid "select video file"

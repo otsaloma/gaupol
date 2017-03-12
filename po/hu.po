@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -11,12 +11,11 @@ msgstr ""
 "POT-Creation-Date: 2016-10-29 21:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
-"Language-Team: Hungarian (https://www.transifex.com/otsaloma/teams/64879/"
-"hu/)\n"
-"Language: hu\n"
+"Language-Team: Hungarian (https://www.transifex.com/otsaloma/teams/64879/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
@@ -122,8 +121,8 @@ msgid "secon_ds"
 msgstr "máso_dperc"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
-#: ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5
+#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -1100,8 +1099,7 @@ msgstr "Pont az előtag után"
 
 #: ../data/patterns/Latn-en-US.common-error.in.h:2
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
-msgstr ""
-"Pont hozzáadása olyan rövidített előtagok után, mint pl. a \"Mr\" és \"Dr\""
+msgstr "Pont hozzáadása olyan rövidített előtagok után, mint pl. a \"Mr\" és \"Dr\""
 
 #: ../data/patterns/Latn-en.capitalization.in.h:1
 msgid "First person pronoun"
@@ -1169,9 +1167,9 @@ msgstr "A \"Beszélő\" kettőspont előtti nagybetűs neve"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
-msgstr ""
-"A \"Beszélő\" kettőspont előtti nagybetűs nevének cseréje gondolatjelre"
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
+msgstr "A \"Beszélő\" kettőspont előtti nagybetűs nevének cseréje gondolatjelre"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
@@ -1253,8 +1251,7 @@ msgid "Spelling of a.m. and p.m."
 msgstr "\"a.m.\" és \"p.m.\" helyesírása"
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "A 12 órás időformátumok átalakítása \"a.m\" és \"p.m.\" formátumúra"
 
 #: ../data/patterns/Latn.common-error.in.h:3
@@ -1385,8 +1382,8 @@ msgstr "Egysoros dalszövegek kettős-keresztek között"
 #: ../data/patterns/Latn.hearing-impaired.in.h:8
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr ""
-"Olyan egysoros dalszövegek eltávolítása, melyek kettős-kereszttel kezdődnek, "
-"vagy azok között vannak"
+"Olyan egysoros dalszövegek eltávolítása, melyek kettős-kereszttel kezdődnek,"
+" vagy azok között vannak"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:9
 msgid "Speaker before a colon"
@@ -1806,7 +1803,8 @@ msgstr "Feliratszerkesztő"
 msgid "Edit subtitle files"
 msgstr "Felirat fájl szerkesztése"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: ../data/gaupol.desktop.in.h:4
 msgid "video;subtitles;captions;"
 msgstr "video;subtitles;captions;"
@@ -1921,8 +1919,8 @@ msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
-"A fájl mérete {:.1f} MB. Ez túl nagy méretű ahhoz, hogy szöveg-alapú felirat "
-"fájl legyen! Ellenőrizze, hogy nem bináris fájlt szeretne-e megnyitni!"
+"A fájl mérete {:.1f} MB. Ez túl nagy méretű ahhoz, hogy szöveg-alapú felirat"
+" fájl legyen! Ellenőrizze, hogy nem bináris fájlt szeretne-e megnyitni!"
 
 #: ../gaupol/agents/open.py:353 ../gaupol/agents/open.py:365
 #: ../gaupol/dialogs/open.py:64
@@ -1991,8 +1989,7 @@ msgstr "A fordítási dokumentum mentve \"{}\" néven"
 #: ../gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr ""
-"A(z) \"{basename}\" fájl átkódolása a(z) \"{codec}\" kodekkel nem sikerült"
+msgstr "A(z) \"{basename}\" fájl átkódolása a(z) \"{codec}\" kodekkel nem sikerült"
 
 #: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
@@ -2420,8 +2417,7 @@ msgstr "{:d} a fájlok közül már létezik! Le szeretné őket cserélni?"
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
-msgstr ""
-"A(z) \"{}\" fájl már létezik. Lecserélésével a tartalma felül lesz írva."
+msgstr "A(z) \"{}\" fájl már létezik. Lecserélésével a tartalma felül lesz írva."
 
 #: ../gaupol/dialogs/position_shift.py:69
 msgid "_Shift"
