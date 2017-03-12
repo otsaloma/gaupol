@@ -4,104 +4,33 @@
 Check translation files for common errors.
 Usage: check-translations [XX[_YY[@ZZ]]...]
 """
-import glob, os, sys
-args = tuple(sys.argv[1:])
-args = tuple("{}.po".format(x) for x in args)
-for arg in args:
-    if not arg in os.listdir("po"):
-        print("'po/{}' not found".format(arg), file=sys.stderr)
-os.chdir(os.path.join(os.path.dirname(__file__), "..", "po"))
-for name in sorted(glob.glob("*.po")):
-    if args and not name in args:
-        continue
-    print("--\n{}:".format(name))
-    os.system("msgfmt -c {} --statistics -o /dev/null".format(name))
-    fobj = open(name, "r", encoding="utf_8")
-    lineno = 0
-    nbad = 0
-    ntotal = 0
-    for line in fobj:
-        lineno += 1
-        line = line.strip()
-        if not line.startswith("msgid"):
-            continue
-        msgid = line[7:-1]
-        while True:
-            line = fobj.readline().strip()
-            lineno += 1
-            if line.startswith("msgstr"):
-                break
-            msgid = "".join((msgid, line[1:-1]))
-        if not msgid:
-            continue
-        if line.startswith("msgstr["):
-            # Skip plural forms.
-            continue
-        lineno_msgstr = lineno
-        msgstr = line[8:-1]
-        while True:
-            line = fobj.readline().strip()
-            lineno += 1
-            if not line:
-                break
-            msgstr = "".join((msgstr, line[1:-1]))
-        if not msgstr:
-            continue
-        pos = (name, lineno_msgstr)
-        ntotal += 1
-
+import glob, polib, re, sys
+def print_error(title, entry):
+    print("\n{}:".format(title), entry, sep="\n")
+FLAGS = re.MULTILINE
+args = list("po/{}.po".format(x) for x in sys.argv[1:])
+for name in args or sorted(glob.glob("po/*.po")):
+    po = polib.pofile(name)
+    print("{}: {}% translated".format(name, po.percent_translated()))
+    for entry in po.translated_entries():
+        # Check that Pyton string formatting fields exists as-is
+        # in the translation (order can vary, but not the field).
+        for field in re.findall(r"\{.*?\}", entry.msgid, flags=FLAGS):
+            if not field in entry.msgstr:
+                print_error("Python string formatting mismatch", entry)
+                raise SystemExit("FATAL ERROR")
         # Check that the translation of a label includes
         # a keyboard accelerator defined by an underscore.
-        if "_" in msgid:
-            if not "_" in msgstr:
-                nbad += 1
-                print("{}:{:d}: missing accelerator in".format(*pos))
-                print('"{}"'.format(msgid))
-                print('"{}"'.format(msgstr))
-                print("")
-
+        if "_" in entry.msgid:
+            if not "_" in entry.msgstr:
+                print_error("Missing accelerator", entry)
         # Check that the translation of a label includes
         # a terminating colon.
-        if msgid.endswith(":"):
-            if not msgstr.endswith(":"):
-                nbad += 1
-                print("{}:{:d}: missing colon in".format(*pos))
-                print('"{}"'.format(msgid))
-                print('"{}"'.format(msgstr))
-                print("")
-
-        # Check that the translation of a menu item includes
-        # an ellipsis defined by three dots.
-        if "..." in msgid:
-            if not "..." in msgstr:
-                nbad += 1
-                print("{}:{:d}: missing ellipsis in".format(*pos))
-                print('"{}"'.format(msgid))
-                print('"{}"'.format(msgstr))
-                print("")
-
+        if entry.msgid.endswith(":"):
+            if not entry.msgstr.endswith(":"):
+                print_error("Missing terminating colon", entry)
         # Check that the translation of a menu item includes
         # an ellipsis defined by the Unicode character.
-        if "…" in msgid:
-            if not "…" in msgstr:
-                nbad += 1
-                print("{}:{:d}: missing ellipsis in".format(*pos))
-                print('"{}"'.format(msgid))
-                print('"{}"'.format(msgstr))
-                print("")
-
-        # Check that string formatting fields exists as-is in
-        # the translation (order may vary, but not the field).
-        for i in range(len(msgid)):
-            if msgid[i] == "{":
-                j = msgid.index("}", i+1)
-                field = msgid[i:(j+1)]
-                if not field in msgstr:
-                    nbad += 1
-                    print("{}:{:d}: formatting mismatch in".format(*pos))
-                    print('"{}"'.format(msgid))
-                    print('"{}"'.format(msgstr))
-                    raise SystemExit("Fatal error!")
-
-    print("{}: {:d} bad, {:d} good messages"
-          .format(name, nbad, ntotal - nbad))
+        if "…" in entry.msgid:
+            if not "…" in entry.msgstr:
+                print_error("Missing ellipsis", entry)
