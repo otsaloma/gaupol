@@ -2,12 +2,14 @@ Releasing a New Version
 =======================
 
 * Update translations
-    - `tx pull -a [--minimum-perc=95]`
     - `tools/update-translations`
+    - `msgmerge -UN po/fi.po po/gaupol.pot`
     - `emacs po/fi.po`
-    - `tools/check-translations`
     - `tx push -s`
     - `tx push -tf -l fi`
+    - `tx pull -a --minimum-perc=75`
+    - `tools/check-translations`
+    - `tools/check-translations | grep %`
     - `git commit -a -m "Update translations for X.Y.Z"`
 * Do final quality checks
     - `python3 -Wd bin/gaupol`
