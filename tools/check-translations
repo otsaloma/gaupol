@@ -13,7 +13,7 @@ for name in args or sorted(glob.glob("po/*.po")):
     po = polib.pofile(name)
     print("{}: {}% translated".format(name, po.percent_translated()))
     for entry in po.translated_entries():
-        # Check that Pyton string formatting fields exists as-is
+        # Check that Python string formatting fields exists as-is
         # in the translation (order can vary, but not the field).
         for field in re.findall(r"\{.*?\}", entry.msgid, flags=FLAGS):
             if not field in entry.msgstr:
