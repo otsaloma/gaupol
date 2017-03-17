@@ -1,3 +1,14 @@
+2017-03-18: Gaupol 1.1
+======================
+
+* Fix error when using the Save All As dialog to save all time-based
+  format documents as frame-based or vice versa
+* Fix unhandled exception when trying to write non-numeric data into
+  integer or float cells
+* Add Icelandic translation (Sveinn í Felli)
+* Remove severely incomplete Catalan, Polish and Swedish translations
+* Update translations
+
 2016-10-29: Gaupol 1.0
 ======================
 
