@@ -87,13 +87,13 @@ def run_or_exit(cmd):
         return open(ofile, "w", encoding="utf_8").write(
             re.sub("^_", "", text, flags=re.MULTILINE))
     if os.system(cmd) != 0:
-        log.error("command {} failed".format(repr(cmd)))
+        log.error("FATAL ERROR: command {} failed".format(repr(cmd)))
         raise SystemExit(1)
 
 def run_or_warn(cmd):
     """Run command in shell and warn if it fails."""
     if os.system(cmd) != 0:
-        log.warn("command {} failed".format(repr(cmd)))
+        log.warn("WARNING: command {} failed".format(repr(cmd)))
 
 
 class Clean(clean):
