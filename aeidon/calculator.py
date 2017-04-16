@@ -150,13 +150,13 @@ class Calculator:
         '01:02:03.400'
         """
         time = time.strip()
+        sign = ("-" if time.startswith("-") else "")
+        time = time.replace("-", "")
+        time = time.replace(",", ".")
         if time.count(":") == 1:
             # Allow hours to be missing,
             # used at least in the WebVTT format.
             time = "00:{}".format(time)
-        sign = ("-" if time.startswith("-") else "")
-        time = time.replace("-", "")
-        time = time.replace(",", ".")
         hours, minutes, seconds = time.split(":")
         return ("{}{:02.0f}:{:02.0f}:{:02.0f}.{:03.0f}"
                 .format(sign,

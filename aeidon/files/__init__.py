@@ -23,6 +23,7 @@ aeidon.util.install_module("files", lambda: None)
 
 from .ssa        import SubStationAlpha
 from .ass        import AdvSubStationAlpha
+from .lrc        import LRC
 from .microdvd   import MicroDVD
 from .mpl2       import MPL2
 from .subrip     import SubRip
@@ -32,6 +33,7 @@ from .webvtt     import WebVTT
 
 __all__ = ["SubStationAlpha",
            "AdvSubStationAlpha",
+           "LRC",
            "MicroDVD",
            "MPL2",
            "SubRip",

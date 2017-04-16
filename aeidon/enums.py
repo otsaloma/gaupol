@@ -228,6 +228,15 @@ class FormatAdvSubStationAlpha(aeidon.EnumerationItem):
     mime_type = "text/x-ssa"
     mode = modes.TIME
 
+class FormatLRC(aeidon.EnumerationItem):
+    container = None
+    extension = ".lrc"
+    has_header = True
+    identifier = r"^\[-?\d\d:\d\d\.\d\d\]"
+    label = "LRC"
+    mime_type = "text/plain"
+    mode = modes.TIME
+
 class FormatMicroDVD(aeidon.EnumerationItem):
     container = None
     extension = ".sub"
@@ -298,6 +307,7 @@ class FormatWebVTT(aeidon.EnumerationItem):
 
 formats = aeidon.Enumeration()
 formats.ASS = FormatAdvSubStationAlpha()
+formats.LRC = FormatLRC()
 formats.MICRODVD = FormatMicroDVD()
 formats.MPL2 = FormatMPL2()
 formats.SUBRIP = FormatSubRip()

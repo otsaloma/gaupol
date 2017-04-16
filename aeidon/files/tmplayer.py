@@ -75,9 +75,8 @@ class TMPlayer(aeidon.SubtitleFile):
                 subtitle.main_text = line[i:].replace("|", "\n")
                 subtitles.append(subtitle)
                 self.two_digit_hour = True
-        subtitles.pop(0)
         subtitles[-1].duration_seconds = 5
-        return subtitles
+        return subtitles[1:]
 
     def write_to_file(self, subtitles, doc, f):
         """
