@@ -287,6 +287,15 @@ class FormatTMPlayer(aeidon.EnumerationItem):
     mime_type = "text/plain"
     mode = modes.TIME
 
+class FormatWebVTT(aeidon.EnumerationItem):
+    container = "webvtt"
+    extension = ".vtt"
+    has_header = True
+    identifier = r"^\s*[wW][eE][bB][vV][tT][tT]\b"
+    label = "WebVTT"
+    mime_type = "text/vtt"
+    mode = modes.TIME
+
 formats = aeidon.Enumeration()
 formats.ASS = FormatAdvSubStationAlpha()
 formats.MICRODVD = FormatMicroDVD()
@@ -295,3 +304,4 @@ formats.SUBRIP = FormatSubRip()
 formats.SSA = FormatSubStationAlpha()
 formats.SUBVIEWER2 = FormatSubViewer2()
 formats.TMPLAYER = FormatTMPlayer()
+formats.WEBVTT = FormatWebVTT()

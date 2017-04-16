@@ -60,11 +60,32 @@ class SubStationAlpha:
     effect = ""
 
 
+class WebVTT:
+
+    """
+    Attributes for the WebVTT format.
+
+    :ivar comment: Optional comment string (including "NOTE")
+    :ivar id: Optional cue identifier
+    :ivar settings: Optional cue settings (position etc.)
+    :ivar style: Optional CSS style block (including "STYLE")
+
+    https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API
+    """
+
+    comment = ""
+    id = ""
+    settings = ""
+    style = ""
+
+
 def new(name):
     """Return a new container instance given the container's `name`."""
     if name == "ssa":
         return SubStationAlpha()
     if name == "subrip":
         return SubRip()
+    if name == "webvtt":
+        return WebVTT()
     raise ValueError("Invalid name: {}"
                      .format(repr(name)))

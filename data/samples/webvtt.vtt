@@ -1,0 +1,47 @@
+WEBVTT - Title
+
+STYLE
+::cue {
+  background-color: yellow;
+}
+
+NOTE First comment
+
+00:00.946 --> 00:03.364
+So, one day when I was 17, I left.
+
+NOTE Second comment,
+which spans multiple lines
+
+1
+00:01.471 --> 00:04.635
+I always wanted to come to France.
+
+Textual cue identifier
+00:04.635 --> 00:06.626
+There I was in Paris.
+
+00:06.843 --> 00:09.606 position:10%
+I always wanted to leave my country
+and go somewhere else.
+
+00:09.606 --> 00:13.736 position:90%
+Since I was a bit naive,
+
+00:14.445 --> 00:18.541
+everyone seemed beautiful
+and fabulous.
+
+00:18.982 --> 00:23.180
+<i>I couldn't tell cruelty from kindness.</i>
+
+00:23.387 --> 00:27.653
+<i>For me, people were</i>
+<i>the way they were.</i>
+
+00:28.058 --> 00:31.619
+<i>You just worked with them</i>
+<i>or talked with them.</i>
+
+00:32.563 --> 00:35.896
+Obviously, it was a big shock.

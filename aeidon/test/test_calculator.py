@@ -102,6 +102,7 @@ class TestCalculator(aeidon.TestCase):
     def test_normalize_time(self):
         assert self.calc.normalize_time("1:2:3.4") == "01:02:03.400"
         assert self.calc.normalize_time("-1:2:3,4") == "-01:02:03.400"
+        assert self.calc.normalize_time("12:34.567") == "00:12:34.567"
 
     def test_round__frame(self):
         assert self.calc.round(13, -1) == 10
