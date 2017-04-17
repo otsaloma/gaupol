@@ -91,6 +91,11 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         store = Gtk.ListStore(str)
         self._format_combo.set_model(store)
         for name in (x.label for x in aeidon.formats):
+            if name == "SubRip":
+                # Mark the SubRip format as recommended, since
+                # it's the most common one and best supported,
+                # both in Gaupol and elsewhere.
+                name = _("{} (recommended)").format(name)
             store.append((name,))
         view = self._format_combo.get_child()
         view.set_displayed_row(gaupol.util.tree_row_to_path(0))
