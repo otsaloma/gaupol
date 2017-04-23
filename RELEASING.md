@@ -21,6 +21,7 @@ Releasing a New Version
     - `aeidon/__init__.py`
     - `gaupol/__init__.py`
     - `data/extensions/*/*.extension.in`
+    - `win32/gaupol.iss`
 * Update `NEWS.md` and `TODO.md`
 * Check that installation works
     - `sudo python3 setup.py install --prefix=/usr/local`

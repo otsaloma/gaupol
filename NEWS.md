@@ -1,3 +1,9 @@
+2017-04-23: Gaupol 1.2
+======================
+
+* Add support for the WebVTT file format (#46)
+* Add support for the LRC file format (#39)
+
 2017-03-18: Gaupol 1.1
 ======================
 
