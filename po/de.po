@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 01:06+0200\n"
+"POT-Creation-Date: 2017-04-23 19:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: German (https://www.transifex.com/otsaloma/teams/64879/de/)\n"
@@ -886,7 +886,7 @@ msgid "Find _Previous"
 msgstr "_Vorherigen finden"
 
 #: ../data/ui/search-dialog.ui.h:5 ../data/ui/spell-check-dialog.ui.h:7
-#: ../gaupol/dialogs/multi_save.py:211
+#: ../gaupol/dialogs/multi_save.py:216
 msgid "_Replace"
 msgstr "Erset_zen"
 
@@ -1779,7 +1779,7 @@ msgstr "{language} ({country})"
 #: ../gaupol/dialogs/duration_adjust.py:86 ../gaupol/dialogs/encoding.py:55
 #: ../gaupol/dialogs/framerate_convert.py:63 ../gaupol/dialogs/insert.py:44
 #: ../gaupol/dialogs/multi_close.py:54 ../gaupol/dialogs/multi_save.py:83
-#: ../gaupol/dialogs/multi_save.py:210 ../gaupol/dialogs/open.py:63
+#: ../gaupol/dialogs/multi_save.py:215 ../gaupol/dialogs/open.py:63
 #: ../gaupol/dialogs/position_shift.py:68
 #: ../gaupol/dialogs/position_transform.py:69 ../gaupol/dialogs/save.py:73
 #: ../gaupol/dialogs/split.py:44 ../gaupol/dialogs/text_edit.py:48
@@ -2433,14 +2433,21 @@ msgstr "_Wählen Sie das Hauptdokument, das Sie speichern wollen:"
 msgid "Select the _translation documents you want to save:"
 msgstr "Wählen Sie die _Übersetzungsdokumente, die Sie speichern wollen:"
 
-#: ../gaupol/dialogs/multi_save.py:207
+#. Mark the SubRip format as recommended, since
+#. it's the most common one and best supported,
+#. both in Gaupol and elsewhere.
+#: ../gaupol/dialogs/multi_save.py:98 ../gaupol/dialogs/save.py:110
+msgid "{} (recommended)"
+msgstr ""
+
+#: ../gaupol/dialogs/multi_save.py:212
 msgid ""
 "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
 "{:d} der zu speichernden Dateien existieren bereits. Möchten Sie sie "
 "ersetzen?"
 
-#: ../gaupol/dialogs/multi_save.py:208
+#: ../gaupol/dialogs/multi_save.py:213
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
