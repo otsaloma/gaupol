@@ -176,7 +176,7 @@ class PlayerMPV(aeidon.EnumerationItem):
                               "--hr-seek=yes",
                               "--start=$SECONDS",
                               "--sub-file=$SUBFILE",
-                              "--sub-codepage=utf-8:utf-8-broken",
+                              "--sub-codepage=utf-8",
                               "$VIDEOFILE",))
 
     label = "mpv"
