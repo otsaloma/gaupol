@@ -1,22 +1,23 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-#, fuzzy
+# Brazilian Portuguese translation for gaupol.
+# Copyright (C) 2017 Osmo Salomaa
+# This file is distributed under the same license as the gaupol package.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gaupol 1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-23 19:26+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/otsaloma/teams/64879/pt_BR/)\n"
+"PO-Revision-Date: 2017-06-06 21:37-0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/otsaloma/"
+"teams/64879/pt_BR/)\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
+"X-Project-Style: gnome\n"
 
 #: ../data/extensions/custom-framerates/add-framerate-dialog.ui.h:1
 msgid "Add Framerate"
@@ -121,8 +122,8 @@ msgid "secon_ds"
 msgstr "segun_dos"
 
 #: ../data/ui/duration-adjust-dialog.ui.h:14
-#: ../data/ui/framerate-convert-dialog.ui.h:5
-#: ../data/ui/language-dialog.ui.h:6 ../data/ui/position-shift-dialog.ui.h:5
+#: ../data/ui/framerate-convert-dialog.ui.h:5 ../data/ui/language-dialog.ui.h:6
+#: ../data/ui/position-shift-dialog.ui.h:5
 #: ../data/ui/position-transform-dialog.ui.h:11
 #: ../data/ui/search-dialog.ui.h:13
 #: ../data/ui/text-assistant/line-break-options-page.ui.h:4
@@ -278,7 +279,7 @@ msgstr "Editar pró_xima célula"
 
 #: ../data/ui/menubar.ui.h:18
 msgid "Stretc_h"
-msgstr ""
+msgstr "E_sticar"
 
 #: ../data/ui/menubar.ui.h:19
 msgid "_Start Earlier"
@@ -592,7 +593,7 @@ msgstr "A_juda"
 
 #: ../data/ui/menubar.ui.h:102
 msgid "_Documentation"
-msgstr ""
+msgstr "_Documentação"
 
 #: ../data/ui/menubar.ui.h:103
 msgid "_Report A Bug"
@@ -743,7 +744,7 @@ msgstr "Fonte"
 
 #: ../data/ui/preferences-dialog.ui.h:10
 msgid "Use _default theme fixed width font"
-msgstr ""
+msgstr "Usar fonte de largura fixa _padrão do tema"
 
 #: ../data/ui/preferences-dialog.ui.h:11
 msgid "_Editor font:"
@@ -811,11 +812,11 @@ msgstr "U_sar um plano de fundo por trás do texto"
 
 #: ../data/ui/preferences-dialog.ui.h:27
 msgid "Seek"
-msgstr ""
+msgstr "Procurar"
 
 #: ../data/ui/preferences-dialog.ui.h:28
 msgid "_Length:"
-msgstr ""
+msgstr "Taman_ho:"
 
 #: ../data/ui/preferences-dialog.ui.h:29
 #: ../gaupol/dialogs/position_shift.py:163
@@ -847,6 +848,11 @@ msgid ""
 "                            $SUBFILE\n"
 "                            $VIDEOFILE"
 msgstr ""
+"Campos:\n"
+"                            $MILLISECONDS\n"
+"                            $SECONDS\n"
+"                            $SUBFILE\n"
+"                            $VIDEOFILE"
 
 #: ../data/ui/preferences-dialog.ui.h:40
 msgid "Al_ways use UTF-8 character encoding"
@@ -1058,8 +1064,7 @@ msgstr "Correções"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:4
 msgid "_Join words not found in spell-check dictionary"
-msgstr ""
-"_Juntar palavras não encontradas no dicionário do corretor ortográfico"
+msgstr "_Juntar palavras não encontradas no dicionário do corretor ortográfico"
 
 #: ../data/ui/text-assistant/join-split-page.ui.h:5
 msgid "_Split words not found in spell-check dictionary"
@@ -1100,7 +1105,7 @@ msgstr "Ponto após título"
 
 #: ../data/patterns/Latn-en-US.common-error.in.h:2
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
-msgstr "Adiciona ponto após uma abreviação, exemplo \"Sr\" e \"Dr\""
+msgstr "Adiciona ponto após uma abreviação, exemplo “Sr” e “Dr”"
 
 #: ../data/patterns/Latn-en.capitalization.in.h:1
 msgid "First person pronoun"
@@ -1108,23 +1113,23 @@ msgstr "Pronome de primeira pessoa"
 
 #: ../data/patterns/Latn-en.capitalization.in.h:2
 msgid "Capitalize the first person pronoun \"I\""
-msgstr "Capitaliza a primeira letra do pronome pessoal \"Eu\" (\"I\" em inglês)"
+msgstr "Capitaliza a primeira letra do pronome pessoal “Eu” (“I” em inglês)"
 
 #: ../data/patterns/Latn-en.common-error.in.h:1
 msgid "Letter \"I\" in a lower case word"
-msgstr "Letra \"I\" em uma palavra minúscula"
+msgstr "Letra “I” em uma palavra minúscula"
 
 #: ../data/patterns/Latn-en.common-error.in.h:2
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
-msgstr "Substitui letra \"I\" por letra \"l\" em uma palavra minúscula"
+msgstr "Substitui letra “I” por letra “l” em uma palavra minúscula"
 
 #: ../data/patterns/Latn-en.common-error.in.h:3
 msgid "Letter \"l\" in an upper case word"
-msgstr "Letra \"l\" em uma palavra maiúscula"
+msgstr "Letra “l” em uma palavra maiúscula"
 
 #: ../data/patterns/Latn-en.common-error.in.h:4
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
-msgstr "Substitui letra \"l\" por letra \"I\" em uma palavra maiúscula"
+msgstr "Substitui letra “l” por letra “I” em uma palavra maiúscula"
 
 #: ../data/patterns/Latn-en.common-error.in.h:5
 msgid "Zero in an upper case word"
@@ -1132,7 +1137,7 @@ msgstr "Zero em uma palavra maiúscula"
 
 #: ../data/patterns/Latn-en.common-error.in.h:6
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr "Substitui zero pela letra \"O\" em uma palavra maiúscula"
+msgstr "Substitui zero pela letra “O” em uma palavra maiúscula"
 
 #: ../data/patterns/Latn-en.common-error.in.h:7
 #: ../data/patterns/Latn.common-error.in.h:5
@@ -1158,7 +1163,7 @@ msgstr "Okay"
 
 #: ../data/patterns/Latn-en.common-error.in.h:12
 msgid "Spell two-letter forms of \"okay\" in all upper case"
-msgstr "Escreve formas de duas letras de \"okay\" toda em caixa alta"
+msgstr "Escreve formas de duas letras de “okay” toda em caixa alta"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Uppercase speaker before a colon"
@@ -1166,11 +1171,9 @@ msgstr "Locutor em maiúsculo antes de um dois-pontos"
 
 #: ../data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue "
-"dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue dash"
 msgstr ""
-"Substitui o nome do locutor em maiúsculo antes de um dois-pontos por um "
-"hífen"
+"Substitui o nome do locutor em maiúsculo antes de um dois-pontos por um hífen"
 
 #: ../data/patterns/Latn-en.line-break.in.h:1
 msgid "Title"
@@ -1178,7 +1181,7 @@ msgstr "Título"
 
 #: ../data/patterns/Latn-en.line-break.in.h:2
 msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr "Não quebrar após um título, ex.: \" Dr.\""
+msgstr "Não quebrar após um título, ex.: “ Dr.”"
 
 #: ../data/patterns/Latn-en.line-break.in.h:3
 msgid "Article"
@@ -1202,7 +1205,7 @@ msgstr "Determinante possessivo"
 
 #: ../data/patterns/Latn-en.line-break.in.h:8
 msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr "Não quebra após um determinante possessivo, ex.: \"meu\""
+msgstr "Não quebra após um determinante possessivo, ex.: “meu”"
 
 #: ../data/patterns/Latn-fi.common-error.in.h:1
 #: ../data/patterns/Latn.common-error.in.h:15
@@ -1252,16 +1255,17 @@ msgid "Spelling of a.m. and p.m."
 msgstr "Formato a.m. e p.m."
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr "Muda os vários formatos de período 12-horas para \"a.m.\" e \"p.m.\""
+msgid ""
+"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgstr "Muda os vários formatos de período 12-horas para “a.m.” e “p.m.”"
 
 #: ../data/patterns/Latn.common-error.in.h:3
 msgid "Letter \"O\" in a number"
-msgstr "Letra \"O\" em um número"
+msgstr "Letra “O” em um número"
 
 #: ../data/patterns/Latn.common-error.in.h:4
 msgid "Replace letter \"O\" with a zero in a number"
-msgstr "Substitui letra \"O\" por zero em um número"
+msgstr "Substitui letra “O” por zero em um número"
 
 #: ../data/patterns/Latn.common-error.in.h:7
 msgid "Double apostrophe"
@@ -1380,8 +1384,7 @@ msgstr "Letras de música em linha única entre sinais numéricos"
 #: ../data/patterns/Latn.hearing-impaired.in.h:8
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr ""
-"Remover letras de música em linha única a partir de ou entre sinais "
-"numéricos"
+"Remover letras de música em linha única a partir de ou entre sinais numéricos"
 
 #: ../data/patterns/Latn.hearing-impaired.in.h:9
 msgid "Speaker before a colon"
@@ -1405,8 +1408,7 @@ msgstr "Cláusula"
 
 #: ../data/patterns/Latn.line-break.in.h:4
 msgid "Break according to clauses terminated by a punctuation mark"
-msgstr ""
-"Quebre de acordo com as cláusulas terminadas por um sinal de pontuação"
+msgstr "Quebre de acordo com as cláusulas terminadas por um sinal de pontuação"
 
 #: ../data/patterns/Latn.line-break.in.h:5
 msgid "Number and unit"
@@ -1495,7 +1497,7 @@ msgstr "Mudando maiusculização"
 
 #: ../aeidon/agents/format.py:92
 msgid "Italicizing"
-msgstr "Tornando Itálico"
+msgstr "Tornando itálico"
 
 #: ../aeidon/agents/format.py:108
 msgid "Removing dialogue dashes"
@@ -1503,7 +1505,7 @@ msgstr "Removendo hifens de diálogo"
 
 #: ../aeidon/agents/format.py:174
 msgid "Unitalicizing"
-msgstr "Tornando Não-itálico"
+msgstr "Tornando não-itálico"
 
 #: ../aeidon/agents/position.py:74
 msgid "Adjusting durations"
@@ -1581,7 +1583,7 @@ msgstr "Chinês tradicional"
 
 #: ../aeidon/encodings.py:44
 msgid "German"
-msgstr ""
+msgstr "Alemão"
 
 #: ../aeidon/encodings.py:45 ../aeidon/encodings.py:54
 #: ../aeidon/encodings.py:58 ../aeidon/encodings.py:78
@@ -1697,11 +1699,11 @@ msgstr "Celta"
 
 #: ../aeidon/encodings.py:112
 msgid "Tajik"
-msgstr ""
+msgstr "Tajique"
 
 #: ../aeidon/encodings.py:114
 msgid "Kazakh"
-msgstr ""
+msgstr "Cazaque"
 
 #: ../aeidon/encodings.py:121
 msgid "Cyrillic Asian"
@@ -1791,7 +1793,7 @@ msgstr ""
 
 #: ../data/gaupol.appdata.xml.in.h:2
 msgid "Main window"
-msgstr ""
+msgstr "Janela principal"
 
 #: ../data/gaupol.desktop.in.h:1
 msgid "Subtitle Editor"
@@ -1813,7 +1815,7 @@ msgstr "Editor de legendas Gaupol"
 
 #: ../gaupol/agents/close.py:66
 msgid "Save changes to document \"{}\" before closing?"
-msgstr ""
+msgstr "Salvar mudanças no documento “{}” antes de fechar?"
 
 #: ../gaupol/agents/close.py:68 ../gaupol/agents/open.py:373
 #: ../gaupol/dialogs/multi_close.py:39
@@ -1840,7 +1842,7 @@ msgstr "Use Shift+Enter para quebra de linha"
 #: ../gaupol/agents/open.py:85
 #, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
-msgstr "Adicionar ao fim {amount:d} legendas de \"{basename}\""
+msgstr "Adicionar ao fim {amount:d} legendas de “{basename}”"
 
 #: ../gaupol/agents/open.py:96
 msgid "Appending file"
@@ -1848,7 +1850,7 @@ msgstr "Anexando arquivo"
 
 #: ../gaupol/agents/open.py:111
 msgid "File \"{}\" is already open"
-msgstr "Arquivo \"{}\" já está aberto"
+msgstr "Arquivo “{}” já está aberto"
 
 #: ../gaupol/agents/open.py:198 ../gaupol/application.py:219
 msgid "Open"
@@ -1868,7 +1870,7 @@ msgstr "_Selecionar"
 
 #: ../gaupol/agents/open.py:314
 msgid "Failed to decode file \"{}\" with all attempted codecs"
-msgstr "Falha ao decodificar arquivo \"{}\" com todos os codecs tentados"
+msgstr "Falha ao decodificar arquivo “{}” com todos os codecs tentados"
 
 #: ../gaupol/agents/open.py:315
 msgid "Please try to open the file with a different character encoding."
@@ -1888,7 +1890,7 @@ msgstr "_OK"
 
 #: ../gaupol/agents/open.py:323
 msgid "Failed to recognize format of file \"{}\""
-msgstr "Falha ao reconhecer formato do arquivo \"{}\""
+msgstr "Falha ao reconhecer formato do arquivo “{}”"
 
 #: ../gaupol/agents/open.py:324
 msgid ""
@@ -1900,11 +1902,11 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:332
 msgid "Failed to open file \"{}\""
-msgstr "Falha ao abrir arquivo \"{}\""
+msgstr "Falha ao abrir arquivo “{}”"
 
 #: ../gaupol/agents/open.py:340
 msgid "Failed to parse file \"{}\""
-msgstr "Falha ao processar arquivo \"{}\""
+msgstr "Falha ao processar arquivo “{}”"
 
 #: ../gaupol/agents/open.py:341
 msgid "Please check that the file you are trying to open is a valid {} file."
@@ -1914,7 +1916,7 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:349
 msgid "Open abnormally large file \"{}\"?"
-msgstr "Abrir arquivo absurdamente grande \"{}\"?"
+msgstr "Abrir arquivo absurdamente grande “{}”?"
 
 #: ../gaupol/agents/open.py:350
 msgid ""
@@ -1932,7 +1934,7 @@ msgstr "_Abrir"
 
 #: ../gaupol/agents/open.py:360
 msgid "Open unsorted file \"{}\"?"
-msgstr "Abrir arquivo não-ordenado \"{}\"?"
+msgstr "Abrir arquivo não-ordenado “{}”?"
 
 #: ../gaupol/agents/open.py:361
 msgid ""
@@ -1944,7 +1946,7 @@ msgstr ""
 
 #: ../gaupol/agents/open.py:372
 msgid "Save changes to translation document \"{}\" before opening a new one?"
-msgstr "Salvar mudanças para documento de tradução \"{}\" antes de abrir outro?"
+msgstr "Salvar mudanças para documento de tradução “{}” antes de abrir outro?"
 
 #: ../gaupol/agents/open.py:375
 msgid "Open _Without Saving"
@@ -1952,7 +1954,7 @@ msgstr "Abrir _sem salvar"
 
 #: ../gaupol/agents/preview.py:101
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
-msgstr "Falha ao codificar legenda para o diretório temporário \"{}\""
+msgstr "Falha ao codificar legenda para o diretório temporário “{}”"
 
 #: ../gaupol/agents/preview.py:102
 msgid ""
@@ -1966,7 +1968,7 @@ msgstr ""
 
 #: ../gaupol/agents/preview.py:110
 msgid "Failed to save subtitle file to temporary directory \"{}\""
-msgstr "Falha ao salvar arquivo de legenda para o diretório temporário \"{}\""
+msgstr "Falha ao salvar arquivo de legenda para o diretório temporário “{}”"
 
 #: ../gaupol/agents/preview.py:118
 msgid "Failed to launch video player"
@@ -1978,7 +1980,7 @@ msgstr "Salvar como"
 
 #: ../gaupol/agents/save.py:135
 msgid "Saved main document as \"{}\""
-msgstr "Documento principal salvo como \"{}\""
+msgstr "Documento principal salvo como “{}”"
 
 #: ../gaupol/agents/save.py:153
 msgid "Save Translation As"
@@ -1986,12 +1988,12 @@ msgstr "Salvar tradução como"
 
 #: ../gaupol/agents/save.py:159
 msgid "Saved translation document as \"{}\""
-msgstr "Salvar documento de tradução como \"{}\""
+msgstr "Salvar documento de tradução como “{}”"
 
 #: ../gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr "Falha ao codificar aquivo \"{basename}\" com codificação \"{codec}\""
+msgstr "Falha ao codificar aquivo “{basename}” com codificação “{codec}”"
 
 #: ../gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
@@ -1999,7 +2001,7 @@ msgstr "Por favor, tente salvar o arquivo com uma codificação diferente."
 
 #: ../gaupol/agents/save.py:203
 msgid "Failed to save file \"{}\""
-msgstr "Falhar ao salvar arquivo \"{}\""
+msgstr "Falhar ao salvar arquivo “{}”"
 
 #: ../gaupol/agents/video.py:67
 msgid "Play or pause video"
@@ -2043,7 +2045,7 @@ msgstr "Abre arquivos principais"
 
 #: ../gaupol/application.py:230
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 #: ../gaupol/application.py:233
 msgid "Save the current main document"
@@ -2051,7 +2053,7 @@ msgstr "Salva o documento principal atual"
 
 #: ../gaupol/application.py:238
 msgid "Undo"
-msgstr ""
+msgstr "Desfazer"
 
 #: ../gaupol/application.py:242
 msgid "Undo the last action"
@@ -2059,7 +2061,7 @@ msgstr "Desfaz a última ação"
 
 #: ../gaupol/application.py:249
 msgid "Redo"
-msgstr ""
+msgstr "Refazer"
 
 #: ../gaupol/application.py:252
 msgid "Redo the last undone action"
@@ -2091,15 +2093,15 @@ msgstr "Pré-visualiza da posição selecionada com um reprodutor de vídeo"
 
 #: ../gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
-msgstr "gaupol [OPÇÃO...] [ARQUIVO...] [+[NÚM]]"
+msgstr "gaupol [OPÇÃO…] [ARQUIVO…] [+[NÚM]]"
 
 #: ../gaupol/applicationman.py:108
 msgid "FILE..."
-msgstr ""
+msgstr "ARQUIVO…"
 
 #: ../gaupol/applicationman.py:111
 msgid "subtitle files to open"
-msgstr ""
+msgstr "arquivo de legendas para abrir"
 
 #: ../gaupol/applicationman.py:121
 msgid "ENCODING"
@@ -2127,7 +2129,7 @@ msgstr "MÉTODO"
 
 #: ../gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
-msgstr "método usado para alinhar legendas traduzidas: \"número\" ou \"posição\""
+msgstr "método usado para alinhar legendas traduzidas: “número” ou “posição”"
 
 #: ../gaupol/applicationman.py:156
 msgid "select video file"
@@ -2227,7 +2229,7 @@ msgstr "Unir ou dividir palavras"
 
 #: ../gaupol/assistants.py:598 ../gaupol/dialogs/spell_check.py:387
 msgid "Failed to load dictionary for language \"{}\""
-msgstr "Falha ao carregar dicionário para idioma \"{}\""
+msgstr "Falha ao carregar dicionário para idioma “{}”"
 
 #: ../gaupol/assistants.py:634
 msgid "Break text into lines of defined length"
@@ -2323,7 +2325,7 @@ msgstr ""
 "Átila Camurça <camurca.home@gmail.com>\n"
 "Darlildo Lima <darlildo.cefetce@gmail.com>\n"
 "Felipe Braga <fbobraga@gmail.com>\n"
-"Rafael Ferreira <rafael.f.f1@gmail.com>"
+"Rafael Fontenelle <rafaelff@gnome.org>"
 
 #: ../gaupol/dialogs/about.py:54
 msgid "Gaupol Website"
@@ -2342,10 +2344,12 @@ msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr ""
+"Você provavelmente descobriu um bug. Por favor, relate-o fornecendo as "
+"informações abaixo e uma descrição do que você estava fazendo."
 
 #: ../gaupol/dialogs/debug.py:52
 msgid "_Report Bug"
-msgstr ""
+msgstr "_Relatar bug"
 
 #: ../gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -2421,7 +2425,7 @@ msgstr "Selecione os documentos de _tradução que deseja salvar:"
 #. both in Gaupol and elsewhere.
 #: ../gaupol/dialogs/multi_save.py:98 ../gaupol/dialogs/save.py:110
 msgid "{} (recommended)"
-msgstr ""
+msgstr "{} (recomendado)"
 
 #: ../gaupol/dialogs/multi_save.py:212
 msgid ""
@@ -2433,8 +2437,7 @@ msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
-"Os arquivos já existem em \"{}\". Substituí-los irá sobrescrever seu "
-"conteúdo."
+"Os arquivos já existem em “{}”. Substituí-los irá sobrescrever seu conteúdo."
 
 #: ../gaupol/dialogs/position_shift.py:69
 msgid "_Shift"
@@ -2465,10 +2468,12 @@ msgid ""
 "There is probably a problem with either the video file or the preview "
 "command."
 msgstr ""
+"Provavelmente há um problema com o arquivo de vídeo ou com o comando de pré-"
+"visualização."
 
 #: ../gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
-msgstr "\"{}\" não encontrado(a)"
+msgstr "“{}” não encontrado(a)"
 
 #: ../gaupol/dialogs/search.py:554
 msgid "Error in regular expression pattern"
@@ -2493,7 +2498,7 @@ msgstr "Dividindo projeto"
 #: ../gaupol/dialogs/split.py:97
 #, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
-msgstr "Dividir {amount:d} legendas para projeto \"{name}\""
+msgstr "Dividir {amount:d} legendas para projeto “{name}”"
 
 #: ../gaupol/dialogs/text_edit.py:53
 msgid "Edit Text"
@@ -2579,4 +2584,4 @@ msgstr "Novas linhas:"
 
 #: ../gaupol/player.py:354
 msgid "Failed to initialize playback"
-msgstr ""
+msgstr "Falha ao inicializar a reprodução"
