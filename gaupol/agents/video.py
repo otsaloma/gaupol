@@ -335,13 +335,16 @@ class VideoAgent(aeidon.Delegate):
         menu = self.get_menubar_section("audio-languages-placeholder")
         menu.remove_all()
         languages = self.player.get_audio_languages()
-        for i, language in enumerate(languages):
-            language = language or _("Undefined")
-            action = "win.set-audio-language::{:d}".format(i)
-            menu.append(language, action)
-            if i == self.player.audio_track:
-                action = self.get_action("set-audio-language")
-                action.set_state(str(i))
+        if languages is None:
+            pass
+        else:
+            for i, language in enumerate(languages):
+                language = language or _("Undefined")
+                action = "win.set-audio-language::{:d}".format(i)
+                menu.append(language, action)
+                if i == self.player.audio_track:
+                    action = self.get_action("set-audio-language")
+                    action.set_state(str(i))
 
     def _update_subtitle_cache(self, *args, **kwargs):
         """Update subtitle position and text cache."""
