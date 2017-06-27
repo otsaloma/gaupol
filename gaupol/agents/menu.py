@@ -280,12 +280,18 @@ class MenuAgent(aeidon.Delegate):
             action = "win.open-recent-main-file-{:d}".format(i)
             menu.append(label, action)
             action = action.replace("win.", "")
-            if not self.get_action(action):
-                ao = gaupol.Action(action)
-                callback = self._on_open_recent_main_file_activate
-                ao.connect("activate", callback)
-                self.window.add_action(ao)
-            self.get_action(action).gaupol_path = path
+            if self.get_action(action):
+                # If action i exists, update the file path.
+                self.get_action(action).gaupol_path = path
+            else:
+                # Otherwise, create the action and add to self.window.
+                # XXX: For some reason, this can sometimes fail.
+                with aeidon.util.silent(Exception):
+                    ao = gaupol.Action(action)
+                    ao.gaupol_path = path
+                    callback = self._on_open_recent_main_file_activate
+                    ao.connect("activate", callback)
+                    self.window.add_action(ao)
 
     def _update_recent_menus(self, *args):
         """Update the file menu lists of recent files."""
