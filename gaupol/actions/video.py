@@ -36,6 +36,7 @@ class PlayPauseAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class PlaySelectionAction(gaupol.Action):
     def __init__(self):
@@ -44,6 +45,7 @@ class PlaySelectionAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
         aeidon.util.affirm(selected_rows)
 
 class SeekBackwardAction(gaupol.Action):
@@ -53,6 +55,7 @@ class SeekBackwardAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class SeekForwardAction(gaupol.Action):
     def __init__(self):
@@ -61,6 +64,7 @@ class SeekForwardAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class SeekNextAction(gaupol.Action):
     def __init__(self):
@@ -69,6 +73,7 @@ class SeekNextAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class SeekPreviousAction(gaupol.Action):
     def __init__(self):
@@ -77,6 +82,7 @@ class SeekPreviousAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class SeekSelectionEndAction(gaupol.Action):
     def __init__(self):
@@ -85,6 +91,7 @@ class SeekSelectionEndAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
         aeidon.util.affirm(selected_rows)
 
 class SeekSelectionStartAction(gaupol.Action):
@@ -94,6 +101,7 @@ class SeekSelectionStartAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
         aeidon.util.affirm(selected_rows)
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

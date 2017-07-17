@@ -104,6 +104,7 @@ class InsertSubtitleAtVideoPositionAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class InsertSubtitlesAction(gaupol.Action):
     def __init__(self):
@@ -170,6 +171,7 @@ class SetEndFromVideoPositionAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
         aeidon.util.affirm(len(selected_rows) == 1)
 
 class SplitSubtitleAction(gaupol.Action):

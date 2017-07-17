@@ -30,6 +30,7 @@ class SetAudioLanguageAction(gaupol.RadioAction):
         self.set_state(str(0))
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class VolumeDownAction(gaupol.Action):
     def __init__(self):
@@ -38,6 +39,7 @@ class VolumeDownAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 class VolumeUpAction(gaupol.Action):
     def __init__(self):
@@ -46,5 +48,6 @@ class VolumeUpAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))
