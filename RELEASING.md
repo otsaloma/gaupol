@@ -34,4 +34,4 @@ Releasing a New Version
     - `git push --tags`
 * Build Windows installer (see [`win32/RELEASING.md`](win32/RELEASING.md))
 * Add release notes and Windows installer on GitHub
-* Update [web site](http://otsaloma.io/gaupol/)
+* Update [web site](https://otsaloma.io/gaupol/)

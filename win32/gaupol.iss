@@ -4,7 +4,7 @@
 AppName=Gaupol
 AppVerName=Gaupol 1.2
 AppPublisher=Osmo Salomaa
-AppPublisherURL=http://otsaloma.io/gaupol/
+AppPublisherURL=https://otsaloma.io/gaupol/
 DefaultDirName={pf}\Gaupol
 DefaultGroupName=Gaupol
 AllowNoIcons=yes

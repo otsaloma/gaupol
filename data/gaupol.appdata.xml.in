@@ -14,11 +14,11 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image>http://otsaloma.io/gaupol/screenshot-appdata.png</image>
+      <image>https://otsaloma.io/gaupol/screenshot-appdata.png</image>
       <_caption>Main window</_caption>
     </screenshot>
   </screenshots>
-  <url type="homepage">http://otsaloma.io/gaupol/</url>
+  <url type="homepage">https://otsaloma.io/gaupol/</url>
   <url type="bugtracker">https://github.com/otsaloma/gaupol/issues</url>
   <url type="help">https://github.com/otsaloma/gaupol/tree/master/doc</url>
   <url type="translate">https://www.transifex.com/otsaloma/gaupol/</url>
