@@ -26,5 +26,5 @@ win32\test-build.bat
 # winsetup.py: s/base="Win32GUI"/base=None/
 ```
 
-* Update version numbers in `win32/gaupol.iss` and compile with Inno Setup
+* Check `win32/gaupol.iss` and compile with Inno Setup
 * Install Gaupol and check that it works
