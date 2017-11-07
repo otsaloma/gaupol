@@ -5,7 +5,7 @@ To install, run command
 
     python3 setup.py install [--prefix=...]
 
-You'll need Python, gettext and intltool.
+In addition to Python, you'll need gettext.
 
 Developers or packagers interested in installing Python packages aeidon
 and gaupol separately, see the file [`README.aeidon.md`](README.aeidon.md).

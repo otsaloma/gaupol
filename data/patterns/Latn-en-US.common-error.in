@@ -1,8 +1,8 @@
 # -*- conf -*-
 
 [Common Error Pattern]
-_Name=Period after title
-_Description=Add period after a shortened title, such as "Mr" and "Dr"
+Name=Period after title
+Description=Add period after a shortened title, such as "Mr" and "Dr"
 Classes=Human;
 Pattern=\b(Dr|Jr|Mr|Mrs|Ms|Sr|St)\b(?!\.)
 Flags=DOTALL;MULTILINE;

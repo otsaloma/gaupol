@@ -6,16 +6,16 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <description>
-    <_p>Gaupol is an editor for text-based subtitle files. It supports
+    <p>Gaupol is an editor for text-based subtitle files. It supports
     multiple subtitle file formats and provides means of creating
     subtitles, editing texts and timing subtitles to match video. The
     user interface is designed with attention to batch processing of
-    multiple documents and convenience of translating.</_p>
+    multiple documents and convenience of translating.</p>
   </description>
   <screenshots>
     <screenshot type="default">
       <image>https://otsaloma.io/gaupol/screenshot-appdata.png</image>
-      <_caption>Main window</_caption>
+      <caption>Main window</caption>
     </screenshot>
   </screenshots>
   <url type="homepage">https://otsaloma.io/gaupol/</url>

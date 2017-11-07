@@ -19,5 +19,6 @@ data/patterns/*.line-break
 dist
 locale
 po/*~
+po/LINGUAS
 MANIFEST
 winsetup.log
