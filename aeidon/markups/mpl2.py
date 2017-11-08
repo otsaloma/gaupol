@@ -78,7 +78,7 @@ class MPL2(aeidon.markups.MicroDVD):
             match = re_tag.search(line)
             if match is None: continue
             lines[i] = match.group(2)
-            for tag in reversed(match.group(1)):
+            for tag in reversed(sorted(set(match.group(1)))):
                 lines[i] = "<{}>{}</{}>".format(tag, lines[i], tag)
         return "\n".join(lines)
 
