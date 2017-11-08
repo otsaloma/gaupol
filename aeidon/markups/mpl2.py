@@ -74,6 +74,8 @@ class MPL2(aeidon.markups.MicroDVD):
         """
         lines = text.split("\n")
         for i, line in enumerate(lines):
+            if not line:
+                continue
             tags = []
             while line[0] in '\\/_' and line[0] not in tags:
                 tags.append(line[0])
