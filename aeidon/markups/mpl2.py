@@ -73,16 +73,13 @@ class MPL2(aeidon.markups.MicroDVD):
         tags ``</\\>``, ``<//>`` and ``</_>``.
         """
         lines = text.split("\n")
+        re_tag = self._get_regex(r"^([\\/_]+)(.*)$")
         for i, line in enumerate(lines):
-            if not line:
-                continue
-            tags = []
-            while line[0] in '\\/_' and line[0] not in tags:
-                tags.append(line[0])
-                line = line[1:]
-            for tag in reversed(tags):
-                line = "<{}>{}</{}>".format(tag, line, tag)
-            lines[i] = line
+            match = re_tag.search(line)
+            if match is None: continue
+            lines[i] = match.group(2)
+            for tag in reversed(match.group(1)):
+                lines[i] = "<{}>{}</{}>".format(tag, lines[i], tag)
         return "\n".join(lines)
 
     def _style_mpl2(self, text, tag, bounds=None):
