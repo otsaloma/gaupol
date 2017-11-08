@@ -188,6 +188,8 @@ class VideoAgent(aeidon.Delegate):
         self._update_languages_menu()
         self.update_gui()
         self.player.play()
+        if not gaupol.conf.video_player.autoplay:
+            self.player.pause()
 
     @aeidon.deco.export
     def _on_play_pause_activate(self, *args):
