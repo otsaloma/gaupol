@@ -7,6 +7,7 @@ Gaupol 1.3
       initialization fails (#52)
 * [x] Fix error quitting if a file is still being loaded (#54)
 * [x] Install appdata XML file under /usr/share/metainfo
+* [x] Prefer iso-codes JSON files over XML files (#10)
 * [x] Drop build dependency on intltool (use gettext instead, #13)
 * [x] Add donate button to about dialog
 * [ ] Update translations

@@ -1,2 +1,2 @@
 [share/gaupol/iso-codes]
-data/iso-codes/*.xml
+data/iso-codes/*.json
