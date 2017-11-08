@@ -54,6 +54,13 @@ class TestMPL2(TestMicroDVD):
             "<i><u>All things weird are normal</u></i>\n"
             "<b><i><u>in this whore of cities.</u></i></b>")
 
+    def test_decode__duplicate(self):
+        text = ("//All things weird are normal\n"
+                "/_/_in this whore of cities.")
+        assert self.markup.decode(text) == (
+            "<i>/All things weird are normal</i>\n"
+            "<i><u>/_in this whore of cities.</u></i>")
+
     def test_decode__underline(self):
         text = ("All things weird are normal\n"
                 "_in this whore of cities.")
