@@ -3,6 +3,7 @@ Gaupol 1.3
 
 * [x] Add hidden preference to disable autoplay (#57)
 * [x] Allow loading video by drag-and-drop (#59)
+* [x] Fix missing icon in GNOME shell on Wayland (#62)
 * [x] Fix unhandled exception when adding recent menu items
 * [x] Fix video player actions being sensitive when playback
       initialization fails (#52)
