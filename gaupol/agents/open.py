@@ -188,7 +188,12 @@ class OpenAgent(aeidon.Delegate):
 
         """Open main files from dragged URIs."""
         uris = selection_data.get_uris()
-        self.open_main(list(map(aeidon.util.uri_to_path, uris)))
+        paths = list(map(aeidon.util.uri_to_path, uris))
+        videos = list(filter(aeidon.util.is_video_file, paths))
+        subtitles = list(set(paths) - set(videos))
+        self.open_main(subtitles)
+        if self.get_current_page() and len(videos) == 1:
+            self.load_video(videos[0])
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
