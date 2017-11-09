@@ -104,5 +104,6 @@ from gaupol.unittest import *
 def main(args):
     """Initialize application."""
     global appman
+    GLib.set_prgname("gaupol")
     appman = ApplicationManager(args)
     raise SystemExit(appman.run())
