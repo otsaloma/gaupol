@@ -315,9 +315,13 @@ class VideoAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_set_audio_language_activate(self, action, parameter):
         """Set the audio language to use."""
+        # Avoid freeze by pausing prior and playing after.
+        # https://github.com/otsaloma/gaupol/issues/58
+        self.player.pause()
         index = int(parameter.get_string())
         self.player.audio_track = index
         self._update_languages_menu()
+        self.player.play()
 
     def _on_volume_button_value_changed(self, button, value):
         """Update video player volume."""
