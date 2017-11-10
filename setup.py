@@ -240,7 +240,7 @@ class InstallData(install_data):
     def __generate_linguas(self):
         """Generate LINGUAS file needed by msgfmt."""
         linguas = glob.glob("po/*.po")
-        linguas = [x.split("/")[1] for x in linguas]
+        linguas = [x.split(os.sep)[1] for x in linguas]
         linguas = [x.split(".")[0] for x in linguas]
         with open("po/LINGUAS", "w") as f:
             f.write("\n".join(linguas) + "\n")
