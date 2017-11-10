@@ -62,5 +62,7 @@ class AboutDialog(Gtk.AboutDialog):
             button.set_uri("https://www.paypal.me/otsaloma")
             button.show()
             box.pack_start(button, expand=False, fill=False, padding=0)
-            switcher = self.get_header_bar().get_children()[0]
-            switcher.get_children()[0].grab_focus()
+            header = self.get_header_bar()
+            if header is not None:
+                switcher = header.get_children()[0]
+                switcher.get_children()[0].grab_focus()
