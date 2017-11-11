@@ -18,6 +18,7 @@
 """Names and ISO 15924 codes for scripts and conversions between them."""
 
 import aeidon
+import json
 import os
 
 from aeidon.i18n import d_
@@ -26,13 +27,32 @@ _scripts = {}
 
 
 def _init_scripts():
-    """Initialize the dictionary mapping codes to scripts."""
-    import xml.etree.ElementTree as ET
+    """Initialize the dictionary mapping codes to names."""
+    # Prefer globally installed iso-codes, JSON over XML,
+    # fall back on possibly bundled JSON.
+    path = "/usr/share/iso-codes/json/iso_15924.json"
+    if os.path.isfile(path):
+        return _init_scripts_json(path)
     path = "/usr/share/xml/iso-codes/iso_15924.xml"
-    if not os.path.isfile(path):
-        # Prefer files part of the iso-codes installation,
-        # use bundled copy as fallback.
-        path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_15924.xml")
+    if os.path.isfile(path):
+        return _init_scripts_xml(path)
+    path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_15924.json")
+    if os.path.isfile(path):
+        return _init_scripts_json(path)
+
+def _init_scripts_json(path):
+    """Initialize the dictionary mapping codes to names."""
+    with open(path, "r") as f:
+        iso = json.load(f)
+    for script in iso["15924"]:
+        code = script.get("alpha_4", None)
+        name = script.get("name", None)
+        if not code or not name: continue
+        _scripts[code] = name
+
+def _init_scripts_xml(path):
+    """Initialize the dictionary mapping codes to names."""
+    import xml.etree.ElementTree as ET
     for element in ET.parse(path).findall("iso_15924_entry"):
         code = element.get("alpha_4_code", None)
         name = element.get("name", None)

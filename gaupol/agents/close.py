@@ -129,8 +129,11 @@ class CloseAgent(aeidon.Delegate):
         try:
             self.quit()
         except gaupol.Default:
-            # Don't destroy window if cancelled.
-            return True
+            pass
+        # Let appman destroy the window if confirmation given
+        # and once any events being processed have completed.
+        # https://github.com/otsaloma/gaupol/issues/54
+        return True
 
     @aeidon.deco.export
     def quit(self, confirm=True):

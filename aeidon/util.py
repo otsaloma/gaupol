@@ -22,6 +22,7 @@ import collections
 import contextlib
 import inspect
 import locale
+import mimetypes
 import os
 import random
 import re
@@ -31,6 +32,18 @@ import subprocess
 import sys
 import traceback
 import urllib.parse
+
+VIDEO_FILE_EXTENSIONS = [
+    ".avi",
+    ".flv",
+    ".mkv",
+    ".mov",
+    ".mp4",
+    ".ogg",
+    ".ogv",
+    ".vob",
+    ".webm",
+]
 
 
 def affirm(value):
@@ -298,6 +311,16 @@ def install_module(name, obj):
         aeidon.util.install_module("foo", lambda: None)
     """
     aeidon.__dict__[name] = inspect.getmodule(obj)
+
+def is_video_file(path):
+    """Return ``True`` if `path` is a video file."""
+    if not os.path.isfile(path):
+        return False
+    # The mimetypes module doesn't work well on Windows,
+    # fall back on a custom list of video file extensions.
+    type, encoding = mimetypes.guess_type(path)
+    return ((type and type.startswith("video/")) or
+            path.lower().endswith(tuple(VIDEO_FILE_EXTENSIONS)))
 
 def last(iterator):
     """Return the last value from `iterator` or ``None``."""

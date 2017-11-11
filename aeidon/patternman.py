@@ -191,7 +191,15 @@ class PatternManager:
                 patterns[-1].local = local
             else: # [_]KEY=VALUE
                 name, value = line.split("=", 1)
+                # Translatable fields used to be marked with a leading
+                # underscore prior to version 1.3. We continue to support that
+                # syntax in case users have local pattern files.
                 name = (name[1:] if name.startswith("_") else name)
+                # Regular expression patterns and replacements use null
+                # character to avoid syntax issues that go against the GKeyFile
+                # spec and would be "fixed" by msgfmt when merging translations.
+                # https://github.com/otsaloma/gaupol/issues/70
+                value = re.sub(r"\\0(?!\d)", "", value)
                 patterns[-1].set_field(name, value)
 
     def save_config(self, script=None, language=None, country=None):

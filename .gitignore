@@ -11,4 +11,4 @@ data/patterns/*.hearing-impaired
 data/patterns/*.line-break
 dist
 locale
-winsetup.log
+po/LINGUAS

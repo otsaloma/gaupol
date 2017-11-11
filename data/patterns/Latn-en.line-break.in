@@ -1,24 +1,24 @@
 # -*- conf -*-
 
 [Line Break Pattern]
-_Name=Title
-_Description=Do not break after a title, e.g. " Dr."
+Name=Title
+Description=Do not break after a title, e.g. " Dr."
 Pattern=\b(Dr|Jr|Mr|Mrs|Ms|Sr|St)\.?( )
 Flags=DOTALL;MULTILINE;
 Group=2
 Penalty=1000000
 
 [Line Break Pattern]
-_Name=Article
-_Description=Do not break after an article
+Name=Article
+Description=Do not break after an article
 Pattern=\b(a|an|the)( )
 Flags=DOTALL;MULTILINE;
 Group=2
 Penalty=1000000
 
 [Line Break Pattern]
-_Name=Preposition
-_Description=Do not break after a preposition
+Name=Preposition
+Description=Do not break after a preposition
 # http://en.wikipedia.org/wiki/List_of_English_prepositions
 Pattern=\b(abaft|aboard|about|above|absent|across|afore|after|against|along|alongside|amid|amidst|among|amongst|apropos|around|as|aside|astride|at|athwart|atop|barring|before|behind|below|beneath|beside|besides|between|betwixt|beyond|but|by|circa|concerning|despite|down|during|except|excluding|failing|following|for|from|given|in|including|inside|into|lest|like|mid|midst|minus|modulo|near|next|notwithstanding|of|off|on|onto|opposite|out|outside|over|pace|past|per|plus|pro|qua|regarding|round|sans|save|since|than|though|throughout|till|times|to|toward|towards|under|underneath|unlike|until|unto|up|upon|versus|via|vice|with|within|without|worth)( )
 Flags=DOTALL;MULTILINE;
@@ -26,8 +26,8 @@ Group=2
 Penalty=100
 
 [Line Break Pattern]
-_Name=Possessive determiner
-_Description=Do not break after a possessive determiner, e.g. "my"
+Name=Possessive determiner
+Description=Do not break after a possessive determiner, e.g. "my"
 # http://en.wikipedia.org/wiki/Possessive_determiner
 Pattern=\b(my|your|his|her|its|our|your|their)( )
 Flags=DOTALL;MULTILINE;

@@ -171,6 +171,7 @@ CONFIG_DEFAULTS = {
         "target": gaupol.targets.CURRENT,
     },
     "video_player": {
+        "autoplay": True,
         "context_length": 1.0,
         "line_alignment": "center",
         "seek_length": 30.0,

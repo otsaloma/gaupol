@@ -17,7 +17,7 @@
 
 """GTK+ user interface for the Gaupol subtitle editor."""
 
-__version__ = "1.2"
+__version__ = "1.3"
 COMBO_SEPARATOR = "<separator/>"
 
 import sys
@@ -38,8 +38,6 @@ for module, version in {
     "Gst": "1.0",
     "GstPbutils": "1.0",
     "GstVideo": "1.0",
-    "GdkX11": "3.0",
-    "GdkWin32": "3.0",
     "GtkSpell": "3.0",
 }.items():
     with aeidon.util.silent(Exception):
@@ -104,5 +102,10 @@ from gaupol.unittest import *
 def main(args):
     """Initialize application."""
     global appman
+    # Needed to see application icon on Wayland, while we don't yet
+    # use the reverse domain application ID with Gtk.Application.
+    # https://wiki.gnome.org/Projects/GnomeShell/ApplicationBased
+    # https://github.com/otsaloma/gaupol/issues/62
+    GLib.set_prgname("gaupol")
     appman = ApplicationManager(args)
     raise SystemExit(appman.run())

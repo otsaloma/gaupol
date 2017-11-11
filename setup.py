@@ -22,7 +22,7 @@ the aeidon.paths module, (3) handling translations and (4) extensions.
 
 (3) During installation, the .po files are compiled into .mo files and the
     appdata, desktop, pattern and extension metadata files are translated.
-    This requires gettext and intltool, commands 'msgfmt' and 'intltool-merge'.
+    This requires gettext.
 
 (4) Extensions are installed under the data directory. All python code included
     in the extensions are compiled during the 'install_data' command, using the
@@ -80,12 +80,6 @@ def get_gaupol_version():
 
 def run_or_exit(cmd):
     """Run command in shell and raise SystemExit if it fails."""
-    if freezing and cmd.startswith("intltool-merge"):
-        # intltool-merge is not available on Windows.
-        ifile, ofile = re.split(" +", cmd)[-2:]
-        text = open(ifile, "r", encoding="utf_8").read()
-        return open(ofile, "w", encoding="utf_8").write(
-            re.sub("^_", "", text, flags=re.MULTILINE))
     if os.system(cmd) != 0:
         log.error("FATAL ERROR: command {} failed".format(repr(cmd)))
         raise SystemExit(1)
@@ -243,23 +237,58 @@ class InstallData(install_data):
         files = glob.glob("{}/extensions/*/*.py".format(data_dir))
         distutils.util.byte_compile(files, optimize, self.force, self.dry_run)
 
+    def __generate_linguas(self):
+        """Generate LINGUAS file needed by msgfmt."""
+        linguas = glob.glob("po/*.po")
+        linguas = [x.split(os.sep)[1] for x in linguas]
+        linguas = [x.split(".")[0] for x in linguas]
+        with open("po/LINGUAS", "w") as f:
+            f.write("\n".join(linguas) + "\n")
+
     def __get_appdata_file(self):
         """Return a tuple for translated appdata file."""
         path = os.path.join("data", "gaupol.appdata.xml")
-        run_or_exit("intltool-merge -x po {}.in {}".format(path, path))
+        command = "msgfmt --xml -d po --template {}.in -o {}"
+        run_or_warn(command.format(path, path))
+        if not os.path.isfile(path):
+            # The above can fail with an old version of gettext,
+            # fall back on copying the file without translations.
+            shutil.copy("{}.in".format(path), path)
         return ("share/metainfo", (path,))
 
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
-        run_or_exit("intltool-merge -d po {}.in {}".format(path, path))
+        command = " ".join((
+            "msgfmt --desktop -d po --template {}.in -o {}",
+            "--keyword=",
+            "--keyword=GenericName",
+            "--keyword=Comment",
+            "--keyword=Keywords",
+            "--keyword=X-GNOME-FullName",
+        ))
+        run_or_warn(command.format(path, path))
+        if not os.path.isfile(path):
+            # The above can fail with an old version of gettext,
+            # fall back on copying the file without translations.
+            shutil.copy("{}.in".format(path), path)
         return ("share/applications", (path,))
 
     def __get_extension_file(self, extension, extension_file):
         """Return a tuple for translated extension metadata file."""
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
-        run_or_exit("intltool-merge -d po {}.in {}".format(path, path))
+        command = " ".join((
+            "msgfmt --desktop -d po --template {}.in -o {}",
+            "--keyword=",
+            "--keyword=Name",
+            "--keyword=Description",
+        ))
+        run_or_warn(command.format(path, path))
+        if not os.path.isfile(path):
+            # The above can fail with an old version of gettext,
+            # fall back on copying the file without translations.
+            shutil.copy("{}.in".format(path), path)
         return ("share/gaupol/extensions/{}".format(extension), (path,))
 
     def __get_mo_file(self, po_file):
@@ -279,11 +308,22 @@ class InstallData(install_data):
         """Return a tuple for the translated pattern file."""
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
-        run_or_exit("intltool-merge -d po {}.in {}".format(path, path))
+        command = " ".join((
+            "msgfmt --desktop -d po --template {}.in -o {}",
+            "--keyword=",
+            "--keyword=Name",
+            "--keyword=Description",
+        ))
+        run_or_warn(command.format(path, path))
+        if not os.path.isfile(path):
+            # The above can fail with an old version of gettext,
+            # fall back on copying the file without translations.
+            shutil.copy("{}.in".format(path), path)
         return ("share/gaupol/patterns", (path,))
 
     def run(self):
         """Install data files after translating them."""
+        self.__generate_linguas()
         if self.distribution.with_aeidon:
             for po_file in glob.glob("po/*.po"):
                 if freezing: continue

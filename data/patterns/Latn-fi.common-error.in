@@ -1,8 +1,8 @@
 # -*- conf -*-
 
 [Common Error Pattern]
-_Name=Space after punctuation marks
-_Description=Add space after various punctuation marks
+Name=Space after punctuation marks
+Description=Add space after various punctuation marks
 Classes=Human;OCR;
 # Same as the Latin pattern, except no space after colon
 # to accommodate Finnish suffixes, e.g. "TV:ssä".

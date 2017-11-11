@@ -1,24 +1,24 @@
 # -*- conf -*-
 
 [Line Break Pattern]
-_Name=Dialogue
-_Description=Break according to dialogue separated by dashes
+Name=Dialogue
+Description=Break according to dialogue separated by dashes
 Pattern=( )([\-\–\—] )
 Flags=DOTALL;MULTILINE;
 Group=1
 Penalty=-1000
 
 [Line Break Pattern]
-_Name=Dialogue
-_Description=Break according to dialogue separated by dashes
+Name=Dialogue
+Description=Break according to dialogue separated by dashes
 Pattern=( [\-\–\—])( )
 Flags=DOTALL;MULTILINE;
 Group=2
 Penalty=1000000
 
 [Line Break Pattern]
-_Name=Clause
-_Description=Break according to clauses terminated by a punctuation mark
+Name=Clause
+Description=Break according to clauses terminated by a punctuation mark
 # Disallow abbreviations and ellipses preceding a period.
 Pattern=((?<!.\.)(?<!\..)\.|[!?])['‘’"“”«»]?( )
 Flags=DOTALL;MULTILINE;
@@ -26,16 +26,16 @@ Group=2
 Penalty=-10
 
 [Line Break Pattern]
-_Name=Clause
-_Description=Break according to clauses terminated by a punctuation mark
+Name=Clause
+Description=Break according to clauses terminated by a punctuation mark
 Pattern=[,;:]['‘’"“”«»]?( )
 Flags=DOTALL;MULTILINE;
 Group=1
 Penalty=-5
 
 [Line Break Pattern]
-_Name=Number and unit
-_Description=Do not break between a number and associated unit
+Name=Number and unit
+Description=Do not break between a number and associated unit
 Pattern=(\d+)( )(%|\w{1,3}\b)
 Flags=DOTALL;MULTILINE;
 Group=2

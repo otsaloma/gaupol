@@ -17,6 +17,7 @@
 
 """Dialog for displaying credits and information."""
 
+import aeidon
 import gaupol
 
 from aeidon.i18n   import _
@@ -53,3 +54,15 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_website(gaupol.HOMEPAGE_URL)
         self.set_website_label(_("Gaupol Website"))
         self.set_wrap_license(True)
+        with aeidon.util.silent(Exception, tb=True):
+            # Add donate button to the bottom of the dialog.
+            # This can fail if the dialog structure changes.
+            box = self.get_content_area()
+            button = Gtk.LinkButton(label=_("Donate"))
+            button.set_uri("https://www.paypal.me/otsaloma")
+            button.show()
+            box.pack_start(button, expand=False, fill=False, padding=0)
+            header = self.get_header_bar()
+            if header is not None:
+                switcher = header.get_children()[0]
+                switcher.get_children()[0].grab_focus()

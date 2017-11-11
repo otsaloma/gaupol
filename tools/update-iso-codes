@@ -1,6 +1,6 @@
 #!/bin/sh
-# Update iso-codes XML files from /usr/share/xml/iso-codes.
+# Update iso-codes JSON files from /usr/share/iso-codes/json.
 cd "$(dirname "$0")/.." || exit 1
-cp -fv /usr/share/xml/iso-codes/iso_639.xml   data/iso-codes
-cp -fv /usr/share/xml/iso-codes/iso_3166.xml  data/iso-codes
-cp -fv /usr/share/xml/iso-codes/iso_15924.xml data/iso-codes
+cp -fv /usr/share/iso-codes/json/iso_639-2.json  data/iso-codes
+cp -fv /usr/share/iso-codes/json/iso_3166-1.json data/iso-codes
+cp -fv /usr/share/iso-codes/json/iso_15924.json  data/iso-codes

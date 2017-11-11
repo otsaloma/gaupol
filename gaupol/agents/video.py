@@ -153,22 +153,9 @@ class VideoAgent(aeidon.Delegate):
         ]
 
     @aeidon.deco.export
-    def _on_load_video_activate(self, *args):
+    def load_video(self, path):
         """Load a video file."""
-        gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
-        dialog = gaupol.VideoDialog(
-            self.window, title=_("Load Video"), button_label=_("_Load"))
-        if page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
-        if page.project.video_path is not None:
-            dialog.set_filename(page.project.video_path)
-        gaupol.util.set_cursor_normal(self.window)
-        response = gaupol.util.run_dialog(dialog)
-        path = dialog.get_filename()
-        dialog.destroy()
-        if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
         if self.player is None:
             self._init_player_widgets()
@@ -188,6 +175,27 @@ class VideoAgent(aeidon.Delegate):
         self._update_languages_menu()
         self.update_gui()
         self.player.play()
+        if not gaupol.conf.video_player.autoplay:
+            self.player.pause()
+
+    @aeidon.deco.export
+    def _on_load_video_activate(self, *args):
+        """Load a video file."""
+        gaupol.util.set_cursor_busy(self.window)
+        page = self.get_current_page()
+        dialog = gaupol.VideoDialog(
+            self.window, title=_("Load Video"), button_label=_("_Load"))
+        if page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(directory)
+        if page.project.video_path is not None:
+            dialog.set_filename(page.project.video_path)
+        gaupol.util.set_cursor_normal(self.window)
+        response = gaupol.util.run_dialog(dialog)
+        path = dialog.get_filename()
+        dialog.destroy()
+        if response != Gtk.ResponseType.OK: return
+        self.load_video(path)
 
     @aeidon.deco.export
     def _on_play_pause_activate(self, *args):
@@ -307,9 +315,13 @@ class VideoAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_set_audio_language_activate(self, action, parameter):
         """Set the audio language to use."""
+        # Avoid freeze by pausing prior and playing after.
+        # https://github.com/otsaloma/gaupol/issues/58
+        self.player.pause()
         index = int(parameter.get_string())
         self.player.audio_track = index
         self._update_languages_menu()
+        self.player.play()
 
     def _on_volume_button_value_changed(self, button, value):
         """Update video player volume."""

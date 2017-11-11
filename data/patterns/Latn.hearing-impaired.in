@@ -1,38 +1,38 @@
 # -*- conf -*-
 
 [Hearing Impaired Pattern]
-_Name=Sound in brackets
-_Description=Remove description of a sound between square brackets
+Name=Sound in brackets
+Description=Remove description of a sound between square brackets
 Pattern=\[.*?\]
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 
 [Hearing Impaired Pattern]
-_Name=Sound in parantheses
-_Description=Remove description of a sound between parantheses
+Name=Sound in parantheses
+Description=Remove description of a sound between parantheses
 Pattern=\(.*?\)
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 
 [Hearing Impaired Pattern]
-_Name=Song lyrics between number signs
-_Description=Remove song lyrics starting with or between number signs
+Name=Song lyrics between number signs
+Description=Remove song lyrics starting with or between number signs
 # Remove up to the end of the subtitle if no terminating number sign.
 Pattern=#+.+?(#+|\Z)
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 
 [Hearing Impaired Pattern]
-_Name=One-line song lyrics between number signs
-_Description=Remove one-line song lyrics starting with or between number signs
+Name=One-line song lyrics between number signs
+Description=Remove one-line song lyrics starting with or between number signs
 # Remove up to the end of the line if no terminating number sign.
 Pattern=#+.+?(#+|$)
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 
 [Hearing Impaired Pattern]
-_Name=Speaker before a colon
-_Description=Replace the name of the speaker before a colon with a dialogue dash
+Name=Speaker before a colon
+Description=Replace the name of the speaker before a colon with a dialogue dash
 Pattern=^[\-\–\—]?\s*?[\w\[][\w#&'.\-\[\] ]+?:\s
 Flags=MULTILINE;
 Replacement=-\040

@@ -1,9 +1,9 @@
 [Desktop Entry]
 Name=Gaupol
-_GenericName=Subtitle Editor
-_Comment=Edit subtitle files
+GenericName=Subtitle Editor
+Comment=Edit subtitle files
 # TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-_Keywords=video;subtitles;captions;
+Keywords=video;subtitles;captions;
 Exec=gaupol %F
 Terminal=false
 StartupNotify=true
@@ -11,4 +11,4 @@ Icon=gaupol
 Type=Application
 MimeType=text/x-microdvd;text/x-ssa;application/x-subrip;text/x-subviewer;text/vtt;
 Categories=GTK;AudioVideo;Video;
-_X-GNOME-FullName=Gaupol Subtitle Editor
+X-GNOME-FullName=Gaupol Subtitle Editor

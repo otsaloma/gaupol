@@ -3,6 +3,7 @@ Gaupol
 
 [![Build Status](https://travis-ci.org/otsaloma/gaupol.svg)](https://travis-ci.org/otsaloma/gaupol)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/otsaloma/gaupol)
+[![Donate](https://img.shields.io/badge/donate-paypal.me-blue.svg)](https://www.paypal.me/otsaloma)
 [![Downloads](https://img.shields.io/github/downloads/otsaloma/gaupol/total.svg)](https://github.com/otsaloma/gaupol/releases)
 [![Downloads](https://img.shields.io/github/downloads/otsaloma/gaupol/latest/total.svg)](https://github.com/otsaloma/gaupol/releases/latest)
 
@@ -28,7 +29,7 @@ dependencies include:
 
 | Dependency | Version | Required for |
 | :--------- | :------ | :----------- |
-| [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.0 | integrated video player |
+| [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.6 | integrated video player |
 | [PyEnchant](http://pythonhosted.org/pyenchant/) | ≥ 1.4.0 | spell-check |
 | [GtkSpell](http://gtkspell.sourceforge.net/) | ≥ 3.0.0 | inline spell-check |
 | [iso-codes](http://pkg-isocodes.alioth.debian.org/) | any | translations |

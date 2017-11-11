@@ -15,5 +15,5 @@ msgfmt -cv po/xx.po -o locale/xx/LC_MESSAGES/gaupol.mo
 LANG=xx bin/gaupol
 ```
 
-[1]: http://www.transifex.com/otsaloma/gaupol/
-[2]: http://github.com/otsaloma/gaupol
+[1]: https://www.transifex.com/otsaloma/gaupol/
+[2]: https://github.com/otsaloma/gaupol

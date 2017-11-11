@@ -1,3 +1,24 @@
+2017-11-11: Gaupol 1.3
+======================
+
+* Use gtksink instead of autovideosink with the integrated video
+  player, making it work on Wayland too (#60)
+* Add a hidden preference to disable autoplay (#57)
+* Allow loading video by drag-and-drop (#59)
+* Fix missing icon in GNOME shell on Wayland (#62)
+* Fix unhandled exception when adding recent menu items
+* Fix video player actions being sensitive when playback
+  initialization fails (#52)
+* Fix Gaupol freezing after changing audio track (#58)
+* Fix error quitting if a file is still being loaded (#54)
+* Fix duplicate tags when decoding MPL2 (devcompl, #68)
+* Install appdata XML file under /usr/share/metainfo
+* Prefer iso-codes JSON files over XML files (#10)
+* Bump GStreamer dependency ≥ 1.6
+* Drop build dependency on intltool (use gettext instead, #13)
+* Add donate button to about dialog
+* Update translations
+
 2017-04-23: Gaupol 1.2
 ======================
 

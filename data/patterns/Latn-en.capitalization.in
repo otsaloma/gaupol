@@ -1,8 +1,8 @@
 # -*- conf -*-
 
 [Capitalization Pattern]
-_Name=First person pronoun
-_Description=Capitalize the first person pronoun "I"
+Name=First person pronoun
+Description=Capitalize the first person pronoun "I"
 Capitalize=Start
 Pattern=\bi\b
 Flags=DOTALL;MULTILINE;

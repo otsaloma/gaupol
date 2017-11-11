@@ -1,35 +1,35 @@
 # -*- conf -*-
 
 [Common Error Pattern]
-_Name=Leading and trailing spaces
-_Description=Remove spaces from the beginning and end of lines
+Name=Leading and trailing spaces
+Description=Remove spaces from the beginning and end of lines
 Classes=Human;OCR;
 Pattern=^ +
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 Repeat=False
 
 [Common Error Pattern]
-_Name=Leading and trailing spaces
-_Description=Remove spaces from the beginning and end of lines
+Name=Leading and trailing spaces
+Description=Remove spaces from the beginning and end of lines
 Classes=Human;OCR;
-Pattern= +$
+Pattern=\0 +$
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 Repeat=False
 
 [Common Error Pattern]
-_Name=Multiple consecutive spaces
-_Description=Replace multiple consecutive spaces with only one
+Name=Multiple consecutive spaces
+Description=Replace multiple consecutive spaces with only one
 Classes=Human;OCR;
-Pattern= {2,}
+Pattern=\0 {2,}
 Flags=DOTALL;MULTILINE;
 Replacement=\040
 Repeat=False
 
 [Common Error Pattern]
-_Name=Space between digits
-_Description=Remove space between digits of a number
+Name=Space between digits
+Description=Remove space between digits of a number
 Classes=OCR;
 # Do not remove space if it's followed by exactly three digits,
 # implying that the space being used as a thousand separator.
@@ -41,8 +41,8 @@ Replacement=\1\2
 Repeat=True
 
 [Common Error Pattern]
-_Name=Space between digits
-_Description=Remove space between digits of a number
+Name=Space between digits
+Description=Remove space between digits of a number
 Classes=OCR;
 # Remove spaces around thousand, decimal and time separators.
 Pattern=(\b\d+) +([,.:])(\d+)
@@ -51,8 +51,8 @@ Replacement=\1\2\3
 Repeat=False
 
 [Common Error Pattern]
-_Name=Space between digits
-_Description=Remove space between digits of a number
+Name=Space between digits
+Description=Remove space between digits of a number
 Classes=OCR;
 # Remove spaces around time separators.
 Pattern=(\b\d+)([:]) +(\d+)
@@ -61,8 +61,8 @@ Replacement=\1\2\3
 Repeat=False
 
 [Common Error Pattern]
-_Name=Space between digits
-_Description=Remove space between digits of a number
+Name=Space between digits
+Description=Remove space between digits of a number
 Classes=OCR;
 # Don't leave thousand separators for four-digit numbers.
 Pattern=(\b\d) +(\d\d\d\b)(?!.\d)
@@ -75,8 +75,8 @@ SkipIn=Latn-fr;
 # Many subtitle fonts don't support Unicode note characters and many
 # video players by default use fonts with a poor coverage and have no
 # system of fallback fonts to provide missing characters.
-_Name=Musical notes
-_Description=Replace Unicode musical note characters with number signs
+Name=Musical notes
+Description=Replace Unicode musical note characters with number signs
 Classes=Human;
 Pattern=[♩♪♫♬]+
 Flags=DOTALL;MULTILINE;
