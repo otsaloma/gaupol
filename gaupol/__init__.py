@@ -38,8 +38,6 @@ for module, version in {
     "Gst": "1.0",
     "GstPbutils": "1.0",
     "GstVideo": "1.0",
-    "GdkX11": "3.0",
-    "GdkWin32": "3.0",
     "GtkSpell": "3.0",
 }.items():
     with aeidon.util.silent(Exception):
