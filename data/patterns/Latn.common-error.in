@@ -106,7 +106,7 @@ Description=Remove space before various punctuation marks
 Classes=Human;OCR;
 # NOTE: Unsuitable for French, see Latn-fr.
 # Disallow trailing digits for the case of fractions, e.g. ".45".
-Pattern= +(['‘’"“”«»]?(?!\.\.)([,;:.?!])(?!\d))
+Pattern=\0 +(['‘’"“”«»]?(?!\.\.)([,;:.?!])(?!\d))
 Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False
@@ -224,7 +224,7 @@ Classes=OCR;
 # Remove period after the mark.
 Pattern=(?<=[:?!])\.(?!\.)
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 Repeat=False
 
 [Common Error Pattern]
@@ -234,7 +234,7 @@ Classes=OCR;
 # Remove period before the mark.
 Pattern=(?<!\.\w)(?<!\.)\.(?=[:?!])
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 Repeat=False
 
 [Common Error Pattern]

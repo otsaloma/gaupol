@@ -41,7 +41,7 @@ Name=Space before punctuation marks
 Description=Add or remove space before various punctuation marks
 Classes=Human;OCR;
 # Same as the Latin pattern, except keep space before [?!;:].
-Pattern= +(['‘’"“”«»]?(?!\.\.)([,.])(?!\d))
+Pattern=\0 +(['‘’"“”«»]?(?!\.\.)([,.])(?!\d))
 Flags=DOTALL;MULTILINE;
 Replacement=\1
 Repeat=False

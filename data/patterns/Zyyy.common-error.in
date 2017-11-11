@@ -6,23 +6,23 @@ Description=Remove spaces from the beginning and end of lines
 Classes=Human;OCR;
 Pattern=^ +
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 Repeat=False
 
 [Common Error Pattern]
 Name=Leading and trailing spaces
 Description=Remove spaces from the beginning and end of lines
 Classes=Human;OCR;
-Pattern= +$
+Pattern=\0 +$
 Flags=DOTALL;MULTILINE;
-Replacement=
+Replacement=\0
 Repeat=False
 
 [Common Error Pattern]
 Name=Multiple consecutive spaces
 Description=Replace multiple consecutive spaces with only one
 Classes=Human;OCR;
-Pattern= {2,}
+Pattern=\0 {2,}
 Flags=DOTALL;MULTILINE;
 Replacement=\040
 Repeat=False
