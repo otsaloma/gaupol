@@ -29,7 +29,7 @@ dependencies include:
 
 | Dependency | Version | Required for |
 | :--------- | :------ | :----------- |
-| [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.0 | integrated video player |
+| [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.6 | integrated video player |
 | [PyEnchant](http://pythonhosted.org/pyenchant/) | ≥ 1.4.0 | spell-check |
 | [GtkSpell](http://gtkspell.sourceforge.net/) | ≥ 3.0.0 | inline spell-check |
 | [iso-codes](http://pkg-isocodes.alioth.debian.org/) | any | translations |

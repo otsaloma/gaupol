@@ -21,16 +21,11 @@ import aeidon
 import gaupol
 
 from aeidon.i18n   import _
-from gi.repository import Gdk
 from gi.repository import Gtk
 
 with aeidon.util.silent(Exception):
     from gi.repository import Gst
     from gi.repository import GstVideo
-
-with aeidon.util.silent(Exception):
-    from gi.repository import GdkX11
-    from gi.repository import GdkWin32
 
 __all__ = ("VideoPlayer",)
 
@@ -53,7 +48,6 @@ class VideoPlayer(aeidon.Observable):
     :ivar _time_overlay: GStreamer "timeoverlay" element
     :ivar volume: Current audio stream volume
     :ivar widget: :class:`Gtk.DrawingArea` used to render video
-    :ivar _xid: `widget`'s X resource (window)
 
     Signals and their arguments for callback functions:
      * ``state-changed``: player new state
@@ -74,12 +68,11 @@ class VideoPlayer(aeidon.Observable):
         self._text_overlay = None
         self._time_overlay = None
         self.widget = None
-        self._xid = None
+        self._init_widget()
         self._init_text_overlay()
         self._init_time_overlay()
         self._init_pipeline()
         self._init_bus()
-        self._init_widget()
 
     @property
     def audio_track(self):
@@ -155,8 +148,6 @@ class VideoPlayer(aeidon.Observable):
     def _init_bus(self):
         """Initialize the GStreamer message bus."""
         bus = self._playbin.get_bus()
-        bus.enable_sync_message_emission()
-        bus.connect("sync-message::element", self._on_bus_sync_message)
         bus.add_signal_watch()
         bus.connect("message::eos", self._on_bus_message_eos)
         bus.connect("message::error", self._on_bus_message_error)
@@ -167,7 +158,8 @@ class VideoPlayer(aeidon.Observable):
         self._playbin = Gst.ElementFactory.make("playbin", None)
         if gaupol.conf.video_player.volume is not None:
             self.volume = gaupol.conf.video_player.volume
-        sink = Gst.ElementFactory.make("autovideosink", None)
+        sink = Gst.ElementFactory.make("gtksink", None)
+        self.widget.pack_start(sink.props.widget, True, True, 0)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
         bin.add(self._text_overlay)
@@ -214,7 +206,7 @@ class VideoPlayer(aeidon.Observable):
 
     def _init_widget(self):
         """Initialize the rendering widget."""
-        self.widget = Gtk.DrawingArea()
+        self.widget = Gtk.Box()
         style = self.widget.get_style_context()
         style.add_class("gaupol-video-background")
         gaupol.style.load_css(self.widget)
@@ -250,12 +242,6 @@ class VideoPlayer(aeidon.Observable):
         if new == self._prev_state: return
         self.emit("state-changed", new)
         self._prev_state = new
-
-    def _on_bus_sync_message(self, bus, message):
-        """Handle sync messages from the bus."""
-        struct = message.get_structure()
-        if struct.get_name() == "prepare-window-handle":
-            message.src.set_window_handle(self._xid)
 
     def _on_conf_notify_subtitle_property(self, *args):
        """Update subtitle text overlay properties."""
@@ -334,10 +320,6 @@ class VideoPlayer(aeidon.Observable):
         """Set the URI of the file to play."""
         self.ready = False
         self._playbin.props.uri = uri
-        # XXX: On Windows, we'd need HWND instead of XID,
-        # but there seems to be no clear way to do this.
-        # http://stackoverflow.com/q/23021327/653825
-        self._xid = self.widget.get_window().get_xid()
         self.subtitle_text = ""
         try:
             # Find out the exact framerate to be able
