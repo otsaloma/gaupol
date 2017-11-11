@@ -13,24 +13,28 @@ for name in args or sorted(glob.glob("po/*.po")):
     po = polib.pofile(name)
     print("{}: {}% translated".format(name, po.percent_translated()))
     for entry in po.translated_entries():
-        # Check that Python string formatting fields exists as-is
-        # in the translation (order can vary, but not the field).
-        for field in re.findall(r"\{.*?\}", entry.msgid, flags=FLAGS):
-            if not field in entry.msgstr:
-                print_error("Python string formatting mismatch", entry)
-                raise SystemExit("FATAL ERROR")
-        # Check that the translation of a label includes
-        # a keyboard accelerator defined by an underscore.
-        if "_" in entry.msgid:
-            if not "_" in entry.msgstr:
-                print_error("Missing accelerator", entry)
-        # Check that the translation of a label includes
-        # a terminating colon.
-        if entry.msgid.endswith(":"):
-            if not entry.msgstr.endswith(":"):
-                print_error("Missing terminating colon", entry)
-        # Check that the translation of a menu item includes
-        # an ellipsis defined by the Unicode character.
-        if "…" in entry.msgid:
-            if not "…" in entry.msgstr:
-                print_error("Missing ellipsis", entry)
+        translations = (
+            list(entry.msgstr_plural.values())
+            if entry.msgid_plural else [entry.msgstr])
+        for translation in translations:
+            # Check that Python string formatting fields exists as-is
+            # in the translation (order can vary, but not the field).
+            for field in re.findall(r"\{.*?\}", entry.msgid, flags=FLAGS):
+                if not field in translation:
+                    print_error("Python string formatting mismatch", entry)
+                    raise SystemExit("FATAL ERROR")
+            # Check that the translation of a label includes
+            # a keyboard accelerator defined by an underscore.
+            if "_" in entry.msgid:
+                if not "_" in translation:
+                    print_error("Missing accelerator", entry)
+            # Check that the translation of a label includes
+            # a terminating colon.
+            if entry.msgid.endswith(":"):
+                if not translation.endswith(":"):
+                    print_error("Missing terminating colon", entry)
+            # Check that the translation of a menu item includes
+            # an ellipsis defined by the Unicode character.
+            if "…" in entry.msgid:
+                if not "…" in translation:
+                    print_error("Missing ellipsis", entry)
