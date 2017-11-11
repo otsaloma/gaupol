@@ -199,7 +199,7 @@ class PatternManager:
                 # character to avoid syntax issues that go against the GKeyFile
                 # spec and would be "fixed" by msgfmt when merging translations.
                 # https://github.com/otsaloma/gaupol/issues/70
-                value = value.replace("\\0", "")
+                value = re.sub(r"\\0(?!\d)", "", value)
                 patterns[-1].set_field(name, value)
 
     def save_config(self, script=None, language=None, country=None):
