@@ -42,7 +42,7 @@ def _init_countries():
 
 def _init_countries_json(path):
     """Initialize the dictionary mapping codes to names."""
-    with open(path, "r") as f:
+    with open(path, "r", encoding="utf_8") as f:
         iso = json.load(f)
     for country in iso["3166-1"]:
         code = country.get("alpha_2", None)

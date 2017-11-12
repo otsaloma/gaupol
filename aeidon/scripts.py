@@ -42,7 +42,7 @@ def _init_scripts():
 
 def _init_scripts_json(path):
     """Initialize the dictionary mapping codes to names."""
-    with open(path, "r") as f:
+    with open(path, "r", encoding="utf_8") as f:
         iso = json.load(f)
     for script in iso["15924"]:
         code = script.get("alpha_4", None)
