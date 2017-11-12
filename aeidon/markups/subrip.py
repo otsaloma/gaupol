@@ -35,6 +35,11 @@ class SubRip(aeidon.Markup):
      * ``<i>.........................</i>``
      * ``<u>.........................</u>``
      * ``<font color="#RRGGBB">...</font>``
+
+    The following tags are supported but are unofficial.
+
+     * ``<font size="12">.........</font>``
+     * ``<font face="sans">.......</font>``
     """
 
     _flags = re.DOTALL | re.MULTILINE | re.IGNORECASE
