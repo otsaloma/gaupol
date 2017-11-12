@@ -34,7 +34,26 @@ class TestWebVTT(TestSubRip):
     def test_decode__color(self):
         pass
 
+    def test_decode__font(self):
+        pass
+
+    def test_decode__nested(self):
+        pass
+
+    def test_decode__size(self):
+        pass
+
     def test_encode__color(self):
         text = ("<color=#ccccff>All things weird are normal\n"
                 "in this whore of cities.</color>")
+        assert self.markup.encode(text) == self.text
+
+    def test_encode__font(self):
+        text = ("<font=sans>All things weird are normal\n"
+                "in this whore of cities.</font>")
+        assert self.markup.encode(text) == self.text
+
+    def test_encode__size(self):
+        text = ("All things weird are normal\n"
+                "in this whore of <size=12>cities</size>.")
         assert self.markup.encode(text) == self.text

@@ -64,12 +64,33 @@ class TestSubRip(aeidon.TestCase):
             "All things weird are normal\n"
             "in <color=#ccccff>this whore of cities</color>.")
 
+    def test_decode__font(self):
+        text = ('<font face="sans">All things weird are normal</font>\n'
+                'in this whore of cities.')
+        assert self.markup.decode(text) == (
+            "<font=sans>All things weird are normal</font>\n"
+            "in this whore of cities.")
+
     def test_decode__italic(self):
         text = ("<I>All</I> things weird are normal\n"
                 "in this whore of cities.")
         assert self.markup.decode(text) == (
             "<i>All</i> things weird are normal\n"
             "in this whore of cities.")
+
+    def test_decode__nested(self):
+        text = ('<font face="sans">All <font color="#ccccff">things</font> weird are normal\n'
+                'in <font size="12">this</font> whore of cities.</font>')
+        assert self.markup.decode(text) == (
+            "<font=sans>All <color=#ccccff>things</color> weird are normal\n"
+            "in <size=12>this</size> whore of cities.</font>")
+
+    def test_decode__size(self):
+        text = ('All things weird are normal\n'
+                '<font size="12">in this whore of cities.</font>')
+        assert self.markup.decode(text) == (
+            "All things weird are normal\n"
+            "<size=12>in this whore of cities.</size>")
 
     def test_decode__underline(self):
         text = ("All things weird are normal\n"
@@ -93,7 +114,9 @@ class TestSubRip(aeidon.TestCase):
     def test_encode__font(self):
         text = ("<font=sans>All things weird are normal\n"
                 "in this whore of cities.</font>")
-        assert self.markup.encode(text) == self.text
+        assert self.markup.encode(text) == (
+            '<font face="sans">All things weird are normal\n'
+            'in this whore of cities.</font>')
 
     def test_encode__italic(self):
         text = ("All <i>things</i> weird are normal\n"
@@ -103,7 +126,9 @@ class TestSubRip(aeidon.TestCase):
     def test_encode__size(self):
         text = ("All things weird are normal\n"
                 "in this whore of <size=12>cities</size>.")
-        assert self.markup.encode(text) == self.text
+        assert self.markup.encode(text) == (
+            'All things weird are normal\n'
+            'in this whore of <font size="12">cities</font>.')
 
     def test_encode__underline(self):
         text = ("All things weird are normal\n"

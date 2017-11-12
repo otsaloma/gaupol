@@ -40,6 +40,10 @@ class WebVTT(aeidon.markups.SubRip):
         """Return `text` colorized to hexadecimal value."""
         raise NotImplementedError
 
+    def fontify(self, text, font, bounds=None):
+        """Return `text` changed to `font`."""
+        raise NotImplementedError
+
     def _main_decode(self, text):
         """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"<b>(.*?)</b>", 1)
@@ -51,3 +55,7 @@ class WebVTT(aeidon.markups.SubRip):
         # Remove all unsupported markup tags.
         text = self._substitute(text, r"</?[^biu]>", "")
         return self._substitute(text, r"</?[^/>]{2,}>", "")
+
+    def scale(self, text, size, bounds=None):
+        """Return `text` scaled to `size`."""
+        raise NotImplementedError
