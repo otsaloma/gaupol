@@ -1,3 +1,8 @@
+2017-11-12: Gaupol 1.3.1
+========================
+
+* Fix pattern file syntax to not be corrupted by msgfmt (#70)
+
 2017-11-11: Gaupol 1.3
 ======================
 
