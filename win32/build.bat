@@ -2,6 +2,7 @@
 cd "%~dp0\.."
 set GAUPOL_FREEZING=1
 set PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Python34
+del /q po\*.po
 python setup.py clean
 python setup.py install_data -d build\usr
 python winsetup.py build > winsetup.log
