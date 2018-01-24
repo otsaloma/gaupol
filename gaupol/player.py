@@ -21,6 +21,7 @@ import aeidon
 import gaupol
 
 from aeidon.i18n   import _
+from gi.repository import GLib
 from gi.repository import Gtk
 
 with aeidon.util.silent(Exception):
@@ -354,6 +355,7 @@ class VideoPlayer(aeidon.Observable):
         """Set `text` to the subtitle overlay."""
         self.subtitle_text_raw = text
         text = aeidon.RE_ANY_TAG.sub("", text)
+        text = GLib.markup_escape_text(text)
         self._text_overlay.props.text = text
 
     @property
