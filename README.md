@@ -35,9 +35,9 @@ dependencies include:
 | [iso-codes](http://pkg-isocodes.alioth.debian.org/) | any | translations |
 | [chardet](https://pypi.python.org/pypi/chardet) | any | character encoding auto-detection |
 
-From GStreamer you need at least the core, gst-plugins-base and
-gst-plugins-good; and for good container and codec support preferrably
-each of gst-plugins-bad, gst-plugins-ugly and gst-libav.
+From GStreamer you need at least the core, gst-plugins-base,
+gst-plugins-good and gst-plugins-bad; and for good container and codec
+support preferrably both of gst-plugins-ugly and gst-libav.
 
 Additionally, Gaupol's external preview is preconfigured to work with
 [mpv](https://mpv.io/), [MPlayer](http://www.mplayerhq.hu/) and
