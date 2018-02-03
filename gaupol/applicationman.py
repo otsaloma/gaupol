@@ -65,6 +65,7 @@ class ApplicationManager(Gtk.Application):
             path = os.path.abspath(opts.video_file)
             page.project.video_path = path
             application.update_gui()
+            application.load_video(path)
         if opts.jump is not None:
             page.view.set_focus(opts.jump)
             page.view.scroll_to_row(opts.jump)
