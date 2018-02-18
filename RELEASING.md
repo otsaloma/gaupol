@@ -7,11 +7,13 @@ tools/update-translations
 msgmerge -UN po/fi.po po/gaupol.pot
 emacs po/fi.po
 tx push -s
-tx push -tf -l fi
+tx push -tf --no-interactive -l fi
 tx pull -a --minimum-perc=75
+sed -i "s/charset=CHARSET/charset=UTF-8/" po/*.po
 tools/check-translations
 tools/check-translations | grep %
-git commit -a -m "Update translations"
+git add po/*.po po/*.pot
+git commit -m "Update translations"
 
 # Check, test, do final edits and release.
 python3 -Wd bin/gaupol
