@@ -4,6 +4,7 @@ Gaupol
 [![Build Status](https://travis-ci.org/otsaloma/gaupol.svg)](https://travis-ci.org/otsaloma/gaupol)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/otsaloma/gaupol)
 [![Donate](https://img.shields.io/badge/donate-paypal.me-blue.svg)](https://www.paypal.me/otsaloma)
+[![Packages](https://repology.org/badge/tiny-repos/gaupol.svg)](https://repology.org/metapackage/gaupol)
 [![Downloads](https://img.shields.io/github/downloads/otsaloma/gaupol/total.svg)](https://github.com/otsaloma/gaupol/releases)
 [![Downloads](https://img.shields.io/github/downloads/otsaloma/gaupol/latest/total.svg)](https://github.com/otsaloma/gaupol/releases/latest)
 
