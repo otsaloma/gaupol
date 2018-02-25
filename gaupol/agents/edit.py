@@ -179,6 +179,13 @@ class EditAgent(aeidon.Delegate):
     def _on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
         page = self.get_current_page()
+        text = self.x_clipboard.wait_for_text()
+        if text:
+            # Update all clipboards in case text is being
+            # copied from the external clipboard.
+            page.project.clipboard.set_string(text)
+            self._sync_clipboards(page)
+        if page.project.clipboard.is_empty(): return
         rows = page.view.get_selected_rows()
         row, col = page.view.get_focus()
         doc = page.text_column_to_document(col)

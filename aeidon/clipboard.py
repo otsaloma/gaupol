@@ -52,6 +52,11 @@ class Clipboard:
         """Return ``True`` if empty."""
         return not bool(self._texts)
 
+    def set_string(self, string):
+        """Set the list of texts from a single string."""
+        strings = [x or None for x in string.split("\n\n")]
+        self.set_texts(strings)
+
     def set_texts(self, texts):
         """Set the list of texts."""
         self._texts = list(texts)

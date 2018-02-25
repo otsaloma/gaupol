@@ -90,7 +90,6 @@ class PasteTextsAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(not application.clipboard.is_empty())
         aeidon.util.affirm(selected_rows)
         col = page.view.get_focus()[1]
         aeidon.util.affirm(col is not None)
