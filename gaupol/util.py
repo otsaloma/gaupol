@@ -161,7 +161,7 @@ def gst_available():
         return False
     if not Gst.ElementFactory.find("gtksink"):
         print("GStreamer found, but gtksink missing.",
-              "Try installing gst-plugins-bad.",
+              "Try installing gst-plugins-good.",
               file=sys.stderr)
         return False
     return True
