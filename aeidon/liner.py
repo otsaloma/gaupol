@@ -154,8 +154,8 @@ class Liner(aeidon.Parser):
         return (sum(penalties)
                 + 50 * sum(((x - mlength) / xlength)**2 for x in lengths)
                 + 50 * sum(((lengths[i] - lengths[i+1]) / xlength)**2
-                            for i in range(len(lengths) - 1)
-                            if lengths[i] > lengths[i+1])
+                           for i in range(len(lengths) - 1)
+                           if lengths[i] > lengths[i+1])
 
                 + 100 * (nlines-1)**3
                 + 1000 * max(0, nlines - self.max_lines)**3)

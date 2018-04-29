@@ -31,15 +31,17 @@ from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 from .webvtt     import WebVTT
 
-__all__ = ["SubStationAlpha",
-           "AdvSubStationAlpha",
-           "LRC",
-           "MicroDVD",
-           "MPL2",
-           "SubRip",
-           "SubViewer2",
-           "TMPlayer",
-           "WebVTT"]
+__all__ = [
+    "SubStationAlpha",
+    "AdvSubStationAlpha",
+    "LRC",
+    "MicroDVD",
+    "MPL2",
+    "SubRip",
+    "SubViewer2",
+    "TMPlayer",
+    "WebVTT",
+]
 
 def add(cls):
     """Add a new :class:`aeidon.SubtitleFile` class."""

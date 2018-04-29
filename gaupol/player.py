@@ -245,29 +245,29 @@ class VideoPlayer(aeidon.Observable):
         self._prev_state = new
 
     def _on_conf_notify_subtitle_property(self, *args):
-       """Update subtitle text overlay properties."""
-       conf = gaupol.conf.video_player
-       self._text_overlay.props.font_desc = conf.subtitle_font
-       self._text_overlay.props.halignment = "center"
-       self._text_overlay.props.valignment = "bottom"
-       self._text_overlay.props.line_alignment = conf.line_alignment
-       self._text_overlay.props.shaded_background = conf.subtitle_background
-       alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
-       color = conf.subtitle_color.replace("#", "")
-       color = int(float.fromhex("".join((alpha, color))))
-       self._text_overlay.props.color = color
+        """Update subtitle text overlay properties."""
+        conf = gaupol.conf.video_player
+        self._text_overlay.props.font_desc = conf.subtitle_font
+        self._text_overlay.props.halignment = "center"
+        self._text_overlay.props.valignment = "bottom"
+        self._text_overlay.props.line_alignment = conf.line_alignment
+        self._text_overlay.props.shaded_background = conf.subtitle_background
+        alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
+        color = conf.subtitle_color.replace("#", "")
+        color = int(float.fromhex("".join((alpha, color))))
+        self._text_overlay.props.color = color
 
     def _on_conf_notify_time_property(self, *args):
-       """Update time overlay properties."""
-       conf = gaupol.conf.video_player
-       self._time_overlay.props.font_desc = conf.time_font
-       self._time_overlay.props.halignment = "right"
-       self._time_overlay.props.valignment = "top"
-       self._time_overlay.props.shaded_background = conf.time_background
-       alpha = "{:02x}".format(int(conf.time_alpha * 255))
-       color = conf.time_color.replace("#", "")
-       color = int(float.fromhex("".join((alpha, color))))
-       self._time_overlay.props.color = color
+        """Update time overlay properties."""
+        conf = gaupol.conf.video_player
+        self._time_overlay.props.font_desc = conf.time_font
+        self._time_overlay.props.halignment = "right"
+        self._time_overlay.props.valignment = "top"
+        self._time_overlay.props.shaded_background = conf.time_background
+        alpha = "{:02x}".format(int(conf.time_alpha * 255))
+        color = conf.time_color.replace("#", "")
+        color = int(float.fromhex("".join((alpha, color))))
+        self._time_overlay.props.color = color
 
     def pause(self):
         """Pause."""

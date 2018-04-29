@@ -295,7 +295,7 @@ def run_dialog(dialog):
     return dialog.run()
 
 def scale_to_content(widget, min_nchar=0,  max_nchar=32768,
-                             min_nlines=0, max_nlines=32768, font=None):
+                     min_nlines=0, max_nlines=32768, font=None):
     """Set `widget's` size by content, but limited by `min` and `max`."""
     width, height = get_content_size(widget, font)
     width  = max(width, char_to_px(min_nchar, font))

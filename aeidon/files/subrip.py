@@ -31,13 +31,13 @@ class SubRip(aeidon.SubtitleFile):
     mode = aeidon.modes.TIME
 
     _re_time_line = re.compile((
-            # Techically all these fields should have fixed widths, but in the
-            # name of being liberal in accepting input, accept lesser widths
-            # assuming that they are just lacking zero-padding from the side
-            # that is farther from the decimal point.
-            r"^(-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3}) -->"
-            r" (-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3})"
-            r"(  X1:(\d+) X2:(\d+) Y1:(\d+) Y2:(\d+))?\s*$"))
+        # Techically all these fields should have fixed widths, but in the
+        # name of being liberal in accepting input, accept lesser widths
+        # assuming that they are just lacking zero-padding from the side
+        # that is farther from the decimal point.
+        r"^(-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3}) -->"
+        r" (-?\d{1,2}:\d{1,2}:\d{1,2},\d{1,3})"
+        r"(  X1:(\d+) X2:(\d+) Y1:(\d+) Y2:(\d+))?\s*$"))
 
     def read(self):
         """
