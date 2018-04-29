@@ -8,7 +8,7 @@ import os
 import site
 
 os.environ["GAUPOL_FREEZING"] = "1"
-from setup import *
+from setup import setup_kwargs
 import cx_Freeze
 
 includes = ["aeidon", "cairo", "gaupol", "gi"]
@@ -43,9 +43,7 @@ setup_kwargs.update(dict(
 ))
 
 def patch_build():
-    # Enable header bars on builtin GTK+ dialogs such as file dialogs,
-    # assistants, color and font pickers for consistency with Gaupol's
-    # own dialogs, which use header bars.
+    # Enable header bars on builtin GTK+ dialogs.
     path = glob.glob("build/exe.*/etc/gtk-3.0/settings.ini")[0]
     print("patching {}".format(path))
     with open(path, "a", encoding="us_ascii") as f:

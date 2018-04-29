@@ -31,23 +31,20 @@ the aeidon.paths module, (3) handling translations and (4) extensions.
     extensions are not compiled either.
 """
 
-import distutils.command.clean
-import distutils.command.install
-import distutils.command.install_data
-import distutils.command.install_lib
+import distutils
 import glob
 import os
 import re
 import shutil
 
-freezing = "GAUPOL_FREEZING" in os.environ
+from distutils import log
+from distutils.command.clean import clean
+from distutils.command.install import install
+from distutils.command.install_data import install_data
+from distutils.command.install_lib import install_lib
+from distutils.dist import Distribution as distribution
 
-clean = distutils.command.clean.clean
-distribution = distutils.dist.Distribution
-install = distutils.command.install.install
-install_data = distutils.command.install_data.install_data
-install_lib = distutils.command.install_lib.install_lib
-log = distutils.log
+freezing = "GAUPOL_FREEZING" in os.environ
 
 distribution.global_options.extend([
     ("mandir=", None, "relative installation directory for man pages (defaults to 'share/man')"),
