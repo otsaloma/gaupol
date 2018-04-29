@@ -12,7 +12,7 @@ pip3 install pyenchant
 pip3 install pypiwin32
 ```
 
-* Install PyGObject all-in-one for Windows (pygi-aio)
+* Install PyGObject for Windows (pygi-aio)
     - GTK+, GtkSpell 3, iso-codes and GIR
 * Install Inno Setup
 * Test, build, test build
