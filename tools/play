@@ -3,7 +3,7 @@
 import os, sys
 file_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(file_dir, ".."))
-import aeidon, gaupol
+import gaupol
 from gi.repository import Gtk
 player = gaupol.VideoPlayer()
 window = Gtk.Window()
