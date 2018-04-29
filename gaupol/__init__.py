@@ -25,7 +25,7 @@ import warnings
 
 if hasattr(sys, "frozen"):
     # Avoid error trying to write to non-existent stderr.
-    # http://stackoverflow.com/a/35773092
+    # https://stackoverflow.com/a/35773092
     warnings.simplefilter("ignore")
 
 import aeidon
