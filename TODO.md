@@ -1,5 +1,5 @@
-Gaupol 1.3.2/1.4
-================
+Gaupol 1.4
+==========
 
 * [x] Update the `--video-file` argument to not just select the video
       file, but also load it in the internal video player (#75)
@@ -10,3 +10,4 @@ Gaupol 1.3.2/1.4
 * [x] Mark gst-plugins-bad as required for using the built-in video
       player, due to the switch from autovideosink to gtksink that
       happened in Gaupol 1.3 (#73)
+* [ ] Update translations

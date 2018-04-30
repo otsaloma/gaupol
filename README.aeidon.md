@@ -16,8 +16,8 @@ Installation
 To install only either the aeidon or the gaupol package, use one
 of the following commands
 
-    python3 setup.py --without-gaupol install [--prefix=...]
-    python3 setup.py --without-aeidon install [--prefix=...]
+    sudo python3 setup.py --without-gaupol install --prefix=/usr/local
+    sudo python3 setup.py --without-aeidon install --prefix=/usr/local
 
 Note that the `--with-*` and `--without-*` are global options and must
 be placed before any commands.
