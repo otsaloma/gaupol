@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-11 17:57+0200\n"
+"POT-Creation-Date: 2018-05-01 16:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
@@ -559,7 +559,7 @@ msgstr "Unir o dividir palabras"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "No fue posible abrir el diccionario para el idioma «{}»"
 
-#: gaupol/assistants.py:600 gaupol/player.py:233 gaupol/player.py:338
+#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
@@ -647,10 +647,10 @@ msgstr "{edits:d} subtítulos editados, {removals:d} eliminados"
 #: gaupol/assistants.py:1122
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Confirmar {:d} cambio"
+msgstr[1] "Confirmar {:d} cambios"
 
-#: gaupol/player.py:336
+#: gaupol/player.py:337
 msgid "Failed to initialize playback"
 msgstr "No fue posible iniciar la reproducción"
 
@@ -661,8 +661,8 @@ msgstr "Ay_uda"
 #: gaupol/dialogs/search.py:471
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{:d} ocurrencia encontrada y reemplazada"
+msgstr[1] "{:d} ocurrencias encontradas y reemplazadas"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -824,7 +824,7 @@ msgstr "Sitio web de Gaupol"
 
 #: gaupol/dialogs/about.py:61
 msgid "Donate"
-msgstr ""
+msgstr "Haga una donación"
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -881,8 +881,8 @@ msgstr "_Reemplazar"
 #: gaupol/dialogs/duration_adjust.py:70
 msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{:d} subtítulo ajustado en su duración"
+msgstr[1] "{:d} subtítulos ajustados en su duración"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -1030,17 +1030,19 @@ msgstr "¿Guardar los cambios al documento «{}» antes de salir?"
 msgid "Stretching end position"
 msgstr "Ajustar posición final"
 
-#: gaupol/agents/edit.py:200
+#: gaupol/agents/edit.py:207
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
+"{:d} subtítulo insertado para adaptarse a los contenidos del portapapeles"
 msgstr[1] ""
+"{:d} subtítulos insertados para adaptarse a los contenidos del portapapeles"
 
-#: gaupol/agents/edit.py:282 gaupol/agents/edit.py:300
+#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
 msgid "Stretching start position"
 msgstr "Ajustar posición inicial"
 
-#: gaupol/agents/edit.py:358
+#: gaupol/agents/edit.py:365
 msgid "Use Shift+Return for line-break"
 msgstr "Use Mayús+Intro para insertar un salto de línea"
 
@@ -1157,49 +1159,49 @@ msgstr ""
 msgid "Failed to launch video player"
 msgstr "No fue posible ejecutar el reproductor de vídeo"
 
-#: gaupol/applicationman.py:104
+#: gaupol/applicationman.py:105
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPCIÓN...] [ARCHIVO...] [+[NUM]]"
 
-#: gaupol/applicationman.py:108
+#: gaupol/applicationman.py:109
 msgid "FILE..."
 msgstr "ARCHIVO..."
 
-#: gaupol/applicationman.py:111
+#: gaupol/applicationman.py:112
 msgid "subtitle files to open"
 msgstr "archivos de subtítulos a abrir"
 
-#: gaupol/applicationman.py:121
+#: gaupol/applicationman.py:122
 msgid "ENCODING"
 msgstr "CODIFICACIÓN"
 
-#: gaupol/applicationman.py:124
+#: gaupol/applicationman.py:125
 msgid "set the character encoding used to open files"
 msgstr "establece la codificación de caracteres usada para abrir archivos"
 
-#: gaupol/applicationman.py:131
+#: gaupol/applicationman.py:132
 msgid "list all available character encodings"
 msgstr "lista todas las codificaciones de caracteres disponibles"
 
-#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
+#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
 msgid "FILE"
 msgstr "ARCHIVO"
 
-#: gaupol/applicationman.py:139
+#: gaupol/applicationman.py:140
 msgid "open translation file"
 msgstr "abre el archivo de traducción"
 
-#: gaupol/applicationman.py:144
+#: gaupol/applicationman.py:145
 msgid "METHOD"
 msgstr "MÉTODO"
 
-#: gaupol/applicationman.py:148
+#: gaupol/applicationman.py:149
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "método usado para ajustar los subtítulos de traducción: 'number' o "
 "'position'"
 
-#: gaupol/applicationman.py:156
+#: gaupol/applicationman.py:157
 msgid "select video file"
 msgstr "selecciona el archivo de vídeo"
 
@@ -1786,7 +1788,7 @@ msgstr "_Detectar automáticamente"
 msgid "Encoding specified in the open dialog will always be tried first."
 msgstr ""
 "La codificación especificada en el diálogo «Abrir» será siempre la primera "
-"en ser probada."
+"en probarse."
 
 #: data/ui/preferences-dialog.ui:296
 msgid "File"
@@ -2213,11 +2215,11 @@ msgstr "Ajustar los subtítulos s_eleccionados"
 msgid "Transform c_urrent project"
 msgstr "Ajustar en el proyecto act_ual"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:5
+#: data/extensions/custom-framerates/custom-framerates.extension.in:7
 msgid "Custom Framerates"
 msgstr "Frecuencias de fotogramas personalizadas"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:6
+#: data/extensions/custom-framerates/custom-framerates.extension.in:8
 msgid "Allow use of non-standard framerates"
 msgstr ""
 "Permite el uso de frecuencias de fotogramas («framerates») poco frecuentes"

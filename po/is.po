@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-11 17:57+0200\n"
+"POT-Creation-Date: 2018-05-01 16:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2016\n"
 "Language-Team: Icelandic (https://www.transifex.com/otsaloma/teams/64879/is/)\n"
@@ -554,7 +554,7 @@ msgstr "Sameina eða skipta orðum"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Það mistókst að hlaða inn orðasafni fyrir tungumálið \"{}\""
 
-#: gaupol/assistants.py:600 gaupol/player.py:233 gaupol/player.py:338
+#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
@@ -642,12 +642,12 @@ msgstr "Breytti {edits:d} og fjarlægði {removals:d} skjátexta"
 #: gaupol/assistants.py:1122
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Staðfesta {:d} breytingu"
+msgstr[1] "Staðfesta {:d} breytingar"
 
-#: gaupol/player.py:336
+#: gaupol/player.py:337
 msgid "Failed to initialize playback"
-msgstr ""
+msgstr "Mistókst að ræsa afspilun"
 
 #: gaupol/dialogs/search.py:189 data/ui/menubar.ui:490
 msgid "_Help"
@@ -656,8 +656,8 @@ msgstr "_Hjálp"
 #: gaupol/dialogs/search.py:471
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Fann og skipti út {:d} tilviki"
+msgstr[1] "Fann og skipti út {:d} tilvikum"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -817,7 +817,7 @@ msgstr "Vefsvæði Gaupol"
 
 #: gaupol/dialogs/about.py:61
 msgid "Donate"
-msgstr ""
+msgstr "Styrkja"
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -851,7 +851,7 @@ msgstr "_Loka"
 
 #: gaupol/dialogs/multi_save.py:98 gaupol/dialogs/save.py:110
 msgid "{} (recommended)"
-msgstr ""
+msgstr "{} (mælt með)"
 
 #: gaupol/dialogs/multi_save.py:212
 msgid ""
@@ -1019,17 +1019,17 @@ msgstr "Viltu vista breytingar á skjalinu “{}“ áður en þú lokar því?"
 msgid "Stretching end position"
 msgstr "Teygi endastöðu"
 
-#: gaupol/agents/edit.py:200
+#: gaupol/agents/edit.py:207
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/agents/edit.py:282 gaupol/agents/edit.py:300
+#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
 msgid "Stretching start position"
 msgstr "Teygi upphafsstöðu"
 
-#: gaupol/agents/edit.py:358
+#: gaupol/agents/edit.py:365
 msgid "Use Shift+Return for line-break"
 msgstr "Notaðu Shift+Enter fyrir línuskil"
 
@@ -1137,47 +1137,47 @@ msgstr ""
 msgid "Failed to launch video player"
 msgstr "Mistókst að ræsa myndspilara"
 
-#: gaupol/applicationman.py:104
+#: gaupol/applicationman.py:105
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
-msgstr ""
+msgstr "gaupol [ROFI...] [SKRÁ...] [+[NUM]]"
 
-#: gaupol/applicationman.py:108
+#: gaupol/applicationman.py:109
 msgid "FILE..."
 msgstr "SKRÁ..."
 
-#: gaupol/applicationman.py:111
+#: gaupol/applicationman.py:112
 msgid "subtitle files to open"
 msgstr "skjátextaskrár sem á að opna"
 
-#: gaupol/applicationman.py:121
+#: gaupol/applicationman.py:122
 msgid "ENCODING"
 msgstr "STAFATAFLA"
 
-#: gaupol/applicationman.py:124
+#: gaupol/applicationman.py:125
 msgid "set the character encoding used to open files"
 msgstr ""
 
-#: gaupol/applicationman.py:131
+#: gaupol/applicationman.py:132
 msgid "list all available character encodings"
 msgstr ""
 
-#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
+#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
 msgid "FILE"
 msgstr "SKRÁ"
 
-#: gaupol/applicationman.py:139
+#: gaupol/applicationman.py:140
 msgid "open translation file"
 msgstr "opna þýðingarskrá"
 
-#: gaupol/applicationman.py:144
+#: gaupol/applicationman.py:145
 msgid "METHOD"
 msgstr "AÐFERÐ"
 
-#: gaupol/applicationman.py:148
+#: gaupol/applicationman.py:149
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 
-#: gaupol/applicationman.py:156
+#: gaupol/applicationman.py:157
 msgid "select video file"
 msgstr "veldu myndskeiðaskrá"
 
@@ -2184,11 +2184,11 @@ msgstr "Umbreyta vö_ldum skjátextum"
 msgid "Transform c_urrent project"
 msgstr "Umbreyta þess_u verkefni"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:5
+#: data/extensions/custom-framerates/custom-framerates.extension.in:7
 msgid "Custom Framerates"
 msgstr "Sérsniðin rammatíðni"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:6
+#: data/extensions/custom-framerates/custom-framerates.extension.in:8
 msgid "Allow use of non-standard framerates"
 msgstr "Leyfa að nota óstaðlaðar rammatíðnir"
 
@@ -2265,7 +2265,7 @@ msgstr "Fjarlægja bil í kringum úrfellingarmerki"
 #: data/patterns/Latn-en.common-error.in:109
 #: data/patterns/Latn-en.common-error.in:118
 msgid "Okay"
-msgstr ""
+msgstr "Í lagi"
 
 #: data/patterns/Latn-en.common-error.in:110
 #: data/patterns/Latn-en.common-error.in:119

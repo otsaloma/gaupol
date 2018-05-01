@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-11 17:57+0200\n"
+"POT-Creation-Date: 2018-05-01 16:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: fri <pavelfric@seznam.cz>, 2017\n"
+"Last-Translator: fri, 2017\n"
 "Language-Team: Czech (https://www.transifex.com/otsaloma/teams/64879/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -557,7 +557,7 @@ msgstr "Spojit nebo rozdělit slova"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Nepodařilo se nahrát slovník pro jazyk \"{}\""
 
-#: gaupol/assistants.py:600 gaupol/player.py:233 gaupol/player.py:338
+#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
@@ -645,11 +645,11 @@ msgstr "Upraveno {edits:d} a odstraněno {removals:d} titulků"
 #: gaupol/assistants.py:1122
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Potvrdit {:d}  změnu"
+msgstr[1] "Potvrdit {:d}  změny"
+msgstr[2] "Potvrdit {:d}  změn"
 
-#: gaupol/player.py:336
+#: gaupol/player.py:337
 msgid "Failed to initialize playback"
 msgstr "Spuštění přehrávání se nezdařilo"
 
@@ -660,9 +660,9 @@ msgstr "_Nápověda"
 #: gaupol/dialogs/search.py:471
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Nalezen a nahrazen {:d} výskyt"
+msgstr[1] "Nalezeny a nahrazeny {:d} výskyty"
+msgstr[2] "Nalezeno a nahrazeno {:d} výskytů"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -822,7 +822,7 @@ msgstr "Stránky Gaupolu"
 
 #: gaupol/dialogs/about.py:61
 msgid "Donate"
-msgstr ""
+msgstr "Darovat"
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -855,7 +855,7 @@ msgstr "_Zavřít"
 
 #: gaupol/dialogs/multi_save.py:98 gaupol/dialogs/save.py:110
 msgid "{} (recommended)"
-msgstr ""
+msgstr "{} (doporučeno)"
 
 #: gaupol/dialogs/multi_save.py:212
 msgid ""
@@ -878,9 +878,9 @@ msgstr "_Nahradit"
 #: gaupol/dialogs/duration_adjust.py:70
 msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Upravená délka trvání {:d} titulku"
+msgstr[1] "Upravená délka trvání {:d} titulků"
+msgstr[2] "Upravená délka trvání {:d} titulků"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -1026,18 +1026,18 @@ msgstr "Uložit před zavřením změny do dokumentu \"{}\"?"
 msgid "Stretching end position"
 msgstr "Natažení polohy konce"
 
-#: gaupol/agents/edit.py:200
+#: gaupol/agents/edit.py:207
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Vložen {:d} titulek, aby se shodoval s obsahem schránky"
+msgstr[1] "Vloženy {:d} nové titulky, aby se shodoval s obsahem schránky"
+msgstr[2] "Vloženo {:d} nových titulků, aby se shodoval s obsahem schránky"
 
-#: gaupol/agents/edit.py:282 gaupol/agents/edit.py:300
+#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
 msgid "Stretching start position"
 msgstr "Natažení polohy začátku"
 
-#: gaupol/agents/edit.py:358
+#: gaupol/agents/edit.py:365
 msgid "Use Shift+Return for line-break"
 msgstr "Pro zalomení řádku použít Shift+Enter"
 
@@ -1148,49 +1148,49 @@ msgstr "Uložení souboru s titulky do dočasného adresáře \"{}\" se nezdaři
 msgid "Failed to launch video player"
 msgstr "Spuštění přehrávače obrazového záznamu se nezdařilo"
 
-#: gaupol/applicationman.py:104
+#: gaupol/applicationman.py:105
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [VOLBA...] [SOUBOR...] [+[ČÍSLO]]"
 
-#: gaupol/applicationman.py:108
+#: gaupol/applicationman.py:109
 msgid "FILE..."
 msgstr "SOUBOR..."
 
-#: gaupol/applicationman.py:111
+#: gaupol/applicationman.py:112
 msgid "subtitle files to open"
 msgstr "Soubory s titulky k otevření"
 
-#: gaupol/applicationman.py:121
+#: gaupol/applicationman.py:122
 msgid "ENCODING"
 msgstr "KÓDOVÁNÍ"
 
-#: gaupol/applicationman.py:124
+#: gaupol/applicationman.py:125
 msgid "set the character encoding used to open files"
 msgstr "Nastavit kódování znaků, které se používá při otevírání souborů"
 
-#: gaupol/applicationman.py:131
+#: gaupol/applicationman.py:132
 msgid "list all available character encodings"
 msgstr "Vypsat všechna dostupná kódování znaků"
 
-#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
+#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
 msgid "FILE"
 msgstr "SOUBOR"
 
-#: gaupol/applicationman.py:139
+#: gaupol/applicationman.py:140
 msgid "open translation file"
 msgstr "Otevřít překladový soubor"
 
-#: gaupol/applicationman.py:144
+#: gaupol/applicationman.py:145
 msgid "METHOD"
 msgstr "METODA"
 
-#: gaupol/applicationman.py:148
+#: gaupol/applicationman.py:149
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "Metoda, která se používá k zarovnání překladových titulků: \"Číslo\" nebo "
 "\"Poloha\""
 
-#: gaupol/applicationman.py:156
+#: gaupol/applicationman.py:157
 msgid "select video file"
 msgstr "Vybrat soubor s obrazovým záznamem"
 
@@ -2201,11 +2201,11 @@ msgstr "Předělat vy_brané titulky"
 msgid "Transform c_urrent project"
 msgstr "Předělat _nynější projekt"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:5
+#: data/extensions/custom-framerates/custom-framerates.extension.in:7
 msgid "Custom Framerates"
 msgstr "Vlastní rychlosti opakování obrázků"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:6
+#: data/extensions/custom-framerates/custom-framerates.extension.in:8
 msgid "Allow use of non-standard framerates"
 msgstr "Povolit užití nestandardních rychlostí opakování obrázků"
 
