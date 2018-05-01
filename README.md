@@ -45,8 +45,10 @@ command.
                      python3-gi \
                      python3-gi-cairo \
                      gir1.2-gtk-3.0 \
+                     gettext \
                      gir1.2-gstreamer-1.0 \
                      gir1.2-gst-plugins-base-1.0 \
+                     gstreamer1.0-gtk3 \
                      gstreamer1.0-plugins-good \
                      gstreamer1.0-plugins-bad \
                      gstreamer1.0-plugins-ugly \
@@ -54,8 +56,7 @@ command.
                      python3-enchant \
                      gir1.2-gtkspell3-3.0 \
                      iso-codes \
-                     python3-chardet \
-                     gettext
+                     python3-chardet
 
 Then, to install Gaupol, run command
 
