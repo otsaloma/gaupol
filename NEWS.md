@@ -1,3 +1,15 @@
+2018-05-01: Gaupol 1.4
+======================
+
+* Update the `--video-file` argument to not just select the video
+  file, but also load it in the internal video player (#75)
+* Fix subtitles with special characters not being displayed by
+  the internal video player (#74)
+* Fix seeking to selection start if at less than one second (#76)
+* Fix pasting texts from outside Gaupol, e.g. from a text editor
+* Update checks for required GStreamer elements (#73)
+* Update translations
+
 2017-11-12: Gaupol 1.3.1
 ========================
 

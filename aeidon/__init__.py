@@ -74,7 +74,7 @@ accessing the subtitles directly (via :attr:`aeidon.Project.subtitles`).
 import re
 import sys
 
-__version__ = "1.3.1"
+__version__ = "1.4"
 
 RUNNING_SPHINX = (sys.argv[0].endswith("autogen.py") or
                   sys.argv[0].endswith("sphinx-build"))
