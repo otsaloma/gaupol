@@ -33,7 +33,6 @@ the aeidon.paths module, (3) handling translations and (4) extensions.
 
 import distutils
 import glob
-import importlib
 import os
 import re
 import shutil
