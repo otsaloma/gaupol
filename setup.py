@@ -33,6 +33,7 @@ the aeidon.paths module, (3) handling translations and (4) extensions.
 
 import distutils
 import glob
+import importlib
 import os
 import re
 import shutil
@@ -233,6 +234,16 @@ class InstallData(install_data):
         data_dir = os.path.join(data_dir, "share", "gaupol")
         files = glob.glob("{}/extensions/*/*.py".format(data_dir))
         distutils.util.byte_compile(files, optimize, self.force, self.dry_run)
+        # Figure out paths of the compiled files and add them to
+        # self.outfiles so that 'setup.py --record' works correctly.
+        def get_cache_pattern(path):
+            dir, file = os.path.split(path)
+            file = os.path.splitext(file)[0] + ".*"
+            return os.path.join(dir, "__pycache__", file)
+        for pattern in map(get_cache_pattern, files):
+            for file in glob.glob(pattern):
+                if not file in self.outfiles:
+                    self.outfiles.append(file)
 
     def __generate_linguas(self):
         """Generate LINGUAS file needed by msgfmt."""
