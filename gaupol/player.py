@@ -100,9 +100,19 @@ class VideoPlayer(aeidon.Observable):
         """
         if self._in_default_segment: return
         # XXX: There's got to be a simpler way to do this.
-        pos = self.get_position(aeidon.modes.SECONDS) * Gst.SECOND
+
+        # Check if get_position has returned None
+        pos = self.get_position(aeidon.modes.SECONDS)
+        if pos is not None: pos *= Gst.SECOND
+        else: pos = 0
+
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
-        end = self.get_duration(aeidon.modes.SECONDS) * Gst.SECOND
+
+        end = self.get_duration(aeidon.modes.SECONDS)
+        # Check if get_duration has returned None
+        if end is not None: end *= Gst.SECOND
+        else: end = 0
+
         self._playbin.seek(rate=1.0,
                            format=Gst.Format.TIME,
                            flags=seek_flags,
