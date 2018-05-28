@@ -145,6 +145,7 @@ class EditAgent(aeidon.Delegate):
         """Insert a new subtitle at video position."""
         mode = aeidon.modes.SECONDS
         pos = self.player.get_position(mode)
+        if pos is None: return
         page = self.get_current_page()
         starts = [x.start_seconds for x in page.project.subtitles]
         index = bisect.bisect_right(starts, pos)
@@ -267,6 +268,7 @@ class EditAgent(aeidon.Delegate):
         mode = aeidon.modes.SECONDS
         row = page.view.get_selected_rows()[0]
         pos = self.player.get_position(mode)
+        if pos is None: return
         page.project.set_end(row, pos)
 
     @aeidon.deco.export

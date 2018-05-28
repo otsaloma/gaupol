@@ -275,6 +275,7 @@ class VideoAgent(aeidon.Delegate):
     def _on_seek_next_activate(self, *args):
         """Seek to the start of the next subtitle."""
         pos = self.player.get_position(aeidon.modes.SECONDS)
+        if pos is None: return
         subtitles = list(filter(lambda x: x[0] > pos + 0.001, self._cache))
         if not subtitles: return
         self.player.seek(subtitles[0][0])
@@ -283,6 +284,7 @@ class VideoAgent(aeidon.Delegate):
     def _on_seek_previous_activate(self, *args):
         """Seek to the start of the previous subtitle."""
         pos = self.player.get_position(aeidon.modes.SECONDS)
+        if pos is None: return
         subtitles = list(filter(lambda x: x[1] < pos - 0.001, self._cache))
         if not subtitles: return
         self.player.seek(subtitles[-1][0])

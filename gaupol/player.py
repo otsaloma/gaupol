@@ -19,6 +19,7 @@
 
 import aeidon
 import gaupol
+import time
 
 from aeidon.i18n   import _
 from gi.repository import GLib
@@ -100,9 +101,11 @@ class VideoPlayer(aeidon.Observable):
         """
         if self._in_default_segment: return
         # XXX: There's got to be a simpler way to do this.
-        pos = self.get_position(aeidon.modes.SECONDS) * Gst.SECOND
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
+        pos = self.get_position(aeidon.modes.SECONDS) * Gst.SECOND
         end = self.get_duration(aeidon.modes.SECONDS) * Gst.SECOND
+        if pos is None: return
+        if end is None: return
         self._playbin.seek(rate=1.0,
                            format=Gst.Format.TIME,
                            flags=seek_flags,
@@ -120,7 +123,14 @@ class VideoPlayer(aeidon.Observable):
 
     def get_duration(self, mode=None):
         """Return duration of video stream or ``None``."""
-        success, duration = self._playbin.query_duration(Gst.Format.TIME)
+        q = self._playbin.query_duration
+        for i in range(100):
+            # Querying duration sometimes fails very unreproducibly,
+            # likely due to a particular pipeline state or state change.
+            # Try repeated times, hoping to pass the bad state.
+            success, duration = q(Gst.Format.TIME)
+            if success: break
+            time.sleep(1/100)
         if not success: return None
         if mode is None: return duration
         duration = duration / Gst.SECOND
@@ -134,7 +144,14 @@ class VideoPlayer(aeidon.Observable):
 
     def get_position(self, mode=None):
         """Return current position in video stream or ``None``."""
-        success, pos = self._playbin.query_position(Gst.Format.TIME)
+        q = self._playbin.query_position
+        for i in range(100):
+            # Querying position sometimes fails very unreproducibly,
+            # likely due to a particular pipeline state or state change.
+            # Try repeated times, hoping to pass the bad state.
+            success, pos = q(Gst.Format.TIME)
+            if success: break
+            time.sleep(1/100)
         if not success: return None
         if mode is None: return pos
         pos = pos / Gst.SECOND
@@ -283,6 +300,7 @@ class VideoPlayer(aeidon.Observable):
         seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
         start = max(0, self.calc.to_seconds(start)) * Gst.SECOND
         duration = self.get_duration(aeidon.modes.SECONDS)
+        if duration is None: return
         end = min(duration, self.calc.to_seconds(end)) * Gst.SECOND
         self._playbin.seek(rate=1.0,
                            format=Gst.Format.TIME,
