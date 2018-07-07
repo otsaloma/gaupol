@@ -1,3 +1,9 @@
+2018-07-07: Gaupol 1.4.1
+========================
+
+* Fix TypeErrors due to video player pipeline queries failing (#78)
+* Make 'setup.py --record' include compiled extensios as well (#91)
+
 2018-05-01: Gaupol 1.4
 ======================
 
