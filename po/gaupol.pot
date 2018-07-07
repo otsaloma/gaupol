@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 16:08+0300\n"
+"POT-Creation-Date: 2018-07-07 19:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -554,7 +554,7 @@ msgstr ""
 msgid "Failed to load dictionary for language \"{}\""
 msgstr ""
 
-#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
@@ -645,7 +645,7 @@ msgid_plural "Confirm {:d} Changes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/player.py:337
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr ""
 
@@ -1006,17 +1006,17 @@ msgstr ""
 msgid "Stretching end position"
 msgstr ""
 
-#: gaupol/agents/edit.py:207
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr ""
 
-#: gaupol/agents/edit.py:365
+#: gaupol/agents/edit.py:367
 msgid "Use Shift+Return for line-break"
 msgstr ""
 
@@ -1101,7 +1101,7 @@ msgstr ""
 msgid "_Load"
 msgstr ""
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr ""
 

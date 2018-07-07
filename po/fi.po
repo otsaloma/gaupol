@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 16:08+0300\n"
-"PO-Revision-Date: 2018-05-01 16:08+0300\n"
+"POT-Creation-Date: 2018-07-07 19:01+0300\n"
+"PO-Revision-Date: 2018-07-07 19:02+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Finnish (https://www.transifex.com/otsaloma/teams/64879/fi/)\n"
 "Language: fi\n"
@@ -557,7 +557,7 @@ msgstr "Yhdistä tai jaa sanoja"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Sanakirjan lataaminen kielelle \"{}\" epäonnistui"
 
-#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
@@ -648,7 +648,7 @@ msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Vahvista {:d} muutos"
 msgstr[1] "Vahvista {:d} muutosta"
 
-#: gaupol/player.py:337
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr "Toiston aloitus epäonnistui"
 
@@ -1022,17 +1022,17 @@ msgstr "Tallenna muutokset asiakirjaan \"{}\" ennen sulkemista?"
 msgid "Stretching end position"
 msgstr "lopun venyttäminen"
 
-#: gaupol/agents/edit.py:207
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] "Lisättiin {:d} kappale, jotta leikepöydän sisältö mahtui"
 msgstr[1] "Lisättiin {:d} kappaletta, jotta leikepöydän sisältö mahtui"
 
-#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr "alun venyttäminen"
 
-#: gaupol/agents/edit.py:365
+#: gaupol/agents/edit.py:367
 msgid "Use Shift+Return for line-break"
 msgstr "Käytä näppäimiä Shift+Return rivinvaihtoa varten"
 
@@ -1118,7 +1118,7 @@ msgstr "Lataa video"
 msgid "_Load"
 msgstr "_Lataa"
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr "Määrittelemätön"
 
