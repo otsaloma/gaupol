@@ -164,6 +164,11 @@ def gst_available():
               "Try installing gst-plugins-good.",
               file=sys.stderr)
         return False
+    if Gst.ElementFactory.find("vaapisink"):
+        print("GStreamer-vaapi found, known to sometimes cause trouble.",
+              "If video doesn't play, please try uninstalling it.",
+              "See https://github.com/otsaloma/gaupol/issues/79",
+              file=sys.stderr)
     return True
 
 @aeidon.deco.once
