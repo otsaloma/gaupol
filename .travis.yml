@@ -7,7 +7,7 @@ python:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y enchant
-  - pip install chardet enchant
+  - pip install chardet pyenchant
 script:
   - py.test aeidon
   - python setup.py install
