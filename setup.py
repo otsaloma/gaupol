@@ -332,7 +332,7 @@ class InstallData(install_data):
         """Install data files after translating them."""
         self.__generate_linguas()
         if self.distribution.with_aeidon:
-            for po_file in glob.glob("po/*.po"):
+            for po_file in sorted(glob.glob("po/*.po")):
                 if freezing: continue
                 self.data_files.append(self.__get_mo_file(po_file))
             for pattern_file in glob.glob("data/patterns/*.in"):
