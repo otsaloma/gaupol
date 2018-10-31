@@ -41,22 +41,23 @@ support preferrably both of gst-plugins-ugly and gst-libav.
 On Debian/Ubuntu you can install the dependencies with the following
 command.
 
-    sudo apt install python3 \
-                     python3-gi \
-                     python3-gi-cairo \
-                     gir1.2-gtk-3.0 \
-                     gettext \
-                     gir1.2-gstreamer-1.0 \
+    sudo apt install gettext \
                      gir1.2-gst-plugins-base-1.0 \
-                     gstreamer1.0-gtk3 \
-                     gstreamer1.0-plugins-good \
-                     gstreamer1.0-plugins-bad \
-                     gstreamer1.0-plugins-ugly \
-                     gstreamer1.0-libav \
-                     python3-enchant \
+                     gir1.2-gstreamer-1.0 \
+                     gir1.2-gtk-3.0 \
                      gir1.2-gtkspell3-3.0 \
+                     gstreamer1.0-gtk3 \
+                     gstreamer1.0-libav \
+                     gstreamer1.0-plugins-bad \
+                     gstreamer1.0-plugins-good \
+                     gstreamer1.0-plugins-ugly \
                      iso-codes \
+                     python3 \
                      python3-chardet
+                     python3-dev \
+                     python3-enchant \
+                     python3-gi \
+                     python3-gi-cairo
 
 Then, to install Gaupol, run command
 
