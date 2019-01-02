@@ -6,7 +6,7 @@ Comment=Edit subtitle files
 Icon=gaupol
 Exec=gaupol %F
 MimeType=text/x-microdvd;text/x-ssa;application/x-subrip;text/x-subviewer;text/vtt;
-Categories=GTK;AudioVideo;Video;
+Categories=AudioVideo;Video;GTK;
 # TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 Keywords=video;subtitles;captions;
 StartupNotify=true

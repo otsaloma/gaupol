@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2013 Osmo Salomaa <otsaloma@iki.fi> -->
-<component type="desktop">
+<component type="desktop-application">
   <id>gaupol.desktop</id>
-  <translation type="gettext">gaupol</translation>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>GPL-3.0+</project_license>
+  <name>Gaupol</name>
+  <summary>Editor for text-based subtitles</summary>
   <description>
     <p>Gaupol is an editor for text-based subtitle files. It supports
     multiple subtitle file formats and provides means of creating
-    subtitles, editing texts and timing subtitles to match video. The
-    user interface is designed with attention to batch processing of
-    multiple documents and convenience of translating.</p>
+    subtitles, editing texts and timing subtitles to match video.</p>
   </description>
+  <categories>
+    <category>AudioVideo</category>
+    <category>Video</category>
+    <category>GTK</category>
+  </categories>
+  <url type="homepage">https://otsaloma.io/gaupol/</url>
+  <url type="help">https://github.com/otsaloma/gaupol/tree/master/doc</url>
+  <url type="bugtracker">https://github.com/otsaloma/gaupol/issues</url>
+  <url type="translate">https://www.transifex.com/otsaloma/gaupol/</url>
+  <launchable type="desktop-id">gaupol.desktop</launchable>
+  <releases>
+    <release version="1.4.1" date="2018-07-07"/>
+  </releases>
+  <mimetypes>
+    <mimetype>application/x-subrip</mimetype>
+    <mimetype>text/vtt</mimetype>
+    <mimetype>text/x-microdvd</mimetype>
+    <mimetype>text/x-ssa</mimetype>
+    <mimetype>text/x-subviewer</mimetype>
+  </mimetypes>
+  <project_license>GPL-3.0+</project_license>
   <screenshots>
     <screenshot type="default">
       <image>https://otsaloma.io/gaupol/screenshot-appdata.png</image>
       <caption>Main window</caption>
     </screenshot>
   </screenshots>
-  <url type="homepage">https://otsaloma.io/gaupol/</url>
-  <url type="bugtracker">https://github.com/otsaloma/gaupol/issues</url>
-  <url type="help">https://github.com/otsaloma/gaupol/tree/master/doc</url>
-  <url type="donation">https://www.paypal.me/otsaloma</url>
-  <url type="translate">https://www.transifex.com/otsaloma/gaupol/</url>
   <update_contact>otsaloma@iki.fi</update_contact>
-  <developer_name>Osmo Salomaa</developer_name>
+  <translation type="gettext">gaupol</translation>
+  <content_rating type="oars-1.1"/>
 </component>
