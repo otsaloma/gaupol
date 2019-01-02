@@ -36,16 +36,16 @@ class _Ruler:
 
     def get_char_length(self, text, strip=False, floor=False):
         """Return length of `text` measured in characters."""
-        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
+        text = aeidon.RE_ANY_TAG.sub("", text) if strip else text
         return len(text.replace("\n", " "))
 
     def get_em_length(self, text, strip=False, floor=False):
         """Return length of `text` measured in ems."""
-        text = (aeidon.RE_ANY_TAG.sub("", text) if strip else text)
+        text = aeidon.RE_ANY_TAG.sub("", text) if strip else text
         self._label.set_text(text.replace("\n", " "))
         width = self._label.get_preferred_width()[1]
         length = width / self._em_length
-        return (int(length) if floor else length)
+        return int(length) if floor else length
 
     def _update_em_length(self):
         """Update the length of em based on font rendering."""

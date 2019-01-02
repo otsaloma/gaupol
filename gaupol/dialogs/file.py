@@ -112,7 +112,7 @@ class FileDialog:
         if locale is not None:
             name = aeidon.encodings.get_locale_long_name()
             encodings[0] = (locale, name)
-        a = (0 if locale is None else 1)
+        a = 0 if locale is None else 1
         encodings[a:] = sorted(encodings[a:], key=lambda x: x[1])
         separator = gaupol.COMBO_SEPARATOR
         if self._use_autodetection:

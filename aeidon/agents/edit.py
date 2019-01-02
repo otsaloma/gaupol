@@ -42,7 +42,7 @@ class EditAgent(aeidon.Delegate):
             first_start = 0.0
             if self.subtitles:
                 start = self.subtitles[0].start_seconds
-                first_start = (0.0 if start >= 0 else start - 3.0)
+                first_start = 0.0 if start >= 0 else start - 3.0
                 if rindices[0] > 0:
                     subtitle = self.subtitles[rindices[0] - 1]
                     first_start = subtitle.end_seconds

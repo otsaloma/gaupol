@@ -194,7 +194,7 @@ class PatternManager:
                 # Translatable fields used to be marked with a leading
                 # underscore prior to version 1.3. We continue to support that
                 # syntax in case users have local pattern files.
-                name = (name[1:] if name.startswith("_") else name)
+                name = name[1:] if name.startswith("_") else name
                 # Regular expression patterns and replacements use null
                 # character to avoid syntax issues that go against the GKeyFile
                 # spec and would be "fixed" by msgfmt when merging translations.
@@ -222,7 +222,7 @@ class PatternManager:
             written_names.add(name)
             name = name.replace("&", "&amp;")
             name = name.replace('"', "&quot;")
-            enabled = ("true" if pattern.enabled else "false")
+            enabled = "true" if pattern.enabled else "false"
             lines.append('  <pattern name="{}" enabled="{}"/>'
                          .format(name, enabled))
 

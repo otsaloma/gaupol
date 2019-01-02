@@ -273,7 +273,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _on_entry_changed(self, entry):
         """Populate suggestions based on text in `entry`."""
         word = entry.get_text()
-        suggestions = (self._checker.suggest(word) if word else [])
+        suggestions = self._checker.suggest(word) if word else []
         self._populate_tree_view(suggestions, select=False)
         self._replace_button.set_sensitive(bool(word))
         self._replace_all_button.set_sensitive(bool(word))

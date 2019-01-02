@@ -161,9 +161,9 @@ class SearchDialog(gaupol.BuilderDialog):
         page = self.application.get_current_page()
         gaupol.util.raise_default(page is None)
         rows = page.view.get_selected_rows()
-        row = (rows[0] if rows else None)
+        row = rows[0] if rows else None
         if row is None:
-            row = (0 if next else len(page.project.subtitles) - 1)
+            row = 0 if next else len(page.project.subtitles) - 1
         col = page.view.get_focus()[1]
         doc = None
         if page.view.is_text_column(col):
@@ -172,7 +172,7 @@ class SearchDialog(gaupol.BuilderDialog):
                         gaupol.conf.search.fields))
 
         if doc is None or not doc in docs:
-            doc = (docs[0] if next else docs[-1])
+            doc = docs[0] if next else docs[-1]
         pos = self._get_cursor_offset(page, row, doc, next)
         return row, doc, pos
 

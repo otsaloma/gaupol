@@ -32,7 +32,7 @@ class ClipboardAgent(aeidon.Delegate):
         self.clipboard.clear()
         for index in range(min(indices), max(indices) + 1):
             subtitle = self.subtitles[index]
-            text = (subtitle.get_text(doc) if index in indices else None)
+            text = subtitle.get_text(doc) if index in indices else None
             self.clipboard.append(text)
 
     @aeidon.deco.export

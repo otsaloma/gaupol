@@ -126,7 +126,7 @@ class Page(aeidon.Observable):
         button.set_focus_on_click(False)
         width = image.get_preferred_width()[1]
         height = image.get_preferred_height()[1]
-        padding = (6 if sys.platform == "win32" else 2)
+        padding = 6 if sys.platform == "win32" else 2
         button.set_size_request(width + padding, height + padding)
         request_close = lambda x, self: self.emit("close-request")
         button.connect("clicked", request_close, self)

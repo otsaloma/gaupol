@@ -82,7 +82,7 @@ class VideoPlayer(aeidon.Observable):
         track = self._playbin.props.current_audio
         # If at the default value, the first track is used,
         # which is (probably?) zero.
-        return (0 if track == -1 else track)
+        return 0 if track == -1 else track
 
     @audio_track.setter
     def audio_track(self, track):

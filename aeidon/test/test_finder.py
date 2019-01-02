@@ -25,7 +25,7 @@ class TestFinder(aeidon.TestCase):
     text = "One only risks it, because\none's survival depends on it."
 
     def find_indices(self, next):
-        advance = (self.finder.next if next else self.finder.previous)
+        advance = self.finder.next if next else self.finder.previous
         pos = []
         while True:
             try:

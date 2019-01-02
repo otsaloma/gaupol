@@ -72,8 +72,8 @@ class LRC(aeidon.SubtitleFile):
             f.write(self.header.strip() + "\n\n")
         for subtitle in subtitles:
             start = subtitle.calc.round(subtitle.start_time, 2)
-            sign = ("-" if start.startswith("-") else "")
-            first = (4 if start.startswith("-") else 3)
+            sign = "-" if start.startswith("-") else ""
+            first = 4 if start.startswith("-") else 3
             start = sign + start[first:-1]
             text = subtitle.get_text(doc).replace("\n", " ")
             f.write("[{}]{}\n".format(start, text))

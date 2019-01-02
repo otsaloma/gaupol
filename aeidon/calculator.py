@@ -150,7 +150,7 @@ class Calculator:
         '01:02:03.400'
         """
         time = time.strip()
-        sign = ("-" if time.startswith("-") else "")
+        sign = "-" if time.startswith("-") else ""
         time = time.replace("-", "")
         time = time.replace(",", ".")
         if time.count(":") == 1:
@@ -192,7 +192,7 @@ class Calculator:
 
     def seconds_to_time(self, seconds):
         """Convert `seconds` to time."""
-        sign = ("-" if seconds < 0 else "")
+        sign = "-" if seconds < 0 else ""
         seconds = abs(round(seconds, 3))
         if seconds > 359999.999:
             return "{}99:59:59.999".format(sign)
@@ -210,8 +210,8 @@ class Calculator:
 
     def time_to_seconds(self, time):
         """Convert `time` to seconds."""
-        coefficient = (-1 if time.startswith("-") else 1)
-        time = (time[1:] if time.startswith("-") else time)
+        coefficient = -1 if time.startswith("-") else 1
+        time = time[1:] if time.startswith("-") else time
         return coefficient * sum((float(time[ :2]) * 3600,
                                   float(time[3:5]) * 60,
                                   float(time[6:8]),

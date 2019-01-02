@@ -56,7 +56,7 @@ class TMPlayer(aeidon.SubtitleFile):
             if match is not None:
                 i = match.span()[1]
                 subtitle = self._get_subtitle()
-                sign = ("-" if line.startswith("-") else "")
+                sign = "-" if line.startswith("-") else ""
                 time = line[:i-1] + ".000"
                 if time.startswith("-"):
                     time = time[1:]

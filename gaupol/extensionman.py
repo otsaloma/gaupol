@@ -104,7 +104,7 @@ class ExtensionManager:
         for line in (x for x in lines if x):
             if line.startswith("["): continue
             name, value = line.split("=", 1)
-            name = (name[1:] if name.startswith("_") else name)
+            name = name[1:] if name.startswith("_") else name
             metadata.set_field(name, value)
         module = metadata.get_field("Module")
         self._metadata[module] = metadata

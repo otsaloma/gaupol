@@ -116,7 +116,7 @@ class WebVTT(aeidon.SubtitleFile):
         writen = lambda x: f.write(x + "\n")
         nwriten = lambda x: f.write("\n" + x + "\n")
         writen(self.header.strip() or "WEBVTT")
-        first = (3 if subtitles[-1].end_seconds < 3600 else 0)
+        first = 3 if subtitles[-1].end_seconds < 3600 else 0
         for i, subtitle in enumerate(subtitles):
             if subtitle.webvtt.style:
                 nwriten(subtitle.webvtt.style)

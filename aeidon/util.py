@@ -449,7 +449,7 @@ def start_process(command, **kwargs):
     """
     # Use no environment on Windows due to a subprocess bug.
     # https://bugzilla.gnome.org/show_bug.cgi?id=605805
-    env = (os.environ.copy() if sys.platform != "win32" else None)
+    env = os.environ.copy() if sys.platform != "win32" else None
     try:
         return subprocess.Popen(command,
                                 shell=(sys.platform != "win32"),

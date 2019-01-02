@@ -394,7 +394,7 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         """Set the fallback tree view button sensitivities."""
         store = self._tree_view.get_model()
         row = self._get_selected_row()
-        row = (-1 if row is None else row)
+        row = -1 if row is None else row
         self._remove_button.set_sensitive(row >= 0)
         self._up_button.set_sensitive(row > 0)
         self._down_button.set_sensitive(0 <= row < len(store) - 1)

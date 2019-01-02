@@ -241,7 +241,7 @@ class LocalePage(BuilderPage):
         if index < 0: return None
         store = self._country_combo.get_model()
         value = store[index][0]
-        return (None if value == "other" else value)
+        return None if value == "other" else value
 
     def _get_language(self):
         """Return the selected language or ``None``."""
@@ -250,7 +250,7 @@ class LocalePage(BuilderPage):
         if index < 0: return None
         store = self._language_combo.get_model()
         value = store[index][0]
-        return (None if value == "other" else value)
+        return None if value == "other" else value
 
     def _get_script(self):
         """Return the selected script or ``None``."""
@@ -259,7 +259,7 @@ class LocalePage(BuilderPage):
         if index < 0: return None
         store = self._script_combo.get_model()
         value = store[index][0]
-        return (None if value == "other" else value)
+        return None if value == "other" else value
 
     def _init_attributes(self):
         """Initialize values of page attributes."""
@@ -787,7 +787,7 @@ class ProgressPage(BuilderPage):
     def set_progress(self, current, total=None):
         """Set current as the task progress status."""
         total = total or self._total_tasks
-        fraction = (current/total if total > 0 else 0)
+        fraction = current / total if total > 0 else 0
         self._progress_bar.set_fraction(fraction)
         text = _("{current:d} of {total:d} tasks complete")
         self._progress_bar.set_text(text.format(**locals()))

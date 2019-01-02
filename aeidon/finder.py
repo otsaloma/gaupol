@@ -141,7 +141,7 @@ class Finder:
             replacement = self.match.expand(self.replacement)
         self.text = self.text[:a] + replacement + self.text[z:]
         shift = len(self.text) - orig_length
-        self.pos = ((z + shift) if next else a)
+        self.pos = (z + shift) if next else a
         # Adapt match span to new text length to avoid
         # getting stuck with zero-length regular expressions.
         if next and (self.match_span[0] == self.match_span[1]):
