@@ -1,5 +1,5 @@
-Releasing a New Windows Installer
-=================================
+Building the Windows Installer
+==============================
 
 * Install the latest 32-bit Python 3.4.x
 * Install dependencies with PIP
@@ -12,8 +12,7 @@ pip3 install pyenchant
 pip3 install pypiwin32
 ```
 
-* Install PyGObject for Windows (pygi-aio)
-    - GTK+, GtkSpell 3, iso-codes and GIR
+* Install pygi-aio (GTK+, GtkSpell 3, iso-codes and GIR)
 * Install Inno Setup
 * Test, build, test build
 
@@ -23,8 +22,8 @@ C:\Python34\python.exe bin\gaupol
 win32\build.bat
 win32\test-build.bat
 # If needed, enable a console window to see output:
-# winsetup.py: s/base="Win32GUI"/base=None/
+# winsetup.py: s/"Win32GUI"/None/
 ```
 
 * Check `win32/gaupol.iss` and compile with Inno Setup
-* Install Gaupol and check that it works
+* Install the result and check that it works
