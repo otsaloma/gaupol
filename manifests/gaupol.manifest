@@ -16,6 +16,12 @@ data/icons/32x32/*.png
 [share/icons/hicolor/48x48/apps]
 data/icons/48x48/*.png
 
+[share/icons/hicolor/64x64/apps]
+data/icons/64x64/*.png
+
+[share/icons/hicolor/128x128/apps]
+data/icons/128x128/*.png
+
 [share/icons/hicolor/256x256/apps]
 data/icons/256x256/*.png
 
