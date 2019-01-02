@@ -73,7 +73,7 @@ class UpdateAgent(aeidon.Delegate):
         page = self.get_current_page()
         scroller = page.view.get_parent()
         index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index+1)
+        self.notebook.reorder_child(scroller, index + 1)
 
     @aeidon.deco.export
     def _on_notebook_page_reordered(self, notebook, scroller, index):

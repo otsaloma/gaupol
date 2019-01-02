@@ -56,7 +56,7 @@ class Liner(aeidon.Parser):
 
     def _boxes_to_lines(self, boxes, breaks):
         """Return `boxes` joined to form lines."""
-        edges = [0] + [x+1 for x in breaks] + [len(boxes)]
+        edges = [0] + [x + 1 for x in breaks] + [len(boxes)]
         return  [" ".join(boxes[edges[i]:edges[i+1]])
                  for i in range(len(edges) - 1)]
 
@@ -97,7 +97,7 @@ class Liner(aeidon.Parser):
             if (penalties[i] + negpen) > best_demerit: break
             value = self._break_lines(boxes[i+1:], penalties[i+1:], nlines-1)
             if value[0] is None: continue
-            later = [i+1+x for x in value[0]]
+            later = [i + 1 + x for x in value[0]]
             demerit = self._calculate_demerit(boxes, penalties, [i] + later)
             if demerit < best_demerit:
                 best_breaks = [i] + later
@@ -120,7 +120,7 @@ class Liner(aeidon.Parser):
         # before finding break points gets intolerably slow.
         min_nlines = min(2, self.max_lines)
         max_nlines = min(10, len(boxes))
-        for nlines in range(min_nlines, max_nlines+1):
+        for nlines in range(min_nlines, max_nlines + 1):
             breaks, demerit = self._break_lines(boxes, penalties, nlines)
             if breaks is None: continue
             if demerit < best_demerit:

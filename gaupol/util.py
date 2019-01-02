@@ -310,7 +310,7 @@ def scale_to_content(widget, min_nchar=0,  max_nchar=32768,
     parent = widget.get_parent()
     if isinstance(parent, Gtk.ScrolledWindow):
         # Vaguely account for possible scrollbars.
-        return parent.set_size_request(width+24, height+24)
+        return parent.set_size_request(width + 24, height + 24)
     widget.set_size_request(width, height)
 
 def scale_to_size(widget, nchar, nlines, font=None):
@@ -320,7 +320,7 @@ def scale_to_size(widget, nchar, nlines, font=None):
     parent = widget.get_parent()
     if isinstance(parent, Gtk.ScrolledWindow):
         # Vaguely account for possible scrollbars.
-        return parent.set_size_request(width+24, height+24)
+        return parent.set_size_request(width + 24, height + 24)
     widget.set_size_request(width, height)
 
 def separate_combo(store, itr, data=None):

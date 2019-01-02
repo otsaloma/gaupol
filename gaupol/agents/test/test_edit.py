@@ -143,7 +143,7 @@ class TestEditAgent(gaupol.TestCase):
         n = len(page.project.subtitles)
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("split-subtitle").activate()
-        assert len(page.project.subtitles) == n+1
+        assert len(page.project.subtitles) == n + 1
 
     def test__on_start_earlier_activate(self):
         self.application.get_action("start-earlier").activate()

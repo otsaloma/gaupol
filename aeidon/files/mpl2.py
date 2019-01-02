@@ -59,6 +59,6 @@ class MPL2(aeidon.SubtitleFile):
         for subtitle in subtitles:
             text = subtitle.get_text(doc).replace("\n", "|")
             f.write(("[{:.0f}][{:.0f}]{}\n"
-                     .format(subtitle.start_seconds*10,
-                             subtitle.end_seconds*10,
+                     .format(subtitle.start_seconds * 10,
+                             subtitle.end_seconds * 10,
                              text)))

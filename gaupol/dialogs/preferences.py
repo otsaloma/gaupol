@@ -354,10 +354,10 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         """Move the selected fallback encoding down."""
         row = self._get_selected_row()
         encodings = gaupol.conf.encoding.fallback
-        encodings.insert(row+1, encodings.pop(row))
+        encodings.insert(row + 1, encodings.pop(row))
         self._reload_tree_view()
         self._tree_view.grab_focus()
-        self._tree_view.set_cursor(row+1)
+        self._tree_view.set_cursor(row + 1)
 
     def _on_locale_check_toggled(self, check_button):
         """Save locale encoding usage."""

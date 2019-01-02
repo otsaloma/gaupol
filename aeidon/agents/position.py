@@ -58,7 +58,7 @@ class PositionAgent(aeidon.Delegate):
             domax = maximum and end - start > maximum
             end = start + minimum if domin else end
             end = start + maximum if domax else end
-            end_max = (self.subtitles[index+1].start_seconds
+            end_max = (self.subtitles[index + 1].start_seconds
                        if index < len(self.subtitles) - 1
                        else 360000)
 

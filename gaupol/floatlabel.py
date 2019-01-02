@@ -56,7 +56,7 @@ class FloatingLabel(Gtk.Box):
         if not text:
             return self._hide()
         self.set_text(text)
-        self._hide_id = gaupol.util.delay_add(duration*1000, self._hide)
+        self._hide_id = gaupol.util.delay_add(duration * 1000, self._hide)
 
     def get_text(self):
         """Return text shown in the label."""

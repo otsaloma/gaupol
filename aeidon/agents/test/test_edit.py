@@ -37,7 +37,7 @@ class TestEditAgent(aeidon.TestCase):
         for i in range(3):
             subtitle = self.project.new_subtitle()
             subtitle.start_frame = i
-            subtitle.end_frame = i+1
+            subtitle.end_frame = i + 1
             new_subtitles.append(subtitle)
         self.project.insert_subtitles((0, 1, 2), new_subtitles)
         assert len(subtitles) == orig_length + 3
@@ -92,7 +92,7 @@ class TestEditAgent(aeidon.TestCase):
         for i in range(3):
             subtitle = self.project.new_subtitle()
             subtitle.start_frame = i
-            subtitle.end_frame = i+1
+            subtitle.end_frame = i + 1
             new_subtitles.append(subtitle)
         self.project.replace_positions((0, 1, 2), new_subtitles)
         subtitles = self.project.subtitles

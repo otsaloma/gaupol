@@ -133,7 +133,7 @@ class MergeSubtitlesAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(selected_rows) > 1)
-        block = list(range(selected_rows[0], selected_rows[-1]+1))
+        block = list(range(selected_rows[0], selected_rows[-1] + 1))
         aeidon.util.affirm(list(selected_rows) == block)
 
 class RedoActionAction(gaupol.Action):

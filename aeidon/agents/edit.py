@@ -165,7 +165,7 @@ class EditAgent(aeidon.Delegate):
         subtitle_2.start = middle
         subtitle_2.end = subtitle.end
         self.remove_subtitles((index,), register=register)
-        indices = (index, index+1)
+        indices = (index, index + 1)
         subtitles = (subtitle_1, subtitle_2)
         self.insert_subtitles(indices, subtitles, register=register)
         self.group_actions(register, 2, _("Splitting subtitle"))

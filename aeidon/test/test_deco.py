@@ -24,7 +24,7 @@ class TestModule(aeidon.TestCase):
         self.project = self.new_project()
 
     def test_silent(self):
-        function = lambda: 0/0
+        function = lambda: 0 / 0
         aeidon.deco.silent(ZeroDivisionError)(function)()
         aeidon.deco.silent(ZeroDivisionError, tb=True)(function)()
         aeidon.deco.silent(Exception)(function)()

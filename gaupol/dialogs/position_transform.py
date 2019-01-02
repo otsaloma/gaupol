@@ -157,8 +157,8 @@ class PositionTransformDialog(gaupol.BuilderDialog):
             and len(rows) > 1
             and len(ranges) == 1
             and not self._output_edited()):
-            self._subtitle_spin_1.set_value(rows[0]+1)
-            self._subtitle_spin_2.set_value(rows[-1]+1)
+            self._subtitle_spin_1.set_value(rows[0] + 1)
+            self._subtitle_spin_2.set_value(rows[-1] + 1)
         elif not self._output_edited():
             self._subtitle_spin_1.set_value(1)
             self._subtitle_spin_2.set_value(len(page.project.subtitles))

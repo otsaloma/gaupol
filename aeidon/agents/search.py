@@ -144,7 +144,7 @@ class SearchAgent(aeidon.Delegate):
         Return tuple of index, document, match span.
         """
         indices = self._indices or self.get_all_indices()
-        for index in range(index, max(indices)+1):
+        for index in range(index, max(indices) + 1):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:
@@ -181,7 +181,7 @@ class SearchAgent(aeidon.Delegate):
         Return tuple of index, document, match span.
         """
         indices = self._indices or self.get_all_indices()
-        for index in reversed(range(min(indices), index+1)):
+        for index in reversed(range(min(indices), index + 1)):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:

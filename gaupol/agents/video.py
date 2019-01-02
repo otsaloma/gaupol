@@ -139,7 +139,7 @@ class VideoAgent(aeidon.Delegate):
             self.notebook.get_window().get_width()
             if orientation == Gtk.Orientation.HORIZONTAL
             else self.notebook.get_window().get_height())
-        self.paned.set_position(int(size/2))
+        self.paned.set_position(int(size / 2))
         self.get_action("toggle-player").set_state(True)
 
     def _init_update_handlers(self):

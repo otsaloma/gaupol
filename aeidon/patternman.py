@@ -65,7 +65,7 @@ class PatternManager:
                     last_index = j
                     if policy == "Replace":
                         filtered_patterns[j] = None
-            filtered_patterns.insert(last_index+1, pattern)
+            filtered_patterns.insert(last_index + 1, pattern)
             while None in filtered_patterns:
                 filtered_patterns.remove(None)
         return filtered_patterns

@@ -88,7 +88,7 @@ class SubRip(aeidon.SubtitleFile):
         """
         for i, subtitle in enumerate(subtitles):
             if i > 0: f.write("\n")
-            f.write("{:d}\n".format(i+1))
+            f.write("{:d}\n".format(i + 1))
             start = subtitle.start_time.replace(".", ",")
             end = subtitle.end_time.replace(".", ",")
             f.write("{} --> {}".format(start, end))

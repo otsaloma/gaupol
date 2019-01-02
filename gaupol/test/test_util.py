@@ -27,7 +27,7 @@ class TestModule(gaupol.TestCase):
         px2 = gaupol.util.char_to_px(2)
         assert 2 < px1 < 10
         assert 4 < px2 < 20
-        assert abs(2*px1 - px2) <= 1
+        assert abs(2 * px1 - px2) <= 1
 
     def test_char_to_px__font(self):
         deft = gaupol.util.char_to_px(100)
@@ -45,7 +45,7 @@ class TestModule(gaupol.TestCase):
         px2 = gaupol.util.lines_to_px(2)
         assert 10 < px1 < 30
         assert 20 < px2 < 60
-        assert abs(2*px1 - px2) <= 1
+        assert abs(2 * px1 - px2) <= 1
 
     def test_lines_to_px__font(self):
         deft = gaupol.util.lines_to_px(10)

@@ -30,7 +30,7 @@ class SetAgent(aeidon.Delegate):
     def _move_if_needed(self, index):
         """Move subtitle for correct order and return new index."""
         subtitle = self.subtitles[index]
-        subtitles = self.subtitles[:index] + self.subtitles[index+1:]
+        subtitles = self.subtitles[:index] + self.subtitles[(index + 1):]
         new_index = bisect.bisect_right(subtitles, subtitle)
         if new_index == index: return new_index
         subtitle = self.subtitles.pop(index)

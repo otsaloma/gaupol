@@ -79,7 +79,7 @@ class TestOpenAgent(gaupol.TestCase):
         n = len(self.application.pages)
         path = self.new_subrip_file()
         self.application.open_main(path)
-        assert len(self.application.pages) == n+1
+        assert len(self.application.pages) == n + 1
 
     def test_open_translation(self):
         path = self.new_subrip_file()

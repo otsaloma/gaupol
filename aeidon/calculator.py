@@ -91,13 +91,13 @@ class Calculator:
         if aeidon.is_time(x):
             x = self.time_to_seconds(x)
             y = self.to_seconds(y)
-            return self.seconds_to_time((x+y)/2)
+            return self.seconds_to_time((x + y) / 2)
         if aeidon.is_frame(x):
             y = self.to_frame(y)
-            return aeidon.as_frame(round((x+y)/2, 0))
+            return aeidon.as_frame(round((x + y) / 2, 0))
         if aeidon.is_seconds(x):
             y = self.to_seconds(y)
-            return aeidon.as_seconds(((x+y)/2))
+            return aeidon.as_seconds(((x + y) / 2))
         raise ValueError("Invalid type for x: {}"
                          .format(repr(type(x))))
 

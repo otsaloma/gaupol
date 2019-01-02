@@ -87,9 +87,9 @@ class TimeEntry(Gtk.Entry):
         self.set_text(text)
         self.set_position(pos)
         if length != 1: return
-        self.set_position(pos+1)
-        if len(text) > pos+1 and text[pos+1] in (":", "."):
-            self.set_position(pos+2)
+        self.set_position(pos + 1)
+        if len(text) > pos + 1 and text[pos+1] in (":", "."):
+            self.set_position(pos + 2)
 
     def _on_cut_clipboard(self, entry):
         """Change "cut-clipboard" signal to "copy-clipboard"."""

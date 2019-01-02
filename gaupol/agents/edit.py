@@ -69,7 +69,7 @@ class EditAgent(aeidon.Delegate):
         page = self.get_current_page()
         path, column = page.view.get_cursor()
         row = gaupol.util.tree_path_to_row(path)
-        path = gaupol.util.tree_row_to_path(row+1)
+        path = gaupol.util.tree_row_to_path(row + 1)
         page.view.set_cursor(path, column, True)
 
     @aeidon.deco.export
@@ -113,7 +113,7 @@ class EditAgent(aeidon.Delegate):
         row = page.view.get_selected_rows()[0]
         pos = page.project.subtitles[row].end_seconds
         length = gaupol.conf.editor.stretch_length
-        value = (((pos+0.001) // length) + 1) * length
+        value = (((pos + 0.001) // length) + 1) * length
         page.project.set_end(row, value)
         register = aeidon.registers.DO
         description = _("Stretching end position")
@@ -129,7 +129,7 @@ class EditAgent(aeidon.Delegate):
         """Extend the selection up to the first subtitle."""
         page = self.get_current_page()
         row = page.view.get_selected_rows()[-1]
-        rows = list(range(0, row+1))
+        rows = list(range(0, row + 1))
         page.view.select_rows(rows)
 
     @aeidon.deco.export
@@ -152,7 +152,7 @@ class EditAgent(aeidon.Delegate):
         subtitle = page.project.new_subtitle()
         subtitle.start_seconds = pos
         subtitle.end_seconds = pos + 3.0
-        subtitle.main_text = "[{:d}]".format(index+1)
+        subtitle.main_text = "[{:d}]".format(index + 1)
         page.project.insert_subtitles((index,), (subtitle,))
 
     @aeidon.deco.export
@@ -303,7 +303,7 @@ class EditAgent(aeidon.Delegate):
         row = page.view.get_selected_rows()[0]
         pos = page.project.subtitles[row].start_seconds
         length = gaupol.conf.editor.stretch_length
-        value = (((pos+0.001) // length) + 1) * length
+        value = (((pos + 0.001) // length) + 1) * length
         page.project.set_start(row, value)
         register = aeidon.registers.DO
         description = _("Stretching start position")

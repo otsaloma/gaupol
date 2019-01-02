@@ -49,7 +49,7 @@ class TestView(gaupol.TestCase):
         store = self.view.get_model()
         self.project = self.new_project()
         for i, subtitle in enumerate(self.project.subtitles):
-            store.append((i+1,
+            store.append((i + 1,
                           subtitle.start_frame,
                           subtitle.end_frame,
                           subtitle.duration_frame,
@@ -65,7 +65,7 @@ class TestView(gaupol.TestCase):
         store = self.view.get_model()
         self.project = self.new_project()
         for i, subtitle in enumerate(self.project.subtitles):
-            store.append((i+1,
+            store.append((i + 1,
                           subtitle.start_time,
                           subtitle.end_time,
                           subtitle.duration_seconds,
