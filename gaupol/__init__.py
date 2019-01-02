@@ -55,7 +55,7 @@ from gaupol import util
 from gaupol.enums import *
 from gaupol.errors import *
 from gaupol.attrdict import *
-from gaupol.config import *
+from gaupol.config import ConfigurationStore
 conf = ConfigurationStore()
 from gaupol import style
 from gaupol import ruler
@@ -96,7 +96,7 @@ from gaupol.extension import *
 from gaupol.extensionman import *
 from gaupol import agents
 from gaupol.application import *
-from gaupol.applicationman import *
+from gaupol.applicationman import ApplicationManager
 from gaupol.unittest import *
 
 def main(args):
