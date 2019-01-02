@@ -47,7 +47,7 @@ class TestSearchDialog(gaupol.TestCase):
 
     def test__on_application_page_changed(self):
         # Ensure that editing obsolete data is not possible.
-        # http://bugzilla.gnome.org/show_bug.cgi?id=572676
+        # https://bugzilla.gnome.org/show_bug.cgi?id=572676
         self.dialog._pattern_entry.set_text("a")
         self.dialog.next()
         page = self.application.get_current_page()

@@ -299,7 +299,7 @@ def get_unique(lst, keep_last=False):
     """Return `lst` with duplicates removed."""
     if keep_last:
         return list(reversed(get_unique(list(reversed(lst)))))
-    # http://stackoverflow.com/a/7961425
+    # https://stackoverflow.com/a/7961425
     return list(collections.OrderedDict.fromkeys(lst))
 
 def install_module(name, obj):
@@ -448,7 +448,7 @@ def start_process(command, **kwargs):
     Return :class:`subprocess.Popen` instance.
     """
     # Use no environment on Windows due to a subprocess bug.
-    # http://bugzilla.gnome.org/show_bug.cgi?id=605805
+    # https://bugzilla.gnome.org/show_bug.cgi?id=605805
     env = (os.environ.copy() if sys.platform != "win32" else None)
     try:
         return subprocess.Popen(command,

@@ -32,8 +32,8 @@ import traceback
 # Specifically, let's use the 'decorator_apply' function as instructed [2] to
 # avoid rewriting our standard-form decorators.
 #
-# [1] http://pypi.python.org/pypi/decorator/
-# [2] http://pythonhosted.org/decorator/
+# [1] https://pypi.python.org/pypi/decorator/
+# [2] https://decorator.readthedocs.io/en/latest/tests.documentation.html#dealing-with-third-party-decorators
 
 
 def decorator_apply(dec, fun):

@@ -42,7 +42,7 @@ class Observable:
 
     The Observable philosophy and API is highly inspired by GObject_.
 
-    .. _GObject: http://developer.gnome.org/gobject/
+    .. _GObject: https://developer.gnome.org/gobject/
     """
 
     __slots__ = (

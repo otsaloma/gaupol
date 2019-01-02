@@ -58,7 +58,7 @@ class OpenAgent(aeidon.Delegate):
         """Add `path` to recent files managed by the recent manager."""
         # XXX: The group field is not available for Python,
         # we cannot differentiate between main and translation files.
-        # http://bugzilla.gnome.org/show_bug.cgi?id=695970
+        # https://bugzilla.gnome.org/show_bug.cgi?id=695970
         uri = aeidon.util.path_to_uri(path)
         recent = Gtk.RecentData()
         recent.mime_type = format.mime_type

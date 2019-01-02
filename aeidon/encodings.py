@@ -36,7 +36,7 @@ from aeidon.i18n import _
 _encodings = (
     # TRANSLATORS: Most of the character encoding descriptions are copied from
     # gedit, which is translated to very many languages. Check the gedit .po
-    # files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
+    # files for a reference: <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
     ("ascii"          , "US-ASCII"        , _("English")),
     ("big5"           , "Big5"            , _("Chinese traditional")),
     ("big5hkscs"      , "Big5-HKSCS"      , _("Chinese traditional")),
