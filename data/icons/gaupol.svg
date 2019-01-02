@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="38.400000pt"
-   height="38.400000pt"
+   width="48px"
+   height="48px"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.44"
+   inkscape:version="0.92+devel (unknown)"
    inkscape:export-xdpi="120"
    inkscape:export-ydpi="120"
-   sodipodi:docname="gaupol.svg">
+   sodipodi:docname="gaupol.svg"
+   version="1.1">
   <defs
      id="defs4">
     <linearGradient
@@ -49,9 +51,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="25.055249"
-     inkscape:cy="22.118869"
+     inkscape:zoom="18.75"
+     inkscape:cx="24"
+     inkscape:cy="24"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:showpageshadow="false"
@@ -62,7 +64,14 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:grid-bbox="true"
-     inkscape:guide-points="true" />
+     inkscape:guide-points="true"
+     inkscape:document-rotation="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid14"
+       empspacing="6"
+       dotted="false" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
