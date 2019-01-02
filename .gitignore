@@ -11,5 +11,7 @@ data/patterns/*.common-error
 data/patterns/*.hearing-impaired
 data/patterns/*.line-break
 dist
+flatpak/.flatpak-builder
+flatpak/build
 locale
 po/LINGUAS
