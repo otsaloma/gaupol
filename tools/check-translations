@@ -7,8 +7,7 @@ Usage: check-translations [XX[_YY[@ZZ]]...]
 import glob, polib, re, sys
 def print_error(title, entry):
     print("\n{}:".format(title), entry, sep="\n")
-FLAGS = re.MULTILINE
-args = list("po/{}.po".format(x) for x in sys.argv[1:])
+args = ["po/{}.po".format(x) for x in sys.argv[1:]]
 for name in args or sorted(glob.glob("po/*.po")):
     po = polib.pofile(name)
     print("{}: {}% translated".format(name, po.percent_translated()))
@@ -19,7 +18,7 @@ for name in args or sorted(glob.glob("po/*.po")):
         for translation in translations:
             # Check that Python string formatting fields exists as-is
             # in the translation (order can vary, but not the field).
-            for field in re.findall(r"\{.*?\}", entry.msgid, flags=FLAGS):
+            for field in re.findall(r"\{.*?\}", entry.msgid, flags=re.M):
                 if not field in translation:
                     print_error("Python string formatting mismatch", entry)
                     raise SystemExit("FATAL ERROR")

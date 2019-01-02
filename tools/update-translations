@@ -1,60 +1,66 @@
 #!/bin/sh
 cd "$(dirname "$0")/.." || exit 1
 truncate -s0 po/gaupol.pot
+
 # Python code
-xgettext --output=po/gaupol.pot \
-         --join-existing \
-         --from-code=UTF-8 \
-         --language=Python \
-         --keyword=_:1 \
-         --keyword=d_:2 \
-         --keyword=n_:1,2 \
-         --add-comments=TRANSLATORS: \
-         $(find . -name "*.py" -not -path "*/test/*")
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Python \
+    --keyword=_:1 \
+    --keyword=d_:2 \
+    --keyword=n_:1,2 \
+    --add-comments=TRANSLATORS: \
+    $(find . -name "*.py" -not -path "*/test/*")
 
 # GtkBuilder XML files
-xgettext --output=po/gaupol.pot \
-         --join-existing \
-         --from-code=UTF-8 \
-         $(find data -name "*.ui")
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    $(find data -name "*.ui")
 
 # Extension metadata files
-xgettext --output=po/gaupol.pot \
-         --join-existing \
-         --from-code=UTF-8 \
-         --language=Desktop \
-         --keyword= \
-         --keyword=Name \
-         --keyword=Description \
-         --add-comments=TRANSLATORS: \
-         data/extensions/*/*.extension.in
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Desktop \
+    --keyword= \
+    --keyword=Name \
+    --keyword=Description \
+    --add-comments=TRANSLATORS: \
+    data/extensions/*/*.extension.in
 
 # Pattern files
-xgettext --output=po/gaupol.pot \
-         --join-existing \
-         --from-code=UTF-8 \
-         --language=Desktop \
-         --keyword= \
-         --keyword=Name \
-         --keyword=Description \
-         --add-comments=TRANSLATORS: \
-         data/patterns/*.in
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Desktop \
+    --keyword= \
+    --keyword=Name \
+    --keyword=Description \
+    --add-comments=TRANSLATORS: \
+    data/patterns/*.in
 
 # AppData XML file
-xgettext --output=po/gaupol.pot \
-         --join-existing \
-         --from-code=UTF-8 \
-         data/gaupol.appdata.xml.in
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    data/gaupol.appdata.xml.in
 
 # Desktop file
-xgettext --output=po/gaupol.pot \
-         --join-existing \
-         --from-code=UTF-8 \
-         --language=Desktop \
-         --keyword= \
-         --keyword=GenericName \
-         --keyword=Comment \
-         --keyword=Keywords \
-         --keyword=X-GNOME-FullName \
-         --add-comments=TRANSLATORS: \
-         data/gaupol.desktop.in
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Desktop \
+    --keyword= \
+    --keyword=GenericName \
+    --keyword=Comment \
+    --keyword=Keywords \
+    --add-comments=TRANSLATORS: \
+    data/gaupol.desktop.in
