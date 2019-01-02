@@ -33,7 +33,7 @@ class LRC(aeidon.SubtitleFile):
 
     format = aeidon.formats.LRC
     mode = aeidon.modes.TIME
-    _re_line = re.compile("^\[(-?\d\d:\d\d.\d\d)\](.*)$")
+    _re_line = re.compile(r"^\[(-?\d\d:\d\d.\d\d)\](.*)$")
 
     def read(self):
         """
