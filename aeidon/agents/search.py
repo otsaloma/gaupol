@@ -254,7 +254,7 @@ class SearchAgent(aeidon.Delegate):
                                register=register)
 
             self.set_action_description(register, _("Replacing all"))
-        if (len(list(counts.keys())) == 2) and all(counts.values()):
+        if len(list(counts.keys())) == 2 and all(counts.values()):
             self.group_actions(register, 2, _("Replacing all"))
         return sum(counts.values())
 
