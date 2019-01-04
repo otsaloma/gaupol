@@ -21,8 +21,6 @@ from gi.repository import Gtk
 
 __all__ = ("ErrorDialog", "InfoDialog", "QuestionDialog", "WarningDialog")
 
-FLAGS = Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT
-
 
 class ErrorDialog(Gtk.MessageDialog):
 
@@ -31,11 +29,12 @@ class ErrorDialog(Gtk.MessageDialog):
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`ErrorDialog` instance."""
         Gtk.MessageDialog.__init__(self,
-                                   parent=parent,
-                                   flags=FLAGS,
-                                   type=Gtk.MessageType.ERROR,
+                                   transient_for=parent,
+                                   modal=True,
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.ERROR,
                                    buttons=Gtk.ButtonsType.NONE,
-                                   message_format=title)
+                                   text=title)
 
         if message is not None:
             self.format_secondary_text(message)
@@ -48,11 +47,12 @@ class InfoDialog(Gtk.MessageDialog):
     def __init__(self, parent, title, message=None):
         """Initialize an :class:`InfoDialog` instance."""
         Gtk.MessageDialog.__init__(self,
-                                   parent=parent,
-                                   flags=FLAGS,
-                                   type=Gtk.MessageType.INFO,
+                                   transient_for=parent,
+                                   modal=True,
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.INFO,
                                    buttons=Gtk.ButtonsType.NONE,
-                                   message_format=title)
+                                   text=title)
 
         if message is not None:
             self.format_secondary_text(message)
@@ -65,11 +65,12 @@ class QuestionDialog(Gtk.MessageDialog):
     def __init__(self, parent, title, message=None):
         """Initialize a :class:`QuestionDialog` instance."""
         Gtk.MessageDialog.__init__(self,
-                                   parent=parent,
-                                   flags=FLAGS,
-                                   type=Gtk.MessageType.QUESTION,
+                                   transient_for=parent,
+                                   modal=True,
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.QUESTION,
                                    buttons=Gtk.ButtonsType.NONE,
-                                   message_format=title)
+                                   text=title)
 
         if message is not None:
             self.format_secondary_text(message)
@@ -82,11 +83,12 @@ class WarningDialog(Gtk.MessageDialog):
     def __init__(self, parent, title, message=None):
         """Initialize a :class:`WarningDialog` instance."""
         Gtk.MessageDialog.__init__(self,
-                                   parent=parent,
-                                   flags=FLAGS,
-                                   type=Gtk.MessageType.WARNING,
+                                   transient_for=parent,
+                                   modal=True,
+                                   destroy_with_parent=True,
+                                   message_type=Gtk.MessageType.WARNING,
                                    buttons=Gtk.ButtonsType.NONE,
-                                   message_format=title)
+                                   text=title)
 
         if message is not None:
             self.format_secondary_text(message)
