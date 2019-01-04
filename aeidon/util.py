@@ -49,7 +49,7 @@ VIDEO_FILE_EXTENSIONS = [
 def affirm(value):
     """Raise :exc:`aeidon.AffirmationError` if value evaluates to ``False``."""
     if not value:
-        raise aeidon.AffirmationError
+        raise aeidon.AffirmationError("Not True: {!r}".format(value))
 
 @contextlib.contextmanager
 def atomic_open(path, mode="w", *args, **kwargs):
@@ -334,14 +334,17 @@ def makedirs(directory):
 
     Raise :exc:`OSError` if unsuccessful.
     """
-    if os.path.isdir(directory): return
+    directory = os.path.abspath(directory)
+    if os.path.isdir(directory):
+        return directory
     try:
         os.makedirs(directory)
     except OSError as error:
-        print("Failed to create directory '{}': {}"
-              .format(directory, str(error)),
+        print("Failed to create directory {!r}: {!s}"
+              .format(directory, error),
               file=sys.stderr)
         raise # OSError
+    return directory
 
 def normalize_newlines(text):
     """Convert all newlines in `text` to "\\n"."""

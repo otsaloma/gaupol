@@ -38,7 +38,7 @@ def get_config_home_directory_windows():
 
 def get_config_home_directory_xdg():
     """Return path to the user's XDG configuration directory."""
-    directory = os.path.expanduser("~/.config")
+    directory = os.path.join(os.path.expanduser("~"), ".config")
     directory = os.environ.get("XDG_CONFIG_HOME", directory)
     directory = os.path.join(directory, "gaupol")
     return os.path.abspath(directory)
