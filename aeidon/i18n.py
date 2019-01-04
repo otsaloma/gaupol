@@ -24,23 +24,22 @@ import locale
 _translation = gettext.NullTranslations()
 
 
-def bind():
+def bind(localedir=aeidon.LOCALE_DIR):
     """Bind translation domains and initialize gettext."""
-    global _translation
-    d = aeidon.LOCALE_DIR
     with aeidon.util.silent(Exception):
-        # Might fail with misconfigured locales.
+        # Set locale to the user's default setting.
+        # Might fail on misconfigured systems.
         locale.setlocale(locale.LC_ALL, "")
-    with aeidon.util.silent(Exception):
-        # Not available on all platforms. Seems to be
-        # needed by GTK+ applications and probably others
-        # with C library dependencies that use gettext.
-        locale.bindtextdomain("gaupol", d)
-        locale.textdomain("gaupol")
-    gettext.bindtextdomain("gaupol", d)
+    # Make translations available to the gettext module.
+    gettext.bindtextdomain("gaupol", localedir)
     gettext.textdomain("gaupol")
-    _translation = gettext.translation(
-        "gaupol", localedir=d, fallback=True)
+    with aeidon.util.silent(Exception):
+        # Make translations available to GTK+ as well.
+        # Not available on all platforms.
+        locale.bindtextdomain("gaupol", localedir)
+        locale.textdomain("gaupol")
+    globals()["_translation"] = gettext.translation(
+        "gaupol", localedir=localedir, fallback=True)
 
 def _(message):
     """Return the localized translation of `message`."""
