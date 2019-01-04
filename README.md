@@ -31,7 +31,7 @@ strongly recommended dependencies include:
 | [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.6 | integrated video player |
 | [PyEnchant](https://github.com/rfk/pyenchant) | ≥ 1.4.0 | spell-check |
 | [GtkSpell](http://gtkspell.sourceforge.net/) | ≥ 3.0.0 | inline spell-check |
-| [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | any | translations |
+| [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
 | [chardet](https://pypi.org/project/chardet/) | any | character encoding auto-detection |
 
 From GStreamer you need at least the core, gst-plugins-base,

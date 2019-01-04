@@ -28,14 +28,10 @@ _languages = {}
 
 def _init_languages():
     """Initialize the dictionary mapping codes to names."""
-    # Prefer globally installed iso-codes, JSON over XML,
-    # fall back on possibly bundled JSON.
+    # Prefer globally installed, fall back on possibly bundled.
     path = "/usr/share/iso-codes/json/iso_639-2.json"
     if os.path.isfile(path):
         return _init_languages_json(path)
-    path = "/usr/share/xml/iso-codes/iso_639.xml"
-    if os.path.isfile(path):
-        return _init_languages_xml(path)
     path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_639-2.json")
     if os.path.isfile(path):
         return _init_languages_json(path)
@@ -47,15 +43,6 @@ def _init_languages_json(path):
     for language in iso["639-2"]:
         code = language.get("alpha_2", None)
         name = language.get("name", None)
-        if not code or not name: continue
-        _languages[code] = name
-
-def _init_languages_xml(path):
-    """Initialize the dictionary mapping codes to names."""
-    import xml.etree.ElementTree as ET
-    for element in ET.parse(path).findall("iso_639_entry"):
-        code = element.get("iso_639_1_code", None)
-        name = element.get("name", None)
         if not code or not name: continue
         _languages[code] = name
 
