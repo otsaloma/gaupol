@@ -61,7 +61,7 @@ class BuilderPage(TextAssistantPage):
 
     """Baseclass for pages of :class:`TextAssistant` built with GtkBuilder."""
 
-    _widgets = ()
+    _widgets = []
 
     def __init__(self, assistant, basename):
         """Initialize a :class:`BuilderPage` instance."""
@@ -89,7 +89,7 @@ class IntroductionPage(BuilderPage):
 
     """Page for listing all text correction tasks."""
 
-    _widgets = ("columns_combo", "subtitles_combo", "tree_view")
+    _widgets = ["columns_combo", "subtitles_combo", "tree_view"]
 
     def __init__(self, assistant):
         """Initialize a :class:`IntroductionPage` instance."""
@@ -207,7 +207,7 @@ class LocalePage(BuilderPage):
 
     _ui_file_basename = NotImplementedError
 
-    _widgets = (
+    _widgets = [
         "country_combo",
         "country_label",
         "language_combo",
@@ -215,7 +215,7 @@ class LocalePage(BuilderPage):
         "script_combo",
         "script_label",
         "tree_view",
-    )
+    ]
 
     def __init__(self, assistant):
         """Initialize a :class:`LocalePage` instance."""
@@ -450,7 +450,7 @@ class CommonErrorPage(LocalePage):
     """Page for correcting common human and OCR errors."""
 
     _ui_file_basename = "common-error-page.ui"
-    _widgets = ("human_check", "ocr_check") + LocalePage._widgets
+    _widgets = ["human_check", "ocr_check"] + LocalePage._widgets
 
     def correct_texts(self, project, indices, doc):
         """Correct texts in `project`."""
@@ -536,7 +536,7 @@ class JoinSplitWordsPage(BuilderPage):
 
     """Page for joining or splitting words based on spell-check suggestions."""
 
-    _widgets = ("language_button", "join_check", "split_check")
+    _widgets = ["language_button", "join_check", "split_check"]
 
     def __init__(self, assistant):
         """Initialize a :class:`JoinSplitWordsPage` instance."""
@@ -658,7 +658,7 @@ class LineBreakOptionsPage(BuilderPage):
 
     """Page for editing line-break options."""
 
-    _widgets = (
+    _widgets = [
         "max_length_spin",
         "max_lines_spin",
         "max_skip_length_spin",
@@ -667,7 +667,7 @@ class LineBreakOptionsPage(BuilderPage):
         "skip_lines_check",
         "skip_unit_combo",
         "unit_combo",
-    )
+    ]
 
     def __init__(self, assistant):
         """Initialize a :class:`LineBreakOptionsPage` instance."""
@@ -750,7 +750,7 @@ class ProgressPage(BuilderPage):
 
     """Page for showing progress of text corrections."""
 
-    _widgets = ("message_label", "progress_bar", "status_label", "task_label")
+    _widgets = ["message_label", "progress_bar", "status_label", "task_label"]
 
     def __init__(self, assistant):
         """Initialize a :class:`ProgressPage` instance."""
@@ -812,13 +812,13 @@ class ConfirmationPage(BuilderPage):
 
     """Page to confirm changes made after performing all tasks."""
 
-    _widgets = (
+    _widgets = [
         "mark_all_button",
         "preview_button",
         "remove_check",
         "tree_view",
         "unmark_all_button",
-    )
+    ]
 
     def __init__(self, assistant):
         """Initialize a :class:`ConfirmationPage` instance."""

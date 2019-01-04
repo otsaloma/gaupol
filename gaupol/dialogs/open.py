@@ -32,7 +32,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting subtitle files to open."""
 
-    _widgets = ("align_combo", "align_label", "encoding_combo")
+    _widgets = ["align_combo", "align_label", "encoding_combo"]
 
     def __init__(self, parent, title, doc):
         """Initialize an :class:`OpenDialog` instance."""

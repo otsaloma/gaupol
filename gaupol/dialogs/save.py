@@ -32,13 +32,13 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
-    _widgets = (
+    _widgets = [
         "encoding_combo",
         "format_combo",
         "framerate_combo",
         "framerate_label",
         "newline_combo",
-    )
+    ]
 
     def __init__(self, parent, title, mode):
         """Initialize a :class:`SaveDialog` instance."""

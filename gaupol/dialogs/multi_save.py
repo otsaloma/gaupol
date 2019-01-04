@@ -31,14 +31,14 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
 
     """Dialog for selecting properties to save multiple files with."""
 
-    _widgets = (
+    _widgets = [
         "encoding_combo",
         "filechooser_button",
         "format_combo",
         "framerate_combo",
         "framerate_label",
         "newline_combo",
-    )
+    ]
 
     def __init__(self, parent, application, modes):
         """Initialize a :class:`MultiSaveDialog` instance."""

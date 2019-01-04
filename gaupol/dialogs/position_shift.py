@@ -30,14 +30,14 @@ class PositionShiftDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for shifting positions."""
 
-    _widgets = (
+    _widgets = [
         "amount_spin",
         "current_radio",
         "preview_button",
         "selected_radio",
         "to_end_radio",
         "unit_label",
-    )
+    ]
 
     def __init__(self, parent, application):
         """Initialize a :class:`PositionShiftDialog` instance."""

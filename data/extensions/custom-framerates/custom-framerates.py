@@ -29,7 +29,7 @@ class AddFramerateDialog(gaupol.BuilderDialog):
 
     """Dialog for entering a custom framerate value."""
 
-    _widgets = ("spin_button",)
+    _widgets = ["spin_button"]
 
     def __init__(self, parent):
         """Initialize an :class:`AddFramerateDialog` instance."""
@@ -55,7 +55,7 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     """Dialog for editing a list of custom framerates."""
 
-    _widgets = ("add_button", "remove_button", "toolbar", "tree_view")
+    _widgets = ["add_button", "remove_button", "toolbar", "tree_view"]
 
     def __init__(self, framerates, parent):
         """Initialize a :class:`PreferencesDialog` instance."""

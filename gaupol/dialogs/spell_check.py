@@ -49,7 +49,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     _max_replacements = 10000
     _personal_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
 
-    _widgets = (
+    _widgets = [
         "add_button",
         "edit_button",
         "entry",
@@ -62,7 +62,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         "grid",
         "text_view",
         "tree_view",
-    )
+    ]
 
     def __init__(self, parent, application):
         """

@@ -30,7 +30,7 @@ class LanguageDialog(gaupol.BuilderDialog):
 
     """Dialog for configuring spell-check."""
 
-    _widgets = (
+    _widgets = [
         "all_radio",
         "current_radio",
         "language_scroller",
@@ -39,7 +39,7 @@ class LanguageDialog(gaupol.BuilderDialog):
         "target_vbox",
         "tran_radio",
         "tree_view",
-    )
+    ]
 
     def __init__(self, parent, show_target=True):
         """Initialize a :class:`LanguageDialog` instance."""

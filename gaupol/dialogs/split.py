@@ -30,7 +30,7 @@ class SplitDialog(gaupol.BuilderDialog):
 
     """Dialog for splitting a project in two."""
 
-    _widgets = ("subtitle_spin",)
+    _widgets = ["subtitle_spin"]
 
     def __init__(self, parent, application):
         """Initialize a :class:`SplitDialog` instance."""

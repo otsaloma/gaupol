@@ -29,7 +29,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
 
     """Dialog for lengthening or shortening durations."""
 
-    _widgets = (
+    _widgets = [
         "all_radio",
         "current_radio",
         "gap_check",
@@ -42,7 +42,7 @@ class DurationAdjustDialog(gaupol.BuilderDialog):
         "selected_radio",
         "shorten_check",
         "speed_spin",
-    )
+    ]
 
     def __init__(self, parent, application):
         """Initialize a :class:`DurationAdjustDialog` instance."""

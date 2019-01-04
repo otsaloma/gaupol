@@ -39,7 +39,7 @@ class BuilderDialog:
     to look and act like a :class:`Gtk.Dialog`.
     """
 
-    _widgets = ()
+    _widgets = []
 
     def __init__(self, ui_file_path, connect_signals=True):
         """Initialize a :class:`BuilderDialog` instance from `ui_file_path`."""

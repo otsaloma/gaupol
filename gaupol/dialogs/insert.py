@@ -29,7 +29,7 @@ class InsertDialog(gaupol.BuilderDialog):
 
     """Dialog for inserting new subtitles."""
 
-    _widgets = ("amount_spin", "position_combo", "position_label")
+    _widgets = ["amount_spin", "position_combo", "position_label"]
 
     def __init__(self, parent, application):
         """Initialize an :class:`InsertDialog` instance."""
