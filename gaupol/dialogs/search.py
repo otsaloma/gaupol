@@ -370,7 +370,7 @@ class SearchDialog(gaupol.BuilderDialog):
         """Do not send response if browsing help."""
         if response == Gtk.ResponseType.HELP:
             gaupol.util.show_uri(gaupol.REGEX_HELP_URL)
-            self.stop_emission("response")
+            self.stop_emission_by_name("response")
 
     def _on_show(self, *args):
         """Move focus to the pattern entry and select the pattern."""
