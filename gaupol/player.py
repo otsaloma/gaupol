@@ -140,7 +140,7 @@ class VideoPlayer(aeidon.Observable):
             return self.calc.to_time(duration)
         if mode == aeidon.modes.FRAME:
             return self.calc.to_frame(duration)
-        raise ValueError("Invalid mode: {}".format(repr(mode)))
+        raise ValueError("Invalid mode: {!r}".format(mode))
 
     def get_position(self, mode=None):
         """Return current position in video stream or ``None``."""
@@ -161,7 +161,7 @@ class VideoPlayer(aeidon.Observable):
             return self.calc.to_time(pos)
         if mode == aeidon.modes.FRAME:
             return self.calc.to_frame(pos)
-        raise ValueError("Invalid mode: {}".format(repr(mode)))
+        raise ValueError("Invalid mode: {!r}".format(mode))
 
     def _init_bus(self):
         """Initialize the GStreamer message bus."""

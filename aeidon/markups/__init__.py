@@ -53,5 +53,5 @@ def new(format):
     for cls in map(eval, __all__):
         if cls.format == format:
             return cls()
-    raise ValueError("Format {} not found"
-                     .format(repr(format)))
+    raise ValueError("Format {!r} not found"
+                     .format(format))

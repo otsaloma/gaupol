@@ -66,8 +66,8 @@ class UtilityAgent(aeidon.Delegate):
             return (self.get_current_page(),)
         if target == gaupol.targets.ALL:
             return tuple(self.pages)
-        raise ValueError("Invalid target: {}"
-                         .format(repr(target)))
+        raise ValueError("Invalid target: {!r}"
+                         .format(target))
 
     @aeidon.deco.export
     def get_target_rows(self, target):
@@ -81,8 +81,8 @@ class UtilityAgent(aeidon.Delegate):
             return list(range(min(rows), len(page.project.subtitles)))
         if target == gaupol.targets.CURRENT: return None
         if target == gaupol.targets.ALL: return None
-        raise ValueError("Invalid target: {}"
-                         .format(repr(target)))
+        raise ValueError("Invalid target: {!r}"
+                         .format(target))
 
     @aeidon.deco.export
     def set_current_page(self, page):

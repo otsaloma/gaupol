@@ -59,8 +59,8 @@ class RevertableAction:
             return aeidon.registers.UNDO
         if self.register.shift == -1:
             return aeidon.registers.REDO
-        raise ValueError("Invalid register: {}"
-                         .format(repr(self.register)))
+        raise ValueError("Invalid register: {!r}"
+                         .format(self.register))
 
     def revert(self):
         """Call the reversion function."""

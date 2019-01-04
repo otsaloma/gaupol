@@ -81,7 +81,7 @@ class OpenAgent(aeidon.Delegate):
             return self.open_main(path, encoding)
         if doc == aeidon.documents.TRAN:
             return self.open_translation(path, encoding, align_method)
-        raise ValueError("Invalid document: {}".format(repr(doc)))
+        raise ValueError("Invalid document: {!r}".format(doc))
 
     @aeidon.deco.export
     @aeidon.deco.notify_frozen
@@ -173,8 +173,8 @@ class OpenAgent(aeidon.Delegate):
             # It's difficult to tell the difference between a syntactic
             # problem in the file to be read and a bug in our own parsing
             # code. Raise both as parse errors.
-            raise aeidon.ParseError("Failed to parse file {}"
-                                    .format(repr(file.path)))
+            raise aeidon.ParseError("Failed to parse file {!r}"
+                                    .format(file.path))
 
     def _sort_subtitles(self, subtitles):
         """Return sorted `subtitles` and sort count."""

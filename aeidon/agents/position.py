@@ -130,7 +130,7 @@ class PositionAgent(aeidon.Delegate):
         if aeidon.is_time(p1[1]): return self._get_time_transform(p1, p2)
         if aeidon.is_frame(p1[1]): return self._get_frame_transform(p1, p2)
         if aeidon.is_seconds(p1[1]): return self._get_seconds_transform(p1, p2)
-        raise ValueError("Bad position argument: {}".format(repr(p1)))
+        raise ValueError("Bad position argument: {!r}".format(p1))
 
     @aeidon.deco.export
     @aeidon.deco.revertable

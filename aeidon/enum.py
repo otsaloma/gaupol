@@ -90,7 +90,7 @@ class Enumeration(list):
         for item in self:
             if getattr(item, name) == value:
                 return item
-        raise ValueError("Name {} not found".format(repr(name)))
+        raise ValueError("Name {!r} not found".format(name))
 
     def __setattr__(self, name, value):
         """Set value of enumeration item with correct attributes."""

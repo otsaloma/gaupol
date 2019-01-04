@@ -65,8 +65,8 @@ class MetadataItem:
             return True
         if value == "False":
             return False
-        raise ValueError("Invalid boolean value: {}"
-                         .format(repr(value)))
+        raise ValueError("Invalid boolean value: {!r}"
+                         .format(value))
 
     def get_field_list(self, name, fallback=None):
         """Return the list of strings value of field or `fallback`."""

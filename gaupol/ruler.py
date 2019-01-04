@@ -107,8 +107,8 @@ def get_length_function(unit):
         return _ruler.get_char_length
     if unit == gaupol.length_units.EM:
         return _ruler.get_em_length
-    raise ValueError("Invalid length unit: {}"
-                     .format(repr(unit)))
+    raise ValueError("Invalid length unit: {!r}"
+                     .format(unit))
 
 def get_lengths(text):
     """Return a sequence of floored line lengths without tags."""

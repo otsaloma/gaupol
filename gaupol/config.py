@@ -394,8 +394,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         try:
             self._read_from_file()
         except Exception as error:
-            print("Failed to read configuration file {}: {}"
-                  .format(self.path, str(error)),
+            print("Failed to read configuration file {}: {!s}"
+                  .format(self.path, error),
                   file=sys.stderr)
 
     def _read_option_line(self, line, sections, container, enums):
@@ -494,6 +494,6 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         try:
             self._write_to_file()
         except Exception as error:
-            print("Failed to write configuration file {}: {}"
-                  .format(self.path, str(error)),
+            print("Failed to write configuration file {}: {!s}"
+                  .format(self.path, error),
                   file=sys.stderr)

@@ -78,13 +78,13 @@ def get_gaupol_version():
 def run_or_exit(cmd):
     """Run command in shell and raise SystemExit if it fails."""
     if os.system(cmd) != 0:
-        log.error("FATAL ERROR: command {} failed".format(repr(cmd)))
+        log.error("FATAL ERROR: command {!r} failed".format(cmd))
         raise SystemExit(1)
 
 def run_or_warn(cmd):
     """Run command in shell and warn if it fails."""
     if os.system(cmd) != 0:
-        log.warn("WARNING: command {} failed".format(repr(cmd)))
+        log.warn("WARNING: command {!r} failed".format(cmd))
 
 
 class Clean(clean):
@@ -376,11 +376,11 @@ class InstallLib(install_lib):
         path = os.path.join(self.build_dir, "aeidon", "paths.py")
         text = open(path, "r", encoding="utf_8").read()
         patt = r"^DATA_DIR = .*$"
-        repl = "DATA_DIR = {}".format(repr(data_dir))
+        repl = "DATA_DIR = {!r}".format(data_dir)
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
         assert text.count(repl) == 1
         patt = r"^LOCALE_DIR = .*$"
-        repl = "LOCALE_DIR = {}".format(repr(locale_dir))
+        repl = "LOCALE_DIR = {!r}".format(locale_dir)
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
         assert text.count(repl) == 1
         open(path, "w", encoding="utf_8").write(text)

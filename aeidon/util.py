@@ -164,8 +164,8 @@ def detect_format(path, encoding):
             for format, re_id in re_ids:
                 if re_id.search(line) is not None:
                     return format
-    raise aeidon.FormatError("Failed to detect format of file {}"
-                             .format(repr(path)))
+    raise aeidon.FormatError("Failed to detect format of file {!r}"
+                             .format(path))
 
 def detect_newlines(path):
     """Detect and return the newline type of file at `path` or ``None``."""

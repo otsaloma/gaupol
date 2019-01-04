@@ -71,8 +71,8 @@ class Page(aeidon.Observable):
             return self.view.columns.MAIN_TEXT
         if doc == aeidon.documents.TRAN:
             return self.view.columns.TRAN_TEXT
-        raise ValueError("Invalid document: {}"
-                         .format(repr(doc)))
+        raise ValueError("Invalid document: {!r}"
+                         .format(doc))
 
     def get_basename(self, doc):
         """Return basename of `doc`."""
@@ -80,8 +80,8 @@ class Page(aeidon.Observable):
             return self.get_main_basename()
         if doc == aeidon.documents.TRAN:
             return self.get_translation_basename()
-        raise ValueError("Invalid document: {}"
-                         .format(repr(doc)))
+        raise ValueError("Invalid document: {!r}"
+                         .format(doc))
 
     def get_main_basename(self):
         """Return basename of the main document."""
@@ -102,15 +102,15 @@ class Page(aeidon.Observable):
                 return subtitle.duration_seconds
             if mode == aeidon.modes.FRAME:
                 return subtitle.duration_frame
-            raise ValueError("Invalid mode: {}"
-                             .format(repr(mode)))
+            raise ValueError("Invalid mode: {!r}"
+                             .format(mode))
 
         if field == gaupol.fields.MAIN_TEXT:
             return subtitle.main_text
         if field == gaupol.fields.TRAN_TEXT:
             return subtitle.tran_text
-        raise ValueError("Invalid field: {}"
-                         .format(repr(field)))
+        raise ValueError("Invalid field: {!r}"
+                         .format(field))
 
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
@@ -338,8 +338,8 @@ class Page(aeidon.Observable):
             return aeidon.documents.MAIN
         if col == self.view.columns.TRAN_TEXT:
             return aeidon.documents.TRAN
-        raise ValueError("Invalid column: {}"
-                         .format(repr(col)))
+        raise ValueError("Invalid column: {!r}"
+                         .format(col))
 
     def update_tab_label(self):
         """Update the notebook tab label and return title."""

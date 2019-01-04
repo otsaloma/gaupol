@@ -131,8 +131,8 @@ class SearchAgent(aeidon.Delegate):
             raise StopIteration
         if not next and doc == aeidon.documents.TRAN:
             return aeidon.documents.MAIN
-        raise ValueError("Invalid document: {} or invalid next: {}"
-                         .format(repr(doc), repr(next)))
+        raise ValueError("Invalid document: {!r} or invalid next: {!r}"
+                         .format(doc, next))
 
     def _next_in_document(self, index, doc, pos=None):
         """

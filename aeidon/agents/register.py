@@ -96,8 +96,8 @@ class RegisterAgent(aeidon.Delegate):
             return self.undoables
         if register.shift == -1:
             return self.redoables
-        raise ValueError("Invalid register: {}"
-                         .format(repr(register)))
+        raise ValueError("Invalid register: {!r}"
+                         .format(register))
 
     def _get_source_stack(self, register):
         """Return the stack where the action to register is taken from."""
@@ -105,8 +105,8 @@ class RegisterAgent(aeidon.Delegate):
             return self.redoables
         if register.shift == -1:
             return self.undoables
-        raise ValueError("Invalid register: {}"
-                         .format(repr(register)))
+        raise ValueError("Invalid register: {!r}"
+                         .format(register))
 
     @aeidon.deco.export
     def group_actions(self, register, count, description):

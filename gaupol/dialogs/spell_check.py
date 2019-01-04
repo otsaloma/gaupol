@@ -189,8 +189,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
             self._checker = enchant.checker.SpellChecker(dictionary, "")
         except enchant.Error as error:
             self._show_error_dialog(str(error))
-            raise ValueError("Dictionary initialization failed for language {}"
-                             .format(repr(self._language)))
+            raise ValueError("Dictionary initialization failed for language {!r}"
+                             .format(self._language))
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
