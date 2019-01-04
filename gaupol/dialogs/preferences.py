@@ -74,7 +74,7 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
         use_custom = gaupol.conf.editor.use_custom_font
         self._default_font_check.set_active(not use_custom)
         self._font_hbox.set_sensitive(use_custom)
-        self._font_button.set_font_name(self._get_custom_font())
+        self._font_button.set_font(self._get_custom_font())
         show_cell = gaupol.conf.editor.show_lengths_cell
         show_edit = gaupol.conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(show_cell or show_edit)
@@ -505,9 +505,9 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
     def _init_values(self):
         """Initialize default values for widgets."""
         font = self._get_custom_font(self.conf.subtitle_font)
-        self._subtitle_font_button.set_font_name(font)
+        self._subtitle_font_button.set_font(font)
         font = self._get_custom_font(self.conf.time_font)
-        self._time_font_button.set_font_name(font)
+        self._time_font_button.set_font(font)
         self._subtitle_bg_check.set_active(self.conf.subtitle_background)
         color = gaupol.util.hex_to_rgba(self.conf.subtitle_color)
         color.alpha = self.conf.subtitle_alpha
