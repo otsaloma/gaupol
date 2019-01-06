@@ -9,14 +9,14 @@ the keys referred to below correspond to actions that you can find via
 the menubar as well, but using the keyboard is necessary to be
 productive.
 
-1.  Open Gaupol and create a blank document: <kbd>File</kbd> ·
+1.  Open Gaupol and create a blank document: <kbd>File</kbd>
     <kbd>New</kbd>.
 
-1.  Load the video file you wish to subtitle: <kbd>Video</kbd> ·
-    <kbd>Load Video</kbd>.
+1.  Load the video file you wish to subtitle: <kbd>Video</kbd> <kbd>Load
+    Video</kbd>.
 
 1.  Play the video from start to finish (or maybe a scene at a time,
-    whatever feels more comfortable). Press <kbd>J</kbd> whenever
+    whichever feels more comfortable). Press <kbd>J</kbd> whenever
     someone starts speaking a new subtitle length piece. A new subtitle
     will be inserted with a three second duration and a placeholder
     text.
@@ -51,7 +51,7 @@ productive.
 
 1.  Once a scene or the whole video is subtitled, if you were not
     careful to avoid it, you'll notice that short subtitles disappear
-    too fast. You can batch-fix that with <kbd>Tools</kbd> · <kbd>Adjust
+    too fast. You can batch-fix that with <kbd>Tools</kbd> <kbd>Adjust
     Durations</kbd>. Set a minimum duration and gap and possibly
     lengthening to match reading speed to ensure that subtitles remain
     on screen long enough to be read. Note that automatic lengthening
