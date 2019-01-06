@@ -269,6 +269,12 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         for path in aeidon.util.flatten([path]):
             try:
+                # Skip files that are already open,
+                # but show a status message when that happens.
+                self._check_file_not_open(path)
+            except gaupol.Default:
+                continue
+            try:
                 page = self._open_file(path, encodings, aeidon.documents.MAIN)
             except gaupol.Default:
                 gaupol.util.set_cursor_normal(self.window)
