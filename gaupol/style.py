@@ -39,9 +39,9 @@ def _get_editor_font_css():
     unit = "pt" if Gtk.check_version(3, 22, 0) is None else "px"
     css = """
     .gaupol-custom-font {{
-      font-family: {family},monospace;
-      font-size: {size}{unit};
-      font-weight: {weight};
+        font-family: {family},monospace;
+        font-size: {size}{unit};
+        font-weight: {weight};
     }}""".format(
         family=font_desc.get_family().split(",")[0],
         size=int(round(font_desc.get_size() / Pango.SCALE)),
@@ -54,7 +54,7 @@ def _get_editor_font_css():
 
 def load_css(widget):
     """Load CSS rules from file and conf for `widget`."""
-    provider = Gtk.CssProvider.get_default()
+    provider = Gtk.CssProvider()
     css = "\n".join((CSS, _get_editor_font_css()))
     provider.load_from_data(bytes(css.encode()))
     style = widget.get_style_context()
@@ -65,7 +65,7 @@ def load_css(widget):
 
 def _update_css(*args, **kwargs):
     """Update CSS rules for the default provider."""
-    provider = Gtk.CssProvider.get_default()
+    provider = Gtk.CssProvider()
     provider.load_from_data(bytes(_get_editor_font_css().encode()))
 
 def use_font(widget, font):
