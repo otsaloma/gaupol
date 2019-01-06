@@ -217,7 +217,8 @@ class TextAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     @aeidon.deco.revertable
-    def remove_hearing_impaired(self, indices, doc, patterns, register=-1):
+    def remove_hearing_impaired(self, indices, doc, patterns,
+                                remove_blank=True, register=-1):
         """
         Remove hearing impaired parts from subtitles.
 
@@ -246,6 +247,7 @@ class TextAgent(aeidon.Delegate):
         self.replace_texts(new_indices, doc, new_texts, register=register)
         description = _("Removing hearing impaired texts")
         self.set_action_description(register, description)
+        if not remove_blank: return
         remove_indices = []
         for i, text in (x for x in enumerate(new_texts) if not x[1]):
             remove_indices.append(new_indices[i])
