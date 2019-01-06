@@ -93,19 +93,19 @@ class TimeEntry(Gtk.Entry):
 
     def _on_cut_clipboard(self, entry):
         """Change "cut-clipboard" signal to "copy-clipboard"."""
-        self.stop_emission("cut-clipboard")
+        self.stop_emission_by_name("cut-clipboard")
         self.emit("copy-clipboard")
 
     def _on_delete_text(self, entry, start_pos, end_pos):
         """Do not allow deleting text."""
-        self.stop_emission("delete-text")
+        self.stop_emission_by_name("delete-text")
         self.set_position(start_pos)
 
     def _on_key_press_event(self, entry, event):
         """Change numbers to zero if Backspace or Delete pressed."""
         keys = (Gdk.KEY_BackSpace, Gdk.KEY_Delete)
         if not event.keyval in keys: return
-        self.stop_emission("key-press-event")
+        self.stop_emission_by_name("key-press-event")
         if self.get_selection_bounds():
             gaupol.util.idle_add(self._zero_selection)
         elif event.keyval == Gdk.KEY_BackSpace:
@@ -115,12 +115,12 @@ class TimeEntry(Gtk.Entry):
 
     def _on_insert_text(self, entry, text, length, pos):
         """Insert `text` after validation."""
-        self.stop_emission("insert-text")
+        self.stop_emission_by_name("insert-text")
         gaupol.util.idle_add(self._insert_text, text)
 
     def _on_toggle_overwrite(self, entry):
         """Do not allow toggling overwrite."""
-        self.stop_emission("toggle-overwrite")
+        self.stop_emission_by_name("toggle-overwrite")
 
     @_blocked
     def _zero_next(self):
