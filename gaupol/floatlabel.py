@@ -31,7 +31,7 @@ class FloatingLabel(Gtk.Box):
 
     # FloatingLabel is inspired by, but not an implementation of,
     # the floating statusbar found in nautilus.
-    # https://git.gnome.org/browse/nautilus/tree/src/nautilus-floating-bar.c
+    # https://gitlab.gnome.org/GNOME/nautilus/blob/master/src/nautilus-floating-bar.c
 
     def __init__(self):
         """Initialize a :class:`FloatingLabel` instance."""
