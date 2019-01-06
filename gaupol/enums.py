@@ -53,7 +53,7 @@ class FieldDuration(aeidon.EnumerationItem):
     is_position = True
     is_text = False
     # TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-    # of a tree view column that contains numbers five characters wide.
+    # of a column that contains numbers five digits wide.
     label = _("Dur.")
     tooltip = _("Duration")
 
