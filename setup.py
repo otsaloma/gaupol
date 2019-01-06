@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 
 """
 There are four relevant customizations to the standard distutils installation
@@ -36,6 +35,7 @@ import glob
 import os
 import re
 import shutil
+import sys
 
 from distutils import log
 from distutils.command.clean import clean
@@ -44,7 +44,6 @@ from distutils.command.install_data import install_data
 from distutils.command.install_lib import install_lib
 from distutils.dist import Distribution as distribution
 
-freezing = "GAUPOL_FREEZING" in os.environ
 
 distribution.global_options.extend([
     ("mandir=", None, "relative installation directory for man pages (defaults to 'share/man')"),
@@ -52,8 +51,8 @@ distribution.global_options.extend([
     ("without-aeidon", None, "don't install the aeidon package"),
     ("with-gaupol", None, "install the gaupol package"),
     ("without-gaupol", None, "don't install the gaupol package"),
-    ("with-iso-codes", None, "install iso-codes XML files"),
-    ("without-iso-codes", None, "don't install iso-codes XML files"),
+    ("with-iso-codes", None, "install iso-codes JSON files"),
+    ("without-iso-codes", None, "don't install iso-codes JSON files"),
 ])
 
 distribution.negative_opt.update({
@@ -64,44 +63,37 @@ distribution.negative_opt.update({
 
 
 def get_aeidon_version():
-    """Return version number from aeidon/__init__.py."""
     path = os.path.join("aeidon", "__init__.py")
     text = open(path, "r", encoding="utf_8").read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def get_gaupol_version():
-    """Return version number from gaupol/__init__.py."""
     path = os.path.join("gaupol", "__init__.py")
     text = open(path, "r", encoding="utf_8").read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def run_or_exit(cmd):
-    """Run command in shell and raise SystemExit if it fails."""
-    if os.system(cmd) != 0:
-        log.error("FATAL ERROR: command {!r} failed".format(cmd))
-        raise SystemExit(1)
+    if os.system(cmd) == 0: return
+    log.error("command {!r} failed".format(cmd))
+    raise SystemExit(1)
 
 def run_or_warn(cmd):
-    """Run command in shell and warn if it fails."""
-    if os.system(cmd) != 0:
-        log.warn("WARNING: command {!r} failed".format(cmd))
+    if os.system(cmd) == 0: return
+    log.warn("command {!r} failed".format(cmd))
 
 
 class Clean(clean):
 
-    """Command to remove files and directories created."""
-
     def run(self):
-        """Remove files and directories listed in manifests/clean."""
         clean.run(self)
         f = open(os.path.join("manifests", "clean.manifest"), "r")
-        for targets in (glob.glob(x.strip()) for x in f):
+        for targets in [glob.glob(x.strip()) for x in f]:
             for target in filter(os.path.isdir, targets):
-                log.info("removing '{}'".format(target))
+                log.info("removing {}".format(target))
                 if not self.dry_run:
                     shutil.rmtree(target)
             for target in filter(os.path.isfile, targets):
-                log.info("removing '{}'".format(target))
+                log.info("removing {}".format(target))
                 if not self.dry_run:
                     os.remove(target)
         f.close()
@@ -109,11 +101,8 @@ class Clean(clean):
 
 class Distribution(distribution):
 
-    """The core controller of distutils commands."""
-
     def __init__(self, attrs=None):
-        """Initialize a :class:`Distribution` instance."""
-        if freezing:
+        if sys.platform == "win32":
             self.executables = []
         self.mandir = "share/man"
         self.with_aeidon = True
@@ -125,11 +114,10 @@ class Distribution(distribution):
         self.scripts = []
 
     def __find_data_files(self, name):
-        """Find data files to install for name."""
         fok = lambda x: not x.endswith((".in", ".pyc"))
         basename = "{}.manifest".format(name)
         f = open(os.path.join("manifests", basename), "r")
-        for line in (x.strip() for x in f):
+        for line in [x.strip() for x in f]:
             if not line: continue
             if line.startswith("["):
                 dest = line[1:-1]
@@ -141,15 +129,13 @@ class Distribution(distribution):
         f.close()
 
     def __find_man_pages(self):
-        """Find man pages to install."""
         mandir = self.mandir
         while mandir.endswith("/"):
             mandir = mandir[:-1]
         dest = "{}/man1".format(mandir)
-        self.data_files.append((dest, ("data/gaupol.1",)))
+        self.data_files.append((dest, ["data/gaupol.1"]))
 
     def __find_packages(self, name):
-        """Find Python packages to install for name."""
         for root, dirs, files in os.walk(name):
             init_path = os.path.join(root, "__init__.py")
             if not os.path.isfile(init_path): continue
@@ -158,12 +144,10 @@ class Distribution(distribution):
             self.packages.append(path[path.find(name):])
 
     def __find_scripts(self, name):
-        """Find scripts to install for name."""
         if name == "gaupol":
             self.scripts.append("bin/gaupol")
 
     def parse_command_line(self):
-        """Parse commands and options given as arguments."""
         value = distribution.parse_command_line(self)
         # Configuration files are parsed before the command line, so once the
         # command line is parsed, all options have their final values and thus
@@ -192,10 +176,9 @@ class Distribution(distribution):
         return value
 
     def parse_config_files(self, filenames=None):
-        """Parse options from configuration files."""
         value = distribution.parse_config_files(self, filenames)
         strtobool = distutils.util.strtobool
-        for option in ("with_aeidon", "with_gaupol", "with_iso_codes"):
+        for option in ["with_aeidon", "with_gaupol", "with_iso_codes"]:
             value = getattr(self, option)
             if isinstance(value, str):
                 setattr(self, option, strtobool(value))
@@ -204,10 +187,7 @@ class Distribution(distribution):
 
 class Install(install):
 
-    """Command to install everything."""
-
     def run(self):
-        """Install everything and update the desktop file database."""
         install.run(self)
         if not self.distribution.with_gaupol: return
         get_command_obj = self.distribution.get_command_obj
@@ -216,16 +196,13 @@ class Install(install):
         # Assume we're actually installing if --root was not given.
         if (root is not None) or (data_dir is None): return
         directory = os.path.join(data_dir, "share", "applications")
-        log.info("updating desktop database in '{}'".format(directory))
+        log.info("updating desktop database in {}".format(directory))
         run_or_warn('update-desktop-database "{}"'.format(directory))
 
 
 class InstallData(install_data):
 
-    """Command to install data files."""
-
     def __build_extensions(self):
-        """Build all Python code files in extensions."""
         get_command_obj = self.distribution.get_command_obj
         if not get_command_obj("install_lib").compile: return
         optimize = get_command_obj("install_lib").optimize
@@ -245,15 +222,12 @@ class InstallData(install_data):
                     self.outfiles.append(file)
 
     def __generate_linguas(self):
-        """Generate LINGUAS file needed by msgfmt."""
         linguas = sorted(glob.glob("po/*.po"))
-        linguas = [x.split(os.sep)[1] for x in linguas]
-        linguas = [x.split(".")[0] for x in linguas]
+        linguas = [os.path.basename(x)[:-3] for x in linguas]
         with open("po/LINGUAS", "w") as f:
             f.write("\n".join(linguas) + "\n")
 
     def __get_appdata_file(self):
-        """Return a tuple for translated appdata file."""
         path = os.path.join("data", "gaupol.appdata.xml")
         command = "msgfmt --xml -d po --template {}.in -o {}"
         run_or_warn(command.format(path, path))
@@ -261,28 +235,19 @@ class InstallData(install_data):
             # The above can fail with an old version of gettext,
             # fall back on copying the file without translations.
             shutil.copy("{}.in".format(path), path)
-        return ("share/metainfo", (path,))
+        return ("share/metainfo", [path])
 
     def __get_desktop_file(self):
-        """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
-        command = " ".join((
-            "msgfmt --desktop -d po --template {}.in -o {}",
-            "--keyword=",
-            "--keyword=GenericName",
-            "--keyword=Comment",
-            "--keyword=Keywords",
-            "--keyword=X-GNOME-FullName",
-        ))
+        command = "msgfmt --desktop -d po --template {}.in -o {}"
         run_or_warn(command.format(path, path))
         if not os.path.isfile(path):
             # The above can fail with an old version of gettext,
             # fall back on copying the file without translations.
             shutil.copy("{}.in".format(path), path)
-        return ("share/applications", (path,))
+        return ("share/applications", [path])
 
-    def __get_extension_file(self, extension, extension_file):
-        """Return a tuple for translated extension metadata file."""
+    def __get_extension_file(self, extension_file):
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
         command = " ".join((
@@ -296,23 +261,29 @@ class InstallData(install_data):
             # The above can fail with an old version of gettext,
             # fall back on copying the file without translations.
             shutil.copy("{}.in".format(path), path)
-        return ("share/gaupol/extensions/{}".format(extension), (path,))
+        extension = os.path.basename(os.path.dirname(extension_file))
+        return ("share/gaupol/extensions/{}".format(extension), [path])
+
+    def __get_extension_files(self):
+        files = sorted(glob.glob("data/extensions/*/*.extension.in"))
+        return [self.__get_extension_file(x) for x in files]
 
     def __get_mo_file(self, po_file):
-        """Return a tuple for compiled .mo file."""
         locale = os.path.basename(po_file[:-3])
         mo_dir = os.path.join("locale", locale, "LC_MESSAGES")
-        if not os.path.isdir(mo_dir):
-            log.info("creating {}".format(mo_dir))
-            os.makedirs(mo_dir)
         mo_file = os.path.join(mo_dir, "gaupol.mo")
-        dest_dir = os.path.join("share", mo_dir)
-        log.info("compiling '{}'".format(mo_file))
+        log.info("compiling {}".format(mo_file))
+        os.makedirs(mo_dir, exist_ok=True)
         run_or_exit("msgfmt {} -o {}".format(po_file, mo_file))
-        return (dest_dir, (mo_file,))
+        dest_dir = os.path.join("share", mo_dir)
+        return (dest_dir, [mo_file])
+
+    def __get_mo_files(self):
+        if sys.platform == "win32": return []
+        files = sorted(glob.glob("po/*.po"))
+        return [self.__get_mo_file(x) for x in files]
 
     def __get_pattern_file(self, pattern_file):
-        """Return a tuple for the translated pattern file."""
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
         command = " ".join((
@@ -326,24 +297,19 @@ class InstallData(install_data):
             # The above can fail with an old version of gettext,
             # fall back on copying the file without translations.
             shutil.copy("{}.in".format(path), path)
-        return ("share/gaupol/patterns", (path,))
+        return ("share/gaupol/patterns", [path])
+
+    def __get_pattern_files(self):
+        files = sorted(glob.glob("data/patterns/*.in"))
+        return [self.__get_pattern_file(x) for x in files]
 
     def run(self):
-        """Install data files after translating them."""
         self.__generate_linguas()
         if self.distribution.with_aeidon:
-            for po_file in sorted(glob.glob("po/*.po")):
-                if freezing: continue
-                self.data_files.append(self.__get_mo_file(po_file))
-            for pattern_file in glob.glob("data/patterns/*.in"):
-                self.data_files.append(self.__get_pattern_file(pattern_file))
+            self.data_files.extend(self.__get_mo_files())
+            self.data_files.extend(self.__get_pattern_files())
         if self.distribution.with_gaupol:
-            for extension in os.listdir("data/extensions"):
-                pattern = "data/extensions/{}/*.extension.in"
-                pattern = pattern.format(extension)
-                for extension_file in glob.glob(pattern):
-                    self.data_files.append(self.__get_extension_file(
-                        extension, extension_file))
+            self.data_files.extend(self.__get_extension_files())
             self.data_files.append(self.__get_appdata_file())
             self.data_files.append(self.__get_desktop_file())
         install_data.run(self)
@@ -353,16 +319,9 @@ class InstallData(install_data):
 
 class InstallLib(install_lib):
 
-    """Command to install library files."""
-
     def install(self):
-        """Install library files after writing changes."""
-        if self.distribution.with_aeidon:
-            self.__write_paths_module()
-        return install_lib.install(self)
-
-    def __write_paths_module(self):
-        """Write installation paths to build/aeidon/paths.py."""
+        if not self.distribution.with_aeidon:
+            return install_lib.install(self)
         get_command_obj = self.distribution.get_command_obj
         root = get_command_obj("install").root
         prefix = get_command_obj("install").install_data
@@ -384,24 +343,25 @@ class InstallLib(install_lib):
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
         assert text.count(repl) == 1
         open(path, "w", encoding="utf_8").write(text)
+        return install_lib.install(self)
 
 
-setup_kwargs = dict(
-    name="gaupol",
-    version=get_gaupol_version(),
-    platforms=("Platform Independent",),
-    author="Osmo Salomaa",
-    author_email="otsaloma@iki.fi",
-    url="https://otsaloma.io/gaupol/",
-    description="Editor for text-based subtitle files",
-    license="GPL",
-    distclass=Distribution,
-    cmdclass=dict(
-        clean=Clean,
-        install=Install,
-        install_data=InstallData,
-        install_lib=InstallLib,
-    ))
+setup_kwargs = {
+    "name": "gaupol",
+    "version": get_gaupol_version(),
+    "author": "Osmo Salomaa",
+    "author_email": "otsaloma@iki.fi",
+    "url": "https://otsaloma.io/gaupol/",
+    "description": "Editor for text-based subtitle files",
+    "license": "GPL",
+    "distclass": Distribution,
+    "cmdclass": {
+        "clean": Clean,
+        "install": Install,
+        "install_data": InstallData,
+        "install_lib": InstallLib,
+    },
+}
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(__file__) or ".")
