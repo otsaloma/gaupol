@@ -134,13 +134,13 @@
 [#753315]: https://bugzilla.gnome.org/show_bug.cgi?id=753315
 [#763589]: https://bugzilla.gnome.org/show_bug.cgi?id=763589
 
-Gaupol 0.28.2
-=============
+2015-05-16: Gaupol 0.28.2
+=========================
 
 * Fix text view size in spell check dialog
 
-Gaupol 0.28.1
-=============
+2015-05-09: Gaupol 0.28.1
+=========================
 
 * Have the spell-check dialog remember its size
 * Work around a destructive override in gst-python that broke
@@ -152,8 +152,8 @@ Gaupol 0.28.1
 
 [#748813]: http://bugzilla.gnome.org/show_bug.cgi?id=748813
 
-Gaupol 0.28
-===========
+2014-12-08: Gaupol 0.28
+=======================
 
 * Add target in the position shift dialog to shift subtitles
   from selection to end ([#734198][])
@@ -170,8 +170,8 @@ Gaupol 0.28
 [#740481]: http://bugzilla.gnome.org/show_bug.cgi?id=740481
 [#740527]: http://bugzilla.gnome.org/show_bug.cgi?id=740527
 
-Gaupol 0.27
-===========
+2014-10-27: Gaupol 0.27
+=======================
 
 * Hide tabs when only one tab is open
 * Expand tabs to fill window width, use 24 characters at minimum
@@ -185,8 +185,8 @@ Gaupol 0.27
   `gi.types.Boxed.__init__` and non-transient dialogs
 * Update Spanish translation (Carlos Mella)
 
-Gaupol 0.26
-===========
+2014-06-21: Gaupol 0.26
+=======================
 
 * Update file selection dialogs to work better with GTK+ 3.12
 * Default toolbar style to icons only (due to `gtk-toolbar-style`
@@ -211,8 +211,8 @@ Gaupol 0.26
 * Update Brazilian Portuguese translation (Rafael Ferreira)
 * Update Czech translation (Pavel Fric)
 
-Gaupol 0.25
-===========
+2014-02-08: Gaupol 0.25
+=======================
 
 * Depend on GtkSpell 3.0.0 or later instead of pygtkspellcheck
   for inline spell-check
@@ -236,20 +236,20 @@ Gaupol 0.25
   cx\_Freeze setup script)
 * Update Spanish translation (Carlos Mella)
 
-Gaupol 0.24.3
-=============
+2013-10-06: Gaupol 0.24.3
+=========================
 
 * Fix preferences dialog subtitle and time overlay connections
 
-Gaupol 0.24.2
-=============
+2013-10-06: Gaupol 0.24.2
+=========================
 
 * Make AppData file translatable
 * Fix broken string formatting in the French translation that caused
   `KeyError`s handling encoding names (#709335)
 
-Gaupol 0.24.1
-=============
+2013-09-22: Gaupol 0.24.1
+=========================
 
 * Possibly fix floating status label colors on non-Adwaita themes
 * Add an AppData XML file
@@ -257,8 +257,8 @@ Gaupol 0.24.1
 * Add French translation (RyDroid)
 * Update Czech translation (Pavel Fric)
 
-Gaupol 0.24
-===========
+2013-07-22: Gaupol 0.24
+=======================
 
 * Add action to set the end time from video position
   (see also <https://wiki.gnome.org/Apps/Gaupol/CreatingSubtitles>)
@@ -282,8 +282,8 @@ Gaupol 0.24
 * Add Galician translation (Leandro Regueiro)
 * Update Spanish translation (Carlos Mella)
 
-Gaupol 0.23
-===========
+2013-06-26: Gaupol 0.23
+=======================
 
 * Add a built-in GStreamer-based video player
 * Add a not-required, but recommended dependency on PT fonts
@@ -294,8 +294,8 @@ Gaupol 0.23
 * Fix `KeyError` tearing down extension on quit (#702518)
 * Update Spanish translation (Carlos Mella)
 
-Gaupol 0.22
-===========
+2013-04-09: Gaupol 0.22
+=======================
 
 * Restore drop-down arrows on undo and redo toolbar buttons for those
   using PyGObject 3.7.90 or greater (#686608)
@@ -306,8 +306,8 @@ Gaupol 0.22
 * Mostly fix cell rendering speed issues with GTK+ 3.6 and later
 * Add Czech translation (Pavel Fric)
 
-Gaupol 0.21.1
-=============
+2013-01-13: Gaupol 0.21.1
+=========================
 
 * Fix error disconnecting text view's line length margin handler
   (`AttributeError: 'TextView' object has no attribute
@@ -319,8 +319,8 @@ Gaupol 0.21.1
   a search-and-replace-all with a alot of matches)
 * Speed up action sensitivity updates
 
-Gaupol 0.21
-===========
+2012-12-02: Gaupol 0.21
+=======================
 
 * Restore inline spell-check, replace the previous GtkSpell
   dependency with a dependency on pygtkspellcheck
@@ -331,8 +331,8 @@ Gaupol 0.21
 * Fix search dialog mnemonics
 * Apply GNOME Goal: Remove markup in translatable messages
 
-Gaupol 0.20.1
-=============
+2012-11-11: Gaupol 0.20.1
+=========================
 
 * Fix crash on startup on newer versions of PyGObject and/or GTK+
   resulting from setting tool item types (#686608)
@@ -343,8 +343,8 @@ Gaupol 0.20.1
   "window-close-symbolic" is not found
 * Fix behaviour of spell-check dialog's "Replace with" entry
 
-Gaupol 0.20
-===========
+2012-10-14: Gaupol 0.20
+=======================
 
 * Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
 * Bump Python dependency to 3.2 or greater
@@ -377,8 +377,8 @@ Gaupol 0.20
 * Update Hungarian translation (Andrássy László)
 * Update Spanish translation (Carlos Mella)
 
-Gaupol 0.19.2
-=============
+2011-11-26: Gaupol 0.19.2
+=========================
 
 * Allow preview of unsaved documents (#661242)
 * Use subtitles from selected range if applicable in the Transform
@@ -393,8 +393,8 @@ Gaupol 0.19.2
 * Rename `manifest` directory in source tarball to avoid clashes with
   `MANIFEST` file on case-insensitive filesystems
 
-Gaupol 0.19.1
-=============
+2011-09-07: Gaupol 0.19.1
+=========================
 
 * Fix gettext initialization in aeidon package to not make global
   changes (Olivier Aubert, Osmo Salomaa, Debian bug #639668)
@@ -402,8 +402,8 @@ Gaupol 0.19.1
   don't start too early
 * Update Russian translation (Alexandre Prokoudine)
 
-Gaupol 0.19
-===========
+2011-07-17: Gaupol 0.19
+=======================
 
 * Add speech recognition to allow generating subtitles from video
   - http://wiki.gnome.org/Apps/Gaupol/SpeechRecognition
@@ -419,8 +419,8 @@ Gaupol 0.19
 * Update Spanish translation (Carlos Mella)
 * Update Hungarian translation (Andrássy László)
 
-Gaupol 0.18
-===========
+2011-05-30: Gaupol 0.18
+=======================
 
 * Add extension that allows use of custom framerates (#637503)
 * Add "Get more extensions" button to the preferences dialog
@@ -431,8 +431,8 @@ Gaupol 0.18
   Darlildo Souza)
 * Update German translation (Chris Leick)
 
-Gaupol 0.17.2
-=============
+2011-04-10: Gaupol 0.17.2
+=========================
 
 * Add framerate 24.0 fps found on Blu-rays and use three decimals for
   all framerates (#580345)
@@ -449,8 +449,8 @@ Gaupol 0.17.2
 * Abandon use of Transifex for translations
 * Add Turkish translation (Koray Löker and Çağlar Kilimci)
 
-Gaupol 0.17.1
-=============
+2010-11-07: Gaupol 0.17.1
+=========================
 
 * Fix search dialog replace button to change sensitivity without
   delay to avoid concurrent replacements (#626976)
@@ -463,8 +463,8 @@ Gaupol 0.17.1
 * Update Hungarian translation (Andrássy László)
 * Update Spanish translation (Carlos Mella)
 
-Gaupol 0.17
-===========
+2010-07-05: Gaupol 0.17
+=======================
 
 * Add "Save All As" (under the Projects menu) to save all open
   documents with selected properties (fixes #595685)
@@ -484,15 +484,15 @@ Gaupol 0.17
   man pages to somewhere else than `.../share/man` (fixes #620665)
 * Add Finnish translation
 
-Gaupol 0.16.2
-=============
+2010-06-22: Gaupol 0.16.2
+=========================
 
 * Fix "Quit" and Close All" to ask to save unsaved changes
 * Update Russian translation (Алекс)
 * Update Hungarian translation (Andrássy László)
 
-Gaupol 0.16.1
-=============
+2010-06-09: Gaupol 0.16.1
+=========================
 
 * Add support for a variant of the TMPlayer format with two-digit
   hours, i.e. time strings of form HH:MM:SS:
@@ -502,8 +502,8 @@ Gaupol 0.16.1
 * Clarify dependencies of aeidon and gaupol in `README.aeidon`
 * Add Russian translation (Алекс)
 
-Gaupol 0.16
-===========
+2010-06-03: Gaupol 0.16
+=======================
 
 * Split general-purpose, user-interface-independent subtitle editing
   code to a separate Python package called "aeidon" while keeping the
@@ -552,8 +552,8 @@ Gaupol 0.16
 * Raise PyGTK dependency to 2.16
 * Raise PyEnchant dependency to 1.4.0
 
-Gaupol 0.15.1
-=============
+2010-03-24: Gaupol 0.15.1
+=========================
 
 * Fix complete breakage of opening subtitle files due to a change in
   newline handling of `codecs.open` in Python 2.6.5
@@ -562,8 +562,8 @@ Gaupol 0.15.1
 * Add German translation (Chris Leick)
 * Add Hungarian translation (László Andrássy)
 
-Gaupol 0.15
-===========
+2009-05-15: Gaupol 0.15
+=======================
 
 * Add text correction task to split joined words or to join split
   words using spell-check suggestions (#572667)
@@ -583,8 +583,8 @@ Gaupol 0.15
 * Abort installation if an `intltool-merge` or `msgfmt` call fails
 * Add messages for raised exceptions
 
-Gaupol 0.14
-===========
+2009-04-13: Gaupol 0.14
+=======================
 
 * Add an extension system (documentation to follow later)
 * Add two extensions: side pane and bookmarks
@@ -607,8 +607,8 @@ Gaupol 0.14
 * Fix AssertionError when installing multiple times
 * Switch version-control systems from subversion to git
 
-Gaupol 0.13.1
-=============
+2008-09-17: Gaupol 0.13.1
+=========================
 
 * Fix error saving subtitle files when trying to quit with unsaved
   changes in multiple documents (#552129)
@@ -616,8 +616,8 @@ Gaupol 0.13.1
 * Remove redundant tags with the SubRip format when doing automatic
   text corrections, e.g. removing hearing impaired texts
 
-Gaupol 0.13
-===========
+2008-08-30: Gaupol 0.13
+=======================
 
 * Raise PyGTK dependency to 2.12 or greater
 * Remove misuse of assertions that broke some parts of Gaupol, when
@@ -655,26 +655,26 @@ Gaupol 0.13
 The five digit bug numbers refer to the old bug tracker at Gna
 and the six digit ones to the new bug tracker at GNOME Bugzilla.
 
-Gaupol 0.12.3
-=============
+2007-11-03: Gaupol 0.12.3
+=========================
 
 * Fix error in splitting frame-based subtitle projects (#10200)
 * Fix `UnboundLocalError` with preview (#10203)
 
-Gaupol 0.12.2
-=============
+2007-10-20: Gaupol 0.12.2
+=========================
 
 * Fix tag conversions that removed text (#10140)
 * Fix spacing issues in open and save dialogs
 
-Gaupol 0.12.1
-=============
+2007-10-02: Gaupol 0.12.1
+=========================
 
 * Fix text correction assistant's capitalization task
 * Fix remaining `NameError`s with function arguments (#10034)
 
-Gaupol 0.12
-===========
+2007-09-29: Gaupol 0.12
+=======================
 
 * Add a capitalization task to the text correction assistant
 * Add "All supported files" filter to the open dialog
@@ -685,8 +685,8 @@ Gaupol 0.12
 * Remove license page from the Windows installer
 * Include iso-codes with the Windows installer
 
-Gaupol 0.11
-===========
+2007-09-14: Gaupol 0.11
+=======================
 
 * Add a line-break task to the text correction assistant
 * Add menu-items and keybindings for extending the current
@@ -700,8 +700,8 @@ Gaupol 0.11
 * Add support for creating a Windows `.exe` with py2exe and a
   Windows installer with Inno Setup
 
-Gaupol 0.10
-===========
+2007-08-20: Gaupol 0.10
+=======================
 
 * Add a common error correction task for the text assistant
 * Fix default values of two configuration variables
@@ -713,8 +713,8 @@ Gaupol 0.10
 * Fix preview on Windows
 * Fix temporary file removals on Windows
 
-Gaupol 0.9
-==========
+2007-08-07: Gaupol 0.9
+======================
 
 * Raise Python dependency to 2.5.1 or greater (#9685, this
   should have been done already for 0.8.)
@@ -728,8 +728,8 @@ Gaupol 0.9
 * For reading and writing non-xml files in `$HOME/.gaupol`, always
   try the locale encoding first and if it fails, use UTF-8
 
-Gaupol 0.8
-==========
+2007-07-09: Gaupol 0.8
+======================
 
 * Python dependency raised to 2.5 or greater
 * PyGTK dependency raised to 2.10 or greater
@@ -780,16 +780,16 @@ Gaupol 0.8
 * Source code directory structure changed
 * Uninstallation feature removed
 
-Gaupol 0.7.1
-============
+2006-09-18: Gaupol 0.7.1
+========================
 
 * Fixed cell renderers to work with GTK and PyGTK 2.10
 * Fixed MicroDVD tag conversion errors (Bug #6938)
 * Fixed issue of disappearing tags when converting case
 * Polish (pl)
 
-Gaupol 0.7.0
-============
+2006-07-11: Gaupol 0.7.0
+========================
 
 * Append file
 * Split project
@@ -801,8 +801,8 @@ Gaupol 0.7.0
 * `setup.py`: `AUTHORS`, `COPYING` and `README` files no longer
   installed
 
-Gaupol 0.6.0
-============
+2006-07-07: Gaupol 0.6.0
+========================
 
 * Subtitle split and merge
 * Smarter translation file opening
@@ -814,8 +814,8 @@ Gaupol 0.6.0
 * `setup.py`: Fixed paths module generation in case `--root` option
   given with a trailing directory separator
 
-Gaupol 0.5.0
-============
+2006-06-28: Gaupol 0.5.0
+========================
 
 * Find and replace, including regular expressions
 * Character encoding auto-detection
@@ -850,14 +850,14 @@ Gaupol 0.5.0
 * New optional dependency of Universal Encoding Detector (chardet)
 * Polish (pl)
 
-Gaupol 0.4.1
-============
+2006-05-04: Gaupol 0.4.1
+========================
 
 * #5880: Framerate conversion returns an error
 * Miguel Latorre: Spanish (es)
 
-Gaupol 0.4.0
-============
+2006-03-10: Gaupol 0.4.0
+========================
 
 * Time shift
 * Time adjustment
@@ -871,15 +871,15 @@ Gaupol 0.4.0
 * Distutils commands `sdist` and `bdist_*` broken
 * Gil Forcada: Catalan (ca)
 
-Gaupol 0.3.4
-============
+2006-01-22: Gaupol 0.3.4
+========================
 
 * Support SubViewer 2.0 format
 * Start-up fails if PyEnchant is not installed
 * Spell-check "Join Forward" button does not work
 
-Gaupol 0.3.3
-============
+2006-01-20: Gaupol 0.3.3
+========================
 
 * Preview current data instead of saved file
 * Allow selecting arbitrary video file
@@ -892,19 +892,19 @@ Gaupol 0.3.3
 * Open button on the main toolbar missing tooltip
 * Open dialog not always defaulting to directory of last opened file
 
-Gaupol 0.3.2
-============
+2006-01-12: Gaupol 0.3.2
+========================
 
 * #5046: MPlayer freezes in preview
 
-Gaupol 0.3.1
-============
+2006-01-11: Gaupol 0.3.1
+========================
 
 * Save file before preview only if the file is changed
 * Have the spell-check dialog use the customizable editor font
 
-Gaupol 0.3.0
-============
+2006-01-10: Gaupol 0.3.0
+========================
 
 * Preview function
 * Smarter dialog sizes
@@ -914,8 +914,8 @@ Gaupol 0.3.0
 * Toggling dialog lines fails if document is unsaved
 * Italicization menu item not grayed out when document is unsaved
 
-Gaupol 0.2.0
-============
+2006-01-02: Gaupol 0.2.0
+========================
 
 * Spell-check
 * Debug dialog
@@ -934,13 +934,13 @@ functions have been rewritten. Separation between base and gtk modules is now
 far more sensible and should better suit possible alternative user
 interfaces.
 
-Gaupol 0.1.1
-============
+2005-08-27: Gaupol 0.1.1
+========================
 
 * Bug #2816: Settings not being saved.
 * Write correct version number to config file.
 
-Gaupol 0.1.0
-============
+2005-08-25: Gaupol 0.1.0
+========================
 
 Initial release.
