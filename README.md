@@ -17,9 +17,20 @@ files. See [`README.aeidon.md`](README.aeidon.md) for details.
 
 ### Linux
 
-Gaupol is packaged for most of the popular [distros][packages], so
-easiest is to install via your distro's package management. If you need
-a newer version than packaged, read on.
+#### Packages
+
+Gaupol is packaged for most of the popular [distros][], so easiest is to
+install via your distro's package management. If not packaged for your
+distro or you need a newer version than packaged, read below on how to
+install from Flatpak or the source code.
+
+[distros]: https://repology.org/metapackage/gaupol
+
+#### Flatpak
+
+Coming soon!
+
+#### Source
 
 Gaupol requires Python ≥ 3.2, PyGObject ≥ 3.12 and GTK+ ≥ 3.12.
 Additionally, during installation you need gettext. Optional, but
@@ -31,7 +42,7 @@ strongly recommended dependencies include:
 | [PyEnchant](https://github.com/rfk/pyenchant) | ≥ 1.4.0 | spell-check |
 | [GtkSpell](http://gtkspell.sourceforge.net/) | ≥ 3.0.0 | inline spell-check |
 | [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
-| [chardet](https://pypi.org/project/chardet/) | any | character encoding auto-detection |
+| [chardet](https://github.com/chardet/chardet) | any | character encoding auto-detection |
 
 From GStreamer you need at least the core, gst-plugins-base,
 gst-plugins-good and gst-plugins-bad; and for good container and codec
@@ -62,14 +73,8 @@ Then, to install Gaupol, run command
 
     sudo python3 setup.py install --prefix=/usr/local
 
-[packages]: https://repology.org/metapackage/gaupol
-
 ### Windows
 
-See the [releases page][releases] for installers. Note that Windows
-packaging is irregular, sometimes skipping a version, sometimes on hold
-completely, so you might need to look further than the latest release.
-Also note that the Windows version might lack some features, currently
-notably lacking the builtin video player.
+Windows installers are built irregularly, see [releases][].
 
 [releases]: https://github.com/otsaloma/gaupol/releases
