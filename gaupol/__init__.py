@@ -107,5 +107,6 @@ def main(args):
     # https://wiki.gnome.org/Projects/GnomeShell/ApplicationBased
     # https://github.com/otsaloma/gaupol/issues/62
     GLib.set_prgname("gaupol")
+    aeidon.i18n.bind()
     appman = ApplicationManager(args)
     raise SystemExit(appman.run())

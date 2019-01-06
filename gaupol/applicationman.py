@@ -90,7 +90,6 @@ class ApplicationManager(Gtk.Application):
         """Initialize application and open files from `args`."""
         opts, args = self._parse_args(args)
         sys.excepthook = gaupol.util.show_exception
-        aeidon.i18n.bind()
         self._init_configuration()
         self._init_menubar()
         self._init_application(opts, args)
@@ -164,7 +163,7 @@ class ApplicationManager(Gtk.Application):
             args.encoding = aeidon.encodings.translate_code(args.encoding)
         # Parse row to jump to. If found, remove from args.files.
         for arg in filter(re.compile(r"\+\d*").match, args.files):
-            args.jump = max(0, int(arg[1:])-1) if arg[1:] else -1
+            args.jump = max(0, int(arg[1:]) - 1) if arg[1:] else -1
             args.files.remove(arg)
         return args, args.files
 
