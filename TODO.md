@@ -2,9 +2,10 @@ Gaupol 1.5
 ==========
 
 * [ ] Add support for building a Flatpak
-* [x] Add 64x64 and 128x128 icons
-* [x] Adapt to various GTK+ deprecations
+* [x] Add keybinding for toggling italic (#118)
 * [x] When opening multiple files, skip ones already open
+* [x] Adapt to various GTK+ deprecations
+* [x] Add 64x64 and 128x128 icons
 * [x] Update AppData XML file
 * [x] Bump iso-codes dependency to >= 3.67
 * [ ] Update translations
