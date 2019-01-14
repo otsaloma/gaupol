@@ -119,7 +119,7 @@ class InsertSubtitlesAction(gaupol.Action):
 class InvertSelectionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "invert-selection")
-        self.accelerators = ["<Control>I"]
+        self.accelerators = ["<Control>J"]
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
