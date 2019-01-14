@@ -360,6 +360,7 @@ class EditAgent(aeidon.Delegate):
         page = self.get_current_page()
         col = page.view.get_columns().index(column)
         if not page.view.is_text_column(col): return
+        self._set_global_italicize(page, col)
         start, end = page.view.get_visible_range()
         end = gaupol.util.tree_path_to_row(end)
         if gaupol.util.tree_path_to_row(path) < end - 1:
@@ -383,6 +384,21 @@ class EditAgent(aeidon.Delegate):
             gaupol.util.set_cursor_normal(self.window)
         finally:
             self._revert_in_progress = False
+
+    def _set_global_italicize(self, page, col):
+        """Set global function to italicize text."""
+        # MultilineCellRenderer's CellTextView needs to know how
+        # to italicize text. Pass ugly via a global function.
+        gaupol.italic_tag = None
+        gaupol.italicize = None
+        if col is None: return
+        if not page.view.is_text_column(col): return
+        doc = page.text_column_to_document(col)
+        markup = page.project.get_markup(doc)
+        if markup is None: return
+        if markup.italic_tag is None: return
+        gaupol.italic_tag = markup.italic_tag
+        gaupol.italicize = markup.italicize
 
     def _set_unsafe_enabled(self, enabled):
         """Set enabled states of unsafe actions."""

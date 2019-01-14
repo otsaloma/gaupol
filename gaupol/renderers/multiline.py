@@ -19,7 +19,10 @@
 
 import aeidon
 import gaupol
+import math
+import re
 
+from aeidon.i18n import _
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
@@ -46,6 +49,8 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
         """Initialize a :class:`CellTextView` instance."""
         GObject.GObject.__init__(self)
         gaupol.util.prepare_text_view(self)
+        aeidon.util.connect(self, self, "key-press-event")
+        aeidon.util.connect(self, self, "populate-popup")
 
     def do_editing_done(self, *args):
         """End editing."""
@@ -66,6 +71,57 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
         text_buffer = self.get_buffer()
         start, end = text_buffer.get_bounds()
         return text_buffer.get_text(start, end, False)
+
+    def _on_key_press_event(self, text_view, event):
+        """Toggle italicization if Control+I pressed."""
+        if (event.get_state() & Gdk.ModifierType.CONTROL_MASK and
+            event.keyval in (Gdk.KEY_i, Gdk.KEY_I)):
+            self._on_toggle_italic()
+            return True
+        return False
+
+    def _on_populate_popup(self, text_view, popup):
+        """Add a context menu item to toggle italicization."""
+        if not isinstance(popup, Gtk.Menu): return
+        item = Gtk.MenuItem(label=_("Italic"))
+        item.connect("activate", self._on_toggle_italic)
+        child = item.get_child()
+        if isinstance(child, Gtk.AccelLabel):
+            child.set_accel(Gdk.KEY_i, Gdk.ModifierType.CONTROL_MASK)
+        item.show_all()
+        popup.append(item)
+
+    def _on_toggle_italic(self, *args):
+        """Add or remove italic tags around selection."""
+        if not getattr(gaupol, "italic_tag", None): return
+        if not getattr(gaupol, "italicize", None): return
+        text_buffer = self.get_buffer()
+        start, end = text_buffer.get_bounds()
+        text = text_buffer.get_text(start, end, False)
+        bounds = text_buffer.get_selection_bounds()
+        if not bounds:
+            # If no selection, replicate cursor position.
+            cursor = text_buffer.get_insert()
+            cursor = text_buffer.get_iter_at_mark(cursor)
+            bounds = (cursor, cursor)
+        a, b = [x.get_offset() for x in bounds]
+        # Strip possible existing italic tags around selection.
+        # If none found, then selection should be italicized.
+        text1 = re.sub(gaupol.italic_tag.pattern + r"\Z", "", text[:a])
+        text2 = re.sub(gaupol.italic_tag.pattern, "", text[a:b])
+        text3 = re.sub("\A" + gaupol.italic_tag.pattern, "", text[b:])
+        if text1 + text2 + text3 == text:
+            text2 = gaupol.italicize(text2)
+            match = gaupol.italic_tag.match(text2)
+            a += match.end() - match.start()
+            b += match.end() - match.start()
+        else:
+            a = len(text1)
+            b = len(text1) + len(text2)
+        text_buffer.set_text(text1 + text2 + text3)
+        ins = text_buffer.get_iter_at_offset(a)
+        bound = text_buffer.get_iter_at_offset(b)
+        text_buffer.select_range(ins, bound)
 
     def set_text(self, text):
         """Set text."""
