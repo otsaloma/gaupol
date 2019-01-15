@@ -2,6 +2,7 @@ Gaupol 1.5
 ==========
 
 * [ ] Add support for building a Flatpak
+* [x] Highlight changed parts in "Correct Texts" (#34)
 * [x] Add keybinding Ctrl+I for toggling italic (#118)
 * [x] Add keybinding Ctrl+I for toggling italic while editing (#118)
 * [x] Change keybinding for Invert Selection to Ctrl+J

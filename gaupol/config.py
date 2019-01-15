@@ -61,6 +61,9 @@ CONFIG_DEFAULTS = {
     },
     "general": {
         "dark_theme": False,
+        "diff_color_change": "#ffff0033",
+        "diff_color_delete": "#ff555533",
+        "diff_color_insert": "#00ff0033",
         "version": None,
     },
     "editor": {

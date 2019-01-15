@@ -833,17 +833,19 @@ class ConfirmationPage(BuilderPage):
         self._init_tree_view()
         self._init_values()
 
-    def _add_text_column(self, index, title):
+    def _add_text_column(self, index, ref_index, title):
         """Add a multiline text column to the tree view."""
-        renderer = gaupol.MultilineCellRenderer()
+        renderer = gaupol.MultilineDiffCellRenderer()
         renderer.set_show_lengths(True)
         renderer.props.editable = (index == 4)
         renderer.props.ellipsize = Pango.EllipsizeMode.END
         renderer.props.font = gaupol.util.get_font()
+        renderer.props.ref_type = ref_index - index
         renderer.props.yalign = 0
         renderer.props.xpad = 4
         renderer.props.ypad = 4
-        column = Gtk.TreeViewColumn(title, renderer, text=index)
+        column = Gtk.TreeViewColumn(
+            title, renderer, text=index, ref_text=ref_index)
         column.set_resizable(True)
         column.set_expand(True)
         self._tree_view.append_column(column)
@@ -892,8 +894,8 @@ class ConfirmationPage(BuilderPage):
         if gaupol.conf.editor.use_zebra_stripes:
             callback = self._on_renderer_set_background
             column.set_cell_data_func(renderer, callback, None)
-        self._add_text_column(3, _("Original Text"))
-        self._add_text_column(4, _("Corrected Text"))
+        self._add_text_column(3, 4, _("Original Text"))
+        self._add_text_column(4, 3, _("Corrected Text"))
         column = self._tree_view.get_column(2)
         renderer = column.get_cells()[0]
         renderer.connect("edited", self._on_tree_view_cell_edited)

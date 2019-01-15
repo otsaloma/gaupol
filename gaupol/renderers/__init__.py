@@ -20,11 +20,13 @@
 from .float     import FloatCellRenderer
 from .integer   import IntegerCellRenderer
 from .multiline import MultilineCellRenderer
+from .multiline import MultilineDiffCellRenderer
 from .time      import TimeCellRenderer
 
 __all__ = (
     "FloatCellRenderer",
     "IntegerCellRenderer",
     "MultilineCellRenderer",
+    "MultilineDiffCellRenderer",
     "TimeCellRenderer",
 )

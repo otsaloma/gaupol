@@ -18,6 +18,7 @@
 """Cell renderer for multiline text data."""
 
 import aeidon
+import difflib
 import gaupol
 import math
 import re
@@ -28,7 +29,7 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("MultilineCellRenderer",)
+__all__ = ("MultilineCellRenderer", "MultilineDiffCellRenderer")
 
 
 class CellTextView(Gtk.TextView, Gtk.CellEditable):
@@ -221,11 +222,80 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         # We don't actually use the length_unit argument,
         # but do need it accounted for in memoized values.
         if not text: return ""
-        if not show_lengths:
-            return GLib.markup_escape_text(text)
-        lengths = gaupol.ruler.get_lengths(text)
         text = GLib.markup_escape_text(text)
+        if not show_lengths: return text
         lines = text.split("\n")
+        lengths = gaupol.ruler.get_lengths(text)
+        return "\n".join(("{} <small>[{:d}]</small>"
+                          .format(lines[i], lengths[i])
+                          if lines[i] else lines[i]
+                          for i in range(len(lines))))
+
+
+class MultilineDiffCellRenderer(MultilineCellRenderer):
+
+    """Cell renderer for multiline diffed text data."""
+
+    __gtype_name__ = "MultilineDiffCellRenderer"
+
+    ref_text = GObject.Property(type=str, default="")
+    ref_type = GObject.Property(type=int, default=-1)
+
+    COLOR_CHANGE = gaupol.conf.general.diff_color_change
+    COLOR_DELETE = gaupol.conf.general.diff_color_delete
+    COLOR_INSERT = gaupol.conf.general.diff_color_insert
+
+    def __init__(self):
+        """Initialize a :class:`MultilineDiffCellRenderer` instance."""
+        MultilineCellRenderer.__init__(self)
+        self._ref_text = ""
+
+    def _add_diff_markup(self, a, b):
+        """Return `a` with markup for parts different from `b`."""
+        matcher = difflib.SequenceMatcher(a=a, b=b)
+        ops = matcher.get_opcodes()
+        return "".join(self._highlight(a[i1:i2], tag)
+                       for tag, i1, i2, j1, j2 in ops)
+
+    def _get_diff_color(self, tag):
+        """Return color to use to highlight changes of type `tag`."""
+        if tag == "insert" and self.props.ref_type > 0: return self.COLOR_INSERT
+        if tag == "insert" and self.props.ref_type < 0: return self.COLOR_DELETE
+        if tag == "delete" and self.props.ref_type > 0: return self.COLOR_DELETE
+        if tag == "delete" and self.props.ref_type < 0: return self.COLOR_INSERT
+        return self.COLOR_CHANGE
+
+    def _highlight(self, text, tag):
+        """Return `text` as markup highlighting changes of type `tag`."""
+        if tag == "equal": return text
+        color = self._get_diff_color(tag)
+        return '<span background="{}">{}</span>'.format(color, text)
+
+    def _on_notify_text(self, *args):
+        """Set markup by adding line lengths to text."""
+        # Since GTK+ 3.6, the notify::text signal seems to get
+        # emitted insanely often even if text hasn't changed at
+        # all. Let's try to keep this callback as fast as possible.
+        self._text = self.props.text
+        self._ref_text = self.props.ref_text
+        self.props.markup = self._text_to_markup(self.props.text,
+                                                 self.props.ref_text,
+                                                 self._show_lengths,
+                                                 gaupol.conf.editor.length_unit)
+
+    @aeidon.deco.memoize(1000)
+    def _text_to_markup(self, text, ref_text, show_lengths, length_unit):
+        """Return `text` rendered as markup for display."""
+        # We don't actually use the length_unit argument,
+        # but do need it accounted for in memoized values.
+        if not text: return ""
+        text = GLib.markup_escape_text(text)
+        ref_text = GLib.markup_escape_text(ref_text)
+        with aeidon.util.silent(Exception, tb=True):
+            text = self._add_diff_markup(text, ref_text)
+        if not show_lengths: return text
+        lines = text.split("\n")
+        lengths = gaupol.ruler.get_lengths(text)
         return "\n".join(("{} <small>[{:d}]</small>"
                           .format(lines[i], lengths[i])
                           if lines[i] else lines[i]
