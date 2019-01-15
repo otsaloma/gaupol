@@ -110,7 +110,7 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
         # If none found, then selection should be italicized.
         text1 = re.sub(gaupol.italic_tag.pattern + r"\Z", "", text[:a])
         text2 = re.sub(gaupol.italic_tag.pattern, "", text[a:b])
-        text3 = re.sub("\A" + gaupol.italic_tag.pattern, "", text[b:])
+        text3 = re.sub(r"\A" + gaupol.italic_tag.pattern, "", text[b:])
         if text1 + text2 + text3 == text:
             text2 = gaupol.italicize(text2)
             match = gaupol.italic_tag.match(text2)
