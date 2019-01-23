@@ -64,3 +64,12 @@ xgettext \
     --keyword=Keywords \
     --add-comments=TRANSLATORS: \
     data/gaupol.desktop.in
+
+# Remove AppData entries that shouldn't be translated.
+msggrep \
+    --invert-match \
+    --msgid \
+    --regexp="^Gaupol$" \
+    --regexp="^Osmo Salomaa$" \
+    --output-file=po/tmp.pot \
+    po/gaupol.pot && mv -f po/tmp.pot po/gaupol.pot
