@@ -1,0 +1,64 @@
+app-id: io.otsaloma.gaupol
+runtime: org.gnome.Platform
+runtime-version: "3.30"
+sdk: org.gnome.Sdk
+command: gaupol
+rename-appdata-file: gaupol.appdata.xml
+rename-desktop-file: gaupol.desktop
+rename-icon: gaupol
+copy-icon: true
+finish-args:
+  - --device=dri
+  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
+  - --filesystem=home
+  - --filesystem=xdg-run/dconf
+  - --filesystem=xdg-videos
+  - --filesystem=~/.config/dconf:ro
+  - --share=ipc
+  - --socket=pulseaudio
+  - --socket=wayland
+  - --socket=x11
+  - --talk-name=ca.desrt.dconf
+modules:
+
+  - name: enchant
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
+        sha256: bef0d9c0fef2e4e8746956b68e4d6c6641f6b85bd2908d91731efb68eba9e3f5
+
+  - name: gtkspell3
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://sourceforge.net/projects/gtkspell/files/3.0.10/gtkspell3-3.0.10.tar.xz
+        sha256: b040f63836b347eb344f5542443dc254621805072f7141d49c067ecb5a375732
+
+  - name: chardet
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/fc/bb/a5768c230f9ddb03acc9ef3f0d4a3cf93462473795d18e9535498c8f929d/chardet-3.0.4.tar.gz
+        sha256: 84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae
+
+  - name: pyenchant
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app
+    ensure-writable:
+      - /lib/python3.*/site-packages/easy-install.pth
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/9e/54/04d88a59efa33fefb88133ceb638cdf754319030c28aadc5a379d82140ed/pyenchant-2.0.0.tar.gz
+        sha256: fc31cda72ace001da8fe5d42f11c26e514a91fa8c70468739216ddd8de64e2a0
+
+  - name: gaupol
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app
+    sources:
+      - type: git
+        url: https://github.com/otsaloma/gaupol.git
