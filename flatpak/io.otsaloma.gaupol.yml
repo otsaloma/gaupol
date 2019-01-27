@@ -23,6 +23,9 @@ modules:
 
   - name: enchant
     buildsystem: autotools
+    config-opts:
+      - --disable-static
+      - --with-myspell-dir=/usr/share/hunspell
     sources:
       - type: archive
         url: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
