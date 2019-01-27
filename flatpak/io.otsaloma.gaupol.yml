@@ -10,6 +10,7 @@ copy-icon: true
 finish-args:
   - --device=dri
   - --env=DCONF_USER_CONFIG_DIR=.config/dconf
+  - --env=GST_PLUGIN_PATH_1_0=/app/lib/gstreamer-1.0
   - --filesystem=home
   - --filesystem=xdg-run/dconf
   - --filesystem=xdg-videos
@@ -20,6 +21,22 @@ finish-args:
   - --socket=x11
   - --talk-name=ca.desrt.dconf
 modules:
+
+  - name: gst-libav
+    buildsystem: autotools
+    config-opts:
+      - --with-system-libav=no
+    sources:
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.14.4.tar.xz
+        sha256: dfd78591901df7853eab7e56a86c34a1b03635da0d3d56b89aa577f1897865da
+
+  - name: gst-plugins-ugly
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.14.4.tar.xz
+        sha256: ac02d837f166c35ff6ce0738e281680d0b90052cfb1f0255dcf6aaca5f0f6d23
 
   - name: enchant
     buildsystem: autotools
