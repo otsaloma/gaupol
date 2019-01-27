@@ -1,11 +1,12 @@
 # -*- coding: utf-8-unix -*-
 
 clean:
-	rm -rf .flatpak-builder
 	rm -rf build
+	rm -rf .flatpak-builder
 
 install:
-	$(MAKE) clean uninstall
+	$(MAKE) uninstall
+	rm -rf build .flatpak-builder/build
 	flatpak-builder --install --install-deps-from=flathub build io.otsaloma.gaupol.yml
 
 run:
