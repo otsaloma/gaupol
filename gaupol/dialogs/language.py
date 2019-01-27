@@ -125,6 +125,10 @@ class LanguageDialog(gaupol.BuilderDialog):
             locales = enchant.list_languages()
         for locale in locales:
             with aeidon.util.silent(enchant.Error):
-                enchant.Dict(locale).check("gaupol")
+                if len(locales) < 100:
+                    # Some locales don't actually work, so initialize and check
+                    # a word to test. With a lot of locales, e.g. with Flatpak,
+                    # this cumulates to an unbearable amount of time.
+                    enchant.Dict(locale).check("gaupol")
                 name = aeidon.locales.code_to_name(locale)
                 store.append((locale, name))
