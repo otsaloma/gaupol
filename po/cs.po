@@ -3,20 +3,24 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Osmo Salomaa <otsaloma@iki.fi>, 2016
+# fri, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 16:08+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: fri, 2017\n"
+"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"PO-Revision-Date: 2016-07-07 00:55+0000\n"
+"Last-Translator: fri, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/otsaloma/teams/64879/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: aeidon/enums.py:39 gaupol/enums.py:38
 msgid "Subtitle number"
@@ -48,7 +52,8 @@ msgstr "Mac (klasický)"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
+#. files for a reference:
+#. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
 #: aeidon/encodings.py:40 aeidon/encodings.py:43 aeidon/encodings.py:46
 msgid "English"
 msgstr "Angličtina"
@@ -247,15 +252,15 @@ msgstr "Psát texty velkým písmem"
 msgid "Correcting common errors"
 msgstr "Opravit běžné chyby"
 
-#: aeidon/agents/text.py:247
+#: aeidon/agents/text.py:248
 msgid "Removing hearing impaired texts"
 msgstr "Odstranit texty pro sluchově postižené"
 
-#: aeidon/agents/text.py:328
+#: aeidon/agents/text.py:330
 msgid "Joining words by spell-check suggestions"
 msgstr "Spojit slova podle návrhů správného psaní"
 
-#: aeidon/agents/text.py:372
+#: aeidon/agents/text.py:374
 msgid "Splitting words by spell-check suggestions"
 msgstr "Rozdělit slova podle návrhů správného psaní"
 
@@ -409,7 +414,7 @@ msgid "End position"
 msgstr "Koncová poloha"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-#. of a tree view column that contains numbers five characters wide.
+#. of a column that contains numbers five digits wide.
 #: gaupol/enums.py:57
 msgid "Dur."
 msgstr "Doba"
@@ -557,12 +562,12 @@ msgstr "Spojit nebo rozdělit slova"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Nepodařilo se nahrát slovník pro jazyk \"{}\""
 
-#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
-#: gaupol/agents/open.py:331 gaupol/agents/open.py:339
-#: gaupol/agents/open.py:348 gaupol/agents/save.py:197
+#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
+#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
+#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
 #: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
 #: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
 msgid "_OK"
@@ -617,39 +622,44 @@ msgstr "Úkol: {}"
 msgid "Confirm Changes"
 msgstr "Potvrdit změny"
 
-#: gaupol/assistants.py:889
+#: gaupol/assistants.py:891
 msgid "Accept"
 msgstr "Přijmout"
 
-#: gaupol/assistants.py:895
+#: gaupol/assistants.py:897
 msgid "Original Text"
 msgstr "Původní text:"
 
-#: gaupol/assistants.py:896
+#: gaupol/assistants.py:898
 msgid "Corrected Text"
 msgstr "Opravený text"
 
-#: gaupol/assistants.py:1045
+#: gaupol/assistants.py:1047
 msgid "Correct Texts"
 msgstr "Opravit texty"
 
-#: gaupol/assistants.py:1072
+#: gaupol/assistants.py:1074
 msgid "Correcting texts"
 msgstr "Opravují se texty"
 
-#: gaupol/assistants.py:1088
+#: gaupol/assistants.py:1090
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Upraveno {edits:d} a odstraněno {removals:d} titulků"
 
-#: gaupol/assistants.py:1122
+#: gaupol/assistants.py:1124
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Potvrdit {:d}  změnu"
 msgstr[1] "Potvrdit {:d}  změny"
 msgstr[2] "Potvrdit {:d}  změn"
+msgstr[3] "Potvrdit {:d}  změn"
 
-#: gaupol/player.py:337
+#: gaupol/renderers/multiline.py:87
+msgid "Italic"
+msgstr ""
+
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr "Spuštění přehrávání se nezdařilo"
 
@@ -663,6 +673,7 @@ msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "Nalezen a nahrazen {:d} výskyt"
 msgstr[1] "Nalezeny a nahrazeny {:d} výskyty"
 msgstr[2] "Nalezeno a nahrazeno {:d} výskytů"
+msgstr[3] "Nalezeno a nahrazeno {:d} výskytů"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -683,8 +694,8 @@ msgstr "Chyba v nahrazení od regulárního výrazu"
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
-#: gaupol/agents/open.py:357 gaupol/agents/open.py:369
-#: gaupol/agents/open.py:381 gaupol/agents/close.py:71
+#: gaupol/agents/open.py:363 gaupol/agents/open.py:375
+#: gaupol/agents/open.py:387 gaupol/agents/close.py:71
 #: data/extensions/custom-framerates/custom-framerates.py:39
 msgid "_Cancel"
 msgstr "_Zrušit"
@@ -754,7 +765,7 @@ msgstr "Vlastní"
 msgid "Save changes to documents before closing?"
 msgstr "Uložit před zavřením změny v dokumentech?"
 
-#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:378
+#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:384
 #: gaupol/agents/close.py:68
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Pokud je neuložíte, budou změny navždy ztraceny."
@@ -764,7 +775,7 @@ msgid "Close _Without Saving"
 msgstr "Zavřít _bez uložení"
 
 #: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/multi_save.py:84
-#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:382
+#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:388
 #: gaupol/agents/close.py:72 data/ui/menubar.ui:34
 msgid "_Save"
 msgstr "_Uložit"
@@ -777,8 +788,8 @@ msgstr "Vyberte _hlavní dokument, který chcete uložit:"
 msgid "Select the _translation documents you want to save:"
 msgstr "Vyberte _překladový dokument, který chcete uložit:"
 
-#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:358
-#: gaupol/agents/open.py:370
+#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:364
+#: gaupol/agents/open.py:376
 msgid "_Open"
 msgstr "_Otevřít"
 
@@ -819,10 +830,6 @@ msgstr "Pavel Fric <fripohled.blogspot.cz>"
 #: gaupol/dialogs/about.py:55
 msgid "Gaupol Website"
 msgstr "Stránky Gaupolu"
-
-#: gaupol/dialogs/about.py:61
-msgid "Donate"
-msgstr "Darovat"
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -881,6 +888,7 @@ msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "Upravená délka trvání {:d} titulku"
 msgstr[1] "Upravená délka trvání {:d} titulků"
 msgstr[2] "Upravená délka trvání {:d} titulků"
+msgstr[3] "Upravená délka trvání {:d} titulků"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -952,19 +960,19 @@ msgstr "Vybrat obrazový záznam"
 msgid "_Select"
 msgstr "_Vybrat"
 
-#: gaupol/agents/open.py:319
+#: gaupol/agents/open.py:325
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "Dekódování souboru \"{}\" se nezdařilo ani se všemi vyzkoušenými kodeky"
 
-#: gaupol/agents/open.py:320
+#: gaupol/agents/open.py:326
 msgid "Please try to open the file with a different character encoding."
 msgstr "Zkuste, prosím, soubor otevřít s jiným kódováním znaků."
 
-#: gaupol/agents/open.py:328
+#: gaupol/agents/open.py:334
 msgid "Failed to recognize format of file \"{}\""
 msgstr "Formát souboru \"{}\" se nepodařilo rozpoznat"
 
-#: gaupol/agents/open.py:329
+#: gaupol/agents/open.py:335
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
@@ -972,24 +980,24 @@ msgstr ""
 "Ověřte, prosím, že soubor, který se pokoušíte otevřít, je soubor s titulky, "
 "jehož formát Gaupol podporuje."
 
-#: gaupol/agents/open.py:337
+#: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
 msgstr "Nepodařilo se otevřít soubor \"{}\""
 
-#: gaupol/agents/open.py:345
+#: gaupol/agents/open.py:351
 msgid "Failed to parse file \"{}\""
 msgstr "Zpracování souboru \"{}\" se nezdařilo"
 
-#: gaupol/agents/open.py:346
+#: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr ""
 "Ověřte, prosím, že soubor, který se pokoušíte otevřít, je platný soubor {}."
 
-#: gaupol/agents/open.py:354
+#: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
 msgstr "Otevřít mimořádně velký soubor\"{}\"?"
 
-#: gaupol/agents/open.py:355
+#: gaupol/agents/open.py:361
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -998,11 +1006,11 @@ msgstr ""
 "titulkymimořádně hodně. Ověřte, prosím, že se nepokoušíte otevřít binární "
 "soubor."
 
-#: gaupol/agents/open.py:365
+#: gaupol/agents/open.py:371
 msgid "Open unsorted file \"{}\"?"
 msgstr "Otevřít nezařazený soubor \"{}\"?"
 
-#: gaupol/agents/open.py:366
+#: gaupol/agents/open.py:372
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
@@ -1010,11 +1018,11 @@ msgstr ""
 "Pořadí {:d} titulků se musí změnit. Když {:d} zní, jako by to bylo mnoho, "
 "soubor by mohl být složen chybně."
 
-#: gaupol/agents/open.py:377
+#: gaupol/agents/open.py:383
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr "Uložit změny do překladového dokumentu »{}« před otevřením nového?"
 
-#: gaupol/agents/open.py:380
+#: gaupol/agents/open.py:386
 msgid "Open _Without Saving"
 msgstr "Otevřít _bez uložení"
 
@@ -1026,18 +1034,19 @@ msgstr "Uložit před zavřením změny do dokumentu \"{}\"?"
 msgid "Stretching end position"
 msgstr "Natažení polohy konce"
 
-#: gaupol/agents/edit.py:207
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] "Vložen {:d} titulek, aby se shodoval s obsahem schránky"
 msgstr[1] "Vloženy {:d} nové titulky, aby se shodoval s obsahem schránky"
 msgstr[2] "Vloženo {:d} nových titulků, aby se shodoval s obsahem schránky"
+msgstr[3] "Vloženo {:d} nových titulků, aby se shodoval s obsahem schránky"
 
-#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr "Natažení polohy začátku"
 
-#: gaupol/agents/edit.py:365
+#: gaupol/agents/edit.py:368
 msgid "Use Shift+Return for line-break"
 msgstr "Pro zalomení řádku použít Shift+Enter"
 
@@ -1122,7 +1131,7 @@ msgstr "Nahrát obrazový záznam"
 msgid "_Load"
 msgstr "_Nahrát"
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr "Nestanoveno"
 
@@ -1148,49 +1157,49 @@ msgstr "Uložení souboru s titulky do dočasného adresáře \"{}\" se nezdaři
 msgid "Failed to launch video player"
 msgstr "Spuštění přehrávače obrazového záznamu se nezdařilo"
 
-#: gaupol/applicationman.py:105
+#: gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [VOLBA...] [SOUBOR...] [+[ČÍSLO]]"
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:108
 msgid "FILE..."
 msgstr "SOUBOR..."
 
-#: gaupol/applicationman.py:112
+#: gaupol/applicationman.py:111
 msgid "subtitle files to open"
 msgstr "Soubory s titulky k otevření"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:121
 msgid "ENCODING"
 msgstr "KÓDOVÁNÍ"
 
-#: gaupol/applicationman.py:125
+#: gaupol/applicationman.py:124
 msgid "set the character encoding used to open files"
 msgstr "Nastavit kódování znaků, které se používá při otevírání souborů"
 
-#: gaupol/applicationman.py:132
+#: gaupol/applicationman.py:131
 msgid "list all available character encodings"
 msgstr "Vypsat všechna dostupná kódování znaků"
 
-#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
+#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
 msgid "FILE"
 msgstr "SOUBOR"
 
-#: gaupol/applicationman.py:140
+#: gaupol/applicationman.py:139
 msgid "open translation file"
 msgstr "Otevřít překladový soubor"
 
-#: gaupol/applicationman.py:145
+#: gaupol/applicationman.py:144
 msgid "METHOD"
 msgstr "METODA"
 
-#: gaupol/applicationman.py:149
+#: gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "Metoda, která se používá k zarovnání překladových titulků: \"Číslo\" nebo "
 "\"Poloha\""
 
-#: gaupol/applicationman.py:157
+#: gaupol/applicationman.py:156
 msgid "select video file"
 msgstr "Vybrat soubor s obrazovým záznamem"
 
@@ -2600,38 +2609,31 @@ msgstr "Hudební noty"
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Nahradit znaky Unicode hudebních not dvojitými křížky"
 
+#: data/gaupol.appdata.xml.in:7
+msgid "Editor for text-based subtitles"
+msgstr ""
+
 #: data/gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
-"texts and timing subtitles to match video. The user interface is designed "
-"with attention to batch processing of multiple documents and convenience of "
-"translating."
+"texts and timing subtitles to match video."
 msgstr ""
-"Gaupol je editor pro textově založené soubory titulků. Podporuje více "
-"formátů souborů titulků a poskytuje prostředky k vytváření titulků, "
-"upravování textů a časování titulků, aby odpovídaly obrazovému záznamu. "
-"Uživatelské rozhraní je navrženo s péčí o dávkové zpracování více dokumentů "
-"a o pohodlí při překládání."
 
-#: data/gaupol.appdata.xml.in:18
+#: data/gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr "Hlavní okno"
 
-#: data/gaupol.desktop.in:4
+#: data/gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "Editor titulků"
 
-#: data/gaupol.desktop.in:5
+#: data/gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "Upravit soubory s titulky"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:7
+#: data/gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
 msgstr "video;titulky;podtitulky;"
-
-#: data/gaupol.desktop.in:15
-msgid "Gaupol Subtitle Editor"
-msgstr "Editor titulků Gaupol"

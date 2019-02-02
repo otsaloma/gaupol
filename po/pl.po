@@ -3,14 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Osmo Salomaa <otsaloma@iki.fi>, 2016
+# edasmax <edasmax@gmail.com>, 2018
+# mkkot <marcin2006@gmail.com>, 2019
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 16:08+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: edasmax <edasmax@gmail.com>, 2016\n"
+"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"PO-Revision-Date: 2016-07-07 00:55+0000\n"
+"Last-Translator: mkkot <marcin2006@gmail.com>, 2019\n"
 "Language-Team: Polish (https://www.transifex.com/otsaloma/teams/64879/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +53,8 @@ msgstr "Mac (klasyczny)"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
+#. files for a reference:
+#. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
 #: aeidon/encodings.py:40 aeidon/encodings.py:43 aeidon/encodings.py:46
 msgid "English"
 msgstr "Angielski"
@@ -247,15 +253,15 @@ msgstr "Zamiana na wielkie litery"
 msgid "Correcting common errors"
 msgstr "Korygowanie typowych błędów"
 
-#: aeidon/agents/text.py:247
+#: aeidon/agents/text.py:248
 msgid "Removing hearing impaired texts"
 msgstr "Usuwanie niesłyszanlych tekstów"
 
-#: aeidon/agents/text.py:328
+#: aeidon/agents/text.py:330
 msgid "Joining words by spell-check suggestions"
 msgstr "Łączenie słów za pomocą sugestii sprawdzania pisowni"
 
-#: aeidon/agents/text.py:372
+#: aeidon/agents/text.py:374
 msgid "Splitting words by spell-check suggestions"
 msgstr "Dzielenie słów przez sugestie sprawdzania pisowni"
 
@@ -409,7 +415,7 @@ msgid "End position"
 msgstr "Pozycja końcowa"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-#. of a tree view column that contains numbers five characters wide.
+#. of a column that contains numbers five digits wide.
 #: gaupol/enums.py:57
 msgid "Dur."
 msgstr "cz. tr."
@@ -558,12 +564,12 @@ msgstr "Łączenie lub dzielenie wyrazów"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Nie można uruchomić słownika dla języka \"{}\""
 
-#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
-#: gaupol/agents/open.py:331 gaupol/agents/open.py:339
-#: gaupol/agents/open.py:348 gaupol/agents/save.py:197
+#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
+#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
+#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
 #: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
 #: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
 msgid "_OK"
@@ -618,40 +624,44 @@ msgstr "Zadanie: {}"
 msgid "Confirm Changes"
 msgstr "Potwierdź zmiany"
 
-#: gaupol/assistants.py:889
+#: gaupol/assistants.py:891
 msgid "Accept"
 msgstr "Zaakceptuj"
 
-#: gaupol/assistants.py:895
+#: gaupol/assistants.py:897
 msgid "Original Text"
 msgstr "Oryginalny tekst"
 
-#: gaupol/assistants.py:896
+#: gaupol/assistants.py:898
 msgid "Corrected Text"
 msgstr "Poprawiony tekst"
 
-#: gaupol/assistants.py:1045
+#: gaupol/assistants.py:1047
 msgid "Correct Texts"
 msgstr "Popraw teksty"
 
-#: gaupol/assistants.py:1072
+#: gaupol/assistants.py:1074
 msgid "Correcting texts"
 msgstr "Poprawianie tekstów"
 
-#: gaupol/assistants.py:1088
+#: gaupol/assistants.py:1090
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Edytowane {edits:d} i usunięte {removals:d} napisy"
 
-#: gaupol/assistants.py:1122
+#: gaupol/assistants.py:1124
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Potwierdź {:d} zmianę"
+msgstr[1] "Potwierdź {:d} zmiany"
+msgstr[2] "Potwierdź {:d} zmiany"
+msgstr[3] "Potwierdź {:d} zmiany"
 
-#: gaupol/player.py:337
+#: gaupol/renderers/multiline.py:87
+msgid "Italic"
+msgstr ""
+
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr "Nie można zainicjować odtwarzania"
 
@@ -662,10 +672,10 @@ msgstr "_Pomoc"
 #: gaupol/dialogs/search.py:471
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Znaleziono i zastąpiono {:d} wystąpienie"
+msgstr[1] "Znaleziono i zastąpiono {:d} wystąpień"
+msgstr[2] "Znaleziono i zastąpiono {:d} wystąpień"
+msgstr[3] "Znaleziono i zastąpiono {:d} wystąpień"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -686,8 +696,8 @@ msgstr "Błąd podczas zastępowania wyrażenia regularnego"
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
-#: gaupol/agents/open.py:357 gaupol/agents/open.py:369
-#: gaupol/agents/open.py:381 gaupol/agents/close.py:71
+#: gaupol/agents/open.py:363 gaupol/agents/open.py:375
+#: gaupol/agents/open.py:387 gaupol/agents/close.py:71
 #: data/extensions/custom-framerates/custom-framerates.py:39
 msgid "_Cancel"
 msgstr "_Anuluj"
@@ -739,7 +749,7 @@ msgstr "Dzielenie projektu"
 #: gaupol/dialogs/split.py:97
 #, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
-msgstr ""
+msgstr "Wydziel {amount:d} linii do projektu \"{name}\""
 
 #: gaupol/dialogs/spell_check.py:360
 msgid "Spell-checking"
@@ -757,7 +767,7 @@ msgstr "Dostosuj"
 msgid "Save changes to documents before closing?"
 msgstr "Zapisz zmiany w dokumentach przed zamknięciem?"
 
-#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:378
+#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:384
 #: gaupol/agents/close.py:68
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Jeśli nie zapiszesz zmian zostaną one bezpowrotnie utracone."
@@ -767,7 +777,7 @@ msgid "Close _Without Saving"
 msgstr "Zamknij _bez zapisywania"
 
 #: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/multi_save.py:84
-#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:382
+#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:388
 #: gaupol/agents/close.py:72 data/ui/menubar.ui:34
 msgid "_Save"
 msgstr "_Zapisz"
@@ -780,8 +790,8 @@ msgstr "Wybierz pliki _główne, które chcesz zapisać:"
 msgid "Select the _translation documents you want to save:"
 msgstr "Wybierz pliki _tłumaczenia, które chcesz zapisać:"
 
-#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:358
-#: gaupol/agents/open.py:370
+#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:364
+#: gaupol/agents/open.py:376
 msgid "_Open"
 msgstr "_Otwórz"
 
@@ -822,10 +832,6 @@ msgstr "napisy tłumacza"
 #: gaupol/dialogs/about.py:55
 msgid "Gaupol Website"
 msgstr "Strona programu Gaupol"
-
-#: gaupol/dialogs/about.py:61
-msgid "Donate"
-msgstr "Wesprzyj"
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -881,10 +887,10 @@ msgstr "_Zastąp"
 #: gaupol/dialogs/duration_adjust.py:70
 msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Dostosowano czas trwania {:d} napisu"
+msgstr[1] "Dostosowano czas trwania {:d} napisów"
+msgstr[2] "Adjusted durations of {:d} subtitles"
+msgstr[3] "Adjusted durations of {:d} subtitles"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -954,19 +960,19 @@ msgstr "Wybierz plik wideo"
 msgid "_Select"
 msgstr "_Wybierz"
 
-#: gaupol/agents/open.py:319
+#: gaupol/agents/open.py:325
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "Nie udało się zdekodować pliku \"{}\" w żadnym z próbowanych kodowań"
 
-#: gaupol/agents/open.py:320
+#: gaupol/agents/open.py:326
 msgid "Please try to open the file with a different character encoding."
 msgstr "Spróbuj otworzyć plik z innym kodowaniem znaków."
 
-#: gaupol/agents/open.py:328
+#: gaupol/agents/open.py:334
 msgid "Failed to recognize format of file \"{}\""
 msgstr "Nie rozpoznano formatu pliku \"{}\""
 
-#: gaupol/agents/open.py:329
+#: gaupol/agents/open.py:335
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
@@ -974,24 +980,24 @@ msgstr ""
 "Sprawdź czy plik który starasz się otworzyć jest plikiem napisóww formacie "
 "obsługiwanym przez Gaupol."
 
-#: gaupol/agents/open.py:337
+#: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
 msgstr "Nie można otworzyć pliku \"{}\""
 
-#: gaupol/agents/open.py:345
+#: gaupol/agents/open.py:351
 msgid "Failed to parse file \"{}\""
 msgstr "Nie można przeanalizować pliku \"{}\""
 
-#: gaupol/agents/open.py:346
+#: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr ""
 "Sprawdź, czy plik, który próbujesz otworzyć, jest prawidłowym plikiem {}."
 
-#: gaupol/agents/open.py:354
+#: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
 msgstr "Otworzyć zbyt duży plik \"{}\"?"
 
-#: gaupol/agents/open.py:355
+#: gaupol/agents/open.py:361
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -999,21 +1005,23 @@ msgstr ""
 "Rozmiar pliku to {:.1f} MB, co jest normalnie zbyt dużo dla tekstowegopliku "
 "napisów. Sprawdź czy nie próbujesz otworzyć pliku binarnego."
 
-#: gaupol/agents/open.py:365
+#: gaupol/agents/open.py:371
 msgid "Open unsorted file \"{}\"?"
 msgstr "Otwórz nieposortowany plik \"{}\"?"
 
-#: gaupol/agents/open.py:366
+#: gaupol/agents/open.py:372
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
 msgstr ""
+"Kolejność {:d} napisów musi zostać zmieniona. Jeśli {:d} to dużo, być może "
+"plik ma dużo błędów."
 
-#: gaupol/agents/open.py:377
+#: gaupol/agents/open.py:383
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr "Zapisać zmiany w pliku tłumaczenia  \"{}\" przed otwarciem nowego?"
 
-#: gaupol/agents/open.py:380
+#: gaupol/agents/open.py:386
 msgid "Open _Without Saving"
 msgstr "Otwórz _bez zapisywania"
 
@@ -1025,19 +1033,19 @@ msgstr "Zapisać zmiany w dokumencie \"{} \" przed zamknięciem?"
 msgid "Stretching end position"
 msgstr "Rozciąganie pozycji końcowej"
 
-#: gaupol/agents/edit.py:207
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Wstawiono {:d} napis na podstawie schowka"
+msgstr[1] "Wstawiono {:d} napisów na podstawie schowka"
+msgstr[2] "Wstawiono {:d} napisów na podstawie schowka"
+msgstr[3] "Wstawiono {:d} napisów na podstawie schowka"
 
-#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr "Rozciąganie pozycji początkowej"
 
-#: gaupol/agents/edit.py:365
+#: gaupol/agents/edit.py:368
 msgid "Use Shift+Return for line-break"
 msgstr "Użyj Shift+Enter aby przejść do następnej linii"
 
@@ -1122,7 +1130,7 @@ msgstr "Wczytaj wideo"
 msgid "_Load"
 msgstr "_Wczytaj"
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr "Niezdefiniowany"
 
@@ -1148,49 +1156,49 @@ msgstr "Nieudany zapis pliku napisów do tymczasowego katalogu \"{}\""
 msgid "Failed to launch video player"
 msgstr "Nie można uruchomić odtwarzacza wideo"
 
-#: gaupol/applicationman.py:105
+#: gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPTION...] [FILE...] [+[NUM]]"
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:108
 msgid "FILE..."
 msgstr "PLIK..."
 
-#: gaupol/applicationman.py:112
+#: gaupol/applicationman.py:111
 msgid "subtitle files to open"
 msgstr "pliki napisów do otwarcia"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:121
 msgid "ENCODING"
 msgstr "KODOWANIE"
 
-#: gaupol/applicationman.py:125
+#: gaupol/applicationman.py:124
 msgid "set the character encoding used to open files"
 msgstr "ustaw kodowanie znaków używane do otwierania plików"
 
-#: gaupol/applicationman.py:132
+#: gaupol/applicationman.py:131
 msgid "list all available character encodings"
 msgstr "wymień wszystkie dostępne kodowania znaków"
 
-#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
+#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
 msgid "FILE"
 msgstr "PLIK"
 
-#: gaupol/applicationman.py:140
+#: gaupol/applicationman.py:139
 msgid "open translation file"
 msgstr "otwórz plik tłumaczenia"
 
-#: gaupol/applicationman.py:145
+#: gaupol/applicationman.py:144
 msgid "METHOD"
 msgstr "METODA"
 
-#: gaupol/applicationman.py:149
+#: gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "metoda używana do wyrównania napisów do tłumaczenia: \"liczba\" lub "
 "\"pozycja\""
 
-#: gaupol/applicationman.py:157
+#: gaupol/applicationman.py:156
 msgid "select video file"
 msgstr "wybierz plik wideo"
 
@@ -1486,7 +1494,7 @@ msgstr "_Połącz napisy"
 
 #: data/ui/menubar.ui:124 data/ui/view-popup.ui:16
 msgid "_Insert Subtitles…"
-msgstr "wstaw napisy..."
+msgstr "Wstaw napisy..."
 
 #: data/ui/menubar.ui:128
 msgid "Inser_t Subtitle At Video Position"
@@ -1610,7 +1618,7 @@ msgstr "_Dialog"
 
 #: data/ui/menubar.ui:314
 msgid "Ca_se"
-msgstr ""
+msgstr "_Rozmiar"
 
 #: data/ui/menubar.ui:317
 msgid "_Title"
@@ -1928,7 +1936,7 @@ msgstr "Sprawdź kolumnę tłumaczenie"
 
 #: data/ui/language-dialog.ui:206
 msgid "Check c_urrent project"
-msgstr "Sprawdź _bierzący projekt"
+msgstr "Sprawdź _bieżący projekt"
 
 #: data/ui/language-dialog.ui:224
 msgid "Check _all open projects"
@@ -2595,38 +2603,31 @@ msgstr "Nuty"
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Zastąp znaki nutowe Unicode znakami numerycznymi"
 
+#: data/gaupol.appdata.xml.in:7
+msgid "Editor for text-based subtitles"
+msgstr ""
+
 #: data/gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
-"texts and timing subtitles to match video. The user interface is designed "
-"with attention to batch processing of multiple documents and convenience of "
-"translating."
+"texts and timing subtitles to match video."
 msgstr ""
-"Gaupol jest edytorem tekstowych plików napisów. Obsługuje wiele formatów "
-"plików napisów i zapewnia sposoby tworzenia napisów, edycji tekstów i "
-"synchronizacji napisów z wideo. Interfejs użytkownika został zaprojektowany "
-"z uwzględnieniem przetwarzania wsadowego wielu dokumentów i wygody "
-"tłumaczenia."
 
-#: data/gaupol.appdata.xml.in:18
+#: data/gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr "Okno główne"
 
-#: data/gaupol.desktop.in:4
+#: data/gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "Edytor napisów"
 
-#: data/gaupol.desktop.in:5
+#: data/gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "Edytuj pliki napisów"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:7
+#: data/gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
-msgstr ""
-
-#: data/gaupol.desktop.in:15
-msgid "Gaupol Subtitle Editor"
-msgstr "Edytor napisów Gaupol"
+msgstr "wideo;napisy;film;"

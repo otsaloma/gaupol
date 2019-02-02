@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Osmo Salomaa <otsaloma@iki.fi>, 2016
+# Ася Л <lara6381@gmail.com>, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 16:08+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Ася Л <lara6381@gmail.com>, 2018\n"
 "Language-Team: Russian (https://www.transifex.com/otsaloma/teams/64879/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +52,8 @@ msgstr "Мак (ранние модели)"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
+#. files for a reference:
+#. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
 #: aeidon/encodings.py:40 aeidon/encodings.py:43 aeidon/encodings.py:46
 msgid "English"
 msgstr "Английская"
@@ -247,15 +252,15 @@ msgstr "Заглавные буквы"
 msgid "Correcting common errors"
 msgstr "Исправление обычных ошибок"
 
-#: aeidon/agents/text.py:247
+#: aeidon/agents/text.py:248
 msgid "Removing hearing impaired texts"
 msgstr "Удаление текста для глухих"
 
-#: aeidon/agents/text.py:328
+#: aeidon/agents/text.py:330
 msgid "Joining words by spell-check suggestions"
 msgstr "Объединение слов"
 
-#: aeidon/agents/text.py:372
+#: aeidon/agents/text.py:374
 msgid "Splitting words by spell-check suggestions"
 msgstr "Разъединение слов"
 
@@ -409,7 +414,7 @@ msgid "End position"
 msgstr "Позиция конца"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-#. of a tree view column that contains numbers five characters wide.
+#. of a column that contains numbers five digits wide.
 #: gaupol/enums.py:57
 msgid "Dur."
 msgstr "Длит."
@@ -557,12 +562,12 @@ msgstr "Объединить или разделить слова"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Не удалось загрузить словарь для языка \"{}\""
 
-#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
-#: gaupol/agents/open.py:331 gaupol/agents/open.py:339
-#: gaupol/agents/open.py:348 gaupol/agents/save.py:197
+#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
+#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
+#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
 #: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
 #: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
 msgid "_OK"
@@ -617,32 +622,32 @@ msgstr "Задача: {}"
 msgid "Confirm Changes"
 msgstr "Подтверждение изменений"
 
-#: gaupol/assistants.py:889
+#: gaupol/assistants.py:891
 msgid "Accept"
 msgstr "Принять"
 
-#: gaupol/assistants.py:895
+#: gaupol/assistants.py:897
 msgid "Original Text"
 msgstr "Исходный текст"
 
-#: gaupol/assistants.py:896
+#: gaupol/assistants.py:898
 msgid "Corrected Text"
 msgstr "Исправленный текст"
 
-#: gaupol/assistants.py:1045
+#: gaupol/assistants.py:1047
 msgid "Correct Texts"
 msgstr "Исправление текста"
 
-#: gaupol/assistants.py:1072
+#: gaupol/assistants.py:1074
 msgid "Correcting texts"
 msgstr "Исправление текста"
 
-#: gaupol/assistants.py:1088
+#: gaupol/assistants.py:1090
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Изменено субтитров: {edits:d}, удалено: {removals:d}"
 
-#: gaupol/assistants.py:1122
+#: gaupol/assistants.py:1124
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Подтвердить {:d} изменение"
@@ -650,7 +655,11 @@ msgstr[1] "Подтвердить {:d} изменений"
 msgstr[2] "Подтвердить {:d} изменений"
 msgstr[3] "Подтвердить {:d} изменений"
 
-#: gaupol/player.py:337
+#: gaupol/renderers/multiline.py:87
+msgid "Italic"
+msgstr ""
+
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr ""
 
@@ -685,8 +694,8 @@ msgstr "Ошибка в замещающем тексте"
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
-#: gaupol/agents/open.py:357 gaupol/agents/open.py:369
-#: gaupol/agents/open.py:381 gaupol/agents/close.py:71
+#: gaupol/agents/open.py:363 gaupol/agents/open.py:375
+#: gaupol/agents/open.py:387 gaupol/agents/close.py:71
 #: data/extensions/custom-framerates/custom-framerates.py:39
 msgid "_Cancel"
 msgstr "Отмена"
@@ -756,7 +765,7 @@ msgstr "Другой"
 msgid "Save changes to documents before closing?"
 msgstr "Сохранить изменения документов перед закрытием?"
 
-#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:378
+#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:384
 #: gaupol/agents/close.py:68
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Несохраненные изменения будут навсегда утеряны."
@@ -766,7 +775,7 @@ msgid "Close _Without Saving"
 msgstr "Закрыть _без сохранения"
 
 #: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/multi_save.py:84
-#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:382
+#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:388
 #: gaupol/agents/close.py:72 data/ui/menubar.ui:34
 msgid "_Save"
 msgstr "_Сохранить"
@@ -779,8 +788,8 @@ msgstr "Выберите _документы, которые вы хотите �
 msgid "Select the _translation documents you want to save:"
 msgstr "Выберите п_ереводы, которые вы хотите сохранить:"
 
-#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:358
-#: gaupol/agents/open.py:370
+#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:364
+#: gaupol/agents/open.py:376
 msgid "_Open"
 msgstr "Открыть"
 
@@ -821,10 +830,6 @@ msgstr "Alex, 2010"
 #: gaupol/dialogs/about.py:55
 msgid "Gaupol Website"
 msgstr "Сайт Gaupol"
-
-#: gaupol/dialogs/about.py:61
-msgid "Donate"
-msgstr ""
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -951,41 +956,41 @@ msgstr "Выберите видеофайл"
 msgid "_Select"
 msgstr "_Выбрать"
 
-#: gaupol/agents/open.py:319
+#: gaupol/agents/open.py:325
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "Не удалось декодировать файл \"{}\" всеми использованными кодеками"
 
-#: gaupol/agents/open.py:320
+#: gaupol/agents/open.py:326
 msgid "Please try to open the file with a different character encoding."
 msgstr "Попробуйте открыть файл, указав другую кодировку символов."
 
-#: gaupol/agents/open.py:328
+#: gaupol/agents/open.py:334
 msgid "Failed to recognize format of file \"{}\""
 msgstr "Не удалось определить формат файла \"{}\""
 
-#: gaupol/agents/open.py:329
+#: gaupol/agents/open.py:335
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr "Проверьте, имеет ли открываемый файл формат, поддерживаемый Gaupol."
 
-#: gaupol/agents/open.py:337
+#: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
 msgstr "Не удалось открыть файл \"{}\""
 
-#: gaupol/agents/open.py:345
+#: gaupol/agents/open.py:351
 msgid "Failed to parse file \"{}\""
 msgstr "Не удалось разобрать файл \"{}\""
 
-#: gaupol/agents/open.py:346
+#: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr ""
 
-#: gaupol/agents/open.py:354
+#: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
 msgstr "Открыть необычно большой файл \"{}\"?"
 
-#: gaupol/agents/open.py:355
+#: gaupol/agents/open.py:361
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -993,11 +998,11 @@ msgstr ""
 "Размер файла составляет {:.1f} МБ, что слишком много для текстового файла "
 "субтитров. Убедитесь, что это не двоичный файл."
 
-#: gaupol/agents/open.py:365
+#: gaupol/agents/open.py:371
 msgid "Open unsorted file \"{}\"?"
 msgstr "Открыть неотсортированный файл \"{}\"?"
 
-#: gaupol/agents/open.py:366
+#: gaupol/agents/open.py:372
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
@@ -1005,11 +1010,11 @@ msgstr ""
 "Необходимо изменить порядок {:d} субтитров. Если {:d} это очень много, то "
 "файл мог быть ошибочно составлен."
 
-#: gaupol/agents/open.py:377
+#: gaupol/agents/open.py:383
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr "Сохранить изменения в переводе \"{}\" перед открытием нового?"
 
-#: gaupol/agents/open.py:380
+#: gaupol/agents/open.py:386
 msgid "Open _Without Saving"
 msgstr "Открыть _без сохранения"
 
@@ -1021,7 +1026,7 @@ msgstr ""
 msgid "Stretching end position"
 msgstr ""
 
-#: gaupol/agents/edit.py:207
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
@@ -1029,11 +1034,11 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr ""
 
-#: gaupol/agents/edit.py:365
+#: gaupol/agents/edit.py:368
 msgid "Use Shift+Return for line-break"
 msgstr "Для переноса текста используйте Shift+Enter"
 
@@ -1118,7 +1123,7 @@ msgstr "Загрузить видео"
 msgid "_Load"
 msgstr "Загрузить"
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr ""
 
@@ -1143,48 +1148,48 @@ msgstr "Не удалось сохранить файл во временном 
 msgid "Failed to launch video player"
 msgstr "Не удалось запустить видеоплеер"
 
-#: gaupol/applicationman.py:105
+#: gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [ПАРАМЕТР...] [ФАЙЛ...] [+[ЧИСЛО]]"
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:108
 msgid "FILE..."
 msgstr "Файл..."
 
-#: gaupol/applicationman.py:112
+#: gaupol/applicationman.py:111
 msgid "subtitle files to open"
 msgstr ""
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:121
 msgid "ENCODING"
 msgstr "КОДИРОВКА"
 
-#: gaupol/applicationman.py:125
+#: gaupol/applicationman.py:124
 msgid "set the character encoding used to open files"
 msgstr "задать кодировку открываемых файлов"
 
-#: gaupol/applicationman.py:132
+#: gaupol/applicationman.py:131
 msgid "list all available character encodings"
 msgstr "вывести все доступные кодировки символов"
 
-#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
+#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
 msgid "FILE"
 msgstr "ФАЙЛ"
 
-#: gaupol/applicationman.py:140
+#: gaupol/applicationman.py:139
 msgid "open translation file"
 msgstr "открыть файл перевода"
 
-#: gaupol/applicationman.py:145
+#: gaupol/applicationman.py:144
 msgid "METHOD"
 msgstr "СПОСОБ"
 
-#: gaupol/applicationman.py:149
+#: gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "способ сопоставления перевода: 'number' (номер) или 'position' (положение)"
 
-#: gaupol/applicationman.py:157
+#: gaupol/applicationman.py:156
 msgid "select video file"
 msgstr "выбрать видеофайл"
 
@@ -2581,37 +2586,31 @@ msgstr ""
 msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
+#: data/gaupol.appdata.xml.in:7
+msgid "Editor for text-based subtitles"
+msgstr ""
+
 #: data/gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
-"texts and timing subtitles to match video. The user interface is designed "
-"with attention to batch processing of multiple documents and convenience of "
-"translating."
+"texts and timing subtitles to match video."
 msgstr ""
-"Gaupol - редактор для текстовых субтитров. Он поддерживает множество "
-"форматов файлов субтитров и предоставляет средства для их создания, "
-"редактирования и синхронизации с видео. В программе реализована возможность "
-"работы с несколькими файлами одновременно. "
 
-#: data/gaupol.appdata.xml.in:18
+#: data/gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr "Главное окно"
 
-#: data/gaupol.desktop.in:4
+#: data/gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "Редактор субтитров"
 
-#: data/gaupol.desktop.in:5
+#: data/gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "Редактирование файлов субтитров"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:7
+#: data/gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
 msgstr ""
-
-#: data/gaupol.desktop.in:15
-msgid "Gaupol Subtitle Editor"
-msgstr "Редактор субтитров Gaupol"

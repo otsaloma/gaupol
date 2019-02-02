@@ -3,20 +3,23 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Osmo Salomaa <otsaloma@iki.fi>, 2016
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-11 17:57+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Hebrew (https://www.transifex.com/otsaloma/teams/64879/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: he\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
 #: aeidon/enums.py:39 gaupol/enums.py:38
 msgid "Subtitle number"
@@ -48,7 +51,8 @@ msgstr "מק (קלאסי)"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
+#. files for a reference:
+#. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
 #: aeidon/encodings.py:40 aeidon/encodings.py:43 aeidon/encodings.py:46
 msgid "English"
 msgstr "אנגלית"
@@ -247,15 +251,15 @@ msgstr "הרשיות בטקסטים מתואמות"
 msgid "Correcting common errors"
 msgstr "שגיאות נפוצות מתוקנות"
 
-#: aeidon/agents/text.py:247
+#: aeidon/agents/text.py:248
 msgid "Removing hearing impaired texts"
 msgstr "מוסרים טקסטים המותאמים ללקויי שמיעה"
 
-#: aeidon/agents/text.py:328
+#: aeidon/agents/text.py:330
 msgid "Joining words by spell-check suggestions"
 msgstr "צירוף מילים לפי הצעות בדיקות איות"
 
-#: aeidon/agents/text.py:372
+#: aeidon/agents/text.py:374
 msgid "Splitting words by spell-check suggestions"
 msgstr "פיצול מילים לפי הצעות בדיקת איות"
 
@@ -409,7 +413,7 @@ msgid "End position"
 msgstr "מיקום הסוף"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-#. of a tree view column that contains numbers five characters wide.
+#. of a column that contains numbers five digits wide.
 #: gaupol/enums.py:57
 msgid "Dur."
 msgstr "משך"
@@ -556,12 +560,12 @@ msgstr "צירוף או פיצול מילים"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "ארע כשל בטעינת המילון עבור השפה״{}״"
 
-#: gaupol/assistants.py:600 gaupol/player.py:233 gaupol/player.py:338
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
-#: gaupol/agents/open.py:331 gaupol/agents/open.py:339
-#: gaupol/agents/open.py:348 gaupol/agents/save.py:197
+#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
+#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
+#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
 #: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
 #: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
 msgid "_OK"
@@ -616,38 +620,44 @@ msgstr "משימה: {}"
 msgid "Confirm Changes"
 msgstr "קבלת השינויים"
 
-#: gaupol/assistants.py:889
+#: gaupol/assistants.py:891
 msgid "Accept"
 msgstr "קבלה"
 
-#: gaupol/assistants.py:895
+#: gaupol/assistants.py:897
 msgid "Original Text"
 msgstr "הטקסט המקורי"
 
-#: gaupol/assistants.py:896
+#: gaupol/assistants.py:898
 msgid "Corrected Text"
 msgstr "הטקסט המתוקן"
 
-#: gaupol/assistants.py:1045
+#: gaupol/assistants.py:1047
 msgid "Correct Texts"
 msgstr "תיקון הטקסטים"
 
-#: gaupol/assistants.py:1072
+#: gaupol/assistants.py:1074
 msgid "Correcting texts"
 msgstr "הטקסטים מתוקנים"
 
-#: gaupol/assistants.py:1088
+#: gaupol/assistants.py:1090
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "נערכו {edits:d} והוסרו {removals:d} כתוביות"
 
-#: gaupol/assistants.py:1122
+#: gaupol/assistants.py:1124
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
-#: gaupol/player.py:336
+#: gaupol/renderers/multiline.py:87
+msgid "Italic"
+msgstr ""
+
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr ""
 
@@ -660,6 +670,8 @@ msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -680,8 +692,8 @@ msgstr "שגיאה בהחלפת הביטוי הרגולרי"
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
-#: gaupol/agents/open.py:357 gaupol/agents/open.py:369
-#: gaupol/agents/open.py:381 gaupol/agents/close.py:71
+#: gaupol/agents/open.py:363 gaupol/agents/open.py:375
+#: gaupol/agents/open.py:387 gaupol/agents/close.py:71
 #: data/extensions/custom-framerates/custom-framerates.py:39
 msgid "_Cancel"
 msgstr ""
@@ -751,7 +763,7 @@ msgstr "התאמה אישית"
 msgid "Save changes to documents before closing?"
 msgstr "האם לשמור את השינויים למסמכים בטרם הסגירה?"
 
-#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:378
+#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:384
 #: gaupol/agents/close.py:68
 msgid "If you don't save, changes will be permanently lost."
 msgstr "אם השינויים לא ישמרו, הם יאבדו לעד."
@@ -761,7 +773,7 @@ msgid "Close _Without Saving"
 msgstr "סגירה _ללא שמירה"
 
 #: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/multi_save.py:84
-#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:382
+#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:388
 #: gaupol/agents/close.py:72 data/ui/menubar.ui:34
 msgid "_Save"
 msgstr "_שמירה"
@@ -774,8 +786,8 @@ msgstr "נא לבחור את המסמכים ה_ראשיים שברצונך לש�
 msgid "Select the _translation documents you want to save:"
 msgstr "נא לבחור את מסמכים ה_תרגום שברצונך לשמור:"
 
-#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:358
-#: gaupol/agents/open.py:370
+#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:364
+#: gaupol/agents/open.py:376
 msgid "_Open"
 msgstr ""
 
@@ -816,10 +828,6 @@ msgstr "ירון שהרבני <sh.yaron@gmail.com>"
 #: gaupol/dialogs/about.py:55
 msgid "Gaupol Website"
 msgstr "האתר של Gaupol"
-
-#: gaupol/dialogs/about.py:61
-msgid "Donate"
-msgstr ""
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -873,6 +881,8 @@ msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -942,41 +952,41 @@ msgstr "בחירת וידאו"
 msgid "_Select"
 msgstr "_בחירה"
 
-#: gaupol/agents/open.py:319
+#: gaupol/agents/open.py:325
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "ארע כשל בפענוח הקובץ ״{}״ עם כל המקודדים שנוסו"
 
-#: gaupol/agents/open.py:320
+#: gaupol/agents/open.py:326
 msgid "Please try to open the file with a different character encoding."
 msgstr "נא לנסות לפתוח את הקובץ עם קידוד תווים שונה."
 
-#: gaupol/agents/open.py:328
+#: gaupol/agents/open.py:334
 msgid "Failed to recognize format of file \"{}\""
 msgstr "ארע כשל בזיהוי מבנה הקובץ ״{}״"
 
-#: gaupol/agents/open.py:329
+#: gaupol/agents/open.py:335
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr "נא לבדוק שהקובץ המועמד לפתיחה הוא מסוג קובץ הנתמך על ידי Gaupol."
 
-#: gaupol/agents/open.py:337
+#: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
 msgstr "ארע כשל בפתיחת הקובץ ״{}״"
 
-#: gaupol/agents/open.py:345
+#: gaupol/agents/open.py:351
 msgid "Failed to parse file \"{}\""
 msgstr "ארע כשל בפענוח הקובץ ״{}״"
 
-#: gaupol/agents/open.py:346
+#: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr ""
 
-#: gaupol/agents/open.py:354
+#: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
 msgstr "האם לפתוח את הקובץ הגדול באופן חריג ״{}״?"
 
-#: gaupol/agents/open.py:355
+#: gaupol/agents/open.py:361
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -984,11 +994,11 @@ msgstr ""
 "גודל הקובץ הוא {:.1f} מ״ב, שזהו גודל גדול באופן חריג עבור קובץ כתוביות מבוסס"
 " טקסט. נא לבדוק שזהו אינו קובץ בינרי."
 
-#: gaupol/agents/open.py:365
+#: gaupol/agents/open.py:371
 msgid "Open unsorted file \"{}\"?"
 msgstr "האם לפתוח את הקובץ הבלתי ממוין ״{}״?"
 
-#: gaupol/agents/open.py:366
+#: gaupol/agents/open.py:372
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
@@ -996,11 +1006,11 @@ msgstr ""
 "יש לשנות את סדרן של {:d} כתוביות. אם {:d} נשמע כמו הרבה, יתכן שהקובץ הורכב "
 "בצורה לא נכונה."
 
-#: gaupol/agents/open.py:377
+#: gaupol/agents/open.py:383
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr "האם לשמור את השינויים למסמך התרגום ״{}״ לפני פתיחת מסמך חדש?"
 
-#: gaupol/agents/open.py:380
+#: gaupol/agents/open.py:386
 msgid "Open _Without Saving"
 msgstr "פתיחה _ללא שמירה"
 
@@ -1012,17 +1022,19 @@ msgstr ""
 msgid "Stretching end position"
 msgstr ""
 
-#: gaupol/agents/edit.py:200
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
-#: gaupol/agents/edit.py:282 gaupol/agents/edit.py:300
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr ""
 
-#: gaupol/agents/edit.py:358
+#: gaupol/agents/edit.py:368
 msgid "Use Shift+Return for line-break"
 msgstr "שימוש ב־Shift+אנטר כדי לשבור שורות"
 
@@ -1107,7 +1119,7 @@ msgstr ""
 msgid "_Load"
 msgstr ""
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr ""
 
@@ -2174,11 +2186,11 @@ msgstr "החלפה בין הכתו_ביות הנבחרות"
 msgid "Transform c_urrent project"
 msgstr "החלפה במיזם ה_נוכחי"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:5
+#: data/extensions/custom-framerates/custom-framerates.extension.in:7
 msgid "Custom Framerates"
 msgstr ""
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:6
+#: data/extensions/custom-framerates/custom-framerates.extension.in:8
 msgid "Allow use of non-standard framerates"
 msgstr ""
 
@@ -2568,33 +2580,31 @@ msgstr ""
 msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
+#: data/gaupol.appdata.xml.in:7
+msgid "Editor for text-based subtitles"
+msgstr ""
+
 #: data/gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
-"texts and timing subtitles to match video. The user interface is designed "
-"with attention to batch processing of multiple documents and convenience of "
-"translating."
+"texts and timing subtitles to match video."
 msgstr ""
 
-#: data/gaupol.appdata.xml.in:18
+#: data/gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr ""
 
-#: data/gaupol.desktop.in:4
+#: data/gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "עורך הכתוביות"
 
-#: data/gaupol.desktop.in:5
+#: data/gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "עריכת קובצי הכתוביות"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:7
+#: data/gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
 msgstr ""
-
-#: data/gaupol.desktop.in:15
-msgid "Gaupol Subtitle Editor"
-msgstr "עורך הכתוביות Gaupol"

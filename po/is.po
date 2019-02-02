@@ -3,14 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Sveinn í Felli <sv1@fellsnet.is>, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-01 16:08+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2016\n"
+"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"PO-Revision-Date: 2016-07-07 00:55+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2018\n"
 "Language-Team: Icelandic (https://www.transifex.com/otsaloma/teams/64879/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +51,8 @@ msgstr "Mac (klassísk)"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
+#. files for a reference:
+#. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
 #: aeidon/encodings.py:40 aeidon/encodings.py:43 aeidon/encodings.py:46
 msgid "English"
 msgstr "Enska"
@@ -247,15 +251,15 @@ msgstr "Textar í hástafi"
 msgid "Correcting common errors"
 msgstr "Leiðrétting algengra villna"
 
-#: aeidon/agents/text.py:247
+#: aeidon/agents/text.py:248
 msgid "Removing hearing impaired texts"
 msgstr "Fjarlægi texta fyrir heyrnarskerta"
 
-#: aeidon/agents/text.py:328
+#: aeidon/agents/text.py:330
 msgid "Joining words by spell-check suggestions"
 msgstr "Sameina orð miðað við uppástungur"
 
-#: aeidon/agents/text.py:372
+#: aeidon/agents/text.py:374
 msgid "Splitting words by spell-check suggestions"
 msgstr "Skipta upp orðum miðað við uppástungur"
 
@@ -409,7 +413,7 @@ msgid "End position"
 msgstr "Endastaða"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-#. of a tree view column that contains numbers five characters wide.
+#. of a column that contains numbers five digits wide.
 #: gaupol/enums.py:57
 msgid "Dur."
 msgstr "Len."
@@ -554,12 +558,12 @@ msgstr "Sameina eða skipta orðum"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Það mistókst að hlaða inn orðasafni fyrir tungumálið \"{}\""
 
-#: gaupol/assistants.py:600 gaupol/player.py:234 gaupol/player.py:339
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
-#: gaupol/agents/open.py:331 gaupol/agents/open.py:339
-#: gaupol/agents/open.py:348 gaupol/agents/save.py:197
+#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
+#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
+#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
 #: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
 #: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
 msgid "_OK"
@@ -614,38 +618,42 @@ msgstr "Verk: {}"
 msgid "Confirm Changes"
 msgstr "Staðfesta breytingar"
 
-#: gaupol/assistants.py:889
+#: gaupol/assistants.py:891
 msgid "Accept"
 msgstr "Samþykkja"
 
-#: gaupol/assistants.py:895
+#: gaupol/assistants.py:897
 msgid "Original Text"
 msgstr "Upprunalegur texti"
 
-#: gaupol/assistants.py:896
+#: gaupol/assistants.py:898
 msgid "Corrected Text"
 msgstr "Leiðréttur texti"
 
-#: gaupol/assistants.py:1045
+#: gaupol/assistants.py:1047
 msgid "Correct Texts"
 msgstr "Leiðréttir textar"
 
-#: gaupol/assistants.py:1072
+#: gaupol/assistants.py:1074
 msgid "Correcting texts"
 msgstr "Leiðrétting texta"
 
-#: gaupol/assistants.py:1088
+#: gaupol/assistants.py:1090
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Breytti {edits:d} og fjarlægði {removals:d} skjátexta"
 
-#: gaupol/assistants.py:1122
+#: gaupol/assistants.py:1124
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Staðfesta {:d} breytingu"
 msgstr[1] "Staðfesta {:d} breytingar"
 
-#: gaupol/player.py:337
+#: gaupol/renderers/multiline.py:87
+msgid "Italic"
+msgstr ""
+
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr "Mistókst að ræsa afspilun"
 
@@ -678,8 +686,8 @@ msgstr "Villa í reglulegri segð til útskiptingar"
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
-#: gaupol/agents/open.py:357 gaupol/agents/open.py:369
-#: gaupol/agents/open.py:381 gaupol/agents/close.py:71
+#: gaupol/agents/open.py:363 gaupol/agents/open.py:375
+#: gaupol/agents/open.py:387 gaupol/agents/close.py:71
 #: data/extensions/custom-framerates/custom-framerates.py:39
 msgid "_Cancel"
 msgstr "_Hætta við"
@@ -749,7 +757,7 @@ msgstr "Sérsniðið"
 msgid "Save changes to documents before closing?"
 msgstr "Vista breytingar á skjölum áður en lokað er?"
 
-#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:378
+#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:384
 #: gaupol/agents/close.py:68
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Ef þú vistar ekki, tapast allar breytingar endanlega."
@@ -759,7 +767,7 @@ msgid "Close _Without Saving"
 msgstr "Loka án þess að _vista"
 
 #: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/multi_save.py:84
-#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:382
+#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:388
 #: gaupol/agents/close.py:72 data/ui/menubar.ui:34
 msgid "_Save"
 msgstr "Vi_sta"
@@ -772,8 +780,8 @@ msgstr "Veldu aðals_kjölin sem þú vilt vista:"
 msgid "Select the _translation documents you want to save:"
 msgstr "Vel_du þýðingarskjölin sem þú vilt vista:"
 
-#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:358
-#: gaupol/agents/open.py:370
+#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:364
+#: gaupol/agents/open.py:376
 msgid "_Open"
 msgstr "_Opna"
 
@@ -814,10 +822,6 @@ msgstr "Sveinn í Felli 2016, sv1@fellsnet.is"
 #: gaupol/dialogs/about.py:55
 msgid "Gaupol Website"
 msgstr "Vefsvæði Gaupol"
-
-#: gaupol/dialogs/about.py:61
-msgid "Donate"
-msgstr "Styrkja"
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -946,21 +950,21 @@ msgstr "Veldu myndskeið"
 msgid "_Select"
 msgstr "_Velja"
 
-#: gaupol/agents/open.py:319
+#: gaupol/agents/open.py:325
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr ""
 "Mistókst að afkóða skrána \"{}\" með öllum þeim stafatöflum sem prófaðar "
 "voru"
 
-#: gaupol/agents/open.py:320
+#: gaupol/agents/open.py:326
 msgid "Please try to open the file with a different character encoding."
 msgstr "Prófaðu að opna skrána með annarri stafatöflu."
 
-#: gaupol/agents/open.py:328
+#: gaupol/agents/open.py:334
 msgid "Failed to recognize format of file \"{}\""
 msgstr "Þekki ekki snið skrárinnar \"{}\""
 
-#: gaupol/agents/open.py:329
+#: gaupol/agents/open.py:335
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
@@ -968,23 +972,23 @@ msgstr ""
 "Athugaðu hvort að skráin sem þú ert að reyna að opna sé skjátextaskrá á "
 "sniði sem Gaupol styður."
 
-#: gaupol/agents/open.py:337
+#: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
 msgstr "Mistókst að opna skrá \"{}\""
 
-#: gaupol/agents/open.py:345
+#: gaupol/agents/open.py:351
 msgid "Failed to parse file \"{}\""
 msgstr "Mistókst að þátta skrána \"{}\""
 
-#: gaupol/agents/open.py:346
+#: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr "Athugaðu hvort að skráin sem þú ert að reyna að opna sé gild \"{}\" skrá."
 
-#: gaupol/agents/open.py:354
+#: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
 msgstr "Opna óeðlilega stóra skrá \"{}\"?"
 
-#: gaupol/agents/open.py:355
+#: gaupol/agents/open.py:361
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -993,21 +997,21 @@ msgstr ""
 "skjátextum. Athugaðu hvort þú sért nokkuð að reyna að opna tvíundakerfisskrá"
 " (binary)."
 
-#: gaupol/agents/open.py:365
+#: gaupol/agents/open.py:371
 msgid "Open unsorted file \"{}\"?"
 msgstr "Opna óraðaða skrá \"{}\"?"
 
-#: gaupol/agents/open.py:366
+#: gaupol/agents/open.py:372
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
 msgstr ""
 
-#: gaupol/agents/open.py:377
+#: gaupol/agents/open.py:383
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr "Vista breytingar á þýðingarskrá \"{}\" áður en ný er opnuð?"
 
-#: gaupol/agents/open.py:380
+#: gaupol/agents/open.py:386
 msgid "Open _Without Saving"
 msgstr "Opna án þess að _vista"
 
@@ -1019,17 +1023,17 @@ msgstr "Viltu vista breytingar á skjalinu “{}“ áður en þú lokar því?"
 msgid "Stretching end position"
 msgstr "Teygi endastöðu"
 
-#: gaupol/agents/edit.py:207
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/agents/edit.py:289 gaupol/agents/edit.py:307
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr "Teygi upphafsstöðu"
 
-#: gaupol/agents/edit.py:365
+#: gaupol/agents/edit.py:368
 msgid "Use Shift+Return for line-break"
 msgstr "Notaðu Shift+Enter fyrir línuskil"
 
@@ -1114,7 +1118,7 @@ msgstr "Hlaða inn myndskeiði"
 msgid "_Load"
 msgstr "_Hlaða inn"
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr "Óskilgreint"
 
@@ -1137,47 +1141,47 @@ msgstr ""
 msgid "Failed to launch video player"
 msgstr "Mistókst að ræsa myndspilara"
 
-#: gaupol/applicationman.py:105
+#: gaupol/applicationman.py:104
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [ROFI...] [SKRÁ...] [+[NUM]]"
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:108
 msgid "FILE..."
 msgstr "SKRÁ..."
 
-#: gaupol/applicationman.py:112
+#: gaupol/applicationman.py:111
 msgid "subtitle files to open"
 msgstr "skjátextaskrár sem á að opna"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:121
 msgid "ENCODING"
 msgstr "STAFATAFLA"
 
-#: gaupol/applicationman.py:125
+#: gaupol/applicationman.py:124
 msgid "set the character encoding used to open files"
 msgstr ""
 
-#: gaupol/applicationman.py:132
+#: gaupol/applicationman.py:131
 msgid "list all available character encodings"
 msgstr ""
 
-#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
+#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
 msgid "FILE"
 msgstr "SKRÁ"
 
-#: gaupol/applicationman.py:140
+#: gaupol/applicationman.py:139
 msgid "open translation file"
 msgstr "opna þýðingarskrá"
 
-#: gaupol/applicationman.py:145
+#: gaupol/applicationman.py:144
 msgid "METHOD"
 msgstr "AÐFERÐ"
 
-#: gaupol/applicationman.py:149
+#: gaupol/applicationman.py:148
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 
-#: gaupol/applicationman.py:157
+#: gaupol/applicationman.py:156
 msgid "select video file"
 msgstr "veldu myndskeiðaskrá"
 
@@ -2578,38 +2582,31 @@ msgstr "Nótnaskrift"
 msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
+#: data/gaupol.appdata.xml.in:7
+msgid "Editor for text-based subtitles"
+msgstr ""
+
 #: data/gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
-"texts and timing subtitles to match video. The user interface is designed "
-"with attention to batch processing of multiple documents and convenience of "
-"translating."
+"texts and timing subtitles to match video."
 msgstr ""
-"Gaupol er ritill til meðhöndlunar á skjátextaskrám á textaformi. Hann styður"
-" margar gerðir skjátextaskráa og býður upp á að útbúa nýja skjátexta, "
-"breytingar texta og tímasetningu þeirra svo að þeir samsvari myndskeiðum. "
-"Notandaviðmótið er hannað með það í huga aðauðvelt sé að magnvinna margar "
-"skrár í einu og að einfalt sé að þýða texta."
 
-#: data/gaupol.appdata.xml.in:18
+#: data/gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr "Aðalgluggi"
 
-#: data/gaupol.desktop.in:4
+#: data/gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "Skjátextaritill"
 
-#: data/gaupol.desktop.in:5
+#: data/gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "Sýsla með skjátextaskrár"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:7
+#: data/gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
 msgstr "myndskeið;skjátextar;þýðingartextar"
-
-#: data/gaupol.desktop.in:15
-msgid "Gaupol Subtitle Editor"
-msgstr "Gaupol skjátextaritill"

@@ -3,13 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Osmo Salomaa <otsaloma@iki.fi>, 2016
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-11 17:57+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Hungarian (https://www.transifex.com/otsaloma/teams/64879/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +51,8 @@ msgstr "Mac (klasszikus)"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: <http://git.gnome.org/browse/gedit/tree/po/>.
+#. files for a reference:
+#. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
 #: aeidon/encodings.py:40 aeidon/encodings.py:43 aeidon/encodings.py:46
 msgid "English"
 msgstr "Angol"
@@ -247,15 +251,15 @@ msgstr "Szöveg nagybetűssé alakítása"
 msgid "Correcting common errors"
 msgstr "Általános hibák javítása"
 
-#: aeidon/agents/text.py:247
+#: aeidon/agents/text.py:248
 msgid "Removing hearing impaired texts"
 msgstr "Halláskárosultak szövegeinek eltávolítása"
 
-#: aeidon/agents/text.py:328
+#: aeidon/agents/text.py:330
 msgid "Joining words by spell-check suggestions"
 msgstr "Szavak egyesítése a helyesírás-ellenőrző javaslata alapján"
 
-#: aeidon/agents/text.py:372
+#: aeidon/agents/text.py:374
 msgid "Splitting words by spell-check suggestions"
 msgstr "Szavak elválasztása a helyesírás-ellenőrző javaslata alapján"
 
@@ -409,7 +413,7 @@ msgid "End position"
 msgstr "Végpozíció"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-#. of a tree view column that contains numbers five characters wide.
+#. of a column that contains numbers five digits wide.
 #: gaupol/enums.py:57
 msgid "Dur."
 msgstr "Hossz"
@@ -556,12 +560,12 @@ msgstr "Szavak egyesítése vagy szétválasztása"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "A megadott nyelvhez \"{}\" tartozó szótár beolvasása sikertelen"
 
-#: gaupol/assistants.py:600 gaupol/player.py:233 gaupol/player.py:338
+#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:322
-#: gaupol/agents/open.py:331 gaupol/agents/open.py:339
-#: gaupol/agents/open.py:348 gaupol/agents/save.py:197
+#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
+#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
+#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
 #: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
 #: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
 msgid "_OK"
@@ -616,38 +620,42 @@ msgstr "Feladat: {}"
 msgid "Confirm Changes"
 msgstr "Változások elfogadása"
 
-#: gaupol/assistants.py:889
+#: gaupol/assistants.py:891
 msgid "Accept"
 msgstr "Elfogad"
 
-#: gaupol/assistants.py:895
+#: gaupol/assistants.py:897
 msgid "Original Text"
 msgstr "Eredeti szöveg"
 
-#: gaupol/assistants.py:896
+#: gaupol/assistants.py:898
 msgid "Corrected Text"
 msgstr "Javított szöveg"
 
-#: gaupol/assistants.py:1045
+#: gaupol/assistants.py:1047
 msgid "Correct Texts"
 msgstr "Szövegek javítása"
 
-#: gaupol/assistants.py:1072
+#: gaupol/assistants.py:1074
 msgid "Correcting texts"
 msgstr "Szövegek javítása"
 
-#: gaupol/assistants.py:1088
+#: gaupol/assistants.py:1090
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Szerkesztett {edits:d} és eltávolított {removals:d} feliratsorok"
 
-#: gaupol/assistants.py:1122
+#: gaupol/assistants.py:1124
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/player.py:336
+#: gaupol/renderers/multiline.py:87
+msgid "Italic"
+msgstr ""
+
+#: gaupol/player.py:355
 msgid "Failed to initialize playback"
 msgstr ""
 
@@ -680,8 +688,8 @@ msgstr "Hiba az általános kifejezés cseréjében"
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
-#: gaupol/agents/open.py:357 gaupol/agents/open.py:369
-#: gaupol/agents/open.py:381 gaupol/agents/close.py:71
+#: gaupol/agents/open.py:363 gaupol/agents/open.py:375
+#: gaupol/agents/open.py:387 gaupol/agents/close.py:71
 #: data/extensions/custom-framerates/custom-framerates.py:39
 msgid "_Cancel"
 msgstr "_Mégse"
@@ -751,7 +759,7 @@ msgstr "Egyéni"
 msgid "Save changes to documents before closing?"
 msgstr "Menti a változtatásokat bezárás előtt?"
 
-#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:378
+#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:384
 #: gaupol/agents/close.py:68
 msgid "If you don't save, changes will be permanently lost."
 msgstr "Ha nem menti, akkor a változtatások véglegesen el fognak veszni."
@@ -761,7 +769,7 @@ msgid "Close _Without Saving"
 msgstr "Bezárás _mentés nélkül"
 
 #: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/multi_save.py:84
-#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:382
+#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:388
 #: gaupol/agents/close.py:72 data/ui/menubar.ui:34
 msgid "_Save"
 msgstr "_Mentés"
@@ -774,8 +782,8 @@ msgstr "_Válassza ki az alap dokumentumot, ha menteni szeretné:"
 msgid "Select the _translation documents you want to save:"
 msgstr "Válassza ki a fordí_tási dokumentumot, ha menteni szeretné:"
 
-#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:358
-#: gaupol/agents/open.py:370
+#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:364
+#: gaupol/agents/open.py:376
 msgid "_Open"
 msgstr "_Megnyitás"
 
@@ -816,10 +824,6 @@ msgstr "Andrássy László <andrassy.laszlo@gmail.com>, 2009-2015"
 #: gaupol/dialogs/about.py:55
 msgid "Gaupol Website"
 msgstr "A Gaupol honlapja"
-
-#: gaupol/dialogs/about.py:61
-msgid "Donate"
-msgstr ""
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -942,41 +946,41 @@ msgstr "Videó kiválasztása"
 msgid "_Select"
 msgstr "_Kiválasztás"
 
-#: gaupol/agents/open.py:319
+#: gaupol/agents/open.py:325
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "A(z) \"{}\" fájl dekódolása az összes támogatott kodekkel sikertelen."
 
-#: gaupol/agents/open.py:320
+#: gaupol/agents/open.py:326
 msgid "Please try to open the file with a different character encoding."
 msgstr "Próbálja megnyitni a fájlt más karakterkódolással."
 
-#: gaupol/agents/open.py:328
+#: gaupol/agents/open.py:334
 msgid "Failed to recognize format of file \"{}\""
 msgstr "A(z) \"{}\" fájl formátuma ismeretlen"
 
-#: gaupol/agents/open.py:329
+#: gaupol/agents/open.py:335
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr "Ellenőrizze, hogy a fájl a Gaupol által támogatott felirat fájl-e."
 
-#: gaupol/agents/open.py:337
+#: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
 msgstr "A fájl \"{}\" megnyitása sikertelen."
 
-#: gaupol/agents/open.py:345
+#: gaupol/agents/open.py:351
 msgid "Failed to parse file \"{}\""
 msgstr "A fájl \"{}\" elemzése sikertelen."
 
-#: gaupol/agents/open.py:346
+#: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr "Ellenőrizze, hogy a megnyitni kívánt {}, érvényes fájl-e."
 
-#: gaupol/agents/open.py:354
+#: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
 msgstr "Megnyitja ezt az abnormálisan nagy fájlt: \"{}\"?"
 
-#: gaupol/agents/open.py:355
+#: gaupol/agents/open.py:361
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
@@ -984,11 +988,11 @@ msgstr ""
 "A fájl mérete {:.1f} MB. Ez túl nagy méretű ahhoz, hogy szöveg-alapú felirat"
 " fájl legyen! Ellenőrizze, hogy nem bináris fájlt szeretne-e megnyitni!"
 
-#: gaupol/agents/open.py:365
+#: gaupol/agents/open.py:371
 msgid "Open unsorted file \"{}\"?"
 msgstr "Megnyitja ezt a rendezetlen fájlt: \"{}\"?"
 
-#: gaupol/agents/open.py:366
+#: gaupol/agents/open.py:372
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
@@ -996,12 +1000,12 @@ msgstr ""
 "A(z) {:d} fordítás sorrendjét meg kell változtatni. Ha {:d} soknak tűnik, "
 "akkor lehet, hogy a fájl hibásan lett összeállítva."
 
-#: gaupol/agents/open.py:377
+#: gaupol/agents/open.py:383
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
 "Menti a(z) \"{}\" fordítási dokumentum változásait mielőtt megnyit egy újat?"
 
-#: gaupol/agents/open.py:380
+#: gaupol/agents/open.py:386
 msgid "Open _Without Saving"
 msgstr "Megnyitás _mentés nélkül"
 
@@ -1013,17 +1017,17 @@ msgstr ""
 msgid "Stretching end position"
 msgstr "Végpozíció nyújtása"
 
-#: gaupol/agents/edit.py:200
+#: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/agents/edit.py:282 gaupol/agents/edit.py:300
+#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
 msgid "Stretching start position"
 msgstr "Kezdőpozíció nyújtása"
 
-#: gaupol/agents/edit.py:358
+#: gaupol/agents/edit.py:368
 msgid "Use Shift+Return for line-break"
 msgstr "Shift+Enter - Sortörés"
 
@@ -1108,7 +1112,7 @@ msgstr "Videó betöltése"
 msgid "_Load"
 msgstr "_Betöltés"
 
-#: gaupol/agents/video.py:351
+#: gaupol/agents/video.py:353
 msgid "Undefined"
 msgstr "Definiálatlan"
 
@@ -2178,11 +2182,11 @@ msgstr "Kije_lölt felirat átalakítása"
 msgid "Transform c_urrent project"
 msgstr "Akt_uális projekt átalakítása"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:5
+#: data/extensions/custom-framerates/custom-framerates.extension.in:7
 msgid "Custom Framerates"
 msgstr "Egyéni képfrissítés"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:6
+#: data/extensions/custom-framerates/custom-framerates.extension.in:8
 msgid "Allow use of non-standard framerates"
 msgstr "Nem szokványos képfrissítés használatának engedélyezése"
 
@@ -2580,39 +2584,31 @@ msgstr "Hangjegyek"
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Hangjegyek Unicode-os karaktereinek cseréje kettős-keresztekre"
 
+#: data/gaupol.appdata.xml.in:7
+msgid "Editor for text-based subtitles"
+msgstr ""
+
 #: data/gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
-"texts and timing subtitles to match video. The user interface is designed "
-"with attention to batch processing of multiple documents and convenience of "
-"translating."
+"texts and timing subtitles to match video."
 msgstr ""
-"A Gaupol egy feliratszerkesztő, ami szöveg alapú feliratfájlok "
-"szerkesztéséhezhasználható. Többféle feliratfájl-formátumot támogat, és "
-"könnyen kezelhetőeszközöket biztosít a feliratok szerkesztéséhez és a "
-"videófájlokkal valóidőzítésükhöz. A Gaupol felhasználói felületét úgy "
-"tervezték, hogy több felirategyidejű, kötegelt feldolgozását és kényelmes "
-"fordítását tegye lehetővé."
 
-#: data/gaupol.appdata.xml.in:18
+#: data/gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr ""
 
-#: data/gaupol.desktop.in:4
+#: data/gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "Feliratszerkesztő"
 
-#: data/gaupol.desktop.in:5
+#: data/gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "Felirat fájl szerkesztése"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:7
+#: data/gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
 msgstr "video;subtitles;captions;"
-
-#: data/gaupol.desktop.in:15
-msgid "Gaupol Subtitle Editor"
-msgstr "Gaupol feliratszerkesztő"
