@@ -1,3 +1,18 @@
+2019-02-03: Gaupol 1.5
+======================
+
+* Add support for building a Flatpak
+* Highlight changed parts in "Correct Texts" (#34)
+* Add keybinding Ctrl+I for toggling italic (#118)
+* Add keybinding Ctrl+I for toggling italic while editing (#118)
+* Change keybinding for Invert Selection to Ctrl+J
+* When opening multiple files, skip ones already open
+* Adapt to various GTK+ deprecations
+* Add 64x64 and 128x128 icons
+* Update AppData XML file
+* Bump iso-codes dependency to >= 3.67
+* Update translations
+
 2018-07-07: Gaupol 1.4.1
 ========================
 

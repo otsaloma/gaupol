@@ -2,14 +2,14 @@
 
 [Setup]
 AppName=Gaupol
-AppVerName=Gaupol 1.4.1
+AppVerName=Gaupol 1.5
 AppPublisher=Osmo Salomaa
 AppPublisherURL=https://otsaloma.io/gaupol/
 DefaultDirName={pf}\Gaupol
 DefaultGroupName=Gaupol
 AllowNoIcons=yes
 OutputDir=".."
-OutputBaseFilename=gaupol-1.4.1-win32
+OutputBaseFilename=gaupol-1.5-win32
 Compression=lzma
 SolidCompression=yes
 
