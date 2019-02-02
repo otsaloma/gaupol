@@ -10,6 +10,8 @@ package from Gaupol has been an afterthought and thus not well designed
 to be a reusable component, but on the other hand is proven, working and
 maintained code.
 
+API Documentation: https://otsaloma.io/gaupol/doc/api/aeidon.html
+
 ## Installation
 
 To install only either the aeidon or the gaupol package, use one of the
