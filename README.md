@@ -28,7 +28,13 @@ install from Flatpak or the source code.
 
 #### Flatpak
 
-Coming soon!
+Stable releases are available via [Flathub][].
+
+The development version can be installed by running command `make
+install` under the `flatpak` directory. You need make, flatpak-builder
+and gettext to build the Flatpak.
+
+[Flathub]: https://flathub.org/apps/details/io.otsaloma.gaupol
 
 #### Source
 
