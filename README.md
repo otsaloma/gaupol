@@ -69,7 +69,7 @@ command.
                      gstreamer1.0-plugins-ugly \
                      iso-codes \
                      python3 \
-                     python3-chardet
+                     python3-chardet \
                      python3-dev \
                      python3-enchant \
                      python3-gi \
