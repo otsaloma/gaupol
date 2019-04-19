@@ -4,7 +4,7 @@
 Name=Period after title
 Description=Add period after a shortened title, such as "Mr" and "Dr"
 Classes=Human;
-Pattern=\b(Dr|Jr|Mr|Mrs|Ms|Sr|St)\b(?!\.)
+Pattern=\b(Dr|Jr|Mr|Mrs|Ms|Sr|St)( |$)
 Flags=DOTALL;MULTILINE;
 Replacement=\1.
 Repeat=False
