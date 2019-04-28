@@ -53,6 +53,11 @@ class MenuAgent(aeidon.Delegate):
         recent_filter.add_application("gaupol")
         menu.add_filter(recent_filter)
         menu.set_filter(recent_filter)
+        recent_filter = Gtk.RecentFilter()
+        for format in aeidon.formats:
+            recent_filter.add_mime_type(format.mime_type)
+        menu.add_filter(recent_filter)
+        menu.set_filter(recent_filter)
         menu.set_limit(10)
         return menu
 
