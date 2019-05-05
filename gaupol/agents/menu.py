@@ -49,13 +49,13 @@ class MenuAgent(aeidon.Delegate):
         menu.set_show_tips(True)
         menu.set_sort_type(Gtk.RecentSortType.MRU)
         menu.connect("item-activated", self._on_recent_menu_item_activated)
+        def custom_filter(info, user_data=None):
+            application = "gaupol" in info.applications
+            mime_type = info.mime_type in [x.mime_type for x in aeidon.formats]
+            return bool(application and mime_type)
         recent_filter = Gtk.RecentFilter()
-        recent_filter.add_application("gaupol")
-        menu.add_filter(recent_filter)
-        menu.set_filter(recent_filter)
-        recent_filter = Gtk.RecentFilter()
-        for format in aeidon.formats:
-            recent_filter.add_mime_type(format.mime_type)
+        flags = Gtk.RecentFilterFlags.APPLICATION | Gtk.RecentFilterFlags.MIME_TYPE
+        recent_filter.add_custom(flags, custom_filter)
         menu.add_filter(recent_filter)
         menu.set_filter(recent_filter)
         menu.set_limit(10)
