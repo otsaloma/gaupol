@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Carlos Mella <cmellib@gmail.com>, 2017
+# Carlos Mella <cmellib@gmail.com>, 2019
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"POT-Creation-Date: 2019-06-08 18:20+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Carlos Mella <cmellib@gmail.com>, 2017\n"
+"Last-Translator: Carlos Mella <cmellib@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -656,7 +656,7 @@ msgstr[1] "Confirmar {:d} cambios"
 
 #: gaupol/renderers/multiline.py:87
 msgid "Italic"
-msgstr ""
+msgstr "Cursiva"
 
 #: gaupol/player.py:355
 msgid "Failed to initialize playback"
@@ -2287,12 +2287,12 @@ msgstr ""
 "«O»"
 
 #: data/patterns/Latn-en.common-error.in:91
-#: data/patterns/Latn.common-error.in:42
+#: data/patterns/Latn.common-error.in:108
 msgid "Space between number and unit"
 msgstr "Espacio entre números y unidades de medida"
 
 #: data/patterns/Latn-en.common-error.in:92
-#: data/patterns/Latn.common-error.in:43
+#: data/patterns/Latn.common-error.in:109
 msgid "Add or remove space between a number and the associated unit"
 msgstr ""
 "Ajusta el espacio en blanco entre un número y su unidad de medida asociada"
@@ -2360,12 +2360,12 @@ msgid "Do not break after a possessive determiner, e.g. \"my\""
 msgstr "No divide después de un determinante posesivo, tal como «mi»"
 
 #: data/patterns/Latn-fi.common-error.in:5
-#: data/patterns/Latn.common-error.in:116
+#: data/patterns/Latn.common-error.in:182
 msgid "Space after punctuation marks"
 msgstr "Espacio a continuación de signos de puntuación"
 
 #: data/patterns/Latn-fi.common-error.in:6
-#: data/patterns/Latn.common-error.in:117
+#: data/patterns/Latn.common-error.in:183
 msgid "Add space after various punctuation marks"
 msgstr "Agrega un espacio en blanco después de distintos signos de puntuación"
 
@@ -2385,7 +2385,7 @@ msgstr "Agrega espacios en blanco alrededor de comillas angulares"
 
 #: data/patterns/Latn-fr.common-error.in:41
 #: data/patterns/Latn-fr.common-error.in:52
-#: data/patterns/Latn.common-error.in:105
+#: data/patterns/Latn.common-error.in:171
 msgid "Space before punctuation marks"
 msgstr "Espacio antes de signos de puntuación"
 
@@ -2410,127 +2410,145 @@ msgstr "Puntos suspensivos"
 msgid "Capitalize after an ellipsis"
 msgstr "Capitaliza después de puntos suspensivos"
 
-#: data/patterns/Latn.common-error.in:5 data/patterns/Latn.common-error.in:14
+#: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
+#: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
+#: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
+#: data/patterns/Latn.common-error.in:62
+msgid "Ligatures"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
+#: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
+#: data/patterns/Latn.common-error.in:45 data/patterns/Latn.common-error.in:54
+#: data/patterns/Latn.common-error.in:63
+msgid "Unpack ligatures to individual characters"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Spelling of a.m. and p.m."
 msgstr "«a.m.» y «p.m.»"
 
-#: data/patterns/Latn.common-error.in:6 data/patterns/Latn.common-error.in:15
+#: data/patterns/Latn.common-error.in:72 data/patterns/Latn.common-error.in:81
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
 "Convierte varias formas de escribir períodos de 12 horas a «a.m.» y «p.m.»"
 
-#: data/patterns/Latn.common-error.in:23 data/patterns/Latn.common-error.in:32
+#: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
 msgid "Letter \"O\" in a number"
 msgstr "Letra «O» en números"
 
-#: data/patterns/Latn.common-error.in:24 data/patterns/Latn.common-error.in:33
+#: data/patterns/Latn.common-error.in:90 data/patterns/Latn.common-error.in:99
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr "Reemplaza la letra «O» dentro de un número por un cero"
 
-#: data/patterns/Latn.common-error.in:51
+#: data/patterns/Latn.common-error.in:117
 msgid "Double apostrophe"
 msgstr "Doble comilla simple"
 
-#: data/patterns/Latn.common-error.in:52
+#: data/patterns/Latn.common-error.in:118
 msgid "Replace a double apostrophe with a quotation mark"
 msgstr "Reemplaza dos comillas simples por una comilla doble"
 
-#: data/patterns/Latn.common-error.in:60 data/patterns/Latn.common-error.in:69
-#: data/patterns/Latn.common-error.in:78 data/patterns/Latn.common-error.in:87
+#: data/patterns/Latn.common-error.in:126
+#: data/patterns/Latn.common-error.in:135
+#: data/patterns/Latn.common-error.in:144
+#: data/patterns/Latn.common-error.in:153
 msgid "Spaces around brackets"
 msgstr "Espacios alrededor de paréntesis"
 
-#: data/patterns/Latn.common-error.in:61 data/patterns/Latn.common-error.in:70
-#: data/patterns/Latn.common-error.in:79 data/patterns/Latn.common-error.in:88
+#: data/patterns/Latn.common-error.in:127
+#: data/patterns/Latn.common-error.in:136
+#: data/patterns/Latn.common-error.in:145
+#: data/patterns/Latn.common-error.in:154
 msgid "Add or remove spaces around parantheses and square brackets"
 msgstr ""
 "Ajusta los espacios en blanco alrededor de paréntesis y corchetes cuadrados"
 
-#: data/patterns/Latn.common-error.in:96
+#: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
 msgstr "Espacio a continuación de rayas de diálogo"
 
-#: data/patterns/Latn.common-error.in:97
+#: data/patterns/Latn.common-error.in:163
 msgid "Add space after a dialogue dash"
 msgstr "Agrega un espacio en blanco después de una raya de diálogo"
 
-#: data/patterns/Latn.common-error.in:106
+#: data/patterns/Latn.common-error.in:172
 msgid "Remove space before various punctuation marks"
 msgstr "Elimina el espacio en blanco antes de distintos signos de puntuación"
 
-#: data/patterns/Latn.common-error.in:126
+#: data/patterns/Latn.common-error.in:192
 msgid "Space after an ellipsis"
 msgstr "Espacio a continuación de puntos suspensivos"
 
-#: data/patterns/Latn.common-error.in:127
+#: data/patterns/Latn.common-error.in:193
 msgid "Add space after an ellipsis"
 msgstr "Agrega un espacio en blanco después de puntos suspensivos"
 
-#: data/patterns/Latn.common-error.in:135
+#: data/patterns/Latn.common-error.in:201
 msgid "Space after a starting ellipsis"
 msgstr "Espacio a continuación de puntos suspensivos iniciales"
 
-#: data/patterns/Latn.common-error.in:136
+#: data/patterns/Latn.common-error.in:202
 msgid "Remove space after an ellipsis that starts a line"
 msgstr ""
 "Elimina el espacio en blanco después de puntos suspensivos al inicio de "
 "línea"
 
-#: data/patterns/Latn.common-error.in:144
-#: data/patterns/Latn.common-error.in:155
-#: data/patterns/Latn.common-error.in:166
-#: data/patterns/Latn.common-error.in:176
+#: data/patterns/Latn.common-error.in:210
+#: data/patterns/Latn.common-error.in:221
+#: data/patterns/Latn.common-error.in:232
+#: data/patterns/Latn.common-error.in:242
 msgid "Spaces around a quotation mark"
 msgstr "Espacios alrededor de comillas"
 
-#: data/patterns/Latn.common-error.in:145
-#: data/patterns/Latn.common-error.in:156
-#: data/patterns/Latn.common-error.in:167
-#: data/patterns/Latn.common-error.in:177
+#: data/patterns/Latn.common-error.in:211
+#: data/patterns/Latn.common-error.in:222
+#: data/patterns/Latn.common-error.in:233
+#: data/patterns/Latn.common-error.in:243
 msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr ""
 "Elimina el espacio en blanco después de una comilla inicial y previo a una "
 "final"
 
-#: data/patterns/Latn.common-error.in:186
-#: data/patterns/Latn.common-error.in:195
+#: data/patterns/Latn.common-error.in:252
+#: data/patterns/Latn.common-error.in:261
 msgid "Spaces around musical notes"
 msgstr "Espacios alrededor de notas musicales"
 
-#: data/patterns/Latn.common-error.in:187
-#: data/patterns/Latn.common-error.in:196
+#: data/patterns/Latn.common-error.in:253
+#: data/patterns/Latn.common-error.in:262
 msgid "Add spaces between musical note characters and lyrics"
 msgstr ""
 "Agrega espacios en blanco entre caracteres de notas musicales y letras de "
 "canciones"
 
-#: data/patterns/Latn.common-error.in:204
-#: data/patterns/Latn.common-error.in:213
+#: data/patterns/Latn.common-error.in:270
+#: data/patterns/Latn.common-error.in:279
 msgid "Multiple question- and exclamation marks"
 msgstr "Múltiples signos de exclamación e interrogación"
 
-#: data/patterns/Latn.common-error.in:205
-#: data/patterns/Latn.common-error.in:214
+#: data/patterns/Latn.common-error.in:271
+#: data/patterns/Latn.common-error.in:280
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr ""
 "Reduce a uno múltiples signos de interrogación o exclamación consecutivos"
 
-#: data/patterns/Latn.common-error.in:222
-#: data/patterns/Latn.common-error.in:232
+#: data/patterns/Latn.common-error.in:288
+#: data/patterns/Latn.common-error.in:298
 msgid "Periods around a punctuation mark"
 msgstr "Puntos alrededor de signos de puntuación"
 
-#: data/patterns/Latn.common-error.in:223
-#: data/patterns/Latn.common-error.in:233
+#: data/patterns/Latn.common-error.in:289
+#: data/patterns/Latn.common-error.in:299
 msgid "Remove period before or after various punctuation marks"
 msgstr "Elimina el punto antes o después de distintos signos de puntuación"
 
-#: data/patterns/Latn.common-error.in:242
+#: data/patterns/Latn.common-error.in:308
 msgid "Terminating double-dashes"
 msgstr "Fin de oraciones con dos rayas"
 
-#: data/patterns/Latn.common-error.in:243
+#: data/patterns/Latn.common-error.in:309
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr "Agrega una segunda raya al fin de una oración terminada por una"
 
@@ -2639,7 +2657,7 @@ msgstr "Reemplaza caracteres Unicode de notas musicales con signos numéricos"
 
 #: data/gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
-msgstr ""
+msgstr "Editor de archivos de subtítulos basados en texto"
 
 #: data/gaupol.appdata.xml.in:9
 msgid ""
@@ -2647,6 +2665,9 @@ msgid ""
 "subtitle file formats and provides means of creating subtitles, editing "
 "texts and timing subtitles to match video."
 msgstr ""
+"Gaupol es un editor de archivos de subtítulos basados en texto. Con soporte "
+"para diversos formatos de archivos, proporciona los medios para crear "
+"subtítulos, manipular líneas y sincronizar subtítulos a un vídeo."
 
 #: data/gaupol.appdata.xml.in:38
 msgid "Main window"

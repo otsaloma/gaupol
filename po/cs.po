@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"POT-Creation-Date: 2019-06-08 18:20+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: fri, 2018\n"
 "Language-Team: Czech (https://www.transifex.com/otsaloma/teams/64879/cs/)\n"
@@ -2271,12 +2271,12 @@ msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr "Nahradí nulu za písmeno „O“ ve slově napsaném velkými písmeny"
 
 #: data/patterns/Latn-en.common-error.in:91
-#: data/patterns/Latn.common-error.in:42
+#: data/patterns/Latn.common-error.in:108
 msgid "Space between number and unit"
 msgstr "Mezera mezi číslem a jednotkou"
 
 #: data/patterns/Latn-en.common-error.in:92
-#: data/patterns/Latn.common-error.in:43
+#: data/patterns/Latn.common-error.in:109
 msgid "Add or remove space between a number and the associated unit"
 msgstr "Přidat nebo odstranit mezeru mezi číslem a k němu patřící jednotkou"
 
@@ -2343,12 +2343,12 @@ msgid "Do not break after a possessive determiner, e.g. \"my\""
 msgstr "Nezalamovat po přivlastňovacím zájmenu, např. \"my\""
 
 #: data/patterns/Latn-fi.common-error.in:5
-#: data/patterns/Latn.common-error.in:116
+#: data/patterns/Latn.common-error.in:182
 msgid "Space after punctuation marks"
 msgstr "Mezera za interpunkčními znaménky"
 
 #: data/patterns/Latn-fi.common-error.in:6
-#: data/patterns/Latn.common-error.in:117
+#: data/patterns/Latn.common-error.in:183
 msgid "Add space after various punctuation marks"
 msgstr "Přidat mezeru za různá interpunkční znaménka"
 
@@ -2368,7 +2368,7 @@ msgstr "Přidat mezery kolem francouzských uvozovek"
 
 #: data/patterns/Latn-fr.common-error.in:41
 #: data/patterns/Latn-fr.common-error.in:52
-#: data/patterns/Latn.common-error.in:105
+#: data/patterns/Latn.common-error.in:171
 msgid "Space before punctuation marks"
 msgstr "Mezera před interpunkčními znaménky"
 
@@ -2393,118 +2393,136 @@ msgstr "Výpustka"
 msgid "Capitalize after an ellipsis"
 msgstr "Nastavit velké písmeno  u slova za výpustkou"
 
-#: data/patterns/Latn.common-error.in:5 data/patterns/Latn.common-error.in:14
+#: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
+#: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
+#: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
+#: data/patterns/Latn.common-error.in:62
+msgid "Ligatures"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
+#: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
+#: data/patterns/Latn.common-error.in:45 data/patterns/Latn.common-error.in:54
+#: data/patterns/Latn.common-error.in:63
+msgid "Unpack ligatures to individual characters"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Spelling of a.m. and p.m."
 msgstr "Způsob psaní a.m. a p.m."
 
-#: data/patterns/Latn.common-error.in:6 data/patterns/Latn.common-error.in:15
+#: data/patterns/Latn.common-error.in:72 data/patterns/Latn.common-error.in:81
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "Změnit různé způsoby psaní 12 hodinových údobí na »a.m.« a »p.m.«"
 
-#: data/patterns/Latn.common-error.in:23 data/patterns/Latn.common-error.in:32
+#: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
 msgid "Letter \"O\" in a number"
 msgstr "Písmeno „O“ uprostřed čísla"
 
-#: data/patterns/Latn.common-error.in:24 data/patterns/Latn.common-error.in:33
+#: data/patterns/Latn.common-error.in:90 data/patterns/Latn.common-error.in:99
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr "Nahradit uprostřed čísel písmeno „O“ za nulu"
 
-#: data/patterns/Latn.common-error.in:51
+#: data/patterns/Latn.common-error.in:117
 msgid "Double apostrophe"
 msgstr "Dvojitý odsuvník (apostrof)"
 
-#: data/patterns/Latn.common-error.in:52
+#: data/patterns/Latn.common-error.in:118
 msgid "Replace a double apostrophe with a quotation mark"
 msgstr "Nahradit dvojitý odsuvník (apostrof) za uvozovku"
 
-#: data/patterns/Latn.common-error.in:60 data/patterns/Latn.common-error.in:69
-#: data/patterns/Latn.common-error.in:78 data/patterns/Latn.common-error.in:87
+#: data/patterns/Latn.common-error.in:126
+#: data/patterns/Latn.common-error.in:135
+#: data/patterns/Latn.common-error.in:144
+#: data/patterns/Latn.common-error.in:153
 msgid "Spaces around brackets"
 msgstr "Mezery kolem závorek"
 
-#: data/patterns/Latn.common-error.in:61 data/patterns/Latn.common-error.in:70
-#: data/patterns/Latn.common-error.in:79 data/patterns/Latn.common-error.in:88
+#: data/patterns/Latn.common-error.in:127
+#: data/patterns/Latn.common-error.in:136
+#: data/patterns/Latn.common-error.in:145
+#: data/patterns/Latn.common-error.in:154
 msgid "Add or remove spaces around parantheses and square brackets"
 msgstr "Přidat nebo odstranit mezery kolem kulatých nebo hranatých závorek"
 
-#: data/patterns/Latn.common-error.in:96
+#: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
 msgstr "Mezera za v dialogovou odrážkou"
 
-#: data/patterns/Latn.common-error.in:97
+#: data/patterns/Latn.common-error.in:163
 msgid "Add space after a dialogue dash"
 msgstr "Přidat mezeru za dialogovou pomlčku."
 
-#: data/patterns/Latn.common-error.in:106
+#: data/patterns/Latn.common-error.in:172
 msgid "Remove space before various punctuation marks"
 msgstr "Odstranit mezeru před různými interpunkčními znaménky"
 
-#: data/patterns/Latn.common-error.in:126
+#: data/patterns/Latn.common-error.in:192
 msgid "Space after an ellipsis"
 msgstr "Mezera za výpustkou"
 
-#: data/patterns/Latn.common-error.in:127
+#: data/patterns/Latn.common-error.in:193
 msgid "Add space after an ellipsis"
 msgstr "Přidat mezeru za výpustku"
 
-#: data/patterns/Latn.common-error.in:135
+#: data/patterns/Latn.common-error.in:201
 msgid "Space after a starting ellipsis"
 msgstr "Mezera za počáteční výpustkou"
 
-#: data/patterns/Latn.common-error.in:136
+#: data/patterns/Latn.common-error.in:202
 msgid "Remove space after an ellipsis that starts a line"
 msgstr "Odstranit mezeru za výpustkou na začátku řádku"
 
-#: data/patterns/Latn.common-error.in:144
-#: data/patterns/Latn.common-error.in:155
-#: data/patterns/Latn.common-error.in:166
-#: data/patterns/Latn.common-error.in:176
+#: data/patterns/Latn.common-error.in:210
+#: data/patterns/Latn.common-error.in:221
+#: data/patterns/Latn.common-error.in:232
+#: data/patterns/Latn.common-error.in:242
 msgid "Spaces around a quotation mark"
 msgstr "Mezery kolem uvozovek"
 
-#: data/patterns/Latn.common-error.in:145
-#: data/patterns/Latn.common-error.in:156
-#: data/patterns/Latn.common-error.in:167
-#: data/patterns/Latn.common-error.in:177
+#: data/patterns/Latn.common-error.in:211
+#: data/patterns/Latn.common-error.in:222
+#: data/patterns/Latn.common-error.in:233
+#: data/patterns/Latn.common-error.in:243
 msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr "Odstranit mezeru po otevírací uvozovce a před uzavírací uvozovkou"
 
-#: data/patterns/Latn.common-error.in:186
-#: data/patterns/Latn.common-error.in:195
+#: data/patterns/Latn.common-error.in:252
+#: data/patterns/Latn.common-error.in:261
 msgid "Spaces around musical notes"
 msgstr "Mezery okolo hudebních not"
 
-#: data/patterns/Latn.common-error.in:187
-#: data/patterns/Latn.common-error.in:196
+#: data/patterns/Latn.common-error.in:253
+#: data/patterns/Latn.common-error.in:262
 msgid "Add spaces between musical note characters and lyrics"
 msgstr "Přidat mezery mezi znaky hudebních not a slova písně"
 
-#: data/patterns/Latn.common-error.in:204
-#: data/patterns/Latn.common-error.in:213
+#: data/patterns/Latn.common-error.in:270
+#: data/patterns/Latn.common-error.in:279
 msgid "Multiple question- and exclamation marks"
 msgstr "Více otazníků a vykřičníků najednou"
 
-#: data/patterns/Latn.common-error.in:205
-#: data/patterns/Latn.common-error.in:214
+#: data/patterns/Latn.common-error.in:271
+#: data/patterns/Latn.common-error.in:280
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr "Nahradit vícenásobné otazníky a vykřičníky za jeden"
 
-#: data/patterns/Latn.common-error.in:222
-#: data/patterns/Latn.common-error.in:232
+#: data/patterns/Latn.common-error.in:288
+#: data/patterns/Latn.common-error.in:298
 msgid "Periods around a punctuation mark"
 msgstr "Tečka vedle interpunkčního znaménka"
 
-#: data/patterns/Latn.common-error.in:223
-#: data/patterns/Latn.common-error.in:233
+#: data/patterns/Latn.common-error.in:289
+#: data/patterns/Latn.common-error.in:299
 msgid "Remove period before or after various punctuation marks"
 msgstr "Odstranit tečku před nebo za různými interpunkčními znaménky"
 
-#: data/patterns/Latn.common-error.in:242
+#: data/patterns/Latn.common-error.in:308
 msgid "Terminating double-dashes"
 msgstr "Závěrečné dvojité pomlčky"
 
-#: data/patterns/Latn.common-error.in:243
+#: data/patterns/Latn.common-error.in:309
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr "Nahradit jednu uzavírající větnou pomlčku dvěma pomlčkami"
 

@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Sveinn í Felli <sv1@fellsnet.is>, 2018
+# Sveinn í Felli <sv1@fellsnet.is>, 2019
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-03 01:14+0200\n"
+"POT-Creation-Date: 2019-06-08 18:20+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2018\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2019\n"
 "Language-Team: Icelandic (https://www.transifex.com/otsaloma/teams/64879/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -390,7 +390,7 @@ msgstr "Forskoðun"
 
 #: gaupol/application.py:287
 msgid "Preview from selected position with a video player"
-msgstr ""
+msgstr "Forskoða frá valinni staðsetningu í myndspilara"
 
 #: gaupol/enums.py:37
 msgid "No."
@@ -474,23 +474,23 @@ msgstr "Verk og útkoma"
 
 #: gaupol/assistants.py:128
 msgid "Correct texts in the text column"
-msgstr ""
+msgstr "Leiðrétta texta í textadálkinum"
 
 #: gaupol/assistants.py:129
 msgid "Correct texts in the translation column"
-msgstr ""
+msgstr "Leiðrétta texta í þýðingadálkinum"
 
 #: gaupol/assistants.py:138
 msgid "Correct texts in selected subtitles"
-msgstr ""
+msgstr "Leiðrétta texta í völdum skjátextum"
 
 #: gaupol/assistants.py:139
 msgid "Correct texts in current project"
-msgstr ""
+msgstr "Leiðrétta texta í þessu verkefni"
 
 #: gaupol/assistants.py:140
 msgid "Correct texts in all open projects"
-msgstr ""
+msgstr "Leiðrétta texta í öllum opnum verkefnum"
 
 #: gaupol/assistants.py:363
 msgid "Other"
@@ -498,7 +498,7 @@ msgstr "Annað"
 
 #: gaupol/assistants.py:439
 msgid "Capitalize texts written in lower case"
-msgstr ""
+msgstr "Setja lágletraðan texta í hástafi"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -512,7 +512,7 @@ msgstr "Setja texta í hástafi"
 
 #: gaupol/assistants.py:468
 msgid "Correct common errors made by humans or image recognition software"
-msgstr ""
+msgstr "Leiðrétta algengar villur gerðar af fólki eða ljóslestrarhugbúnaði"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -526,7 +526,7 @@ msgstr "Leiðrétta algengar villur"
 
 #: gaupol/assistants.py:526
 msgid "Remove explanatory texts meant for the hearing impaired"
-msgstr ""
+msgstr "Fjarlægja skýringatexta sem ætlaðir eru fyrir heyrnarskerta"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -651,7 +651,7 @@ msgstr[1] "Staðfesta {:d} breytingar"
 
 #: gaupol/renderers/multiline.py:87
 msgid "Italic"
-msgstr ""
+msgstr "Skáletrað"
 
 #: gaupol/player.py:355
 msgid "Failed to initialize playback"
@@ -879,8 +879,8 @@ msgstr "_Skipta út"
 #: gaupol/dialogs/duration_adjust.py:70
 msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Aðlagaði tímalengd {:d} skjátexta"
+msgstr[1] "Aðlagaði tímalengdir {:d} skjátexta"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -1056,7 +1056,7 @@ msgstr "Vistaði þýðingarskjal sem \"{}\""
 #: gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr ""
+msgstr "Mistókst að kóða skrána \"{basename}\" með stafatöfluni \"{codec}\""
 
 #: gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
@@ -1124,7 +1124,7 @@ msgstr "Óskilgreint"
 
 #: gaupol/agents/preview.py:101
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
-msgstr ""
+msgstr "Mistókst að kóða skjátextaskrána  í bráðabirgðamöppuna \"{}\""
 
 #: gaupol/agents/preview.py:102
 msgid ""
@@ -1135,7 +1135,7 @@ msgstr ""
 
 #: gaupol/agents/preview.py:110
 msgid "Failed to save subtitle file to temporary directory \"{}\""
-msgstr ""
+msgstr "Mistókst að vista skjátextaskrána  í bráðabirgðamöppuna \"{}\""
 
 #: gaupol/agents/preview.py:118
 msgid "Failed to launch video player"
@@ -1159,11 +1159,11 @@ msgstr "STAFATAFLA"
 
 #: gaupol/applicationman.py:124
 msgid "set the character encoding used to open files"
-msgstr ""
+msgstr "veldu stafatöflu sem á að nota við að opna skrár"
 
 #: gaupol/applicationman.py:131
 msgid "list all available character encodings"
-msgstr ""
+msgstr "telja upp allar tiltækar stafatöflur"
 
 #: gaupol/applicationman.py:136 gaupol/applicationman.py:153
 msgid "FILE"
@@ -1790,11 +1790,11 @@ msgstr "Lengdir lína"
 
 #: data/ui/preferences-dialog.ui:445
 msgid "_Show line lengths in list cells"
-msgstr ""
+msgstr "_Birta lengdir lína í listareitum"
 
 #: data/ui/preferences-dialog.ui:462
 msgid "S_how line lengths in editable text fields"
-msgstr ""
+msgstr "B_irta lengdir lína í breytanlegum textareitum"
 
 #: data/ui/preferences-dialog.ui:486
 msgid "_Length unit:"
@@ -2241,20 +2241,20 @@ msgstr ""
 #: data/patterns/Latn-en.common-error.in:73
 #: data/patterns/Latn-en.common-error.in:82
 msgid "Zero in an upper case word"
-msgstr ""
+msgstr "Núll í hástafa orði"
 
 #: data/patterns/Latn-en.common-error.in:74
 #: data/patterns/Latn-en.common-error.in:83
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr ""
+msgstr "Skipta núlli út fyrir stafinn \"O\" í hástafa orði"
 
 #: data/patterns/Latn-en.common-error.in:91
-#: data/patterns/Latn.common-error.in:42
+#: data/patterns/Latn.common-error.in:108
 msgid "Space between number and unit"
 msgstr "Fjarlægja bil á milli tölustafa og mælieininga"
 
 #: data/patterns/Latn-en.common-error.in:92
-#: data/patterns/Latn.common-error.in:43
+#: data/patterns/Latn.common-error.in:109
 msgid "Add or remove space between a number and the associated unit"
 msgstr "Bæta við eða fjarlægja bil á milli tölustafa og mælieininga"
 
@@ -2292,7 +2292,7 @@ msgstr "Titill"
 
 #: data/patterns/Latn-en.line-break.in:6
 msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr ""
+msgstr "Ekki setja skil á eftir titli, t.d. \" Dr.\""
 
 #: data/patterns/Latn-en.line-break.in:13
 msgid "Article"
@@ -2319,39 +2319,39 @@ msgid "Do not break after a possessive determiner, e.g. \"my\""
 msgstr ""
 
 #: data/patterns/Latn-fi.common-error.in:5
-#: data/patterns/Latn.common-error.in:116
+#: data/patterns/Latn.common-error.in:182
 msgid "Space after punctuation marks"
-msgstr ""
+msgstr "Bil á eftir greinamerkjum"
 
 #: data/patterns/Latn-fi.common-error.in:6
-#: data/patterns/Latn.common-error.in:117
+#: data/patterns/Latn.common-error.in:183
 msgid "Add space after various punctuation marks"
-msgstr ""
+msgstr "Setja  bil á eftir margskonar greinamerkjum"
 
 #: data/patterns/Latn-fr.common-error.in:5
 #: data/patterns/Latn-fr.common-error.in:14
 #: data/patterns/Latn-fr.common-error.in:23
 #: data/patterns/Latn-fr.common-error.in:32
 msgid "Spaces around guillemets"
-msgstr ""
+msgstr "Bil í kringum gæsalappir"
 
 #: data/patterns/Latn-fr.common-error.in:6
 #: data/patterns/Latn-fr.common-error.in:15
 #: data/patterns/Latn-fr.common-error.in:24
 #: data/patterns/Latn-fr.common-error.in:33
 msgid "Add spaces around guillemets"
-msgstr ""
+msgstr "Bæta við bilum í kringum gæsalappir"
 
 #: data/patterns/Latn-fr.common-error.in:41
 #: data/patterns/Latn-fr.common-error.in:52
-#: data/patterns/Latn.common-error.in:105
+#: data/patterns/Latn.common-error.in:171
 msgid "Space before punctuation marks"
-msgstr ""
+msgstr "Bil á undan greinamerkjum"
 
 #: data/patterns/Latn-fr.common-error.in:42
 #: data/patterns/Latn-fr.common-error.in:53
 msgid "Add or remove space before various punctuation marks"
-msgstr ""
+msgstr "Setja eða fjarlægja bil á undan margskonar greinamerkjum"
 
 #: data/patterns/Latn.capitalization.in:5
 msgid "Sentence"
@@ -2359,7 +2359,7 @@ msgstr "Setning"
 
 #: data/patterns/Latn.capitalization.in:6
 msgid "Capitalize the first word of a sentence"
-msgstr ""
+msgstr "Setja hástaf á fyrsta staf í hverri setningu"
 
 #: data/patterns/Latn.capitalization.in:12
 msgid "Ellipsis"
@@ -2369,118 +2369,136 @@ msgstr "Brottfellingarpunktar"
 msgid "Capitalize after an ellipsis"
 msgstr "Hástafur á eftir brottfellingarpunktum"
 
-#: data/patterns/Latn.common-error.in:5 data/patterns/Latn.common-error.in:14
+#: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
+#: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
+#: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
+#: data/patterns/Latn.common-error.in:62
+msgid "Ligatures"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
+#: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
+#: data/patterns/Latn.common-error.in:45 data/patterns/Latn.common-error.in:54
+#: data/patterns/Latn.common-error.in:63
+msgid "Unpack ligatures to individual characters"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Spelling of a.m. and p.m."
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:6 data/patterns/Latn.common-error.in:15
+#: data/patterns/Latn.common-error.in:72 data/patterns/Latn.common-error.in:81
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:23 data/patterns/Latn.common-error.in:32
+#: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
 msgid "Letter \"O\" in a number"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:24 data/patterns/Latn.common-error.in:33
+#: data/patterns/Latn.common-error.in:90 data/patterns/Latn.common-error.in:99
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:51
+#: data/patterns/Latn.common-error.in:117
 msgid "Double apostrophe"
 msgstr "Tvöfalt úrfellingarmerki"
 
-#: data/patterns/Latn.common-error.in:52
+#: data/patterns/Latn.common-error.in:118
 msgid "Replace a double apostrophe with a quotation mark"
 msgstr "Skipta út tvöföldu úrfellingarmerki fyrir gæsalappir"
 
-#: data/patterns/Latn.common-error.in:60 data/patterns/Latn.common-error.in:69
-#: data/patterns/Latn.common-error.in:78 data/patterns/Latn.common-error.in:87
+#: data/patterns/Latn.common-error.in:126
+#: data/patterns/Latn.common-error.in:135
+#: data/patterns/Latn.common-error.in:144
+#: data/patterns/Latn.common-error.in:153
 msgid "Spaces around brackets"
 msgstr "Bil í kringum sviga"
 
-#: data/patterns/Latn.common-error.in:61 data/patterns/Latn.common-error.in:70
-#: data/patterns/Latn.common-error.in:79 data/patterns/Latn.common-error.in:88
+#: data/patterns/Latn.common-error.in:127
+#: data/patterns/Latn.common-error.in:136
+#: data/patterns/Latn.common-error.in:145
+#: data/patterns/Latn.common-error.in:154
 msgid "Add or remove spaces around parantheses and square brackets"
 msgstr "Bæta við eða fjarlægja bil í kringum sviga og hornklofa"
 
-#: data/patterns/Latn.common-error.in:96
+#: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
 msgstr "Bil á eftir þankastriki"
 
-#: data/patterns/Latn.common-error.in:97
+#: data/patterns/Latn.common-error.in:163
 msgid "Add space after a dialogue dash"
 msgstr "Bæta við bili á eftir þankastriki"
 
-#: data/patterns/Latn.common-error.in:106
+#: data/patterns/Latn.common-error.in:172
 msgid "Remove space before various punctuation marks"
 msgstr "Fjarlægja bil á undan margskonar greinamerkjum"
 
-#: data/patterns/Latn.common-error.in:126
+#: data/patterns/Latn.common-error.in:192
 msgid "Space after an ellipsis"
 msgstr "Bil á eftir brottfellingarpunktum"
 
-#: data/patterns/Latn.common-error.in:127
+#: data/patterns/Latn.common-error.in:193
 msgid "Add space after an ellipsis"
 msgstr "Bæta við bili á eftir brottfellingarpunktum"
 
-#: data/patterns/Latn.common-error.in:135
+#: data/patterns/Latn.common-error.in:201
 msgid "Space after a starting ellipsis"
 msgstr "Bil á eftir brottfellingarpunktum í upphafi setningar"
 
-#: data/patterns/Latn.common-error.in:136
+#: data/patterns/Latn.common-error.in:202
 msgid "Remove space after an ellipsis that starts a line"
 msgstr "Fjarlægja bil á eftir brottfellingarpunktum í upphafi setningar"
 
-#: data/patterns/Latn.common-error.in:144
-#: data/patterns/Latn.common-error.in:155
-#: data/patterns/Latn.common-error.in:166
-#: data/patterns/Latn.common-error.in:176
+#: data/patterns/Latn.common-error.in:210
+#: data/patterns/Latn.common-error.in:221
+#: data/patterns/Latn.common-error.in:232
+#: data/patterns/Latn.common-error.in:242
 msgid "Spaces around a quotation mark"
 msgstr "Bil í kringum gæsalappir"
 
-#: data/patterns/Latn.common-error.in:145
-#: data/patterns/Latn.common-error.in:156
-#: data/patterns/Latn.common-error.in:167
-#: data/patterns/Latn.common-error.in:177
+#: data/patterns/Latn.common-error.in:211
+#: data/patterns/Latn.common-error.in:222
+#: data/patterns/Latn.common-error.in:233
+#: data/patterns/Latn.common-error.in:243
 msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:186
-#: data/patterns/Latn.common-error.in:195
+#: data/patterns/Latn.common-error.in:252
+#: data/patterns/Latn.common-error.in:261
 msgid "Spaces around musical notes"
 msgstr "Bil í kringum nótnaskrift"
 
-#: data/patterns/Latn.common-error.in:187
-#: data/patterns/Latn.common-error.in:196
+#: data/patterns/Latn.common-error.in:253
+#: data/patterns/Latn.common-error.in:262
 msgid "Add spaces between musical note characters and lyrics"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:204
-#: data/patterns/Latn.common-error.in:213
+#: data/patterns/Latn.common-error.in:270
+#: data/patterns/Latn.common-error.in:279
 msgid "Multiple question- and exclamation marks"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:205
-#: data/patterns/Latn.common-error.in:214
+#: data/patterns/Latn.common-error.in:271
+#: data/patterns/Latn.common-error.in:280
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:222
-#: data/patterns/Latn.common-error.in:232
+#: data/patterns/Latn.common-error.in:288
+#: data/patterns/Latn.common-error.in:298
 msgid "Periods around a punctuation mark"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:223
-#: data/patterns/Latn.common-error.in:233
+#: data/patterns/Latn.common-error.in:289
+#: data/patterns/Latn.common-error.in:299
 msgid "Remove period before or after various punctuation marks"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:242
+#: data/patterns/Latn.common-error.in:308
 msgid "Terminating double-dashes"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:243
+#: data/patterns/Latn.common-error.in:309
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr ""
 
@@ -2584,7 +2602,7 @@ msgstr ""
 
 #: data/gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
-msgstr ""
+msgstr "Ritill fyrir skjátexta á textaformi"
 
 #: data/gaupol.appdata.xml.in:9
 msgid ""
@@ -2592,6 +2610,9 @@ msgid ""
 "subtitle file formats and provides means of creating subtitles, editing "
 "texts and timing subtitles to match video."
 msgstr ""
+"Gaupol er ritill til meðhöndlunar á skjátextaskrám á textaformi. Hann styður"
+" margar gerðir skjátextaskráa og býður upp á að útbúa nýja skjátexta, "
+"breytingar texta og tímasetningu þeirra svo að þeir samsvari myndskeiðum."
 
 #: data/gaupol.appdata.xml.in:38
 msgid "Main window"
