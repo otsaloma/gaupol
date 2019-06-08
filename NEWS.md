@@ -1,3 +1,10 @@
+2019-06-08: Gaupol 1.6
+======================
+
+* Add text correction pattern to unpack ligatures
+* Don't show video files in recent file menus (#130)
+* Update translations
+
 2019-02-03: Gaupol 1.5
 ======================
 
