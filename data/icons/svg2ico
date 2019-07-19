@@ -1,0 +1,5 @@
+#!/bin/sh
+# https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-icons#size-requirements
+for SIZE in 256 48 32 16; do inkscape -e $SIZE.png -C -w $SIZE gaupol.svg; done
+convert 256.png 48.png 32.png 16.png -background transparent gaupol.ico
+rm -f 256.png 48.png 32.png 16.png
