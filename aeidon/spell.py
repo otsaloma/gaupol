@@ -100,6 +100,10 @@ class SpellCheckNavigator:
         """Add the current word to personal word list."""
         self.checker.add_to_personal(self.word)
 
+    def _delete_at(self, i):
+        """Delete character in text at index `i`."""
+        self.text = self.text[:i] + self.text[i+1:]
+
     @property
     def endpos(self):
         """The end position of the current word."""
@@ -113,6 +117,20 @@ class SpellCheckNavigator:
         """Ignore the current word and any subsequent instances."""
         self.checker.add_to_session(self.word)
         self.pos = self.endpos
+
+    def join_with_next(self):
+        """Join the current word with the next."""
+        while self.trailing_context(1).isspace():
+            self._delete_at(self.endpos)
+
+    def join_with_previous(self):
+        """Join the current word with the previous."""
+        while self.leading_context(1).isspace():
+            self._delete_at(self.pos - 1)
+            self.pos -= 1
+        # Rewind position to the start of the new compound word.
+        while self.leading_context(1).isalnum():
+            self.pos -= 1
 
     def leading_context(self, n):
         """Return `n` characters before the current word."""

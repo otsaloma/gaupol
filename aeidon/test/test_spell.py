@@ -68,6 +68,23 @@ class TestSpellCheckNavigator(aeidon.TestCase):
         error = next(self.navigator)
         assert error == (44, "Kunst")
 
+    def test_join_with_next(self):
+        error = next(self.navigator)
+        assert error == (37, "Panzer")
+        self.navigator.join_with_next()
+        error = next(self.navigator)
+        assert error == (37, "PanzerKunst")
+
+    def test_join_with_previous(self):
+        error = next(self.navigator)
+        assert error == (37, "Panzer")
+        self.navigator.ignore()
+        error = next(self.navigator)
+        assert error == (44, "Kunst")
+        self.navigator.join_with_previous()
+        error = next(self.navigator)
+        assert error == (37, "PanzerKunst")
+
     def test_leading_context(self):
         error = next(self.navigator)
         assert error == (37, "Panzer")
