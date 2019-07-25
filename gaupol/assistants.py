@@ -1047,7 +1047,8 @@ class TextAssistant(Gtk.Assistant):
         self.set_title(_("Correct Texts"))
         self.add_page(self._introduction_page)
         self.add_page(HearingImpairedPage(self))
-        if aeidon.util.enchant_and_dicts_available():
+        if (aeidon.SpellChecker.available() and
+            aeidon.SpellChecker.list_languages()):
             self.add_page(JoinSplitWordsPage(self))
         self.add_page(CommonErrorPage(self))
         self.add_page(CapitalizationPage(self))

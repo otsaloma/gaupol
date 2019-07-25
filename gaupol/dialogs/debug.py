@@ -91,7 +91,7 @@ class DebugDialog(Gtk.MessageDialog):
         """Insert version numbers of selected dependencies."""
         dotjoin = lambda x: ".".join(map(str, x))
         chardet_version = aeidon.util.get_chardet_version()
-        enchant_version = aeidon.util.get_enchant_version()
+        gspell_version = gaupol.util.get_gspell_version()
         gst_version = gaupol.util.get_gst_version()
         gtk_version = dotjoin((
             Gtk.get_major_version(),
@@ -102,8 +102,8 @@ class DebugDialog(Gtk.MessageDialog):
         python_version = dotjoin(sys.version_info[:3])
         self._insert_text("aeidon: {}\n".format(aeidon.__version__))
         self._insert_text("chardet: {}\n".format(chardet_version))
-        self._insert_text("enchant: {}\n".format(enchant_version))
         self._insert_text("gaupol: {}\n".format(gaupol.__version__))
+        self._insert_text("gspell: {}\n".format(gspell_version))
         self._insert_text("gstreamer: {}\n".format(gst_version))
         self._insert_text("gtk+: {}\n".format(gtk_version))
         self._insert_text("pygobject: {}\n".format(pygobject_version))

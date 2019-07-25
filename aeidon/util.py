@@ -190,24 +190,6 @@ def detect_newlines(path):
         return aeidon.newlines.WINDOWS
     return None
 
-@aeidon.deco.once
-def enchant_available():
-    """Return ``True`` if :mod:`enchant` module is available."""
-    try:
-        import enchant
-        return True
-    except Exception:
-        return False
-
-@aeidon.deco.once
-def enchant_and_dicts_available():
-    """Return ``True`` if :mod:`enchant` and dictionaries are available."""
-    try:
-        import enchant
-        return bool(enchant.list_languages())
-    except Exception:
-        return False
-
 def flatten(lst):
     """
     Return a shallow version of `lst`.
@@ -245,14 +227,6 @@ def get_default_encoding(fallback="utf_8"):
 def get_default_newline():
     """Return system default newline as :attr:`aeidon.newlines` item."""
     return aeidon.newlines.find_item("value", os.linesep)
-
-def get_enchant_version():
-    """Return :mod:`enchant` version number as string or ``None``."""
-    try:
-        import enchant
-        return enchant.__version__
-    except Exception:
-        return None
 
 def get_encoding_alias(encoding):
     """Return proper Python alias for `encoding`."""

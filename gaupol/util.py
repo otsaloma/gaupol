@@ -75,6 +75,16 @@ def get_font():
             gaupol.conf.editor.use_custom_font and
             gaupol.conf.editor.custom_font else "")
 
+def get_gspell_version():
+    """Return :mod:`Gspell` version number as string or ``None``."""
+    try:
+        # XXX: The full version number is not available.
+        # https://gitlab.gnome.org/GNOME/gspell/issues/8
+        from gi.repository import Gspell
+        return str(Gspell._version)
+    except Exception:
+        return None
+
 def get_gst_version():
     """Return :mod:`Gst` version number as string or ``None``."""
     try:

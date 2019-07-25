@@ -42,7 +42,7 @@ class CheckSpellingAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(aeidon.util.enchant_available())
+        aeidon.util.affirm(aeidon.SpellChecker.available())
         aeidon.util.affirm(gaupol.conf.spell_check.language)
 
 class ConfigureSpellCheckAction(gaupol.Action):
@@ -50,7 +50,7 @@ class ConfigureSpellCheckAction(gaupol.Action):
         gaupol.Action.__init__(self, "configure-spell-check")
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(aeidon.util.enchant_available())
+        aeidon.util.affirm(aeidon.SpellChecker.available())
 
 class ConvertFramerateAction(gaupol.Action):
     def __init__(self):
