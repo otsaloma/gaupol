@@ -81,6 +81,12 @@ RUNNING_SPHINX = (sys.argv[0].endswith("autogen.py") or
 
 RE_ANY_TAG = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
 
+try:
+    import gi
+    gi.require_version("Gspell", "1")
+except Exception:
+    pass
+
 from aeidon.paths import *
 from aeidon.position import *
 from aeidon import deco
@@ -115,6 +121,7 @@ from aeidon.pattern import *
 from aeidon.patternman import *
 from aeidon.clipboard import *
 from aeidon.revertable import *
+from aeidon.spell import *
 from aeidon import agents
 from aeidon.project import *
 from aeidon.unittest import *
