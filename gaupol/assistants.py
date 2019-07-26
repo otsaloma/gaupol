@@ -552,17 +552,18 @@ class JoinSplitWordsPage(BuilderPage):
 
     def correct_texts(self, project, indices, doc):
         """Correct texts in `project`."""
-        import enchant
         language = gaupol.conf.spell_check.language
         if gaupol.conf.join_split_words.join:
             try:
+                # Can fail if the spell-check backend or dictionary is missing.
                 project.spell_check_join_words(indices, doc, language)
-            except enchant.Error as error:
+            except Exception as error:
                 return self._show_error_dialog(str(error))
         if gaupol.conf.join_split_words.split:
             try:
+                # Can fail if the spell-check backend or dictionary is missing.
                 project.spell_check_split_words(indices, doc, language)
-            except enchant.Error as error:
+            except Exception as error:
                 return self._show_error_dialog(str(error))
 
     def _init_values(self):
