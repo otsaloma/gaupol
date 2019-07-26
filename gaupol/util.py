@@ -181,15 +181,6 @@ def gst_available():
               file=sys.stderr)
     return True
 
-@aeidon.deco.once
-def gtkspell_available():
-    """Return ``True`` if :mod:`GtkSpell` module is available."""
-    try:
-        from gi.repository import GtkSpell
-        return True
-    except Exception:
-        return False
-
 def hex_to_rgba(string):
     """Return a :class:`Gdk.RGBA` for hexadecimal `string`."""
     rgba = Gdk.RGBA()
@@ -263,16 +254,11 @@ def pack_start_fill(box, widget, padding=0):
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
-    if (gaupol.util.gtkspell_available() and
+    if (gaupol.SpellChecker.available() and
         gaupol.conf.spell_check.inline):
-        from gi.repository import GtkSpell
         language = gaupol.conf.spell_check.language
         with aeidon.util.silent(Exception):
-            checker = GtkSpell.Checker()
-            checker.set_language(language)
-            def on_language_changed(checker, lang, *args):
-                gaupol.conf.spell_check.language = lang
-            checker.connect("language-changed", on_language_changed)
+            checker = gaupol.SpellChecker(language)
             checker.attach(text_view)
     connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
