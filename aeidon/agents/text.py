@@ -184,20 +184,6 @@ class TextAgent(aeidon.Delegate):
         self.replace_texts(new_indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Correcting common errors"))
 
-    def _get_enchant_checker(self, language):
-        """Return an enchant spell-checker for `language`."""
-        import enchant.checker
-        dictionary = enchant.Dict(language)
-        # Sometimes enchant will initialize a dictionary that will not
-        # actually work when trying to use it, hence check something.
-        dictionary.check("aeidon")
-        return enchant.checker.SpellChecker(dictionary, "")
-
-    def _get_misspelled_indices(self, checker):
-        """Return a list of misspelled indices in `checker`'s text."""
-        i = [list(range(x.wordpos, x.wordpos + len(x.word))) for x in checker]
-        return aeidon.util.flatten(i)
-
     def _get_penalties(self, patterns):
         """Return a list of penalty definitions."""
         return [{
@@ -290,41 +276,40 @@ class TextAgent(aeidon.Delegate):
         Join misspelled words based on spell-checker suggestions.
 
         `indices` can be ``None`` to process all subtitles.
-        Raise :exc:`enchant.Error` if dictionary instatiation fails.
+        Raise :exc:`Exception` if dictionary instatiation fails.
         """
         new_indices = []
         new_texts = []
-        re_multispace = re.compile(r" +")
-        checker = self._get_enchant_checker(language)
-        seeker = self._get_enchant_checker(language)
+        checker = aeidon.SpellChecker(language)
+        navigator = aeidon.SpellCheckNavigator(language)
         for index in indices or self.get_all_indices():
             subtitle = self.subtitles[index]
             text = subtitle.get_text(doc)
-            text = re_multispace.sub(" ", text)
-            checker.set_text(text)
-            for error in checker:
-                text = checker.get_text()
-                a = checker.wordpos
-                z = checker.wordpos + len(checker.word)
-                ok_with_prev = ok_with_next = False
-                if checker.leading_context(1) == " ":
-                    seeker.set_text(text[:a-1] + text[a:])
-                    poss = self._get_misspelled_indices(seeker)
-                    ok_with_prev = not a-1 in poss
-                if checker.trailing_context(1) == " ":
-                    seeker.set_text(text[:z] + text[z+1:])
-                    poss = self._get_misspelled_indices(seeker)
-                    ok_with_next = not a in poss
+            text = re.sub(r" +", " ", text)
+            navigator.reset(text)
+            for pos, word in navigator:
+                text = navigator.text
+                a = navigator.pos
+                z = navigator.endpos
+                ok_with_prev = False
+                if navigator.leading_context(1) == " ":
+                    candidate = re.split(r"\W+", text[:a-1])[-1] + word
+                    ok_with_prev = checker.check(candidate)
+                ok_with_next = False
+                if navigator.trailing_context(1) == " ":
+                    candidate = word + re.split(r"\W+", text[z+1:])[0]
+                    ok_with_next = checker.check(candidate)
                 # Join backwards or forwards if only one direction,
                 # but not both, produce a correctly spelled result.
-                if ok_with_prev and not ok_with_next:
-                    checker.set_text(text[:a-1] + text[a:])
-                if ok_with_next and not ok_with_prev:
-                    checker.set_text(text[:z] + text[z+1:])
-            new_text = checker.get_text()
-            if new_text != text:
+                if ok_with_prev == ok_with_next:
+                    navigator.ignore()
+                elif ok_with_prev:
+                    navigator.join_with_previous()
+                elif ok_with_next:
+                    navigator.join_with_next()
+            if navigator.text != text:
                 new_indices.append(index)
-                new_texts.append(new_text)
+                new_texts.append(navigator.text)
         if not new_indices: return
         self.replace_texts(new_indices, doc, new_texts, register=register)
         description = _("Joining words by spell-check suggestions")
@@ -337,38 +322,31 @@ class TextAgent(aeidon.Delegate):
         Split misspelled words based on spell-checker suggestions.
 
         `indices` can be ``None`` to process all subtitles.
-        Raise :exc:`enchant.Error` if dictionary instatiation fails.
+        Raise :exc:`Exception` if dictionary instatiation fails.
         """
         new_indices = []
         new_texts = []
-        re_multispace = re.compile(r" +")
-        checker = self._get_enchant_checker(language)
-        indices = indices or self.get_all_indices()
-        for index in indices:
+        navigator = aeidon.SpellCheckNavigator(language)
+        for index in indices or self.get_all_indices():
             subtitle = self.subtitles[index]
             text = subtitle.get_text(doc)
-            text = re_multispace.sub(" ", text)
-            checker.set_text(text)
-            for error in checker:
+            text = re.sub(r" +", " ", text)
+            navigator.reset(text)
+            for pos, word in navigator:
                 # Skip capitalized words, which are usually names
                 # and thus not always found in dictionaries.
-                if checker.word.capitalize() == checker.word: continue
-                suggestions = []
-                for i, suggestion in enumerate(checker.suggest()):
-                    if suggestion.find(" ") > 0:
-                        if suggestion.replace(" ", "") == checker.word:
-                            suggestions.append(suggestion)
+                if word.istitle(): continue
+                suggestions = navigator.suggest()
+                suggestions = [x for x in suggestions if x.replace(" ", "") == word]
                 # Split word only if only one two-word suggestion found that
                 # has all the same characters as the original unsplit word.
-                if len(suggestions) != 1: continue
-                text = checker.get_text()
-                a = checker.wordpos
-                z = checker.wordpos + len(checker.word)
-                checker.set_text(text[:a] + suggestions[0] + text[z:])
-            new_text = checker.get_text()
-            if new_text != text:
+                if len(suggestions) == 1:
+                    navigator.replace(suggestions[0])
+                else:
+                    navigator.ignore()
+            if navigator.text != text:
                 new_indices.append(index)
-                new_texts.append(new_text)
+                new_texts.append(navigator.text)
         if not new_indices: return
         self.replace_texts(new_indices, doc, new_texts, register=register)
         description = _("Splitting words by spell-check suggestions")
