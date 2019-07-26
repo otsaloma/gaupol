@@ -43,7 +43,6 @@ class SpellChecker:
 
     def add_replacement(self, word, replacement):
         """Inform that `word` is to be replaced with `replacement`."""
-        self.checker.set_correction(word, -1, replacement, -1)
         self.replacements.append((word, replacement))
 
     def add_to_personal(self, word):
@@ -76,7 +75,7 @@ class SpellChecker:
             lines = aeidon.util.readlines(self.replacement_file)
             lines = aeidon.util.get_unique(lines)
             lines = list(filter(lambda x: x.strip(), lines))
-            self.replacements = [x.strip().split("|", 1) for x in lines]
+            self.replacements = [tuple(x.strip().split("|", 1)) for x in lines]
 
     @property
     def replacement_file(self):
@@ -171,12 +170,12 @@ class SpellCheckNavigator:
 
     def replace(self, replacement):
         """Replace the current word with `replacement`."""
+        self.checker.add_replacement(self.word, replacement)
         self.text = self.text[:self.pos] + replacement + self.text[self.endpos:]
         self.pos += len(replacement)
 
     def replace_all(self, replacement):
         """Replace the current word and subsequent instances with `replacement`."""
-        self.checker.add_replacement(self.word, replacement)
         self.replacements[self.word] = replacement
         self.replace(replacement)
 
