@@ -121,14 +121,8 @@ class LanguageDialog(gaupol.BuilderDialog):
         """Add all available languages to `store`."""
         locales = []
         with aeidon.util.silent(Exception):
-            import enchant
-            locales = enchant.list_languages()
+            locales = aeidon.SpellChecker.list_languages()
         for locale in locales:
-            with aeidon.util.silent(enchant.Error):
-                if len(locales) < 100:
-                    # Some locales don't actually work, so initialize and check
-                    # a word to test. With a lot of locales, e.g. with Flatpak,
-                    # this cumulates to an unbearable amount of time.
-                    enchant.Dict(locale).check("gaupol")
+            with aeidon.util.silent(Exception):
                 name = aeidon.locales.code_to_name(locale)
                 store.append((locale, name))
