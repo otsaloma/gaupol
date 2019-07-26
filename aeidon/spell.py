@@ -18,6 +18,7 @@
 """Checking and correcting spelling."""
 
 import aeidon
+import os
 import re
 
 with aeidon.util.silent(Exception):
@@ -36,10 +37,14 @@ class SpellChecker:
         if glanguage is None:
             raise aeidon.Error('Language "{}" not supported'.format(language))
         self.checker = Gspell.Checker(language=glanguage)
+        self.language = language
+        self.replacements = []
+        self.read_replacements()
 
     def add_replacement(self, word, replacement):
         """Inform that `word` is to be replaced with `replacement`."""
         self.checker.set_correction(word, -1, replacement, -1)
+        self.replacements.append((word, replacement))
 
     def add_to_personal(self, word):
         """Add `word` to personal word list."""
@@ -64,9 +69,35 @@ class SpellChecker:
         languages = Gspell.Language.get_available()
         return sorted(x.get_code() for x in languages)
 
+    def read_replacements(self):
+        """Read list of replacements from file."""
+        if not os.path.isfile(self.replacement_file): return
+        with aeidon.util.silent(IOError, OSError, tb=True):
+            lines = aeidon.util.readlines(self.replacement_file)
+            lines = aeidon.util.get_unique(lines)
+            lines = list(filter(lambda x: x.strip(), lines))
+            self.replacements = [x.strip().split("|", 1) for x in lines]
+
+    @property
+    def replacement_file(self):
+        """Return path to the replacement file."""
+        directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
+        return os.path.join(directory, "{}.repl".format(self.language))
+
     def suggest(self, word):
         """Return a list of suggestions for `word`."""
-        return self.checker.get_suggestions(word, -1)
+        saved = [y for x, y in self.replacements if x == word]
+        suggestions = self.checker.get_suggestions(word, -1)
+        return aeidon.util.get_unique(saved + suggestions)
+
+    def write_replacements(self):
+        """Write list of replacements to file."""
+        if not self.replacements: return
+        replacements = aeidon.util.get_unique(
+            self.replacements, keep_last=True)[-10000:]
+        text = "\n".join("|".join(x) for x in replacements) + "\n"
+        with aeidon.util.silent(IOError, OSError, tb=True):
+            aeidon.util.write(self.replacement_file, text)
 
 
 class SpellCheckNavigator:

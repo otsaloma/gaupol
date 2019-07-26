@@ -25,6 +25,8 @@ class TestSpellChecker(aeidon.TestCase):
 
     def test_add_replacement(self):
         self.checker.add_replacement("abc", "xyz")
+        suggestions = self.checker.suggest("abc")
+        assert suggestions and suggestions[0] == "xyz"
 
     def test_add_to_session(self):
         assert not self.checker.check("asdf")
