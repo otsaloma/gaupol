@@ -32,8 +32,10 @@ class SpellChecker:
 
     def __init__(self, language):
         """Initialize a :class:`SpellChecker` instance."""
-        language = Gspell.language_lookup(language)
-        self.checker = Gspell.Checker(language=language)
+        glanguage = Gspell.language_lookup(language)
+        if glanguage is None:
+            raise aeidon.Error('Language "{}" not supported'.format(language))
+        self.checker = Gspell.Checker(language=glanguage)
 
     def add_replacement(self, word, replacement):
         """Inform that `word` is to be replaced with `replacement`."""
