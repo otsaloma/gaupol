@@ -181,9 +181,7 @@ class SpellCheckTokenizer:
             if self.text[i].isalnum():
                 word = re.split(r"(?!')\W+", self.text[i:])[0]
                 word = re.sub(r"\W+$", "", word)
-                if (len(word) > 1 and
-                    not word.isdigit() and
-                    not word.isupper()):
+                if len(word) > 1 and not word.isdigit():
                     yield (i, word)
                 i += len(word)
             else:

@@ -132,6 +132,7 @@ class TestSpellCheckTokenizer(aeidon.TestCase):
             ( 2, "This"),
             ( 7, "is"),
             (10, "an"),
+            (13, "URM"),
             (17, "ship"),
             (25, "Uh"),
             (28, "huh"),
