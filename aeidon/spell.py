@@ -60,6 +60,11 @@ class SpellChecker:
 
     def check(self, word):
         """Return ``True`` if `word` is correct, ``False`` otherwise."""
+        if self.language.startswith("en"):
+            if word.endswith("in"):
+                # Special case a common missing "g" in "-ing".
+                return (self.checker.check_word(word, -1) or
+                        self.checker.check_word(word + "g", -1))
         return self.checker.check_word(word, -1)
 
     @classmethod
