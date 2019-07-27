@@ -17,12 +17,6 @@ include_files.append((os.path.join(gnome_dir, "etc"), "etc"))
 include_files.append((os.path.join(gnome_dir, "lib"), "lib"))
 include_files.append((os.path.join(gnome_dir, "share"), "share"))
 
-# PyEnchant ships with DLLs provided by pygi-aio as well.
-# Keep the pygio-aio DLLs, but add PyEnchant data files.
-enchant_dir = os.path.join(site.getsitepackages()[1], "enchant")
-include_files.append((os.path.join(enchant_dir, "lib"), "lib"))
-include_files.append((os.path.join(enchant_dir, "share"), "share"))
-
 setup_kwargs.update({
     "options": {"build_exe": {
         "compressed": False,
