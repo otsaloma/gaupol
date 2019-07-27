@@ -5,6 +5,8 @@ python:
   - 3.6
   - 3.7
 before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y gir1.2-gspell-1
   - pip install chardet flake8
 script:
   - flake8 .
