@@ -33,164 +33,62 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     """
     Dialog for checking and correcting spelling.
 
-    :cvar _max_replacements: Maximum amount of replacements to save to file
-    :cvar _personal_dir: Directory for user replacement files
-    :ivar _checker: :class:`enchant.Checker` instance used
     :ivar _doc: :attr:`aeidon.documents` item currectly being checked
     :ivar _entry_handler: Handler for replacement entry's "changed" signal
-    :ivar _language: Language code for :attr:`_checker`
+    :ivar _language: Language code for :attr:`_navigator`
+    :ivar _navigator: :class:`aeidon.SpellCheckNavigator` instance used
     :ivar _new_rows: List of rows in the current page with changed texts
     :ivar _new_texts: List of changed texts in the current page
     :ivar _page: :class:`gaupol.Page` instance currectly being checked
     :ivar _pager: Iterator to iterate over all target pages
-    :ivar _replacements: List of misspelled words and their replacements
     :ivar _row: Row currently being checked
+    :ivar _rower: Iterator to iterate over all rows
     """
-    _max_replacements = 10000
-    _personal_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
 
     _widgets = [
         "add_button",
         "edit_button",
         "entry",
+        "grid",
         "ignore_all_button",
         "ignore_button",
         "join_back_button",
         "join_forward_button",
         "replace_all_button",
         "replace_button",
-        "grid",
         "text_view",
         "tree_view",
     ]
 
     def __init__(self, parent, application):
-        """
-        Initialize a :class:`SpellCheckDialog` instance.
-
-        Raise :exc:`ValueError` if dictionary initialization fails.
-        """
+        """Initialize a :class:`SpellCheckDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "spell-check-dialog.ui")
         self.application = application
-        self._checker = None
         self._doc = None
         self._entry_handler = None
         self._language = gaupol.conf.spell_check.language
         self._language_name = aeidon.locales.code_to_name(self._language)
+        self._navigator = aeidon.SpellCheckNavigator(self._language)
         self._new_rows = []
         self._new_texts = []
         self._page = None
         self._pager = None
-        self._replacements = []
         self._row = None
+        self._rower = None
         self._init_dialog(parent)
-        self._init_spell_check()
         self._init_widgets()
         self._init_sensitivities()
         self.resize(*gaupol.conf.spell_check.size)
-        self._start()
+        self._pager = self._yield_pages()
+        next(self._pager)
+        self._proceed()
 
-    def _advance(self):
-        """Advance to the next spelling error."""
-        while True:
-            try:
-                # Advance to the next spelling error in the current text.
-                return self._advance_current()
-            except StopIteration:
-                # Save the current text if changes were made.
-                text = self._checker.get_text()
-                subtitle = self._page.project.subtitles[self._row]
-                if text != subtitle.get_text(self._doc):
-                    self._new_rows.append(self._row)
-                    self._new_texts.append(text)
-            # Move to the next row in the current page, move to the next page
-            # in the sequence of target pages or end when all pages checked.
-            try:
-                self._advance_row()
-            except StopIteration:
-                try:
-                    next(self._pager)
-                except StopIteration:
-                    break
-        self._set_done()
-
-    def _advance_current(self):
-        """
-        Advance to the next spelling error in the current text.
-
-        Raise :exc:`StopIteration` when no more errors in the current text.
-        """
-        next(self._checker)
-        col = self._page.document_to_text_column(self._doc)
-        self._page.view.set_focus(self._row, col)
-        self._page.view.scroll_to_row(self._row)
-        text = self._checker.get_text()
-        text_buffer = self._text_view.get_buffer()
-        text_buffer.set_text(text)
-        a = self._checker.wordpos
-        z = a + len(self._checker.word)
-        start = text_buffer.get_iter_at_offset(a)
-        end = text_buffer.get_iter_at_offset(z)
-        text_buffer.apply_tag_by_name("misspelled", start, end)
-        mark = text_buffer.create_mark(None, end, True)
-        self._text_view.scroll_to_mark(mark=mark,
-                                       within_margin=0,
-                                       use_align=False,
-                                       xalign=0.5,
-                                       yalign=0.5)
-
-        leading = self._checker.leading_context(1)
-        trailing = self._checker.trailing_context(1)
-        self._join_back_button.set_sensitive(leading.isspace())
-        self._join_forward_button.set_sensitive(trailing.isspace())
-        self._set_entry_text("")
-        self._populate_tree_view(self._checker.suggest())
-        self._tree_view.grab_focus()
-
-    def _advance_row(self):
-        """
-        Advance to the next subtitle and feed its text to the spell-checker.
-
-        Raise :exc:`StopIteration` when no more subtitles in the current page.
-        """
-        self._row += 1
-        if self._row >= len(self._page.project.subtitles):
-            raise StopIteration
+    def _append_changes(self):
+        """Append current changes to the list of changes."""
         subtitle = self._page.project.subtitles[self._row]
-        text = subtitle.get_text(self._doc)
-        self._checker.set_text(text)
-
-    def _get_next_page(self):
-        """Return the next page to check spelling in."""
-        field = gaupol.conf.spell_check.field
-        doc = gaupol.util.text_field_to_document(field)
-        target = gaupol.conf.spell_check.target
-        for page in self.application.get_target_pages(target):
-            self.application.set_current_page(page)
-            self._page = page
-            self._doc = doc
-            self._row = -1
-            self._advance_row()
-            yield page
-            self._register_changes()
-
-    def _init_checker(self):
-        """
-        Initialize spell-checker and its dictionary.
-
-        Raise :exc:`ValueError` if dictionary initialization fails.
-        """
-        try:
-            import enchant.checker
-            dictionary = enchant.Dict(self._language)
-            # Sometimes enchant will initialize a dictionary that will not
-            # actually work when trying to use it, hence check something.
-            dictionary.check("gaupol")
-            self._checker = enchant.checker.SpellChecker(dictionary, "")
-        except enchant.Error as error:
-            self._show_error_dialog(str(error))
-            raise ValueError("Dictionary initialization failed for language {!r}"
-                             .format(self._language))
+        if self._navigator.text == subtitle.get_text(self._doc): return
+        self._new_rows.append(self._row)
+        self._new_texts.append(self._navigator.text)
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
@@ -198,33 +96,12 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self.set_transient_for(parent)
         self.set_modal(True)
 
-    def _init_replacements(self):
-        """Read misspelled words and their replacements from file."""
-        basename = "{}.repl".format(gaupol.conf.spell_check.language)
-        path = os.path.join(self._personal_dir, basename)
-        if not os.path.isfile(path): return
-        with aeidon.util.silent(IOError, OSError, tb=True):
-            lines = aeidon.util.readlines(path)
-            for line in aeidon.util.get_unique(lines):
-                misspelled, correct  = line.strip().split("|", 1)
-                self._replacements.append((misspelled, correct))
-
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
         self._join_back_button.set_sensitive(False)
         self._join_forward_button.set_sensitive(False)
         self._replace_all_button.set_sensitive(False)
         self._replace_button.set_sensitive(False)
-
-    def _init_spell_check(self):
-        """
-        Initialize spell-check components and related widgets.
-
-        Raise :exc:`ValueError` if dictionary initialization fails.
-        """
-        aeidon.util.makedirs(self._personal_dir)
-        self._init_checker()
-        self._init_replacements()
 
     def _init_tree_view(self):
         """Initialize the suggestion tree view."""
@@ -251,73 +128,61 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         scale = gaupol.util.scale_to_size
         scale(self._text_view, nchar=55, nlines=4, font="custom")
         scale(self._tree_view, nchar=20, nlines=6, font="custom")
-        self._entry_handler = self._entry.connect(
-            "changed", self._on_entry_changed)
+        self._entry_handler = self._entry.connect("changed", self._on_entry_changed)
 
     def _on_add_button_clicked(self, *args):
-        """Add the current word to the user dictionary."""
-        self._checker.dict.add(self._checker.word)
-        self._advance()
+        """Add the current word to personal word list."""
+        self._navigator.add()
+        self._proceed()
 
     def _on_edit_button_clicked(self, *args):
         """Edit the current text in a separate dialog."""
-        text = self._checker.get_text()
+        text = self._navigator.text
         dialog = gaupol.TextEditDialog(self._dialog, text)
         response = gaupol.util.run_dialog(dialog)
         text = dialog.get_text()
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
-        self._checker.set_text(text)
-        self._advance()
+        self._navigator.reset(text)
+        self._proceed()
 
     def _on_entry_changed(self, entry):
         """Populate suggestions based on text in `entry`."""
         word = entry.get_text()
-        suggestions = self._checker.suggest(word) if word else []
+        suggestions = self._navigator.checker.suggest(word) if word else []
         self._populate_tree_view(suggestions, select=False)
         self._replace_button.set_sensitive(bool(word))
         self._replace_all_button.set_sensitive(bool(word))
 
     def _on_ignore_all_button_clicked(self, *args):
-        """Ignore all instances of the current word."""
-        self._checker.ignore_always()
-        self._advance()
+        """Ignore the current word and any subsequent instances."""
+        self._navigator.ignore_all()
+        self._proceed()
 
     def _on_ignore_button_clicked(self, *args):
         """Ignore the current word."""
-        self._advance()
+        self._navigator.ignore()
+        self._proceed()
 
     def _on_join_back_button_clicked(self, *args):
-        """Join the current word with the preceding word."""
-        text = self._checker.get_text()
-        a = self._checker.wordpos
-        text = text[:a-1] + text[a:]
-        self._checker.set_text(text)
-        self._advance()
+        """Join the current word with the previous."""
+        self._navigator.join_with_previous()
+        self._proceed()
 
     def _on_join_forward_button_clicked(self, *args):
-        """Join the current word with the following word."""
-        text = self._checker.get_text()
-        z = self._checker.wordpos + len(self._checker.word)
-        text = text[:z] + text [z+1:]
-        self._checker.set_text(text)
-        self._advance()
+        """Join the current word with the next."""
+        self._navigator.join_with_next()
+        self._proceed()
 
     def _on_replace_all_button_clicked(self, *args):
-        """Replace all instances of the current word."""
-        misspelled = self._checker.word
-        correct = self._entry.get_text()
-        self._replacements.append((misspelled, correct))
-        self._checker.replace_always(correct)
-        self._advance()
+        """Replace the current word and subsequent instances with `replacement`."""
+        self._navigator.replace_all(self._entry.get_text())
+        self._proceed()
 
     def _on_replace_button_clicked(self, *args):
-        """Replace the current word."""
-        misspelled = self._checker.word
-        correct = self._entry.get_text()
-        self._replacements.append((misspelled, correct))
-        self._checker.replace(correct)
-        self._advance()
+        """Replace the current word with `replacement`."""
+        self._navigator.replace(self._entry.get_text())
+        self._proceed()
 
     def _on_response(self, dialog, response):
         """Apply changes to the current page."""
@@ -336,11 +201,6 @@ class SpellCheckDialog(gaupol.BuilderDialog):
 
     def _populate_tree_view(self, suggestions, select=True):
         """Populate the tree view with `suggestions`."""
-        word = self._checker.word
-        repl = reversed(self._replacements)
-        replacements = [x[1] for x in repl if x[0] == word]
-        suggestions = list(replacements) + list(suggestions)
-        suggestions = aeidon.util.get_unique(suggestions)
         store = self._tree_view.get_model()
         self._tree_view.set_model(None)
         store.clear()
@@ -350,6 +210,54 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         if select and len(store) > 0:
             self._tree_view.set_cursor(0)
             self._tree_view.scroll_to_cell(0)
+
+    def _proceed(self):
+        """Move on to the next spelling error."""
+        try:
+            # Move on to the next spelling error in the current text.
+            return self._proceed_current()
+        except StopIteration:
+            # Commit changes to the current text.
+            self._append_changes()
+        try:
+            # Move on to the next row.
+            next(self._rower)
+            return self._proceed()
+        except StopIteration:
+            # Commit changes to the current page.
+            self._register_changes()
+        try:
+            # Move on to the next page.
+            next(self._pager)
+            return self._proceed()
+        except StopIteration:
+            self._set_done()
+
+    def _proceed_current(self):
+        """Move on to the next spelling error in the current text."""
+        next(self._navigator)
+        col = self._page.document_to_text_column(self._doc)
+        self._page.view.set_focus(self._row, col)
+        self._page.view.scroll_to_row(self._row)
+        text_buffer = self._text_view.get_buffer()
+        text_buffer.set_text(self._navigator.text)
+        start = text_buffer.get_iter_at_offset(self._navigator.pos)
+        end = text_buffer.get_iter_at_offset(self._navigator.endpos)
+        text_buffer.apply_tag_by_name("misspelled", start, end)
+        mark = text_buffer.create_mark(None, end, True)
+        self._text_view.scroll_to_mark(mark=mark,
+                                       within_margin=0,
+                                       use_align=False,
+                                       xalign=0.5,
+                                       yalign=0.5)
+
+        leading = self._navigator.leading_context(1)
+        trailing = self._navigator.trailing_context(1)
+        self._join_back_button.set_sensitive(leading.isspace())
+        self._join_forward_button.set_sensitive(trailing.isspace())
+        self._set_entry_text("")
+        self._populate_tree_view(self._navigator.suggest())
+        self._tree_view.grab_focus()
 
     def _register_changes(self):
         """Register changes to the current page."""
@@ -370,9 +278,9 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         """Set state of widgets for finished spell-check."""
         self._text_view.get_buffer().set_text("")
         self._set_entry_text("")
-        self._populate_tree_view(())
+        self._populate_tree_view([])
         self._grid.set_sensitive(False)
-        self._write_replacements()
+        self._navigator.checker.write_replacements()
 
     def _set_entry_text(self, word):
         """Set `word` to the entry with its "changed" handler blocked."""
@@ -382,31 +290,24 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._replace_button.set_sensitive(bool(word))
         self._replace_all_button.set_sensitive(bool(word))
 
-    def _show_error_dialog(self, message):
-        """Show an error dialog after failing to load dictionary."""
-        title = _('Failed to load dictionary for language "{}"')
-        title = title.format(self._language_name)
-        dialog = gaupol.ErrorDialog(self._dialog, title, message)
-        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
-        dialog.set_default_response(Gtk.ResponseType.OK)
-        gaupol.util.flash_dialog(dialog)
+    def _yield_pages(self):
+        """Yield pages to check spelling in."""
+        field = gaupol.conf.spell_check.field
+        doc = gaupol.util.text_field_to_document(field)
+        target = gaupol.conf.spell_check.target
+        for page in self.application.get_target_pages(target):
+            if not page.project.subtitles: continue
+            self.application.set_current_page(page)
+            self._page = page
+            self._doc = doc
+            self._rower = self._yield_rows(page)
+            next(self._rower)
+            yield page
 
-    def _start(self):
-        """Start checking the spelling."""
-        self._pager = self._get_next_page()
-        next(self._pager)
-        self._advance()
-
-    def _write_replacements(self):
-        """Write misspelled words and their replacements to file."""
-        if not self._replacements: return
-        self._replacements = aeidon.util.get_unique(
-            self._replacements, keep_last=True)
-        basename = "{}.repl".format(self._language)
-        path = os.path.join(self._personal_dir, basename)
-        if len(self._replacements) > self._max_replacements:
-            # Discard the oldest of replacements.
-            self._replacements[-self._max_replacements:]
-        text = "\n".join("|".join(x) for x in self._replacements) + "\n"
-        with aeidon.util.silent(IOError, OSError, tb=True):
-            aeidon.util.write(path, text)
+    def _yield_rows(self, page):
+        """Yield rows to check spelling in."""
+        for row, subtitle in enumerate(page.project.subtitles):
+            self._row = row
+            text = subtitle.get_text(self._doc)
+            self._navigator.reset(text)
+            yield row

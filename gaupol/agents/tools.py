@@ -20,6 +20,9 @@
 import aeidon
 import gaupol
 
+from aeidon.i18n import _
+from gi.repository import Gtk
+
 
 class ToolsAgent(aeidon.Delegate):
 
@@ -36,10 +39,15 @@ class ToolsAgent(aeidon.Delegate):
         """Check for incorrect spelling."""
         gaupol.util.set_cursor_busy(self.window)
         try:
-            # Fails if no dictionary for conf.spell_check.language.
             dialog = gaupol.SpellCheckDialog(self.window, self)
-        except ValueError:
-            return gaupol.util.set_cursor_normal(self.window)
+        except Exception as error:
+            gaupol.util.set_cursor_normal(self.window)
+            title = _('Failed to load dictionary for language "{}"')
+            title = title.format(gaupol.conf.spell_check.language)
+            dialog = gaupol.ErrorDialog(self.window, title, str(error))
+            dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
+            dialog.set_default_response(Gtk.ResponseType.OK)
+            return gaupol.util.flash_dialog(dialog)
         gaupol.util.set_cursor_normal(self.window)
         gaupol.util.flash_dialog(dialog)
 
