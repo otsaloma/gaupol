@@ -1,13 +1,33 @@
+dist: bionic
 language: python
-python:
-  - 3.4
-  - 3.5
-  - 3.6
-  - 3.7
 before_install:
-  - pip install chardet flake8
+  - sudo apt-get update
+  - >
+    sudo apt-get install -y
+    flake8
+    gettext
+    gir1.2-gspell-1
+    gir1.2-gst-plugins-base-1.0
+    gir1.2-gstreamer-1.0
+    gir1.2-gtk-3.0
+    gstreamer1.0-gtk3
+    gstreamer1.0-libav
+    gstreamer1.0-plugins-bad
+    gstreamer1.0-plugins-good
+    gstreamer1.0-plugins-ugly
+    iso-codes
+    python3
+    python3-chardet
+    python3-dev
+    python3-gi
+    python3-gi-cairo
+    python3-pytest
+    xvfb
 script:
   - flake8 .
-  - py.test aeidon
-  - python setup.py install
-  - python setup.py clean
+  - py.test-3 aeidon
+  - xvfb-run py.test-3 gaupol
+  - xvfb-run py.test-3 data/extensions
+  - python3 setup.py install --prefix=/tmp/local
+  - python3 setup.py install --root=/tmp/pkg
+  - python3 setup.py clean
