@@ -65,6 +65,9 @@ class SpellChecker:
                 # Special case a common missing "g" in "-ing".
                 return (self.checker.check_word(word, -1) or
                         self.checker.check_word(word + "g", -1))
+            if word.endswith("'s"):
+                # Check plain word for possessive forms.
+                return self.checker.check_word(word[:-2], -1)
         return self.checker.check_word(word, -1)
 
     @classmethod
