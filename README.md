@@ -45,8 +45,7 @@ strongly recommended dependencies include:
 | Dependency | Version | Required for |
 | :--------- | :------ | :----------- |
 | [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.6 | integrated video player |
-| [PyEnchant](https://github.com/rfk/pyenchant) | ≥ 1.4.0 | spell-check |
-| [GtkSpell](http://gtkspell.sourceforge.net/) | ≥ 3.0.0 | inline spell-check |
+| [gspell](https://wiki.gnome.org/Projects/gspell) | ≥ 1.0.0 | spell-check |
 | [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
 | [chardet](https://github.com/chardet/chardet) | any | character encoding auto-detection |
 
@@ -58,10 +57,10 @@ On Debian/Ubuntu you can install the dependencies with the following
 command.
 
     sudo apt install gettext \
+                     gir1.2-gspell-1 \
                      gir1.2-gst-plugins-base-1.0 \
                      gir1.2-gstreamer-1.0 \
                      gir1.2-gtk-3.0 \
-                     gir1.2-gtkspell3-3.0 \
                      gstreamer1.0-gtk3 \
                      gstreamer1.0-libav \
                      gstreamer1.0-plugins-bad \
@@ -71,7 +70,6 @@ command.
                      python3 \
                      python3-chardet \
                      python3-dev \
-                     python3-enchant \
                      python3-gi \
                      python3-gi-cairo
 

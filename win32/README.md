@@ -8,11 +8,10 @@ Building the Windows Installer
 cd C:\Python34\Scripts
 pip3 install chardet
 pip3 install cx_Freeze
-pip3 install pyenchant
 pip3 install pypiwin32
 ```
 
-* Install pygi-aio (GTK+, GtkSpell 3, iso-codes and GIR)
+* Install pygi-aio (GTK+, gspell, iso-codes and GIR)
 * Install Inno Setup
 * Test, build, test build
 
