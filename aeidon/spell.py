@@ -85,9 +85,14 @@ class SpellChecker:
 
     def suggest(self, word):
         """Return a list of suggestions for `word`."""
-        saved = [y for x, y in self.replacements if x == word]
+        custom = [y for x, y in self.replacements if x == word]
+        if "I" in word:
+            # Add the most common OCR replacement.
+            replacement = word.replace("I", "l")
+            if self.check(replacement):
+                custom.append(replacement)
         suggestions = self.checker.get_suggestions(word, -1)
-        return aeidon.util.get_unique(saved + suggestions)
+        return aeidon.util.get_unique(custom + suggestions)
 
     def write_replacements(self):
         """Write list of replacements to file."""
