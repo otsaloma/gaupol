@@ -20,7 +20,6 @@
 import aeidon
 import difflib
 import gaupol
-import math
 import re
 
 from aeidon.i18n import _

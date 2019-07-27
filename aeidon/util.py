@@ -114,7 +114,7 @@ def atomic_open(path, mode="w", *args, **kwargs):
 def chardet_available():
     """Return ``True`` if :mod:`chardet` module is available."""
     try:
-        import chardet
+        import chardet # noqa
         return True
     except Exception:
         return False

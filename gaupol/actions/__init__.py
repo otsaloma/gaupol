@@ -17,14 +17,14 @@
 
 """User-activatable actions for :class:`gaupol.Application`."""
 
-from gaupol.actions.audio    import *
-from gaupol.actions.edit     import *
-from gaupol.actions.file     import *
-from gaupol.actions.help     import *
-from gaupol.actions.projects import *
-from gaupol.actions.text     import *
-from gaupol.actions.tools    import *
-from gaupol.actions.video    import *
-from gaupol.actions.view     import *
+from gaupol.actions.audio    import * # noqa
+from gaupol.actions.edit     import * # noqa
+from gaupol.actions.file     import * # noqa
+from gaupol.actions.help     import * # noqa
+from gaupol.actions.projects import * # noqa
+from gaupol.actions.text     import * # noqa
+from gaupol.actions.tools    import * # noqa
+from gaupol.actions.video    import * # noqa
+from gaupol.actions.view     import * # noqa
 
 __all__ = tuple(x for x in dir() if x.endswith("Action"))

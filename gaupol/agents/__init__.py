@@ -17,19 +17,19 @@
 
 """Extension delegates of of :class:`gaupol.Application`."""
 
-from .close    import CloseAgent
-from .edit     import EditAgent
-from .format   import FormatAgent
-from .help     import HelpAgent
-from .menu     import MenuAgent
-from .open     import OpenAgent
-from .preview  import PreviewAgent
-from .save     import SaveAgent
-from .search   import SearchAgent
-from .tools    import ToolsAgent
-from .update   import UpdateAgent
-from .util     import UtilityAgent
-from .video    import VideoAgent
-from .view     import ViewAgent
+from .close    import CloseAgent # noqa
+from .edit     import EditAgent # noqa
+from .format   import FormatAgent # noqa
+from .help     import HelpAgent # noqa
+from .menu     import MenuAgent # noqa
+from .open     import OpenAgent # noqa
+from .preview  import PreviewAgent # noqa
+from .save     import SaveAgent # noqa
+from .search   import SearchAgent # noqa
+from .tools    import ToolsAgent # noqa
+from .update   import UpdateAgent # noqa
+from .util     import UtilityAgent # noqa
+from .video    import VideoAgent # noqa
+from .view     import ViewAgent # noqa
 
 __all__ = tuple(x for x in dir() if x.endswith("Agent"))

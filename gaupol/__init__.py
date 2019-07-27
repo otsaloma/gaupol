@@ -43,61 +43,60 @@ for module, version in {
         gi.require_version(module, version)
 
 from gi.repository import GLib
-from gi.repository import GObject
 
 with aeidon.util.silent(Exception):
     from gi.repository import Gst
     Gst.init(None)
 
-from gaupol.urls import *
-from gaupol import util
-from gaupol.enums import *
-from gaupol.errors import *
-from gaupol.attrdict import *
-from gaupol.config import ConfigurationStore
+from gaupol.urls import * # noqa
+from gaupol import util # noqa
+from gaupol.enums import * # noqa
+from gaupol.errors import * # noqa
+from gaupol.attrdict import * # noqa
+from gaupol.config import ConfigurationStore # noqa
 conf = ConfigurationStore()
-from gaupol import style
-from gaupol import ruler
-from gaupol.entries import *
-from gaupol.renderers import *
-from gaupol.floatlabel import *
-from gaupol.spell import *
-from gaupol.view import *
-from gaupol.page import *
-from gaupol.player import *
-from gaupol.dialogs.builder import *
-from gaupol.dialogs.file import *
-from gaupol.dialogs.open import *
-from gaupol.dialogs.save import *
-from gaupol.dialogs.video import *
-from gaupol.dialogs.append import *
-from gaupol.dialogs.about import *
-from gaupol.dialogs.debug import *
-from gaupol.dialogs.duration_adjust import *
-from gaupol.dialogs.encoding import *
-from gaupol.dialogs.framerate_convert import *
-from gaupol.dialogs.insert import *
-from gaupol.dialogs.language import *
-from gaupol.dialogs.message import *
-from gaupol.dialogs.multi_close import *
-from gaupol.dialogs.multi_save import *
-from gaupol.dialogs.preferences import *
-from gaupol.dialogs.preview_error import *
-from gaupol.dialogs.search import *
-from gaupol.dialogs.position_shift import *
-from gaupol.dialogs.spell_check import *
-from gaupol.dialogs.split import *
-from gaupol.dialogs.text_edit import *
-from gaupol.dialogs.position_transform import *
-from gaupol.assistants import *
-from gaupol.action import *
-from gaupol import actions
-from gaupol.extension import *
-from gaupol.extensionman import *
-from gaupol import agents
-from gaupol.application import *
-from gaupol.applicationman import ApplicationManager
-from gaupol.unittest import *
+from gaupol import style # noqa
+from gaupol import ruler # noqa
+from gaupol.entries import * # noqa
+from gaupol.renderers import * # noqa
+from gaupol.floatlabel import * # noqa
+from gaupol.spell import * # noqa
+from gaupol.view import * # noqa
+from gaupol.page import * # noqa
+from gaupol.player import * # noqa
+from gaupol.dialogs.builder import * # noqa
+from gaupol.dialogs.file import * # noqa
+from gaupol.dialogs.open import * # noqa
+from gaupol.dialogs.save import * # noqa
+from gaupol.dialogs.video import * # noqa
+from gaupol.dialogs.append import * # noqa
+from gaupol.dialogs.about import * # noqa
+from gaupol.dialogs.debug import * # noqa
+from gaupol.dialogs.duration_adjust import * # noqa
+from gaupol.dialogs.encoding import * # noqa
+from gaupol.dialogs.framerate_convert import * # noqa
+from gaupol.dialogs.insert import * # noqa
+from gaupol.dialogs.language import * # noqa
+from gaupol.dialogs.message import * # noqa
+from gaupol.dialogs.multi_close import * # noqa
+from gaupol.dialogs.multi_save import * # noqa
+from gaupol.dialogs.preferences import * # noqa
+from gaupol.dialogs.preview_error import * # noqa
+from gaupol.dialogs.search import * # noqa
+from gaupol.dialogs.position_shift import * # noqa
+from gaupol.dialogs.spell_check import * # noqa
+from gaupol.dialogs.split import * # noqa
+from gaupol.dialogs.text_edit import * # noqa
+from gaupol.dialogs.position_transform import * # noqa
+from gaupol.assistants import * # noqa
+from gaupol.action import * # noqa
+from gaupol import actions # noqa
+from gaupol.extension import * # noqa
+from gaupol.extensionman import * # noqa
+from gaupol import agents # noqa
+from gaupol.application import * # noqa
+from gaupol.applicationman import ApplicationManager # noqa
+from gaupol.unittest import * # noqa
 
 def main(args):
     """Initialize application."""

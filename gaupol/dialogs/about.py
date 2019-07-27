@@ -17,7 +17,6 @@
 
 """Dialog for displaying credits and information."""
 
-import aeidon
 import gaupol
 
 from aeidon.i18n   import _

@@ -17,17 +17,17 @@
 
 """Data editing extension delegates of :class:`aeidon.Project`."""
 
-from .clipboard import ClipboardAgent
-from .edit      import EditAgent
-from .format    import FormatAgent
-from .open      import OpenAgent
-from .position  import PositionAgent
-from .preview   import PreviewAgent
-from .register  import RegisterAgent
-from .save      import SaveAgent
-from .search    import SearchAgent
-from .set       import SetAgent
-from .text      import TextAgent
-from .util      import UtilityAgent
+from .clipboard import ClipboardAgent # noqa
+from .edit      import EditAgent # noqa
+from .format    import FormatAgent # noqa
+from .open      import OpenAgent # noqa
+from .position  import PositionAgent # noqa
+from .preview   import PreviewAgent # noqa
+from .register  import RegisterAgent # noqa
+from .save      import SaveAgent # noqa
+from .search    import SearchAgent # noqa
+from .set       import SetAgent # noqa
+from .text      import TextAgent # noqa
+from .util      import UtilityAgent # noqa
 
 __all__ = tuple(x for x in dir() if x.endswith("Agent"))

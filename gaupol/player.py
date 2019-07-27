@@ -27,7 +27,6 @@ from gi.repository import Gtk
 
 with aeidon.util.silent(Exception):
     from gi.repository import Gst
-    from gi.repository import GstVideo
 
 __all__ = ("VideoPlayer",)
 

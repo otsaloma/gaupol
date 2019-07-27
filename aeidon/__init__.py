@@ -87,41 +87,41 @@ try:
 except Exception:
     pass
 
-from aeidon.paths import *
-from aeidon.position import *
-from aeidon import deco
-from aeidon import i18n
-from aeidon import util
-from aeidon import temp
-from aeidon.delegate import *
-from aeidon.singleton import *
-from aeidon.mutables import *
-from aeidon.observable import *
-from aeidon.errors import *
-from aeidon.enum import *
-from aeidon.enums import *
-from aeidon import encodings
-from aeidon import languages
-from aeidon import countries
-from aeidon import locales
-from aeidon import scripts
-from aeidon.metadata import *
-from aeidon.calculator import *
-from aeidon.finder import *
-from aeidon.parser import *
-from aeidon.liner import *
-from aeidon import containers
-from aeidon.subtitle import *
-from aeidon.file import *
-from aeidon import files
-from aeidon.markup import *
-from aeidon import markups
-from aeidon.markupconv import *
-from aeidon.pattern import *
-from aeidon.patternman import *
-from aeidon.clipboard import *
-from aeidon.revertable import *
-from aeidon.spell import *
-from aeidon import agents
-from aeidon.project import *
-from aeidon.unittest import *
+from aeidon.paths import * # noqa
+from aeidon.position import * # noqa
+from aeidon import deco # noqa
+from aeidon import i18n # noqa
+from aeidon import util # noqa
+from aeidon import temp # noqa
+from aeidon.delegate import * # noqa
+from aeidon.singleton import * # noqa
+from aeidon.mutables import * # noqa
+from aeidon.observable import * # noqa
+from aeidon.errors import * # noqa
+from aeidon.enum import * # noqa
+from aeidon.enums import * # noqa
+from aeidon import encodings # noqa
+from aeidon import languages # noqa
+from aeidon import countries # noqa
+from aeidon import locales # noqa
+from aeidon import scripts # noqa
+from aeidon.metadata import * # noqa
+from aeidon.calculator import * # noqa
+from aeidon.finder import * # noqa
+from aeidon.parser import * # noqa
+from aeidon.liner import * # noqa
+from aeidon import containers # noqa
+from aeidon.subtitle import * # noqa
+from aeidon.file import * # noqa
+from aeidon import files # noqa
+from aeidon.markup import * # noqa
+from aeidon import markups # noqa
+from aeidon.markupconv import * # noqa
+from aeidon.pattern import * # noqa
+from aeidon.patternman import * # noqa
+from aeidon.clipboard import * # noqa
+from aeidon.revertable import * # noqa
+from aeidon.spell import * # noqa
+from aeidon import agents # noqa
+from aeidon.project import * # noqa
+from aeidon.unittest import * # noqa
