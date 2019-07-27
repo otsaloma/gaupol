@@ -1,6 +1,6 @@
 app-id: io.otsaloma.gaupol
 runtime: org.gnome.Platform
-runtime-version: "3.30"
+runtime-version: "3.32"
 sdk: org.gnome.Sdk
 command: gaupol
 rename-appdata-file: gaupol.appdata.xml
@@ -41,35 +41,6 @@ modules:
       - type: archive
         url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.14.4.tar.xz
         sha256: ac02d837f166c35ff6ce0738e281680d0b90052cfb1f0255dcf6aaca5f0f6d23
-
-  # Spell-Check
-
-  - name: enchant
-    buildsystem: autotools
-    config-opts:
-      - --with-myspell-dir=/usr/share/hunspell
-    sources:
-      - type: archive
-        url: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
-        sha256: bef0d9c0fef2e4e8746956b68e4d6c6641f6b85bd2908d91731efb68eba9e3f5
-
-  - name: pyenchant
-    buildsystem: simple
-    build-commands:
-      - python3 setup.py install --prefix=/app
-    ensure-writable:
-      - /lib/python3.*/site-packages/easy-install.pth
-    sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/9e/54/04d88a59efa33fefb88133ceb638cdf754319030c28aadc5a379d82140ed/pyenchant-2.0.0.tar.gz
-        sha256: fc31cda72ace001da8fe5d42f11c26e514a91fa8c70468739216ddd8de64e2a0
-
-  - name: gtkspell3
-    buildsystem: autotools
-    sources:
-      - type: archive
-        url: https://sourceforge.net/projects/gtkspell/files/3.0.10/gtkspell3-3.0.10.tar.xz
-        sha256: b040f63836b347eb344f5542443dc254621805072f7141d49c067ecb5a375732
 
   # Character encoding auto-detection
 
