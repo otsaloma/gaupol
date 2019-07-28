@@ -40,7 +40,7 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_comments(_("Subtitle editor"))
         self.set_copyright("Copyright © 2005–2019 Osmo Salomaa")
         self.set_license_type(Gtk.License.GPL_3_0)
-        self.set_logo_icon_name("gaupol")
+        self.set_logo_icon_name("io.otsaloma.gaupol")
         self.set_program_name("Gaupol")
         # TRANSLATORS: This is a special message that shouldn't be translated
         # literally. It is used in the about dialog to give credits to the
