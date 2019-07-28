@@ -107,11 +107,6 @@ from gaupol.unittest import * # noqa
 def main(args):
     """Initialize application."""
     global appman
-    # Needed to see application icon on Wayland, while we don't yet
-    # use the reverse domain application ID with Gtk.Application.
-    # https://wiki.gnome.org/Projects/GnomeShell/ApplicationBased
-    # https://github.com/otsaloma/gaupol/issues/62
-    GLib.set_prgname("gaupol")
     aeidon.i18n.bind()
     appman = ApplicationManager(args)
     raise SystemExit(appman.run())

@@ -45,6 +45,7 @@ class ApplicationManager(Gtk.Application):
         """Initialize an :class:`ApplicationManager` instance."""
         GObject.GObject.__init__(self)
         self.menubar_builder = None
+        self.set_application_id("io.otsaloma.gaupol")
         self.set_flags(Gio.ApplicationFlags.NON_UNIQUE)
         self.connect("activate", self._on_activate, args)
         self.connect("shutdown", self._on_shutdown)
