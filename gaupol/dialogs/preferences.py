@@ -206,7 +206,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         dialog.set_transient_for(self._dialog)
         dialog.set_program_name(metadata.get_name())
         dialog.set_comments(metadata.get_description())
-        dialog.set_logo_icon_name("gaupol")
+        dialog.set_logo_icon_name("io.otsaloma.gaupol")
         if metadata.has_field("Version"):
             dialog.set_version(metadata.get_field("Version"))
         if metadata.has_field("Copyright"):
