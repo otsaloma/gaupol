@@ -48,8 +48,6 @@ for module, version in {
     with aeidon.util.silent(Exception):
         gi.require_version(module, version)
 
-from gi.repository import GLib
-
 with aeidon.util.silent(Exception):
     from gi.repository import Gst
     Gst.init(None)
