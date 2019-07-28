@@ -7,6 +7,9 @@ finish-args:
   - --device=dri
   - --env=DCONF_USER_CONFIG_DIR=.config/dconf
   - --env=GST_PLUGIN_PATH_1_0=/app/lib/gstreamer-1.0
+  # gst-vaapi (part of platform) doesn't work with gtksink.
+  # https://github.com/otsaloma/gaupol/issues/79
+  - --env=LIBVA_DRIVER_NAME=novaapi
   - --filesystem=home
   - --filesystem=xdg-run/dconf
   - --filesystem=xdg-videos
