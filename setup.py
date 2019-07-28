@@ -228,7 +228,7 @@ class InstallData(install_data):
             f.write("\n".join(linguas) + "\n")
 
     def __get_appdata_file(self):
-        path = os.path.join("data", "gaupol.appdata.xml")
+        path = os.path.join("data", "io.otsaloma.gaupol.appdata.xml")
         command = "msgfmt --xml -d po --template {}.in -o {}"
         run_or_warn(command.format(path, path))
         if not os.path.isfile(path):
@@ -238,7 +238,7 @@ class InstallData(install_data):
         return ("share/metainfo", [path])
 
     def __get_desktop_file(self):
-        path = os.path.join("data", "gaupol.desktop")
+        path = os.path.join("data", "io.otsaloma.gaupol.desktop")
         command = "msgfmt --desktop -d po --template {}.in -o {}"
         run_or_warn(command.format(path, path))
         if not os.path.isfile(path):

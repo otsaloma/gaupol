@@ -20,7 +20,7 @@ python3 -Wd bin/gaupol
 flake8 bin/gaupol aeidon gaupol data/extensions/*/*.py *.py
 py.test --tb=no aeidon gaupol data/extensions
 emacs */__init__.py data/extensions/*/*.in win32/gaupol.iss
-emacs NEWS.md TODO.md data/gaupol.appdata.xml.in
+emacs NEWS.md TODO.md data/io.otsaloma.gaupol.appdata.xml.in
 sudo ./setup.py install --prefix=/usr/local clean
 /usr/local/bin/gaupol
 tools/release

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2013 Osmo Salomaa <otsaloma@iki.fi> -->
 <component type="desktop-application">
-  <id>gaupol.desktop</id>
+  <id>io.otsaloma.gaupol.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <name>Gaupol</name>
   <summary>Editor for text-based subtitles</summary>
@@ -19,7 +19,7 @@
   <url type="help">https://github.com/otsaloma/gaupol/tree/master/doc</url>
   <url type="bugtracker">https://github.com/otsaloma/gaupol/issues</url>
   <url type="translate">https://www.transifex.com/otsaloma/gaupol/</url>
-  <launchable type="desktop-id">gaupol.desktop</launchable>
+  <launchable type="desktop-id">io.otsaloma.gaupol.desktop</launchable>
   <releases>
     <release version="1.6" date="2019-06-08"/>
   </releases>

@@ -9,7 +9,7 @@ def prepare_paths():
     if not "__file__" in globals(): return
     bindir = os.path.dirname(os.path.abspath(__file__))
     if not os.path.isfile(os.path.join(
-        bindir, "..", "data", "gaupol.desktop.in")): return
+        bindir, "..", "data", "io.otsaloma.gaupol.desktop.in")): return
     sys.path.insert(0, os.path.abspath(os.path.join(bindir, "..")))
 
 prepare_paths()

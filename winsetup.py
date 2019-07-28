@@ -27,7 +27,7 @@ setup_kwargs.update({
     "executables": [cx_Freeze.Executable(
         script="bin/gaupol",
         base="WIN32GUI",
-        icon="data/icons/gaupol.ico",
+        icon="data/icons/io.otsaloma.gaupol.ico",
     )],
 })
 

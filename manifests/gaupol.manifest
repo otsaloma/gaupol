@@ -2,10 +2,10 @@
 data/extensions/custom-framerates/*.*
 
 [share/icons/hicolor/scalable/apps]
-data/icons/gaupol.svg
+data/icons/io.otsaloma.gaupol.svg
 
 [share/icons/hicolor/symbolic/apps]
-data/icons/gaupol-symbolic.svg
+data/icons/io.otsaloma.gaupol-symbolic.svg
 
 [share/gaupol/ui]
 data/ui/*.*

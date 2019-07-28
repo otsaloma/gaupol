@@ -50,7 +50,7 @@ xgettext \
     --output=po/gaupol.pot \
     --join-existing \
     --from-code=UTF-8 \
-    data/gaupol.appdata.xml.in
+    data/io.otsaloma.gaupol.appdata.xml.in
 
 # Desktop file
 xgettext \
@@ -63,7 +63,7 @@ xgettext \
     --keyword=Comment \
     --keyword=Keywords \
     --add-comments=TRANSLATORS: \
-    data/gaupol.desktop.in
+    data/io.otsaloma.gaupol.desktop.in
 
 # Remove AppData entries that shouldn't be translated.
 msggrep \

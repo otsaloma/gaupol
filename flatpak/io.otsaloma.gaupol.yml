@@ -3,9 +3,6 @@ runtime: org.gnome.Platform
 runtime-version: "3.32"
 sdk: org.gnome.Sdk
 command: gaupol
-rename-appdata-file: gaupol.appdata.xml
-rename-desktop-file: gaupol.desktop
-rename-icon: gaupol
 copy-icon: true
 finish-args:
   - --device=dri
