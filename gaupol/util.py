@@ -69,6 +69,12 @@ def get_content_size(widget, font=None):
     raise ValueError("Unsupported container type: {!r}"
                      .format(type(widget)))
 
+def get_default_player():
+    """Return the default video player to use for preview."""
+    players = [aeidon.players.MPV, aeidon.players.MPLAYER, aeidon.players.VLC]
+    players = [x for x in players if x.found]
+    return players[0] if players else aeidon.players.MPV
+
 def get_font():
     """Return custom font or blank string."""
     return (gaupol.conf.editor.custom_font if

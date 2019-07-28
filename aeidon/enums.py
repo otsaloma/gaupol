@@ -19,6 +19,7 @@
 
 import aeidon
 import os
+import shutil
 import sys
 
 from aeidon.i18n import _
@@ -159,6 +160,7 @@ class PlayerMPlayer(aeidon.EnumerationItem):
         # http://www.mplayerhq.hu/DOCS/HTML/en/faq.html#idm5930
         command_utf_8 = "{} < /dev/null".format(command_utf_8)
 
+    found = shutil.which(_get_mplayer_executable()) is not None
     label = "MPlayer"
 
 class PlayerMPV(aeidon.EnumerationItem):
@@ -179,6 +181,7 @@ class PlayerMPV(aeidon.EnumerationItem):
                               "--sub-codepage=utf-8",
                               "$VIDEOFILE",))
 
+    found = shutil.which(_get_mpv_executable()) is not None
     label = "mpv"
 
 class PlayerVLC(aeidon.EnumerationItem):
@@ -193,6 +196,7 @@ class PlayerVLC(aeidon.EnumerationItem):
                               ":sub-file=$SUBFILE",
                               ":subsdec-encoding=UTF-8",))
 
+    found = shutil.which(_get_vlc_executable()) is not None
     label = "VLC"
 
 players = aeidon.Enumeration()

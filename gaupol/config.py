@@ -143,10 +143,9 @@ CONFIG_DEFAULTS = {
     "preview": {
         "custom_command": "",
         "force_utf_8": True,
-        "offset": (5.0 if sys.platform == "win32" else 1.0),
-        "player": (aeidon.players.VLC if sys.platform == "win32"
-                   else aeidon.players.MPV),
-
+        # mpv is the only player that supports precise seek, others need a longer offset.
+        "offset": 1.0 if gaupol.util.get_default_player() == aeidon.players.MPV else 5.0,
+        "player": gaupol.util.get_default_player(),
         "use_custom_command": False,
     },
     "search": {
