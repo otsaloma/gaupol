@@ -3,7 +3,6 @@ runtime: org.gnome.Platform
 runtime-version: "3.32"
 sdk: org.gnome.Sdk
 command: gaupol
-copy-icon: true
 finish-args:
   - --device=dri
   - --env=DCONF_USER_CONFIG_DIR=.config/dconf
