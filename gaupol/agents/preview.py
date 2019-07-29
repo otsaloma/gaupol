@@ -19,6 +19,7 @@
 
 import aeidon
 import gaupol
+import shutil
 import tempfile
 
 from aeidon.i18n   import _
@@ -65,6 +66,9 @@ class PreviewAgent(aeidon.Delegate):
     @aeidon.deco.export
     def preview(self, page, position, doc, temp=False):
         """Preview from `position` with a video player."""
+        if (not gaupol.conf.preview.use_custom_command and
+            not shutil.which(gaupol.conf.preview.player.executable)):
+            return self._show_player_not_found_error_dialog()
         command = gaupol.util.get_preview_command()
         offset = gaupol.conf.preview.offset
         encoding = "utf_8" if gaupol.conf.preview.force_utf_8 else None
@@ -108,6 +112,15 @@ class PreviewAgent(aeidon.Delegate):
     def _show_io_error_dialog(self, message):
         """Show an error dialog after failing to write file."""
         title = _('Failed to save subtitle file to temporary directory "{}"').format(tempfile.gettempdir())
+        dialog = gaupol.ErrorDialog(self.window, title, message)
+        dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
+        gaupol.util.flash_dialog(dialog)
+
+    def _show_player_not_found_error_dialog(self):
+        """Show an error dialog if video player not found."""
+        title = _("Video player not found")
+        message = _("Please install one of the supported video players: mpv (recommended), MPlayer or VLC. See the preferences dialog to choose the video player or to customize the command.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)

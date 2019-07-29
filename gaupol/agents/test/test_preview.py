@@ -26,6 +26,9 @@ class TestPreviewAgent(gaupol.TestCase):
     def run__show_io_error_dialog(self):
         self.delegate._show_io_error_dialog("test")
 
+    def run__show_player_not_found_error_dialog(self):
+        self.delegate._show_player_not_found_error_dialog()
+
     def run__show_process_error_dialog(self):
         self.delegate._show_process_error_dialog("test")
 

@@ -34,7 +34,7 @@ class PreviewErrorDialog(Gtk.MessageDialog):
         GObject.GObject.__init__(self,
                                  message_type=Gtk.MessageType.ERROR,
                                  text=_("Preview in video player failed"),
-                                 secondary_text=_("There is probably a problem with either the video file or the preview command."))
+                                 secondary_text=_("There is probably a problem with either the video file or the video player. See the preferences dialog to choose the video player or to customize the command."))
 
         self._text_view = Gtk.TextView()
         self._init_dialog(parent)
