@@ -4,8 +4,8 @@
 __pycache__
 build
 data/extensions/*/*.extension
-data/gaupol.appdata.xml
-data/gaupol.desktop
+data/io.otsaloma.gaupol.appdata.xml
+data/io.otsaloma.gaupol.desktop
 data/patterns/*.capitalization
 data/patterns/*.common-error
 data/patterns/*.hearing-impaired
