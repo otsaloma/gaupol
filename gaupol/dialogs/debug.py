@@ -65,7 +65,7 @@ class DebugDialog(Gtk.MessageDialog):
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
         with aeidon.util.silent(AttributeError):
-            # Top and bottom margins available since GTK+ 3.18.
+            # Top and bottom margins available since GTK 3.18.
             self._text_view.set_top_margin(6)
             self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()

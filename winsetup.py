@@ -33,7 +33,7 @@ setup_kwargs.update({
 
 if __name__ == "__main__":
     cx_Freeze.setup(**setup_kwargs)
-    # Enable header bars on builtin GTK+ dialogs.
+    # Enable header bars on builtin GTK dialogs.
     path = glob.glob("build/exe.*/etc/gtk-3.0/settings.ini")[0]
     with open(path, "a", encoding="us_ascii") as f:
         f.write("\ngtk-dialogs-use-header = 1\n")

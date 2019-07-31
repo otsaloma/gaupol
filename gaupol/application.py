@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""GTK+ user interface controller for :class:`aeidon.Project`."""
+"""GTK user interface controller for :class:`aeidon.Project`."""
 
 import aeidon
 import gaupol
@@ -60,7 +60,7 @@ class ApplicationMeta(type):
 class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     """
-    GTK+ user interface controller for :class:`aeidon.Project`.
+    GTK user interface controller for :class:`aeidon.Project`.
 
     :ivar clipboard: Instance of :class:`aeidon.Clipboard` used
     :ivar counter: Iterator used for naming unsaved documents

@@ -54,7 +54,7 @@ class FloatCellRenderer(Gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Cut decimals to fixed precision."""
-        # Since GTK+ 3.6, the notify::text signal seems to get
+        # Since GTK 3.6, the notify::text signal seems to get
         # emitted insanely often even if text hasn't changed at
         # all. Let's try to keep this callback as fast as possible.
         self.props.markup = self._text_to_markup(self.props.text)

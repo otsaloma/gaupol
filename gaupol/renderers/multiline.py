@@ -157,7 +157,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         editor.set_left_margin(self.props.xpad)
         editor.set_right_margin(self.props.xpad)
         with aeidon.util.silent(AttributeError):
-            # Top and bottom margins available since GTK+ 3.18.
+            # Top and bottom margins available since GTK 3.18.
             editor.set_top_margin(self.props.ypad)
             editor.set_bottom_margin(self.props.ypad)
         editor.gaupol_path = path
@@ -202,7 +202,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
-        # Since GTK+ 3.6, the notify::text signal seems to get
+        # Since GTK 3.6, the notify::text signal seems to get
         # emitted insanely often even if text hasn't changed at
         # all. Let's try to keep this callback as fast as possible.
         self._text = self.props.text
@@ -272,7 +272,7 @@ class MultilineDiffCellRenderer(MultilineCellRenderer):
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
-        # Since GTK+ 3.6, the notify::text signal seems to get
+        # Since GTK 3.6, the notify::text signal seems to get
         # emitted insanely often even if text hasn't changed at
         # all. Let's try to keep this callback as fast as possible.
         self._text = self.props.text

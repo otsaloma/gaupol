@@ -34,7 +34,7 @@ def bind(localedir=aeidon.LOCALE_DIR):
     gettext.bindtextdomain("gaupol", localedir)
     gettext.textdomain("gaupol")
     with aeidon.util.silent(Exception):
-        # Make translations available to GTK+ as well.
+        # Make translations available to GTK as well.
         # Not available on all platforms.
         locale.bindtextdomain("gaupol", localedir)
         locale.textdomain("gaupol")

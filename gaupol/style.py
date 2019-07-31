@@ -35,7 +35,7 @@ def _get_editor_font_css():
     if (gaupol.conf.editor.custom_font and
         gaupol.conf.editor.use_custom_font):
         font_desc = Pango.FontDescription(gaupol.conf.editor.custom_font)
-    # They fucking broke theming again with GTK+ 3.22.
+    # They fucking broke theming again with GTK 3.22.
     unit = "pt" if Gtk.check_version(3, 22, 0) is None else "px"
     css = """
     .gaupol-custom-font {{

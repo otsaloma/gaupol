@@ -3,7 +3,7 @@ aeidon
 
 aeidon is a Python package for reading, writing and manipulating
 text-based subtitle files. It is used by the gaupol package, which
-provides a subtitle editor with a GTK+ user interface.
+provides a subtitle editor with a GTK user interface.
 
 Separating a user interface independent general-purpose subtitle editing
 package from Gaupol has been an afterthought and thus not well designed

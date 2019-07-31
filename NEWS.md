@@ -14,7 +14,7 @@
 * Add keybinding Ctrl+I for toggling italic while editing (#118)
 * Change keybinding for Invert Selection to Ctrl+J
 * When opening multiple files, skip ones already open
-* Adapt to various GTK+ deprecations
+* Adapt to various GTK deprecations
 * Add 64x64 and 128x128 icons
 * Update AppData XML file
 * Bump iso-codes dependency to >= 3.67
@@ -84,7 +84,7 @@
 2016-10-29: Gaupol 1.0
 ======================
 
-* Fix size of custom font with GTK+ 3.22 (#40)
+* Fix size of custom font with GTK 3.22 (#40)
 * Show an error dialog if the integrated video player fails
   to initialize playback due to e.g. missing codecs
 * Fix error trying to undo more actions than exist when holding down
@@ -146,7 +146,7 @@
 * Close mailing lists, use Gitter instead: <https://gitter.im/otsaloma/gaupol>
 * Use Transifex for translations: <http://www.transifex.com/otsaloma/gaupol/>
 * Update AppData file
-* Bump GTK+ dependency to ≥ 3.12
+* Bump GTK dependency to ≥ 3.12
 * Bump PyGObject dependency to ≥ 3.12
 * Drop optional dependencies on PT fonts
 * Add Serbian translation (Miroslav Nikolić)
@@ -197,8 +197,8 @@
 
 * Hide tabs when only one tab is open
 * Expand tabs to fill window width, use 24 characters at minimum
-* Fix dialog paddings with GTK+ 3.14
-* Fix text view line length display with GTK+ 3.14
+* Fix dialog paddings with GTK 3.14
+* Fix text view line length display with GTK 3.14
 * Pack video player toolbar and seekbar horizontally
 * Avoid column resizing upon opening file
 * Fix `IndexError: list index out of range` when undoing or redoing
@@ -210,10 +210,10 @@
 2014-06-21: Gaupol 0.26
 =======================
 
-* Update file selection dialogs to work better with GTK+ 3.12
+* Update file selection dialogs to work better with GTK 3.12
 * Default toolbar style to icons only (due to `gtk-toolbar-style`
-  being deprecated since GTK+ 3.10)
-* Allow using the dark GTK+ theme variant (you need to edit
+  being deprecated since GTK 3.10)
+* Allow using the dark GTK theme variant (you need to edit
   `~/.config/gaupol/gaupol.conf` to enable this)
 * Fix errors and lack of updates in multiline text cells and their
   line length calculation and display (#728575)
@@ -227,8 +227,8 @@
 * Remove non-functional speech recognition menu item
   (see <http://www.mail-archive.com/gaupol-list@gna.org/msg00069.html>)
 * Drop support for the MPsub format
-* Add GTK+ (3.2 or greater) to list of dependencies in the `README`
-  file (GTK+ has always been a dependency, its explicit mention was
+* Add GTK (3.2 or greater) to list of dependencies in the `README`
+  file (GTK has always been a dependency, its explicit mention was
   just forgotten when migrating from PyGTK to PyGObject)
 * Update Brazilian Portuguese translation (Rafael Ferreira)
 * Update Czech translation (Pavel Fric)
@@ -247,7 +247,7 @@
   print error messages if not (#710138)
 * Filter open recent menu items by mimetype
 * Fix search dialog "Ignore case" option
-* Fix text correction assistant layout with GTK+ 3.10
+* Fix text correction assistant layout with GTK 3.10
 * Fix newline handling on Windows (Python 3 does implicit conversions
   that were not accounted for)
 * Fix preview error dialog on Windows (#651675)
@@ -324,8 +324,8 @@
 * Restore almost proper keeping track of recent files for those using
   PyGObject 3.7.4 or greater (#678401, #695970)
 * Restore zebra-stripes, which were previously discarded by some
-  GTK+ themes
-* Mostly fix cell rendering speed issues with GTK+ 3.6 and later
+  GTK themes
+* Mostly fix cell rendering speed issues with GTK 3.6 and later
 * Add Czech translation (Pavel Fric)
 
 2013-01-13: Gaupol 0.21.1
@@ -356,19 +356,19 @@
 2012-11-11: Gaupol 0.20.1
 =========================
 
-* Fix crash on startup on newer versions of PyGObject and/or GTK+
+* Fix crash on startup on newer versions of PyGObject and/or GTK
   resulting from setting tool item types (#686608)
 * Fix side pane header menu (#686312)
 * Disable "Join or Split Words" task in the text correction assistant
   if no spell-check dictionaries are available (#686340)
-* Use a stock GTK+ close icon for tab close buttons if
+* Use a stock GTK close icon for tab close buttons if
   "window-close-symbolic" is not found
 * Fix behaviour of spell-check dialog's "Replace with" entry
 
 2012-10-14: Gaupol 0.20
 =======================
 
-* Migrate to Python 3, GTK+ 3, GStreamer 1.0, PyGI and GNOME 3
+* Migrate to Python 3, GTK 3, GStreamer 1.0, PyGI and GNOME 3
 * Bump Python dependency to 3.2 or greater
 * Replace PyGTK dependency with PyGObject 3.0.0 or greater
 * Bump optional GStreamer dependency to 1.0 or greater
@@ -529,7 +529,7 @@
 
 * Split general-purpose, user-interface-independent subtitle editing
   code to a separate Python package called "aeidon" while keeping the
-  GTK+ user interface code under the package "gaupol". Allow
+  GTK user interface code under the package "gaupol". Allow
   installation of these two packages separate of one another.
   Developers and packagers are encouraged to read `./setup.py --help`
   message and the file `README.aeidon`. (Fixes #595809 and should

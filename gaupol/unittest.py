@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""Base class for GTK+ unit test cases."""
+"""Base class for GTK unit test cases."""
 
 import aeidon
 import gaupol
@@ -26,7 +26,7 @@ __all__ = ("TestCase",)
 class TestCase(aeidon.TestCase):
 
     """
-    Base class for GTK+ unit test cases.
+    Base class for GTK unit test cases.
 
     Unit tests are designed to be run with ``py.test``, ``nose`` or something
     compatible. Tests should use plain ``assert`` statements to allow multiple
