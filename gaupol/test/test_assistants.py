@@ -19,6 +19,7 @@ import aeidon
 import gaupol
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 from gaupol.assistants import CapitalizationPage
 from gaupol.assistants import CommonErrorPage
@@ -29,6 +30,8 @@ from gaupol.assistants import JoinSplitWordsPage
 from gaupol.assistants import LineBreakOptionsPage
 from gaupol.assistants import LineBreakPage
 from gaupol.assistants import ProgressPage
+
+OK = lambda *args: Gtk.ResponseType.OK
 
 
 class _TestBuilderPage(gaupol.TestCase):
@@ -104,6 +107,7 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
         self.window.add(self.page)
         self.window.show_all()
 
+    @patch("gaupol.util.flash_dialog", OK)
     def test_correct_texts(self):
         self.page.correct_texts(self.project,
                                 None,
