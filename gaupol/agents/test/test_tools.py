@@ -36,7 +36,8 @@ class TestToolsAgent(gaupol.TestCase):
 
     @patch("gaupol.util.flash_dialog", OK)
     def test__on_check_spelling_activate(self):
-        gaupol.conf.spell_check.language = "en"
+        language = self.get_spell_check_language("en")
+        gaupol.conf.spell_check.language = language
         self.application.get_action("check-spelling").activate()
 
     @patch("gaupol.util.flash_dialog", OK)

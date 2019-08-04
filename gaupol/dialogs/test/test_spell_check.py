@@ -32,7 +32,8 @@ class TestSpellCheckDialog(gaupol.TestCase):
         aeidon.SpellChecker.add_to_personal = aeidon.SpellChecker.add_to_session
         aeidon.SpellChecker.read_replacements = lambda *args: None
         aeidon.SpellChecker.write_replacements = lambda *args: None
-        gaupol.conf.spell_check.language = "en"
+        language = self.get_spell_check_language("en")
+        gaupol.conf.spell_check.language = language
         self.application = self.new_application()
         for page in self.application.pages:
             for subtitle in page.project.subtitles:

@@ -78,14 +78,16 @@ class TestTextAgent(aeidon.TestCase):
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace("a", " a")
             subtitle.main_text = subtitle.main_text.replace("e", "e ")
+        language = self.get_spell_check_language("en")
         self.project.spell_check_join_words(indices=None,
                                             doc=aeidon.documents.MAIN,
-                                            language="en")
+                                            language=language)
 
     def test_spell_check_split_words(self):
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace("s ", "s")
             subtitle.main_text = subtitle.main_text.replace("y ", "y")
+        language = self.get_spell_check_language("en")
         self.project.spell_check_split_words(indices=None,
                                              doc=aeidon.documents.MAIN,
-                                             language="en")
+                                             language=language)

@@ -50,6 +50,15 @@ class TestCase:
         with open(path, "r", encoding="ascii") as f:
             return f.read().strip()
 
+    def get_spell_check_language(self, language):
+        """Return spell-check language to use in unit tests."""
+        # Allow any close-enough variant as different systems will have
+        # different spell-check engines and dictionaries installed.
+        for candidate in aeidon.SpellChecker.list_languages():
+            if candidate.startswith(language):
+                return candidate
+        raise Exception("Spell-check dictionary {}* not found".format(language))
+
     def new_microdvd_file(self):
         """Return path to a new temporary MicroDVD file."""
         return self.new_temp_file(aeidon.formats.MICRODVD)

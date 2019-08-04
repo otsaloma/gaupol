@@ -21,7 +21,8 @@ import aeidon
 class TestSpellChecker(aeidon.TestCase):
 
     def setup_method(self, method):
-        self.checker = aeidon.SpellChecker("en")
+        language = self.get_spell_check_language("en")
+        self.checker = aeidon.SpellChecker(language)
 
     def test_add_replacement(self):
         self.checker.add_replacement("abc", "xyz")
@@ -50,7 +51,8 @@ class TestSpellChecker(aeidon.TestCase):
 class TestSpellCheckNavigator(aeidon.TestCase):
 
     def setup_method(self, method):
-        self.navigator = aeidon.SpellCheckNavigator("en")
+        language = language = self.get_spell_check_language("en")
+        self.navigator = aeidon.SpellCheckNavigator(language)
         self.navigator.text = "She knows the fighting\ntechniques of Panzer Kunst."
 
     def test_ignore(self):

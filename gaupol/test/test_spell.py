@@ -37,4 +37,5 @@ class TestSpellChecker(aeidon.TestCase):
         Gtk.main()
 
     def setup_method(self, method):
-        self.checker = gaupol.SpellChecker("en")
+        language = self.get_spell_check_language("en")
+        self.checker = gaupol.SpellChecker(language)
