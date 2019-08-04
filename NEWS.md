@@ -1,3 +1,13 @@
+2019-08-04: Gaupol 1.7
+======================
+
+* New app icon, as full-color and symbolic SVGs (#119)
+* Better initial preview experience (#136)
+* Disable loading of problematic gstreamer-vaapi (#79)
+* Use gspell for spell-check instead of PyEnchant and GtkSpell (#12)
+* Use the reverse domain name "io.otsaloma.gaupol" for desktop file,
+  appdata file and icons
+
 2019-06-08: Gaupol 1.6
 ======================
 
