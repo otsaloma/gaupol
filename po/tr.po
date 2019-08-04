@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-08 18:20+0300\n"
+"POT-Creation-Date: 2019-07-30 22:58+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Turkish (https://www.transifex.com/otsaloma/teams/64879/tr/)\n"
@@ -21,31 +21,31 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: aeidon/enums.py:39 gaupol/enums.py:38
+#: aeidon/enums.py:40 gaupol/enums.py:38
 msgid "Subtitle number"
 msgstr "Alt yazı numarası"
 
-#: aeidon/enums.py:42
+#: aeidon/enums.py:43
 msgid "Subtitle position"
 msgstr "Alt yazı durumu"
 
-#: aeidon/enums.py:58
+#: aeidon/enums.py:59
 msgid "23.976 fps"
 msgstr ""
 
-#: aeidon/enums.py:62
+#: aeidon/enums.py:63
 msgid "24.000 fps"
 msgstr ""
 
-#: aeidon/enums.py:66
+#: aeidon/enums.py:67
 msgid "25.000 fps"
 msgstr ""
 
-#: aeidon/enums.py:70
+#: aeidon/enums.py:71
 msgid "29.970 fps"
 msgstr ""
 
-#: aeidon/enums.py:91
+#: aeidon/enums.py:92
 msgid "Mac (classic)"
 msgstr "Mac (klasik)"
 
@@ -251,15 +251,15 @@ msgstr "Yazılar büyütülüyor"
 msgid "Correcting common errors"
 msgstr "Genel hatalar düzeltiliyor"
 
-#: aeidon/agents/text.py:248
+#: aeidon/agents/text.py:234
 msgid "Removing hearing impaired texts"
 msgstr "Bozulmuş yazılar siliniyor"
 
-#: aeidon/agents/text.py:330
+#: aeidon/agents/text.py:315
 msgid "Joining words by spell-check suggestions"
 msgstr "Yazım kontrolü önerilerine göre kelimeleri birleştir"
 
-#: aeidon/agents/text.py:374
+#: aeidon/agents/text.py:352
 msgid "Splitting words by spell-check suggestions"
 msgstr "Yazım kontrolü önerilerine göre kelimeleri ayır"
 
@@ -557,106 +557,107 @@ msgstr ""
 msgid "Join or Split Words"
 msgstr "Kelimeleri Birleştir/Ayır"
 
-#: gaupol/assistants.py:598 gaupol/dialogs/spell_check.py:387
+#: gaupol/assistants.py:599 gaupol/agents/tools.py:45
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "\"{}\" için sözlük yüklenemedi."
 
-#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
+#: gaupol/assistants.py:601 gaupol/player.py:250 gaupol/player.py:356
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
-#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
-#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
-#: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
-#: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
+#: gaupol/agents/open.py:328 gaupol/agents/open.py:337
+#: gaupol/agents/open.py:345 gaupol/agents/open.py:354
+#: gaupol/agents/tools.py:48 gaupol/agents/save.py:197
+#: gaupol/agents/save.py:205 gaupol/agents/preview.py:108
+#: gaupol/agents/preview.py:116 gaupol/agents/preview.py:125
+#: gaupol/agents/preview.py:133
 msgid "_OK"
 msgstr ""
 
-#: gaupol/assistants.py:634
+#: gaupol/assistants.py:635
 msgid "Break text into lines of defined length"
 msgstr "Yazııları belirtilen uzunlukta satırlara böl"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:638
+#: gaupol/assistants.py:639
 msgid "Line-Break Patterns"
 msgstr ""
 
-#: gaupol/assistants.py:640
+#: gaupol/assistants.py:641
 msgid "Break lines"
 msgstr "Satırları durdur"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:678
+#: gaupol/assistants.py:679
 msgid "Line-Break Options"
 msgstr ""
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:762
+#: gaupol/assistants.py:763
 msgid "Correcting Texts"
 msgstr "Yazılar düzeltiliyor"
 
-#: gaupol/assistants.py:768
+#: gaupol/assistants.py:769
 msgid "Each task is now being run on each project."
 msgstr "Her görev, kendi projesinde çalışıyor."
 
-#: gaupol/assistants.py:792
+#: gaupol/assistants.py:793
 #, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "Toplam {total:d} olaydan {current:d} 'i tamamlandı."
 
-#: gaupol/assistants.py:800
+#: gaupol/assistants.py:801
 msgid "Project: {}"
 msgstr "Proje: {}"
 
-#: gaupol/assistants.py:806
+#: gaupol/assistants.py:807
 msgid "Task: {}"
 msgstr "Görev: {}"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:831
+#: gaupol/assistants.py:832
 msgid "Confirm Changes"
 msgstr "Değişimleri onayla"
 
-#: gaupol/assistants.py:891
+#: gaupol/assistants.py:892
 msgid "Accept"
 msgstr "Kabul"
 
-#: gaupol/assistants.py:897
+#: gaupol/assistants.py:898
 msgid "Original Text"
 msgstr "Orjinal Yazı"
 
-#: gaupol/assistants.py:898
+#: gaupol/assistants.py:899
 msgid "Corrected Text"
 msgstr "Yazı Düzeltildi"
 
-#: gaupol/assistants.py:1047
+#: gaupol/assistants.py:1048
 msgid "Correct Texts"
 msgstr "Yazıları Düzelt"
 
-#: gaupol/assistants.py:1074
+#: gaupol/assistants.py:1076
 msgid "Correcting texts"
 msgstr "Yazılar düzeltiliyor"
 
-#: gaupol/assistants.py:1090
+#: gaupol/assistants.py:1092
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "Düzenlenen: {edits:d}, Silinen: {removals:d} alt yazı."
 
-#: gaupol/assistants.py:1124
+#: gaupol/assistants.py:1126
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/renderers/multiline.py:87
+#: gaupol/renderers/multiline.py:86
 msgid "Italic"
 msgstr ""
 
-#: gaupol/player.py:355
+#: gaupol/player.py:354
 msgid "Failed to initialize playback"
 msgstr ""
 
@@ -744,7 +745,7 @@ msgstr "Projeyi böl"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Alt yazıların {amount:d} 'i, \"{name}\" olarak bölündü."
 
-#: gaupol/dialogs/spell_check.py:360
+#: gaupol/dialogs/spell_check.py:267
 msgid "Spell-checking"
 msgstr "Yazım kontrolü"
 
@@ -804,11 +805,11 @@ msgstr "kare (frame)"
 msgid "seconds"
 msgstr "saniye"
 
-#: gaupol/dialogs/about.py:37
+#: gaupol/dialogs/about.py:36
 msgid "About Gaupol"
 msgstr "Gaupol Hakkında"
 
-#: gaupol/dialogs/about.py:41
+#: gaupol/dialogs/about.py:40
 msgid "Subtitle editor"
 msgstr "Alt Yazı Düzenleyicisi"
 
@@ -818,13 +819,13 @@ msgstr "Alt Yazı Düzenleyicisi"
 #. address. You can also include other translators who have contributed
 #. to this translation; in that case, please write them on separate
 #. lines seperated by newlines (\n).
-#: gaupol/dialogs/about.py:52
+#: gaupol/dialogs/about.py:51
 msgid "translator-credits"
 msgstr ""
 "Koray Löker <loker@pardus.org.tr>\n"
 "Çağlar Kilimci <ckilimci@pardus.org.tr>"
 
-#: gaupol/dialogs/about.py:55
+#: gaupol/dialogs/about.py:54
 msgid "Gaupol Website"
 msgstr "Gaupol web sitesi"
 
@@ -893,7 +894,8 @@ msgstr "Deneme filmi oynatılamadı"
 
 #: gaupol/dialogs/preview_error.py:37
 msgid ""
-"There is probably a problem with either the video file or the preview "
+"There is probably a problem with either the video file or the video player. "
+"See the preferences dialog to choose the video player or to customize the "
 "command."
 msgstr ""
 
@@ -1123,11 +1125,11 @@ msgstr ""
 msgid "Undefined"
 msgstr ""
 
-#: gaupol/agents/preview.py:101
+#: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr "Geçici yer olarak \"{}\" 'e kodlanamadı."
 
-#: gaupol/agents/preview.py:102
+#: gaupol/agents/preview.py:106
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
@@ -1136,57 +1138,68 @@ msgstr ""
 "Alt yazı ön izleme için kullanılan karakter kodlama ile geçici dosyaya "
 "kodlanamadı. Lütfen farklı bir karakter kodlama ile kaydedin."
 
-#: gaupol/agents/preview.py:110
+#: gaupol/agents/preview.py:114
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr "Alt yazı dosyası geçici klasör olan \"{}\" 'e kaydedilemedi"
 
-#: gaupol/agents/preview.py:118
+#: gaupol/agents/preview.py:122
+msgid "Video player not found"
+msgstr ""
+
+#: gaupol/agents/preview.py:123
+msgid ""
+"Please install one of the supported video players: mpv (recommended), "
+"MPlayer or VLC. See the preferences dialog to choose the video player or to "
+"customize the command."
+msgstr ""
+
+#: gaupol/agents/preview.py:131
 msgid "Failed to launch video player"
 msgstr "Video oynatıcısı oynatılamadı"
 
-#: gaupol/applicationman.py:104
+#: gaupol/applicationman.py:105
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [SEÇENEK...] [DOSYA...] [+[NUM]]"
 
-#: gaupol/applicationman.py:108
+#: gaupol/applicationman.py:109
 msgid "FILE..."
 msgstr ""
 
-#: gaupol/applicationman.py:111
+#: gaupol/applicationman.py:112
 msgid "subtitle files to open"
 msgstr ""
 
-#: gaupol/applicationman.py:121
+#: gaupol/applicationman.py:122
 msgid "ENCODING"
 msgstr "KARAKTER KODLAMA"
 
-#: gaupol/applicationman.py:124
+#: gaupol/applicationman.py:125
 msgid "set the character encoding used to open files"
 msgstr "Açık olan dosya için karakter kodlamayı uygula"
 
-#: gaupol/applicationman.py:131
+#: gaupol/applicationman.py:132
 msgid "list all available character encodings"
 msgstr "Ulaşılabilir bütün karakter kodlamalarını listele"
 
-#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
+#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
 msgid "FILE"
 msgstr "DOSYA"
 
-#: gaupol/applicationman.py:139
+#: gaupol/applicationman.py:140
 msgid "open translation file"
 msgstr "Açık çeviri dosyası"
 
-#: gaupol/applicationman.py:144
+#: gaupol/applicationman.py:145
 msgid "METHOD"
 msgstr "YÖNTEM"
 
-#: gaupol/applicationman.py:148
+#: gaupol/applicationman.py:149
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "Çeviri alt yazılarını hizaya sokmak için 'numara' ya da 'durum' yöntemini "
 "kullanın."
 
-#: gaupol/applicationman.py:156
+#: gaupol/applicationman.py:157
 msgid "select video file"
 msgstr "Video dosyası seçiniz"
 
@@ -2602,31 +2615,31 @@ msgstr ""
 msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
-#: data/gaupol.appdata.xml.in:7
+#: data/io.otsaloma.gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
 msgstr ""
 
-#: data/gaupol.appdata.xml.in:9
+#: data/io.otsaloma.gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
 "texts and timing subtitles to match video."
 msgstr ""
 
-#: data/gaupol.appdata.xml.in:38
+#: data/io.otsaloma.gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr ""
 
-#: data/gaupol.desktop.in:5
+#: data/io.otsaloma.gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "Alt Yazı Düzenleyicisi"
 
-#: data/gaupol.desktop.in:6
+#: data/io.otsaloma.gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "Alt yazı dosyasını düzenle"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:12
+#: data/io.otsaloma.gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
 msgstr ""

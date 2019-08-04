@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-08 18:20+0300\n"
+"POT-Creation-Date: 2019-07-30 22:58+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
@@ -21,31 +21,31 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: aeidon/enums.py:39 gaupol/enums.py:38
+#: aeidon/enums.py:40 gaupol/enums.py:38
 msgid "Subtitle number"
 msgstr "Número del subtítulo"
 
-#: aeidon/enums.py:42
+#: aeidon/enums.py:43
 msgid "Subtitle position"
 msgstr "Posición del subtítulo"
 
-#: aeidon/enums.py:58
+#: aeidon/enums.py:59
 msgid "23.976 fps"
 msgstr "23,976 fps"
 
-#: aeidon/enums.py:62
+#: aeidon/enums.py:63
 msgid "24.000 fps"
 msgstr "24,000 fps"
 
-#: aeidon/enums.py:66
+#: aeidon/enums.py:67
 msgid "25.000 fps"
 msgstr "25,000 fps"
 
-#: aeidon/enums.py:70
+#: aeidon/enums.py:71
 msgid "29.970 fps"
 msgstr "29,970 fps"
 
-#: aeidon/enums.py:91
+#: aeidon/enums.py:92
 msgid "Mac (classic)"
 msgstr "Mac (clásico)"
 
@@ -251,15 +251,15 @@ msgstr "Capitalizar texto"
 msgid "Correcting common errors"
 msgstr "Corregir errores frecuentes"
 
-#: aeidon/agents/text.py:248
+#: aeidon/agents/text.py:234
 msgid "Removing hearing impaired texts"
 msgstr "Eliminar texto para sordos"
 
-#: aeidon/agents/text.py:330
+#: aeidon/agents/text.py:315
 msgid "Joining words by spell-check suggestions"
 msgstr "Unir palabras según sugerencias del corrector ortográfico"
 
-#: aeidon/agents/text.py:374
+#: aeidon/agents/text.py:352
 msgid "Splitting words by spell-check suggestions"
 msgstr "Dividir palabras según sugerencias del corrector ortográfico"
 
@@ -514,8 +514,8 @@ msgstr "Capitalizar texto"
 #: gaupol/assistants.py:468
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
-"Corrige errores frecuentes propios de un humano o un software reconocedor de"
-" imágenes"
+"Corrige diversos errores frecuentes propios de un humano o de un\n"
+"software reconocedor de imágenes"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -559,106 +559,107 @@ msgstr "Unir o dividir palabras"
 msgid "Join or Split Words"
 msgstr "Unir o dividir palabras"
 
-#: gaupol/assistants.py:598 gaupol/dialogs/spell_check.py:387
+#: gaupol/assistants.py:599 gaupol/agents/tools.py:45
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "No fue posible abrir el diccionario para el idioma «{}»"
 
-#: gaupol/assistants.py:600 gaupol/player.py:251 gaupol/player.py:357
+#: gaupol/assistants.py:601 gaupol/player.py:250 gaupol/player.py:356
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/spell_check.py:390 gaupol/agents/open.py:328
-#: gaupol/agents/open.py:337 gaupol/agents/open.py:345
-#: gaupol/agents/open.py:354 gaupol/agents/save.py:197
-#: gaupol/agents/save.py:205 gaupol/agents/preview.py:104
-#: gaupol/agents/preview.py:112 gaupol/agents/preview.py:120
+#: gaupol/agents/open.py:328 gaupol/agents/open.py:337
+#: gaupol/agents/open.py:345 gaupol/agents/open.py:354
+#: gaupol/agents/tools.py:48 gaupol/agents/save.py:197
+#: gaupol/agents/save.py:205 gaupol/agents/preview.py:108
+#: gaupol/agents/preview.py:116 gaupol/agents/preview.py:125
+#: gaupol/agents/preview.py:133
 msgid "_OK"
 msgstr "_Aceptar"
 
-#: gaupol/assistants.py:634
+#: gaupol/assistants.py:635
 msgid "Break text into lines of defined length"
 msgstr "Divide el texto en líneas de un largo máximo especificado"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:638
+#: gaupol/assistants.py:639
 msgid "Line-Break Patterns"
 msgstr "Reglas de dividir líneas"
 
-#: gaupol/assistants.py:640
+#: gaupol/assistants.py:641
 msgid "Break lines"
 msgstr "Dividir líneas"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:678
+#: gaupol/assistants.py:679
 msgid "Line-Break Options"
 msgstr "Opciones de dividir líneas"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:762
+#: gaupol/assistants.py:763
 msgid "Correcting Texts"
 msgstr "Corrigiendo textos"
 
-#: gaupol/assistants.py:768
+#: gaupol/assistants.py:769
 msgid "Each task is now being run on each project."
 msgstr "Aplicando las tareas seleccionadas a cada proyecto."
 
-#: gaupol/assistants.py:792
+#: gaupol/assistants.py:793
 #, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
 msgstr "{current:d} de {total:d} tareas completadas"
 
-#: gaupol/assistants.py:800
+#: gaupol/assistants.py:801
 msgid "Project: {}"
 msgstr "Proyecto: {}"
 
-#: gaupol/assistants.py:806
+#: gaupol/assistants.py:807
 msgid "Task: {}"
 msgstr "Tarea: {}"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:831
+#: gaupol/assistants.py:832
 msgid "Confirm Changes"
 msgstr "Confirmar cambios"
 
-#: gaupol/assistants.py:891
+#: gaupol/assistants.py:892
 msgid "Accept"
 msgstr "Aceptar"
 
-#: gaupol/assistants.py:897
+#: gaupol/assistants.py:898
 msgid "Original Text"
 msgstr "Texto original"
 
-#: gaupol/assistants.py:898
+#: gaupol/assistants.py:899
 msgid "Corrected Text"
 msgstr "Texto corregido"
 
-#: gaupol/assistants.py:1047
+#: gaupol/assistants.py:1048
 msgid "Correct Texts"
 msgstr "Corregir Texto"
 
-#: gaupol/assistants.py:1074
+#: gaupol/assistants.py:1076
 msgid "Correcting texts"
 msgstr "Corregir texto"
 
-#: gaupol/assistants.py:1090
+#: gaupol/assistants.py:1092
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "{edits:d} subtítulos editados, {removals:d} eliminados"
 
-#: gaupol/assistants.py:1124
+#: gaupol/assistants.py:1126
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Confirmar {:d} cambio"
 msgstr[1] "Confirmar {:d} cambios"
 
-#: gaupol/renderers/multiline.py:87
+#: gaupol/renderers/multiline.py:86
 msgid "Italic"
 msgstr "Cursiva"
 
-#: gaupol/player.py:355
+#: gaupol/player.py:354
 msgid "Failed to initialize playback"
 msgstr "No fue posible iniciar la reproducción"
 
@@ -746,7 +747,7 @@ msgstr "Dividiendo proyecto"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "{amount:d} subtítulos movidos al proyecto nuevo «{name}»"
 
-#: gaupol/dialogs/spell_check.py:360
+#: gaupol/dialogs/spell_check.py:267
 msgid "Spell-checking"
 msgstr "Corrigiendo ortografía"
 
@@ -806,11 +807,11 @@ msgstr "fotogramas"
 msgid "seconds"
 msgstr "segundos"
 
-#: gaupol/dialogs/about.py:37
+#: gaupol/dialogs/about.py:36
 msgid "About Gaupol"
 msgstr "Acerca de Gaupol"
 
-#: gaupol/dialogs/about.py:41
+#: gaupol/dialogs/about.py:40
 msgid "Subtitle editor"
 msgstr "Editor de subtítulos"
 
@@ -820,13 +821,13 @@ msgstr "Editor de subtítulos"
 #. address. You can also include other translators who have contributed
 #. to this translation; in that case, please write them on separate
 #. lines seperated by newlines (\n).
-#: gaupol/dialogs/about.py:52
+#: gaupol/dialogs/about.py:51
 msgid "translator-credits"
 msgstr ""
 "Carlos Mella <cmellib@gmail.com>\n"
 "Miguel Latorre <kuan@graffiti.net>"
 
-#: gaupol/dialogs/about.py:55
+#: gaupol/dialogs/about.py:54
 msgid "Gaupol Website"
 msgstr "Sitio web de Gaupol"
 
@@ -898,11 +899,10 @@ msgstr "No fue posible ejecutar la vista previa en el reproductor de vídeo"
 
 #: gaupol/dialogs/preview_error.py:37
 msgid ""
-"There is probably a problem with either the video file or the preview "
+"There is probably a problem with either the video file or the video player. "
+"See the preferences dialog to choose the video player or to customize the "
 "command."
 msgstr ""
-"Verifique que no haya un problema con el archivo de vídeo o el comando dado "
-"para ejecutar la vista previa."
 
 #: gaupol/dialogs/language.py:97
 msgid "Set Language"
@@ -1137,13 +1137,13 @@ msgstr "_Abrir"
 msgid "Undefined"
 msgstr "Indeterminado"
 
-#: gaupol/agents/preview.py:101
+#: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
 "No fue posible codificar el archivo de subtítulos en el directorio temporal "
 "«{}»"
 
-#: gaupol/agents/preview.py:102
+#: gaupol/agents/preview.py:106
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
@@ -1153,59 +1153,70 @@ msgstr ""
 " previa usando la codificación de caracteres actual. Intente guardar el "
 "archivo de subtítulos con una codificación de caracteres diferente."
 
-#: gaupol/agents/preview.py:110
+#: gaupol/agents/preview.py:114
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
 "No fue posible guardar el archivo de subtítulos en el directorio temporal "
 "«{}»"
 
-#: gaupol/agents/preview.py:118
+#: gaupol/agents/preview.py:122
+msgid "Video player not found"
+msgstr ""
+
+#: gaupol/agents/preview.py:123
+msgid ""
+"Please install one of the supported video players: mpv (recommended), "
+"MPlayer or VLC. See the preferences dialog to choose the video player or to "
+"customize the command."
+msgstr ""
+
+#: gaupol/agents/preview.py:131
 msgid "Failed to launch video player"
 msgstr "No fue posible ejecutar el reproductor de vídeo"
 
-#: gaupol/applicationman.py:104
+#: gaupol/applicationman.py:105
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPCIÓN...] [ARCHIVO...] [+[NUM]]"
 
-#: gaupol/applicationman.py:108
+#: gaupol/applicationman.py:109
 msgid "FILE..."
 msgstr "ARCHIVO..."
 
-#: gaupol/applicationman.py:111
+#: gaupol/applicationman.py:112
 msgid "subtitle files to open"
 msgstr "archivos de subtítulos a abrir"
 
-#: gaupol/applicationman.py:121
+#: gaupol/applicationman.py:122
 msgid "ENCODING"
 msgstr "CODIFICACIÓN"
 
-#: gaupol/applicationman.py:124
+#: gaupol/applicationman.py:125
 msgid "set the character encoding used to open files"
 msgstr "establece la codificación de caracteres usada para abrir archivos"
 
-#: gaupol/applicationman.py:131
+#: gaupol/applicationman.py:132
 msgid "list all available character encodings"
 msgstr "lista todas las codificaciones de caracteres disponibles"
 
-#: gaupol/applicationman.py:136 gaupol/applicationman.py:153
+#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
 msgid "FILE"
 msgstr "ARCHIVO"
 
-#: gaupol/applicationman.py:139
+#: gaupol/applicationman.py:140
 msgid "open translation file"
 msgstr "abre el archivo de traducción"
 
-#: gaupol/applicationman.py:144
+#: gaupol/applicationman.py:145
 msgid "METHOD"
 msgstr "MÉTODO"
 
-#: gaupol/applicationman.py:148
+#: gaupol/applicationman.py:149
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "método usado para ajustar los subtítulos de traducción: 'number' o "
 "'position'"
 
-#: gaupol/applicationman.py:156
+#: gaupol/applicationman.py:157
 msgid "select video file"
 msgstr "selecciona el archivo de vídeo"
 
@@ -2055,7 +2066,7 @@ msgstr "S_eleccione los errores que quiera corregir:"
 
 #: data/ui/text-assistant/common-error-page.ui:108
 msgid "Error types:"
-msgstr "Tipos de error:"
+msgstr "Tipos de errores:"
 
 #: data/ui/text-assistant/common-error-page.ui:158
 msgid "_Human errors"
@@ -2063,7 +2074,7 @@ msgstr "Errores _humanos"
 
 #: data/ui/text-assistant/common-error-page.ui:175
 msgid "_Image recognition errors"
-msgstr "Errores por _reconocimiento de imágenes"
+msgstr "Errores de _reconocedores de imágenes"
 
 #: data/ui/text-assistant/capitalization-page.ui:22
 msgid "S_elect parts to capitalize:"
@@ -2257,7 +2268,8 @@ msgstr "Letra «I» en palabras en minúsculas"
 #: data/patterns/Latn-en.common-error.in:24
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
 msgstr ""
-"Reemplaza la letra «I» dentro de una palabra en minúsculas por la letra «l»"
+"Reemplaza la vocal «I» dentro de una palabra en minúsculas por la consonante"
+" «l»"
 
 #: data/patterns/Latn-en.common-error.in:32
 #: data/patterns/Latn-en.common-error.in:41
@@ -2272,7 +2284,8 @@ msgstr "Letra «l» en palabras en mayúsculas"
 #: data/patterns/Latn-en.common-error.in:63
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
 msgstr ""
-"Reemplaza la letra «l» dentro de una palabra en mayúsculas por la letra «I»"
+"Reemplaza la consonante «l» dentro de una palabra en mayúsculas por la vocal"
+" «I»"
 
 #: data/patterns/Latn-en.common-error.in:73
 #: data/patterns/Latn-en.common-error.in:82
@@ -2283,7 +2296,7 @@ msgstr "Cero en palabras en mayúsculas"
 #: data/patterns/Latn-en.common-error.in:83
 msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr ""
-"Reemplaza el número cero dentro de una palabra en mayúsculas por la letra "
+"Reemplaza el número cero dentro de una palabra en mayúsculas por la vocal "
 "«O»"
 
 #: data/patterns/Latn-en.common-error.in:91
@@ -2367,7 +2380,7 @@ msgstr "Espacio a continuación de signos de puntuación"
 #: data/patterns/Latn-fi.common-error.in:6
 #: data/patterns/Latn.common-error.in:183
 msgid "Add space after various punctuation marks"
-msgstr "Agrega un espacio en blanco después de distintos signos de puntuación"
+msgstr "Agrega un espacio en blanco después de diversos signos de puntuación"
 
 #: data/patterns/Latn-fr.common-error.in:5
 #: data/patterns/Latn-fr.common-error.in:14
@@ -2392,7 +2405,7 @@ msgstr "Espacio antes de signos de puntuación"
 #: data/patterns/Latn-fr.common-error.in:42
 #: data/patterns/Latn-fr.common-error.in:53
 msgid "Add or remove space before various punctuation marks"
-msgstr "Ajusta el espacio en blanco antes de distintos signos de puntuación"
+msgstr "Ajusta el espacio en blanco antes de diversos signos de puntuación"
 
 #: data/patterns/Latn.capitalization.in:5
 msgid "Sentence"
@@ -2415,7 +2428,7 @@ msgstr "Capitaliza después de puntos suspensivos"
 #: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
 #: data/patterns/Latn.common-error.in:62
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligaduras"
 
 #: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
 #: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
@@ -2423,6 +2436,7 @@ msgstr ""
 #: data/patterns/Latn.common-error.in:63
 msgid "Unpack ligatures to individual characters"
 msgstr ""
+"Reemplaza diversas ligaduras tipográficas por sus caracteres individuales"
 
 #: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Spelling of a.m. and p.m."
@@ -2439,7 +2453,7 @@ msgstr "Letra «O» en números"
 
 #: data/patterns/Latn.common-error.in:90 data/patterns/Latn.common-error.in:99
 msgid "Replace letter \"O\" with a zero in a number"
-msgstr "Reemplaza la letra «O» dentro de un número por un cero"
+msgstr "Reemplaza la vocal «O» dentro de un número por un cero"
 
 #: data/patterns/Latn.common-error.in:117
 msgid "Double apostrophe"
@@ -2474,7 +2488,7 @@ msgstr "Agrega un espacio en blanco después de una raya de diálogo"
 
 #: data/patterns/Latn.common-error.in:172
 msgid "Remove space before various punctuation marks"
-msgstr "Elimina el espacio en blanco antes de distintos signos de puntuación"
+msgstr "Elimina el espacio en blanco antes de diversos signos de puntuación"
 
 #: data/patterns/Latn.common-error.in:192
 msgid "Space after an ellipsis"
@@ -2542,7 +2556,7 @@ msgstr "Puntos alrededor de signos de puntuación"
 #: data/patterns/Latn.common-error.in:289
 #: data/patterns/Latn.common-error.in:299
 msgid "Remove period before or after various punctuation marks"
-msgstr "Elimina el punto antes o después de distintos signos de puntuación"
+msgstr "Elimina el punto antes o después de diversos signos de puntuación"
 
 #: data/patterns/Latn.common-error.in:308
 msgid "Terminating double-dashes"
@@ -2550,7 +2564,8 @@ msgstr "Fin de oraciones con dos rayas"
 
 #: data/patterns/Latn.common-error.in:309
 msgid "Replace a single clause-terminating dash with two dashes"
-msgstr "Agrega una segunda raya al fin de una oración terminada por una"
+msgstr ""
+"Agrega una segunda raya al fin de una oración ya terminada por una raya"
 
 #: data/patterns/Latn.hearing-impaired.in:5
 msgid "Sound in brackets"
@@ -2619,7 +2634,7 @@ msgstr "Número y unidad de medida"
 
 #: data/patterns/Latn.line-break.in:39
 msgid "Do not break between a number and associated unit"
-msgstr "No divide entre un número y su unidad de medida asociada"
+msgstr "No divide entre un número y su unidad de medida respectiva"
 
 #: data/patterns/Zyyy.common-error.in:5 data/patterns/Zyyy.common-error.in:14
 msgid "Leading and trailing spaces"
@@ -2627,7 +2642,7 @@ msgstr "Espacios iniciales y finales"
 
 #: data/patterns/Zyyy.common-error.in:6 data/patterns/Zyyy.common-error.in:15
 msgid "Remove spaces from the beginning and end of lines"
-msgstr "Elimina el espacio en blanco al inicio y fin de una línea"
+msgstr "Elimina el espacio en blanco al inicio y fin de cada línea"
 
 #: data/patterns/Zyyy.common-error.in:23
 msgid "Multiple consecutive spaces"
@@ -2653,13 +2668,13 @@ msgstr "Notas musicales"
 
 #: data/patterns/Zyyy.common-error.in:80
 msgid "Replace Unicode musical note characters with number signs"
-msgstr "Reemplaza caracteres Unicode de notas musicales con signos numéricos"
+msgstr "Reemplaza caracteres Unicode de notas musicales por signos numéricos"
 
-#: data/gaupol.appdata.xml.in:7
+#: data/io.otsaloma.gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
 msgstr "Editor de archivos de subtítulos basados en texto"
 
-#: data/gaupol.appdata.xml.in:9
+#: data/io.otsaloma.gaupol.appdata.xml.in:9
 msgid ""
 "Gaupol is an editor for text-based subtitle files. It supports multiple "
 "subtitle file formats and provides means of creating subtitles, editing "
@@ -2669,20 +2684,20 @@ msgstr ""
 "para diversos formatos de archivos, proporciona los medios para crear "
 "subtítulos, manipular líneas y sincronizar subtítulos a un vídeo."
 
-#: data/gaupol.appdata.xml.in:38
+#: data/io.otsaloma.gaupol.appdata.xml.in:38
 msgid "Main window"
 msgstr "Ventana principal"
 
-#: data/gaupol.desktop.in:5
+#: data/io.otsaloma.gaupol.desktop.in:5
 msgid "Subtitle Editor"
 msgstr "Editor de subtítulos"
 
-#: data/gaupol.desktop.in:6
+#: data/io.otsaloma.gaupol.desktop.in:6
 msgid "Edit subtitle files"
 msgstr "Edite archivos de subtítulos"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/gaupol.desktop.in:12
+#: data/io.otsaloma.gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
 msgstr "vídeo;subtítulos;"
