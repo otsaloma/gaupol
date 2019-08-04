@@ -51,7 +51,7 @@ class TestSpellChecker(aeidon.TestCase):
 class TestSpellCheckNavigator(aeidon.TestCase):
 
     def setup_method(self, method):
-        language = language = self.get_spell_check_language("en")
+        language = self.get_spell_check_language("en")
         self.navigator = aeidon.SpellCheckNavigator(language)
         self.navigator.text = "She knows the fighting\ntechniques of Panzer Kunst."
 
