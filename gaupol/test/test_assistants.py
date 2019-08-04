@@ -109,6 +109,8 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
 
     @patch("gaupol.util.flash_dialog", OK)
     def test_correct_texts(self):
+        language = self.get_spell_check_language("en")
+        gaupol.conf.spell_check.language = language
         self.page.correct_texts(self.project,
                                 None,
                                 aeidon.documents.MAIN)
