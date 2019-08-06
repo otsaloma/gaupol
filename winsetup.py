@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """cx_Freeze installation routines built on top of setup.py."""
 
