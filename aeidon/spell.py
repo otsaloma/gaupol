@@ -58,17 +58,25 @@ class SpellChecker:
         """Return ``True`` if spell-check is available."""
         return "Gspell" in globals()
 
-    def check(self, word):
+    def check(self, word, leading_context="", trailing_context=""):
         """Return ``True`` if `word` is correct, ``False`` otherwise."""
+        # Include special cases to deal with suboptimal tokenization
+        # and informal spoken language common in subtitles.
         if self.language.startswith("en"):
-            if word.endswith("in"):
-                # Special case a common missing "g" in "-ing".
-                return (self.checker.check_word(word, -1) or
-                        self.checker.check_word(word + "g", -1))
-            if word.endswith("'s"):
-                # Check plain word for possessive forms.
-                return self.checker.check_word(word[:-2], -1)
+            if word.endswith("in") and trailing_context.startswith("'"):
+                # Also check word with formal "ing" ending.
+                return self.check_any(word, word + "g")
+            for suffix in ["'d", "'ll", "'re", "'s", "'ve"]:
+                # Strip certain suffixes to also check just the main word.
+                # https://en.wikipedia.org/wiki/English_possessive
+                # https://en.wikipedia.org/wiki/Contraction_(grammar)#English
+                if word.endswith(suffix):
+                    return self.check_any(word, word[:-len(suffix)])
         return self.checker.check_word(word, -1)
+
+    def check_any(self, *words):
+        """Return ``True`` if any of `words` is correct, ``False`` otherwise."""
+        return any(self.checker.check_word(x, -1) for x in words)
 
     @classmethod
     def list_languages(cls):
@@ -130,11 +138,14 @@ class SpellCheckNavigator:
 
     def __next__(self):
         """Iterate over spelling errors in text."""
-        self.tokenizer.text = self.text[self.pos:]
+        initial_pos = self.pos
+        self.tokenizer.text = self.text[initial_pos:]
         for pos, word in self.tokenizer.tokenize():
-            if self.checker.check(word): continue
-            self.pos += pos
+            self.pos = initial_pos + pos
             self.word = word
+            leading = self.leading_context(1)
+            trailing = self.trailing_context(1)
+            if self.checker.check(word, leading, trailing): continue
             if word in self.replacements:
                 self.replace(self.replacements[word])
                 return self.__next__()
