@@ -84,6 +84,10 @@ class SpellChecker:
                 return True
         return self.checker.check_word(word, -1)
 
+    def check_all(self, *words):
+        """Return ``True`` if all of `words` are correct, ``False`` otherwise."""
+        return all(self.checker.check_word(x, -1) for x in words)
+
     def check_any(self, *words):
         """Return ``True`` if any of `words` is correct, ``False`` otherwise."""
         return any(self.checker.check_word(x, -1) for x in words)
@@ -116,6 +120,11 @@ class SpellChecker:
             # Add the most common OCR replacement.
             replacement = word.replace("I", "l")
             if self.check(replacement):
+                custom.append(replacement)
+        if re.match(r"^\d+\D+$", word):
+            # Add a common OCR fix of missing space between number and unit.
+            replacement = re.sub(r"^(\d+)(\D+)$", r"\1 \2", word)
+            if self.check_all(*replacement.split()):
                 custom.append(replacement)
         suggestions = self.checker.get_suggestions(word, -1)
         return aeidon.util.get_unique(custom + suggestions)
