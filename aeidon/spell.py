@@ -72,6 +72,16 @@ class SpellChecker:
                 # https://en.wikipedia.org/wiki/Contraction_(grammar)#English
                 if word.endswith(suffix):
                     return self.check_any(word, word[:-len(suffix)])
+            if (re.match(r"^\d*?(?<!1)1st$", word) or
+                re.match(r"^\d*?(?<!1)2nd$", word) or
+                re.match(r"^\d*?(?<!1)3rd$", word) or
+                re.match(r"^\d*?(?<=1)1th$", word) or
+                re.match(r"^\d*?(?<=1)2th$", word) or
+                re.match(r"^\d*?(?<=1)3th$", word) or
+                re.match(r"^\d*?[0,4-9]th$", word)):
+                # Accept ordinal numerals comprised of number and suffix.
+                # https://en.wikipedia.org/wiki/English_numerals#Ordinal_numbers
+                return True
         return self.checker.check_word(word, -1)
 
     def check_any(self, *words):
