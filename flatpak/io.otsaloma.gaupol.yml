@@ -1,6 +1,6 @@
 app-id: io.otsaloma.gaupol
 runtime: org.gnome.Platform
-runtime-version: "3.32"
+runtime-version: "3.34"
 sdk: org.gnome.Sdk
 command: gaupol
 finish-args:
@@ -28,15 +28,15 @@ modules:
       - --with-system-libav=no
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.14.4.tar.xz
-        sha256: dfd78591901df7853eab7e56a86c34a1b03635da0d3d56b89aa577f1897865da
+        url: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.16.1.tar.xz
+        sha256: e8a5748ae9a4a7be9696512182ea9ffa6efe0be9b7976916548e9d4381ca61c4
 
   - name: gst-plugins-ugly
     buildsystem: meson
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.14.4.tar.xz
-        sha256: ac02d837f166c35ff6ce0738e281680d0b90052cfb1f0255dcf6aaca5f0f6d23
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.16.1.tar.xz
+        sha256: 4bf913b2ca5195ac3b53b5e3ade2dc7c45d2258507552ddc850c5fa425968a1d
 
   # Character encoding auto-detection
 
@@ -64,8 +64,8 @@ modules:
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://github.com/fribidi/fribidi/releases/download/v1.0.5/fribidi-1.0.5.tar.bz2
-        sha256: 6a64f2a687f5c4f203a46fa659f43dd43d1f8b845df8d723107e8a7e6158e4ce
+        url: https://github.com/fribidi/fribidi/releases/download/v1.0.8/fribidi-1.0.8.tar.bz2
+        sha256: 94c7b68d86ad2a9613b4dcffe7bbeb03523d63b5b37918bdf2e4ef34195c1e6c
 
   - name: libass
     buildsystem: autotools
@@ -92,12 +92,14 @@ modules:
       - python3 waf install
     sources:
       - type: archive
-        url: https://github.com/mpv-player/mpv/archive/v0.29.1.tar.gz
-        sha256: f9f9d461d1990f9728660b4ccb0e8cb5dce29ccaa6af567bec481b79291ca623
+        url: https://github.com/mpv-player/mpv/archive/v0.31.0.tar.gz
+        sha256: 805a3ac8cf51bfdea6087a6480c18835101da0355c8e469b6d488a1e290585a5
       - type: file
-        url: https://waf.io/waf-2.0.12
-        sha256: 0979ca87f45928e0d752049ab2f43be8551249be73dc5563b944ec54f8871d1f
+        url: https://waf.io/waf-2.0.19
+        sha256: ba63c90a865a9bcf46926c4e6776f9a3f73d29f33d49b7f61f96bc37b7397cef
         dest-filename: waf
+
+  # Gaupol
 
   - name: gaupol
     buildsystem: simple
