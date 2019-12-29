@@ -95,8 +95,10 @@ modules:
         url: https://github.com/mpv-player/mpv/archive/v0.31.0.tar.gz
         sha256: 805a3ac8cf51bfdea6087a6480c18835101da0355c8e469b6d488a1e290585a5
       - type: file
-        url: https://waf.io/waf-2.0.19
-        sha256: ba63c90a865a9bcf46926c4e6776f9a3f73d29f33d49b7f61f96bc37b7397cef
+        # Use the version of waf tested to work with mpv.
+        # https://github.com/mpv-player/mpv/blob/master/bootstrap.py
+        url: https://waf.io/waf-2.0.9
+        sha256: 2a8e0816f023995e557f79ea8940d322bec18f286917c8f9a6fa2dc3875dfa48
         dest-filename: waf
 
   # Gaupol
