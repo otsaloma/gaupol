@@ -5,17 +5,13 @@ sdk: org.gnome.Sdk
 command: gaupol
 finish-args:
   - --device=dri
-  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
   - --env=GST_PLUGIN_PATH_1_0=/app/lib/gstreamer-1.0
   - --filesystem=home
-  - --filesystem=xdg-run/dconf
   - --filesystem=xdg-videos
-  - --filesystem=~/.config/dconf:ro
   - --share=ipc
   - --socket=pulseaudio
   - --socket=wayland
   - --socket=x11
-  - --talk-name=ca.desrt.dconf
 modules:
 
   # Internal video player codecs
