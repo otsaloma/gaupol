@@ -174,6 +174,17 @@ class SetEndFromVideoPositionAction(gaupol.Action):
         aeidon.util.affirm(application.player.ready)
         aeidon.util.affirm(len(selected_rows) == 1)
 
+class SetStartFromVideoPositionAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "set-start-from-video-position")
+        self.accelerators = ["U"]
+        self.action_group = "unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
+        aeidon.util.affirm(len(selected_rows) == 1)
+
 class SplitSubtitleAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "split-subtitle")

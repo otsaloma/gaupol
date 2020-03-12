@@ -272,6 +272,16 @@ class EditAgent(aeidon.Delegate):
         page.project.set_end(row, pos)
 
     @aeidon.deco.export
+    def _on_set_start_from_video_position_activate(self, *args):
+        """Set subtitle start from video position."""
+        page = self.get_current_page()
+        mode = aeidon.modes.SECONDS
+        row = page.view.get_selected_rows()[0]
+        pos = self.player.get_position(mode)
+        if pos is None: return
+        page.project.set_start(row, pos)
+
+    @aeidon.deco.export
     def _on_split_subtitle_activate(self, *args):
         """Split the selected subtitle."""
         page = self.get_current_page()

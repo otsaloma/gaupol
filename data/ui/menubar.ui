@@ -105,6 +105,10 @@
           </section>
         </submenu>
         <item>
+          <attribute name="label" translatable="yes">Set St_art From Video Position</attribute>
+          <attribute name="action">win.set-start-from-video-position</attribute>
+        </item>
+        <item>
           <attribute name="label" translatable="yes">Set En_d From Video Position</attribute>
           <attribute name="action">win.set-end-from-video-position</attribute>
         </item>
