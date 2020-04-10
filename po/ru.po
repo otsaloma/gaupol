@@ -6,15 +6,16 @@
 # Translators:
 # Osmo Salomaa <otsaloma@iki.fi>, 2016
 # Ася Л <lara6381@gmail.com>, 2018
+# Caarmi, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 22:58+0300\n"
+"POT-Creation-Date: 2020-04-10 22:03+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Ася Л <lara6381@gmail.com>, 2018\n"
+"Last-Translator: Caarmi, 2020\n"
 "Language-Team: Russian (https://www.transifex.com/otsaloma/teams/64879/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -505,7 +506,7 @@ msgstr "Расставить в тексте заглавные буквы"
 #. affect the width of the text correction assistant sidebar.
 #: gaupol/assistants.py:443
 msgid "Capitalization Patterns"
-msgstr ""
+msgstr "Заглавные буквы"
 
 #: gaupol/assistants.py:445
 msgid "Capitalize texts"
@@ -534,7 +535,7 @@ msgstr "Удалить описательный текст, предназнач
 #. affect the width of the text correction assistant sidebar.
 #: gaupol/assistants.py:530
 msgid "Hearing Impaired Patterns"
-msgstr ""
+msgstr "Текст для глухих"
 
 #: gaupol/assistants.py:532
 msgid "Remove hearing impaired texts"
@@ -582,7 +583,7 @@ msgstr "Разбить текст на строки определенной д�
 #. affect the width of the text correction assistant sidebar.
 #: gaupol/assistants.py:639
 msgid "Line-Break Patterns"
-msgstr ""
+msgstr "Разрывы строк"
 
 #: gaupol/assistants.py:641
 msgid "Break lines"
@@ -592,7 +593,7 @@ msgstr "Переносы строк"
 #. affect the width of the text correction assistant sidebar.
 #: gaupol/assistants.py:679
 msgid "Line-Break Options"
-msgstr ""
+msgstr "Параметры строк"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -658,23 +659,23 @@ msgstr[3] "Подтвердить {:d} изменений"
 
 #: gaupol/renderers/multiline.py:86
 msgid "Italic"
-msgstr ""
+msgstr "Курсив"
 
 #: gaupol/player.py:354
 msgid "Failed to initialize playback"
-msgstr ""
+msgstr "Не удалось начать воспроизведение"
 
-#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:490
+#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:494
 msgid "_Help"
 msgstr "Спра_вка"
 
 #: gaupol/dialogs/search.py:471
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Найдено и заменено {:d} вхождение"
+msgstr[1] "Найдено и заменено {:d} вхождения"
+msgstr[2] "Найдено и заменено {:d} вхождений"
+msgstr[3] "Найдено и заменено {:d} вхождений"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -863,18 +864,20 @@ msgstr "_Закрыть"
 
 #: gaupol/dialogs/multi_save.py:98 gaupol/dialogs/save.py:110
 msgid "{} (recommended)"
-msgstr ""
+msgstr "{} (рекомендуется)"
 
 #: gaupol/dialogs/multi_save.py:212
 msgid ""
 "{:d} of the files to be saved already exist. Do you want to replace them?"
-msgstr ""
+msgstr "{:d} сохраняемых файлов уже существуют. Заменить их?"
 
 #: gaupol/dialogs/multi_save.py:213
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
+"В «{}» уже существуют файлы. Если их заменить, то их содержимое будет "
+"утеряно."
 
 #: gaupol/dialogs/multi_save.py:216 data/ui/search-dialog.ui:192
 #: data/ui/spell-check-dialog.ui:122
@@ -884,10 +887,10 @@ msgstr "За_менить"
 #: gaupol/dialogs/duration_adjust.py:70
 msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Изменена длительность {:d} субтитра"
+msgstr[1] "Изменена длительность {:d} субтитров"
+msgstr[2] "Изменена длительность {:d} субтитров"
+msgstr[3] "Изменена длительность {:d} субтитров"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -903,6 +906,8 @@ msgid ""
 "See the preferences dialog to choose the video player or to customize the "
 "command."
 msgstr ""
+"Вероятно, возникла проблема с видеофайлом или плеером. Используйте диалог "
+"настроек, чтобы выбрать видеоплеер или изменить команду его вызова."
 
 #: gaupol/dialogs/language.py:97
 msgid "Set Language"
@@ -986,7 +991,7 @@ msgstr "Не удалось разобрать файл \"{}\""
 
 #: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
-msgstr ""
+msgstr "Проверьте, имеет ли этот файл формат {}."
 
 #: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
@@ -1022,25 +1027,25 @@ msgstr "Открыть _без сохранения"
 
 #: gaupol/agents/close.py:66
 msgid "Save changes to document \"{}\" before closing?"
-msgstr ""
+msgstr "Сохранить изменения в документе «{}» перед закрытием?"
 
 #: gaupol/agents/edit.py:101 gaupol/agents/edit.py:119
 msgid "Stretching end position"
-msgstr ""
+msgstr "Перенести конец"
 
 #: gaupol/agents/edit.py:208
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Вставлен {:d} субтитр для размещения текста из Буфера обмена"
+msgstr[1] "Вставлено {:d} субтитра для размещения текста из Буфера обмена"
+msgstr[2] "Вставлено {:d} субтитров для размещения текста из Буфера обмена"
+msgstr[3] "Вставлено {:d} субтитров для размещения текста из Буфера обмена"
 
-#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
+#: gaupol/agents/edit.py:301 gaupol/agents/edit.py:319
 msgid "Stretching start position"
-msgstr ""
+msgstr "Перенести начало"
 
-#: gaupol/agents/edit.py:368
+#: gaupol/agents/edit.py:378
 msgid "Use Shift+Return for line-break"
 msgstr "Для переноса текста используйте Shift+Enter"
 
@@ -1073,7 +1078,7 @@ msgstr "Попробуйте сохранить файл в другой код�
 msgid "Failed to save file \"{}\""
 msgstr "Не удалось сохранить файл \"{}\""
 
-#: gaupol/agents/video.py:65 data/ui/menubar.ui:346
+#: gaupol/agents/video.py:65 data/ui/menubar.ui:350
 msgid "_Play/Pause"
 msgstr "Воспроизвести/Остановить"
 
@@ -1081,37 +1086,37 @@ msgstr "Воспроизвести/Остановить"
 msgid "Play or pause video"
 msgstr "Воспроизвести или остановить видео"
 
-#: gaupol/agents/video.py:73 data/ui/menubar.ui:356
+#: gaupol/agents/video.py:73 data/ui/menubar.ui:360
 msgid "Seek _Previous"
-msgstr ""
+msgstr "К _предыдущему"
 
 #: gaupol/agents/video.py:75
 msgid "Seek to the start of the previous subtitle"
-msgstr ""
+msgstr "Перемотать к началу предыдущего субтитра"
 
-#: gaupol/agents/video.py:79 data/ui/menubar.ui:360
+#: gaupol/agents/video.py:79 data/ui/menubar.ui:364
 msgid "Seek _Next"
-msgstr ""
+msgstr "К _следующему"
 
 #: gaupol/agents/video.py:81
 msgid "Seek to the start of the next subtitle"
-msgstr ""
+msgstr "Промотать к началу следующего субтитра"
 
-#: gaupol/agents/video.py:86 data/ui/menubar.ui:366
+#: gaupol/agents/video.py:86 data/ui/menubar.ui:370
 msgid "Seek _Backward"
-msgstr ""
+msgstr "Перемотать _назад"
 
 #: gaupol/agents/video.py:88
 msgid "Seek backward"
-msgstr ""
+msgstr "Перемотать назад"
 
-#: gaupol/agents/video.py:92 data/ui/menubar.ui:370
+#: gaupol/agents/video.py:92 data/ui/menubar.ui:374
 msgid "Seek _Forward"
-msgstr ""
+msgstr "Промотать _вперед"
 
 #: gaupol/agents/video.py:94
 msgid "Seek forward"
-msgstr ""
+msgstr "Промотать вперед"
 
 #: gaupol/agents/video.py:107
 msgid "Volume"
@@ -1127,7 +1132,7 @@ msgstr "Загрузить"
 
 #: gaupol/agents/video.py:353
 msgid "Undefined"
-msgstr ""
+msgstr "Неопределено"
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1148,7 +1153,7 @@ msgstr "Не удалось сохранить файл во временном 
 
 #: gaupol/agents/preview.py:122
 msgid "Video player not found"
-msgstr ""
+msgstr "Видеоплеер не найден"
 
 #: gaupol/agents/preview.py:123
 msgid ""
@@ -1156,6 +1161,8 @@ msgid ""
 "MPlayer or VLC. See the preferences dialog to choose the video player or to "
 "customize the command."
 msgstr ""
+"Установите один из поддерживаемых плееров: mpv (рекомендуется), MPlayer или "
+"VLC. Используйте диалог настроек для их настройки."
 
 #: gaupol/agents/preview.py:131
 msgid "Failed to launch video player"
@@ -1171,7 +1178,7 @@ msgstr "Файл..."
 
 #: gaupol/applicationman.py:112
 msgid "subtitle files to open"
-msgstr ""
+msgstr "файл с субтитрами"
 
 #: gaupol/applicationman.py:122
 msgid "ENCODING"
@@ -1235,27 +1242,27 @@ msgstr "Частота кадров"
 msgid "Add"
 msgstr "Добавить"
 
-#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:241
+#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:245
 msgid "_No."
 msgstr "_Номер"
 
-#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:245
+#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:249
 msgid "_Start"
 msgstr "_Конец"
 
-#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:249
+#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:253
 msgid "_End"
 msgstr "_Начало"
 
-#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:253
+#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:257
 msgid "_Duration"
 msgstr "_Длительность"
 
-#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:257 data/ui/menubar.ui:269
+#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:261 data/ui/menubar.ui:273
 msgid "_Text"
 msgstr "_Текст"
 
-#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:261
+#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:265
 msgid "T_ranslation"
 msgstr "Перевод"
 
@@ -1275,7 +1282,7 @@ msgstr "_Искать:"
 msgid "Replace _with:"
 msgstr "_Заменить на:"
 
-#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:294
+#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:298
 msgid "Find _Next"
 msgstr "Найти _выше"
 
@@ -1398,7 +1405,7 @@ msgstr "Фор_мат:"
 #: data/ui/multi-save-dialog.ui:74 data/ui/open-dialog.ui:25
 #: data/ui/save-dialog.ui:39
 msgid "_Encoding:"
-msgstr ""
+msgstr "_Кодировка:"
 
 #: data/ui/multi-save-dialog.ui:88 data/ui/save-dialog.ui:53
 msgid "Ne_wlines:"
@@ -1466,298 +1473,302 @@ msgstr "Сл_едующая ячейка"
 
 #: data/ui/menubar.ui:85
 msgid "Stretc_h"
-msgstr ""
+msgstr "Раст_януть"
 
 #: data/ui/menubar.ui:88
 msgid "_Start Earlier"
-msgstr ""
+msgstr "_Начать раньше"
 
 #: data/ui/menubar.ui:92
 msgid "S_tart Later"
-msgstr ""
+msgstr "Н_ачать позже"
 
 #: data/ui/menubar.ui:98
 msgid "E_nd Earlier"
-msgstr ""
+msgstr "За_кончить раньше"
 
 #: data/ui/menubar.ui:102
 msgid "En_d Later"
-msgstr ""
+msgstr "_Закончить позже"
 
 #: data/ui/menubar.ui:108
-msgid "Set En_d From Video Position"
+msgid "Set St_art From Video Position"
 msgstr ""
 
-#: data/ui/menubar.ui:114 data/ui/view-popup.ui:6
+#: data/ui/menubar.ui:112
+msgid "Set En_d From Video Position"
+msgstr "О_кончание в позиции видео"
+
+#: data/ui/menubar.ui:118 data/ui/view-popup.ui:6
 msgid "_Split Subtitle"
 msgstr "_Разделить"
 
-#: data/ui/menubar.ui:118 data/ui/view-popup.ui:10
+#: data/ui/menubar.ui:122 data/ui/view-popup.ui:10
 msgid "_Merge Subtitles"
 msgstr "О_бъединить субтитры"
 
-#: data/ui/menubar.ui:124 data/ui/view-popup.ui:16
+#: data/ui/menubar.ui:128 data/ui/view-popup.ui:16
 msgid "_Insert Subtitles…"
 msgstr "В_ставить субтитры…"
 
-#: data/ui/menubar.ui:128
+#: data/ui/menubar.ui:132
 msgid "Inser_t Subtitle At Video Position"
-msgstr ""
+msgstr "Встав_ить в позицию видео"
 
-#: data/ui/menubar.ui:132 data/ui/view-popup.ui:20
+#: data/ui/menubar.ui:136 data/ui/view-popup.ui:20
 msgid "Rem_ove Subtitles"
 msgstr "_Удалить субтитры"
 
-#: data/ui/menubar.ui:138
+#: data/ui/menubar.ui:142
 msgid "Sele_ction"
 msgstr "Вы_деление"
 
-#: data/ui/menubar.ui:141
+#: data/ui/menubar.ui:145
 msgid "Select _All"
 msgstr "Выделить в_се"
 
-#: data/ui/menubar.ui:145
+#: data/ui/menubar.ui:149
 msgid "_Invert Selection"
 msgstr "О_братить выделение"
 
-#: data/ui/menubar.ui:151
+#: data/ui/menubar.ui:155
 msgid "Extend To _Beginning"
 msgstr "Расширить до _начала"
 
-#: data/ui/menubar.ui:155
+#: data/ui/menubar.ui:159
 msgid "Extend To _End"
 msgstr "Расширить до _конца"
 
-#: data/ui/menubar.ui:163
+#: data/ui/menubar.ui:167
 msgid "_Preferences"
 msgstr "_Параметры"
 
-#: data/ui/menubar.ui:169
+#: data/ui/menubar.ui:173
 msgid "_View"
 msgstr "_Вид"
 
-#: data/ui/menubar.ui:172
+#: data/ui/menubar.ui:176
 msgid "Tool_bar"
 msgstr "Панель инструментов"
 
-#: data/ui/menubar.ui:176
+#: data/ui/menubar.ui:180
 msgid "_Video Player"
 msgstr "Видеоплеер"
 
-#: data/ui/menubar.ui:182
+#: data/ui/menubar.ui:186
 msgid "_Layout"
-msgstr ""
+msgstr "_Расположение"
 
-#: data/ui/menubar.ui:185
+#: data/ui/menubar.ui:189
 msgid "_Horizontal"
-msgstr ""
+msgstr "_Горизонтально"
 
-#: data/ui/menubar.ui:190
+#: data/ui/menubar.ui:194
 msgid "_Vertical"
-msgstr ""
+msgstr "_Вертикально"
 
-#: data/ui/menubar.ui:199
+#: data/ui/menubar.ui:203
 msgid "_Times"
 msgstr "_Время"
 
-#: data/ui/menubar.ui:204
+#: data/ui/menubar.ui:208
 msgid "_Frames"
 msgstr "_Кадры"
 
-#: data/ui/menubar.ui:211
+#: data/ui/menubar.ui:215
 msgid "F_ramerate"
 msgstr "_Частота кадров"
 
-#: data/ui/menubar.ui:214
+#: data/ui/menubar.ui:218
 msgid "2_3.976 fps"
 msgstr "2_3,976 к/с"
 
-#: data/ui/menubar.ui:219
+#: data/ui/menubar.ui:223
 msgid "2_4.000 fps"
 msgstr "2_4 к/с"
 
-#: data/ui/menubar.ui:224
+#: data/ui/menubar.ui:228
 msgid "2_5.000 fps"
 msgstr "2_5 к/с"
 
-#: data/ui/menubar.ui:229
+#: data/ui/menubar.ui:233
 msgid "2_9.970 fps"
 msgstr "2_9,970 к/с"
 
-#: data/ui/menubar.ui:238
+#: data/ui/menubar.ui:242
 msgid "_Columns"
 msgstr "Стол_бцы"
 
-#: data/ui/menubar.ui:272
+#: data/ui/menubar.ui:276
 msgid "Cu_t"
 msgstr "В_ырезать"
 
-#: data/ui/menubar.ui:276
+#: data/ui/menubar.ui:280
 msgid "_Copy"
 msgstr "_Копировать"
 
-#: data/ui/menubar.ui:280
+#: data/ui/menubar.ui:284
 msgid "_Paste"
 msgstr "Вс_тавить"
 
-#: data/ui/menubar.ui:284
+#: data/ui/menubar.ui:288
 msgid "Cl_ear"
 msgstr "О_чистить"
 
-#: data/ui/menubar.ui:290
+#: data/ui/menubar.ui:294
 msgid "_Find And Replace…"
 msgstr "По_иск и замена…"
 
-#: data/ui/menubar.ui:298
+#: data/ui/menubar.ui:302
 msgid "Find Pre_vious"
 msgstr "Найти в_ыше"
 
-#: data/ui/menubar.ui:304
+#: data/ui/menubar.ui:308
 msgid "_Italic"
 msgstr "К_урсив"
 
-#: data/ui/menubar.ui:308
+#: data/ui/menubar.ui:312
 msgid "_Dialogue"
 msgstr "_Диалог"
 
-#: data/ui/menubar.ui:314
+#: data/ui/menubar.ui:318
 msgid "Ca_se"
 msgstr "Ре_гистр"
 
-#: data/ui/menubar.ui:317
+#: data/ui/menubar.ui:321
 msgid "_Title"
 msgstr "Начать с _заглавных букв"
 
-#: data/ui/menubar.ui:321
+#: data/ui/menubar.ui:325
 msgid "_Sentence"
 msgstr "Как в _предложении"
 
-#: data/ui/menubar.ui:325
+#: data/ui/menubar.ui:329
 msgid "_Upper"
 msgstr "_Верхний"
 
-#: data/ui/menubar.ui:329
+#: data/ui/menubar.ui:333
 msgid "_Lower"
 msgstr "_Нижний"
 
-#: data/ui/menubar.ui:337
+#: data/ui/menubar.ui:341
 msgid "Vi_deo"
 msgstr "Видео"
 
-#: data/ui/menubar.ui:340
+#: data/ui/menubar.ui:344
 msgid "_Load Video…"
 msgstr "Загрузить видео..."
 
-#: data/ui/menubar.ui:350 data/ui/view-popup.ui:26
+#: data/ui/menubar.ui:354 data/ui/view-popup.ui:26
 msgid "Play _Selection"
-msgstr ""
+msgstr "Воспроизвести в_ыделенное"
 
-#: data/ui/menubar.ui:376 data/ui/view-popup.ui:30
+#: data/ui/menubar.ui:380 data/ui/view-popup.ui:30
 msgid "S_eek Selection Start"
-msgstr ""
+msgstr "К н_ачалу выделения"
 
-#: data/ui/menubar.ui:380
+#: data/ui/menubar.ui:384
 msgid "See_k Selection End"
-msgstr ""
+msgstr "К _концу выделения"
 
-#: data/ui/menubar.ui:386
+#: data/ui/menubar.ui:390
 msgid "_Audio"
 msgstr "Аудио"
 
-#: data/ui/menubar.ui:389
+#: data/ui/menubar.ui:393
 msgid "_Language"
 msgstr "Язык"
 
-#: data/ui/menubar.ui:396
+#: data/ui/menubar.ui:400
 msgid "Volume _Down"
 msgstr "Уменьшить громкость"
 
-#: data/ui/menubar.ui:400
+#: data/ui/menubar.ui:404
 msgid "Volume _Up"
 msgstr "Увеличить громкость"
 
-#: data/ui/menubar.ui:406
+#: data/ui/menubar.ui:410
 msgid "T_ools"
 msgstr "С_ервис"
 
-#: data/ui/menubar.ui:409 data/ui/text-assistant/confirmation-page.ui:97
+#: data/ui/menubar.ui:413 data/ui/text-assistant/confirmation-page.ui:97
 #: data/ui/view-popup.ui:36
 msgid "_Preview"
 msgstr "Прос_мотр"
 
-#: data/ui/menubar.ui:413
+#: data/ui/menubar.ui:417
 msgid "Select _Video…"
 msgstr "Выбрать _видео…"
 
-#: data/ui/menubar.ui:419
+#: data/ui/menubar.ui:423
 msgid "_Check Spelling"
 msgstr "Про_верка орфографии"
 
-#: data/ui/menubar.ui:423
+#: data/ui/menubar.ui:427
 msgid "Co_nfigure Spell-check…"
 msgstr "Настройки проверки ор_фографии…"
 
-#: data/ui/menubar.ui:427
+#: data/ui/menubar.ui:431
 msgid "C_orrect Texts…"
 msgstr "Испра_вить текст…"
 
-#: data/ui/menubar.ui:433
+#: data/ui/menubar.ui:437
 msgid "_Shift Positions…"
 msgstr "_Сдвиг…"
 
-#: data/ui/menubar.ui:437
+#: data/ui/menubar.ui:441
 msgid "_Transform Positions…"
 msgstr "_Преобразовать…"
 
-#: data/ui/menubar.ui:441
+#: data/ui/menubar.ui:445
 msgid "Adjust _Durations…"
 msgstr "Скорректировать _длительность…"
 
-#: data/ui/menubar.ui:445
+#: data/ui/menubar.ui:449
 msgid "Convert _Framerate…"
 msgstr "Изменить _частоту кадров…"
 
-#: data/ui/menubar.ui:451
+#: data/ui/menubar.ui:455
 msgid "_Append File…"
 msgstr "_Добавить файл…"
 
-#: data/ui/menubar.ui:455
+#: data/ui/menubar.ui:459
 msgid "Spli_t Project…"
 msgstr "_Разделить проект…"
 
-#: data/ui/menubar.ui:461
+#: data/ui/menubar.ui:465
 msgid "_Projects"
 msgstr "_Проект"
 
-#: data/ui/menubar.ui:464
+#: data/ui/menubar.ui:468
 msgid "_Save All"
 msgstr "_Сохранить все"
 
-#: data/ui/menubar.ui:468
+#: data/ui/menubar.ui:472
 msgid "Save _All As…"
 msgstr "Сохранить все как..."
 
-#: data/ui/menubar.ui:472
+#: data/ui/menubar.ui:476
 msgid "_Close All"
 msgstr "Зак_рыть все"
 
-#: data/ui/menubar.ui:478
+#: data/ui/menubar.ui:482
 msgid "_Previous"
 msgstr "Пре_дыдущая"
 
-#: data/ui/menubar.ui:482
+#: data/ui/menubar.ui:486
 msgid "_Next"
 msgstr "С_ледующая"
 
-#: data/ui/menubar.ui:493
-msgid "_Documentation"
-msgstr ""
-
 #: data/ui/menubar.ui:497
+msgid "_Documentation"
+msgstr "_Документация"
+
+#: data/ui/menubar.ui:501
 msgid "_Report A Bug"
 msgstr "_Сообщить об ошибке"
 
-#: data/ui/menubar.ui:501
+#: data/ui/menubar.ui:505
 msgid "_About"
 msgstr "О _программе"
 
@@ -1800,7 +1811,7 @@ msgstr "Шрифт"
 
 #: data/ui/preferences-dialog.ui:344
 msgid "Use _default theme fixed width font"
-msgstr ""
+msgstr "Использовать моно_ширинный шрифт из темы"
 
 #: data/ui/preferences-dialog.ui:368
 msgid "_Editor font:"
@@ -1856,7 +1867,7 @@ msgstr "Субтитры:"
 
 #: data/ui/preferences-dialog.ui:777
 msgid "_Use a background behind text"
-msgstr ""
+msgstr "_Непрозрачный фон"
 
 #: data/ui/preferences-dialog.ui:797
 msgid "Ti_me:"
@@ -1864,7 +1875,7 @@ msgstr "Время:"
 
 #: data/ui/preferences-dialog.ui:822
 msgid "Us_e a background behind text"
-msgstr ""
+msgstr "Н_епрозрачный фон"
 
 #: data/ui/preferences-dialog.ui:862
 msgid "Seek"
@@ -1926,11 +1937,11 @@ msgstr "Язык"
 
 #: data/ui/language-dialog.ui:128
 msgid "Check _text column"
-msgstr ""
+msgstr "Колонку _текста"
 
 #: data/ui/language-dialog.ui:146
 msgid "Check t_ranslation column"
-msgstr ""
+msgstr "Колонку _перевода"
 
 #: data/ui/language-dialog.ui:206
 msgid "Check c_urrent project"
@@ -2154,7 +2165,7 @@ msgstr "Сдвинуть в_ыделенные субтитры"
 
 #: data/ui/position-shift-dialog.ui:217
 msgid "Shift su_btitles from selection to end"
-msgstr ""
+msgstr "Сдвинуть в_се субтитры"
 
 #: data/ui/position-shift-dialog.ui:234
 msgid "Shift c_urrent project"
@@ -2291,7 +2302,7 @@ msgstr "Okay"
 #: data/patterns/Latn-en.common-error.in:110
 #: data/patterns/Latn-en.common-error.in:119
 msgid "Spell two-letter forms of \"okay\" in all upper case"
-msgstr ""
+msgstr "Заменить все формы «okay» на ΟΚ"
 
 #: data/patterns/Latn-en.hearing-impaired.in:5
 msgid "Uppercase speaker before a colon"
@@ -2309,31 +2320,31 @@ msgstr "Заголовок"
 
 #: data/patterns/Latn-en.line-break.in:6
 msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr ""
+msgstr "Не переносить после титулов, напр. «Dr.»"
 
 #: data/patterns/Latn-en.line-break.in:13
 msgid "Article"
-msgstr ""
+msgstr "Артикль"
 
 #: data/patterns/Latn-en.line-break.in:14
 msgid "Do not break after an article"
-msgstr ""
+msgstr "Не переносить после артикля"
 
 #: data/patterns/Latn-en.line-break.in:21
 msgid "Preposition"
-msgstr ""
+msgstr "Предлог"
 
 #: data/patterns/Latn-en.line-break.in:22
 msgid "Do not break after a preposition"
-msgstr ""
+msgstr "Не переносить после предлогов"
 
 #: data/patterns/Latn-en.line-break.in:30
 msgid "Possessive determiner"
-msgstr ""
+msgstr "Притяжательное местоимение"
 
 #: data/patterns/Latn-en.line-break.in:31
 msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr ""
+msgstr "Не переносить после притяжательных местоимений, напр. «my»"
 
 #: data/patterns/Latn-fi.common-error.in:5
 #: data/patterns/Latn.common-error.in:182
@@ -2350,14 +2361,14 @@ msgstr "Добавляет пробелы после знаков препина
 #: data/patterns/Latn-fr.common-error.in:23
 #: data/patterns/Latn-fr.common-error.in:32
 msgid "Spaces around guillemets"
-msgstr ""
+msgstr "Пробелы вокруг «лапок»"
 
 #: data/patterns/Latn-fr.common-error.in:6
 #: data/patterns/Latn-fr.common-error.in:15
 #: data/patterns/Latn-fr.common-error.in:24
 #: data/patterns/Latn-fr.common-error.in:33
 msgid "Add spaces around guillemets"
-msgstr ""
+msgstr "Добавить пробелы вокруг кавычек-лапок"
 
 #: data/patterns/Latn-fr.common-error.in:41
 #: data/patterns/Latn-fr.common-error.in:52
@@ -2380,25 +2391,25 @@ msgstr "Начинать предложения с заглавной буквы
 
 #: data/patterns/Latn.capitalization.in:12
 msgid "Ellipsis"
-msgstr ""
+msgstr "Многоточие"
 
 #: data/patterns/Latn.capitalization.in:13
 msgid "Capitalize after an ellipsis"
-msgstr ""
+msgstr "Заглавная буква после многоточия"
 
 #: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
 #: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
 #: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
 #: data/patterns/Latn.common-error.in:62
 msgid "Ligatures"
-msgstr ""
+msgstr "Лигатуры"
 
 #: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
 #: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
 #: data/patterns/Latn.common-error.in:45 data/patterns/Latn.common-error.in:54
 #: data/patterns/Latn.common-error.in:63
 msgid "Unpack ligatures to individual characters"
-msgstr ""
+msgstr "Разделять лигатуры на составляющие символы"
 
 #: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Spelling of a.m. and p.m."
@@ -2406,7 +2417,7 @@ msgstr "Написание a.m. и p.m."
 
 #: data/patterns/Latn.common-error.in:72 data/patterns/Latn.common-error.in:81
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr ""
+msgstr "Заменить различные написания времени суток на «a.m.» и «p.m.»"
 
 #: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
 msgid "Letter \"O\" in a number"
@@ -2483,12 +2494,12 @@ msgstr "Удаляет пробелы внутри кавычек"
 #: data/patterns/Latn.common-error.in:252
 #: data/patterns/Latn.common-error.in:261
 msgid "Spaces around musical notes"
-msgstr ""
+msgstr "Пробелы вокруг нот"
 
 #: data/patterns/Latn.common-error.in:253
 #: data/patterns/Latn.common-error.in:262
 msgid "Add spaces between musical note characters and lyrics"
-msgstr ""
+msgstr "Добавить пробелы между значками нот и словами песни"
 
 #: data/patterns/Latn.common-error.in:270
 #: data/patterns/Latn.common-error.in:279
@@ -2577,11 +2588,11 @@ msgstr "Переносить по знакам препинания"
 
 #: data/patterns/Latn.line-break.in:38
 msgid "Number and unit"
-msgstr ""
+msgstr "Число и единицы"
 
 #: data/patterns/Latn.line-break.in:39
 msgid "Do not break between a number and associated unit"
-msgstr ""
+msgstr "Не разрывать число и единицы измерения"
 
 #: data/patterns/Zyyy.common-error.in:5 data/patterns/Zyyy.common-error.in:14
 msgid "Leading and trailing spaces"
@@ -2611,15 +2622,15 @@ msgstr "Удаляет пробелы между цифрами числа"
 
 #: data/patterns/Zyyy.common-error.in:79
 msgid "Musical notes"
-msgstr ""
+msgstr "Знаки нот"
 
 #: data/patterns/Zyyy.common-error.in:80
 msgid "Replace Unicode musical note characters with number signs"
-msgstr ""
+msgstr "Заменить значки нот символом #"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
-msgstr ""
+msgstr "Редактор текстовых субтитров"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:9
 msgid ""
@@ -2627,6 +2638,9 @@ msgid ""
 "subtitle file formats and provides means of creating subtitles, editing "
 "texts and timing subtitles to match video."
 msgstr ""
+"Gaupol - редактор для текстовых субтитров. Он поддерживает множество "
+"форматов файлов субтитров и предоставляет средства для их создания, "
+"редактирования и синхронизации с видео."
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:38
 msgid "Main window"
@@ -2644,4 +2658,4 @@ msgstr "Редактирование файлов субтитров"
 #. localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.otsaloma.gaupol.desktop.in:12
 msgid "video;subtitles;captions;"
-msgstr ""
+msgstr "видео;фильм;субтитры;"

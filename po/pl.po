@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 22:58+0300\n"
+"POT-Creation-Date: 2020-04-10 22:03+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: mkkot <marcin2006@gmail.com>, 2019\n"
 "Language-Team: Polish (https://www.transifex.com/otsaloma/teams/64879/pl/)\n"
@@ -666,7 +666,7 @@ msgstr ""
 msgid "Failed to initialize playback"
 msgstr "Nie można zainicjować odtwarzania"
 
-#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:490
+#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:494
 msgid "_Help"
 msgstr "_Pomoc"
 
@@ -1043,11 +1043,11 @@ msgstr[1] "Wstawiono {:d} napisów na podstawie schowka"
 msgstr[2] "Wstawiono {:d} napisów na podstawie schowka"
 msgstr[3] "Wstawiono {:d} napisów na podstawie schowka"
 
-#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
+#: gaupol/agents/edit.py:301 gaupol/agents/edit.py:319
 msgid "Stretching start position"
 msgstr "Rozciąganie pozycji początkowej"
 
-#: gaupol/agents/edit.py:368
+#: gaupol/agents/edit.py:378
 msgid "Use Shift+Return for line-break"
 msgstr "Użyj Shift+Enter aby przejść do następnej linii"
 
@@ -1080,7 +1080,7 @@ msgstr "Proszę spróbuj zapisać plik z innym kodowaniem znaków."
 msgid "Failed to save file \"{}\""
 msgstr "Nieudane zapisywanie pliku \"{}\""
 
-#: gaupol/agents/video.py:65 data/ui/menubar.ui:346
+#: gaupol/agents/video.py:65 data/ui/menubar.ui:350
 msgid "_Play/Pause"
 msgstr "_Odtwarzaj/Wstrzymaj"
 
@@ -1088,7 +1088,7 @@ msgstr "_Odtwarzaj/Wstrzymaj"
 msgid "Play or pause video"
 msgstr "Odtwarzaj lub wstrzymaj wideo"
 
-#: gaupol/agents/video.py:73 data/ui/menubar.ui:356
+#: gaupol/agents/video.py:73 data/ui/menubar.ui:360
 msgid "Seek _Previous"
 msgstr "Szukaj _Poprzednich"
 
@@ -1096,7 +1096,7 @@ msgstr "Szukaj _Poprzednich"
 msgid "Seek to the start of the previous subtitle"
 msgstr "Szukaj na początku poprzedniego napisu"
 
-#: gaupol/agents/video.py:79 data/ui/menubar.ui:360
+#: gaupol/agents/video.py:79 data/ui/menubar.ui:364
 msgid "Seek _Next"
 msgstr "Szukaj _Dalej"
 
@@ -1104,7 +1104,7 @@ msgstr "Szukaj _Dalej"
 msgid "Seek to the start of the next subtitle"
 msgstr "Szukaj na początku następnego napisu"
 
-#: gaupol/agents/video.py:86 data/ui/menubar.ui:366
+#: gaupol/agents/video.py:86 data/ui/menubar.ui:370
 msgid "Seek _Backward"
 msgstr "Szukaj _Wstecz"
 
@@ -1112,7 +1112,7 @@ msgstr "Szukaj _Wstecz"
 msgid "Seek backward"
 msgstr "Szukaj wstecz"
 
-#: gaupol/agents/video.py:92 data/ui/menubar.ui:370
+#: gaupol/agents/video.py:92 data/ui/menubar.ui:374
 msgid "Seek _Forward"
 msgstr "Szukaj _Dalej"
 
@@ -1244,27 +1244,27 @@ msgstr "Ilości klatek"
 msgid "Add"
 msgstr "Dodaj"
 
-#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:241
+#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:245
 msgid "_No."
 msgstr "_Nr"
 
-#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:245
+#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:249
 msgid "_Start"
 msgstr "_Początek"
 
-#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:249
+#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:253
 msgid "_End"
 msgstr "_Koniec"
 
-#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:253
+#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:257
 msgid "_Duration"
 msgstr "_Czas trwania"
 
-#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:257 data/ui/menubar.ui:269
+#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:261 data/ui/menubar.ui:273
 msgid "_Text"
 msgstr "_Tekst"
 
-#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:261
+#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:265
 msgid "T_ranslation"
 msgstr "Tłumaczenie"
 
@@ -1284,7 +1284,7 @@ msgstr "Szukaj:"
 msgid "Replace _with:"
 msgstr "Zastąp _za pomocą:"
 
-#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:294
+#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:298
 msgid "Find _Next"
 msgstr "Znajdź _następny"
 
@@ -1494,279 +1494,283 @@ msgid "En_d Later"
 msgstr "Skończ później"
 
 #: data/ui/menubar.ui:108
+msgid "Set St_art From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:112
 msgid "Set En_d From Video Position"
 msgstr "Ustaw koniec z pozycji wideo"
 
-#: data/ui/menubar.ui:114 data/ui/view-popup.ui:6
+#: data/ui/menubar.ui:118 data/ui/view-popup.ui:6
 msgid "_Split Subtitle"
 msgstr "Podziel napi_sy"
 
-#: data/ui/menubar.ui:118 data/ui/view-popup.ui:10
+#: data/ui/menubar.ui:122 data/ui/view-popup.ui:10
 msgid "_Merge Subtitles"
 msgstr "_Połącz napisy"
 
-#: data/ui/menubar.ui:124 data/ui/view-popup.ui:16
+#: data/ui/menubar.ui:128 data/ui/view-popup.ui:16
 msgid "_Insert Subtitles…"
 msgstr "Wstaw napisy..."
 
-#: data/ui/menubar.ui:128
+#: data/ui/menubar.ui:132
 msgid "Inser_t Subtitle At Video Position"
 msgstr "Wstaw napisy do pozycji wideo..."
 
-#: data/ui/menubar.ui:132 data/ui/view-popup.ui:20
+#: data/ui/menubar.ui:136 data/ui/view-popup.ui:20
 msgid "Rem_ove Subtitles"
 msgstr "_Usuń napisy"
 
-#: data/ui/menubar.ui:138
+#: data/ui/menubar.ui:142
 msgid "Sele_ction"
 msgstr "Zaznaczenie"
 
-#: data/ui/menubar.ui:141
+#: data/ui/menubar.ui:145
 msgid "Select _All"
 msgstr "Z_aznacz wszystko"
 
-#: data/ui/menubar.ui:145
+#: data/ui/menubar.ui:149
 msgid "_Invert Selection"
 msgstr "Odwróć zaznaczenie"
 
-#: data/ui/menubar.ui:151
+#: data/ui/menubar.ui:155
 msgid "Extend To _Beginning"
 msgstr "Rozszerz do początku"
 
-#: data/ui/menubar.ui:155
+#: data/ui/menubar.ui:159
 msgid "Extend To _End"
 msgstr "Rozszerz do końca"
 
-#: data/ui/menubar.ui:163
+#: data/ui/menubar.ui:167
 msgid "_Preferences"
 msgstr "Ustawienia"
 
-#: data/ui/menubar.ui:169
+#: data/ui/menubar.ui:173
 msgid "_View"
 msgstr "_Widok"
 
-#: data/ui/menubar.ui:172
+#: data/ui/menubar.ui:176
 msgid "Tool_bar"
 msgstr "Pasek narzędziowy"
 
-#: data/ui/menubar.ui:176
+#: data/ui/menubar.ui:180
 msgid "_Video Player"
 msgstr "Odtwarzacz wideo"
 
-#: data/ui/menubar.ui:182
+#: data/ui/menubar.ui:186
 msgid "_Layout"
 msgstr "Układ"
 
-#: data/ui/menubar.ui:185
+#: data/ui/menubar.ui:189
 msgid "_Horizontal"
 msgstr "Poziomy"
 
-#: data/ui/menubar.ui:190
+#: data/ui/menubar.ui:194
 msgid "_Vertical"
 msgstr "Pionowy"
 
-#: data/ui/menubar.ui:199
+#: data/ui/menubar.ui:203
 msgid "_Times"
 msgstr "Czasy"
 
-#: data/ui/menubar.ui:204
+#: data/ui/menubar.ui:208
 msgid "_Frames"
 msgstr "Klatki"
 
-#: data/ui/menubar.ui:211
+#: data/ui/menubar.ui:215
 msgid "F_ramerate"
 msgstr "Ilość klatek"
 
-#: data/ui/menubar.ui:214
+#: data/ui/menubar.ui:218
 msgid "2_3.976 fps"
 msgstr "2_3.976 fps"
 
-#: data/ui/menubar.ui:219
+#: data/ui/menubar.ui:223
 msgid "2_4.000 fps"
 msgstr "2_4.000 fps"
 
-#: data/ui/menubar.ui:224
+#: data/ui/menubar.ui:228
 msgid "2_5.000 fps"
 msgstr "2_5.000 fps"
 
-#: data/ui/menubar.ui:229
+#: data/ui/menubar.ui:233
 msgid "2_9.970 fps"
 msgstr "2_9.970 fps"
 
-#: data/ui/menubar.ui:238
+#: data/ui/menubar.ui:242
 msgid "_Columns"
 msgstr "_Kolumny"
 
-#: data/ui/menubar.ui:272
+#: data/ui/menubar.ui:276
 msgid "Cu_t"
 msgstr "Wytnij"
 
-#: data/ui/menubar.ui:276
+#: data/ui/menubar.ui:280
 msgid "_Copy"
 msgstr "S_kopiuj"
 
-#: data/ui/menubar.ui:280
+#: data/ui/menubar.ui:284
 msgid "_Paste"
 msgstr "_Wklej"
 
-#: data/ui/menubar.ui:284
+#: data/ui/menubar.ui:288
 msgid "Cl_ear"
 msgstr "Wyczyść"
 
-#: data/ui/menubar.ui:290
+#: data/ui/menubar.ui:294
 msgid "_Find And Replace…"
 msgstr "Znajdź i zamień..."
 
-#: data/ui/menubar.ui:298
+#: data/ui/menubar.ui:302
 msgid "Find Pre_vious"
 msgstr "Znajdź poprzedni"
 
-#: data/ui/menubar.ui:304
+#: data/ui/menubar.ui:308
 msgid "_Italic"
 msgstr "_Pochylenie"
 
-#: data/ui/menubar.ui:308
+#: data/ui/menubar.ui:312
 msgid "_Dialogue"
 msgstr "_Dialog"
 
-#: data/ui/menubar.ui:314
+#: data/ui/menubar.ui:318
 msgid "Ca_se"
 msgstr "_Rozmiar"
 
-#: data/ui/menubar.ui:317
+#: data/ui/menubar.ui:321
 msgid "_Title"
 msgstr "_Tytuł"
 
-#: data/ui/menubar.ui:321
+#: data/ui/menubar.ui:325
 msgid "_Sentence"
 msgstr "_Zdanie"
 
-#: data/ui/menubar.ui:325
+#: data/ui/menubar.ui:329
 msgid "_Upper"
 msgstr "D_uże litery"
 
-#: data/ui/menubar.ui:329
+#: data/ui/menubar.ui:333
 msgid "_Lower"
 msgstr "Małe _litery"
 
-#: data/ui/menubar.ui:337
+#: data/ui/menubar.ui:341
 msgid "Vi_deo"
 msgstr "Wideo"
 
-#: data/ui/menubar.ui:340
+#: data/ui/menubar.ui:344
 msgid "_Load Video…"
 msgstr "Załaduj wideo ..."
 
-#: data/ui/menubar.ui:350 data/ui/view-popup.ui:26
+#: data/ui/menubar.ui:354 data/ui/view-popup.ui:26
 msgid "Play _Selection"
 msgstr "Odtwórz zaznaczenie"
 
-#: data/ui/menubar.ui:376 data/ui/view-popup.ui:30
+#: data/ui/menubar.ui:380 data/ui/view-popup.ui:30
 msgid "S_eek Selection Start"
 msgstr "idź na początek zaznaczenia"
 
-#: data/ui/menubar.ui:380
+#: data/ui/menubar.ui:384
 msgid "See_k Selection End"
 msgstr "idź na koniec zaznaczenia"
 
-#: data/ui/menubar.ui:386
+#: data/ui/menubar.ui:390
 msgid "_Audio"
 msgstr "_Audio"
 
-#: data/ui/menubar.ui:389
+#: data/ui/menubar.ui:393
 msgid "_Language"
 msgstr "Język"
 
-#: data/ui/menubar.ui:396
+#: data/ui/menubar.ui:400
 msgid "Volume _Down"
 msgstr "Ścisz"
 
-#: data/ui/menubar.ui:400
+#: data/ui/menubar.ui:404
 msgid "Volume _Up"
 msgstr "Zwiększ głośność"
 
-#: data/ui/menubar.ui:406
+#: data/ui/menubar.ui:410
 msgid "T_ools"
 msgstr "Narzędzia"
 
-#: data/ui/menubar.ui:409 data/ui/text-assistant/confirmation-page.ui:97
+#: data/ui/menubar.ui:413 data/ui/text-assistant/confirmation-page.ui:97
 #: data/ui/view-popup.ui:36
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: data/ui/menubar.ui:413
+#: data/ui/menubar.ui:417
 msgid "Select _Video…"
 msgstr "Wybierz wideo ..."
 
-#: data/ui/menubar.ui:419
+#: data/ui/menubar.ui:423
 msgid "_Check Spelling"
 msgstr "_Sprawdź pisownię"
 
-#: data/ui/menubar.ui:423
+#: data/ui/menubar.ui:427
 msgid "Co_nfigure Spell-check…"
 msgstr "Konfiguruj sprawdzanie pisowni ..."
 
-#: data/ui/menubar.ui:427
+#: data/ui/menubar.ui:431
 msgid "C_orrect Texts…"
 msgstr "Popraw teksty ..."
 
-#: data/ui/menubar.ui:433
+#: data/ui/menubar.ui:437
 msgid "_Shift Positions…"
 msgstr "Przesuń pozycje..."
 
-#: data/ui/menubar.ui:437
+#: data/ui/menubar.ui:441
 msgid "_Transform Positions…"
 msgstr "Przekształć pozycje..."
 
-#: data/ui/menubar.ui:441
+#: data/ui/menubar.ui:445
 msgid "Adjust _Durations…"
 msgstr "Dostosuj czas trwania..."
 
-#: data/ui/menubar.ui:445
+#: data/ui/menubar.ui:449
 msgid "Convert _Framerate…"
 msgstr "Konwersja ilości klatek..."
 
-#: data/ui/menubar.ui:451
+#: data/ui/menubar.ui:455
 msgid "_Append File…"
 msgstr "Dołącz plik..."
 
-#: data/ui/menubar.ui:455
+#: data/ui/menubar.ui:459
 msgid "Spli_t Project…"
 msgstr "Podziel projekt..."
 
-#: data/ui/menubar.ui:461
+#: data/ui/menubar.ui:465
 msgid "_Projects"
 msgstr "_Projekty"
 
-#: data/ui/menubar.ui:464
+#: data/ui/menubar.ui:468
 msgid "_Save All"
 msgstr "_Zapisz wszystko"
 
-#: data/ui/menubar.ui:468
+#: data/ui/menubar.ui:472
 msgid "Save _All As…"
 msgstr "_Zapisz wszystko jako..."
 
-#: data/ui/menubar.ui:472
+#: data/ui/menubar.ui:476
 msgid "_Close All"
 msgstr "Za_mknij wszystko"
 
-#: data/ui/menubar.ui:478
+#: data/ui/menubar.ui:482
 msgid "_Previous"
 msgstr "_Poprzedni"
 
-#: data/ui/menubar.ui:482
+#: data/ui/menubar.ui:486
 msgid "_Next"
 msgstr "_Następny"
 
-#: data/ui/menubar.ui:493
+#: data/ui/menubar.ui:497
 msgid "_Documentation"
 msgstr "_Dokumentacja"
 
-#: data/ui/menubar.ui:497
+#: data/ui/menubar.ui:501
 msgid "_Report A Bug"
 msgstr "Zgłoś _błąd"
 
-#: data/ui/menubar.ui:501
+#: data/ui/menubar.ui:505
 msgid "_About"
 msgstr "_O programie"
 

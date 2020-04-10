@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 22:58+0300\n"
+"POT-Creation-Date: 2020-04-10 22:03+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Serbian (https://www.transifex.com/otsaloma/teams/64879/sr/)\n"
@@ -661,7 +661,7 @@ msgstr ""
 msgid "Failed to initialize playback"
 msgstr ""
 
-#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:490
+#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:494
 msgid "_Help"
 msgstr "По_моћ"
 
@@ -1038,11 +1038,11 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: gaupol/agents/edit.py:291 gaupol/agents/edit.py:309
+#: gaupol/agents/edit.py:301 gaupol/agents/edit.py:319
 msgid "Stretching start position"
 msgstr "Развлачим почетни положај"
 
-#: gaupol/agents/edit.py:368
+#: gaupol/agents/edit.py:378
 msgid "Use Shift+Return for line-break"
 msgstr "Користите „помак+унеси“ за преламање редова"
 
@@ -1075,7 +1075,7 @@ msgstr "Пробајте да сачувате датотеку у другом 
 msgid "Failed to save file \"{}\""
 msgstr "Нисам успео да сачувам датотеку „{}“"
 
-#: gaupol/agents/video.py:65 data/ui/menubar.ui:346
+#: gaupol/agents/video.py:65 data/ui/menubar.ui:350
 msgid "_Play/Pause"
 msgstr "_Пусти/застани"
 
@@ -1083,7 +1083,7 @@ msgstr "_Пусти/застани"
 msgid "Play or pause video"
 msgstr "Пустите или паузирајте филм"
 
-#: gaupol/agents/video.py:73 data/ui/menubar.ui:356
+#: gaupol/agents/video.py:73 data/ui/menubar.ui:360
 msgid "Seek _Previous"
 msgstr "Пређи на _претходно"
 
@@ -1091,7 +1091,7 @@ msgstr "Пређи на _претходно"
 msgid "Seek to the start of the previous subtitle"
 msgstr "Пређите на почетак претходног титла"
 
-#: gaupol/agents/video.py:79 data/ui/menubar.ui:360
+#: gaupol/agents/video.py:79 data/ui/menubar.ui:364
 msgid "Seek _Next"
 msgstr "Пређи на _следеће"
 
@@ -1099,7 +1099,7 @@ msgstr "Пређи на _следеће"
 msgid "Seek to the start of the next subtitle"
 msgstr "Пређите на почетак следећег титла"
 
-#: gaupol/agents/video.py:86 data/ui/menubar.ui:366
+#: gaupol/agents/video.py:86 data/ui/menubar.ui:370
 msgid "Seek _Backward"
 msgstr "Премотај уна_зад"
 
@@ -1107,7 +1107,7 @@ msgstr "Премотај уна_зад"
 msgid "Seek backward"
 msgstr "Премотајте уназад"
 
-#: gaupol/agents/video.py:92 data/ui/menubar.ui:370
+#: gaupol/agents/video.py:92 data/ui/menubar.ui:374
 msgid "Seek _Forward"
 msgstr "Премотај уна_пред"
 
@@ -1239,27 +1239,27 @@ msgstr "Протоци кадрова"
 msgid "Add"
 msgstr "Додај"
 
-#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:241
+#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:245
 msgid "_No."
 msgstr "_Број"
 
-#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:245
+#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:249
 msgid "_Start"
 msgstr "_Почетак"
 
-#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:249
+#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:253
 msgid "_End"
 msgstr "_Крај"
 
-#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:253
+#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:257
 msgid "_Duration"
 msgstr "_Трајање"
 
-#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:257 data/ui/menubar.ui:269
+#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:261 data/ui/menubar.ui:273
 msgid "_Text"
 msgstr "_Текст"
 
-#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:261
+#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:265
 msgid "T_ranslation"
 msgstr "_Превод"
 
@@ -1279,7 +1279,7 @@ msgstr "_Потражи:"
 msgid "Replace _with:"
 msgstr "Замени _са:"
 
-#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:294
+#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:298
 msgid "Find _Next"
 msgstr "Нађи _следеће"
 
@@ -1489,279 +1489,283 @@ msgid "En_d Later"
 msgstr "Заврши _касније"
 
 #: data/ui/menubar.ui:108
+msgid "Set St_art From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:112
 msgid "Set En_d From Video Position"
 msgstr "Подеси _крај са положаја у филму"
 
-#: data/ui/menubar.ui:114 data/ui/view-popup.ui:6
+#: data/ui/menubar.ui:118 data/ui/view-popup.ui:6
 msgid "_Split Subtitle"
 msgstr "_Подели титл"
 
-#: data/ui/menubar.ui:118 data/ui/view-popup.ui:10
+#: data/ui/menubar.ui:122 data/ui/view-popup.ui:10
 msgid "_Merge Subtitles"
 msgstr "_Стопи титлове"
 
-#: data/ui/menubar.ui:124 data/ui/view-popup.ui:16
+#: data/ui/menubar.ui:128 data/ui/view-popup.ui:16
 msgid "_Insert Subtitles…"
 msgstr "_Уметни титлове…"
 
-#: data/ui/menubar.ui:128
+#: data/ui/menubar.ui:132
 msgid "Inser_t Subtitle At Video Position"
 msgstr "Уметни титл на положају у _филму"
 
-#: data/ui/menubar.ui:132 data/ui/view-popup.ui:20
+#: data/ui/menubar.ui:136 data/ui/view-popup.ui:20
 msgid "Rem_ove Subtitles"
 msgstr "Уклони _титлове"
 
-#: data/ui/menubar.ui:138
+#: data/ui/menubar.ui:142
 msgid "Sele_ction"
 msgstr "_Избор"
 
-#: data/ui/menubar.ui:141
+#: data/ui/menubar.ui:145
 msgid "Select _All"
 msgstr "Изабери _све"
 
-#: data/ui/menubar.ui:145
+#: data/ui/menubar.ui:149
 msgid "_Invert Selection"
 msgstr "_Преокрени избор"
 
-#: data/ui/menubar.ui:151
+#: data/ui/menubar.ui:155
 msgid "Extend To _Beginning"
 msgstr "Прошири на _почетак"
 
-#: data/ui/menubar.ui:155
+#: data/ui/menubar.ui:159
 msgid "Extend To _End"
 msgstr "Прошири на _крај"
 
-#: data/ui/menubar.ui:163
+#: data/ui/menubar.ui:167
 msgid "_Preferences"
 msgstr "_Поставке"
 
-#: data/ui/menubar.ui:169
+#: data/ui/menubar.ui:173
 msgid "_View"
 msgstr "_Преглед"
 
-#: data/ui/menubar.ui:172
+#: data/ui/menubar.ui:176
 msgid "Tool_bar"
 msgstr "Трака _алата"
 
-#: data/ui/menubar.ui:176
+#: data/ui/menubar.ui:180
 msgid "_Video Player"
 msgstr "_Програм за пуштање"
 
-#: data/ui/menubar.ui:182
+#: data/ui/menubar.ui:186
 msgid "_Layout"
 msgstr "_Распоред"
 
-#: data/ui/menubar.ui:185
+#: data/ui/menubar.ui:189
 msgid "_Horizontal"
 msgstr "_Водоравно"
 
-#: data/ui/menubar.ui:190
+#: data/ui/menubar.ui:194
 msgid "_Vertical"
 msgstr "_Усправно"
 
-#: data/ui/menubar.ui:199
+#: data/ui/menubar.ui:203
 msgid "_Times"
 msgstr "_Времена"
 
-#: data/ui/menubar.ui:204
+#: data/ui/menubar.ui:208
 msgid "_Frames"
 msgstr "_Кадрови"
 
-#: data/ui/menubar.ui:211
+#: data/ui/menubar.ui:215
 msgid "F_ramerate"
 msgstr "Проток _кадрова"
 
-#: data/ui/menubar.ui:214
+#: data/ui/menubar.ui:218
 msgid "2_3.976 fps"
 msgstr "2_3.976 к/с"
 
-#: data/ui/menubar.ui:219
+#: data/ui/menubar.ui:223
 msgid "2_4.000 fps"
 msgstr "2_4.000 к/с"
 
-#: data/ui/menubar.ui:224
+#: data/ui/menubar.ui:228
 msgid "2_5.000 fps"
 msgstr "2_5.000 к/с"
 
-#: data/ui/menubar.ui:229
+#: data/ui/menubar.ui:233
 msgid "2_9.970 fps"
 msgstr "2_9.970 к/с"
 
-#: data/ui/menubar.ui:238
+#: data/ui/menubar.ui:242
 msgid "_Columns"
 msgstr "_Ступци"
 
-#: data/ui/menubar.ui:272
+#: data/ui/menubar.ui:276
 msgid "Cu_t"
 msgstr "_Исеци"
 
-#: data/ui/menubar.ui:276
+#: data/ui/menubar.ui:280
 msgid "_Copy"
 msgstr "_Умножи"
 
-#: data/ui/menubar.ui:280
+#: data/ui/menubar.ui:284
 msgid "_Paste"
 msgstr "_Убаци"
 
-#: data/ui/menubar.ui:284
+#: data/ui/menubar.ui:288
 msgid "Cl_ear"
 msgstr "_Очисти"
 
-#: data/ui/menubar.ui:290
+#: data/ui/menubar.ui:294
 msgid "_Find And Replace…"
 msgstr "Нађи и _замени…"
 
-#: data/ui/menubar.ui:298
+#: data/ui/menubar.ui:302
 msgid "Find Pre_vious"
 msgstr "Нађи _претходно"
 
-#: data/ui/menubar.ui:304
+#: data/ui/menubar.ui:308
 msgid "_Italic"
 msgstr "_Искошено"
 
-#: data/ui/menubar.ui:308
+#: data/ui/menubar.ui:312
 msgid "_Dialogue"
 msgstr "_Разговор"
 
-#: data/ui/menubar.ui:314
+#: data/ui/menubar.ui:318
 msgid "Ca_se"
 msgstr "_Величина слова"
 
-#: data/ui/menubar.ui:317
+#: data/ui/menubar.ui:321
 msgid "_Title"
 msgstr "_Наслов"
 
-#: data/ui/menubar.ui:321
+#: data/ui/menubar.ui:325
 msgid "_Sentence"
 msgstr "_Реченица"
 
-#: data/ui/menubar.ui:325
+#: data/ui/menubar.ui:329
 msgid "_Upper"
 msgstr "_Велика"
 
-#: data/ui/menubar.ui:329
+#: data/ui/menubar.ui:333
 msgid "_Lower"
 msgstr "_Мала"
 
-#: data/ui/menubar.ui:337
+#: data/ui/menubar.ui:341
 msgid "Vi_deo"
 msgstr "_Филм"
 
-#: data/ui/menubar.ui:340
+#: data/ui/menubar.ui:344
 msgid "_Load Video…"
 msgstr "_Учитај филм…"
 
-#: data/ui/menubar.ui:350 data/ui/view-popup.ui:26
+#: data/ui/menubar.ui:354 data/ui/view-popup.ui:26
 msgid "Play _Selection"
 msgstr "Пусти _изабрано"
 
-#: data/ui/menubar.ui:376 data/ui/view-popup.ui:30
+#: data/ui/menubar.ui:380 data/ui/view-popup.ui:30
 msgid "S_eek Selection Start"
 msgstr "Пређи на _почетак избора"
 
-#: data/ui/menubar.ui:380
+#: data/ui/menubar.ui:384
 msgid "See_k Selection End"
 msgstr "Пређи на _крај избора"
 
-#: data/ui/menubar.ui:386
+#: data/ui/menubar.ui:390
 msgid "_Audio"
 msgstr "_Звук"
 
-#: data/ui/menubar.ui:389
+#: data/ui/menubar.ui:393
 msgid "_Language"
 msgstr "_Језик"
 
-#: data/ui/menubar.ui:396
+#: data/ui/menubar.ui:400
 msgid "Volume _Down"
 msgstr "_Утишај"
 
-#: data/ui/menubar.ui:400
+#: data/ui/menubar.ui:404
 msgid "Volume _Up"
 msgstr "_Појачај"
 
-#: data/ui/menubar.ui:406
+#: data/ui/menubar.ui:410
 msgid "T_ools"
 msgstr "_Алати"
 
-#: data/ui/menubar.ui:409 data/ui/text-assistant/confirmation-page.ui:97
+#: data/ui/menubar.ui:413 data/ui/text-assistant/confirmation-page.ui:97
 #: data/ui/view-popup.ui:36
 msgid "_Preview"
 msgstr "_Преглед"
 
-#: data/ui/menubar.ui:413
+#: data/ui/menubar.ui:417
 msgid "Select _Video…"
 msgstr "Изабери _филм…"
 
-#: data/ui/menubar.ui:419
+#: data/ui/menubar.ui:423
 msgid "_Check Spelling"
 msgstr "_Провери писање"
 
-#: data/ui/menubar.ui:423
+#: data/ui/menubar.ui:427
 msgid "Co_nfigure Spell-check…"
 msgstr "_Подеси проверу писања…"
 
-#: data/ui/menubar.ui:427
+#: data/ui/menubar.ui:431
 msgid "C_orrect Texts…"
 msgstr "_Исправи текстове…"
 
-#: data/ui/menubar.ui:433
+#: data/ui/menubar.ui:437
 msgid "_Shift Positions…"
 msgstr "_Премакни положаје…"
 
-#: data/ui/menubar.ui:437
+#: data/ui/menubar.ui:441
 msgid "_Transform Positions…"
 msgstr "_Преобрати положаје…"
 
-#: data/ui/menubar.ui:441
+#: data/ui/menubar.ui:445
 msgid "Adjust _Durations…"
 msgstr "Дотерај _трајања…"
 
-#: data/ui/menubar.ui:445
+#: data/ui/menubar.ui:449
 msgid "Convert _Framerate…"
 msgstr "Претвори проток _кадрова…"
 
-#: data/ui/menubar.ui:451
+#: data/ui/menubar.ui:455
 msgid "_Append File…"
 msgstr "_Прикачи датотеку…"
 
-#: data/ui/menubar.ui:455
+#: data/ui/menubar.ui:459
 msgid "Spli_t Project…"
 msgstr "Подели _пројекат…"
 
-#: data/ui/menubar.ui:461
+#: data/ui/menubar.ui:465
 msgid "_Projects"
 msgstr "_Пројекти"
 
-#: data/ui/menubar.ui:464
+#: data/ui/menubar.ui:468
 msgid "_Save All"
 msgstr "_Сачувај све"
 
-#: data/ui/menubar.ui:468
+#: data/ui/menubar.ui:472
 msgid "Save _All As…"
 msgstr "Сачувај све _као…"
 
-#: data/ui/menubar.ui:472
+#: data/ui/menubar.ui:476
 msgid "_Close All"
 msgstr "Затвори _све"
 
-#: data/ui/menubar.ui:478
+#: data/ui/menubar.ui:482
 msgid "_Previous"
 msgstr "_Претходни"
 
-#: data/ui/menubar.ui:482
+#: data/ui/menubar.ui:486
 msgid "_Next"
 msgstr "_Следећи"
 
-#: data/ui/menubar.ui:493
+#: data/ui/menubar.ui:497
 msgid "_Documentation"
 msgstr ""
 
-#: data/ui/menubar.ui:497
+#: data/ui/menubar.ui:501
 msgid "_Report A Bug"
 msgstr "Пријави _грешку"
 
-#: data/ui/menubar.ui:501
+#: data/ui/menubar.ui:505
 msgid "_About"
 msgstr "_О програму"
 
