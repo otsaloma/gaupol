@@ -1,3 +1,13 @@
+2020-04-10: Gaupol 1.8
+======================
+
+* Add action set start from video position (#148)
+* Add and fix English spell-check special cases
+* Add and fix OCR spell-check special cases
+* Add Interlingue translation (OIS)
+* Add Portuguese translation (Hugo Carvalho)
+* Update translations
+
 2019-08-04: Gaupol 1.7
 ======================
 

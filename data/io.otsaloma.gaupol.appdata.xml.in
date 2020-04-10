@@ -21,7 +21,7 @@
   <url type="translate">https://www.transifex.com/otsaloma/gaupol/</url>
   <launchable type="desktop-id">io.otsaloma.gaupol.desktop</launchable>
   <releases>
-    <release version="1.7" date="2019-08-04"/>
+    <release version="1.8" date="2020-04-10"/>
   </releases>
   <mimetypes>
     <mimetype>application/x-subrip</mimetype>
