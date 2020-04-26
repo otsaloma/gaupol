@@ -53,52 +53,52 @@ class TestSpellCheckNavigator(aeidon.TestCase):
     def setup_method(self, method):
         language = self.get_spell_check_language("en")
         self.navigator = aeidon.SpellCheckNavigator(language)
-        self.navigator.text = "She knows the fighting\ntechniques of Panzer Kunst."
+        self.navigator.text = "She knows the fighting\ntechniques of Panzr Kunst."
 
     def test_ignore(self):
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         self.navigator.ignore()
         error = next(self.navigator)
-        assert error == (44, "Kunst")
+        assert error == (43, "Kunst")
         self.navigator.ignore()
         self.assert_raises(StopIteration, self.navigator.__next__)
 
     def test_ignore_all(self):
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         self.navigator.ignore_all()
         self.navigator.reset(self.navigator.text)
         error = next(self.navigator)
-        assert error == (44, "Kunst")
+        assert error == (43, "Kunst")
 
     def test_join_with_next(self):
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         self.navigator.join_with_next()
         error = next(self.navigator)
-        assert error == (37, "PanzerKunst")
+        assert error == (37, "PanzrKunst")
 
     def test_join_with_previous(self):
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         self.navigator.ignore()
         error = next(self.navigator)
-        assert error == (44, "Kunst")
+        assert error == (43, "Kunst")
         self.navigator.join_with_previous()
         error = next(self.navigator)
-        assert error == (37, "PanzerKunst")
+        assert error == (37, "PanzrKunst")
 
     def test_leading_context(self):
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         assert self.navigator.leading_context(3) == "of "
 
     def test_replace(self):
         text = self.navigator.text
-        text = text.replace("Panzer", "Test")
+        text = text.replace("Panzr", "Test")
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         self.navigator.replace("Test")
         assert self.navigator.text == text
 
@@ -116,12 +116,12 @@ class TestSpellCheckNavigator(aeidon.TestCase):
 
     def test_suggest(self):
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         assert self.navigator.suggest()
 
     def test_trailing_context(self):
         error = next(self.navigator)
-        assert error == (37, "Panzer")
+        assert error == (37, "Panzr")
         assert self.navigator.trailing_context(3) == " Ku"
 
 
