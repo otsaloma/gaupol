@@ -118,7 +118,8 @@ class VideoPlayer(aeidon.Observable):
 
     def get_audio_languages(self):
         """Return a sequence of audio languages or ``None``."""
-        return tuple(x.get_language() for x in self._info.get_audio_streams())
+        return tuple(self._playbin.emit("get-audio-tags", i).get_string("language-code")[1]
+                     for i in range(self._playbin.props.n_audio))
 
     def get_duration(self, mode=None):
         """Return duration of video stream or ``None``."""
@@ -356,6 +357,10 @@ class VideoPlayer(aeidon.Observable):
             dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
             dialog.set_default_response(Gtk.ResponseType.OK)
             gaupol.util.flash_dialog(dialog)
+        else:
+            # Make stream tags available from _playbin
+            self._playbin.set_state(Gst.State.PAUSED)
+            self._playbin.get_state(Gst.CLOCK_TIME_NONE)
 
     def stop(self):
         """Stop."""
