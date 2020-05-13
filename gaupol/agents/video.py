@@ -27,8 +27,6 @@ from gi.repository import GLib
 from gi.repository import Gtk
 
 with aeidon.util.silent(Exception):
-    from gi import require_version
-    require_version('GstTag', '1.0')
     from gi.repository import Gst
     from gi.repository import GstTag
 
@@ -354,7 +352,7 @@ class VideoAgent(aeidon.Delegate):
         menu.remove_all()
         tracks = self.player.get_audio_infos()
         for i, track in enumerate(tracks):
-            title = track.title or "{} {}".format(_("Track"), i + 1)
+            title = track.title or _("Track {:d}").format(i + 1)
             lang = None
             if track.language_code is not None:
                 lang = GstTag.tag_get_language_name(track.language_code)

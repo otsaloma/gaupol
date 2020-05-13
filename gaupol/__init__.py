@@ -44,6 +44,7 @@ for module, version in {
     "Gst": "1.0",
     "GstPbutils": "1.0",
     "GstVideo": "1.0",
+    "GstTag": "1.0",
 }.items():
     with aeidon.util.silent(Exception):
         gi.require_version(module, version)
