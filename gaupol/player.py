@@ -21,6 +21,7 @@ import aeidon
 import gaupol
 import time
 
+from collections import namedtuple
 from aeidon.i18n   import _
 from gi.repository import GLib
 from gi.repository import Gtk
@@ -55,6 +56,8 @@ class VideoPlayer(aeidon.Observable):
     """
 
     signals = ("state-changed",)
+
+    TrackInfo = namedtuple("TrackInfo", ["title", "language_code", "language_name"])
 
     def __init__(self):
         """Initialize a :class:`VideoPlayer` instance."""
@@ -116,9 +119,19 @@ class VideoPlayer(aeidon.Observable):
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
         self._in_default_segment = True
 
-    def get_audio_languages(self):
-        """Return a sequence of audio languages or ``None``."""
-        return tuple(x.get_language() for x in self._info.get_audio_streams())
+    def get_audio_infos(self):
+        """Return a sequence of audio track infos."""
+        return tuple(
+            self._make_track_infos(self._playbin.emit("get-audio-tags", i))
+            for i in range(self._playbin.props.n_audio)
+        )
+
+    def _make_track_infos(self, tags):
+        return self.TrackInfo(
+            tags.get_string("title")[1],
+            tags.get_string("language-code")[1],
+            tags.get_string("language-name")[1]
+        )
 
     def get_duration(self, mode=None):
         """Return duration of video stream or ``None``."""
@@ -356,6 +369,10 @@ class VideoPlayer(aeidon.Observable):
             dialog.add_button(_("_OK"), Gtk.ResponseType.OK)
             dialog.set_default_response(Gtk.ResponseType.OK)
             gaupol.util.flash_dialog(dialog)
+        else:
+            # Make stream tags available from _playbin
+            self._playbin.set_state(Gst.State.PAUSED)
+            self._playbin.get_state(Gst.CLOCK_TIME_NONE)
 
     def stop(self):
         """Stop."""

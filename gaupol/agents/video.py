@@ -28,6 +28,8 @@ from gi.repository import Gtk
 
 with aeidon.util.silent(Exception):
     from gi.repository import Gst
+    from gi.repository import GstTag
+
 
 
 class VideoAgent(aeidon.Delegate):
@@ -348,11 +350,17 @@ class VideoAgent(aeidon.Delegate):
         """Update the audio language selection menu."""
         menu = self.get_menubar_section("audio-languages-placeholder")
         menu.remove_all()
-        languages = self.player.get_audio_languages()
-        for i, language in enumerate(languages):
-            language = language or _("Undefined")
+        tracks = self.player.get_audio_infos()
+        for i, track in enumerate(tracks):
+            title = track.title or _("Track {:d}").format(i + 1)
+            lang = None
+            if track.language_code is not None:
+                lang = GstTag.tag_get_language_name(track.language_code)
+            if lang is None:
+                lang = track.language_name
+            name = title if lang is None else "{} - [{}]".format(title, lang.title())
             action = "win.set-audio-language::{:d}".format(i)
-            menu.append(language, action)
+            menu.append(name, action)
             if i == self.player.audio_track:
                 action = self.get_action("set-audio-language")
                 action.set_state(str(i))
