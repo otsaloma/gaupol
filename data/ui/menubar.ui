@@ -234,6 +234,26 @@
               <attribute name="action">win.set-framerate</attribute>
               <attribute name="target">FPS_29_970</attribute>
             </item>
+            <item>
+              <attribute name="label" translatable="yes">30.000 fps</attribute>
+              <attribute name="action">win.set-framerate</attribute>
+              <attribute name="target">FPS_30_000</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">50.000 fps</attribute>
+              <attribute name="action">win.set-framerate</attribute>
+              <attribute name="target">FPS_50_000</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">59.940 fps</attribute>
+              <attribute name="action">win.set-framerate</attribute>
+              <attribute name="target">FPS_59_940</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">60.000 fps</attribute>
+              <attribute name="action">win.set-framerate</attribute>
+              <attribute name="target">FPS_60_000</attribute>
+            </item>
           </section>
           <section id="custom-framerates-placeholder">
           </section>
