@@ -71,11 +71,31 @@ class Framerate29970(aeidon.EnumerationItem):
     label = _("29.970 fps")
     value = 30 / 1.001
 
+class Framerate30000(aeidon.EnumerationItem):
+    label = _("30.000 fps")
+    value = 30.0
+
+class Framerate50000(aeidon.EnumerationItem):
+    label = _("50.000 fps")
+    value = 50.0
+
+class Framerate59940(aeidon.EnumerationItem):
+    label = _("59.940 fps")
+    value = 60 / 1.001
+
+class Framerate60000(aeidon.EnumerationItem):
+    label = _("60.000 fps")
+    value = 60.0
+
 framerates = aeidon.Enumeration()
 framerates.FPS_23_976 = Framerate23976()
 framerates.FPS_24_000 = Framerate24000()
 framerates.FPS_25_000 = Framerate25000()
 framerates.FPS_29_970 = Framerate29970()
+framerates.FPS_30_000 = Framerate30000()
+framerates.FPS_50_000 = Framerate50000()
+framerates.FPS_59_940 = Framerate59940()
+framerates.FPS_60_000 = Framerate60000()
 
 
 class ModeTime(aeidon.EnumerationItem): pass
