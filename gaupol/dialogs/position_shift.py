@@ -31,6 +31,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
     """Base class for dialogs for shifting positions."""
 
     _widgets = [
+        "all_radio",
         "amount_spin",
         "current_radio",
         "preview_button",
@@ -61,6 +62,8 @@ class PositionShiftDialog(gaupol.BuilderDialog):
             return gaupol.targets.SELECTED_TO_END
         if self._current_radio.get_active():
             return gaupol.targets.CURRENT
+        if self._all_radio.get_active():
+            return gaupol.targets.ALL
         raise ValueError("Invalid target radio state")
 
     def _init_dialog(self, parent):
@@ -77,6 +80,7 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         self._selected_radio.set_active(target == gaupol.targets.SELECTED)
         self._to_end_radio.set_active(target == gaupol.targets.SELECTED_TO_END)
         self._current_radio.set_active(target == gaupol.targets.CURRENT)
+        self._all_radio.set_active(target == gaupol.targets.ALL)
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
         if not rows and target in (
@@ -120,9 +124,10 @@ class PositionShiftDialog(gaupol.BuilderDialog):
         """Shift positions in subtitles."""
         gaupol.util.set_cursor_busy(self)
         target = self._get_target()
-        rows = self.application.get_target_rows(target)
         amount = self._get_amount()
         for page in self.application.get_target_pages(target):
+            self.application.set_current_page(page)
+            rows = self.application.get_target_rows(target)
             page.project.shift_positions(rows, amount)
         gaupol.util.set_cursor_normal(self)
 
