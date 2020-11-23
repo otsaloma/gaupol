@@ -335,7 +335,9 @@ class TextAgent(aeidon.Delegate):
             for pos, word in navigator:
                 # Skip capitalized words, which are usually names
                 # and thus not always found in dictionaries.
-                if word.istitle(): continue
+                if word.istitle():
+                    navigator.ignore()
+                    continue
                 suggestions = navigator.suggest()
                 suggestions = [x for x in suggestions if x.replace(" ", "") == word]
                 # Split word only if only one two-word suggestion found that
