@@ -148,6 +148,9 @@ CONFIG_DEFAULTS = {
         "player": gaupol.util.get_default_player(),
         "use_custom_command": False,
     },
+    "recent": {
+        "show_not_found": False,
+    },
     "search": {
         "fields": [gaupol.fields.MAIN_TEXT],
         "ignore_case": True,

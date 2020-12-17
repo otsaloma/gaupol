@@ -22,6 +22,7 @@ import gaupol
 import os
 import sys
 
+from aeidon.i18n   import _
 from gi.repository import Gtk
 
 
@@ -44,7 +45,9 @@ class MenuAgent(aeidon.Delegate):
         """Return a new recent chooser menu."""
         menu = Gtk.RecentChooserMenu()
         menu.set_show_icons(sys.platform != "win32")
-        menu.set_show_not_found(False)
+        # Can be really slow with network drives.
+        # https://github.com/otsaloma/gaupol/issues/175
+        menu.set_show_not_found(gaupol.conf.recent.show_not_found)
         menu.set_show_numbers(False)
         menu.set_show_tips(True)
         menu.set_sort_type(Gtk.RecentSortType.MRU)
@@ -87,6 +90,8 @@ class MenuAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_open_recent_main_file_activate(self, action, *args):
         """Open recent file as main document."""
+        if not os.path.isfile(action.gaupol_path):
+            return self.flash_message(_("File not found"))
         self.open_main(action.gaupol_path)
 
     def _on_recent_menu_item_activated(self, chooser, *args):
@@ -94,11 +99,15 @@ class MenuAgent(aeidon.Delegate):
         uri = chooser.get_current_uri()
         path = aeidon.util.uri_to_path(uri)
         self.open_button.get_menu().deactivate()
+        if not os.path.isfile(path):
+            return self.flash_message(_("File not found"))
         self.open_main(path)
 
     @aeidon.deco.export
     def _on_open_recent_translation_file_activate(self, action, *args):
         """Open recent file as translation document."""
+        if not os.path.isfile(action.gaupol_path):
+            return self.flash_message(_("File not found"))
         self.open_translation(action.gaupol_path)
 
     @aeidon.deco.export
