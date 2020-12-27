@@ -48,7 +48,7 @@ strongly recommended dependencies include:
 | [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.6 | integrated video player |
 | [gspell](https://wiki.gnome.org/Projects/gspell) | ≥ 1.0.0 | spell-check |
 | [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
-| [chardet](https://github.com/chardet/chardet) | any | character encoding auto-detection |
+| [chardet](https://github.com/chardet/chardet) | ≥ 2.2.1 | character encoding auto-detection |
 
 From GStreamer you need at least the core, gst-plugins-base,
 gst-plugins-good and gst-plugins-bad; and for good container and codec
