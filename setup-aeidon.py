@@ -24,7 +24,6 @@ setup(
     license="GPL",
     packages=find_packages(exclude=["gaupol*", "*.test"]),
     package_data={"aeidon": ["data/*/*"]},
-    include_package_data=True,
     python_requires=">=3.2.0",
     install_requires=["chardet>=2.2.1"],
 )
