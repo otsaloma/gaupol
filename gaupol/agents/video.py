@@ -226,7 +226,8 @@ class VideoAgent(aeidon.Delegate):
 
     def _on_player_update_seekbar(self, data=None):
         """Update seekbar from video position."""
-        if not self.player.ready: return
+        if not self.player.ready:
+            return True # to be called again.
         duration = self.player.get_duration(mode=None)
         position = self.player.get_position(mode=None)
         if duration is not None and position is not None:
@@ -236,7 +237,8 @@ class VideoAgent(aeidon.Delegate):
 
     def _on_player_update_subtitle(self, data=None):
         """Update subtitle overlay from video position."""
-        if not self.player.ready: return
+        if not self.player.ready:
+            return True # to be called again.
         pos = self.player.get_position(aeidon.modes.SECONDS)
         if pos is None:
             return True # to be called again.
@@ -252,7 +254,8 @@ class VideoAgent(aeidon.Delegate):
 
     def _on_player_update_volume(self, data=None):
         """Update volume from player."""
-        if not self.player.ready: return
+        if not self.player.ready:
+            return True # to be called again.
         self.volume_button.set_value(self.player.volume)
         return True # to be called again.
 
