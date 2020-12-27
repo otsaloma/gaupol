@@ -24,6 +24,7 @@ emacs NEWS.md TODO.md data/io.otsaloma.gaupol.appdata.xml.in
 sudo ./setup.py install --prefix=/usr/local clean
 /usr/local/bin/gaupol
 tools/release
+tools/publish-aeidon
 
 # Update Flatpak, website.
 # https://github.com/flathub/io.otsaloma.gaupol

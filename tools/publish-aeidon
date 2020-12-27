@@ -1,0 +1,16 @@
+#!/bin/bash
+# Build aeidon package and upload to PyPI.
+set -e
+cd "$(dirname "$0")/.." || exit 1
+flake8 aeidon
+py.test --tb=no aeidon
+./setup-aeidon.py sdist bdist_wheel
+test -s dist/aeidon-*-py3-none-any.whl
+test -s dist/aeidon-*.tar.gz
+ls -l dist
+@printf "Press Enter to upload or Ctrl+C to abort: "; read _
+twine upload dist/*
+sudo pip3 uninstall -y aeidon || true
+sudo pip3 uninstall -y aeidon || true
+sudo pip3 install aeidon
+cd && python3 -c "import aeidon; print(aeidon.__file__, aeidon.__version__)"

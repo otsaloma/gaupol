@@ -8,6 +8,7 @@ __pycache__
 */*/.pytest_cache
 */*/*/.pytest_cache
 */*/*/*/.pytest_cache
+*.egg-info
 build
 data/extensions/*/*.extension
 data/io.otsaloma.gaupol.appdata.xml

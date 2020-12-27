@@ -47,12 +47,20 @@ def get_data_directory():
     """Return path to the global data directory."""
     if hasattr(sys, "frozen"):
         return get_data_directory_frozen()
+    if os.path.isdir(get_data_directory_package()):
+        return get_data_directory_package()
     return get_data_directory_source()
 
 def get_data_directory_frozen():
     """Return path to the global data directory on ``frozen``."""
     directory = os.path.dirname(sys.argv[0])
     directory = os.path.join(directory, "share", "gaupol")
+    return os.path.abspath(directory)
+
+def get_data_directory_package():
+    """Return path to the global data directory when data in the package."""
+    directory = os.path.dirname(os.path.abspath(__file__))
+    directory = os.path.join(directory, "data")
     return os.path.abspath(directory)
 
 def get_data_directory_source():
