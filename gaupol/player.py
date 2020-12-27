@@ -358,6 +358,10 @@ class VideoPlayer(aeidon.Observable):
             from gi.repository import GstPbutils
             discoverer = GstPbutils.Discoverer()
             self._info = discoverer.discover_uri(uri)
+            streams = self._info.get_stream_list()
+            stream_types = [x.get_stream_type_nick() for x in streams]
+            if "video" not in stream_types:
+                raise Exception(_("No video streams found"))
             stream = self._info.get_video_streams()[0]
             num = float(stream.get_framerate_num())
             denom = float(stream.get_framerate_denom())
