@@ -160,6 +160,16 @@
               <attribute name="action">win.extend-selection-to-end</attribute>
             </item>
           </section>
+          <section>
+            <item>
+              <attribute name="label" translatable="yes">_Previous From Video Position</attribute>
+              <attribute name="action">win.select-previous-from-video-position</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">_Next From Video Position</attribute>
+              <attribute name="action">win.select-next-from-video-position</attribute>
+            </item>
+          </section>
         </submenu>
       </section>
       <section>

@@ -163,6 +163,28 @@ class SelectAllAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
 
+class SelectNextFromVideoPositionAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "select-next-from-video-position")
+        self.accelerators = ["<Control>U"]
+        self.action_group = "unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
+        aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
+
+class SelectPreviousFromVideoPositionAction(gaupol.Action):
+    def __init__(self):
+        gaupol.Action.__init__(self, "select-previous-from-video-position")
+        self.accelerators = ["<Control>Y"]
+        self.action_group = "unsafe"
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
+        aeidon.util.affirm(application.player is not None)
+        aeidon.util.affirm(application.player.ready)
+
 class SetEndFromVideoPositionAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "set-end-from-video-position")

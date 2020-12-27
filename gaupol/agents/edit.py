@@ -262,6 +262,39 @@ class EditAgent(aeidon.Delegate):
         selection.select_all()
 
     @aeidon.deco.export
+    def _on_select_previous_from_video_position_activate(self, *args):
+        """Select the previous subtitle from video position."""
+        mode = aeidon.modes.SECONDS
+        pos = self.player.get_position(mode)
+        if pos is None: return
+        page = self.get_current_page()
+        for i, subtitle in reversed(list(enumerate(page.project.subtitles))):
+            if subtitle.start_seconds < pos:
+                page.view.select_rows([i])
+                page.view.scroll_to_row([i])
+                return
+        # Select the first subtitle, if nothing previous.
+        page.view.select_rows([0])
+        page.view.scroll_to_row([0])
+
+    @aeidon.deco.export
+    def _on_select_next_from_video_position_activate(self, *args):
+        """Select the next subtitle from video position."""
+        mode = aeidon.modes.SECONDS
+        pos = self.player.get_position(mode)
+        if pos is None: return
+        page = self.get_current_page()
+        for i, subtitle in enumerate(page.project.subtitles):
+            if subtitle.start_seconds > pos:
+                page.view.select_rows([i])
+                page.view.scroll_to_row([i])
+                return
+        # Select the last subtitle, if nothing next.
+        last = len(page.project.subtitles) - 1
+        page.view.select_rows([last])
+        page.view.scroll_to_row([last])
+
+    @aeidon.deco.export
     def _on_set_end_from_video_position_activate(self, *args):
         """Set subtitle end from video position."""
         page = self.get_current_page()
