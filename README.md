@@ -1,7 +1,7 @@
 Gaupol
 ======
 
-[![Build Status](https://travis-ci.org/otsaloma/gaupol.svg)](https://travis-ci.org/otsaloma/gaupol)
+[![Test](https://github.com/otsaloma/gaupol/workflows/Test/badge.svg)](https://github.com/otsaloma/gaupol/actions)
 [![Packages](https://repology.org/badge/tiny-repos/gaupol.svg)](https://repology.org/metapackage/gaupol)
 [![Flathub](https://img.shields.io/badge/download-flathub-blue.svg)](https://flathub.org/apps/details/io.otsaloma.gaupol)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/otsaloma/gaupol)
