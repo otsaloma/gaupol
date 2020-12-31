@@ -5,17 +5,17 @@
 # 
 # Translators:
 # Osmo Salomaa <otsaloma@iki.fi>, 2016
-# edasmax <edasmax@gmail.com>, 2018
 # mkkot <marcin2006@gmail.com>, 2019
+# edasmax <edasmax@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-10 22:03+0300\n"
+"POT-Creation-Date: 2020-12-31 18:20+0200\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: mkkot <marcin2006@gmail.com>, 2019\n"
+"Last-Translator: edasmax <edasmax@gmail.com>, 2020\n"
 "Language-Team: Polish (https://www.transifex.com/otsaloma/teams/64879/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +47,23 @@ msgstr "25.000 fps"
 msgid "29.970 fps"
 msgstr "29.970 fps"
 
-#: aeidon/enums.py:92
+#: aeidon/enums.py:75 data/ui/menubar.ui:248
+msgid "30.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:79 data/ui/menubar.ui:253
+msgid "50.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:83 data/ui/menubar.ui:258
+msgid "59.940 fps"
+msgstr ""
+
+#: aeidon/enums.py:87 data/ui/menubar.ui:263
+msgid "60.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:112
 msgid "Mac (classic)"
 msgstr "Mac (klasyczny)"
 
@@ -261,7 +277,7 @@ msgstr "Usuwanie niesłyszanlych tekstów"
 msgid "Joining words by spell-check suggestions"
 msgstr "Łączenie słów za pomocą sugestii sprawdzania pisowni"
 
-#: aeidon/agents/text.py:352
+#: aeidon/agents/text.py:354
 msgid "Splitting words by spell-check suggestions"
 msgstr "Dzielenie słów przez sugestie sprawdzania pisowni"
 
@@ -564,7 +580,7 @@ msgstr "Łączenie lub dzielenie wyrazów"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Nie można uruchomić słownika dla języka \"{}\""
 
-#: gaupol/assistants.py:601 gaupol/player.py:250 gaupol/player.py:356
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
@@ -660,13 +676,17 @@ msgstr[3] "Potwierdź {:d} zmiany"
 
 #: gaupol/renderers/multiline.py:86
 msgid "Italic"
+msgstr "Kursywa"
+
+#: gaupol/player.py:364
+msgid "No video streams found"
 msgstr ""
 
-#: gaupol/player.py:354
+#: gaupol/player.py:371
 msgid "Failed to initialize playback"
 msgstr "Nie można zainicjować odtwarzania"
 
-#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:494
+#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:524
 msgid "_Help"
 msgstr "_Pomoc"
 
@@ -694,7 +714,7 @@ msgstr "Błąd podczas zastępowania wyrażenia regularnego"
 #: gaupol/dialogs/insert.py:44 gaupol/dialogs/encoding.py:55
 #: gaupol/dialogs/split.py:44 gaupol/dialogs/multi_close.py:54
 #: gaupol/dialogs/open.py:63 gaupol/dialogs/position_transform.py:69
-#: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
+#: gaupol/dialogs/position_shift.py:71 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
 #: gaupol/agents/open.py:363 gaupol/agents/open.py:375
@@ -800,15 +820,15 @@ msgstr "_Otwórz"
 msgid "_Transform"
 msgstr "_Przekształcać"
 
-#: gaupol/dialogs/position_shift.py:69
+#: gaupol/dialogs/position_shift.py:72
 msgid "_Shift"
 msgstr "_Przesuń"
 
-#: gaupol/dialogs/position_shift.py:145
+#: gaupol/dialogs/position_shift.py:150
 msgid "frames"
 msgstr "klatki"
 
-#: gaupol/dialogs/position_shift.py:163 data/ui/preferences-dialog.ui:911
+#: gaupol/dialogs/position_shift.py:168 data/ui/preferences-dialog.ui:911
 msgid "seconds"
 msgstr "sekundy"
 
@@ -907,6 +927,9 @@ msgid ""
 "See the preferences dialog to choose the video player or to customize the "
 "command."
 msgstr ""
+"Prawdopodobnie wystąpił problem z plikiem wideo lub odtwarzaczem wideo. "
+"Zobacz okno dialogowe preferencji, aby wybrać odtwarzacz wideo lub "
+"dostosować polecenie."
 
 #: gaupol/dialogs/language.py:97
 msgid "Set Language"
@@ -936,6 +959,11 @@ msgstr "Automatyczne wykrywanie"
 #: gaupol/dialogs/file.py:122
 msgid "Other…"
 msgstr "Inny…"
+
+#: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
+#: gaupol/agents/menu.py:110
+msgid "File not found"
+msgstr ""
 
 #: gaupol/agents/open.py:85
 #, python-brace-format
@@ -1043,11 +1071,11 @@ msgstr[1] "Wstawiono {:d} napisów na podstawie schowka"
 msgstr[2] "Wstawiono {:d} napisów na podstawie schowka"
 msgstr[3] "Wstawiono {:d} napisów na podstawie schowka"
 
-#: gaupol/agents/edit.py:301 gaupol/agents/edit.py:319
+#: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
 msgid "Stretching start position"
 msgstr "Rozciąganie pozycji początkowej"
 
-#: gaupol/agents/edit.py:378
+#: gaupol/agents/edit.py:411
 msgid "Use Shift+Return for line-break"
 msgstr "Użyj Shift+Enter aby przejść do następnej linii"
 
@@ -1080,61 +1108,61 @@ msgstr "Proszę spróbuj zapisać plik z innym kodowaniem znaków."
 msgid "Failed to save file \"{}\""
 msgstr "Nieudane zapisywanie pliku \"{}\""
 
-#: gaupol/agents/video.py:65 data/ui/menubar.ui:350
+#: gaupol/agents/video.py:67 data/ui/menubar.ui:380
 msgid "_Play/Pause"
 msgstr "_Odtwarzaj/Wstrzymaj"
 
-#: gaupol/agents/video.py:67
+#: gaupol/agents/video.py:69
 msgid "Play or pause video"
 msgstr "Odtwarzaj lub wstrzymaj wideo"
 
-#: gaupol/agents/video.py:73 data/ui/menubar.ui:360
+#: gaupol/agents/video.py:75 data/ui/menubar.ui:390
 msgid "Seek _Previous"
 msgstr "Szukaj _Poprzednich"
 
-#: gaupol/agents/video.py:75
+#: gaupol/agents/video.py:77
 msgid "Seek to the start of the previous subtitle"
 msgstr "Szukaj na początku poprzedniego napisu"
 
-#: gaupol/agents/video.py:79 data/ui/menubar.ui:364
+#: gaupol/agents/video.py:81 data/ui/menubar.ui:394
 msgid "Seek _Next"
 msgstr "Szukaj _Dalej"
 
-#: gaupol/agents/video.py:81
+#: gaupol/agents/video.py:83
 msgid "Seek to the start of the next subtitle"
 msgstr "Szukaj na początku następnego napisu"
 
-#: gaupol/agents/video.py:86 data/ui/menubar.ui:370
+#: gaupol/agents/video.py:88 data/ui/menubar.ui:400
 msgid "Seek _Backward"
 msgstr "Szukaj _Wstecz"
 
-#: gaupol/agents/video.py:88
+#: gaupol/agents/video.py:90
 msgid "Seek backward"
 msgstr "Szukaj wstecz"
 
-#: gaupol/agents/video.py:92 data/ui/menubar.ui:374
+#: gaupol/agents/video.py:94 data/ui/menubar.ui:404
 msgid "Seek _Forward"
 msgstr "Szukaj _Dalej"
 
-#: gaupol/agents/video.py:94
+#: gaupol/agents/video.py:96
 msgid "Seek forward"
 msgstr "Szukaj dalej"
 
-#: gaupol/agents/video.py:107
+#: gaupol/agents/video.py:109
 msgid "Volume"
 msgstr "Głośność"
 
-#: gaupol/agents/video.py:187
+#: gaupol/agents/video.py:189
 msgid "Load Video"
 msgstr "Wczytaj wideo"
 
-#: gaupol/agents/video.py:187
+#: gaupol/agents/video.py:189
 msgid "_Load"
 msgstr "_Wczytaj"
 
-#: gaupol/agents/video.py:353
-msgid "Undefined"
-msgstr "Niezdefiniowany"
+#: gaupol/agents/video.py:361
+msgid "Track {:d}"
+msgstr ""
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1156,7 +1184,7 @@ msgstr "Nieudany zapis pliku napisów do tymczasowego katalogu \"{}\""
 
 #: gaupol/agents/preview.py:122
 msgid "Video player not found"
-msgstr ""
+msgstr "Nie znaleziono odtwarzacza wideo"
 
 #: gaupol/agents/preview.py:123
 msgid ""
@@ -1164,6 +1192,9 @@ msgid ""
 "MPlayer or VLC. See the preferences dialog to choose the video player or to "
 "customize the command."
 msgstr ""
+"Zainstaluj jeden z obsługiwanych odtwarzaczy wideo: mpv (zalecane), MPlayer "
+"lub VLC. Zobacz okno dialogowe preferencji, aby wybrać odtwarzacz wideo lub "
+"dostosować polecenie."
 
 #: gaupol/agents/preview.py:131
 msgid "Failed to launch video player"
@@ -1244,27 +1275,27 @@ msgstr "Ilości klatek"
 msgid "Add"
 msgstr "Dodaj"
 
-#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:245
+#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:275
 msgid "_No."
 msgstr "_Nr"
 
-#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:249
+#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:279
 msgid "_Start"
 msgstr "_Początek"
 
-#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:253
+#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:283
 msgid "_End"
 msgstr "_Koniec"
 
-#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:257
+#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:287
 msgid "_Duration"
 msgstr "_Czas trwania"
 
-#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:261 data/ui/menubar.ui:273
+#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:291 data/ui/menubar.ui:303
 msgid "_Text"
 msgstr "_Tekst"
 
-#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:265
+#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:295
 msgid "T_ranslation"
 msgstr "Tłumaczenie"
 
@@ -1284,7 +1315,7 @@ msgstr "Szukaj:"
 msgid "Replace _with:"
 msgstr "Zastąp _za pomocą:"
 
-#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:298
+#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:328
 msgid "Find _Next"
 msgstr "Znajdź _następny"
 
@@ -1495,7 +1526,7 @@ msgstr "Skończ później"
 
 #: data/ui/menubar.ui:108
 msgid "Set St_art From Video Position"
-msgstr ""
+msgstr "Ustaw St_art z pozycji wideo"
 
 #: data/ui/menubar.ui:112
 msgid "Set En_d From Video Position"
@@ -1541,236 +1572,244 @@ msgstr "Rozszerz do początku"
 msgid "Extend To _End"
 msgstr "Rozszerz do końca"
 
-#: data/ui/menubar.ui:167
+#: data/ui/menubar.ui:165
+msgid "_Previous From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:169
+msgid "_Next From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:177
 msgid "_Preferences"
 msgstr "Ustawienia"
 
-#: data/ui/menubar.ui:173
+#: data/ui/menubar.ui:183
 msgid "_View"
 msgstr "_Widok"
 
-#: data/ui/menubar.ui:176
+#: data/ui/menubar.ui:186
 msgid "Tool_bar"
 msgstr "Pasek narzędziowy"
 
-#: data/ui/menubar.ui:180
+#: data/ui/menubar.ui:190
 msgid "_Video Player"
 msgstr "Odtwarzacz wideo"
 
-#: data/ui/menubar.ui:186
+#: data/ui/menubar.ui:196
 msgid "_Layout"
 msgstr "Układ"
 
-#: data/ui/menubar.ui:189
+#: data/ui/menubar.ui:199
 msgid "_Horizontal"
 msgstr "Poziomy"
 
-#: data/ui/menubar.ui:194
+#: data/ui/menubar.ui:204
 msgid "_Vertical"
 msgstr "Pionowy"
 
-#: data/ui/menubar.ui:203
+#: data/ui/menubar.ui:213
 msgid "_Times"
 msgstr "Czasy"
 
-#: data/ui/menubar.ui:208
+#: data/ui/menubar.ui:218
 msgid "_Frames"
 msgstr "Klatki"
 
-#: data/ui/menubar.ui:215
+#: data/ui/menubar.ui:225
 msgid "F_ramerate"
 msgstr "Ilość klatek"
 
-#: data/ui/menubar.ui:218
+#: data/ui/menubar.ui:228
 msgid "2_3.976 fps"
 msgstr "2_3.976 fps"
 
-#: data/ui/menubar.ui:223
+#: data/ui/menubar.ui:233
 msgid "2_4.000 fps"
 msgstr "2_4.000 fps"
 
-#: data/ui/menubar.ui:228
+#: data/ui/menubar.ui:238
 msgid "2_5.000 fps"
 msgstr "2_5.000 fps"
 
-#: data/ui/menubar.ui:233
+#: data/ui/menubar.ui:243
 msgid "2_9.970 fps"
 msgstr "2_9.970 fps"
 
-#: data/ui/menubar.ui:242
+#: data/ui/menubar.ui:272
 msgid "_Columns"
 msgstr "_Kolumny"
 
-#: data/ui/menubar.ui:276
+#: data/ui/menubar.ui:306
 msgid "Cu_t"
 msgstr "Wytnij"
 
-#: data/ui/menubar.ui:280
+#: data/ui/menubar.ui:310
 msgid "_Copy"
 msgstr "S_kopiuj"
 
-#: data/ui/menubar.ui:284
+#: data/ui/menubar.ui:314
 msgid "_Paste"
 msgstr "_Wklej"
 
-#: data/ui/menubar.ui:288
+#: data/ui/menubar.ui:318
 msgid "Cl_ear"
 msgstr "Wyczyść"
 
-#: data/ui/menubar.ui:294
+#: data/ui/menubar.ui:324
 msgid "_Find And Replace…"
 msgstr "Znajdź i zamień..."
 
-#: data/ui/menubar.ui:302
+#: data/ui/menubar.ui:332
 msgid "Find Pre_vious"
 msgstr "Znajdź poprzedni"
 
-#: data/ui/menubar.ui:308
+#: data/ui/menubar.ui:338
 msgid "_Italic"
 msgstr "_Pochylenie"
 
-#: data/ui/menubar.ui:312
+#: data/ui/menubar.ui:342
 msgid "_Dialogue"
 msgstr "_Dialog"
 
-#: data/ui/menubar.ui:318
+#: data/ui/menubar.ui:348
 msgid "Ca_se"
 msgstr "_Rozmiar"
 
-#: data/ui/menubar.ui:321
+#: data/ui/menubar.ui:351
 msgid "_Title"
 msgstr "_Tytuł"
 
-#: data/ui/menubar.ui:325
+#: data/ui/menubar.ui:355
 msgid "_Sentence"
 msgstr "_Zdanie"
 
-#: data/ui/menubar.ui:329
+#: data/ui/menubar.ui:359
 msgid "_Upper"
 msgstr "D_uże litery"
 
-#: data/ui/menubar.ui:333
+#: data/ui/menubar.ui:363
 msgid "_Lower"
 msgstr "Małe _litery"
 
-#: data/ui/menubar.ui:341
+#: data/ui/menubar.ui:371
 msgid "Vi_deo"
 msgstr "Wideo"
 
-#: data/ui/menubar.ui:344
+#: data/ui/menubar.ui:374
 msgid "_Load Video…"
 msgstr "Załaduj wideo ..."
 
-#: data/ui/menubar.ui:354 data/ui/view-popup.ui:26
+#: data/ui/menubar.ui:384 data/ui/view-popup.ui:26
 msgid "Play _Selection"
 msgstr "Odtwórz zaznaczenie"
 
-#: data/ui/menubar.ui:380 data/ui/view-popup.ui:30
+#: data/ui/menubar.ui:410 data/ui/view-popup.ui:30
 msgid "S_eek Selection Start"
 msgstr "idź na początek zaznaczenia"
 
-#: data/ui/menubar.ui:384
+#: data/ui/menubar.ui:414
 msgid "See_k Selection End"
 msgstr "idź na koniec zaznaczenia"
 
-#: data/ui/menubar.ui:390
+#: data/ui/menubar.ui:420
 msgid "_Audio"
 msgstr "_Audio"
 
-#: data/ui/menubar.ui:393
+#: data/ui/menubar.ui:423
 msgid "_Language"
 msgstr "Język"
 
-#: data/ui/menubar.ui:400
+#: data/ui/menubar.ui:430
 msgid "Volume _Down"
 msgstr "Ścisz"
 
-#: data/ui/menubar.ui:404
+#: data/ui/menubar.ui:434
 msgid "Volume _Up"
 msgstr "Zwiększ głośność"
 
-#: data/ui/menubar.ui:410
+#: data/ui/menubar.ui:440
 msgid "T_ools"
 msgstr "Narzędzia"
 
-#: data/ui/menubar.ui:413 data/ui/text-assistant/confirmation-page.ui:97
+#: data/ui/menubar.ui:443 data/ui/text-assistant/confirmation-page.ui:97
 #: data/ui/view-popup.ui:36
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: data/ui/menubar.ui:417
+#: data/ui/menubar.ui:447
 msgid "Select _Video…"
 msgstr "Wybierz wideo ..."
 
-#: data/ui/menubar.ui:423
+#: data/ui/menubar.ui:453
 msgid "_Check Spelling"
 msgstr "_Sprawdź pisownię"
 
-#: data/ui/menubar.ui:427
+#: data/ui/menubar.ui:457
 msgid "Co_nfigure Spell-check…"
 msgstr "Konfiguruj sprawdzanie pisowni ..."
 
-#: data/ui/menubar.ui:431
+#: data/ui/menubar.ui:461
 msgid "C_orrect Texts…"
 msgstr "Popraw teksty ..."
 
-#: data/ui/menubar.ui:437
+#: data/ui/menubar.ui:467
 msgid "_Shift Positions…"
 msgstr "Przesuń pozycje..."
 
-#: data/ui/menubar.ui:441
+#: data/ui/menubar.ui:471
 msgid "_Transform Positions…"
 msgstr "Przekształć pozycje..."
 
-#: data/ui/menubar.ui:445
+#: data/ui/menubar.ui:475
 msgid "Adjust _Durations…"
 msgstr "Dostosuj czas trwania..."
 
-#: data/ui/menubar.ui:449
+#: data/ui/menubar.ui:479
 msgid "Convert _Framerate…"
 msgstr "Konwersja ilości klatek..."
 
-#: data/ui/menubar.ui:455
+#: data/ui/menubar.ui:485
 msgid "_Append File…"
 msgstr "Dołącz plik..."
 
-#: data/ui/menubar.ui:459
+#: data/ui/menubar.ui:489
 msgid "Spli_t Project…"
 msgstr "Podziel projekt..."
 
-#: data/ui/menubar.ui:465
+#: data/ui/menubar.ui:495
 msgid "_Projects"
 msgstr "_Projekty"
 
-#: data/ui/menubar.ui:468
+#: data/ui/menubar.ui:498
 msgid "_Save All"
 msgstr "_Zapisz wszystko"
 
-#: data/ui/menubar.ui:472
+#: data/ui/menubar.ui:502
 msgid "Save _All As…"
 msgstr "_Zapisz wszystko jako..."
 
-#: data/ui/menubar.ui:476
+#: data/ui/menubar.ui:506
 msgid "_Close All"
 msgstr "Za_mknij wszystko"
 
-#: data/ui/menubar.ui:482
+#: data/ui/menubar.ui:512
 msgid "_Previous"
 msgstr "_Poprzedni"
 
-#: data/ui/menubar.ui:486
+#: data/ui/menubar.ui:516
 msgid "_Next"
 msgstr "_Następny"
 
-#: data/ui/menubar.ui:497
+#: data/ui/menubar.ui:527
 msgid "_Documentation"
 msgstr "_Dokumentacja"
 
-#: data/ui/menubar.ui:501
+#: data/ui/menubar.ui:531
 msgid "_Report A Bug"
 msgstr "Zgłoś _błąd"
 
-#: data/ui/menubar.ui:505
+#: data/ui/menubar.ui:535
 msgid "_About"
 msgstr "_O programie"
 
@@ -2179,6 +2218,10 @@ msgstr "Przesuń napisy od zaznaczenia do końca"
 msgid "Shift c_urrent project"
 msgstr "Przesuń w b_ierzącym projekcie"
 
+#: data/ui/position-shift-dialog.ui:251
+msgid "Shift all _open projects"
+msgstr ""
+
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"
 msgstr "Przekształć pozycje"
@@ -2410,14 +2453,14 @@ msgstr "Wielka litera po wielokropku"
 #: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
 #: data/patterns/Latn.common-error.in:62
 msgid "Ligatures"
-msgstr ""
+msgstr "Ligatury"
 
 #: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
 #: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
 #: data/patterns/Latn.common-error.in:45 data/patterns/Latn.common-error.in:54
 #: data/patterns/Latn.common-error.in:63
 msgid "Unpack ligatures to individual characters"
-msgstr ""
+msgstr "Rozpakuj ligatury do poszczególnych znaków"
 
 #: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Spelling of a.m. and p.m."
@@ -2640,7 +2683,7 @@ msgstr "Zastąp znaki nutowe Unicode znakami numerycznymi"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
-msgstr ""
+msgstr "Edytor napisów tekstowych"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:9
 msgid ""
@@ -2648,6 +2691,9 @@ msgid ""
 "subtitle file formats and provides means of creating subtitles, editing "
 "texts and timing subtitles to match video."
 msgstr ""
+"Gaupol to edytor tekstowych plików napisów. Obsługuje wiele formatów plików "
+"napisów i zapewnia środki do tworzenia napisów, edycji tekstów i "
+"synchronizacji napisów w celu dopasowania do wideo."
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:38
 msgid "Main window"

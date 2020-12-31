@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-10 22:03+0300\n"
+"POT-Creation-Date: 2020-12-31 18:20+0200\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2020\n"
 "Language-Team: Interlingue (https://www.transifex.com/otsaloma/teams/64879/ie/)\n"
@@ -46,7 +46,23 @@ msgstr "25.000 fps"
 msgid "29.970 fps"
 msgstr "29.970 fps"
 
-#: aeidon/enums.py:92
+#: aeidon/enums.py:75 data/ui/menubar.ui:248
+msgid "30.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:79 data/ui/menubar.ui:253
+msgid "50.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:83 data/ui/menubar.ui:258
+msgid "59.940 fps"
+msgstr ""
+
+#: aeidon/enums.py:87 data/ui/menubar.ui:263
+msgid "60.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:112
 msgid "Mac (classic)"
 msgstr "Mac (classic)"
 
@@ -260,7 +276,7 @@ msgstr ""
 msgid "Joining words by spell-check suggestions"
 msgstr ""
 
-#: aeidon/agents/text.py:352
+#: aeidon/agents/text.py:354
 msgid "Splitting words by spell-check suggestions"
 msgstr ""
 
@@ -561,7 +577,7 @@ msgstr "Unir o separar paroles"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Ne posset cargar li dictionarium por lingue «{}»"
 
-#: gaupol/assistants.py:601 gaupol/player.py:250 gaupol/player.py:356
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
 #: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
@@ -657,11 +673,15 @@ msgstr[1] "Confirmar {:d} modificationes"
 msgid "Italic"
 msgstr "Italic"
 
-#: gaupol/player.py:354
+#: gaupol/player.py:364
+msgid "No video streams found"
+msgstr ""
+
+#: gaupol/player.py:371
 msgid "Failed to initialize playback"
 msgstr "Ne successat inicialisar reproduction"
 
-#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:494
+#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:524
 msgid "_Help"
 msgstr "Au_xilie"
 
@@ -687,7 +707,7 @@ msgstr "Errore de expression regulari in li substitution"
 #: gaupol/dialogs/insert.py:44 gaupol/dialogs/encoding.py:55
 #: gaupol/dialogs/split.py:44 gaupol/dialogs/multi_close.py:54
 #: gaupol/dialogs/open.py:63 gaupol/dialogs/position_transform.py:69
-#: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/multi_save.py:83
+#: gaupol/dialogs/position_shift.py:71 gaupol/dialogs/multi_save.py:83
 #: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
 #: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
 #: gaupol/agents/open.py:363 gaupol/agents/open.py:375
@@ -794,15 +814,15 @@ msgstr "_Aperter"
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: gaupol/dialogs/position_shift.py:69
+#: gaupol/dialogs/position_shift.py:72
 msgid "_Shift"
 msgstr "Mo_ver"
 
-#: gaupol/dialogs/position_shift.py:145
+#: gaupol/dialogs/position_shift.py:150
 msgid "frames"
 msgstr "cadres"
 
-#: gaupol/dialogs/position_shift.py:163 data/ui/preferences-dialog.ui:911
+#: gaupol/dialogs/position_shift.py:168 data/ui/preferences-dialog.ui:911
 msgid "seconds"
 msgstr "secondes"
 
@@ -925,6 +945,11 @@ msgstr "Auto-detectet"
 msgid "Other…"
 msgstr "Altri..."
 
+#: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
+#: gaupol/agents/menu.py:110
+msgid "File not found"
+msgstr ""
+
 #: gaupol/agents/open.py:85
 #, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
@@ -1029,11 +1054,11 @@ msgstr[0] ""
 msgstr[1] ""
 "Insertet {:d} additional subtitules por metter li contene del Paperiere"
 
-#: gaupol/agents/edit.py:301 gaupol/agents/edit.py:319
+#: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
 msgid "Stretching start position"
 msgstr "Extension del inicie"
 
-#: gaupol/agents/edit.py:378
+#: gaupol/agents/edit.py:411
 msgid "Use Shift+Return for line-break"
 msgstr "Usa Shift+Return por rupter lineas"
 
@@ -1066,61 +1091,61 @@ msgstr "Ples garda li file in un altri codification."
 msgid "Failed to save file \"{}\""
 msgstr "Ne posset salvar li file «{}»"
 
-#: gaupol/agents/video.py:65 data/ui/menubar.ui:350
+#: gaupol/agents/video.py:67 data/ui/menubar.ui:380
 msgid "_Play/Pause"
 msgstr "Re_producter/pausar"
 
-#: gaupol/agents/video.py:67
+#: gaupol/agents/video.py:69
 msgid "Play or pause video"
 msgstr "Reproducter o pausar li video"
 
-#: gaupol/agents/video.py:73 data/ui/menubar.ui:360
+#: gaupol/agents/video.py:75 data/ui/menubar.ui:390
 msgid "Seek _Previous"
 msgstr "Ear al _precedent"
 
-#: gaupol/agents/video.py:75
+#: gaupol/agents/video.py:77
 msgid "Seek to the start of the previous subtitle"
 msgstr "Ear al inicie del precedent subtitul"
 
-#: gaupol/agents/video.py:79 data/ui/menubar.ui:364
+#: gaupol/agents/video.py:81 data/ui/menubar.ui:394
 msgid "Seek _Next"
 msgstr "Ear al _sequent"
 
-#: gaupol/agents/video.py:81
+#: gaupol/agents/video.py:83
 msgid "Seek to the start of the next subtitle"
 msgstr "Ear al inicie del sequent subtitul"
 
-#: gaupol/agents/video.py:86 data/ui/menubar.ui:370
+#: gaupol/agents/video.py:88 data/ui/menubar.ui:400
 msgid "Seek _Backward"
 msgstr "Saltar _retro"
 
-#: gaupol/agents/video.py:88
+#: gaupol/agents/video.py:90
 msgid "Seek backward"
 msgstr "Saltar retro"
 
-#: gaupol/agents/video.py:92 data/ui/menubar.ui:374
+#: gaupol/agents/video.py:94 data/ui/menubar.ui:404
 msgid "Seek _Forward"
 msgstr "Saltar _avan"
 
-#: gaupol/agents/video.py:94
+#: gaupol/agents/video.py:96
 msgid "Seek forward"
 msgstr "Saltar avan"
 
-#: gaupol/agents/video.py:107
+#: gaupol/agents/video.py:109
 msgid "Volume"
 msgstr "Volúmine"
 
-#: gaupol/agents/video.py:187
+#: gaupol/agents/video.py:189
 msgid "Load Video"
 msgstr "Cargar un video"
 
-#: gaupol/agents/video.py:187
+#: gaupol/agents/video.py:189
 msgid "_Load"
 msgstr "_Cargar"
 
-#: gaupol/agents/video.py:353
-msgid "Undefined"
-msgstr "Índefinit"
+#: gaupol/agents/video.py:361
+msgid "Track {:d}"
+msgstr ""
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1229,27 +1254,27 @@ msgstr "Rapidores de cadres"
 msgid "Add"
 msgstr "Adjunter"
 
-#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:245
+#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:275
 msgid "_No."
 msgstr "_Nró"
 
-#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:249
+#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:279
 msgid "_Start"
 msgstr "_Comense"
 
-#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:253
+#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:283
 msgid "_End"
 msgstr "_Fin"
 
-#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:257
+#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:287
 msgid "_Duration"
 msgstr "_Duration"
 
-#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:261 data/ui/menubar.ui:273
+#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:291 data/ui/menubar.ui:303
 msgid "_Text"
 msgstr "_Textu"
 
-#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:265
+#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:295
 msgid "T_ranslation"
 msgstr "T_raduction"
 
@@ -1269,7 +1294,7 @@ msgstr "_Serchar por:"
 msgid "Replace _with:"
 msgstr "Substituer _per:"
 
-#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:298
+#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:328
 msgid "Find _Next"
 msgstr "Trovar _sequent"
 
@@ -1526,236 +1551,244 @@ msgstr "Extender al _inicie"
 msgid "Extend To _End"
 msgstr "Extender al _fin"
 
-#: data/ui/menubar.ui:167
+#: data/ui/menubar.ui:165
+msgid "_Previous From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:169
+msgid "_Next From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:177
 msgid "_Preferences"
 msgstr "_Preferenties"
 
-#: data/ui/menubar.ui:173
+#: data/ui/menubar.ui:183
 msgid "_View"
 msgstr "_Vise"
 
-#: data/ui/menubar.ui:176
+#: data/ui/menubar.ui:186
 msgid "Tool_bar"
 msgstr "P_anel de instrumentarium"
 
-#: data/ui/menubar.ui:180
+#: data/ui/menubar.ui:190
 msgid "_Video Player"
 msgstr "Reproductor de _video"
 
-#: data/ui/menubar.ui:186
+#: data/ui/menubar.ui:196
 msgid "_Layout"
 msgstr "_Arangeament"
 
-#: data/ui/menubar.ui:189
+#: data/ui/menubar.ui:199
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: data/ui/menubar.ui:194
+#: data/ui/menubar.ui:204
 msgid "_Vertical"
 msgstr "_Vertical"
 
-#: data/ui/menubar.ui:203
+#: data/ui/menubar.ui:213
 msgid "_Times"
 msgstr "_Témpores"
 
-#: data/ui/menubar.ui:208
+#: data/ui/menubar.ui:218
 msgid "_Frames"
 msgstr "_Cadres"
 
-#: data/ui/menubar.ui:215
+#: data/ui/menubar.ui:225
 msgid "F_ramerate"
 msgstr "_Rapidore de cadres"
 
-#: data/ui/menubar.ui:218
+#: data/ui/menubar.ui:228
 msgid "2_3.976 fps"
 msgstr "2_3.976 fps"
 
-#: data/ui/menubar.ui:223
+#: data/ui/menubar.ui:233
 msgid "2_4.000 fps"
 msgstr "2_4.000 fps"
 
-#: data/ui/menubar.ui:228
+#: data/ui/menubar.ui:238
 msgid "2_5.000 fps"
 msgstr "2_5.000 fps"
 
-#: data/ui/menubar.ui:233
+#: data/ui/menubar.ui:243
 msgid "2_9.970 fps"
 msgstr "2_9.970 fps"
 
-#: data/ui/menubar.ui:242
+#: data/ui/menubar.ui:272
 msgid "_Columns"
 msgstr "_Columnes"
 
-#: data/ui/menubar.ui:276
+#: data/ui/menubar.ui:306
 msgid "Cu_t"
 msgstr "Ci_ser"
 
-#: data/ui/menubar.ui:280
+#: data/ui/menubar.ui:310
 msgid "_Copy"
 msgstr "_Copiar"
 
-#: data/ui/menubar.ui:284
+#: data/ui/menubar.ui:314
 msgid "_Paste"
 msgstr "Co_llar"
 
-#: data/ui/menubar.ui:288
+#: data/ui/menubar.ui:318
 msgid "Cl_ear"
 msgstr "_Vacuar"
 
-#: data/ui/menubar.ui:294
+#: data/ui/menubar.ui:324
 msgid "_Find And Replace…"
 msgstr "_Serchar e substituer..."
 
-#: data/ui/menubar.ui:302
+#: data/ui/menubar.ui:332
 msgid "Find Pre_vious"
 msgstr "Trovar pre_cedent"
 
-#: data/ui/menubar.ui:308
+#: data/ui/menubar.ui:338
 msgid "_Italic"
 msgstr "_Italic"
 
-#: data/ui/menubar.ui:312
+#: data/ui/menubar.ui:342
 msgid "_Dialogue"
 msgstr "_Dialog"
 
-#: data/ui/menubar.ui:318
+#: data/ui/menubar.ui:348
 msgid "Ca_se"
 msgstr "Min/MA_J"
 
-#: data/ui/menubar.ui:321
+#: data/ui/menubar.ui:351
 msgid "_Title"
 msgstr "_Titul"
 
-#: data/ui/menubar.ui:325
+#: data/ui/menubar.ui:355
 msgid "_Sentence"
 msgstr "_Frase"
 
-#: data/ui/menubar.ui:329
+#: data/ui/menubar.ui:359
 msgid "_Upper"
 msgstr "MA_JUSCULES"
 
-#: data/ui/menubar.ui:333
+#: data/ui/menubar.ui:363
 msgid "_Lower"
 msgstr "mi_nuscules"
 
-#: data/ui/menubar.ui:341
+#: data/ui/menubar.ui:371
 msgid "Vi_deo"
 msgstr "Vi_deo"
 
-#: data/ui/menubar.ui:344
+#: data/ui/menubar.ui:374
 msgid "_Load Video…"
 msgstr "_Cargar un video..."
 
-#: data/ui/menubar.ui:354 data/ui/view-popup.ui:26
+#: data/ui/menubar.ui:384 data/ui/view-popup.ui:26
 msgid "Play _Selection"
 msgstr "Reproducter li _selection"
 
-#: data/ui/menubar.ui:380 data/ui/view-popup.ui:30
+#: data/ui/menubar.ui:410 data/ui/view-popup.ui:30
 msgid "S_eek Selection Start"
 msgstr "Saltar al inicie del s_election"
 
-#: data/ui/menubar.ui:384
+#: data/ui/menubar.ui:414
 msgid "See_k Selection End"
 msgstr "Al fin del sele_ction"
 
-#: data/ui/menubar.ui:390
+#: data/ui/menubar.ui:420
 msgid "_Audio"
 msgstr "_Audio"
 
-#: data/ui/menubar.ui:393
+#: data/ui/menubar.ui:423
 msgid "_Language"
 msgstr "_Lingue"
 
-#: data/ui/menubar.ui:400
+#: data/ui/menubar.ui:430
 msgid "Volume _Down"
 msgstr "_Augmentar li volúmine"
 
-#: data/ui/menubar.ui:404
+#: data/ui/menubar.ui:434
 msgid "Volume _Up"
 msgstr "_Diminuer li volúmine"
 
-#: data/ui/menubar.ui:410
+#: data/ui/menubar.ui:440
 msgid "T_ools"
 msgstr "_Instrumentarium"
 
-#: data/ui/menubar.ui:413 data/ui/text-assistant/confirmation-page.ui:97
+#: data/ui/menubar.ui:443 data/ui/text-assistant/confirmation-page.ui:97
 #: data/ui/view-popup.ui:36
 msgid "_Preview"
 msgstr "_Previder"
 
-#: data/ui/menubar.ui:417
+#: data/ui/menubar.ui:447
 msgid "Select _Video…"
 msgstr "Selecter un _video..."
 
-#: data/ui/menubar.ui:423
+#: data/ui/menubar.ui:453
 msgid "_Check Spelling"
 msgstr "Controlar _ortografie"
 
-#: data/ui/menubar.ui:427
+#: data/ui/menubar.ui:457
 msgid "Co_nfigure Spell-check…"
 msgstr "Co_nfigurar ortografie..."
 
-#: data/ui/menubar.ui:431
+#: data/ui/menubar.ui:461
 msgid "C_orrect Texts…"
 msgstr "C_orrecter textus"
 
-#: data/ui/menubar.ui:437
+#: data/ui/menubar.ui:467
 msgid "_Shift Positions…"
 msgstr "_Mover positiones..."
 
-#: data/ui/menubar.ui:441
+#: data/ui/menubar.ui:471
 msgid "_Transform Positions…"
 msgstr "_Transformar positiones…"
 
-#: data/ui/menubar.ui:445
+#: data/ui/menubar.ui:475
 msgid "Adjust _Durations…"
 msgstr "A_djustar durationes..."
 
-#: data/ui/menubar.ui:449
+#: data/ui/menubar.ui:479
 msgid "Convert _Framerate…"
 msgstr "Converter r_apiditá del cadres"
 
-#: data/ui/menubar.ui:455
+#: data/ui/menubar.ui:485
 msgid "_Append File…"
 msgstr "Apen_der un file..."
 
-#: data/ui/menubar.ui:459
+#: data/ui/menubar.ui:489
 msgid "Spli_t Project…"
 msgstr "S_eparar li projecte..."
 
-#: data/ui/menubar.ui:465
+#: data/ui/menubar.ui:495
 msgid "_Projects"
 msgstr "_Projectes"
 
-#: data/ui/menubar.ui:468
+#: data/ui/menubar.ui:498
 msgid "_Save All"
 msgstr "Salvar _omni"
 
-#: data/ui/menubar.ui:472
+#: data/ui/menubar.ui:502
 msgid "Save _All As…"
 msgstr "Salvar _omni quam..."
 
-#: data/ui/menubar.ui:476
+#: data/ui/menubar.ui:506
 msgid "_Close All"
 msgstr "_Clúder omni"
 
-#: data/ui/menubar.ui:482
+#: data/ui/menubar.ui:512
 msgid "_Previous"
 msgstr "_Precedent"
 
-#: data/ui/menubar.ui:486
+#: data/ui/menubar.ui:516
 msgid "_Next"
 msgstr "Seque_nt"
 
-#: data/ui/menubar.ui:497
+#: data/ui/menubar.ui:527
 msgid "_Documentation"
 msgstr "_Documentation"
 
-#: data/ui/menubar.ui:501
+#: data/ui/menubar.ui:531
 msgid "_Report A Bug"
 msgstr "_Raportar un defecte"
 
-#: data/ui/menubar.ui:505
+#: data/ui/menubar.ui:535
 msgid "_About"
 msgstr "_Pri"
 
@@ -2162,6 +2195,10 @@ msgstr "Mover su_btitules del inicie al fin"
 #: data/ui/position-shift-dialog.ui:234
 msgid "Shift c_urrent project"
 msgstr "Mover li act_ual projecte"
+
+#: data/ui/position-shift-dialog.ui:251
+msgid "Shift all _open projects"
+msgstr ""
 
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"
