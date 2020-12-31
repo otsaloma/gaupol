@@ -1,3 +1,14 @@
+2020-12-31: Gaupol 1.9
+======================
+
+* Add framerates 30, 50, 59.94 and 60 fps (#164)
+* Add selecting next/previous from video position (#154)
+* Allow shifting positions of all open projects (#66)
+* Fix error dialog when video playback fails (#153)
+* Fix the order of audio tracks in the menu (#129, qnga)
+* Fix spell-check split words correction task to not hang (#171)
+* Add Dutch translation (Heimen Stoffels)
+
 2020-04-10: Gaupol 1.8
 ======================
 
