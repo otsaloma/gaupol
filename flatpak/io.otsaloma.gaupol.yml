@@ -34,6 +34,15 @@ modules:
         url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.16.1.tar.xz
         sha256: 4bf913b2ca5195ac3b53b5e3ade2dc7c45d2258507552ddc850c5fa425968a1d
 
+  # Spell-check
+
+  - name: gspell
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/gspell/1.9/gspell-1.9.1.tar.xz
+        sha256: dcbb769dfdde8e3c0a8ed3102ce7e661abbf7ddf85df08b29915e92cd723abdd
+
   # Character encoding auto-detection
 
   - name: chardet
