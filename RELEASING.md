@@ -4,12 +4,11 @@ Releasing a New Version
 ```bash
 # Update translations.
 tools/update-translations
-msgmerge -UN po/fi.po po/gaupol.pot
-emacs po/fi.po
 tx push -s
-tx push -tf --no-interactive -l fi
 tx pull -a --minimum-perc=50
 sed -i "s/charset=CHARSET/charset=UTF-8/" po/*.po
+emacs po/fi.po
+tx push -tf --no-interactive -l fi
 tools/check-translations
 tools/check-translations | grep %
 git add po/*.po po/*.pot; git status
