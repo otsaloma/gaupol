@@ -277,8 +277,8 @@ class VideoPlayer(aeidon.Observable):
         """Update subtitle text overlay properties."""
         conf = gaupol.conf.video_player
         self._text_overlay.props.font_desc = conf.subtitle_font
-        self._text_overlay.props.halignment = "center"
-        self._text_overlay.props.valignment = "bottom"
+        self._text_overlay.props.halignment = conf.subtitle_position_horizontal
+        self._text_overlay.props.valignment = conf.subtitle_position_vertical
         self._text_overlay.props.line_alignment = conf.line_alignment
         self._text_overlay.props.shaded_background = conf.subtitle_background
         alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
@@ -290,8 +290,8 @@ class VideoPlayer(aeidon.Observable):
         """Update time overlay properties."""
         conf = gaupol.conf.video_player
         self._time_overlay.props.font_desc = conf.time_font
-        self._time_overlay.props.halignment = "right"
-        self._time_overlay.props.valignment = "top"
+        self._time_overlay.props.halignment = conf.time_position_horizontal
+        self._time_overlay.props.valignment = conf.time_position_vertical
         self._time_overlay.props.shaded_background = conf.time_background
         alpha = "{:02x}".format(int(conf.time_alpha * 255))
         color = conf.time_color.replace("#", "")
