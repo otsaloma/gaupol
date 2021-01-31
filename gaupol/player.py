@@ -331,6 +331,14 @@ class VideoPlayer(aeidon.Observable):
         pos = self.calc.to_seconds(pos) * Gst.SECOND
         self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
 
+    def _seek_null(self):
+        """Seek to the current position."""
+        self._ensure_default_segment()
+        pos = self.get_position(mode=None)
+        if pos is None: return
+        seek_flags = Gst.SeekFlags.FLUSH | Gst.SeekFlags.ACCURATE
+        self._playbin.seek_simple(Gst.Format.TIME, seek_flags, pos)
+
     def seek_relative(self, offset):
         """Seek to `offset` relative to current position."""
         self._ensure_default_segment()
@@ -395,6 +403,10 @@ class VideoPlayer(aeidon.Observable):
         text = aeidon.RE_ANY_TAG.sub("", text)
         text = GLib.markup_escape_text(text)
         self._text_overlay.props.text = text
+        # Do a zero seek to force an update of the overlay.
+        # https://github.com/otsaloma/gaupol/issues/181
+        with aeidon.util.silent(Exception, tb=True):
+            self._seek_null()
 
     @property
     def volume(self):
