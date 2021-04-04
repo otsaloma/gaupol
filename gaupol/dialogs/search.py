@@ -536,7 +536,6 @@ class SearchDialog(gaupol.BuilderDialog):
         subtitle = page.project.subtitles[row]
         text = subtitle.get_text(doc)
         text_buffer.set_text(text)
-        ins = text_buffer.get_iter_at_offset(match_span[0])
         bound = text_buffer.get_iter_at_offset(match_span[1])
         mark = text_buffer.create_mark(None, bound, True)
         self._text_view.scroll_to_mark(mark=mark,
@@ -547,8 +546,12 @@ class SearchDialog(gaupol.BuilderDialog):
 
         self._text_view.set_sensitive(True)
         self._text_view.grab_focus()
+        def select_text(text_buffer, match_span):
+            ins = text_buffer.get_iter_at_offset(match_span[0])
+            bound = text_buffer.get_iter_at_offset(match_span[1])
+            text_buffer.select_range(ins, bound)
         # Some calls fail to select unless idle_add used (GTK 3.24).
-        gaupol.util.idle_add(text_buffer.select_range, ins, bound)
+        gaupol.util.idle_add(select_text, text_buffer, match_span)
 
     def _show_regex_error_dialog_pattern(self, message):
         """Show an error dialog if regex pattern failed to compile."""
