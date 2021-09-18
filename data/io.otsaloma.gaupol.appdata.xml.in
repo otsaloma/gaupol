@@ -23,13 +23,13 @@
   <releases>
     <release version="1.9" date="2020-12-31"/>
   </releases>
-  <mimetypes>
-    <mimetype>application/x-subrip</mimetype>
-    <mimetype>text/vtt</mimetype>
-    <mimetype>text/x-microdvd</mimetype>
-    <mimetype>text/x-ssa</mimetype>
-    <mimetype>text/x-subviewer</mimetype>
-  </mimetypes>
+  <provides>
+    <mediatype>application/x-subrip</mediatype>
+    <mediatype>text/vtt</mediatype>
+    <mediatype>text/x-microdvd</mediatype>
+    <mediatype>text/x-ssa</mediatype>
+    <mediatype>text/x-subviewer</mediatype>
+  </provides>
   <project_license>GPL-3.0+</project_license>
   <developer_name>Osmo Salomaa</developer_name>
   <screenshots>
