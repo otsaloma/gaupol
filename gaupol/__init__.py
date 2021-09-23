@@ -28,6 +28,12 @@ if hasattr(sys, "frozen"):
     # https://stackoverflow.com/a/35773092
     warnings.simplefilter("ignore")
 
+# Needed for the spell-check dialog, where the '_proceed' function call is
+# recursive. The recursion limit effectively defines the maximum allowed
+# amount of consecutive subtitles without spelling errors, which if exceeded
+# triggers a RecursionError.
+sys.setrecursionlimit(10000)
+
 import aeidon
 import gi
 import os
