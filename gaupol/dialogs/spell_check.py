@@ -228,7 +228,9 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         try:
             # Move on to the next page.
             next(self._pager)
-            return self._proceed()
+            # Use idle_add here to break out of recursion to
+            # reduce the likelihood of hitting the recursion limit.
+            return gaupol.util.idle_add(self._proceed)
         except StopIteration:
             self._set_done()
 
