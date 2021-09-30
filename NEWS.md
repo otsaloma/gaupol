@@ -1,3 +1,10 @@
+2021-09-30: Gaupol 1.10
+=======================
+
+* Fix subtitle display when seeking to selection start (#181)
+* Fix search dialog result sometimes not being selected
+* Fix rare RecursionError with spell-check
+
 2020-12-31: Gaupol 1.9
 ======================
 
