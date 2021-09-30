@@ -5,16 +5,16 @@
 # 
 # Translators:
 # Osmo Salomaa <otsaloma@iki.fi>, 2017
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2020
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 18:20+0200\n"
+"POT-Creation-Date: 2021-09-30 22:10+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2020\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2021\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/otsaloma/teams/64879/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,19 +48,19 @@ msgstr "29.970 fps"
 
 #: aeidon/enums.py:75 data/ui/menubar.ui:248
 msgid "30.000 fps"
-msgstr ""
+msgstr "30.000 fps"
 
 #: aeidon/enums.py:79 data/ui/menubar.ui:253
 msgid "50.000 fps"
-msgstr ""
+msgstr "50.000 fps"
 
 #: aeidon/enums.py:83 data/ui/menubar.ui:258
 msgid "59.940 fps"
-msgstr ""
+msgstr "59.940 fps"
 
 #: aeidon/enums.py:87 data/ui/menubar.ui:263
 msgid "60.000 fps"
-msgstr ""
+msgstr "60.000 fps"
 
 #: aeidon/enums.py:112
 msgid "Mac (classic)"
@@ -579,8 +579,8 @@ msgstr "Unir ou dividir palavras"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Falha ao carregar dicionário para idioma “{}”"
 
-#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
-#: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:381
+#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
 #: gaupol/agents/open.py:345 gaupol/agents/open.py:354
@@ -624,7 +624,7 @@ msgstr "Cada tarefa está sendo executada em cada projeto."
 #: gaupol/assistants.py:793
 #, python-brace-format
 msgid "{current:d} of {total:d} tasks complete"
-msgstr "{current:d} de {total:d} tarefas completadas"
+msgstr "{current:d} de {total:d} tarefas concluídas"
 
 #: gaupol/assistants.py:801
 msgid "Project: {}"
@@ -675,11 +675,11 @@ msgstr[1] "Confirmar {:d} alterações"
 msgid "Italic"
 msgstr "Itálico"
 
-#: gaupol/player.py:364
+#: gaupol/player.py:372
 msgid "No video streams found"
-msgstr ""
+msgstr "Nenhum fluxo de vídeo encontrado"
 
-#: gaupol/player.py:371
+#: gaupol/player.py:379
 msgid "Failed to initialize playback"
 msgstr "Falha ao inicializar a reprodução"
 
@@ -697,11 +697,11 @@ msgstr[1] "Encontradas e substituídas {:d} ocorrências"
 msgid "\"{}\" not found"
 msgstr "“{}” não encontrado(a)"
 
-#: gaupol/dialogs/search.py:554
+#: gaupol/dialogs/search.py:558
 msgid "Error in regular expression pattern"
 msgstr "Erro no formato da expressão regular"
 
-#: gaupol/dialogs/search.py:562
+#: gaupol/dialogs/search.py:566
 msgid "Error in regular expression replacement"
 msgstr "Erro na expressão regular de substituição"
 
@@ -720,7 +720,7 @@ msgstr "_Cancelar"
 
 #: gaupol/dialogs/text_edit.py:53
 msgid "Edit Text"
-msgstr "Editar Texto"
+msgstr "Editar texto"
 
 #: gaupol/dialogs/framerate_convert.py:64
 msgid "Co_nvert"
@@ -767,7 +767,7 @@ msgstr "Dividindo projeto"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Dividir {amount:d} legendas para projeto “{name}”"
 
-#: gaupol/dialogs/spell_check.py:267
+#: gaupol/dialogs/spell_check.py:269
 msgid "Spell-checking"
 msgstr "Verificar ortografia"
 
@@ -817,7 +817,7 @@ msgstr "_Transformar"
 
 #: gaupol/dialogs/position_shift.py:72
 msgid "_Shift"
-msgstr "De_slocar"
+msgstr "_Deslocar"
 
 #: gaupol/dialogs/position_shift.py:150
 msgid "frames"
@@ -851,7 +851,7 @@ msgstr ""
 
 #: gaupol/dialogs/about.py:54
 msgid "Gaupol Website"
-msgstr "Website do Gaupol"
+msgstr "Site do Gaupol"
 
 #: gaupol/dialogs/append.py:35
 msgid "Append File"
@@ -929,7 +929,7 @@ msgstr ""
 
 #: gaupol/dialogs/language.py:97
 msgid "Set Language"
-msgstr "Definir Idioma"
+msgstr "Definir idioma"
 
 #: gaupol/dialogs/video.py:52 gaupol/dialogs/file.py:59
 msgid "All files"
@@ -959,7 +959,7 @@ msgstr "Outro…"
 #: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
 #: gaupol/agents/menu.py:110
 msgid "File not found"
-msgstr ""
+msgstr "Arquivo não encontrado"
 
 #: gaupol/agents/open.py:85
 #, python-brace-format
@@ -980,7 +980,7 @@ msgstr "Abrir tradução"
 
 #: gaupol/agents/open.py:223
 msgid "Select Video"
-msgstr "Selecionar Vídeo"
+msgstr "Selecionar vídeo"
 
 #: gaupol/agents/open.py:224
 msgid "_Select"
@@ -1003,8 +1003,8 @@ msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
-"Por favor, cheque se o arquivo que você está tentando abrir é um arquivo de "
-"legenda com formato suportado pelo Gaupol."
+"Por favor, verifique se o arquivo que você está tentando abrir é um arquivo "
+"de legenda com formato suportado pelo Gaupol."
 
 #: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
@@ -1116,19 +1116,19 @@ msgstr "Reproduz ou para o vídeo"
 
 #: gaupol/agents/video.py:75 data/ui/menubar.ui:390
 msgid "Seek _Previous"
-msgstr "Procurar legenda _anterior"
+msgstr "Ir para legenda _anterior"
 
 #: gaupol/agents/video.py:77
 msgid "Seek to the start of the previous subtitle"
-msgstr "Procura o início da legenda anterior"
+msgstr "Ir para início da legenda anterior"
 
 #: gaupol/agents/video.py:81 data/ui/menubar.ui:394
 msgid "Seek _Next"
-msgstr "Procurar _próxima legenda"
+msgstr "Ir para _próxima legenda"
 
 #: gaupol/agents/video.py:83
 msgid "Seek to the start of the next subtitle"
-msgstr "Procura o início da próxima legenda"
+msgstr "Ir para início da próxima legenda"
 
 #: gaupol/agents/video.py:88 data/ui/menubar.ui:400
 msgid "Seek _Backward"
@@ -1160,7 +1160,7 @@ msgstr "_Carregar"
 
 #: gaupol/agents/video.py:361
 msgid "Track {:d}"
-msgstr ""
+msgstr "Faixa {:d}"
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1570,11 +1570,11 @@ msgstr "Prolongar até o _fim"
 
 #: data/ui/menubar.ui:165
 msgid "_Previous From Video Position"
-msgstr ""
+msgstr "_Anterior à posição do vídeo"
 
 #: data/ui/menubar.ui:169
 msgid "_Next From Video Position"
-msgstr ""
+msgstr "_Próximo a partir da posição do vídeo"
 
 #: data/ui/menubar.ui:177
 msgid "_Preferences"
@@ -1702,11 +1702,11 @@ msgstr "Reproduzir _seleção"
 
 #: data/ui/menubar.ui:410 data/ui/view-popup.ui:30
 msgid "S_eek Selection Start"
-msgstr "Procurar _início da seleção"
+msgstr "Ir para _início da seleção"
 
 #: data/ui/menubar.ui:414
 msgid "See_k Selection End"
-msgstr "Procurar fi_m da seleção"
+msgstr "Ir para fi_m da seleção"
 
 #: data/ui/menubar.ui:420
 msgid "_Audio"
@@ -2205,7 +2205,7 @@ msgstr "_Pré-visualizar mudanças"
 
 #: data/ui/position-shift-dialog.ui:200
 msgid "Shift s_elected subtitles"
-msgstr "Deslocar legendas s_elecionadas"
+msgstr "Deslocar legendas _selecionadas"
 
 #: data/ui/position-shift-dialog.ui:217
 msgid "Shift su_btitles from selection to end"
@@ -2217,7 +2217,7 @@ msgstr "Deslocar projeto at_ual"
 
 #: data/ui/position-shift-dialog.ui:251
 msgid "Shift all _open projects"
-msgstr ""
+msgstr "Deslocar todos projetos _abertos"
 
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"
@@ -2441,11 +2441,11 @@ msgstr "Capitaliza a primeira letra de uma frase"
 
 #: data/patterns/Latn.capitalization.in:12
 msgid "Ellipsis"
-msgstr "Elipse"
+msgstr "Reticências"
 
 #: data/patterns/Latn.capitalization.in:13
 msgid "Capitalize after an ellipsis"
-msgstr "Maiúsculo após uma elipse"
+msgstr "Maiúsculo após reticências"
 
 #: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
 #: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
@@ -2467,7 +2467,7 @@ msgstr "Formato a.m. e p.m."
 
 #: data/patterns/Latn.common-error.in:72 data/patterns/Latn.common-error.in:81
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr "Muda os vários formatos de período 12-horas para “a.m.” e “p.m.”"
+msgstr "Muda os vários formatos de período de 12 horas para “a.m.” e “p.m.”"
 
 #: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
 msgid "Letter \"O\" in a number"
@@ -2583,7 +2583,7 @@ msgstr "Substituir um único hífen de uma cláusula por dois hifens"
 
 #: data/patterns/Latn.hearing-impaired.in:5
 msgid "Sound in brackets"
-msgstr "Som entre parênteses"
+msgstr "Som entre colchetes"
 
 #: data/patterns/Latn.hearing-impaired.in:6
 msgid "Remove description of a sound between square brackets"

@@ -6,16 +6,16 @@
 # Translators:
 # Osmo Salomaa <otsaloma@iki.fi>, 2016
 # Ася Л <lara6381@gmail.com>, 2018
-# Caarmi, 2020
+# Caarmi, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 18:20+0200\n"
+"POT-Creation-Date: 2021-09-30 22:10+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Caarmi, 2020\n"
+"Last-Translator: Caarmi, 2021\n"
 "Language-Team: Russian (https://www.transifex.com/otsaloma/teams/64879/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,23 +45,23 @@ msgstr "25 к/с"
 
 #: aeidon/enums.py:71
 msgid "29.970 fps"
-msgstr "29.970 к/с"
+msgstr "29,970 к/с"
 
 #: aeidon/enums.py:75 data/ui/menubar.ui:248
 msgid "30.000 fps"
-msgstr ""
+msgstr "30,000 к/с"
 
 #: aeidon/enums.py:79 data/ui/menubar.ui:253
 msgid "50.000 fps"
-msgstr ""
+msgstr "50,000 к/с"
 
 #: aeidon/enums.py:83 data/ui/menubar.ui:258
 msgid "59.940 fps"
-msgstr ""
+msgstr "59,940 к/с"
 
 #: aeidon/enums.py:87 data/ui/menubar.ui:263
 msgid "60.000 fps"
-msgstr ""
+msgstr "60,000 к/с"
 
 #: aeidon/enums.py:112
 msgid "Mac (classic)"
@@ -579,8 +579,8 @@ msgstr "Объединить или разделить слова"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Не удалось загрузить словарь для языка \"{}\""
 
-#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
-#: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:381
+#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
 #: gaupol/agents/open.py:345 gaupol/agents/open.py:354
@@ -677,11 +677,11 @@ msgstr[3] "Подтвердить {:d} изменений"
 msgid "Italic"
 msgstr "Курсив"
 
-#: gaupol/player.py:364
+#: gaupol/player.py:372
 msgid "No video streams found"
-msgstr ""
+msgstr "Видеопотоки не найдены"
 
-#: gaupol/player.py:371
+#: gaupol/player.py:379
 msgid "Failed to initialize playback"
 msgstr "Не удалось начать воспроизведение"
 
@@ -701,11 +701,11 @@ msgstr[3] "Найдено и заменено {:d} вхождений"
 msgid "\"{}\" not found"
 msgstr "\"{}\" не найден"
 
-#: gaupol/dialogs/search.py:554
+#: gaupol/dialogs/search.py:558
 msgid "Error in regular expression pattern"
 msgstr "Ошибка в регулярном выражении"
 
-#: gaupol/dialogs/search.py:562
+#: gaupol/dialogs/search.py:566
 msgid "Error in regular expression replacement"
 msgstr "Ошибка в замещающем тексте"
 
@@ -771,7 +771,7 @@ msgstr "Разделение проекта"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Перенесено субтитров в проект \"{name}\": {amount:d}"
 
-#: gaupol/dialogs/spell_check.py:267
+#: gaupol/dialogs/spell_check.py:269
 msgid "Spell-checking"
 msgstr "Проверка орфографии"
 
@@ -961,7 +961,7 @@ msgstr "Другая…"
 #: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
 #: gaupol/agents/menu.py:110
 msgid "File not found"
-msgstr ""
+msgstr "Файл не найден"
 
 #: gaupol/agents/open.py:85
 #, python-brace-format
@@ -1157,7 +1157,7 @@ msgstr "Загрузить"
 
 #: gaupol/agents/video.py:361
 msgid "Track {:d}"
-msgstr ""
+msgstr "Дорожка {:d}"
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1518,7 +1518,7 @@ msgstr "_Закончить позже"
 
 #: data/ui/menubar.ui:108
 msgid "Set St_art From Video Position"
-msgstr ""
+msgstr "_Начало в позиции видео"
 
 #: data/ui/menubar.ui:112
 msgid "Set En_d From Video Position"
@@ -2206,7 +2206,7 @@ msgstr "Сдвинуть т_екущий проект"
 
 #: data/ui/position-shift-dialog.ui:251
 msgid "Shift all _open projects"
-msgstr ""
+msgstr "Сдвинуть все пр_оекты"
 
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"

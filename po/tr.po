@@ -7,15 +7,16 @@
 # Osmo Salomaa <otsaloma@iki.fi>, 2016
 # Yasin ÇUKUR <yasincukur@gmail.com>, 2020
 # CJ9 <aanistt@gmail.com>, 2020
+# Hasan Kalaman <piryazici@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 18:20+0200\n"
+"POT-Creation-Date: 2021-09-30 22:10+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: CJ9 <aanistt@gmail.com>, 2020\n"
+"Last-Translator: Hasan Kalaman <piryazici@gmail.com>, 2021\n"
 "Language-Team: Turkish (https://www.transifex.com/otsaloma/teams/64879/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -492,23 +493,23 @@ msgstr "Görevler ve Hedef"
 
 #: gaupol/assistants.py:128
 msgid "Correct texts in the text column"
-msgstr ""
+msgstr "Metin sütunundaki metinleri düzeltin"
 
 #: gaupol/assistants.py:129
 msgid "Correct texts in the translation column"
-msgstr ""
+msgstr "Çeviri sütunundaki metinleri düzeltin"
 
 #: gaupol/assistants.py:138
 msgid "Correct texts in selected subtitles"
-msgstr ""
+msgstr "Seçili altyazıdaki metinleri düzeltin"
 
 #: gaupol/assistants.py:139
 msgid "Correct texts in current project"
-msgstr ""
+msgstr "Güncel projedeki metinleri düzeltin"
 
 #: gaupol/assistants.py:140
 msgid "Correct texts in all open projects"
-msgstr ""
+msgstr "Tüm açılmamış projedeki metinleri düzeltin"
 
 #: gaupol/assistants.py:363
 msgid "Other"
@@ -579,8 +580,8 @@ msgstr "Kelimeleri Birleştir/Ayır"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "\"{}\" için sözlük yüklenemedi."
 
-#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
-#: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:381
+#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
 #: gaupol/agents/open.py:345 gaupol/agents/open.py:354
@@ -675,11 +676,11 @@ msgstr[1] "{:d} Değişikliği Doğrula"
 msgid "Italic"
 msgstr "Eğik"
 
-#: gaupol/player.py:364
+#: gaupol/player.py:372
 msgid "No video streams found"
 msgstr ""
 
-#: gaupol/player.py:371
+#: gaupol/player.py:379
 msgid "Failed to initialize playback"
 msgstr ""
 
@@ -697,11 +698,11 @@ msgstr[1] ""
 msgid "\"{}\" not found"
 msgstr "\"{}\" bulunamadı"
 
-#: gaupol/dialogs/search.py:554
+#: gaupol/dialogs/search.py:558
 msgid "Error in regular expression pattern"
 msgstr "Düzenli ifade modellemesinde hata var"
 
-#: gaupol/dialogs/search.py:562
+#: gaupol/dialogs/search.py:566
 msgid "Error in regular expression replacement"
 msgstr "Düzenli ifade değiştirilmesinde hata var"
 
@@ -767,7 +768,7 @@ msgstr "Projeyi böl"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Alt yazıların {amount:d} 'i, \"{name}\" olarak bölündü."
 
-#: gaupol/dialogs/spell_check.py:267
+#: gaupol/dialogs/spell_check.py:269
 msgid "Spell-checking"
 msgstr "Yazım kontrolü"
 

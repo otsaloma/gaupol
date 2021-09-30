@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Carlos Mella <cmellib@gmail.com>, 2019
+# Carlos Mella <cmellib@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 18:20+0200\n"
+"POT-Creation-Date: 2021-09-30 22:10+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Carlos Mella <cmellib@gmail.com>, 2019\n"
+"Last-Translator: Carlos Mella <cmellib@gmail.com>, 2021\n"
 "Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,19 +47,19 @@ msgstr "29,970 fps"
 
 #: aeidon/enums.py:75 data/ui/menubar.ui:248
 msgid "30.000 fps"
-msgstr ""
+msgstr "30,000 fps"
 
 #: aeidon/enums.py:79 data/ui/menubar.ui:253
 msgid "50.000 fps"
-msgstr ""
+msgstr "50,000 fps"
 
 #: aeidon/enums.py:83 data/ui/menubar.ui:258
 msgid "59.940 fps"
-msgstr ""
+msgstr "59,940 fps"
 
 #: aeidon/enums.py:87 data/ui/menubar.ui:263
 msgid "60.000 fps"
-msgstr ""
+msgstr "60,000 fps"
 
 #: aeidon/enums.py:112
 msgid "Mac (classic)"
@@ -579,8 +579,8 @@ msgstr "Unir o dividir palabras"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "No fue posible abrir el diccionario para el idioma «{}»"
 
-#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
-#: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:381
+#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
 #: gaupol/agents/open.py:345 gaupol/agents/open.py:354
@@ -675,11 +675,11 @@ msgstr[1] "Confirmar {:d} cambios"
 msgid "Italic"
 msgstr "Cursiva"
 
-#: gaupol/player.py:364
+#: gaupol/player.py:372
 msgid "No video streams found"
-msgstr ""
+msgstr "No se encontró ningún canal de vídeo"
 
-#: gaupol/player.py:371
+#: gaupol/player.py:379
 msgid "Failed to initialize playback"
 msgstr "No fue posible iniciar la reproducción"
 
@@ -697,11 +697,11 @@ msgstr[1] "{:d} ocurrencias encontradas y reemplazadas"
 msgid "\"{}\" not found"
 msgstr "No se encontró «{}»"
 
-#: gaupol/dialogs/search.py:554
+#: gaupol/dialogs/search.py:558
 msgid "Error in regular expression pattern"
 msgstr "Error con la expresión regular de búsqueda"
 
-#: gaupol/dialogs/search.py:562
+#: gaupol/dialogs/search.py:566
 msgid "Error in regular expression replacement"
 msgstr "Error con la expresión regular de reemplazo"
 
@@ -767,7 +767,7 @@ msgstr "Dividiendo proyecto"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "{amount:d} subtítulos movidos al proyecto nuevo «{name}»"
 
-#: gaupol/dialogs/spell_check.py:267
+#: gaupol/dialogs/spell_check.py:269
 msgid "Spell-checking"
 msgstr "Corrigiendo ortografía"
 
@@ -960,7 +960,7 @@ msgstr "Otro…"
 #: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
 #: gaupol/agents/menu.py:110
 msgid "File not found"
-msgstr ""
+msgstr "No se encontró el archivo"
 
 #: gaupol/agents/open.py:85
 #, python-brace-format
@@ -1164,7 +1164,7 @@ msgstr "_Abrir"
 
 #: gaupol/agents/video.py:361
 msgid "Track {:d}"
-msgstr ""
+msgstr "Pista {:d}"
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1532,7 +1532,7 @@ msgstr "Fin_alizar después"
 
 #: data/ui/menubar.ui:108
 msgid "Set St_art From Video Position"
-msgstr ""
+msgstr "Definir p_osición inicial según la posición del vídeo"
 
 #: data/ui/menubar.ui:112
 msgid "Set En_d From Video Position"
@@ -1580,11 +1580,11 @@ msgstr "Extender hasta el _final"
 
 #: data/ui/menubar.ui:165
 msgid "_Previous From Video Position"
-msgstr ""
+msgstr "_Anterior según la posición del vídeo"
 
 #: data/ui/menubar.ui:169
 msgid "_Next From Video Position"
-msgstr ""
+msgstr "_Siguiente según la posición del vídeo"
 
 #: data/ui/menubar.ui:177
 msgid "_Preferences"
@@ -2231,7 +2231,7 @@ msgstr "Desplazar en el proyecto act_ual"
 
 #: data/ui/position-shift-dialog.ui:251
 msgid "Shift all _open projects"
-msgstr ""
+msgstr "Desplazar en _todos los proyectos abiertos"
 
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"

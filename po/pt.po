@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 18:20+0200\n"
+"POT-Creation-Date: 2021-09-30 22:10+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2020\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2021\n"
 "Language-Team: Portuguese (https://www.transifex.com/otsaloma/teams/64879/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,19 +47,19 @@ msgstr "29.970 fps"
 
 #: aeidon/enums.py:75 data/ui/menubar.ui:248
 msgid "30.000 fps"
-msgstr ""
+msgstr "30.000 fps"
 
 #: aeidon/enums.py:79 data/ui/menubar.ui:253
 msgid "50.000 fps"
-msgstr ""
+msgstr "50.000 fps"
 
 #: aeidon/enums.py:83 data/ui/menubar.ui:258
 msgid "59.940 fps"
-msgstr ""
+msgstr "59.940 fps"
 
 #: aeidon/enums.py:87 data/ui/menubar.ui:263
 msgid "60.000 fps"
-msgstr ""
+msgstr "60.000 fps"
 
 #: aeidon/enums.py:112
 msgid "Mac (classic)"
@@ -110,7 +110,7 @@ msgstr "Báltico"
 #: aeidon/encodings.py:52 aeidon/encodings.py:73 aeidon/encodings.py:98
 #: aeidon/encodings.py:118
 msgid "Central European"
-msgstr "Europa Central"
+msgstr "Centro Europeu"
 
 #: aeidon/encodings.py:53 aeidon/encodings.py:74 aeidon/encodings.py:101
 #: aeidon/encodings.py:115
@@ -181,7 +181,7 @@ msgstr "Chinês unificado"
 
 #: aeidon/encodings.py:99
 msgid "South European"
-msgstr "Sul da Europa"
+msgstr "Sul Europeu"
 
 #: aeidon/encodings.py:108
 msgid "Celtic"
@@ -410,7 +410,7 @@ msgstr "Pré-visualiza da posição selecionada com um reprodutor de vídeo"
 
 #: gaupol/enums.py:37
 msgid "No."
-msgstr "Num."
+msgstr "Nº."
 
 #: gaupol/enums.py:43
 msgid "Start"
@@ -510,7 +510,7 @@ msgstr "Corrigir textos em todos projetos abertos"
 
 #: gaupol/assistants.py:363
 msgid "Other"
-msgstr "Outro(s)"
+msgstr "Outros"
 
 #: gaupol/assistants.py:439
 msgid "Capitalize texts written in lower case"
@@ -578,8 +578,8 @@ msgstr "Juntar ou dividir palavras"
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "Erro ao carregar dicionário para idioma “{}”"
 
-#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
-#: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:381
+#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
 #: gaupol/agents/open.py:345 gaupol/agents/open.py:354
@@ -674,11 +674,11 @@ msgstr[1] "Confirmar {:d} alterações"
 msgid "Italic"
 msgstr "Itálico"
 
-#: gaupol/player.py:364
+#: gaupol/player.py:372
 msgid "No video streams found"
-msgstr ""
+msgstr "Nenhuma transmissão de vídeo encontrada"
 
-#: gaupol/player.py:371
+#: gaupol/player.py:379
 msgid "Failed to initialize playback"
 msgstr "Erro ao iniciar a reprodução"
 
@@ -694,13 +694,13 @@ msgstr[1] "Encontradas e substituídas {:d} ocorrências"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
-msgstr "“{}” não encontrado(a)"
+msgstr "“{}” não encontrado"
 
-#: gaupol/dialogs/search.py:554
+#: gaupol/dialogs/search.py:558
 msgid "Error in regular expression pattern"
 msgstr "Erro no padrão da expressão regular"
 
-#: gaupol/dialogs/search.py:562
+#: gaupol/dialogs/search.py:566
 msgid "Error in regular expression replacement"
 msgstr "Erro na expressão regular de substituição"
 
@@ -766,7 +766,7 @@ msgstr "A dividir projeto"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Dividir {amount:d} legendas para projeto “{name}”"
 
-#: gaupol/dialogs/spell_check.py:267
+#: gaupol/dialogs/spell_check.py:269
 msgid "Spell-checking"
 msgstr "Verificar ortografia"
 
@@ -828,7 +828,7 @@ msgstr "segundos"
 
 #: gaupol/dialogs/about.py:36
 msgid "About Gaupol"
-msgstr "Sobre o Gaupol"
+msgstr "Acerca do Gaupol"
 
 #: gaupol/dialogs/about.py:40
 msgid "Subtitle editor"
@@ -956,7 +956,7 @@ msgstr "Outro…"
 #: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
 #: gaupol/agents/menu.py:110
 msgid "File not found"
-msgstr ""
+msgstr "Ficheiro não encontrado"
 
 #: gaupol/agents/open.py:85
 #, python-brace-format
@@ -977,7 +977,7 @@ msgstr "Abrir tradução"
 
 #: gaupol/agents/open.py:223
 msgid "Select Video"
-msgstr "Selecionar Vídeo"
+msgstr "Selecionar vídeo"
 
 #: gaupol/agents/open.py:224
 msgid "_Select"
@@ -1114,7 +1114,7 @@ msgstr "Reproduz ou para o vídeo"
 
 #: gaupol/agents/video.py:75 data/ui/menubar.ui:390
 msgid "Seek _Previous"
-msgstr "Procurar _Anterior"
+msgstr "Procurar _anterior"
 
 #: gaupol/agents/video.py:77
 msgid "Seek to the start of the previous subtitle"
@@ -1122,7 +1122,7 @@ msgstr "Procura o início da legenda anterior"
 
 #: gaupol/agents/video.py:81 data/ui/menubar.ui:394
 msgid "Seek _Next"
-msgstr "Procurar _Próxima"
+msgstr "Procurar _seguinte"
 
 #: gaupol/agents/video.py:83
 msgid "Seek to the start of the next subtitle"
@@ -1130,7 +1130,7 @@ msgstr "Procura o início da próxima legenda"
 
 #: gaupol/agents/video.py:88 data/ui/menubar.ui:400
 msgid "Seek _Backward"
-msgstr "Procurar _Atrás"
+msgstr "Procurar para _atrás"
 
 #: gaupol/agents/video.py:90
 msgid "Seek backward"
@@ -1138,11 +1138,11 @@ msgstr "Procurar para trás"
 
 #: gaupol/agents/video.py:94 data/ui/menubar.ui:404
 msgid "Seek _Forward"
-msgstr "Procurar _Frente"
+msgstr "Procurar à _frente"
 
 #: gaupol/agents/video.py:96
 msgid "Seek forward"
-msgstr "Procurar para frente"
+msgstr "Procurar à frente"
 
 #: gaupol/agents/video.py:109
 msgid "Volume"
@@ -1158,7 +1158,7 @@ msgstr "_Carregar"
 
 #: gaupol/agents/video.py:361
 msgid "Track {:d}"
-msgstr ""
+msgstr "Faixa {:d}"
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1296,7 +1296,7 @@ msgstr "T_radução"
 
 #: data/ui/split-dialog.ui:15
 msgid "Split Project"
-msgstr "Dividir Projeto"
+msgstr "Dividir projeto"
 
 #: data/ui/split-dialog.ui:48
 msgid "_First subtitle of new project:"
@@ -1312,19 +1312,19 @@ msgstr "Substituir _por:"
 
 #: data/ui/search-dialog.ui:162 data/ui/menubar.ui:328
 msgid "Find _Next"
-msgstr "Localizar _Próxima"
+msgstr "Localizar _seguinte"
 
 #: data/ui/search-dialog.ui:177
 msgid "Find _Previous"
-msgstr "Localizar _Anterior"
+msgstr "Localizar _anterior"
 
 #: data/ui/search-dialog.ui:207
 msgid "Replace _All"
-msgstr "Substituir _Tudo"
+msgstr "Substituir _tudo"
 
 #: data/ui/search-dialog.ui:241
 msgid "R_egular expression"
-msgstr "Expressão R_egular"
+msgstr "Expressão r_egular"
 
 #: data/ui/search-dialog.ui:258
 msgid "_Ignore case"
@@ -1473,11 +1473,11 @@ msgstr "Abrir tradução r_ecente"
 
 #: data/ui/menubar.ui:38
 msgid "Save _As…"
-msgstr "G_uardar Como…"
+msgstr "G_uardar como…"
 
 #: data/ui/menubar.ui:42
 msgid "Save Trans_lation"
-msgstr "Gu_ardar Tradução"
+msgstr "Gu_ardar tradução"
 
 #: data/ui/menubar.ui:46
 msgid "Save Translat_ion As…"
@@ -1569,11 +1569,11 @@ msgstr "Prolongar até o _fim"
 
 #: data/ui/menubar.ui:165
 msgid "_Previous From Video Position"
-msgstr ""
+msgstr "_Anterior à posição do vídeo"
 
 #: data/ui/menubar.ui:169
 msgid "_Next From Video Position"
-msgstr ""
+msgstr "_Posterior à posição do vídeo"
 
 #: data/ui/menubar.ui:177
 msgid "_Preferences"
@@ -1637,7 +1637,7 @@ msgstr "_Colunas"
 
 #: data/ui/menubar.ui:306
 msgid "Cu_t"
-msgstr "Recor_tar"
+msgstr "Cor_tar"
 
 #: data/ui/menubar.ui:310
 msgid "_Copy"
@@ -2216,7 +2216,7 @@ msgstr "Deslocar projeto at_ual"
 
 #: data/ui/position-shift-dialog.ui:251
 msgid "Shift all _open projects"
-msgstr ""
+msgstr "Mudar todos _os projetos abertos"
 
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"
@@ -2285,7 +2285,7 @@ msgstr "Pronome de primeira pessoa"
 
 #: data/patterns/Latn-en.capitalization.in:6
 msgid "Capitalize the first person pronoun \"I\""
-msgstr "Capitaliza a primeira letra do pronome pessoal “Eu” (“I” em inglês)"
+msgstr "Capitaliza a primeira letra do pronome pessoal “Eu”"
 
 #: data/patterns/Latn-en.common-error.in:5
 #: data/patterns/Latn-en.common-error.in:14
@@ -2297,7 +2297,7 @@ msgstr "Letra “I” numa palavra minúscula"
 #: data/patterns/Latn-en.common-error.in:15
 #: data/patterns/Latn-en.common-error.in:24
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
-msgstr "Substitui letra “I” por letra “l” numa palavra minúscula"
+msgstr "Substitui letra “I” pela letra “l” numa palavra minúscula"
 
 #: data/patterns/Latn-en.common-error.in:32
 #: data/patterns/Latn-en.common-error.in:41
@@ -2311,7 +2311,7 @@ msgstr "Letra “l” numa palavra maiúscula"
 #: data/patterns/Latn-en.common-error.in:51
 #: data/patterns/Latn-en.common-error.in:63
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
-msgstr "Substitui letra “l” por letra “I” numa palavra maiúscula"
+msgstr "Substitui letra “l” pela letra “I” numa palavra maiúscula"
 
 #: data/patterns/Latn-en.common-error.in:73
 #: data/patterns/Latn-en.common-error.in:82
@@ -2451,14 +2451,14 @@ msgstr "Maiúsculo após uma elipse"
 #: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
 #: data/patterns/Latn.common-error.in:62
 msgid "Ligatures"
-msgstr "Ligaduras"
+msgstr "Ligações"
 
 #: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
 #: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
 #: data/patterns/Latn.common-error.in:45 data/patterns/Latn.common-error.in:54
 #: data/patterns/Latn.common-error.in:63
 msgid "Unpack ligatures to individual characters"
-msgstr "Desempacota ligaduras para caracteres individuais"
+msgstr "Desempacota ligações para caracteres individuais"
 
 #: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Spelling of a.m. and p.m."

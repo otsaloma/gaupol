@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Heimen Stoffels <vistausss@outlook.com>, 2020
+# Heimen Stoffels <vistausss@fastmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 18:20+0200\n"
+"POT-Creation-Date: 2021-09-30 22:10+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>, 2020\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>, 2021\n"
 "Language-Team: Dutch (https://www.transifex.com/otsaloma/teams/64879/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,19 +47,19 @@ msgstr "29.970 fps"
 
 #: aeidon/enums.py:75 data/ui/menubar.ui:248
 msgid "30.000 fps"
-msgstr ""
+msgstr "30.000 fps"
 
 #: aeidon/enums.py:79 data/ui/menubar.ui:253
 msgid "50.000 fps"
-msgstr ""
+msgstr "50.000 fps"
 
 #: aeidon/enums.py:83 data/ui/menubar.ui:258
 msgid "59.940 fps"
-msgstr ""
+msgstr "59.940 fps"
 
 #: aeidon/enums.py:87 data/ui/menubar.ui:263
 msgid "60.000 fps"
-msgstr ""
+msgstr "60.000 fps"
 
 #: aeidon/enums.py:112
 msgid "Mac (classic)"
@@ -233,11 +233,11 @@ msgstr "Duur aanpassen"
 
 #: aeidon/agents/position.py:96
 msgid "Converting framerate"
-msgstr "Framerate omzetten"
+msgstr "Framesnelheid omzetten"
 
 #: aeidon/agents/position.py:146
 msgid "Setting framerate"
-msgstr "Framerate instellen"
+msgstr "Framesnelheid instellen"
 
 #: aeidon/agents/position.py:168
 msgid "Shifting positions"
@@ -576,10 +576,10 @@ msgstr "Splits woorden of voeg ze samen"
 
 #: gaupol/assistants.py:599 gaupol/agents/tools.py:45
 msgid "Failed to load dictionary for language \"{}\""
-msgstr "Het woordenboek '{}' kan niet worden geladen"
+msgstr "Het woordenboek ‘{}’ kan niet worden geladen"
 
-#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:373
-#: gaupol/dialogs/search.py:556 gaupol/dialogs/search.py:564
+#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:381
+#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
 #: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
 #: gaupol/agents/open.py:328 gaupol/agents/open.py:337
 #: gaupol/agents/open.py:345 gaupol/agents/open.py:354
@@ -674,11 +674,11 @@ msgstr[1] "{:d} wijzigingen toepassen?"
 msgid "Italic"
 msgstr "Cursief"
 
-#: gaupol/player.py:364
+#: gaupol/player.py:372
 msgid "No video streams found"
-msgstr ""
+msgstr "Geen videostreams aangetroffen"
 
-#: gaupol/player.py:371
+#: gaupol/player.py:379
 msgid "Failed to initialize playback"
 msgstr "Afspelen mislukt"
 
@@ -694,13 +694,13 @@ msgstr[1] "{:d} items aangetroffen en vervangen"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
-msgstr "'{}' is niet aangetroffen"
+msgstr "‘{}’ is niet aangetroffen"
 
-#: gaupol/dialogs/search.py:554
+#: gaupol/dialogs/search.py:558
 msgid "Error in regular expression pattern"
 msgstr "Fout in reguliere-expressiepatroon"
 
-#: gaupol/dialogs/search.py:562
+#: gaupol/dialogs/search.py:566
 msgid "Error in regular expression replacement"
 msgstr "Fout in reguliere-expressievervanging"
 
@@ -764,9 +764,9 @@ msgstr "Project splitsen"
 #: gaupol/dialogs/split.py:97
 #, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
-msgstr "{amount:d} ondertitels afsplitsen naar project '{name}'"
+msgstr "{amount:d} ondertitels afsplitsen naar ‘{name}’"
 
-#: gaupol/dialogs/spell_check.py:267
+#: gaupol/dialogs/spell_check.py:269
 msgid "Spell-checking"
 msgstr "Spellingcontrole"
 
@@ -894,7 +894,7 @@ msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr ""
-"De bestanden bestaan al in '{}'. Als je ze vervangt, dan wordt de inhoud "
+"De bestanden in ‘{}’ bestaan al. Als je ze vervangt, dan wordt de inhoud "
 "ervan overschreven."
 
 #: gaupol/dialogs/multi_save.py:216 data/ui/search-dialog.ui:192
@@ -952,17 +952,17 @@ msgstr "Automatische detectie"
 
 #: gaupol/dialogs/file.py:122
 msgid "Other…"
-msgstr "Overig..."
+msgstr "Overig…"
 
 #: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
 #: gaupol/agents/menu.py:110
 msgid "File not found"
-msgstr ""
+msgstr "Bestand niet aangetroffen"
 
 #: gaupol/agents/open.py:85
 #, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
-msgstr "{amount:d} ondertitels toegevoegd uit '{basename}'"
+msgstr "{amount:d} ondertitels toegevoegd uit ‘{basename}’"
 
 #: gaupol/agents/open.py:96
 msgid "Appending file"
@@ -970,7 +970,7 @@ msgstr "Bestand invoegen"
 
 #: gaupol/agents/open.py:111
 msgid "File \"{}\" is already open"
-msgstr "'{}' is al geopend"
+msgstr "‘{}’ is al geopend"
 
 #: gaupol/agents/open.py:214
 msgid "Open Translation"
@@ -986,7 +986,7 @@ msgstr "_Selecteren"
 
 #: gaupol/agents/open.py:325
 msgid "Failed to decode file \"{}\" with all attempted codecs"
-msgstr "'{}' kan niet worden gedecodeerd met de beschikbare codecs"
+msgstr "‘{}’ kan niet worden gedecodeerd met de beschikbare codecs"
 
 #: gaupol/agents/open.py:326
 msgid "Please try to open the file with a different character encoding."
@@ -994,7 +994,7 @@ msgstr "Open het bestand met een andere tekenreeks."
 
 #: gaupol/agents/open.py:334
 msgid "Failed to recognize format of file \"{}\""
-msgstr "Het formaat van '{}' wordt niet herkend"
+msgstr "Het formaat van ‘{}’ wordt niet herkend"
 
 #: gaupol/agents/open.py:335
 msgid ""
@@ -1006,11 +1006,11 @@ msgstr ""
 
 #: gaupol/agents/open.py:343
 msgid "Failed to open file \"{}\""
-msgstr "'{}' kan niet worden geopend"
+msgstr "‘{}’ kan niet worden geopend"
 
 #: gaupol/agents/open.py:351
 msgid "Failed to parse file \"{}\""
-msgstr "'{}' kan niet worden verwerkt"
+msgstr "‘{}’ kan niet worden verwerkt"
 
 #: gaupol/agents/open.py:352
 msgid "Please check that the file you are trying to open is a valid {} file."
@@ -1018,7 +1018,7 @@ msgstr "Controleer of het te openen bestand een geldig {}bestand is."
 
 #: gaupol/agents/open.py:360
 msgid "Open abnormally large file \"{}\"?"
-msgstr "Weet je zeker dat je '{}' wilt openen?"
+msgstr "Weet je zeker dat je ‘{}’ wilt openen?"
 
 #: gaupol/agents/open.py:361
 msgid ""
@@ -1031,7 +1031,7 @@ msgstr ""
 
 #: gaupol/agents/open.py:371
 msgid "Open unsorted file \"{}\"?"
-msgstr "Weet je zeker dat je '{}' wilt openen?"
+msgstr "Weet je zeker dat je ‘{}’ wilt openen?"
 
 #: gaupol/agents/open.py:372
 msgid ""
@@ -1044,7 +1044,7 @@ msgstr ""
 #: gaupol/agents/open.py:383
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr ""
-"Wil je de aanpassingen aan '{}' opslaan alvorens een nieuw bestand te "
+"Wil je de aanpassingen aan ‘{}’ opslaan alvorens een nieuw bestand te "
 "openen?"
 
 #: gaupol/agents/open.py:386
@@ -1053,7 +1053,7 @@ msgstr "Openen _zonder opslaan"
 
 #: gaupol/agents/close.py:66
 msgid "Save changes to document \"{}\" before closing?"
-msgstr "Wil je de aanpassingen aan '{}' opslaan alvorens te sluiten?"
+msgstr "Wil je de aanpassingen aan ‘{}’ opslaan alvorens te sluiten?"
 
 #: gaupol/agents/edit.py:101 gaupol/agents/edit.py:119
 msgid "Stretching end position"
@@ -1081,7 +1081,7 @@ msgstr "Opslaan als"
 
 #: gaupol/agents/save.py:135
 msgid "Saved main document as \"{}\""
-msgstr "Het hoofdbestand is opgeslagen als '{}'"
+msgstr "Het hoofdbestand is opgeslagen als ‘{}’"
 
 #: gaupol/agents/save.py:153
 msgid "Save Translation As"
@@ -1089,12 +1089,12 @@ msgstr "Vertaling opslaan als"
 
 #: gaupol/agents/save.py:159
 msgid "Saved translation document as \"{}\""
-msgstr "Het vertaalbestand is opgeslagen als '{}'"
+msgstr "Het vertaalbestand is opgeslagen als ‘{}’"
 
 #: gaupol/agents/save.py:194
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr "'{basename}' kan niet worden geëncodeerd met de codec '{codec}'"
+msgstr "‘{basename}’ kan niet worden geëncodeerd met de codec ‘{codec}’"
 
 #: gaupol/agents/save.py:195
 msgid "Please try to save the file with a different character encoding."
@@ -1102,7 +1102,7 @@ msgstr "Sla het bestand op met een andere tekenreeks."
 
 #: gaupol/agents/save.py:203
 msgid "Failed to save file \"{}\""
-msgstr "'{}' kan niet worden opgeslagen"
+msgstr "‘{}’ kan niet worden opgeslagen"
 
 #: gaupol/agents/video.py:67 data/ui/menubar.ui:380
 msgid "_Play/Pause"
@@ -1158,13 +1158,13 @@ msgstr "_Laden"
 
 #: gaupol/agents/video.py:361
 msgid "Track {:d}"
-msgstr ""
+msgstr "Spoor {:d}"
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr ""
 "Het ondertitelbestand kan niet worden geëncodeerd naar de tijdelijke map "
-"'{}'"
+"‘{}’"
 
 #: gaupol/agents/preview.py:106
 msgid ""
@@ -1179,7 +1179,7 @@ msgstr ""
 #: gaupol/agents/preview.py:114
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr ""
-"Het ondertitelbestand kan niet worden opgeslagen in de tijdelijke map '{}'"
+"Het ondertitelbestand kan niet worden opgeslagen in de tijdelijke map ‘{}’"
 
 #: gaupol/agents/preview.py:122
 msgid "Video player not found"
@@ -1201,11 +1201,11 @@ msgstr "De videospeler kan niet worden gestart"
 
 #: gaupol/applicationman.py:105
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
-msgstr "gaupol [OPTIE...] [BESTAND...] [+[NUM]]"
+msgstr "gaupol [OPTIE…] [BESTAND…] [+[NUM]]"
 
 #: gaupol/applicationman.py:109
 msgid "FILE..."
-msgstr "BESTAND..."
+msgstr "BESTAND…"
 
 #: gaupol/applicationman.py:112
 msgid "subtitle files to open"
@@ -1238,8 +1238,8 @@ msgstr "METHODE"
 #: gaupol/applicationman.py:149
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
-"de te gebruiken methode voor het uitlijnen van vertalingen: 'number' of "
-"'position'"
+"de te gebruiken methode voor het uitlijnen van vertalingen: ‘number’ of "
+"‘position’"
 
 #: gaupol/applicationman.py:157
 msgid "select video file"
@@ -1256,11 +1256,11 @@ msgstr "{:.3f} fps"
 
 #: data/extensions/custom-framerates/add-framerate-dialog.ui:13
 msgid "Add Framerate"
-msgstr "Framerate toevoegen"
+msgstr "Framesnelheid toevoegen"
 
 #: data/extensions/custom-framerates/add-framerate-dialog.ui:44
 msgid "_Framerate:"
-msgstr "_Framerate:"
+msgstr "_Framesnelheid:"
 
 #: data/extensions/custom-framerates/add-framerate-dialog.ui:73
 msgid "fps"
@@ -1268,7 +1268,7 @@ msgstr "fps"
 
 #: data/extensions/custom-framerates/preferences-dialog.ui:8
 msgid "Framerates"
-msgstr "Framerates"
+msgstr "Framesnelheden"
 
 #: data/extensions/custom-framerates/preferences-dialog.ui:64
 msgid "Add"
@@ -1368,11 +1368,11 @@ msgstr "Doel"
 
 #: data/ui/framerate-convert-dialog.ui:8
 msgid "Convert Framerate"
-msgstr "Framerate omzetten"
+msgstr "Framesnelheid omzetten"
 
 #: data/ui/framerate-convert-dialog.ui:48
 msgid "Framerate"
-msgstr "Framerate"
+msgstr "Framesnelheid"
 
 #: data/ui/framerate-convert-dialog.ui:71
 msgid "_Input:"
@@ -1449,7 +1449,7 @@ msgstr "Map kiezen"
 
 #: data/ui/multi-save-dialog.ui:150 data/ui/save-dialog.ui:102
 msgid "F_ramerate:"
-msgstr "F_ramerate:"
+msgstr "F_ramesnelheid:"
 
 #: data/ui/menubar.ui:5
 msgid "_File"
@@ -1573,11 +1573,11 @@ msgstr "Uitbreiden naar _einde"
 
 #: data/ui/menubar.ui:165
 msgid "_Previous From Video Position"
-msgstr ""
+msgstr "Vorige vanaf video_positie"
 
 #: data/ui/menubar.ui:169
 msgid "_Next From Video Position"
-msgstr ""
+msgstr "Volge_nde vanaf videopositie"
 
 #: data/ui/menubar.ui:177
 msgid "_Preferences"
@@ -1617,7 +1617,7 @@ msgstr "_Frames"
 
 #: data/ui/menubar.ui:225
 msgid "F_ramerate"
-msgstr "F_ramerate"
+msgstr "F_ramesnelheid"
 
 #: data/ui/menubar.ui:228
 msgid "2_3.976 fps"
@@ -1766,7 +1766,7 @@ msgstr "_Duur aanpassen…"
 
 #: data/ui/menubar.ui:479
 msgid "Convert _Framerate…"
-msgstr "_Framerate omzetten…"
+msgstr "_Framesnelheid omzetten…"
 
 #: data/ui/menubar.ui:485
 msgid "_Append File…"
@@ -1839,7 +1839,7 @@ msgstr "Aut_omatisch detecteren:"
 #: data/ui/preferences-dialog.ui:266
 msgid "Encoding specified in the open dialog will always be tried first."
 msgstr ""
-"De in het venster 'Openen' opgegeven tekenreeks wordt ten allen tijde als "
+"De in het venster ‘Openen’ opgegeven tekenreeks wordt te allen tijde als "
 "eerste geprobeerd."
 
 #: data/ui/preferences-dialog.ui:296
@@ -2219,7 +2219,7 @@ msgstr "Huidig proje_ct verschuiven"
 
 #: data/ui/position-shift-dialog.ui:251
 msgid "Shift all _open projects"
-msgstr ""
+msgstr "Alle ge_opende projecten verschuiven"
 
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"
@@ -2268,11 +2268,11 @@ msgstr "H_uidig project aanpassen"
 
 #: data/extensions/custom-framerates/custom-framerates.extension.in:7
 msgid "Custom Framerates"
-msgstr "Aangepaste framerates"
+msgstr "Aangepaste framesnelheden"
 
 #: data/extensions/custom-framerates/custom-framerates.extension.in:8
 msgid "Allow use of non-standard framerates"
-msgstr "Gebruik van niet-standaard framerates toestaan"
+msgstr "Gebruik van ongewone framesnelheden toestaan"
 
 #: data/patterns/Latn-en-US.common-error.in:5
 msgid "Period after title"
@@ -2280,7 +2280,7 @@ msgstr "Punt achter titel"
 
 #: data/patterns/Latn-en-US.common-error.in:6
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
-msgstr "Voeg een punt toe achter een afkorting, zoals 'Mr' en 'Dr'"
+msgstr "Voeg een punt toe achter een afkorting, zoals die van ‘Mr’ en ‘Dr’"
 
 #: data/patterns/Latn-en.capitalization.in:5
 msgid "First person pronoun"
@@ -2288,33 +2288,33 @@ msgstr "Voornaamwoord"
 
 #: data/patterns/Latn-en.capitalization.in:6
 msgid "Capitalize the first person pronoun \"I\""
-msgstr "'I' in Engelstalige teksten met hoofdletter schrijven"
+msgstr "‘I’ in Engelstalige teksten met hoofdletter schrijven"
 
 #: data/patterns/Latn-en.common-error.in:5
 #: data/patterns/Latn-en.common-error.in:14
 #: data/patterns/Latn-en.common-error.in:23
 msgid "Letter \"I\" in a lower case word"
-msgstr "'I' in Engelstalige teksten in kleine letters schrijven"
+msgstr "‘I’ in Engelstalige teksten in kleine letters schrijven"
 
 #: data/patterns/Latn-en.common-error.in:6
 #: data/patterns/Latn-en.common-error.in:15
 #: data/patterns/Latn-en.common-error.in:24
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
-msgstr "'I' in Engelstalige woorden met kleine letter schrijven"
+msgstr "‘I’ in Engelstalige woorden met kleine letter schrijven"
 
 #: data/patterns/Latn-en.common-error.in:32
 #: data/patterns/Latn-en.common-error.in:41
 #: data/patterns/Latn-en.common-error.in:50
 #: data/patterns/Latn-en.common-error.in:62
 msgid "Letter \"l\" in an upper case word"
-msgstr "'I' in Engelstalige woorden met hoofdletter schrijven"
+msgstr "‘I’ in Engelstalige woorden met hoofdletter schrijven"
 
 #: data/patterns/Latn-en.common-error.in:33
 #: data/patterns/Latn-en.common-error.in:42
 #: data/patterns/Latn-en.common-error.in:51
 #: data/patterns/Latn-en.common-error.in:63
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
-msgstr "'i' in Engelstalige woorden met hoofdletter schrijven"
+msgstr "‘i’ in Engelstalige woorden met hoofdletter schrijven"
 
 #: data/patterns/Latn-en.common-error.in:73
 #: data/patterns/Latn-en.common-error.in:82
@@ -2324,7 +2324,7 @@ msgstr "Nul in woord met hoofdletters"
 #: data/patterns/Latn-en.common-error.in:74
 #: data/patterns/Latn-en.common-error.in:83
 msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr "'0' in woorden met hoofdletters vervangen door 'O'"
+msgstr "‘0’ in woorden met hoofdletters vervangen door ‘O’"
 
 #: data/patterns/Latn-en.common-error.in:91
 #: data/patterns/Latn.common-error.in:108
@@ -2352,7 +2352,7 @@ msgstr "Oké"
 #: data/patterns/Latn-en.common-error.in:110
 #: data/patterns/Latn-en.common-error.in:119
 msgid "Spell two-letter forms of \"okay\" in all upper case"
-msgstr "'okay' vervangen door 'OK'"
+msgstr "‘okay’ vervangen door ‘OK’"
 
 #: data/patterns/Latn-en.hearing-impaired.in:5
 msgid "Uppercase speaker before a colon"
@@ -2371,7 +2371,7 @@ msgstr "Titel"
 
 #: data/patterns/Latn-en.line-break.in:6
 msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr "Geen spatie na een titel, zoals in ' Dr.'"
+msgstr "Geen spatie na een titel, zoals die van ‘ Dr.’"
 
 #: data/patterns/Latn-en.line-break.in:13
 msgid "Article"
@@ -2395,7 +2395,7 @@ msgstr "Bezittelijk voornaamwoord"
 
 #: data/patterns/Latn-en.line-break.in:31
 msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr "Geen spatie na bezittelijke voornaamwoorden, zoals in 'mijn'"
+msgstr "Geen spatie na bezittelijke voornaamwoorden, zoals in ‘mijn’"
 
 #: data/patterns/Latn-fi.common-error.in:5
 #: data/patterns/Latn.common-error.in:182
@@ -2468,15 +2468,15 @@ msgstr "Spelling van a.m. en p.m."
 
 #: data/patterns/Latn.common-error.in:72 data/patterns/Latn.common-error.in:81
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr "Verander de spelling van 12-uurnotaties in 'a.m.' en 'p.m.'"
+msgstr "Verander de spelling van 12-uurnotaties in ‘a.m.’ en ‘p.m.’"
 
 #: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
 msgid "Letter \"O\" in a number"
-msgstr "Letter 'O' als getal"
+msgstr "Letter ‘O’ als getal"
 
 #: data/patterns/Latn.common-error.in:90 data/patterns/Latn.common-error.in:99
 msgid "Replace letter \"O\" with a zero in a number"
-msgstr "Vervang de letter 'O' door 'nul' in een getal"
+msgstr "Vervang de letter ‘O’ door een nul in een getal"
 
 #: data/patterns/Latn.common-error.in:117
 msgid "Double apostrophe"
