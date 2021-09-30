@@ -13,5 +13,5 @@ printf "Press Enter to upload or Ctrl+C to abort: "; read _
 twine upload dist/*
 sudo pip3 uninstall -y aeidon || true
 sudo pip3 uninstall -y aeidon || true
-sudo pip3 install aeidon
+sudo pip3 install -U aeidon
 cd && python3 -c "import aeidon; print(aeidon.__file__, aeidon.__version__)"
