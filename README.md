@@ -80,6 +80,8 @@ Then, to install Gaupol, run command
 
 ### Windows
 
-Windows installers are built irregularly, see [releases][].
+Windows installers are no longer built due to bad tooling, bad results,
+lack of time and lack of motivation. The latest version available for
+Windows is [1.3.1][].
 
-[releases]: https://github.com/otsaloma/gaupol/releases
+[1.3.1]: https://github.com/otsaloma/gaupol/releases/tag/1.3.1
