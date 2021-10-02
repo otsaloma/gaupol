@@ -405,8 +405,9 @@ class VideoPlayer(aeidon.Observable):
         self._text_overlay.props.text = text
         # Do a zero seek to force an update of the overlay.
         # https://github.com/otsaloma/gaupol/issues/181
-        with aeidon.util.silent(Exception, tb=True):
-            self._seek_null()
+        if self._in_default_segment:
+            with aeidon.util.silent(Exception, tb=True):
+                self._seek_null()
 
     @property
     def volume(self):
