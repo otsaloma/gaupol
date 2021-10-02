@@ -1,76 +1,17 @@
-#!/bin/sh
-
+#!/bin/bash
+set -e
 cd "$(dirname "$0")/.." || exit 1
-truncate -s0 po/gaupol.pot
-
-# Python code
-xgettext \
-    --output=po/gaupol.pot \
-    --join-existing \
-    --from-code=UTF-8 \
-    --language=Python \
-    --keyword=_:1 \
-    --keyword=d_:2 \
-    --keyword=n_:1,2 \
-    --add-comments=TRANSLATORS: \
-    $(find . -name "*.py" -not -path "*/test/*")
-
-# GtkBuilder XML files
-xgettext \
-    --output=po/gaupol.pot \
-    --join-existing \
-    --from-code=UTF-8 \
-    $(find data -name "*.ui")
-
-# Extension metadata files
-xgettext \
-    --output=po/gaupol.pot \
-    --join-existing \
-    --from-code=UTF-8 \
-    --language=Desktop \
-    --keyword= \
-    --keyword=Name \
-    --keyword=Description \
-    --add-comments=TRANSLATORS: \
-    data/extensions/*/*.extension.in
-
-# Pattern files
-xgettext \
-    --output=po/gaupol.pot \
-    --join-existing \
-    --from-code=UTF-8 \
-    --language=Desktop \
-    --keyword= \
-    --keyword=Name \
-    --keyword=Description \
-    --add-comments=TRANSLATORS: \
-    data/patterns/*.in
-
-# AppData XML file
-xgettext \
-    --output=po/gaupol.pot \
-    --join-existing \
-    --from-code=UTF-8 \
-    data/io.otsaloma.gaupol.appdata.xml.in
-
-# Desktop file
-xgettext \
-    --output=po/gaupol.pot \
-    --join-existing \
-    --from-code=UTF-8 \
-    --language=Desktop \
-    --keyword= \
-    --keyword=GenericName \
-    --keyword=Comment \
-    --keyword=Keywords \
-    --add-comments=TRANSLATORS: \
-    data/io.otsaloma.gaupol.desktop.in
-
-# Remove AppData entries that shouldn't be translated.
-msggrep \
-    --invert-match \
-    --msgid \
-    --regexp="^Gaupol$" \
-    --regexp="^Osmo Salomaa$" \
-    --output-file=po/tmp.pot \
-    po/gaupol.pot && mv -f po/tmp.pot po/gaupol.pot
+tools/extract-translations
+tx push -s
+tx pull -af --minimum-perc=50
+emacs1 po/fi.po
+tx push -tf --no-interactive -l fi
+for PO in po/*.po; do
+    LANG=$(basename $PO .po)
+    tools/check-translations $LANG
+    read -p "Keep? [Y/n] "
+    [ "$REPLY" = "n" ] && rm -fv $PO
+done
+# rm -f po/LINGUAS
+# ls po/*.po | cut -d/ -f2 | cut -d. -f1 > po/LINGUAS
+git status

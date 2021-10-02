@@ -1,0 +1,79 @@
+#!/bin/sh
+
+cd "$(dirname "$0")/.." || exit 1
+truncate -s0 po/gaupol.pot
+
+# Python code
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Python \
+    --keyword=_:1 \
+    --keyword=d_:2 \
+    --keyword=n_:1,2 \
+    --add-comments=TRANSLATORS: \
+    $(find . -name "*.py" -not -path "*/test/*")
+
+# GtkBuilder XML files
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    $(find data -name "*.ui")
+
+# Extension metadata files
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Desktop \
+    --keyword= \
+    --keyword=Name \
+    --keyword=Description \
+    --add-comments=TRANSLATORS: \
+    data/extensions/*/*.extension.in
+
+# Pattern files
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Desktop \
+    --keyword= \
+    --keyword=Name \
+    --keyword=Description \
+    --add-comments=TRANSLATORS: \
+    data/patterns/*.in
+
+# AppData XML file
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    data/io.otsaloma.gaupol.appdata.xml.in
+
+# Desktop file
+xgettext \
+    --output=po/gaupol.pot \
+    --join-existing \
+    --from-code=UTF-8 \
+    --language=Desktop \
+    --keyword= \
+    --keyword=GenericName \
+    --keyword=Comment \
+    --keyword=Keywords \
+    --add-comments=TRANSLATORS: \
+    data/io.otsaloma.gaupol.desktop.in
+
+# XXX: Fix charset=CHARSET which causes msggrep to fail.
+sed -i s/charset=CHARSET/charset=UTF-8/ po/gaupol.pot
+
+# Remove AppData entries that shouldn't be translated.
+msggrep \
+    --invert-match \
+    --msgid \
+    --regexp="^Gaupol$" \
+    --regexp="^Osmo Salomaa$" \
+    --output-file=po/tmp.pot \
+    po/gaupol.pot && mv -f po/tmp.pot po/gaupol.pot
