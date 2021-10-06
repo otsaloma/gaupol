@@ -2,7 +2,7 @@
 
 [Setup]
 AppName=Gaupol
-AppVerName=Gaupol 1.10
+AppVerName=Gaupol 1.10.1
 AppPublisher=Osmo Salomaa
 AppPublisherURL=https://otsaloma.io/gaupol/
 DefaultDirName={pf}\Gaupol
