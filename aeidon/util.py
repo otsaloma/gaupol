@@ -36,6 +36,7 @@ import urllib.parse
 VIDEO_FILE_EXTENSIONS = [
     ".avi",
     ".flv",
+    ".m2ts",
     ".mkv",
     ".mov",
     ".mp4",
