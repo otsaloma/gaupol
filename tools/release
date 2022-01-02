@@ -10,8 +10,10 @@ git commit -a -m "RELEASE $VERSION"
 git tag -s -m "RELEASE $VERSION" $VERSION
 git push
 git push --tags
-echo ""
-echo "Add release notes and possible downloads:"
-echo "https://github.com/otsaloma/gaupol/tags"
-echo ""
-egrep -B 999 -m2 "==+" NEWS.md
+egrep -B 999 -m2 "^===+" NEWS.md \
+    | head -n-3 \
+    | tail -n+4 \
+    | gh release create \
+         --notes-file - \
+         --title $VERSION \
+         $VERSION
