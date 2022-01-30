@@ -2,6 +2,7 @@ Python Package aeidon for Subtitles
 ===================================
 
 [![PyPI](https://img.shields.io/pypi/v/aeidon.svg)](https://pypi.org/project/aeidon/)
+[![Downloads](https://pepy.tech/badge/aeidon/month)](https://pepy.tech/project/aeidon)
 
 aeidon is a Python package that provides classes and functions for
 dealing with text-based subtitle files of many different formats.
