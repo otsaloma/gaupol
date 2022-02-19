@@ -13,6 +13,7 @@ git push --tags
 egrep -B 999 -m2 "^===+" NEWS.md \
     | head -n-3 \
     | tail -n+4 \
+    | sed ':a;N;$!ba;s/\n  / /g' \
     | gh release create \
          --notes-file - \
          --title $VERSION \
