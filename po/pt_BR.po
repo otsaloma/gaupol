@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-30 22:10+0300\n"
+"POT-Creation-Date: 2022-04-03 04:00+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2021\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/otsaloma/teams/64879/pt_BR/)\n"
@@ -74,7 +74,7 @@ msgstr "Mac (clássico)"
 msgid "English"
 msgstr "Inglês"
 
-#: aeidon/encodings.py:41 aeidon/encodings.py:42 aeidon/encodings.py:68
+#: aeidon/encodings.py:41 aeidon/encodings.py:42 aeidon/encodings.py:69
 msgid "Chinese traditional"
 msgstr "Chinês tradicional"
 
@@ -82,136 +82,136 @@ msgstr "Chinês tradicional"
 msgid "German"
 msgstr "Alemão"
 
-#: aeidon/encodings.py:45 aeidon/encodings.py:54 aeidon/encodings.py:58
-#: aeidon/encodings.py:78 aeidon/encodings.py:104
+#: aeidon/encodings.py:45 aeidon/encodings.py:54 aeidon/encodings.py:59
+#: aeidon/encodings.py:79 aeidon/encodings.py:105
 msgid "Hebrew"
 msgstr "Hebraico"
 
-#: aeidon/encodings.py:47 aeidon/encodings.py:51 aeidon/encodings.py:72
-#: aeidon/encodings.py:75 aeidon/encodings.py:97 aeidon/encodings.py:109
-#: aeidon/encodings.py:119
+#: aeidon/encodings.py:47 aeidon/encodings.py:51 aeidon/encodings.py:56
+#: aeidon/encodings.py:73 aeidon/encodings.py:76 aeidon/encodings.py:98
+#: aeidon/encodings.py:111 aeidon/encodings.py:122
 msgid "Western"
 msgstr "Ocidental"
 
-#: aeidon/encodings.py:48 aeidon/encodings.py:60 aeidon/encodings.py:79
-#: aeidon/encodings.py:102
+#: aeidon/encodings.py:48 aeidon/encodings.py:61 aeidon/encodings.py:80
+#: aeidon/encodings.py:103
 msgid "Arabic"
 msgstr "Árabe"
 
-#: aeidon/encodings.py:49 aeidon/encodings.py:63 aeidon/encodings.py:65
-#: aeidon/encodings.py:76 aeidon/encodings.py:103 aeidon/encodings.py:116
+#: aeidon/encodings.py:49 aeidon/encodings.py:64 aeidon/encodings.py:66
+#: aeidon/encodings.py:77 aeidon/encodings.py:104 aeidon/encodings.py:119
 msgid "Greek"
 msgstr "Grego"
 
-#: aeidon/encodings.py:50 aeidon/encodings.py:80 aeidon/encodings.py:100
-#: aeidon/encodings.py:107
+#: aeidon/encodings.py:50 aeidon/encodings.py:81 aeidon/encodings.py:101
+#: aeidon/encodings.py:109
 msgid "Baltic"
 msgstr "Báltico"
 
-#: aeidon/encodings.py:52 aeidon/encodings.py:73 aeidon/encodings.py:98
-#: aeidon/encodings.py:118
+#: aeidon/encodings.py:52 aeidon/encodings.py:74 aeidon/encodings.py:99
+#: aeidon/encodings.py:121
 msgid "Central European"
 msgstr "Europa Central"
 
-#: aeidon/encodings.py:53 aeidon/encodings.py:74 aeidon/encodings.py:101
-#: aeidon/encodings.py:115
+#: aeidon/encodings.py:53 aeidon/encodings.py:75 aeidon/encodings.py:102
+#: aeidon/encodings.py:118
 msgid "Cyrillic"
 msgstr "Cirílico"
 
-#: aeidon/encodings.py:55 aeidon/encodings.py:70 aeidon/encodings.py:77
-#: aeidon/encodings.py:105 aeidon/encodings.py:120
+#: aeidon/encodings.py:55 aeidon/encodings.py:71 aeidon/encodings.py:78
+#: aeidon/encodings.py:106 aeidon/encodings.py:123
 msgid "Turkish"
 msgstr "Turco"
 
-#: aeidon/encodings.py:56
+#: aeidon/encodings.py:57
 msgid "Portuguese"
 msgstr "Português"
 
-#: aeidon/encodings.py:57 aeidon/encodings.py:117
+#: aeidon/encodings.py:58 aeidon/encodings.py:120
 msgid "Icelandic"
 msgstr "Islandês"
 
-#: aeidon/encodings.py:59
+#: aeidon/encodings.py:60
 msgid "Canadian"
 msgstr "Canadense"
 
-#: aeidon/encodings.py:61 aeidon/encodings.py:106
+#: aeidon/encodings.py:62 aeidon/encodings.py:107
 msgid "Nordic"
 msgstr "Nórdico"
 
-#: aeidon/encodings.py:62 aeidon/encodings.py:111
+#: aeidon/encodings.py:63 aeidon/encodings.py:114
 msgid "Russian"
 msgstr "Russo"
 
-#: aeidon/encodings.py:64
+#: aeidon/encodings.py:65 aeidon/encodings.py:108
 msgid "Thai"
 msgstr "Tailandês"
 
-#: aeidon/encodings.py:66 aeidon/encodings.py:82 aeidon/encodings.py:83
-#: aeidon/encodings.py:84 aeidon/encodings.py:90 aeidon/encodings.py:91
-#: aeidon/encodings.py:92 aeidon/encodings.py:93 aeidon/encodings.py:94
-#: aeidon/encodings.py:95 aeidon/encodings.py:122 aeidon/encodings.py:123
-#: aeidon/encodings.py:124
+#: aeidon/encodings.py:67 aeidon/encodings.py:83 aeidon/encodings.py:84
+#: aeidon/encodings.py:85 aeidon/encodings.py:91 aeidon/encodings.py:92
+#: aeidon/encodings.py:93 aeidon/encodings.py:94 aeidon/encodings.py:95
+#: aeidon/encodings.py:96 aeidon/encodings.py:125 aeidon/encodings.py:126
+#: aeidon/encodings.py:127
 msgid "Japanese"
 msgstr "Japonês"
 
-#: aeidon/encodings.py:67 aeidon/encodings.py:85 aeidon/encodings.py:96
-#: aeidon/encodings.py:110
+#: aeidon/encodings.py:68 aeidon/encodings.py:86 aeidon/encodings.py:97
+#: aeidon/encodings.py:113
 msgid "Korean"
 msgstr "Coreano"
 
-#: aeidon/encodings.py:69
+#: aeidon/encodings.py:70
 msgid "Urdu"
 msgstr "Urdo"
 
-#: aeidon/encodings.py:71 aeidon/encodings.py:113
+#: aeidon/encodings.py:72 aeidon/encodings.py:116
 msgid "Ukrainian"
 msgstr "Ucraniano"
 
-#: aeidon/encodings.py:81
+#: aeidon/encodings.py:82
 msgid "Vietnamese"
 msgstr "Vietnamita"
 
-#: aeidon/encodings.py:86 aeidon/encodings.py:89
+#: aeidon/encodings.py:87 aeidon/encodings.py:90
 msgid "Chinese simplified"
 msgstr "Chinês simplificado"
 
-#: aeidon/encodings.py:87 aeidon/encodings.py:88
+#: aeidon/encodings.py:88 aeidon/encodings.py:89
 msgid "Chinese unified"
 msgstr "Chinês unificado"
 
-#: aeidon/encodings.py:99
+#: aeidon/encodings.py:100 aeidon/encodings.py:112
 msgid "South European"
 msgstr "Sul da Europa"
 
-#: aeidon/encodings.py:108
+#: aeidon/encodings.py:110
 msgid "Celtic"
 msgstr "Celta"
 
-#: aeidon/encodings.py:112
+#: aeidon/encodings.py:115
 msgid "Tajik"
 msgstr "Tajique"
 
-#: aeidon/encodings.py:114
+#: aeidon/encodings.py:117
 msgid "Kazakh"
 msgstr "Cazaque"
 
-#: aeidon/encodings.py:121
+#: aeidon/encodings.py:124
 msgid "Cyrillic Asian"
 msgstr "Cirílico Asiático"
 
-#: aeidon/encodings.py:125 aeidon/encodings.py:126 aeidon/encodings.py:127
 #: aeidon/encodings.py:128 aeidon/encodings.py:129 aeidon/encodings.py:130
 #: aeidon/encodings.py:131 aeidon/encodings.py:132 aeidon/encodings.py:133
+#: aeidon/encodings.py:134 aeidon/encodings.py:135 aeidon/encodings.py:136
 msgid "Unicode"
 msgstr "Unicode"
 
-#: aeidon/encodings.py:153
+#: aeidon/encodings.py:156
 #, python-brace-format
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
-#: aeidon/encodings.py:229
+#: aeidon/encodings.py:232
 msgid "Current locale ({})"
 msgstr "Idioma atual ({})"
 
@@ -2696,7 +2696,7 @@ msgstr ""
 "vários formatos de arquivo de legenda e fornece meios de criar legendas, "
 "editar textos e legendas de tempo para corresponder ao vídeo."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:38
+#: data/io.otsaloma.gaupol.appdata.xml.in:40
 msgid "Main window"
 msgstr "Janela principal"
 
