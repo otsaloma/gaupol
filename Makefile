@@ -36,7 +36,6 @@ release:
 	$(EDITOR) aeidon/__init__.py
 	$(EDITOR) gaupol/__init__.py
 	$(EDITOR) data/extensions/*/*.in
-	$(EDITOR) win32/gaupol.iss
 	@echo "ADD RELEASE NOTES"
 	$(EDITOR) NEWS.md
 	$(EDITOR) data/io.otsaloma.gaupol.appdata.xml.in
