@@ -1,5 +1,5 @@
-PENDING: Gaupol 1.11
-====================
+2022-04-03: Gaupol 1.11
+=======================
 
 * Add IBM858, ISO-8859-11 and ISO-8859-16 encodings
 * Fix displayed line lengths being incorrect for subtitles with special
