@@ -13,7 +13,7 @@ Repeat=True
 Name=Letter "I" in a lower case word
 Description=Replace letter "I" with letter "l" in a lower case word
 Classes=OCR;
-Pattern=(?<=\b[A-Z])I(?=[a-z])
+Pattern=(?<=\b[A-ZÉ])I(?=[a-z])
 Flags=DOTALL;MULTILINE;
 Replacement=l
 Repeat=True
@@ -31,7 +31,7 @@ Repeat=False
 Name=Letter "l" in an upper case word
 Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
-Pattern=(?<=[A-Z][A-Z])l
+Pattern=(?<=[A-ZÉ][A-ZÉ])l
 Flags=DOTALL;MULTILINE;
 Replacement=I
 Repeat=True
@@ -40,7 +40,7 @@ Repeat=True
 Name=Letter "l" in an upper case word
 Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
-Pattern=l(?=[A-Z])
+Pattern=l(?=[A-ZÉ])
 Flags=DOTALL;MULTILINE;
 Replacement=I
 Repeat=True
@@ -72,7 +72,7 @@ Repeat=False
 Name=Zero in an upper case word
 Description=Replace zero with letter "O" in an upper case word
 Classes=OCR;
-Pattern=(?<=[A-Z])0(?!\d)
+Pattern=(?<=[A-ZÉ])0(?!\d)
 Flags=DOTALL;MULTILINE;
 Replacement=O
 Repeat=True
@@ -81,7 +81,7 @@ Repeat=True
 Name=Zero in an upper case word
 Description=Replace zero with letter "O" in an upper case word
 Classes=OCR;
-Pattern=(?<!\d)0(?=[A-Z])
+Pattern=(?<!\d)0(?=[A-ZÉ])
 Flags=DOTALL;MULTILINE;
 Replacement=O
 Repeat=True

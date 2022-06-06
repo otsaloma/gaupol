@@ -4,6 +4,6 @@
 Name=Uppercase speaker before a colon
 Description=Replace the uppercase name of the speaker before a colon with a dialogue dash
 # Allow lower case "c" for McNAMES.
-Pattern=^[\-\–\—]?\s*?[A-Z\[][A-Zc\d#&'.\-\[\] ]+?:\s
+Pattern=^[\-\–\—]?\s*?[A-ZÉ\[][A-ZÉc\d#&'.\-\[\] ]+?:\s
 Flags=MULTILINE;
 Replacement=-\040
