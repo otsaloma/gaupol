@@ -82,6 +82,7 @@ Then, to install Gaupol, run command
 
 Windows installers are no longer built due to bad tooling, bad results,
 lack of time and lack of motivation. The latest version available for
-Windows is [1.3.1][].
+Windows is [1.3.1][]. Some features do not work in the Windows version,
+most importantly the builtin video player is disabled.
 
 [1.3.1]: https://github.com/otsaloma/gaupol/releases/tag/1.3.1
