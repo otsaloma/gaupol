@@ -72,6 +72,17 @@ Repeat=True
 SkipIn=Latn-fr;
 
 [Common Error Pattern]
+# In many fonts the Unicode ellipsis character is really narrow
+# and three separate dots look a lot better.
+Name=Ellipses
+Description=Replace Unicode ellipses with three separate dots
+Classes=Human;OCR;
+Pattern=…
+Flags=DOTALL;MULTILINE;
+Replacement=...
+Repeat=False
+
+[Common Error Pattern]
 # Many subtitle fonts don't support Unicode note characters and many
 # video players by default use fonts with a poor coverage and have no
 # system of fallback fonts to provide missing characters.
