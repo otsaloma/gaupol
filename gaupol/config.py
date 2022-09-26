@@ -31,7 +31,6 @@ CONFIG_DEFAULTS = {
     "application_window": {
         "layout": gaupol.orientation.VERTICAL,
         "maximized": False,
-        "position": [0, 0],
         "show_main_toolbar": True,
         "size": [700, 433],
         "toolbar_style": gaupol.toolbar_styles.ICONS,

@@ -343,7 +343,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.window.set_icon_name("io.otsaloma.gaupol")
         Gtk.Window.set_default_icon_name("io.otsaloma.gaupol")
         self.window.set_default_size(*gaupol.conf.application_window.size)
-        self.window.move(*gaupol.conf.application_window.position)
         if gaupol.conf.application_window.maximized:
             self.window.maximize()
         aeidon.util.connect(self, "window", "delete-event")

@@ -150,6 +150,5 @@ class CloseAgent(aeidon.Delegate):
         if not gaupol.conf.application_window.maximized:
             conf = gaupol.conf.application_window
             conf.size = list(self.window.get_size())
-            conf.position = list(self.window.get_position())
         if hasattr(gaupol, "appman"):
             gaupol.appman.remove_window(self.window)
