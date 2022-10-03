@@ -1,6 +1,0 @@
-#!/bin/sh
-cd "$(dirname "$0")" || exit 1
-# https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-icons#size-requirements
-for SIZE in 256 48 32 16; do inkscape -o $SIZE.png -C -w $SIZE io.otsaloma.gaupol.svg; done
-convert 256.png 48.png 32.png 16.png -background transparent io.otsaloma.gaupol.ico
-rm -f 256.png 48.png 32.png 16.png
