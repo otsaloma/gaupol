@@ -75,6 +75,7 @@ class PreviewAction(gaupol.Action):
         self.action_group = "unsafe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
+        aeidon.util.affirm(page.project.subtitles)
         aeidon.util.affirm(page.project.video_path is not None)
         if gaupol.conf.preview.use_custom_command:
             aeidon.util.affirm(gaupol.conf.preview.custom_command)
