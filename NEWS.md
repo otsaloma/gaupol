@@ -3,6 +3,7 @@ PENDING: Gaupol 1.12
 
 * Don't remember window position on screen (seems more common and better
   left to the window manager)
+* Fix cursor construction error (#202)
 
 2022-04-03: Gaupol 1.11
 =======================

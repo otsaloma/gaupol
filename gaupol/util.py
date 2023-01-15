@@ -333,21 +333,13 @@ def separate_combo(store, itr, data=None):
 
 def set_cursor_busy(window):
     """Set mouse pointer busy when above window."""
-    cursor = window.get_window().get_cursor()
-    if (cursor is not None and cursor.get_cursor_type() ==
-        Gdk.CursorType.WATCH): return
-    cursor = Gdk.Cursor.new_for_display(
-        Gdk.Display.get_default(), Gdk.CursorType.WATCH)
+    cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), "wait")
     window.get_window().set_cursor(cursor)
     iterate_main()
 
 def set_cursor_normal(window):
     """Set mouse pointer normal when above window."""
-    cursor = window.get_window().get_cursor()
-    if (cursor is not None and cursor.get_cursor_type() ==
-        Gdk.CursorType.LEFT_PTR): return
-    cursor = Gdk.Cursor.new_for_display(
-        Gdk.Display.get_default(), Gdk.CursorType.LEFT_PTR)
+    cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), "default")
     window.get_window().set_cursor(cursor)
     iterate_main()
 
