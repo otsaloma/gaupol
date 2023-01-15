@@ -20,6 +20,7 @@
 import aeidon
 import gaupol
 import linecache
+import os
 import platform
 import sys
 import traceback
@@ -84,8 +85,13 @@ class DebugDialog(Gtk.MessageDialog):
         """Insert information about user's platform and environment."""
         locale = aeidon.locales.get_system_code()
         encoding = aeidon.encodings.get_locale_code()
+        wayland = "yes" if (
+            os.getenv("XDG_SESSION_TYPE", "") == "wayland" or
+            os.getenv("WAYLAND_DISPLAY", "")
+        ) else "no"
         self._insert_text("Platform: {}\n".format(platform.platform(True)))
-        self._insert_text("Locale: {}.{}\n\n".format(locale, encoding))
+        self._insert_text("Locale: {}.{}\n".format(locale, encoding))
+        self._insert_text("Wayland: {}\n\n".format(wayland))
 
     def _insert_dependencies(self):
         """Insert version numbers of selected dependencies."""
