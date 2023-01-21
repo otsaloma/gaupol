@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 04:00+0300\n"
+"POT-Creation-Date: 2023-01-21 19:05+0200\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2021\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/otsaloma/teams/64879/pt_BR/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: aeidon/enums.py:40 gaupol/enums.py:38
 msgid "Subtitle number"
@@ -670,6 +670,7 @@ msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Confirmar {:d} alteração"
 msgstr[1] "Confirmar {:d} alterações"
+msgstr[2] "Confirmar {:d} alterações"
 
 #: gaupol/renderers/multiline.py:86
 msgid "Italic"
@@ -692,6 +693,7 @@ msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "Encontrada e substituída {:d} ocorrência"
 msgstr[1] "Encontradas e substituídas {:d} ocorrências"
+msgstr[2] "Encontradas e substituídas {:d} ocorrências"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -857,11 +859,11 @@ msgstr "Site do Gaupol"
 msgid "Append File"
 msgstr "Anexar arquivo"
 
-#: gaupol/dialogs/debug.py:43
+#: gaupol/dialogs/debug.py:44
 msgid "Something went wrong"
 msgstr "Alguma coisa deu errado"
 
-#: gaupol/dialogs/debug.py:44
+#: gaupol/dialogs/debug.py:45
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
@@ -869,15 +871,15 @@ msgstr ""
 "Você provavelmente descobriu um bug. Por favor, relate-o fornecendo as "
 "informações abaixo e uma descrição do que você estava fazendo."
 
-#: gaupol/dialogs/debug.py:52
+#: gaupol/dialogs/debug.py:53
 msgid "_Report Bug"
 msgstr "_Relatar bug"
 
-#: gaupol/dialogs/debug.py:53 data/ui/menubar.ui:56
+#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
 msgid "_Quit"
 msgstr "_Sair"
 
-#: gaupol/dialogs/debug.py:54 gaupol/dialogs/preview_error.py:45
+#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
 #: data/ui/menubar.ui:52 data/ui/tab-popup.ui:16
 msgid "_Close"
 msgstr "Fe_char"
@@ -908,6 +910,7 @@ msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "Ajustada duração de {:d} legenda"
 msgstr[1] "Ajustadas durações de {:d} legendas"
+msgstr[2] "Ajustadas durações de {:d} legendas"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -1067,6 +1070,8 @@ msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 "Inseridas {:d} legenda para o conteúdo caber na área de transferência"
 msgstr[1] ""
+"Inseridas {:d} legendas para o conteúdo caber na área de transferência"
+msgstr[2] ""
 "Inseridas {:d} legendas para o conteúdo caber na área de transferência"
 
 #: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
@@ -2674,11 +2679,19 @@ msgstr "Espaço entre dígitos"
 msgid "Remove space between digits of a number"
 msgstr "Remover espaços entre dígitos de um número"
 
+#: data/patterns/Zyyy.common-error.in:78
+msgid "Ellipses"
+msgstr ""
+
 #: data/patterns/Zyyy.common-error.in:79
+msgid "Replace Unicode ellipses with three separate dots"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"
 msgstr "Notas musicais"
 
-#: data/patterns/Zyyy.common-error.in:80
+#: data/patterns/Zyyy.common-error.in:91
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Substitui caracteres de nota musical Unicode com sinais de números"
 
@@ -2696,7 +2709,7 @@ msgstr ""
 "vários formatos de arquivo de legenda e fornece meios de criar legendas, "
 "editar textos e legendas de tempo para corresponder ao vídeo."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:40
+#: data/io.otsaloma.gaupol.appdata.xml.in:42
 msgid "Main window"
 msgstr "Janela principal"
 

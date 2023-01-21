@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 04:00+0300\n"
+"POT-Creation-Date: 2023-01-21 19:05+0200\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Erwan Amans <erwan.amans@gmail.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/otsaloma/teams/64879/fr/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: aeidon/enums.py:40 gaupol/enums.py:38
 msgid "Subtitle number"
@@ -672,6 +672,7 @@ msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Confirmer {:d} changement"
 msgstr[1] "Confirmer {:d} changements"
+msgstr[2] "Confirmer {:d} changements"
 
 #: gaupol/renderers/multiline.py:86
 msgid "Italic"
@@ -694,6 +695,7 @@ msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "Terme remplacé {:d} fois"
 msgstr[1] "Terme remplacé {:d} fois"
+msgstr[2] "Terme remplacé {:d} fois"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -858,11 +860,11 @@ msgstr "Site web de Gaupol"
 msgid "Append File"
 msgstr "Ajouter un fichier..."
 
-#: gaupol/dialogs/debug.py:43
+#: gaupol/dialogs/debug.py:44
 msgid "Something went wrong"
 msgstr "Quelque chose s'est mal passé"
 
-#: gaupol/dialogs/debug.py:44
+#: gaupol/dialogs/debug.py:45
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
@@ -871,15 +873,15 @@ msgstr ""
 "transmettant les informations, affichées ci-dessous ainsi qu'une description"
 " de ce que vous étiez en train de faire lorsque le problème est apparu."
 
-#: gaupol/dialogs/debug.py:52
+#: gaupol/dialogs/debug.py:53
 msgid "_Report Bug"
 msgstr "_Signaler un Problème"
 
-#: gaupol/dialogs/debug.py:53 data/ui/menubar.ui:56
+#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
 msgid "_Quit"
 msgstr "_Quitter"
 
-#: gaupol/dialogs/debug.py:54 gaupol/dialogs/preview_error.py:45
+#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
 #: data/ui/menubar.ui:52 data/ui/tab-popup.ui:16
 msgid "_Close"
 msgstr "_Fermer"
@@ -913,6 +915,7 @@ msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "Durée ajustée pour {:d} sous-titre"
 msgstr[1] "Durée ajustée pour {:d} sous-titres"
+msgstr[2] "Durée ajustée pour {:d} sous-titres"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -1075,6 +1078,8 @@ msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 "{:d} sous-titre inséré pour correspondre au contenu du presse-papier"
 msgstr[1] ""
+"{:d} sous-titres insérés pour correspondre au contenu du presse-papier"
+msgstr[2] ""
 "{:d} sous-titres insérés pour correspondre au contenu du presse-papier"
 
 #: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
@@ -2711,11 +2716,19 @@ msgstr "Espace entre les chiffres"
 msgid "Remove space between digits of a number"
 msgstr "Supprimer les espaces entre chiffres d'un même nombre"
 
+#: data/patterns/Zyyy.common-error.in:78
+msgid "Ellipses"
+msgstr ""
+
 #: data/patterns/Zyyy.common-error.in:79
+msgid "Replace Unicode ellipses with three separate dots"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"
 msgstr "Notes musicales"
 
-#: data/patterns/Zyyy.common-error.in:80
+#: data/patterns/Zyyy.common-error.in:91
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Remplacer les notes musicales en Unicode avec des nombres"
 
@@ -2733,7 +2746,7 @@ msgstr ""
 "nombreux formats de sous-titres et permet de créer, des sous-titres, "
 "d'éditer du texte, et de synchroniser les sous-titres à une vidéo."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:40
+#: data/io.otsaloma.gaupol.appdata.xml.in:42
 msgid "Main window"
 msgstr "Fenêtre principale"
 

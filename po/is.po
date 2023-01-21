@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 04:00+0300\n"
+"POT-Creation-Date: 2023-01-21 19:05+0200\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2019\n"
 "Language-Team: Icelandic (https://www.transifex.com/otsaloma/teams/64879/is/)\n"
@@ -848,11 +848,11 @@ msgstr "Vefsvæði Gaupol"
 msgid "Append File"
 msgstr "Bæta við skrá"
 
-#: gaupol/dialogs/debug.py:43
+#: gaupol/dialogs/debug.py:44
 msgid "Something went wrong"
 msgstr "Úbbs! Eitthvað fór úrskeiðis"
 
-#: gaupol/dialogs/debug.py:44
+#: gaupol/dialogs/debug.py:45
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
@@ -861,15 +861,15 @@ msgstr ""
 "fylgja með upplýsingarnar hér fyrir neðan ásamt stuttri lýsingu á því sem þú"
 " varst að gera þegar hún kom upp."
 
-#: gaupol/dialogs/debug.py:52
+#: gaupol/dialogs/debug.py:53
 msgid "_Report Bug"
 msgstr "Til_kynna um villu"
 
-#: gaupol/dialogs/debug.py:53 data/ui/menubar.ui:56
+#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
 msgid "_Quit"
 msgstr "_Hætta"
 
-#: gaupol/dialogs/debug.py:54 gaupol/dialogs/preview_error.py:45
+#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
 #: data/ui/menubar.ui:52 data/ui/tab-popup.ui:16
 msgid "_Close"
 msgstr "_Loka"
@@ -2646,11 +2646,19 @@ msgstr "Bil á milli tölustafa"
 msgid "Remove space between digits of a number"
 msgstr "Fjarlægja bil á milli tölustafa"
 
+#: data/patterns/Zyyy.common-error.in:78
+msgid "Ellipses"
+msgstr ""
+
 #: data/patterns/Zyyy.common-error.in:79
+msgid "Replace Unicode ellipses with three separate dots"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"
 msgstr "Nótnaskrift"
 
-#: data/patterns/Zyyy.common-error.in:80
+#: data/patterns/Zyyy.common-error.in:91
 msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
@@ -2668,7 +2676,7 @@ msgstr ""
 " margar gerðir skjátextaskráa og býður upp á að útbúa nýja skjátexta, "
 "breytingar texta og tímasetningu þeirra svo að þeir samsvari myndskeiðum."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:40
+#: data/io.otsaloma.gaupol.appdata.xml.in:42
 msgid "Main window"
 msgstr "Aðalgluggi"
 

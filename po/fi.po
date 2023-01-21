@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Osmo Salomaa <otsaloma@iki.fi>, 2020
+# Jiri Grönroos <jiri.gronroos@iki.fi>, 2022
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 04:00+0300\n"
-"PO-Revision-Date: 2022-04-03 04:00+0300\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2020\n"
+"POT-Creation-Date: 2023-01-21 19:05+0200\n"
+"PO-Revision-Date: 2023-01-21 19:07+0200\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>, 2022\n"
 "Language-Team: Finnish (https://www.transifex.com/otsaloma/teams/64879/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -714,7 +715,7 @@ msgstr "Virhe säännöllisen lausekkeen korvaajassa"
 #: gaupol/agents/open.py:387 gaupol/agents/close.py:71
 #: data/extensions/custom-framerates/custom-framerates.py:39
 msgid "_Cancel"
-msgstr "_Peruuta"
+msgstr "_Peru"
 
 #: gaupol/dialogs/text_edit.py:53
 msgid "Edit Text"
@@ -851,11 +852,11 @@ msgstr "Gaupolin WWW-sivut"
 msgid "Append File"
 msgstr "Lisää tiedosto perään"
 
-#: gaupol/dialogs/debug.py:43
+#: gaupol/dialogs/debug.py:44
 msgid "Something went wrong"
 msgstr "Jotain meni vikaan"
 
-#: gaupol/dialogs/debug.py:44
+#: gaupol/dialogs/debug.py:45
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
@@ -863,15 +864,15 @@ msgstr ""
 "Olet luultavasti löytänyt ohjelmointivirheen. Voit ilmoittaa virheen "
 "antamalla alla olevat tiedot ja kuvauksen siitä mitä olit tekemässä."
 
-#: gaupol/dialogs/debug.py:52
+#: gaupol/dialogs/debug.py:53
 msgid "_Report Bug"
 msgstr "_Lähetä vikailmoitus"
 
-#: gaupol/dialogs/debug.py:53 data/ui/menubar.ui:56
+#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
 msgid "_Quit"
 msgstr "_Lopeta"
 
-#: gaupol/dialogs/debug.py:54 gaupol/dialogs/preview_error.py:45
+#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
 #: data/ui/menubar.ui:52 data/ui/tab-popup.ui:16
 msgid "_Close"
 msgstr "_Sulje"
@@ -1687,7 +1688,7 @@ msgstr "Vi_deo"
 
 #: data/ui/menubar.ui:374
 msgid "_Load Video…"
-msgstr "_Lataa Video…"
+msgstr "_Lataa video…"
 
 #: data/ui/menubar.ui:384 data/ui/view-popup.ui:26
 msgid "Play _Selection"
@@ -1876,7 +1877,7 @@ msgstr "Muokkain"
 
 #: data/ui/preferences-dialog.ui:626
 msgid "Fonts"
-msgstr "Kirjasimet"
+msgstr "Fontit"
 
 #: data/ui/preferences-dialog.ui:649
 msgid "_Subtitles:"
@@ -2663,13 +2664,21 @@ msgstr "Väli numeroiden välissä"
 msgid "Remove space between digits of a number"
 msgstr "Poista väli luvun numeroiden välissä"
 
+#: data/patterns/Zyyy.common-error.in:78
+msgid "Ellipses"
+msgstr "Kolmet pisteet"
+
 #: data/patterns/Zyyy.common-error.in:79
+msgid "Replace Unicode ellipses with three separate dots"
+msgstr "Korvaa Unicode kolmen pisteen merkit kolmella erillisellä pisteellä"
+
+#: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"
 msgstr "Musiikkinuotit"
 
-#: data/patterns/Zyyy.common-error.in:80
+#: data/patterns/Zyyy.common-error.in:91
 msgid "Replace Unicode musical note characters with number signs"
-msgstr "Korvaa Unicode musiikkinuotit numeromerkeillä"
+msgstr "Korvaa Unicode-musiikkinuotit numeromerkeillä"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
@@ -2685,7 +2694,7 @@ msgstr ""
 "eri tekstitystiedostomuotoja ja tarjoaa toimintoja tekstitysten luomiseen, "
 "tekstien muokkaamiseen ja tekstitysten ajoittamiseen videoon sovittaen."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:40
+#: data/io.otsaloma.gaupol.appdata.xml.in:42
 msgid "Main window"
 msgstr "Pääikkuna"
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 04:00+0300\n"
+"POT-Creation-Date: 2023-01-21 19:05+0200\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Caarmi, 2021\n"
 "Language-Team: Interlingue (https://www.transifex.com/otsaloma/teams/64879/ie/)\n"
@@ -852,25 +852,25 @@ msgstr "Website de Gaupol"
 msgid "Append File"
 msgstr "Apender un file"
 
-#: gaupol/dialogs/debug.py:43
+#: gaupol/dialogs/debug.py:44
 msgid "Something went wrong"
 msgstr "Un errore evenit"
 
-#: gaupol/dialogs/debug.py:44
+#: gaupol/dialogs/debug.py:45
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr ""
 
-#: gaupol/dialogs/debug.py:52
+#: gaupol/dialogs/debug.py:53
 msgid "_Report Bug"
 msgstr "_Raportar un defecte"
 
-#: gaupol/dialogs/debug.py:53 data/ui/menubar.ui:56
+#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
 msgid "_Quit"
 msgstr "Sa_lir"
 
-#: gaupol/dialogs/debug.py:54 gaupol/dialogs/preview_error.py:45
+#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
 #: data/ui/menubar.ui:52 data/ui/tab-popup.ui:16
 msgid "_Close"
 msgstr "_Clúder"
@@ -2649,11 +2649,19 @@ msgstr "Spacie inter ciffres"
 msgid "Remove space between digits of a number"
 msgstr "Remover li spacie inter ciffres in un númere"
 
+#: data/patterns/Zyyy.common-error.in:78
+msgid "Ellipses"
+msgstr ""
+
 #: data/patterns/Zyyy.common-error.in:79
+msgid "Replace Unicode ellipses with three separate dots"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"
 msgstr "Musical notes"
 
-#: data/patterns/Zyyy.common-error.in:80
+#: data/patterns/Zyyy.common-error.in:91
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Vicear simboles de note de Unicode per #s"
 
@@ -2671,7 +2679,7 @@ msgstr ""
 " formates de file e permisse vos crear, redacter e colocar subtitules secun "
 "un video."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:40
+#: data/io.otsaloma.gaupol.appdata.xml.in:42
 msgid "Main window"
 msgstr "Li fenestre principal"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-03 04:00+0300\n"
+"POT-Creation-Date: 2023-01-21 19:05+0200\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Carlos Mella <cmellib@gmail.com>, 2021\n"
 "Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: aeidon/enums.py:40 gaupol/enums.py:38
 msgid "Subtitle number"
@@ -670,6 +670,7 @@ msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Confirmar {:d} cambio"
 msgstr[1] "Confirmar {:d} cambios"
+msgstr[2] "Confirmar {:d} cambios"
 
 #: gaupol/renderers/multiline.py:86
 msgid "Italic"
@@ -692,6 +693,7 @@ msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "{:d} ocurrencia encontrada y reemplazada"
 msgstr[1] "{:d} ocurrencias encontradas y reemplazadas"
+msgstr[2] "{:d} ocurrencias encontradas y reemplazadas"
 
 #: gaupol/dialogs/search.py:488
 msgid "\"{}\" not found"
@@ -855,11 +857,11 @@ msgstr "Sitio web de Gaupol"
 msgid "Append File"
 msgstr "Añadir desde archivo"
 
-#: gaupol/dialogs/debug.py:43
+#: gaupol/dialogs/debug.py:44
 msgid "Something went wrong"
 msgstr "Algo salió mal"
 
-#: gaupol/dialogs/debug.py:44
+#: gaupol/dialogs/debug.py:45
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
@@ -868,15 +870,15 @@ msgstr ""
 "describiendo la tarea que estaba realizando, y adjunte la siguiente "
 "información:"
 
-#: gaupol/dialogs/debug.py:52
+#: gaupol/dialogs/debug.py:53
 msgid "_Report Bug"
 msgstr "_Informar de este error"
 
-#: gaupol/dialogs/debug.py:53 data/ui/menubar.ui:56
+#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
 msgid "_Quit"
 msgstr "_Salir"
 
-#: gaupol/dialogs/debug.py:54 gaupol/dialogs/preview_error.py:45
+#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
 #: data/ui/menubar.ui:52 data/ui/tab-popup.ui:16
 msgid "_Close"
 msgstr "_Cerrar"
@@ -908,6 +910,7 @@ msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "{:d} subtítulo ajustado en su duración"
 msgstr[1] "{:d} subtítulos ajustados en su duración"
+msgstr[2] "{:d} subtítulos ajustados en su duración"
 
 #: gaupol/dialogs/duration_adjust.py:87
 msgid "_Adjust"
@@ -1069,6 +1072,8 @@ msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 "{:d} subtítulo insertado para adaptarse a los contenidos del portapapeles"
 msgstr[1] ""
+"{:d} subtítulos insertados para adaptarse a los contenidos del portapapeles"
+msgstr[2] ""
 "{:d} subtítulos insertados para adaptarse a los contenidos del portapapeles"
 
 #: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
@@ -2710,11 +2715,19 @@ msgstr "Espacio entre dígitos"
 msgid "Remove space between digits of a number"
 msgstr "Elimina el espacio en blanco entre los dígitos de un número"
 
+#: data/patterns/Zyyy.common-error.in:78
+msgid "Ellipses"
+msgstr ""
+
 #: data/patterns/Zyyy.common-error.in:79
+msgid "Replace Unicode ellipses with three separate dots"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"
 msgstr "Notas musicales"
 
-#: data/patterns/Zyyy.common-error.in:80
+#: data/patterns/Zyyy.common-error.in:91
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Reemplaza caracteres Unicode de notas musicales por signos numéricos"
 
@@ -2732,7 +2745,7 @@ msgstr ""
 "para diversos formatos de archivos, proporciona los medios para crear "
 "subtítulos, manipular líneas y sincronizar subtítulos a un vídeo."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:40
+#: data/io.otsaloma.gaupol.appdata.xml.in:42
 msgid "Main window"
 msgstr "Ventana principal"
 
