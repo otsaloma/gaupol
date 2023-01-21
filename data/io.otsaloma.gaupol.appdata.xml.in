@@ -21,6 +21,7 @@
   <url type="translate">https://www.transifex.com/otsaloma/gaupol/</url>
   <launchable type="desktop-id">io.otsaloma.gaupol.desktop</launchable>
   <releases>
+    <release version="1.12"   date="2023-01-21"/>
     <release version="1.11"   date="2022-04-03"/>
     <release version="1.10.1" date="2021-10-06"/>
     <release version="1.10"   date="2021-09-30"/>

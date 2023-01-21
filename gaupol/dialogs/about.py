@@ -38,7 +38,7 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_artists(("Osmo Salomaa <otsaloma@iki.fi>",))
         self.set_authors(("Osmo Salomaa <otsaloma@iki.fi>",))
         self.set_comments(_("Subtitle editor"))
-        self.set_copyright("Copyright © 2005–2022 Osmo Salomaa")
+        self.set_copyright("Copyright © 2005–2023 Osmo Salomaa")
         self.set_license_type(Gtk.License.GPL_3_0)
         self.set_logo_icon_name("io.otsaloma.gaupol")
         self.set_program_name("Gaupol")
