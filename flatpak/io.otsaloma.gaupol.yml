@@ -90,21 +90,11 @@ modules:
         sha256: 8351328cdfbcb2432e63938721dd781eb8c11ebc56e3a89d0f84576b96002c61
 
   - name: mpv
-    buildsystem: simple
-    build-commands:
-      - python3 waf configure --prefix=/app
-      - python3 waf build
-      - python3 waf install
+    buildsystem: meson
     sources:
       - type: archive
-        url: https://github.com/mpv-player/mpv/archive/v0.31.0.tar.gz
-        sha256: 805a3ac8cf51bfdea6087a6480c18835101da0355c8e469b6d488a1e290585a5
-      - type: file
-        # Use the version of waf tested to work with mpv.
-        # https://github.com/mpv-player/mpv/blob/master/bootstrap.py
-        url: https://waf.io/waf-2.0.9
-        sha256: 2a8e0816f023995e557f79ea8940d322bec18f286917c8f9a6fa2dc3875dfa48
-        dest-filename: waf
+        url: https://github.com/mpv-player/mpv/archive/refs/tags/v0.35.1.tar.gz
+        sha256: 41df981b7b84e33a2ef4478aaf81d6f4f5c8b9cd2c0d337ac142fc20b387d1a9
 
   # Gaupol
 
