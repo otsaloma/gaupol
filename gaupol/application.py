@@ -308,7 +308,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         gaupol.util.pack_start(vbox, self.notebook_separator)
 
         self.wavev = gaupol.Waveview()
-        gaupol.util.pack_start(vbox, self.wavev)
+        gaupol.util.pack_start(vbox, self.wavev.getWidget())
 
         overlay = Gtk.Overlay()
         overlay.add(self.notebook)
