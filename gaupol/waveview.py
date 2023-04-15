@@ -22,25 +22,97 @@ import gaupol
 import os
 import sys
 import cairo
+import traceback
+import argparse
 
 from aeidon.i18n   import _
-from gi.repository import Gtk, GObject
+from gi.repository import Gtk, GObject, Gst
 
+# gi.require_version('Gst', '1.0')
+# from gi.repository import Gst, GObject
 
 __all__ = ("Waveview",)
 
 
-# class Waveview(Gtk.Button):
+"""
+for 16 bits in 16 bits, signed, little endian:
 
-#     """
-#     Control and display a wave view for the audio.
-#     """
-#     signals = ("close-request", "view-created")
+gst-launch-1.0 filesrc location=filename ! \ 
+ decodebin ! audioconvert ! audioresample ! \
+ audio/x-raw, channels=1, rate=16000, format=S16LE ! \
+ filesink location=out.raw
 
-#     def __init__(self, count=0):
-#         """Initialize a :class:`Page` instance."""
-#         super().__init__("Placeholder")
-#         self.set_visible(False)
+for 8 bits, 8K/sec:
+
+gst-launch-1.0 filesrc location=filename ! \
+    decodebin ! audioconvert ! \
+    audioresample ! \
+    audio/x-raw, channels=1, rate=8000, format=S8 ! \
+    filesink location=fileout.raw
+"""
+
+#ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
+
+def CreateCache(file_in, file_out):
+    DEFAULT_PIPELINE = "filesrc location=FILEIN ! decodebin ! progressreport update-freq=1 silent=true ! audioconvert ! audioresample ! audio/x-raw, channels=1, rate=8000, format=S8 ! filesink location=FILEOUT"
+    default_pipeline = DEFAULT_PIPELINE.replace("FILEIN", file_in)
+    default_pipeline = default_pipeline.replace("FILEOUT", file_out)
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-p", "--pipeline", required=False,
+                    default=default_pipeline, help="Gstreamer pipeline without gst-launch")
+
+    args = vars(ap.parse_args())
+
+    command = args["pipeline"]
+
+    pipeline = Gst.parse_launch(command)
+    bus = pipeline.get_bus()
+    bus.add_signal_watch()
+    pipeline.set_state(Gst.State.PLAYING)
+
+    # Init GObject loop to handle Gstreamer Bus Events
+    loop = GObject.MainLoop()
+
+    bus.connect("message", on_message, loop)
+
+    try:
+        loop.run()
+    except Exception:
+        traceback.print_exc()
+        loop.quit()
+
+    # Stop Pipeline
+    pipeline.set_state(Gst.State.NULL)
+
+
+def on_message(bus: Gst.Bus, message: Gst.Message, loop: GObject.MainLoop):
+    mtype = message.type
+    """
+        Gstreamer Message Types and how to parse
+        https://lazka.github.io/pgi-docs/Gst-1.0/flags.html#Gst.MessageType
+    """
+    if mtype == Gst.MessageType.EOS:
+        print("End of stream")
+        loop.quit()
+
+    elif mtype == Gst.MessageType.ERROR:
+        err, debug = message.parse_error()
+        print(err, debug)
+        loop.quit()
+
+    elif mtype == Gst.MessageType.WARNING:
+        err, debug = message.parse_warning()
+        print(err, debug)
+
+    elif mtype == Gst.MessageType.ELEMENT:
+        b,p = message.get_structure().get_int("percent")
+        print("Progress message " + str(p) + "%")
+
+    else:
+        print(mtype)
+
+    return True
 
 
 class GraphicArea(Gtk.DrawingArea):
@@ -174,6 +246,12 @@ class Waveview():
         self.top_container.pack_start(self.graphic_area, True, True, 0)
         self.top_container.pack_start(self.vbox, True, True, 0)
         self.top_container.show_all()
+
+        ## test only:
+        FILEIN = "/home/vigil/lixo/gtk_test/patrick_ori.mp4"
+        FILEOUT = "/home/vigil/lixo/gtk_test/patrick_ori.raw"
+        Gst.init(None)
+        CreateCache(FILEIN, FILEOUT)
 
     def getWidget(self):
         return self.top_container
