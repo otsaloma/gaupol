@@ -108,6 +108,7 @@ from gaupol import agents # noqa
 from gaupol.application import * # noqa
 from gaupol.applicationman import ApplicationManager # noqa
 from gaupol.unittest import * # noqa
+from gaupol.waveview import * # noqa
 
 def main(args):
     """Initialize application."""

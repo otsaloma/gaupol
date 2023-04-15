@@ -306,6 +306,10 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.notebook_separator = Gtk.Separator(orientation=orientation)
         vbox = gaupol.util.new_vbox(spacing=0)
         gaupol.util.pack_start(vbox, self.notebook_separator)
+
+        self.wavev = gaupol.Waveview()
+        gaupol.util.pack_start(vbox, self.wavev)
+
         overlay = Gtk.Overlay()
         overlay.add(self.notebook)
         self.statuslabel = gaupol.FloatingLabel()
