@@ -55,7 +55,7 @@ gst-launch-1.0 filesrc location=filename ! \
 
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
-def CreateCache(file_in, file_out):
+def CreateCache(file_in, file_out, progress):
     DEFAULT_PIPELINE = "filesrc location=FILEIN ! decodebin ! progressreport update-freq=1 silent=true ! audioconvert ! audioresample ! audio/x-raw, channels=1, rate=8000, format=S8 ! filesink location=FILEOUT"
     default_pipeline = DEFAULT_PIPELINE.replace("FILEIN", file_in)
     default_pipeline = default_pipeline.replace("FILEOUT", file_out)
@@ -232,6 +232,22 @@ class GraphicArea(Gtk.DrawingArea):
         ctx.line_to(10, 0)
         ctx.stroke()
 
+class Progress(Gtk.Window):
+    def __init__(self):
+        super(Progress, self).__init__()
+        self.set_default_size(400,200)
+        self.set_title("Gaupol Progress")
+        vbox = Gtk.VBox()
+        label = Gtk.Label("Loading/Parsing Video File")
+        vbox.pack_start(label, expand = True, fill = True, padding = 10)
+        self.progress = Gtk.ProgressBar()
+        vbox.pack_start(self.progress, expand = True, fill = True, padding = 10)
+        self.add(vbox)
+        self.show_all()
+
+    def get_progress(self):
+        return self.progress
+
 class Waveview():
     """ This class is a Drawing Area"""
     def __init__(self):
@@ -260,9 +276,10 @@ class Waveview():
 
     def create_data(self, path):
         tmp_name = TMP_PATH + os.path.basename(path) + TMP_EXT
-        CreateCache(path, tmp_name)
+        p = Progress()
+        CreateCache(path, tmp_name, p.get_progress())
+        p.hide()
         f = open(tmp_name, 'rb')
         self.data = bytearray(f.read())
         f.close()
-
 
