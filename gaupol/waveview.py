@@ -33,6 +33,8 @@ from gi.repository import Gtk, GObject, Gst
 
 __all__ = ("Waveview",)
 
+TMP_PATH = "/tmp/"
+TMP_EXT = ".gaupol.$$$"
 
 """
 for 16 bits in 16 bits, signed, little endian:
@@ -248,11 +250,19 @@ class Waveview():
         self.top_container.show_all()
 
         ## test only:
-        FILEIN = "/home/vigil/lixo/gtk_test/patrick_ori.mp4"
-        FILEOUT = "/home/vigil/lixo/gtk_test/patrick_ori.raw"
-        Gst.init(None)
-        CreateCache(FILEIN, FILEOUT)
+        # FILEIN = "/home/vigil/lixo/gtk_test/patrick_ori.mp4"
+        # FILEOUT = "/home/vigil/lixo/gtk_test/patrick_ori.raw"
+        # Gst.init(None)
+        # CreateCache(FILEIN, FILEOUT)
 
     def getWidget(self):
         return self.top_container
+
+    def create_data(self, path):
+        tmp_name = TMP_PATH + os.path.basename(path) + TMP_EXT
+        CreateCache(path, tmp_name)
+        f = open(tmp_name, 'rb')
+        self.data = bytearray(f.read())
+        f.close()
+
 

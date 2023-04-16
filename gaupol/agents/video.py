@@ -131,6 +131,8 @@ class VideoAgent(aeidon.Delegate):
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(vbox, self.player.widget)
+        self.wavev = gaupol.Waveview()
+        gaupol.util.pack_start_fill(vbox, self.wavev.getWidget())
         self._init_player_toolbar()
         gaupol.util.pack_start_fill(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
@@ -175,6 +177,7 @@ class VideoAgent(aeidon.Delegate):
         # in which case the player itself has shown an error dialog.
         if not self.player.ready: return
         self._update_languages_menu()
+        self.wavev.create_data(path)
         self.update_gui()
         self.player.play()
         if not gaupol.conf.video_player.autoplay:
