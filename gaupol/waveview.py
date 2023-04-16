@@ -55,66 +55,71 @@ gst-launch-1.0 filesrc location=filename ! \
 
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
-def CreateCache(file_in, file_out, progress):
-    DEFAULT_PIPELINE = "filesrc location=FILEIN ! decodebin ! progressreport update-freq=1 silent=true ! audioconvert ! audioresample ! audio/x-raw, channels=1, rate=8000, format=S8 ! filesink location=FILEOUT"
-    default_pipeline = DEFAULT_PIPELINE.replace("FILEIN", file_in)
-    default_pipeline = default_pipeline.replace("FILEOUT", file_out)
+class CreateCache():
+    def __init__(self, file_in, file_out, progress):
+        super(CreateCache,self).__init__()
+        self.progress = progress
 
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--pipeline", required=False,
-                    default=default_pipeline, help="Gstreamer pipeline without gst-launch")
+        DEFAULT_PIPELINE = "filesrc location=FILEIN ! decodebin ! progressreport update-freq=1 silent=true ! audioconvert ! audioresample ! audio/x-raw, channels=1, rate=8000, format=S8 ! filesink location=FILEOUT"
+        default_pipeline = DEFAULT_PIPELINE.replace("FILEIN", file_in)
+        default_pipeline = default_pipeline.replace("FILEOUT", file_out)
 
-    args = vars(ap.parse_args())
+        ap = argparse.ArgumentParser()
+        ap.add_argument("-p", "--pipeline", required=False,
+                        default=default_pipeline, help="Gstreamer pipeline without gst-launch")
 
-    command = args["pipeline"]
+        args = vars(ap.parse_args())
 
-    pipeline = Gst.parse_launch(command)
-    bus = pipeline.get_bus()
-    bus.add_signal_watch()
-    pipeline.set_state(Gst.State.PLAYING)
+        command = args["pipeline"]
 
-    # Init GObject loop to handle Gstreamer Bus Events
-    loop = GObject.MainLoop()
+        pipeline = Gst.parse_launch(command)
+        bus = pipeline.get_bus()
+        bus.add_signal_watch()
+        pipeline.set_state(Gst.State.PLAYING)
 
-    bus.connect("message", on_message, loop)
+        # Init GObject loop to handle Gstreamer Bus Events
+        loop = GObject.MainLoop()
 
-    try:
-        loop.run()
-    except Exception:
-        traceback.print_exc()
-        loop.quit()
+        bus.connect("message", self.on_message, loop)
 
-    # Stop Pipeline
-    pipeline.set_state(Gst.State.NULL)
+        try:
+            loop.run()
+        except Exception:
+            traceback.print_exc()
+            loop.quit()
+
+        # Stop Pipeline
+        pipeline.set_state(Gst.State.NULL)
 
 
-def on_message(bus: Gst.Bus, message: Gst.Message, loop: GObject.MainLoop):
-    mtype = message.type
-    """
-        Gstreamer Message Types and how to parse
-        https://lazka.github.io/pgi-docs/Gst-1.0/flags.html#Gst.MessageType
-    """
-    if mtype == Gst.MessageType.EOS:
-        print("End of stream")
-        loop.quit()
+    def on_message(self, bus: Gst.Bus, message: Gst.Message, loop: GObject.MainLoop):
+        mtype = message.type
+        """
+            Gstreamer Message Types and how to parse
+            https://lazka.github.io/pgi-docs/Gst-1.0/flags.html#Gst.MessageType
+        """
+        if mtype == Gst.MessageType.EOS:
+            print("End of stream")
+            loop.quit()
 
-    elif mtype == Gst.MessageType.ERROR:
-        err, debug = message.parse_error()
-        print(err, debug)
-        loop.quit()
+        elif mtype == Gst.MessageType.ERROR:
+            err, debug = message.parse_error()
+            print(err, debug)
+            loop.quit()
 
-    elif mtype == Gst.MessageType.WARNING:
-        err, debug = message.parse_warning()
-        print(err, debug)
+        elif mtype == Gst.MessageType.WARNING:
+            err, debug = message.parse_warning()
+            print(err, debug)
 
-    elif mtype == Gst.MessageType.ELEMENT:
-        b,p = message.get_structure().get_int("percent")
-        print("Progress message " + str(p) + "%")
+        elif mtype == Gst.MessageType.ELEMENT:
+            b,p = message.get_structure().get_int("percent")
+            print("Progress message " + str(p) + "%")
+            self.progress.set_fraction(p/100)
 
-    else:
-        print(mtype)
+        else:
+            print(mtype)
 
-    return True
+        return True
 
 
 class GraphicArea(Gtk.DrawingArea):
