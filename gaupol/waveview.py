@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2023 Varanda Labs Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -120,6 +120,12 @@ class CreateCache():
             print(mtype)
 
         return True
+
+AUDIO_SAMPLES_PER_SECOND = 8000
+DECIMATE_FACTOR = 80 * 4
+SAMPLES_PER_SECOND = AUDIO_SAMPLES_PER_SECOND / DECIMATE_FACTOR
+SPAM_IN_SECONDS = 10
+SPAM_IN_SAMPLES = SPAM_IN_SECONDS * SAMPLES_PER_SECOND
 
 
 class GraphicArea(Gtk.DrawingArea):
@@ -270,11 +276,6 @@ class Waveview():
         self.top_container.pack_start(self.vbox, True, True, 0)
         self.top_container.show_all()
 
-        ## test only:
-        # FILEIN = "/home/vigil/lixo/gtk_test/patrick_ori.mp4"
-        # FILEOUT = "/home/vigil/lixo/gtk_test/patrick_ori.raw"
-        # Gst.init(None)
-        # CreateCache(FILEIN, FILEOUT)
 
     def getWidget(self):
         return self.top_container
@@ -285,6 +286,44 @@ class Waveview():
         CreateCache(path, tmp_name, p.get_progress())
         p.hide()
         f = open(tmp_name, 'rb')
-        self.data = bytearray(f.read())
+        d = bytearray(f.read())
         f.close()
+
+        # decimate date
+        i = 0
+        _len = len(d)
+        samples = []
+        offset = DECIMATE_FACTOR
+        o = offset
+        acc = 0
+        max = 0
+        while (i < _len):
+            b = d[i]
+            print(b)
+            #b -= 128
+            acc += b #(b * b)
+            o -= 1
+            if o <= 0:
+                o = offset
+                samples.append(acc)
+                #print(acc)
+                if acc > max:
+                    max = acc
+                acc = 0
+            i += 1
+        print("n samples = " + str(len(samples)))
+        print ("SAMPLES_PER_SECOND = " + str(SAMPLES_PER_SECOND))
+
+        ## normalize
+        _len = len(samples)
+        i = 0
+        f = 1.0 / max
+        print("max = " + str(max) + ", f = " + str(f))
+        while (i < _len):
+            samples[i] *= f
+            i += 1
+        self.data = samples
+
+
+
 
