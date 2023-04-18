@@ -11,7 +11,8 @@
       //"program": "${file}",
       "program": "bin/gaupol",
       "console": "integratedTerminal",
-      "justMyCode": true
+      "justMyCode": true,
+      "args": ["../test.srt", "-v", "../Videos/test-short.mp4"],
     }
   ]
 }

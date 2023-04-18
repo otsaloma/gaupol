@@ -70,19 +70,12 @@ class CreateCache():
         super(CreateCache,self).__init__()
         self.progress = progress
 
-        DEFAULT_PIPELINE = "filesrc location=FILEIN ! decodebin ! progressreport update-freq=1 silent=true ! audioconvert ! audioresample ! audio/x-raw, channels=1, rate=8000, format=S8 ! filesink location=FILEOUT"
+        DEFAULT_PIPELINE = "filesrc location=FILEIN ! decodebin ! progressreport update-freq=1 silent=true ! audioconvert ! audioresample ! audio/x-raw, channels=1, rate=RATE, format=S8 ! filesink location=FILEOUT"
         default_pipeline = DEFAULT_PIPELINE.replace("FILEIN", file_in)
         default_pipeline = default_pipeline.replace("FILEOUT", file_out)
+        default_pipeline = default_pipeline.replace("RATE", str(AUDIO_SAMPLES_PER_SECOND))
 
-        ap = argparse.ArgumentParser()
-        ap.add_argument("-p", "--pipeline", required=False,
-                        default=default_pipeline, help="Gstreamer pipeline without gst-launch")
-
-        args = vars(ap.parse_args())
-
-        command = args["pipeline"]
-
-        pipeline = Gst.parse_launch(command)
+        pipeline = Gst.parse_launch(default_pipeline)
         bus = pipeline.get_bus()
         bus.add_signal_watch()
         pipeline.set_state(Gst.State.PLAYING)
@@ -188,10 +181,10 @@ class GraphicArea(Gtk.DrawingArea):
 
         if self.disp_samples == None:
             return
-        max_y = DISP_SPAM_IN_SAMPLES
-        if max_y >= len(self.disp_samples):
-            max_y = len(self.disp_samples) - 1
-        offset_x = width/max_y
+        max_x = DISP_SPAM_IN_SAMPLES
+        if max_x >= len(self.disp_samples):
+            max_x = len(self.disp_samples) - 1
+        offset_x = width/max_x
         x = 0
         i = 0
 
@@ -209,7 +202,7 @@ class GraphicArea(Gtk.DrawingArea):
             self.ctx.stroke()
             i += 1
             x += offset_x
-        if self.sample_pos >= 0 and self.sample_pos < max_y:
+        if self.sample_pos >= 0 and self.sample_pos < max_x:
             self.ctx.set_source_rgb(255, 0, 0)
             x = self.sample_pos * offset_x
             self.ctx.move_to(x, height)
