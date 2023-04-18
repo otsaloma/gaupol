@@ -129,6 +129,7 @@ class VideoAgent(aeidon.Delegate):
         """Initialize the video player and related widgets."""
         vbox = gaupol.util.new_vbox(spacing=0)
         hbox = gaupol.util.new_hbox(spacing=0)
+        hbox.set_homogeneous(True)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(hbox, self.player.widget)

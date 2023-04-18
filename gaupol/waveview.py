@@ -224,12 +224,13 @@ class Waveview():
     def __init__(self):
         super(Waveview,self).__init__()
         self.graphic_area = GraphicArea()
-        self.graphic_area.set_size_request(200, 0)
+        #self.graphic_area.set_size_request(0, 100)
         self.top_container = Gtk.HBox(spacing=6)
+        self.top_container.set_homogeneous(True)
 
         self.vbox = Gtk.VBox(spacing=6)
         # b = Gtk.Button("Dummy 1")
-        # self.vbox.pack_start(b, True, True, 0)
+        # self.vbox.pack_start(b, True, False, 0)
         # b = Gtk.Button("Dummy 2")
         # self.vbox.pack_start(b, True, True, 0)
 
@@ -282,7 +283,7 @@ class Waveview():
             i += 1
         self.disp_samples = samples
         self.graphic_area.set_data(samples)
-        print(samples)
+        #print(samples)
 
 
 
