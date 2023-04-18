@@ -146,6 +146,10 @@ class GraphicArea(Gtk.DrawingArea):
         self.rot = 0
         ## sx,sy is to mess with scale
         self.sx, self.sy = 1, 1
+        self.data = None
+
+    def set_data(self, data):
+        self.data = data
 
     def tick(self):
         ## This invalidates the graphic area, causing the "draw" event to fire.
@@ -162,7 +166,38 @@ class GraphicArea(Gtk.DrawingArea):
         self.cr = self.get_window().cairo_create()
         ## Call our draw function to do stuff.
         geom = self.get_window().get_geometry()
-        self.draw(geom.width, geom.height)
+        #self.draw(geom.width, geom.height)
+        self.draw_wave(geom.width, geom.height)
+    
+    def draw_wave(self, width, height):
+        self.drawcross(self.cr)
+        ctx = self.cr
+        ctx.set_source_rgb(0, 0, 0)
+        # ctx.move_to(0,0)
+        # ctx.line_to(10, 10)
+        # #ctx.move_to(-10, 0)
+        # #ctx.line_to(10, 0)
+        # ctx.stroke()
+
+
+        if self.data == None:
+            return
+        max_y = SPAM_IN_SAMPLES
+        if max_y > len(self.data):
+            max_y = len(self.data)
+        offset_x = width/max_y
+        x = 0
+        i = 0
+        #self.cr.set_source_rgba(1, 0.2, 0.2, 0.6)
+        self.cr.set_source_rgb(0, 0, 0)
+        #self.cr.set_line_width(0.02)
+        self.cr.move_to(x, 0)
+        while x <= width:
+            self.cr.move_to(x, height) #self.data[i])
+            self.cr.line_to(x, height - self.data[i] * height)
+            self.cr.stroke()
+            i += 1
+            x += offset_x
 
     def draw(self, width, height):
         ## A shortcut
@@ -258,6 +293,7 @@ class Progress(Gtk.Window):
 
     def get_progress(self):
         return self.progress
+    
 
 class Waveview():
     """ This class is a Drawing Area"""
@@ -299,9 +335,11 @@ class Waveview():
         max = 0
         while (i < _len):
             b = d[i]
-            print(b)
+            #print(b)
             #b -= 128
-            acc += b #(b * b)
+            if b > 127:
+                b = 256 - b
+            acc += b
             o -= 1
             if o <= 0:
                 o = offset
@@ -311,18 +349,20 @@ class Waveview():
                     max = acc
                 acc = 0
             i += 1
-        print("n samples = " + str(len(samples)))
-        print ("SAMPLES_PER_SECOND = " + str(SAMPLES_PER_SECOND))
+        #print("n samples = " + str(len(samples)))
+        #print ("SAMPLES_PER_SECOND = " + str(SAMPLES_PER_SECOND))
 
         ## normalize
         _len = len(samples)
         i = 0
         f = 1.0 / max
-        print("max = " + str(max) + ", f = " + str(f))
+        #print("max = " + str(max) + ", f = " + str(f))
         while (i < _len):
             samples[i] *= f
             i += 1
         self.data = samples
+        self.graphic_area.set_data(samples)
+        print(samples)
 
 
 
