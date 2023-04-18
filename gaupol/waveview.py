@@ -147,9 +147,16 @@ class GraphicArea(Gtk.DrawingArea):
         ## sx,sy is to mess with scale
         self.sx, self.sy = 1, 1
         self.data = None
+        self.sample_pos = -1
 
     def set_data(self, data):
         self.data = data
+
+    def set_position(self, pos):
+        if self.data == None:
+            return
+        # pos is fraction of the total duration
+        self.sample_pos = int(len(self.data) * pos)
 
     def tick(self):
         ## This invalidates the graphic area, causing the "draw" event to fire.
@@ -198,6 +205,12 @@ class GraphicArea(Gtk.DrawingArea):
             self.cr.stroke()
             i += 1
             x += offset_x
+        if self.sample_pos >= 0 and self.sample_pos < max_y:
+            self.cr.set_source_rgb(255, 0, 0)
+            x = self.sample_pos * offset_x
+            self.cr.move_to(x, height)
+            self.cr.line_to(x, 0)
+            self.cr.stroke()
 
     def draw(self, width, height):
         ## A shortcut
