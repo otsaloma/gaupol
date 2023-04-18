@@ -53,6 +53,12 @@ gst-launch-1.0 filesrc location=filename ! \
     filesink location=fileout.raw
 """
 
+AUDIO_SAMPLES_PER_SECOND = 8000
+DECIMATE_FACTOR = 80
+DISP_SAMPLES_PER_SECOND = AUDIO_SAMPLES_PER_SECOND / DECIMATE_FACTOR
+DISP_SPAM_IN_SECONDS = 10
+DISP_SPAM_IN_SAMPLES = DISP_SPAM_IN_SECONDS * DISP_SAMPLES_PER_SECOND
+
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
 class CreateCache():
@@ -121,12 +127,6 @@ class CreateCache():
 
         return True
 
-AUDIO_SAMPLES_PER_SECOND = 8000
-DECIMATE_FACTOR = 80 * 4
-SAMPLES_PER_SECOND = AUDIO_SAMPLES_PER_SECOND / DECIMATE_FACTOR
-SPAM_IN_SECONDS = 10
-SPAM_IN_SAMPLES = SPAM_IN_SECONDS * SAMPLES_PER_SECOND
-
 
 class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
@@ -171,36 +171,28 @@ class GraphicArea(Gtk.DrawingArea):
     ## When the "draw" event fires, this is run
     def on_draw(self, widget, event):
         self.cr = self.get_window().cairo_create()
-        ## Call our draw function to do stuff.
         geom = self.get_window().get_geometry()
-        #self.draw(geom.width, geom.height)
         self.draw_wave(geom.width, geom.height)
     
     def draw_wave(self, width, height):
         self.drawcross(self.cr)
         ctx = self.cr
         ctx.set_source_rgb(0, 0, 0)
-        # ctx.move_to(0,0)
-        # ctx.line_to(10, 10)
-        # #ctx.move_to(-10, 0)
-        # #ctx.line_to(10, 0)
-        # ctx.stroke()
-
 
         if self.data == None:
             return
-        max_y = SPAM_IN_SAMPLES
+        max_y = DISP_SPAM_IN_SAMPLES
         if max_y > len(self.data):
             max_y = len(self.data)
         offset_x = width/max_y
         x = 0
         i = 0
-        #self.cr.set_source_rgba(1, 0.2, 0.2, 0.6)
+
         self.cr.set_source_rgb(0, 0, 0)
         #self.cr.set_line_width(0.02)
         self.cr.move_to(x, 0)
         while x <= width:
-            self.cr.move_to(x, height) #self.data[i])
+            self.cr.move_to(x, height)
             self.cr.line_to(x, height - self.data[i] * height)
             self.cr.stroke()
             i += 1
@@ -211,85 +203,6 @@ class GraphicArea(Gtk.DrawingArea):
             self.cr.move_to(x, height)
             self.cr.line_to(x, 0)
             self.cr.stroke()
-
-    def draw(self, width, height):
-        ## A shortcut
-        cr = self.cr
-
-        ## First, let's shift 0,0 to be in the center of page
-        ## This means:
-        ##  -y | -y
-        ##  -x | +x
-        ## ----0------
-        ##  -x | +x
-        ##  +y | +y
-
-        matrix = cairo.Matrix(1, 0, 0, 1, width/2, height/2)
-        cr.transform(matrix) # Make it so...
-
-        ## Now save that situation so that we can mess with it.
-        ## This preserves the last context(the one at 0,0)
-        ## and let's us do new stuff.
-        cr.save()
-
-        ## Now attempt to rotate something around a point
-        ## Use a matrix to change the shape's position and rotation.
-
-        ## First, make a matrix. Don't look at me, I only use this stuff :)
-        ThingMatrix = cairo.Matrix(1, 0, 0, 1, 0, 0)
-
-        ## Next, move the drawing to it's x,y
-        cairo.Matrix.translate(ThingMatrix, self.x, self.y)
-        cr.transform(ThingMatrix) # Changes the context to reflect that
-
-        ## Now, change the matrix again to:
-        cairo.Matrix.translate(ThingMatrix, self.rx, self.ry) # move it all to point of rotation
-        cairo.Matrix.rotate(ThingMatrix, self.rot) # Do the rotation
-        cairo.Matrix.translate(ThingMatrix, -self.rx, -self.ry) # move it back again
-        cairo.Matrix.scale(ThingMatrix, self.sx, self.sy) # Now scale it all
-        cr.transform(ThingMatrix) # and commit it to the context
-
-        ## Now, whatever is draw is "under the influence" of the
-        ## context and all that matrix magix we just did.
-        self.drawCairoStuff(cr)
-
-        ## Let's inc the angle a little
-        self.rot += 0.1
-
-        ## Now mess with scale too
-        self.sx += 0 # Change to 0 to see if rotation is working...
-        if self.sx > 4: self.sx=0.5
-        self.sy = self.sx
-
-        ## We restore to a clean context, to undo all that hocus-pocus
-        cr.restore()
-
-        ## Let's draw a crosshair so we can identify 0,0
-        ## Drawn last to be above the red square.
-        self.drawcross(cr)
-
-    def drawCairoStuff(self, cr):
-        ## Thrillingly, we draw a red rectangle.
-        ## It's drawn such that 0,0 is in it's center.
-        cr.rectangle(-25, -25, 50, 50)
-        cr.set_source_rgb(1, 0, 0)
-        cr.fill()
-        ## Now a visual indicator of the point of rotation
-        ## I have no idea(yet) how to keep this as a
-        ## tiny dot when the entire thing scales.
-        cr.set_source_rgb(1, 1, 1)
-        cr.move_to(self.rx, self.ry)
-        cr.line_to(self.rx+1, self.ry+1)
-        cr.stroke()
-
-    def drawcross(self, ctx):
-        ## Also drawn around 0,0 in the center
-        ctx.set_source_rgb(0, 0, 0)
-        ctx.move_to(0,10)
-        ctx.line_to(0, -10)
-        ctx.move_to(-10, 0)
-        ctx.line_to(10, 0)
-        ctx.stroke()
 
 class Progress(Gtk.Window):
     def __init__(self):
@@ -335,35 +248,27 @@ class Waveview():
         CreateCache(path, tmp_name, p.get_progress())
         p.hide()
         f = open(tmp_name, 'rb')
-        d = bytearray(f.read())
+        d = bytearray(f.read())  # maybe save d as self.audio_samples for scrubbing
         f.close()
+
+        # maybe run an IIR low pass before decimation?
 
         # decimate date
         i = 0
         _len = len(d)
         samples = []
-        offset = DECIMATE_FACTOR
-        o = offset
-        acc = 0
         max = 0
+
         while (i < _len):
             b = d[i]
-            #print(b)
-            #b -= 128
             if b > 127:
                 b = 256 - b
-            acc += b
-            o -= 1
-            if o <= 0:
-                o = offset
-                samples.append(acc)
-                #print(acc)
-                if acc > max:
-                    max = acc
-                acc = 0
-            i += 1
+            samples.append(b)
+            if b > max:
+                max = b
+            i += DECIMATE_FACTOR
         #print("n samples = " + str(len(samples)))
-        #print ("SAMPLES_PER_SECOND = " + str(SAMPLES_PER_SECOND))
+        #print ("DISP_SAMPLES_PER_SECOND = " + str(DISP_SAMPLES_PER_SECOND))
 
         ## normalize
         _len = len(samples)
