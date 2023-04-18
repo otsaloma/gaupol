@@ -59,7 +59,7 @@ DISP_SAMPLES_PER_SECOND = AUDIO_SAMPLES_PER_SECOND / DECIMATE_FACTOR
 DISP_SPAM_IN_SECONDS = 10
 DISP_SPAM_IN_SAMPLES = DISP_SPAM_IN_SECONDS * DISP_SAMPLES_PER_SECOND
 
-WAVE_H_MARGINS = 0.10     # 5% each left/right side
+WAVE_H_MARGINS = 0.05     # 5% each left/right side
 WAVE_V_MARGINS = 0.10     # 10% each top/bottom
 
 
@@ -129,6 +129,8 @@ class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
     def __init__(self):
         super(GraphicArea,self).__init__()
+        self.spam_in_samples = DISP_SPAM_IN_SAMPLES
+
         ## Connect to the "draw" signal
         self.connect("draw", self.on_draw)
         ## This is what gives the animation life!
@@ -175,23 +177,22 @@ class GraphicArea(Gtk.DrawingArea):
         self.ctx.set_source_rgb(0, 0, 0)
         left_offset = width * WAVE_H_MARGINS
         right_max = width - left_offset
-        x_span = right_max - left_offset
+        x_g_span = right_max - left_offset
         y_span = height - (height * WAVE_V_MARGINS * 2)
-
 
         if self.disp_samples == None:
             return
-        max_x = DISP_SPAM_IN_SAMPLES
+        max_x = self.spam_in_samples
         if max_x >= len(self.disp_samples):
             max_x = len(self.disp_samples) - 1
-        offset_x = width/max_x
-        x = 0
+        offset_x = x_g_span/max_x
+        x = left_offset
         i = 0
 
         self.ctx.set_source_rgb(0, 0, 0)
         #self.ctx.set_line_width(0.02)
         self.ctx.move_to(x, 0)
-        while x <= width:
+        while x <= right_max:
             line_len = self.disp_samples[i] * y_span
             if line_len < 3:
                 line_len = 3
