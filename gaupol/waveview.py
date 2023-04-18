@@ -224,21 +224,25 @@ class Waveview():
     def __init__(self):
         super(Waveview,self).__init__()
         self.graphic_area = GraphicArea()
+        self.graphic_area.set_size_request(200, 0)
         self.top_container = Gtk.HBox(spacing=6)
 
         self.vbox = Gtk.VBox(spacing=6)
-        b = Gtk.Button("Dummy 1")
-        self.vbox.pack_start(b, True, True, 0)
-        b = Gtk.Button("Dummy 2")
-        self.vbox.pack_start(b, True, True, 0)
+        # b = Gtk.Button("Dummy 1")
+        # self.vbox.pack_start(b, True, True, 0)
+        # b = Gtk.Button("Dummy 2")
+        # self.vbox.pack_start(b, True, True, 0)
 
         self.top_container.pack_start(self.graphic_area, True, True, 0)
-        self.top_container.pack_start(self.vbox, True, True, 0)
+        #self.top_container.pack_start(self.vbox, True, True, 0)
         self.top_container.show_all()
 
 
     def getWidget(self):
         return self.top_container
+
+    def set_position(self, pos):
+        self.graphic_area.set_position(pos)
 
     def create_data(self, path):
         tmp_name = TMP_PATH + os.path.basename(path) + TMP_EXT

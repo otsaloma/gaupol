@@ -128,11 +128,13 @@ class VideoAgent(aeidon.Delegate):
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
         vbox = gaupol.util.new_vbox(spacing=0)
+        hbox = gaupol.util.new_hbox(spacing=0)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
-        gaupol.util.pack_start_expand(vbox, self.player.widget)
+        gaupol.util.pack_start_expand(hbox, self.player.widget)
         self.wavev = gaupol.Waveview()
-        gaupol.util.pack_start_fill(vbox, self.wavev.getWidget())
+        gaupol.util.pack_start_fill(hbox, self.wavev.getWidget())
+        gaupol.util.pack_start_expand(vbox, hbox)
         self._init_player_toolbar()
         gaupol.util.pack_start_fill(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
@@ -236,7 +238,7 @@ class VideoAgent(aeidon.Delegate):
         if duration is not None and position is not None:
             adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(position/duration)
-            self.wavev.graphic_area.set_position(position/duration)
+            self.wavev.set_position(position/duration)
         return True # to be called again.
 
     def _on_player_update_subtitle(self, data=None):
