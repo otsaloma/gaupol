@@ -62,6 +62,12 @@ DISP_SPAM_IN_SAMPLES = DISP_SPAM_IN_SECONDS * DISP_SAMPLES_PER_SECOND
 WAVE_H_MARGINS = 0.05     # 5% each left/right side
 WAVE_V_MARGINS = 0.10     # 10% each top/bottom
 
+THEMES = { \
+    'dark': { \
+        'wave': {'r': 255, 'g': 255, 'b': 0}, \
+        'pos_cursor' : {'r': 255, 'g': 0, 'b': 0} \
+    } \
+}
 
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
@@ -130,6 +136,7 @@ class GraphicArea(Gtk.DrawingArea):
     def __init__(self):
         super(GraphicArea,self).__init__()
         self.spam_in_samples = DISP_SPAM_IN_SAMPLES
+        self.set_theme('dark')
 
         ## Connect to the "draw" signal
         self.connect("draw", self.on_draw)
@@ -147,6 +154,10 @@ class GraphicArea(Gtk.DrawingArea):
         self.sx, self.sy = 1, 1
         self.disp_samples = None
         self.sample_pos = -1
+
+    def set_theme(self, t):
+        self.color_wave = THEMES[t]['wave']
+        self.color_pos_cursor = THEMES[t]['pos_cursor']
 
     def set_data(self, data):
         self.disp_samples = data
@@ -167,6 +178,9 @@ class GraphicArea(Gtk.DrawingArea):
         self.queue_draw()
         return True # Causes timeout to tick again.
 
+    def set_color(self, c):
+        self.ctx.set_source_rgb(c['r'], c['g'], c['b'])
+
     ## When the "draw" event fires, this is run
     def on_draw(self, widget, event):
         self.ctx = self.get_window().cairo_create()
@@ -174,7 +188,8 @@ class GraphicArea(Gtk.DrawingArea):
         self.draw_wave(geom.width, geom.height)
     
     def draw_wave(self, width, height):
-        self.ctx.set_source_rgb(0, 0, 0)
+        #self.ctx.set_source_rgb(0, 0, 0)
+        self.set_color(self.color_wave)
         left_offset = width * WAVE_H_MARGINS
         right_max = width - left_offset
         x_g_span = right_max - left_offset
@@ -189,8 +204,9 @@ class GraphicArea(Gtk.DrawingArea):
         x = left_offset
         i = 0
 
-        self.ctx.set_source_rgb(0, 0, 0)
+        #self.ctx.set_source_rgb(0, 0, 0)
         #self.ctx.set_line_width(0.02)
+        self.set_color(self.color_wave)
         self.ctx.move_to(x, 0)
         while x <= right_max:
             line_len = self.disp_samples[i] * y_span
@@ -204,8 +220,9 @@ class GraphicArea(Gtk.DrawingArea):
             i += 1
             x += offset_x
         if self.sample_pos >= 0 and self.sample_pos < max_x:
-            self.ctx.set_source_rgb(255, 0, 0)
-            x = self.sample_pos * offset_x
+            #self.ctx.set_source_rgb(255, 0, 0)
+            self.set_color(self.color_pos_cursor)
+            x = self.sample_pos * offset_x + left_offset
             self.ctx.move_to(x, height)
             self.ctx.line_to(x, 0)
             self.ctx.stroke()
