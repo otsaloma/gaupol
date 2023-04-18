@@ -146,17 +146,17 @@ class GraphicArea(Gtk.DrawingArea):
         self.rot = 0
         ## sx,sy is to mess with scale
         self.sx, self.sy = 1, 1
-        self.data = None
+        self.disp_samples = None
         self.sample_pos = -1
 
     def set_data(self, data):
-        self.data = data
+        self.disp_samples = data
 
     def set_position(self, pos):
-        if self.data == None:
+        if self.disp_samples == None:
             return
         # pos is fraction of the total duration
-        self.sample_pos = int(len(self.data) * pos)
+        self.sample_pos = int(len(self.disp_samples) * pos)
 
     def tick(self):
         ## This invalidates the graphic area, causing the "draw" event to fire.
@@ -170,39 +170,37 @@ class GraphicArea(Gtk.DrawingArea):
 
     ## When the "draw" event fires, this is run
     def on_draw(self, widget, event):
-        self.cr = self.get_window().cairo_create()
+        self.ctx = self.get_window().cairo_create()
         geom = self.get_window().get_geometry()
         self.draw_wave(geom.width, geom.height)
     
     def draw_wave(self, width, height):
-        self.drawcross(self.cr)
-        ctx = self.cr
-        ctx.set_source_rgb(0, 0, 0)
+        self.ctx.set_source_rgb(0, 0, 0)
 
-        if self.data == None:
+        if self.disp_samples == None:
             return
         max_y = DISP_SPAM_IN_SAMPLES
-        if max_y > len(self.data):
-            max_y = len(self.data)
+        if max_y >= len(self.disp_samples):
+            max_y = len(self.disp_samples) - 1
         offset_x = width/max_y
         x = 0
         i = 0
 
-        self.cr.set_source_rgb(0, 0, 0)
-        #self.cr.set_line_width(0.02)
-        self.cr.move_to(x, 0)
+        self.ctx.set_source_rgb(0, 0, 0)
+        #self.ctx.set_line_width(0.02)
+        self.ctx.move_to(x, 0)
         while x <= width:
-            self.cr.move_to(x, height)
-            self.cr.line_to(x, height - self.data[i] * height)
-            self.cr.stroke()
+            self.ctx.move_to(x, height)
+            self.ctx.line_to(x, height - self.disp_samples[i] * height)
+            self.ctx.stroke()
             i += 1
             x += offset_x
         if self.sample_pos >= 0 and self.sample_pos < max_y:
-            self.cr.set_source_rgb(255, 0, 0)
+            self.ctx.set_source_rgb(255, 0, 0)
             x = self.sample_pos * offset_x
-            self.cr.move_to(x, height)
-            self.cr.line_to(x, 0)
-            self.cr.stroke()
+            self.ctx.move_to(x, height)
+            self.ctx.line_to(x, 0)
+            self.ctx.stroke()
 
 class Progress(Gtk.Window):
     def __init__(self):
@@ -278,7 +276,7 @@ class Waveview():
         while (i < _len):
             samples[i] *= f
             i += 1
-        self.data = samples
+        self.disp_samples = samples
         self.graphic_area.set_data(samples)
         print(samples)
 
