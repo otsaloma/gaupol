@@ -59,6 +59,10 @@ DISP_SAMPLES_PER_SECOND = AUDIO_SAMPLES_PER_SECOND / DECIMATE_FACTOR
 DISP_SPAM_IN_SECONDS = 10
 DISP_SPAM_IN_SAMPLES = DISP_SPAM_IN_SECONDS * DISP_SAMPLES_PER_SECOND
 
+WAVE_H_MARGINS = 0.10     # 5% each left/right side
+WAVE_V_MARGINS = 0.10     # 10% each top/bottom
+
+
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
 class CreateCache():
@@ -176,6 +180,11 @@ class GraphicArea(Gtk.DrawingArea):
     
     def draw_wave(self, width, height):
         self.ctx.set_source_rgb(0, 0, 0)
+        left_offset = width * WAVE_H_MARGINS
+        right_max = width - left_offset
+        x_span = right_max - left_offset
+        y_span = height - (height * WAVE_V_MARGINS * 2)
+
 
         if self.disp_samples == None:
             return
@@ -190,8 +199,13 @@ class GraphicArea(Gtk.DrawingArea):
         #self.ctx.set_line_width(0.02)
         self.ctx.move_to(x, 0)
         while x <= width:
-            self.ctx.move_to(x, height)
-            self.ctx.line_to(x, height - self.disp_samples[i] * height)
+            line_len = self.disp_samples[i] * y_span
+            if line_len < 3:
+                line_len = 3
+            y_start = (height - line_len) / 2
+            y_end = y_start + line_len
+            self.ctx.move_to(x, y_start)
+            self.ctx.line_to(x, y_end)
             self.ctx.stroke()
             i += 1
             x += offset_x
