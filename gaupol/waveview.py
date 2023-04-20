@@ -97,7 +97,6 @@ class GraphicArea(Gtk.DrawingArea):
         right_max = width - left_offset
         x_g_span = right_max - left_offset
         y_span = height - (height * WAVE_V_MARGINS * 2)
-        #cursor_max_right = right_max = width - (2 * left_offset)
         increasing = False
 
         if self.disp_samples == None:
@@ -109,8 +108,17 @@ class GraphicArea(Gtk.DrawingArea):
             self.last_sample_pos = self.sample_base
         
         # point to the next frame if pos beyond max
-        if self.sample_pos - self.sample_base > self.spam_in_samples:
-            self.sample_base += self.spam_in_samples
+        if self.sample_pos - self.sample_base > self.spam_in_samples or self.sample_base > self.sample_pos:
+            v = self.sample_pos / self.spam_in_samples
+            if v == 0:
+                v = 1
+            v = int(v) * self.spam_in_samples
+            self.sample_base = int(v)
+            #if self.sample_pos > self.spam_in_samples:
+            #    self.sample_base -= 100
+        
+        #if  self.sample_base > self.sample_pos:
+
 
             # we are increasing. check if exceed right limit
 
@@ -126,7 +134,9 @@ class GraphicArea(Gtk.DrawingArea):
         self.set_color(self.color_wave)
         self.ctx.move_to(x, 0)
         while x <= right_max:
-            line_len = self.disp_samples[i + int(self.sample_base)] * y_span
+            if i + self.sample_base >= len(self.disp_samples):
+                break
+            line_len = self.disp_samples[i + self.sample_base] * y_span
             if line_len < 3:
                 line_len = 3
             y_start = (height - line_len) / 2

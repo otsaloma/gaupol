@@ -12,7 +12,8 @@
       "program": "bin/gaupol",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "args": ["../test.srt", "-v", "../Videos/test-short.mp4"],
+      //"args": ["../test.srt", "-v", "../Videos/test-short.mp4"],
+      "args": ["../test.srt", "-v", "../Videos/patrick_ori.mp4"],
     }
   ]
 }
