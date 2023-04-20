@@ -34,7 +34,7 @@ from gi.repository import Gtk, GObject, Gst
 __all__ = ("Waveview",)
 
 TMP_PATH = "/tmp/"
-TMP_EXT = ".gaupol.$$$"
+TMP_EXT = ".gaupol"
 
 """
 for 16 bits in 16 bits, signed, little endian:
@@ -72,9 +72,20 @@ THEMES = { \
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
 class CreateCache():
-    def __init__(self, file_in, file_out, progress):
+    def __init__(self, file_in, file_out):
         super(CreateCache,self).__init__()
-        self.progress = progress
+        # check if there is a cache already
+        if os.path.exists(file_out):
+            # check if newer than video file
+            ts_out = os.stat(file_out).st_mtime
+            ts_in = os.stat(file_in).st_mtime
+            if ts_out > ts_in:
+                # we have a valid cache file
+                print("wave cache found")
+                return
+
+        p = Progress()
+        self.progress = p.get_progress()
 
         DEFAULT_PIPELINE = "filesrc location=FILEIN ! decodebin ! progressreport update-freq=1 silent=true ! audioconvert ! audioresample ! audio/x-raw, channels=1, rate=RATE, format=S8 ! filesink location=FILEOUT"
         default_pipeline = DEFAULT_PIPELINE.replace("FILEIN", file_in)
@@ -95,10 +106,14 @@ class CreateCache():
             loop.run()
         except Exception:
             traceback.print_exc()
+            p.hide()
+            p = None
             loop.quit()
 
         # Stop Pipeline
         pipeline.set_state(Gst.State.NULL)
+        p.hide()
+        p = None
 
 
     def on_message(self, bus: Gst.Bus, message: Gst.Message, loop: GObject.MainLoop):
@@ -138,22 +153,13 @@ class GraphicArea(Gtk.DrawingArea):
         self.spam_in_samples = DISP_SPAM_IN_SAMPLES
         self.set_theme('dark')
 
-        ## Connect to the "draw" signal
         self.connect("draw", self.on_draw)
-        ## This is what gives the animation life!
         GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
 
-
-        ## x,y is where I'm at
-        self.x, self.y = 25, -25
-        ## rx,ry is point of rotation
-        self.rx, self.ry = -10, -25
-        ## rot is angle counter
-        self.rot = 0
-        ## sx,sy is to mess with scale
-        self.sx, self.sy = 1, 1
         self.disp_samples = None
         self.sample_pos = -1
+        self.last_sample_pos = -1
+        self.sample_base = 0 # sample index at the start of the left side
 
     def set_theme(self, t):
         self.color_wave = THEMES[t]['wave']
@@ -194,9 +200,17 @@ class GraphicArea(Gtk.DrawingArea):
         right_max = width - left_offset
         x_g_span = right_max - left_offset
         y_span = height - (height * WAVE_V_MARGINS * 2)
+        cursor_max_right = right_max = width - (2 * left_offset)
 
         if self.disp_samples == None:
             return
+
+        if self.last_sample_pos >= 0:
+        # need to check if pos is increasing
+            if self.sample_pos > self.last_sample_pos:
+                pass
+            # we are increasing. check if exceed right limit
+
         max_x = self.spam_in_samples
         if max_x >= len(self.disp_samples):
             max_x = len(self.disp_samples) - 1
@@ -233,10 +247,13 @@ class Progress(Gtk.Window):
         self.set_default_size(400,200)
         self.set_title("Gaupol Progress")
         vbox = Gtk.VBox()
-        label = Gtk.Label("Loading/Parsing Video File")
-        vbox.pack_start(label, expand = True, fill = True, padding = 10)
+        label = Gtk.Label("Creating cache for wave graphic")
+        vbox.pack_start(label, expand = True, fill = True, padding = 6)
         self.progress = Gtk.ProgressBar()
-        vbox.pack_start(self.progress, expand = True, fill = True, padding = 10)
+        self.progress.set_margin_bottom(100)
+        self.progress.set_margin_right(10)
+        self.progress.set_margin_left(10)
+        vbox.pack_start(self.progress, expand = True, fill = True, padding = 4)
         self.add(vbox)
         self.show_all()
 
@@ -272,9 +289,8 @@ class Waveview():
 
     def create_data(self, path):
         tmp_name = TMP_PATH + os.path.basename(path) + TMP_EXT
-        p = Progress()
-        CreateCache(path, tmp_name, p.get_progress())
-        p.hide()
+        CreateCache(path, tmp_name)
+
         f = open(tmp_name, 'rb')
         d = bytearray(f.read())  # maybe save d as self.audio_samples for scrubbing
         f.close()
