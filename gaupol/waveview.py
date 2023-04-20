@@ -69,6 +69,117 @@ THEMES = { \
     } \
 }
 
+
+class GraphicArea(Gtk.DrawingArea):
+    """ This class is a Drawing Area"""
+    def __init__(self):
+        super(GraphicArea,self).__init__()
+        self.spam_in_samples = DISP_SPAM_IN_SAMPLES
+        self.set_theme('dark')
+
+        self.connect("draw", self.on_draw)
+        GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
+
+        self.disp_samples = None
+        self.sample_pos = -1
+        self.last_sample_pos = 0
+        self.sample_base = 0 # sample index at the start of the left side
+
+    #######################################
+    #
+    #               draw_wave
+    #
+    #######################################
+    def draw_wave(self, width, height):
+        #self.ctx.set_source_rgb(0, 0, 0)
+        self.set_color(self.color_wave)
+        left_offset = width * WAVE_H_MARGINS
+        right_max = width - left_offset
+        x_g_span = right_max - left_offset
+        y_span = height - (height * WAVE_V_MARGINS * 2)
+        #cursor_max_right = right_max = width - (2 * left_offset)
+        increasing = False
+
+        if self.disp_samples == None:
+            return
+
+
+        if self.sample_pos > self.last_sample_pos:
+            increasing = True
+            self.last_sample_pos = self.sample_base
+        
+        # point to the next frame if pos beyond max
+        if self.sample_pos - self.sample_base > self.spam_in_samples:
+            self.sample_base += self.spam_in_samples
+
+            # we are increasing. check if exceed right limit
+
+        max_x = self.spam_in_samples
+        if max_x >= len(self.disp_samples):
+            max_x = len(self.disp_samples) - 1
+        offset_x = x_g_span/max_x
+        x = left_offset
+        i = 0
+
+        #self.ctx.set_source_rgb(0, 0, 0)
+        #self.ctx.set_line_width(0.02)
+        self.set_color(self.color_wave)
+        self.ctx.move_to(x, 0)
+        while x <= right_max:
+            line_len = self.disp_samples[i + int(self.sample_base)] * y_span
+            if line_len < 3:
+                line_len = 3
+            y_start = (height - line_len) / 2
+            y_end = y_start + line_len
+            self.ctx.move_to(x, y_start)
+            self.ctx.line_to(x, y_end)
+            self.ctx.stroke()
+            i += 1
+            x += offset_x
+
+        # draw cursor
+        if self.sample_pos >= 0 and self.sample_pos - self.sample_base < max_x:
+            self.set_color(self.color_pos_cursor)
+            x = (self.sample_pos - self.sample_base) * offset_x + left_offset
+            self.ctx.move_to(x, height)
+            self.ctx.line_to(x, 0)
+            self.ctx.stroke()
+
+
+    def set_theme(self, t):
+        self.color_wave = THEMES[t]['wave']
+        self.color_pos_cursor = THEMES[t]['pos_cursor']
+
+    def set_data(self, data):
+        self.disp_samples = data
+
+    def set_position(self, pos):
+        if self.disp_samples == None:
+            return
+        # pos is fraction of the total duration
+        self.sample_pos = int(len(self.disp_samples) * pos)
+
+    def tick(self):
+        ## This invalidates the graphic area, causing the "draw" event to fire.
+        rect = self.get_allocation()
+        #self.get_window().invalidate_rect(rect, True)
+        #w = self.get_window()
+        #w.invalidate_rect(rect, True)
+        #self.gtk_widget_queue_draw_area()
+        self.queue_draw()
+        return True # Causes timeout to tick again.
+
+    def set_color(self, c):
+        self.ctx.set_source_rgb(c['r'], c['g'], c['b'])
+
+    ## When the "draw" event fires, this is run
+    def on_draw(self, widget, event):
+        self.ctx = self.get_window().cairo_create()
+        geom = self.get_window().get_geometry()
+        self.draw_wave(geom.width, geom.height)
+    
+
+
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
 class CreateCache():
@@ -145,101 +256,6 @@ class CreateCache():
 
         return True
 
-
-class GraphicArea(Gtk.DrawingArea):
-    """ This class is a Drawing Area"""
-    def __init__(self):
-        super(GraphicArea,self).__init__()
-        self.spam_in_samples = DISP_SPAM_IN_SAMPLES
-        self.set_theme('dark')
-
-        self.connect("draw", self.on_draw)
-        GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
-
-        self.disp_samples = None
-        self.sample_pos = -1
-        self.last_sample_pos = -1
-        self.sample_base = 0 # sample index at the start of the left side
-
-    def set_theme(self, t):
-        self.color_wave = THEMES[t]['wave']
-        self.color_pos_cursor = THEMES[t]['pos_cursor']
-
-    def set_data(self, data):
-        self.disp_samples = data
-
-    def set_position(self, pos):
-        if self.disp_samples == None:
-            return
-        # pos is fraction of the total duration
-        self.sample_pos = int(len(self.disp_samples) * pos)
-
-    def tick(self):
-        ## This invalidates the graphic area, causing the "draw" event to fire.
-        rect = self.get_allocation()
-        #self.get_window().invalidate_rect(rect, True)
-        #w = self.get_window()
-        #w.invalidate_rect(rect, True)
-        #self.gtk_widget_queue_draw_area()
-        self.queue_draw()
-        return True # Causes timeout to tick again.
-
-    def set_color(self, c):
-        self.ctx.set_source_rgb(c['r'], c['g'], c['b'])
-
-    ## When the "draw" event fires, this is run
-    def on_draw(self, widget, event):
-        self.ctx = self.get_window().cairo_create()
-        geom = self.get_window().get_geometry()
-        self.draw_wave(geom.width, geom.height)
-    
-    def draw_wave(self, width, height):
-        #self.ctx.set_source_rgb(0, 0, 0)
-        self.set_color(self.color_wave)
-        left_offset = width * WAVE_H_MARGINS
-        right_max = width - left_offset
-        x_g_span = right_max - left_offset
-        y_span = height - (height * WAVE_V_MARGINS * 2)
-        cursor_max_right = right_max = width - (2 * left_offset)
-
-        if self.disp_samples == None:
-            return
-
-        if self.last_sample_pos >= 0:
-        # need to check if pos is increasing
-            if self.sample_pos > self.last_sample_pos:
-                pass
-            # we are increasing. check if exceed right limit
-
-        max_x = self.spam_in_samples
-        if max_x >= len(self.disp_samples):
-            max_x = len(self.disp_samples) - 1
-        offset_x = x_g_span/max_x
-        x = left_offset
-        i = 0
-
-        #self.ctx.set_source_rgb(0, 0, 0)
-        #self.ctx.set_line_width(0.02)
-        self.set_color(self.color_wave)
-        self.ctx.move_to(x, 0)
-        while x <= right_max:
-            line_len = self.disp_samples[i] * y_span
-            if line_len < 3:
-                line_len = 3
-            y_start = (height - line_len) / 2
-            y_end = y_start + line_len
-            self.ctx.move_to(x, y_start)
-            self.ctx.line_to(x, y_end)
-            self.ctx.stroke()
-            i += 1
-            x += offset_x
-        if self.sample_pos >= 0 and self.sample_pos < max_x:
-            #self.ctx.set_source_rgb(255, 0, 0)
-            self.set_color(self.color_pos_cursor)
-            x = self.sample_pos * offset_x + left_offset
-            self.ctx.move_to(x, height)
-            self.ctx.line_to(x, 0)
-            self.ctx.stroke()
 
 class Progress(Gtk.Window):
     def __init__(self):
