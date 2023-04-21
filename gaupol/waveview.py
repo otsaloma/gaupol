@@ -26,7 +26,7 @@ import traceback
 import argparse
 
 from aeidon.i18n   import _
-from gi.repository import Gtk, GObject, Gst
+from gi.repository import Gtk, GObject, Gst, Gdk
 
 # gi.require_version('Gst', '1.0')
 # from gi.repository import Gst, GObject
@@ -84,6 +84,10 @@ class GraphicArea(Gtk.DrawingArea):
         self.sample_pos = -1
         self.last_sample_pos = 0
         self.sample_base = 0 # sample index at the start of the left side
+
+        self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK) #POINTER_MOTION_MASK)
+        self.connect('motion-notify-event', self.event_cb)
+        self.connect('button-press-event', self.event_cb)
 
     #######################################
     #
@@ -155,6 +159,9 @@ class GraphicArea(Gtk.DrawingArea):
             self.ctx.line_to(x, 0)
             self.ctx.stroke()
 
+    def event_cb(self, widget, ev):
+        if Gdk.EventMask.BUTTON_PRESS_MASK: #POINTER_MOTION_MASK:
+            print("got pointer motion event " + str(ev.x) + ", " + str(ev.y))
 
     def set_theme(self, t):
         self.color_wave = THEMES[t]['wave']
