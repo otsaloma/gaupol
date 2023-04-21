@@ -85,9 +85,13 @@ class GraphicArea(Gtk.DrawingArea):
         self.last_sample_pos = 0
         self.sample_base = 0 # sample index at the start of the left side
 
-        self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK) #POINTER_MOTION_MASK)
-        self.connect('motion-notify-event', self.event_cb)
+        ## Register events callbacks
+        self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
         self.connect('button-press-event', self.event_cb)
+
+        self.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
+        self.connect('motion-notify-event', self.on_motion)
+
 
     #######################################
     #
@@ -101,7 +105,6 @@ class GraphicArea(Gtk.DrawingArea):
         right_max = width - left_offset
         x_g_span = right_max - left_offset
         y_span = height - (height * WAVE_V_MARGINS * 2)
-        increasing = False
 
         if self.disp_samples == None:
             return
@@ -118,13 +121,6 @@ class GraphicArea(Gtk.DrawingArea):
                 v = 1
             v = int(v) * self.spam_in_samples
             self.sample_base = int(v)
-            #if self.sample_pos > self.spam_in_samples:
-            #    self.sample_base -= 100
-        
-        #if  self.sample_base > self.sample_pos:
-
-
-            # we are increasing. check if exceed right limit
 
         max_x = self.spam_in_samples
         if max_x >= len(self.disp_samples):
@@ -133,7 +129,6 @@ class GraphicArea(Gtk.DrawingArea):
         x = left_offset
         i = 0
 
-        #self.ctx.set_source_rgb(0, 0, 0)
         #self.ctx.set_line_width(0.02)
         self.set_color(self.color_wave)
         self.ctx.move_to(x, 0)
@@ -163,10 +158,23 @@ class GraphicArea(Gtk.DrawingArea):
     #               events
     #
     #######################################
+    def on_left_click(self, x,y):
+        print("left-click event " + str(x) + ", " + str(y))
+
+    def on_right_click(self, x,y):
+        print("right-click event " + str(x) + ", " + str(y))
+
+    def on_motion(self, widget, ev):
+        print("on motion event " + str(ev.x) + ", " + str(ev.y))
+
     def event_cb(self, widget, ev):
-        if Gdk.EventMask.BUTTON_PRESS_MASK: #POINTER_MOTION_MASK:
-            print("got pointer motion event " + str(ev.x) + ", " + str(ev.y))
-            print("button " + str(ev.button) )
+        #if ev.type == Gdk.EventMask.BUTTON_PRESS_MASK:
+        if ev.button == 1:
+            self.on_left_click(ev.x, ev.y)
+        elif ev.button == 3:
+            self.on_right_click(ev.x, ev.y)
+        # elif ev.type == Gdk.EventMask.MOTION_NOTIFY_MASK: #POINTER_MOTION_MASK:
+        #     self.on_motion(ev.x, ev.y)
 
 
     def set_theme(self, t):
