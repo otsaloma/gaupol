@@ -158,10 +158,16 @@ class GraphicArea(Gtk.DrawingArea):
             self.ctx.move_to(x, height)
             self.ctx.line_to(x, 0)
             self.ctx.stroke()
-
+    #######################################
+    #
+    #               events
+    #
+    #######################################
     def event_cb(self, widget, ev):
         if Gdk.EventMask.BUTTON_PRESS_MASK: #POINTER_MOTION_MASK:
             print("got pointer motion event " + str(ev.x) + ", " + str(ev.y))
+            print("button " + str(ev.button) )
+
 
     def set_theme(self, t):
         self.color_wave = THEMES[t]['wave']
