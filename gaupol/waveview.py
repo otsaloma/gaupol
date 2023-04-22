@@ -109,34 +109,14 @@ class GraphicArea(Gtk.DrawingArea):
 
         # self.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
         # self.connect('motion-notify-event', self.on_motion)
-    
-    # def get_time_from_sample_pos(self, pos_in_samples):
-    #     total_sample = len(self.disp_samples)
-    #     print("total_sample = " + str(total_sample))
-    #     print("pos_in_samples = " + str(pos_in_samples))
-    #     print("self.duration = " + str(self.duration))
 
-    #     if self.sample_pos == 0 or total_sample == 0:
-    #         return 0
-    #     return (self.duration * (pos_in_samples/total_sample)) / 1000000000
     
     def get_click_time(self, x):
         xx = x - self.width * WAVE_H_MARGINS
         xx *= self.width/self.x_g_span
-        #print("xx = " + str(xx))
-        #print("self.spam_in_time = " + str(self.spam_in_time))
         f = xx/self.width
-        if f > 1.0:
-            f = 1.0
-        #print("f = " + str(f))
         d = f * self.spam_in_time
-        #print("d = " + str(d))
-        i = (self.sample_base/100) + d #(f * self.spam_in_time)
-        #print("self.sample_base = " + str(self.sample_base) + ", self.spam_in_time = " + str(self.spam_in_time))
-        #print("i = " + str(i) )
-        # i = x + self.sample_base - self.width * WAVE_H_MARGINS
-        # i *= self.width/self.x_g_span
-        #i = xx 
+        i = (self.sample_base/100) + d
         if i < 0:
             return 0
         return i
