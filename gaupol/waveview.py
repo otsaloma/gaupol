@@ -112,14 +112,12 @@ class GraphicArea(Gtk.DrawingArea):
 
     
     def get_click_time(self, x):
-        xx = x - self.width * WAVE_H_MARGINS
-        xx *= self.width/self.x_g_span
-        f = xx/self.width
-        d = f * self.spam_in_time
-        i = (self.sample_base/100) + d
-        if i < 0:
+        xx = (x - self.width * WAVE_H_MARGINS) / self.x_g_span
+        d = xx * self.spam_in_time
+        d += (self.sample_base/100)
+        if d < 0:
             return 0
-        return i
+        return d
 
 
 
@@ -190,10 +188,9 @@ class GraphicArea(Gtk.DrawingArea):
     #######################################
     @aeidon.deco.export
     def on_left_click(self, x,y):
-        print("left-click event " + str(x) + ", " + str(y))
-        t = self.get_click_time(x) #self.get_time_from_sample_pos(self.get_click_time_in_samples(x))
-        print( "t = ", str(t))
-        self.poster.send_seek_request( t)#self.get_time_from_sample_pos(self.sample_pos) )
+        #print("left-click event " + str(x) + ", " + str(y))
+        t = self.get_click_time(x)
+        self.poster.send_seek_request( t)
 
     def on_right_click(self, x,y):
         print("right-click event " + str(x) + ", " + str(y))
