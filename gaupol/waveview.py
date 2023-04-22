@@ -365,7 +365,7 @@ class Waveview():
     def getWidget(self):
         return self.top_container
 
-    def set_position(self, position, duration):
+    def set_position(self, position, duration, subtitles):
         self.graphic_area.set_position(position, duration)
 
     def create_data(self, path):
