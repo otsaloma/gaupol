@@ -133,14 +133,21 @@ class VideoAgent(aeidon.Delegate):
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
         vbox = gaupol.util.new_vbox(spacing=0)
-        hbox = gaupol.util.new_hbox(spacing=0)
-        hbox.set_homogeneous(True)
+        layout = gaupol.conf.application_window.layout
+
+        # TODO: fix: layout change only takes effect after App relaunch as this is static
+        if layout == Gtk.Orientation.HORIZONTAL:
+            video_and_wavev_box = gaupol.util.new_vbox(spacing=0)
+        else:
+            video_and_wavev_box = gaupol.util.new_hbox(spacing=0)
+        
+        video_and_wavev_box.set_homogeneous(True)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
-        gaupol.util.pack_start_expand(hbox, self.player.widget)
+        gaupol.util.pack_start_expand(video_and_wavev_box, self.player.widget)
         self.wavev = gaupol.Waveview(self)
-        gaupol.util.pack_start_fill(hbox, self.wavev.getWidget())
-        gaupol.util.pack_start_expand(vbox, hbox)
+        gaupol.util.pack_start_fill(video_and_wavev_box, self.wavev.getWidget())
+        gaupol.util.pack_start_expand(vbox, video_and_wavev_box)
         self._init_player_toolbar()
         gaupol.util.pack_start_fill(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
