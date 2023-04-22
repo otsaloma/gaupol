@@ -88,6 +88,7 @@ class GraphicArea(Gtk.DrawingArea):
         super(GraphicArea,self).__init__()
         self.poster = poster
         self.spam_in_samples = DISP_SPAM_IN_SAMPLES
+        self.spam_in_time = self.spam_in_samples / DISP_SAMPLES_PER_SECOND
         self.set_theme('dark')
 
         self.connect("draw", self.on_draw)
@@ -97,6 +98,10 @@ class GraphicArea(Gtk.DrawingArea):
         self.sample_pos = -1
         self.last_sample_pos = 0
         self.sample_base = 0 # sample index at the start of the left side
+        self.duration = 0
+        self.width = 0
+        self.x_g_span = 0
+
 
         ## Register events callbacks
         self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
@@ -104,6 +109,38 @@ class GraphicArea(Gtk.DrawingArea):
 
         # self.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
         # self.connect('motion-notify-event', self.on_motion)
+    
+    # def get_time_from_sample_pos(self, pos_in_samples):
+    #     total_sample = len(self.disp_samples)
+    #     print("total_sample = " + str(total_sample))
+    #     print("pos_in_samples = " + str(pos_in_samples))
+    #     print("self.duration = " + str(self.duration))
+
+    #     if self.sample_pos == 0 or total_sample == 0:
+    #         return 0
+    #     return (self.duration * (pos_in_samples/total_sample)) / 1000000000
+    
+    def get_click_time(self, x):
+        xx = x - self.width * WAVE_H_MARGINS
+        xx *= self.width/self.x_g_span
+        #print("xx = " + str(xx))
+        #print("self.spam_in_time = " + str(self.spam_in_time))
+        f = xx/self.width
+        if f > 1.0:
+            f = 1.0
+        #print("f = " + str(f))
+        d = f * self.spam_in_time
+        #print("d = " + str(d))
+        i = (self.sample_base/100) + d #(f * self.spam_in_time)
+        #print("self.sample_base = " + str(self.sample_base) + ", self.spam_in_time = " + str(self.spam_in_time))
+        #print("i = " + str(i) )
+        # i = x + self.sample_base - self.width * WAVE_H_MARGINS
+        # i *= self.width/self.x_g_span
+        #i = xx 
+        if i < 0:
+            return 0
+        return i
+
 
 
     #######################################
@@ -116,7 +153,7 @@ class GraphicArea(Gtk.DrawingArea):
         self.set_color(self.color_wave)
         left_offset = width * WAVE_H_MARGINS
         right_max = width - left_offset
-        x_g_span = right_max - left_offset
+        self.x_g_span = right_max - left_offset
         y_span = height - (height * WAVE_V_MARGINS * 2)
 
         if self.disp_samples == None:
@@ -138,7 +175,7 @@ class GraphicArea(Gtk.DrawingArea):
         max_x = self.spam_in_samples
         if max_x >= len(self.disp_samples):
             max_x = len(self.disp_samples) - 1
-        offset_x = x_g_span/max_x
+        offset_x = self.x_g_span/max_x
         x = left_offset
         i = 0
 
@@ -174,8 +211,9 @@ class GraphicArea(Gtk.DrawingArea):
     @aeidon.deco.export
     def on_left_click(self, x,y):
         print("left-click event " + str(x) + ", " + str(y))
-        self.poster.send_seek_request(3.0)
-        #self.parent.emit("request-seek", 0.5)
+        t = self.get_click_time(x) #self.get_time_from_sample_pos(self.get_click_time_in_samples(x))
+        print( "t = ", str(t))
+        self.poster.send_seek_request( t)#self.get_time_from_sample_pos(self.sample_pos) )
 
     def on_right_click(self, x,y):
         print("right-click event " + str(x) + ", " + str(y))
@@ -200,11 +238,12 @@ class GraphicArea(Gtk.DrawingArea):
     def set_data(self, data):
         self.disp_samples = data
 
-    def set_position(self, pos):
-        if self.disp_samples == None:
+    def set_position(self, position, duration):
+        if self.disp_samples == None or duration <= 0:
             return
-        # pos is fraction of the total duration
-        self.sample_pos = int(len(self.disp_samples) * pos)
+        
+        self.duration = duration
+        self.sample_pos = int(len(self.disp_samples) * (position/duration))
 
     def tick(self):
         ## This invalidates the graphic area, causing the "draw" event to fire.
@@ -223,6 +262,7 @@ class GraphicArea(Gtk.DrawingArea):
     def on_draw(self, widget, event):
         self.ctx = self.get_window().cairo_create()
         geom = self.get_window().get_geometry()
+        self.width = geom.width
         self.draw_wave(geom.width, geom.height)
     
 
@@ -348,8 +388,8 @@ class Waveview():
     def getWidget(self):
         return self.top_container
 
-    def set_position(self, pos):
-        self.graphic_area.set_position(pos)
+    def set_position(self, position, duration):
+        self.graphic_area.set_position(position, duration)
 
     def create_data(self, path):
         tmp_name = TMP_PATH + os.path.basename(path) + TMP_EXT
