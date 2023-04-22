@@ -128,7 +128,7 @@ class GraphicArea(Gtk.DrawingArea):
     #
     #######################################
     def draw_wave(self, width, height):
-        #self.ctx.set_source_rgb(0, 0, 0)
+        ctx = self.ctx # speed up access to ctx
         self.set_color(self.color_wave)
         left_offset = width * WAVE_H_MARGINS
         right_max = width - left_offset
@@ -158,9 +158,9 @@ class GraphicArea(Gtk.DrawingArea):
         x = left_offset
         i = 0
 
-        #self.ctx.set_line_width(0.02)
+        #ctx.set_line_width(0.02)
         self.set_color(self.color_wave)
-        self.ctx.move_to(x, 0)
+        ctx.move_to(x, 0)
         while x <= right_max:
             if i + self.sample_base >= len(self.disp_samples):
                 break
@@ -169,9 +169,9 @@ class GraphicArea(Gtk.DrawingArea):
                 line_len = 3
             y_start = (height - line_len) / 2
             y_end = y_start + line_len
-            self.ctx.move_to(x, y_start)
-            self.ctx.line_to(x, y_end)
-            self.ctx.stroke()
+            ctx.move_to(x, y_start)
+            ctx.line_to(x, y_end)
+            ctx.stroke()
             i += 1
             x += offset_x
 
@@ -179,12 +179,17 @@ class GraphicArea(Gtk.DrawingArea):
         if self.sample_pos >= 0 and self.sample_pos - self.sample_base < max_x:
             self.set_color(self.color_pos_cursor)
             x = (self.sample_pos - self.sample_base) * offset_x + left_offset
-            self.ctx.move_to(x, height)
-            self.ctx.line_to(x, 0)
-            self.ctx.stroke()
+            ctx.move_to(x, height)
+            ctx.line_to(x, 0)
+            ctx.stroke()
 
         ########### draw subtitle bars ##########
         #
+        # there is a chance that the following code will be slow.
+        # we may need to cache the visible bars and update the cache upon 
+        # notification for changes.
+        #
+
         if self.subtitles != None:
             visible_start = self.sample_base/100
             visible_end = visible_start + self.spam_in_time
@@ -194,8 +199,8 @@ class GraphicArea(Gtk.DrawingArea):
                 start = s.start_seconds
                 if s.start_seconds >= visible_start or s.end_seconds < visible_end:
                     #print(s._main_text)
-                    self.ctx.rectangle(10, 10, 100, 10)
-                    self.ctx.fill()
+                    ctx.rectangle(10, 10, 100, 10)
+                    ctx.fill()
 
 
     #######################################
