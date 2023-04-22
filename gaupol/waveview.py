@@ -69,12 +69,24 @@ THEMES = { \
     } \
 }
 
+class SignalPoster(): #(aeidon.Observable)  TODO: fix usage of aeidon.Observable
+                    # and remove hack of using parent
+    # signals = (
+    #     "request-seek",
+    # )
+    def __init__(self, parent):
+        """Initialize an :class:`SignalPoster` instance."""
+        #aeidon.Observable.__init__(self)
+        self.parent = parent
+
+    def send_seek_request(self, pos):
+        self.parent.emit("request-seek", pos)
 
 class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
-    def __init__(self, parent):
+    def __init__(self, poster):
         super(GraphicArea,self).__init__()
-        self.parent = parent
+        self.poster = poster
         self.spam_in_samples = DISP_SPAM_IN_SAMPLES
         self.set_theme('dark')
 
@@ -162,7 +174,8 @@ class GraphicArea(Gtk.DrawingArea):
     @aeidon.deco.export
     def on_left_click(self, x,y):
         print("left-click event " + str(x) + ", " + str(y))
-        self.parent.emit("request-set-seekbar", 0.5)
+        self.poster.send_seek_request(3.0)
+        #self.parent.emit("request-seek", 0.5)
 
     def on_right_click(self, x,y):
         print("right-click event " + str(x) + ", " + str(y))
@@ -315,8 +328,8 @@ class Waveview():
     """ This class is a Drawing Area"""
     def __init__(self, parent):
         super(Waveview,self).__init__()
-        self.parent = parent
-        self.graphic_area = GraphicArea(parent)
+        self.poster = SignalPoster(parent)
+        self.graphic_area = GraphicArea(self.poster)
         #self.graphic_area.set_size_request(0, 100)
         self.top_container = Gtk.HBox(spacing=6)
         self.top_container.set_homogeneous(True)

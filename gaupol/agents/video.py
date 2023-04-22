@@ -120,7 +120,7 @@ class VideoAgent(aeidon.Delegate):
 
         self.seekbar.set_draw_value(False)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
-        self.connect("request-set-seekbar", self.on_req_set_seekbar)
+        self.connect("request-seek", self.on_req_set_seekbar)
         item = Gtk.ToolItem()
         item.set_expand(True)
         item.add(self.seekbar)
