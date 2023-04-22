@@ -106,6 +106,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         "page-saved",
         "page-switched",
         "pages-reordered",
+        "request-set-seekbar",
         "quit",
     )
 

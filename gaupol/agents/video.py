@@ -120,10 +120,15 @@ class VideoAgent(aeidon.Delegate):
 
         self.seekbar.set_draw_value(False)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
+        self.connect("request-set-seekbar", self.on_req_set_seekbar)
         item = Gtk.ToolItem()
         item.set_expand(True)
         item.add(self.seekbar)
         self.player_toolbar.insert(item, -1)
+    
+    def on_req_set_seekbar(self, widget, pos):
+        print("on_req_set_seekbar: " + str(pos))
+        self.player.seek(pos)
 
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
@@ -133,7 +138,7 @@ class VideoAgent(aeidon.Delegate):
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(hbox, self.player.widget)
-        self.wavev = gaupol.Waveview()
+        self.wavev = gaupol.Waveview(self)
         gaupol.util.pack_start_fill(hbox, self.wavev.getWidget())
         gaupol.util.pack_start_expand(vbox, hbox)
         self._init_player_toolbar()
