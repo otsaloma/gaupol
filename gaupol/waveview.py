@@ -86,7 +86,9 @@ class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
     def __init__(self, poster):
         super(GraphicArea,self).__init__()
+        self.calc = aeidon.Calculator()
         self.poster = poster
+        self.subtitles = None
         self.spam_in_samples = DISP_SPAM_IN_SAMPLES
         self.spam_in_time = self.spam_in_samples / DISP_SAMPLES_PER_SECOND
         self.set_theme('dark')
@@ -118,7 +120,6 @@ class GraphicArea(Gtk.DrawingArea):
         if d < 0:
             return 0
         return d
-
 
 
     #######################################
@@ -174,13 +175,29 @@ class GraphicArea(Gtk.DrawingArea):
             i += 1
             x += offset_x
 
-        # draw cursor
+        ############### draw cursor #############
         if self.sample_pos >= 0 and self.sample_pos - self.sample_base < max_x:
             self.set_color(self.color_pos_cursor)
             x = (self.sample_pos - self.sample_base) * offset_x + left_offset
             self.ctx.move_to(x, height)
             self.ctx.line_to(x, 0)
             self.ctx.stroke()
+
+        ########### draw subtitle bars ##########
+        #
+        if self.subtitles != None:
+            visible_start = self.sample_base/100
+            visible_end = visible_start + self.spam_in_time
+            for s in self.subtitles:
+                if s.start_seconds > visible_end:
+                    break
+                start = s.start_seconds
+                if s.start_seconds >= visible_start or s.end_seconds < visible_end:
+                    #print(s._main_text)
+                    self.ctx.rectangle(10, 10, 100, 10)
+                    self.ctx.fill()
+
+
     #######################################
     #
     #               events
@@ -215,7 +232,8 @@ class GraphicArea(Gtk.DrawingArea):
     def set_data(self, data):
         self.disp_samples = data
 
-    def set_position(self, position, duration):
+    def set_position(self, position, duration, subtitles):
+        self.subtitles = subtitles
         if self.disp_samples == None or duration <= 0:
             return
         
@@ -366,7 +384,8 @@ class Waveview():
         return self.top_container
 
     def set_position(self, position, duration, subtitles):
-        self.graphic_area.set_position(position, duration)
+        self.graphic_area.set_position(position, duration, subtitles)
+        self.subtitles = subtitles
 
     def create_data(self, path):
         tmp_name = TMP_PATH + os.path.basename(path) + TMP_EXT

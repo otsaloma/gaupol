@@ -13,7 +13,7 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       //"args": ["../test.srt", "-v", "../Videos/test-short.mp4"],
-      "args": ["../test.srt", "-v", "../Videos/patrick_ori.mp4"],
+      "args": ["../Videos/tears_of_steel_sample.srt", "-v", "../Videos/tears_of_steel_sample.mov"],
     }
   ]
 }
