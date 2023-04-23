@@ -56,8 +56,8 @@ gst-launch-1.0 filesrc location=filename ! \
 AUDIO_SAMPLES_PER_SECOND = 8000
 DECIMATE_FACTOR = 80
 DISP_SAMPLES_PER_SECOND = AUDIO_SAMPLES_PER_SECOND / DECIMATE_FACTOR
-DISP_SPAM_IN_SECONDS = 10
-DISP_SPAM_IN_SAMPLES = DISP_SPAM_IN_SECONDS * DISP_SAMPLES_PER_SECOND
+DISP_SPAN_IN_SECONDS = 10
+DISP_SPAN_IN_SAMPLES = DISP_SPAN_IN_SECONDS * DISP_SAMPLES_PER_SECOND
 
 WAVE_H_MARGINS = 0.05     # 5% each left/right side
 WAVE_V_MARGINS = 0.10     # 10% each top/bottom
@@ -66,14 +66,18 @@ BAR_HEIGTH = 16
 BAR_TEXT_X_OFFSET = 4
 BAR_TEXT_Y_OFFSET = 6
 
+SPAN_LABEL_X_OFFSET = 14
+SPAN_LABEL_Y_OFFSET = 14
+
 THEMES = { \
     'dark': { \
         'wave': {'r': 1, 'g': 1, 'b': 0}, \
         'pos_cursor' : {'r': 1, 'g': 0, 'b': 0}, \
-        'bar' : {'r': 37/255, 'g': 137/255, 'b': 157/255}, \
-        'bar_selected' : {'r': 181/255, 'g': 233/255, 'b': 243/255}, \
-        'bar_text' : {'r': 255/255, 'g': 255/255, 'b': 255/255}, \
-        'bar_text_selected' : {'r': 98/255, 'g': 92/255, 'b': 13/255}, \
+        'bar' : {'r': 37/256, 'g': 137/256, 'b': 157/256}, \
+        'bar_selected' : {'r': 181/256, 'g': 233/256, 'b': 243/256}, \
+        'bar_text' : {'r': 255/256, 'g': 255/256, 'b': 255/256}, \
+        'bar_text_selected' : {'r': 98/256, 'g': 92/256, 'b': 13/256}, \
+        'labels' : {'r': 0xff/256, 'g': 0xea/256, 'b': 0x7b/256}, \
     } \
 }
 
@@ -97,8 +101,8 @@ class GraphicArea(Gtk.DrawingArea):
         self.calc = aeidon.Calculator()
         self.poster = poster
         self.subtitles = None
-        self.spam_in_samples = DISP_SPAM_IN_SAMPLES
-        self.spam_in_time = self.spam_in_samples / DISP_SAMPLES_PER_SECOND
+        self.span_in_samples = DISP_SPAN_IN_SAMPLES
+        self.span_in_time = self.span_in_samples / DISP_SAMPLES_PER_SECOND
         self.set_theme('dark')
 
         self.connect("draw", self.on_draw)
@@ -123,7 +127,7 @@ class GraphicArea(Gtk.DrawingArea):
     
     def get_click_time(self, x):
         xx = (x - self.width * WAVE_H_MARGINS) / self.x_g_span
-        d = xx * self.spam_in_time
+        d = xx * self.span_in_time
         d += (self.sample_base/100)
         if d < 0:
             return 0
@@ -131,7 +135,7 @@ class GraphicArea(Gtk.DrawingArea):
 
     def get_x_from_time(self, d):
         d -= (self.sample_base/100)
-        d /= self.spam_in_time
+        d /= self.span_in_time
         d *= self.x_g_span
         d += self.width * WAVE_H_MARGINS
         return d
@@ -143,6 +147,13 @@ class GraphicArea(Gtk.DrawingArea):
     #######################################
     def draw_wave(self, width, height):
         ctx = self.ctx # speed up access to ctx
+        ctx.select_font_face("Purisa", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+        ctx.set_font_size(12)
+        self.set_color(self.color_wave)
+        t = "span: " + str(self.span_in_time) + " secs"
+        ctx.move_to(SPAN_LABEL_X_OFFSET, height - SPAN_LABEL_Y_OFFSET)
+        ctx.show_text(t)
+        
         self.set_color(self.color_wave)
         left_offset = width * WAVE_H_MARGINS
         right_max = width - left_offset
@@ -158,14 +169,14 @@ class GraphicArea(Gtk.DrawingArea):
             self.last_sample_pos = self.sample_base
         
         # point to the next frame if pos beyond max
-        if self.sample_pos - self.sample_base > self.spam_in_samples or self.sample_base > self.sample_pos:
-            v = self.sample_pos / self.spam_in_samples
+        if self.sample_pos - self.sample_base > self.span_in_samples or self.sample_base > self.sample_pos:
+            v = self.sample_pos / self.span_in_samples
             if v == 0:
                 v = 1
-            v = int(v) * self.spam_in_samples
+            v = int(v) * self.span_in_samples
             self.sample_base = int(v)
 
-        max_x = self.spam_in_samples
+        max_x = self.span_in_samples
         if max_x >= len(self.disp_samples):
             max_x = len(self.disp_samples) - 1
         offset_x = self.x_g_span/max_x
@@ -205,10 +216,8 @@ class GraphicArea(Gtk.DrawingArea):
         #
 
         if self.subtitles != None:
-            ctx.select_font_face("Purisa", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
-            ctx.set_font_size(12)
             visible_start = self.sample_base/100
-            visible_end = visible_start + self.spam_in_time
+            visible_end = visible_start + self.span_in_time
             for s in self.subtitles:
                 if s.start_seconds > visible_end:
                     break
@@ -220,10 +229,6 @@ class GraphicArea(Gtk.DrawingArea):
                     else:
                         x0 = self.get_x_from_time(s.start_seconds)
                     self.set_color(self.color_bar)
-                    #ctx.set_source_rgb(self.color_bar['r'], self.color_bar['g'], self.color_bar['b'])
-                    #ctx.set_source_rgb(self.color_bar['r'], self.color_bar['g'], self.color_bar['b'])
-                    #ctx.set_source_rgb(37, 137, 157)
-                    #ctx.set_source_rgba(1, 1, 255, 255)
                     x1 = self.get_x_from_time(s.end_seconds)
                     bar_len = x1 - x0
                     ctx.rectangle(x0, 10, bar_len, BAR_HEIGTH)
@@ -269,6 +274,7 @@ class GraphicArea(Gtk.DrawingArea):
         self.color_bar_selected = THEMES[t]['bar_selected']
         self.color_bar_text = THEMES[t]['bar_text']
         self.color_bar_text_selected = THEMES[t]['bar_text_selected']
+        self.color_labels = THEMES[t]['labels']
 
     def set_data(self, data):
         self.disp_samples = data
