@@ -34,7 +34,8 @@ from gi.repository import Gtk, GObject, Gst, Gdk
 __all__ = ("Waveview",)
 
 TMP_PATH = "/tmp/"
-TMP_EXT = ".gaupol"
+TMP_AUDIO_PCM = "audio.gaupol"
+TMP_DISPLAY_PCM8_SAMPLES = "display.gaupol"
 
 """
 for 16 bits in 16 bits, signed, little endian:
@@ -312,16 +313,16 @@ class GraphicArea(Gtk.DrawingArea):
 
 class CreateCache():
     def __init__(self, file_in, file_out):
-        super(CreateCache,self).__init__()
+        # super(CreateCache,self).__init__()
         # check if there is a cache already
-        if os.path.exists(file_out):
-            # check if newer than video file
-            ts_out = os.stat(file_out).st_mtime
-            ts_in = os.stat(file_in).st_mtime
-            if ts_out > ts_in:
-                # we have a valid cache file
-                print("wave cache found")
-                return
+        # if os.path.exists(file_out):
+        #     # check if newer than video file
+        #     ts_out = os.stat(file_out).st_mtime
+        #     ts_in = os.stat(file_in).st_mtime
+        #     if ts_out > ts_in:
+        #         # we have a valid cache file
+        #         print("wave cache found")
+        #         return
 
         p = Progress()
         self.progress = p.get_progress()
@@ -433,30 +434,26 @@ class Waveview():
         self.graphic_area.set_position(position, duration, subtitles)
         self.subtitles = subtitles
 
-    def create_data(self, path):
-        tmp_name = TMP_PATH + os.path.basename(path) + TMP_EXT
-        CreateCache(path, tmp_name)
-
-        f = open(tmp_name, 'rb')
-        d = bytearray(f.read())  # maybe save d as self.audio_samples for scrubbing
-        f.close()
-
-        # maybe run an IIR low pass before decimation?
-
-        # decimate date
+    def decimate_and_normalize(self, decimation, bytes):
+        # decimate date, output: bytes, samples
+        # returns: bytes_output, samples
+        # if decimation ==  1 bytes_output == empty 
         i = 0
-        _len = len(d)
+        _len = len(bytes)
         samples = []
         max = 0
+        bytes_output = bytearray()
 
         while (i < _len):
-            b = d[i]
+            b = bytes[i]
             if b > 127:
                 b = 256 - b
             samples.append(b)
             if b > max:
                 max = b
-            i += DECIMATE_FACTOR
+            if decimation > 1:
+                bytes_output.append(bytes[i])
+            i += decimation
         #print("n samples = " + str(len(samples)))
         #print ("DISP_SAMPLES_PER_SECOND = " + str(DISP_SAMPLES_PER_SECOND))
 
@@ -468,6 +465,76 @@ class Waveview():
         while (i < _len):
             samples[i] *= f
             i += 1
+        return bytes_output, samples
+
+
+    def create_data(self, path):
+        
+        tmp_display_samples_file = TMP_PATH + os.path.basename(path) + TMP_DISPLAY_PCM8_SAMPLES
+
+        ## check if a valid cache is available
+        if os.path.exists(tmp_display_samples_file):
+            # check if newer than video file
+            ts_out = os.stat(tmp_display_samples_file).st_mtime
+            ts_in = os.stat(path).st_mtime
+            if ts_out > ts_in:
+                # we have a valid cache file
+                print("wave cache found")
+                f = open(tmp_display_samples_file, 'rb')
+                d = bytearray(f.read())  # maybe save d as self.audio_samples for scrubbing
+                f.close()
+
+                bytes_out, samples = self.decimate_and_normalize(1, d)
+                self.disp_samples = samples
+                self.graphic_area.set_data(samples)
+                return
+            
+
+        tmp_audio_file = TMP_PATH + os.path.basename(path) + TMP_AUDIO_PCM
+        CreateCache(path, tmp_audio_file)
+
+        f = open(tmp_audio_file, 'rb')
+        d = bytearray(f.read())  # maybe save d as self.audio_samples for scrubbing
+        f.close()
+
+        bytes_out, samples = self.decimate_and_normalize(DECIMATE_FACTOR, d)
+
+        ## save cache
+        f = open(tmp_display_samples_file, "wb")
+        for byte in bytes_out:
+            f.write(byte.to_bytes(1, byteorder='big'))
+        f.close()
+
+        ## Delete audio file (unless we implement scrubbing later on)
+
+
+        # maybe run an IIR low pass before decimation?
+
+        # # decimate date
+        # i = 0
+        # _len = len(d)
+        # samples = []
+        # max = 0
+
+        # while (i < _len):
+        #     b = d[i]
+        #     if b > 127:
+        #         b = 256 - b
+        #     samples.append(b)
+        #     if b > max:
+        #         max = b
+        #     i += DECIMATE_FACTOR
+        # #print("n samples = " + str(len(samples)))
+        # #print ("DISP_SAMPLES_PER_SECOND = " + str(DISP_SAMPLES_PER_SECOND))
+
+        # ## normalize
+        # _len = len(samples)
+        # i = 0
+        # f = 1.0 / max
+        # #print("max = " + str(max) + ", f = " + str(f))
+        # while (i < _len):
+        #     samples[i] *= f
+        #     i += 1
         self.disp_samples = samples
         self.graphic_area.set_data(samples)
         #print(samples)
