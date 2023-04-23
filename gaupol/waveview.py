@@ -34,8 +34,8 @@ from gi.repository import Gtk, GObject, Gst, Gdk
 __all__ = ("Waveview",)
 
 TMP_PATH = "/tmp/"
-TMP_AUDIO_PCM = "audio.gaupol"
-TMP_DISPLAY_PCM8_SAMPLES = "display.gaupol"
+TMP_AUDIO_PCM = ".audio.gaupol"
+TMP_DISPLAY_PCM8_SAMPLES = ".display.gaupol"
 
 """
 for 16 bits in 16 bits, signed, little endian:
@@ -313,17 +313,6 @@ class GraphicArea(Gtk.DrawingArea):
 
 class CreateCache():
     def __init__(self, file_in, file_out):
-        # super(CreateCache,self).__init__()
-        # check if there is a cache already
-        # if os.path.exists(file_out):
-        #     # check if newer than video file
-        #     ts_out = os.stat(file_out).st_mtime
-        #     ts_in = os.stat(file_in).st_mtime
-        #     if ts_out > ts_in:
-        #         # we have a valid cache file
-        #         print("wave cache found")
-        #         return
-
         p = Progress()
         self.progress = p.get_progress()
 
@@ -363,7 +352,7 @@ class CreateCache():
             https://lazka.github.io/pgi-docs/Gst-1.0/flags.html#Gst.MessageType
         """
         if mtype == Gst.MessageType.EOS:
-            print("End of stream")
+            #print("End of stream")
             loop.quit()
 
         elif mtype == Gst.MessageType.ERROR:
@@ -377,11 +366,11 @@ class CreateCache():
 
         elif mtype == Gst.MessageType.ELEMENT:
             b,p = message.get_structure().get_int("percent")
-            print("Progress message " + str(p) + "%")
+            #print("Progress message " + str(p) + "%")
             self.progress.set_fraction(p/100)
 
-        else:
-            print(mtype)
+        # else:
+        #     print(mtype)
 
         return True
 
@@ -479,7 +468,7 @@ class Waveview():
             ts_in = os.stat(path).st_mtime
             if ts_out > ts_in:
                 # we have a valid cache file
-                print("wave cache found")
+                #print("wave cache found")
                 f = open(tmp_display_samples_file, 'rb')
                 d = bytearray(f.read())  # maybe save d as self.audio_samples for scrubbing
                 f.close()
@@ -506,35 +495,11 @@ class Waveview():
         f.close()
 
         ## Delete audio file (unless we implement scrubbing later on)
+        try:
+            os.remove(tmp_audio_file)
+        except:
+            pass
 
-
-        # maybe run an IIR low pass before decimation?
-
-        # # decimate date
-        # i = 0
-        # _len = len(d)
-        # samples = []
-        # max = 0
-
-        # while (i < _len):
-        #     b = d[i]
-        #     if b > 127:
-        #         b = 256 - b
-        #     samples.append(b)
-        #     if b > max:
-        #         max = b
-        #     i += DECIMATE_FACTOR
-        # #print("n samples = " + str(len(samples)))
-        # #print ("DISP_SAMPLES_PER_SECOND = " + str(DISP_SAMPLES_PER_SECOND))
-
-        # ## normalize
-        # _len = len(samples)
-        # i = 0
-        # f = 1.0 / max
-        # #print("max = " + str(max) + ", f = " + str(f))
-        # while (i < _len):
-        #     samples[i] *= f
-        #     i += 1
         self.disp_samples = samples
         self.graphic_area.set_data(samples)
         #print(samples)
