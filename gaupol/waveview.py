@@ -62,10 +62,18 @@ DISP_SPAM_IN_SAMPLES = DISP_SPAM_IN_SECONDS * DISP_SAMPLES_PER_SECOND
 WAVE_H_MARGINS = 0.05     # 5% each left/right side
 WAVE_V_MARGINS = 0.10     # 10% each top/bottom
 
+BAR_HEIGTH = 16
+BAR_TEXT_X_OFFSET = 4
+BAR_TEXT_Y_OFFSET = 6
+
 THEMES = { \
     'dark': { \
-        'wave': {'r': 255, 'g': 255, 'b': 0}, \
-        'pos_cursor' : {'r': 255, 'g': 0, 'b': 0} \
+        'wave': {'r': 1, 'g': 1, 'b': 0}, \
+        'pos_cursor' : {'r': 1, 'g': 0, 'b': 0}, \
+        'bar' : {'r': 37/255, 'g': 137/255, 'b': 157/255}, \
+        'bar_selected' : {'r': 181/255, 'g': 233/255, 'b': 243/255}, \
+        'bar_text' : {'r': 255/255, 'g': 255/255, 'b': 255/255}, \
+        'bar_text_selected' : {'r': 98/255, 'g': 92/255, 'b': 13/255}, \
     } \
 }
 
@@ -121,7 +129,13 @@ class GraphicArea(Gtk.DrawingArea):
             return 0
         return d
 
-
+    def get_x_from_time(self, d):
+        d -= (self.sample_base/100)
+        d /= self.spam_in_time
+        d *= self.x_g_span
+        d += self.width * WAVE_H_MARGINS
+        return d
+    
     #######################################
     #
     #               draw_wave
@@ -191,6 +205,8 @@ class GraphicArea(Gtk.DrawingArea):
         #
 
         if self.subtitles != None:
+            ctx.select_font_face("Purisa", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+            ctx.set_font_size(12)
             visible_start = self.sample_base/100
             visible_end = visible_start + self.spam_in_time
             for s in self.subtitles:
@@ -199,8 +215,24 @@ class GraphicArea(Gtk.DrawingArea):
                 start = s.start_seconds
                 if s.start_seconds >= visible_start or s.end_seconds < visible_end:
                     #print(s._main_text)
-                    ctx.rectangle(10, 10, 100, 10)
+                    if s.start_seconds < visible_start:
+                        x0 = 0
+                    else:
+                        x0 = self.get_x_from_time(s.start_seconds)
+                    self.set_color(self.color_bar)
+                    #ctx.set_source_rgb(self.color_bar['r'], self.color_bar['g'], self.color_bar['b'])
+                    #ctx.set_source_rgb(self.color_bar['r'], self.color_bar['g'], self.color_bar['b'])
+                    #ctx.set_source_rgb(37, 137, 157)
+                    #ctx.set_source_rgba(1, 1, 255, 255)
+                    x1 = self.get_x_from_time(s.end_seconds)
+                    bar_len = x1 - x0
+                    ctx.rectangle(x0, 10, bar_len, BAR_HEIGTH)
                     ctx.fill()
+                    if bar_len > 40:
+                        ctx.move_to(x0 + BAR_TEXT_X_OFFSET, BAR_HEIGTH + BAR_TEXT_Y_OFFSET)
+                        self.set_color(self.color_bar_text)
+                        t = s.main_text
+                        ctx.show_text(t[:5])
 
 
     #######################################
@@ -233,6 +265,10 @@ class GraphicArea(Gtk.DrawingArea):
     def set_theme(self, t):
         self.color_wave = THEMES[t]['wave']
         self.color_pos_cursor = THEMES[t]['pos_cursor']
+        self.color_bar = THEMES[t]['bar']
+        self.color_bar_selected = THEMES[t]['bar_selected']
+        self.color_bar_text = THEMES[t]['bar_text']
+        self.color_bar_text_selected = THEMES[t]['bar_text_selected']
 
     def set_data(self, data):
         self.disp_samples = data
@@ -265,7 +301,6 @@ class GraphicArea(Gtk.DrawingArea):
         self.width = geom.width
         self.draw_wave(geom.width, geom.height)
     
-
 
 #ref: https://github.com/jackersson/gst-python-tutorials/blob/master/launch_pipeline/pipeline_with_parse_launch.py
 
