@@ -120,7 +120,7 @@ class VideoAgent(aeidon.Delegate):
 
         self.seekbar.set_draw_value(False)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
-        self.connect("request-seek", self.on_req_set_seekbar)
+        self.wavev.poster.connect("request-seek", self.on_req_set_seekbar)
         item = Gtk.ToolItem()
         item.set_expand(True)
         item.add(self.seekbar)
@@ -145,7 +145,7 @@ class VideoAgent(aeidon.Delegate):
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(video_and_wavev_box, self.player.widget)
-        self.wavev = gaupol.Waveview(self)
+        self.wavev = gaupol.Waveview()
         gaupol.util.pack_start_fill(video_and_wavev_box, self.wavev.getWidget())
         gaupol.util.pack_start_expand(vbox, video_and_wavev_box)
         self._init_player_toolbar()

@@ -82,18 +82,21 @@ THEMES = { \
     } \
 }
 
-class SignalPoster(): #(aeidon.Observable)  TODO: fix usage of aeidon.Observable
-                    # and remove hack of using parent
-    # signals = (
-    #     "request-seek",
-    # )
-    def __init__(self, parent):
+_waveview_instance = None
+
+def get_waveview_instance():
+    return _waveview_instance
+
+class SignalPoster(aeidon.Observable): 
+    signals = (
+        "request-seek",
+    )
+    def __init__(self):
         """Initialize an :class:`SignalPoster` instance."""
-        #aeidon.Observable.__init__(self)
-        self.parent = parent
+        aeidon.Observable.__init__(self)
 
     def send_seek_request(self, pos):
-        self.parent.emit("request-seek", pos)
+        self.emit("request-seek", pos)
 
 class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
@@ -397,9 +400,9 @@ class Progress(Gtk.Window):
 
 class Waveview():
     """ This class is a Drawing Area"""
-    def __init__(self, parent):
-        super(Waveview,self).__init__()
-        self.poster = SignalPoster(parent)
+    def __init__(self):
+        global _waveview_instance
+        self.poster = SignalPoster()
         self.graphic_area = GraphicArea(self.poster)
         #self.graphic_area.set_size_request(0, 100)
         self.top_container = Gtk.HBox(spacing=6)
@@ -414,7 +417,10 @@ class Waveview():
         self.top_container.pack_start(self.graphic_area, True, True, 0)
         #self.top_container.pack_start(self.vbox, True, True, 0)
         self.top_container.show_all()
+        _waveview_instance = self
 
+    def subtitles_have_changed(self, what):
+        print("subtitles_have_changed: " + what)
 
     def getWidget(self):
         return self.top_container

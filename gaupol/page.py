@@ -144,6 +144,11 @@ class Page(aeidon.Observable):
                 basename = basename[:-len(extension)]
         return _("{} translation").format(basename)
 
+    def _notify_wavev(self, what):
+        f = gaupol.waveview.get_waveview_instance()
+        if f != None:
+            f.subtitles_have_changed(what)
+
     def _init_project(self):
         """Initialize :class:`aeidon.Project` with proper properties."""
         framerate = gaupol.conf.editor.framerate
@@ -253,6 +258,7 @@ class Page(aeidon.Observable):
         self.view.set_focus(rows[0])
         self.view.select_rows(rows)
         gaupol.util.iterate_main()
+        self._notify_wavev("inserted")
 
     def _on_project_subtitles_removed(self, project, rows):
         """Remove rows from the view."""
@@ -273,6 +279,7 @@ class Page(aeidon.Observable):
             col = self.view.get_focus()[1]
             self.view.set_focus(row, col)
         gaupol.util.iterate_main()
+        self._notify_wavev("removed")
 
     def _on_project_translation_file_opened(self, *args):
         """Reload the entire view."""
@@ -312,6 +319,7 @@ class Page(aeidon.Observable):
         for row, field in ((x, y) for x in rows for y in fields):
             value = self._get_subtitle_value(row, field)
             store[row][field] = value
+        self._notify_wavev("reload_view")
 
     def reload_view_all(self):
         """Clear and repopulate the entire view."""
@@ -331,6 +339,7 @@ class Page(aeidon.Observable):
             store[i][4] = subtitle.main_text
             store[i][5] = subtitle.tran_text
         self.view.set_model(store)
+        self._notify_wavev("reload_all")
 
     def text_column_to_document(self, col):
         """Translate view's column enumeration to document enumeration."""

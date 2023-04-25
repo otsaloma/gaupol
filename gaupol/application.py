@@ -106,7 +106,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         "page-saved",
         "page-switched",
         "pages-reordered",
-        "request-seek", # keep while Waveview's SignalPoster doe snot work
         "quit",
     )
 
