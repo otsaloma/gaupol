@@ -183,8 +183,11 @@ class OpenAgent(aeidon.Delegate):
         page.project.insert_subtitles((0,), register=None)
         self.add_page(page)
         #
-        # Ugly hack: fix me !!!
-        # If an instance of wave already exist then register view signals for it
+        # hack!!!!
+        # TODO: find a better way to do the following !!!
+        #
+        # If an instance of waveview already exist then register view signals for it.
+        # when it does not exit the registration is done by video instance.
         #
         w = gaupol.waveview.get_waveview_instance()
         if w != None:

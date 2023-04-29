@@ -130,7 +130,7 @@ class GraphicArea(Gtk.DrawingArea):
         self.width = 0
         self.x_g_span = 0
         self.bars_cache = None
-
+        self.selected_rows = []
 
         ## Register events callbacks
         self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
@@ -145,10 +145,13 @@ class GraphicArea(Gtk.DrawingArea):
         view.connect_selection_changed(self.on_focus_changed)
 
     def on_focus_changed(self, view):
-        rows = view.get_selected_rows()[1]
-        print("Focus has changed row:")
-        for r in rows:
-            print(r)
+        self.selected_rows = []
+        row_paths = view.get_selected_rows()[1]
+        # print("Focus has changed row:")
+        for r in row_paths:
+            for rr in r:
+                self.selected_rows.append(rr)
+
 
     def get_click_time(self, x):
         xx = (x - self.width * WAVE_H_MARGINS) / self.x_g_span
@@ -243,13 +246,21 @@ class GraphicArea(Gtk.DrawingArea):
         #
 
         if self.bars_cache != None:
+            sel = False
             for b in self.bars_cache:
-                self.set_color(self.color_bar)
+                if b['row'] in self.selected_rows:
+                    self.set_color(self.color_bar_selected)
+                    sel = True
+                else:
+                    self.set_color(self.color_bar)
                 ctx.rectangle(b['x0'], BAR_Y_OFFSET, b['bar_len'], BAR_HEIGTH)
                 ctx.fill()
                 if len(b['text']) > 0:
                     ctx.move_to(b['x0'] + BAR_TEXT_X_OFFSET, BAR_HEIGTH + BAR_TEXT_Y_OFFSET)
-                    self.set_color(self.color_bar_text)
+                    if sel == True:
+                        self.set_color(self.color_bar_text_selected)
+                    else:
+                        self.set_color(self.color_bar_text)
                     ctx.show_text(b['text'])
 
     def create_bars_cache(self):
