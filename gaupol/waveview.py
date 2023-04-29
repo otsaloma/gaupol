@@ -64,6 +64,7 @@ WAVE_H_MARGINS = 0.05     # 5% each left/right side
 WAVE_V_MARGINS = 0.10     # 10% each top/bottom
 
 BAR_HEIGTH = 16
+BAR_Y_OFFSET = 10
 BAR_TEXT_X_OFFSET = 4
 BAR_TEXT_Y_OFFSET = 6
 
@@ -232,7 +233,7 @@ class GraphicArea(Gtk.DrawingArea):
         if self.bars_cache != None:
             for b in self.bars_cache:
                 self.set_color(self.color_bar)
-                ctx.rectangle(b['x0'], 10, b['bar_len'], BAR_HEIGTH)
+                ctx.rectangle(b['x0'], BAR_Y_OFFSET, b['bar_len'], BAR_HEIGTH)
                 ctx.fill()
                 if len(b['text']) > 0:
                     ctx.move_to(b['x0'] + BAR_TEXT_X_OFFSET, BAR_HEIGTH + BAR_TEXT_Y_OFFSET)
@@ -271,7 +272,20 @@ class GraphicArea(Gtk.DrawingArea):
                     self.bars_cache.append(e)
                 id += 1
 
-
+    def get_pointed_bar_id(self, x, y):
+        if self.bars_cache == None:
+            return -1
+        if len(self.bars_cache) == 0:
+            return -1
+        if y < BAR_TEXT_Y_OFFSET:
+            return -1
+        if y > BAR_TEXT_Y_OFFSET + BAR_HEIGTH:
+            return -1
+        for b in self.bars_cache:
+            if x >= b['x0'] and x <= b['x1']:
+                print("bar: " + str(b['row']))
+                return b['row']
+        return -1
 
     #######################################
     #
@@ -282,6 +296,7 @@ class GraphicArea(Gtk.DrawingArea):
     def on_left_click(self, x,y):
         #print("left-click event " + str(x) + ", " + str(y))
         t = self.get_click_time(x)
+        self.get_pointed_bar_id(x,y)
         self.poster.emit_seek_request( t)
 
     def on_right_click(self, x,y):
