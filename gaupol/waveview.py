@@ -141,7 +141,16 @@ class GraphicArea(Gtk.DrawingArea):
         # self.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
         # self.connect('motion-notify-event', self.on_motion)
 
-    
+    def init_view_signals (self, view):
+        #view.connect("focus-changed", self.on_focus_changed)
+        view.connect_selection_changed(self.on_focus_changed)
+
+    def on_focus_changed(self, view):
+        rows = view.get_selected_rows()[1]
+        print("Focus has changed row:")
+        for r in rows:
+            print(r)
+
     def get_click_time(self, x):
         xx = (x - self.width * WAVE_H_MARGINS) / self.x_g_span
         d = xx * self.span_in_time
@@ -473,6 +482,9 @@ class Waveview():
         #self.top_container.pack_start(self.vbox, True, True, 0)
         self.top_container.show_all()
         _waveview_instance = self
+
+    def init_view_signals (self, view):
+        self.graphic_area.init_view_signals(view)
 
     def subtitles_have_changed(self):
         print("subtitles_have_changed")
