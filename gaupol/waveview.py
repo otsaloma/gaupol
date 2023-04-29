@@ -142,7 +142,6 @@ class GraphicArea(Gtk.DrawingArea):
         # self.connect('motion-notify-event', self.on_motion)
 
     def init_view_signals (self, view):
-        #view.connect("focus-changed", self.on_focus_changed)
         view.connect_selection_changed(self.on_focus_changed)
 
     def on_focus_changed(self, view):

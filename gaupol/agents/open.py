@@ -143,6 +143,7 @@ class OpenAgent(aeidon.Delegate):
             callback = self._on_view_header_button_press_event
             button.connect("button-press-event", callback)
 
+
     def _get_encodings(self, first=None):
         """Return a sequence of encodings to try when opening files."""
         encodings = [first]
@@ -181,6 +182,14 @@ class OpenAgent(aeidon.Delegate):
         page = gaupol.Page(next(self.counter))
         page.project.insert_subtitles((0,), register=None)
         self.add_page(page)
+        #
+        # Ugly hack: fix me !!!
+        # If an instance of wave already exist then register view signals for it
+        #
+        w = gaupol.waveview.get_waveview_instance()
+        if w != None:
+            w.init_view_signals (page.view)
+            print("explicitly register wave signals in open")
 
     @aeidon.deco.export
     def _on_notebook_drag_data_received(self, notebook, context, x, y,
