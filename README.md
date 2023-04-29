@@ -4,7 +4,7 @@ Gaupol
 [![Test](https://github.com/otsaloma/gaupol/workflows/Test/badge.svg)](https://github.com/otsaloma/gaupol/actions)
 [![Packages](https://repology.org/badge/tiny-repos/gaupol.svg)](https://repology.org/metapackage/gaupol)
 [![Flathub](https://img.shields.io/badge/download-flathub-blue.svg)](https://flathub.org/apps/details/io.otsaloma.gaupol)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/otsaloma/gaupol)
+[![Chat](https://img.shields.io/badge/chat-linen-blue)](https://www.linen.dev/s/otsaloma/c/gaupol)
 
 Gaupol is an editor for text-based subtitle files. It supports multiple
 subtitle file formats and provides means of creating, editing and
