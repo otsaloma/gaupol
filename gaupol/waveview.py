@@ -124,11 +124,14 @@ class GraphicArea(Gtk.DrawingArea):
         self.duration = 0
         self.width = 0
         self.x_g_span = 0
+        self.bars_cache = None
 
 
         ## Register events callbacks
         self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
         self.connect('button-press-event', self.event_cb)
+
+        self.create_bars_cache()
 
         # self.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
         # self.connect('motion-notify-event', self.on_motion)
@@ -183,7 +186,9 @@ class GraphicArea(Gtk.DrawingArea):
             if v == 0:
                 v = 1
             v = int(v) * self.span_in_samples
-            self.sample_base = int(v)
+            if self.sample_base != int(v):
+                self.create_bars_cache()
+                self.sample_base = int(v)
 
         max_x = self.span_in_samples
         if max_x >= len(self.disp_samples):
@@ -224,9 +229,23 @@ class GraphicArea(Gtk.DrawingArea):
         # notification for changes.
         #
 
+        if self.bars_cache != None:
+            for b in self.bars_cache:
+                self.set_color(self.color_bar)
+                ctx.rectangle(b['x0'], 10, b['bar_len'], BAR_HEIGTH)
+                ctx.fill()
+                if len(b['text']) > 0:
+                    ctx.move_to(b['x0'] + BAR_TEXT_X_OFFSET, BAR_HEIGTH + BAR_TEXT_Y_OFFSET)
+                    self.set_color(self.color_bar_text)
+                    ctx.show_text(b['text'])
+
+    def create_bars_cache(self):
+        self.bars_cache = []
+
         if self.subtitles != None:
             visible_start = self.sample_base/100
             visible_end = visible_start + self.span_in_time
+            id = 0
             for s in self.subtitles:
                 if s.start_seconds > visible_end:
                     break
@@ -237,16 +256,21 @@ class GraphicArea(Gtk.DrawingArea):
                         x0 = 0
                     else:
                         x0 = self.get_x_from_time(s.start_seconds)
-                    self.set_color(self.color_bar)
                     x1 = self.get_x_from_time(s.end_seconds)
                     bar_len = x1 - x0
-                    ctx.rectangle(x0, 10, bar_len, BAR_HEIGTH)
-                    ctx.fill()
+                    t = ""
                     if bar_len > 40:
-                        ctx.move_to(x0 + BAR_TEXT_X_OFFSET, BAR_HEIGTH + BAR_TEXT_Y_OFFSET)
-                        self.set_color(self.color_bar_text)
-                        t = s.main_text
-                        ctx.show_text(t[:5])
+                        t = s.main_text[:5]
+                    e = {   'row':id, 
+                            'x0':x0, 
+                            'x1':x1, 
+                            'bar_len': bar_len, 
+                            'text': t, 
+                            'start_seconds': s.start_seconds, 
+                            'end_seconds' : s.end_seconds }
+                    self.bars_cache.append(e)
+                id += 1
+
 
 
     #######################################
@@ -294,6 +318,7 @@ class GraphicArea(Gtk.DrawingArea):
 
     def set_position(self, position, duration, subtitles):
         self.subtitles = subtitles
+        self.create_bars_cache()
         if self.disp_samples == None or duration <= 0:
             return
         
@@ -427,9 +452,8 @@ class Waveview():
         self.top_container.show_all()
         _waveview_instance = self
 
-    def subtitles_have_changed(self, what):
-        print("subtitles_have_changed: ")
-        print(what.__class__)
+    def subtitles_have_changed(self):
+        print("subtitles_have_changed")
 
     def getWidget(self):
         return self.top_container
