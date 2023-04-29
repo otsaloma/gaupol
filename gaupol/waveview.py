@@ -428,7 +428,8 @@ class Waveview():
         _waveview_instance = self
 
     def subtitles_have_changed(self, what):
-        print("subtitles_have_changed: " + what)
+        print("subtitles_have_changed: ")
+        print(what.__class__)
 
     def getWidget(self):
         return self.top_container

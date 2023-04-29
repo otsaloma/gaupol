@@ -403,3 +403,4 @@ class VideoAgent(aeidon.Delegate):
             return self._clear_subtitle_cache()
         self._cache = [(x.start_seconds, x.end_seconds, x.main_text)
                        for x in page.project.subtitles]
+        self.wavev.subtitles_have_changed()
