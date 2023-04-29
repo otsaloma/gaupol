@@ -87,16 +87,21 @@ _waveview_instance = None
 def get_waveview_instance():
     return _waveview_instance
 
+
 class SignalPoster(aeidon.Observable): 
     signals = (
         "request-seek",
+        "wave-subtitle-change"
     )
     def __init__(self):
         """Initialize an :class:`SignalPoster` instance."""
         aeidon.Observable.__init__(self)
 
-    def send_seek_request(self, pos):
+    def emit_seek_request(self, pos):
         self.emit("request-seek", pos)
+
+    def emit_subtitle_change(self, pos):
+        self.emit("wave-subtitle-change", pos)
 
 class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
@@ -253,10 +258,14 @@ class GraphicArea(Gtk.DrawingArea):
     def on_left_click(self, x,y):
         #print("left-click event " + str(x) + ", " + str(y))
         t = self.get_click_time(x)
-        self.poster.send_seek_request( t)
+        self.poster.emit_seek_request( t)
 
     def on_right_click(self, x,y):
         print("right-click event " + str(x) + ", " + str(y))
+        # hack
+        self.subtitles[0].start_seconds = 0.5
+        self.poster.emit_subtitle_change(0)
+
 
     def on_motion(self, widget, ev):
         print("on motion event " + str(ev.x) + ", " + str(ev.y))
@@ -397,7 +406,6 @@ class Progress(Gtk.Window):
     def get_progress(self):
         return self.progress
     
-
 class Waveview():
     """ This class is a Drawing Area"""
     def __init__(self):

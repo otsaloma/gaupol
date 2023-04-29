@@ -121,6 +121,9 @@ class VideoAgent(aeidon.Delegate):
         self.seekbar.set_draw_value(False)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
         self.wavev.poster.connect("request-seek", self.on_req_set_seekbar)
+        #self.wavev.poster.connect("wave-subtitle-change", self.on_wave_subtitle_change)
+        page = self.get_current_page()
+        page.init_signals_from_wave(self.wavev)
         item = Gtk.ToolItem()
         item.set_expand(True)
         item.add(self.seekbar)
@@ -129,6 +132,9 @@ class VideoAgent(aeidon.Delegate):
     def on_req_set_seekbar(self, widget, pos):
         print("on_req_set_seekbar: " + str(pos))
         self.player.seek(pos)
+    
+    # def on_wave_subtitle_change(self, widget, pos):
+    #     self.update_gui()
 
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
