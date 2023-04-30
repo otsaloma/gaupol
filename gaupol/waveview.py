@@ -160,11 +160,13 @@ class GraphicArea(Gtk.DrawingArea):
     def on_focus_changed(self, view):
         self.selected_rows = []
         row_paths = view.get_selected_rows()[1]
-        # print("Focus has changed row:")
         for r in row_paths:
             for rr in r:
                 self.selected_rows.append(rr)
 
+    def get_pixel_to_time(self, x):
+        f = self.span_in_time / self.x_g_span
+        return x * f
 
     def get_click_time(self, x):
         xx = (x - self.width * WAVE_H_MARGINS) / self.x_g_span
@@ -299,7 +301,6 @@ class GraphicArea(Gtk.DrawingArea):
                     break
                 start = s.start_seconds
                 if s.start_seconds >= visible_start or s.end_seconds < visible_end:
-                    #print(s._main_text)
                     if s.start_seconds < visible_start:
                         x0 = 0
                     else:
@@ -331,7 +332,7 @@ class GraphicArea(Gtk.DrawingArea):
             return -1, False
         for b in self.bars_cache:
             if x >= b['x0'] and x <= b['x1']:
-                print("bar: " + str(b['row']))
+                #print("bar: " + str(b['row']))
                 is_end_side = False
                 if x > b['x0'] + ((b['x1'] - b['x0']) / 2):
                     is_end_side = True
@@ -346,45 +347,49 @@ class GraphicArea(Gtk.DrawingArea):
     @aeidon.deco.export
     def on_left_click(self, x,y):
         t = self.get_click_time(x)
-        bar_id, is_end_side = self.get_pointed_bar_id(x,y)
-        self.drag_bar_init_x = x
+        bar_id, self.drag_end_side = self.get_pointed_bar_id(x,y)
+        
         if bar_id >=0:
             self.poster.emit_focus_set(bar_id)
+            self.drag_bar_state = DRAG_BAR_ST__DRAGGING
+            self.drag_bar_row = bar_id
+            self.drag_bar_init_x = x
+            if self.drag_end_side == True:
+                self.drag_bar_base_value = self.subtitles[bar_id].end_seconds
+            else:
+                self.drag_bar_base_value = self.subtitles[bar_id].start_seconds
         else:
             self.poster.emit_seek_request( t)
 
     def on_right_click(self, x,y):
         print("right-click event " + str(x) + ", " + str(y))
-        # hack
-        self.subtitles[0].start_seconds = 0.5
-        self.poster.emit_subtitle_change(0)
+        print("TODO: implement context menu")
 
 
     def on_motion(self, widget, ev):
         if self.drag_bar_state == DRAG_BAR_ST__DRAGGING:
-            if self.drag_end_side:
-                print("dragging   end " + str(ev.x - self.drag_bar_init_x))
+            delta = ev.x - self.drag_bar_init_x
+            delta_time = - self.get_pixel_to_time(delta)
+            v = self.drag_bar_base_value - delta_time
+            if self.drag_end_side == True:
+                if v > self.subtitles[self.drag_bar_row].start_seconds + 0.3:
+                    self.subtitles[self.drag_bar_row].end_seconds = v
             else:
-                print("dragging start " + str(ev.x - self.drag_bar_init_x))
+                if v < self.subtitles[self.drag_bar_row].end_seconds - 0.3:
+                    self.subtitles[self.drag_bar_row].start_seconds = v
+            self.poster.emit_subtitle_change(self.drag_bar_row)
+            # TODO: Video cache not being invalidated
 
     def on_bt_press(self, widget, ev):
-        #if ev.type == Gdk.EventMask.BUTTON_PRESS_MASK:
         if ev.button == 1:
             self.on_left_click(ev.x, ev.y)
-            bar_id, self.drag_end_side = self.get_pointed_bar_id(ev.x, ev.y)
-            if bar_id >= 0:
-                self.drag_bar_state = DRAG_BAR_ST__DRAGGING
+
         elif ev.button == 3:
             self.on_right_click(ev.x, ev.y)
-        # elif ev.type == Gdk.EventMask.MOTION_NOTIFY_MASK: #POINTER_MOTION_MASK:
-        #     self.on_motion(ev.x, ev.y)
 
     def on_bt_release(self, widget, ev):
-        #if ev.type == Gdk.EventMask.BUTTON_PRESS_MASK:
         if ev.button == 1:
-            #self.on_left_click(ev.x, ev.y)
             self.drag_bar_state = DRAG_BAR_ST__IDLE
-            print("Release")
 
 
     def set_theme(self, t):
@@ -569,14 +574,11 @@ class Waveview():
             if decimation > 1:
                 bytes_output.append(bytes[i])
             i += decimation
-        #print("n samples = " + str(len(samples)))
-        #print ("DISP_SAMPLES_PER_SECOND = " + str(DISP_SAMPLES_PER_SECOND))
 
         ## normalize
         _len = len(samples)
         i = 0
         f = 1.0 / max
-        #print("max = " + str(max) + ", f = " + str(f))
         while (i < _len):
             samples[i] *= f
             i += 1
@@ -594,7 +596,6 @@ class Waveview():
             ts_in = os.stat(path).st_mtime
             if ts_out > ts_in:
                 # we have a valid cache file
-                #print("wave cache found")
                 f = open(tmp_display_samples_file, 'rb')
                 d = bytearray(f.read())  # maybe save d as self.audio_samples for scrubbing
                 f.close()
@@ -628,7 +629,7 @@ class Waveview():
 
         self.disp_samples = samples
         self.graphic_area.set_data(samples)
-        #print(samples)
+
 
 
 
