@@ -71,6 +71,11 @@ BAR_TEXT_Y_OFFSET = 4
 SPAN_LABEL_X_OFFSET = 14
 SPAN_LABEL_Y_OFFSET = 14
 
+DRAG_BAR_ST__IDLE = 0
+DRAG_BAR_ST__START_BT_DOWN = 1
+DRAG_BAR_ST__DRAGGING = 2
+
+
 THEMES = { \
     'dark': { \
         'wave': {'r': 1, 'g': 1, 'b': 0}, \
@@ -131,16 +136,23 @@ class GraphicArea(Gtk.DrawingArea):
         self.width = 0
         self.x_g_span = 0
         self.bars_cache = None
-        self.selected_rows = []
+        self.selected_rows = [0]
 
         ## Register events callbacks
         self.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
-        self.connect('button-press-event', self.event_cb)
+        self.connect('button-press-event', self.on_bt_press)
+
+        self.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK)
+        self.connect('button-release-event', self.on_bt_release)
+
+        self.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
+        self.connect('motion-notify-event', self.on_motion)
 
         self.create_bars_cache()
-
-        # self.add_events(Gdk.EventMask.POINTER_MOTION_MASK)
-        # self.connect('motion-notify-event', self.on_motion)
+        self.drag_bar_state = DRAG_BAR_ST__IDLE
+        self.drag_bar_init_x = 0
+        self.drag_bar_timer = 0
+        self.drag_end_side = False
 
     def init_view_signals (self, view):
         view.connect_selection_changed(self.on_focus_changed)
@@ -259,7 +271,7 @@ class GraphicArea(Gtk.DrawingArea):
                 ctx.fill()
                 if sel == True:
                     self.set_color(self.color_dash_line_selected)
-                    ctx.set_dash ([6,3]) #([14.0, 6.0])
+                    ctx.set_dash ([6,3])
                     ctx.set_line_width(1)
                     ctx.move_to(b['x0'] + 1, BAR_Y_OFFSET + BAR_HEIGTH)
                     ctx.line_to(b['x0'] + 1, height)
@@ -307,20 +319,24 @@ class GraphicArea(Gtk.DrawingArea):
                     self.bars_cache.append(e)
                 id += 1
 
+    # ret: int row, bool is_end_side
     def get_pointed_bar_id(self, x, y):
         if self.bars_cache == None:
-            return -1
+            return -1, False
         if len(self.bars_cache) == 0:
-            return -1
+            return -1, False
         if y < BAR_Y_OFFSET:
-            return -1
+            return -1, False
         if y > BAR_Y_OFFSET + BAR_HEIGTH:
-            return -1
+            return -1, False
         for b in self.bars_cache:
             if x >= b['x0'] and x <= b['x1']:
                 print("bar: " + str(b['row']))
-                return b['row']
-        return -1
+                is_end_side = False
+                if x > b['x0'] + ((b['x1'] - b['x0']) / 2):
+                    is_end_side = True
+                return b['row'], is_end_side
+        return -1, False
 
     #######################################
     #
@@ -329,9 +345,9 @@ class GraphicArea(Gtk.DrawingArea):
     #######################################
     @aeidon.deco.export
     def on_left_click(self, x,y):
-        #print("left-click event " + str(x) + ", " + str(y))
         t = self.get_click_time(x)
-        bar_id = self.get_pointed_bar_id(x,y)
+        bar_id, is_end_side = self.get_pointed_bar_id(x,y)
+        self.drag_bar_init_x = x
         if bar_id >=0:
             self.poster.emit_focus_set(bar_id)
         else:
@@ -345,16 +361,30 @@ class GraphicArea(Gtk.DrawingArea):
 
 
     def on_motion(self, widget, ev):
-        print("on motion event " + str(ev.x) + ", " + str(ev.y))
+        if self.drag_bar_state == DRAG_BAR_ST__DRAGGING:
+            if self.drag_end_side:
+                print("dragging   end " + str(ev.x - self.drag_bar_init_x))
+            else:
+                print("dragging start " + str(ev.x - self.drag_bar_init_x))
 
-    def event_cb(self, widget, ev):
+    def on_bt_press(self, widget, ev):
         #if ev.type == Gdk.EventMask.BUTTON_PRESS_MASK:
         if ev.button == 1:
             self.on_left_click(ev.x, ev.y)
+            bar_id, self.drag_end_side = self.get_pointed_bar_id(ev.x, ev.y)
+            if bar_id >= 0:
+                self.drag_bar_state = DRAG_BAR_ST__DRAGGING
         elif ev.button == 3:
             self.on_right_click(ev.x, ev.y)
         # elif ev.type == Gdk.EventMask.MOTION_NOTIFY_MASK: #POINTER_MOTION_MASK:
         #     self.on_motion(ev.x, ev.y)
+
+    def on_bt_release(self, widget, ev):
+        #if ev.type == Gdk.EventMask.BUTTON_PRESS_MASK:
+        if ev.button == 1:
+            #self.on_left_click(ev.x, ev.y)
+            self.drag_bar_state = DRAG_BAR_ST__IDLE
+            print("Release")
 
 
     def set_theme(self, t):
