@@ -63,10 +63,10 @@ DISP_SPAN_IN_SAMPLES = DISP_SPAN_IN_SECONDS * DISP_SAMPLES_PER_SECOND
 WAVE_H_MARGINS = 0.05     # 5% each left/right side
 WAVE_V_MARGINS = 0.10     # 10% each top/bottom
 
-BAR_HEIGTH = 16
+BAR_HEIGTH = 20
 BAR_Y_OFFSET = 10
 BAR_TEXT_X_OFFSET = 4
-BAR_TEXT_Y_OFFSET = 6
+BAR_TEXT_Y_OFFSET = 4
 
 SPAN_LABEL_X_OFFSET = 14
 SPAN_LABEL_Y_OFFSET = 14
@@ -77,6 +77,7 @@ THEMES = { \
         'pos_cursor' : {'r': 1, 'g': 0, 'b': 0}, \
         'bar' : {'r': 37/256, 'g': 137/256, 'b': 157/256}, \
         'bar_selected' : {'r': 181/256, 'g': 233/256, 'b': 243/256}, \
+        'dash_line_selected' : {'r': 181/256, 'g': 233/256, 'b': 243/256}, \
         'bar_text' : {'r': 255/256, 'g': 255/256, 'b': 255/256}, \
         'bar_text_selected' : {'r': 98/256, 'g': 92/256, 'b': 13/256}, \
         'labels' : {'r': 0xff/256, 'g': 0xea/256, 'b': 0x7b/256}, \
@@ -248,6 +249,7 @@ class GraphicArea(Gtk.DrawingArea):
         if self.bars_cache != None:
             sel = False
             for b in self.bars_cache:
+                sel = False
                 if b['row'] in self.selected_rows:
                     self.set_color(self.color_bar_selected)
                     sel = True
@@ -255,6 +257,16 @@ class GraphicArea(Gtk.DrawingArea):
                     self.set_color(self.color_bar)
                 ctx.rectangle(b['x0'], BAR_Y_OFFSET, b['bar_len'], BAR_HEIGTH)
                 ctx.fill()
+                if sel == True:
+                    self.set_color(self.color_dash_line_selected)
+                    ctx.set_dash ([6,3]) #([14.0, 6.0])
+                    ctx.set_line_width(1)
+                    ctx.move_to(b['x0'] + 1, BAR_Y_OFFSET + BAR_HEIGTH)
+                    ctx.line_to(b['x0'] + 1, height)
+                    ctx.stroke()
+                    ctx.move_to(b['x1'] - 1, BAR_Y_OFFSET + BAR_HEIGTH)
+                    ctx.line_to(b['x1'] - 1, height)
+                    ctx.stroke()
                 if len(b['text']) > 0:
                     ctx.move_to(b['x0'] + BAR_TEXT_X_OFFSET, BAR_HEIGTH + BAR_TEXT_Y_OFFSET)
                     if sel == True:
@@ -300,9 +312,9 @@ class GraphicArea(Gtk.DrawingArea):
             return -1
         if len(self.bars_cache) == 0:
             return -1
-        if y < BAR_TEXT_Y_OFFSET:
+        if y < BAR_Y_OFFSET:
             return -1
-        if y > BAR_TEXT_Y_OFFSET + BAR_HEIGTH:
+        if y > BAR_Y_OFFSET + BAR_HEIGTH:
             return -1
         for b in self.bars_cache:
             if x >= b['x0'] and x <= b['x1']:
@@ -353,6 +365,7 @@ class GraphicArea(Gtk.DrawingArea):
         self.color_bar_text = THEMES[t]['bar_text']
         self.color_bar_text_selected = THEMES[t]['bar_text_selected']
         self.color_labels = THEMES[t]['labels']
+        self.color_dash_line_selected = THEMES[t]['dash_line_selected']
 
     def set_data(self, data):
         self.disp_samples = data
