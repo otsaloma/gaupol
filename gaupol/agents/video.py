@@ -259,7 +259,8 @@ class VideoAgent(aeidon.Delegate):
         if duration is not None and position is not None:
             adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(position/duration)
-            self.wavev.set_position(position, duration, self.get_current_page().project.subtitles)
+            if self.wavev != None:
+                self.wavev.set_position(position, duration, self.get_current_page().project.subtitles)
         return True # to be called again.
 
     def _on_player_update_subtitle(self, data=None):
