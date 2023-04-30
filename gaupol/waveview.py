@@ -378,7 +378,6 @@ class GraphicArea(Gtk.DrawingArea):
                 if v < self.subtitles[self.drag_bar_row].end_seconds - 0.3:
                     self.subtitles[self.drag_bar_row].start_seconds = v
             self.poster.emit_subtitle_change(self.drag_bar_row)
-            # TODO: Video cache not being invalidated
 
     def on_bt_press(self, widget, ev):
         if ev.button == 1:
