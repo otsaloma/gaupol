@@ -123,6 +123,7 @@ class VideoAgent(aeidon.Delegate):
         self.wavev.poster.connect("wave-req-seek", self.on_req_set_seekbar)
         self.wavev.poster.connect("wave-req-set-focus", self.on_wave_req_set_focus)
         self.wavev.poster.connect("wave-subtitle-change", self.on_wave_subtitle_change)
+        self.wavev.poster.connect("wave-time-edit-end", self.on_wave_time_edit_end)
         self.wavev.init_view_signals (self.get_current_page().view)
         page = self.get_current_page()
         page.init_signals_from_wave(self.wavev)
@@ -141,6 +142,15 @@ class VideoAgent(aeidon.Delegate):
 
     def on_wave_subtitle_change(self, widget, pos):
         self._update_subtitle_cache()
+
+    def on_wave_time_edit_end(self, widget, is_end_time, row, val_seconds):
+        print("on_wave_time_edit_end")
+        page = self.get_current_page()
+        if is_end_time == True:
+            page.project.set_end(row, val_seconds)
+        else:
+            page.project.set_start(row, val_seconds)
+
 
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
