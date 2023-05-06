@@ -99,7 +99,8 @@ class SignalPoster(aeidon.Observable):
     signals = (
         "wave-req-seek",
         "wave-subtitle-change",
-        "wave-req-set-focus"
+        "wave-req-set-focus",
+        "wave-time-edit-end",
     )
     def __init__(self):
         """Initialize an :class:`SignalPoster` instance."""
@@ -113,6 +114,9 @@ class SignalPoster(aeidon.Observable):
 
     def emit_focus_set(self, row):
         self.emit("wave-req-set-focus", row)
+    
+    def emit_time_edit_end(self, is_end, row, val_seconds):
+        self.emit("wave-time-edit-end", is_end, row, val_seconds)
 
 class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
@@ -153,6 +157,7 @@ class GraphicArea(Gtk.DrawingArea):
         self.drag_bar_init_x = 0
         self.drag_bar_timer = 0
         self.drag_end_side = False
+        self.drag_bar_row = -1
 
     def init_view_signals (self, view):
         view.connect_selection_changed(self.on_focus_changed)
@@ -388,8 +393,19 @@ class GraphicArea(Gtk.DrawingArea):
 
     def on_bt_release(self, widget, ev):
         if ev.button == 1:
+            if self.drag_bar_state == DRAG_BAR_ST__IDLE:
+                return
             self.drag_bar_state = DRAG_BAR_ST__IDLE
-
+            if self.drag_bar_row >=0:
+                if self.drag_end_side:
+                    t =self.subtitles[self.drag_bar_row].end_seconds
+                    self.subtitles[self.drag_bar_row].end_seconds = self.drag_bar_base_value # revert time to its initial value
+                    self.poster.emit_time_edit_end(self.drag_end_side, self.drag_bar_row, t)
+                else:
+                    t = self.subtitles[self.drag_bar_row].start_seconds
+                    self.subtitles[self.drag_bar_row].start_seconds = self.drag_bar_base_value # revert time to its initial value
+                    self.poster.emit_time_edit_end(self.drag_end_side, self.drag_bar_row, t)
+                self.drag_bar_row = -1
 
     def set_theme(self, t):
         self.color_wave = THEMES[t]['wave']
