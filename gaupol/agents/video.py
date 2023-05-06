@@ -170,6 +170,7 @@ class VideoAgent(aeidon.Delegate):
         self.get_action("toggle-wave").set_state(wave_view_visible)
         self.wavev = gaupol.Waveview(wave_view_visible)
         self.wavev.set_theme(gaupol.conf.wave_viewer.theme)
+        self.wavev.set_span(gaupol.conf.wave_viewer.span)
         gaupol.util.pack_start_fill(self.video_and_wavev_box, self.wavev.getWidget())
         gaupol.util.pack_start_expand(vbox, self.video_and_wavev_box)
         self._init_player_toolbar()
@@ -200,10 +201,19 @@ class VideoAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_set_wave_theme_activate(self, action, parameter):
         """Change wave theme."""
-        theme = parameter.get_string() #getattr(gaupol.theme, parameter.get_string())
+        theme = parameter.get_string()
         print("Theme = " + theme)
         gaupol.conf.wave_viewer.theme = theme
         self.wavev.set_theme(theme)
+        self.update_gui()
+
+    @aeidon.deco.export
+    def _on_set_wave_span_activate(self, action, parameter):
+        """Change wave span."""
+        span = parameter.get_string()
+        print("span = " + span)
+        gaupol.conf.wave_viewer.span = span
+        self.wavev.set_span(span)
         self.update_gui()
         
     @aeidon.deco.export

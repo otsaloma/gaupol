@@ -180,6 +180,10 @@ class GraphicArea(Gtk.DrawingArea):
     def init_view_signals (self, view):
         view.connect_selection_changed(self.on_focus_changed)
 
+    def set_span(self, secs):
+        self.span_in_time = secs
+        self.span_in_samples = self.span_in_time * DISP_SAMPLES_PER_SECOND
+
     def on_focus_changed(self, view):
         self.selected_rows = []
         row_paths = view.get_selected_rows()[1]
@@ -587,6 +591,12 @@ class Waveview():
 
     def set_theme(self, t):
         self.graphic_area.set_theme(t)
+
+    def set_span(self, span):
+        secs = 10
+        if span == "20 Seconds":
+            secs = 20
+        self.graphic_area.set_span(secs)
 
     def init_view_signals (self, view):
         self.graphic_area.init_view_signals(view)
