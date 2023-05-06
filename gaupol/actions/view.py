@@ -127,6 +127,18 @@ class TogglePlayerAction(gaupol.ToggleAction):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
+class ToggleWaveAction(gaupol.ToggleAction):
+    def __new__(cls):
+        action = gaupol.ToggleAction.new("toggle-wave")
+        action.__class__ = cls
+        return action
+    def __init__(self):
+        gaupol.ToggleAction.__init__(self, "toggle-wave")
+        self.action_group = "safe"
+        self.set_state(False)
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(application.player is not None)
+
 class ToggleStartColumnAction(gaupol.ToggleAction):
     def __new__(cls):
         action = gaupol.ToggleAction.new("toggle-start-column")

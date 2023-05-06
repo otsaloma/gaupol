@@ -193,6 +193,11 @@ CONFIG_DEFAULTS = {
         "time_position_vertical": "top",
         "volume": None,
     },
+    "wave_viewer": {
+        "visible": True,
+        "span": 10,
+        "theme": "dark",
+    },
 }
 
 CONFIG_ENUMS = {

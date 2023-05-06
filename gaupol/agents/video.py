@@ -157,6 +157,9 @@ class VideoAgent(aeidon.Delegate):
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(video_and_wavev_box, self.player.widget)
+        wave_view_visible = gaupol.conf.wave_viewer.visible
+        self.get_action("toggle-wave").set_state(wave_view_visible) # default is on
+        print("wave visible: " + str(wave_view_visible))
         self.wavev = gaupol.Waveview()
         gaupol.util.pack_start_fill(video_and_wavev_box, self.wavev.getWidget())
         gaupol.util.pack_start_expand(vbox, video_and_wavev_box)
@@ -182,6 +185,23 @@ class VideoAgent(aeidon.Delegate):
             GLib.timeout_add( 50, self._on_player_update_seekbar),
             GLib.timeout_add(100, self._on_player_update_volume),
         ]
+
+    @aeidon.deco.export
+    def _on_toggle_wave_activate(self, *args):
+        """Show or hide the audio visualizer."""
+        print("Toggle wave")
+        if self.wavev != None:
+            w = self.wavev.getWidget()
+            action = self.get_action("toggle-wave")
+            if w.get_visible() == True:
+                w.hide()
+                gaupol.conf.wave_viewer.visible = False
+                action.set_state(False)
+            else:
+                w.show_all()
+                gaupol.conf.wave_viewer.visible = True
+                action.set_state(True)
+            #self.update_gui()
 
     @aeidon.deco.export
     def load_video(self, path):

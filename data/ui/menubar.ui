@@ -190,6 +190,10 @@
           <attribute name="label" translatable="yes">_Video Player</attribute>
           <attribute name="action">win.toggle-player</attribute>
         </item>
+        <item>
+          <attribute name="label" translatable="yes">Audio Visualizer</attribute>
+          <attribute name="action">win.toggle-wave</attribute>
+        </item>
       </section>
       <section>
         <submenu>
