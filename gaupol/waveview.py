@@ -173,7 +173,7 @@ class GraphicArea(Gtk.DrawingArea):
 
     def set_visible(self, v):
         if self.is_visible != v:
-            self.is_visible != v
+            self.is_visible = v
             if v == True:
                 GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
 
