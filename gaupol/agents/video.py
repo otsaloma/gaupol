@@ -168,9 +168,8 @@ class VideoAgent(aeidon.Delegate):
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(video_and_wavev_box, self.player.widget)
         wave_view_visible = gaupol.conf.wave_viewer.visible
-        self.get_action("toggle-wave").set_state(wave_view_visible) # default is on
-        print("wave visible: " + str(wave_view_visible))
-        self.wavev = gaupol.Waveview()
+        self.get_action("toggle-wave").set_state(wave_view_visible)
+        self.wavev = gaupol.Waveview(wave_view_visible)
         gaupol.util.pack_start_fill(video_and_wavev_box, self.wavev.getWidget())
         gaupol.util.pack_start_expand(vbox, video_and_wavev_box)
         self._init_player_toolbar()
@@ -185,6 +184,8 @@ class VideoAgent(aeidon.Delegate):
             else self.notebook.get_window().get_height())
         self.paned.set_position(int(size / 2))
         self.get_action("toggle-player").set_state(True)
+        if wave_view_visible == False:
+            self.wavev.getWidget().hide()
 
     def _init_update_handlers(self):
         """Initialize timed updates of widgets."""
@@ -205,10 +206,12 @@ class VideoAgent(aeidon.Delegate):
             action = self.get_action("toggle-wave")
             if w.get_visible() == True:
                 w.hide()
+                self.wavev.set_visible(False)
                 gaupol.conf.wave_viewer.visible = False
                 action.set_state(False)
             else:
                 w.show_all()
+                self.wavev.set_visible(True)
                 gaupol.conf.wave_viewer.visible = True
                 action.set_state(True)
             #self.update_gui()

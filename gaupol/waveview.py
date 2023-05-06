@@ -120,8 +120,9 @@ class SignalPoster(aeidon.Observable):
 
 class GraphicArea(Gtk.DrawingArea):
     """ This class is a Drawing Area"""
-    def __init__(self, poster):
+    def __init__(self, poster, is_visible):
         super(GraphicArea,self).__init__()
+        self.is_visible = is_visible
         self.calc = aeidon.Calculator()
         self.poster = poster
         self.subtitles = None
@@ -130,7 +131,8 @@ class GraphicArea(Gtk.DrawingArea):
         self.set_theme('dark')
 
         self.connect("draw", self.on_draw)
-        GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
+        if is_visible == True:
+            GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
 
         self.disp_samples = None
         self.sample_pos = -1
@@ -158,6 +160,12 @@ class GraphicArea(Gtk.DrawingArea):
         self.drag_bar_timer = 0
         self.drag_end_side = False
         self.drag_bar_row = -1
+
+    def set_visible(self, v):
+        if self.is_visible != v:
+            self.is_visible != v
+            if v == True:
+                GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
 
     def init_view_signals (self, view):
         view.connect_selection_changed(self.on_focus_changed)
@@ -436,8 +444,9 @@ class GraphicArea(Gtk.DrawingArea):
         #w = self.get_window()
         #w.invalidate_rect(rect, True)
         #self.gtk_widget_queue_draw_area()
-        self.queue_draw()
-        return True # Causes timeout to tick again.
+        if self.is_visible == True:
+            self.queue_draw()
+        return self.is_visible # Causes timeout to tick again when visible.
 
     def set_color(self, c):
         self.ctx.set_source_rgb(c['r'], c['g'], c['b'])
@@ -537,10 +546,11 @@ class Progress(Gtk.Window):
     
 class Waveview():
     """ This class is a Drawing Area"""
-    def __init__(self):
+    def __init__(self, is_visible):
         global _waveview_instance
+        self.is_visible = is_visible
         self.poster = SignalPoster()
-        self.graphic_area = GraphicArea(self.poster)
+        self.graphic_area = GraphicArea(self.poster, is_visible)
         #self.graphic_area.set_size_request(0, 100)
         self.top_container = Gtk.HBox(spacing=6)
         self.top_container.set_homogeneous(True)
@@ -555,6 +565,15 @@ class Waveview():
         #self.top_container.pack_start(self.vbox, True, True, 0)
         self.top_container.show_all()
         _waveview_instance = self
+        self.disp_samples = None
+        self.video_file_path = None
+
+    def set_visible(self, v):
+        self.is_visible = v
+        if v == True:
+            if self.video_file_path != None:
+                self.create_data(self.video_file_path)
+        self.graphic_area.set_visible(v)
 
     def init_view_signals (self, view):
         self.graphic_area.init_view_signals(view)
@@ -599,8 +618,15 @@ class Waveview():
             i += 1
         return bytes_output, samples
 
-
     def create_data(self, path):
+        if self.disp_samples != None:
+            #ignore if we already have samples
+            return
+
+        if self.is_visible == False:
+            #postpone for when it becomes visible for the first time
+            self.video_file_path = path
+            return
         
         tmp_display_samples_file = TMP_PATH + os.path.basename(path) + TMP_DISPLAY_PCM8_SAMPLES
 
