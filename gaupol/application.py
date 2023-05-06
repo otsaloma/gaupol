@@ -125,6 +125,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.play_button = None
         self.player = None
         self.player_box = None
+        self.video_and_wavev_box = None
         self.player_toolbar = None
         self.recent_manager = Gtk.RecentManager.get_default()
         self.redo_button = None
@@ -325,8 +326,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         layout = gaupol.conf.application_window.layout
         if layout == Gtk.Orientation.HORIZONTAL:
             self.player_box = gaupol.util.new_vbox(spacing=0)
+            self.video_and_wavev_box = gaupol.util.new_vbox(spacing=0)
         if layout == Gtk.Orientation.VERTICAL:
             self.player_box = gaupol.util.new_hbox(spacing=0)
+            self.video_and_wavev_box = gaupol.util.new_vbox(spacing=0)
+        self.video_and_wavev_box.set_homogeneous(True)
 
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""

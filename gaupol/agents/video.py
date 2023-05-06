@@ -159,19 +159,19 @@ class VideoAgent(aeidon.Delegate):
 
         # TODO: fix: layout change only takes effect after App relaunch as this is static
         if layout == Gtk.Orientation.HORIZONTAL:
-            video_and_wavev_box = gaupol.util.new_vbox(spacing=0)
+            self.video_and_wavev_box = gaupol.util.new_vbox(spacing=0)
         else:
-            video_and_wavev_box = gaupol.util.new_hbox(spacing=0)
+            self.video_and_wavev_box = gaupol.util.new_hbox(spacing=0)
         
-        video_and_wavev_box.set_homogeneous(True)
+        self.video_and_wavev_box.set_homogeneous(True)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
-        gaupol.util.pack_start_expand(video_and_wavev_box, self.player.widget)
+        gaupol.util.pack_start_expand(self.video_and_wavev_box, self.player.widget)
         wave_view_visible = gaupol.conf.wave_viewer.visible
         self.get_action("toggle-wave").set_state(wave_view_visible)
         self.wavev = gaupol.Waveview(wave_view_visible)
-        gaupol.util.pack_start_fill(video_and_wavev_box, self.wavev.getWidget())
-        gaupol.util.pack_start_expand(vbox, video_and_wavev_box)
+        gaupol.util.pack_start_fill(self.video_and_wavev_box, self.wavev.getWidget())
+        gaupol.util.pack_start_expand(vbox, self.video_and_wavev_box)
         self._init_player_toolbar()
         gaupol.util.pack_start_fill(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
