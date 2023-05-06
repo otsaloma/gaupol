@@ -77,7 +77,7 @@ DRAG_BAR_ST__DRAGGING = 2
 
 
 THEMES = { \
-    'dark': { \
+    'Dark': { \
         'wave': {'r': 1, 'g': 1, 'b': 0}, \
         'pos_cursor' : {'r': 1, 'g': 0, 'b': 0}, \
         'bar' : {'r': 37/256, 'g': 137/256, 'b': 157/256}, \
@@ -86,6 +86,16 @@ THEMES = { \
         'bar_text' : {'r': 255/256, 'g': 255/256, 'b': 255/256}, \
         'bar_text_selected' : {'r': 98/256, 'g': 92/256, 'b': 13/256}, \
         'labels' : {'r': 0xff/256, 'g': 0xea/256, 'b': 0x7b/256}, \
+    }, \
+    'Light': { \
+        'wave': {'r': 2/256, 'g': 7/256, 'b': 0x71/256}, \
+        'pos_cursor' : {'r': 1, 'g': 0, 'b': 0}, \
+        'bar' : {'r': 37/256, 'g': 137/256, 'b': 157/256}, \
+        'bar_selected' : {'r': 181/256, 'g': 233/256, 'b': 243/256}, \
+        'dash_line_selected' : {'r': 4/256, 'g': 0xbe/256, 'b': 0x32/256}, \
+        'bar_text' : {'r': 255/256, 'g': 255/256, 'b': 255/256}, \
+        'bar_text_selected' : {'r': 98/256, 'g': 92/256, 'b': 13/256}, \
+        'labels' : {'r': 0x2/256, 'g': 0x3/256, 'b': 0x71/256}, \
     } \
 }
 
@@ -128,7 +138,7 @@ class GraphicArea(Gtk.DrawingArea):
         self.subtitles = None
         self.span_in_samples = DISP_SPAN_IN_SAMPLES
         self.span_in_time = self.span_in_samples / DISP_SAMPLES_PER_SECOND
-        self.set_theme('dark')
+        self.set_theme('Dark')
 
         self.connect("draw", self.on_draw)
         if is_visible == True:
@@ -574,6 +584,9 @@ class Waveview():
             if self.video_file_path != None:
                 self.create_data(self.video_file_path)
         self.graphic_area.set_visible(v)
+
+    def set_theme(self, t):
+        self.graphic_area.set_theme(t)
 
     def init_view_signals (self, view):
         self.graphic_area.init_view_signals(view)

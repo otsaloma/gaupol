@@ -196,7 +196,7 @@ CONFIG_DEFAULTS = {
     "wave_viewer": {
         "visible": True,
         "span": 10,
-        "theme": "dark",
+        "theme": "Dark",
     },
 }
 

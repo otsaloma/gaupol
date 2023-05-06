@@ -157,7 +157,6 @@ class VideoAgent(aeidon.Delegate):
         vbox = gaupol.util.new_vbox(spacing=0)
         layout = gaupol.conf.application_window.layout
 
-        # TODO: fix: layout change only takes effect after App relaunch as this is static
         if layout == Gtk.Orientation.HORIZONTAL:
             self.video_and_wavev_box = gaupol.util.new_vbox(spacing=0)
         else:
@@ -170,6 +169,7 @@ class VideoAgent(aeidon.Delegate):
         wave_view_visible = gaupol.conf.wave_viewer.visible
         self.get_action("toggle-wave").set_state(wave_view_visible)
         self.wavev = gaupol.Waveview(wave_view_visible)
+        self.wavev.set_theme(gaupol.conf.wave_viewer.theme)
         gaupol.util.pack_start_fill(self.video_and_wavev_box, self.wavev.getWidget())
         gaupol.util.pack_start_expand(vbox, self.video_and_wavev_box)
         self._init_player_toolbar()
@@ -198,9 +198,17 @@ class VideoAgent(aeidon.Delegate):
         ]
 
     @aeidon.deco.export
+    def _on_set_wave_theme_activate(self, action, parameter):
+        """Change wave theme."""
+        theme = parameter.get_string() #getattr(gaupol.theme, parameter.get_string())
+        print("Theme = " + theme)
+        gaupol.conf.wave_viewer.theme = theme
+        self.wavev.set_theme(theme)
+        self.update_gui()
+        
+    @aeidon.deco.export
     def _on_toggle_wave_activate(self, *args):
         """Show or hide the audio visualizer."""
-        print("Toggle wave")
         if self.wavev != None:
             w = self.wavev.getWidget()
             action = self.get_action("toggle-wave")

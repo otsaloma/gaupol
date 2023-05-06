@@ -195,6 +195,25 @@
           <attribute name="action">win.toggle-wave</attribute>
         </item>
       </section>
+
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes">Audio Visualizer Theme</attribute>
+          <section>
+            <item>
+              <attribute name="label" translatable="yes">Dark</attribute>
+              <attribute name="action">win.set-wave-theme</attribute>
+              <attribute name="target">Dark</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">Light</attribute>
+              <attribute name="action">win.set-wave-theme</attribute>
+              <attribute name="target">Light</attribute>
+            </item>
+          </section>
+        </submenu>
+      </section>
+
       <section>
         <submenu>
           <attribute name="label" translatable="yes">_Layout</attribute>

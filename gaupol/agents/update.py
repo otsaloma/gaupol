@@ -151,3 +151,5 @@ class UpdateAgent(aeidon.Delegate):
             col = getattr(page.view.columns, field.name)
             visible = page.view.get_column(col).get_visible()
             self.get_column_action(field).set_state(visible)
+        theme = gaupol.conf.wave_viewer.theme
+        self.get_action("set-wave-theme").set_state(str(theme))
