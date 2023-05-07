@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""User interface container and controller for :class:`aeidon.Project`."""
+"""Wave viewer - an audio visualizer."""
 
 import aeidon
 import gaupol
@@ -28,31 +28,11 @@ import argparse
 from aeidon.i18n   import _
 from gi.repository import Gtk, GObject, Gst, Gdk
 
-# gi.require_version('Gst', '1.0')
-# from gi.repository import Gst, GObject
-
 __all__ = ("Waveview",)
 
 TMP_PATH = "/tmp/"
 TMP_AUDIO_PCM = ".audio.gaupol"
 TMP_DISPLAY_PCM8_SAMPLES = ".display.gaupol"
-
-"""
-for 16 bits in 16 bits, signed, little endian:
-
-gst-launch-1.0 filesrc location=filename ! \ 
- decodebin ! audioconvert ! audioresample ! \
- audio/x-raw, channels=1, rate=16000, format=S16LE ! \
- filesink location=out.raw
-
-for 8 bits, 8K/sec:
-
-gst-launch-1.0 filesrc location=filename ! \
-    decodebin ! audioconvert ! \
-    audioresample ! \
-    audio/x-raw, channels=1, rate=8000, format=S8 ! \
-    filesink location=fileout.raw
-"""
 
 AUDIO_SAMPLES_PER_SECOND = 8000
 DECIMATE_FACTOR = 80
@@ -142,7 +122,7 @@ class GraphicArea(Gtk.DrawingArea):
 
         self.connect("draw", self.on_draw)
         if is_visible == True:
-            GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
+            GObject.timeout_add(50, self.on_timer) # Go call on_timer every 50 whatsits.
 
         self.disp_samples = None
         self.sample_pos = -1
@@ -172,10 +152,11 @@ class GraphicArea(Gtk.DrawingArea):
         self.drag_bar_row = -1
 
     def set_visible(self, v):
+        # When wave viewer become visible turn on the draw timer
         if self.is_visible != v:
             self.is_visible = v
             if v == True:
-                GObject.timeout_add(50, self.tick) # Go call tick every 50 whatsits.
+                GObject.timeout_add(50, self.on_timer) # Go call on_timer every 50 milliseconds.
 
     def init_view_signals (self, view):
         view.connect_selection_changed(self.on_focus_changed)
@@ -359,7 +340,6 @@ class GraphicArea(Gtk.DrawingArea):
             return -1, False
         for b in self.bars_cache:
             if x >= b['x0'] and x <= b['x1']:
-                #print("bar: " + str(b['row']))
                 is_end_side = False
                 if x > b['x0'] + ((b['x1'] - b['x0']) / 2):
                     is_end_side = True
@@ -389,8 +369,10 @@ class GraphicArea(Gtk.DrawingArea):
             self.poster.emit_seek_request( t)
 
     def on_right_click(self, x,y):
-        print("right-click event " + str(x) + ", " + str(y))
-        print("TODO: implement context menu")
+        # placeholder
+        # print("right-click event " + str(x) + ", " + str(y))
+        # print("TODO: implement context menu")
+        pass
 
 
     def on_motion(self, widget, ev):
@@ -451,21 +433,16 @@ class GraphicArea(Gtk.DrawingArea):
         self.duration = duration
         self.sample_pos = int(len(self.disp_samples) * (position/duration))
 
-    def tick(self):
+    def on_timer(self):
         ## This invalidates the graphic area, causing the "draw" event to fire.
-        rect = self.get_allocation()
-        #self.get_window().invalidate_rect(rect, True)
-        #w = self.get_window()
-        #w.invalidate_rect(rect, True)
-        #self.gtk_widget_queue_draw_area()
         if self.is_visible == True:
             self.queue_draw()
-        return self.is_visible # Causes timeout to tick again when visible.
+        return self.is_visible # Causes timeout to on_timer again when visible.
 
     def set_color(self, c):
         self.ctx.set_source_rgb(c['r'], c['g'], c['b'])
 
-    ## When the "draw" event fires, this is run
+    ## When the "draw" event fires, this is ran
     def on_draw(self, widget, event):
         self.ctx = self.get_window().cairo_create()
         geom = self.get_window().get_geometry()
@@ -516,7 +493,6 @@ class CreateCache():
             https://lazka.github.io/pgi-docs/Gst-1.0/flags.html#Gst.MessageType
         """
         if mtype == Gst.MessageType.EOS:
-            #print("End of stream")
             loop.quit()
 
         elif mtype == Gst.MessageType.ERROR:
@@ -530,11 +506,7 @@ class CreateCache():
 
         elif mtype == Gst.MessageType.ELEMENT:
             b,p = message.get_structure().get_int("percent")
-            #print("Progress message " + str(p) + "%")
             self.progress.set_fraction(p/100)
-
-        # else:
-        #     print(mtype)
 
         return True
 
@@ -545,7 +517,7 @@ class Progress(Gtk.Window):
         self.set_default_size(400,200)
         self.set_title("Gaupol Progress")
         vbox = Gtk.VBox()
-        label = Gtk.Label("Creating cache for wave graphic")
+        label = Gtk.Label("Creating cache for audio visualizer")
         vbox.pack_start(label, expand = True, fill = True, padding = 6)
         self.progress = Gtk.ProgressBar()
         self.progress.set_margin_bottom(100)
@@ -565,18 +537,10 @@ class Waveview():
         self.is_visible = is_visible
         self.poster = SignalPoster()
         self.graphic_area = GraphicArea(self.poster, is_visible)
-        #self.graphic_area.set_size_request(0, 100)
         self.top_container = Gtk.HBox(spacing=6)
         self.top_container.set_homogeneous(True)
-
         self.vbox = Gtk.VBox(spacing=6)
-        # b = Gtk.Button("Dummy 1")
-        # self.vbox.pack_start(b, True, False, 0)
-        # b = Gtk.Button("Dummy 2")
-        # self.vbox.pack_start(b, True, True, 0)
-
         self.top_container.pack_start(self.graphic_area, True, True, 0)
-        #self.top_container.pack_start(self.vbox, True, True, 0)
         self.top_container.show_all()
         _waveview_instance = self
         self.disp_samples = None
@@ -600,10 +564,6 @@ class Waveview():
 
     def init_view_signals (self, view):
         self.graphic_area.init_view_signals(view)
-
-    def subtitles_have_changed(self):
-        # do nothing yet
-        pass
 
     def getWidget(self):
         return self.top_container

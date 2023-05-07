@@ -133,7 +133,6 @@ class VideoAgent(aeidon.Delegate):
         self.player_toolbar.insert(item, -1)
     
     def on_req_set_seekbar(self, widget, pos):
-        print("on_req_set_seekbar: " + str(pos))
         self.player.seek(pos)
     
     def on_wave_req_set_focus(self, widget, row):
@@ -144,7 +143,6 @@ class VideoAgent(aeidon.Delegate):
         self._update_subtitle_cache()
 
     def on_wave_time_edit_end(self, widget, is_end_time, row, val_seconds):
-        print("on_wave_time_edit_end")
         page = self.get_current_page()
         if is_end_time == True:
             page.project.set_end(row, val_seconds)
@@ -202,7 +200,6 @@ class VideoAgent(aeidon.Delegate):
     def _on_set_wave_theme_activate(self, action, parameter):
         """Change wave theme."""
         theme = parameter.get_string()
-        print("Theme = " + theme)
         gaupol.conf.wave_viewer.theme = theme
         self.wavev.set_theme(theme)
         self.update_gui()
@@ -211,7 +208,6 @@ class VideoAgent(aeidon.Delegate):
     def _on_set_wave_span_activate(self, action, parameter):
         """Change wave span."""
         span = parameter.get_string()
-        print("span = " + span)
         gaupol.conf.wave_viewer.span = span
         self.wavev.set_span(span)
         self.update_gui()
@@ -232,7 +228,6 @@ class VideoAgent(aeidon.Delegate):
                 self.wavev.set_visible(True)
                 gaupol.conf.wave_viewer.visible = True
                 action.set_state(True)
-            #self.update_gui()
 
     @aeidon.deco.export
     def load_video(self, path):
@@ -461,4 +456,4 @@ class VideoAgent(aeidon.Delegate):
             return self._clear_subtitle_cache()
         self._cache = [(x.start_seconds, x.end_seconds, x.main_text)
                        for x in page.project.subtitles]
-        self.wavev.subtitles_have_changed()
+
