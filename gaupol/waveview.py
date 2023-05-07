@@ -602,7 +602,8 @@ class Waveview():
         self.graphic_area.init_view_signals(view)
 
     def subtitles_have_changed(self):
-        print("subtitles_have_changed")
+        # do nothing yet
+        pass
 
     def getWidget(self):
         return self.top_container
