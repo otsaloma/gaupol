@@ -148,8 +148,8 @@ class SetWaveThemeAction(gaupol.RadioAction):
         gaupol.RadioAction.__init__(self, "set-wave-theme")
         self.action_group = "unsafe"
         self.set_state(str(gaupol.conf.wave_viewer.theme))
-    # def _affirm_doable(self, application, page, selected_rows):
-    #     aeidon.util.affirm(application.player is not None)
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(application.player is not None)
 
 class SetWaveSpanAction(gaupol.RadioAction):
     def __new__(cls):
@@ -160,6 +160,8 @@ class SetWaveSpanAction(gaupol.RadioAction):
         gaupol.RadioAction.__init__(self, "set-wave-span")
         self.action_group = "unsafe"
         self.set_state(str(gaupol.conf.wave_viewer.span))
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(application.player is not None)
 
 class ToggleStartColumnAction(gaupol.ToggleAction):
     def __new__(cls):

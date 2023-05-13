@@ -44,6 +44,7 @@ class VideoAgent(aeidon.Delegate):
         # This cache must be updated when page or subtitle data changes.
         self._cache = []
         self._update_handlers = []
+        self.wavev = None
 
     def _clear_subtitle_cache(self):
         """Clear subtitle position and text cache."""
@@ -201,16 +202,18 @@ class VideoAgent(aeidon.Delegate):
         """Change wave theme."""
         theme = parameter.get_string()
         gaupol.conf.wave_viewer.theme = theme
-        self.wavev.set_theme(theme)
-        self.update_gui()
+        if self.wavev != None:
+            self.wavev.set_theme(theme)
+            self.update_gui()
 
     @aeidon.deco.export
     def _on_set_wave_span_activate(self, action, parameter):
         """Change wave span."""
         span = parameter.get_string()
         gaupol.conf.wave_viewer.span = span
-        self.wavev.set_span(span)
-        self.update_gui()
+        if self.wavev != None:
+            self.wavev.set_span(span)
+            self.update_gui()
         
     @aeidon.deco.export
     def _on_toggle_wave_activate(self, *args):
@@ -309,8 +312,9 @@ class VideoAgent(aeidon.Delegate):
         if duration is not None and position is not None:
             adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(position/duration)
-            if self.wavev != None:
-                self.wavev.set_position(position, duration, self.get_current_page().project.subtitles)
+            page = self.get_current_page()
+            if self.wavev != None and page != None:
+                self.wavev.set_position(position, duration, page.project.subtitles)
         return True # to be called again.
 
     def _on_player_update_subtitle(self, data=None):
