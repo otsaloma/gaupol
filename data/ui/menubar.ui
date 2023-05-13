@@ -190,6 +190,44 @@
           <attribute name="label" translatable="yes">_Video Player</attribute>
           <attribute name="action">win.toggle-player</attribute>
         </item>
+        <item>
+          <attribute name="label" translatable="yes">Audio Visualizer</attribute>
+          <attribute name="action">win.toggle-wave</attribute>
+        </item>
+      </section>
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes">Audio Visualizer Theme</attribute>
+          <section>
+            <item>
+              <attribute name="label" translatable="yes">Dark</attribute>
+              <attribute name="action">win.set-wave-theme</attribute>
+              <attribute name="target">Dark</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">Light</attribute>
+              <attribute name="action">win.set-wave-theme</attribute>
+              <attribute name="target">Light</attribute>
+            </item>
+          </section>
+        </submenu>
+      </section>
+      <section>
+        <submenu>
+          <attribute name="label" translatable="yes">Audio Visualizer Span</attribute>
+          <section>
+            <item>
+              <attribute name="label" translatable="yes">10 Seconds</attribute>
+              <attribute name="action">win.set-wave-span</attribute>
+              <attribute name="target">10 Seconds</attribute>
+            </item>
+            <item>
+              <attribute name="label" translatable="yes">20 Seconds</attribute>
+              <attribute name="action">win.set-wave-span</attribute>
+              <attribute name="target">20 Seconds</attribute>
+            </item>
+          </section>
+        </submenu>
       </section>
       <section>
         <submenu>

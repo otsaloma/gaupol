@@ -44,6 +44,7 @@ class VideoAgent(aeidon.Delegate):
         # This cache must be updated when page or subtitle data changes.
         self._cache = []
         self._update_handlers = []
+        self.wavev = None
 
     def _clear_subtitle_cache(self):
         """Clear subtitle position and text cache."""
@@ -120,17 +121,57 @@ class VideoAgent(aeidon.Delegate):
 
         self.seekbar.set_draw_value(False)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
+        self.wavev.poster.connect("wave-req-seek", self.on_req_set_seekbar)
+        self.wavev.poster.connect("wave-req-set-focus", self.on_wave_req_set_focus)
+        self.wavev.poster.connect("wave-subtitle-change", self.on_wave_subtitle_change)
+        self.wavev.poster.connect("wave-time-edit-end", self.on_wave_time_edit_end)
+        self.wavev.init_view_signals (self.get_current_page().view)
+        page = self.get_current_page()
+        page.init_signals_from_wave(self.wavev)
         item = Gtk.ToolItem()
         item.set_expand(True)
         item.add(self.seekbar)
         self.player_toolbar.insert(item, -1)
+    
+    def on_req_set_seekbar(self, widget, pos):
+        self.player.seek(pos)
+    
+    def on_wave_req_set_focus(self, widget, row):
+        page = self.get_current_page()
+        page.view.set_focus(row)
+
+    def on_wave_subtitle_change(self, widget, pos):
+        self._update_subtitle_cache()
+
+    def on_wave_time_edit_end(self, widget, is_end_time, row, val_seconds):
+        page = self.get_current_page()
+        if is_end_time == True:
+            page.project.set_end(row, val_seconds)
+        else:
+            page.project.set_start(row, val_seconds)
+
 
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
         vbox = gaupol.util.new_vbox(spacing=0)
+        layout = gaupol.conf.application_window.layout
+
+        if layout == Gtk.Orientation.HORIZONTAL:
+            self.video_and_wavev_box = gaupol.util.new_vbox(spacing=0)
+        else:
+            self.video_and_wavev_box = gaupol.util.new_hbox(spacing=0)
+        
+        self.video_and_wavev_box.set_homogeneous(True)
         self.player = gaupol.VideoPlayer()
         aeidon.util.connect(self, "player", "state-changed")
-        gaupol.util.pack_start_expand(vbox, self.player.widget)
+        gaupol.util.pack_start_expand(self.video_and_wavev_box, self.player.widget)
+        wave_view_visible = gaupol.conf.wave_viewer.visible
+        self.get_action("toggle-wave").set_state(wave_view_visible)
+        self.wavev = gaupol.Waveview(wave_view_visible)
+        self.wavev.set_theme(gaupol.conf.wave_viewer.theme)
+        self.wavev.set_span(gaupol.conf.wave_viewer.span)
+        gaupol.util.pack_start_fill(self.video_and_wavev_box, self.wavev.getWidget())
+        gaupol.util.pack_start_expand(vbox, self.video_and_wavev_box)
         self._init_player_toolbar()
         gaupol.util.pack_start_fill(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
@@ -143,6 +184,8 @@ class VideoAgent(aeidon.Delegate):
             else self.notebook.get_window().get_height())
         self.paned.set_position(int(size / 2))
         self.get_action("toggle-player").set_state(True)
+        if wave_view_visible == False:
+            self.wavev.getWidget().hide()
 
     def _init_update_handlers(self):
         """Initialize timed updates of widgets."""
@@ -153,6 +196,41 @@ class VideoAgent(aeidon.Delegate):
             GLib.timeout_add( 50, self._on_player_update_seekbar),
             GLib.timeout_add(100, self._on_player_update_volume),
         ]
+
+    @aeidon.deco.export
+    def _on_set_wave_theme_activate(self, action, parameter):
+        """Change wave theme."""
+        theme = parameter.get_string()
+        gaupol.conf.wave_viewer.theme = theme
+        if self.wavev != None:
+            self.wavev.set_theme(theme)
+            self.update_gui()
+
+    @aeidon.deco.export
+    def _on_set_wave_span_activate(self, action, parameter):
+        """Change wave span."""
+        span = parameter.get_string()
+        gaupol.conf.wave_viewer.span = span
+        if self.wavev != None:
+            self.wavev.set_span(span)
+            self.update_gui()
+        
+    @aeidon.deco.export
+    def _on_toggle_wave_activate(self, *args):
+        """Show or hide the audio visualizer."""
+        if self.wavev != None:
+            w = self.wavev.getWidget()
+            action = self.get_action("toggle-wave")
+            if w.get_visible() == True:
+                w.hide()
+                self.wavev.set_visible(False)
+                gaupol.conf.wave_viewer.visible = False
+                action.set_state(False)
+            else:
+                w.show_all()
+                self.wavev.set_visible(True)
+                gaupol.conf.wave_viewer.visible = True
+                action.set_state(True)
 
     @aeidon.deco.export
     def load_video(self, path):
@@ -175,6 +253,7 @@ class VideoAgent(aeidon.Delegate):
         # in which case the player itself has shown an error dialog.
         if not self.player.ready: return
         self._update_languages_menu()
+        self.wavev.create_data(path)
         self.update_gui()
         self.player.play()
         if not gaupol.conf.video_player.autoplay:
@@ -233,6 +312,9 @@ class VideoAgent(aeidon.Delegate):
         if duration is not None and position is not None:
             adjustment = self.seekbar.get_adjustment()
             adjustment.set_value(position/duration)
+            page = self.get_current_page()
+            if self.wavev != None and page != None:
+                self.wavev.set_position(position, duration, page.project.subtitles)
         return True # to be called again.
 
     def _on_player_update_subtitle(self, data=None):
@@ -378,3 +460,4 @@ class VideoAgent(aeidon.Delegate):
             return self._clear_subtitle_cache()
         self._cache = [(x.start_seconds, x.end_seconds, x.main_text)
                        for x in page.project.subtitles]
+

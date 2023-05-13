@@ -19,7 +19,7 @@
 
 import aeidon
 import gaupol
-
+from gi.repository import Gtk
 
 class ViewAgent(aeidon.Delegate):
 
@@ -76,9 +76,11 @@ class ViewAgent(aeidon.Delegate):
         if orientation == gaupol.orientation.HORIZONTAL:
             self.paned.set_orientation(gaupol.orientation.HORIZONTAL)
             self.player_box.orientation = gaupol.orientation.VERTICAL
+            self.video_and_wavev_box.set_orientation(gaupol.orientation.VERTICAL)
         if orientation == gaupol.orientation.VERTICAL:
             self.paned.set_orientation(gaupol.orientation.VERTICAL)
             self.player_box.orientation = gaupol.orientation.HORIZONTAL
+            self.video_and_wavev_box.set_orientation(gaupol.orientation.HORIZONTAL)
         gaupol.conf.application_window.layout = orientation
         self.update_gui()
 

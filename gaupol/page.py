@@ -153,6 +153,14 @@ class Page(aeidon.Observable):
         """Initialize signal handlers."""
         self._init_signal_handlers_for_data()
         self._init_signal_handlers_for_tab_label()
+        # if an instance of waveview already exist then 
+        # we need to explicitly register it signals.
+        # Otherwise, video will call init_signals_from_wave
+        # for the very first page
+        w = gaupol.waveview.get_waveview_instance()
+        if w != None:
+            self.init_signals_from_wave(w)
+            print("explicitly register wave signals")
 
     def _init_signal_handlers_for_data(self):
         """Initialize signal handlers for project data updates."""
@@ -164,6 +172,18 @@ class Page(aeidon.Observable):
         aeidon.util.connect(self, "project", "subtitles-removed")
         aeidon.util.connect(self, "project", "translation-file-opened")
         aeidon.util.connect(self, "project", "translation-texts-changed")
+
+    def init_signals_from_wave(self, waveview):
+        waveview.poster.connect("wave-subtitle-change", self.on_wave_subtitle_change)
+
+    def on_wave_subtitle_change(self, w, p):
+        print("on_wave_subtitle_change")
+        fields = (  gaupol.fields.MAIN_TEXT,
+                    gaupol.fields.START,
+                    gaupol.fields.END,
+                    gaupol.fields.DURATION,
+        )
+        self.reload_view([p], fields)
 
     def _init_signal_handlers_for_tab_label(self):
         """Initialize signal handlers for tab label updates."""

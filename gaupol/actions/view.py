@@ -127,6 +127,42 @@ class TogglePlayerAction(gaupol.ToggleAction):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
 
+class ToggleWaveAction(gaupol.ToggleAction):
+    def __new__(cls):
+        action = gaupol.ToggleAction.new("toggle-wave")
+        action.__class__ = cls
+        return action
+    def __init__(self):
+        gaupol.ToggleAction.__init__(self, "toggle-wave")
+        self.action_group = "safe"
+        self.set_state(False)
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(application.player is not None)
+
+class SetWaveThemeAction(gaupol.RadioAction):
+    def __new__(cls):
+        action = gaupol.RadioAction.new("set-wave-theme")
+        action.__class__ = cls
+        return action
+    def __init__(self):
+        gaupol.RadioAction.__init__(self, "set-wave-theme")
+        self.action_group = "unsafe"
+        self.set_state(str(gaupol.conf.wave_viewer.theme))
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(application.player is not None)
+
+class SetWaveSpanAction(gaupol.RadioAction):
+    def __new__(cls):
+        action = gaupol.RadioAction.new("set-wave-span")
+        action.__class__ = cls
+        return action
+    def __init__(self):
+        gaupol.RadioAction.__init__(self, "set-wave-span")
+        self.action_group = "unsafe"
+        self.set_state(str(gaupol.conf.wave_viewer.span))
+    def _affirm_doable(self, application, page, selected_rows):
+        aeidon.util.affirm(application.player is not None)
+
 class ToggleStartColumnAction(gaupol.ToggleAction):
     def __new__(cls):
         action = gaupol.ToggleAction.new("toggle-start-column")
