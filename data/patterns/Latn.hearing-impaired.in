@@ -8,8 +8,8 @@ Flags=DOTALL;MULTILINE;
 Replacement=\0
 
 [Hearing Impaired Pattern]
-Name=Sound in parantheses
-Description=Remove description of a sound between parantheses
+Name=Sound in parentheses
+Description=Remove description of a sound between parentheses
 Pattern=\(.*?\)
 Flags=DOTALL;MULTILINE;
 Replacement=\0
