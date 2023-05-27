@@ -1,3 +1,8 @@
+PENDING: Gaupol 1.13
+====================
+
+* Fix translations missing for enums (#210)
+
 2023-01-21: Gaupol 1.12
 =======================
 

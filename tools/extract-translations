@@ -10,6 +10,7 @@ xgettext \
     --from-code=UTF-8 \
     --language=Python \
     --keyword=_:1 \
+    --keyword=__:1 \
     --keyword=d_:2 \
     --keyword=n_:1,2 \
     --add-comments=TRANSLATORS: \

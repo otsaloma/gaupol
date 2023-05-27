@@ -23,6 +23,9 @@ integers. The string value of an item will be the name that it was defined with
 in its set. New items can always be added to an enumeration.
 """
 
+from aeidon.i18n import _
+from aeidon.i18n import __
+
 __all__ = ("EnumerationItem", "Enumeration",)
 
 
@@ -46,6 +49,11 @@ class EnumerationItem(int):
     def __bool__(self):
         """For consistency, always return ``True``."""
         return True
+
+    def __getattribute__(self, name):
+        """Return attribute, evaluating any lazy translations."""
+        value = super().__getattribute__(name)
+        return _(value) if isinstance(value, __) else value
 
     def __str__(self):
         """Return name as the string representation."""

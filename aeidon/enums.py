@@ -22,7 +22,7 @@ import os
 import shutil
 import sys
 
-from aeidon.i18n import _
+from aeidon.i18n import __
 
 __all__ = [
     "align_methods",
@@ -37,10 +37,10 @@ __all__ = [
 
 
 class AlignMethodNumber(aeidon.EnumerationItem):
-    label = _("Subtitle number")
+    label = __("Subtitle number")
 
 class AlignMethodPosition(aeidon.EnumerationItem):
-    label = _("Subtitle position")
+    label = __("Subtitle position")
 
 align_methods = aeidon.Enumeration()
 align_methods.NUMBER = AlignMethodNumber()
@@ -56,35 +56,35 @@ documents.TRAN = DocumentTranslation()
 
 
 class Framerate23976(aeidon.EnumerationItem):
-    label = _("23.976 fps")
+    label = __("23.976 fps")
     value = 24 / 1.001
 
 class Framerate24000(aeidon.EnumerationItem):
-    label = _("24.000 fps")
+    label = __("24.000 fps")
     value = 24.0
 
 class Framerate25000(aeidon.EnumerationItem):
-    label = _("25.000 fps")
+    label = __("25.000 fps")
     value = 25.0
 
 class Framerate29970(aeidon.EnumerationItem):
-    label = _("29.970 fps")
+    label = __("29.970 fps")
     value = 30 / 1.001
 
 class Framerate30000(aeidon.EnumerationItem):
-    label = _("30.000 fps")
+    label = __("30.000 fps")
     value = 30.0
 
 class Framerate50000(aeidon.EnumerationItem):
-    label = _("50.000 fps")
+    label = __("50.000 fps")
     value = 50.0
 
 class Framerate59940(aeidon.EnumerationItem):
-    label = _("59.940 fps")
+    label = __("59.940 fps")
     value = 60 / 1.001
 
 class Framerate60000(aeidon.EnumerationItem):
-    label = _("60.000 fps")
+    label = __("60.000 fps")
     value = 60.0
 
 framerates = aeidon.Enumeration()
@@ -109,7 +109,7 @@ modes.SECONDS = ModeSeconds()
 
 
 class NewlinesMac(aeidon.EnumerationItem):
-    label = _("Mac (classic)")
+    label = __("Mac (classic)")
     value = "\r"
 
 class NewlinesUnix(aeidon.EnumerationItem):

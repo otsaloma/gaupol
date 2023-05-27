@@ -24,6 +24,10 @@ import locale
 _translation = gettext.NullTranslations()
 
 
+# Wrapper class for marking lazy translations
+class __(str): pass
+
+
 def bind(localedir=aeidon.LOCALE_DIR):
     """Bind translation domains and initialize gettext."""
     with aeidon.util.silent(Exception):
