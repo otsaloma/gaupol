@@ -16,7 +16,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import aeidon
-import imp
+try:
+    from importlib import reload  # Python 3.4 and later
+except ImportError:
+    from imp import reload  # Python 3.11 and older
 
 from aeidon.i18n   import _, d_
 from unittest.mock import patch
@@ -46,10 +49,10 @@ class TestModule(aeidon.TestCase):
 
     @patch.dict("os.environ", dict(LANGUAGE="sr@Latn"))
     def test_get_system_modifier__latn(self):
-        imp.reload(aeidon.locales)
+        reload(aeidon.locales)
         assert aeidon.locales.get_system_modifier() == "Latn"
 
     @patch.dict("os.environ", dict(LANGUAGE="en"))
     def test_get_system_modifier__none(self):
-        imp.reload(aeidon.locales)
+        reload(aeidon.locales)
         assert aeidon.locales.get_system_modifier() is None
