@@ -39,7 +39,7 @@ and gettext to build the Flatpak.
 
 #### Source
 
-Gaupol requires Python ≥ 3.2, PyGObject ≥ 3.12 and GTK ≥ 3.12.
+Gaupol requires Python ≥ 3.4, PyGObject ≥ 3.12 and GTK ≥ 3.12.
 Additionally, during installation you need gettext. Optional, but
 strongly recommended dependencies include:
 
