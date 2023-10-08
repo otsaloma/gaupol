@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-21 19:05+0200\n"
+"POT-Creation-Date: 2023-10-08 18:55+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
-"Language-Team: Galician (https://www.transifex.com/otsaloma/teams/64879/gl/)\n"
+"Language-Team: Galician (https://app.transifex.com/otsaloma/teams/64879/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2491,8 +2491,8 @@ msgstr "Espazos arredor de parénteses"
 #: data/patterns/Latn.common-error.in:136
 #: data/patterns/Latn.common-error.in:145
 #: data/patterns/Latn.common-error.in:154
-msgid "Add or remove spaces around parantheses and square brackets"
-msgstr "Engadir ou eliminar espazos arredor de parénteses e corchetes"
+msgid "Add or remove spaces around parentheses and square brackets"
+msgstr ""
 
 #: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
@@ -2589,12 +2589,12 @@ msgid "Remove description of a sound between square brackets"
 msgstr "Retirar a descrición dun son entre corchetes"
 
 #: data/patterns/Latn.hearing-impaired.in:12
-msgid "Sound in parantheses"
-msgstr "Son entre parénteses"
+msgid "Sound in parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:13
-msgid "Remove description of a sound between parantheses"
-msgstr "Retirar a descrición dun son entre parénteses"
+msgid "Remove description of a sound between parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:19
 msgid "Song lyrics between number signs"

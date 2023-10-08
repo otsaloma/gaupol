@@ -5,7 +5,7 @@ tools/extract-translations
 tx push -s
 tx pull -af --minimum-perc=50
 emacs1 po/fi.po
-tx push -tf --no-interactive -l fi
+tx push -tf -l fi
 for PO in po/*.po; do
     LANG=$(basename $PO .po)
     tools/check-translations $LANG

@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Carlos Mella <cmellib@gmail.com>, 2021
+# Carlos Mella <cmellib@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-21 19:05+0200\n"
+"POT-Creation-Date: 2023-10-08 18:55+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Carlos Mella <cmellib@gmail.com>, 2021\n"
-"Language-Team: Spanish (https://www.transifex.com/otsaloma/teams/64879/es/)\n"
+"Last-Translator: Carlos Mella <cmellib@gmail.com>, 2023\n"
+"Language-Team: Spanish (https://app.transifex.com/otsaloma/teams/64879/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -669,7 +669,7 @@ msgstr "{edits:d} subtítulos editados, {removals:d} eliminados"
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "Confirmar {:d} cambio"
-msgstr[1] "Confirmar {:d} cambios"
+msgstr[1] "Confirmar {:d} de cambios"
 msgstr[2] "Confirmar {:d} cambios"
 
 #: gaupol/renderers/multiline.py:86
@@ -692,7 +692,7 @@ msgstr "Ay_uda"
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "{:d} ocurrencia encontrada y reemplazada"
-msgstr[1] "{:d} ocurrencias encontradas y reemplazadas"
+msgstr[1] "{:d} de ocurrencias encontradas y reemplazadas"
 msgstr[2] "{:d} ocurrencias encontradas y reemplazadas"
 
 #: gaupol/dialogs/search.py:488
@@ -767,7 +767,7 @@ msgstr "Dividiendo proyecto"
 #: gaupol/dialogs/split.py:97
 #, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
-msgstr "{amount:d} subtítulos movidos al proyecto nuevo «{name}»"
+msgstr "{amount:d} subtítulos movidos al proyecto «{name}»"
 
 #: gaupol/dialogs/spell_check.py:269
 msgid "Spell-checking"
@@ -909,7 +909,7 @@ msgstr "_Reemplazar"
 msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "{:d} subtítulo ajustado en su duración"
-msgstr[1] "{:d} subtítulos ajustados en su duración"
+msgstr[1] "{:d} de subtítulos ajustados en su duración"
 msgstr[2] "{:d} subtítulos ajustados en su duración"
 
 #: gaupol/dialogs/duration_adjust.py:87
@@ -1072,7 +1072,8 @@ msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] ""
 "{:d} subtítulo insertado para adaptarse a los contenidos del portapapeles"
 msgstr[1] ""
-"{:d} subtítulos insertados para adaptarse a los contenidos del portapapeles"
+"{:d} de subtítulos insertados para adaptarse a los contenidos del "
+"portapapeles"
 msgstr[2] ""
 "{:d} subtítulos insertados para adaptarse a los contenidos del portapapeles"
 
@@ -2527,9 +2528,8 @@ msgstr "Espacios alrededor de paréntesis"
 #: data/patterns/Latn.common-error.in:136
 #: data/patterns/Latn.common-error.in:145
 #: data/patterns/Latn.common-error.in:154
-msgid "Add or remove spaces around parantheses and square brackets"
+msgid "Add or remove spaces around parentheses and square brackets"
 msgstr ""
-"Ajusta los espacios en blanco alrededor de paréntesis y corchetes cuadrados"
 
 #: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
@@ -2629,12 +2629,12 @@ msgid "Remove description of a sound between square brackets"
 msgstr "Elimina la descripción entre corchetes cuadrados de un sonido"
 
 #: data/patterns/Latn.hearing-impaired.in:12
-msgid "Sound in parantheses"
-msgstr "Sonido entre paréntesis"
+msgid "Sound in parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:13
-msgid "Remove description of a sound between parantheses"
-msgstr "Elimina la descripción entre paréntesis de un sonido"
+msgid "Remove description of a sound between parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:19
 msgid "Song lyrics between number signs"
@@ -2717,11 +2717,13 @@ msgstr "Elimina el espacio en blanco entre los dígitos de un número"
 
 #: data/patterns/Zyyy.common-error.in:78
 msgid "Ellipses"
-msgstr ""
+msgstr "Puntos suspensivos"
 
 #: data/patterns/Zyyy.common-error.in:79
 msgid "Replace Unicode ellipses with three separate dots"
 msgstr ""
+"Reemplaza caracteres Unicode de puntos suspensivos por tres caracteres de "
+"punto"
 
 #: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"

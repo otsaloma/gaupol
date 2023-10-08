@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-21 19:05+0200\n"
+"POT-Creation-Date: 2023-10-08 18:55+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2021\n"
-"Language-Team: Portuguese (https://www.transifex.com/otsaloma/teams/64879/pt/)\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2023\n"
+"Language-Team: Portuguese (https://app.transifex.com/otsaloma/teams/64879/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2500,8 +2500,8 @@ msgstr "Espaços ao redor de parênteses"
 #: data/patterns/Latn.common-error.in:136
 #: data/patterns/Latn.common-error.in:145
 #: data/patterns/Latn.common-error.in:154
-msgid "Add or remove spaces around parantheses and square brackets"
-msgstr "Adiciona ou remove espaços ao redor de parênteses e parênteses rectos"
+msgid "Add or remove spaces around parentheses and square brackets"
+msgstr ""
 
 #: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
@@ -2594,12 +2594,12 @@ msgid "Remove description of a sound between square brackets"
 msgstr "Remover descrição de um som entre parênteses rectos"
 
 #: data/patterns/Latn.hearing-impaired.in:12
-msgid "Sound in parantheses"
-msgstr "Som entre parênteses"
+msgid "Sound in parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:13
-msgid "Remove description of a sound between parantheses"
-msgstr "Remover descrição de um som entre parênteses"
+msgid "Remove description of a sound between parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:19
 msgid "Song lyrics between number signs"
@@ -2676,15 +2676,15 @@ msgstr "Espaço entre dígitos"
 #: data/patterns/Zyyy.common-error.in:33 data/patterns/Zyyy.common-error.in:46
 #: data/patterns/Zyyy.common-error.in:56 data/patterns/Zyyy.common-error.in:66
 msgid "Remove space between digits of a number"
-msgstr "Remover espaços entre dígitos de um número"
+msgstr "Remover espaço entre dígitos de um número"
 
 #: data/patterns/Zyyy.common-error.in:78
 msgid "Ellipses"
-msgstr ""
+msgstr "Elipses"
 
 #: data/patterns/Zyyy.common-error.in:79
 msgid "Replace Unicode ellipses with three separate dots"
-msgstr ""
+msgstr "Substituir as elipses Unicode por três pontos separados"
 
 #: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"

@@ -1,8 +1,10 @@
 [main]
 host = https://www.transifex.com
 
-[gaupol.gaupolpot]
-file_filter = po/<lang>.po
-source_file = po/gaupol.pot
-source_lang = en
-type = PO
+[o:otsaloma:p:gaupol:r:gaupolpot]
+file_filter            = po/<lang>.po
+source_file            = po/gaupol.pot
+source_lang            = en
+type                   = PO
+replace_edited_strings = false
+keep_translations      = false

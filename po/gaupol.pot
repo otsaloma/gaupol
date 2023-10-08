@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-21 19:05+0200\n"
+"POT-Creation-Date: 2023-10-08 18:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2449,7 +2449,7 @@ msgstr ""
 #: data/patterns/Latn.common-error.in:136
 #: data/patterns/Latn.common-error.in:145
 #: data/patterns/Latn.common-error.in:154
-msgid "Add or remove spaces around parantheses and square brackets"
+msgid "Add or remove spaces around parentheses and square brackets"
 msgstr ""
 
 #: data/patterns/Latn.common-error.in:162
@@ -2542,11 +2542,11 @@ msgid "Remove description of a sound between square brackets"
 msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:12
-msgid "Sound in parantheses"
+msgid "Sound in parentheses"
 msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:13
-msgid "Remove description of a sound between parantheses"
+msgid "Remove description of a sound between parentheses"
 msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:19

@@ -5,17 +5,17 @@
 # 
 # Translators:
 # Osmo Salomaa <otsaloma@iki.fi>, 2016
-# fri, 2020
+# fri, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-21 19:05+0200\n"
+"POT-Creation-Date: 2023-10-08 18:55+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
-"Last-Translator: fri, 2020\n"
-"Language-Team: Czech (https://www.transifex.com/otsaloma/teams/64879/cs/)\n"
+"Last-Translator: fri, 2023\n"
+"Language-Team: Czech (https://app.transifex.com/otsaloma/teams/64879/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,19 +48,19 @@ msgstr "29.970 fps"
 
 #: aeidon/enums.py:75 data/ui/menubar.ui:248
 msgid "30.000 fps"
-msgstr ""
+msgstr "30.000 fps"
 
 #: aeidon/enums.py:79 data/ui/menubar.ui:253
 msgid "50.000 fps"
-msgstr ""
+msgstr "50.000 fps"
 
 #: aeidon/enums.py:83 data/ui/menubar.ui:258
 msgid "59.940 fps"
-msgstr ""
+msgstr "59.940 fps"
 
 #: aeidon/enums.py:87 data/ui/menubar.ui:263
 msgid "60.000 fps"
-msgstr ""
+msgstr "60.000 fps"
 
 #: aeidon/enums.py:112
 msgid "Mac (classic)"
@@ -678,7 +678,7 @@ msgstr "Kurzíva"
 
 #: gaupol/player.py:372
 msgid "No video streams found"
-msgstr ""
+msgstr "Nebyly nalezeny žádné datové proudy videa"
 
 #: gaupol/player.py:379
 msgid "Failed to initialize playback"
@@ -961,7 +961,7 @@ msgstr "Další…"
 #: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
 #: gaupol/agents/menu.py:110
 msgid "File not found"
-msgstr ""
+msgstr "Soubor nebyl nalezen"
 
 #: gaupol/agents/open.py:85
 #, python-brace-format
@@ -1161,7 +1161,7 @@ msgstr "_Nahrát"
 
 #: gaupol/agents/video.py:361
 msgid "Track {:d}"
-msgstr ""
+msgstr "Stopa {:d}"
 
 #: gaupol/agents/preview.py:105
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
@@ -1573,11 +1573,11 @@ msgstr "Rozšířit po _konec"
 
 #: data/ui/menubar.ui:165
 msgid "_Previous From Video Position"
-msgstr ""
+msgstr "_Předchozí z polohy obrazového záznamu"
 
 #: data/ui/menubar.ui:169
 msgid "_Next From Video Position"
-msgstr ""
+msgstr "_Další z polohy obrazového záznamu"
 
 #: data/ui/menubar.ui:177
 msgid "_Preferences"
@@ -2221,7 +2221,7 @@ msgstr "Posunout _nynější projekt"
 
 #: data/ui/position-shift-dialog.ui:251
 msgid "Shift all _open projects"
-msgstr ""
+msgstr "Posunout všechny _otevřené projekty"
 
 #: data/ui/position-transform-dialog.ui:22
 msgid "Transform Positions"
@@ -2500,8 +2500,8 @@ msgstr "Mezery kolem závorek"
 #: data/patterns/Latn.common-error.in:136
 #: data/patterns/Latn.common-error.in:145
 #: data/patterns/Latn.common-error.in:154
-msgid "Add or remove spaces around parantheses and square brackets"
-msgstr "Přidat nebo odstranit mezery kolem kulatých nebo hranatých závorek"
+msgid "Add or remove spaces around parentheses and square brackets"
+msgstr ""
 
 #: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
@@ -2593,12 +2593,12 @@ msgid "Remove description of a sound between square brackets"
 msgstr "Odstranit popis zvuku v hranatých závorkách"
 
 #: data/patterns/Latn.hearing-impaired.in:12
-msgid "Sound in parantheses"
-msgstr "Zvuk v kulatých závorkách"
+msgid "Sound in parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:13
-msgid "Remove description of a sound between parantheses"
-msgstr "Odstranit popis zvuku v kulatých závorkách"
+msgid "Remove description of a sound between parentheses"
+msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in:19
 msgid "Song lyrics between number signs"
@@ -2679,11 +2679,11 @@ msgstr "Odstranit mezery mezi číslicemi v čísle"
 
 #: data/patterns/Zyyy.common-error.in:78
 msgid "Ellipses"
-msgstr ""
+msgstr "Výpustky"
 
 #: data/patterns/Zyyy.common-error.in:79
 msgid "Replace Unicode ellipses with three separate dots"
-msgstr ""
+msgstr "Nahradit výpustku Unicode třemi samostatnými tečkami"
 
 #: data/patterns/Zyyy.common-error.in:90
 msgid "Musical notes"
