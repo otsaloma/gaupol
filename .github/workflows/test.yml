@@ -5,10 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Python version
-        run: python -c "import sys; print(sys.version)"
-      - name: Install dependencies
-        run: >
+      - run: python -c "import sys; print(sys.version)"
+      - run: >
           sudo apt-get update && sudo apt-get install -y
           flake8
           gettext
@@ -29,15 +27,10 @@ jobs:
           python3-gi-cairo
           python3-pytest
           xvfb
-      - name: Run linter
-        run: flake8 .
-      - name: Run unit tests
-        run: |
-          py.test-3 aeidon
-          xvfb-run py.test-3 gaupol
-          xvfb-run py.test-3 data/extensions
-      - name: Install
-        run: |
-          python3 setup.py install --prefix=/tmp/local
-          python3 setup.py install --root=/tmp/pkg
-          python3 setup.py clean
+      - run: flake8 .
+      - run: py.test-3 aeidon
+      - run: xvfb-run py.test-3 gaupol
+      - run: xvfb-run py.test-3 data/extensions
+      - run: python3 setup.py install --prefix=/tmp/local
+      - run: python3 setup.py install --root=/tmp/pkg
+      - run: python3 setup.py clean
