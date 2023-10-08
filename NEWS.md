@@ -1,5 +1,5 @@
-PENDING: Gaupol 1.13
-====================
+2023-10-08: Gaupol 1.13
+=======================
 
 * Fix translations missing for enums (#210)
 * Fix Python 3.12 compatibility and drop support for Python < 3.4 (#211)
