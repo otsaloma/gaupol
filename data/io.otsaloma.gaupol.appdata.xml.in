@@ -36,7 +36,9 @@
     <mediatype>text/x-subviewer</mediatype>
   </provides>
   <project_license>GPL-3.0+</project_license>
-  <developer_name>Osmo Salomaa</developer_name>
+  <developer>
+    <name>Osmo Salomaa</name>
+  </developer>
   <screenshots>
     <screenshot type="default">
       <image>https://otsaloma.io/gaupol/screenshot-appdata.png</image>
