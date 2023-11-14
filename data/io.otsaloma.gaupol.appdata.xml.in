@@ -36,7 +36,7 @@
     <mediatype>text/x-subviewer</mediatype>
   </provides>
   <project_license>GPL-3.0+</project_license>
-  <developer>
+  <developer id="otsaloma.io">
     <name>Osmo Salomaa</name>
   </developer>
   <screenshots>
