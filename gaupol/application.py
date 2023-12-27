@@ -276,7 +276,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.main_toolbar.insert(button, -1)
         # win.toggle-player
         button = Gtk.ToggleToolButton(
-            label=_("Video"), icon_name="video-x-generic")
+            label=_("Video"), icon_name="camera-video")
         button.set_action_name("win.toggle-player")
         button.set_tooltip_text(_("Show or hide the video player"))
         self.main_toolbar.insert(button, -1)
