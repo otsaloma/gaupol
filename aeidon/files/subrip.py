@@ -87,7 +87,6 @@ class SubRip(aeidon.SubtitleFile):
         Raise :exc:`UnicodeError` if encoding fails.
         """
         for i, subtitle in enumerate(subtitles):
-            if i > 0: f.write("\n")
             f.write("{:d}\n".format(i + 1))
             start = subtitle.start_time.replace(".", ",")
             end = subtitle.end_time.replace(".", ",")
@@ -103,3 +102,4 @@ class SubRip(aeidon.SubtitleFile):
                     f.write("  X1:{:03d} X2:{:03d}".format(x1, x2))
                     f.write( " Y1:{:03d} Y2:{:03d}".format(y1, y2))
             f.write("\n{}\n".format(subtitle.get_text(doc)))
+            f.write("\n")
