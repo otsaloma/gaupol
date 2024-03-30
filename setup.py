@@ -30,14 +30,24 @@ the aeidon.paths module, (3) handling translations and (4) extensions.
     extensions are not compiled either.
 """
 
-import distutils
 import glob
+import logging
 import os
 import re
 import shutil
 import sys
 
-from distutils import log
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
+
+try:
+    import distutils
+except ImportError:
+    # Use distutils from setuptools, needed since Python 3.12.
+    # https://docs.python.org/3/whatsnew/3.12.html#distutils
+    import setuptools._distutils as distutils
+
 from distutils.command.clean import clean
 from distutils.command.install import install
 from distutils.command.install_data import install_data

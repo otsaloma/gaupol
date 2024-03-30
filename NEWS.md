@@ -3,6 +3,7 @@ PENDING: Gaupol 1.14
 
 * Change the icon for the toggle video player toolbar item to an action
   icon (not mimetype) that has a symbolic version available
+* Fix installation on Python >= 3.12 by using distutils from setuptools
 
 2023-10-08: Gaupol 1.13
 =======================
