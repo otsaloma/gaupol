@@ -89,7 +89,7 @@ def run_or_exit(cmd):
 
 def run_or_warn(cmd):
     if os.system(cmd) == 0: return
-    log.warn("command {!r} failed".format(cmd))
+    log.warning("command {!r} failed".format(cmd))
 
 
 class Clean(clean):
