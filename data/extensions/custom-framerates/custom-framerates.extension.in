@@ -1,11 +1,11 @@
 # -*- conf -*-
 
 [Extension]
-GaupolVersion=1.13
+GaupolVersion=1.14
 Module=custom-framerates
 Name=Custom Framerates
 Description=Allow use of non-standard framerates
-Version=1.13
+Version=1.14
 Authors=Osmo Salomaa <otsaloma@iki.fi>;
 Copyright=Copyright © 2011 Osmo Salomaa;
 Website=https://otsaloma.io/gaupol/

@@ -1,5 +1,5 @@
-PENDING: Gaupol 1.14
-====================
+2024-03-31: Gaupol 1.14
+=======================
 
 * Change the icon for the toggle video player toolbar item to an action
   icon (not mimetype) that has a symbolic version available
