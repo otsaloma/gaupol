@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-08 18:55+0300\n"
+"POT-Creation-Date: 2024-03-31 22:54+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/otsaloma/teams/64879/pt_BR/)\n"
@@ -2502,7 +2502,7 @@ msgstr "Espaços ao redor de parênteses"
 #: data/patterns/Latn.common-error.in:145
 #: data/patterns/Latn.common-error.in:154
 msgid "Add or remove spaces around parentheses and square brackets"
-msgstr ""
+msgstr "Adiciona ou remove espaços em volta de parênteses e colchetes"
 
 #: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
@@ -2596,11 +2596,11 @@ msgstr "Remover descrição de um som entre colchetes"
 
 #: data/patterns/Latn.hearing-impaired.in:12
 msgid "Sound in parentheses"
-msgstr ""
+msgstr "Som entre parênteses"
 
 #: data/patterns/Latn.hearing-impaired.in:13
 msgid "Remove description of a sound between parentheses"
-msgstr ""
+msgstr "Remove descrição de um som entre parênteses"
 
 #: data/patterns/Latn.hearing-impaired.in:19
 msgid "Song lyrics between number signs"
@@ -2709,7 +2709,7 @@ msgstr ""
 "vários formatos de arquivo de legenda e fornece meios de criar legendas, "
 "editar textos e legendas de tempo para corresponder ao vídeo."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:42
+#: data/io.otsaloma.gaupol.appdata.xml.in:45
 msgid "Main window"
 msgstr "Janela principal"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-08 18:55+0300\n"
+"POT-Creation-Date: 2024-03-31 22:54+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Hungarian (https://app.transifex.com/otsaloma/teams/64879/hu/)\n"
@@ -2673,7 +2673,7 @@ msgid ""
 "texts and timing subtitles to match video."
 msgstr ""
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:42
+#: data/io.otsaloma.gaupol.appdata.xml.in:45
 msgid "Main window"
 msgstr ""
 

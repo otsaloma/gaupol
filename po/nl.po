@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-08 18:55+0300\n"
+"POT-Creation-Date: 2024-03-31 22:54+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>, 2023\n"
 "Language-Team: Dutch (https://app.transifex.com/otsaloma/teams/64879/nl/)\n"
@@ -2498,7 +2498,7 @@ msgstr "Spaties rondom haakjes"
 #: data/patterns/Latn.common-error.in:145
 #: data/patterns/Latn.common-error.in:154
 msgid "Add or remove spaces around parentheses and square brackets"
-msgstr ""
+msgstr "Voeg een spatie toe (of verwijder deze) rondom alle soorten haakjes"
 
 #: data/patterns/Latn.common-error.in:162
 msgid "Space after a dialogue dash"
@@ -2592,11 +2592,11 @@ msgstr "Verwijder de geluidsomschrijving tussen rechte haakjes"
 
 #: data/patterns/Latn.hearing-impaired.in:12
 msgid "Sound in parentheses"
-msgstr ""
+msgstr "Geluid tussen haakjes"
 
 #: data/patterns/Latn.hearing-impaired.in:13
 msgid "Remove description of a sound between parentheses"
-msgstr ""
+msgstr "Verwijder de geluidsomschrijving tussen haakjes"
 
 #: data/patterns/Latn.hearing-impaired.in:19
 msgid "Song lyrics between number signs"
@@ -2704,7 +2704,7 @@ msgstr ""
 "om nieuwe ondertitels te maken, teksten aan te passen en ondertitels te "
 "timen met video's."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:42
+#: data/io.otsaloma.gaupol.appdata.xml.in:45
 msgid "Main window"
 msgstr "Hoofdvenster"
 

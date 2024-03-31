@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-08 18:55+0300\n"
-"PO-Revision-Date: 2023-10-08 18:56+0300\n"
+"POT-Creation-Date: 2024-03-31 22:54+0300\n"
+"PO-Revision-Date: 2024-03-31 22:55+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2023\n"
 "Language-Team: Finnish (https://app.transifex.com/otsaloma/teams/64879/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -2694,7 +2694,7 @@ msgstr ""
 "eri tekstitystiedostomuotoja ja tarjoaa toimintoja tekstitysten luomiseen, "
 "tekstien muokkaamiseen ja tekstitysten ajoittamiseen videoon sovittaen."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:42
+#: data/io.otsaloma.gaupol.appdata.xml.in:45
 msgid "Main window"
 msgstr "Pääikkuna"
 
