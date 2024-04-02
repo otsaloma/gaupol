@@ -39,6 +39,7 @@ release:
 	@echo "ADD RELEASE NOTES"
 	$(EDITOR) NEWS.md
 	$(EDITOR) data/io.otsaloma.gaupol.appdata.xml.in
+	appstream-util validate-relax --nonet data/io.otsaloma.gaupol.appdata.xml.in
 	sudo ./setup.py install --prefix=/usr/local clean
 	/usr/local/bin/gaupol
 	tools/release
