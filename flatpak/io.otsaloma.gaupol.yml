@@ -17,22 +17,18 @@ modules:
   # Internal video player codecs
 
   - name: gst-libav
-    buildsystem: autotools
-    config-opts:
-      # Prefer upstream configuration over what happens to be in the runtime.
-      # https://github.com/flathub/org.gnome.Totem/commit/0c8ed1e25bfad9745ff002b8b3efae3cdd3aebde
-      - --with-system-libav=no
+    buildsystem: meson
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.16.1.tar.xz
-        sha256: e8a5748ae9a4a7be9696512182ea9ffa6efe0be9b7976916548e9d4381ca61c4
+        url: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.22.11.tar.xz
+        sha256: 6b13dcc9332ef27a7c1e7005c0196883874f91622f8aa6e52f218b05b15d2bf5
 
   - name: gst-plugins-ugly
     buildsystem: meson
     sources:
       - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.16.1.tar.xz
-        sha256: 4bf913b2ca5195ac3b53b5e3ade2dc7c45d2258507552ddc850c5fa425968a1d
+        url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.22.11.tar.xz
+        sha256: 7758b7decfd20c00cae5700822bcbbf03f98c723e33e17634db2e07ca1da60bf
 
   # Spell-check
 
@@ -62,8 +58,8 @@ modules:
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-4.1.tar.xz
-        sha256: a38ec4d026efb58506a99ad5cd23d5a9793b4bf415f2c4c2e9c1bb444acd1994
+        url: https://ffmpeg.org/releases/ffmpeg-6.1.1.tar.xz
+        sha256: 8684f4b00f94b85461884c3719382f1261f0d9eb3d59640a1f4ac0873616f968
 
   - name: fribidi
     buildsystem: autotools
