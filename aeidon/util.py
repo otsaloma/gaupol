@@ -113,11 +113,11 @@ def atomic_open(path, mode="w", *args, **kwargs):
 
 @aeidon.deco.once
 def chardet_available():
-    """Return ``True`` if :mod:`chardet` module is available."""
+    """Return ``True`` if :mod:`charset_normalizer` module is available."""
     try:
-        import chardet # noqa
+        import charset_normalizer # noqa
         return True
-    except Exception:
+    except ImportError:
         return False
 
 def compare_versions(x, y):
@@ -207,11 +207,11 @@ def flatten(lst):
     return flat_lst
 
 def get_chardet_version():
-    """Return :mod:`chardet` version number as string or ``None``."""
+    """Return :mod:`charset_normalizer` version number as string or ``None``."""
     try:
-        import chardet
-        return chardet.__version__
-    except Exception:
+        import charset_normalizer
+        return "charset_normalizer {}".format(charset_normalizer.__version__)
+    except ImportError:
         return None
 
 @aeidon.deco.once
