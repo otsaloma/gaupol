@@ -177,23 +177,12 @@ def detect(path):
     bom_encoding = detect_bom(path)
     if bom_encoding is not None:
         return bom_encoding
-    from chardet import universaldetector
-    detector = universaldetector.UniversalDetector()
-    with open(path, "rb") as f:
-        detector.reset()
-        for line in f:
-            detector.feed(line)
-            if detector.done: break
-    detector.close()
-    code = detector.result["encoding"]
-    if code is None: return None
-    try:
-        # chardet returns what seem to be IANA names. They need to be
-        # translated to their Python equivalents. Some of the encodings
-        # returned by chardet are not supported by Python.
-        return translate_code(code)
-    except ValueError:
+    from charset_normalizer import from_path
+    detector = from_path(path)
+    result = detector.best()
+    if result is None:
         return None
+    return result.encoding
 
 def detect_bom(path):
     """Return corresponding encoding if BOM found, else ``None``."""

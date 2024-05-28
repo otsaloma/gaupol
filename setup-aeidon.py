@@ -24,8 +24,8 @@ setup(
     license="GPL",
     packages=find_packages(exclude=["gaupol*", "*.test"]),
     package_data={"aeidon": ["data/*/*"]},
-    python_requires=">=3.2.0",
-    install_requires=["chardet>=2.2.1"],
+    python_requires=">=3.5.0",
+    install_requires=["charset-normalizer>2.0"],
 )
 
 shutil.rmtree("aeidon/data")
