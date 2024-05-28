@@ -1,3 +1,10 @@
+PENDING: Gaupol 1.15
+====================
+
+* Drop dependency on chardet
+* Add dependency on charset-normalizer
+* Raise Python dependency to >= 3.5
+
 2024-04-02: Gaupol 1.14.1
 =========================
 
