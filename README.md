@@ -39,7 +39,7 @@ and gettext to build the Flatpak.
 
 #### Source
 
-Gaupol requires Python ≥ 3.4, PyGObject ≥ 3.12 and GTK ≥ 3.12.
+Gaupol requires Python ≥ 3.5, PyGObject ≥ 3.12 and GTK ≥ 3.12.
 Additionally, during installation you need gettext. Optional, but
 strongly recommended dependencies include:
 
@@ -48,7 +48,7 @@ strongly recommended dependencies include:
 | [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.6 | integrated video player |
 | [gspell](https://wiki.gnome.org/Projects/gspell) | ≥ 1.0.0 | spell-check |
 | [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
-| [chardet](https://github.com/chardet/chardet) | ≥ 2.2.1 | character encoding auto-detection |
+| [charset-normalizer](https://github.com/jawah/charset_normalizer) | | character encoding auto-detection |
 
 From GStreamer you need at least the core, gst-plugins-base,
 gst-plugins-good and gst-plugins-bad; and for good container and codec
@@ -69,7 +69,7 @@ command.
                      gstreamer1.0-plugins-ugly \
                      iso-codes \
                      python3 \
-                     python3-chardet \
+                     python3-charset-normalizer \
                      python3-dev \
                      python3-gi \
                      python3-gi-cairo

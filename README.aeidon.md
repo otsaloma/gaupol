@@ -33,10 +33,10 @@ Note that the `--with-*` and `--without-*` are global options and must
 be placed before any commands.
 
 Of the dependencies listed in the [`README.md`](README.md) file,
-iso-codes and chardet are to be associated with aeidon. If aeidon is
-installed using the `--without-iso-codes` switch, then iso-codes is
-required instead of optional. gaupol should depend on the remaining
-dependencies as well as aeidon of the same version.
+iso-codes and charset-normalizer are to be associated with aeidon. If
+aeidon is installed using the `--without-iso-codes` switch, then
+iso-codes is required instead of optional. gaupol should depend on the
+remaining dependencies as well as aeidon of the same version.
 
 ## History
 

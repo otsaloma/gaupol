@@ -41,16 +41,14 @@ modules:
 
   # Character encoding auto-detection
 
-  - name: chardet
+  - name: charset-normalizer
     buildsystem: simple
     build-commands:
-      - python3 setup.py install --prefix=/app
-    ensure-writable:
-      - /lib/python3.*/site-packages/easy-install.pth
+      - pip3 install --break-system-packages --verbose .
     sources:
       - type: archive
-        url: https://files.pythonhosted.org/packages/fc/bb/a5768c230f9ddb03acc9ef3f0d4a3cf93462473795d18e9535498c8f929d/chardet-3.0.4.tar.gz
-        sha256: 84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae
+        url: https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz
+        sha256: f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5
 
   # External video player: mpv
 
