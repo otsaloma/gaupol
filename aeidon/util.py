@@ -210,7 +210,7 @@ def get_chardet_version():
     """Return :mod:`charset_normalizer` version number as string or ``None``."""
     try:
         import charset_normalizer
-        return "charset_normalizer {}".format(charset_normalizer.__version__)
+        return charset_normalizer.__version__
     except ImportError:
         return None
 

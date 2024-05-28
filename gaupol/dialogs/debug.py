@@ -107,7 +107,7 @@ class DebugDialog(Gtk.MessageDialog):
         pygobject_version = dotjoin(GObject.pygobject_version)
         python_version = dotjoin(sys.version_info[:3])
         self._insert_text("aeidon: {}\n".format(aeidon.__version__))
-        self._insert_text("chardet: {}\n".format(chardet_version))
+        self._insert_text("charset-normalizer: {}\n".format(chardet_version))
         self._insert_text("gaupol: {}\n".format(gaupol.__version__))
         self._insert_text("gspell: {}\n".format(gspell_version))
         self._insert_text("gstreamer: {}\n".format(gst_version))
