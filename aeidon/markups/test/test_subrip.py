@@ -38,6 +38,14 @@ class TestSubRip(aeidon.TestCase):
             "All <i>things</i> weird are normal\n"
             "in <i>this</i> whore of cities.")
 
+    def test_clean__font(self):
+        # Don't merge font tags with different values.
+        # https://github.com/otsaloma/gaupol/issues/224
+        text = ('<font color="#00ff00">Yes, exactly.</font>'
+                '<font color="#00ffff">Oh, wow!</font>'
+                '<font color="#ffff00">Nice.</font>')
+        assert self.markup.clean(text) == text
+
     def test_clean__opening(self):
         text = ("All <i>things </i>weird are normal\n"
                 "in <i>this </i> whore of cities.")

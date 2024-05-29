@@ -50,7 +50,9 @@ class SubRip(aeidon.Markup):
         # Remove tags that are immediately closed after opening.
         text = self._substitute(text, r"<([a-z]+)[^<]*?>( *)</\1>", r"\2")
         # Remove tags that are immediately opened after closing.
-        text = self._substitute(text, r"</([a-z]+)>( *)<\1[^<]*?>", r"\2")
+        # Don't apply to tags that have values, such as 'font',
+        # because then we'd need to check the value is the same too.
+        text = self._substitute(text, r"</([a-z]+)>( *)<\1>", r"\2")
         # Remove or relocate space right after an opening tag.
         text = self._substitute(text, r" ?(<(?!/)[^>]+?>) ", r" \1")
         # Remove or relocate space right before a closing tag.

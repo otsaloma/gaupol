@@ -1,6 +1,7 @@
 PENDING: Gaupol 1.15
 ====================
 
+* Don't merge font tags with different values (#224)
 * Drop dependency on chardet
 * Add dependency on charset-normalizer
 * Raise Python dependency to >= 3.5
