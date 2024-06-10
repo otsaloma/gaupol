@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-31 22:54+0300\n"
+"POT-Creation-Date: 2024-06-10 21:51+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Serbian (https://app.transifex.com/otsaloma/teams/64879/sr/)\n"
@@ -210,7 +210,7 @@ msgstr "Уникод"
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
-#: aeidon/encodings.py:232
+#: aeidon/encodings.py:221
 msgid "Current locale ({})"
 msgstr "Текући језик ({})"
 
@@ -2685,7 +2685,7 @@ msgid ""
 "texts and timing subtitles to match video."
 msgstr ""
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:45
+#: data/io.otsaloma.gaupol.appdata.xml.in:47
 msgid "Main window"
 msgstr ""
 

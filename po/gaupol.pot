@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-31 22:54+0300\n"
+"POT-Creation-Date: 2024-06-10 21:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -206,7 +206,7 @@ msgstr ""
 msgid "{description} ({name})"
 msgstr ""
 
-#: aeidon/encodings.py:232
+#: aeidon/encodings.py:221
 msgid "Current locale ({})"
 msgstr ""
 
@@ -2650,7 +2650,7 @@ msgid ""
 "texts and timing subtitles to match video."
 msgstr ""
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:45
+#: data/io.otsaloma.gaupol.appdata.xml.in:47
 msgid "Main window"
 msgstr ""
 

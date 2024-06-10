@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-31 22:54+0300\n"
+"POT-Creation-Date: 2024-06-10 21:51+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: b83946de5835331df42b9ffcc43e6a33_05e65cd <73a30e0a984b2291d4915f37112ad292_814039>, 2022\n"
 "Language-Team: Turkish (https://app.transifex.com/otsaloma/teams/64879/tr/)\n"
@@ -214,7 +214,7 @@ msgstr "Unicode"
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
-#: aeidon/encodings.py:232
+#: aeidon/encodings.py:221
 msgid "Current locale ({})"
 msgstr "Şimdiki lokal: \"{}\""
 
@@ -2696,7 +2696,7 @@ msgstr ""
 "altyazı dosya biçimini destekler ve video eşleştirmek için altyazı "
 "oluşturma, metinleri düzenleme ve altyazıları zamanlama araçları sağlar."
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:45
+#: data/io.otsaloma.gaupol.appdata.xml.in:47
 msgid "Main window"
 msgstr "Ana pencere"
 
