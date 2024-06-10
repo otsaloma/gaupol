@@ -1,7 +1,7 @@
 # -*- conf -*-
 
 [Extension]
-GaupolVersion=1.14.1
+GaupolVersion=1.15
 Module=custom-framerates
 Name=Custom Framerates
 Description=Allow use of non-standard framerates

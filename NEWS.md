@@ -1,5 +1,5 @@
-PENDING: Gaupol 1.15
-====================
+2024-06-10: Gaupol 1.15
+=======================
 
 * Don't merge font tags with different values (#224)
 * Drop dependency on chardet
