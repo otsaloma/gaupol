@@ -127,26 +127,26 @@ class TestModule(aeidon.TestCase):
         text = "test\ntest\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text)
-        f = open(path, "r", encoding="ascii")
-        assert f.read() == text
+        with open(path, "r", encoding="ascii") as f:
+            assert f.read() == text
 
     def test_write__fallback(self):
         text = "\xc3\xb6\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text, "ascii")
-        f = open(path, "r", encoding="utf_8")
-        assert f.read() == text
+        with open(path, "r", encoding="utf_8") as f:
+            assert f.read() == text
 
     def test_writelines__basic(self):
         lines = ("test", "test")
         path = self.new_subrip_file()
         aeidon.util.writelines(path, lines)
-        f = open(path, "r", encoding="ascii")
-        assert f.read() == "test\ntest\n"
+        with open(path, "r", encoding="ascii") as f:
+            assert f.read() == "test\ntest\n"
 
     def test_writelines__fallback(self):
         text = "\xc3\xb6"
         path = self.new_subrip_file()
         aeidon.util.writelines(path, (text,), "ascii")
-        f = open(path, "r", encoding="utf_8")
-        assert f.read() == text + "\n"
+        with open(path, "r", encoding="utf_8") as f:
+            assert f.read() == text + "\n"

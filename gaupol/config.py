@@ -474,28 +474,27 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         encoding = aeidon.util.get_default_encoding()
         # Ignore possible encoding errors, which are only related to
         # saved file and directory names and not in any way critical.
-        f = open(self.path, "w", encoding=encoding, errors="replace")
-        root = self._flatten(self._root)
-        defaults = self._flatten(self._defaults)
-        for section in sorted(root):
-            f.write("\n[{}]\n".format(section))
-            for option in sorted(root[section]):
-                value = root[section][option]
-                json_value = json.dumps(
-                    value, cls=EnumEncoder, ensure_ascii=False)
-                # Discard removed options, but always keep
-                # all options of all extensions.
-                if (not section.startswith("extensions::")
-                    and (not section in defaults or
-                         not option in defaults[section])): continue
-                # Write options that remain at their default value
-                # (perhaps, but not necessarily unset) as commented out.
-                if (section in defaults
-                    and option in defaults[section]
-                    and value == defaults[section][option]):
-                    f.write("# ")
-                f.write("{} = {}\n".format(option, json_value))
-        f.close()
+        with open(self.path, "w", encoding=encoding, errors="replace") as f:
+            root = self._flatten(self._root)
+            defaults = self._flatten(self._defaults)
+            for section in sorted(root):
+                f.write("\n[{}]\n".format(section))
+                for option in sorted(root[section]):
+                    value = root[section][option]
+                    json_value = json.dumps(
+                        value, cls=EnumEncoder, ensure_ascii=False)
+                    # Discard removed options, but always keep
+                    # all options of all extensions.
+                    if (not section.startswith("extensions::")
+                        and (not section in defaults or
+                             not option in defaults[section])): continue
+                    # Write options that remain at their default value
+                    # (perhaps, but not necessarily unset) as commented out.
+                    if (section in defaults
+                        and option in defaults[section]
+                        and value == defaults[section][option]):
+                        f.write("# ")
+                    f.write("{} = {}\n".format(option, json_value))
 
     def write_to_file(self):
         """Write values of configuration options to file."""

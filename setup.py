@@ -98,17 +98,16 @@ class Clean(clean):
 
     def run(self):
         clean.run(self)
-        f = open(os.path.join("manifests", "clean.manifest"), "r")
-        for targets in [glob.glob(x.strip()) for x in f]:
-            for target in filter(os.path.isdir, targets):
-                log.info("removing {}".format(target))
-                if not self.dry_run:
-                    shutil.rmtree(target)
-            for target in filter(os.path.isfile, targets):
-                log.info("removing {}".format(target))
-                if not self.dry_run:
-                    os.remove(target)
-        f.close()
+        with open(os.path.join("manifests", "clean.manifest"), "r") as f:
+            for targets in [glob.glob(x.strip()) for x in f]:
+                for target in filter(os.path.isdir, targets):
+                    log.info("removing {}".format(target))
+                    if not self.dry_run:
+                        shutil.rmtree(target)
+                for target in filter(os.path.isfile, targets):
+                    log.info("removing {}".format(target))
+                    if not self.dry_run:
+                        os.remove(target)
 
 
 class Distribution(distribution):
@@ -128,17 +127,16 @@ class Distribution(distribution):
     def __find_data_files(self, name):
         fok = lambda x: not x.endswith((".in", ".pyc"))
         basename = "{}.manifest".format(name)
-        f = open(os.path.join("manifests", basename), "r")
-        for line in [x.strip() for x in f]:
-            if not line: continue
-            if line.startswith("["):
-                dest = line[1:-1]
-                continue
-            files = list(filter(fok, glob.glob(line)))
-            files = list(filter(os.path.isfile, files))
-            assert files
-            self.data_files.append((dest, files))
-        f.close()
+        with open(os.path.join("manifests", basename), "r") as f:
+            for line in [x.strip() for x in f]:
+                if not line: continue
+                if line.startswith("["):
+                    dest = line[1:-1]
+                    continue
+                files = list(filter(fok, glob.glob(line)))
+                files = list(filter(os.path.isfile, files))
+                assert files
+                self.data_files.append((dest, files))
 
     def __find_man_pages(self):
         mandir = self.mandir
