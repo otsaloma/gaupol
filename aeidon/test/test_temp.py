@@ -31,8 +31,10 @@ class TestModule(aeidon.TestCase):
 
     def test_remove__directory(self):
         path = aeidon.temp.create_directory()
-        open(os.path.join(path, "a"), "w").write("a")
-        open(os.path.join(path, "b"), "w").write("b")
+        with open(os.path.join(path, "a"), "w") as f:
+            f.write("a")
+        with open(os.path.join(path, "b"), "w") as f:
+            f.write("b")
         os.makedirs(os.path.join(path, "c"))
         aeidon.temp.remove(path)
         assert not os.path.isdir(path)

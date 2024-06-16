@@ -74,12 +74,14 @@ distribution.negative_opt.update({
 
 def get_aeidon_version():
     path = os.path.join("aeidon", "__init__.py")
-    text = open(path, "r", encoding="utf_8").read()
+    with open(path, "r", encoding="utf_8") as f:
+        text = f.read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def get_gaupol_version():
     path = os.path.join("gaupol", "__init__.py")
-    text = open(path, "r", encoding="utf_8").read()
+    with open(path, "r", encoding="utf_8") as f:
+        text = f.read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def run_or_exit(cmd):
@@ -96,17 +98,16 @@ class Clean(clean):
 
     def run(self):
         clean.run(self)
-        f = open(os.path.join("manifests", "clean.manifest"), "r")
-        for targets in [glob.glob(x.strip()) for x in f]:
-            for target in filter(os.path.isdir, targets):
-                log.info("removing {}".format(target))
-                if not self.dry_run:
-                    shutil.rmtree(target)
-            for target in filter(os.path.isfile, targets):
-                log.info("removing {}".format(target))
-                if not self.dry_run:
-                    os.remove(target)
-        f.close()
+        with open(os.path.join("manifests", "clean.manifest"), "r") as f:
+            for targets in [glob.glob(x.strip()) for x in f]:
+                for target in filter(os.path.isdir, targets):
+                    log.info("removing {}".format(target))
+                    if not self.dry_run:
+                        shutil.rmtree(target)
+                for target in filter(os.path.isfile, targets):
+                    log.info("removing {}".format(target))
+                    if not self.dry_run:
+                        os.remove(target)
 
 
 class Distribution(distribution):
@@ -126,17 +127,16 @@ class Distribution(distribution):
     def __find_data_files(self, name):
         fok = lambda x: not x.endswith((".in", ".pyc"))
         basename = "{}.manifest".format(name)
-        f = open(os.path.join("manifests", basename), "r")
-        for line in [x.strip() for x in f]:
-            if not line: continue
-            if line.startswith("["):
-                dest = line[1:-1]
-                continue
-            files = list(filter(fok, glob.glob(line)))
-            files = list(filter(os.path.isfile, files))
-            assert files
-            self.data_files.append((dest, files))
-        f.close()
+        with open(os.path.join("manifests", basename), "r") as f:
+            for line in [x.strip() for x in f]:
+                if not line: continue
+                if line.startswith("["):
+                    dest = line[1:-1]
+                    continue
+                files = list(filter(fok, glob.glob(line)))
+                files = list(filter(os.path.isfile, files))
+                assert files
+                self.data_files.append((dest, files))
 
     def __find_man_pages(self):
         mandir = self.mandir
@@ -343,7 +343,8 @@ class InstallLib(install_lib):
         locale_dir = os.path.join(prefix, "share", "locale")
         # Write changes to the aeidon.paths module.
         path = os.path.join(self.build_dir, "aeidon", "paths.py")
-        text = open(path, "r", encoding="utf_8").read()
+        with open(path, "r", encoding="utf_8") as f:
+            text = f.read()
         patt = r"^DATA_DIR = .*$"
         repl = "DATA_DIR = {!r}".format(data_dir)
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
@@ -352,7 +353,8 @@ class InstallLib(install_lib):
         repl = "LOCALE_DIR = {!r}".format(locale_dir)
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
         assert text.count(repl) == 1
-        open(path, "w", encoding="utf_8").write(text)
+        with open(path, "w", encoding="utf_8") as f:
+            f.write(text)
         return install_lib.install(self)
 
 

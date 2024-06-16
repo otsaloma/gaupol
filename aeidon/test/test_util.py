@@ -24,14 +24,16 @@ class TestModule(aeidon.TestCase):
         path = self.new_subrip_file()
         with aeidon.util.atomic_open(path, "w") as f:
             f.write("test\n")
-        text = open(path, "r").read()
+        with open(path, "r") as f:
+            text = f.read()
         assert text == "test\n"
 
     def test_atomic_open__no_existing_file(self):
         path = aeidon.temp.create()
         with aeidon.util.atomic_open(path, "w") as f:
             f.write("test\n")
-        text = open(path, "r").read()
+        with open(path, "r") as f:
+            text = f.read()
         assert text == "test\n"
 
     def test_compare_versions(self):
@@ -48,19 +50,22 @@ class TestModule(aeidon.TestCase):
 
     def test_detect_newlines__mac(self):
         path = aeidon.temp.create()
-        open(path, "w", newline="").write("a\rb\rc\r")
+        with open(path, "w", newline="") as f:
+            f.write("a\rb\rc\r")
         newlines = aeidon.util.detect_newlines(path)
         assert newlines == aeidon.newlines.MAC
 
     def test_detect_newlines__unix(self):
         path = aeidon.temp.create()
-        open(path, "w", newline="").write("a\nb\nc\n")
+        with open(path, "w", newline="") as f:
+            f.write("a\nb\nc\n")
         newlines = aeidon.util.detect_newlines(path)
         assert newlines == aeidon.newlines.UNIX
 
     def test_detect_newlines__windows(self):
         path = aeidon.temp.create()
-        open(path, "w", newline="").write("a\r\nb\r\nc\r\n")
+        with open(path, "w", newline="") as f:
+            f.write("a\r\nb\r\nc\r\n")
         newlines = aeidon.util.detect_newlines(path)
         assert newlines == aeidon.newlines.WINDOWS
 
@@ -96,48 +101,52 @@ class TestModule(aeidon.TestCase):
 
     def test_read__basic(self):
         path = self.new_subrip_file()
-        text = open(path, "r", encoding="ascii").read().strip()
+        with open(path, "r", encoding="ascii") as f:
+            text = f.read().strip()
         assert aeidon.util.read(path) == text
 
     def test_read__fallback(self):
         path = self.new_subrip_file()
-        open(path, "w", encoding="utf_8").write("\xc3\xb6\n")
+        with open(path, "w", encoding="utf_8") as f:
+            f.write("\xc3\xb6\n")
         assert aeidon.util.read(path, "ascii") == "\xc3\xb6"
 
     def test_readlines__basic(self):
         path = self.new_subrip_file()
-        lines = [x.rstrip() for x in open(path, "r").readlines()]
+        with open(path, "r") as f:
+            lines = [x.rstrip() for x in f.readlines()]
         assert aeidon.util.readlines(path) == lines
 
     def test_readlines__fallback(self):
         path = self.new_subrip_file()
-        open(path, "w", encoding="utf_8").write("\xc3\xb6\n")
+        with open(path, "w", encoding="utf_8") as f:
+            f.write("\xc3\xb6\n")
         assert aeidon.util.readlines(path, "ascii") == ["\xc3\xb6"]
 
     def test_write__basic(self):
         text = "test\ntest\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text)
-        f = open(path, "r", encoding="ascii")
-        assert f.read() == text
+        with open(path, "r", encoding="ascii") as f:
+            assert f.read() == text
 
     def test_write__fallback(self):
         text = "\xc3\xb6\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text, "ascii")
-        f = open(path, "r", encoding="utf_8")
-        assert f.read() == text
+        with open(path, "r", encoding="utf_8") as f:
+            assert f.read() == text
 
     def test_writelines__basic(self):
         lines = ("test", "test")
         path = self.new_subrip_file()
         aeidon.util.writelines(path, lines)
-        f = open(path, "r", encoding="ascii")
-        assert f.read() == "test\ntest\n"
+        with open(path, "r", encoding="ascii") as f:
+            assert f.read() == "test\ntest\n"
 
     def test_writelines__fallback(self):
         text = "\xc3\xb6"
         path = self.new_subrip_file()
         aeidon.util.writelines(path, (text,), "ascii")
-        f = open(path, "r", encoding="utf_8")
-        assert f.read() == text + "\n"
+        with open(path, "r", encoding="utf_8") as f:
+            assert f.read() == text + "\n"
