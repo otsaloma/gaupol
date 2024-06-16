@@ -12,13 +12,16 @@ from setuptools import setup
 shutil.copytree("data/headers", "aeidon/data/headers")
 shutil.copytree("data/patterns", "aeidon/data/patterns")
 
+with open("README.aeidon.md", "r") as f:
+    long_description = f.read()
+
 setup(
     name="aeidon",
     version=get_aeidon_version(),
     author="Osmo Salomaa",
     author_email="otsaloma@iki.fi",
     description="Reading, writing and manipulating text-based subtitle files",
-    long_description=open("README.aeidon.md", "r").read(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/otsaloma/gaupol",
     license="GPL",

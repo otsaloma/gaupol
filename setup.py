@@ -74,12 +74,14 @@ distribution.negative_opt.update({
 
 def get_aeidon_version():
     path = os.path.join("aeidon", "__init__.py")
-    text = open(path, "r", encoding="utf_8").read()
+    with open(path, "r", encoding="utf_8") as f:
+        text = f.read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def get_gaupol_version():
     path = os.path.join("gaupol", "__init__.py")
-    text = open(path, "r", encoding="utf_8").read()
+    with open(path, "r", encoding="utf_8") as f:
+        text = f.read()
     return re.search(r"__version__ *= *['\"](.*?)['\"]", text).group(1)
 
 def run_or_exit(cmd):
@@ -343,7 +345,8 @@ class InstallLib(install_lib):
         locale_dir = os.path.join(prefix, "share", "locale")
         # Write changes to the aeidon.paths module.
         path = os.path.join(self.build_dir, "aeidon", "paths.py")
-        text = open(path, "r", encoding="utf_8").read()
+        with open(path, "r", encoding="utf_8") as f:
+            text = f.read()
         patt = r"^DATA_DIR = .*$"
         repl = "DATA_DIR = {!r}".format(data_dir)
         text = re.sub(patt, repl, text, flags=re.MULTILINE)

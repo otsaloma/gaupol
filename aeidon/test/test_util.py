@@ -24,14 +24,16 @@ class TestModule(aeidon.TestCase):
         path = self.new_subrip_file()
         with aeidon.util.atomic_open(path, "w") as f:
             f.write("test\n")
-        text = open(path, "r").read()
+        with open(path, "r") as f:
+            text = f.read()
         assert text == "test\n"
 
     def test_atomic_open__no_existing_file(self):
         path = aeidon.temp.create()
         with aeidon.util.atomic_open(path, "w") as f:
             f.write("test\n")
-        text = open(path, "r").read()
+        with open(path, "r") as f:
+            text = f.read()
         assert text == "test\n"
 
     def test_compare_versions(self):
@@ -96,7 +98,8 @@ class TestModule(aeidon.TestCase):
 
     def test_read__basic(self):
         path = self.new_subrip_file()
-        text = open(path, "r", encoding="ascii").read().strip()
+        with open(path, "r", encoding="ascii") as f:
+            text = f.read().strip()
         assert aeidon.util.read(path) == text
 
     def test_read__fallback(self):
@@ -106,7 +109,8 @@ class TestModule(aeidon.TestCase):
 
     def test_readlines__basic(self):
         path = self.new_subrip_file()
-        lines = [x.rstrip() for x in open(path, "r").readlines()]
+        with open(path, "r") as f:
+            lines = [x.rstrip() for x in f.readlines()]
         assert aeidon.util.readlines(path) == lines
 
     def test_readlines__fallback(self):

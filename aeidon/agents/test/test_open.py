@@ -32,7 +32,8 @@ class TestOpenAgent(aeidon.TestCase):
 
     def test_open_main__bom(self):
         path = self.new_subrip_file()
-        blob = open(path, "rb").read()
+        with open(path, "rb") as f:
+            blob = f.read()
         open(path, "wb").write(codecs.BOM_UTF8 + blob)
         self.project.open_main(path, "ascii")
         assert self.project.subtitles
@@ -61,7 +62,8 @@ class TestOpenAgent(aeidon.TestCase):
 
     def test_open_translation__bom(self):
         path = self.new_subrip_file()
-        blob = open(path, "rb").read()
+        with open(path, "rb") as f:
+            blob = f.read()
         open(path, "wb").write(codecs.BOM_UTF8 + blob)
         self.project.open_translation(path, "ascii")
         assert self.project.subtitles
