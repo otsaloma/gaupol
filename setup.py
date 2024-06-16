@@ -355,7 +355,8 @@ class InstallLib(install_lib):
         repl = "LOCALE_DIR = {!r}".format(locale_dir)
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
         assert text.count(repl) == 1
-        open(path, "w", encoding="utf_8").write(text)
+        with open(path, "w", encoding="utf_8") as f:
+            f.write(text)
         return install_lib.install(self)
 
 

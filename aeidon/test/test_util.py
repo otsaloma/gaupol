@@ -50,19 +50,22 @@ class TestModule(aeidon.TestCase):
 
     def test_detect_newlines__mac(self):
         path = aeidon.temp.create()
-        open(path, "w", newline="").write("a\rb\rc\r")
+        with open(path, "w", newline="") as f:
+            f.write("a\rb\rc\r")
         newlines = aeidon.util.detect_newlines(path)
         assert newlines == aeidon.newlines.MAC
 
     def test_detect_newlines__unix(self):
         path = aeidon.temp.create()
-        open(path, "w", newline="").write("a\nb\nc\n")
+        with open(path, "w", newline="") as f:
+            f.write("a\nb\nc\n")
         newlines = aeidon.util.detect_newlines(path)
         assert newlines == aeidon.newlines.UNIX
 
     def test_detect_newlines__windows(self):
         path = aeidon.temp.create()
-        open(path, "w", newline="").write("a\r\nb\r\nc\r\n")
+        with open(path, "w", newline="") as f:
+            f.write("a\r\nb\r\nc\r\n")
         newlines = aeidon.util.detect_newlines(path)
         assert newlines == aeidon.newlines.WINDOWS
 
@@ -104,7 +107,8 @@ class TestModule(aeidon.TestCase):
 
     def test_read__fallback(self):
         path = self.new_subrip_file()
-        open(path, "w", encoding="utf_8").write("\xc3\xb6\n")
+        with open(path, "w", encoding="utf_8") as f:
+            f.write("\xc3\xb6\n")
         assert aeidon.util.read(path, "ascii") == "\xc3\xb6"
 
     def test_readlines__basic(self):
@@ -115,7 +119,8 @@ class TestModule(aeidon.TestCase):
 
     def test_readlines__fallback(self):
         path = self.new_subrip_file()
-        open(path, "w", encoding="utf_8").write("\xc3\xb6\n")
+        with open(path, "w", encoding="utf_8") as f:
+            f.write("\xc3\xb6\n")
         assert aeidon.util.readlines(path, "ascii") == ["\xc3\xb6"]
 
     def test_write__basic(self):
