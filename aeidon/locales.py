@@ -51,7 +51,7 @@ def code_to_name(code):
 def get_system_code():
     """Return the locale code preferred by system or ``None``."""
     import locale
-    return locale.getdefaultlocale()[0]
+    return locale.getlocale()[0]
 
 @aeidon.deco.once
 def get_system_modifier():
