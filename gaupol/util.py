@@ -19,6 +19,7 @@
 
 import aeidon
 import gaupol
+import importlib.util
 import inspect
 import sys
 import traceback
@@ -226,6 +227,14 @@ def lines_to_px(nlines, font=None):
     label.show()
     height = label.get_preferred_height()[1]
     return int(round(nlines * height))
+
+def load_module_from_file(name, path):
+    # https://docs.python.org/3/library/importlib.html#importing-a-source-file-directly
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
 
 def new_hbox(spacing):
     """Return a new horizontal :class:`Gtk.Box`."""

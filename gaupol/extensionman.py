@@ -19,7 +19,6 @@
 
 import aeidon
 import gaupol
-import importlib.machinery
 import inspect
 import os
 import re
@@ -122,8 +121,7 @@ class ExtensionManager:
         directory = os.path.dirname(metadata.path)
         name = "gaupol.extension.{:s}".format(module)
         path = os.path.join(directory, "{}.py".format(module))
-        loader = importlib.machinery.SourceFileLoader(name, path)
-        module_object = loader.load_module(name)
+        module_object = gaupol.util.load_module_from_file(name, path)
         for attribute in dir(module_object):
             if attribute.startswith("_"): continue
             value = getattr(module_object, attribute)
