@@ -7,7 +7,8 @@ clean:
 install:
 	$(MAKE) uninstall
 	rm -rf build .flatpak-builder/build
-	flatpak-builder --install --install-deps-from=flathub build io.otsaloma.gaupol.yml
+	flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+	flatpak-builder --user --install --install-deps-from=flathub build io.otsaloma.gaupol.yml
 
 run:
 	flatpak run io.otsaloma.gaupol
