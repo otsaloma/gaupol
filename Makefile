@@ -18,7 +18,7 @@ install:
 
 publish-aeidon:
 	$(MAKE) check test clean
-	./setup-aeidon.py sdist bdist_wheel
+	./setup-aeidon-pypi.py sdist bdist_wheel
 	test -s dist/aeidon-*-py3-none-any.whl
 	test -s dist/aeidon-*.tar.gz
 	ls -l dist
