@@ -11,6 +11,7 @@ from setuptools import setup
 # Copy data files to the aeidon package, so they can be included.
 shutil.copytree("data/headers", "aeidon/data/headers")
 shutil.copytree("data/patterns", "aeidon/data/patterns")
+shutil.copytree("data/ui", "aeidon/data/ui")
 
 with open("README.aeidon.md", "r") as f:
     long_description = f.read()
