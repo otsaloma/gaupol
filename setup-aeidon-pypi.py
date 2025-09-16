@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
-"""setuptools/wheel/PyPI version of the aeidon package."""
+"""
+PyPI version of the aeidon package.
+
+This script is only for building a package to upload to PyPI!
+If building separate aeidon and gaupol packages for a distro,
+please use the main setup.py as explained in README.aeidon.md.
+"""
 
 import shutil
 
