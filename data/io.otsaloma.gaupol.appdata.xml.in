@@ -18,9 +18,9 @@
   <url type="homepage">https://otsaloma.io/gaupol/</url>
   <url type="help">https://github.com/otsaloma/gaupol/tree/master/doc</url>
   <url type="bugtracker">https://github.com/otsaloma/gaupol/issues</url>
-  <url type="translate">https://www.transifex.com/otsaloma/gaupol/</url>
+  <url type="translate">https://app.transifex.com/otsaloma/gaupol/</url>
   <launchable type="desktop-id">io.otsaloma.gaupol.desktop</launchable>
-  <releases>    
+  <releases>
     <release version="1.15"   date="2024-06-10"/>
     <release version="1.14.1" date="2024-04-02"/>
     <release version="1.14"   date="2024-03-31"/>
