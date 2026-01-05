@@ -71,7 +71,8 @@ command.
                      python3-charset-normalizer \
                      python3-dev \
                      python3-gi \
-                     python3-gi-cairo
+                     python3-gi-cairo \
+                     python3-setuptools
 
 Then, to install Gaupol, run command
 
