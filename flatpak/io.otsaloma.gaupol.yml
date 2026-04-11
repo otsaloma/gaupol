@@ -1,34 +1,29 @@
 app-id: io.otsaloma.gaupol
 runtime: org.gnome.Platform
-runtime-version: "48"
+runtime-version: "50"
 sdk: org.gnome.Sdk
 command: gaupol
 finish-args:
   - --device=dri
-  - --env=GST_PLUGIN_PATH_1_0=/app/lib/gstreamer-1.0
   - --filesystem=home
   - --filesystem=xdg-videos
   - --share=ipc
   - --socket=pulseaudio
   - --socket=wayland
   - --socket=x11
+cleanup:
+  - /include
+  - /lib/girepository-1.0
+  - /share/bash-completion
+  - /share/doc
+  - /share/fish
+  - /share/gir-1.0
+  - /share/man
+  - /share/vala
+  - /share/zsh
+  - "*.la"
+  - "*.a"
 modules:
-
-  # Internal video player codecs
-
-  - name: gst-libav
-    buildsystem: meson
-    sources:
-      - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.24.12.tar.xz
-        sha256: ef72c1c70a17b3c0bb283d16d09aba496d3401c927dcf5392a8a7866d9336379
-
-  - name: gst-plugins-ugly
-    buildsystem: meson
-    sources:
-      - type: archive
-        url: https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.24.12.tar.xz
-        sha256: 19ed6eef4ea1a742234fb35e2cdb107168595a4dd409a9fac0b7a16543eee78b
 
   # Spell-check
 
@@ -41,62 +36,64 @@ modules:
 
   # Character encoding auto-detection
 
-  - name: charset-normalizer
+  # Generated with flatpak-pip-generator --runtime=org.gnome.Sdk//50 charset-normalizer -o python3-charset-normalizer --yaml
+  - name: python3-charset-normalizer
     buildsystem: simple
     build-commands:
-      - pip3 install --break-system-packages --verbose .
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+        --prefix=${FLATPAK_DEST} "charset-normalizer" --no-build-isolation
     sources:
-      - type: archive
-        url: https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz
-        sha256: f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5
+      - type: file
+        url: https://files.pythonhosted.org/packages/e7/a1/67fe25fac3c7642725500a3f6cfe5821ad557c3abb11c9d20d12c7008d3e/charset_normalizer-3.4.7.tar.gz
+        sha256: ae89db9e5f98a11a4bf50407d4363e7b09b31e55bc117b4f7d80aab97ba009e5
 
   # External video player: mpv
 
-  - name: ffmpeg
-    buildsystem: autotools
-    sources:
-      - type: archive
-        url: https://ffmpeg.org/releases/ffmpeg-7.0.2.tar.xz
-        sha256: 8646515b638a3ad303e23af6a3587734447cb8fc0a0c064ecdb8e95c4fd8b389
-
   - name: fribidi
-    buildsystem: autotools
+    buildsystem: meson
     sources:
       - type: archive
-        url: https://github.com/fribidi/fribidi/releases/download/v1.0.8/fribidi-1.0.8.tar.bz2
-        sha256: 94c7b68d86ad2a9613b4dcffe7bbeb03523d63b5b37918bdf2e4ef34195c1e6c
+        url: https://github.com/fribidi/fribidi/releases/download/v1.0.16/fribidi-1.0.16.tar.xz
+        sha256: 1b1cde5b235d40479e91be2f0e88a309e3214c8ab470ec8a2744d82a5a9ea05c
 
   - name: libass
-    buildsystem: autotools
+    buildsystem: meson
+    cleanup: ["*"]
     sources:
       - type: archive
-        url: https://github.com/libass/libass/releases/download/0.14.0/libass-0.14.0.tar.xz
-        sha256: 881f2382af48aead75b7a0e02e65d88c5ebd369fe46bc77d9270a94aa8fd38a2
+        url: https://github.com/libass/libass/releases/download/0.17.4/libass-0.17.4.tar.gz
+        sha256: a886b3b80867f437bc55cff3280a652bfa0d37b43d2aff39ddf3c4f288b8c5a8
 
   - name: libplacebo
     buildsystem: meson
+    config-opts:
+      - -Ddemos=false
     sources:
       - type: git
-        url: https://code.videolan.org/videolan/libplacebo.git
-        tag: v7.349.0
-        commit: 1fd3c7bde7b943fe8985c893310b5269a09b46c5
+        url: https://github.com/haasn/libplacebo.git
+        tag: v7.360.1
+        commit: cee9b076f2c63104ccfd497fa79c39a867293ec4
 
   - name: uchardet
     buildsystem: cmake-ninja
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release
-      - -DCMAKE_INSTALL_PREFIX=/app
+      - -DBUILD_STATIC=0
+      - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+    cleanup:
+      - /bin
+      - /lib/cmake
     sources:
       - type: archive
-        url: https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.6.tar.xz
-        sha256: 8351328cdfbcb2432e63938721dd781eb8c11ebc56e3a89d0f84576b96002c61
+        url: https://www.freedesktop.org/software/uchardet/releases/uchardet-0.0.8.tar.xz
+        sha256: e97a60cfc00a1c147a674b097bb1422abd9fa78a2d9ce3f3fdcc2e78a34ac5f0
 
   - name: mpv
     buildsystem: meson
     sources:
       - type: archive
-        url: https://github.com/mpv-player/mpv/archive/refs/tags/v0.39.0.tar.gz
-        sha256: 2ca92437affb62c2b559b4419ea4785c70d023590500e8a52e95ea3ab4554683
+        url: https://github.com/mpv-player/mpv/archive/v0.41.0.tar.gz
+        sha256: ee21092a5ee427353392360929dc64645c54479aefdb5babc5cfbb5fad626209
 
   # Gaupol
 
