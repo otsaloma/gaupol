@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-10 21:51+0300\n"
+"POT-Creation-Date: 2026-04-13 22:29+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Hebrew (https://app.transifex.com/otsaloma/teams/64879/he/)\n"
@@ -21,49 +21,121 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;\n"
 
-#: aeidon/enums.py:40 gaupol/enums.py:38
-msgid "Subtitle number"
-msgstr "מספר הכתובית"
+#: aeidon/agents/position.py:74
+msgid "Adjusting durations"
+msgstr "פרקי הזמן מתואמים"
 
-#: aeidon/enums.py:43
-msgid "Subtitle position"
-msgstr "מיקום הכתובית"
+#: aeidon/agents/position.py:96
+msgid "Converting framerate"
+msgstr "קצב השקופיות מומר"
 
-#: aeidon/enums.py:59
-msgid "23.976 fps"
-msgstr ""
+#: aeidon/agents/position.py:146
+msgid "Setting framerate"
+msgstr "הגדרת קצב השקופיות"
 
-#: aeidon/enums.py:63
-msgid "24.000 fps"
-msgstr ""
+#: aeidon/agents/position.py:168
+msgid "Shifting positions"
+msgstr "הזזת המקומות"
 
-#: aeidon/enums.py:67
-msgid "25.000 fps"
-msgstr ""
+#: aeidon/agents/position.py:188
+msgid "Transforming positions"
+msgstr "החלפת המקומות"
 
-#: aeidon/enums.py:71
-msgid "29.970 fps"
-msgstr ""
+#: aeidon/agents/edit.py:35
+msgid "Clearing texts"
+msgstr "הטקסטים נמחקים"
 
-#: aeidon/enums.py:75 data/ui/menubar.ui:248
-msgid "30.000 fps"
-msgstr ""
+#: aeidon/agents/edit.py:61 aeidon/agents/edit.py:83
+msgid "Inserting subtitles"
+msgstr "הכתוביות נוספות"
 
-#: aeidon/enums.py:79 data/ui/menubar.ui:253
-msgid "50.000 fps"
-msgstr ""
+#: aeidon/agents/edit.py:103
+msgid "Merging subtitles"
+msgstr "הכתוביות מתמזגות"
 
-#: aeidon/enums.py:83 data/ui/menubar.ui:258
-msgid "59.940 fps"
-msgstr ""
+#: aeidon/agents/edit.py:114
+msgid "Removing subtitles"
+msgstr "הכתוביות מוסרות"
 
-#: aeidon/enums.py:87 data/ui/menubar.ui:263
-msgid "60.000 fps"
-msgstr ""
+#: aeidon/agents/edit.py:131
+msgid "Replacing positions"
+msgstr "המיקומים מוחלפים"
 
-#: aeidon/enums.py:112
-msgid "Mac (classic)"
-msgstr "מק (קלאסי)"
+#: aeidon/agents/edit.py:147
+msgid "Replacing texts"
+msgstr "הטקסטים מוחלפים"
+
+#: aeidon/agents/edit.py:171
+msgid "Splitting subtitle"
+msgstr "הכתובית מפוצלת"
+
+#: aeidon/agents/format.py:49
+msgid "Adding dialogue dashes"
+msgstr "מקפי הדו־שיח נוספים"
+
+#: aeidon/agents/format.py:68
+msgid "Changing case"
+msgstr "שינוי בין קטנות לרשיות"
+
+#: aeidon/agents/format.py:92
+msgid "Italicizing"
+msgstr "ההטיה מוחלת"
+
+#: aeidon/agents/format.py:108
+msgid "Removing dialogue dashes"
+msgstr "מקפי הדו־שיח מוסרים"
+
+#: aeidon/agents/format.py:174
+msgid "Unitalicizing"
+msgstr "ההטיה מבוטלת"
+
+#: aeidon/agents/search.py:227
+msgid "Replacing"
+msgstr "מתבצעת החלפה"
+
+#: aeidon/agents/search.py:256 aeidon/agents/search.py:258
+msgid "Replacing all"
+msgstr "הכול מוחלף"
+
+#: aeidon/agents/text.py:91
+msgid "Breaking lines"
+msgstr "השורות נשברות"
+
+#: aeidon/agents/text.py:128
+msgid "Capitalizing texts"
+msgstr "הרשיות בטקסטים מתואמות"
+
+#: aeidon/agents/text.py:185
+msgid "Correcting common errors"
+msgstr "שגיאות נפוצות מתוקנות"
+
+#: aeidon/agents/text.py:234
+msgid "Removing hearing impaired texts"
+msgstr "מוסרים טקסטים המותאמים ללקויי שמיעה"
+
+#: aeidon/agents/text.py:315
+msgid "Joining words by spell-check suggestions"
+msgstr "צירוף מילים לפי הצעות בדיקות איות"
+
+#: aeidon/agents/text.py:354
+msgid "Splitting words by spell-check suggestions"
+msgstr "פיצול מילים לפי הצעות בדיקת איות"
+
+#: aeidon/agents/clipboard.py:44
+msgid "Cutting texts"
+msgstr "הטקסטים נגזרים"
+
+#: aeidon/agents/clipboard.py:61
+msgid "Pasting texts"
+msgstr "הטקסטים מודבקים"
+
+#: aeidon/agents/set.py:58 aeidon/agents/set.py:80 aeidon/agents/set.py:113
+msgid "Editing position"
+msgstr "המיקום נערך"
+
+#: aeidon/agents/set.py:129
+msgid "Editing text"
+msgstr "הטקסט נערך"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
@@ -214,130 +286,384 @@ msgstr "{description} ({name})"
 msgid "Current locale ({})"
 msgstr "סוג כתב נוכחי ({})"
 
+#: aeidon/enums.py:40 gaupol/enums.py:38
+msgid "Subtitle number"
+msgstr "מספר הכתובית"
+
+#: aeidon/enums.py:43
+msgid "Subtitle position"
+msgstr "מיקום הכתובית"
+
+#: aeidon/enums.py:59
+msgid "23.976 fps"
+msgstr ""
+
+#: aeidon/enums.py:63
+msgid "24.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:67
+msgid "25.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:71
+msgid "29.970 fps"
+msgstr ""
+
+#: aeidon/enums.py:75 data/ui/menubar.ui:248
+msgid "30.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:79 data/ui/menubar.ui:253
+msgid "50.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:83 data/ui/menubar.ui:258
+msgid "59.940 fps"
+msgstr ""
+
+#: aeidon/enums.py:87 data/ui/menubar.ui:263
+msgid "60.000 fps"
+msgstr ""
+
+#: aeidon/enums.py:112
+msgid "Mac (classic)"
+msgstr "מק (קלאסי)"
+
 #: aeidon/locales.py:46
 #, python-brace-format
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
-#: aeidon/agents/search.py:227
-msgid "Replacing"
-msgstr "מתבצעת החלפה"
+#: data/extensions/custom-framerates/custom-framerates.py:39
+#: gaupol/agents/close.py:71 gaupol/agents/open.py:363
+#: gaupol/agents/open.py:375 gaupol/agents/open.py:387
+#: gaupol/dialogs/multi_close.py:54 gaupol/dialogs/split.py:44
+#: gaupol/dialogs/encoding.py:55 gaupol/dialogs/save.py:73
+#: gaupol/dialogs/multi_save.py:83 gaupol/dialogs/multi_save.py:215
+#: gaupol/dialogs/framerate_convert.py:63 gaupol/dialogs/position_shift.py:71
+#: gaupol/dialogs/duration_adjust.py:86 gaupol/dialogs/video.py:41
+#: gaupol/dialogs/insert.py:44 gaupol/dialogs/open.py:63
+#: gaupol/dialogs/position_transform.py:69 gaupol/dialogs/text_edit.py:48
+msgid "_Cancel"
+msgstr ""
 
-#: aeidon/agents/search.py:256 aeidon/agents/search.py:258
-msgid "Replacing all"
-msgstr "הכול מוחלף"
+#: data/extensions/custom-framerates/custom-framerates.py:40
+#: data/ui/spell-check-dialog.ui:152
+msgid "_Add"
+msgstr "הו_ספה"
 
-#: aeidon/agents/position.py:74
-msgid "Adjusting durations"
-msgstr "פרקי הזמן מתואמים"
+#: data/extensions/custom-framerates/custom-framerates.py:171
+msgid "{:.3f} fps"
+msgstr ""
 
-#: aeidon/agents/position.py:96
-msgid "Converting framerate"
-msgstr "קצב השקופיות מומר"
+#: gaupol/player.py:263 gaupol/player.py:381 gaupol/agents/save.py:197
+#: gaupol/agents/save.py:205 gaupol/agents/tools.py:48
+#: gaupol/agents/open.py:328 gaupol/agents/open.py:337
+#: gaupol/agents/open.py:345 gaupol/agents/open.py:354
+#: gaupol/agents/preview.py:108 gaupol/agents/preview.py:116
+#: gaupol/agents/preview.py:125 gaupol/agents/preview.py:133
+#: gaupol/assistants.py:601 gaupol/dialogs/encoding.py:56
+#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
+#: gaupol/dialogs/text_edit.py:49
+msgid "_OK"
+msgstr ""
 
-#: aeidon/agents/position.py:146
-msgid "Setting framerate"
-msgstr "הגדרת קצב השקופיות"
+#: gaupol/player.py:372
+msgid "No video streams found"
+msgstr ""
 
-#: aeidon/agents/position.py:168
-msgid "Shifting positions"
-msgstr "הזזת המקומות"
+#: gaupol/player.py:379
+msgid "Failed to initialize playback"
+msgstr ""
 
-#: aeidon/agents/position.py:188
-msgid "Transforming positions"
-msgstr "החלפת המקומות"
+#: gaupol/page.py:60
+msgid "Untitled {:d}"
+msgstr "ללא שם {:d}"
 
-#: aeidon/agents/clipboard.py:44
-msgid "Cutting texts"
-msgstr "הטקסטים נגזרים"
+#: gaupol/page.py:133
+msgid "Close project"
+msgstr "סגירת המיזם"
 
-#: aeidon/agents/clipboard.py:61
-msgid "Pasting texts"
-msgstr "הטקסטים מודבקים"
+#: gaupol/page.py:145
+msgid "{} translation"
+msgstr "תרגום {}"
 
-#: aeidon/agents/text.py:91
-msgid "Breaking lines"
-msgstr "השורות נשברות"
+#: gaupol/page.py:302
+msgid "Path:"
+msgstr "נתיב:"
 
-#: aeidon/agents/text.py:128
-msgid "Capitalizing texts"
-msgstr "הרשיות בטקסטים מתואמות"
+#: gaupol/page.py:303
+msgid "Format:"
+msgstr "מבנה:"
 
-#: aeidon/agents/text.py:185
-msgid "Correcting common errors"
-msgstr "שגיאות נפוצות מתוקנות"
+#: gaupol/page.py:304
+msgid "Encoding:"
+msgstr ""
 
-#: aeidon/agents/text.py:234
-msgid "Removing hearing impaired texts"
-msgstr "מוסרים טקסטים המותאמים ללקויי שמיעה"
+#: gaupol/page.py:305
+msgid "Newlines:"
+msgstr "שורות חדשות:"
 
-#: aeidon/agents/text.py:315
-msgid "Joining words by spell-check suggestions"
-msgstr "צירוף מילים לפי הצעות בדיקות איות"
+#: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
+#: gaupol/agents/menu.py:110
+msgid "File not found"
+msgstr ""
 
-#: aeidon/agents/text.py:354
-msgid "Splitting words by spell-check suggestions"
-msgstr "פיצול מילים לפי הצעות בדיקת איות"
+#: gaupol/agents/save.py:129
+msgid "Save As"
+msgstr "שמירה בשם"
 
-#: aeidon/agents/set.py:58 aeidon/agents/set.py:80 aeidon/agents/set.py:113
-msgid "Editing position"
-msgstr "המיקום נערך"
+#: gaupol/agents/save.py:135
+msgid "Saved main document as \"{}\""
+msgstr "המסמך הראשי נשמר בשם ״{}״"
 
-#: aeidon/agents/set.py:129
-msgid "Editing text"
-msgstr "הטקסט נערך"
+#: gaupol/agents/save.py:153
+msgid "Save Translation As"
+msgstr "שמירת התרגום בשם"
 
-#: aeidon/agents/edit.py:35
-msgid "Clearing texts"
-msgstr "הטקסטים נמחקים"
+#: gaupol/agents/save.py:159
+msgid "Saved translation document as \"{}\""
+msgstr "מסמך התרגום נשמר בשם ״{}״"
 
-#: aeidon/agents/edit.py:61 aeidon/agents/edit.py:83
-msgid "Inserting subtitles"
-msgstr "הכתוביות נוספות"
+#: gaupol/agents/save.py:194
+#, python-brace-format
+msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
+msgstr "ארע כשל בקידוד הקובץ ״{basename}״ באמצעות המפענח ״{codec}״"
 
-#: aeidon/agents/edit.py:103
-msgid "Merging subtitles"
-msgstr "הכתוביות מתמזגות"
+#: gaupol/agents/save.py:195
+msgid "Please try to save the file with a different character encoding."
+msgstr "נא לנסות לשמור את הקובץ בקידוד תווים שונה."
 
-#: aeidon/agents/edit.py:114
-msgid "Removing subtitles"
-msgstr "הכתוביות מוסרות"
+#: gaupol/agents/save.py:203
+msgid "Failed to save file \"{}\""
+msgstr "ארע כשל בשמירת הקובץ ״{}״"
 
-#: aeidon/agents/edit.py:131
-msgid "Replacing positions"
-msgstr "המיקומים מוחלפים"
+#: gaupol/agents/edit.py:101 gaupol/agents/edit.py:119
+msgid "Stretching end position"
+msgstr ""
 
-#: aeidon/agents/edit.py:147
-msgid "Replacing texts"
-msgstr "הטקסטים מוחלפים"
+#: gaupol/agents/edit.py:208
+msgid "Inserted {:d} subtitle to fit clipboard contents"
+msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
-#: aeidon/agents/edit.py:171
-msgid "Splitting subtitle"
-msgstr "הכתובית מפוצלת"
+#: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
+msgid "Stretching start position"
+msgstr ""
 
-#: aeidon/agents/format.py:49
-msgid "Adding dialogue dashes"
-msgstr "מקפי הדו־שיח נוספים"
+#: gaupol/agents/edit.py:411
+msgid "Use Shift+Return for line-break"
+msgstr "שימוש ב־Shift+אנטר כדי לשבור שורות"
 
-#: aeidon/agents/format.py:68
-msgid "Changing case"
-msgstr "שינוי בין קטנות לרשיות"
+#: gaupol/agents/close.py:66
+msgid "Save changes to document \"{}\" before closing?"
+msgstr ""
 
-#: aeidon/agents/format.py:92
-msgid "Italicizing"
-msgstr "ההטיה מוחלת"
+#: gaupol/agents/close.py:68 gaupol/agents/open.py:384
+#: gaupol/dialogs/multi_close.py:39
+msgid "If you don't save, changes will be permanently lost."
+msgstr "אם השינויים לא ישמרו, הם יאבדו לעד."
 
-#: aeidon/agents/format.py:108
-msgid "Removing dialogue dashes"
-msgstr "מקפי הדו־שיח מוסרים"
+#: gaupol/agents/close.py:70 gaupol/dialogs/multi_close.py:53
+msgid "Close _Without Saving"
+msgstr "סגירה _ללא שמירה"
 
-#: aeidon/agents/format.py:174
-msgid "Unitalicizing"
-msgstr "ההטיה מבוטלת"
+#: gaupol/agents/close.py:72 gaupol/agents/open.py:388
+#: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/save.py:74
+#: gaupol/dialogs/multi_save.py:84 data/ui/menubar.ui:34
+msgid "_Save"
+msgstr "_שמירה"
 
-#: gaupol/application.py:219 gaupol/agents/open.py:203
+#: gaupol/agents/video.py:67 data/ui/menubar.ui:380
+msgid "_Play/Pause"
+msgstr ""
+
+#: gaupol/agents/video.py:69
+msgid "Play or pause video"
+msgstr ""
+
+#: gaupol/agents/video.py:75 data/ui/menubar.ui:390
+msgid "Seek _Previous"
+msgstr ""
+
+#: gaupol/agents/video.py:77
+msgid "Seek to the start of the previous subtitle"
+msgstr ""
+
+#: gaupol/agents/video.py:81 data/ui/menubar.ui:394
+msgid "Seek _Next"
+msgstr ""
+
+#: gaupol/agents/video.py:83
+msgid "Seek to the start of the next subtitle"
+msgstr ""
+
+#: gaupol/agents/video.py:88 data/ui/menubar.ui:400
+msgid "Seek _Backward"
+msgstr ""
+
+#: gaupol/agents/video.py:90
+msgid "Seek backward"
+msgstr ""
+
+#: gaupol/agents/video.py:94 data/ui/menubar.ui:404
+msgid "Seek _Forward"
+msgstr ""
+
+#: gaupol/agents/video.py:96
+msgid "Seek forward"
+msgstr ""
+
+#: gaupol/agents/video.py:109
+msgid "Volume"
+msgstr ""
+
+#: gaupol/agents/video.py:189
+msgid "Load Video"
+msgstr ""
+
+#: gaupol/agents/video.py:189
+msgid "_Load"
+msgstr ""
+
+#: gaupol/agents/video.py:361
+msgid "Track {:d}"
+msgstr ""
+
+#: gaupol/agents/tools.py:45 gaupol/assistants.py:599
+msgid "Failed to load dictionary for language \"{}\""
+msgstr "ארע כשל בטעינת המילון עבור השפה״{}״"
+
+#: gaupol/agents/open.py:85
+#, python-brace-format
+msgid "Appended {amount:d} subtitles from \"{basename}\""
+msgstr "האם להוסיף {amount:d} כתוביות מ־״{basename}״"
+
+#: gaupol/agents/open.py:96
+msgid "Appending file"
+msgstr "הקובץ מתווסף"
+
+#: gaupol/agents/open.py:111
+msgid "File \"{}\" is already open"
+msgstr "הקובץ ״{}״ כבר פתוח"
+
+#: gaupol/agents/open.py:203 gaupol/application.py:219
 msgid "Open"
 msgstr "פתיחה"
+
+#: gaupol/agents/open.py:214
+msgid "Open Translation"
+msgstr "פתיחת תרגום"
+
+#: gaupol/agents/open.py:223
+msgid "Select Video"
+msgstr "בחירת וידאו"
+
+#: gaupol/agents/open.py:224
+msgid "_Select"
+msgstr "_בחירה"
+
+#: gaupol/agents/open.py:325
+msgid "Failed to decode file \"{}\" with all attempted codecs"
+msgstr "ארע כשל בפענוח הקובץ ״{}״ עם כל המקודדים שנוסו"
+
+#: gaupol/agents/open.py:326
+msgid "Please try to open the file with a different character encoding."
+msgstr "נא לנסות לפתוח את הקובץ עם קידוד תווים שונה."
+
+#: gaupol/agents/open.py:334
+msgid "Failed to recognize format of file \"{}\""
+msgstr "ארע כשל בזיהוי מבנה הקובץ ״{}״"
+
+#: gaupol/agents/open.py:335
+msgid ""
+"Please check that the file you are trying to open is a subtitle file of a "
+"format supported by Gaupol."
+msgstr "נא לבדוק שהקובץ המועמד לפתיחה הוא מסוג קובץ הנתמך על ידי Gaupol."
+
+#: gaupol/agents/open.py:343
+msgid "Failed to open file \"{}\""
+msgstr "ארע כשל בפתיחת הקובץ ״{}״"
+
+#: gaupol/agents/open.py:351
+msgid "Failed to parse file \"{}\""
+msgstr "ארע כשל בפענוח הקובץ ״{}״"
+
+#: gaupol/agents/open.py:352
+msgid "Please check that the file you are trying to open is a valid {} file."
+msgstr ""
+
+#: gaupol/agents/open.py:360
+msgid "Open abnormally large file \"{}\"?"
+msgstr "האם לפתוח את הקובץ הגדול באופן חריג ״{}״?"
+
+#: gaupol/agents/open.py:361
+msgid ""
+"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
+"subtitle file. Please, check that you are not trying to open a binary file."
+msgstr ""
+"גודל הקובץ הוא {:.1f} מ״ב, שזהו גודל גדול באופן חריג עבור קובץ כתוביות מבוסס"
+" טקסט. נא לבדוק שזהו אינו קובץ בינרי."
+
+#: gaupol/agents/open.py:364 gaupol/agents/open.py:376
+#: gaupol/dialogs/open.py:64
+msgid "_Open"
+msgstr ""
+
+#: gaupol/agents/open.py:371
+msgid "Open unsorted file \"{}\"?"
+msgstr "האם לפתוח את הקובץ הבלתי ממוין ״{}״?"
+
+#: gaupol/agents/open.py:372
+msgid ""
+"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
+"the file may be erroneously composed."
+msgstr ""
+"יש לשנות את סדרן של {:d} כתוביות. אם {:d} נשמע כמו הרבה, יתכן שהקובץ הורכב "
+"בצורה לא נכונה."
+
+#: gaupol/agents/open.py:383
+msgid "Save changes to translation document \"{}\" before opening a new one?"
+msgstr "האם לשמור את השינויים למסמך התרגום ״{}״ לפני פתיחת מסמך חדש?"
+
+#: gaupol/agents/open.py:386
+msgid "Open _Without Saving"
+msgstr "פתיחה _ללא שמירה"
+
+#: gaupol/agents/preview.py:105
+msgid "Failed to encode subtitle file to temporary directory \"{}\""
+msgstr "ארע כשל בקידוד קובץ הכתוביות אל התיקייה הזמנית ״{}״"
+
+#: gaupol/agents/preview.py:106
+msgid ""
+"Subtitle data could not be encoded to a temporary file for preview with the "
+"current character encoding. Please first save the subtitle file with a "
+"different character encoding."
+msgstr ""
+"לא ניתן לקודד את נתוני הכתוביות לקובץ זמני לתצוגה מקדימה עם קידוד התווים "
+"הנבחר. נא לשנות תחילה את קובץ הכתוביות לקידוד תווים שונה."
+
+#: gaupol/agents/preview.py:114
+msgid "Failed to save subtitle file to temporary directory \"{}\""
+msgstr "ארע כשל בשמירת קובץ הכתוביות לתיקייה הזמנית ״{}״"
+
+#: gaupol/agents/preview.py:122
+msgid "Video player not found"
+msgstr ""
+
+#: gaupol/agents/preview.py:123
+msgid ""
+"Please install one of the supported video players: mpv (recommended), "
+"MPlayer or VLC. See the preferences dialog to choose the video player or to "
+"customize the command."
+msgstr ""
+
+#: gaupol/agents/preview.py:131
+msgid "Failed to launch video player"
+msgstr "ארע כשל בהפעלת נגן הווידאו"
 
 #: gaupol/application.py:223
 msgid "Open main files"
@@ -407,80 +733,6 @@ msgstr "תצוגה מקדימה"
 #: gaupol/application.py:287
 msgid "Preview from selected position with a video player"
 msgstr "הצגה מקדימה מהמיקום הנבחר באמצעות נגן וידאו"
-
-#: gaupol/enums.py:37
-msgid "No."
-msgstr "מס׳"
-
-#: gaupol/enums.py:43
-msgid "Start"
-msgstr "התחלה"
-
-#: gaupol/enums.py:44
-msgid "Start position"
-msgstr "מיקום ההתחלה"
-
-#: gaupol/enums.py:49
-msgid "End"
-msgstr "סוף"
-
-#: gaupol/enums.py:50
-msgid "End position"
-msgstr "מיקום הסוף"
-
-#. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
-#. of a column that contains numbers five digits wide.
-#: gaupol/enums.py:57
-msgid "Dur."
-msgstr "משך"
-
-#: gaupol/enums.py:58
-msgid "Duration"
-msgstr "משך"
-
-#: gaupol/enums.py:63 gaupol/enums.py:64
-msgid "Text"
-msgstr ""
-
-#: gaupol/enums.py:69 gaupol/enums.py:70
-msgid "Translation"
-msgstr ""
-
-#: gaupol/enums.py:82
-msgid "characters"
-msgstr "תווים"
-
-#: gaupol/enums.py:85
-msgid "ems"
-msgstr "ems"
-
-#: gaupol/page.py:60
-msgid "Untitled {:d}"
-msgstr "ללא שם {:d}"
-
-#: gaupol/page.py:133
-msgid "Close project"
-msgstr "סגירת המיזם"
-
-#: gaupol/page.py:145
-msgid "{} translation"
-msgstr "תרגום {}"
-
-#: gaupol/page.py:302
-msgid "Path:"
-msgstr "נתיב:"
-
-#: gaupol/page.py:303
-msgid "Format:"
-msgstr "מבנה:"
-
-#: gaupol/page.py:304
-msgid "Encoding:"
-msgstr ""
-
-#: gaupol/page.py:305
-msgid "Newlines:"
-msgstr "שורות חדשות:"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
@@ -572,22 +824,6 @@ msgstr ""
 msgid "Join or Split Words"
 msgstr "צירוף או פיצול מילים"
 
-#: gaupol/assistants.py:599 gaupol/agents/tools.py:45
-msgid "Failed to load dictionary for language \"{}\""
-msgstr "ארע כשל בטעינת המילון עבור השפה״{}״"
-
-#: gaupol/assistants.py:601 gaupol/player.py:263 gaupol/player.py:381
-#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
-#: gaupol/dialogs/text_edit.py:49 gaupol/dialogs/encoding.py:56
-#: gaupol/agents/open.py:328 gaupol/agents/open.py:337
-#: gaupol/agents/open.py:345 gaupol/agents/open.py:354
-#: gaupol/agents/tools.py:48 gaupol/agents/save.py:197
-#: gaupol/agents/save.py:205 gaupol/agents/preview.py:108
-#: gaupol/agents/preview.py:116 gaupol/agents/preview.py:125
-#: gaupol/agents/preview.py:133
-msgid "_OK"
-msgstr ""
-
 #: gaupol/assistants.py:635
 msgid "Break text into lines of defined length"
 msgstr "שבירת טקסט לשורות באורך המוגדר"
@@ -669,515 +905,6 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: gaupol/renderers/multiline.py:86
-msgid "Italic"
-msgstr ""
-
-#: gaupol/player.py:372
-msgid "No video streams found"
-msgstr ""
-
-#: gaupol/player.py:379
-msgid "Failed to initialize playback"
-msgstr ""
-
-#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:524
-msgid "_Help"
-msgstr "ע_זרה"
-
-#: gaupol/dialogs/search.py:471
-msgid "Found and replaced {:d} occurence"
-msgid_plural "Found and replaced {:d} occurences"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: gaupol/dialogs/search.py:488
-msgid "\"{}\" not found"
-msgstr "״{}״ לא נמצא"
-
-#: gaupol/dialogs/search.py:558
-msgid "Error in regular expression pattern"
-msgstr "שגיאה בתבנית הביטוי הרגולרי"
-
-#: gaupol/dialogs/search.py:566
-msgid "Error in regular expression replacement"
-msgstr "שגיאה בהחלפת הביטוי הרגולרי"
-
-#: gaupol/dialogs/text_edit.py:48 gaupol/dialogs/framerate_convert.py:63
-#: gaupol/dialogs/insert.py:44 gaupol/dialogs/encoding.py:55
-#: gaupol/dialogs/split.py:44 gaupol/dialogs/multi_close.py:54
-#: gaupol/dialogs/open.py:63 gaupol/dialogs/position_transform.py:69
-#: gaupol/dialogs/position_shift.py:71 gaupol/dialogs/multi_save.py:83
-#: gaupol/dialogs/multi_save.py:215 gaupol/dialogs/duration_adjust.py:86
-#: gaupol/dialogs/save.py:73 gaupol/dialogs/video.py:41
-#: gaupol/agents/open.py:363 gaupol/agents/open.py:375
-#: gaupol/agents/open.py:387 gaupol/agents/close.py:71
-#: data/extensions/custom-framerates/custom-framerates.py:39
-msgid "_Cancel"
-msgstr ""
-
-#: gaupol/dialogs/text_edit.py:53
-msgid "Edit Text"
-msgstr "עריכת טקסט"
-
-#: gaupol/dialogs/framerate_convert.py:64
-msgid "Co_nvert"
-msgstr "ה_מרה"
-
-#: gaupol/dialogs/insert.py:45
-msgid "_Insert"
-msgstr "הו_ספה"
-
-#: gaupol/dialogs/insert.py:54
-msgid "Above selection"
-msgstr "מעל לבחירה"
-
-#: gaupol/dialogs/insert.py:55
-msgid "Below selection"
-msgstr "מתחת לבחירה"
-
-#: gaupol/dialogs/encoding.py:60 data/ui/preferences-dialog.ui:70
-msgid "Character Encodings"
-msgstr "קידוד תווים"
-
-#: gaupol/dialogs/encoding.py:78 gaupol/dialogs/encoding.py:125
-msgid "Description"
-msgstr "תיאור"
-
-#: gaupol/dialogs/encoding.py:85 gaupol/dialogs/encoding.py:132
-msgid "Encoding"
-msgstr "קידוד"
-
-#: gaupol/dialogs/encoding.py:141
-msgid "Show in Menu"
-msgstr "הצגה בתפריט"
-
-#: gaupol/dialogs/split.py:45
-msgid "_Split"
-msgstr "_פיצול"
-
-#: gaupol/dialogs/split.py:76
-msgid "Splitting project"
-msgstr "פיצול מיזם"
-
-#: gaupol/dialogs/split.py:97
-#, python-brace-format
-msgid "Split {amount:d} subtitles to project \"{name}\""
-msgstr "פיצול {amount:d} כתוביות למיזם {name}"
-
-#: gaupol/dialogs/spell_check.py:269
-msgid "Spell-checking"
-msgstr "בדיקת איות"
-
-#: gaupol/dialogs/preferences.py:217
-msgid "{} Extension Website"
-msgstr "אתר ההרחבות {}"
-
-#: gaupol/dialogs/preferences.py:429
-msgid "Custom"
-msgstr "התאמה אישית"
-
-#: gaupol/dialogs/multi_close.py:38
-msgid "Save changes to documents before closing?"
-msgstr "האם לשמור את השינויים למסמכים בטרם הסגירה?"
-
-#: gaupol/dialogs/multi_close.py:39 gaupol/agents/open.py:384
-#: gaupol/agents/close.py:68
-msgid "If you don't save, changes will be permanently lost."
-msgstr "אם השינויים לא ישמרו, הם יאבדו לעד."
-
-#: gaupol/dialogs/multi_close.py:53 gaupol/agents/close.py:70
-msgid "Close _Without Saving"
-msgstr "סגירה _ללא שמירה"
-
-#: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/multi_save.py:84
-#: gaupol/dialogs/save.py:74 gaupol/agents/open.py:388
-#: gaupol/agents/close.py:72 data/ui/menubar.ui:34
-msgid "_Save"
-msgstr "_שמירה"
-
-#: gaupol/dialogs/multi_close.py:70
-msgid "Select the _main documents you want to save:"
-msgstr "נא לבחור את המסמכים ה_ראשיים שברצונך לשמור:"
-
-#: gaupol/dialogs/multi_close.py:95
-msgid "Select the _translation documents you want to save:"
-msgstr "נא לבחור את מסמכים ה_תרגום שברצונך לשמור:"
-
-#: gaupol/dialogs/open.py:64 gaupol/agents/open.py:364
-#: gaupol/agents/open.py:376
-msgid "_Open"
-msgstr ""
-
-#: gaupol/dialogs/position_transform.py:70
-msgid "_Transform"
-msgstr "ה_חלפה"
-
-#: gaupol/dialogs/position_shift.py:72
-msgid "_Shift"
-msgstr "ה_זזה"
-
-#: gaupol/dialogs/position_shift.py:150
-msgid "frames"
-msgstr "שקופיות"
-
-#: gaupol/dialogs/position_shift.py:168 data/ui/preferences-dialog.ui:911
-msgid "seconds"
-msgstr "שניות"
-
-#: gaupol/dialogs/about.py:36
-msgid "About Gaupol"
-msgstr "על אודות Gaupol"
-
-#: gaupol/dialogs/about.py:40
-msgid "Subtitle editor"
-msgstr "עורך הכתוביות"
-
-#. TRANSLATORS: This is a special message that shouldn't be translated
-#. literally. It is used in the about dialog to give credits to the
-#. translators. Thus, you should translate it to your name and email
-#. address. You can also include other translators who have contributed
-#. to this translation; in that case, please write them on separate
-#. lines seperated by newlines (\n).
-#: gaupol/dialogs/about.py:51
-msgid "translator-credits"
-msgstr "ירון שהרבני <sh.yaron@gmail.com>"
-
-#: gaupol/dialogs/about.py:54
-msgid "Gaupol Website"
-msgstr "האתר של Gaupol"
-
-#: gaupol/dialogs/append.py:35
-msgid "Append File"
-msgstr "הוספת קובץ"
-
-#: gaupol/dialogs/debug.py:44
-msgid "Something went wrong"
-msgstr ""
-
-#: gaupol/dialogs/debug.py:45
-msgid ""
-"You have probably discovered a bug. Please report it by providing the below "
-"information and a description of what you were doing."
-msgstr ""
-
-#: gaupol/dialogs/debug.py:53
-msgid "_Report Bug"
-msgstr ""
-
-#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
-msgid "_Quit"
-msgstr "י_ציאה"
-
-#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
-#: data/ui/menubar.ui:52 data/ui/tab-popup.ui:16
-msgid "_Close"
-msgstr "_סגירה"
-
-#: gaupol/dialogs/multi_save.py:98 gaupol/dialogs/save.py:110
-msgid "{} (recommended)"
-msgstr ""
-
-#: gaupol/dialogs/multi_save.py:212
-msgid ""
-"{:d} of the files to be saved already exist. Do you want to replace them?"
-msgstr "{:d} מתוך הקבצים לשמירה כבר קיימים. האם ברצונך להחליף אותם?"
-
-#: gaupol/dialogs/multi_save.py:213
-msgid ""
-"The files already exist in \"{}\". Replacing them will overwrite their "
-"contents."
-msgstr "הקבצים כבר קיימים תחת ״{}״. החלפתם תשכתב על תוכנם."
-
-#: gaupol/dialogs/multi_save.py:216 data/ui/search-dialog.ui:192
-#: data/ui/spell-check-dialog.ui:122
-msgid "_Replace"
-msgstr "ה_חלפה"
-
-#: gaupol/dialogs/duration_adjust.py:70
-msgid "Adjusted duration of {:d} subtitle"
-msgid_plural "Adjusted durations of {:d} subtitles"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: gaupol/dialogs/duration_adjust.py:87
-msgid "_Adjust"
-msgstr "ה_תאמה"
-
-#: gaupol/dialogs/preview_error.py:36
-msgid "Preview in video player failed"
-msgstr "התצוגה המקדימה בנגן הווידאו נכשלה"
-
-#: gaupol/dialogs/preview_error.py:37
-msgid ""
-"There is probably a problem with either the video file or the video player. "
-"See the preferences dialog to choose the video player or to customize the "
-"command."
-msgstr ""
-
-#: gaupol/dialogs/language.py:97
-msgid "Set Language"
-msgstr "הגדרת שפה"
-
-#: gaupol/dialogs/video.py:52 gaupol/dialogs/file.py:59
-msgid "All files"
-msgstr "כל הקבצים"
-
-#: gaupol/dialogs/video.py:56
-msgid "Video files"
-msgstr "קובצי וידאו"
-
-#: gaupol/dialogs/file.py:63
-msgid "All supported files"
-msgstr "כל הקבצים הנתמכים"
-
-#: gaupol/dialogs/file.py:77
-#, python-brace-format
-msgid "{format} (*{extension})"
-msgstr ""
-
-#: gaupol/dialogs/file.py:120
-msgid "Auto-detected"
-msgstr "זיהוי אוטומטי"
-
-#: gaupol/dialogs/file.py:122
-msgid "Other…"
-msgstr "אחר…"
-
-#: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
-#: gaupol/agents/menu.py:110
-msgid "File not found"
-msgstr ""
-
-#: gaupol/agents/open.py:85
-#, python-brace-format
-msgid "Appended {amount:d} subtitles from \"{basename}\""
-msgstr "האם להוסיף {amount:d} כתוביות מ־״{basename}״"
-
-#: gaupol/agents/open.py:96
-msgid "Appending file"
-msgstr "הקובץ מתווסף"
-
-#: gaupol/agents/open.py:111
-msgid "File \"{}\" is already open"
-msgstr "הקובץ ״{}״ כבר פתוח"
-
-#: gaupol/agents/open.py:214
-msgid "Open Translation"
-msgstr "פתיחת תרגום"
-
-#: gaupol/agents/open.py:223
-msgid "Select Video"
-msgstr "בחירת וידאו"
-
-#: gaupol/agents/open.py:224
-msgid "_Select"
-msgstr "_בחירה"
-
-#: gaupol/agents/open.py:325
-msgid "Failed to decode file \"{}\" with all attempted codecs"
-msgstr "ארע כשל בפענוח הקובץ ״{}״ עם כל המקודדים שנוסו"
-
-#: gaupol/agents/open.py:326
-msgid "Please try to open the file with a different character encoding."
-msgstr "נא לנסות לפתוח את הקובץ עם קידוד תווים שונה."
-
-#: gaupol/agents/open.py:334
-msgid "Failed to recognize format of file \"{}\""
-msgstr "ארע כשל בזיהוי מבנה הקובץ ״{}״"
-
-#: gaupol/agents/open.py:335
-msgid ""
-"Please check that the file you are trying to open is a subtitle file of a "
-"format supported by Gaupol."
-msgstr "נא לבדוק שהקובץ המועמד לפתיחה הוא מסוג קובץ הנתמך על ידי Gaupol."
-
-#: gaupol/agents/open.py:343
-msgid "Failed to open file \"{}\""
-msgstr "ארע כשל בפתיחת הקובץ ״{}״"
-
-#: gaupol/agents/open.py:351
-msgid "Failed to parse file \"{}\""
-msgstr "ארע כשל בפענוח הקובץ ״{}״"
-
-#: gaupol/agents/open.py:352
-msgid "Please check that the file you are trying to open is a valid {} file."
-msgstr ""
-
-#: gaupol/agents/open.py:360
-msgid "Open abnormally large file \"{}\"?"
-msgstr "האם לפתוח את הקובץ הגדול באופן חריג ״{}״?"
-
-#: gaupol/agents/open.py:361
-msgid ""
-"Size of the file is {:.1f} MB, which is abnormally large for a text-based "
-"subtitle file. Please, check that you are not trying to open a binary file."
-msgstr ""
-"גודל הקובץ הוא {:.1f} מ״ב, שזהו גודל גדול באופן חריג עבור קובץ כתוביות מבוסס"
-" טקסט. נא לבדוק שזהו אינו קובץ בינרי."
-
-#: gaupol/agents/open.py:371
-msgid "Open unsorted file \"{}\"?"
-msgstr "האם לפתוח את הקובץ הבלתי ממוין ״{}״?"
-
-#: gaupol/agents/open.py:372
-msgid ""
-"The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
-"the file may be erroneously composed."
-msgstr ""
-"יש לשנות את סדרן של {:d} כתוביות. אם {:d} נשמע כמו הרבה, יתכן שהקובץ הורכב "
-"בצורה לא נכונה."
-
-#: gaupol/agents/open.py:383
-msgid "Save changes to translation document \"{}\" before opening a new one?"
-msgstr "האם לשמור את השינויים למסמך התרגום ״{}״ לפני פתיחת מסמך חדש?"
-
-#: gaupol/agents/open.py:386
-msgid "Open _Without Saving"
-msgstr "פתיחה _ללא שמירה"
-
-#: gaupol/agents/close.py:66
-msgid "Save changes to document \"{}\" before closing?"
-msgstr ""
-
-#: gaupol/agents/edit.py:101 gaupol/agents/edit.py:119
-msgid "Stretching end position"
-msgstr ""
-
-#: gaupol/agents/edit.py:208
-msgid "Inserted {:d} subtitle to fit clipboard contents"
-msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-
-#: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
-msgid "Stretching start position"
-msgstr ""
-
-#: gaupol/agents/edit.py:411
-msgid "Use Shift+Return for line-break"
-msgstr "שימוש ב־Shift+אנטר כדי לשבור שורות"
-
-#: gaupol/agents/save.py:129
-msgid "Save As"
-msgstr "שמירה בשם"
-
-#: gaupol/agents/save.py:135
-msgid "Saved main document as \"{}\""
-msgstr "המסמך הראשי נשמר בשם ״{}״"
-
-#: gaupol/agents/save.py:153
-msgid "Save Translation As"
-msgstr "שמירת התרגום בשם"
-
-#: gaupol/agents/save.py:159
-msgid "Saved translation document as \"{}\""
-msgstr "מסמך התרגום נשמר בשם ״{}״"
-
-#: gaupol/agents/save.py:194
-#, python-brace-format
-msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr "ארע כשל בקידוד הקובץ ״{basename}״ באמצעות המפענח ״{codec}״"
-
-#: gaupol/agents/save.py:195
-msgid "Please try to save the file with a different character encoding."
-msgstr "נא לנסות לשמור את הקובץ בקידוד תווים שונה."
-
-#: gaupol/agents/save.py:203
-msgid "Failed to save file \"{}\""
-msgstr "ארע כשל בשמירת הקובץ ״{}״"
-
-#: gaupol/agents/video.py:67 data/ui/menubar.ui:380
-msgid "_Play/Pause"
-msgstr ""
-
-#: gaupol/agents/video.py:69
-msgid "Play or pause video"
-msgstr ""
-
-#: gaupol/agents/video.py:75 data/ui/menubar.ui:390
-msgid "Seek _Previous"
-msgstr ""
-
-#: gaupol/agents/video.py:77
-msgid "Seek to the start of the previous subtitle"
-msgstr ""
-
-#: gaupol/agents/video.py:81 data/ui/menubar.ui:394
-msgid "Seek _Next"
-msgstr ""
-
-#: gaupol/agents/video.py:83
-msgid "Seek to the start of the next subtitle"
-msgstr ""
-
-#: gaupol/agents/video.py:88 data/ui/menubar.ui:400
-msgid "Seek _Backward"
-msgstr ""
-
-#: gaupol/agents/video.py:90
-msgid "Seek backward"
-msgstr ""
-
-#: gaupol/agents/video.py:94 data/ui/menubar.ui:404
-msgid "Seek _Forward"
-msgstr ""
-
-#: gaupol/agents/video.py:96
-msgid "Seek forward"
-msgstr ""
-
-#: gaupol/agents/video.py:109
-msgid "Volume"
-msgstr ""
-
-#: gaupol/agents/video.py:189
-msgid "Load Video"
-msgstr ""
-
-#: gaupol/agents/video.py:189
-msgid "_Load"
-msgstr ""
-
-#: gaupol/agents/video.py:361
-msgid "Track {:d}"
-msgstr ""
-
-#: gaupol/agents/preview.py:105
-msgid "Failed to encode subtitle file to temporary directory \"{}\""
-msgstr "ארע כשל בקידוד קובץ הכתוביות אל התיקייה הזמנית ״{}״"
-
-#: gaupol/agents/preview.py:106
-msgid ""
-"Subtitle data could not be encoded to a temporary file for preview with the "
-"current character encoding. Please first save the subtitle file with a "
-"different character encoding."
-msgstr ""
-"לא ניתן לקודד את נתוני הכתוביות לקובץ זמני לתצוגה מקדימה עם קידוד התווים "
-"הנבחר. נא לשנות תחילה את קובץ הכתוביות לקידוד תווים שונה."
-
-#: gaupol/agents/preview.py:114
-msgid "Failed to save subtitle file to temporary directory \"{}\""
-msgstr "ארע כשל בשמירת קובץ הכתוביות לתיקייה הזמנית ״{}״"
-
-#: gaupol/agents/preview.py:122
-msgid "Video player not found"
-msgstr ""
-
-#: gaupol/agents/preview.py:123
-msgid ""
-"Please install one of the supported video players: mpv (recommended), "
-"MPlayer or VLC. See the preferences dialog to choose the video player or to "
-"customize the command."
-msgstr ""
-
-#: gaupol/agents/preview.py:131
-msgid "Failed to launch video player"
-msgstr "ארע כשל בהפעלת נגן הווידאו"
-
 #: gaupol/applicationman.py:105
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPTION...] [FILE...] [+[NUM]]"
@@ -1222,13 +949,294 @@ msgstr "method used to align translation subtitles: 'number' or 'position'"
 msgid "select video file"
 msgstr "select video file"
 
-#: data/extensions/custom-framerates/custom-framerates.py:40
-#: data/ui/spell-check-dialog.ui:152
-msgid "_Add"
+#: gaupol/enums.py:37
+msgid "No."
+msgstr "מס׳"
+
+#: gaupol/enums.py:43
+msgid "Start"
+msgstr "התחלה"
+
+#: gaupol/enums.py:44
+msgid "Start position"
+msgstr "מיקום ההתחלה"
+
+#: gaupol/enums.py:49
+msgid "End"
+msgstr "סוף"
+
+#: gaupol/enums.py:50
+msgid "End position"
+msgstr "מיקום הסוף"
+
+#. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
+#. of a column that contains numbers five digits wide.
+#: gaupol/enums.py:57
+msgid "Dur."
+msgstr "משך"
+
+#: gaupol/enums.py:58
+msgid "Duration"
+msgstr "משך"
+
+#: gaupol/enums.py:63 gaupol/enums.py:64
+msgid "Text"
+msgstr ""
+
+#: gaupol/enums.py:69 gaupol/enums.py:70
+msgid "Translation"
+msgstr ""
+
+#: gaupol/enums.py:82
+msgid "characters"
+msgstr "תווים"
+
+#: gaupol/enums.py:85
+msgid "ems"
+msgstr "ems"
+
+#: gaupol/dialogs/debug.py:44
+msgid "Something went wrong"
+msgstr ""
+
+#: gaupol/dialogs/debug.py:45
+msgid ""
+"You have probably discovered a bug. Please report it by providing the below "
+"information and a description of what you were doing."
+msgstr ""
+
+#: gaupol/dialogs/debug.py:53
+msgid "_Report Bug"
+msgstr ""
+
+#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
+msgid "_Quit"
+msgstr "י_ציאה"
+
+#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
+#: data/ui/tab-popup.ui:16 data/ui/menubar.ui:52
+msgid "_Close"
+msgstr "_סגירה"
+
+#: gaupol/dialogs/multi_close.py:38
+msgid "Save changes to documents before closing?"
+msgstr "האם לשמור את השינויים למסמכים בטרם הסגירה?"
+
+#: gaupol/dialogs/multi_close.py:70
+msgid "Select the _main documents you want to save:"
+msgstr "נא לבחור את המסמכים ה_ראשיים שברצונך לשמור:"
+
+#: gaupol/dialogs/multi_close.py:95
+msgid "Select the _translation documents you want to save:"
+msgstr "נא לבחור את מסמכים ה_תרגום שברצונך לשמור:"
+
+#: gaupol/dialogs/split.py:45
+msgid "_Split"
+msgstr "_פיצול"
+
+#: gaupol/dialogs/split.py:76
+msgid "Splitting project"
+msgstr "פיצול מיזם"
+
+#: gaupol/dialogs/split.py:97
+#, python-brace-format
+msgid "Split {amount:d} subtitles to project \"{name}\""
+msgstr "פיצול {amount:d} כתוביות למיזם {name}"
+
+#: gaupol/dialogs/encoding.py:60 data/ui/preferences-dialog.ui:70
+msgid "Character Encodings"
+msgstr "קידוד תווים"
+
+#: gaupol/dialogs/encoding.py:78 gaupol/dialogs/encoding.py:125
+msgid "Description"
+msgstr "תיאור"
+
+#: gaupol/dialogs/encoding.py:85 gaupol/dialogs/encoding.py:132
+msgid "Encoding"
+msgstr "קידוד"
+
+#: gaupol/dialogs/encoding.py:141
+msgid "Show in Menu"
+msgstr "הצגה בתפריט"
+
+#: gaupol/dialogs/spell_check.py:269
+msgid "Spell-checking"
+msgstr "בדיקת איות"
+
+#: gaupol/dialogs/save.py:110 gaupol/dialogs/multi_save.py:98
+msgid "{} (recommended)"
+msgstr ""
+
+#: gaupol/dialogs/file.py:59 gaupol/dialogs/video.py:52
+msgid "All files"
+msgstr "כל הקבצים"
+
+#: gaupol/dialogs/file.py:63
+msgid "All supported files"
+msgstr "כל הקבצים הנתמכים"
+
+#: gaupol/dialogs/file.py:77
+#, python-brace-format
+msgid "{format} (*{extension})"
+msgstr ""
+
+#: gaupol/dialogs/file.py:120
+msgid "Auto-detected"
+msgstr "זיהוי אוטומטי"
+
+#: gaupol/dialogs/file.py:122
+msgid "Other…"
+msgstr "אחר…"
+
+#: gaupol/dialogs/multi_save.py:212
+msgid ""
+"{:d} of the files to be saved already exist. Do you want to replace them?"
+msgstr "{:d} מתוך הקבצים לשמירה כבר קיימים. האם ברצונך להחליף אותם?"
+
+#: gaupol/dialogs/multi_save.py:213
+msgid ""
+"The files already exist in \"{}\". Replacing them will overwrite their "
+"contents."
+msgstr "הקבצים כבר קיימים תחת ״{}״. החלפתם תשכתב על תוכנם."
+
+#: gaupol/dialogs/multi_save.py:216 data/ui/spell-check-dialog.ui:122
+#: data/ui/search-dialog.ui:192
+msgid "_Replace"
+msgstr "ה_חלפה"
+
+#: gaupol/dialogs/language.py:97
+msgid "Set Language"
+msgstr "הגדרת שפה"
+
+#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:524
+msgid "_Help"
+msgstr "ע_זרה"
+
+#: gaupol/dialogs/search.py:471
+msgid "Found and replaced {:d} occurence"
+msgid_plural "Found and replaced {:d} occurences"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: gaupol/dialogs/search.py:488
+msgid "\"{}\" not found"
+msgstr "״{}״ לא נמצא"
+
+#: gaupol/dialogs/search.py:558
+msgid "Error in regular expression pattern"
+msgstr "שגיאה בתבנית הביטוי הרגולרי"
+
+#: gaupol/dialogs/search.py:566
+msgid "Error in regular expression replacement"
+msgstr "שגיאה בהחלפת הביטוי הרגולרי"
+
+#: gaupol/dialogs/framerate_convert.py:64
+msgid "Co_nvert"
+msgstr "ה_מרה"
+
+#: gaupol/dialogs/preview_error.py:36
+msgid "Preview in video player failed"
+msgstr "התצוגה המקדימה בנגן הווידאו נכשלה"
+
+#: gaupol/dialogs/preview_error.py:37
+msgid ""
+"There is probably a problem with either the video file or the video player. "
+"See the preferences dialog to choose the video player or to customize the "
+"command."
+msgstr ""
+
+#: gaupol/dialogs/preferences.py:217
+msgid "{} Extension Website"
+msgstr "אתר ההרחבות {}"
+
+#: gaupol/dialogs/preferences.py:429
+msgid "Custom"
+msgstr "התאמה אישית"
+
+#: gaupol/dialogs/position_shift.py:72
+msgid "_Shift"
+msgstr "ה_זזה"
+
+#: gaupol/dialogs/position_shift.py:150
+msgid "frames"
+msgstr "שקופיות"
+
+#: gaupol/dialogs/position_shift.py:168 data/ui/preferences-dialog.ui:911
+msgid "seconds"
+msgstr "שניות"
+
+#: gaupol/dialogs/duration_adjust.py:70
+msgid "Adjusted duration of {:d} subtitle"
+msgid_plural "Adjusted durations of {:d} subtitles"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: gaupol/dialogs/duration_adjust.py:87
+msgid "_Adjust"
+msgstr "ה_תאמה"
+
+#: gaupol/dialogs/about.py:36
+msgid "About Gaupol"
+msgstr "על אודות Gaupol"
+
+#: gaupol/dialogs/about.py:40
+msgid "Subtitle editor"
+msgstr "עורך הכתוביות"
+
+#. TRANSLATORS: This is a special message that shouldn't be translated
+#. literally. It is used in the about dialog to give credits to the
+#. translators. Thus, you should translate it to your name and email
+#. address. You can also include other translators who have contributed
+#. to this translation; in that case, please write them on separate
+#. lines seperated by newlines (\n).
+#: gaupol/dialogs/about.py:51
+msgid "translator-credits"
+msgstr "ירון שהרבני <sh.yaron@gmail.com>"
+
+#: gaupol/dialogs/about.py:54
+msgid "Gaupol Website"
+msgstr "האתר של Gaupol"
+
+#: gaupol/dialogs/video.py:56
+msgid "Video files"
+msgstr "קובצי וידאו"
+
+#: gaupol/dialogs/insert.py:45
+msgid "_Insert"
 msgstr "הו_ספה"
 
-#: data/extensions/custom-framerates/custom-framerates.py:171
-msgid "{:.3f} fps"
+#: gaupol/dialogs/insert.py:54
+msgid "Above selection"
+msgstr "מעל לבחירה"
+
+#: gaupol/dialogs/insert.py:55
+msgid "Below selection"
+msgstr "מתחת לבחירה"
+
+#: gaupol/dialogs/append.py:35
+msgid "Append File"
+msgstr "הוספת קובץ"
+
+#: gaupol/dialogs/position_transform.py:70
+msgid "_Transform"
+msgstr "ה_חלפה"
+
+#: gaupol/dialogs/text_edit.py:53
+msgid "Edit Text"
+msgstr "עריכת טקסט"
+
+#: gaupol/renderers/multiline.py:86
+msgid "Italic"
+msgstr ""
+
+#: data/extensions/custom-framerates/preferences-dialog.ui:8
+msgid "Framerates"
+msgstr ""
+
+#: data/extensions/custom-framerates/preferences-dialog.ui:64
+msgid "Add"
 msgstr ""
 
 #: data/extensions/custom-framerates/add-framerate-dialog.ui:13
@@ -1243,555 +1251,43 @@ msgstr ""
 msgid "fps"
 msgstr ""
 
-#: data/extensions/custom-framerates/preferences-dialog.ui:8
-msgid "Framerates"
-msgstr ""
-
-#: data/extensions/custom-framerates/preferences-dialog.ui:64
-msgid "Add"
-msgstr ""
-
-#: data/ui/columns-popup.ui:6 data/ui/menubar.ui:275
-msgid "_No."
-msgstr "_מס׳"
-
-#: data/ui/columns-popup.ui:10 data/ui/menubar.ui:279
-msgid "_Start"
-msgstr "ה_תחלה"
-
-#: data/ui/columns-popup.ui:14 data/ui/menubar.ui:283
-msgid "_End"
-msgstr "_סוף"
-
-#: data/ui/columns-popup.ui:18 data/ui/menubar.ui:287
-msgid "_Duration"
-msgstr "_פרק הזמן"
-
-#: data/ui/columns-popup.ui:22 data/ui/menubar.ui:291 data/ui/menubar.ui:303
-msgid "_Text"
-msgstr "_טקסט"
-
-#: data/ui/columns-popup.ui:26 data/ui/menubar.ui:295
-msgid "T_ranslation"
-msgstr ""
-
-#: data/ui/split-dialog.ui:15
-msgid "Split Project"
-msgstr "פיצול מיזם"
-
-#: data/ui/split-dialog.ui:48
-msgid "_First subtitle of new project:"
-msgstr "הכתובית ה_ראשונה של המיזם החדש:"
-
-#: data/ui/search-dialog.ui:89
-msgid "_Search for:"
-msgstr "חיפוש _אחר:"
-
-#: data/ui/search-dialog.ui:103 data/ui/spell-check-dialog.ui:193
-msgid "Replace _with:"
-msgstr "החלפה _ב־:"
-
-#: data/ui/search-dialog.ui:162 data/ui/menubar.ui:328
-msgid "Find _Next"
-msgstr "חיפוש ה_בא"
-
-#: data/ui/search-dialog.ui:177
-msgid "Find _Previous"
-msgstr "חיפוש ה_קודם"
-
-#: data/ui/search-dialog.ui:207
-msgid "Replace _All"
-msgstr "החלפת ה_כול"
-
-#: data/ui/search-dialog.ui:241
-msgid "R_egular expression"
-msgstr "ביטוי ר_גולרי"
-
-#: data/ui/search-dialog.ui:258
-msgid "_Ignore case"
-msgstr "ה_תעלמות מהבדלי רשיות"
-
-#: data/ui/search-dialog.ui:304 data/ui/language-dialog.ui:108
-msgid "Columns"
-msgstr "עמודות"
-
-#: data/ui/search-dialog.ui:324
-msgid "Find in _text column"
-msgstr ""
-
-#: data/ui/search-dialog.ui:341
-msgid "Find in t_ranslation column"
-msgstr ""
-
-#: data/ui/search-dialog.ui:381 data/ui/framerate-convert-dialog.ui:144
-#: data/ui/language-dialog.ui:186
-#: data/ui/text-assistant/line-break-options-page.ui:178
-#: data/ui/duration-adjust-dialog.ui:388 data/ui/position-shift-dialog.ui:180
-#: data/ui/position-transform-dialog.ui:444
-msgid "Subtitles"
-msgstr "כתוביות"
-
-#: data/ui/search-dialog.ui:401
-msgid "Find in c_urrent project"
-msgstr "חיפוש במיזם ה_נוכחי"
-
-#: data/ui/search-dialog.ui:419
-msgid "Find in _all open projects"
-msgstr "חיפוש ב_כול המיזמים הפתוחים"
-
-#: data/ui/search-dialog.ui:452
-msgid "Target"
-msgstr "יעד"
-
-#: data/ui/framerate-convert-dialog.ui:8
-msgid "Convert Framerate"
-msgstr "קצב השקופיות להמרה"
-
-#: data/ui/framerate-convert-dialog.ui:48
-msgid "Framerate"
-msgstr "קצב שקופיות"
-
-#: data/ui/framerate-convert-dialog.ui:71
-msgid "_Input:"
-msgstr "_קלט:"
-
-#: data/ui/framerate-convert-dialog.ui:86
-msgid "_Output:"
-msgstr "_פלט:"
-
-#: data/ui/framerate-convert-dialog.ui:164
-msgid "Convert c_urrent project"
-msgstr "המרת המיזם ה_נוכחי"
-
-#: data/ui/framerate-convert-dialog.ui:181
-msgid "Convert _all open projects"
-msgstr "המרת _כל המיזמים הפתוחים"
-
-#: data/ui/spell-check-dialog.ui:8
-msgid "Check Spelling"
-msgstr "בדיקת איות"
-
-#: data/ui/spell-check-dialog.ui:47
-msgid "Join _Back"
-msgstr "_צירוף בחזרה"
-
-#: data/ui/spell-check-dialog.ui:62
-msgid "Join _Forward"
-msgstr "צירוף _קדימה"
-
-#: data/ui/spell-check-dialog.ui:77 data/ui/menubar.ui:62
-msgid "_Edit"
-msgstr "_עריכה"
-
-#: data/ui/spell-check-dialog.ui:92
-msgid "_Ignore"
-msgstr "הת_עלמות"
-
-#: data/ui/spell-check-dialog.ui:107
-msgid "Ig_nore All"
-msgstr "ה_תעלמות מהכול"
-
-#: data/ui/spell-check-dialog.ui:137
-msgid "Rep_lace All"
-msgstr "הח_לפת הכול"
-
-#: data/ui/spell-check-dialog.ui:179
-msgid "_Suggestions:"
-msgstr "ה_צעות:"
-
-#: data/ui/multi-save-dialog.ui:8
-msgid "Save All As"
-msgstr "שמירת הכול בשם"
-
-#: data/ui/multi-save-dialog.ui:46
-msgid "Save in _folder:"
-msgstr "שמירה ב_תיקייה:"
-
-#: data/ui/multi-save-dialog.ui:60 data/ui/save-dialog.ui:25
-msgid "For_mat:"
-msgstr "מ_בנה:"
-
-#: data/ui/multi-save-dialog.ui:74 data/ui/open-dialog.ui:25
-#: data/ui/save-dialog.ui:39
+#: data/ui/open-dialog.ui:25 data/ui/save-dialog.ui:39
+#: data/ui/multi-save-dialog.ui:74
 msgid "_Encoding:"
 msgstr ""
-
-#: data/ui/multi-save-dialog.ui:88 data/ui/save-dialog.ui:53
-msgid "Ne_wlines:"
-msgstr "שורות _חדשות:"
-
-#: data/ui/multi-save-dialog.ui:103
-msgid "Select A Folder"
-msgstr "בחירת תיקייה"
-
-#: data/ui/multi-save-dialog.ui:150 data/ui/save-dialog.ui:102
-msgid "F_ramerate:"
-msgstr ""
-
-#: data/ui/menubar.ui:5
-msgid "_File"
-msgstr "_קובץ"
-
-#: data/ui/menubar.ui:8
-msgid "_New"
-msgstr "_חדש"
-
-#: data/ui/menubar.ui:12
-msgid "_Open…"
-msgstr "_פתיחה…"
-
-#: data/ui/menubar.ui:16
-msgid "Open _Translation…"
-msgstr "פתיחת _תרגום…"
-
-#: data/ui/menubar.ui:22
-msgid "Open _Recent"
-msgstr "שנפתחו ל_אחרונה"
-
-#: data/ui/menubar.ui:27
-msgid "Open R_ecent Translation"
-msgstr "פתיחת תר_גומים שנפתחו לאחרונה"
-
-#: data/ui/menubar.ui:38
-msgid "Save _As…"
-msgstr "שמירה _בשם…"
-
-#: data/ui/menubar.ui:42
-msgid "Save Trans_lation"
-msgstr "שמירת הת_רגום"
-
-#: data/ui/menubar.ui:46
-msgid "Save Translat_ion As…"
-msgstr "שמירת ה_תרגום בשם…"
-
-#: data/ui/menubar.ui:65
-msgid "_Undo"
-msgstr "_ביטול"
-
-#: data/ui/menubar.ui:69
-msgid "_Redo"
-msgstr "בי_צוע מחדש"
-
-#: data/ui/menubar.ui:75
-msgid "_Edit Cell"
-msgstr "עריכת _תא"
-
-#: data/ui/menubar.ui:79
-msgid "Edit _Next Cell"
-msgstr "עריכת התא ה_בא"
-
-#: data/ui/menubar.ui:85
-msgid "Stretc_h"
-msgstr ""
-
-#: data/ui/menubar.ui:88
-msgid "_Start Earlier"
-msgstr ""
-
-#: data/ui/menubar.ui:92
-msgid "S_tart Later"
-msgstr ""
-
-#: data/ui/menubar.ui:98
-msgid "E_nd Earlier"
-msgstr ""
-
-#: data/ui/menubar.ui:102
-msgid "En_d Later"
-msgstr ""
-
-#: data/ui/menubar.ui:108
-msgid "Set St_art From Video Position"
-msgstr ""
-
-#: data/ui/menubar.ui:112
-msgid "Set En_d From Video Position"
-msgstr ""
-
-#: data/ui/menubar.ui:118 data/ui/view-popup.ui:6
-msgid "_Split Subtitle"
-msgstr "_פיצול כתובית"
-
-#: data/ui/menubar.ui:122 data/ui/view-popup.ui:10
-msgid "_Merge Subtitles"
-msgstr "_מיזוג כתוביות"
-
-#: data/ui/menubar.ui:128 data/ui/view-popup.ui:16
-msgid "_Insert Subtitles…"
-msgstr "הו_ספת כתוביות…"
-
-#: data/ui/menubar.ui:132
-msgid "Inser_t Subtitle At Video Position"
-msgstr ""
-
-#: data/ui/menubar.ui:136 data/ui/view-popup.ui:20
-msgid "Rem_ove Subtitles"
-msgstr "ה_סרת כתוביות"
-
-#: data/ui/menubar.ui:142
-msgid "Sele_ction"
-msgstr "_בחירה"
-
-#: data/ui/menubar.ui:145
-msgid "Select _All"
-msgstr "בחירת ה_כול"
-
-#: data/ui/menubar.ui:149
-msgid "_Invert Selection"
-msgstr "ה_פיכת הבחירה"
-
-#: data/ui/menubar.ui:155
-msgid "Extend To _Beginning"
-msgstr "הרחבה לה_תחלה"
-
-#: data/ui/menubar.ui:159
-msgid "Extend To _End"
-msgstr "הרחבה ל_סוף"
-
-#: data/ui/menubar.ui:165
-msgid "_Previous From Video Position"
-msgstr ""
-
-#: data/ui/menubar.ui:169
-msgid "_Next From Video Position"
-msgstr ""
-
-#: data/ui/menubar.ui:177
-msgid "_Preferences"
-msgstr "הע_דפות"
-
-#: data/ui/menubar.ui:183
-msgid "_View"
-msgstr "_תצוגה"
-
-#: data/ui/menubar.ui:186
-msgid "Tool_bar"
-msgstr ""
-
-#: data/ui/menubar.ui:190
-msgid "_Video Player"
-msgstr ""
-
-#: data/ui/menubar.ui:196
-msgid "_Layout"
-msgstr ""
-
-#: data/ui/menubar.ui:199
-msgid "_Horizontal"
-msgstr ""
-
-#: data/ui/menubar.ui:204
-msgid "_Vertical"
-msgstr ""
-
-#: data/ui/menubar.ui:213
-msgid "_Times"
-msgstr "_זמנים"
-
-#: data/ui/menubar.ui:218
-msgid "_Frames"
-msgstr "_שקופיות"
-
-#: data/ui/menubar.ui:225
-msgid "F_ramerate"
-msgstr "_קצב שקופיות"
-
-#: data/ui/menubar.ui:228
-msgid "2_3.976 fps"
-msgstr ""
-
-#: data/ui/menubar.ui:233
-msgid "2_4.000 fps"
-msgstr ""
-
-#: data/ui/menubar.ui:238
-msgid "2_5.000 fps"
-msgstr ""
-
-#: data/ui/menubar.ui:243
-msgid "2_9.970 fps"
-msgstr ""
-
-#: data/ui/menubar.ui:272
-msgid "_Columns"
-msgstr "_עמודות"
-
-#: data/ui/menubar.ui:306
-msgid "Cu_t"
-msgstr "_גזירה"
-
-#: data/ui/menubar.ui:310
-msgid "_Copy"
-msgstr "ה_עתקה"
-
-#: data/ui/menubar.ui:314
-msgid "_Paste"
-msgstr "ה_דבקה"
-
-#: data/ui/menubar.ui:318
-msgid "Cl_ear"
-msgstr "_ניקוי"
-
-#: data/ui/menubar.ui:324
-msgid "_Find And Replace…"
-msgstr "_חיפוש והחלפה…"
-
-#: data/ui/menubar.ui:332
-msgid "Find Pre_vious"
-msgstr "חיפוש ה_קודם"
-
-#: data/ui/menubar.ui:338
-msgid "_Italic"
-msgstr "_נטוי"
-
-#: data/ui/menubar.ui:342
-msgid "_Dialogue"
-msgstr "_דו־שיח"
-
-#: data/ui/menubar.ui:348
-msgid "Ca_se"
-msgstr "_רשיות/קטנות"
-
-#: data/ui/menubar.ui:351
-msgid "_Title"
-msgstr "_כותרת"
-
-#: data/ui/menubar.ui:355
-msgid "_Sentence"
-msgstr "_משפט"
-
-#: data/ui/menubar.ui:359
-msgid "_Upper"
-msgstr "_רשיות"
-
-#: data/ui/menubar.ui:363
-msgid "_Lower"
-msgstr "_קטנות"
-
-#: data/ui/menubar.ui:371
-msgid "Vi_deo"
-msgstr ""
-
-#: data/ui/menubar.ui:374
-msgid "_Load Video…"
-msgstr ""
-
-#: data/ui/menubar.ui:384 data/ui/view-popup.ui:26
-msgid "Play _Selection"
-msgstr ""
-
-#: data/ui/menubar.ui:410 data/ui/view-popup.ui:30
-msgid "S_eek Selection Start"
-msgstr ""
-
-#: data/ui/menubar.ui:414
-msgid "See_k Selection End"
-msgstr ""
-
-#: data/ui/menubar.ui:420
-msgid "_Audio"
-msgstr ""
-
-#: data/ui/menubar.ui:423
-msgid "_Language"
-msgstr ""
-
-#: data/ui/menubar.ui:430
-msgid "Volume _Down"
-msgstr ""
-
-#: data/ui/menubar.ui:434
-msgid "Volume _Up"
-msgstr ""
-
-#: data/ui/menubar.ui:440
-msgid "T_ools"
-msgstr "_כלים"
-
-#: data/ui/menubar.ui:443 data/ui/text-assistant/confirmation-page.ui:97
-#: data/ui/view-popup.ui:36
-msgid "_Preview"
-msgstr "ת_צוגה מקדימה"
-
-#: data/ui/menubar.ui:447
-msgid "Select _Video…"
-msgstr "בחירת _וידאו…"
-
-#: data/ui/menubar.ui:453
-msgid "_Check Spelling"
-msgstr "_בדיקת איות"
-
-#: data/ui/menubar.ui:457
-msgid "Co_nfigure Spell-check…"
-msgstr "ה_גדרת בדיקת איות…"
-
-#: data/ui/menubar.ui:461
-msgid "C_orrect Texts…"
-msgstr "_תיקון הטקסטים…"
-
-#: data/ui/menubar.ui:467
-msgid "_Shift Positions…"
-msgstr "ה_זחת מקומות…"
-
-#: data/ui/menubar.ui:471
-msgid "_Transform Positions…"
-msgstr "הח_לפת מקומות…"
-
-#: data/ui/menubar.ui:475
-msgid "Adjust _Durations…"
-msgstr "התאמת _פרקי הזמן…"
-
-#: data/ui/menubar.ui:479
-msgid "Convert _Framerate…"
-msgstr "המרת ק_צב שקופיות…"
-
-#: data/ui/menubar.ui:485
-msgid "_Append File…"
-msgstr "הו_ספת קובץ…"
-
-#: data/ui/menubar.ui:489
-msgid "Spli_t Project…"
-msgstr "_פיצול המיזם…"
-
-#: data/ui/menubar.ui:495
-msgid "_Projects"
-msgstr "_מיזמים"
-
-#: data/ui/menubar.ui:498
-msgid "_Save All"
-msgstr "_שמירת הכול"
-
-#: data/ui/menubar.ui:502
-msgid "Save _All As…"
-msgstr "שמירת ה_כול בשם…"
-
-#: data/ui/menubar.ui:506
-msgid "_Close All"
-msgstr "ס_גירת הכול"
-
-#: data/ui/menubar.ui:512
-msgid "_Previous"
-msgstr "ה_קודמת"
-
-#: data/ui/menubar.ui:516
-msgid "_Next"
-msgstr "ה_באה"
-
-#: data/ui/menubar.ui:527
-msgid "_Documentation"
-msgstr ""
-
-#: data/ui/menubar.ui:531
-msgid "_Report A Bug"
-msgstr "דיווח על _באג"
-
-#: data/ui/menubar.ui:535
-msgid "_About"
-msgstr "על _אודות"
 
 #: data/ui/open-dialog.ui:39
 msgid "Align _method:"
 msgstr "שיטת ה_יישור:"
+
+#: data/ui/view-popup.ui:6 data/ui/menubar.ui:118
+msgid "_Split Subtitle"
+msgstr "_פיצול כתובית"
+
+#: data/ui/view-popup.ui:10 data/ui/menubar.ui:122
+msgid "_Merge Subtitles"
+msgstr "_מיזוג כתוביות"
+
+#: data/ui/view-popup.ui:16 data/ui/menubar.ui:128
+msgid "_Insert Subtitles…"
+msgstr "הו_ספת כתוביות…"
+
+#: data/ui/view-popup.ui:20 data/ui/menubar.ui:136
+msgid "Rem_ove Subtitles"
+msgstr "ה_סרת כתוביות"
+
+#: data/ui/view-popup.ui:26 data/ui/menubar.ui:384
+msgid "Play _Selection"
+msgstr ""
+
+#: data/ui/view-popup.ui:30 data/ui/menubar.ui:410
+msgid "S_eek Selection Start"
+msgstr ""
+
+#: data/ui/view-popup.ui:36 data/ui/menubar.ui:443
+#: data/ui/text-assistant/confirmation-page.ui:97
+msgid "_Preview"
+msgstr "ת_צוגה מקדימה"
 
 #: data/ui/preferences-dialog.ui:18
 msgid "Preferences"
@@ -1943,6 +1439,132 @@ msgstr "שניות בטרם הבחירה"
 msgid "Extensions"
 msgstr "הרחבות"
 
+#: data/ui/position-transform-dialog.ui:22
+msgid "Transform Positions"
+msgstr "החלפת המקומות"
+
+#: data/ui/position-transform-dialog.ui:62
+msgid "First Point"
+msgstr "הנקודה הראשונה"
+
+#: data/ui/position-transform-dialog.ui:91
+msgid "_Subtitle:"
+msgstr "_כתובית:"
+
+#: data/ui/position-transform-dialog.ui:105
+msgid "C_orrection:"
+msgstr "_תיקון:"
+
+#: data/ui/position-transform-dialog.ui:119
+#: data/ui/position-transform-dialog.ui:310
+msgid "Text:"
+msgstr "טקסט:"
+
+#: data/ui/position-transform-dialog.ui:208
+#: data/ui/position-shift-dialog.ui:135
+msgid "_Preview Changes"
+msgstr "הצגה מקדימה של ה_שינויים"
+
+#: data/ui/position-transform-dialog.ui:253
+msgid "Second Point"
+msgstr "הנקודה השנייה"
+
+#: data/ui/position-transform-dialog.ui:282
+msgid "Su_btitle:"
+msgstr "_כתובית:"
+
+#: data/ui/position-transform-dialog.ui:296
+msgid "Co_rrection:"
+msgstr "תי_קון:"
+
+#: data/ui/position-transform-dialog.ui:399
+msgid "Pre_view Changes"
+msgstr "הצגה _מקדימה של השינויים"
+
+#: data/ui/position-transform-dialog.ui:444
+#: data/ui/framerate-convert-dialog.ui:144 data/ui/language-dialog.ui:186
+#: data/ui/duration-adjust-dialog.ui:388
+#: data/ui/text-assistant/line-break-options-page.ui:178
+#: data/ui/position-shift-dialog.ui:180 data/ui/search-dialog.ui:381
+msgid "Subtitles"
+msgstr "כתוביות"
+
+#: data/ui/position-transform-dialog.ui:464
+msgid "Transform se_lected subtitles"
+msgstr "החלפה בין הכתו_ביות הנבחרות"
+
+#: data/ui/position-transform-dialog.ui:482
+msgid "Transform c_urrent project"
+msgstr "החלפה במיזם ה_נוכחי"
+
+#: data/ui/spell-check-dialog.ui:8
+msgid "Check Spelling"
+msgstr "בדיקת איות"
+
+#: data/ui/spell-check-dialog.ui:47
+msgid "Join _Back"
+msgstr "_צירוף בחזרה"
+
+#: data/ui/spell-check-dialog.ui:62
+msgid "Join _Forward"
+msgstr "צירוף _קדימה"
+
+#: data/ui/spell-check-dialog.ui:77 data/ui/menubar.ui:62
+msgid "_Edit"
+msgstr "_עריכה"
+
+#: data/ui/spell-check-dialog.ui:92
+msgid "_Ignore"
+msgstr "הת_עלמות"
+
+#: data/ui/spell-check-dialog.ui:107
+msgid "Ig_nore All"
+msgstr "ה_תעלמות מהכול"
+
+#: data/ui/spell-check-dialog.ui:137
+msgid "Rep_lace All"
+msgstr "הח_לפת הכול"
+
+#: data/ui/spell-check-dialog.ui:179
+msgid "_Suggestions:"
+msgstr "ה_צעות:"
+
+#: data/ui/spell-check-dialog.ui:193 data/ui/search-dialog.ui:103
+msgid "Replace _with:"
+msgstr "החלפה _ב־:"
+
+#: data/ui/framerate-convert-dialog.ui:8
+msgid "Convert Framerate"
+msgstr "קצב השקופיות להמרה"
+
+#: data/ui/framerate-convert-dialog.ui:48
+msgid "Framerate"
+msgstr "קצב שקופיות"
+
+#: data/ui/framerate-convert-dialog.ui:71
+msgid "_Input:"
+msgstr "_קלט:"
+
+#: data/ui/framerate-convert-dialog.ui:86
+msgid "_Output:"
+msgstr "_פלט:"
+
+#: data/ui/framerate-convert-dialog.ui:164
+msgid "Convert c_urrent project"
+msgstr "המרת המיזם ה_נוכחי"
+
+#: data/ui/framerate-convert-dialog.ui:181
+msgid "Convert _all open projects"
+msgstr "המרת _כל המיזמים הפתוחים"
+
+#: data/ui/tab-popup.ui:6
+msgid "Move Tab _Left"
+msgstr "העברת הלשונית _שמאלה"
+
+#: data/ui/tab-popup.ui:10
+msgid "Move Tab _Right"
+msgstr "העברת הלשונית _ימינה"
+
 #: data/ui/language-dialog.ui:8
 msgid "Configure Spell-Check"
 msgstr "הגדרת בדיקת איות"
@@ -1950,6 +1572,10 @@ msgstr "הגדרת בדיקת איות"
 #: data/ui/language-dialog.ui:50
 msgid "Language"
 msgstr "שפה"
+
+#: data/ui/language-dialog.ui:108 data/ui/search-dialog.ui:304
+msgid "Columns"
+msgstr "עמודות"
 
 #: data/ui/language-dialog.ui:128
 msgid "Check _text column"
@@ -1966,121 +1592,6 @@ msgstr "בדיקת ה_מיזם הנוכחי"
 #: data/ui/language-dialog.ui:224
 msgid "Check _all open projects"
 msgstr "בדיקת _כל המיזמים הפתוחים"
-
-#: data/ui/text-assistant/confirmation-page.ui:22
-msgid "Acc_ept, discard or edit changes:"
-msgstr "_קבלה, דחייה או עריכת השינויים:"
-
-#: data/ui/text-assistant/confirmation-page.ui:67
-msgid "_Mark All"
-msgstr "_סימון הכול"
-
-#: data/ui/text-assistant/confirmation-page.ui:82
-msgid "_Unmark All"
-msgstr "בי_טול הסימון"
-
-#: data/ui/text-assistant/confirmation-page.ui:119
-msgid "_Remove all blank subtitles"
-msgstr "ה_סרת כל הכתוביות הריקות"
-
-#: data/ui/text-assistant/join-split-page.ui:28
-msgid "Spell-Check Dictionary"
-msgstr "מילון בדיקת איות"
-
-#: data/ui/text-assistant/join-split-page.ui:49
-#: data/ui/text-assistant/line-break-page.ui:81
-#: data/ui/text-assistant/hearing-impaired-page.ui:81
-#: data/ui/text-assistant/common-error-page.ui:80
-#: data/ui/text-assistant/capitalization-page.ui:80
-msgid "_Language:"
-msgstr "_שפה:"
-
-#: data/ui/text-assistant/join-split-page.ui:97
-msgid "Corrections"
-msgstr "תיקונים"
-
-#: data/ui/text-assistant/join-split-page.ui:117
-msgid "_Join words not found in spell-check dictionary"
-msgstr "_צירוף מילים שאינן נמצאות במילון האיות"
-
-#: data/ui/text-assistant/join-split-page.ui:134
-msgid "_Split words not found in spell-check dictionary"
-msgstr "_פיצול מילים שאינן נמצאות במילון האיות"
-
-#: data/ui/text-assistant/line-break-page.ui:22
-msgid "S_elect preferred line-break points:"
-msgstr "ב_חירת נקודות שבירת השורות המועדפות:"
-
-#: data/ui/text-assistant/line-break-page.ui:67
-#: data/ui/text-assistant/hearing-impaired-page.ui:67
-#: data/ui/text-assistant/common-error-page.ui:66
-#: data/ui/text-assistant/capitalization-page.ui:66
-msgid "_Script:"
-msgstr "_תסריט:"
-
-#: data/ui/text-assistant/line-break-page.ui:95
-#: data/ui/text-assistant/hearing-impaired-page.ui:95
-#: data/ui/text-assistant/common-error-page.ui:94
-#: data/ui/text-assistant/capitalization-page.ui:94
-msgid "Co_untry:"
-msgstr ""
-
-#: data/ui/text-assistant/introduction-page.ui:28
-msgid "_Select corrections to perform on texts:"
-msgstr "בחירת תיקונים להחלה על הטק_סטים:"
-
-#: data/ui/text-assistant/introduction-page.ui:79
-msgid "Colu_mns:"
-msgstr ""
-
-#: data/ui/text-assistant/introduction-page.ui:93
-msgid "S_ubtitles:"
-msgstr ""
-
-#: data/ui/text-assistant/line-break-options-page.ui:56
-#: data/ui/duration-adjust-dialog.ui:207
-msgid "Limits"
-msgstr "מגבלות"
-
-#: data/ui/text-assistant/line-break-options-page.ui:79
-msgid "_Maximum line length:"
-msgstr "אורך ה_שורה המרבי:"
-
-#: data/ui/text-assistant/line-break-options-page.ui:93
-msgid "_Preferred maximum amount of lines:"
-msgstr "_כמות השורות המרבית המועדפת היא:"
-
-#: data/ui/text-assistant/line-break-options-page.ui:198
-msgid "_Skip subtitles with maximum line length of:"
-msgstr "_דילוג על כתוביות שאורך השורה המרבי שלהן הוא:"
-
-#: data/ui/text-assistant/line-break-options-page.ui:214
-msgid "S_kip subtitles with maximum line amount of:"
-msgstr "_דילוג על כתוביות שכמות שורותיהן המרבי הוא:"
-
-#: data/ui/text-assistant/hearing-impaired-page.ui:22
-msgid "S_elect parts to remove:"
-msgstr "בחירת ה_חלקים להסרה:"
-
-#: data/ui/text-assistant/common-error-page.ui:22
-msgid "S_elect errors to correct:"
-msgstr "_בחירת שגיאות לתיקון:"
-
-#: data/ui/text-assistant/common-error-page.ui:108
-msgid "Error types:"
-msgstr "סוג השגיאות:"
-
-#: data/ui/text-assistant/common-error-page.ui:158
-msgid "_Human errors"
-msgstr "שגיאות _אנושיות"
-
-#: data/ui/text-assistant/common-error-page.ui:175
-msgid "_Image recognition errors"
-msgstr "שגיאות ב_זיהוי תמונה"
-
-#: data/ui/text-assistant/capitalization-page.ui:22
-msgid "S_elect parts to capitalize:"
-msgstr "בחירת חלקים להפיכת האותיות שלהם לרשיות:"
 
 #: data/ui/duration-adjust-dialog.ui:33
 msgid "Adjust Durations"
@@ -2105,6 +1616,11 @@ msgstr "הארכת פרק הזמן כדי להתאים למהירות ה_קרי�
 #: data/ui/duration-adjust-dialog.ui:167
 msgid "_Shorten duration to match reading speed"
 msgstr "קי_צור פרק הזמן כדי להתאים למהירות הקריאה"
+
+#: data/ui/duration-adjust-dialog.ui:207
+#: data/ui/text-assistant/line-break-options-page.ui:56
+msgid "Limits"
+msgstr "מגבלות"
 
 #: data/ui/duration-adjust-dialog.ui:227
 msgid "_Minimum duration:"
@@ -2142,25 +1658,487 @@ msgstr "התא_מת המיזם הנוכחי"
 msgid "Adjust all _open projects"
 msgstr "התאמת כל המיזמים ה_פתוחים"
 
-#: data/ui/tab-popup.ui:6
-msgid "Move Tab _Left"
-msgstr "העברת הלשונית _שמאלה"
+#: data/ui/menubar.ui:5
+msgid "_File"
+msgstr "_קובץ"
 
-#: data/ui/tab-popup.ui:10
-msgid "Move Tab _Right"
-msgstr "העברת הלשונית _ימינה"
+#: data/ui/menubar.ui:8
+msgid "_New"
+msgstr "_חדש"
 
-#: data/ui/insert-dialog.ui:15
-msgid "Insert Subtitles"
-msgstr "הוספת כתוביות"
+#: data/ui/menubar.ui:12
+msgid "_Open…"
+msgstr "_פתיחה…"
 
-#: data/ui/insert-dialog.ui:48 data/ui/position-shift-dialog.ui:82
-msgid "_Amount:"
-msgstr "_כמות:"
+#: data/ui/menubar.ui:16
+msgid "Open _Translation…"
+msgstr "פתיחת _תרגום…"
 
-#: data/ui/insert-dialog.ui:62
-msgid "_Position:"
-msgstr "_מיקום:"
+#: data/ui/menubar.ui:22
+msgid "Open _Recent"
+msgstr "שנפתחו ל_אחרונה"
+
+#: data/ui/menubar.ui:27
+msgid "Open R_ecent Translation"
+msgstr "פתיחת תר_גומים שנפתחו לאחרונה"
+
+#: data/ui/menubar.ui:38
+msgid "Save _As…"
+msgstr "שמירה _בשם…"
+
+#: data/ui/menubar.ui:42
+msgid "Save Trans_lation"
+msgstr "שמירת הת_רגום"
+
+#: data/ui/menubar.ui:46
+msgid "Save Translat_ion As…"
+msgstr "שמירת ה_תרגום בשם…"
+
+#: data/ui/menubar.ui:65
+msgid "_Undo"
+msgstr "_ביטול"
+
+#: data/ui/menubar.ui:69
+msgid "_Redo"
+msgstr "בי_צוע מחדש"
+
+#: data/ui/menubar.ui:75
+msgid "_Edit Cell"
+msgstr "עריכת _תא"
+
+#: data/ui/menubar.ui:79
+msgid "Edit _Next Cell"
+msgstr "עריכת התא ה_בא"
+
+#: data/ui/menubar.ui:85
+msgid "Stretc_h"
+msgstr ""
+
+#: data/ui/menubar.ui:88
+msgid "_Start Earlier"
+msgstr ""
+
+#: data/ui/menubar.ui:92
+msgid "S_tart Later"
+msgstr ""
+
+#: data/ui/menubar.ui:98
+msgid "E_nd Earlier"
+msgstr ""
+
+#: data/ui/menubar.ui:102
+msgid "En_d Later"
+msgstr ""
+
+#: data/ui/menubar.ui:108
+msgid "Set St_art From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:112
+msgid "Set En_d From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:132
+msgid "Inser_t Subtitle At Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:142
+msgid "Sele_ction"
+msgstr "_בחירה"
+
+#: data/ui/menubar.ui:145
+msgid "Select _All"
+msgstr "בחירת ה_כול"
+
+#: data/ui/menubar.ui:149
+msgid "_Invert Selection"
+msgstr "ה_פיכת הבחירה"
+
+#: data/ui/menubar.ui:155
+msgid "Extend To _Beginning"
+msgstr "הרחבה לה_תחלה"
+
+#: data/ui/menubar.ui:159
+msgid "Extend To _End"
+msgstr "הרחבה ל_סוף"
+
+#: data/ui/menubar.ui:165
+msgid "_Previous From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:169
+msgid "_Next From Video Position"
+msgstr ""
+
+#: data/ui/menubar.ui:177
+msgid "_Preferences"
+msgstr "הע_דפות"
+
+#: data/ui/menubar.ui:183
+msgid "_View"
+msgstr "_תצוגה"
+
+#: data/ui/menubar.ui:186
+msgid "Tool_bar"
+msgstr ""
+
+#: data/ui/menubar.ui:190
+msgid "_Video Player"
+msgstr ""
+
+#: data/ui/menubar.ui:196
+msgid "_Layout"
+msgstr ""
+
+#: data/ui/menubar.ui:199
+msgid "_Horizontal"
+msgstr ""
+
+#: data/ui/menubar.ui:204
+msgid "_Vertical"
+msgstr ""
+
+#: data/ui/menubar.ui:213
+msgid "_Times"
+msgstr "_זמנים"
+
+#: data/ui/menubar.ui:218
+msgid "_Frames"
+msgstr "_שקופיות"
+
+#: data/ui/menubar.ui:225
+msgid "F_ramerate"
+msgstr "_קצב שקופיות"
+
+#: data/ui/menubar.ui:228
+msgid "2_3.976 fps"
+msgstr ""
+
+#: data/ui/menubar.ui:233
+msgid "2_4.000 fps"
+msgstr ""
+
+#: data/ui/menubar.ui:238
+msgid "2_5.000 fps"
+msgstr ""
+
+#: data/ui/menubar.ui:243
+msgid "2_9.970 fps"
+msgstr ""
+
+#: data/ui/menubar.ui:272
+msgid "_Columns"
+msgstr "_עמודות"
+
+#: data/ui/menubar.ui:275 data/ui/columns-popup.ui:6
+msgid "_No."
+msgstr "_מס׳"
+
+#: data/ui/menubar.ui:279 data/ui/columns-popup.ui:10
+msgid "_Start"
+msgstr "ה_תחלה"
+
+#: data/ui/menubar.ui:283 data/ui/columns-popup.ui:14
+msgid "_End"
+msgstr "_סוף"
+
+#: data/ui/menubar.ui:287 data/ui/columns-popup.ui:18
+msgid "_Duration"
+msgstr "_פרק הזמן"
+
+#: data/ui/menubar.ui:291 data/ui/menubar.ui:303 data/ui/columns-popup.ui:22
+msgid "_Text"
+msgstr "_טקסט"
+
+#: data/ui/menubar.ui:295 data/ui/columns-popup.ui:26
+msgid "T_ranslation"
+msgstr ""
+
+#: data/ui/menubar.ui:306
+msgid "Cu_t"
+msgstr "_גזירה"
+
+#: data/ui/menubar.ui:310
+msgid "_Copy"
+msgstr "ה_עתקה"
+
+#: data/ui/menubar.ui:314
+msgid "_Paste"
+msgstr "ה_דבקה"
+
+#: data/ui/menubar.ui:318
+msgid "Cl_ear"
+msgstr "_ניקוי"
+
+#: data/ui/menubar.ui:324
+msgid "_Find And Replace…"
+msgstr "_חיפוש והחלפה…"
+
+#: data/ui/menubar.ui:328 data/ui/search-dialog.ui:162
+msgid "Find _Next"
+msgstr "חיפוש ה_בא"
+
+#: data/ui/menubar.ui:332
+msgid "Find Pre_vious"
+msgstr "חיפוש ה_קודם"
+
+#: data/ui/menubar.ui:338
+msgid "_Italic"
+msgstr "_נטוי"
+
+#: data/ui/menubar.ui:342
+msgid "_Dialogue"
+msgstr "_דו־שיח"
+
+#: data/ui/menubar.ui:348
+msgid "Ca_se"
+msgstr "_רשיות/קטנות"
+
+#: data/ui/menubar.ui:351
+msgid "_Title"
+msgstr "_כותרת"
+
+#: data/ui/menubar.ui:355
+msgid "_Sentence"
+msgstr "_משפט"
+
+#: data/ui/menubar.ui:359
+msgid "_Upper"
+msgstr "_רשיות"
+
+#: data/ui/menubar.ui:363
+msgid "_Lower"
+msgstr "_קטנות"
+
+#: data/ui/menubar.ui:371
+msgid "Vi_deo"
+msgstr ""
+
+#: data/ui/menubar.ui:374
+msgid "_Load Video…"
+msgstr ""
+
+#: data/ui/menubar.ui:414
+msgid "See_k Selection End"
+msgstr ""
+
+#: data/ui/menubar.ui:420
+msgid "_Audio"
+msgstr ""
+
+#: data/ui/menubar.ui:423
+msgid "_Language"
+msgstr ""
+
+#: data/ui/menubar.ui:430
+msgid "Volume _Down"
+msgstr ""
+
+#: data/ui/menubar.ui:434
+msgid "Volume _Up"
+msgstr ""
+
+#: data/ui/menubar.ui:440
+msgid "T_ools"
+msgstr "_כלים"
+
+#: data/ui/menubar.ui:447
+msgid "Select _Video…"
+msgstr "בחירת _וידאו…"
+
+#: data/ui/menubar.ui:453
+msgid "_Check Spelling"
+msgstr "_בדיקת איות"
+
+#: data/ui/menubar.ui:457
+msgid "Co_nfigure Spell-check…"
+msgstr "ה_גדרת בדיקת איות…"
+
+#: data/ui/menubar.ui:461
+msgid "C_orrect Texts…"
+msgstr "_תיקון הטקסטים…"
+
+#: data/ui/menubar.ui:467
+msgid "_Shift Positions…"
+msgstr "ה_זחת מקומות…"
+
+#: data/ui/menubar.ui:471
+msgid "_Transform Positions…"
+msgstr "הח_לפת מקומות…"
+
+#: data/ui/menubar.ui:475
+msgid "Adjust _Durations…"
+msgstr "התאמת _פרקי הזמן…"
+
+#: data/ui/menubar.ui:479
+msgid "Convert _Framerate…"
+msgstr "המרת ק_צב שקופיות…"
+
+#: data/ui/menubar.ui:485
+msgid "_Append File…"
+msgstr "הו_ספת קובץ…"
+
+#: data/ui/menubar.ui:489
+msgid "Spli_t Project…"
+msgstr "_פיצול המיזם…"
+
+#: data/ui/menubar.ui:495
+msgid "_Projects"
+msgstr "_מיזמים"
+
+#: data/ui/menubar.ui:498
+msgid "_Save All"
+msgstr "_שמירת הכול"
+
+#: data/ui/menubar.ui:502
+msgid "Save _All As…"
+msgstr "שמירת ה_כול בשם…"
+
+#: data/ui/menubar.ui:506
+msgid "_Close All"
+msgstr "ס_גירת הכול"
+
+#: data/ui/menubar.ui:512
+msgid "_Previous"
+msgstr "ה_קודמת"
+
+#: data/ui/menubar.ui:516
+msgid "_Next"
+msgstr "ה_באה"
+
+#: data/ui/menubar.ui:527
+msgid "_Documentation"
+msgstr ""
+
+#: data/ui/menubar.ui:531
+msgid "_Report A Bug"
+msgstr "דיווח על _באג"
+
+#: data/ui/menubar.ui:535
+msgid "_About"
+msgstr "על _אודות"
+
+#: data/ui/save-dialog.ui:25 data/ui/multi-save-dialog.ui:60
+msgid "For_mat:"
+msgstr "מ_בנה:"
+
+#: data/ui/save-dialog.ui:53 data/ui/multi-save-dialog.ui:88
+msgid "Ne_wlines:"
+msgstr "שורות _חדשות:"
+
+#: data/ui/save-dialog.ui:102 data/ui/multi-save-dialog.ui:150
+msgid "F_ramerate:"
+msgstr ""
+
+#: data/ui/text-assistant/line-break-page.ui:22
+msgid "S_elect preferred line-break points:"
+msgstr "ב_חירת נקודות שבירת השורות המועדפות:"
+
+#: data/ui/text-assistant/line-break-page.ui:67
+#: data/ui/text-assistant/capitalization-page.ui:66
+#: data/ui/text-assistant/hearing-impaired-page.ui:67
+#: data/ui/text-assistant/common-error-page.ui:66
+msgid "_Script:"
+msgstr "_תסריט:"
+
+#: data/ui/text-assistant/line-break-page.ui:81
+#: data/ui/text-assistant/join-split-page.ui:49
+#: data/ui/text-assistant/capitalization-page.ui:80
+#: data/ui/text-assistant/hearing-impaired-page.ui:81
+#: data/ui/text-assistant/common-error-page.ui:80
+msgid "_Language:"
+msgstr "_שפה:"
+
+#: data/ui/text-assistant/line-break-page.ui:95
+#: data/ui/text-assistant/capitalization-page.ui:94
+#: data/ui/text-assistant/hearing-impaired-page.ui:95
+#: data/ui/text-assistant/common-error-page.ui:94
+msgid "Co_untry:"
+msgstr ""
+
+#: data/ui/text-assistant/join-split-page.ui:28
+msgid "Spell-Check Dictionary"
+msgstr "מילון בדיקת איות"
+
+#: data/ui/text-assistant/join-split-page.ui:97
+msgid "Corrections"
+msgstr "תיקונים"
+
+#: data/ui/text-assistant/join-split-page.ui:117
+msgid "_Join words not found in spell-check dictionary"
+msgstr "_צירוף מילים שאינן נמצאות במילון האיות"
+
+#: data/ui/text-assistant/join-split-page.ui:134
+msgid "_Split words not found in spell-check dictionary"
+msgstr "_פיצול מילים שאינן נמצאות במילון האיות"
+
+#: data/ui/text-assistant/capitalization-page.ui:22
+msgid "S_elect parts to capitalize:"
+msgstr "בחירת חלקים להפיכת האותיות שלהם לרשיות:"
+
+#: data/ui/text-assistant/hearing-impaired-page.ui:22
+msgid "S_elect parts to remove:"
+msgstr "בחירת ה_חלקים להסרה:"
+
+#: data/ui/text-assistant/introduction-page.ui:28
+msgid "_Select corrections to perform on texts:"
+msgstr "בחירת תיקונים להחלה על הטק_סטים:"
+
+#: data/ui/text-assistant/introduction-page.ui:79
+msgid "Colu_mns:"
+msgstr ""
+
+#: data/ui/text-assistant/introduction-page.ui:93
+msgid "S_ubtitles:"
+msgstr ""
+
+#: data/ui/text-assistant/line-break-options-page.ui:79
+msgid "_Maximum line length:"
+msgstr "אורך ה_שורה המרבי:"
+
+#: data/ui/text-assistant/line-break-options-page.ui:93
+msgid "_Preferred maximum amount of lines:"
+msgstr "_כמות השורות המרבית המועדפת היא:"
+
+#: data/ui/text-assistant/line-break-options-page.ui:198
+msgid "_Skip subtitles with maximum line length of:"
+msgstr "_דילוג על כתוביות שאורך השורה המרבי שלהן הוא:"
+
+#: data/ui/text-assistant/line-break-options-page.ui:214
+msgid "S_kip subtitles with maximum line amount of:"
+msgstr "_דילוג על כתוביות שכמות שורותיהן המרבי הוא:"
+
+#: data/ui/text-assistant/confirmation-page.ui:22
+msgid "Acc_ept, discard or edit changes:"
+msgstr "_קבלה, דחייה או עריכת השינויים:"
+
+#: data/ui/text-assistant/confirmation-page.ui:67
+msgid "_Mark All"
+msgstr "_סימון הכול"
+
+#: data/ui/text-assistant/confirmation-page.ui:82
+msgid "_Unmark All"
+msgstr "בי_טול הסימון"
+
+#: data/ui/text-assistant/confirmation-page.ui:119
+msgid "_Remove all blank subtitles"
+msgstr "ה_סרת כל הכתוביות הריקות"
+
+#: data/ui/text-assistant/common-error-page.ui:22
+msgid "S_elect errors to correct:"
+msgstr "_בחירת שגיאות לתיקון:"
+
+#: data/ui/text-assistant/common-error-page.ui:108
+msgid "Error types:"
+msgstr "סוג השגיאות:"
+
+#: data/ui/text-assistant/common-error-page.ui:158
+msgid "_Human errors"
+msgstr "שגיאות _אנושיות"
+
+#: data/ui/text-assistant/common-error-page.ui:175
+msgid "_Image recognition errors"
+msgstr "שגיאות ב_זיהוי תמונה"
 
 #: data/ui/position-shift-dialog.ui:14
 msgid "Shift Positions"
@@ -2170,10 +2148,9 @@ msgstr "הזזת מקומות"
 msgid "Shift"
 msgstr "הזזה"
 
-#: data/ui/position-shift-dialog.ui:135
-#: data/ui/position-transform-dialog.ui:208
-msgid "_Preview Changes"
-msgstr "הצגה מקדימה של ה_שינויים"
+#: data/ui/position-shift-dialog.ui:82 data/ui/insert-dialog.ui:48
+msgid "_Amount:"
+msgstr "_כמות:"
 
 #: data/ui/position-shift-dialog.ui:200
 msgid "Shift s_elected subtitles"
@@ -2191,468 +2168,491 @@ msgstr "הזזת ה_מיזם הנוכחי"
 msgid "Shift all _open projects"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:22
-msgid "Transform Positions"
-msgstr "החלפת המקומות"
+#: data/ui/multi-save-dialog.ui:8
+msgid "Save All As"
+msgstr "שמירת הכול בשם"
 
-#: data/ui/position-transform-dialog.ui:62
-msgid "First Point"
-msgstr "הנקודה הראשונה"
+#: data/ui/multi-save-dialog.ui:46
+msgid "Save in _folder:"
+msgstr "שמירה ב_תיקייה:"
 
-#: data/ui/position-transform-dialog.ui:91
-msgid "_Subtitle:"
-msgstr "_כתובית:"
+#: data/ui/multi-save-dialog.ui:103
+msgid "Select A Folder"
+msgstr "בחירת תיקייה"
 
-#: data/ui/position-transform-dialog.ui:105
-msgid "C_orrection:"
-msgstr "_תיקון:"
+#: data/ui/insert-dialog.ui:15
+msgid "Insert Subtitles"
+msgstr "הוספת כתוביות"
 
-#: data/ui/position-transform-dialog.ui:119
-#: data/ui/position-transform-dialog.ui:310
-msgid "Text:"
-msgstr "טקסט:"
+#: data/ui/insert-dialog.ui:62
+msgid "_Position:"
+msgstr "_מיקום:"
 
-#: data/ui/position-transform-dialog.ui:253
-msgid "Second Point"
-msgstr "הנקודה השנייה"
+#: data/ui/split-dialog.ui:15
+msgid "Split Project"
+msgstr "פיצול מיזם"
 
-#: data/ui/position-transform-dialog.ui:282
-msgid "Su_btitle:"
-msgstr "_כתובית:"
+#: data/ui/split-dialog.ui:48
+msgid "_First subtitle of new project:"
+msgstr "הכתובית ה_ראשונה של המיזם החדש:"
 
-#: data/ui/position-transform-dialog.ui:296
-msgid "Co_rrection:"
-msgstr "תי_קון:"
+#: data/ui/search-dialog.ui:89
+msgid "_Search for:"
+msgstr "חיפוש _אחר:"
 
-#: data/ui/position-transform-dialog.ui:399
-msgid "Pre_view Changes"
-msgstr "הצגה _מקדימה של השינויים"
+#: data/ui/search-dialog.ui:177
+msgid "Find _Previous"
+msgstr "חיפוש ה_קודם"
 
-#: data/ui/position-transform-dialog.ui:464
-msgid "Transform se_lected subtitles"
-msgstr "החלפה בין הכתו_ביות הנבחרות"
+#: data/ui/search-dialog.ui:207
+msgid "Replace _All"
+msgstr "החלפת ה_כול"
 
-#: data/ui/position-transform-dialog.ui:482
-msgid "Transform c_urrent project"
-msgstr "החלפה במיזם ה_נוכחי"
+#: data/ui/search-dialog.ui:241
+msgid "R_egular expression"
+msgstr "ביטוי ר_גולרי"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:7
+#: data/ui/search-dialog.ui:258
+msgid "_Ignore case"
+msgstr "ה_תעלמות מהבדלי רשיות"
+
+#: data/ui/search-dialog.ui:324
+msgid "Find in _text column"
+msgstr ""
+
+#: data/ui/search-dialog.ui:341
+msgid "Find in t_ranslation column"
+msgstr ""
+
+#: data/ui/search-dialog.ui:401
+msgid "Find in c_urrent project"
+msgstr "חיפוש במיזם ה_נוכחי"
+
+#: data/ui/search-dialog.ui:419
+msgid "Find in _all open projects"
+msgstr "חיפוש ב_כול המיזמים הפתוחים"
+
+#: data/ui/search-dialog.ui:452
+msgid "Target"
+msgstr "יעד"
+
+#: data/extensions/custom-framerates/custom-framerates.extension.in:6
 msgid "Custom Framerates"
 msgstr ""
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:8
+#: data/extensions/custom-framerates/custom-framerates.extension.in:7
 msgid "Allow use of non-standard framerates"
 msgstr ""
 
-#: data/patterns/Latn-en-US.common-error.in:5
+#: data/patterns/Latn-en-US.common-error.in:4
 msgid "Period after title"
 msgstr "נקודה לאחר הכותרת"
 
-#: data/patterns/Latn-en-US.common-error.in:6
+#: data/patterns/Latn-en-US.common-error.in:5
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
 msgstr "הוספת נקודות לאחר תארים מקוצרים, כגון ״Mr״ ו־״Dr״ (לא תקף בעברית)"
 
-#: data/patterns/Latn-en.capitalization.in:5
+#: data/patterns/Latn-en.capitalization.in:4
 msgid "First person pronoun"
 msgstr "ראשית כינוי עצמית"
 
-#: data/patterns/Latn-en.capitalization.in:6
+#: data/patterns/Latn-en.capitalization.in:5
 msgid "Capitalize the first person pronoun \"I\""
 msgstr "הגדלת ראשית הכינוי העצמי ״I״ (לא תקף בעברית)"
+
+#: data/patterns/Latn-en.common-error.in:4
+#: data/patterns/Latn-en.common-error.in:13
+#: data/patterns/Latn-en.common-error.in:22
+msgid "Letter \"I\" in a lower case word"
+msgstr "האות ״I״ במילה באותיות קטנות"
 
 #: data/patterns/Latn-en.common-error.in:5
 #: data/patterns/Latn-en.common-error.in:14
 #: data/patterns/Latn-en.common-error.in:23
-msgid "Letter \"I\" in a lower case word"
-msgstr "האות ״I״ במילה באותיות קטנות"
-
-#: data/patterns/Latn-en.common-error.in:6
-#: data/patterns/Latn-en.common-error.in:15
-#: data/patterns/Latn-en.common-error.in:24
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
 msgstr "החלפת האות ״I״ באות ״l״ במילים באותיות קטנות"
+
+#: data/patterns/Latn-en.common-error.in:31
+#: data/patterns/Latn-en.common-error.in:40
+#: data/patterns/Latn-en.common-error.in:49
+#: data/patterns/Latn-en.common-error.in:61
+msgid "Letter \"l\" in an upper case word"
+msgstr "האות ״I״ במילה באותיות רשיות"
 
 #: data/patterns/Latn-en.common-error.in:32
 #: data/patterns/Latn-en.common-error.in:41
 #: data/patterns/Latn-en.common-error.in:50
 #: data/patterns/Latn-en.common-error.in:62
-msgid "Letter \"l\" in an upper case word"
-msgstr "האות ״I״ במילה באותיות רשיות"
-
-#: data/patterns/Latn-en.common-error.in:33
-#: data/patterns/Latn-en.common-error.in:42
-#: data/patterns/Latn-en.common-error.in:51
-#: data/patterns/Latn-en.common-error.in:63
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
 msgstr "החלפת האות ״l״ באות ״I״ במילים באותיות רשיות"
 
-#: data/patterns/Latn-en.common-error.in:73
-#: data/patterns/Latn-en.common-error.in:82
+#: data/patterns/Latn-en.common-error.in:72
+#: data/patterns/Latn-en.common-error.in:81
 msgid "Zero in an upper case word"
 msgstr "אפס במילה באותיות רשיות"
 
-#: data/patterns/Latn-en.common-error.in:74
-#: data/patterns/Latn-en.common-error.in:83
+#: data/patterns/Latn-en.common-error.in:73
+#: data/patterns/Latn-en.common-error.in:82
 msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr "החלפת אפס באות ״O״ במילה הכתובה ברשיות"
 
-#: data/patterns/Latn-en.common-error.in:91
-#: data/patterns/Latn.common-error.in:108
+#: data/patterns/Latn-en.common-error.in:90
+#: data/patterns/Latn.common-error.in:107
 msgid "Space between number and unit"
 msgstr "רווחים בין מספר ליחידה"
 
-#: data/patterns/Latn-en.common-error.in:92
-#: data/patterns/Latn.common-error.in:109
+#: data/patterns/Latn-en.common-error.in:91
+#: data/patterns/Latn.common-error.in:108
 msgid "Add or remove space between a number and the associated unit"
 msgstr "הוספה או הסרה של רווח בין המספר והיחידה המשויכת אליו"
 
-#: data/patterns/Latn-en.common-error.in:100
+#: data/patterns/Latn-en.common-error.in:99
 msgid "Spaces around an apostrophe"
 msgstr "רווחים מסביב לאפוסטרוף"
 
-#: data/patterns/Latn-en.common-error.in:101
+#: data/patterns/Latn-en.common-error.in:100
 msgid "Remove spaces around an apostrophe"
 msgstr "הסרת רווחים מסביב לאפוסטרוף"
 
-#: data/patterns/Latn-en.common-error.in:109
-#: data/patterns/Latn-en.common-error.in:118
+#: data/patterns/Latn-en.common-error.in:108
+#: data/patterns/Latn-en.common-error.in:117
 msgid "Okay"
 msgstr "אוקיי"
 
-#: data/patterns/Latn-en.common-error.in:110
-#: data/patterns/Latn-en.common-error.in:119
+#: data/patterns/Latn-en.common-error.in:109
+#: data/patterns/Latn-en.common-error.in:118
 msgid "Spell two-letter forms of \"okay\" in all upper case"
 msgstr ""
 
-#: data/patterns/Latn-en.hearing-impaired.in:5
+#: data/patterns/Latn-en.hearing-impaired.in:4
 msgid "Uppercase speaker before a colon"
 msgstr "הגדלת שם הדובר לרשיות לפני נקודתיים"
 
-#: data/patterns/Latn-en.hearing-impaired.in:6
+#: data/patterns/Latn-en.hearing-impaired.in:5
 msgid ""
 "Replace the uppercase name of the speaker before a colon with a dialogue "
 "dash"
 msgstr "החלפת השם באותיות רשיות של הדובר לפני הנקודתיים במקף דו־שיח"
 
-#: data/patterns/Latn-en.line-break.in:5
+#: data/patterns/Latn-en.line-break.in:4
 msgid "Title"
 msgstr ""
 
-#: data/patterns/Latn-en.line-break.in:6
+#: data/patterns/Latn-en.line-break.in:5
 msgid "Do not break after a title, e.g. \" Dr.\""
 msgstr ""
 
-#: data/patterns/Latn-en.line-break.in:13
+#: data/patterns/Latn-en.line-break.in:12
 msgid "Article"
 msgstr ""
 
-#: data/patterns/Latn-en.line-break.in:14
+#: data/patterns/Latn-en.line-break.in:13
 msgid "Do not break after an article"
 msgstr ""
 
-#: data/patterns/Latn-en.line-break.in:21
+#: data/patterns/Latn-en.line-break.in:20
 msgid "Preposition"
 msgstr ""
 
-#: data/patterns/Latn-en.line-break.in:22
+#: data/patterns/Latn-en.line-break.in:21
 msgid "Do not break after a preposition"
 msgstr ""
 
-#: data/patterns/Latn-en.line-break.in:30
+#: data/patterns/Latn-en.line-break.in:29
 msgid "Possessive determiner"
 msgstr ""
 
-#: data/patterns/Latn-en.line-break.in:31
+#: data/patterns/Latn-en.line-break.in:30
 msgid "Do not break after a possessive determiner, e.g. \"my\""
 msgstr ""
 
-#: data/patterns/Latn-fi.common-error.in:5
-#: data/patterns/Latn.common-error.in:182
+#: data/patterns/Latn-fi.common-error.in:4
+#: data/patterns/Latn.common-error.in:181
 msgid "Space after punctuation marks"
 msgstr "רווחים לאחר סימני פיסוק"
 
-#: data/patterns/Latn-fi.common-error.in:6
-#: data/patterns/Latn.common-error.in:183
+#: data/patterns/Latn-fi.common-error.in:5
+#: data/patterns/Latn.common-error.in:182
 msgid "Add space after various punctuation marks"
 msgstr "הוספת רווח לאחר סימני פיסוק שונים"
+
+#: data/patterns/Latn-fr.common-error.in:4
+#: data/patterns/Latn-fr.common-error.in:13
+#: data/patterns/Latn-fr.common-error.in:22
+#: data/patterns/Latn-fr.common-error.in:31
+msgid "Spaces around guillemets"
+msgstr ""
 
 #: data/patterns/Latn-fr.common-error.in:5
 #: data/patterns/Latn-fr.common-error.in:14
 #: data/patterns/Latn-fr.common-error.in:23
 #: data/patterns/Latn-fr.common-error.in:32
-msgid "Spaces around guillemets"
-msgstr ""
-
-#: data/patterns/Latn-fr.common-error.in:6
-#: data/patterns/Latn-fr.common-error.in:15
-#: data/patterns/Latn-fr.common-error.in:24
-#: data/patterns/Latn-fr.common-error.in:33
 msgid "Add spaces around guillemets"
 msgstr ""
 
-#: data/patterns/Latn-fr.common-error.in:41
-#: data/patterns/Latn-fr.common-error.in:52
-#: data/patterns/Latn.common-error.in:171
+#: data/patterns/Latn-fr.common-error.in:40
+#: data/patterns/Latn-fr.common-error.in:51
+#: data/patterns/Latn.common-error.in:170
 msgid "Space before punctuation marks"
 msgstr "רווחים לפני סימני פיסוק"
 
-#: data/patterns/Latn-fr.common-error.in:42
-#: data/patterns/Latn-fr.common-error.in:53
+#: data/patterns/Latn-fr.common-error.in:41
+#: data/patterns/Latn-fr.common-error.in:52
 msgid "Add or remove space before various punctuation marks"
 msgstr ""
 
-#: data/patterns/Latn.capitalization.in:5
+#: data/patterns/Latn.capitalization.in:4
 msgid "Sentence"
 msgstr "משפט"
 
-#: data/patterns/Latn.capitalization.in:6
+#: data/patterns/Latn.capitalization.in:5
 msgid "Capitalize the first word of a sentence"
 msgstr "הפיכת המילה הראשונה במשפט לרישית (הגדלת האות הראשונה)"
 
-#: data/patterns/Latn.capitalization.in:12
+#: data/patterns/Latn.capitalization.in:11
 msgid "Ellipsis"
 msgstr ""
 
-#: data/patterns/Latn.capitalization.in:13
+#: data/patterns/Latn.capitalization.in:12
 msgid "Capitalize after an ellipsis"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in:7 data/patterns/Latn.common-error.in:16
+#: data/patterns/Latn.common-error.in:25 data/patterns/Latn.common-error.in:34
+#: data/patterns/Latn.common-error.in:43 data/patterns/Latn.common-error.in:52
+#: data/patterns/Latn.common-error.in:61
+msgid "Ligatures"
 msgstr ""
 
 #: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
 #: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
 #: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
 #: data/patterns/Latn.common-error.in:62
-msgid "Ligatures"
-msgstr ""
-
-#: data/patterns/Latn.common-error.in:9 data/patterns/Latn.common-error.in:18
-#: data/patterns/Latn.common-error.in:27 data/patterns/Latn.common-error.in:36
-#: data/patterns/Latn.common-error.in:45 data/patterns/Latn.common-error.in:54
-#: data/patterns/Latn.common-error.in:63
 msgid "Unpack ligatures to individual characters"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
+#: data/patterns/Latn.common-error.in:70 data/patterns/Latn.common-error.in:79
 msgid "Spelling of a.m. and p.m."
 msgstr "איות של a.m.‎ ו־p.m.‎"
 
-#: data/patterns/Latn.common-error.in:72 data/patterns/Latn.common-error.in:81
+#: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "שינוי צורות האיות השונות של פרקי 12 השעות ל־״a.m.‎״ ו־״p.m.‎״"
 
-#: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
+#: data/patterns/Latn.common-error.in:88 data/patterns/Latn.common-error.in:97
 msgid "Letter \"O\" in a number"
 msgstr "האות ״O״ במספר"
 
-#: data/patterns/Latn.common-error.in:90 data/patterns/Latn.common-error.in:99
+#: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr "החלפת האות ״O״ באפס במספר"
 
-#: data/patterns/Latn.common-error.in:117
+#: data/patterns/Latn.common-error.in:116
 msgid "Double apostrophe"
 msgstr "אפוסטרוף כפול"
 
-#: data/patterns/Latn.common-error.in:118
+#: data/patterns/Latn.common-error.in:117
 msgid "Replace a double apostrophe with a quotation mark"
 msgstr "החלפת אפוסטרוף כפול בסימן ציטוט"
+
+#: data/patterns/Latn.common-error.in:125
+#: data/patterns/Latn.common-error.in:134
+#: data/patterns/Latn.common-error.in:143
+#: data/patterns/Latn.common-error.in:152
+msgid "Spaces around brackets"
+msgstr "רווחים מסביב לסוגריים מרובעים"
 
 #: data/patterns/Latn.common-error.in:126
 #: data/patterns/Latn.common-error.in:135
 #: data/patterns/Latn.common-error.in:144
 #: data/patterns/Latn.common-error.in:153
-msgid "Spaces around brackets"
-msgstr "רווחים מסביב לסוגריים מרובעים"
-
-#: data/patterns/Latn.common-error.in:127
-#: data/patterns/Latn.common-error.in:136
-#: data/patterns/Latn.common-error.in:145
-#: data/patterns/Latn.common-error.in:154
 msgid "Add or remove spaces around parentheses and square brackets"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:162
+#: data/patterns/Latn.common-error.in:161
 msgid "Space after a dialogue dash"
 msgstr "רווח לאחר קו הפרדה לציון דו־שיח"
 
-#: data/patterns/Latn.common-error.in:163
+#: data/patterns/Latn.common-error.in:162
 msgid "Add space after a dialogue dash"
 msgstr "הוספת רווח לאחר מקף דו־שיח"
 
-#: data/patterns/Latn.common-error.in:172
+#: data/patterns/Latn.common-error.in:171
 msgid "Remove space before various punctuation marks"
 msgstr "הסרת רווח לפני סימני פיסוק שונים"
 
-#: data/patterns/Latn.common-error.in:192
+#: data/patterns/Latn.common-error.in:191
 msgid "Space after an ellipsis"
 msgstr "רווח לאחר שלוש נקודות ההשמטה"
 
-#: data/patterns/Latn.common-error.in:193
+#: data/patterns/Latn.common-error.in:192
 msgid "Add space after an ellipsis"
 msgstr "הוספת רווח לאחר שלוש נקודות ההשמטה"
 
-#: data/patterns/Latn.common-error.in:201
+#: data/patterns/Latn.common-error.in:200
 msgid "Space after a starting ellipsis"
 msgstr "רווח לאחר קו הפרדה לציון דו־שיח בתחילתו"
 
-#: data/patterns/Latn.common-error.in:202
+#: data/patterns/Latn.common-error.in:201
 msgid "Remove space after an ellipsis that starts a line"
 msgstr "הסרת רווח לאחר שלוש נקודות להשמטה המתחילות שורה"
+
+#: data/patterns/Latn.common-error.in:209
+#: data/patterns/Latn.common-error.in:220
+#: data/patterns/Latn.common-error.in:231
+#: data/patterns/Latn.common-error.in:241
+msgid "Spaces around a quotation mark"
+msgstr "רווחים מסביב לסימני מרכאות"
 
 #: data/patterns/Latn.common-error.in:210
 #: data/patterns/Latn.common-error.in:221
 #: data/patterns/Latn.common-error.in:232
 #: data/patterns/Latn.common-error.in:242
-msgid "Spaces around a quotation mark"
-msgstr "רווחים מסביב לסימני מרכאות"
-
-#: data/patterns/Latn.common-error.in:211
-#: data/patterns/Latn.common-error.in:222
-#: data/patterns/Latn.common-error.in:233
-#: data/patterns/Latn.common-error.in:243
 msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr "הסרת רווח לאחר סימן קריאה סוגר ולפני פותח"
 
-#: data/patterns/Latn.common-error.in:252
-#: data/patterns/Latn.common-error.in:261
+#: data/patterns/Latn.common-error.in:251
+#: data/patterns/Latn.common-error.in:260
 msgid "Spaces around musical notes"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:253
-#: data/patterns/Latn.common-error.in:262
+#: data/patterns/Latn.common-error.in:252
+#: data/patterns/Latn.common-error.in:261
 msgid "Add spaces between musical note characters and lyrics"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:270
-#: data/patterns/Latn.common-error.in:279
+#: data/patterns/Latn.common-error.in:269
+#: data/patterns/Latn.common-error.in:278
 msgid "Multiple question- and exclamation marks"
 msgstr "מספר סימני שאלה וקריאה"
 
-#: data/patterns/Latn.common-error.in:271
-#: data/patterns/Latn.common-error.in:280
+#: data/patterns/Latn.common-error.in:270
+#: data/patterns/Latn.common-error.in:279
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr "החלפת מספר סימני שאלה וסימני קריאה ברצף בסימנים יחידים"
 
-#: data/patterns/Latn.common-error.in:288
-#: data/patterns/Latn.common-error.in:298
+#: data/patterns/Latn.common-error.in:287
+#: data/patterns/Latn.common-error.in:297
 msgid "Periods around a punctuation mark"
 msgstr "נקודות מסביב לסימני פיסוק"
 
-#: data/patterns/Latn.common-error.in:289
-#: data/patterns/Latn.common-error.in:299
+#: data/patterns/Latn.common-error.in:288
+#: data/patterns/Latn.common-error.in:298
 msgid "Remove period before or after various punctuation marks"
 msgstr "הסרת נקודה לפני או אחרי סימני פיסוק שונים"
 
-#: data/patterns/Latn.common-error.in:308
+#: data/patterns/Latn.common-error.in:307
 msgid "Terminating double-dashes"
 msgstr "מקפים כפולים לסגירה"
 
-#: data/patterns/Latn.common-error.in:309
+#: data/patterns/Latn.common-error.in:308
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr "החלפת מקף סוף סעיף בשני מקפים"
 
-#: data/patterns/Latn.hearing-impaired.in:5
+#: data/patterns/Latn.hearing-impaired.in:4
 msgid "Sound in brackets"
 msgstr "צליל בסוגריים מרובעים"
 
-#: data/patterns/Latn.hearing-impaired.in:6
+#: data/patterns/Latn.hearing-impaired.in:5
 msgid "Remove description of a sound between square brackets"
 msgstr "הסרת תיאורי צליל בסוגריים מרובעים"
 
-#: data/patterns/Latn.hearing-impaired.in:12
+#: data/patterns/Latn.hearing-impaired.in:11
 msgid "Sound in parentheses"
 msgstr ""
 
-#: data/patterns/Latn.hearing-impaired.in:13
+#: data/patterns/Latn.hearing-impaired.in:12
 msgid "Remove description of a sound between parentheses"
 msgstr ""
 
-#: data/patterns/Latn.hearing-impaired.in:19
+#: data/patterns/Latn.hearing-impaired.in:18
 msgid "Song lyrics between number signs"
 msgstr "מילות שירים בין סולמיות"
 
-#: data/patterns/Latn.hearing-impaired.in:20
+#: data/patterns/Latn.hearing-impaired.in:19
 msgid "Remove song lyrics starting with or between number signs"
 msgstr "הסרת מילות שירים המתחילים עם או בין סולמיות"
 
-#: data/patterns/Latn.hearing-impaired.in:27
+#: data/patterns/Latn.hearing-impaired.in:26
 msgid "One-line song lyrics between number signs"
 msgstr "מילות שירים בנות שורה אחת בין סולמיות"
 
-#: data/patterns/Latn.hearing-impaired.in:28
+#: data/patterns/Latn.hearing-impaired.in:27
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr "הסרת מילות שירים בנות שורה אחת עם או בין סולמיות"
 
-#: data/patterns/Latn.hearing-impaired.in:35
+#: data/patterns/Latn.hearing-impaired.in:34
 msgid "Speaker before a colon"
 msgstr "הדובר לפי הנקודתיים"
 
-#: data/patterns/Latn.hearing-impaired.in:36
+#: data/patterns/Latn.hearing-impaired.in:35
 msgid "Replace the name of the speaker before a colon with a dialogue dash"
 msgstr "החלפת שם הדובר שלפני הנקודתיים במקף דו־שיח"
 
-#: data/patterns/Latn.line-break.in:5 data/patterns/Latn.line-break.in:13
+#: data/patterns/Latn.line-break.in:4 data/patterns/Latn.line-break.in:12
 msgid "Dialogue"
 msgstr "דו־שיח"
 
-#: data/patterns/Latn.line-break.in:6 data/patterns/Latn.line-break.in:14
+#: data/patterns/Latn.line-break.in:5 data/patterns/Latn.line-break.in:13
 msgid "Break according to dialogue separated by dashes"
 msgstr "שבירה בהתאם לדו־שיח המופרד במקפים"
 
-#: data/patterns/Latn.line-break.in:21 data/patterns/Latn.line-break.in:30
+#: data/patterns/Latn.line-break.in:20 data/patterns/Latn.line-break.in:29
 msgid "Clause"
 msgstr "סעיף"
 
-#: data/patterns/Latn.line-break.in:22 data/patterns/Latn.line-break.in:31
+#: data/patterns/Latn.line-break.in:21 data/patterns/Latn.line-break.in:30
 msgid "Break according to clauses terminated by a punctuation mark"
 msgstr "שבירה בהתאם לסעיפים שנסגרים על ידי סימני פיסוק"
 
-#: data/patterns/Latn.line-break.in:38
+#: data/patterns/Latn.line-break.in:37
 msgid "Number and unit"
 msgstr ""
 
-#: data/patterns/Latn.line-break.in:39
+#: data/patterns/Latn.line-break.in:38
 msgid "Do not break between a number and associated unit"
 msgstr ""
 
-#: data/patterns/Zyyy.common-error.in:5 data/patterns/Zyyy.common-error.in:14
+#: data/patterns/Zyyy.common-error.in:4 data/patterns/Zyyy.common-error.in:13
 msgid "Leading and trailing spaces"
 msgstr "רווחים מובילים ועוקבים"
 
-#: data/patterns/Zyyy.common-error.in:6 data/patterns/Zyyy.common-error.in:15
+#: data/patterns/Zyyy.common-error.in:5 data/patterns/Zyyy.common-error.in:14
 msgid "Remove spaces from the beginning and end of lines"
 msgstr "הסרת רווחים מתחילת ומסוף השורות"
 
-#: data/patterns/Zyyy.common-error.in:23
+#: data/patterns/Zyyy.common-error.in:22
 msgid "Multiple consecutive spaces"
 msgstr "מספר רווחים עוקבים"
 
-#: data/patterns/Zyyy.common-error.in:24
+#: data/patterns/Zyyy.common-error.in:23
 msgid "Replace multiple consecutive spaces with only one"
 msgstr "החלפת מספר רווחים עוקבים באחד"
 
-#: data/patterns/Zyyy.common-error.in:32 data/patterns/Zyyy.common-error.in:45
-#: data/patterns/Zyyy.common-error.in:55 data/patterns/Zyyy.common-error.in:65
+#: data/patterns/Zyyy.common-error.in:31 data/patterns/Zyyy.common-error.in:44
+#: data/patterns/Zyyy.common-error.in:54 data/patterns/Zyyy.common-error.in:64
 msgid "Space between digits"
 msgstr "רווח בין ספרות"
 
-#: data/patterns/Zyyy.common-error.in:33 data/patterns/Zyyy.common-error.in:46
-#: data/patterns/Zyyy.common-error.in:56 data/patterns/Zyyy.common-error.in:66
+#: data/patterns/Zyyy.common-error.in:32 data/patterns/Zyyy.common-error.in:45
+#: data/patterns/Zyyy.common-error.in:55 data/patterns/Zyyy.common-error.in:65
 msgid "Remove space between digits of a number"
 msgstr "הסרת רווחים בין ספרות של מספר"
 
-#: data/patterns/Zyyy.common-error.in:78
+#: data/patterns/Zyyy.common-error.in:77
 msgid "Ellipses"
 msgstr ""
 
-#: data/patterns/Zyyy.common-error.in:79
+#: data/patterns/Zyyy.common-error.in:78
 msgid "Replace Unicode ellipses with three separate dots"
 msgstr ""
 
-#: data/patterns/Zyyy.common-error.in:90
+#: data/patterns/Zyyy.common-error.in:89
 msgid "Musical notes"
 msgstr ""
 
-#: data/patterns/Zyyy.common-error.in:91
+#: data/patterns/Zyyy.common-error.in:90
 msgid "Replace Unicode musical note characters with number signs"
 msgstr ""
 
@@ -2667,20 +2667,20 @@ msgid ""
 "texts and timing subtitles to match video."
 msgstr ""
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:47
+#: data/io.otsaloma.gaupol.appdata.xml.in:48
 msgid "Main window"
 msgstr ""
 
-#: data/io.otsaloma.gaupol.desktop.in:5
+#: data/io.otsaloma.gaupol.desktop.in:4
 msgid "Subtitle Editor"
 msgstr "עורך הכתוביות"
 
-#: data/io.otsaloma.gaupol.desktop.in:6
+#: data/io.otsaloma.gaupol.desktop.in:5
 msgid "Edit subtitle files"
 msgstr "עריכת קובצי הכתוביות"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
-#: data/io.otsaloma.gaupol.desktop.in:12
+#: data/io.otsaloma.gaupol.desktop.in:11
 msgid "video;subtitles;captions;"
 msgstr ""
