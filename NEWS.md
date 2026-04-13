@@ -1,5 +1,5 @@
-PENDING: Gaupol 1.16
-====================
+2026-04-13: Gaupol 1.16
+=======================
 
 Two fixes for compatibility with Python 3.15, which can be expected to
 be released around fall 2026. These have both been deprecated for a
