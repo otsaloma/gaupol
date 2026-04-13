@@ -1,3 +1,13 @@
+PENDING: Gaupol 1.16
+====================
+
+Two fixes for compatibility with Python 3.15, which can be expected to
+be released around fall 2026. These have both been deprecated for a
+while, but will be removed in 3.15.
+
+* Don't use deprecated locale.getdefaultlocale (#226)
+* Don't use deprecated importlib.load_module (#227)
+
 2024-06-10: Gaupol 1.15
 =======================
 
