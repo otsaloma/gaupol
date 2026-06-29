@@ -16,13 +16,11 @@ whatever version justified by having something we need.
 
 ## Steps Done
 
-...
-
-## Steps Left
-
 - Review our current unit test coverage. Are we missing some relevant
   tests? Are our tests touching implementation details in a way that the
   tests themselves break too?
+
+## Steps Left
 
 - Review the current deprecation warnings we see when running `pytest`
   or `bin/gaupol FILE...`. Let's try to fix these before jumping into
