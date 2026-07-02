@@ -20,12 +20,12 @@ whatever version justified by having something we need.
   tests? Are our tests touching implementation details in a way that the
   tests themselves break too?
 
-## Steps Left
-
 - Review the current deprecation warnings we see when running `pytest`
   or `bin/gaupol FILE...`. Let's try to fix these before jumping into
   GTK-4. Fix also any non-GTK, such as Python, deprecation warnings
   while at it.
+
+## Steps Left
 
 - Run any automated conversions, such as `gtk4-builder-tool simplify` to
   convert files to whatever new format.

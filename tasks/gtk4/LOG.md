@@ -10,8 +10,39 @@
   `-s` to show them. Use `G_DEBUG=fatal-warnings` to turn a warning into
   a fatal error (with traceback) when tracking down its source.
 
+- Retested CSS `:nth-child` zebra stripes (the XXX comment in
+  `gaupol/util.py` `get_zebra_color`): still not viable, GtkTreeView has
+  no per-row CSS nodes, the selector matches the whole widget. Real
+  per-row CSS only comes with the GtkListView family.
+
+- `get_zebra_color` now uses `lookup_color("theme_base_color")`; if a
+  theme doesn't define that color, it returns None and zebra stripes are
+  simply not drawn. `lookup_color` and `get_color` exist in GTK 4 but
+  are deprecated since 4.10 — revisit with the TreeView question.
+
+- `show_uri` now uses `Gio.AppInfo.launch_default_for_uri` instead of
+  any of the churning `Gtk.show_uri*` variants; no GTK API involved
+  anymore, portal-aware under Flatpak.
+
+- Removed deprecated `rules_hint` from the `.ui` files: dialog tree
+  views (preferences, spell-check, language, text assistant) lose
+  theme-drawn zebra stripes already under GTK-3. `margin_left` →
+  `margin_start` in the same files, no visual change.
+
+- The `PyGIDeprecationWarning: GLib.unix_signal_add_full` warning at
+  import is internal to PyGObject 3.56 (it registers the alias as
+  deprecated twice in `gi/overrides/GLib.py`); nothing to fix on our
+  side, ignore it.
+
 ## Deferred
 
 - Migrate or remove the interactive `run_*`/`run_dialog` test helpers
   that rely on `Gtk.main()`/`Gtk.Dialog.run()`/`Gtk.WindowPosition` (~13
   test files); not collected by pytest, so they rot silently.
+
+- `TimeEntry.set_text` triggers a `g_value_get_int: assertion
+  'G_VALUE_HOLDS_INT (value)' failed` warning: PyGObject can't marshal
+  the in-out position argument of the "insert-text" signal that
+  `gaupol/entries.py` connects to. Harmless noise in GTK-3; fix as part
+  of the GTK-4 rework of TimeEntry ("key-press-event" and GtkEditable
+  handling change anyway).
