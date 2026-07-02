@@ -140,14 +140,19 @@ def get_tree_view_size(tree_view, font=None):
 
 @aeidon.deco.once
 def get_zebra_color(tree_view):
-    """Return background color to use for tree view zebra-stripes."""
+    """Return background color to use for tree view zebra-stripes or None."""
     # XXX: Zebra stripes would be faster and cleaner done with CSS
     # selectors :nth-child(odd) and :nth-child(even), but they don't
-    # seem to work, might even be deliberately broken.
+    # work: GtkTreeView has no per-row CSS nodes, the selectors match
+    # the tree view widget itself among its siblings (tested 7/2026).
     # https://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
     style = tree_view.get_style_context()
     fg = style.get_color(Gtk.StateFlags.NORMAL)
-    bg = style.get_background_color(Gtk.StateFlags.NORMAL)
+    found, bg = style.lookup_color("theme_base_color")
+    if not found:
+        # Can't reliably guess,
+        # return None to not use zebra-stripes.
+        return None
     color = Gdk.RGBA()
     color.red   = 0.92 * bg.red   + 0.08 * fg.red
     color.green = 0.92 * bg.green + 0.08 * fg.green
