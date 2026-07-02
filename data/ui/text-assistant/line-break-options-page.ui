@@ -68,7 +68,7 @@
               <object class="GtkGrid" id="grid1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_left">12</property>
+                <property name="margin_start">12</property>
                 <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
                 <child>
@@ -190,7 +190,7 @@
               <object class="GtkGrid" id="grid2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_left">12</property>
+                <property name="margin_start">12</property>
                 <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
                 <child>

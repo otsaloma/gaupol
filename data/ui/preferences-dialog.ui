@@ -82,7 +82,7 @@
                       <object class="GtkBox" id="vbox4">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
@@ -153,7 +153,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="headers_visible">False</property>
-                                        <property name="rules_hint">True</property>
                                         <child internal-child="selection">
                                           <object class="GtkTreeSelection" id="treeview-selection"/>
                                         </child>
@@ -336,7 +335,7 @@
                       <object class="GtkBox" id="vbox8">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
@@ -437,7 +436,7 @@
                       <object class="GtkBox" id="vbox13">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
@@ -552,7 +551,7 @@
                       <object class="GtkBox" id="vbox17">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
@@ -638,7 +637,7 @@
                       <object class="GtkGrid" id="grid2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="row_spacing">6</property>
                         <property name="column_spacing">12</property>
                         <child>
@@ -741,7 +740,7 @@
                       <object class="GtkGrid" id="grid3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="row_spacing">6</property>
                         <property name="column_spacing">12</property>
                         <child>
@@ -874,7 +873,7 @@
                       <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="spacing">12</property>
                         <child>
                           <object class="GtkLabel">
@@ -983,7 +982,7 @@
                       <object class="GtkGrid" id="grid1">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="row_spacing">6</property>
                         <property name="column_spacing">12</property>
                         <child>
@@ -1101,7 +1100,7 @@
                       <object class="GtkBox" id="hbox2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">12</property>
+                        <property name="margin_start">12</property>
                         <property name="spacing">12</property>
                         <child>
                           <object class="GtkLabel" id="label9">
@@ -1201,7 +1200,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="headers_visible">False</property>
-                            <property name="rules_hint">True</property>
                             <child internal-child="selection">
                               <object class="GtkTreeSelection" id="treeview-selection2"/>
                             </child>
