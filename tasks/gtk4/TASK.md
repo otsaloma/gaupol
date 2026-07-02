@@ -14,6 +14,13 @@ you migrate pieces, note in the GTK-4 documentation since which GTK-4
 version that symbol has been in and we'll set the version requirement to
 whatever version justified by having something we need.
 
+During the migration, we'll be handling one deprecation at a time.
+During this time, you can expect tests to fail. Do not worry about that.
+Tests can be expected to pass only once all deprecations are handled.
+Always run `flake8` for individual changes you make. You can also run
+`pytest` for individual test files matching your changes, but check why
+the tests fail and ignore anything unrelated to your changes.
+
 ## Steps Done
 
 - Review our current unit test coverage. Are we missing some relevant
@@ -25,10 +32,10 @@ whatever version justified by having something we need.
   GTK-4. Fix also any non-GTK, such as Python, deprecation warnings
   while at it.
 
-## Steps Left
-
 - Run any automated conversions, such as `gtk4-builder-tool simplify` to
   convert files to whatever new format.
+
+## Steps Left
 
 - Switch the codebase to GTK-4 (mainly `gi.require_version` calls in
   `gaupol/__init__.py`). Let's also use this breaking opportunity bump

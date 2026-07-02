@@ -34,11 +34,48 @@
   deprecated twice in `gi/overrides/GLib.py`); nothing to fix on our
   side, ignore it.
 
+- Converted all 26 `.ui` files to GTK-4 format with `gtk4-builder-tool
+  simplify --3to4` plus manual fixes for what the tool only warns about;
+  all files now pass `gtk4-builder-tool validate`. The app and the
+  dialog tests are broken (segfault, even) under GTK-3 until the GTK-4
+  switch. Notable changes beyond the mechanical ones:
+
+  - Dropped `border_width` (12px) from all dialogs and assistant pages:
+    dialog content padding is lost, review spacing visually under GTK 4
+    and add margins where needed.
+
+  - `GtkButtonBox` → `GtkBox`: buttons in a box are no longer
+    homogeneous in size by default (spell-check dialog's button column
+    is the most visible case); set homogeneous if it looks off. Also
+    deleted the empty leftover `action_area` boxes.
+
+  - The two `GtkArrow`s in the position transform dialog are now
+    `GtkImage`s with `go-next-symbolic` (also flips in RTL, unlike
+    GtkArrow's fixed direction).
+
+  - The preferences dialog `GtkToolbar` became a `GtkBox` with the
+    `toolbar` CSS class, `GtkToolButton`s became `GtkButton`s (all done
+    by the tool).
+
+  - `translatable="yes"` became `translatable="1"`: verified OK for
+    string extraction, the gettext GtkBuilder ITS rules accept both.
+
 ## Deferred
 
 - Migrate or remove the interactive `run_*`/`run_dialog` test helpers
   that rely on `Gtk.main()`/`Gtk.Dialog.run()`/`Gtk.WindowPosition` (~13
   test files); not collected by pytest, so they rot silently.
+
+- The multi-save dialog's `GtkFileChooserButton` (removed in GTK 4) is
+  now a plain `GtkButton` with the same id `filechooser_button`, but
+  non-functional: reimplement folder selection in `multi_save.py`
+  (`get_filename`/`set_filename` calls, dialog title "Select A Folder")
+  with a file chooser dialog during the code migration.
+
+- Removed the `focus-out-event` signal (GTK 4 has no event signals) from
+  `search-dialog.ui`: `_on_text_view_focus_out_event` in `search.py` is
+  now never called, reconnect it in code via `Gtk.EventControllerFocus`
+  during the code migration.
 
 - `TimeEntry.set_text` triggers a `g_value_get_int: assertion
   'G_VALUE_HOLDS_INT (value)' failed` warning: PyGObject can't marshal
