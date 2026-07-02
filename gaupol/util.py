@@ -26,6 +26,7 @@ import traceback
 import webbrowser
 
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
 
@@ -374,11 +375,11 @@ def show_exception(exctype, value, tb):
 def show_uri(uri):
     """Open `uri` in default application."""
     try:
-        return Gtk.show_uri(None, uri, Gdk.CURRENT_TIME)
+        return Gio.AppInfo.launch_default_for_uri(uri)
     except Exception:
-        # Gtk.show_uri fails on Windows and some misconfigured installations.
+        # Launching fails on Windows and some misconfigured installations.
         # GError: No application is registered as handling this file
-        # Gtk.show_uri: Operation not supported
+        # Operation not supported
         if uri.startswith(("http://", "https://")):
             return webbrowser.open(uri)
         raise # Exception
