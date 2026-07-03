@@ -35,12 +35,12 @@ the tests fail and ignore anything unrelated to your changes.
 - Run any automated conversions, such as `gtk4-builder-tool simplify` to
   convert files to whatever new format.
 
-## Steps Left
-
 - Switch the codebase to GTK-4 (mainly `gi.require_version` calls in
   `gaupol/__init__.py`). Let's also use this breaking opportunity bump
   versions of all libraries used via `gi.require_version`. We can also
   bump Python version if it comes up for some reason.
+
+## Steps Left
 
 - Look through the migration guide to see what we're using that we
   absolutely need to migrate away from. Go through those one-by-one

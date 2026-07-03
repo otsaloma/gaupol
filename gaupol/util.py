@@ -85,13 +85,9 @@ def get_font():
 
 def get_gspell_version():
     """Return :mod:`Gspell` version number as string or ``None``."""
-    try:
-        # XXX: The full version number is not available.
-        # https://gitlab.gnome.org/GNOME/gspell/issues/8
-        from gi.repository import Gspell
-        return str(Gspell._version)
-    except Exception:
-        return None
+    # Gspell requires GTK 3 and cannot be loaded in the same process with
+    # GTK 4. Disabled until spell-check is migrated to a GTK-4 replacement.
+    return None
 
 def get_gst_version():
     """Return :mod:`Gst` version number as string or ``None``."""

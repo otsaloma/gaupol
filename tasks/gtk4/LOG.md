@@ -60,7 +60,45 @@
   - `translatable="yes"` became `translatable="1"`: verified OK for
     string extraction, the gettext GtkBuilder ITS rules accept both.
 
+- Switched `gi.require_version` to Gdk/Gtk 4.0. GStreamer namespaces
+  stay at 1.0 (the only GIR version there is). `import aeidon` works;
+  `import gaupol` still fails on removed GTK-3 APIs used at module level
+  (first hit: `Gtk.ToolbarStyle` in `gaupol/enums.py`) — that's the next
+  step, migrating removed APIs one by one.
+
+- Disabled Gspell entirely: it's GTK-3-only and merely importing its
+  typelib loads Gtk 3.0 into the process, which conflicts with GTK 4
+  (`import aeidon` before requiring Gtk 4.0 would make the whole app
+  fail to start). Imports commented out in `aeidon/spell.py`,
+  `gaupol/spell.py` and `aeidon/__init__.py`; `SpellChecker.available()`
+  now returns False so all spell-check UI disables itself gracefully.
+
+- Updated README and CI workflow packages: `gir1.2-gtk-3.0` →
+  `gir1.2-gtk-4.0`, `gstreamer1.0-gtk3` → `gstreamer1.0-gtk4`, dropped
+  `gir1.2-gspell-1`, GTK requirement now ≥ 4.0 (tighten later to
+  whatever 4.x version we end up needing symbols from).
+
+- Bumped README dependency floors: Python ≥ 3.10, PyGObject ≥ 3.38
+  (first release with GTK-4 support) and GStreamer ≥ 1.18 (contemporary
+  of GTK 4.0, September vs. December 2020). If the final GTK floor ends
+  up ≥ 4.14, raise GStreamer to its contemporary 1.24.
+
 ## Deferred
+
+- Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
+  aeidon `SpellChecker` backend (`Gspell.Checker`), inline spell-check
+  in text views (`gaupol/spell.py`), and
+  `gaupol/util.py:get_gspell_version` (debug dialog). Candidate:
+  libspelling (`gir1.2-spelling-1`, in Debian as libspelling-1-2 0.4.x);
+  check it covers both the word-checker API and inline GtkTextView
+  checking. Until then `aeidon/test/test_spell.py` and
+  `gaupol/test/test_spell.py` fail (they assume availability), and
+  README/CI no longer list a spell-check dependency — re-add one when
+  reimplemented.
+
+- Switch `gaupol/player.py` from `gtksink` to `gtk4paintablesink` +
+  `Gtk.Picture` during the code migration; README/CI already point to
+  `gstreamer1.0-gtk4`.
 
 - Migrate or remove the interactive `run_*`/`run_dialog` test helpers
   that rely on `Gtk.main()`/`Gtk.Dialog.run()`/`Gtk.WindowPosition` (~13

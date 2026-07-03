@@ -21,8 +21,11 @@ import aeidon
 import os
 import re
 
-with aeidon.util.silent(Exception):
-    from gi.repository import Gspell
+# Gspell requires GTK 3 and cannot be loaded in the same process with
+# GTK 4. Disabled until spell-check is migrated to a GTK-4 replacement.
+# with aeidon.util.silent(Exception):
+#     from gi.repository import Gspell
+Gspell = None
 
 __all__ = ("SpellChecker", "SpellCheckNavigator", "SpellCheckTokenizer")
 
@@ -56,7 +59,7 @@ class SpellChecker:
     @classmethod
     def available(cls):
         """Return ``True`` if spell-check is available."""
-        return "Gspell" in globals()
+        return Gspell is not None
 
     def check(self, word, leading_context="", trailing_context=""):
         """Return ``True`` if `word` is correct, ``False`` otherwise."""

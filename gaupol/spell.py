@@ -19,8 +19,11 @@
 
 import aeidon
 
-with aeidon.util.silent(Exception):
-    from gi.repository import Gspell
+# Gspell requires GTK 3 and cannot be loaded in the same process with
+# GTK 4. Disabled until spell-check is migrated to a GTK-4 replacement.
+# with aeidon.util.silent(Exception):
+#     from gi.repository import Gspell
+Gspell = None
 
 __all__ = ("SpellChecker",)
 
