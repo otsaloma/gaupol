@@ -44,7 +44,9 @@ the tests fail and ignore anything unrelated to your changes.
 
 - Look through the migration guide to see what we're using that we
   absolutely need to migrate away from. Go through those one-by-one
-  switching to whatever new recommended solution.
+  switching to whatever new recommended solution. Maintain a list of the
+  individual migrations in `tasks/gtk4/MIGRATIONS.md`, marking `[x]` as
+  you go along.
 
 - Run `pytest` and `bin/gaupol FILE...`, fix any errors you see.
 
