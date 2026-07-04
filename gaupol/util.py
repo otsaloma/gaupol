@@ -340,14 +340,12 @@ def separate_combo(store, itr, data=None):
 
 def set_cursor_busy(window):
     """Set mouse pointer busy when above window."""
-    cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), "wait")
-    window.get_window().set_cursor(cursor)
+    window.set_cursor_from_name("wait")
     iterate_main()
 
 def set_cursor_normal(window):
     """Set mouse pointer normal when above window."""
-    cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), "default")
-    window.get_window().set_cursor(cursor)
+    window.set_cursor_from_name("default")
     iterate_main()
 
 def show_exception(exctype, value, tb):

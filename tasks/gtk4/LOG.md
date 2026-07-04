@@ -156,6 +156,14 @@
   is gone in GTK 4, so those callbacks were removed. Verify live font
   change at runtime once the app starts.
 
+- GdkWindow: only two uses, both trivial. `gaupol/util.py` cursor
+  helpers now use `Gtk.Widget.set_cursor_from_name` (in GTK since 4.0),
+  which also completes the "cursor API changes" item (no other mouse
+  pointer code exists). `gaupol/agents/video.py` paned sizing now uses
+  `Gtk.Widget.get_width/get_height` directly; note these return the
+  widget's content size rather than the GdkWindow size, an irrelevant
+  difference for picking the initial 50% paned position.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the

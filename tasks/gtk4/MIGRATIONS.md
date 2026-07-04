@@ -7,7 +7,7 @@ section headings.
 - [x] Stop using `GtkWidget` event signals
 - [x] Stop using `gtk_main()` and related APIs
 - [x] Stop using GdkScreen
-- [ ] Adapt to `GdkWindow` API changes
+- [x] Adapt to `GdkWindow` API changes
 - [ ] The "iconified" window state has been renamed to "minimized"
 - [ ] Adapt to `GdkEvent` API changes
 - [ ] Replace `GtkClipboard` with `GdkClipboard`
@@ -26,7 +26,7 @@ section headings.
 - [ ] Adapt to GtkWidget's size request changes
 - [ ] Widgets are now visible by default
 - [ ] Stop using GtkWidget::draw
-- [ ] Adapt to cursor API changes
+- [x] Adapt to cursor API changes
 - [ ] Adapt to icon size API changes
 - [ ] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
 - [ ] GtkMenu, GtkMenuBar and GtkMenuItem are gone
