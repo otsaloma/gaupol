@@ -77,7 +77,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._init_dialog(parent)
         self._init_widgets()
         self._init_sensitivities()
-        self.resize(*gaupol.conf.spell_check.size)
+        self.set_default_size(*gaupol.conf.spell_check.size)
         self._pager = self._yield_pages()
         next(self._pager)
         self._proceed()
@@ -273,7 +273,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _save_geometry(self):
         """Save dialog size."""
         if self.is_maximized(): return
-        gaupol.conf.spell_check.size = list(self.get_size())
+        gaupol.conf.spell_check.size = list(self.get_default_size())
 
     def _set_done(self):
         """Set state of widgets for finished spell-check."""

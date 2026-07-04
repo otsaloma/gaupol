@@ -261,6 +261,18 @@
   calls elsewhere are Gtk.CellLayout API on combo boxes, not GtkBox;
   they still exist in GTK-4 (deprecated since 4.10, TreeView family).
 
+- GtkWindow: window-size persistence (main window in `close.py`, text
+  assistant, spell-check dialog) moved from `resize`/`get_size` to
+  `set_default_size`/`get_default_size` (both since 4.0); in GTK-4 the
+  default-size properties track user resizes and are the documented
+  save-state mechanism. They report the unmaximized size when maximized,
+  which all three save sites already guard for anyway. The text
+  assistant's `set_position(CENTER_ON_PARENT)` was dropped without
+  replacement: `GtkWindowPosition` is gone and placement of a modal
+  transient window is up to the compositor. Verify saved sizes restore
+  sensibly at runtime (GTK-4 sizes exclude window shadows, so old saved
+  conf values may restore slightly differently once).
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the

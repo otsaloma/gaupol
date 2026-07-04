@@ -977,11 +977,10 @@ class TextAssistant(Gtk.Assistant):
         self.application = application
         self._init_properties()
         self._init_signal_handlers()
-        self.resize(*gaupol.conf.text_assistant.size)
+        self.set_default_size(*gaupol.conf.text_assistant.size)
         if gaupol.conf.text_assistant.maximized:
             self.maximize()
         self.set_modal(True)
-        self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.set_transient_for(parent)
 
     def add_page(self, page):
@@ -1149,4 +1148,4 @@ class TextAssistant(Gtk.Assistant):
     def _save_window_geometry(self):
         """Save the geometry of the assistant window."""
         if not gaupol.conf.text_assistant.maximized:
-            gaupol.conf.text_assistant.size = list(self.get_size())
+            gaupol.conf.text_assistant.size = list(self.get_default_size())
