@@ -51,7 +51,7 @@ class TimeEntry(Gtk.Entry):
     :ivar _insert_handler: Handler for "insert-text" signal
 
     This widget uses :func:`GLib.idle_add` a lot, which means that clients may
-    need to call :func:`Gtk.main_iteration` to ensure proper updating.
+    need to call :func:`gaupol.util.iterate_main` to ensure proper updating.
     """
     _re_digit = re.compile(r"\d")
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")

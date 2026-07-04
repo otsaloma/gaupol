@@ -25,12 +25,10 @@ class TestTimeEntry(gaupol.TestCase):
     def run_entry(self):
         self.entry.set_text("12:34:56.789")
         window = Gtk.Window()
-        window.connect("delete-event", Gtk.main_quit)
-        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(200, 50)
-        window.add(self.entry)
-        window.show_all()
-        Gtk.main()
+        window.set_child(self.entry)
+        window.show()
+        self.main_loop(window)
 
     def setup_method(self, method):
         self.entry = gaupol.TimeEntry()

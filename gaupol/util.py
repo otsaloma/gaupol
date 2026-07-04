@@ -216,9 +216,10 @@ def install_module(name, obj):
     gaupol.__dict__[name] = inspect.getmodule(obj)
 
 def iterate_main():
-    """Iterate the GTK main loop while events are pending."""
-    while Gtk.events_pending():
-        Gtk.main_iteration()
+    """Iterate the GLib main loop while events are pending."""
+    context = GLib.MainContext.default()
+    while context.pending():
+        context.iteration(False)
 
 def lines_to_px(nlines, font=None):
     """Convert lines to pixels."""

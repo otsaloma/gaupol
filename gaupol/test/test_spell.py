@@ -15,13 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
 import gaupol
 
 from gi.repository import Gtk
 
 
-class TestSpellChecker(aeidon.TestCase):
+class TestSpellChecker(gaupol.TestCase):
 
     def run_checker(self):
         text_view = Gtk.TextView()
@@ -29,12 +28,10 @@ class TestSpellChecker(aeidon.TestCase):
         text_buffer.set_text("It's a humanoid weapon-system\ncreated by the URM Technarchy.")
         self.checker.attach(text_view)
         window = Gtk.Window()
-        window.connect("delete-event", Gtk.main_quit)
-        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(400, 200)
-        window.add(text_view)
-        window.show_all()
-        Gtk.main()
+        window.set_child(text_view)
+        window.show()
+        self.main_loop(window)
 
     def setup_method(self, method):
         language = self.get_spell_check_language("en")

@@ -19,6 +19,9 @@
 
 import aeidon
 import gaupol
+import time
+
+from gi.repository import GLib
 
 __all__ = ("TestCase",)
 
@@ -32,6 +35,14 @@ class TestCase(aeidon.TestCase):
     compatible. Tests should use plain ``assert`` statements to allow multiple
     different tools to be used to run the tests.
     """
+
+    def main_loop(self, window):
+        """Iterate the main loop until `window` is closed."""
+        context = GLib.MainContext.default()
+        while window.get_visible():
+            while context.pending():
+                context.iteration(False)
+            time.sleep(0.01)
 
     def new_application(self):
         """Return a new application with one open page."""

@@ -24,17 +24,15 @@ class TestFloatingLabel(gaupol.TestCase):
 
     def run(self):
         self.label.flash_text("Testing floating label")
-        self.window.connect("notify::visible", Gtk.main_quit)
-        Gtk.main()
+        self.main_loop(self.window)
 
     def setup_method(self, method):
         self.window = Gtk.Window()
         gaupol.style.load_css(self.window)
         self.window.set_default_size(800, 480)
-        self.window.connect("delete-event", Gtk.main_quit)
         self.overlay = Gtk.Overlay()
-        self.overlay.add(Gtk.Label())
-        self.window.add(self.overlay)
+        self.overlay.set_child(Gtk.Label())
+        self.window.set_child(self.overlay)
         self.label = gaupol.FloatingLabel()
         self.overlay.add_overlay(self.label)
-        self.window.show_all()
+        self.window.show()

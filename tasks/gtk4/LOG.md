@@ -124,6 +124,21 @@
     (dropped earlier with the `.ui` conversion) via
     `Gtk.EventControllerFocus`; clears the earlier Deferred item.
 
+- Migrated away from the `Gtk.main*` family: `gaupol.util.iterate_main`
+  now iterates `GLib.MainContext.default()` (non-blocking), and
+  `gaupol.TestCase` got an nfoview-style `main_loop(window)` helper that
+  iterates the default main context while the window is visible. The
+  interactive `run_*` test helpers (view, entries, spell, floatlabel,
+  assistants, renderers) now use it instead of `Gtk.main()` +
+  `delete-event`/`main_quit`. Since those helpers were rewritten anyway,
+  they were converted fully to GTK-4 (`set_child`, `show`, dropped
+  `Gtk.WindowPosition` — also from `test_floatlabel.py`'s
+  `setup_method`); the `run_dialog`-based helpers in dialog tests remain
+  for the blocking-dialogs item. `TestSpellChecker` base class changed
+  from `aeidon.TestCase` to `gaupol.TestCase` to get `main_loop`.
+  `TextAssistant`'s run helper relies on the assistant destroying itself
+  on apply/cancel to end the loop.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
@@ -141,9 +156,12 @@
   `Gtk.Picture` during the code migration; README/CI already point to
   `gstreamer1.0-gtk4`.
 
-- Migrate or remove the interactive `run_*`/`run_dialog` test helpers
-  that rely on `Gtk.main()`/`Gtk.Dialog.run()`/`Gtk.WindowPosition` (~13
-  test files); not collected by pytest, so they rot silently.
+- The `Gtk.main()`-based interactive test helpers are migrated, but the
+  `run_dialog`/`flash_dialog`-based ones (~28 test files) still rely on
+  `Gtk.Dialog.run()`; handle them with the "Stop using blocking dialog
+  functions" item and remember they're not collected by pytest, so they
+  rot silently. Smoke-test a couple of `run_*` helpers interactively
+  once `import gaupol` works again.
 
 - The multi-save dialog's `GtkFileChooserButton` (removed in GTK 4) is
   now a plain `GtkButton` with the same id `filechooser_button`, but

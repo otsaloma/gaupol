@@ -5,7 +5,7 @@ codebase, in the order they appear in the guide, titled by the guide's
 section headings.
 
 - [x] Stop using `GtkWidget` event signals
-- [ ] Stop using `gtk_main()` and related APIs
+- [x] Stop using `gtk_main()` and related APIs
 - [ ] Stop using GdkScreen
 - [ ] Adapt to `GdkWindow` API changes
 - [ ] The "iconified" window state has been renamed to "minimized"

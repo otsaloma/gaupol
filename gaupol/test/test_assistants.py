@@ -37,8 +37,7 @@ OK = lambda *args: Gtk.ResponseType.OK
 class _TestBuilderPage(gaupol.TestCase):
 
     def run_page(self):
-        self.window.connect("delete-event", Gtk.main_quit)
-        Gtk.main()
+        self.main_loop(self.window)
 
 
 class TestIntroductionPage(_TestBuilderPage):
@@ -165,10 +164,7 @@ class TestTextAssistant(gaupol.TestCase):
 
     def run_assistant(self):
         self.assistant.show()
-        self.assistant.connect("apply", Gtk.main_quit)
-        self.assistant.connect("cancel", Gtk.main_quit)
-        self.assistant.connect("delete-event", Gtk.main_quit)
-        Gtk.main()
+        self.main_loop(self.assistant)
 
     def setup_method(self, method):
         gaupol.conf.text_assistant.pages = ["common-error"]
