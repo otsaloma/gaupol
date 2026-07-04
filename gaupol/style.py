@@ -74,8 +74,7 @@ def use_font(widget, font):
     """Use `font` ("custom" or "monospace") for `widget`."""
     if not font: return
     load_css(widget)
-    style = widget.get_style_context()
-    style.add_class({
+    widget.add_css_class({
         "custom": "gaupol-custom-font",
         "monospace": "monospace",
     }[font])

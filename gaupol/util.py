@@ -144,7 +144,7 @@ def get_zebra_color(tree_view):
     # the tree view widget itself among its siblings (tested 7/2026).
     # https://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
     style = tree_view.get_style_context()
-    fg = style.get_color(Gtk.StateFlags.NORMAL)
+    fg = style.get_color()
     found, bg = style.lookup_color("theme_base_color")
     if not found:
         # Can't reliably guess,

@@ -68,8 +68,7 @@ class FloatingLabel(Gtk.Box):
 
     def _init_widgets(self):
         """Initialize widgets contained in the box."""
-        style = self._label.get_style_context()
-        style.add_class("gaupol-floating-label")
+        self._label.add_css_class("gaupol-floating-label")
         gaupol.util.pack_start(self, self._label)
         controller = Gtk.EventControllerMotion()
         controller.connect("enter", self._hide)

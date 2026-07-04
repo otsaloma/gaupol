@@ -307,6 +307,30 @@
     (GtkToolbar), `menu.get_children`/`menu.remove` in `agents/menu.py`
     (GtkMenu), and all `show_all` calls (widgets visible by default).
 
+- gtk_widget_destroy removal: a no-op. Every `.destroy()` call in the
+  codebase is on a toplevel window (dialogs, main window, TextAssistant,
+  the text-assistant pages' throwaway wrapper window) and
+  `Gtk.Window.destroy` exists in GTK-4 (since 4.0); nothing destroys
+  non-window widgets. The `destroy_with_parent` window property is
+  unchanged too.
+
+- GtkStyleContext: `get_style_context().add_class(...)` with our custom
+  CSS classes replaced by `Gtk.Widget.add_css_class` (in GTK since 4.0)
+  in player, page, floatlabel and `style.py` `use_font`;
+  `get_zebra_color` drops the state argument from `get_color()` (gone in
+  GTK-4). The `Gtk.STYLE_CLASS_*` constants are gone: the
+  `add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)` lines in the preferences
+  dialogs (gaupol + custom-framerates extension) were dropped entirely —
+  those toolbars are already GtkBoxes with the "toolbar" CSS class from
+  the `.ui` conversion, and GTK-4 has no "inline-toolbar" styling (minor
+  visual change: standard toolbar look instead of GTK-3's
+  attached-to-tree-view inline look). Left for their own items:
+  `application.py` `_init_main_toolbar`'s STYLE_CLASS_PRIMARY_TOOLBAR
+  (GtkToolbar item, whole method gets rewritten) and `ruler.py`'s
+  `Gtk.render_layout(style, ...)` (GtkWidget::draw item).
+  `Gtk.StyleContext.add_provider_for_display` in `style.py` stays: it
+  exists since 4.0 and is not deprecated (only the instance API is).
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is

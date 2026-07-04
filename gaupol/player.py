@@ -237,8 +237,7 @@ class VideoPlayer(aeidon.Observable):
     def _init_widget(self):
         """Initialize the rendering widget."""
         self.widget = Gtk.Box()
-        style = self.widget.get_style_context()
-        style.add_class("gaupol-video-background")
+        self.widget.add_css_class("gaupol-video-background")
         gaupol.style.load_css(self.widget)
 
     def is_playing(self):

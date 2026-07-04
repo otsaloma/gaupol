@@ -19,8 +19,8 @@ section headings.
 - [x] Adapt to `GtkWindow` API changes
 - [x] Adapt to GtkStack, GtkAssistant and GtkNotebook API changes
 - [x] Adapt to GtkContainer removal
-- [ ] Adapt to gtk_widget_destroy() removal
-- [ ] Adapt to GtkStyleContext API changes
+- [x] Adapt to gtk_widget_destroy() removal
+- [x] Adapt to GtkStyleContext API changes
 - [ ] Adapt to GtkCssProvider API changes
 - [ ] Stop using GtkShadowType and GtkRelief properties
 - [ ] Adapt to GtkWidget's size request changes
