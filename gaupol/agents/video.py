@@ -132,7 +132,7 @@ class VideoAgent(aeidon.Delegate):
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(vbox, self.player.widget)
         self._init_player_toolbar()
-        gaupol.util.pack_start_fill(vbox, self.player_toolbar)
+        gaupol.util.pack_start(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
         self.player_box.show_all()
         self.paned.add1(self.player_box)

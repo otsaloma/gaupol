@@ -248,6 +248,19 @@
   `show_all()` call went away with the event box; children default to
   visible in GTK-4.
 
+- GtkBox: the `gaupol.util` pack helpers now use `Gtk.Box.append` (in
+  GTK since 4.0); `pack_start_expand` sets `hexpand`/`vexpand` on the
+  child by box orientation. The unused `padding` parameter was dropped
+  and `pack_start_fill` was removed as identical to `pack_start` in
+  GTK-4 (children default to fill via `halign`/`valign`; fill only ever
+  differed with expand). Caveat from the migration guide: unlike the
+  GTK-3 expand child property, `hexpand`/`vexpand` propagate up the
+  widget hierarchy, so check for layout surprises at runtime. The raw
+  `pack_start` in `gaupol/player.py` is left for the deferred
+  gtk4paintablesink switch. The `pack_start(renderer, expand=True)`
+  calls elsewhere are Gtk.CellLayout API on combo boxes, not GtkBox;
+  they still exist in GTK-4 (deprecated since 4.10, TreeView family).
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the

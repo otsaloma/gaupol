@@ -249,26 +249,17 @@ def new_vbox(spacing):
     return Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                    spacing=spacing)
 
-def pack_start(box, widget, padding=0):
-    """Pack widget to box without fill or expand."""
-    box.pack_start(widget,
-                   expand=False,
-                   fill=False,
-                   padding=padding)
+def pack_start(box, widget):
+    """Pack widget to box without expand."""
+    box.append(widget)
 
-def pack_start_expand(box, widget, padding=0):
-    """Pack widget to box with fill and expand."""
-    box.pack_start(widget,
-                   expand=True,
-                   fill=True,
-                   padding=padding)
-
-def pack_start_fill(box, widget, padding=0):
-    """Pack widget to box with fill, but no expand."""
-    box.pack_start(widget,
-                   expand=False,
-                   fill=True,
-                   padding=padding)
+def pack_start_expand(box, widget):
+    """Pack widget to box with expand."""
+    if box.get_orientation() == Gtk.Orientation.HORIZONTAL:
+        widget.set_hexpand(True)
+    else:
+        widget.set_vexpand(True)
+    box.append(widget)
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
