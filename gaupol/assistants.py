@@ -65,11 +65,10 @@ class BuilderPage(TextAssistantPage):
     def __init__(self, assistant, basename):
         """Initialize a :class:`BuilderPage` instance."""
         TextAssistantPage.__init__(self, assistant)
-        self._builder = Gtk.Builder()
+        self._builder = Gtk.Builder(self)
         self._builder.set_translation_domain("gaupol")
         self._builder.add_from_file(os.path.join(
             aeidon.DATA_DIR, "ui", "text-assistant", basename))
-        self._builder.connect_signals(self)
         self._set_attributes(self._widgets)
         container = self._builder.get_object("main_container")
         window = container.get_parent()

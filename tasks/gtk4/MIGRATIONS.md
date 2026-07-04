@@ -11,7 +11,7 @@ section headings.
 - [x] The "iconified" window state has been renamed to "minimized"
 - [x] Adapt to `GdkEvent` API changes
 - [x] Replace `GtkClipboard` with `GdkClipboard`
-- [ ] Adapt to GtkBuilder API changes
+- [x] Adapt to GtkBuilder API changes
 - [ ] Focus handling changes
 - [ ] Use the new apis for keyboard shortcuts
 - [ ] Stop using `GtkEventBox`

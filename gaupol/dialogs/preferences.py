@@ -559,17 +559,25 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     def __init__(self, parent, application):
         """Initialize a :class:`PreferencesDialog` instance."""
-        gaupol.BuilderDialog.__init__(self,
-                                      "preferences-dialog.ui",
-                                      connect_signals=False)
-
+        # The signal handlers, which live on the page instances created
+        # below, are resolved against self already when the UI definition
+        # file is parsed. __getattr__ resolves them to placeholders that
+        # look up the actual handler from _callbacks only when called.
+        self._callbacks = {}
+        gaupol.BuilderDialog.__init__(self, "preferences-dialog.ui")
         self._editor_page = EditorPage(self, application)
         self._extension_page = ExtensionPage(self, application)
         self._file_page = FilePage(self, application)
         self._preview_page = PreviewPage(self, application)
         self._video_page = VideoPage(self, application)
-        self._builder.connect_signals(self._get_callbacks())
+        self._callbacks.update(self._get_callbacks())
         self._init_dialog(parent)
+
+    def __getattr__(self, name):
+        """Return signal handler placeholder or attribute from dialog."""
+        if name.startswith("_on_"):
+            return lambda *args: self._callbacks[name](*args)
+        return super().__getattr__(name)
 
     def _get_callbacks(self):
         """Return a dictionary mapping names to callback methods."""

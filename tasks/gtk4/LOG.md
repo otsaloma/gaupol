@@ -200,6 +200,30 @@
     connections on TimeEntry are not GtkClipboard API, but they moved
     from GtkEntry to GtkText in GTK-4; left for the GtkEntry item.
 
+- GtkBuilder: `connect_signals` is gone; PyGObject's GTK-4 override
+  `Gtk.Builder(scope_object_or_map)` (added in PyGObject 3.40, README
+  floor bumped from 3.38) installs a `BuilderScope` that resolves
+  handler names on any plain Python object — but eagerly, at
+  `add_from_file` parse time. Notable details:
+
+  - `BuilderDialog` passes `self` as scope; the `connect_signals`
+    parameter was dropped. Since handlers are now resolved before
+    `self._dialog` is assigned, a missing handler would have made
+    `__getattr__`'s delegation recurse infinitely; it now raises
+    `AttributeError` for `_dialog`, so PyGObject instead prints a clear
+    "Handler X not found" traceback and leaves that signal unconnected
+    (GTK-3 `connect_signals` warned similarly; not a hard error in
+    either case).
+
+  - `PreferencesDialog` connected a callbacks map collected from its
+    page objects after loading, which is impossible now (scope precedes
+    parsing, pages need the loaded builder). Its `__getattr__` now
+    resolves `_on_*` names to placeholder lambdas that look up the real
+    handler from a `_callbacks` dict, filled once the pages exist.
+    Verified with a standalone script against the real
+    preferences-dialog.ui: parse succeeds and signals dispatch to
+    late-filled callbacks.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the

@@ -41,20 +41,22 @@ class BuilderDialog:
 
     _widgets = []
 
-    def __init__(self, ui_file_path, connect_signals=True):
+    def __init__(self, ui_file_path):
         """Initialize a :class:`BuilderDialog` instance from `ui_file_path`."""
         if not os.path.isabs(ui_file_path):
             ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", ui_file_path)
-        self._builder = Gtk.Builder()
+        # Signal handlers are resolved against self already when
+        # the UI definition file is parsed, i.e. before _dialog is set.
+        self._builder = Gtk.Builder(self)
         self._builder.set_translation_domain("gaupol")
         self._builder.add_from_file(ui_file_path)
         self._dialog = self._builder.get_object("dialog")
-        if connect_signals:
-            self._builder.connect_signals(self)
         self._set_attributes(self._widgets)
 
     def __getattr__(self, name):
         """Return attribute from :attr:`_dialog`."""
+        if name == "_dialog":
+            raise AttributeError(name)
         return getattr(self._dialog, name)
 
     def run(self):

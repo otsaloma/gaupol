@@ -84,10 +84,9 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
     def _init_extra_widget(self):
         """Initialize the extra widget from UI definition file."""
         ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", "save-dialog.ui")
-        builder = Gtk.Builder()
+        builder = Gtk.Builder(self)
         builder.set_translation_domain("gaupol")
         builder.add_from_file(ui_file_path)
-        builder.connect_signals(self)
         for name in self._widgets:
             widget = builder.get_object(name)
             setattr(self, "_{}".format(name), widget)
