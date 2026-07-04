@@ -37,19 +37,16 @@ def _get_editor_font_css():
     if (gaupol.conf.editor.custom_font and
         gaupol.conf.editor.use_custom_font):
         font_desc = Pango.FontDescription(gaupol.conf.editor.custom_font)
-    # They fucking broke theming again with GTK 3.22.
-    unit = "pt" if Gtk.check_version(3, 22, 0) is None else "px"
     css = """
     .gaupol-custom-font {{
         font-family: {family},monospace;
-        font-size: {size}{unit};
+        font-size: {size}pt;
         font-weight: {weight};
     }}""".format(
         family=font_desc.get_family().split(",")[0],
         size=int(round(font_desc.get_size() / Pango.SCALE)),
-        unit=unit,
         weight=int(font_desc.get_weight()))
-    css = css.replace("font-size: 0{unit};".format(unit=unit), "")
+    css = css.replace("font-size: 0pt;", "")
     css = css.replace("font-weight: 0;", "")
     css = "\n".join(filter(lambda x: x.strip(), css.splitlines()))
     return css
@@ -68,7 +65,9 @@ def _update_css(*args, **kwargs):
     """Reload CSS rules from file and conf into the shared provider."""
     if css_provider is None: return
     css = "\n".join((CSS, _get_editor_font_css()))
-    css_provider.load_from_data(bytes(css.encode()))
+    # load_from_string is new in GTK 4.12; load_from_data
+    # is deprecated since 4.12 and its signature changed.
+    css_provider.load_from_string(css)
 
 def use_font(widget, font):
     """Use `font` ("custom" or "monospace") for `widget`."""

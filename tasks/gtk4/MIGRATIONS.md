@@ -21,7 +21,7 @@ section headings.
 - [x] Adapt to GtkContainer removal
 - [x] Adapt to gtk_widget_destroy() removal
 - [x] Adapt to GtkStyleContext API changes
-- [ ] Adapt to GtkCssProvider API changes
+- [x] Adapt to GtkCssProvider API changes
 - [ ] Stop using GtkShadowType and GtkRelief properties
 - [ ] Adapt to GtkWidget's size request changes
 - [ ] Widgets are now visible by default

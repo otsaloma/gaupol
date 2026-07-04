@@ -331,6 +331,21 @@
   `Gtk.StyleContext.add_provider_for_display` in `style.py` stays: it
   exists since 4.0 and is not deprecated (only the instance API is).
 
+- GtkCssProvider: `style.py` now uses `load_from_string` (in GTK since
+  4.12 — the first symbol pushing our GTK floor above 4.0, README
+  updated to ≥ 4.12; `load_from_data` exists since 4.0 but with a
+  changed signature and deprecated since 4.12). Also resolved the
+  `_get_editor_font_css` font-size unit hack flagged earlier:
+  `Gtk.check_version(3, 22, 0)` is non-None under GTK-4 (major
+  mismatch), so the unit had silently flipped to "px"; now hardcoded to
+  "pt". Verified empirically that "pt" is correct: GTK-4 CSS resolves
+  pt using gtk-xft-dpi (13pt → 13 × dpi/72 px), the same way Pango
+  resolves the point sizes that font choosers produce, so pt tracks the
+  desktop text-scaling-factor while px would ignore it; libadwaita does
+  the same, emitting `--document-font-size: %dpt` when converting the
+  GNOME font settings to CSS. Verified provider load + reload with the
+  generated CSS in a standalone script.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
