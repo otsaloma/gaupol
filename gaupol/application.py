@@ -85,7 +85,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar undo_button: The undo button on the main toolbar
     :ivar volume_button: A :class:`Gtk.VolumeButton` in the player toolbar
     :ivar window: A :class:`Gtk.ApplicationWindow` used to hold all the widgets
-    :ivar x_clipboard: A :class:`Gtk.Clipboard` used for desktop-wide copying
+    :ivar x_clipboard: A :class:`Gdk.Clipboard` used for desktop-wide copying
 
     Signals and their arguments for callback functions:
      * ``init-done``: application
@@ -350,7 +350,5 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         gaupol.style.load_css(self.window)
 
     def _init_x_clipboard(self):
-        """Initialize the desktop-wide, persistent clipboard."""
-        atom = Gdk.atom_intern("CLIPBOARD", True)
-        self.x_clipboard = Gtk.Clipboard.get(atom)
-        self.x_clipboard.set_can_store(None)
+        """Initialize the desktop-wide clipboard."""
+        self.x_clipboard = Gdk.Display.get_default().get_clipboard()

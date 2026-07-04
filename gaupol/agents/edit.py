@@ -22,6 +22,7 @@ import bisect
 import gaupol
 
 from aeidon.i18n import _, n_
+from gi.repository import GLib
 
 
 class EditAgent(aeidon.Delegate):
@@ -179,35 +180,7 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
-        page = self.get_current_page()
-        text = self.x_clipboard.wait_for_text()
-        if text:
-            # Update all clipboards in case text is being
-            # copied from the external clipboard.
-            page.project.clipboard.set_string(text)
-            self._sync_clipboards(page)
-        if page.project.clipboard.is_empty(): return
-        rows = page.view.get_selected_rows()
-        row, col = page.view.get_focus()
-        doc = page.text_column_to_document(col)
-        length = len(page.project.subtitles)
-        # Ensure that even if new subtitles need to be inserted,
-        # focus and scroll position are not moved to the end.
-        rect = page.view.get_visible_rect()
-        window = page.view.get_bin_window()
-        window.freeze_updates()
-        rows = page.project.paste_texts(rows[0], doc)
-        rows = page.view.get_selected_rows()
-        page.view.set_focus(row, col)
-        page.view.select_rows(rows)
-        page.view.scroll_to_point(rect.x, rect.y)
-        window.thaw_updates()
-        count = len(page.project.subtitles) - length
-        if count <= 0: return
-        self.flash_message(n_(
-            "Inserted {:d} subtitle to fit clipboard contents",
-            "Inserted {:d} subtitles to fit clipboard contents",
-            count).format(count))
+        self.x_clipboard.read_text_async(None, self._paste_texts)
 
     def _on_pref_dialog_response(self, *args):
         """Destroy the preferences dialog."""
@@ -410,6 +383,37 @@ class EditAgent(aeidon.Delegate):
             # Don't show help text if it would overlap with text being edited.
             self.show_message(_("Use Shift+Return for line-break"))
 
+    def _paste_texts(self, clipboard, result):
+        """Paste texts once the desktop clipboard has been read."""
+        text = None
+        with aeidon.util.silent(GLib.Error):
+            text = clipboard.read_text_finish(result)
+        page = self.get_current_page()
+        if text:
+            # Update all clipboards in case text is being
+            # copied from the external clipboard.
+            page.project.clipboard.set_string(text)
+            self._sync_clipboards(page)
+        if page.project.clipboard.is_empty(): return
+        rows = page.view.get_selected_rows()
+        row, col = page.view.get_focus()
+        doc = page.text_column_to_document(col)
+        length = len(page.project.subtitles)
+        # Ensure that even if new subtitles need to be inserted,
+        # focus and scroll position are not moved to the end.
+        rect = page.view.get_visible_rect()
+        rows = page.project.paste_texts(rows[0], doc)
+        rows = page.view.get_selected_rows()
+        page.view.set_focus(row, col)
+        page.view.select_rows(rows)
+        page.view.scroll_to_point(rect.x, rect.y)
+        count = len(page.project.subtitles) - length
+        if count <= 0: return
+        self.flash_message(n_(
+            "Inserted {:d} subtitle to fit clipboard contents",
+            "Inserted {:d} subtitles to fit clipboard contents",
+            count).format(count))
+
     @aeidon.deco.export
     def redo(self, count=1):
         """Redo `count` amount of actions."""
@@ -457,7 +461,7 @@ class EditAgent(aeidon.Delegate):
         for item in self.pages:
             item.project.clipboard.set_texts(texts)
         text = page.project.clipboard.get_string()
-        self.x_clipboard.set_text(text, -1)
+        self.x_clipboard.set(text)
         self.update_gui()
 
     @aeidon.deco.export

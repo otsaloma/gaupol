@@ -17,7 +17,7 @@
 
 - `get_zebra_color` now uses `lookup_color("theme_base_color")`; if a
   theme doesn't define that color, it returns None and zebra stripes are
-  simply not drawn. `lookup_color` and `get_color` exist in GTK 4 but
+  simply not drawn. `lookup_color` and `get_color` exist in GTK-4 but
   are deprecated since 4.10 — revisit with the TreeView question.
 
 - `show_uri` now uses `Gio.AppInfo.launch_default_for_uri` instead of
@@ -41,7 +41,7 @@
   switch. Notable changes beyond the mechanical ones:
 
   - Dropped `border_width` (12px) from all dialogs and assistant pages:
-    dialog content padding is lost, review spacing visually under GTK 4
+    dialog content padding is lost, review spacing visually under GTK-4
     and add margins where needed.
 
   - `GtkButtonBox` → `GtkBox`: buttons in a box are no longer
@@ -67,7 +67,7 @@
   step, migrating removed APIs one by one.
 
 - Disabled Gspell entirely: it's GTK-3-only and merely importing its
-  typelib loads Gtk 3.0 into the process, which conflicts with GTK 4
+  typelib loads Gtk 3.0 into the process, which conflicts with GTK-4
   (`import aeidon` before requiring Gtk 4.0 would make the whole app
   fail to start). Imports commented out in `aeidon/spell.py`,
   `gaupol/spell.py` and `aeidon/__init__.py`; `SpellChecker.available()`
@@ -102,7 +102,7 @@
     `Gtk.MenuItem`s) was deliberately left untouched for that item, as
     it all gets rewritten together.
 
-  - The `populate-popup` signal is gone (GTK 4 uses `extra-menu` models
+  - The `populate-popup` signal is gone (GTK-4 uses `extra-menu` models
     on `Gtk.Text`/`Gtk.TextView`). Removed the "Italic" context menu
     item of the text cell editor and the `_in_editor_menu` guards that
     kept focus-out from ending cell editing while a context menu was
@@ -143,7 +143,7 @@
   `add_provider_for_display(Gdk.Display.get_default(), ...)` (in GTK
   since 4.0), following nfoview. Noticed in the same function:
   `_get_editor_font_css` picks its font-size unit with
-  `Gtk.check_version(3, 22, 0)`, which under GTK 4 makes the unit
+  `Gtk.check_version(3, 22, 0)`, which under GTK-4 makes the unit
   silently flip from "pt" to "px"; sort that out with the GtkCssProvider
   migration item.
 
@@ -153,7 +153,7 @@
   open text views again update live (reloading an installed provider
   invalidates styles by itself). The `reset_style` calls in
   `prepare_text_view` relied on `_update_css` working and `reset_style`
-  is gone in GTK 4, so those callbacks were removed. Verify live font
+  is gone in GTK-4, so those callbacks were removed. Verify live font
   change at runtime once the app starts.
 
 - GdkWindow: only two uses, both trivial. `gaupol/util.py` cursor
@@ -163,6 +163,42 @@
   `Gtk.Widget.get_width/get_height` directly; note these return the
   widget's content size rather than the GdkWindow size, an irrelevant
   difference for picking the initial 50% paned position.
+
+- GdkEvent: no direct event field access remains, the event controllers
+  migration already moved everything to controller callback arguments;
+  the remaining `event` parameters (cell renderers' `do_start_editing`,
+  menu.py's deferred `enter/leave-notify-event` handlers) are never
+  dereferenced. The "iconified" item was a no-op too, nothing touches
+  iconification. One leftover found: the save dialog connects to the
+  generic `"event"` signal, deferred to the FileChooser item (see
+  Deferred).
+
+- GtkClipboard → GdkClipboard: `x_clipboard` is now
+  `Gdk.Display.get_clipboard()` (in GDK since 4.0). Notable details:
+
+  - GdkClipboard has no synchronous read, so pasting is now
+    asynchronous: `_on_paste_texts_activate` calls `read_text_async` and
+    the actual paste logic moved to a `_paste_texts` callback.
+    `test__on_paste_texts_activate` iterates the main context after
+    activating so the callback still gets exercised.
+
+  - GdkClipboard has no `set_can_store` equivalent; whether copied text
+    persists in the desktop clipboard after quitting Gaupol is now up to
+    the session's clipboard manager. Minor, acceptable regression.
+
+  - `Gdk.Clipboard.set_text` is not introspectable; from Python use
+    `set(str)` (PyGObject marshals the value). Verified the
+    set/read-text roundtrip works in a test script under Wayland.
+
+  - Found more GdkWindow API missed by commit e6b075ef (grep pattern
+    missed `get_bin_window`): the paste handler's
+    `freeze_updates`/`thaw_updates` around the tree view update. GTK-4's
+    frame-based rendering has no update freezing, so they're simply
+    dropped; the focus/scroll restoration logic remains.
+
+  - `entries.py`'s `cut-clipboard`/`copy-clipboard` keybinding signal
+    connections on TimeEntry are not GtkClipboard API, but they moved
+    from GtkEntry to GtkText in GTK-4; left for the GtkEntry item.
 
 ## Deferred
 
@@ -188,7 +224,15 @@
   rot silently. Smoke-test a couple of `run_*` helpers interactively
   once `import gaupol` works again.
 
-- The multi-save dialog's `GtkFileChooserButton` (removed in GTK 4) is
+- `gaupol/dialogs/save.py` connects the save button to the generic
+  `"event"` signal (removed in GTK-4, crashes dialog init) to add a
+  missing filename extension before overwrite confirmation. Rework this
+  with the "Update to GtkFileChooser API changes" item: the handler and
+  `_on_response` are built on `get_filename`/`set_filename`/
+  `set_do_overwrite_confirmation`/`stop_emission`, which all go away in
+  the same rework.
+
+- The multi-save dialog's `GtkFileChooserButton` (removed in GTK-4) is
   now a plain `GtkButton` with the same id `filechooser_button`, but
   non-functional: reimplement folder selection in `multi_save.py`
   (`get_filename`/`set_filename` calls, dialog title "Select A Folder")

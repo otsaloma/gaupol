@@ -8,9 +8,9 @@ section headings.
 - [x] Stop using `gtk_main()` and related APIs
 - [x] Stop using GdkScreen
 - [x] Adapt to `GdkWindow` API changes
-- [ ] The "iconified" window state has been renamed to "minimized"
-- [ ] Adapt to `GdkEvent` API changes
-- [ ] Replace `GtkClipboard` with `GdkClipboard`
+- [x] The "iconified" window state has been renamed to "minimized"
+- [x] Adapt to `GdkEvent` API changes
+- [x] Replace `GtkClipboard` with `GdkClipboard`
 - [ ] Adapt to GtkBuilder API changes
 - [ ] Focus handling changes
 - [ ] Use the new apis for keyboard shortcuts

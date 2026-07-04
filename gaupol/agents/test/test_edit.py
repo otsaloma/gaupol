@@ -116,6 +116,8 @@ class TestEditAgent(gaupol.TestCase):
         self.application.get_action("copy-texts").activate()
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         self.application.get_action("paste-texts").activate()
+        # Give the asynchronous clipboard read time to finish.
+        gaupol.util.iterate_main()
 
     def test__on_redo_action_activate(self):
         page = self.application.get_current_page()
