@@ -273,6 +273,16 @@
   sensibly at runtime (GTK-4 sizes exclude window shadows, so old saved
   conf values may restore slightly differently once).
 
+- GtkStack/GtkAssistant/GtkNotebook: a near no-op. The search dialog's
+  `.ui` already got explicit `GtkStackPage` objects in the builder-tool
+  conversion, and all the Notebook/Assistant methods we call
+  (`append_page`, `set_tab_reorderable`, `reorder_child`,
+  `set_page_type`, `set_page_complete`) still exist in GTK-4. The one
+  real change: the notebook `tab-expand`/`tab-fill` child properties in
+  `gaupol/agents/open.py` are now set on the `Gtk.NotebookPage` meta
+  object via `Gtk.Notebook.get_page` (in GTK since 4.0), as
+  `child_set_property` went away with GtkContainer.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
