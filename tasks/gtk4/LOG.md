@@ -283,6 +283,31 @@
   object via `Gtk.Notebook.get_page` (in GTK since 4.0), as
   `child_set_property` went away with GtkContainer.
 
+- GtkContainer removal: generic `add`/`remove` replaced with the
+  class-specific API (all in GTK since 4.0): `set_child` on
+  Window/Button/ScrolledWindow/Overlay, `append` on Box, and
+  `set_start_child`/`set_end_child` on Paned. Notable details:
+
+  - GTK-3 `Paned.add1` implied `resize=False` for the start child while
+    GTK-4 defaults both children to resizing, so `video.py` now calls
+    `set_resize_start_child(False)` to keep window resizes stretching
+    the subtitle view rather than the video player.
+
+  - The edit-mode switch in `agents/view.py` now replaces the view with
+    a single `scroller.set_child(new_view)` — GTK-4 setters unparent the
+    old child themselves, no separate `remove` needed.
+
+  - `ruler.py` dropped `text_view.get_border_width()` from the margin x
+    coordinate: container border width is gone in GTK-4 and nothing ever
+    set it on text views, so it was always 0.
+
+  - `test_assistants.py` setups converted like the earlier run helpers
+    (`set_child`, `show`, dropped the 12px `set_border_width`).
+
+  - Left for their own items: `Gtk.ToolItem.add` in `agents/video.py`
+    (GtkToolbar), `menu.get_children`/`menu.remove` in `agents/menu.py`
+    (GtkMenu), and all `show_all` calls (widgets visible by default).
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the

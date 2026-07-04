@@ -75,7 +75,6 @@ def _on_text_view_draw(text_view, cairoc):
     width = layout.get_pixel_size()[0]
     text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 6)
     x, y = text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 4)
-    x += text_view.get_border_width()
     with aeidon.util.silent(AttributeError):
         # Top margin available since GTK 3.18.
         y += text_view.props.top_margin

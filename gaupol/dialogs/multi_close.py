@@ -66,7 +66,7 @@ class MultiCloseDialog(Gtk.MessageDialog):
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
-        scroller.add(self._main_tree_view)
+        scroller.set_child(self._main_tree_view)
         label = Gtk.Label(label=_("Select the _main documents you want to save:"))
         label.props.xalign = 0
         label.set_use_underline(True)
@@ -91,7 +91,7 @@ class MultiCloseDialog(Gtk.MessageDialog):
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
         scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
-        scroller.add(self._tran_tree_view)
+        scroller.set_child(self._tran_tree_view)
         label = Gtk.Label(label=_("Select the _translation documents you want to save:"))
         label.props.xalign = 0
         label.set_use_underline(True)

@@ -199,7 +199,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_paned(vbox)
         self._init_player_box(self.paned)
         self._init_notebook(self.paned)
-        self.window.add(vbox)
+        self.window.set_child(vbox)
         vbox.show_all()
         self._init_visibilities()
 
@@ -307,11 +307,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         vbox = gaupol.util.new_vbox(spacing=0)
         gaupol.util.pack_start(vbox, self.notebook_separator)
         overlay = Gtk.Overlay()
-        overlay.add(self.notebook)
+        overlay.set_child(self.notebook)
         self.statuslabel = gaupol.FloatingLabel()
         overlay.add_overlay(self.statuslabel)
         gaupol.util.pack_start_expand(vbox, overlay)
-        paned.add2(vbox)
+        paned.set_end_child(vbox)
 
     def _init_paned(self, vbox):
         """Intialize the paned layout."""

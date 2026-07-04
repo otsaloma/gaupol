@@ -135,7 +135,10 @@ class VideoAgent(aeidon.Delegate):
         gaupol.util.pack_start(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
         self.player_box.show_all()
-        self.paned.add1(self.player_box)
+        self.paned.set_start_child(self.player_box)
+        # Keep GTK-3 add1 behavior: window resizes stretch the subtitle
+        # view (the end child), not the video player.
+        self.paned.set_resize_start_child(False)
         orientation = self.paned.get_orientation()
         size = (
             self.notebook.get_width()

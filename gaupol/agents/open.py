@@ -47,7 +47,7 @@ class OpenAgent(aeidon.Delegate):
         scroller = Gtk.ScrolledWindow()
         policy = Gtk.PolicyType.AUTOMATIC
         scroller.set_policy(policy, policy)
-        scroller.add(page.view)
+        scroller.set_child(page.view)
         self.notebook.append_page(scroller, page.tab_widget)
         self.notebook.set_tab_reorderable(scroller, True)
         notebook_page = self.notebook.get_page(scroller)

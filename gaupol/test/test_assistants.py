@@ -44,11 +44,10 @@ class TestIntroductionPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = IntroductionPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class _TestLocalePage(_TestBuilderPage):
@@ -63,33 +62,30 @@ class TestCapitalizationPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = CapitalizationPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class TestCommonErrorPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = CommonErrorPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class TestHearingImpairedPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = HearingImpairedPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class TestJoinSplitWordsPage(_TestBuilderPage):
@@ -99,12 +95,11 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.project = self.new_project()
         self.page = JoinSplitWordsPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
     @patch("gaupol.util.flash_dialog", OK)
     def test_correct_texts(self):
@@ -119,45 +114,41 @@ class TestLineBreakPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = LineBreakPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class TestLineBreakOptionsPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = LineBreakOptionsPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class TestProgressPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = ProgressPage(self.window)
         self.page.reset(100)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class TestConfirmationPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = ConfirmationPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.show()
 
 
 class TestTextAssistant(gaupol.TestCase):
