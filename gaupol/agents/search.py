@@ -42,7 +42,7 @@ class SearchAgent(aeidon.Delegate):
         self._search_dialog = gaupol.SearchDialog(self.window, self)
         aeidon.util.connect(self, "_search_dialog", "response")
         # Do not destroy the dialog, but rather hide based on response.
-        self._search_dialog.connect("delete-event", lambda *args: True)
+        self._search_dialog.set_hide_on_close(True)
         self._search_dialog.show()
 
     @aeidon.deco.export

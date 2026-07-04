@@ -68,10 +68,13 @@ class TimeEntry(Gtk.Entry):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
         aeidon.util.connect(self, self, "cut-clipboard")
-        aeidon.util.connect(self, self, "key-press-event")
         aeidon.util.connect(self, self, "toggle-overwrite")
         self._delete_handler = aeidon.util.connect(self, self, "delete-text")
         self._insert_handler = aeidon.util.connect(self, self, "insert-text")
+        controller = Gtk.EventControllerKey()
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        controller.connect("key-pressed", self._on_key_pressed)
+        self.add_controller(controller)
 
     @_blocked
     def _insert_text(self, value):
@@ -101,17 +104,17 @@ class TimeEntry(Gtk.Entry):
         self.stop_emission_by_name("delete-text")
         self.set_position(start_pos)
 
-    def _on_key_press_event(self, entry, event):
+    def _on_key_pressed(self, controller, keyval, keycode, state):
         """Change numbers to zero if Backspace or Delete pressed."""
         keys = (Gdk.KEY_BackSpace, Gdk.KEY_Delete)
-        if not event.keyval in keys: return
-        self.stop_emission_by_name("key-press-event")
+        if not keyval in keys: return False
         if self.get_selection_bounds():
             gaupol.util.idle_add(self._zero_selection)
-        elif event.keyval == Gdk.KEY_BackSpace:
+        elif keyval == Gdk.KEY_BackSpace:
             gaupol.util.idle_add(self._zero_previous)
-        elif event.keyval == Gdk.KEY_Delete:
+        elif keyval == Gdk.KEY_Delete:
             gaupol.util.idle_add(self._zero_next)
+        return True
 
     def _on_insert_text(self, entry, text, length, pos):
         """Insert `text` after validation."""

@@ -83,6 +83,47 @@
   of GTK 4.0, September vs. December 2020). If the final GTK floor ends
   up ≥ 4.14, raise GStreamer to its contemporary 1.24.
 
+- Migrated all `GtkWidget` event signals to event controllers and
+  gestures. Notable details:
+
+  - Main window and text assistant now save maximization via
+    `notify::maximized` instead of `window-state-event`; the main
+    window's `delete-event` quit hook is now `close-request`; the search
+    dialog uses `Gtk.Window.set_hide_on_close` instead of a
+    `delete-event` handler returning True.
+
+  - The right-click popup menus (view, tab, column header) had to be
+    converted from `Gtk.Menu` to `Gtk.PopoverMenu` in the same go,
+    because the `Gtk.Menu.popup` calls depended on the event object. The
+    popover is created per click, parented to the clicked widget and
+    unparented (idle) on close. This covers part of the "GtkMenu is
+    gone" migration item; the rest of `menu.py` (undo/redo button menus,
+    recent menus, and their `enter/leave-notify-event` handlers on
+    `Gtk.MenuItem`s) was deliberately left untouched for that item, as
+    it all gets rewritten together.
+
+  - The `populate-popup` signal is gone (GTK 4 uses `extra-menu` models
+    on `Gtk.Text`/`Gtk.TextView`). Removed the "Italic" context menu
+    item of the text cell editor and the `_in_editor_menu` guards that
+    kept focus-out from ending cell editing while a context menu was
+    open. See Deferred.
+
+  - Key controllers were added in the capture phase where the old
+    handlers relied on running before the widget's own handling (cell
+    editors' Enter/Escape, TimeEntry's Backspace/Delete, view's
+    Ctrl+PageUp/Down block). See Deferred for a runtime check.
+
+  - `gaupol.View` uses `Gdk.keyval_to_unicode(keyval)` in place of the
+    removed `event.string` for toggling interactive search.
+
+  - `FloatingLabel.register_hide_event(widget, event)` now takes
+    "button-press", "key-press" or "scroll" and adds a capture-phase
+    controller; controllers are removed again when the label hides.
+
+  - Reconnected the search dialog text view's focus-out saving of edits
+    (dropped earlier with the `.ui` conversion) via
+    `Gtk.EventControllerFocus`; clears the earlier Deferred item.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
@@ -110,10 +151,18 @@
   (`get_filename`/`set_filename` calls, dialog title "Select A Folder")
   with a file chooser dialog during the code migration.
 
-- Removed the `focus-out-event` signal (GTK 4 has no event signals) from
-  `search-dialog.ui`: `_on_text_view_focus_out_event` in `search.py` is
-  now never called, reconnect it in code via `Gtk.EventControllerFocus`
-  during the code migration.
+- Reimplement the "Italic" context menu item of the multiline cell
+  editor with `Gtk.TextView.set_extra_menu` when doing the GtkMenu
+  migration (Ctrl+I still works). Also verify that opening the default
+  context menu in cell editors (text and time) doesn't cancel editing
+  via the focus controller's "leave" — the old `populate-popup` +
+  `_in_editor_menu` guard against that was removed.
+
+- Verify at runtime that Ctrl+Page_Up/Down switches notebook tabs while
+  the view has focus: the view's capture-phase key controller consumes
+  those keys to block TreeView's paging bindings, which assumes GTK-4
+  handles application accelerators at the window before the focus
+  widget's controllers. If tab switching broke, rethink.
 
 - `TimeEntry.set_text` triggers a `g_value_get_int: assertion
   'G_VALUE_HOLDS_INT (value)' failed` warning: PyGObject can't marshal

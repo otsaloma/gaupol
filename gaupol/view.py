@@ -195,7 +195,10 @@ class View(Gtk.TreeView):
         """Initialize signal handlers."""
         aeidon.util.connect(self, self, "columns-changed")
         aeidon.util.connect(self, self, "cursor-changed")
-        aeidon.util.connect(self, self, "key-press-event")
+        controller = Gtk.EventControllerKey()
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        controller.connect("key-pressed", self._on_key_pressed)
+        self.add_controller(controller)
         gaupol.conf.connect_notify("editor", "custom_font", self)
         gaupol.conf.connect_notify("editor", "length_unit", self)
         gaupol.conf.connect_notify("editor", "show_lengths_cell", self)
@@ -258,18 +261,20 @@ class View(Gtk.TreeView):
         """Update the column header labels to reflect changed focus."""
         self.update_headers()
 
-    def _on_key_press_event(self, widget, event):
+    def _on_key_pressed(self, controller, keyval, keycode, state):
         """Handle various special-case key combinations."""
         # Disable Ctrl+PageUp/PageDown to allow them to be
         # used solely for navigation between notebook tabs.
-        if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
-            if event.keyval in (Gdk.KEY_Page_Up, Gdk.KEY_Page_Down):
-                return widget.stop_emission("key-press-event")
+        if state & Gdk.ModifierType.CONTROL_MASK:
+            if keyval in (Gdk.KEY_Page_Up, Gdk.KEY_Page_Down):
+                return True
         # Use interactive search for a subtitle number or time
         # only if valid string keys have been pressed.
-        self.set_enable_search(event.string.isdigit() or
-                               event.string == ":" or
-                               event.string == ".")
+        string = chr(Gdk.keyval_to_unicode(keyval) or 0)
+        self.set_enable_search(string.isdigit() or
+                               string == ":" or
+                               string == ".")
+        return False
 
     def _on_renderer_set_background(self, column, renderer, store, itr, data):
         """Set zerba-striped backgrounds for all columns."""

@@ -22,7 +22,6 @@ import difflib
 import gaupol
 import re
 
-from aeidon.i18n import _
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
@@ -49,8 +48,10 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
         """Initialize a :class:`CellTextView` instance."""
         GObject.GObject.__init__(self)
         gaupol.util.prepare_text_view(self)
-        aeidon.util.connect(self, self, "key-press-event")
-        aeidon.util.connect(self, self, "populate-popup")
+        controller = Gtk.EventControllerKey()
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        controller.connect("key-pressed", self._on_key_pressed)
+        self.add_controller(controller)
 
     def do_editing_done(self, *args):
         """End editing."""
@@ -62,9 +63,13 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
     def do_start_editing(self, *args):
         """Start editing."""
-        # Don't let anyone else handle button-press-events
+        # Don't let anyone else handle clicks
         # that happen within the text view.
-        self.connect_after("button-press-event", lambda *args: True)
+        gesture = Gtk.GestureClick()
+        gesture.set_button(0)
+        gesture.connect("pressed", lambda gesture, *args: (
+            gesture.set_state(Gtk.EventSequenceState.CLAIMED)))
+        self.add_controller(gesture)
 
     def get_text(self):
         """Return text."""
@@ -72,24 +77,13 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
         start, end = text_buffer.get_bounds()
         return text_buffer.get_text(start, end, False)
 
-    def _on_key_press_event(self, text_view, event):
+    def _on_key_pressed(self, controller, keyval, keycode, state):
         """Toggle italicization if Control+I pressed."""
-        if (event.get_state() & Gdk.ModifierType.CONTROL_MASK and
-            event.keyval in (Gdk.KEY_i, Gdk.KEY_I)):
+        if (state & Gdk.ModifierType.CONTROL_MASK and
+            keyval in (Gdk.KEY_i, Gdk.KEY_I)):
             self._on_toggle_italic()
             return True
         return False
-
-    def _on_populate_popup(self, text_view, popup):
-        """Add a context menu item to toggle italicization."""
-        if not isinstance(popup, Gtk.Menu): return
-        item = Gtk.MenuItem(label=_("Italic"))
-        item.connect("activate", self._on_toggle_italic)
-        child = item.get_child()
-        if isinstance(child, Gtk.AccelLabel):
-            child.set_accel(Gdk.KEY_i, Gdk.ModifierType.CONTROL_MASK)
-        item.show_all()
-        popup.append(item)
 
     def _on_toggle_italic(self, *args):
         """Add or remove italic tags around selection."""
@@ -142,7 +136,6 @@ class MultilineCellRenderer(Gtk.CellRendererText):
     def __init__(self):
         """Initialize a :class:`MultilineCellRenderer` instance."""
         GObject.GObject.__init__(self)
-        self._in_editor_menu = False
         self._show_lengths = gaupol.conf.editor.show_lengths_cell
         self._text = ""
         gaupol.conf.connect_notify("editor", "show_lengths_cell", self)
@@ -161,9 +154,13 @@ class MultilineCellRenderer(Gtk.CellRendererText):
             editor.set_top_margin(self.props.ypad)
             editor.set_bottom_margin(self.props.ypad)
         editor.gaupol_path = path
-        editor.connect("focus-out-event", self._on_editor_focus_out_event)
-        editor.connect("key-press-event", self._on_editor_key_press_event)
-        editor.connect("populate-popup",  self._on_editor_populate_popup)
+        controller = Gtk.EventControllerFocus()
+        controller.connect("leave", self._on_editor_focus_leave, editor)
+        editor.add_controller(controller)
+        controller = Gtk.EventControllerKey()
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        controller.connect("key-pressed", self._on_editor_key_pressed, editor)
+        editor.add_controller(controller)
         editor.show()
         return editor
 
@@ -171,34 +168,27 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         """Hide or show line lengths if ``conf`` changed."""
         self._show_lengths = gaupol.conf.editor.show_lengths_cell
 
-    def _on_editor_focus_out_event(self, editor, *args):
+    def _on_editor_focus_leave(self, controller, editor):
         """End editing."""
-        if self._in_editor_menu: return
         editor.remove_widget()
         self.emit("editing-canceled")
 
-    def _on_editor_key_press_event(self, editor, event):
+    def _on_editor_key_pressed(self, controller, keyval, keycode, state, editor):
         """End editing if ``Enter`` or ``Escape`` pressed."""
-        if (event.get_state() &
+        if (state &
             (Gdk.ModifierType.SHIFT_MASK |
-             Gdk.ModifierType.CONTROL_MASK)): return
-        if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+             Gdk.ModifierType.CONTROL_MASK)): return False
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.editing_done()
             editor.remove_widget()
             self.emit("edited", editor.gaupol_path, editor.get_text())
             return True
-        if event.keyval == Gdk.KEY_Escape:
+        if keyval == Gdk.KEY_Escape:
             editor.editing_done()
             editor.remove_widget()
             self.emit("editing-canceled")
             return True
-
-    def _on_editor_populate_popup(self, editor, menu):
-        """Disable "focus-out-event" ending editing."""
-        self._in_editor_menu = True
-        def on_menu_unmap(menu, self):
-            self._in_editor_menu = False
-        menu.connect("unmap", on_menu_unmap, self)
+        return False
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""

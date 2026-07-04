@@ -20,8 +20,6 @@
 import aeidon
 import gaupol
 
-from gi.repository import Gdk
-
 
 class UpdateAgent(aeidon.Delegate):
 
@@ -36,12 +34,12 @@ class UpdateAgent(aeidon.Delegate):
     def flash_message(self, message, duration=6):
         """Show `message` in statuslabel for `duration` seconds."""
         self.statuslabel.flash_text(message, duration=duration)
-        self.statuslabel.register_hide_event(self.window, "button-press-event")
-        self.statuslabel.register_hide_event(self.window, "key-press-event")
-        self.statuslabel.register_hide_event(self.window, "scroll-event")
+        self.statuslabel.register_hide_event(self.window, "button-press")
+        self.statuslabel.register_hide_event(self.window, "key-press")
+        self.statuslabel.register_hide_event(self.window, "scroll")
         with aeidon.util.silent(AttributeError):
             self.statuslabel.register_hide_event(
-                self.get_current_page().view, "button-press-event")
+                self.get_current_page().view, "button-press")
 
     @aeidon.deco.export
     def _on_activate_next_project_activate(self, *args):
@@ -105,10 +103,9 @@ class UpdateAgent(aeidon.Delegate):
         self.update_gui()
 
     @aeidon.deco.export
-    def _on_window_window_state_event(self, window, event):
+    def _on_window_notify_maximized(self, window, param):
         """Save window maximization."""
-        state = event.new_window_state
-        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
+        maximized = window.is_maximized()
         gaupol.conf.application_window.maximized = maximized
 
     @aeidon.deco.export

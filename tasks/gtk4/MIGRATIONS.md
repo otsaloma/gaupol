@@ -4,7 +4,7 @@ Migrations from `tasks/gtk4/migrating-3to4.md` that apply to our
 codebase, in the order they appear in the guide, titled by the guide's
 section headings.
 
-- [ ] Stop using `GtkWidget` event signals
+- [x] Stop using `GtkWidget` event signals
 - [ ] Stop using `gtk_main()` and related APIs
 - [ ] Stop using GdkScreen
 - [ ] Adapt to `GdkWindow` API changes

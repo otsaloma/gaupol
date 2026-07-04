@@ -45,11 +45,10 @@ class FloatingLabel(Gtk.Box):
         self._init_widgets()
 
     def _clear_hide_events(self):
-        """Disconnect registered hide events."""
+        """Remove controllers registered for hide events."""
         while self._handlers:
-            widget, handler_id = self._handlers.pop()
-            if widget.handler_is_connected(handler_id):
-                widget.handler_disconnect(handler_id)
+            widget, controller = self._handlers.pop()
+            widget.remove_controller(controller)
 
     def flash_text(self, text, duration=6):
         """Show label with `text` for `duration` seconds."""
@@ -74,12 +73,26 @@ class FloatingLabel(Gtk.Box):
         style.add_class("gaupol-floating-label")
         self._event_box.add(self._label)
         gaupol.util.pack_start(self, self._event_box)
-        self._event_box.connect("enter-notify-event", self._hide)
+        controller = Gtk.EventControllerMotion()
+        controller.connect("enter", self._hide)
+        self.add_controller(controller)
 
-    def register_hide_event(self, widget, signal):
-        """Register `widget`'s `signal` as cause to hide the label."""
-        handler_id = widget.connect(signal, self._hide)
-        self._handlers.append((widget, handler_id))
+    def register_hide_event(self, widget, event):
+        """Register `event` on `widget` as cause to hide the label."""
+        if event == "button-press":
+            controller = Gtk.GestureClick()
+            controller.set_button(0)
+            controller.connect("pressed", self._hide)
+        if event == "key-press":
+            controller = Gtk.EventControllerKey()
+            controller.connect("key-pressed", self._hide)
+        if event == "scroll":
+            flags = Gtk.EventControllerScrollFlags.BOTH_AXES
+            controller = Gtk.EventControllerScroll.new(flags)
+            controller.connect("scroll", self._hide)
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        widget.add_controller(controller)
+        self._handlers.append((widget, controller))
 
     def set_text(self, text):
         """Show `text` in the label."""

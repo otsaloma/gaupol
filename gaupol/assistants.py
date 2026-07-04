@@ -22,7 +22,6 @@ import gaupol
 import os
 
 from aeidon.i18n   import _, n_
-from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -1063,7 +1062,7 @@ class TextAssistant(Gtk.Assistant):
         aeidon.util.connect(self, self, "cancel")
         aeidon.util.connect(self, self, "close")
         aeidon.util.connect(self, self, "prepare")
-        aeidon.util.connect(self, self, "window-state-event")
+        aeidon.util.connect(self, self, "notify::maximized")
 
     def _on_apply(self, *args):
         """Apply accepted changes to projects."""
@@ -1114,10 +1113,9 @@ class TextAssistant(Gtk.Assistant):
             if previous_page is not self._confirmation_page:
                 return self._prepare_progress_page(pages)
 
-    def _on_window_state_event(self, window, event):
+    def _on_notify_maximized(self, assistant, param):
         """Save window maximization."""
-        state = event.new_window_state
-        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
+        maximized = self.is_maximized()
         gaupol.conf.text_assistant.maximized = maximized
 
     def _prepare_confirmation_page(self, doc, changes):

@@ -345,8 +345,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.window.set_default_size(*gaupol.conf.application_window.size)
         if gaupol.conf.application_window.maximized:
             self.window.maximize()
-        aeidon.util.connect(self, "window", "delete-event")
-        aeidon.util.connect(self, "window", "window-state-event")
+        aeidon.util.connect(self, "window", "close-request")
+        aeidon.util.connect(self, "window", "notify::maximized")
         gaupol.style.load_css(self.window)
 
     def _init_x_clipboard(self):

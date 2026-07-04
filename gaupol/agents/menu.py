@@ -23,6 +23,8 @@ import os
 import sys
 
 from aeidon.i18n   import _
+from gi.repository import Gdk
+from gi.repository import GLib
 from gi.repository import Gtk
 
 
@@ -154,23 +156,13 @@ class MenuAgent(aeidon.Delegate):
             item.set_state(Gtk.StateType.NORMAL)
 
     @aeidon.deco.export
-    def _on_tab_widget_button_press_event(self, button, event, page):
+    def _on_tab_widget_pressed(self, gesture, n_press, x, y, page):
         """Display a pop-up menu with tab-related actions."""
-        if event.button != 3: return
         if self._tab_popup is None:
             path = os.path.join(aeidon.DATA_DIR, "ui", "tab-popup.ui")
             builder = Gtk.Builder.new_from_file(path)
             self._tab_popup = builder.get_object("tab-popup")
-        menu = Gtk.Menu.new_from_model(self._tab_popup)
-        menu.attach_to_widget(self.notebook, None)
-        menu.popup(parent_menu_shell=None,
-                   parent_menu_item=None,
-                   func=None,
-                   data=None,
-                   button=event.button,
-                   activate_time=event.time)
-
-        return True
+        self._show_popover_menu(gesture, x, y, self._tab_popup)
 
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):
@@ -216,14 +208,13 @@ class MenuAgent(aeidon.Delegate):
             item.set_state(Gtk.StateType.NORMAL)
 
     @aeidon.deco.export
-    def _on_view_button_press_event(self, view, event):
+    def _on_view_pressed(self, gesture, n_press, x, y):
         """Display a right-click pop-up menu to edit data."""
-        if event.button != 3: return
-        x = int(event.x)
-        y = int(event.y)
-        value = view.get_path_at_pos(x, y)
+        view = gesture.get_widget()
+        bx, by = view.convert_widget_to_bin_window_coords(int(x), int(y))
+        value = view.get_path_at_pos(bx, by)
         if value is None: return
-        path, column, x, y = value
+        path, column = value[:2]
         row = gaupol.util.tree_path_to_row(path)
         if not row in view.get_selected_rows():
             view.set_cursor(path, column)
@@ -232,35 +223,29 @@ class MenuAgent(aeidon.Delegate):
             path = os.path.join(aeidon.DATA_DIR, "ui", "view-popup.ui")
             builder = Gtk.Builder.new_from_file(path)
             self._view_popup = builder.get_object("view-popup")
-        menu = Gtk.Menu.new_from_model(self._view_popup)
-        menu.attach_to_widget(view, None)
-        menu.popup(parent_menu_shell=None,
-                   parent_menu_item=None,
-                   func=None,
-                   data=None,
-                   button=event.button,
-                   activate_time=event.time)
-
-        return True
+        self._show_popover_menu(gesture, x, y, self._view_popup)
 
     @aeidon.deco.export
-    def _on_view_header_button_press_event(self, button, event):
+    def _on_view_header_pressed(self, gesture, n_press, x, y):
         """Display a column visibility pop-up menu."""
-        if event.button != 3: return
         if self._columns_popup is None:
             path = os.path.join(aeidon.DATA_DIR, "ui", "columns-popup.ui")
             builder = Gtk.Builder.new_from_file(path)
             self._columns_popup = builder.get_object("columns-popup")
-        menu = Gtk.Menu.new_from_model(self._columns_popup)
-        menu.attach_to_widget(self.get_current_page().view, None)
-        menu.popup(parent_menu_shell=None,
-                   parent_menu_item=None,
-                   func=None,
-                   data=None,
-                   button=event.button,
-                   activate_time=event.time)
+        self._show_popover_menu(gesture, x, y, self._columns_popup)
 
-        return True
+    def _show_popover_menu(self, gesture, x, y, model):
+        """Show a pop-up menu for `model` at coordinates."""
+        gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+        menu = Gtk.PopoverMenu.new_from_model(model)
+        menu.set_parent(gesture.get_widget())
+        rect = Gdk.Rectangle()
+        rect.x, rect.y = int(x), int(y)
+        rect.width = rect.height = 1
+        menu.set_pointing_to(rect)
+        menu.set_has_arrow(False)
+        menu.connect("closed", lambda menu: GLib.idle_add(menu.unparent))
+        menu.popup()
 
     def _update_projects_menu(self, *args):
         """Update the project menu list of projects."""

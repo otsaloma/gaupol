@@ -35,7 +35,6 @@ class TimeCellRenderer(Gtk.CellRendererText):
     def __init__(self):
         """Initialize a :class:`TimeCellRenderer` instance."""
         GObject.GObject.__init__(self)
-        self._in_editor_menu = False
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return a :class:`gaupol.TimeEntry` widget."""
@@ -46,34 +45,32 @@ class TimeCellRenderer(Gtk.CellRendererText):
         editor.set_text(self.props.text)
         editor.select_region(0, -1)
         editor.gaupol_path = path
-        editor.connect("focus-out-event", self._on_editor_focus_out_event)
-        editor.connect("key-press-event", self._on_editor_key_press_event)
-        editor.connect("populate-popup",  self._on_editor_populate_popup)
+        controller = Gtk.EventControllerFocus()
+        controller.connect("leave", self._on_editor_focus_leave, editor)
+        editor.add_controller(controller)
+        controller = Gtk.EventControllerKey()
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        controller.connect("key-pressed", self._on_editor_key_pressed, editor)
+        editor.add_controller(controller)
         editor.show()
         return editor
 
-    def _on_editor_focus_out_event(self, editor, *args):
+    def _on_editor_focus_leave(self, controller, editor):
         """End editing."""
-        if self._in_editor_menu: return
         editor.remove_widget()
         self.emit("editing-canceled")
 
-    def _on_editor_key_press_event(self, editor, event):
+    def _on_editor_key_pressed(self, controller, keyval, keycode, state, editor):
         """End editing if ``Enter`` or ``Escape`` pressed."""
-        if (event.get_state() &
+        if (state &
             (Gdk.ModifierType.SHIFT_MASK |
-             Gdk.ModifierType.CONTROL_MASK)): return
-        if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+             Gdk.ModifierType.CONTROL_MASK)): return False
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.gaupol_path, editor.get_text())
             return True
-        if event.keyval == Gdk.KEY_Escape:
+        if keyval == Gdk.KEY_Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
-
-    def _on_editor_populate_popup(self, editor, menu):
-        """Disable "focus-out-event" ending editing."""
-        self._in_editor_menu = True
-        def on_menu_unmap(menu, self):
-            self._in_editor_menu = False
-        menu.connect("unmap", on_menu_unmap, self)
+            return True
+        return False

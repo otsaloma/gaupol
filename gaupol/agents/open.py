@@ -22,6 +22,7 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gdk
 from gi.repository import Gtk
 
 
@@ -37,8 +38,10 @@ class OpenAgent(aeidon.Delegate):
         page.project.connect("action-done", self._on_project_action_done)
         page.project.connect("action-redone", self._on_project_action_redone)
         page.project.connect("action-undone", self._on_project_action_undone)
-        callback = self._on_tab_widget_button_press_event
-        page.tab_widget.connect("button-press-event", callback, page)
+        gesture = Gtk.GestureClick()
+        gesture.set_button(Gdk.BUTTON_SECONDARY)
+        gesture.connect("pressed", self._on_tab_widget_pressed, page)
+        page.tab_widget.add_controller(gesture)
         self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()
@@ -130,7 +133,10 @@ class OpenAgent(aeidon.Delegate):
         """Connect to signals emitted by `view`."""
         view.connect_selection_changed(self._on_view_selection_changed)
         view.connect_after("move-cursor", self._on_view_move_cursor)
-        view.connect("button-press-event", self._on_view_button_press_event)
+        gesture = Gtk.GestureClick()
+        gesture.set_button(Gdk.BUTTON_SECONDARY)
+        gesture.connect("pressed", self._on_view_pressed)
+        view.add_controller(gesture)
         for column in view.get_columns():
             renderer = column.get_cells()[0]
             callback = self._on_view_renderer_edited
@@ -140,8 +146,10 @@ class OpenAgent(aeidon.Delegate):
             callback = self._on_view_renderer_editing_canceled
             renderer.connect("editing-canceled", callback, column)
             button = column.get_widget().get_ancestor(Gtk.Button)
-            callback = self._on_view_header_button_press_event
-            button.connect("button-press-event", callback)
+            gesture = Gtk.GestureClick()
+            gesture.set_button(Gdk.BUTTON_SECONDARY)
+            gesture.connect("pressed", self._on_view_header_pressed)
+            button.add_controller(gesture)
 
     def _get_encodings(self, first=None):
         """Return a sequence of encodings to try when opening files."""

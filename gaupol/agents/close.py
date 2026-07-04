@@ -124,7 +124,7 @@ class CloseAgent(aeidon.Delegate):
         self.quit()
 
     @aeidon.deco.export
-    def _on_window_delete_event(self, *args):
+    def _on_window_close_request(self, *args):
         """Quit Gaupol."""
         try:
             self.quit()

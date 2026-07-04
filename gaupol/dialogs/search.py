@@ -253,6 +253,9 @@ class SearchDialog(gaupol.BuilderDialog):
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.connect("changed", self._on_text_buffer_changed)
+        controller = Gtk.EventControllerFocus()
+        controller.connect("leave", self._on_text_view_focus_leave)
+        self._text_view.add_controller(controller)
 
     def _init_values(self):
         """Initialize default values for widgets."""
@@ -328,7 +331,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_next_button_clicked(self, *args):
         """Find the next match of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._next_button.grab_focus()
         self.next()
 
@@ -341,7 +344,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_previous_button_clicked(self, *args):
         """Find the previous match of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._previous_button.grab_focus()
         self.previous()
 
@@ -353,7 +356,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_replace_all_button_clicked(self, *args):
         """Replace all matches of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._replace_all_button.grab_focus()
         gaupol.util.set_cursor_busy(self._dialog)
         self.replace_all()
@@ -361,7 +364,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_replace_button_clicked(self, *args):
         """Replace the current match of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._replace_button.grab_focus()
         self._replace_button.set_sensitive(False)
         self.replace()
@@ -382,15 +385,15 @@ class SearchDialog(gaupol.BuilderDialog):
         self._replace_button.set_sensitive(False)
 
     @page_changing
-    def _on_text_view_focus_out_event(self, text_view, event):
-        """Save changes made in `text_view`."""
+    def _on_text_view_focus_leave(self, *args):
+        """Save changes made in the text view."""
         if self._match_page is None: return
         if self._match_row  is None: return
         if self._match_doc  is None: return
         if not self._text_view.get_sensitive(): return
         page = self.application.get_current_page()
         if page is not self._match_page: return
-        text_buffer = text_view.get_buffer()
+        text_buffer = self._text_view.get_buffer()
         start, end = text_buffer.get_bounds()
         text = text_buffer.get_text(start, end, False)
         page.project.set_text(self._match_row, self._match_doc, text)
