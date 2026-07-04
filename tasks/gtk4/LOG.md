@@ -224,6 +224,13 @@
     preferences-dialog.ui: parse succeeds and signals dispatch to
     late-filled callbacks.
 
+- Focus handling changes: a near no-op. The `.ui` files already got
+  `can-focus` → `focusable` in the builder-tool conversion, and nothing
+  uses `set_can_focus` or the removed focus adjustments. The one real
+  fix: `_on_set_edit_mode_activate` restored view focus by writing
+  `props.has_focus`, which is read-only in GTK-4; it now calls
+  `grab_focus()` instead.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the

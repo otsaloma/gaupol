@@ -12,7 +12,7 @@ section headings.
 - [x] Adapt to `GdkEvent` API changes
 - [x] Replace `GtkClipboard` with `GdkClipboard`
 - [x] Adapt to GtkBuilder API changes
-- [ ] Focus handling changes
+- [x] Focus handling changes
 - [ ] Use the new apis for keyboard shortcuts
 - [ ] Stop using `GtkEventBox`
 - [ ] Adapt to `GtkBox` API changes

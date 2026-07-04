@@ -48,7 +48,8 @@ class ViewAgent(aeidon.Delegate):
             page.view.set_focus(focus_row, focus_col)
             page.view.scroll_to_row(focus_row)
         page.view.select_rows(selected_rows)
-        page.view.props.has_focus = has_focus
+        if has_focus:
+            page.view.grab_focus()
         self.update_gui()
         gaupol.util.set_cursor_normal(self.window)
         page.emit("view-created", page.view)
