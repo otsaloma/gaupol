@@ -41,8 +41,7 @@
   switch. Notable changes beyond the mechanical ones:
 
   - Dropped `border_width` (12px) from all dialogs and assistant pages:
-    dialog content padding is lost, review spacing visually under GTK-4
-    and add margins where needed.
+    dialog content padding is lost. See Deferred for restoring it.
 
   - `GtkButtonBox` → `GtkBox`: buttons in a box are no longer
     homogeneous in size by default (spell-check dialog's button column
@@ -309,6 +308,19 @@
     (GtkMenu), and all `show_all` calls (widgets visible by default).
 
 ## Deferred
+
+- Dialog borders were lost in the `.ui` conversion (`border_width` is
+  gone in GTK-4): categorically, all dialogs should get GNOME
+  HIG-compliant 18px borders, set as margins on the first child of the
+  content area. Same for the sub-containers that carried their own 12px
+  border: the preferences dialog's per-tab boxes and the search dialog's
+  stack page boxes. It's the same four `set_margin_*` lines repeating,
+  so probably warrants a `gaupol.util` function; the Python-built
+  dialogs (encoding, multi-close, debug) should use it too. The file
+  chooser dialogs (open, save, multi-save) get reworked in the
+  GtkFileChooser item — settle their borders there. The text-assistant
+  page files also lost `border_width`, but theirs was on the throwaway
+  wrapper window and never applied at runtime, so nothing to restore.
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
   aeidon `SpellChecker` backend (`Gspell.Checker`), inline spell-check
