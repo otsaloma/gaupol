@@ -285,12 +285,7 @@ def prepare_text_view(text_view):
         return gaupol.ruler.disconnect_text_view(text_view)
     connect("notify::show_lengths_edit", update_margin, text_view)
     update_margin(None, None, text_view)
-    def update_font(section, value, text_view):
-        text_view.reset_style()
     gaupol.style.use_font(text_view, "custom")
-    connect("notify::use_custom_font", update_font, text_view)
-    connect("notify::custom_font", update_font, text_view)
-    update_font(None, None, text_view)
     def update_spacing(section, value, text_view):
         if gaupol.conf.editor.show_lengths_cell:
             return text_view.set_pixels_above_lines(2)

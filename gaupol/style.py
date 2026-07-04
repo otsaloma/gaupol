@@ -21,6 +21,7 @@ import aeidon
 import gaupol
 import os
 
+from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import Pango
 
@@ -28,6 +29,7 @@ CSS_FILE = os.path.join(aeidon.DATA_DIR, "ui", "gaupol.css")
 with open(CSS_FILE, "r") as f:
     CSS = f.read()
 
+css_provider = None
 
 def _get_editor_font_css():
     """Return CSS for custom editor font."""
@@ -54,19 +56,19 @@ def _get_editor_font_css():
 
 def load_css(widget):
     """Load CSS rules from file and conf for `widget`."""
-    provider = Gtk.CssProvider()
-    css = "\n".join((CSS, _get_editor_font_css()))
-    provider.load_from_data(bytes(css.encode()))
-    style = widget.get_style_context()
-    priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-    style.add_provider_for_screen(widget.get_screen(),
-                                  provider,
-                                  priority)
+    global css_provider
+    if css_provider is None:
+        css_provider = Gtk.CssProvider()
+        priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(), css_provider, priority)
+    _update_css()
 
 def _update_css(*args, **kwargs):
-    """Update CSS rules for the default provider."""
-    provider = Gtk.CssProvider()
-    provider.load_from_data(bytes(_get_editor_font_css().encode()))
+    """Reload CSS rules from file and conf into the shared provider."""
+    if css_provider is None: return
+    css = "\n".join((CSS, _get_editor_font_css()))
+    css_provider.load_from_data(bytes(css.encode()))
 
 def use_font(widget, font):
     """Use `font` ("custom" or "monospace") for `widget`."""

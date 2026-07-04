@@ -6,7 +6,7 @@ section headings.
 
 - [x] Stop using `GtkWidget` event signals
 - [x] Stop using `gtk_main()` and related APIs
-- [ ] Stop using GdkScreen
+- [x] Stop using GdkScreen
 - [ ] Adapt to `GdkWindow` API changes
 - [ ] The "iconified" window state has been renamed to "minimized"
 - [ ] Adapt to `GdkEvent` API changes

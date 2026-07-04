@@ -139,6 +139,23 @@
   `TextAssistant`'s run helper relies on the assistant destroying itself
   on apply/cancel to end the loop.
 
+- GdkScreen: only one use, `gaupol/style.py` `load_css` now calls
+  `add_provider_for_display(Gdk.Display.get_default(), ...)` (in GTK
+  since 4.0), following nfoview. Noticed in the same function:
+  `_get_editor_font_css` picks its font-size unit with
+  `Gtk.check_version(3, 22, 0)`, which under GTK 4 makes the unit
+  silently flip from "pt" to "px"; sort that out with the GtkCssProvider
+  migration item.
+
+- Fixed `gaupol/style.py` `_update_css` being a no-op since commit
+  75df44d3: `load_css` now installs a single module-level provider for
+  the display once and `_update_css` reloads it on font conf changes, so
+  open text views again update live (reloading an installed provider
+  invalidates styles by itself). The `reset_style` calls in
+  `prepare_text_view` relied on `_update_css` working and `reset_style`
+  is gone in GTK 4, so those callbacks were removed. Verify live font
+  change at runtime once the app starts.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
