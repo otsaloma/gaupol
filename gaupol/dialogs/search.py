@@ -24,7 +24,6 @@ import os
 import re
 
 from aeidon.i18n   import _, n_
-from gi.repository import Gdk
 from gi.repository import Gtk
 
 __all__ = ("SearchDialog",)
@@ -193,13 +192,12 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _init_keys(self):
         """Initialize keyboard shortcuts."""
-        accel_group = Gtk.AccelGroup()
-        accel_group.connect(Gdk.KEY_f,
-                            Gdk.ModifierType.CONTROL_MASK,
-                            Gtk.AccelFlags.MASK,
-                            self._on_find_key_pressed)
-
-        self.add_accel_group(accel_group)
+        controller = Gtk.ShortcutController()
+        controller.set_scope(Gtk.ShortcutScope.GLOBAL)
+        controller.add_shortcut(Gtk.Shortcut.new(
+            Gtk.ShortcutTrigger.parse_string("<Control>f"),
+            Gtk.CallbackAction.new(self._on_find_key_pressed)))
+        self.add_controller(controller)
 
     def _init_pattern_combo(self):
         """Initialize the pattern combo box."""
@@ -319,6 +317,7 @@ class SearchDialog(gaupol.BuilderDialog):
     def _on_find_key_pressed(self, *args):
         """Move focus to the pattern entry."""
         self._pattern_entry.grab_focus()
+        return True
 
     def _on_ignore_case_check_toggled(self, check_button):
         """Save ignore case setting."""

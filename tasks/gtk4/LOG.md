@@ -231,6 +231,15 @@
   `props.has_focus`, which is read-only in GTK-4; it now calls
   `grab_focus()` instead.
 
+- Keyboard shortcuts: the only `GtkAccelGroup` use was the search
+  dialog's Ctrl+F (focus the pattern entry); it's now a
+  `Gtk.ShortcutController` with `Gtk.ShortcutScope.GLOBAL` and a
+  `Gtk.CallbackAction` (all in GTK since 4.0). The action accelerators
+  in `gaupol/actions/*` go through
+  `Gtk.Application.set_accels_for_action`, which is unchanged in GTK-4;
+  no `GtkBindingSet`/`GtkAccelMap` usage existed. Verify Ctrl+F in the
+  search dialog at runtime once the app starts.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
