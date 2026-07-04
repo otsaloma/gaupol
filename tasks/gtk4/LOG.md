@@ -240,6 +240,14 @@
   no `GtkBindingSet`/`GtkAccelMap` usage existed. Verify Ctrl+F in the
   search dialog at runtime once the app starts.
 
+- GtkEventBox: both uses were vestigial wrappers, since all widgets
+  receive events in GTK-4. `FloatingLabel` now packs its label directly;
+  `Page.tab_widget` is now the plain `Gtk.Box` holding the tab label and
+  close button (the tab popup's click gesture already attaches to
+  `tab_widget` itself, so it keeps working). The tab widget's
+  `show_all()` call went away with the event box; children default to
+  visible in GTK-4.
+
 ## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the

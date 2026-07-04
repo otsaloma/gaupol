@@ -14,7 +14,7 @@ section headings.
 - [x] Adapt to GtkBuilder API changes
 - [x] Focus handling changes
 - [x] Use the new apis for keyboard shortcuts
-- [ ] Stop using `GtkEventBox`
+- [x] Stop using `GtkEventBox`
 - [ ] Adapt to `GtkBox` API changes
 - [ ] Adapt to `GtkWindow` API changes
 - [ ] Adapt to GtkStack, GtkAssistant and GtkNotebook API changes

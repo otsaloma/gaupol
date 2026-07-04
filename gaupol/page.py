@@ -189,11 +189,7 @@ class Page(aeidon.Observable):
         box = gaupol.util.new_hbox(spacing=4)
         gaupol.util.pack_start_expand(box, self.tab_label)
         gaupol.util.pack_start(box, button)
-        box.gaupol_button = button
-        self.tab_widget = Gtk.EventBox()
-        self.tab_widget.add(box)
-        self.tab_widget.set_visible_window(False)
-        self.tab_widget.show_all()
+        self.tab_widget = box
 
     def _on_project_main_file_opened(self, *args):
         """Reload the entire view."""
