@@ -142,7 +142,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         self.application = application
         self.manager = self.application.extension_manager
         self._init_tree_view()
-        self._init_toolbar()
         self._init_values()
         self._init_sensitivities()
 
@@ -158,10 +157,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         self._about_button.set_sensitive(False)
         self._help_button.set_sensitive(False)
         self._preferences_button.set_sensitive(False)
-
-    def _init_toolbar(self):
-        """Initialize the tree view inline toolbar."""
-        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
@@ -293,7 +288,6 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _init_toolbar(self):
         """Initialize the tree view inline toolbar."""
-        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
         theme = Gtk.IconTheme.get_default()
         # Tool buttons in the UI file are specified as symbolic icons
         # by name, found in adwaita-icon-theme. If missing in another

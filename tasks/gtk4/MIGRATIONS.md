@@ -27,7 +27,7 @@ section headings.
 - [x] Widgets are now visible by default
 - [x] Stop using GtkWidget::draw
 - [x] Adapt to cursor API changes
-- [ ] Adapt to icon size API changes
+- [x] Adapt to icon size API changes
 - [ ] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
 - [ ] GtkMenu, GtkMenuBar and GtkMenuItem are gone
 - [ ] GtkToolbar has been removed

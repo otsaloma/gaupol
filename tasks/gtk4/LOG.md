@@ -414,6 +414,17 @@
   Verified visually in a standalone demo that `cell-background-rgba`
   respects alpha, on both light and dark themes.
 
+- Icon sizes: the tab close button image now uses `Gtk.IconSize.NORMAL`
+  (GTK-4 only has INHERIT/NORMAL/LARGE; NORMAL is the text-like size
+  that MENU effectively was). The `set_icon_size(MENU)` calls on the
+  preferences-dialog and custom-framerates inline toolbars were dropped:
+  those "toolbars" are plain GtkBoxes since the `.ui` conversion and
+  their symbolic button icons default to NORMAL anyway (ExtensionPage's
+  `_init_toolbar` became empty and was removed). The two remaining
+  `set_icon_size` calls (main toolbar, player toolbar) are real
+  GtkToolbar API on win32-only paths and go away with the GtkToolbar
+  rewrite item.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is

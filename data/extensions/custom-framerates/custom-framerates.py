@@ -90,7 +90,6 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     def _init_toolbar(self):
         """Initialize the tree view inline toolbar."""
-        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
         theme = Gtk.IconTheme.get_default()
         # Tool buttons in the UI file are specified as symbolic icons
         # by name, found in adwaita-icon-theme, if missing in another
