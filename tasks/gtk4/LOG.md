@@ -403,6 +403,17 @@
     visually with a standalone demo script; `test_ruler.py` can't run
     until `import gaupol` works again (blocked on the GtkToolbar item).
 
+- Zebra stripes: `get_zebra_color` now returns the tree view's
+  foreground color at 8% alpha (`Gtk.Widget.get_color`, since 4.10) and
+  lets rendering composite it over the actual row background, instead of
+  arithmetically blending 8% foreground into
+  `lookup_color("theme_base_color")`. This drops the deprecated
+  GtkStyleContext color API (clears the "revisit" note from the
+  GtkStyleContext item) and stripes now work also on themes that don't
+  define `theme_base_color`; the function no longer returns None.
+  Verified visually in a standalone demo that `cell-background-rgba`
+  respects alpha, on both light and dark themes.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
