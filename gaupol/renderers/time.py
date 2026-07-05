@@ -52,7 +52,6 @@ class TimeCellRenderer(Gtk.CellRendererText):
         controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         controller.connect("key-pressed", self._on_editor_key_pressed, editor)
         editor.add_controller(controller)
-        editor.show()
         return editor
 
     def _on_editor_focus_leave(self, controller, editor):

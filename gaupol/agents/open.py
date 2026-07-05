@@ -53,7 +53,6 @@ class OpenAgent(aeidon.Delegate):
         notebook_page = self.notebook.get_page(scroller)
         notebook_page.props.tab_expand = True
         notebook_page.props.tab_fill = True
-        self.notebook.show_all()
         self.set_current_page(page)
         self.emit("page-added", page)
 

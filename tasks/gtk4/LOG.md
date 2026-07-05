@@ -365,6 +365,21 @@
   sizing returns sensible values in a standalone script. Nothing used
   the removed `::size-allocate` signal or baseline API.
 
+- Visible by default: dropped all `show_all` calls (removed in GTK-4)
+  and the redundant `show()` calls on non-toplevels (measurement labels,
+  header labels, cell editors). Everything that must start or turn
+  hidden was already handled by explicit `set_visible`/`hide` calls that
+  run regardless (e.g. the floating status label is hidden by
+  `show_message(None)`/`set_text(None)` right after the GTK-3 `show_all`
+  sites), and the search dialog's `.ui` has explicit `visible=0` where
+  needed, so no new hiding was added. Left as-is: `menu.py` `show_all`
+  (GtkMenu item), `dialogs/open.py`/`save.py` `show_all` (their
+  `_init_extra_widget` is built on the removed `set_extra_widget` and
+  gets rewritten wholesale in the GtkFileChooser item — same goes for
+  their `vbox.add`/`get_parent().remove` GtkContainer leftovers), and
+  toplevel/dynamic `show()`/`hide()` calls, which exist in GTK-4 and are
+  only deprecated since 4.10 (evaluate in the later deprecations pass).
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is

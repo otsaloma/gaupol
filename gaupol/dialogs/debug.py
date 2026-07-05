@@ -79,7 +79,6 @@ class DebugDialog(Gtk.MessageDialog):
         scroller.set_child(self._text_view)
         box = self.get_message_area()
         gaupol.util.pack_start_expand(box, scroller)
-        box.show_all()
 
     def _insert_environment(self):
         """Insert information about user's platform and environment."""

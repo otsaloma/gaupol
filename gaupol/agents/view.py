@@ -41,7 +41,6 @@ class ViewAgent(aeidon.Delegate):
         page.view = gaupol.View(edit_mode)
         self.connect_view_signals(page.view)
         scroller.set_child(page.view)
-        scroller.show_all()
         page.reload_view_all()
         if focus_row is not None:
             page.view.set_focus(focus_row, focus_col)

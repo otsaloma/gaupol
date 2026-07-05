@@ -36,7 +36,6 @@ def char_to_px(nchar, font=None):
     if nchar < 0: return nchar
     label = Gtk.Label(label="etaoin shrdlu")
     gaupol.style.use_font(label, font)
-    label.show()
     width = label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
     return int(round(nchar * width/len(label.props.label)))
 
@@ -119,7 +118,6 @@ def get_text_view_size(text_view, font=None):
     text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
     gaupol.style.use_font(label, font)
-    label.show()
     return (label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
             + text_view.get_left_margin()
             + text_view.get_right_margin(),
@@ -227,7 +225,6 @@ def lines_to_px(nlines, font=None):
     text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     label = Gtk.Label(label=text)
     gaupol.style.use_font(label, font)
-    label.show()
     height = label.measure(Gtk.Orientation.VERTICAL, -1).natural
     return int(round(nlines * height))
 

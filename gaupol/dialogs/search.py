@@ -101,7 +101,6 @@ class SearchDialog(gaupol.BuilderDialog):
         self._init_signal_handlers()
         self._init_sensitivities()
         self._overlay.add_overlay(self._statuslabel)
-        self._overlay.show_all()
         self._statuslabel.set_text(None)
 
     def _add_pattern_to_history(self):

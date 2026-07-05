@@ -24,7 +24,7 @@ section headings.
 - [x] Adapt to GtkCssProvider API changes
 - [x] Stop using GtkShadowType and GtkRelief properties
 - [x] Adapt to GtkWidget's size request changes
-- [ ] Widgets are now visible by default
+- [x] Widgets are now visible by default
 - [ ] Stop using GtkWidget::draw
 - [x] Adapt to cursor API changes
 - [ ] Adapt to icon size API changes

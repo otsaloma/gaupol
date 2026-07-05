@@ -200,7 +200,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_player_box(self.paned)
         self._init_notebook(self.paned)
         self.window.set_child(vbox)
-        vbox.show_all()
         self._init_visibilities()
 
     def _init_main_toolbar(self, vbox):

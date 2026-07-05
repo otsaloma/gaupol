@@ -134,7 +134,6 @@ class VideoAgent(aeidon.Delegate):
         self._init_player_toolbar()
         gaupol.util.pack_start(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
-        self.player_box.show_all()
         self.paned.set_start_child(self.player_box)
         # Keep GTK-3 add1 behavior: window resizes stretch the subtitle
         # view (the end child), not the video player.

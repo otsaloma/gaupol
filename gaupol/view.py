@@ -92,16 +92,13 @@ class View(Gtk.TreeView):
         # sufficient width for usual expected data.
         if field == gaupol.fields.NUMBER:
             size_label = Gtk.Label(label="8888")
-            size_label.show()
             width = size_label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
             label.set_size_request(width, -1)
         if field == gaupol.fields.DURATION:
             size_label = Gtk.Label(label="88.888")
-            size_label.show()
             width = size_label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
             label.set_size_request(width, -1)
         label.set_halign(Gtk.Align.START)
-        label.show()
         return label
 
     def _get_renderer(self, field, edit_mode):

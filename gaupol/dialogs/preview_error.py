@@ -74,5 +74,3 @@ class PreviewErrorDialog(Gtk.MessageDialog):
                                      min_nlines=10,
                                      max_nlines=25,
                                      font="monospace")
-
-        box.show_all()

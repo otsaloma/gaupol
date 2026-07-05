@@ -161,7 +161,6 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         controller.connect("key-pressed", self._on_editor_key_pressed, editor)
         editor.add_controller(controller)
-        editor.show()
         return editor
 
     def _on_conf_editor_notify_show_lengths_cell(self, *args):

@@ -985,7 +985,6 @@ class TextAssistant(Gtk.Assistant):
 
     def add_page(self, page):
         """Add `page` and configure its properties."""
-        page.show_all()
         self.append_page(page)
         self.set_page_type(page, page.page_type)
         self.set_page_title(page, page.page_title)

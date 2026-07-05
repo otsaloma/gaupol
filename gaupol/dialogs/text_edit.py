@@ -73,8 +73,6 @@ class TextEditDialog(Gtk.Dialog):
                                   nlines=7,
                                   font="custom")
 
-        box.show_all()
-
     def set_text(self, text):
         """Set `text` to the text view."""
         text_buffer = self._text_view.get_buffer()

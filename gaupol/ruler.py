@@ -51,7 +51,6 @@ class _Ruler:
         """Update the length of em based on font rendering."""
         text = "abcdefghijklmnopqrstuvwxyz"
         self._label.set_text(text)
-        self._label.show()
         width = self._label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
         # About 0.55 em per a-z average character.
         # https://bugzilla.gnome.org/show_bug.cgi?id=763589
