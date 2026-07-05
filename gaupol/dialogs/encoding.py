@@ -63,7 +63,6 @@ class EncodingDialog(Gtk.Dialog):
         """Initialize the character encoding tree view."""
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.NONE)
         scroller.set_child(self._tree_view)
         box = self.get_content_area()
         gaupol.util.pack_start_expand(box, scroller)
@@ -109,7 +108,6 @@ class MenuEncodingDialog(EncodingDialog):
         """Initialize the character encoding tree view."""
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.NONE)
         scroller.set_child(self._tree_view)
         box = self.get_content_area()
         gaupol.util.pack_start_expand(box, scroller)

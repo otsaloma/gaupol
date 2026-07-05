@@ -346,7 +346,16 @@
   GNOME font settings to CSS. Verified provider load + reload with the
   generated CSS in a standalone script.
 
-## Deferred
+- GtkShadowType/GtkRelief: scrolled windows' `set_shadow_type` became
+  `set_has_frame` (in GTK since 4.0): ETCHED_IN → True, and the NONE
+  calls (encoding, text-edit dialogs) were dropped since GTK-4
+  ScrolledWindow defaults to no frame. The tab close button's
+  `set_relief(NONE)` became `set_has_frame(False)` — needed explicitly,
+  GTK-4 buttons default to has-frame True. Any GTK-3 vs. GTK-4 frame
+  drawing differences (ETCHED_IN vs. flat border) are up to the theme.
+  Also fixed two `scroller.add()` calls (preview-error and text-edit
+  dialogs) that the GtkContainer migration in commit a9e46e22 missed;
+  now `set_child`.
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
   gone in GTK-4): categorically, all dialogs should get GNOME

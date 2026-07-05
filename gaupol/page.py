@@ -121,7 +121,7 @@ class Page(aeidon.Observable):
                                            Gtk.IconSize.MENU)
 
         button.set_child(image)
-        button.set_relief(Gtk.ReliefStyle.NONE)
+        button.set_has_frame(False)
         button.set_focus_on_click(False)
         width = image.get_preferred_width()[1]
         height = image.get_preferred_height()[1]

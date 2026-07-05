@@ -64,8 +64,8 @@ class PreviewErrorDialog(Gtk.MessageDialog):
         gaupol.style.use_font(self._text_view, "monospace")
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
-        scroller.add(self._text_view)
+        scroller.set_has_frame(True)
+        scroller.set_child(self._text_view)
         box = self.get_message_area()
         gaupol.util.pack_start_expand(box, scroller)
         gaupol.util.scale_to_content(self._text_view,

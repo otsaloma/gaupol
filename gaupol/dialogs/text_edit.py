@@ -65,8 +65,7 @@ class TextEditDialog(Gtk.Dialog):
             self._text_view.set_bottom_margin(6)
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.NONE)
-        scroller.add(self._text_view)
+        scroller.set_child(self._text_view)
         box = self.get_content_area()
         gaupol.util.pack_start_expand(box, scroller)
         gaupol.util.scale_to_size(self._text_view,
