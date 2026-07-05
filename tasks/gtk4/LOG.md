@@ -425,6 +425,23 @@
   GtkToolbar API on win32-only paths and go away with the GtkToolbar
   rewrite item.
 
+- GtkEntry/GtkSpinButton: only `TimeEntry` needed work. Its edit
+  blocking moved from stopping the GtkEditable `insert-text`/
+  `delete-text` signals to a `Gtk.EntryBuffer` subclass whose
+  `do_insert_text`/`do_delete_text` vfuncs reject anything not
+  explicitly allowed: the signals still exist and are stoppable in
+  GTK-4, but PyGObject cannot marshal their in-out position argument,
+  which would have printed the `g_value_get_int` assertion warning on
+  every keystroke (this also clears the old TimeEntry warning from
+  Deferred). The `cut-clipboard`/`toggle-overwrite` keybinding signals
+  moved from GtkEntry to its GtkText delegate
+  (`Gtk.Editable.get_delegate`, since 4.0). All TimeEntry behaviors
+  (validation, overwrite typing, separator skip, digit zeroing, blocked
+  delete, cut→copy redirect) verified in a standalone GTK-4 script;
+  `pytest` remains blocked on `import gaupol` (GtkToolbar item). The
+  SpinButton API we use is unchanged in GTK-4 and GtkSearchEntry is not
+  used at all.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
@@ -488,10 +505,3 @@
   those keys to block TreeView's paging bindings, which assumes GTK-4
   handles application accelerators at the window before the focus
   widget's controllers. If tab switching broke, rethink.
-
-- `TimeEntry.set_text` triggers a `g_value_get_int: assertion
-  'G_VALUE_HOLDS_INT (value)' failed` warning: PyGObject can't marshal
-  the in-out position argument of the "insert-text" signal that
-  `gaupol/entries.py` connects to. Harmless noise in GTK-3; fix as part
-  of the GTK-4 rework of TimeEntry ("key-press-event" and GtkEditable
-  handling change anyway).

@@ -28,7 +28,7 @@ section headings.
 - [x] Stop using GtkWidget::draw
 - [x] Adapt to cursor API changes
 - [x] Adapt to icon size API changes
-- [ ] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
+- [x] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
 - [ ] GtkMenu, GtkMenuBar and GtkMenuItem are gone
 - [ ] GtkToolbar has been removed
 - [ ] Switch to the new Drag-and-Drop api
