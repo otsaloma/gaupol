@@ -43,7 +43,7 @@ class _Ruler:
         """Return length of `text` measured in ems."""
         text = aeidon.RE_ANY_TAG.sub("", text) if strip else text
         self._label.set_text(text.replace("\n", " "))
-        width = self._label.get_preferred_width()[1]
+        width = self._label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
         length = width / self._em_length
         return int(length) if floor else length
 
@@ -52,7 +52,7 @@ class _Ruler:
         text = "abcdefghijklmnopqrstuvwxyz"
         self._label.set_text(text)
         self._label.show()
-        width = self._label.get_preferred_width()[1]
+        width = self._label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
         # About 0.55 em per a-z average character.
         # https://bugzilla.gnome.org/show_bug.cgi?id=763589
         self._em_length = width / (0.55 * len(text))

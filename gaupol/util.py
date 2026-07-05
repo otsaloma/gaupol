@@ -37,7 +37,7 @@ def char_to_px(nchar, font=None):
     label = Gtk.Label(label="etaoin shrdlu")
     gaupol.style.use_font(label, font)
     label.show()
-    width = label.get_preferred_width()[1]
+    width = label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
     return int(round(nchar * width/len(label.props.label)))
 
 def delay_add(delay, function, *args, **kwargs):
@@ -120,18 +120,18 @@ def get_text_view_size(text_view, font=None):
     label = Gtk.Label(label=text)
     gaupol.style.use_font(label, font)
     label.show()
-    return (label.get_preferred_width()[1]
+    return (label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
             + text_view.get_left_margin()
             + text_view.get_right_margin(),
-            label.get_preferred_height()[1])
+            label.measure(Gtk.Orientation.VERTICAL, -1).natural)
 
 def get_tree_view_size(tree_view, font=None):
     """Return the width and height desired by `tree_view`."""
     scroller = tree_view.get_parent()
     policy = scroller.get_policy()
     scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER)
-    width = scroller.get_preferred_width()[1]
-    height = scroller.get_preferred_height()[1]
+    width = scroller.measure(Gtk.Orientation.HORIZONTAL, -1).natural
+    height = scroller.measure(Gtk.Orientation.VERTICAL, -1).natural
     scroller.set_policy(*policy)
     return width, height
 
@@ -228,7 +228,7 @@ def lines_to_px(nlines, font=None):
     label = Gtk.Label(label=text)
     gaupol.style.use_font(label, font)
     label.show()
-    height = label.get_preferred_height()[1]
+    height = label.measure(Gtk.Orientation.VERTICAL, -1).natural
     return int(round(nlines * height))
 
 def load_module_from_file(name, path):

@@ -357,6 +357,16 @@
   dialogs) that the GtkContainer migration in commit a9e46e22 missed;
   now `set_child`.
 
+- Size requests: all `get_preferred_width/height()[1]` calls (util,
+  view, ruler, page) became `measure(orientation, -1).natural` (in GTK
+  since 4.0), following nfoview. All call sites wanted the natural size
+  of an unrooted throwaway label (or the tab image / tree view
+  scroller), so semantics are unchanged; verified the measure-based
+  sizing returns sensible values in a standalone script. Nothing used
+  the removed `::size-allocate` signal or baseline API.
+
+## Deferred
+
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
   gone in GTK-4): categorically, all dialogs should get GNOME
   HIG-compliant 18px borders, set as margins on the first child of the

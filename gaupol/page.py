@@ -123,8 +123,8 @@ class Page(aeidon.Observable):
         button.set_child(image)
         button.set_has_frame(False)
         button.set_focus_on_click(False)
-        width = image.get_preferred_width()[1]
-        height = image.get_preferred_height()[1]
+        width = image.measure(Gtk.Orientation.HORIZONTAL, -1).natural
+        height = image.measure(Gtk.Orientation.VERTICAL, -1).natural
         padding = 6 if sys.platform == "win32" else 2
         button.set_size_request(width + padding, height + padding)
         request_close = lambda x, self: self.emit("close-request")
