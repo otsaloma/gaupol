@@ -25,7 +25,7 @@ section headings.
 - [x] Stop using GtkShadowType and GtkRelief properties
 - [x] Adapt to GtkWidget's size request changes
 - [x] Widgets are now visible by default
-- [ ] Stop using GtkWidget::draw
+- [x] Stop using GtkWidget::draw
 - [x] Adapt to cursor API changes
 - [ ] Adapt to icon size API changes
 - [ ] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
@@ -41,4 +41,4 @@ section headings.
 ## Removals not covered by the guide
 
 - [ ] `GtkRecentChooserMenu` is gone
-- [ ] `GtkTextView` border windows are gone
+- [x] `GtkTextView` border windows are gone

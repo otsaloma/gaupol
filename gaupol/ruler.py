@@ -20,6 +20,8 @@
 import aeidon
 import gaupol
 
+from gi.repository import GObject
+from gi.repository import Graphene
 from gi.repository import Gtk
 from gi.repository import Pango
 
@@ -59,45 +61,97 @@ class _Ruler:
 
 _ruler = _Ruler()
 
-def _on_text_view_draw(text_view, cairoc):
-    """Calculate and show line lengths in text view margin."""
-    text_buffer = text_view.get_buffer()
-    start, end = text_buffer.get_bounds()
-    text = text_buffer.get_text(start, end, False)
-    if not text: return
-    lengths = get_lengths(text)
-    layout = Pango.Layout(text_view.get_pango_context())
-    # XXX: Lines overlap if we don't set a spacing!?
-    layout.set_spacing(2 * Pango.SCALE)
-    layout.set_markup("\n".join(str(x) for x in lengths), -1)
-    layout.set_alignment(Pango.Alignment.RIGHT)
-    width = layout.get_pixel_size()[0]
-    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 6)
-    x, y = text_view.window_to_buffer_coords(Gtk.TextWindowType.RIGHT, 2, 4)
-    with aeidon.util.silent(AttributeError):
-        # Top margin available since GTK 3.18.
-        y += text_view.props.top_margin
-    style = text_view.get_style_context()
-    Gtk.render_layout(style, cairoc, x, y, layout)
+
+class _Margin(Gtk.Widget):
+
+    """Widget that shows line lengths in a text view's right gutter."""
+
+    def __init__(self, text_view):
+        """Initialize a :class:`_Margin` instance."""
+        GObject.GObject.__init__(self)
+        self._handlers = []
+        self._text_view = text_view
+        self._vadjustment = None
+        text_buffer = text_view.get_buffer()
+        handler_id = text_buffer.connect("changed", self._on_buffer_changed)
+        self._handlers.append((text_buffer, handler_id))
+        handler_id = text_view.connect(
+            "notify::vadjustment", self._on_notify_vadjustment)
+        self._handlers.append((text_view, handler_id))
+        self._on_notify_vadjustment()
+        self._update_width()
+
+    def disconnect_all(self):
+        """Disconnect all signal handlers connected to other objects."""
+        for obj, handler_id in self._handlers:
+            obj.disconnect(handler_id)
+        self._handlers = []
+        if self._vadjustment is not None:
+            self._vadjustment.disconnect(self._vadjustment_handler)
+            self._vadjustment = None
+
+    def do_snapshot(self, snapshot):
+        """Draw line lengths aligned with the text view's lines."""
+        text_view = self._text_view
+        text_buffer = text_view.get_buffer()
+        start, end = text_buffer.get_bounds()
+        text = text_buffer.get_text(start, end, False)
+        if not text: return
+        lengths = get_lengths(text)
+        color = self.get_color()
+        layout = Pango.Layout(text_view.get_pango_context())
+        width = self.get_width()
+        for i in range(len(lengths)):
+            ok, itr = text_buffer.get_iter_at_line(i)
+            if not ok: break
+            location = text_view.get_iter_location(itr)
+            y = text_view.buffer_to_window_coords(
+                Gtk.TextWindowType.RIGHT, 0, location.y)[1]
+            layout.set_text(str(lengths[i]), -1)
+            point = Graphene.Point()
+            point.init(width - layout.get_pixel_size()[0] - 4, y)
+            snapshot.save()
+            snapshot.translate(point)
+            snapshot.append_layout(layout, color)
+            snapshot.restore()
+
+    def _on_buffer_changed(self, *args):
+        """Update width and redraw when text changes."""
+        self._update_width()
+        self.queue_draw()
+
+    def _on_notify_vadjustment(self, *args):
+        """Redraw on scrolling, also if the adjustment is replaced."""
+        if self._vadjustment is not None:
+            self._vadjustment.disconnect(self._vadjustment_handler)
+        self._vadjustment = self._text_view.get_vadjustment()
+        if self._vadjustment is None: return
+        self._vadjustment_handler = self._vadjustment.connect(
+            "value-changed", lambda *args: self.queue_draw())
+
+    def _update_width(self):
+        """Request enough width for the widest line length."""
+        text_buffer = self._text_view.get_buffer()
+        start, end = text_buffer.get_bounds()
+        text = text_buffer.get_text(start, end, False)
+        layout = Pango.Layout(self._text_view.get_pango_context())
+        layout.set_text(str(max(get_lengths(text))), -1)
+        self.set_size_request(layout.get_pixel_size()[0] + 6, -1)
+
 
 def connect_text_view(text_view):
     """Connect `text_view` to show line lengths in its margin."""
-    context = text_view.get_pango_context()
-    layout = Pango.Layout(context)
-    layout.set_text("8", -1)
-    width = layout.get_pixel_size()[0]
-    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, width + 6)
-    handler_id = text_view.connect_after("draw", _on_text_view_draw)
-    text_view.gaupol_ruler_handler_id = handler_id
-    return handler_id
+    if hasattr(text_view, "gaupol_ruler_margin"): return
+    margin = _Margin(text_view)
+    text_view.set_gutter(Gtk.TextWindowType.RIGHT, margin)
+    text_view.gaupol_ruler_margin = margin
 
 def disconnect_text_view(text_view):
     """Disconnect `text_view` from showing line lengths in its margin."""
-    text_view.set_border_window_size(Gtk.TextWindowType.RIGHT, 0)
-    if not hasattr(text_view, "gaupol_ruler_handler_id"): return
-    handler_id = text_view.gaupol_ruler_handler_id
-    del text_view.gaupol_ruler_handler_id
-    return text_view.disconnect(handler_id)
+    if not hasattr(text_view, "gaupol_ruler_margin"): return
+    text_view.gaupol_ruler_margin.disconnect_all()
+    del text_view.gaupol_ruler_margin
+    text_view.set_gutter(Gtk.TextWindowType.RIGHT, None)
 
 def get_length_function(unit):
     """Return a function that returns text length in `unit`."""

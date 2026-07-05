@@ -380,6 +380,29 @@
   toplevel/dynamic `show()`/`hide()` calls, which exist in GTK-4 and are
   only deprecated since 4.10 (evaluate in the later deprecations pass).
 
+- GtkWidget::draw + GtkTextView border windows (both removed in GTK-4,
+  both used only by `ruler.py`): the line-length margin is now a
+  `Gtk.Widget` subclass that draws in `do_snapshot` and is placed with
+  `Gtk.TextView.set_gutter(RIGHT)` (in GTK since 4.0; Graphene added to
+  the `gi.require_version` calls for `Gtk.Snapshot.translate`). Notable
+  details:
+
+  - GTK-4 caches the gutter's render node and does not redraw it on
+    scrolling or typing (verified empirically), so the margin widget
+    queues its own redraws on buffer "changed" and vadjustment
+    "value-changed"; the adjustment is tracked via `notify::vadjustment`
+    because the cell editor's text view has no scrolled window and the
+    text edit dialog gets its scroller only after `prepare_text_view`.
+
+  - Each length number is now positioned from its buffer line's real
+    coordinates (`get_iter_location` + `buffer_to_window_coords`),
+    replacing the old single joined layout and its "XXX: Lines overlap
+    if we don't set a spacing!?" hack; numbers stay aligned regardless
+    of line spacing and wrapping. Text color comes from
+    `Gtk.Widget.get_color` (since 4.10, under our 4.12 floor). Verified
+    visually with a standalone demo script; `test_ruler.py` can't run
+    until `import gaupol` works again (blocked on the GtkToolbar item).
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
