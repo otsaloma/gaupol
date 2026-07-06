@@ -268,6 +268,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             self.player_box = gaupol.util.new_vbox(spacing=0)
         if layout == Gtk.Orientation.VERTICAL:
             self.player_box = gaupol.util.new_hbox(spacing=0)
+        # Keep hidden until a video is loaded. Tab visibility logic
+        # in UpdateAgent._update_widgets depends on this too.
+        self.player_box.set_visible(False)
 
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""

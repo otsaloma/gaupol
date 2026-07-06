@@ -20,6 +20,26 @@
   `python3 -c` and `pytest` run from the repo root resolve correctly,
   as they put the working directory on `sys.path`.
 
+- To screenshot the app, run a standalone script (with `PYTHONPATH` as
+  above) that creates `gaupol.Application()` and calls
+  `application.open_main(paths)` — the same calls `applicationman.py`
+  makes — then in a `GLib.timeout_add` callback (~1500 ms, inside a
+  `GLib.MainLoop`) renders the window to PNG:
+
+  ```python
+  paintable = Gtk.WidgetPaintable(widget=window)
+  snapshot = Gtk.Snapshot()
+  paintable.snapshot(snapshot, paintable.get_intrinsic_width(), paintable.get_intrinsic_height())
+  texture = window.get_native().get_renderer().render_texture(snapshot.to_node())
+  texture.save_to_png(path)
+  ```
+
+  This captures the window content regardless of the Wayland
+  compositor. Caveat: the menubar doesn't render, since the script has
+  no `Gtk.Application` (`gaupol.appman`) to provide the menubar model.
+  The same recipe works for dialogs (snapshot the dialog widget
+  instead), e.g. built via the dialog test classes' `setup_method`.
+
 - Retested CSS `:nth-child` zebra stripes (the XXX comment in
   `gaupol/util.py` `get_zebra_color`): still not viable, GtkTreeView has
   no per-row CSS nodes, the selector matches the whole widget. Real
@@ -696,6 +716,16 @@
   errors, all assume a working `SpellChecker`); `bin/gaupol` with one or
   several files runs with zero console output even under
   `G_ENABLE_DIAGNOSTIC=1`.
+
+- Fixed notebook tabs never showing with multiple files open: the tab
+  visibility logic reads `player_box.get_visible()`, and the player box
+  — created detached and only added to the paned when a video loads — is
+  visible by default in GTK-4 (in GTK-3 it stayed hidden until the
+  `show_all` dropped in commit 3afc02c2). The box now starts with
+  `set_visible(False)` and is set visible in `_init_player_widgets`,
+  preserving the toggle-player flip semantics. Verified with in-app
+  screenshots (tabs render with close buttons) and a clean console from
+  `bin/gaupol data/samples/*.srt`.
 
 ## Deferred
 
