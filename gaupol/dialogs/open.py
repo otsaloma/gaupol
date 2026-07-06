@@ -33,8 +33,6 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting subtitle files to open."""
 
-    _widgets = ["align_combo", "align_label", "encoding_combo"]
-
     def __init__(self, parent, title, doc):
         """Initialize an :class:`OpenDialog` instance."""
         GObject.GObject.__init__(self)
@@ -70,18 +68,35 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.set_action(Gtk.FileChooserAction.OPEN)
 
     def _init_extra_widget(self):
-        """Initialize the extra widget from UI definition file."""
-        ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", "open-dialog.ui")
-        builder = Gtk.Builder(self)
-        builder.set_translation_domain("gaupol")
-        builder.add_from_file(ui_file_path)
-        for name in self._widgets:
-            widget = builder.get_object(name)
-            setattr(self, "_{}".format(name), widget)
+        """Initialize the extra widget with encoding and align combos."""
+        self._encoding_combo = Gtk.ComboBox(hexpand=True)
+        self._encoding_combo.connect(
+            "changed", self._on_encoding_combo_changed)
+        encoding_label = Gtk.Label(label=_("_Encoding:"),
+                                   halign=Gtk.Align.START,
+                                   use_underline=True)
+
+        encoding_label.set_mnemonic_widget(self._encoding_combo)
+        self._align_combo = Gtk.ComboBox(hexpand=True)
+        self._align_label = Gtk.Label(label=_("Align _method:"),
+                                      halign=Gtk.Align.START,
+                                      use_underline=True)
+
+        self._align_label.set_mnemonic_widget(self._align_combo)
+        grid = Gtk.Grid(row_spacing=6,
+                        column_spacing=12,
+                        margin_top=12,
+                        margin_bottom=12,
+                        margin_start=12,
+                        margin_end=12)
+
+        grid.attach(encoding_label, 0, 0, 1, 1)
+        grid.attach(self._encoding_combo, 1, 0, 1, 1)
+        grid.attach(self._align_label, 0, 1, 1, 1)
+        grid.attach(self._align_combo, 1, 1, 1, 1)
         # GTK 4 file choosers don't support an extra widget,
         # add to the content area below the file chooser widget.
-        main_vbox = builder.get_object("main_vbox")
-        self.get_content_area().append(main_vbox)
+        self.get_content_area().append(grid)
 
     def _init_values(self, doc):
         """Initialize default values for widgets."""

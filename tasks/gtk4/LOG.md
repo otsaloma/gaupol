@@ -584,6 +584,16 @@
     case for the later deprecations pass, hampered by the extra widget
     need.
 
+- Follow-up to the GtkFileChooser item: `open-dialog.ui` and
+  `save-dialog.ui` were dropped and the extra widgets are now built in
+  code in `_init_extra_widget`. The files contained only a static grid
+  of labels and empty combos (all combo contents were already built in
+  Python), and loading a fragment with a second `Gtk.Builder` into a
+  foreign dialog was an odd pattern. Label strings are identical, so
+  existing translations keep matching (`tools/extract-translations`
+  globs both `.py` and `.ui`, no file lists to update). Rendering
+  verified identical via screenshots; dialog tests pass.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
