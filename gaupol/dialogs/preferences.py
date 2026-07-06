@@ -549,7 +549,13 @@ class PreferencesDialog(gaupol.BuilderDialog):
     def __getattr__(self, name):
         """Return signal handler placeholder or attribute from dialog."""
         if name.startswith("_on_"):
-            return lambda *args: self._callbacks[name](*args)
+            # Setting initial widget values in the page constructors emits
+            # signals before _callbacks is populated. Those just echo values
+            # already in the configuration, so they can be safely dropped.
+            def placeholder(*args):
+                if name in self._callbacks:
+                    return self._callbacks[name](*args)
+            return placeholder
         return super().__getattr__(name)
 
     def _get_callbacks(self):
