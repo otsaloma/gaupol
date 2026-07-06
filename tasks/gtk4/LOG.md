@@ -594,6 +594,12 @@
   globs both `.py` and `.ui`, no file lists to update). Rendering
   verified identical via screenshots; dialog tests pass.
 
+- MessageDialog: `format_secondary_text` is gone in GTK-4 (a removal not
+  covered by the guide, found because every confirmation flow builds on
+  the message dialogs); the four message dialog base classes now set the
+  `secondary-text` property instead. This unbroke all
+  Error/Info/Question/WarningDialog construction and their tests.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is

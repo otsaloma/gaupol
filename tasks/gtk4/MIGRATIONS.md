@@ -42,3 +42,4 @@ section headings.
 
 - [x] `GtkRecentChooserMenu` is gone
 - [x] `GtkTextView` border windows are gone
+- [x] `Gtk.MessageDialog.format_secondary_text` is gone
