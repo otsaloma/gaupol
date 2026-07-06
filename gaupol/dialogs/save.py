@@ -22,6 +22,7 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -76,10 +77,14 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.set_transient_for(parent)
         self.set_title(title)
         self.connect("response", self._on_response)
+        # Add a possibly missing filename extension before GTK's
+        # overwrite confirmation runs on save button click.
         save_button = self.get_widget_for_response(Gtk.ResponseType.OK)
-        save_button.connect("event", self._on_save_button_event)
+        gesture = Gtk.GestureClick()
+        gesture.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        gesture.connect("pressed", self._on_save_button_pressed)
+        save_button.add_controller(gesture)
         self.set_action(Gtk.FileChooserAction.SAVE)
-        self.set_do_overwrite_confirmation(True)
 
     def _init_extra_widget(self):
         """Initialize the extra widget from UI definition file."""
@@ -90,12 +95,10 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         for name in self._widgets:
             widget = builder.get_object(name)
             setattr(self, "_{}".format(name), widget)
-        vbox = gaupol.util.new_vbox(spacing=0)
+        # GTK 4 file choosers don't support an extra widget,
+        # add to the content area below the file chooser widget.
         main_vbox = builder.get_object("main_vbox")
-        main_vbox.get_parent().remove(main_vbox)
-        vbox.add(main_vbox)
-        vbox.show_all()
-        self.set_extra_widget(vbox)
+        self.get_content_area().append(main_vbox)
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
@@ -144,7 +147,8 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
     def _init_values(self):
         """Initialize default values for widgets."""
         if os.path.isdir(gaupol.conf.file.directory):
-            self.set_current_folder(gaupol.conf.file.directory)
+            directory = Gio.File.new_for_path(gaupol.conf.file.directory)
+            self.set_current_folder(directory)
         self.set_encoding(gaupol.conf.file.encoding)
         self.set_format(gaupol.conf.file.format)
         self.set_newline(gaupol.conf.file.newline)
@@ -155,16 +159,10 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
     def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""
         format = self.get_format()
-        path = self.get_filename()
-        if path is not None:
-            dirname = os.path.dirname(path)
-            basename = os.path.basename(path)
-            if not path.endswith(format.extension):
-                basename = aeidon.util.replace_extension(basename, format)
-                path = os.path.join(dirname, basename)
-                self.unselect_filename(path)
-                self.set_current_name(basename)
-                self.set_filename(path)
+        basename = self.get_current_name()
+        if basename and not basename.endswith(format.extension):
+            basename = aeidon.util.replace_extension(basename, format)
+            self.set_current_name(basename)
         visible = (format.mode != self._mode)
         self._framerate_combo.set_visible(visible)
         self._framerate_label.set_visible(visible)
@@ -172,29 +170,23 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
         directory = self.get_current_folder()
-        if directory is not None:
-            gaupol.conf.file.directory = directory
+        if directory is not None and directory.get_path() is not None:
+            gaupol.conf.file.directory = directory.get_path()
         gaupol.conf.file.encoding = self.get_encoding()
         gaupol.conf.file.format = self.get_format()
         gaupol.conf.file.newline = self.get_newline()
         gaupol.conf.editor.framerate = self.get_framerate()
-        if (response == Gtk.ResponseType.OK and
-            not self.get_filename().endswith(self.get_format().extension)):
-            # If the filename is lacking the extension, add it, stop this
-            # response and emit a new one so that overwrite confirmation gets
-            # called with the full filename. The filename extension might have
-            # already been added in self._on_save_button_event, but not
+        if response == Gtk.ResponseType.OK:
+            # If the filename is lacking the extension, add it. This already
+            # happened in self._on_save_button_pressed, before overwrite
+            # confirmation, if the save button was clicked, but not
             # necessarily if the user hit Enter on the keyboard.
             self._format_combo.emit("changed")
-            gaupol.util.iterate_main()
-            self.stop_emission("response")
-            return self.response(Gtk.ResponseType.OK)
 
-    def _on_save_button_event(self, button, event):
+    def _on_save_button_pressed(self, gesture, n_press, x, y):
         """Ensure that the filename contains an extension."""
         # Add possibly lacking extension to the filename.
         self._format_combo.emit("changed")
-        gaupol.util.iterate_main()
 
     def set_format(self, format):
         """Set the selected format."""
@@ -209,8 +201,8 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
     def set_name(self, path):
         """Set the selected filename."""
         if os.path.isfile(path):
-            return self.set_filename(path)
-        return self.set_current_name(path)
+            return self.set_file(Gio.File.new_for_path(path))
+        return self.set_current_name(os.path.basename(path))
 
     def set_newline(self, newline):
         """Set the selected newline."""

@@ -22,6 +22,7 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
 
@@ -175,12 +176,13 @@ class VideoAgent(aeidon.Delegate):
             self.window, title=_("Load Video"), button_label=_("_Load"))
         if page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
+            dialog.set_current_folder(Gio.File.new_for_path(directory))
         if page.project.video_path is not None:
-            dialog.set_filename(page.project.video_path)
+            dialog.set_file(Gio.File.new_for_path(page.project.video_path))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        path = dialog.get_filename()
+        file = dialog.get_file()
+        path = file.get_path() if file is not None else None
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         self.load_video(path)

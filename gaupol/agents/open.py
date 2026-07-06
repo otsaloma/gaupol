@@ -23,6 +23,7 @@ import os
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import Gtk
 
 
@@ -173,7 +174,8 @@ class OpenAgent(aeidon.Delegate):
         dialog = gaupol.AppendDialog(self.window)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        paths = dialog.get_filenames()
+        paths = [x.get_path() for x in dialog.get_files()]
+        paths = list(filter(None, paths))
         encoding = dialog.get_encoding()
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
@@ -232,12 +234,13 @@ class OpenAgent(aeidon.Delegate):
         dialog = gaupol.VideoDialog(self.window, title, label)
         if page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
+            dialog.set_current_folder(Gio.File.new_for_path(directory))
         if page.project.video_path is not None:
-            dialog.set_filename(page.project.video_path)
+            dialog.set_file(Gio.File.new_for_path(page.project.video_path))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        path = dialog.get_filename()
+        file = dialog.get_file()
+        path = file.get_path() if file is not None else None
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
@@ -317,10 +320,11 @@ class OpenAgent(aeidon.Delegate):
         page = self.get_current_page()
         if page is not None and page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
+            dialog.set_current_folder(Gio.File.new_for_path(directory))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        paths = dialog.get_filenames()
+        paths = [x.get_path() for x in dialog.get_files()]
+        paths = list(filter(None, paths))
         encoding = dialog.get_encoding()
         dialog.destroy()
         gaupol.util.raise_default(response != Gtk.ResponseType.OK)

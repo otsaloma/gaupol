@@ -33,7 +33,7 @@ section headings.
 - [x] GtkToolbar has been removed
 - [x] Switch to the new Drag-and-Drop api
 - [x] Adapt to GtkIconTheme API changes
-- [ ] Update to GtkFileChooser API changes
+- [x] Update to GtkFileChooser API changes
 - [ ] Stop using blocking dialog functions
 - [ ] Adapt to GtkAboutDialog API changes
 - [ ] Stop using GtkFileChooserButton

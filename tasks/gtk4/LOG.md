@@ -536,6 +536,54 @@
   `bin/gaupol FILE` now starts and runs with zero console errors or
   warnings.
 
+- GtkFileChooser API changes: moved to the GFile-based API —
+  `set_current_folder`/`set_file` take a `Gio.File`, and the agents read
+  `get_file()`/`get_files()`, converting with `get_path()` (non-local
+  files filtered out where multiple can be selected). Notable details:
+
+  - Decision: no `Gtk.FileChooserNative` (or 4.10's `Gtk.FileDialog`)
+    anywhere. The open/save dialogs need real extra widgets (encoding/
+    format combos with change handlers), which neither supports
+    (`add_choice` is string-only with no signals), and FileChooserNative
+    was seen broken in nfoview on GTK 4.10. For consistency, all file
+    choosers stay `Gtk.FileChooserDialog` subclasses.
+
+  - `set_extra_widget` is gone: the open/save dialogs' combo grids are
+    appended to the dialog's content area, below the file chooser
+    widget (verified visually). The throwaway `GtkWindow` wrappers in
+    `open-dialog.ui`/`save-dialog.ui` were dropped — `main_vbox` is now
+    a top-level builder object carrying its own 12px margins, which
+    settles these dialogs' borders (part of the deferred border item).
+
+  - Overwrite confirmation is automatic in GTK-4. The save dialog's
+    hack of adding a missing filename extension before confirmation
+    moved from the removed generic "event" signal on the save button
+    (which crashed dialog init, see the cleared Deferred item) to a
+    capture-phase `Gtk.GestureClick` on the same button. The Enter-key
+    path adds the extension only in the response handler, after GTK's
+    confirmation has checked the extensionless name — the same loophole
+    existed in GTK-3, whose `stop_emission` + re-`response` dance also
+    bypassed re-confirmation; that dance was dropped.
+
+  - In SAVE mode, GTK-4's file chooser dialog automatically creates a
+    header bar holding the name entry and moves the response buttons
+    into it. Just a look change, everything keeps working, including
+    `get_widget_for_response`.
+
+  - `SaveDialog.set_name` with a path to a nonexistent file now sets
+    only the basename; GTK-3 `set_current_name` received the full path
+    and displayed it verbatim in the name entry.
+
+  - Construction, extra-widget rendering and the set_name → format
+    change → extension-adding → `get_file` flow verified with a
+    standalone script (dialogs render correctly, screenshots checked);
+    the full response flow through the agents is still blocked on
+    `Gtk.Dialog.run` (the next, blocking-dialogs item). All dialog and
+    agent unit tests pass. The whole GtkFileChooser family is
+    deprecated since 4.10 in favor of `Gtk.FileDialog`; that's a
+    case for the later deprecations pass, hampered by the extra widget
+    need.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
@@ -545,9 +593,10 @@
   border: the preferences dialog's per-tab boxes and the search dialog's
   stack page boxes. It's the same four `set_margin_*` lines repeating,
   so probably warrants a `gaupol.util` function; the Python-built
-  dialogs (encoding, multi-close, debug) should use it too. The file
-  chooser dialogs (open, save, multi-save) get reworked in the
-  GtkFileChooser item — settle their borders there. The text-assistant
+  dialogs (encoding, multi-close, debug) should use it too. The open
+  and save dialogs' extra widgets got their margins with the
+  GtkFileChooser item; the multi-save dialog is a regular
+  BuilderDialog and gets borders with the rest. The text-assistant
   page files also lost `border_width`, but theirs was on the throwaway
   wrapper window and never applied at runtime, so nothing to restore.
 
@@ -572,14 +621,6 @@
   functions" item and remember they're not collected by pytest, so they
   rot silently. Smoke-test a couple of `run_*` helpers interactively
   once `import gaupol` works again.
-
-- `gaupol/dialogs/save.py` connects the save button to the generic
-  `"event"` signal (removed in GTK-4, crashes dialog init) to add a
-  missing filename extension before overwrite confirmation. Rework this
-  with the "Update to GtkFileChooser API changes" item: the handler and
-  `_on_response` are built on `get_filename`/`set_filename`/
-  `set_do_overwrite_confirmation`/`stop_emission`, which all go away in
-  the same rework.
 
 - The multi-save dialog's `GtkFileChooserButton` (removed in GTK-4) is
   now a plain `GtkButton` with the same id `filechooser_button`, but

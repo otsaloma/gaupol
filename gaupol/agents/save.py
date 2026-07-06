@@ -173,7 +173,8 @@ class SaveAgent(aeidon.Delegate):
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         format = dialog.get_format()
-        path = dialog.get_filename()
+        file = dialog.get_file()
+        path = file.get_path() if file is not None else None
         encoding = dialog.get_encoding()
         newline = dialog.get_newline()
         framerate = dialog.get_framerate()

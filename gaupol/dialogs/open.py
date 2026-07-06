@@ -22,6 +22,7 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -77,18 +78,17 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         for name in self._widgets:
             widget = builder.get_object(name)
             setattr(self, "_{}".format(name), widget)
-        vbox = gaupol.util.new_vbox(spacing=0)
+        # GTK 4 file choosers don't support an extra widget,
+        # add to the content area below the file chooser widget.
         main_vbox = builder.get_object("main_vbox")
-        main_vbox.get_parent().remove(main_vbox)
-        vbox.add(main_vbox)
-        vbox.show_all()
-        self.set_extra_widget(vbox)
+        self.get_content_area().append(main_vbox)
 
     def _init_values(self, doc):
         """Initialize default values for widgets."""
         self.set_select_multiple(doc == aeidon.documents.MAIN)
         if os.path.isdir(gaupol.conf.file.directory):
-            self.set_current_folder(gaupol.conf.file.directory)
+            directory = Gio.File.new_for_path(gaupol.conf.file.directory)
+            self.set_current_folder(directory)
         self.set_encoding(gaupol.conf.file.encoding)
         self._align_combo.set_active(gaupol.conf.file.align_method)
         self._align_combo.set_visible(doc == aeidon.documents.TRAN)
@@ -98,7 +98,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Save default values for widgets."""
         gaupol.conf.file.encoding = self.get_encoding()
         directory = self.get_current_folder()
-        if directory is not None:
-            gaupol.conf.file.directory = directory
+        if directory is not None and directory.get_path() is not None:
+            gaupol.conf.file.directory = directory.get_path()
         index = self._align_combo.get_active()
         gaupol.conf.file.align_method = aeidon.align_methods[index]

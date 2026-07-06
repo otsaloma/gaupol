@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <object class="GtkWindow" id="window1">
-    <property name="child">
-      <object class="GtkBox" id="main_vbox">
-        <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
+  <object class="GtkBox" id="main_vbox">
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <property name="margin-top">12</property>
+    <property name="margin-bottom">12</property>
+    <property name="margin-start">12</property>
+    <property name="margin-end">12</property>
+    <child>
+      <object class="GtkGrid" id="grid1">
+        <property name="row_spacing">6</property>
+        <property name="column_spacing">12</property>
         <child>
-          <object class="GtkGrid" id="grid1">
-            <property name="row_spacing">6</property>
-            <property name="column_spacing">12</property>
-            <child>
-              <object class="GtkLabel" id="label1">
-                <property name="halign">start</property>
-                <property name="label" translatable="1">_Encoding:</property>
-                <property name="use_underline">1</property>
-                <property name="mnemonic_widget">encoding_combo</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="align_label">
-                <property name="halign">start</property>
-                <property name="label" translatable="1">Align _method:</property>
-                <property name="use_underline">1</property>
-                <property name="mnemonic_widget">align_combo</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">1</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkComboBox" id="encoding_combo">
-                <property name="hexpand">1</property>
-                <signal name="changed" handler="_on_encoding_combo_changed" swapped="no"/>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkComboBox" id="align_combo">
-                <property name="hexpand">1</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">1</property>
-                </layout>
-              </object>
-            </child>
+          <object class="GtkLabel" id="label1">
+            <property name="halign">start</property>
+            <property name="label" translatable="1">_Encoding:</property>
+            <property name="use_underline">1</property>
+            <property name="mnemonic_widget">encoding_combo</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="align_label">
+            <property name="halign">start</property>
+            <property name="label" translatable="1">Align _method:</property>
+            <property name="use_underline">1</property>
+            <property name="mnemonic_widget">align_combo</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkComboBox" id="encoding_combo">
+            <property name="hexpand">1</property>
+            <signal name="changed" handler="_on_encoding_combo_changed" swapped="no"/>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkComboBox" id="align_combo">
+            <property name="hexpand">1</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">1</property>
+            </layout>
           </object>
         </child>
       </object>
-    </property>
+    </child>
   </object>
 </interface>
