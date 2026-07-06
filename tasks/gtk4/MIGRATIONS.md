@@ -31,7 +31,7 @@ section headings.
 - [x] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
 - [x] GtkMenu, GtkMenuBar and GtkMenuItem are gone
 - [x] GtkToolbar has been removed
-- [ ] Switch to the new Drag-and-Drop api
+- [x] Switch to the new Drag-and-Drop api
 - [ ] Adapt to GtkIconTheme API changes
 - [ ] Update to GtkFileChooser API changes
 - [ ] Stop using blocking dialog functions

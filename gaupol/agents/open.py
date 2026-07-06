@@ -191,17 +191,16 @@ class OpenAgent(aeidon.Delegate):
         self.add_page(page)
 
     @aeidon.deco.export
-    def _on_notebook_drag_data_received(self, notebook, context, x, y,
-                                        selection_data, info, time):
-
-        """Open main files from dragged URIs."""
-        uris = selection_data.get_uris()
-        paths = list(map(aeidon.util.uri_to_path, uris))
+    def _on_notebook_drop(self, target, value, x, y):
+        """Open main files from dropped files."""
+        paths = [f.get_path() for f in value.get_files()]
+        paths = list(filter(None, paths))
         videos = list(filter(aeidon.util.is_video_file, paths))
         subtitles = list(set(paths) - set(videos))
         self.open_main(subtitles)
         if self.get_current_page() and len(videos) == 1:
             self.load_video(videos[0])
+        return True
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)

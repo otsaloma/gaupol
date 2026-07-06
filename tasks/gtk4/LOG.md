@@ -512,6 +512,17 @@
     `_init_player_toolbar` on a stub master; in-app verification blocked
     on the deferred gtksink → gtk4paintablesink switch.
 
+- Drag-and-drop: the notebook's URI drop (open dragged files) is now a
+  `Gtk.DropTarget` (since 4.0) receiving `Gdk.FileList` (since 4.6,
+  under our 4.12 floor); GTK deserializes `text/uri-list` drags into it,
+  so drops from file managers keep working. The handler gets `Gio.File`s
+  and uses `get_path()`, filtering out non-local files (the old code
+  would have produced garbage paths for those anyway). This was the only
+  DnD in the codebase (notebook tab reordering is internal to
+  GtkNotebook). `import gaupol` works again as of this commit's
+  predecessor state; runtime drop verification blocked on the next item
+  (`Gtk.IconTheme.get_default` crashes app startup).
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is

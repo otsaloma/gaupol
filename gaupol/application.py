@@ -242,12 +242,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.notebook.set_scrollable(True)
         self.notebook.set_show_border(False)
         self.notebook.set_show_tabs(False)
-        self.notebook.drag_dest_set(flags=Gtk.DestDefaults.ALL,
-                                    targets=None,
-                                    actions=Gdk.DragAction.COPY)
-
-        self.notebook.drag_dest_add_uri_targets()
-        aeidon.util.connect(self, "notebook", "drag-data-received")
+        target = Gtk.DropTarget.new(Gdk.FileList, Gdk.DragAction.COPY)
+        target.connect("drop", self._on_notebook_drop)
+        self.notebook.add_controller(target)
         aeidon.util.connect(self, "notebook", "page-reordered")
         callback = self._on_notebook_switch_page
         self.notebook.connect_after("switch-page", callback)
