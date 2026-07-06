@@ -487,6 +487,31 @@
     player toolbar in `agents/video.py` is still GtkToolbar — it's the
     remaining half of the "GtkToolbar has been removed" item.
 
+- Player toolbar: now a `GtkBox` with the "toolbar" CSS class (the
+  migration guide's replacement; an OSD overlay was considered and
+  rejected — auto-hiding controls suit immersive playback, not editing,
+  and would cover the subtitle overlay at the bottom of the video). Same
+  buttons and order, separators dropped (the "toolbar" class spacing
+  suffices), seekbar expands via `hexpand`. Completes the GtkToolbar
+  item. Notable details:
+
+  - Icon names switched to `-symbolic` variants out of necessity, not
+    just style: current adwaita-icon-theme ships only symbolic icons and
+    GTK-4 does *not* fall back from a plain name to its symbolic variant
+    (verified: "media-playback-start" resolves to image-missing). The
+    media icon base names are all freedesktop naming spec names and
+    Adwaita has `-rtl` variants, so seek/skip icons flip automatically
+    in RTL. See Deferred for auditing the remaining non-symbolic icon
+    names elsewhere.
+
+  - `volume_button.props.use_symbolic = False` dropped: broken for the
+    same no-fullcolor-icons reason, and the property is deprecated since
+    4.10 (GTK-4 default is True).
+
+  - Verified visually with a standalone script that calls the real
+    `_init_player_toolbar` on a stub master; in-app verification blocked
+    on the deferred gtksink → gtk4paintablesink switch.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
@@ -544,6 +569,15 @@
   context menu in cell editors (text and time) doesn't cancel editing
   via the focus controller's "leave" — the old `populate-popup` +
   `_in_editor_menu` guard against that was removed.
+
+- Audit the remaining non-symbolic icon names: current Adwaita ships
+  only symbolic icons and GTK-4 doesn't fall back from plain names, so
+  these likely render as image-missing. Known cases: the
+  `preferences-desktop`/`help-contents`/`help-about` icons in
+  `preferences-dialog.ui`, the `list-add`/`list-remove`/`go-up`/
+  `go-down` fallbacks in `dialogs/preferences.py` and the
+  custom-framerates extension (their `theme.has_icon` guards also mask
+  the breakage), and `gaupol/util.py` `get_icon_image` callers.
 
 - Rename `FloatingLabel` to Toast and restyle it with CSS to match the
   GNOME HIG toast look (rounded, floating at the bottom):

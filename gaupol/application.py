@@ -72,7 +72,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar play_button: The play/pause button on the video player toolbar
     :ivar player: A :class:`gaupol.VideoPlayer` instance or ``None``
     :ivar player_box: Box containing video player etc.
-    :ivar player_toolbar: A :class:`Gtk.Toolbar` for video player actions
+    :ivar player_toolbar: A toolbar :class:`Gtk.Box` for video player actions
     :ivar recent_manager: Instance of :class:`Gtk.RecentManager` used
     :ivar replacement: Last used search replacement or blank if not used
     :ivar seekbar: Video player seekbar (a :class:`Gtk.Scale` instance)

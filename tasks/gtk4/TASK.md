@@ -50,6 +50,10 @@ the tests fail and ignore anything unrelated to your changes.
 
 - Run `pytest` and `bin/gaupol FILE...`, fix any errors you see.
 
+- Go through the "Deferred" section of `tasks/gtk4/LOG.md` fixing those
+  one-by-one and removing them once done. That "Deferred" section is
+  like a todo-list that must be cleared.
+
 - Apart from errors, there are likely to be warnings caused by new
   deprecations in GTK-4. Let's evaluate these on a case-by-case basis
   and pick some of those to migrate, some to leave for later.

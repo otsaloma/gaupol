@@ -30,7 +30,7 @@ section headings.
 - [x] Adapt to icon size API changes
 - [x] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
 - [x] GtkMenu, GtkMenuBar and GtkMenuItem are gone
-- [ ] GtkToolbar has been removed (main toolbar done, player toolbar left)
+- [x] GtkToolbar has been removed
 - [ ] Switch to the new Drag-and-Drop api
 - [ ] Adapt to GtkIconTheme API changes
 - [ ] Update to GtkFileChooser API changes
