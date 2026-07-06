@@ -137,7 +137,7 @@ def get_zebra_color(tree_view):
     # Foreground color at low alpha composited over the background
     # gives a subtle stripe on any theme, light or dark.
     color = tree_view.get_color()
-    color.alpha = 0.08
+    color.alpha = 0.05
     return color
 
 @aeidon.deco.once
