@@ -666,6 +666,37 @@
   flows plus rendering (screenshot) with standalone scripts; dialog
   tests pass.
 
+- Fixed a flaky `ValueError` in the search dialog's `replace()` (seen as
+  an intermittent `test_replace` failure): the `page_changing` decorator
+  set `_handle_page_changes` back to True unconditionally on exit, so
+  when the text view's focus-leave handler (also decorated) ran nested
+  inside `replace()` — dispatched from `iterate_main` in page.py's
+  main-texts-changed handler — it re-enabled page-change handling early
+  and the subsequent "page-changed" emission reset the match state
+  mid-replace. GTK-4's `EventControllerFocus` delivers leave events via
+  the main context (GTK-3 focus-out was synchronous at `grab_focus`
+  time), which is what made the nesting possible. The decorator now
+  saves and restores the previous flag value with try/finally.
+
+- Fixed the test suite segfaulting under Wayland (GTK 4.22.4):
+  destroying a window whose focus is in a `GtkText`, with no other
+  window left in the process, and then showing a new window crashes in
+  GTK's Wayland text-input code when a late input-method event arrives
+  for the freed widget (first seen as `test_assistants.py` crashing in
+  teardown after `TestLineBreakOptionsPage`, whose spin button entry
+  holds focus). A new root `conftest.py` sets
+  `GTK_IM_MODULE=gtk-im-context-simple` for tests, bypassing the Wayland
+  text-input protocol. The app itself is not affected — its main window
+  outlives all dialogs (verified: destroying a dialog with a focused
+  entry while the main window persists is fine). Arguably a GTK bug,
+  worth reporting upstream with the minimal reproduction.
+
+- Milestone: full `pytest` run is stable and green apart from the
+  spell-check failures covered by the Deferred item (4 failures + 26
+  errors, all assume a working `SpellChecker`); `bin/gaupol` with one or
+  several files runs with zero console output even under
+  `G_ENABLE_DIAGNOSTIC=1`.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
