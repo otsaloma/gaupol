@@ -57,7 +57,7 @@ def document_to_text_field(doc):
 
 def flash_dialog(dialog):
     """Run `dialog`, destroy it and return response."""
-    response = dialog.run()
+    response = run_dialog(dialog)
     dialog.destroy()
     return response
 
@@ -281,8 +281,31 @@ def rgba_to_hex(color):
     )
 
 def run_dialog(dialog):
-    """Run `dialog` and return response."""
-    return dialog.run()
+    """
+    Run `dialog` in a nested main loop and return response.
+
+    A stand-in for ``Gtk.Dialog.run``, which was removed in GTK 4. Blocks in a
+    nested main loop until the "response" signal, keeping callers simple,
+    synchronous code. Closing the dialog window emits response
+    ``Gtk.ResponseType.DELETE_EVENT``.
+    """
+    response = Gtk.ResponseType.NONE
+    loop = GLib.MainLoop()
+    def on_response(dialog, response_id):
+        nonlocal response
+        response = response_id
+        loop.quit()
+    def on_unrealize(dialog):
+        # Don't hang if dialog is destroyed without a response.
+        loop.quit()
+    response_id = dialog.connect("response", on_response)
+    unrealize_id = dialog.connect("unrealize", on_unrealize)
+    dialog.present()
+    loop.run()
+    for handler in [response_id, unrealize_id]:
+        if dialog.handler_is_connected(handler):
+            dialog.disconnect(handler)
+    return response
 
 def scale_to_content(widget, min_nchar=0,  max_nchar=32768,
                      min_nlines=0, max_nlines=32768, font=None):
@@ -329,8 +352,7 @@ def show_exception(exctype, value, tb):
     try: # to avoid recursion.
         dialog = gaupol.DebugDialog()
         dialog.set_text(exctype, value, tb)
-        response = dialog.run()
-        dialog.destroy()
+        response = flash_dialog(dialog)
         if response == Gtk.ResponseType.NO:
             raise SystemExit(1)
     except Exception:

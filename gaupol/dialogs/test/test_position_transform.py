@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class _TestPositionTransformDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def test__on_response(self):

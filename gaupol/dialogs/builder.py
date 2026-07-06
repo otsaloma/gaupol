@@ -59,11 +59,6 @@ class BuilderDialog:
             raise AttributeError(name)
         return getattr(self._dialog, name)
 
-    def run(self):
-        """Show the dialog, run it and return response."""
-        self._dialog.show()
-        return self._dialog.run()
-
     def _set_attributes(self, widgets, prefix=None):
         """Assign all names in `widgets` as attributes of `self`."""
         for name in widgets:

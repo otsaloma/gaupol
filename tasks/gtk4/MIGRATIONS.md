@@ -34,7 +34,7 @@ section headings.
 - [x] Switch to the new Drag-and-Drop api
 - [x] Adapt to GtkIconTheme API changes
 - [x] Update to GtkFileChooser API changes
-- [ ] Stop using blocking dialog functions
+- [x] Stop using blocking dialog functions
 - [ ] Adapt to GtkAboutDialog API changes
 - [ ] Stop using GtkFileChooserButton
 

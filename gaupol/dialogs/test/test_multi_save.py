@@ -25,7 +25,7 @@ from gaupol.dialogs.test.test_file import _TestFileDialog
 class TestMultiSaveDialog(_TestFileDialog):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     @aeidon.deco.silent(gaupol.Default)

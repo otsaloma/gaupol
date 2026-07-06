@@ -34,7 +34,7 @@ from unittest.mock import patch
 class TestAddFramerateDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
@@ -49,7 +49,7 @@ class TestAddFramerateDialog(gaupol.TestCase):
 class TestPreferencesDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):

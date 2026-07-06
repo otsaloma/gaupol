@@ -26,14 +26,14 @@ class TestLanguageDialog(gaupol.TestCase):
         self.dialog.destroy()
         self.dialog = gaupol.LanguageDialog(
             Gtk.Window(), show_target=False)
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def run_dialog__show_target(self):
         self.dialog.destroy()
         self.dialog = gaupol.LanguageDialog(
             Gtk.Window(), show_target=True)
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):

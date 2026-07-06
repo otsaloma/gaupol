@@ -594,6 +594,39 @@
   globs both `.py` and `.ui`, no file lists to update). Rendering
   verified identical via screenshots; dialog tests pass.
 
+- Blocking dialogs: `Gtk.Dialog.run` is gone; rather than rewriting all
+  ~50 synchronous call sites (and the `gaupol.Default` exception
+  unwinding built on their return values) into "response"-callback
+  style, `gaupol.util.run_dialog` now blocks in a nested `GLib.MainLoop`
+  until the "response" signal, preserving GTK-3 `run()` semantics. The
+  async rewrite was rejected as an application-wide architecture change
+  — and moot, since GtkDialog is deprecated since 4.10 and the dialog
+  story gets revisited in the deprecations pass anyway. Notable details:
+
+  - GTK-4 GtkDialog emits response `DELETE_EVENT` when the window is
+    closed (verified empirically), so cancel-on-close keeps working. An
+    "unrealize" handler also quits the loop, so it cannot hang if a
+    dialog is destroyed mid-run without a response (the "destroy" signal
+    is useless for this: it only fires once Python drops its reference).
+    Handlers are disconnected after each run, so re-running the same
+    dialog (open.py's retry loops) doesn't accumulate them.
+
+  - `BuilderDialog.run` was removed; everything, including the ~24
+    interactive `run_dialog` test helpers that called `dialog.run()`
+    directly (mechanically converted), now goes through
+    `gaupol.util.run_dialog`. `show_exception` now uses `flash_dialog`.
+
+  - `flash_dialog(AboutDialog)` remains broken: GTK-4 GtkAboutDialog is
+    not a GtkDialog and has no "response" signal — that's the next item,
+    "Adapt to GtkAboutDialog API changes".
+
+  - Verified with scripts: response/close/destroy semantics standalone,
+    a BuilderDialog run twice through the shim, and the real in-app
+    close-confirmation flow (MultiCloseDialog inside
+    `application.close`: CANCEL keeps the page via `gaupol.Default`, NO
+    closes it). App starts and runs with a clean console. This also
+    clears the deferred item on the `run_dialog`-based test helpers.
+
 - MessageDialog: `format_secondary_text` is gone in GTK-4 (a removal not
   covered by the guide, found because every confirmation flow builds on
   the message dialogs); the four message dialog base classes now set the
@@ -630,13 +663,6 @@
 - Switch `gaupol/player.py` from `gtksink` to `gtk4paintablesink` +
   `Gtk.Picture` during the code migration; README/CI already point to
   `gstreamer1.0-gtk4`.
-
-- The `Gtk.main()`-based interactive test helpers are migrated, but the
-  `run_dialog`/`flash_dialog`-based ones (~28 test files) still rely on
-  `Gtk.Dialog.run()`; handle them with the "Stop using blocking dialog
-  functions" item and remember they're not collected by pytest, so they
-  rot silently. Smoke-test a couple of `run_*` helpers interactively
-  once `import gaupol` works again.
 
 - The multi-save dialog's `GtkFileChooserButton` (removed in GTK-4) is
   now a plain `GtkButton` with the same id `filechooser_button`, but
