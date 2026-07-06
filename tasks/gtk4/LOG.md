@@ -10,6 +10,16 @@
   `-s` to show them. Use `G_DEBUG=fatal-warnings` to turn a warning into
   a fatal error (with traceback) when tracking down its source.
 
+- Run standalone verification scripts with the repository on
+  `PYTHONPATH`: Python puts the script's directory, not the working
+  directory, on `sys.path`, so a script run by path outside the repo
+  imports the GTK-3 gaupol 1.16 installed under `/usr/local` and
+  "verifies" the wrong code (it can even hang, since the GTK-3 app
+  blocks in main loops that ignore SIGTERM). The repo version is bumped
+  to 1.99, so `assert gaupol.__version__ == "1.99"` catches any mixup.
+  `python3 -c` and `pytest` run from the repo root resolve correctly,
+  as they put the working directory on `sys.path`.
+
 - Retested CSS `:nth-child` zebra stripes (the XXX comment in
   `gaupol/util.py` `get_zebra_color`): still not viable, GtkTreeView has
   no per-row CSS nodes, the selector matches the whole widget. Real
@@ -626,6 +636,16 @@
     `application.close`: CANCEL keeps the page via `gaupol.Default`, NO
     closes it). App starts and runs with a clean console. This also
     clears the deferred item on the `run_dialog`-based test helpers.
+
+- GtkAboutDialog: derives from GtkWindow in GTK-4, so it can't go
+  through `flash_dialog`/`run_dialog` (no "response" signal). The help
+  agent now keeps a single AboutDialog instance and `present`s it, with
+  `set_hide_on_close(True)` — the same pattern as the search dialog and
+  nfoview. All the `set_*` calls in `AboutDialog.__init__` exist
+  unchanged in GTK-4; the init was just reordered to match nfoview.
+  Verified the present/close-hides/re-present flow in-app with a script
+  (after first testing the wrong code, see the `PYTHONPATH` note at the
+  top of this file).
 
 - MessageDialog: `format_secondary_text` is gone in GTK-4 (a removal not
   covered by the guide, found because every confirmation flow builds on

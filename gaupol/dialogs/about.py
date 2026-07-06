@@ -33,8 +33,6 @@ class AboutDialog(Gtk.AboutDialog):
     def __init__(self, parent):
         """Initialize an :class:`AboutDialog` instance."""
         GObject.GObject.__init__(self)
-        self.set_title(_("About Gaupol"))
-        self.set_transient_for(parent)
         self.set_artists(("Osmo Salomaa <otsaloma@iki.fi>",))
         self.set_authors(("Osmo Salomaa <otsaloma@iki.fi>",))
         self.set_comments(_("Subtitle editor"))
@@ -42,6 +40,13 @@ class AboutDialog(Gtk.AboutDialog):
         self.set_license_type(Gtk.License.GPL_3_0)
         self.set_logo_icon_name("io.otsaloma.gaupol")
         self.set_program_name("Gaupol")
+        self.set_title(_("About Gaupol"))
+        self.set_transient_for(parent)
+        self.set_version(gaupol.__version__)
+        self.set_website(gaupol.HOMEPAGE_URL)
+        self.set_website_label(_("Gaupol Website"))
+        self.set_wrap_license(True)
+
         # TRANSLATORS: This is a special message that shouldn't be translated
         # literally. It is used in the about dialog to give credits to the
         # translators. Thus, you should translate it to your name and email
@@ -49,7 +54,3 @@ class AboutDialog(Gtk.AboutDialog):
         # to this translation; in that case, please write them on separate
         # lines seperated by newlines (\n).
         self.set_translator_credits(_("translator-credits"))
-        self.set_version(gaupol.__version__)
-        self.set_website(gaupol.HOMEPAGE_URL)
-        self.set_website_label(_("Gaupol Website"))
-        self.set_wrap_license(True)
