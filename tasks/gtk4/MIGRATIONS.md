@@ -36,7 +36,7 @@ section headings.
 - [x] Update to GtkFileChooser API changes
 - [x] Stop using blocking dialog functions
 - [x] Adapt to GtkAboutDialog API changes
-- [ ] Stop using GtkFileChooserButton
+- [x] Stop using GtkFileChooserButton
 
 ## Removals not covered by the guide
 

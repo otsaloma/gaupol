@@ -653,6 +653,19 @@
   `secondary-text` property instead. This unbroke all
   Error/Info/Question/WarningDialog construction and their tests.
 
+- GtkFileChooserButton: the multi-save dialog's folder selector is now
+  the plain `GtkButton` left behind by the `.ui` conversion, renamed
+  `directory_button` and made functional: its label shows the selected
+  folder's basename and clicking opens a `Gtk.FileChooserDialog` in
+  SELECT_FOLDER mode (per the earlier decision, no
+  FileChooserNative/FileDialog) through
+  `gaupol.util.run_dialog`, with the selected path kept in a
+  `_directory` attribute. Minor look change: a regular centered button
+  label instead of GtkFileChooserButton's icon + left-aligned text.
+  Verified the click → select → label update and cancel-keeps-selection
+  flows plus rendering (screenshot) with standalone scripts; dialog
+  tests pass.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
@@ -683,12 +696,6 @@
 - Switch `gaupol/player.py` from `gtksink` to `gtk4paintablesink` +
   `Gtk.Picture` during the code migration; README/CI already point to
   `gstreamer1.0-gtk4`.
-
-- The multi-save dialog's `GtkFileChooserButton` (removed in GTK-4) is
-  now a plain `GtkButton` with the same id `filechooser_button`, but
-  non-functional: reimplement folder selection in `multi_save.py`
-  (`get_filename`/`set_filename` calls, dialog title "Select A Folder")
-  with a file chooser dialog during the code migration.
 
 - Reimplement the "Italic" context menu item of the multiline cell
   editor with `Gtk.TextView.set_extra_menu` when doing the GtkMenu

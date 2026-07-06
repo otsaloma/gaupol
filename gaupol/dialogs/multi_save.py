@@ -22,6 +22,7 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gio
 from gi.repository import Gtk
 
 __all__ = ("MultiSaveDialog",)
@@ -32,8 +33,8 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
     """Dialog for selecting properties to save multiple files with."""
 
     _widgets = [
+        "directory_button",
         "encoding_combo",
-        "filechooser_button",
         "format_combo",
         "framerate_combo",
         "framerate_label",
@@ -44,6 +45,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         """Initialize a :class:`MultiSaveDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "multi-save-dialog.ui")
         self.application = application
+        self._directory = None
         self._modes = modes
         self._init_dialog(parent)
         self._init_format_combo()
@@ -51,12 +53,12 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         self._init_newline_combo()
         self._init_framerate_combo()
         width = gaupol.util.char_to_px(60)
-        self._filechooser_button.set_size_request(width, -1)
+        self._directory_button.set_size_request(width, -1)
         self._init_values()
 
     def get_directory(self):
         """Return the selected directory."""
-        return self._filechooser_button.get_filename()
+        return self._directory
 
     def get_format(self):
         """Return the selected format."""
@@ -143,6 +145,26 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         self._framerate_combo.set_visible(visible)
         self._framerate_label.set_visible(visible)
 
+    def _on_directory_button_clicked(self, *args):
+        """Show a dialog to select the directory to save in."""
+        dialog = Gtk.FileChooserDialog(
+            title=_("Select A Folder"),
+            transient_for=self._dialog,
+            modal=True,
+            action=Gtk.FileChooserAction.SELECT_FOLDER)
+        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        dialog.add_button(_("_Select"), Gtk.ResponseType.OK)
+        dialog.set_default_response(Gtk.ResponseType.OK)
+        if self._directory is not None:
+            dialog.set_current_folder(Gio.File.new_for_path(self._directory))
+        response = gaupol.util.run_dialog(dialog)
+        file = dialog.get_file()
+        path = file.get_path() if file is not None else None
+        dialog.destroy()
+        if response != Gtk.ResponseType.OK: return
+        if path is None: return
+        self.set_directory(path)
+
     def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""
         format = self.get_format()
@@ -189,7 +211,8 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
 
     def set_directory(self, path):
         """Set the selected directory."""
-        return self._filechooser_button.set_filename(path)
+        self._directory = path
+        self._directory_button.set_label(os.path.basename(path) or path)
 
     def set_format(self, format):
         """Set the selected format."""

@@ -40,13 +40,13 @@ the tests fail and ignore anything unrelated to your changes.
   versions of all libraries used via `gi.require_version`. We can also
   bump Python version if it comes up for some reason.
 
-## Steps Left
-
 - Look through the migration guide to see what we're using that we
   absolutely need to migrate away from. Go through those one-by-one
   switching to whatever new recommended solution. Maintain a list of the
   individual migrations in `tasks/gtk4/MIGRATIONS.md`, marking `[x]` as
   you go along.
+
+## Steps Left
 
 - Run `pytest` and `bin/gaupol FILE...`, fix any errors you see.
 
