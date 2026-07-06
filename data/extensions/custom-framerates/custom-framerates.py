@@ -65,7 +65,6 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self.set_default_response(Gtk.ResponseType.CLOSE)
         self.set_transient_for(parent)
         self.set_modal(True)
-        self._init_toolbar()
         self._init_tree_view(framerates)
         self._remove_button.set_sensitive(False)
         gaupol.util.scale_to_content(self._tree_view,
@@ -87,17 +86,6 @@ class PreferencesDialog(gaupol.BuilderDialog):
         selection = self._tree_view.get_selection()
         paths = selection.get_selected_rows()[1]
         return list(map(gaupol.util.tree_path_to_row, paths))
-
-    def _init_toolbar(self):
-        """Initialize the tree view inline toolbar."""
-        theme = Gtk.IconTheme.get_default()
-        # Tool buttons in the UI file are specified as symbolic icons
-        # by name, found in adwaita-icon-theme, if missing in another
-        # theme fall back to non-symbolic icons.
-        if not all((theme.has_icon(self._add_button.get_icon_name()),
-                    theme.has_icon(self._remove_button.get_icon_name()))):
-            self._add_button.set_icon_name("list-add")
-            self._remove_button.set_icon_name("list-remove")
 
     def _init_tree_view(self, framerates):
         """Initialize the tree view."""

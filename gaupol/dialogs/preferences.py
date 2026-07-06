@@ -275,7 +275,6 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         self._set_attributes(self._widgets, "file_")
         self.application = application
         self._init_tree_view()
-        self._init_toolbar()
         self._init_values()
 
     def _get_selected_row(self):
@@ -285,22 +284,6 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         if itr is None: return None
         path = store.get_path(itr)
         return gaupol.util.tree_path_to_row(path)
-
-    def _init_toolbar(self):
-        """Initialize the tree view inline toolbar."""
-        theme = Gtk.IconTheme.get_default()
-        # Tool buttons in the UI file are specified as symbolic icons
-        # by name, found in adwaita-icon-theme. If missing in another
-        # theme fall back to non-symbolic icons.
-        if not all((theme.has_icon(self._add_button.get_icon_name()),
-                    theme.has_icon(self._remove_button.get_icon_name()),
-                    theme.has_icon(self._up_button.get_icon_name()),
-                    theme.has_icon(self._down_button.get_icon_name()))):
-
-            self._add_button.set_icon_name("list-add")
-            self._remove_button.set_icon_name("list-remove")
-            self._up_button.set_icon_name("go-up")
-            self._down_button.set_icon_name("go-down")
 
     def _init_tree_view(self):
         """Initialize the fallback encoding tree view."""

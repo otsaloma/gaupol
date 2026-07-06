@@ -116,9 +116,8 @@ class Page(aeidon.Observable):
         """Initialize and return a tab close button."""
         button = Gtk.Button()
         button.add_css_class("gaupol-tab-close-button")
-        image = gaupol.util.get_icon_image("window-close-symbolic",
-                                           "window-close",
-                                           Gtk.IconSize.NORMAL)
+        image = Gtk.Image(icon_name="window-close-symbolic",
+                          icon_size=Gtk.IconSize.NORMAL)
 
         button.set_child(image)
         button.set_has_frame(False)

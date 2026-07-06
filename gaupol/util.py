@@ -96,13 +96,6 @@ def get_gst_version():
     except Exception:
         return None
 
-def get_icon_image(name, fallback, size):
-    """Return icon image from `name` or `fallback` in theme."""
-    theme = Gtk.IconTheme.get_default()
-    if theme.has_icon(name):
-        return Gtk.Image(icon_name=name, icon_size=size)
-    return Gtk.Image(icon_name=fallback, icon_size=size)
-
 def get_preview_command():
     """Return command to use for lauching video player."""
     if gaupol.conf.preview.use_custom_command:

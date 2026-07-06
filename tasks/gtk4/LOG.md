@@ -523,6 +523,19 @@
   predecessor state; runtime drop verification blocked on the next item
   (`Gtk.IconTheme.get_default` crashes app startup).
 
+- GtkIconTheme: no `Gtk.IconTheme.get_for_display` port was needed — all
+  three `get_default()` sites existed only to fall back from symbolic to
+  non-symbolic icon names, which is backwards in GTK-4 (current Adwaita
+  ships only symbolic icons; plain names are the broken ones and themes
+  inherit Adwaita anyway). `gaupol/util.py` `get_icon_image` was removed
+  and the tab close button creates its symbolic `Gtk.Image` directly;
+  the `_init_toolbar` has_icon-fallback methods in
+  `dialogs/preferences.py` and the custom-framerates extension were
+  deleted, keeping the symbolic names from the `.ui` files. This clears
+  the Python half of the deferred non-symbolic icon audit. Milestone:
+  `bin/gaupol FILE` now starts and runs with zero console errors or
+  warnings.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
@@ -583,12 +596,10 @@
 
 - Audit the remaining non-symbolic icon names: current Adwaita ships
   only symbolic icons and GTK-4 doesn't fall back from plain names, so
-  these likely render as image-missing. Known cases: the
+  these likely render as image-missing. Remaining case: the
   `preferences-desktop`/`help-contents`/`help-about` icons in
-  `preferences-dialog.ui`, the `list-add`/`list-remove`/`go-up`/
-  `go-down` fallbacks in `dialogs/preferences.py` and the
-  custom-framerates extension (their `theme.has_icon` guards also mask
-  the breakage), and `gaupol/util.py` `get_icon_image` callers.
+  `preferences-dialog.ui` (the Python-side fallbacks were removed with
+  the GtkIconTheme item).
 
 - Rename `FloatingLabel` to Toast and restyle it with CSS to match the
   GNOME HIG toast look (rounded, floating at the bottom):
