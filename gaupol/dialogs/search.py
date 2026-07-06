@@ -31,12 +31,17 @@ __all__ = ("SearchDialog",)
 
 def page_changing(function):
     """Decorator for :class:`SearchDialog` methods that edit data."""
+    # Save and restore the previous value so that nested calls
+    # (e.g. the text view's focus-leave handler dispatched from
+    # iterate_main during replace) don't re-enable handling early.
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
+        previous = args[0]._handle_page_changes
         args[0]._handle_page_changes = False
-        value = function(*args, **kwargs)
-        args[0]._handle_page_changes = True
-        return value
+        try:
+            return function(*args, **kwargs)
+        finally:
+            args[0]._handle_page_changes = previous
     return wrapper
 
 
