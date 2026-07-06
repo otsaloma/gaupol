@@ -52,12 +52,6 @@ class UpdateAgent(aeidon.Delegate):
         self.notebook.prev_page()
 
     @aeidon.deco.export
-    def _on_conf_application_window_notify_toolbar_style(self, *args):
-        """Change the style of the main toolbar."""
-        style = gaupol.conf.application_window.toolbar_style
-        self.main_toolbar.set_style(style.value)
-
-    @aeidon.deco.export
     def _on_move_tab_left_activate(self, *args):
         """Move the current tab to the left."""
         page = self.get_current_page()

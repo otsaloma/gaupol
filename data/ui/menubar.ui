@@ -182,10 +182,6 @@
       <attribute name="label" translatable="yes">_View</attribute>
       <section>
         <item>
-          <attribute name="label" translatable="yes">Tool_bar</attribute>
-          <attribute name="action">win.toggle-main-toolbar</attribute>
-        </item>
-        <item>
           <attribute name="label" translatable="yes">_Video Player</attribute>
           <attribute name="action">win.toggle-player</attribute>
         </item>

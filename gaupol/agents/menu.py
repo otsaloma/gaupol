@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 import os
-import sys
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
@@ -36,35 +35,22 @@ class MenuAgent(aeidon.Delegate):
         """Initialize a :class:`MenuAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._columns_popup = None
-        self._redo_menu_items = []
         self._tab_popup = None
-        self._undo_menu_items = []
         self._view_popup = None
         self._init_signal_handlers()
 
-    @aeidon.deco.once
-    def _get_recent_chooser_menu(self):
-        """Return a new recent chooser menu."""
-        menu = Gtk.RecentChooserMenu()
-        menu.set_show_icons(sys.platform != "win32")
-        # Can be really slow with network drives.
-        # https://github.com/otsaloma/gaupol/issues/175
-        menu.set_show_not_found(gaupol.conf.recent.show_not_found)
-        menu.set_show_numbers(False)
-        menu.set_show_tips(True)
-        menu.set_sort_type(Gtk.RecentSortType.MRU)
-        menu.connect("item-activated", self._on_recent_menu_item_activated)
-        def custom_filter(info, user_data=None):
-            application = "gaupol" in info.applications
-            mime_type = info.mime_type in [x.mime_type for x in aeidon.formats]
-            return bool(application and mime_type)
-        recent_filter = Gtk.RecentFilter()
-        flags = Gtk.RecentFilterFlags.APPLICATION | Gtk.RecentFilterFlags.MIME_TYPE
-        recent_filter.add_custom(flags, custom_filter)
-        menu.add_filter(recent_filter)
-        menu.set_filter(recent_filter)
-        menu.set_limit(10)
-        return menu
+    def _get_recent_paths(self):
+        """Return a list of recently used subtitle file paths."""
+        mime_types = [x.mime_type for x in aeidon.formats]
+        items = [x for x in self.recent_manager.get_items()
+                 if x.has_application("gaupol")
+                 and x.get_mime_type() in mime_types]
+        if not gaupol.conf.recent.show_not_found:
+            # Can be really slow with network drives.
+            # https://github.com/otsaloma/gaupol/issues/175
+            items = [x for x in items if x.exists()]
+        items.sort(key=lambda x: x.get_modified().to_unix(), reverse=True)
+        return [aeidon.util.uri_to_path(x.get_uri()) for x in items[:10]]
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -84,26 +70,11 @@ class MenuAgent(aeidon.Delegate):
         self.set_current_page(self.pages[index])
 
     @aeidon.deco.export
-    def _on_open_button_show_menu(self, *args):
-        """Show a menu listing recent files to open."""
-        menu = self._get_recent_chooser_menu()
-        self.open_button.set_menu(menu)
-
-    @aeidon.deco.export
     def _on_open_recent_main_file_activate(self, action, *args):
         """Open recent file as main document."""
         if not os.path.isfile(action.gaupol_path):
             return self.flash_message(_("File not found"))
         self.open_main(action.gaupol_path)
-
-    def _on_recent_menu_item_activated(self, chooser, *args):
-        """Open recent file as main document."""
-        uri = chooser.get_current_uri()
-        path = aeidon.util.uri_to_path(uri)
-        self.open_button.get_menu().deactivate()
-        if not os.path.isfile(path):
-            return self.flash_message(_("File not found"))
-        self.open_main(path)
 
     @aeidon.deco.export
     def _on_open_recent_translation_file_activate(self, action, *args):
@@ -113,49 +84,6 @@ class MenuAgent(aeidon.Delegate):
         self.open_translation(action.gaupol_path)
 
     @aeidon.deco.export
-    def _on_redo_button_show_menu(self, *args):
-        """Show a menu listing all redoable actions."""
-        if not self.redo_button.get_menu():
-            self.redo_button.set_menu(Gtk.Menu())
-        menu = self.redo_button.get_menu()
-        for item in menu.get_children():
-            menu.remove(item)
-        self._redo_menu_items = []
-        redoables = []
-        with aeidon.util.silent(AttributeError):
-            # XXX: Gtk.Actionable.set_action_name doesn't affect the dropdown
-            # arrow making it clickable even when there's nothing to redo.
-            page = self.get_current_page()
-            redoables = page.project.redoables
-        for i, action in enumerate(redoables):
-            item = Gtk.MenuItem(label=action.description)
-            item.gaupol_index = i
-            item.connect("activate", self._on_redo_menu_item_activate)
-            item.connect("enter-notify-event", self._on_redo_menu_item_enter_notify_event)
-            item.connect("leave-notify-event", self._on_redo_menu_item_leave_notify_event)
-            self._redo_menu_items.append(item)
-            menu.append(item)
-        menu.show_all()
-        self.redo_button.set_menu(menu)
-
-    def _on_redo_menu_item_activate(self, menu_item):
-        """Redo the selected action and all those above it."""
-        self.redo(menu_item.gaupol_index + 1)
-        self.redo_button.get_menu().deactivate()
-
-    def _on_redo_menu_item_enter_notify_event(self, menu_item, event):
-        """Select all actions above `menu_item`."""
-        index = menu_item.gaupol_index
-        for item in self._redo_menu_items[:index]:
-            item.set_state(Gtk.StateType.PRELIGHT)
-
-    def _on_redo_menu_item_leave_notify_event(self, menu_item, event):
-        """Unselect all actions above `menu_item`."""
-        index = menu_item.gaupol_index
-        for item in self._redo_menu_items[:index]:
-            item.set_state(Gtk.StateType.NORMAL)
-
-    @aeidon.deco.export
     def _on_tab_widget_pressed(self, gesture, n_press, x, y, page):
         """Display a pop-up menu with tab-related actions."""
         if self._tab_popup is None:
@@ -163,49 +91,6 @@ class MenuAgent(aeidon.Delegate):
             builder = Gtk.Builder.new_from_file(path)
             self._tab_popup = builder.get_object("tab-popup")
         self._show_popover_menu(gesture, x, y, self._tab_popup)
-
-    @aeidon.deco.export
-    def _on_undo_button_show_menu(self, *args):
-        """Show a menu listing all undoable actions."""
-        if not self.undo_button.get_menu():
-            self.undo_button.set_menu(Gtk.Menu())
-        menu = self.undo_button.get_menu()
-        for item in menu.get_children():
-            menu.remove(item)
-        self._undo_menu_items = []
-        undoables = []
-        with aeidon.util.silent(AttributeError):
-            # XXX: Gtk.Actionable.set_action_name doesn't affect the dropdown
-            # arrow making it clickable even when there's nothing to undo.
-            page = self.get_current_page()
-            undoables = page.project.undoables
-        for i, action in enumerate(undoables):
-            item = Gtk.MenuItem(label=action.description)
-            item.gaupol_index = i
-            item.connect("activate", self._on_undo_menu_item_activate)
-            item.connect("enter-notify-event", self._on_undo_menu_item_enter_notify_event)
-            item.connect("leave-notify-event", self._on_undo_menu_item_leave_notify_event)
-            self._undo_menu_items.append(item)
-            menu.append(item)
-        menu.show_all()
-        self.undo_button.set_menu(menu)
-
-    def _on_undo_menu_item_activate(self, menu_item):
-        """Undo the selected action and all those above it."""
-        self.undo(menu_item.gaupol_index + 1)
-        self.undo_button.get_menu().deactivate()
-
-    def _on_undo_menu_item_enter_notify_event(self, menu_item, event):
-        """Select all actions above `menu_item`."""
-        index = menu_item.gaupol_index
-        for item in self._undo_menu_items[:index]:
-            item.set_state(Gtk.StateType.PRELIGHT)
-
-    def _on_undo_menu_item_leave_notify_event(self, menu_item, event):
-        """Unselect all actions above `menu_item`."""
-        index = menu_item.gaupol_index
-        for item in self._undo_menu_items[:index]:
-            item.set_state(Gtk.StateType.NORMAL)
 
     @aeidon.deco.export
     def _on_view_pressed(self, gesture, n_press, x, y):
@@ -270,9 +155,7 @@ class MenuAgent(aeidon.Delegate):
         # Menubar not available when running unit tests.
         if menu is None: return
         menu.remove_all()
-        recent = self._get_recent_chooser_menu()
-        for i, uri in enumerate(recent.get_uris()):
-            path = aeidon.util.uri_to_path(uri)
+        for i, path in enumerate(self._get_recent_paths()):
             label = os.path.basename(path)
             if len(label) > 100:
                 label = label[:100] + "…"
@@ -305,9 +188,7 @@ class MenuAgent(aeidon.Delegate):
         # Menubar not available when running unit tests.
         if menu is None: return
         menu.remove_all()
-        recent = self._get_recent_chooser_menu()
-        for i, uri in enumerate(recent.get_uris()):
-            path = aeidon.util.uri_to_path(uri)
+        for i, path in enumerate(self._get_recent_paths()):
             label = os.path.basename(path)
             if len(label) > 100:
                 label = label[:100] + "…"

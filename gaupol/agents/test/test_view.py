@@ -38,11 +38,6 @@ class TestViewAgent(gaupol.TestCase):
         self.application.get_action(name).activate()
         self.application.get_action(name).activate()
 
-    def test__on_toggle_main_toolbar_toggled(self):
-        name = "toggle-main-toolbar"
-        self.application.get_action(name).activate()
-        self.application.get_action(name).activate()
-
     def test__on_toggle_number_column_toggled(self):
         name = "toggle-number-column"
         self.application.get_action(name).activate()

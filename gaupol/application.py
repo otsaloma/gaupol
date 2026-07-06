@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 import itertools
-import sys
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
@@ -66,10 +65,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar counter: Iterator used for naming unsaved documents
     :ivar _delegations: Dictionary mapping method names to agent methods
     :ivar extension_manager: Instance of :class:`gaupol.ExtensionManager` used
-    :ivar main_toolbar: A :class:`Gtk.Toolbar` shown below the menubar
     :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
-    :ivar notebook_separator: A :class:`Gtk.Separator` above the notebook
-    :ivar open_button: The open button on the main toolbar
     :ivar pages: List of :class:`gaupol.Page` currently open
     :ivar paned: A :class:`Gtk.Paned` to hold player and subtitles
     :ivar pattern: Last used search pattern or blank if not used
@@ -78,11 +74,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar player_box: Box containing video player etc.
     :ivar player_toolbar: A :class:`Gtk.Toolbar` for video player actions
     :ivar recent_manager: Instance of :class:`Gtk.RecentManager` used
-    :ivar redo_button: The redo button on the main toolbar
     :ivar replacement: Last used search replacement or blank if not used
     :ivar seekbar: Video player seekbar (a :class:`Gtk.Scale` instance)
     :ivar statuslabel: Instance of :class:`gaupol.FloatingLabel` used
-    :ivar undo_button: The undo button on the main toolbar
     :ivar volume_button: A :class:`Gtk.VolumeButton` in the player toolbar
     :ivar window: A :class:`Gtk.ApplicationWindow` used to hold all the widgets
     :ivar x_clipboard: A :class:`Gdk.Clipboard` used for desktop-wide copying
@@ -116,10 +110,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.counter = itertools.count(1)
         self._delegations = {}
         self.extension_manager = gaupol.ExtensionManager(self)
-        self.main_toolbar = None
         self.notebook = None
-        self.notebook_separator = None
-        self.open_button = None
         self.pages = []
         self.pattern = ""
         self.play_button = None
@@ -127,11 +118,9 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.player_box = None
         self.player_toolbar = None
         self.recent_manager = Gtk.RecentManager.get_default()
-        self.redo_button = None
         self.replacement = ""
         self.seekbar = None
         self.statuslabel = None
-        self.undo_button = None
         self.volume_button = None
         self.window = None
         self.x_clipboard = None
@@ -195,96 +184,57 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self._init_x_clipboard()
         self._init_window()
         self._init_actions()
-        self._init_main_toolbar(vbox)
+        self._init_header_bar()
         self._init_paned(vbox)
         self._init_player_box(self.paned)
         self._init_notebook(self.paned)
         self.window.set_child(vbox)
         self._init_visibilities()
 
-    def _init_main_toolbar(self, vbox):
-        """Initialize the main toolbar."""
-        self.main_toolbar = Gtk.Toolbar()
-        style = self.main_toolbar.get_style_context()
-        style.add_class(Gtk.STYLE_CLASS_PRIMARY_TOOLBAR)
-        toolbar_style = gaupol.conf.application_window.toolbar_style
-        self.main_toolbar.set_style(toolbar_style.value)
-        if sys.platform == "win32":
-            self.main_toolbar.set_icon_size(Gtk.IconSize.MENU)
-        gaupol.conf.connect_notify("application_window", "toolbar_style", self)
-        gaupol.util.pack_start(vbox, self.main_toolbar)
-        # win.open-main-files
-        button = Gtk.MenuToolButton(
-            label=_("Open"), icon_name="document-open")
-        button.set_menu(Gtk.Menu())
-        button.set_is_important(True)
+    def _init_header_bar(self):
+        """Initialize the window header bar."""
+        header = Gtk.HeaderBar()
+        # Open split button: win.open-main-files
+        # plus a menu listing recent files.
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        box.add_css_class("linked")
+        button = Gtk.Button(icon_name="document-open-symbolic")
         button.set_action_name("win.open-main-files")
         button.set_tooltip_text(_("Open main files"))
-        callback = self._on_open_button_show_menu
-        button.connect("show-menu", callback)
-        self.main_toolbar.insert(button, -1)
-        self.open_button = button
+        box.append(button)
+        button = Gtk.MenuButton(icon_name="pan-down-symbolic")
+        button.set_menu_model(self.get_menubar_section("open-recent-main-placeholder"))
+        button.set_tooltip_text(_("Open a recently used main file"))
+        box.append(button)
+        header.pack_start(box)
         # win.save-main-document
-        button = Gtk.ToolButton(
-            label=_("Save"), icon_name="document-save")
-        button.set_is_important(True)
+        button = Gtk.Button(icon_name="document-save-symbolic")
         button.set_action_name("win.save-main-document")
         button.set_tooltip_text(_("Save the current main document"))
-        self.main_toolbar.insert(button, -1)
-        self.main_toolbar.insert(Gtk.SeparatorToolItem(), -1)
-        # win.undo-action
-        button = Gtk.MenuToolButton(
-            label=_("Undo"), icon_name="edit-undo")
-        button.set_menu(Gtk.Menu())
-        button.set_is_important(True)
+        header.pack_start(button)
+        # win.undo-action and win.redo-action as a group
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        box.add_css_class("linked")
+        button = Gtk.Button(icon_name="edit-undo-symbolic")
         button.set_action_name("win.undo-action")
         button.set_tooltip_text(_("Undo the last action"))
-        callback = self._on_undo_button_show_menu
-        button.connect("show-menu", callback)
-        self.main_toolbar.insert(button, -1)
-        self.undo_button = button
-        # win.redo-action
-        button = Gtk.MenuToolButton(
-            label=_("Redo"), icon_name="edit-redo")
-        button.set_menu(Gtk.Menu())
+        box.append(button)
+        button = Gtk.Button(icon_name="edit-redo-symbolic")
         button.set_action_name("win.redo-action")
         button.set_tooltip_text(_("Redo the last undone action"))
-        callback = self._on_redo_button_show_menu
-        button.connect("show-menu", callback)
-        self.main_toolbar.insert(button, -1)
-        self.redo_button = button
-        self.main_toolbar.insert(Gtk.SeparatorToolItem(), -1)
-        # win.insert-subtitles
-        button = Gtk.ToolButton(
-            label=_("Insert"), icon_name="list-add")
-        button.set_action_name("win.insert-subtitles")
-        button.set_tooltip_text(_("Insert new subtitles"))
-        self.main_toolbar.insert(button, -1)
-        # win.remove-subtitles
-        button = Gtk.ToolButton(
-            label=_("Remove"), icon_name="list-remove")
-        button.set_action_name("win.remove-subtitles")
-        button.set_tooltip_text(_("Remove the selected subtitles"))
-        self.main_toolbar.insert(button, -1)
-        self.main_toolbar.insert(Gtk.SeparatorToolItem(), -1)
-        # win.find-and-replace
-        button = Gtk.ToolButton(
-            label=_("Find"), icon_name="edit-find")
-        button.set_action_name("win.find-and-replace")
-        button.set_tooltip_text(_("Search for and replace text"))
-        self.main_toolbar.insert(button, -1)
-        # win.toggle-player
-        button = Gtk.ToggleToolButton(
-            label=_("Video"), icon_name="camera-video")
-        button.set_action_name("win.toggle-player")
-        button.set_tooltip_text(_("Show or hide the video player"))
-        self.main_toolbar.insert(button, -1)
+        box.append(button)
+        header.pack_start(box)
         # win.preview
-        button = Gtk.ToolButton(
-            label=_("Preview"), icon_name="media-playback-start")
+        button = Gtk.Button(icon_name="media-playback-start-symbolic")
         button.set_action_name("win.preview")
         button.set_tooltip_text(_("Preview from selected position with a video player"))
-        self.main_toolbar.insert(button, -1)
+        header.pack_end(button)
+        # win.find-and-replace
+        button = Gtk.Button(icon_name="edit-find-symbolic")
+        button.set_action_name("win.find-and-replace")
+        button.set_tooltip_text(_("Search for and replace text"))
+        header.pack_end(button)
+        self.window.set_titlebar(header)
 
     def _init_notebook(self, paned):
         """Initialize the notebook."""
@@ -301,16 +251,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         aeidon.util.connect(self, "notebook", "page-reordered")
         callback = self._on_notebook_switch_page
         self.notebook.connect_after("switch-page", callback)
-        orientation = Gtk.Orientation.HORIZONTAL
-        self.notebook_separator = Gtk.Separator(orientation=orientation)
-        vbox = gaupol.util.new_vbox(spacing=0)
-        gaupol.util.pack_start(vbox, self.notebook_separator)
         overlay = Gtk.Overlay()
         overlay.set_child(self.notebook)
         self.statuslabel = gaupol.FloatingLabel()
         overlay.add_overlay(self.statuslabel)
-        gaupol.util.pack_start_expand(vbox, overlay)
-        paned.set_end_child(vbox)
+        paned.set_end_child(overlay)
 
     def _init_paned(self, vbox):
         """Intialize the paned layout."""
@@ -329,9 +274,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""
-        conf = gaupol.conf.application_window
-        self.main_toolbar.set_visible(conf.show_main_toolbar)
-        self.notebook_separator.set_visible(conf.show_main_toolbar)
         self.show_message(None)
 
     def _init_window(self):

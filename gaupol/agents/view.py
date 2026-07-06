@@ -97,15 +97,6 @@ class ViewAgent(aeidon.Delegate):
         self._toggle_column(gaupol.fields.MAIN_TEXT)
 
     @aeidon.deco.export
-    def _on_toggle_main_toolbar_activate(self, *args):
-        """Show or hide the main toolbar."""
-        visible = self.main_toolbar.get_visible()
-        self.main_toolbar.set_visible(not visible)
-        self.notebook_separator.set_visible(not visible)
-        gaupol.conf.application_window.show_main_toolbar = not visible
-        self.get_action("toggle-main-toolbar").set_state(not visible)
-
-    @aeidon.deco.export
     def _on_toggle_number_column_activate(self, *args):
         """Show or hide the number column."""
         self._toggle_column(gaupol.fields.NUMBER)

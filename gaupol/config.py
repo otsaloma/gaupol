@@ -31,9 +31,7 @@ CONFIG_DEFAULTS = {
     "application_window": {
         "layout": gaupol.orientation.VERTICAL,
         "maximized": False,
-        "show_main_toolbar": True,
         "size": [700, 433],
-        "toolbar_style": gaupol.toolbar_styles.ICONS,
     },
     "capitalization": {
         "country": "",
@@ -198,7 +196,6 @@ CONFIG_DEFAULTS = {
 CONFIG_ENUMS = {
     "application_window": {
         "layout": gaupol.orientation,
-        "toolbar_style": gaupol.toolbar_styles,
     },
     "duration_adjust": {
         "target": gaupol.targets,

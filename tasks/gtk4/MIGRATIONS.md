@@ -29,8 +29,8 @@ section headings.
 - [x] Adapt to cursor API changes
 - [x] Adapt to icon size API changes
 - [x] Adapt to changes in the API of GtkEntry, GtkSearchEntry and GtkSpinButton
-- [ ] GtkMenu, GtkMenuBar and GtkMenuItem are gone
-- [ ] GtkToolbar has been removed
+- [x] GtkMenu, GtkMenuBar and GtkMenuItem are gone
+- [ ] GtkToolbar has been removed (main toolbar done, player toolbar left)
 - [ ] Switch to the new Drag-and-Drop api
 - [ ] Adapt to GtkIconTheme API changes
 - [ ] Update to GtkFileChooser API changes
@@ -40,5 +40,5 @@ section headings.
 
 ## Removals not covered by the guide
 
-- [ ] `GtkRecentChooserMenu` is gone
+- [x] `GtkRecentChooserMenu` is gone
 - [x] `GtkTextView` border windows are gone

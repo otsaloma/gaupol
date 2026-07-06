@@ -427,7 +427,9 @@ class EditAgent(aeidon.Delegate):
             # after the previous redone action.
             gaupol.util.iterate_main()
             if page.project.can_redo(count):
+                description = page.project.redoables[0].description
                 page.project.redo(count)
+                self.flash_message(_("Redo: {}").format(description))
             gaupol.util.set_cursor_normal(self.window)
         finally:
             self._revert_in_progress = False
@@ -477,7 +479,9 @@ class EditAgent(aeidon.Delegate):
             # after the previous undone action.
             gaupol.util.iterate_main()
             if page.project.can_undo(count):
+                description = page.project.undoables[0].description
                 page.project.undo(count)
+                self.flash_message(_("Undo: {}").format(description))
             gaupol.util.set_cursor_normal(self.window)
         finally:
             self._revert_in_progress = False

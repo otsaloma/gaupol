@@ -442,6 +442,51 @@
   SpinButton API we use is unchanged in GTK-4 and GtkSearchEntry is not
   used at all.
 
+- Menubar + main toolbar: the menubar needed no code changes — GTK-4's
+  `GtkApplicationWindow` renders the `Gtk.Application.set_menubar` model
+  as a `GtkPopoverMenuBar` automatically when `show-menubar` is set, so
+  the existing `menubar.ui` + `GMenu` section updates all keep working.
+  The main toolbar (GtkToolbar, removed in GTK-4) was replaced with a
+  GNOME HIG style `GtkHeaderBar` set as the window titlebar, with the
+  menubar below it. Notable details:
+
+  - Header bar contents: an Open split button (folder icon + arrow
+    MenuButton whose menu is the *same* `GMenu` section object as File →
+    Open Recent), a save button, a linked undo/redo pair, the default
+    title widget (shows the window title, which `update.py` already
+    maintains as filename/"Gaupol"), and find-and-replace + preview icon
+    buttons on the right; window controls come automatically. Cut from
+    the old toolbar: Insert, Remove and Video toggle — all still in the
+    menubar.
+
+  - The undo/redo history dropdowns are gone (the hover-highlight
+    multi-undo UI can't be done with popover menus); undo/redo now flash
+    "Undo: <action description>" via the FloatingLabel so it's clear
+    what was reverted. All the `Gtk.Menu`/`Gtk.MenuItem` code in
+    `agents/menu.py` went away with them.
+
+  - Recent files are now listed by querying `Gtk.RecentManager` directly
+    (filter by application + format mime types, MRU by modified time,
+    honor `recent.show_not_found`, limit 10), replacing
+    `GtkRecentChooserMenu` for both the split button and the two menubar
+    sections. This also clears the "GtkRecentChooserMenu is gone" item.
+
+  - A header bar can't be hidden like the toolbar could, so the View →
+    Toolbar menu item, `toggle-main-toolbar` action, conf options
+    `show_main_toolbar` and `toolbar_style`, and the `toolbar_styles`
+    enum (built on removed `Gtk.ToolbarStyle`) were all removed. Stale
+    keys in old config files are discarded on the next write; an old
+    `toolbar_style` line prints a harmless one-time parse warning. The
+    notebook separator, whose visibility was tied to the toolbar, was
+    dropped too.
+
+  - Verified visually (screenshot via `Gtk.WidgetPaintable` with the
+    still-unmigrated notebook DnD calls stubbed out): header bar, linked
+    groups, title and menubar all render correctly. Full runtime
+    verification blocked on the remaining items (DnD, GtkIconTheme). The
+    player toolbar in `agents/video.py` is still GtkToolbar — it's the
+    remaining half of the "GtkToolbar has been removed" item.
+
 ## Deferred
 
 - Dialog borders were lost in the `.ui` conversion (`border_width` is
@@ -499,6 +544,13 @@
   context menu in cell editors (text and time) doesn't cancel editing
   via the focus controller's "leave" — the old `populate-popup` +
   `_in_editor_menu` guard against that was removed.
+
+- Rename `FloatingLabel` to Toast and restyle it with CSS to match the
+  GNOME HIG toast look (rounded, floating at the bottom):
+  <https://developer.gnome.org/hig/patterns/feedback/toasts.html> and
+  <https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/class.Toast.html>
+  — without using libadwaita itself. Undo/redo now flash messages
+  through it, so it's more visible than before.
 
 - Verify at runtime that Ctrl+Page_Up/Down switches notebook tabs while
   the view has focus: the view's capture-phase key controller consumes
