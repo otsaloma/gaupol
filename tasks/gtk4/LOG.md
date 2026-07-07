@@ -727,21 +727,33 @@
   screenshots (tabs render with close buttons) and a clean console from
   `bin/gaupol data/samples/*.srt`.
 
-## Deferred
+- Restored dialog borders lost in the `.ui` conversion (clears the
+  Deferred item). Every dialog's content area holds exactly one child,
+  so 18px HIG margins (`margin_start`/`end`/`top`/`bottom`) went on that
+  child in each `.ui` file. Notable details:
 
-- Dialog borders were lost in the `.ui` conversion (`border_width` is
-  gone in GTK-4): categorically, all dialogs should get GNOME
-  HIG-compliant 18px borders, set as margins on the first child of the
-  content area. Same for the sub-containers that carried their own 12px
-  border: the preferences dialog's per-tab boxes and the search dialog's
-  stack page boxes. It's the same four `set_margin_*` lines repeating,
-  so probably warrants a `gaupol.util` function; the Python-built
-  dialogs (encoding, multi-close, debug) should use it too. The open
-  and save dialogs' extra widgets got their margins with the
-  GtkFileChooser item; the multi-save dialog is a regular
-  BuilderDialog and gets borders with the rest. The text-assistant
-  page files also lost `border_width`, but theirs was on the throwaway
-  wrapper window and never applied at runtime, so nothing to restore.
+  - The notebook/stack dialogs get the border on the inner content, not
+    around the tabs: the preferences dialog's five per-tab boxes and the
+    search dialog's two stack-page boxes carry the 18px (replacing the
+    12px `border_width` they lost). Two preferences pages had a stray
+    `margin_bottom=12` the builder tool had kept separately; folded into
+    the uniform 18px.
+
+  - Code-built dialogs: `gaupol.util.set_widget_margins(widget,
+    margin=18)` sets all four margins in one call. Only the plain
+    `Gtk.Dialog` (encoding) needed it — margins go on its tree-view
+    scroller. The two `GtkMessageDialog`s (multi-close, debug) were left
+    as-is despite the earlier note: their message area already provides
+    HIG insets, and margining the appended scroller would push it inward
+    and misalign it with the primary/secondary text (verified by
+    screenshot).
+
+  - Verified 18px borders render correctly via screenshots of the
+    encoding, preferences (notebook page) and search (stack page)
+    dialogs; all `.ui` files pass `gtk4-builder-tool validate` and the
+    dialog/util tests pass.
+
+## Deferred
 
 - Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
   aeidon `SpellChecker` backend (`Gspell.Checker`), inline spell-check

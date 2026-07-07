@@ -12,6 +12,10 @@
         <property name="spacing">12</property>
         <child>
           <object class="GtkBox" id="box1">
+            <property name="margin_start">18</property>
+            <property name="margin_end">18</property>
+            <property name="margin_top">18</property>
+            <property name="margin_bottom">18</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkGrid" id="grid1">

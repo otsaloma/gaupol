@@ -345,6 +345,13 @@ def set_cursor_normal(window):
     window.set_cursor_from_name("default")
     iterate_main()
 
+def set_widget_margins(widget, margin):
+    """Set equal margins on all sides of `widget`."""
+    widget.set_margin_top(margin)
+    widget.set_margin_bottom(margin)
+    widget.set_margin_start(margin)
+    widget.set_margin_end(margin)
+
 def show_exception(exctype, value, tb):
     """A :class:`gaupol.DebugDialog` :attr`sys.excepthook`."""
     traceback.print_exception(exctype, value, tb)

@@ -17,6 +17,10 @@
                 <property name="title" translatable="1">Find</property>
                 <property name="child">
                   <object class="GtkBox" id="search_vbox">
+                    <property name="margin_start">18</property>
+                    <property name="margin_end">18</property>
+                    <property name="margin_top">18</property>
+                    <property name="margin_bottom">18</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
@@ -184,6 +188,10 @@
                 <property name="title" translatable="1">Target</property>
                 <property name="child">
                   <object class="GtkBox" id="vbox4">
+                    <property name="margin_start">18</property>
+                    <property name="margin_end">18</property>
+                    <property name="margin_top">18</property>
+                    <property name="margin_bottom">18</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">12</property>
                     <child>

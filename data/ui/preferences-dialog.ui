@@ -30,7 +30,10 @@
               <object class="GtkNotebookPage">
                 <property name="child">
                   <object class="GtkBox" id="file_vbox">
-                    <property name="margin_bottom">12</property>
+                    <property name="margin_start">18</property>
+                    <property name="margin_end">18</property>
+                    <property name="margin_top">18</property>
+                    <property name="margin_bottom">18</property>
                     <property name="hexpand">1</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
@@ -178,8 +181,11 @@
                 <property name="position">1</property>
                 <property name="child">
                   <object class="GtkBox" id="editor_vbox">
+                    <property name="margin_start">18</property>
+                    <property name="margin_end">18</property>
+                    <property name="margin_top">18</property>
+                    <property name="margin_bottom">18</property>
                     <property name="valign">start</property>
-                    <property name="margin_bottom">12</property>
                     <property name="hexpand">1</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
@@ -353,7 +359,10 @@
                 <property name="position">2</property>
                 <property name="child">
                   <object class="GtkBox" id="video_vbox">
-                    <property name="margin_bottom">12</property>
+                    <property name="margin_start">18</property>
+                    <property name="margin_end">18</property>
+                    <property name="margin_top">18</property>
+                    <property name="margin_bottom">18</property>
                     <property name="hexpand">1</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
@@ -590,8 +599,11 @@
                 <property name="position">3</property>
                 <property name="child">
                   <object class="GtkBox" id="preview_vbox">
+                    <property name="margin_start">18</property>
+                    <property name="margin_end">18</property>
+                    <property name="margin_top">18</property>
+                    <property name="margin_bottom">18</property>
                     <property name="valign">start</property>
-                    <property name="margin_bottom">12</property>
                     <property name="hexpand">1</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
@@ -745,6 +757,10 @@
                 <property name="position">4</property>
                 <property name="child">
                   <object class="GtkBox" id="extensions_vbox">
+                    <property name="margin_start">18</property>
+                    <property name="margin_end">18</property>
+                    <property name="margin_top">18</property>
+                    <property name="margin_bottom">18</property>
                     <property name="hexpand">1</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
