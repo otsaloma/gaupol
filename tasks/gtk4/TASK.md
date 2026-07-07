@@ -54,6 +54,13 @@ the tests fail and ignore anything unrelated to your changes.
   one-by-one and removing them once done. That "Deferred" section is
   like a todo-list that must be cleared.
 
+- Add cases (`tasks/gtk4/cases`) for all actions we have, but ignore
+  anything untestable such as video (we don't have sample video files)
+  or opening URLs (you don't see the browser). Run them all via
+  `tasks/gtk4/harness.py` and fix anything that doesn't verify as
+  passing either due to stderr output or a failing visual inspection
+  based on screenshots.
+
 - Apart from errors, there are likely to be warnings caused by new
   deprecations in GTK-4. Let's evaluate these on a case-by-case basis
   and pick some of those to migrate, some to leave for later.
