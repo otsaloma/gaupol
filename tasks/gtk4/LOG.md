@@ -790,9 +790,3 @@
   <https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/class.Toast.html>
   — without using libadwaita itself. Undo/redo now flash messages
   through it, so it's more visible than before.
-
-- Verify at runtime that Ctrl+Page_Up/Down switches notebook tabs while
-  the view has focus: the view's capture-phase key controller consumes
-  those keys to block TreeView's paging bindings, which assumes GTK-4
-  handles application accelerators at the window before the focus
-  widget's controllers. If tab switching broke, rethink.
