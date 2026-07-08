@@ -789,19 +789,19 @@
                             <property name="css-classes">toolbar</property>
                             <child>
                               <object class="GtkButton" id="extensions_preferences_button">
-                                <property name="icon_name">preferences-desktop</property>
+                                <property name="icon_name">emblem-system-symbolic</property>
                                 <signal name="clicked" handler="_on_preferences_button_clicked" swapped="no"/>
                               </object>
                             </child>
                             <child>
                               <object class="GtkButton" id="extensions_help_button">
-                                <property name="icon_name">help-contents</property>
+                                <property name="icon_name">help-contents-symbolic</property>
                                 <signal name="clicked" handler="_on_help_button_clicked" swapped="no"/>
                               </object>
                             </child>
                             <child>
                               <object class="GtkButton" id="extensions_about_button">
-                                <property name="icon_name">help-about</property>
+                                <property name="icon_name">help-about-symbolic</property>
                                 <signal name="clicked" handler="_on_about_button_clicked" swapped="no"/>
                               </object>
                             </child>

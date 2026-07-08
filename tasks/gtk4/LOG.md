@@ -822,21 +822,17 @@
   `__init__.py` was reworded off `gtksink`; the workaround itself kept
   as-is (unverified against the new sink).
 
+- Non-symbolic icons: the last plain icon names were the three extensions
+  toolbar buttons in `preferences-dialog.ui`. GTK-4 doesn't fall back
+  from a plain name to its symbolic variant and current Adwaita ships
+  only symbolic icons, so these would render as image-missing.
+  `help-contents`/`help-about` have exact `-symbolic` twins;
+  `preferences-desktop` has none, so the preferences button now uses the
+  conventional `emblem-system-symbolic` configure gear. Verified all
+  three render (screenshot of the Extensions page); no other non-symbolic
+  icon names remain in the codebase.
+
 ## Deferred
-
-- Reimplement the "Italic" context menu item of the multiline cell
-  editor with `Gtk.TextView.set_extra_menu` when doing the GtkMenu
-  migration (Ctrl+I still works). Also verify that opening the default
-  context menu in cell editors (text and time) doesn't cancel editing
-  via the focus controller's "leave" — the old `populate-popup` +
-  `_in_editor_menu` guard against that was removed.
-
-- Audit the remaining non-symbolic icon names: current Adwaita ships
-  only symbolic icons and GTK-4 doesn't fall back from plain names, so
-  these likely render as image-missing. Remaining case: the
-  `preferences-desktop`/`help-contents`/`help-about` icons in
-  `preferences-dialog.ui` (the Python-side fallbacks were removed with
-  the GtkIconTheme item).
 
 - Rename `FloatingLabel` to Toast and restyle it with CSS to match the
   GNOME HIG toast look (rounded, floating at the bottom):
