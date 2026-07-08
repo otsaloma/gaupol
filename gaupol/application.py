@@ -76,7 +76,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar recent_manager: Instance of :class:`Gtk.RecentManager` used
     :ivar replacement: Last used search replacement or blank if not used
     :ivar seekbar: Video player seekbar (a :class:`Gtk.Scale` instance)
-    :ivar statuslabel: Instance of :class:`gaupol.FloatingLabel` used
+    :ivar toast: Instance of :class:`gaupol.Toast` used
     :ivar volume_button: A :class:`Gtk.VolumeButton` in the player toolbar
     :ivar window: A :class:`Gtk.ApplicationWindow` used to hold all the widgets
     :ivar x_clipboard: A :class:`Gdk.Clipboard` used for desktop-wide copying
@@ -120,7 +120,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.recent_manager = Gtk.RecentManager.get_default()
         self.replacement = ""
         self.seekbar = None
-        self.statuslabel = None
+        self.toast = None
         self.volume_button = None
         self.window = None
         self.x_clipboard = None
@@ -250,8 +250,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.notebook.connect_after("switch-page", callback)
         overlay = Gtk.Overlay()
         overlay.set_child(self.notebook)
-        self.statuslabel = gaupol.FloatingLabel()
-        overlay.add_overlay(self.statuslabel)
+        self.toast = gaupol.Toast()
+        overlay.add_overlay(self.toast)
         paned.set_end_child(overlay)
 
     def _init_paned(self, vbox):

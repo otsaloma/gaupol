@@ -20,10 +20,10 @@ import gaupol
 from gi.repository import Gtk
 
 
-class TestFloatingLabel(gaupol.TestCase):
+class TestToast(gaupol.TestCase):
 
     def run(self):
-        self.label.flash_text("Testing floating label")
+        self.toast.flash_text("Testing toast notification")
         self.main_loop(self.window)
 
     def setup_method(self, method):
@@ -33,6 +33,6 @@ class TestFloatingLabel(gaupol.TestCase):
         self.overlay = Gtk.Overlay()
         self.overlay.set_child(Gtk.Label())
         self.window.set_child(self.overlay)
-        self.label = gaupol.FloatingLabel()
-        self.overlay.add_overlay(self.label)
+        self.toast = gaupol.Toast()
+        self.overlay.add_overlay(self.toast)
         self.window.show()

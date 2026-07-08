@@ -31,15 +31,9 @@ class UpdateAgent(aeidon.Delegate):
         self.show_message(None)
 
     @aeidon.deco.export
-    def flash_message(self, message, duration=6):
-        """Show `message` in statuslabel for `duration` seconds."""
-        self.statuslabel.flash_text(message, duration=duration)
-        self.statuslabel.register_hide_event(self.window, "button-press")
-        self.statuslabel.register_hide_event(self.window, "key-press")
-        self.statuslabel.register_hide_event(self.window, "scroll")
-        with aeidon.util.silent(AttributeError):
-            self.statuslabel.register_hide_event(
-                self.get_current_page().view, "button-press")
+    def flash_message(self, message):
+        """Show `message` in the toast."""
+        self.toast.flash_text(message)
 
     @aeidon.deco.export
     def _on_activate_next_project_activate(self, *args):
@@ -104,8 +98,8 @@ class UpdateAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def show_message(self, message):
-        """Show `message` in the statuslabel or hide label with `None`."""
-        self.statuslabel.set_text(message)
+        """Show `message` in the toast or hide label with `None`."""
+        self.toast.set_text(message)
 
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""

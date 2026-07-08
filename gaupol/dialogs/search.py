@@ -57,7 +57,7 @@ class SearchDialog(gaupol.BuilderDialog):
     :ivar _match_span: Start, end position of the last match
     :ivar patterns: List of patterns previously searched for
     :ivar replacements: List of replacements previously used
-    :ivar _statuslabel: Instance of :class:`gaupol.FloatingLabel` used
+    :ivar _toast: Instance of :class:`gaupol.Toast` used
     :ivar _was_next: ``True`` if the last search was "next", else ``False``
     """
 
@@ -93,7 +93,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self.patterns = []
         self._replacement_entry = None
         self.replacements = []
-        self._statuslabel = gaupol.FloatingLabel()
+        self._toast = gaupol.Toast()
         self._was_next = None
         self._read_history("patterns")
         self._read_history("replacements")
@@ -105,8 +105,8 @@ class SearchDialog(gaupol.BuilderDialog):
         self._init_values()
         self._init_signal_handlers()
         self._init_sensitivities()
-        self._overlay.add_overlay(self._statuslabel)
-        self._statuslabel.set_text(None)
+        self._overlay.add_overlay(self._toast)
+        self._toast.set_text(None)
 
     def _add_pattern_to_history(self):
         """Add current pattern to the pattern combo box."""
@@ -473,7 +473,7 @@ class SearchDialog(gaupol.BuilderDialog):
                 self._show_regex_error_dialog_replacement(str(error))
                 break
         self._reset_properties()
-        self._statuslabel.flash_text(n_(
+        self._toast.flash_text(n_(
             "Found and replaced {:d} occurence",
             "Found and replaced {:d} occurences",
             count).format(count))
@@ -492,7 +492,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self._reset_properties()
         pattern = self._pattern_entry.get_text()
         message = _('"{}" not found').format(pattern)
-        self._statuslabel.flash_text(message)
+        self._toast.flash_text(message)
 
     def _set_pattern(self, page):
         """

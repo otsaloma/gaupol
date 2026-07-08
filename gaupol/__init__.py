@@ -74,7 +74,7 @@ from gaupol import style # noqa
 from gaupol import ruler # noqa
 from gaupol.entries import * # noqa
 from gaupol.renderers import * # noqa
-from gaupol.floatlabel import * # noqa
+from gaupol.toast import * # noqa
 from gaupol.spell import * # noqa
 from gaupol.view import * # noqa
 from gaupol.page import * # noqa

@@ -832,11 +832,21 @@
   three render (screenshot of the Extensions page); no other non-symbolic
   icon names remain in the codebase.
 
-## Deferred
+- Renamed `FloatingLabel` to `Toast` (`floatlabel.py` → `toast.py`,
+  `test_floatlabel.py` → `test_toast.py`) and restyled it as a GNOME HIG
+  toast (without libadwaita): a dark rounded pill floating at
+  bottom-center, holding the message label and a `window-close-symbolic`
+  button, with a drop shadow (`.gaupol-toast` CSS). The toast now
+  dismisses only via that close button or the auto-dismiss timeout, so
+  the whole hide-on-interaction machinery was dropped:
+  `register_hide_event`, the `EventControllerMotion` pointer-enter hide,
+  and the `register_hide_event` calls in `update.py`'s `flash_message`.
+  The application/search instance variables `statuslabel`/`_statuslabel`
+  were renamed to `toast`/`_toast`. Durations were unified on
+  `flash_text`'s 3 s default: `flash_message` no longer takes or
+  forwards a `duration` (was hardcoding 6 s), and no `flash_text` call
+  passes one. Verified the look via screenshot (dark pill, centered at
+  bottom, close button legible) and
+  `test_toast`/`test_update`/`test_search` pass.
 
-- Rename `FloatingLabel` to Toast and restyle it with CSS to match the
-  GNOME HIG toast look (rounded, floating at the bottom):
-  <https://developer.gnome.org/hig/patterns/feedback/toasts.html> and
-  <https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/class.Toast.html>
-  — without using libadwaita itself. Undo/redo now flash messages
-  through it, so it's more visible than before.
+## Deferred

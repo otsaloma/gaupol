@@ -48,11 +48,11 @@ the tests fail and ignore anything unrelated to your changes.
 
 - Run `pytest` and `bin/gaupol FILE...`, fix any errors you see.
 
-## Steps Left
-
 - Go through the "Deferred" section of `tasks/gtk4/LOG.md` fixing those
   one-by-one and removing them once done. That "Deferred" section is
   like a todo-list that must be cleared.
+
+## Steps Left
 
 - Add cases (`tasks/gtk4/cases`) for all actions we have, but ignore
   anything untestable such as video (we don't have sample video files)
