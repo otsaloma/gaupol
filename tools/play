@@ -4,13 +4,16 @@ import os, sys
 directory = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(directory, ".."))
 import gaupol
+from gi.repository import GLib
 from gi.repository import Gtk
+Gtk.init()
 player = gaupol.VideoPlayer()
 window = Gtk.Window()
 window.set_default_size(1280, 720)
-window.connect("delete-event", Gtk.main_quit)
-window.add(player.widget)
-window.show_all()
+loop = GLib.MainLoop()
+window.connect("close-request", lambda *args: loop.quit())
+window.set_child(player.widget)
+window.present()
 player.set_path(sys.argv[1])
 player.play()
-Gtk.main()
+loop.run()

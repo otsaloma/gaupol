@@ -800,11 +800,29 @@
     empirically (only 0.4.10 available here); local testing was
     against 0.4.10.
 
-## Deferred
+- Video sink: switched `gaupol/player.py` from `gtksink` (which exposed
+  a ready-made `props.widget`, GTK-3-only) to `gtk4paintablesink` +
+  `Gtk.Picture`, the migration guide's replacement and the only GTK-4
+  path. The sink's `paintable` (a `GstGtk4Paintable`, readable at
+  element creation) is set on a `Gtk.Picture` packed into the existing
+  `gaupol-video-background` box; the `pack_start` deferred in the GtkBox
+  item is gone. Picture defaults (`content-fit=contain`) keep aspect
+  ratio and letterbox against the black box. The timeoverlay/textoverlay
+  bin is unchanged — only the terminal sink swapped — so the subtitle
+  and time overlays still render. `gaupol.util.gst_available` now probes
+  for `gtk4paintablesink` (upstream module `gst-plugins-rs`, matching
+  the distro-independent module names used for the other plugins)
+  instead of `gtksink`. Also ported `tools/play` (the standalone player
+  harness) to GTK-4 — it was still `window.add`/`show_all`/`Gtk.main`;
+  now `set_child` + `present` + a `GLib.MainLoop` quit on
+  `close-request`. Verified end-to-end with a generated test video:
+  frames, time overlay and subtitle overlay all render in the Picture
+  (screenshot checked) and `tools/play` runs it with a clean console
+  under `G_ENABLE_DIAGNOSTIC=1`. The gst-vaapi workaround comment in
+  `__init__.py` was reworded off `gtksink`; the workaround itself kept
+  as-is (unverified against the new sink).
 
-- Switch `gaupol/player.py` from `gtksink` to `gtk4paintablesink` +
-  `Gtk.Picture` during the code migration; README/CI already point to
-  `gstreamer1.0-gtk4`.
+## Deferred
 
 - Reimplement the "Italic" context menu item of the multiline cell
   editor with `Gtk.TextView.set_extra_menu` when doing the GtkMenu

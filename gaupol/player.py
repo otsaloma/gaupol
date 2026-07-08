@@ -49,7 +49,7 @@ class VideoPlayer(aeidon.Observable):
     :ivar _text_overlay: GStreamer "textoverlay" element
     :ivar _time_overlay: GStreamer "timeoverlay" element
     :ivar volume: Current audio stream volume
-    :ivar widget: :class:`Gtk.DrawingArea` used to render video
+    :ivar widget: :class:`Gtk.Box` holding the :class:`Gtk.Picture` used to render video
 
     Signals and their arguments for callback functions:
      * ``state-changed``: player new state
@@ -188,8 +188,12 @@ class VideoPlayer(aeidon.Observable):
         self._playbin = Gst.ElementFactory.make("playbin", None)
         if gaupol.conf.video_player.volume is not None:
             self.volume = gaupol.conf.video_player.volume
-        sink = Gst.ElementFactory.make("gtksink", None)
-        self.widget.pack_start(sink.props.widget, True, True, 0)
+        sink = Gst.ElementFactory.make("gtk4paintablesink", None)
+        picture = Gtk.Picture()
+        picture.set_paintable(sink.props.paintable)
+        picture.set_hexpand(True)
+        picture.set_vexpand(True)
+        self.widget.append(picture)
         bin = Gst.Bin()
         bin.add(self._time_overlay)
         bin.add(self._text_overlay)

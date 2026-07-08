@@ -164,9 +164,9 @@ def gst_available():
               "Try installing gst-plugins-base.",
               file=sys.stderr)
         return False
-    if not Gst.ElementFactory.find("gtksink"):
-        print("GStreamer found, but gtksink missing.",
-              "Try installing gst-plugins-good.",
+    if not Gst.ElementFactory.find("gtk4paintablesink"):
+        print("GStreamer found, but gtk4paintablesink missing.",
+              "Try installing gst-plugins-rs.",
               file=sys.stderr)
         return False
     if Gst.ElementFactory.find("vaapisink"):

@@ -38,7 +38,7 @@ import aeidon
 import gi
 import os
 
-# Disable gst-vaapi as it doesn't seem to work with gtksink.
+# Disable gst-vaapi as it doesn't seem to work with the GTK video sink.
 # https://github.com/otsaloma/gaupol/issues/79
 os.environ["LIBVA_DRIVER_NAME"] = "null"
 os.environ["LIBVA_DRIVERS_PATH"] = "/dev/null"
