@@ -74,7 +74,7 @@ def _intercepted_run_dialog(dialog):
 
 gaupol.util.run_dialog = _intercepted_run_dialog
 
-def run_case(application, name, setup, dialog_script, verify):
+def run_case(application, name, setup, dialog_script, verify, target=None):
     """Run one action test case, return True if it passed."""
     global _case_name, _dialog_script
     _case_name = name
@@ -93,7 +93,15 @@ def run_case(application, name, setup, dialog_script, verify):
         screenshot(application.window, "{}-1-before".format(name))
         action = application.get_action(name)
         assert action.get_enabled(), "action not enabled"
-        action.activate()
+        # Radio actions (set-edit-mode etc.) need a string target; a case
+        # provides one via ACTIVATE_TARGET, optionally as a callable that
+        # picks the target from the post-setup application state.
+        if target is None:
+            action.activate()
+        else:
+            if callable(target):
+                target = target(application)
+            action.activate(target)
         wait()
         screenshot(application.window, "{}-2-after".format(name))
         verify(application)
@@ -109,18 +117,24 @@ def run_case(application, name, setup, dialog_script, verify):
 # and verify(application) functions and an optional DIALOG_SCRIPT list of
 # responses (empty if the action opens no dialogs). A case's file name is its
 # action name, which must match a menubar.ui action (win.insert-subtitles ->
-# insert-subtitles.py).
+# insert-subtitles.py). Files whose name starts with "_" are shared helpers
+# (e.g. _video), not cases.
 
 def discover_cases():
-    """Generate a list of (name, setup, dialog_script, verify) tuples."""
-    pattern = os.path.join(os.path.dirname(__file__), "cases", "*.py")
-    for path in sorted(glob.glob(pattern)):
+    """Generate (name, setup, dialog_script, verify, target) tuples."""
+    cases_dir = os.path.join(os.path.dirname(__file__), "cases")
+    # Let case modules import shared helpers as plain top-level modules.
+    if cases_dir not in sys.path:
+        sys.path.insert(0, cases_dir)
+    for path in sorted(glob.glob(os.path.join(cases_dir, "*.py"))):
         name = os.path.splitext(os.path.basename(path))[0]
+        if name.startswith("_"): continue
         spec = importlib.util.spec_from_file_location("case_" + name, path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         dialog_script = getattr(module, "DIALOG_SCRIPT", [])
-        yield (name, module.setup, dialog_script, module.verify)
+        target = getattr(module, "ACTIVATE_TARGET", None)
+        yield (name, module.setup, dialog_script, module.verify, target)
 
 def main():
     application = gaupol.Application()
