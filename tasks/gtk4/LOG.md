@@ -849,4 +849,32 @@
   bottom, close button legible) and
   `test_toast`/`test_update`/`test_search` pass.
 
+- Ran all 73 action cases through `harness.py` (one at a time, each in
+  its own short-lived process, to avoid cumulative main-loop starvation
+  on the live compositor). All pass with clean stderr. Notable details:
+
+  - Fixed a real crash in `agents/video.py` `_update_languages_menu`: it
+    called `menu.remove_all()` without guarding `menu is None`, unlike
+    the three `_update_*_menu` methods in `agents/menu.py`, which all
+    skip when `get_menubar_section` returns None (no `gaupol.appman`,
+    i.e. no `Gtk.Application` — the case for both unit tests and the
+    harness). Loading a video thus crashed every video case; now guarded
+    to match.
+
+  - Three cases checked `application._pref_dialog`/`_search_dialog`/
+    `_about_dialog`, but those live on the agent instances, not the
+    Application (only exported *methods* are delegated). The cases now
+    reach the agent via its delegated activate callback's `__self__`.
+
+  - `toggle-player` emits one transient `Gtk-WARNING` "Trying to measure
+    GtkOverlay for height of 0, but it needs at least 85" — only when
+    the *after* screenshot renders, i.e. after the action hid the player
+    box. It comes from the harness's `Gtk.WidgetPaintable` measuring the
+    window at its intrinsic size with the paned's start child hidden,
+    leaving the notebook+toast overlay measured for height 0; a
+    normally-mapped window has a concrete allocation and doesn't hit it
+    (other relayout cases like the toggle-column ones snapshot the same
+    way without warning). Left as a harness offscreen-snapshot artifact,
+    not an app bug.
+
 ## Deferred

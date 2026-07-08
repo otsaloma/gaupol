@@ -8,4 +8,6 @@ def setup(application):
     pass
 
 def verify(application):
-    assert application._search_dialog is not None
+    # The dialog lives on the search agent, reached via its activate callback.
+    agent = application._on_find_and_replace_activate.__self__
+    assert agent._search_dialog is not None

@@ -8,4 +8,6 @@ def setup(application):
     pass
 
 def verify(application):
-    assert application._about_dialog is not None
+    # The dialog lives on the help agent, reached via its activate callback.
+    agent = application._on_view_about_dialog_activate.__self__
+    assert agent._about_dialog is not None

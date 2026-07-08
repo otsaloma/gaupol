@@ -344,6 +344,8 @@ class VideoAgent(aeidon.Delegate):
     def _update_languages_menu(self):
         """Update the audio language selection menu."""
         menu = self.get_menubar_section("audio-languages-placeholder")
+        # Menubar not available when running unit tests.
+        if menu is None: return
         menu.remove_all()
         tracks = self.player.get_audio_infos()
         for i, track in enumerate(tracks):

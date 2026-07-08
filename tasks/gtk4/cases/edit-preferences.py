@@ -8,4 +8,6 @@ def setup(application):
     pass
 
 def verify(application):
-    assert application._pref_dialog is not None
+    # The dialog lives on the edit agent, reached via its activate callback.
+    agent = application._on_edit_preferences_activate.__self__
+    assert agent._pref_dialog is not None
