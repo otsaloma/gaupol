@@ -21,11 +21,9 @@ import aeidon
 import os
 import re
 
-# Gspell requires GTK 3 and cannot be loaded in the same process with
-# GTK 4. Disabled until spell-check is migrated to a GTK-4 replacement.
-# with aeidon.util.silent(Exception):
-#     from gi.repository import Gspell
-Gspell = None
+with aeidon.util.silent(Exception):
+    from gi.repository import Spelling
+    Spelling.init()
 
 __all__ = ("SpellChecker", "SpellCheckNavigator", "SpellCheckTokenizer")
 
@@ -36,12 +34,13 @@ class SpellChecker:
 
     def __init__(self, language):
         """Initialize a :class:`SpellChecker` instance."""
-        glanguage = Gspell.language_lookup(language)
-        if glanguage is None:
+        provider = Spelling.Provider.get_default()
+        if not provider.supports_language(language):
             raise aeidon.Error('Language "{}" not supported'.format(language))
-        self.checker = Gspell.Checker(language=glanguage)
+        self.checker = Spelling.Checker.new(provider, language)
         self.language = language
         self.replacements = []
+        self.session_words = set()
         self.read_replacements()
 
     def add_replacement(self, word, replacement):
@@ -50,16 +49,19 @@ class SpellChecker:
 
     def add_to_personal(self, word):
         """Add `word` to personal word list."""
-        self.checker.add_word_to_personal(word, -1)
+        self.checker.add_word(word)
 
     def add_to_session(self, word):
         """Add `word` to session word list."""
-        self.checker.add_word_to_session(word, -1)
+        # libspelling's ignore_word applies to a dictionary shared
+        # between all checkers of the same language, so keep the
+        # session word list per-checker here, like Gspell had it.
+        self.session_words.add(word)
 
     @classmethod
     def available(cls):
         """Return ``True`` if spell-check is available."""
-        return Gspell is not None
+        return "Spelling" in globals()
 
     def check(self, word, leading_context="", trailing_context=""):
         """Return ``True`` if `word` is correct, ``False`` otherwise."""
@@ -85,21 +87,29 @@ class SpellChecker:
                 # Accept ordinal numerals comprised of number and suffix.
                 # https://en.wikipedia.org/wiki/English_numerals#Ordinal_numbers
                 return True
-        return self.checker.check_word(word, -1)
+        return self._check_word(word)
 
     def check_all(self, *words):
         """Return ``True`` if all of `words` are correct, ``False`` otherwise."""
-        return all(self.checker.check_word(x, -1) for x in words)
+        return all(self._check_word(x) for x in words)
 
     def check_any(self, *words):
         """Return ``True`` if any of `words` is correct, ``False`` otherwise."""
-        return any(self.checker.check_word(x, -1) for x in words)
+        return any(self._check_word(x) for x in words)
+
+    def _check_word(self, word):
+        """Return ``True`` if `word` is correct, ``False`` otherwise."""
+        if word in self.session_words: return True
+        return self.checker.check_word(word, -1)
 
     @classmethod
     def list_languages(cls):
         """Return a list of supported language codes."""
-        languages = Gspell.Language.get_available()
-        return sorted(x.get_code() for x in languages)
+        languages = Spelling.Provider.get_default().list_languages()
+        codes = [x.get_code() for x in languages]
+        # Filter out odd Enchant entries, e.g. "en-variant_0" and
+        # "en-w_accents", that are not valid locale codes.
+        return sorted(filter(aeidon.locales.is_valid, codes))
 
     def read_replacements(self):
         """Read list of replacements from file."""
@@ -129,7 +139,7 @@ class SpellChecker:
             replacement = re.sub(r"^(\d+)(\D+)$", r"\1 \2", word)
             if self.check_all(*replacement.split()):
                 custom.append(replacement)
-        suggestions = self.checker.get_suggestions(word, -1)
+        suggestions = self.checker.list_corrections(word) or []
         return aeidon.util.get_unique(custom + suggestions)
 
     def write_replacements(self):

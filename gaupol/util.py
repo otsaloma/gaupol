@@ -82,17 +82,19 @@ def get_font():
             gaupol.conf.editor.use_custom_font and
             gaupol.conf.editor.custom_font else "")
 
-def get_gspell_version():
-    """Return :mod:`Gspell` version number as string or ``None``."""
-    # Gspell requires GTK 3 and cannot be loaded in the same process with
-    # GTK 4. Disabled until spell-check is migrated to a GTK-4 replacement.
-    return None
-
 def get_gst_version():
     """Return :mod:`Gst` version number as string or ``None``."""
     try:
         from gi.repository import Gst
         return ".".join(map(str, Gst.version()))
+    except Exception:
+        return None
+
+def get_libspelling_version():
+    """Return libspelling version number as string or ``None``."""
+    try:
+        from gi.repository import Spelling
+        return str(Spelling._version)
     except Exception:
         return None
 

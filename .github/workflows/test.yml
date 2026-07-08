@@ -13,6 +13,7 @@ jobs:
           gir1.2-gst-plugins-base-1.0
           gir1.2-gstreamer-1.0
           gir1.2-gtk-4.0
+          gir1.2-spelling-1
           gstreamer1.0-libav
           gstreamer1.0-plugins-bad
           gstreamer1.0-plugins-good

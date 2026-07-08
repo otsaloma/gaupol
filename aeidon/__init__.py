@@ -81,13 +81,11 @@ RUNNING_SPHINX = (sys.argv[0].endswith("autogen.py") or
 
 RE_ANY_TAG = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
 
-# Gspell requires GTK 3 and cannot be loaded in the same process with
-# GTK 4. Disabled until spell-check is migrated to a GTK-4 replacement.
-# try:
-#     import gi
-#     gi.require_version("Gspell", "1")
-# except Exception:
-#     pass
+try:
+    import gi
+    gi.require_version("Spelling", "1")
+except Exception:
+    pass
 
 from aeidon.paths import * # noqa
 from aeidon.position import * # noqa

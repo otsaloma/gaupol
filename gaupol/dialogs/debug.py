@@ -96,8 +96,8 @@ class DebugDialog(Gtk.MessageDialog):
         """Insert version numbers of selected dependencies."""
         dotjoin = lambda x: ".".join(map(str, x))
         chardet_version = aeidon.util.get_chardet_version()
-        gspell_version = gaupol.util.get_gspell_version()
         gst_version = gaupol.util.get_gst_version()
+        libspelling_version = gaupol.util.get_libspelling_version()
         gtk_version = dotjoin((
             Gtk.get_major_version(),
             Gtk.get_minor_version(),
@@ -108,9 +108,9 @@ class DebugDialog(Gtk.MessageDialog):
         self._insert_text("aeidon: {}\n".format(aeidon.__version__))
         self._insert_text("charset-normalizer: {}\n".format(chardet_version))
         self._insert_text("gaupol: {}\n".format(gaupol.__version__))
-        self._insert_text("gspell: {}\n".format(gspell_version))
         self._insert_text("gstreamer: {}\n".format(gst_version))
         self._insert_text("gtk+: {}\n".format(gtk_version))
+        self._insert_text("libspelling: {}\n".format(libspelling_version))
         self._insert_text("pygobject: {}\n".format(pygobject_version))
         self._insert_text("python: {}\n".format(python_version))
 

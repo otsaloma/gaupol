@@ -753,18 +753,54 @@
     dialogs; all `.ui` files pass `gtk4-builder-tool validate` and the
     dialog/util tests pass.
 
-## Deferred
+- Spell-check reimplemented with libspelling (`Spelling` 1, docs in
+  `/usr/share/doc/libspelling-1`, HTML readable via `pandoc -t plain`).
+  The word-checker API maps nearly 1:1 to Gspell in `aeidon/spell.py`
+  (`check_word`, `list_corrections`, `add_word` for the personal list)
+  and inline spell-check in `gaupol/spell.py` uses
+  `Spelling.TextBufferAdapter`. Full `pytest` is now green. Notable
+  details:
 
-- Reimplement spell-check without Gspell (GTK-3-only, now disabled): the
-  aeidon `SpellChecker` backend (`Gspell.Checker`), inline spell-check
-  in text views (`gaupol/spell.py`), and
-  `gaupol/util.py:get_gspell_version` (debug dialog). Candidate:
-  libspelling (`gir1.2-spelling-1`, in Debian as libspelling-1-2 0.4.x);
-  check it covers both the word-checker API and inline GtkTextView
-  checking. Until then `aeidon/test/test_spell.py` and
-  `gaupol/test/test_spell.py` fail (they assume availability), and
-  README/CI no longer list a spell-check dependency — re-add one when
-  reimplemented.
+  - For an unsupported language, `Spelling.Checker.new` does not fail:
+    it returns a checker with `language=None` that reports *every* word
+    as correct. `aeidon.SpellChecker.__init__` validates with
+    `Provider.supports_language` and raises `aeidon.Error` itself.
+
+  - `Spelling.Checker.ignore_word` applies to a dictionary shared
+    between all checkers of the same language (found as session-ignored
+    words leaking between unit tests), so `add_to_session` keeps a
+    per-checker word set instead, preserving Gspell semantics.
+
+  - `list_languages` filters out Enchant's non-locale entries like
+    "en-variant_0" and "en-w_accents" with the new
+    `aeidon.locales.is_valid`; Gspell filtered these internally,
+    libspelling reports them verbatim.
+
+  - `Spelling.TextBufferAdapter` requires a `GtkSource.Buffer`, so
+    `attach()` replaces the text view's blank default buffer with one
+    (verified empirically that the misspelled-word tag then works in a
+    plain `Gtk.TextView`; GtkSource.View is not needed). All three
+    `prepare_text_view` call sites fetch the buffer only after `attach`,
+    so the swap is safe. The adapter also provides a corrections context
+    menu (`set_extra_menu` + the "spelling" action group); verify it at
+    runtime with the cell-editor context menu Deferred item.
+
+  - libspelling has no runtime version API, so `get_libspelling_version`
+    reports the namespace version ("1") in the debug dialog, like Gspell
+    before it.
+
+  - README/CI dependency re-added as `gir1.2-spelling-1`, floor
+    libspelling ≥ 0.2 (what Ubuntu 24.04 CI has, as 0.2.0). Although
+    0.3.0 renamed `SpellingLanguage` → `SpellingDictionary` and
+    `SpellingLanguageInfo` → `SpellingLanguage`, and `list_languages`
+    changed from GPtrArray to GListModel, our code is compatible with
+    both: every function we call exists identically in 0.2.0 and the
+    list items have `get_code()` under either name. Verified against
+    the 0.2.0/0.2.1 headers and GIR annotations upstream, not
+    empirically (only 0.4.10 available here); local testing was
+    against 0.4.10.
+
+## Deferred
 
 - Switch `gaupol/player.py` from `gtksink` to `gtk4paintablesink` +
   `Gtk.Picture` during the code migration; README/CI already point to

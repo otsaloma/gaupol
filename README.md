@@ -45,7 +45,7 @@ strongly recommended dependencies include:
 | Dependency | Version | Required for |
 | :--------- | :------ | :----------- |
 | [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.18 | integrated video player |
-| TODO | TODO | spell-check |
+| [libspelling](https://gitlab.gnome.org/GNOME/libspelling) | ≥ 0.2 | spell-check |
 | [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
 | [charset-normalizer](https://github.com/jawah/charset_normalizer) | ≥ 2.0 | character encoding auto-detection |
 
@@ -60,6 +60,7 @@ command.
                      gir1.2-gst-plugins-base-1.0 \
                      gir1.2-gstreamer-1.0 \
                      gir1.2-gtk-4.0 \
+                     gir1.2-spelling-1 \
                      gstreamer1.0-gtk4 \
                      gstreamer1.0-libav \
                      gstreamer1.0-plugins-bad \

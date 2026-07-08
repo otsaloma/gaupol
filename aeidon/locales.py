@@ -25,6 +25,7 @@ Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
 
 import aeidon
 import os
+import re
 
 from aeidon.i18n import _
 
@@ -63,3 +64,7 @@ def get_system_modifier():
             return value[i+1:i+5]
     # No script modifier found implies the language default script.
     return None
+
+def is_valid(code):
+    """Return ``True`` if `code` is a valid locale code."""
+    return re.match(r"^[a-z]{2}(_[A-Z]{2})?(@[A-Z][a-z]{3})?$", code) is not None
