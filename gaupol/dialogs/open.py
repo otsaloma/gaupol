@@ -33,7 +33,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting subtitle files to open."""
 
-    def __init__(self, parent, title, doc):
+    def __init__(self, parent, title, doc, directory=None):
         """Initialize an :class:`OpenDialog` instance."""
         GObject.GObject.__init__(self)
         self._use_autodetection = aeidon.util.chardet_available()
@@ -42,7 +42,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._init_filters()
         self._init_encoding_combo()
         self._init_align_combo()
-        self._init_values(doc)
+        self._init_values(doc, directory)
 
     def _init_align_combo(self):
         """Initialize the align method combo box."""
@@ -63,6 +63,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.add_button(_("_Open"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
+        self.set_modal(True)
         self.set_title(title)
         self.connect("response", self._on_response)
         self.set_action(Gtk.FileChooserAction.OPEN)
@@ -98,12 +99,15 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         # add to the content area below the file chooser widget.
         self.get_content_area().append(grid)
 
-    def _init_values(self, doc):
+    def _init_values(self, doc, directory):
         """Initialize default values for widgets."""
         self.set_select_multiple(doc == aeidon.documents.MAIN)
-        if os.path.isdir(gaupol.conf.file.directory):
-            directory = Gio.File.new_for_path(gaupol.conf.file.directory)
-            self.set_current_folder(directory)
+        # Set the location with exactly one call: a second folder load
+        # would cancel the first one mid-flight and GTK pops up that
+        # cancellation as a modal "Operation was cancelled" error dialog.
+        directory = directory or gaupol.conf.file.directory
+        if os.path.isdir(directory):
+            self.set_current_folder(Gio.File.new_for_path(directory))
         self.set_encoding(gaupol.conf.file.encoding)
         self._align_combo.set_active(gaupol.conf.file.align_method)
         self._align_combo.set_visible(doc == aeidon.documents.TRAN)

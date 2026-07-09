@@ -232,11 +232,14 @@ class OpenAgent(aeidon.Delegate):
         title = _("Select Video")
         label = _("_Select")
         dialog = gaupol.VideoDialog(self.window, title, label)
-        if page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(Gio.File.new_for_path(directory))
+        # Set the location with exactly one call: a second folder load
+        # would cancel the first one mid-flight and GTK pops up that
+        # cancellation as a modal "Operation was cancelled" error dialog.
         if page.project.video_path is not None:
             dialog.set_file(Gio.File.new_for_path(page.project.video_path))
+        elif page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(Gio.File.new_for_path(directory))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         file = dialog.get_file()
@@ -316,11 +319,11 @@ class OpenAgent(aeidon.Delegate):
     def _select_files(self, title, doc):
         """Show a :class:`gaupol.OpenDialog` to select files."""
         gaupol.util.set_cursor_busy(self.window)
-        dialog = gaupol.OpenDialog(self.window, title, doc)
+        directory = None
         page = self.get_current_page()
         if page is not None and page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(Gio.File.new_for_path(directory))
+        dialog = gaupol.OpenDialog(self.window, title, doc, directory)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         paths = [x.get_path() for x in dialog.get_files()]

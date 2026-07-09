@@ -930,6 +930,43 @@
   dialogs alone to `Gtk.AlertDialog` (feasible independently of the file
   choosers, which stay `FileChooserDialog` for their extra widgets).
 
+- Post-migration fix from manual testing: the file chooser dialogs
+  appeared to freeze the app (open dialog ignoring clicks until Escape;
+  after closing it, the main window dead). The real culprit was a
+  *hidden* modal GTK error dialog — "The folder contents could not be
+  displayed", "Operation was cancelled" — stacked behind the visible
+  windows. GtkFileChooserWidget starts an async folder enumeration for
+  each `set_current_folder`/`set_file` call; a second call cancels the
+  first mid-flight and GTK 4 (seen on 4.22) pops up that
+  `G_IO_ERROR_CANCELLED` as a modal MessageDialog. Being modal, it
+  blocked input to every other window, and the grab/stacking order kept
+  it invisible; Escape closed it, which looked like "unfreezing". The
+  same message in nfoview's `open.py` XXX comment is this same bug, not
+  a FileChooserNative problem. Worth reporting upstream (minimal repro:
+  two `set_current_folder` calls on a fresh chooser). Notable details:
+
+  - Rule now followed everywhere: exactly one location call per file
+    chooser (`set_current_name` is string-only, not a load).
+    `OpenDialog` takes a `directory` and `SaveDialog` a `path`
+    constructor argument instead of post-construction location calls
+    (`SaveDialog.set_name` removed — it was the second load in Save As
+    on an existing file), and the select-video flow prefers `set_file`
+    over `set_current_folder`. The multi-save folder button was already
+    fine (single `set_current_folder`, verified SELECT_FOLDER mode too).
+
+  - Also gave the file chooser dialogs (open/save/video) the
+    `set_modal(True)` every other dialog already had: GTK-3
+    `Gtk.Dialog.run` made dialogs modal implicitly for its duration,
+    GTK-4 with the `run_dialog` shim does not, so they never blocked (or
+    received priority input over) the main window.
+
+  - The action-case harness couldn't have caught this: it responds to
+    dialogs programmatically via `emit("response")`, which bypasses the
+    compositor input routing that modality breaks. The stray error
+    dialog itself is detectable, though: enumerate
+    `Gtk.Window.get_toplevels()` for unexpected visible MessageDialogs
+    after opening a chooser.
+
 ## Deferred
 
 (none)

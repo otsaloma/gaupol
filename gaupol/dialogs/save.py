@@ -33,7 +33,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
-    def __init__(self, parent, title, mode):
+    def __init__(self, parent, title, mode, path=None):
         """Initialize a :class:`SaveDialog` instance."""
         GObject.GObject.__init__(self)
         self._mode = mode
@@ -44,7 +44,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._init_encoding_combo()
         self._init_newline_combo()
         self._init_framerate_combo()
-        self._init_values()
+        self._init_values(path)
 
     def get_format(self):
         """Return the selected format."""
@@ -67,6 +67,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
+        self.set_modal(True)
         self.set_title(title)
         self.connect("response", self._on_response)
         # Add a possibly missing filename extension before GTK's
@@ -170,11 +171,20 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._newline_combo.pack_start(renderer, expand=True)
         self._newline_combo.add_attribute(renderer, "text", 0)
 
-    def _init_values(self):
+    def _init_values(self, path):
         """Initialize default values for widgets."""
-        if os.path.isdir(gaupol.conf.file.directory):
-            directory = Gio.File.new_for_path(gaupol.conf.file.directory)
-            self.set_current_folder(directory)
+        # Set the location with exactly one load: a second one (set_file
+        # or set_current_folder) would cancel the first one mid-flight
+        # and GTK pops up that cancellation as a modal "Operation was
+        # cancelled" error dialog. set_current_name is not a load.
+        if path is not None and os.path.isfile(path):
+            self.set_file(Gio.File.new_for_path(path))
+        else:
+            if path is not None:
+                self.set_current_name(os.path.basename(path))
+            if os.path.isdir(gaupol.conf.file.directory):
+                directory = Gio.File.new_for_path(gaupol.conf.file.directory)
+                self.set_current_folder(directory)
         self.set_encoding(gaupol.conf.file.encoding)
         self.set_format(gaupol.conf.file.format)
         self.set_newline(gaupol.conf.file.newline)
@@ -223,12 +233,6 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Set the selected framerate."""
         if framerate is None: return
         self._framerate_combo.set_active(framerate)
-
-    def set_name(self, path):
-        """Set the selected filename."""
-        if os.path.isfile(path):
-            return self.set_file(Gio.File.new_for_path(path))
-        return self.set_current_name(os.path.basename(path))
 
     def set_newline(self, newline):
         """Set the selected newline."""
