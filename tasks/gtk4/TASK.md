@@ -63,12 +63,14 @@ the tests fail and ignore anything unrelated to your changes.
   deprecations in GTK-4. Let's evaluate these on a case-by-case basis
   and pick some of those to migrate, some to leave for later.
 
-## Steps Left
-
 - Finally, review the migration as a whole. Did we migrate something
   only partially? Did we introduce some inconsistencies? Did GTK-4 bring
   something new that would benefit us? Let's consider opportunities to
   simplify or improve the codebase.
+
+## Steps Left
+
+(none)
 
 ## GTK Documentation
 

@@ -900,4 +900,36 @@
 
   All 805 tests still pass; the three targeted warnings no longer appear.
 
+- Final whole-migration review: the port is complete and consistent. All
+  36 guide migrations plus the 3 uncovered removals in `MIGRATIONS.md`
+  are `[x]`, the Deferred list is empty, `make check` and the 805-test
+  `pytest` are green, every `.ui` file passes `gtk4-builder-tool
+  validate`, and there is no leftover GTK-3 residue: no
+  `show`/`hide`/`show_all` calls, no `Gtk.check_version` guards, no
+  commented-out Gspell imports, and no references to the removed
+  `toolbar_style`/`show_main_toolbar` conf keys or `ToolbarStyle` enum.
+  Reviewed each partial-by-design decision recorded above (the
+  `run_dialog` nested-loop shim, the `FileChooserDialog` extra widgets,
+  the per-checker session word set, the disabled clipboard persistence,
+  the dropped undo/redo history dropdowns) and confirmed each is a
+  deliberate, self-consistent tradeoff rather than an unfinished edge.
+  The only deprecation warnings remaining under `G_ENABLE_DIAGNOSTIC=1`
+  are the TreeView family (out of scope per TASK) and the dialog/chooser
+  family (consciously kept), plus PyGObject-internal
+  `GLib.unix_signal_add_full`; nothing small remains to migrate.
+
+  Opportunities noted for later, none pursued now (all large, none
+  blocking): (1) the TreeView → `GtkColumnView`/`GListModel` rewrite,
+  which would also retire the zebra-stripe hack and the `ComboBox`
+  cell-layout usage — the single biggest deprecation surface, explicitly
+  deferred by TASK; (2) libadwaita adoption, which would replace several
+  hand-rolled pieces (the custom `Toast`, the header-bar layout, the
+  `run_dialog` shim via `Adw.AlertDialog`, preferences via
+  `Adw.PreferencesWindow`) with platform widgets, at the cost of a new
+  hard dependency and a GNOME-specific look; (3) migrating the message
+  dialogs alone to `Gtk.AlertDialog` (feasible independently of the file
+  choosers, which stay `FileChooserDialog` for their extra widgets).
+
 ## Deferred
+
+(none)
