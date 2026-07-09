@@ -45,6 +45,7 @@ os.environ["LIBVA_DRIVERS_PATH"] = "/dev/null"
 
 gi.require_version("Gdk", "4.0")
 gi.require_version("Graphene", "1.0")
+gi.require_version("Gsk", "4.0")
 gi.require_version("Gtk", "4.0")
 
 with aeidon.util.silent(Exception):

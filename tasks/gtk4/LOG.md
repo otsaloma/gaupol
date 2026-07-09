@@ -967,6 +967,66 @@
     `Gtk.Window.get_toplevels()` for unexpected visible MessageDialogs
     after opening a chooser.
 
+- Post-migration fix from manual testing: the in-cell editor (Enter on a
+  subtitle) appeared displaced up and left of the cell it edits. A GTK-4
+  bug (seen on 4.22, reproduced with a stock `Gtk.TreeView` +
+  `Gtk.CellRendererText`): the tree view allocates cell editors at the
+  cell's *bin window* coordinates, which lack the column header offset,
+  so the editor lands one header-height too high (GTK-3 placed editors
+  on the bin window, which was itself offset below the headers; GTK-4
+  has no bin window and never translates). Worth reporting upstream.
+  Only the keyboard path is affected: per gtktreeview.c, editing started
+  by mouse click passes a cell area already converted to widget
+  coordinates, whose difference to `get_cell_area` gets baked into the
+  stored child border, accidentally correcting the final allocation (a
+  first workaround here shifted all editors down unconditionally, which
+  broke the double-click case). Worked around in
+  `gaupol.View.do_size_allocate`: the renderers' "editing-started"
+  signals track the current editor with its path and column, and after
+  chaining up, the editor is re-allocated at `get_cell_area(path,
+  column)` converted to widget coordinates — identical regardless of how
+  editing started. Verified numerically (keyboard-started editing exact;
+  editor snaps back onto the cell from a deliberately wrong position,
+  proving start-path independence) and by screenshot; full `pytest`
+  green.
+
+- More cell editor fixes from manual testing:
+
+  - The editor text sat 2px below the cell text: `prepare_text_view` set
+    `pixels_above_lines(2)` to match the cell's line height back when
+    line lengths were normal-size `<sup>` superscripts (commit 44591263,
+    2010), which raised the cell lines by 2px. They've long been
+    `<small>[N]</small>`, which doesn't affect line height, so the hack
+    now did the exact opposite; removed. Editor and cell text verified
+    pixel-identical (0px shift both axes) by comparing in-app
+    screenshots programmatically.
+
+  - The time/frame/duration editors showed their text vertically
+    centered while the cells render top-aligned (`yalign=0`), visible on
+    rows with multi-line text: the tree view allocates the editor the
+    full cell height and a single-line entry centers its text. Fixed
+    with `editor.set_valign(Gtk.Align.START)` (the widget itself applies
+    valign within the allocation the tree view gives).
+
+  - Found a pre-existing freeze: cancelling a time/frame cell edit by
+    focusing another widget (e.g. clicking elsewhere) hung the app in an
+    infinite `gtk_widget_get_parent` critical flood inside `grab_focus`.
+    The `EventControllerFocus` "leave" handlers called
+    `editor.remove_widget()` in the middle of the focus change,
+    destroying the focused widget while GTK walks the focus chain (safe
+    in GTK-3, whose focus-out-event arrived after the change). Both
+    renderers' leave handlers now defer ending the edit to an idle
+    callback, skipping if the editor was already unparented by the
+    Enter/Escape path.
+
+  - The one-time `gtk_css_node_insert_after` critical when a cell edit
+    starts is GTK-internal: it's emitted inside
+    `gtk_cell_area_activate_cell` when the tree view inserts the
+    editor's CSS node, and reproduces with a stock `Gtk.TreeView` +
+    `Gtk.CellRendererText`. Harmless (worst case a CSS sibling selector
+    mismatch); include it in the upstream report with the
+    editor-placement bug.
+
 ## Deferred
 
 (none)

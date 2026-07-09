@@ -262,12 +262,6 @@ def prepare_text_view(text_view):
     connect("notify::show_lengths_edit", update_margin, text_view)
     update_margin(None, None, text_view)
     gaupol.style.use_font(text_view, "custom")
-    def update_spacing(section, value, text_view):
-        if gaupol.conf.editor.show_lengths_cell:
-            return text_view.set_pixels_above_lines(2)
-        return text_view.set_pixels_above_lines(0)
-    connect("notify::show_lengths_cell", update_spacing, text_view)
-    update_spacing(None, None, text_view)
 
 def raise_default(expression):
     """Raise :exc:`gaupol.Default` if `expression` evaluates to ``True``."""

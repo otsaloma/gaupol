@@ -169,8 +169,15 @@ class MultilineCellRenderer(Gtk.CellRendererText):
 
     def _on_editor_focus_leave(self, controller, editor):
         """End editing."""
-        editor.remove_widget()
-        self.emit("editing-canceled")
+        # The leave event is delivered in the middle of the focus
+        # change and removing the focused editor there sends GTK's
+        # focus handling into an infinite loop. Defer to idle and
+        # skip if editing already ended (editor unparented).
+        def end_editing():
+            if editor.get_parent() is None: return
+            editor.remove_widget()
+            self.emit("editing-canceled")
+        gaupol.util.idle_add(end_editing)
 
     def _on_editor_key_pressed(self, controller, keyval, keycode, state, editor):
         """End editing if ``Enter`` or ``Escape`` pressed."""

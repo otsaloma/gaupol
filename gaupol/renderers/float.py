@@ -51,6 +51,9 @@ class FloatCellRenderer(Gtk.CellRendererText):
     def _on_editing_started(self, renderer, editor, path):
         """Set `editor` to use same font as `self`."""
         gaupol.style.use_font(editor, "custom")
+        # Match the renderer's yalign=0 when the cell
+        # is taller than one line of text.
+        editor.set_valign(Gtk.Align.START)
 
     def _on_notify_text(self, *args):
         """Cut decimals to fixed precision."""

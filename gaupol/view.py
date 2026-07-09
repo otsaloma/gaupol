@@ -24,6 +24,8 @@ import re
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
+from gi.repository import Graphene
+from gi.repository import Gsk
 from gi.repository import Gtk
 
 __all__ = ("View",)
@@ -47,10 +49,34 @@ class View(Gtk.TreeView):
         GObject.GObject.__init__(self)
         self._active_col_name = ""
         self._calc = aeidon.Calculator()
+        self._cell_editor = None
         self.columns = aeidon.Enumeration()
         self._selection_changed_handlers = {}
         self._init_signal_handlers()
         self._init_props(edit_mode)
+
+    def do_size_allocate(self, width, height, baseline):
+        """Fix the placement of the cell editor after default allocation."""
+        Gtk.TreeView.do_size_allocate(self, width, height, baseline)
+        # GTK-4 (seen on 4.22) allocates cell editors in bin window
+        # coordinates, which lack the column header offset: editing
+        # started with the keyboard lands one header height too high,
+        # while editing started with the mouse is accidentally correct
+        # (the editor rectangle GTK stores from a click has the offset
+        # baked in). Skip those inconsistencies and re-allocate the
+        # editor at the edited cell's actual coordinates.
+        if self._cell_editor is None: return
+        editor, path, column = self._cell_editor
+        if editor.get_parent() is not self:
+            self._cell_editor = None
+            return
+        area = self.get_cell_area(path, column)
+        x, y = self.convert_bin_window_to_widget_coords(area.x, area.y)
+        point = Graphene.Point()
+        point.x = x
+        point.y = y
+        transform = Gsk.Transform().translate(point)
+        editor.allocate(area.width, area.height, -1, transform)
 
     def connect_selection_changed(self, callback):
         """
@@ -155,6 +181,7 @@ class View(Gtk.TreeView):
             renderer = self._get_renderer(field, edit_mode)
             column = Gtk.TreeViewColumn(field.label, renderer, text=field)
             column.gaupol_id = field.name.lower()
+            renderer.connect("editing-started", self._on_renderer_editing_started, column)
             self.append_column(column)
             column.set_clickable(True)
             column.set_resizable(True)
@@ -272,6 +299,11 @@ class View(Gtk.TreeView):
                                string == ":" or
                                string == ".")
         return False
+
+    def _on_renderer_editing_started(self, renderer, editor, path, column):
+        """Keep track of the cell being edited for `do_size_allocate`."""
+        path = Gtk.TreePath.new_from_string(path)
+        self._cell_editor = (editor, path, column)
 
     def _on_renderer_set_background(self, column, renderer, store, itr, data):
         """Set zerba-striped backgrounds for all columns."""

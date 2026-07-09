@@ -40,6 +40,9 @@ class TimeCellRenderer(Gtk.CellRendererText):
         """Initialize and return a :class:`gaupol.TimeEntry` widget."""
         editor = gaupol.TimeEntry()
         gaupol.style.use_font(editor, "custom")
+        # Match the renderer's yalign=0 when the cell
+        # is taller than one line of text.
+        editor.set_valign(Gtk.Align.START)
         editor.set_has_frame(False)
         editor.set_alignment(self.props.xalign)
         editor.set_text(self.props.text)
@@ -56,8 +59,15 @@ class TimeCellRenderer(Gtk.CellRendererText):
 
     def _on_editor_focus_leave(self, controller, editor):
         """End editing."""
-        editor.remove_widget()
-        self.emit("editing-canceled")
+        # The leave event is delivered in the middle of the focus
+        # change and removing the focused editor there sends GTK's
+        # focus handling into an infinite loop. Defer to idle and
+        # skip if editing already ended (editor unparented).
+        def end_editing():
+            if editor.get_parent() is None: return
+            editor.remove_widget()
+            self.emit("editing-canceled")
+        gaupol.util.idle_add(end_editing)
 
     def _on_editor_key_pressed(self, controller, keyval, keycode, state, editor):
         """End editing if ``Enter`` or ``Escape`` pressed."""
