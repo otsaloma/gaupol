@@ -48,7 +48,7 @@ class TestCase(aeidon.TestCase):
         """Return a new application with one open page."""
         application = gaupol.Application()
         application.add_page(self.new_page())
-        application.window.show()
+        application.window.present()
         return application
 
     def new_page(self):
@@ -65,7 +65,7 @@ class TestCase(aeidon.TestCase):
             if hasattr(self, name):
                 getattr(self, name).destroy()
         if hasattr(self, "application"):
-            self.application.window.hide()
+            self.application.window.set_visible(False)
             self.application.window.destroy()
         gaupol.util.iterate_main()
         gaupol.conf.restore_defaults()

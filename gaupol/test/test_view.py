@@ -29,7 +29,7 @@ class TestView(gaupol.TestCase):
         window = Gtk.Window()
         window.set_default_size(200, 200)
         window.set_child(self.view)
-        window.show()
+        window.present()
         self.main_loop(window)
 
     def run_view_time(self):
@@ -37,7 +37,7 @@ class TestView(gaupol.TestCase):
         window = Gtk.Window()
         window.set_default_size(200, 200)
         window.set_child(self.view)
-        window.show()
+        window.present()
         self.main_loop(window)
 
     def setup_frame(self):

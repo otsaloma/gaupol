@@ -34,7 +34,7 @@ class TestMultilineCellRenderer(gaupol.TestCase):
         window = Gtk.Window()
         window.set_default_size(240, 70)
         window.set_child(tree_view)
-        window.show()
+        window.present()
         self.main_loop(window)
 
     def setup_method(self, method):
@@ -55,7 +55,7 @@ class TestMultilineDiffCellRenderer(gaupol.TestCase):
         window = Gtk.Window()
         window.set_default_size(240, 70)
         window.set_child(tree_view)
-        window.show()
+        window.present()
         self.main_loop(window)
 
     def setup_method(self, method):

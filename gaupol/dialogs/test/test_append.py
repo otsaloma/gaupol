@@ -30,4 +30,4 @@ class TestAppendDialog(_TestFileDialog):
     def setup_method(self, method):
         gaupol.conf.file.directory = os.getcwd()
         self.dialog = gaupol.AppendDialog(Gtk.Window())
-        self.dialog.show()
+        self.dialog.present()

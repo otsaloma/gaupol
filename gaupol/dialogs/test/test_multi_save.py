@@ -42,7 +42,7 @@ class TestMultiSaveDialog(_TestFileDialog):
                                              application=self.application,
                                              modes=modes)
 
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.CANCEL)

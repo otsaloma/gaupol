@@ -41,7 +41,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
                 subtitle.tran_text = subtitle.tran_text.replace("a", "x")
             page.reload_view_all()
         self.dialog = gaupol.SpellCheckDialog(self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_add_button_clicked(self):
         self.dialog._add_button.emit("clicked")

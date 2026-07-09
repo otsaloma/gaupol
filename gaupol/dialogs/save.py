@@ -179,8 +179,8 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.set_format(gaupol.conf.file.format)
         self.set_newline(gaupol.conf.file.newline)
         self.set_framerate(gaupol.conf.editor.framerate)
-        self._framerate_combo.hide()
-        self._framerate_label.hide()
+        self._framerate_combo.set_visible(False)
+        self._framerate_label.set_visible(False)
 
     def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""

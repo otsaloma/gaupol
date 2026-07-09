@@ -47,7 +47,7 @@ class TestIntroductionPage(_TestBuilderPage):
         self.window.set_default_size(800, 500)
         self.page = IntroductionPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class _TestLocalePage(_TestBuilderPage):
@@ -65,7 +65,7 @@ class TestCapitalizationPage(_TestLocalePage):
         self.window.set_default_size(800, 500)
         self.page = CapitalizationPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class TestCommonErrorPage(_TestLocalePage):
@@ -75,7 +75,7 @@ class TestCommonErrorPage(_TestLocalePage):
         self.window.set_default_size(800, 500)
         self.page = CommonErrorPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class TestHearingImpairedPage(_TestLocalePage):
@@ -85,7 +85,7 @@ class TestHearingImpairedPage(_TestLocalePage):
         self.window.set_default_size(800, 500)
         self.page = HearingImpairedPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class TestJoinSplitWordsPage(_TestBuilderPage):
@@ -99,7 +99,7 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
         self.project = self.new_project()
         self.page = JoinSplitWordsPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
     @patch("gaupol.util.flash_dialog", OK)
     def test_correct_texts(self):
@@ -117,7 +117,7 @@ class TestLineBreakPage(_TestLocalePage):
         self.window.set_default_size(800, 500)
         self.page = LineBreakPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class TestLineBreakOptionsPage(_TestBuilderPage):
@@ -127,7 +127,7 @@ class TestLineBreakOptionsPage(_TestBuilderPage):
         self.window.set_default_size(800, 500)
         self.page = LineBreakOptionsPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class TestProgressPage(_TestBuilderPage):
@@ -138,7 +138,7 @@ class TestProgressPage(_TestBuilderPage):
         self.page = ProgressPage(self.window)
         self.page.reset(100)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class TestConfirmationPage(_TestBuilderPage):
@@ -148,13 +148,13 @@ class TestConfirmationPage(_TestBuilderPage):
         self.window.set_default_size(800, 500)
         self.page = ConfirmationPage(self.window)
         self.window.set_child(self.page)
-        self.window.show()
+        self.window.present()
 
 
 class TestTextAssistant(gaupol.TestCase):
 
     def run_assistant(self):
-        self.assistant.show()
+        self.assistant.present()
         self.main_loop(self.assistant)
 
     def setup_method(self, method):
@@ -162,4 +162,4 @@ class TestTextAssistant(gaupol.TestCase):
         self.application = self.new_application()
         self.assistant = gaupol.TextAssistant(
             self.application.window, self.application)
-        self.assistant.show()
+        self.assistant.present()

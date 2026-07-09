@@ -31,4 +31,4 @@ class TestDebugDialog(gaupol.TestCase):
             self.dialog.foo()
         except AttributeError:
             self.dialog.set_text(*sys.exc_info())
-        self.dialog.show()
+        self.dialog.present()

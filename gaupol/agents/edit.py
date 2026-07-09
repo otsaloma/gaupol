@@ -80,7 +80,7 @@ class EditAgent(aeidon.Delegate):
             return self._pref_dialog.present()
         self._pref_dialog = gaupol.PreferencesDialog(self.window, self)
         aeidon.util.connect(self, "_pref_dialog", "response")
-        self._pref_dialog.show()
+        self._pref_dialog.present()
 
     @aeidon.deco.export
     def _on_edit_value_activate(self, *args):

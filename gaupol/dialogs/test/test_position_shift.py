@@ -41,7 +41,7 @@ class TestFrameShiftDialog(_TestPositionShiftDialog):
         self.application = self.new_application()
         self.dialog = gaupol.FrameShiftDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
 
 class TestTimeShiftDialog(_TestPositionShiftDialog):
@@ -50,4 +50,4 @@ class TestTimeShiftDialog(_TestPositionShiftDialog):
         self.application = self.new_application()
         self.dialog = gaupol.TimeShiftDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()

@@ -28,11 +28,11 @@ class TestEncodingDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         self.dialog = gaupol.EncodingDialog(Gtk.Window())
-        self.dialog.show()
+        self.dialog.present()
 
 
 class TestMenuEncodingDialog(TestEncodingDialog):
 
     def setup_method(self, method):
         self.dialog = gaupol.MenuEncodingDialog(Gtk.Window())
-        self.dialog.show()
+        self.dialog.present()

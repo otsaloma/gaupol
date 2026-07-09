@@ -30,7 +30,7 @@ class TestDurationAdjustDialog(gaupol.TestCase):
         self.application = self.new_application()
         self.dialog = gaupol.DurationAdjustDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.OK)

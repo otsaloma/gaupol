@@ -129,7 +129,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.extension_manager.find_extensions()
         self.extension_manager.setup_extensions()
         self.update_gui()
-        self.window.show()
+        self.window.present()
         self.emit("init-done")
 
     def __getattr__(self, name):

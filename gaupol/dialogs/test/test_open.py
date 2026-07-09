@@ -41,7 +41,7 @@ class TestOpenDialog(_TestFileDialog):
         gaupol.conf.file.directory = os.getcwd()
         doc = aeidon.documents.MAIN
         self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.CANCEL)

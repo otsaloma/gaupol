@@ -29,4 +29,4 @@ class TestTextEditDialog(gaupol.TestCase):
     def setup_method(self, method):
         text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu"
         self.dialog = gaupol.TextEditDialog(Gtk.Window(), text)
-        self.dialog.show()
+        self.dialog.present()

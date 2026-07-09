@@ -19,6 +19,7 @@
 
 import gaupol
 
+from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -52,7 +53,7 @@ class Toast(Gtk.Box):
 
     def _hide(self, *args):
         """Hide the toast."""
-        self.hide()
+        self.set_visible(False)
         self._hide_id = None
 
     def _init_widgets(self):
@@ -69,6 +70,6 @@ class Toast(Gtk.Box):
         if not text:
             return self._hide()
         if self._hide_id is not None:
-            GObject.source_remove(self._hide_id)
+            GLib.source_remove(self._hide_id)
         self._label.set_text(text)
-        self.show()
+        self.set_visible(True)

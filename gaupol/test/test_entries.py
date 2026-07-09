@@ -27,7 +27,7 @@ class TestTimeEntry(gaupol.TestCase):
         window = Gtk.Window()
         window.set_default_size(200, 50)
         window.set_child(self.entry)
-        window.show()
+        window.present()
         self.main_loop(window)
 
     def setup_method(self, method):

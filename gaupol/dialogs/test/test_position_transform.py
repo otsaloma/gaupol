@@ -36,7 +36,7 @@ class TestFrameTransformDialog(_TestPositionTransformDialog):
         self.application = self.new_application()
         self.dialog = gaupol.FrameTransformDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
 
 class TestTimeTransformDialog(_TestPositionTransformDialog):
@@ -45,4 +45,4 @@ class TestTimeTransformDialog(_TestPositionTransformDialog):
         self.application = self.new_application()
         self.dialog = gaupol.TimeTransformDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()

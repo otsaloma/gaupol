@@ -40,7 +40,7 @@ class TestAddFramerateDialog(gaupol.TestCase):
     def setup_method(self, method):
         module = __import__("custom-framerates", {}, {}, [])
         self.dialog = module.AddFramerateDialog(Gtk.Window())
-        self.dialog.show()
+        self.dialog.present()
 
     def test_get_framerate(self):
         assert self.dialog.get_framerate() == 0.0
@@ -56,7 +56,7 @@ class TestPreferencesDialog(gaupol.TestCase):
         module = __import__("custom-framerates", {}, {}, [])
         self.framerates = [20.0, 21.0, 22.0, 23.0]
         self.dialog = module.PreferencesDialog(self.framerates, Gtk.Window())
-        self.dialog.show()
+        self.dialog.present()
 
     @patch("gaupol.util.run_dialog", lambda *args: Gtk.ResponseType.OK)
     def test__on_add_button_clicked(self):

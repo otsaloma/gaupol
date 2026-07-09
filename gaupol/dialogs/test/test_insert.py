@@ -32,7 +32,7 @@ class TestInsertDialog(gaupol.TestCase):
         page.view.select_rows((2,))
         self.dialog = gaupol.InsertDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.OK)

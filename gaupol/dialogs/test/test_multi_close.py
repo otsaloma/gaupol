@@ -34,7 +34,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
                                               self.application,
                                               self.application.pages)
 
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.YES)

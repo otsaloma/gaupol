@@ -35,7 +35,7 @@ class TestSaveDialog(_TestFileDialog):
                                         title="test",
                                         mode=aeidon.modes.TIME)
 
-        self.dialog.show()
+        self.dialog.present()
 
     def test_get_format(self):
         self.dialog.set_format(aeidon.formats.SUBRIP)

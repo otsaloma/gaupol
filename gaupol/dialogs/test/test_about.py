@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class TestAboutDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.show()
+        self.dialog.present()
         self.main_loop(self.dialog)
 
     def setup_method(self, method):

@@ -59,11 +59,11 @@ the tests fail and ignore anything unrelated to your changes.
   passing either due to stderr output or a failing visual inspection
   based on screenshots.
 
-## Steps Left
-
 - Apart from errors, there are likely to be warnings caused by new
   deprecations in GTK-4. Let's evaluate these on a case-by-case basis
   and pick some of those to migrate, some to leave for later.
+
+## Steps Left
 
 - Finally, review the migration as a whole. Did we migrate something
   only partially? Did we introduce some inconsistencies? Did GTK-4 bring

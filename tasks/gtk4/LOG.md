@@ -877,4 +877,27 @@
     way without warning). Left as a harness offscreen-snapshot artifact,
     not an app bug.
 
+- New GTK-4 deprecations pass: surveyed the "deprecated since 4.10"
+  warnings emitted under `G_ENABLE_DIAGNOSTIC=1` (97 distinct after this
+  change). The bulk are big widget-family deprecations left for the
+  final review step: the TreeView family (`Gtk.TreeView`/`TreeViewColumn`/
+  `TreeModel`/`ListStore`/`TreeSelection`/`CellLayout`/`ComboBox`, etc.,
+  superseded by `GtkColumnView` + `GListModel` + `GtkDropDown`, explicitly
+  out of scope per TASK) and the dialog family (`Gtk.Dialog`/`MessageDialog`/
+  `Assistant`/`FileChooser`/`ColorChooser`/`FontChooser`, superseded by
+  `GtkAlertDialog`/`FileDialog`/etc., which were consciously kept during
+  the migration — the `run_dialog` shim and `FileChooserDialog` extra
+  widgets). `GLib.unix_signal_add_full` is PyGObject-internal, ignored.
+  Migrated only the small self-contained wins:
+
+  - `Gtk.Widget.show`/`hide` (deprecated 4.10) → `set_visible(True/False)`
+    for child widgets (toast, save/language dialogs' inner widgets) and
+    `present()` for toplevels (main window, preferences/search dialogs,
+    text assistant, and all the test helper windows/dialogs/assistants).
+
+  - `GObject.source_remove` → `GLib.source_remove` in `toast.py` (the
+    one stale non-`GLib` call; `video.py` already used the `GLib` form).
+
+  All 805 tests still pass; the three targeted warnings no longer appear.
+
 ## Deferred

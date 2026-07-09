@@ -30,4 +30,4 @@ class TestPreviewErrorDialog(gaupol.TestCase):
     def setup_method(self, method):
         output = self.get_sample_text(aeidon.formats.SUBRIP)
         self.dialog = gaupol.PreviewErrorDialog(Gtk.Window(), output)
-        self.dialog.show()
+        self.dialog.present()

@@ -30,7 +30,7 @@ class TestFramerateConversionDialog(gaupol.TestCase):
         self.application = self.new_application()
         self.dialog = gaupol.FramerateConvertDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog._input_combo.set_active(0)

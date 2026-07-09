@@ -28,4 +28,4 @@ class TestPreferencesDialog(gaupol.TestCase):
         self.application = self.new_application()
         self.dialog = gaupol.PreferencesDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()

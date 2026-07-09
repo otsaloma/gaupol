@@ -35,4 +35,4 @@ class TestToast(gaupol.TestCase):
         self.window.set_child(self.overlay)
         self.toast = gaupol.Toast()
         self.overlay.add_overlay(self.toast)
-        self.window.show()
+        self.window.present()

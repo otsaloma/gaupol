@@ -31,4 +31,4 @@ class TestVideoDialog(gaupol.TestCase):
                                          title="Select Video",
                                          button_label="Select")
 
-        self.dialog.show()
+        self.dialog.present()
