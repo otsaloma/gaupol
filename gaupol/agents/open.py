@@ -60,8 +60,9 @@ class OpenAgent(aeidon.Delegate):
     @aeidon.deco.export
     def add_to_recent_files(self, path, format, doc):
         """Add `path` to recent files managed by the recent manager."""
-        # XXX: The group field is not available for Python,
-        # we cannot differentiate between main and translation files.
+        # XXX: The groups field is a char** and PyGObject cannot set char**
+        # struct fields, so we cannot differentiate main and translation
+        # files. WONTFIX in pygobject, kept on the read-only GNOME Bugzilla:
         # https://bugzilla.gnome.org/show_bug.cgi?id=695970
         uri = aeidon.util.path_to_uri(path)
         recent = Gtk.RecentData()
