@@ -35,7 +35,6 @@ class MenuAgent(aeidon.Delegate):
         """Initialize a :class:`MenuAgent` instance."""
         aeidon.Delegate.__init__(self, master)
         self._columns_popup = None
-        self._tab_popup = None
         self._view_popup = None
         self._init_signal_handlers()
 
@@ -82,15 +81,6 @@ class MenuAgent(aeidon.Delegate):
         if not os.path.isfile(action.gaupol_path):
             return self.flash_message(_("File not found"))
         self.open_translation(action.gaupol_path)
-
-    @aeidon.deco.export
-    def _on_tab_widget_pressed(self, gesture, n_press, x, y, page):
-        """Display a pop-up menu with tab-related actions."""
-        if self._tab_popup is None:
-            path = os.path.join(aeidon.DATA_DIR, "ui", "tab-popup.ui")
-            builder = Gtk.Builder.new_from_file(path)
-            self._tab_popup = builder.get_object("tab-popup")
-        self._show_popover_menu(gesture, x, y, self._tab_popup)
 
     @aeidon.deco.export
     def _on_view_pressed(self, gesture, n_press, x, y):

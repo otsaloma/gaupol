@@ -58,23 +58,6 @@ class CloseAllProjectsAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.pages)
 
-class MoveTabLeftAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "move-tab-left")
-        self.action_group = "safe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(page is not None)
-        aeidon.util.affirm(application.pages.index(page) > 0)
-
-class MoveTabRightAction(gaupol.Action):
-    def __init__(self):
-        gaupol.Action.__init__(self, "move-tab-right")
-        self.action_group = "safe"
-    def _affirm_doable(self, application, page, selected_rows):
-        aeidon.util.affirm(page is not None)
-        index = application.pages.index(page) + 1
-        aeidon.util.affirm(index in range(len(application.pages)))
-
 class SaveAllDocumentsAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "save-all-documents")

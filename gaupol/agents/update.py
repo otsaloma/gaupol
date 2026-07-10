@@ -46,22 +46,6 @@ class UpdateAgent(aeidon.Delegate):
         self.notebook.prev_page()
 
     @aeidon.deco.export
-    def _on_move_tab_left_activate(self, *args):
-        """Move the current tab to the left."""
-        page = self.get_current_page()
-        scroller = page.view.get_parent()
-        index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index-1)
-
-    @aeidon.deco.export
-    def _on_move_tab_right_activate(self, *args):
-        """Move the current tab to the right."""
-        page = self.get_current_page()
-        scroller = page.view.get_parent()
-        index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index + 1)
-
-    @aeidon.deco.export
     def _on_notebook_page_reordered(self, notebook, scroller, index):
         """Update the list of pages to match the new order."""
         view = scroller.get_child()
