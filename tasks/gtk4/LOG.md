@@ -17,8 +17,8 @@
   "verifies" the wrong code (it can even hang, since the GTK-3 app
   blocks in main loops that ignore SIGTERM). The repo version is bumped
   to 1.99, so `assert gaupol.__version__ == "1.99"` catches any mixup.
-  `python3 -c` and `pytest` run from the repo root resolve correctly,
-  as they put the working directory on `sys.path`.
+  `python3 -c` and `pytest` run from the repo root resolve correctly, as
+  they put the working directory on `sys.path`.
 
 - To screenshot the app, run a standalone script (with `PYTHONPATH` as
   above) that creates `gaupol.Application()` and calls
@@ -34,11 +34,11 @@
   texture.save_to_png(path)
   ```
 
-  This captures the window content regardless of the Wayland
-  compositor. Caveat: the menubar doesn't render, since the script has
-  no `Gtk.Application` (`gaupol.appman`) to provide the menubar model.
-  The same recipe works for dialogs (snapshot the dialog widget
-  instead), e.g. built via the dialog test classes' `setup_method`.
+  This captures the window content regardless of the Wayland compositor.
+  Caveat: the menubar doesn't render, since the script has no
+  `Gtk.Application` (`gaupol.appman`) to provide the menubar model. The
+  same recipe works for dialogs (snapshot the dialog widget instead),
+  e.g. built via the dialog test classes' `setup_method`.
 
 - Retested CSS `:nth-child` zebra stripes (the XXX comment in
   `gaupol/util.py` `get_zebra_color`): still not viable, GtkTreeView has
@@ -368,12 +368,12 @@
   `_get_editor_font_css` font-size unit hack flagged earlier:
   `Gtk.check_version(3, 22, 0)` is non-None under GTK-4 (major
   mismatch), so the unit had silently flipped to "px"; now hardcoded to
-  "pt". Verified empirically that "pt" is correct: GTK-4 CSS resolves
-  pt using gtk-xft-dpi (13pt → 13 × dpi/72 px), the same way Pango
-  resolves the point sizes that font choosers produce, so pt tracks the
-  desktop text-scaling-factor while px would ignore it; libadwaita does
-  the same, emitting `--document-font-size: %dpt` when converting the
-  GNOME font settings to CSS. Verified provider load + reload with the
+  "pt". Verified empirically that "pt" is correct: GTK-4 CSS resolves pt
+  using gtk-xft-dpi (13pt → 13 × dpi/72 px), the same way Pango resolves
+  the point sizes that font choosers produce, so pt tracks the desktop
+  text-scaling-factor while px would ignore it; libadwaita does the
+  same, emitting `--document-font-size: %dpt` when converting the GNOME
+  font settings to CSS. Verified provider load + reload with the
   generated CSS in a standalone script.
 
 - GtkShadowType/GtkRelief: scrolled windows' `set_shadow_type` became
@@ -579,8 +579,8 @@
     choosers stay `Gtk.FileChooserDialog` subclasses.
 
   - `set_extra_widget` is gone: the open/save dialogs' combo grids are
-    appended to the dialog's content area, below the file chooser
-    widget (verified visually). The throwaway `GtkWindow` wrappers in
+    appended to the dialog's content area, below the file chooser widget
+    (verified visually). The throwaway `GtkWindow` wrappers in
     `open-dialog.ui`/`save-dialog.ui` were dropped — `main_vbox` is now
     a top-level builder object carrying its own 12px margins, which
     settles these dialogs' borders (part of the deferred border item).
@@ -609,10 +609,9 @@
     standalone script (dialogs render correctly, screenshots checked);
     the full response flow through the agents is still blocked on
     `Gtk.Dialog.run` (the next, blocking-dialogs item). All dialog and
-    agent unit tests pass. The whole GtkFileChooser family is
-    deprecated since 4.10 in favor of `Gtk.FileDialog`; that's a
-    case for the later deprecations pass, hampered by the extra widget
-    need.
+    agent unit tests pass. The whole GtkFileChooser family is deprecated
+    since 4.10 in favor of `Gtk.FileDialog`; that's a case for the later
+    deprecations pass, hampered by the extra widget need.
 
 - Follow-up to the GtkFileChooser item: `open-dialog.ui` and
   `save-dialog.ui` were dropped and the extra widgets are now built in
@@ -678,13 +677,12 @@
   `directory_button` and made functional: its label shows the selected
   folder's basename and clicking opens a `Gtk.FileChooserDialog` in
   SELECT_FOLDER mode (per the earlier decision, no
-  FileChooserNative/FileDialog) through
-  `gaupol.util.run_dialog`, with the selected path kept in a
-  `_directory` attribute. Minor look change: a regular centered button
-  label instead of GtkFileChooserButton's icon + left-aligned text.
-  Verified the click → select → label update and cancel-keeps-selection
-  flows plus rendering (screenshot) with standalone scripts; dialog
-  tests pass.
+  FileChooserNative/FileDialog) through `gaupol.util.run_dialog`, with
+  the selected path kept in a `_directory` attribute. Minor look change:
+  a regular centered button label instead of GtkFileChooserButton's
+  icon + left-aligned text. Verified the click → select → label update
+  and cancel-keeps-selection flows plus rendering (screenshot) with
+  standalone scripts; dialog tests pass.
 
 - Fixed a flaky `ValueError` in the search dialog's `replace()` (seen as
   an intermittent `test_replace` failure): the `page_changing` decorator
@@ -795,10 +793,9 @@
     `SpellingLanguageInfo` → `SpellingLanguage`, and `list_languages`
     changed from GPtrArray to GListModel, our code is compatible with
     both: every function we call exists identically in 0.2.0 and the
-    list items have `get_code()` under either name. Verified against
-    the 0.2.0/0.2.1 headers and GIR annotations upstream, not
-    empirically (only 0.4.10 available here); local testing was
-    against 0.4.10.
+    list items have `get_code()` under either name. Verified against the
+    0.2.0/0.2.1 headers and GIR annotations upstream, not empirically
+    (only 0.4.10 available here); local testing was against 0.4.10.
 
 - Video sink: switched `gaupol/player.py` from `gtksink` (which exposed
   a ready-made `props.widget`, GTK-3-only) to `gtk4paintablesink` +
@@ -822,15 +819,16 @@
   `__init__.py` was reworded off `gtksink`; the workaround itself kept
   as-is (unverified against the new sink).
 
-- Non-symbolic icons: the last plain icon names were the three extensions
+- Non-symbolic icons: the last plain icon names were the three
+  extensions
   toolbar buttons in `preferences-dialog.ui`. GTK-4 doesn't fall back
   from a plain name to its symbolic variant and current Adwaita ships
   only symbolic icons, so these would render as image-missing.
   `help-contents`/`help-about` have exact `-symbolic` twins;
   `preferences-desktop` has none, so the preferences button now uses the
   conventional `emblem-system-symbolic` configure gear. Verified all
-  three render (screenshot of the Extensions page); no other non-symbolic
-  icon names remain in the codebase.
+  three render (screenshot of the Extensions page); no other
+  non-symbolic icon names remain in the codebase.
 
 - Renamed `FloatingLabel` to `Toast` (`floatlabel.py` → `toast.py`,
   `test_floatlabel.py` → `test_toast.py`) and restyled it as a GNOME HIG
@@ -870,24 +868,26 @@
     measure GtkOverlay for height of 25/0, but it needs at least 85".
     This was first mistaken for a harness offscreen-snapshot artifact,
     but it happens in the normally-mapped app too (every toggle prints
-    both lines). It's a benign `GtkPaned` relayout quirk: when the player
-    box (the paned's start child) is shown or hidden, the paned runs an
-    opposite-orientation pass that measures the notebook+toast overlay
-    (end child) *width* while handing it transient *height* slices (25,
-    then 0) below the overlay's 85px minimum — a minimum driven by the
-    `Gtk.Notebook`, not the hidden toast. GTK clamps to the minimum and
-    returns a valid width, so the final layout is correct; only the
-    console noise remains. Not worth suppressing (would mean
-    restructuring the paned/overlay layout for a cosmetic message).
+    both lines). It's a benign `GtkPaned` relayout quirk: when the
+    player box (the paned's start child) is shown or hidden, the paned
+    runs an opposite-orientation pass that measures the notebook+toast
+    overlay (end child) *width* while handing it transient *height*
+    slices (25, then 0) below the overlay's 85px minimum — a minimum
+    driven by the `Gtk.Notebook`, not the hidden toast. GTK clamps to
+    the minimum and returns a valid width, so the final layout is
+    correct; only the console noise remains. Not worth suppressing
+    (would mean restructuring the paned/overlay layout for a cosmetic
+    message).
 
 - New GTK-4 deprecations pass: surveyed the "deprecated since 4.10"
   warnings emitted under `G_ENABLE_DIAGNOSTIC=1` (97 distinct after this
   change). The bulk are big widget-family deprecations left for the
-  final review step: the TreeView family (`Gtk.TreeView`/`TreeViewColumn`/
-  `TreeModel`/`ListStore`/`TreeSelection`/`CellLayout`/`ComboBox`, etc.,
-  superseded by `GtkColumnView` + `GListModel` + `GtkDropDown`, explicitly
-  out of scope per TASK) and the dialog family (`Gtk.Dialog`/`MessageDialog`/
-  `Assistant`/`FileChooser`/`ColorChooser`/`FontChooser`, superseded by
+  final review step: the TreeView family (`Gtk.TreeView` /
+  `TreeViewColumn` / `TreeModel` / `ListStore` / `TreeSelection` /
+  `CellLayout` / `ComboBox`, etc., superseded by `GtkColumnView` +
+  `GListModel` + `GtkDropDown`, explicitly out of scope per TASK) and
+  the dialog family (`Gtk.Dialog` / `MessageDialog`/ `Assistant` /
+  `FileChooser` / `ColorChooser` / `FontChooser`, superseded by
   `GtkAlertDialog`/`FileDialog`/etc., which were consciously kept during
   the migration — the `run_dialog` shim and `FileChooserDialog` extra
   widgets). `GLib.unix_signal_add_full` is PyGObject-internal, ignored.
