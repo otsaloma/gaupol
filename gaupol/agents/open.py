@@ -249,6 +249,8 @@ class OpenAgent(aeidon.Delegate):
         if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
         self.update_gui()
+        self.flash_message(_('Selected video "{}"')
+                           .format(os.path.basename(path)))
 
     @aeidon.deco.export
     def _on_split_project_activate(self, *args):
