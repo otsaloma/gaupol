@@ -39,7 +39,7 @@ class MenuAgent(aeidon.Delegate):
         self._view_popup = None
         self._init_signal_handlers()
 
-    def _get_recent_paths(self):
+    def _get_recent_paths(self, limit=10):
         """Return a list of recently used subtitle file paths."""
         mime_types = [x.mime_type for x in aeidon.formats]
         items = [x for x in self.recent_manager.get_items()
@@ -50,7 +50,7 @@ class MenuAgent(aeidon.Delegate):
             # https://github.com/otsaloma/gaupol/issues/175
             items = [x for x in items if x.exists()]
         items.sort(key=lambda x: x.get_modified().to_unix(), reverse=True)
-        return [aeidon.util.uri_to_path(x.get_uri()) for x in items[:10]]
+        return [aeidon.util.uri_to_path(x.get_uri()) for x in items[:limit]]
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
