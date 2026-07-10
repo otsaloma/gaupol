@@ -335,6 +335,7 @@ class VideoAgent(aeidon.Delegate):
         """Decrease volume."""
         self.player.volume = self.player.volume - 0.05
         self.volume_button.set_value(self.player.volume)
+        self.flash_message(_("Volume: {}%").format(round(self.player.volume * 100)))
         self.update_gui()
 
     @aeidon.deco.export
@@ -342,6 +343,7 @@ class VideoAgent(aeidon.Delegate):
         """Increase volume."""
         self.player.volume = self.player.volume + 0.05
         self.volume_button.set_value(self.player.volume)
+        self.flash_message(_("Volume: {}%").format(round(self.player.volume * 100)))
         self.update_gui()
 
     def _update_languages_menu(self):
