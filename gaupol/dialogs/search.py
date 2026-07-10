@@ -300,7 +300,11 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_all_radio_toggled(self, radio_button):
         """Save search target."""
-        gaupol.conf.search.target = self._get_target()
+        # In GTK-4, activating a group sibling deactivates the current
+        # button before activating the new one, so this fires once with
+        # neither button active; only act when this button became active.
+        if radio_button.get_active():
+            gaupol.conf.search.target = self._get_target()
 
     def _on_application_page_changed(self, application, page):
         """Invalidate the current search if underlying data has changed."""
@@ -316,7 +320,9 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_current_radio_toggled(self, radio_button):
         """Save search target."""
-        gaupol.conf.search.target = self._get_target()
+        # See the note in _on_all_radio_toggled.
+        if radio_button.get_active():
+            gaupol.conf.search.target = self._get_target()
 
     def _on_find_key_pressed(self, *args):
         """Move focus to the pattern entry."""
