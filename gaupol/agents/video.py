@@ -175,11 +175,14 @@ class VideoAgent(aeidon.Delegate):
         page = self.get_current_page()
         dialog = gaupol.VideoDialog(
             self.window, title=_("Load Video"), button_label=_("_Load"))
-        if page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(Gio.File.new_for_path(directory))
+        # Only one location call, or the second cancels the first's async
+        # folder load and GTK pops up a hidden modal error dialog. Prefer
+        # set_file, which selects the video and navigates to its folder.
         if page.project.video_path is not None:
             dialog.set_file(Gio.File.new_for_path(page.project.video_path))
+        elif page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(Gio.File.new_for_path(directory))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         file = dialog.get_file()
