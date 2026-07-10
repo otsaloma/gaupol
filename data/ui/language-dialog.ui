@@ -38,6 +38,7 @@
                     </child>
                     <child>
                       <object class="GtkScrolledWindow" id="language_scroller">
+                        <property name="has_frame">1</property>
                         <property name="vexpand">1</property>
                         <property name="focusable">1</property>
                         <property name="child">

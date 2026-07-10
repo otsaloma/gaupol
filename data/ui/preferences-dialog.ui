@@ -97,6 +97,7 @@
                                     <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkScrolledWindow" id="scrolledwindow1">
+                                        <property name="has_frame">1</property>
                                         <property name="vexpand">1</property>
                                         <property name="width_request">260</property>
                                         <property name="focusable">1</property>
@@ -771,6 +772,7 @@
                         <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkScrolledWindow" id="scrolledwindow2">
+                            <property name="has_frame">1</property>
                             <property name="vexpand">1</property>
                             <property name="focusable">1</property>
                             <property name="child">

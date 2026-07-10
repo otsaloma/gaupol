@@ -131,6 +131,7 @@
             </child>
             <child>
               <object class="GtkScrolledWindow" id="scrolledwindow1">
+                <property name="has_frame">1</property>
                 <property name="focusable">1</property>
                 <property name="child">
                   <object class="GtkTextView" id="text_view">
@@ -159,6 +160,7 @@
             </child>
             <child>
               <object class="GtkScrolledWindow" id="scrolledwindow2">
+                <property name="has_frame">1</property>
                 <property name="focusable">1</property>
                 <property name="hexpand">1</property>
                 <property name="vexpand">1</property>
