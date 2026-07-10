@@ -866,16 +866,19 @@
     Application (only exported *methods* are delegated). The cases now
     reach the agent via its delegated activate callback's `__self__`.
 
-  - `toggle-player` emits one transient `Gtk-WARNING` "Trying to measure
-    GtkOverlay for height of 0, but it needs at least 85" — only when
-    the *after* screenshot renders, i.e. after the action hid the player
-    box. It comes from the harness's `Gtk.WidgetPaintable` measuring the
-    window at its intrinsic size with the paned's start child hidden,
-    leaving the notebook+toast overlay measured for height 0; a
-    normally-mapped window has a concrete allocation and doesn't hit it
-    (other relayout cases like the toggle-column ones snapshot the same
-    way without warning). Left as a harness offscreen-snapshot artifact,
-    not an app bug.
+  - `toggle-player` emits a pair of transient `Gtk-WARNING`s "Trying to
+    measure GtkOverlay for height of 25/0, but it needs at least 85".
+    This was first mistaken for a harness offscreen-snapshot artifact,
+    but it happens in the normally-mapped app too (every toggle prints
+    both lines). It's a benign `GtkPaned` relayout quirk: when the player
+    box (the paned's start child) is shown or hidden, the paned runs an
+    opposite-orientation pass that measures the notebook+toast overlay
+    (end child) *width* while handing it transient *height* slices (25,
+    then 0) below the overlay's 85px minimum — a minimum driven by the
+    `Gtk.Notebook`, not the hidden toast. GTK clamps to the minimum and
+    returns a valid width, so the final layout is correct; only the
+    console noise remains. Not worth suppressing (would mean
+    restructuring the paned/overlay layout for a cosmetic message).
 
 - New GTK-4 deprecations pass: surveyed the "deprecated since 4.10"
   warnings emitted under `G_ENABLE_DIAGNOSTIC=1` (97 distinct after this
