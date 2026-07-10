@@ -1,6 +1,7 @@
 # TODO
 
 - Use pathlib instead of os.path
+- Use pathlib to read and write instead of one-line with bodies
 - All dialogs
   - Modernize layout, spacing and labels
 - Preferences dialog
@@ -18,3 +19,16 @@
 - Text correction assistant
   - Use ListBox
 - New installation mechanism
+- Update Flatpak to GTK-4 etc.
+- Reduce import * in __init__.py files and get rid of __all__
+- Use pytest.mark.parametrize for test loops e.g. aeidon/agents/test/test_save.py
+- Use fstrings where applicable
+- Dismantle the delegate system?
+- Do we need aeidon.util.install_module?
+- Check aeidon/i18n.py
+- Update encoding list in aeidon/encodings.py
+- Simplify aeidon/paths.py
+- Check bin/gaupol
+- Update iso-codes
+- Move gaupol.css one level up
+- Check data/io.otsaloma.gaupol.appdata.xml.in
