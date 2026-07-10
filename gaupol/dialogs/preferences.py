@@ -211,7 +211,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             dialog.set_website_label(label)
         if metadata.has_field("Authors"):
             dialog.set_authors(metadata.get_field_list("Authors"))
-        gaupol.util.flash_dialog(dialog)
+        dialog.present()
 
     def _on_help_button_clicked(self, *args):
         """Show extension's own documentation."""
