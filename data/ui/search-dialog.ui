@@ -61,7 +61,7 @@
                                 <property name="halign">start</property>
                                 <property name="label" translatable="1">_Search for:</property>
                                 <property name="use_underline">1</property>
-                                <property name="mnemonic_widget">pattern_combo_entry</property>
+                                <property name="mnemonic_widget">pattern_combo</property>
                                 <layout>
                                   <property name="column">0</property>
                                   <property name="row">1</property>
@@ -73,7 +73,7 @@
                                 <property name="halign">start</property>
                                 <property name="label" translatable="1">Replace _with:</property>
                                 <property name="use_underline">1</property>
-                                <property name="mnemonic_widget">replacement_combo_entry</property>
+                                <property name="mnemonic_widget">replacement_combo</property>
                                 <layout>
                                   <property name="column">0</property>
                                   <property name="row">2</property>
@@ -84,12 +84,6 @@
                               <object class="GtkComboBox" id="pattern_combo">
                                 <property name="hexpand">1</property>
                                 <property name="has_entry">1</property>
-                                <property name="child">
-                                  <object class="GtkEntry" id="pattern_combo_entry">
-                                    <property name="visible">0</property>
-                                    <property name="focusable">1</property>
-                                  </object>
-                                </property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">1</property>
@@ -100,12 +94,6 @@
                               <object class="GtkComboBox" id="replacement_combo">
                                 <property name="hexpand">1</property>
                                 <property name="has_entry">1</property>
-                                <property name="child">
-                                  <object class="GtkEntry" id="replacement_combo_entry">
-                                    <property name="visible">0</property>
-                                    <property name="focusable">1</property>
-                                  </object>
-                                </property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">2</property>
