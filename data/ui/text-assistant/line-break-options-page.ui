@@ -32,6 +32,10 @@
   <object class="GtkWindow" id="window">
     <property name="child">
       <object class="GtkBox" id="main_container">
+        <property name="margin_start">18</property>
+        <property name="margin_end">18</property>
+        <property name="margin_top">18</property>
+        <property name="margin_bottom">18</property>
         <property name="hexpand">1</property>
         <property name="vexpand">1</property>
         <property name="orientation">vertical</property>
