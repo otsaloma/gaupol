@@ -19,7 +19,6 @@
 
 import aeidon
 import gaupol
-import inspect
 import sys
 import traceback
 import webbrowser
@@ -189,16 +188,6 @@ def idle_add(function, *args, **kwargs):
         function(*args, **kwargs)
         return False # to not be called again.
     return GLib.idle_add(call_function, *args, **kwargs)
-
-def install_module(name, obj):
-    """
-    Install `obj`'s module into the :mod:`gaupol` namespace.
-
-    Typical call is of form::
-
-        gaupol.util.install_module("foo", lambda: None)
-    """
-    gaupol.__dict__[name] = inspect.getmodule(obj)
 
 def iterate_main():
     """Iterate the GLib main loop while events are pending."""

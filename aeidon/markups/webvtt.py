@@ -19,10 +19,12 @@
 
 import aeidon
 
+from .subrip import SubRip
+
 __all__ = ("WebVTT",)
 
 
-class WebVTT(aeidon.markups.SubRip):
+class WebVTT(SubRip):
 
     """
     Text markup for the WebVTT format.

@@ -19,10 +19,12 @@
 
 import aeidon
 
+from .subrip import SubRip
+
 __all__ = ("SubViewer2",)
 
 
-class SubViewer2(aeidon.markups.SubRip):
+class SubViewer2(SubRip):
 
     """
     Text markup for the SubViewer 2.0 format.

@@ -20,7 +20,6 @@
 import aeidon
 import collections
 import contextlib
-import inspect
 import locale
 import mimetypes
 import os
@@ -276,16 +275,6 @@ def get_unique(lst, keep_last=False):
         return list(reversed(get_unique(list(reversed(lst)))))
     # https://stackoverflow.com/a/7961425
     return list(collections.OrderedDict.fromkeys(lst))
-
-def install_module(name, obj):
-    """
-    Install `obj`'s module into the :mod:`aeidon` namespace.
-
-    Typical call is of form::
-
-        aeidon.util.install_module("foo", lambda: None)
-    """
-    aeidon.__dict__[name] = inspect.getmodule(obj)
 
 def is_video_file(path):
     """Return ``True`` if `path` is a video file."""

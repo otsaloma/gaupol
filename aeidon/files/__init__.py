@@ -19,8 +19,6 @@
 
 import aeidon
 
-aeidon.util.install_module("files", lambda: None)
-
 from .ssa        import SubStationAlpha
 from .ass        import AdvSubStationAlpha
 from .lrc        import LRC
