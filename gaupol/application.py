@@ -134,7 +134,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         try:
             return self._delegations[name]
         except KeyError:
-            raise AttributeError
+            raise AttributeError(name)
 
     def __setattr__(self, name, value):
         """Set value of attribute `name`."""

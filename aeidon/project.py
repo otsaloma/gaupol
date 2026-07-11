@@ -134,8 +134,8 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
         """Return method delegated to an agent."""
         try:
             return self._delegations[name]
-        except LookupError:
-            raise AttributeError
+        except KeyError:
+            raise AttributeError(name)
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""

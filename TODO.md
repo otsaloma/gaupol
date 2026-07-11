@@ -1,6 +1,5 @@
 # TODO
 
-- Dismantle the delegate system?
 - Do we need aeidon.util.install_module?
 - Check aeidon/i18n.py
 - Update encoding list in aeidon/encodings.py
