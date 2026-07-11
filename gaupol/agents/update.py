@@ -100,7 +100,6 @@ class UpdateAgent(aeidon.Delegate):
         page = self.get_current_page()
         self._update_actions(page)
         self._update_widgets(page)
-        self.extension_manager.update_extensions(page)
 
     def _update_widgets(self, page):
         """Update states of all widgets for `page`."""

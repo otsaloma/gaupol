@@ -64,7 +64,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     :ivar clipboard: Instance of :class:`aeidon.Clipboard` used
     :ivar counter: Iterator used for naming unsaved documents
     :ivar _delegations: Dictionary mapping method names to agent methods
-    :ivar extension_manager: Instance of :class:`gaupol.ExtensionManager` used
     :ivar notebook: A :class:`Gtk.Notebook` used to hold multiple projects
     :ivar pages: List of :class:`gaupol.Page` currently open
     :ivar paned: A :class:`Gtk.Paned` to hold player and subtitles
@@ -109,7 +108,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.clipboard = aeidon.Clipboard()
         self.counter = itertools.count(1)
         self._delegations = {}
-        self.extension_manager = gaupol.ExtensionManager(self)
         self.notebook = None
         self.pages = []
         self.pattern = ""
@@ -126,8 +124,6 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.x_clipboard = None
         self._init_delegations()
         self._init_gui()
-        self.extension_manager.find_extensions()
-        self.extension_manager.setup_extensions()
         self.update_gui()
         self.window.present()
         self.emit("init-done")

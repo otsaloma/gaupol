@@ -1,6 +1,3 @@
-[share/gaupol/extensions/custom-framerates]
-data/extensions/custom-framerates/*.*
-
 [share/icons/hicolor/scalable/apps]
 data/icons/io.otsaloma.gaupol.svg
 

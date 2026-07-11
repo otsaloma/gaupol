@@ -7,7 +7,6 @@ check:
 	flake8 bin/gaupol
 	flake8 aeidon
 	flake8 gaupol
-	flake8 data/extensions/*/*.py
 	flake8 *.py
 
 clean:
@@ -35,7 +34,6 @@ release:
 	@echo "BUMP VERSION NUMBERS"
 	$(EDITOR) aeidon/__init__.py
 	$(EDITOR) gaupol/__init__.py
-	$(EDITOR) data/extensions/*/*.in
 	@echo "ADD RELEASE NOTES"
 	$(EDITOR) NEWS.md
 	$(EDITOR) data/io.otsaloma.gaupol.appdata.xml.in
@@ -48,7 +46,7 @@ release:
 	@echo "REMEMBER TO UPDATE WEBSITE"
 
 test:
-	py.test -xs aeidon gaupol data/extensions
+	py.test -xs aeidon gaupol
 
 # Interactive!
 translations:

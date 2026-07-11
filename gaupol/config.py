@@ -97,9 +97,6 @@ CONFIG_DEFAULTS = {
         "try_locale": True,
         "visible": ["utf_8", "cp1252"],
     },
-    "extensions": {
-        "active": [],
-    },
     "file": {
         "align_method": aeidon.align_methods.POSITION,
         "directory": "",
@@ -206,8 +203,6 @@ CONFIG_ENUMS = {
         "length_unit": gaupol.length_units,
         "mode": aeidon.modes,
         "visible_fields": gaupol.fields,
-    },
-    "extensions": {
     },
     "file": {
         "align_method": aeidon.align_methods,
@@ -415,19 +410,16 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                          file=sys.stderr)
 
         if hasattr(container, option) and value is None:
-            # Discard a None-value for all non-extension options.
-            # None-values are not used for any options, but might
-            # accidentally bet set in some corner or error cases.
-            # By discarding them here, we ensure a clean start.
+            # Discard None-values. They are not used for any options,
+            # but might accidentally bet set in some corner or error
+            # cases. By discarding them here, we ensure a clean start.
             return print("Discarding value '{}' of option '{}.{}' from configuration file '{}'."
                          .format(value, "::".join(sections), option, self.path),
                          file=sys.stderr)
 
         if not hasattr(container, option):
             # Add attribute if it does not exist in container, which
-            # has been initialized from config_defaults. This is needed
-            # for extensions, defaults of options of which are not
-            # known until later. Any possible obsolete non-extension
+            # has been initialized from CONFIG_DEFAULTS. Any obsolete
             # options created here will be removed before writing in
             # write_to_file.
             container.add_attribute(option, value)
@@ -444,20 +436,6 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             container = getattr(container, section)
             enums = enums.get(section, {})
         return sections, container, enums
-
-    def register_extension(self, name, defaults, enums=None):
-        """
-        Add section and options for extension.
-
-        `name` should be preferrably the module name of the extension and
-        it will appear in the section name as ``extensions::name``. `defaults`
-        should be a dictionary of default values for options. `enums` should be
-        a dictionary of :class:`aeidon.Enumeration` instances corresponding
-        to enumeration items that appear in options.
-        """
-        self._defaults["extensions"].update({name: defaults})
-        self.extensions.extend({name: copy.deepcopy(defaults)})
-        self._enums["extensions"].update({name: enums or {}})
 
     def restore_defaults(self):
         """Set all configuration options to their default values."""
@@ -480,11 +458,9 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                     value = root[section][option]
                     json_value = json.dumps(
                         value, cls=EnumEncoder, ensure_ascii=False)
-                    # Discard removed options, but always keep
-                    # all options of all extensions.
-                    if (not section.startswith("extensions::")
-                        and (not section in defaults or
-                             not option in defaults[section])): continue
+                    # Discard removed options.
+                    if (not section in defaults or
+                        not option in defaults[section]): continue
                     # Write options that remain at their default value
                     # (perhaps, but not necessarily unset) as commented out.
                     if (section in defaults

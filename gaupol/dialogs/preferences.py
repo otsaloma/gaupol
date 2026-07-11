@@ -123,137 +123,6 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
         gaupol.conf.spell_check.inline = check_button.get_active()
 
 
-class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
-
-    """Extension activation and preferences page."""
-
-    _widgets = [
-        "extensions_about_button",
-        "extensions_help_button",
-        "extensions_preferences_button",
-        "extensions_toolbar",
-        "extensions_tree_view",
-    ]
-
-    def __init__(self, master, application):
-        """Initialize an :class:`ExtensionPage` instance."""
-        aeidon.Delegate.__init__(self, master)
-        self._set_attributes(self._widgets, "extensions_")
-        self.application = application
-        self.manager = self.application.extension_manager
-        self._init_tree_view()
-        self._init_values()
-        self._init_sensitivities()
-
-    def _get_selected_module(self):
-        """Return the selected module in the tree view or ``None``."""
-        selection = self._tree_view.get_selection()
-        store, itr = selection.get_selected()
-        if itr is None: return None
-        return store.get_value(itr, 0)
-
-    def _init_sensitivities(self):
-        """Initialize button sensitivities."""
-        self._about_button.set_sensitive(False)
-        self._help_button.set_sensitive(False)
-        self._preferences_button.set_sensitive(False)
-
-    def _init_tree_view(self):
-        """Initialize the tree view."""
-        store = Gtk.ListStore(str, bool, str)
-        self._tree_view.set_model(store)
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        selection.connect("changed", self._on_tree_view_selection_changed)
-        renderer = Gtk.CellRendererToggle()
-        renderer.props.activatable = True
-        renderer.props.xpad = 6
-        renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = Gtk.TreeViewColumn("", renderer, active=1)
-        self._tree_view.append_column(column)
-        renderer = Gtk.CellRendererText()
-        renderer.props.ellipsize = Pango.EllipsizeMode.END
-        column = Gtk.TreeViewColumn("", renderer, markup=2)
-        self._tree_view.append_column(column)
-
-    def _init_values(self):
-        """Initialize default values for widgets."""
-        store = self._tree_view.get_model()
-        extensions = []
-        for module in self.manager.get_modules():
-            metadata = self.manager.get_metadata(module)
-            if metadata.get_field_boolean("Hidden", False): continue
-            markup = "<b>{}</b>\n{}".format(
-                metadata.get_name(), metadata.get_description())
-            extensions.append((module, markup))
-        extensions.sort(key=lambda x: x[1])
-        for module, markup in extensions:
-            active = module in gaupol.conf.extensions.active
-            store.append((module, active, markup))
-
-    def _on_about_button_clicked(self, *args):
-        """Construct and show a :class:`Gtk.AboutDialog` for extension."""
-        module = self._get_selected_module()
-        metadata = self.manager.get_metadata(module)
-        dialog = Gtk.AboutDialog()
-        dialog.set_transient_for(self._dialog)
-        dialog.set_program_name(metadata.get_name())
-        dialog.set_comments(metadata.get_description())
-        dialog.set_logo_icon_name("io.otsaloma.gaupol")
-        if metadata.has_field("Version"):
-            dialog.set_version(metadata.get_field("Version"))
-        if metadata.has_field("Copyright"):
-            copyright = "\n".join(metadata.get_field_list("Copyright"))
-            dialog.set_copyright(copyright)
-        if metadata.has_field("Website"):
-            dialog.set_website(metadata.get_field("Website"))
-            label = _("{} Extension Website").format(metadata.get_name())
-            dialog.set_website_label(label)
-        if metadata.has_field("Authors"):
-            dialog.set_authors(metadata.get_field_list("Authors"))
-        dialog.present()
-
-    def _on_help_button_clicked(self, *args):
-        """Show extension's own documentation."""
-        module = self._get_selected_module()
-        self.manager.show_help(module)
-
-    def _on_preferences_button_clicked(self, *args):
-        """Show extension's preferences dialog."""
-        module = self._get_selected_module()
-        self.manager.show_preferences_dialog(module, self._dialog)
-
-    def _on_tree_view_cell_toggled(self, renderer, path):
-        """Activate or deactivate toggled extension."""
-        store = self._tree_view.get_model()
-        module = store[path][0]
-        active = store[path][1]
-        if active:
-            self.manager.teardown_extension(module)
-            gaupol.conf.extensions.active.remove(module)
-        else:
-            self.manager.setup_extension(module)
-            gaupol.conf.extensions.active.append(module)
-        for row in store:
-            row[1] = self.manager.is_active(row[0])
-        selection = self._tree_view.get_selection()
-        selection.emit("changed")
-
-    def _on_tree_view_selection_changed(self, *args):
-        """Set sensitivities of buttons."""
-        module = self._get_selected_module()
-        have_selection = self._get_selected_module() is not None
-        self._about_button.set_sensitive(have_selection)
-        if module in gaupol.conf.extensions.active:
-            has_help = self.manager.has_help(module)
-            self._help_button.set_sensitive(has_help)
-            has_preferences = self.manager.has_preferences_dialog(module)
-            self._preferences_button.set_sensitive(has_preferences)
-        else: # Cannot query unimported extensions.
-            self._help_button.set_sensitive(False)
-            self._preferences_button.set_sensitive(False)
-
-
 class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """File preferences page."""
@@ -539,7 +408,6 @@ class PreferencesDialog(gaupol.BuilderDialog):
         self._callbacks = {}
         gaupol.BuilderDialog.__init__(self, "preferences-dialog.ui")
         self._editor_page = EditorPage(self, application)
-        self._extension_page = ExtensionPage(self, application)
         self._file_page = FilePage(self, application)
         self._preview_page = PreviewPage(self, application)
         self._video_page = VideoPage(self, application)
@@ -562,7 +430,6 @@ class PreferencesDialog(gaupol.BuilderDialog):
         """Return a dictionary mapping names to callback methods."""
         callbacks = {}
         for page in (self._editor_page,
-                     self._extension_page,
                      self._file_page,
                      self._preview_page,
                      self._video_page):

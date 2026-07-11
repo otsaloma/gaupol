@@ -107,8 +107,6 @@ from gaupol.dialogs.position_transform import *
 from gaupol.assistants import *
 from gaupol.action import *
 from gaupol import actions
-from gaupol.extension import *
-from gaupol.extensionman import *
 from gaupol import agents
 from gaupol.application import *
 from gaupol.applicationman import ApplicationManager

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 """
-There are four relevant customizations to the standard distutils installation
+There are three relevant customizations to the standard distutils installation
 process: (1) allowing separate installations of aeidon and gaupol, (2) writing
-the aeidon.paths module, (3) handling translations and (4) extensions.
+the aeidon.paths module and (3) handling translations.
 
 (1) Allowing separate installations of aeidon and gaupol are handled through
     global options --with-aeidon, --without-aeidon, --with-gaupol and
@@ -20,14 +20,7 @@ the aeidon.paths module, (3) handling translations and (4) extensions.
     file gets correctly written.
 
 (3) During installation, the .po files are compiled into .mo files and the
-    appdata, desktop, pattern and extension metadata files are translated.
-    This requires gettext.
-
-(4) Extensions are installed under the data directory. All python code included
-    in the extensions are compiled during the 'install_data' command, using the
-    same arguments for 'byte_compile' as used by the 'install_lib' command.
-    If the 'install_lib' command was given the '--no-compile' option, then
-    extensions are not compiled either.
+    appdata, desktop and pattern files are translated. This requires gettext.
 """
 
 import glob
@@ -212,25 +205,6 @@ class Install(install):
 
 class InstallData(install_data):
 
-    def __build_extensions(self):
-        get_command_obj = self.distribution.get_command_obj
-        if not get_command_obj("install_lib").compile: return
-        optimize = get_command_obj("install_lib").optimize
-        data_dir = get_command_obj("install_data").install_dir
-        data_dir = os.path.join(data_dir, "share", "gaupol")
-        files = glob.glob("{}/extensions/*/*.py".format(data_dir))
-        distutils.util.byte_compile(files, optimize, self.force, self.dry_run)
-        # Figure out paths of the compiled files and add them to
-        # self.outfiles so that 'setup.py --record' works correctly.
-        def get_cache_pattern(path):
-            dir, file = os.path.split(path)
-            file = os.path.splitext(file)[0] + ".*"
-            return os.path.join(dir, "__pycache__", file)
-        for pattern in map(get_cache_pattern, files):
-            for file in glob.glob(pattern):
-                if not file in self.outfiles:
-                    self.outfiles.append(file)
-
     def __generate_linguas(self):
         linguas = sorted(glob.glob("po/*.po"))
         linguas = [os.path.basename(x)[:-3] for x in linguas]
@@ -256,27 +230,6 @@ class InstallData(install_data):
             # fall back on copying the file without translations.
             shutil.copy("{}.in".format(path), path)
         return ("share/applications", [path])
-
-    def __get_extension_file(self, extension_file):
-        assert extension_file.endswith(".in")
-        path = extension_file[:-3]
-        command = " ".join((
-            "msgfmt --desktop -d po --template {}.in -o {}",
-            "--keyword=",
-            "--keyword=Name",
-            "--keyword=Description",
-        ))
-        run_or_warn(command.format(path, path))
-        if not os.path.isfile(path):
-            # The above can fail with an old version of gettext,
-            # fall back on copying the file without translations.
-            shutil.copy("{}.in".format(path), path)
-        extension = os.path.basename(os.path.dirname(extension_file))
-        return ("share/gaupol/extensions/{}".format(extension), [path])
-
-    def __get_extension_files(self):
-        files = sorted(glob.glob("data/extensions/*/*.extension.in"))
-        return [self.__get_extension_file(x) for x in files]
 
     def __get_mo_file(self, po_file):
         locale = os.path.basename(po_file[:-3])
@@ -319,12 +272,9 @@ class InstallData(install_data):
             self.data_files.extend(self.__get_mo_files())
             self.data_files.extend(self.__get_pattern_files())
         if self.distribution.with_gaupol:
-            self.data_files.extend(self.__get_extension_files())
             self.data_files.append(self.__get_appdata_file())
             self.data_files.append(self.__get_desktop_file())
         install_data.run(self)
-        if self.distribution.with_gaupol:
-            self.__build_extensions()
 
 
 class InstallLib(install_lib):

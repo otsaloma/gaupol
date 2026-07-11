@@ -146,7 +146,6 @@ class CloseAgent(aeidon.Delegate):
             for page in self.pages:
                 if self._need_confirmation(page):
                     self._confirm_close(page)
-        self.extension_manager.teardown_extensions()
         if not gaupol.conf.application_window.maximized:
             conf = gaupol.conf.application_window
             conf.size = list(self.window.get_default_size())

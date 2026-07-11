@@ -37,13 +37,6 @@ class TestConfigurationStore(gaupol.TestCase):
         self.conf.restore_defaults()
         self.conf.read_from_file()
 
-    def test_register_extension(self):
-        defaults = dict(x=1, mode=aeidon.modes.TIME)
-        enums = dict(mode=aeidon.modes)
-        self.conf.register_extension("test", defaults, enums)
-        assert self.conf.extensions.test.x == 1
-        assert self.conf.extensions.test.mode == aeidon.modes.TIME
-
     def test_restore_defaults(self):
         size = list(self.conf.application_window.size)
         self.conf.application_window.size = [99, 99]

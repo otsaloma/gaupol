@@ -34,7 +34,6 @@ jobs:
       - run: make check
       - run: pytest aeidon
       - run: xvfb-run pytest gaupol
-      - run: xvfb-run pytest data/extensions
       - run: python3 setup.py install --prefix=/tmp/local
       - run: python3 setup.py install --root=/tmp/pkg
       - run: python3 setup.py clean
