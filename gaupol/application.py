@@ -123,6 +123,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         self.window = None
         self.x_clipboard = None
         self._init_delegations()
+        self._init_custom_framerates()
         self._init_gui()
         self.update_gui()
         self.window.present()
@@ -151,6 +152,21 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
                 action.props.name.replace("-", "_"))
             action.connect("activate", getattr(self, callback))
             self.window.add_action(action)
+
+    def _init_custom_framerates(self):
+        """Add framerates from ``conf.editor.custom_framerates``."""
+        menu = self.get_menubar_section("custom-framerates-placeholder")
+        for value in sorted(gaupol.conf.editor.custom_framerates):
+            name = "FPS_{:.3f}".format(value).replace(".", "_")
+            if hasattr(aeidon.framerates, name): continue
+            setattr(aeidon.framerates, name, aeidon.EnumerationItem())
+            framerate = getattr(aeidon.framerates, name)
+            framerate.label = _("{:.3f} fps").format(value)
+            framerate.value = float(value)
+            if menu is not None:
+                # Menubar not available when running unit tests.
+                action = "win.set-framerate::{}".format(name)
+                menu.append(framerate.label, action)
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""

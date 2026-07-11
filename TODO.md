@@ -1,8 +1,5 @@
 # TODO
 
-- Drop the whole extension system
-  - Add some more framerates to the default enums?
-  - Add config file entry for custom framerates?
 - Dismantle the delegate system?
 - Do we need aeidon.util.install_module?
 - Check aeidon/i18n.py

@@ -67,6 +67,7 @@ CONFIG_DEFAULTS = {
         "custom_font": ("Consolas 9" if sys.platform == "win32"
                         else "monospace"),
 
+        "custom_framerates": [],
         "field_order": [
             gaupol.fields.NUMBER,
             gaupol.fields.START,
