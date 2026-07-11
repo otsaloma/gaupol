@@ -18,6 +18,7 @@
 """Building and updating dynamic menus."""
 
 import aeidon
+import contextlib
 import gaupol
 import os
 
@@ -158,7 +159,7 @@ class MenuAgent(aeidon.Delegate):
             else:
                 # Otherwise, create the action and add to self.window.
                 # XXX: For some reason, this can sometimes fail.
-                with aeidon.util.silent(Exception):
+                with contextlib.suppress(Exception):
                     ao = gaupol.Action(action)
                     ao.gaupol_path = path
                     callback = self._on_open_recent_main_file_activate

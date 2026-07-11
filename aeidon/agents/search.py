@@ -18,6 +18,7 @@
 """Searching for and replacing text."""
 
 import aeidon
+import contextlib
 import re
 
 from aeidon.i18n import _
@@ -74,7 +75,7 @@ class SearchAgent(aeidon.Delegate):
         self._match_passed = False
         indices = self._indices or self.get_all_indices()
         while True:
-            with aeidon.util.silent(ValueError):
+            with contextlib.suppress(ValueError):
                 # Return match in document after location.
                 return find(index, doc, pos)
             # Proceed to the next document or raise StopIteration.

@@ -20,6 +20,7 @@
 __version__ = "1.99"
 COMBO_SEPARATOR = "<separator/>"
 
+import contextlib
 import sys
 import warnings
 
@@ -48,7 +49,7 @@ gi.require_version("Graphene", "1.0")
 gi.require_version("Gsk", "4.0")
 gi.require_version("Gtk", "4.0")
 
-with aeidon.util.silent(Exception):
+with contextlib.suppress(Exception):
     gi.require_version("GtkSource", "5")
 
 for module, version in {
@@ -57,10 +58,10 @@ for module, version in {
     "GstVideo": "1.0",
     "GstTag": "1.0",
 }.items():
-    with aeidon.util.silent(Exception):
+    with contextlib.suppress(Exception):
         gi.require_version(module, version)
 
-with aeidon.util.silent(Exception):
+with contextlib.suppress(Exception):
     from gi.repository import Gst
     Gst.init(None)
 

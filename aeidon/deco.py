@@ -19,6 +19,7 @@
 
 import aeidon
 import collections
+import contextlib
 import functools
 import pickle
 import traceback
@@ -94,7 +95,7 @@ def memoize(limit=100):
                           args[1:], kwargs)
 
             key = pickle.dumps(params)
-            with aeidon.util.silent(KeyError):
+            with contextlib.suppress(KeyError):
                 return cache[key]
             cache[key] = function(*args, **kwargs)
             if limit is not None:
@@ -131,7 +132,7 @@ def once(function):
     cache = []
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        with aeidon.util.silent(IndexError):
+        with contextlib.suppress(IndexError):
             return cache[0]
         cache.append(function(*args, **kwargs))
         return cache[0]

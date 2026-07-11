@@ -18,6 +18,7 @@
 """Dialog for configuring spell-check."""
 
 import aeidon
+import contextlib
 import gaupol
 
 from aeidon.i18n   import _
@@ -120,9 +121,9 @@ class LanguageDialog(gaupol.BuilderDialog):
     def _populate_store(self, store):
         """Add all available languages to `store`."""
         locales = []
-        with aeidon.util.silent(Exception):
+        with contextlib.suppress(Exception):
             locales = aeidon.SpellChecker.list_languages()
         for locale in locales:
-            with aeidon.util.silent(Exception):
+            with contextlib.suppress(Exception):
                 name = aeidon.locales.code_to_name(locale)
                 store.append((locale, name))

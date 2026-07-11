@@ -22,6 +22,7 @@ import functools
 import gaupol
 import os
 import re
+import traceback
 
 from aeidon.i18n   import _, n_
 from gi.repository import Gtk
@@ -591,8 +592,10 @@ class SearchDialog(gaupol.BuilderDialog):
     def _write_history(self, name):
         """Write history to file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
-        with aeidon.util.silent(OSError, tb=True):
+        try:
             path = os.path.join(directory, "{}.history".format(name))
             history = getattr(self, name)
             text = "\n".join(history) + "\n"
             aeidon.util.write(path, text)
+        except OSError:
+            traceback.print_exc()

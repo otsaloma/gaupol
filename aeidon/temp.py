@@ -17,8 +17,8 @@
 
 """Creating and removing temporary files and directories."""
 
-import aeidon
 import atexit
+import contextlib
 import os
 import tempfile
 
@@ -44,12 +44,12 @@ def create_directory(suffix=""):
 def remove(path):
     """Remove temporary file or directory at `path`."""
     if os.path.isfile(path):
-        with aeidon.util.silent(OSError):
+        with contextlib.suppress(OSError):
             os.remove(path)
     if os.path.isdir(path):
         for name in os.listdir(path):
             remove(os.path.join(path, name))
-        with aeidon.util.silent(OSError):
+        with contextlib.suppress(OSError):
             os.rmdir(path)
 
 def remove_all():

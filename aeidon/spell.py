@@ -18,10 +18,12 @@
 """Checking and correcting spelling."""
 
 import aeidon
+import contextlib
 import os
 import re
+import traceback
 
-with aeidon.util.silent(Exception):
+with contextlib.suppress(Exception):
     from gi.repository import Spelling
     Spelling.init()
 
@@ -114,11 +116,13 @@ class SpellChecker:
     def read_replacements(self):
         """Read list of replacements from file."""
         if not os.path.isfile(self.replacement_file): return
-        with aeidon.util.silent(IOError, OSError, tb=True):
+        try:
             lines = aeidon.util.readlines(self.replacement_file)
             lines = aeidon.util.get_unique(lines)
             lines = list(filter(lambda x: x.strip(), lines))
             self.replacements = [tuple(x.strip().split("|", 1)) for x in lines]
+        except OSError:
+            traceback.print_exc()
 
     @property
     def replacement_file(self):
@@ -148,8 +152,10 @@ class SpellChecker:
         replacements = aeidon.util.get_unique(
             self.replacements, keep_last=True)[-10000:]
         text = "\n".join("|".join(x) for x in replacements) + "\n"
-        with aeidon.util.silent(IOError, OSError, tb=True):
+        try:
             aeidon.util.write(self.replacement_file, text)
+        except OSError:
+            traceback.print_exc()
 
 
 class SpellCheckNavigator:

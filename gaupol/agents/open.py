@@ -18,6 +18,7 @@
 """Opening subtitle files and creating new projects."""
 
 import aeidon
+import contextlib
 import gaupol
 import os
 
@@ -263,7 +264,7 @@ class OpenAgent(aeidon.Delegate):
         page = (gaupol.Page() if doc == aeidon.documents.MAIN
                 else self.get_current_page())
         for encoding in encodings:
-            with aeidon.util.silent(UnicodeError):
+            with contextlib.suppress(UnicodeError):
                 n = self._try_open_file(page, doc, path, encoding)
                 self._check_sort_count(path, n)
                 return page
@@ -421,7 +422,7 @@ class OpenAgent(aeidon.Delegate):
         except aeidon.ParseError:
             bom_encoding = aeidon.encodings.detect_bom(path)
             encoding = bom_encoding or encoding
-            with aeidon.util.silent(Exception):
+            with contextlib.suppress(Exception):
                 format = aeidon.util.detect_format(path, encoding)
             self._show_parse_error_dialog(basename, format)
         raise gaupol.Default

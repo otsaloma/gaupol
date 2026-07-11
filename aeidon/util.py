@@ -29,7 +29,6 @@ import shutil
 import stat
 import subprocess
 import sys
-import traceback
 import urllib.parse
 
 VIDEO_FILE_EXTENSIONS = [
@@ -107,7 +106,7 @@ def atomic_open(path, mode="w", *args, **kwargs):
                     os.remove(path)
             shutil.move(temp_path, path)
     finally:
-        with silent(Exception):
+        with contextlib.suppress(Exception):
             os.remove(temp_path)
 
 @aeidon.deco.once
@@ -231,7 +230,7 @@ def get_default_newline():
 def get_encoding_alias(encoding):
     """Return proper Python alias for `encoding`."""
     from encodings.aliases import aliases
-    with silent(LookupError):
+    with contextlib.suppress(LookupError):
         return aliases[encoding]
     return encoding
 
@@ -261,7 +260,7 @@ def get_template_header(format):
     """
     directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
     path = os.path.join(directory, format.name.lower())
-    with silent(Exception):
+    with contextlib.suppress(Exception):
         header = read(path, encoding=None, quiet=True).rstrip()
         return normalize_newlines(header)
     directory = os.path.join(aeidon.DATA_DIR, "headers")
@@ -397,14 +396,6 @@ def shell_quote(path):
         path = path.replace("\\", "\\\\")
         path = path.replace('"', '\\"')
     return '"{}"'.format(path)
-
-@contextlib.contextmanager
-def silent(*exceptions, tb=False):
-    """Try to execute body, ignoring `exceptions`."""
-    try:
-        yield
-    except exceptions:
-        if tb: traceback.print_exc()
 
 def start_process(command, **kwargs):
     """

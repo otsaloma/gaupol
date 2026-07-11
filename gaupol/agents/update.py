@@ -18,6 +18,7 @@
 """Updating the application GUI."""
 
 import aeidon
+import contextlib
 import gaupol
 
 
@@ -88,7 +89,7 @@ class UpdateAgent(aeidon.Delegate):
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""
         rows = []
-        with aeidon.util.silent(AttributeError):
+        with contextlib.suppress(AttributeError):
             rows = page.view.get_selected_rows()
         for name in self.window.list_actions():
             action = self.get_action(name)

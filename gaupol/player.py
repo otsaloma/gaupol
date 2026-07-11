@@ -18,15 +18,17 @@
 """GStreamer video player."""
 
 import aeidon
+import contextlib
 import gaupol
 import time
+import traceback
 
 from collections import namedtuple
 from aeidon.i18n   import _
 from gi.repository import GLib
 from gi.repository import Gtk
 
-with aeidon.util.silent(Exception):
+with contextlib.suppress(Exception):
     from gi.repository import Gst
 
 __all__ = ("VideoPlayer",)
@@ -409,8 +411,10 @@ class VideoPlayer(aeidon.Observable):
         # Do a zero seek to force an update of the overlay.
         # https://github.com/otsaloma/gaupol/issues/181
         if self._in_default_segment:
-            with aeidon.util.silent(Exception, tb=True):
+            try:
                 self._seek_null()
+            except Exception:
+                traceback.print_exc()
 
     @property
     def volume(self):

@@ -19,6 +19,7 @@
 
 import aeidon
 import bisect
+import contextlib
 import gaupol
 
 from aeidon.i18n import _, n_
@@ -346,7 +347,7 @@ class EditAgent(aeidon.Delegate):
         if page.view.is_position_column(col):
             if not value: return
             if page.edit_mode == aeidon.modes.FRAME:
-                with aeidon.util.silent(ValueError):
+                with contextlib.suppress(ValueError):
                     value = aeidon.as_frame(value)
         if col == page.view.columns.START:
             return page.project.set_start(row, value)
@@ -355,7 +356,7 @@ class EditAgent(aeidon.Delegate):
         if col ==  page.view.columns.DURATION:
             if page.edit_mode == aeidon.modes.TIME:
                 value = value.replace(",", ".")
-                with aeidon.util.silent(ValueError):
+                with contextlib.suppress(ValueError):
                     value = aeidon.as_seconds(value)
             return page.project.set_duration(row, value)
         doc = page.text_column_to_document(col)
@@ -386,7 +387,7 @@ class EditAgent(aeidon.Delegate):
     def _paste_texts(self, clipboard, result):
         """Paste texts once the desktop clipboard has been read."""
         text = None
-        with aeidon.util.silent(GLib.Error):
+        with contextlib.suppress(GLib.Error):
             text = clipboard.read_text_finish(result)
         page = self.get_current_page()
         if text:

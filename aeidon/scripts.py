@@ -18,6 +18,7 @@
 """Names and ISO 15924 codes for scripts and conversions between them."""
 
 import aeidon
+import contextlib
 import json
 import os
 
@@ -50,7 +51,7 @@ def code_to_name(code):
     """Convert ISO 15924 `code` to localized script name."""
     if not _scripts:
         _init_scripts()
-    with aeidon.util.silent(LookupError):
+    with contextlib.suppress(LookupError):
         return d_("iso_15924", _scripts[code])
     return code
 

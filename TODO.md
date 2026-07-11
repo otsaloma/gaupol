@@ -1,6 +1,5 @@
 # TODO
 
-- Use contextlib.suppress?
 - Use https://www.gnu.org/licenses/
 - Update encoding list in aeidon/encodings.py
 - Simplify aeidon/paths.py

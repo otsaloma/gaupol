@@ -18,6 +18,7 @@
 """Saving documents."""
 
 import aeidon
+import contextlib
 import gaupol
 import os
 
@@ -33,10 +34,10 @@ class SaveAgent(aeidon.Delegate):
     def _on_save_all_documents_activate(self, *args):
         """Save all open documents."""
         for page in self.pages:
-            with aeidon.util.silent(gaupol.Default):
+            with contextlib.suppress(gaupol.Default):
                 self.save_main(page)
             if page.project.tran_changed is not None:
-                with aeidon.util.silent(gaupol.Default):
+                with contextlib.suppress(gaupol.Default):
                     self.save_translation(page)
         self.update_gui()
 

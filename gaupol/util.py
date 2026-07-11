@@ -18,6 +18,7 @@
 """Miscellaneous functions and decorators."""
 
 import aeidon
+import contextlib
 import gaupol
 import sys
 import traceback
@@ -231,7 +232,7 @@ def prepare_text_view(text_view):
     if (gaupol.SpellChecker.available() and
         gaupol.conf.spell_check.inline):
         language = gaupol.conf.spell_check.language
-        with aeidon.util.silent(Exception):
+        with contextlib.suppress(Exception):
             checker = gaupol.SpellChecker(language)
             checker.attach(text_view)
     connect = gaupol.conf.editor.connect

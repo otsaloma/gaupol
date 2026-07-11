@@ -18,6 +18,7 @@
 """Names and ISO 639 codes for languages and conversions between them."""
 
 import aeidon
+import contextlib
 import json
 import os
 
@@ -50,7 +51,7 @@ def code_to_name(code):
     """Convert ISO 639 `code` to localized language name."""
     if not _languages:
         _init_languages()
-    with aeidon.util.silent(LookupError):
+    with contextlib.suppress(LookupError):
         return d_("iso_639", _languages[code])
     return code
 

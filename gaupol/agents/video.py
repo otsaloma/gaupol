@@ -18,6 +18,7 @@
 """Loading and interacting with video."""
 
 import aeidon
+import contextlib
 import gaupol
 import os
 
@@ -26,7 +27,7 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
 
-with aeidon.util.silent(Exception):
+with contextlib.suppress(Exception):
     from gi.repository import Gst
     from gi.repository import GstTag
 

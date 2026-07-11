@@ -18,6 +18,7 @@
 """Dialogs for applying linear transformations to positions."""
 
 import aeidon
+import contextlib
 import gaupol
 
 from aeidon.i18n   import _
@@ -112,7 +113,7 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         last_subtitle = len(page.project.subtitles)
         self._subtitle_spin_1.set_range(1, last_subtitle)
         self._subtitle_spin_2.set_range(1, last_subtitle)
-        with aeidon.util.silent(AttributeError):
+        with contextlib.suppress(AttributeError):
             self._text_label_1.props.xalign = 0
             self._text_label_2.props.xalign = 0
 

@@ -18,8 +18,9 @@
 """Checking and correcting spelling."""
 
 import aeidon
+import contextlib
 
-with aeidon.util.silent(Exception):
+with contextlib.suppress(Exception):
     from gi.repository import GtkSource
     from gi.repository import Spelling
 

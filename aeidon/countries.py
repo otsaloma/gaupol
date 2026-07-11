@@ -18,6 +18,7 @@
 """Names and ISO 3166 codes for countries and conversions between them."""
 
 import aeidon
+import contextlib
 import json
 import os
 
@@ -50,7 +51,7 @@ def code_to_name(code):
     """Convert ISO 3166 `code` to localized country name."""
     if not _countries:
         _init_countries()
-    with aeidon.util.silent(LookupError):
+    with contextlib.suppress(LookupError):
         return d_("iso_3166", _countries[code])
     return code
 

@@ -21,6 +21,7 @@ import aeidon
 import difflib
 import gaupol
 import re
+import traceback
 
 from gi.repository import Gdk
 from gi.repository import GLib
@@ -284,8 +285,10 @@ class MultilineDiffCellRenderer(MultilineCellRenderer):
         if not text: return ""
         text = GLib.markup_escape_text(text)
         ref_text = GLib.markup_escape_text(ref_text)
-        with aeidon.util.silent(Exception, tb=True):
+        try:
             text = self._add_diff_markup(text, ref_text)
+        except Exception:
+            traceback.print_exc()
         if not show_lengths: return text
         lines = text.split("\n")
         lengths = gaupol.ruler.get_lengths(text)

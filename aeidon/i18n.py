@@ -18,6 +18,7 @@
 """Internationalization functions."""
 
 import aeidon
+import contextlib
 import gettext
 import locale
 
@@ -29,14 +30,14 @@ class __(str): pass
 def bind(localedir=aeidon.LOCALE_DIR):
     """Bind translation domains and initialize gettext."""
     global _translation
-    with aeidon.util.silent(Exception):
+    with contextlib.suppress(Exception):
         # Set locale to the user's default setting.
         # Might fail on misconfigured systems.
         locale.setlocale(locale.LC_ALL, "")
     # Make translations available to the gettext module.
     gettext.bindtextdomain("gaupol", localedir)
     gettext.textdomain("gaupol")
-    with aeidon.util.silent(Exception):
+    with contextlib.suppress(Exception):
         # Make translations available to GTK as well.
         # Not available on all platforms.
         locale.bindtextdomain("gaupol", localedir)

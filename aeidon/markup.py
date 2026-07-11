@@ -18,6 +18,7 @@
 """Base class for text markup."""
 
 import aeidon
+import contextlib
 import re
 
 __all__ = ("Markup",)
@@ -150,7 +151,7 @@ class Markup(aeidon.Singleton):
         args = (text, (a, z))
         if value is not None:
             args = (text, match.group(value), (a, z))
-        with aeidon.util.silent(NotImplementedError):
+        with contextlib.suppress(NotImplementedError):
             text = method(*args)
         if text == orig_text: return text
         return self._encode_apply(text, regex, method, target, value)
