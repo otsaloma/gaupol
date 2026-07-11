@@ -244,7 +244,7 @@ class SearchDialog(gaupol.BuilderDialog):
     def _init_text_view(self):
         """Initialize the text view."""
         with aeidon.util.silent(AttributeError):
-            # Top and bottom margins available since GTK 3.18.
+            # Top and bottom margins available since GTK-3.18.
             self._text_view.set_top_margin(6)
             self._text_view.set_bottom_margin(6)
         gaupol.util.prepare_text_view(self._text_view)
@@ -562,7 +562,7 @@ class SearchDialog(gaupol.BuilderDialog):
             ins = text_buffer.get_iter_at_offset(match_span[0])
             bound = text_buffer.get_iter_at_offset(match_span[1])
             text_buffer.select_range(ins, bound)
-        # Some calls fail to select unless idle_add used (GTK 3.24).
+        # Some calls fail to select unless idle_add used (GTK-3.24).
         gaupol.util.idle_add(select_text, text_buffer, match_span)
 
     def _show_regex_error_dialog_pattern(self, message):

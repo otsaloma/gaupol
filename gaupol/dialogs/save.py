@@ -123,7 +123,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         grid.attach(self._newline_combo, 1, 2, 1, 1)
         grid.attach(self._framerate_label, 0, 3, 1, 1)
         grid.attach(self._framerate_combo, 1, 3, 1, 1)
-        # GTK 4 file choosers don't support an extra widget,
+        # GTK-4 file choosers don't support an extra widget,
         # add to the content area below the file chooser widget.
         self.get_content_area().append(grid)
 

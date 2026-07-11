@@ -95,7 +95,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         grid.attach(self._encoding_combo, 1, 0, 1, 1)
         grid.attach(self._align_label, 0, 1, 1, 1)
         grid.attach(self._align_combo, 1, 1, 1, 1)
-        # GTK 4 file choosers don't support an extra widget,
+        # GTK-4 file choosers don't support an extra widget,
         # add to the content area below the file chooser widget.
         self.get_content_area().append(grid)
 

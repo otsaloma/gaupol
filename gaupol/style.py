@@ -65,7 +65,7 @@ def _update_css(*args, **kwargs):
     """Reload CSS rules from file and conf into the shared provider."""
     if css_provider is None: return
     css = "\n".join((CSS, _get_editor_font_css()))
-    # load_from_string is new in GTK 4.12; load_from_data
+    # load_from_string is new in GTK-4.12; load_from_data
     # is deprecated since 4.12 and its signature changed.
     css_provider.load_from_string(css)
 

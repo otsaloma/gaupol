@@ -280,7 +280,7 @@ def run_dialog(dialog):
     """
     Run `dialog` in a nested main loop and return response.
 
-    A stand-in for ``Gtk.Dialog.run``, which was removed in GTK 4. Blocks in a
+    A stand-in for ``Gtk.Dialog.run``, which was removed in GTK-4. Blocks in a
     nested main loop until the "response" signal, keeping callers simple,
     synchronous code. Closing the dialog window emits response
     ``Gtk.ResponseType.DELETE_EVENT``.
