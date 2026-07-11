@@ -17,7 +17,6 @@
 
 """Dialog for informing that preview failed."""
 
-import aeidon
 import gaupol
 
 from aeidon.i18n   import _
@@ -55,10 +54,8 @@ class PreviewErrorDialog(Gtk.MessageDialog):
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
-        with aeidon.util.silent(AttributeError):
-            # Available since GTK-3.18.
-            self._text_view.set_top_margin(6)
-            self._text_view.set_bottom_margin(6)
+        self._text_view.set_top_margin(6)
+        self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(output)
         gaupol.style.use_font(self._text_view, "monospace")

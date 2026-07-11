@@ -118,10 +118,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         gaupol.style.use_font(self._entry, "custom")
         gaupol.style.use_font(self._text_view, "custom")
         gaupol.style.use_font(self._tree_view, "custom")
-        with aeidon.util.silent(AttributeError):
-            # Top and bottom margins available since GTK-3.18.
-            self._text_view.set_top_margin(6)
-            self._text_view.set_bottom_margin(6)
+        self._text_view.set_top_margin(6)
+        self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
         scale = gaupol.util.scale_to_size
