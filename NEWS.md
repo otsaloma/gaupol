@@ -233,12 +233,12 @@ while, but will be removed in 3.15.
 * Only force theme variant if `dark_theme` in config file is
   `true`, thus respecting any global settings ([#753315][])
 * Make `GTK_THEME=Adwaita:dark gaupol` work correctly
-* Move web pages to <http://otsaloma.io/gaupol/>
+* Move web pages to <https://otsaloma.io/gaupol/>
 * Move releases to <https://github.com/otsaloma/gaupol/releases>
 * Move bug tracker to <https://github.com/otsaloma/gaupol/issues>
 * Move documentation to <https://github.com/otsaloma/gaupol/tree/master/doc>
 * Close mailing lists, use Gitter instead: <https://gitter.im/otsaloma/gaupol>
-* Use Transifex for translations: <http://www.transifex.com/otsaloma/gaupol/>
+* Use Transifex for translations: <https://app.transifex.com/otsaloma/gaupol/>
 * Update AppData file
 * Bump GTK dependency to ≥ 3.12
 * Bump PyGObject dependency to ≥ 3.12
@@ -266,7 +266,7 @@ while, but will be removed in 3.15.
 * Update Brazilian Portuguese translation (Rafael Ferreira, Felipe Braga)
 * Update Czech translation (Pavel Fric)
 
-[#748813]: http://bugzilla.gnome.org/show_bug.cgi?id=748813
+[#748813]: https://bugzilla.gnome.org/show_bug.cgi?id=748813
 
 2014-12-08: Gaupol 0.28
 =======================
@@ -282,9 +282,9 @@ while, but will be removed in 3.15.
 * Use markdown for documentation files (`README` etc.)
 * Update Spanish translation (Carlos Mella)
 
-[#734198]: http://bugzilla.gnome.org/show_bug.cgi?id=734198
-[#740481]: http://bugzilla.gnome.org/show_bug.cgi?id=740481
-[#740527]: http://bugzilla.gnome.org/show_bug.cgi?id=740527
+[#734198]: https://bugzilla.gnome.org/show_bug.cgi?id=734198
+[#740481]: https://bugzilla.gnome.org/show_bug.cgi?id=740481
+[#740527]: https://bugzilla.gnome.org/show_bug.cgi?id=740527
 
 2014-10-27: Gaupol 0.27
 =======================
@@ -319,7 +319,7 @@ while, but will be removed in 3.15.
   render line length margin in text views
 * Remove header editing dialog
 * Remove non-functional speech recognition menu item
-  (see <http://www.mail-archive.com/gaupol-list@gna.org/msg00069.html>)
+  (see <https://www.mail-archive.com/gaupol-list@gna.org/msg00069.html>)
 * Drop support for the MPsub format
 * Add GTK (3.2 or greater) to list of dependencies in the `README`
   file (GTK has always been a dependency, its explicit mention was
@@ -332,7 +332,7 @@ while, but will be removed in 3.15.
 
 * Depend on GtkSpell 3.0.0 or later instead of pygtkspellcheck
   for inline spell-check
-  - http://gtkspell.sourceforge.net/
+  - https://gtkspell.sourceforge.net/
 * Clarify GStreamer dependency as "at least the core,
   gst-plugins-base and gst-plugins-good; and for good container and
   codec support preferrably each of gst-plugins-bad, gst-plugins-ugly
@@ -369,7 +369,7 @@ while, but will be removed in 3.15.
 
 * Possibly fix floating status label colors on non-Adwaita themes
 * Add an AppData XML file
-  - http://people.freedesktop.org/~hughsient/appdata/
+  - https://people.freedesktop.org/~hughsient/appdata/
 * Add French translation (RyDroid)
 * Update Czech translation (Pavel Fric)
 
@@ -405,7 +405,7 @@ while, but will be removed in 3.15.
 * Add a not-required, but recommended dependency on PT fonts
   (PT Sans Caption and PT Mono) used by default for video player's
   subtitle and timecode overlays
-  - http://www.paratype.com/public/
+  - https://www.paratype.com/public/
 * Bump PyGObject dependency to version 3.6.0 or later
 * Fix `KeyError` tearing down extension on quit (#702518)
 * Update Spanish translation (Carlos Mella)
@@ -522,15 +522,15 @@ while, but will be removed in 3.15.
 =======================
 
 * Add speech recognition to allow generating subtitles from video
-  - http://wiki.gnome.org/Apps/Gaupol/SpeechRecognition
+  - https://wiki.gnome.org/Apps/Gaupol/SpeechRecognition
 * Fix installation of custom-framerates extension
 * Add optional dependency on gst-python (this also implies a
   dependency on one or more of gst-plugins-base, gst-plugins-good,
   gst-plugins-ugly, gst-plugins-bad, gst-ffmpeg depending on what
   video and audio formats are being used)
-  - http://gstreamer.freedesktop.org/
+  - https://gstreamer.freedesktop.org/
 * Add optional dependency on pocketsphinx
-  - http://cmusphinx.sourceforge.net/
+  - https://cmusphinx.sourceforge.net/
 * Add gaupol-i18n mailing list for translators
 * Update Spanish translation (Carlos Mella)
 * Update Hungarian translation (Andrássy László)
@@ -634,7 +634,7 @@ while, but will be removed in 3.15.
   numbers if the search string contains a colon (fixes #609176)
 * Add miscellaneous Latin common error corrections patterns
 * Add help menu item to browse wiki documentation at
-  <http://wiki.gnome.org/Apps/Gaupol>
+  <https://wiki.gnome.org/Apps/Gaupol>
 * Increase size of line length superscripts shown in list cells
 * Fix focus changing when pasting subtitles
 * Use `gtk.RecentAction` for recent file menus (fixes #615372 and

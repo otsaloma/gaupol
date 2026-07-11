@@ -19,7 +19,7 @@ Penalty=1000000
 [Line Break Pattern]
 Name=Preposition
 Description=Do not break after a preposition
-# http://en.wikipedia.org/wiki/List_of_English_prepositions
+# https://en.wikipedia.org/wiki/List_of_English_prepositions
 Pattern=\b(abaft|aboard|about|above|absent|across|afore|after|against|along|alongside|amid|amidst|among|amongst|apropos|around|as|aside|astride|at|athwart|atop|barring|before|behind|below|beneath|beside|besides|between|betwixt|beyond|but|by|circa|concerning|despite|down|during|except|excluding|failing|following|for|from|given|in|including|inside|into|lest|like|mid|midst|minus|modulo|near|next|notwithstanding|of|off|on|onto|opposite|out|outside|over|pace|past|per|plus|pro|qua|regarding|round|sans|save|since|than|though|throughout|till|times|to|toward|towards|under|underneath|unlike|until|unto|up|upon|versus|via|vice|with|within|without|worth)( )
 Flags=DOTALL;MULTILINE;
 Group=2
@@ -28,7 +28,7 @@ Penalty=100
 [Line Break Pattern]
 Name=Possessive determiner
 Description=Do not break after a possessive determiner, e.g. "my"
-# http://en.wikipedia.org/wiki/Possessive_determiner
+# https://en.wikipedia.org/wiki/Possessive_determiner
 Pattern=\b(my|your|his|her|its|our|your|their)( )
 Flags=DOTALL;MULTILINE;
 Group=2
