@@ -30,4 +30,17 @@ from .set       import SetAgent
 from .text      import TextAgent
 from .util      import UtilityAgent
 
-__all__ = tuple(x for x in dir() if x.endswith("Agent"))
+classes = (
+    ClipboardAgent,
+    EditAgent,
+    FormatAgent,
+    OpenAgent,
+    PositionAgent,
+    PreviewAgent,
+    RegisterAgent,
+    SaveAgent,
+    SearchAgent,
+    SetAgent,
+    TextAgent,
+    UtilityAgent,
+)

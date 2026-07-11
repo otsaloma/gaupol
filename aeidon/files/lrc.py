@@ -20,8 +20,6 @@
 import aeidon
 import re
 
-__all__ = ("LRC",)
-
 class LRC(aeidon.SubtitleFile):
 
     """

@@ -19,8 +19,6 @@
 
 import aeidon
 
-__all__ = ("RevertableAction", "RevertableActionGroup",)
-
 class RevertableAction:
 
     """

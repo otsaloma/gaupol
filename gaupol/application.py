@@ -25,8 +25,6 @@ from aeidon.i18n   import _
 from gi.repository import Gdk
 from gi.repository import Gtk
 
-__all__ = ("Application",)
-
 class ApplicationMeta(type):
 
     """
@@ -41,8 +39,7 @@ class ApplicationMeta(type):
 
     def __new__(meta, class_name, bases, dic):
         new_dict = dic.copy()
-        for agent_class_name in gaupol.agents.__all__:
-            agent_class = getattr(gaupol.agents, agent_class_name)
+        for agent_class in gaupol.agents.classes:
             def is_delegate_method(name):
                 value = getattr(agent_class, name)
                 return (callable(value) and
@@ -140,8 +137,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_actions(self):
         """Initialize user-activatable actions."""
-        for name in gaupol.actions.__all__:
-            action = getattr(gaupol.actions, name)()
+        for action_class in gaupol.actions.classes:
+            action = action_class()
             name = "win.{}".format(action.props.name)
             if hasattr(gaupol, "appman"):
                 gaupol.appman.set_accels_for_action(
@@ -168,8 +165,8 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""
-        for agent_class_name in gaupol.agents.__all__:
-            agent = getattr(gaupol.agents, agent_class_name)(self)
+        for agent_class in gaupol.agents.classes:
+            agent = agent_class(self)
             def is_delegate_method(name):
                 value = getattr(agent, name)
                 return (callable(value) and

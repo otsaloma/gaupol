@@ -27,8 +27,6 @@ import traceback
 from aeidon.i18n   import _, n_
 from gi.repository import Gtk
 
-__all__ = ("SearchDialog",)
-
 def page_changing(function):
     """Decorator for :class:`SearchDialog` methods that edit data."""
     # Save and restore the previous value so that nested calls

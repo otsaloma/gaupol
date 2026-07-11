@@ -22,8 +22,6 @@ import gaupol
 
 from aeidon.i18n import _
 
-__all__ = ("AppendDialog",)
-
 class AppendDialog(gaupol.OpenDialog):
 
     """Dialog for selecting a subtitle file to append to project."""

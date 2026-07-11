@@ -34,8 +34,6 @@ from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("ApplicationManager",)
-
 class ApplicationManager(Gtk.Application):
 
     """Initializing and managing Gaupol windows."""

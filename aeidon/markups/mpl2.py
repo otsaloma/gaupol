@@ -22,8 +22,6 @@ import aeidon
 from .microdvd import MicroDVD
 from collections import OrderedDict
 
-__all__ = ("MPL2",)
-
 class MPL2(MicroDVD):
 
     """

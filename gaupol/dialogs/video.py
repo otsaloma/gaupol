@@ -23,8 +23,6 @@ from aeidon.i18n   import _
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("VideoDialog",)
-
 class VideoDialog(Gtk.FileChooserDialog):
 
     """Dialog for selecting a video file."""

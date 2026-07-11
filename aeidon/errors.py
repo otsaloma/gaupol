@@ -17,14 +17,6 @@
 
 """All :mod:`aeidon` error classes."""
 
-__all__ = (
-    "Error",
-    "AffirmationError",
-    "FormatError",
-    "ParseError",
-    "ProcessError",
-)
-
 class Error(Exception):
 
     """Base class for all :mod:`aeidon` errors."""

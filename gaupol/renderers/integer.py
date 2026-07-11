@@ -24,8 +24,6 @@ import re
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("IntegerCellRenderer",)
-
 class IntegerCellRenderer(Gtk.CellRendererText):
 
     """Cell renderer for integer data."""

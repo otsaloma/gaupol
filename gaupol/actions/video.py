@@ -103,5 +103,3 @@ class SeekSelectionStartAction(gaupol.Action):
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(application.player.ready)
         aeidon.util.affirm(selected_rows)
-
-__all__ = tuple(x for x in dir() if x.endswith("Action"))

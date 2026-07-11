@@ -22,8 +22,6 @@ import os
 import re
 import xml.etree.ElementTree as ET
 
-__all__ = ("PatternManager",)
-
 class PatternManager:
 
     """

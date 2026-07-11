@@ -140,5 +140,3 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
         self.set_state(gaupol.fields.TRAN_TEXT in gaupol.conf.editor.visible_fields)
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
-
-__all__ = tuple(x for x in dir() if x.endswith("Action"))

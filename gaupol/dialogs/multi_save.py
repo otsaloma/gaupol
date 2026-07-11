@@ -25,8 +25,6 @@ from aeidon.i18n   import _
 from gi.repository import Gio
 from gi.repository import Gtk
 
-__all__ = ("MultiSaveDialog",)
-
 class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
 
     """Dialog for selecting properties to save multiple files with."""

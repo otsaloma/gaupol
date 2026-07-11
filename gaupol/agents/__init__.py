@@ -32,4 +32,19 @@ from .util     import UtilityAgent
 from .video    import VideoAgent
 from .view     import ViewAgent
 
-__all__ = tuple(x for x in dir() if x.endswith("Agent"))
+classes = (
+    CloseAgent,
+    EditAgent,
+    FormatAgent,
+    HelpAgent,
+    MenuAgent,
+    OpenAgent,
+    PreviewAgent,
+    SaveAgent,
+    SearchAgent,
+    ToolsAgent,
+    UpdateAgent,
+    UtilityAgent,
+    VideoAgent,
+    ViewAgent,
+)

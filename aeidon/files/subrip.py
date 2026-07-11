@@ -20,8 +20,6 @@
 import aeidon
 import re
 
-__all__ = ("SubRip",)
-
 class SubRip(aeidon.SubtitleFile):
 
     """SubRip file."""

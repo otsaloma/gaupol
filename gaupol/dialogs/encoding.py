@@ -24,8 +24,6 @@ from aeidon.i18n   import _
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("EncodingDialog", "MenuEncodingDialog")
-
 class EncodingDialog(Gtk.Dialog):
 
     """Dialog for selecting a character encoding."""

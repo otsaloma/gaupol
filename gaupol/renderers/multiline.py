@@ -28,8 +28,6 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("MultilineCellRenderer", "MultilineDiffCellRenderer")
-
 class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
     """A :class:`Gtk.TextView` suitable for cell renderer use."""

@@ -20,8 +20,6 @@
 import aeidon
 import re
 
-__all__ = ("SubViewer2",)
-
 class SubViewer2(aeidon.SubtitleFile):
 
     """SubViewer 2.0 file."""

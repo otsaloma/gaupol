@@ -27,8 +27,6 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 
-__all__ = ("TextAssistant", "TextAssistantPage")
-
 class TextAssistantPage(Gtk.Box):
 
     """

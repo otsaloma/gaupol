@@ -17,8 +17,6 @@
 
 """Internal text clipboard."""
 
-__all__ = ("Clipboard",)
-
 class Clipboard:
 
     """Internal text clipboard."""

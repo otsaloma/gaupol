@@ -27,8 +27,6 @@ with contextlib.suppress(Exception):
     from gi.repository import Spelling
     Spelling.init()
 
-__all__ = ("SpellChecker", "SpellCheckNavigator", "SpellCheckTokenizer")
-
 class SpellChecker:
 
     """Checking the spelling of an individual word."""

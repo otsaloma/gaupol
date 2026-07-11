@@ -85,5 +85,3 @@ class SaveTranslationDocumentAsAction(gaupol.Action):
         self.action_group = "safe"
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
-
-__all__ = tuple(x for x in dir() if x.endswith("Action"))

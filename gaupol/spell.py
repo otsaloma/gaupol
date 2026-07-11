@@ -24,8 +24,6 @@ with contextlib.suppress(Exception):
     from gi.repository import GtkSource
     from gi.repository import Spelling
 
-__all__ = ("SpellChecker",)
-
 class SpellChecker(aeidon.SpellChecker):
 
     """Checking the spelling of an individual word."""

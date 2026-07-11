@@ -49,5 +49,3 @@ class VolumeUpAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(application.player is not None)
         aeidon.util.affirm(application.player.ready)
-
-__all__ = tuple(x for x in dir() if x.endswith("Action"))

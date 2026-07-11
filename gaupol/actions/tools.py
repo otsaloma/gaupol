@@ -111,5 +111,3 @@ class TransformPositionsAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.project.subtitles) > 1)
-
-__all__ = tuple(x for x in dir() if x.endswith("Action"))

@@ -17,8 +17,6 @@
 
 """Base class for objects that dispatch ``self``-lookups."""
 
-__all__ = ("Delegate",)
-
 class Delegate:
 
     """

@@ -23,8 +23,6 @@ import time
 
 from gi.repository import GLib
 
-__all__ = ("TestCase",)
-
 class TestCase(aeidon.TestCase):
 
     """

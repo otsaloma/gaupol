@@ -29,26 +29,26 @@ from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 from .webvtt     import WebVTT
 
-__all__ = [
-    "SubStationAlpha",
-    "AdvSubStationAlpha",
-    "LRC",
-    "MicroDVD",
-    "MPL2",
-    "SubRip",
-    "SubViewer2",
-    "TMPlayer",
-    "WebVTT",
+classes = [
+    SubStationAlpha,
+    AdvSubStationAlpha,
+    LRC,
+    MicroDVD,
+    MPL2,
+    SubRip,
+    SubViewer2,
+    TMPlayer,
+    WebVTT,
 ]
 
 def add(cls):
     """Add a new :class:`aeidon.Markup` class."""
     globals()[cls.__name__] = cls
-    __all__.append(cls.__name__)
+    classes.append(cls)
 
 def new(format):
     """Return a new :class:`aeidon.Markup` instance given `format`."""
-    for cls in map(eval, __all__):
+    for cls in classes:
         if cls.format == format:
             return cls()
     raise ValueError("Format {!r} not found"

@@ -24,8 +24,6 @@ import json
 import os
 import sys
 
-__all__ = ("ConfigurationStore",)
-
 CONFIG_DEFAULTS = {
     "application_window": {
         "layout": gaupol.orientation.VERTICAL,

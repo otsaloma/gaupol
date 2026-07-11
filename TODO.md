@@ -1,8 +1,6 @@
 # TODO
 
-- Update encoding list in aeidon/encodings.py
 - Simplify aeidon/paths.py
-- Reduce import * in __init__.py files and get rid of __all__
 - Use pytest.mark.parametrize for test loops e.g. aeidon/agents/test/test_save.py
 - Use fstrings where applicable
 - Use pathlib instead of os.path

@@ -17,14 +17,101 @@
 
 """User-activatable actions for :class:`gaupol.Application`."""
 
-from gaupol.actions.audio    import *
-from gaupol.actions.edit     import *
-from gaupol.actions.file     import *
-from gaupol.actions.help     import *
-from gaupol.actions.projects import *
-from gaupol.actions.text     import *
-from gaupol.actions.tools    import *
-from gaupol.actions.video    import *
-from gaupol.actions.view     import *
+from gaupol.actions import audio
+from gaupol.actions import edit
+from gaupol.actions import file
+from gaupol.actions import help
+from gaupol.actions import projects
+from gaupol.actions import text
+from gaupol.actions import tools
+from gaupol.actions import video
+from gaupol.actions import view
 
-__all__ = tuple(x for x in dir() if x.endswith("Action"))
+classes = (
+    audio.SetAudioLanguageAction,
+    audio.VolumeDownAction,
+    audio.VolumeUpAction,
+    edit.EditPreferencesAction,
+    edit.EditNextValueAction,
+    edit.EditValueAction,
+    edit.EndEarlierAction,
+    edit.EndLaterAction,
+    edit.ExtendSelectionToBeginningAction,
+    edit.ExtendSelectionToEndAction,
+    edit.InsertSubtitleAtVideoPositionAction,
+    edit.InsertSubtitlesAction,
+    edit.InvertSelectionAction,
+    edit.MergeSubtitlesAction,
+    edit.RedoActionAction,
+    edit.RemoveSubtitlesAction,
+    edit.SelectAllAction,
+    edit.SelectNextFromVideoPositionAction,
+    edit.SelectPreviousFromVideoPositionAction,
+    edit.SetEndFromVideoPositionAction,
+    edit.SetStartFromVideoPositionAction,
+    edit.SplitSubtitleAction,
+    edit.StartEarlierAction,
+    edit.StartLaterAction,
+    edit.UndoActionAction,
+    file.CloseProjectAction,
+    file.NewProjectAction,
+    file.OpenMainFilesAction,
+    file.OpenTranslationFileAction,
+    file.QuitAction,
+    file.SaveMainDocumentAction,
+    file.SaveMainDocumentAsAction,
+    file.SaveTranslationDocumentAction,
+    file.SaveTranslationDocumentAsAction,
+    help.BrowseDocumentationAction,
+    help.ReportABugAction,
+    help.ViewAboutDialogAction,
+    projects.ActivateNextProjectAction,
+    projects.ActivatePreviousProjectAction,
+    projects.ActivateProjectAction,
+    projects.CloseAllProjectsAction,
+    projects.SaveAllDocumentsAction,
+    projects.SaveAllDocumentsAsAction,
+    text.ClearTextsAction,
+    text.CopyTextsAction,
+    text.CutTextsAction,
+    text.FindAndReplaceAction,
+    text.FindNextAction,
+    text.FindPreviousAction,
+    text.PasteTextsAction,
+    text.ToggleDialogDashesAction,
+    text.ToggleItalicizationAction,
+    text.UseLowerCaseAction,
+    text.UseSentenceCaseAction,
+    text.UseTitleCaseAction,
+    text.UseUpperCaseAction,
+    tools.AdjustDurationsAction,
+    tools.AppendFileAction,
+    tools.CheckSpellingAction,
+    tools.ConfigureSpellCheckAction,
+    tools.ConvertFramerateAction,
+    tools.CorrectTextsAction,
+    tools.PreviewAction,
+    tools.SelectVideoFileAction,
+    tools.ShiftPositionsAction,
+    tools.SplitProjectAction,
+    tools.TransformPositionsAction,
+    video.LoadVideoAction,
+    video.PlayPauseAction,
+    video.PlaySelectionAction,
+    video.SeekBackwardAction,
+    video.SeekForwardAction,
+    video.SeekNextAction,
+    video.SeekPreviousAction,
+    video.SeekSelectionEndAction,
+    video.SeekSelectionStartAction,
+    view.SetEditModeAction,
+    view.SetFramerateAction,
+    view.SetLayoutAction,
+    view.ToggleDurationColumnAction,
+    view.ToggleEndColumnAction,
+    view.ToggleMainTextColumnAction,
+    view.ToggleNumberColumnAction,
+    view.TogglePlayerAction,
+    view.ToggleStartColumnAction,
+    view.ToggleTranslationTextColumnAction,
+)

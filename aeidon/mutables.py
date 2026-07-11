@@ -20,8 +20,6 @@
 import copy
 import functools
 
-__all__ = ("ObservableDict", "ObservableList", "ObservableSet",)
-
 def _mutation(function):
     """Decorator for sending a notification after mutating object."""
     @functools.wraps(function)

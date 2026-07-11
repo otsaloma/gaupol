@@ -21,8 +21,6 @@ import aeidon
 
 from .subrip import SubRip
 
-__all__ = ("WebVTT",)
-
 class WebVTT(SubRip):
 
     """

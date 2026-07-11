@@ -25,8 +25,6 @@ from aeidon.i18n   import _
 from gi.repository import Gtk
 from gi.repository import Pango
 
-__all__ = ("FrameTransformDialog", "TimeTransformDialog")
-
 class PositionTransformDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for transforming positions."""

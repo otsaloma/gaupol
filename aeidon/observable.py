@@ -19,8 +19,6 @@
 
 import aeidon
 
-__all__ = ("Observable",)
-
 class Observable:
 
     """

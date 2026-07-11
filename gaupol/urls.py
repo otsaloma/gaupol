@@ -24,13 +24,6 @@ Website URLs.
 :var REGEX_HELP_URL: Documentation on regular expressions
 """
 
-__all__ = (
-    "BUG_REPORT_URL",
-    "DOCUMENTATION_URL",
-    "HOMEPAGE_URL",
-    "REGEX_HELP_URL",
-)
-
 BUG_REPORT_URL = "https://github.com/otsaloma/gaupol/issues"
 DOCUMENTATION_URL = "https://github.com/otsaloma/gaupol/tree/master/doc"
 HOMEPAGE_URL = "https://otsaloma.io/gaupol/"

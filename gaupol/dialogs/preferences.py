@@ -24,8 +24,6 @@ from aeidon.i18n   import _
 from gi.repository import Gtk
 from gi.repository import Pango
 
-__all__ = ("PreferencesDialog",)
-
 class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Editor preferences page."""

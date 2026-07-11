@@ -73,5 +73,3 @@ class SaveAllDocumentsAsAction(gaupol.Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm([x for x in application.pages
                             if x.project.main_file is not None])
-
-__all__ = tuple(x for x in dir() if x.endswith("Action"))

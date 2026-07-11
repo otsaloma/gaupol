@@ -33,5 +33,3 @@ class ViewAboutDialogAction(gaupol.Action):
     def __init__(self):
         gaupol.Action.__init__(self, "view-about-dialog")
         self.action_group = "safe"
-
-__all__ = tuple(x for x in dir() if x.endswith("Action"))

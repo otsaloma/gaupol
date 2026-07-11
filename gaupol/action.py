@@ -23,13 +23,6 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import GObject
 
-__all__ = (
-    "Action",
-    "OpenRecentTranslationFileAction",
-    "RadioAction",
-    "ToggleAction",
-)
-
 class Action(Gio.SimpleAction):
 
     """Baseclass for user-activatable actions."""

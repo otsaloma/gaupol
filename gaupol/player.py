@@ -31,8 +31,6 @@ from gi.repository import Gtk
 with contextlib.suppress(Exception):
     from gi.repository import Gst
 
-__all__ = ("VideoPlayer",)
-
 class VideoPlayer(aeidon.Observable):
 
     """

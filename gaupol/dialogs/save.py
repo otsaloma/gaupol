@@ -26,8 +26,6 @@ from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("SaveDialog",)
-
 class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""

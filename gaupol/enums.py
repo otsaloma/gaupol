@@ -22,13 +22,6 @@ import aeidon
 from aeidon.i18n import __
 from gi.repository import Gtk
 
-__all__ = [
-    "fields",
-    "length_units",
-    "orientation",
-    "targets",
-]
-
 class FieldNumber(aeidon.EnumerationItem):
     is_position = False
     is_text = False

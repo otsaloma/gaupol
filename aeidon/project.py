@@ -19,8 +19,6 @@
 
 import aeidon
 
-__all__ = ("Project",)
-
 class ProjectMeta(type):
 
     """
@@ -35,8 +33,7 @@ class ProjectMeta(type):
 
     def __new__(meta, class_name, bases, dic):
         new_dict = dic.copy()
-        for agent_class_name in aeidon.agents.__all__:
-            agent_class = getattr(aeidon.agents, agent_class_name)
+        for agent_class in aeidon.agents.classes:
             def is_delegate_method(name):
                 value = getattr(agent_class, name)
                 return (callable(value) and
@@ -137,8 +134,8 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
 
     def _init_delegations(self):
         """Initialize the delegation mappings."""
-        for agent_class_name in aeidon.agents.__all__:
-            agent = getattr(aeidon.agents, agent_class_name)(self)
+        for agent_class in aeidon.agents.classes:
+            agent = agent_class(self)
             def is_delegate_method(name):
                 value = getattr(agent, name)
                 return (callable(value) and

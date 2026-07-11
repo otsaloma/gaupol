@@ -25,8 +25,6 @@ from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("FloatCellRenderer",)
-
 class FloatCellRenderer(Gtk.CellRendererText):
 
     """Cell renderer for float data with fixed precision."""

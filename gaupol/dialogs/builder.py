@@ -22,8 +22,6 @@ import os
 
 from gi.repository import Gtk
 
-__all__ = ("BuilderDialog",)
-
 class BuilderDialog:
 
     """

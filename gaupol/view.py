@@ -28,8 +28,6 @@ from gi.repository import Graphene
 from gi.repository import Gsk
 from gi.repository import Gtk
 
-__all__ = ("View",)
-
 class View(Gtk.TreeView):
 
     """

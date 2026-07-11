@@ -22,8 +22,6 @@ import gaupol
 from aeidon.i18n   import _
 from gi.repository import Gtk
 
-__all__ = ("InsertDialog",)
-
 class InsertDialog(gaupol.BuilderDialog):
 
     """Dialog for inserting new subtitles."""

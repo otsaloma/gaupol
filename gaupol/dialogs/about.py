@@ -23,8 +23,6 @@ from aeidon.i18n   import _
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("AboutDialog",)
-
 class AboutDialog(Gtk.AboutDialog):
 
     """Dialog for displaying credits and information."""

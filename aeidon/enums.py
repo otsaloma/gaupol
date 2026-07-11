@@ -24,17 +24,6 @@ import sys
 
 from aeidon.i18n import __
 
-__all__ = [
-    "align_methods",
-    "documents",
-    "formats",
-    "framerates",
-    "modes",
-    "newlines",
-    "players",
-    "registers",
-]
-
 class AlignMethodNumber(aeidon.EnumerationItem):
     label = __("Subtitle number")
 

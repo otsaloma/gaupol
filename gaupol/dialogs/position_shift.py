@@ -23,8 +23,6 @@ import gaupol
 from aeidon.i18n   import _
 from gi.repository import Gtk
 
-__all__ = ("FrameShiftDialog", "TimeShiftDialog")
-
 class PositionShiftDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for shifting positions."""

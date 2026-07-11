@@ -24,8 +24,6 @@ import gaupol
 from aeidon.i18n   import _
 from gi.repository import Gtk
 
-__all__ = ("LanguageDialog",)
-
 class LanguageDialog(gaupol.BuilderDialog):
 
     """Dialog for configuring spell-check."""

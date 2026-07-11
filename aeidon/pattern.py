@@ -20,8 +20,6 @@
 import aeidon
 import re
 
-__all__ = ("Pattern",)
-
 class Pattern(aeidon.MetadataItem):
 
     """

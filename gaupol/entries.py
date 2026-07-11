@@ -25,8 +25,6 @@ from gi.repository import Gdk
 from gi.repository import GObject
 from gi.repository import Gtk
 
-__all__ = ("TimeEntry",)
-
 def _blocked(function):
     """Decorator for methods to be run with buffer edits allowed."""
     @functools.wraps(function)

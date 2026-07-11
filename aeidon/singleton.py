@@ -17,8 +17,6 @@
 
 """Base class for single-instance classes."""
 
-__all__ = ("Singleton",)
-
 class Singleton:
 
     """Base class for single-instance classes."""

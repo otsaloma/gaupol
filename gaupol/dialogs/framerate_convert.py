@@ -23,8 +23,6 @@ import gaupol
 from aeidon.i18n   import _
 from gi.repository import Gtk
 
-__all__ = ("FramerateConvertDialog",)
-
 class FramerateConvertDialog(gaupol.BuilderDialog):
 
     """Dialog for converting framerates."""

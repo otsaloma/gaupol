@@ -26,8 +26,6 @@ in its set. New items can always be added to an enumeration.
 from aeidon.i18n import _
 from aeidon.i18n import __
 
-__all__ = ("EnumerationItem", "Enumeration",)
-
 class EnumerationItem(int):
 
     """

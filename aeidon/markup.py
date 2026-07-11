@@ -21,8 +21,6 @@ import aeidon
 import contextlib
 import re
 
-__all__ = ("Markup",)
-
 class Markup(aeidon.Singleton):
 
     """

@@ -19,8 +19,6 @@
 
 import aeidon
 
-__all__ = ("Default",)
-
 class Default(aeidon.Error):
 
     """Cancelled or something of the sort."""

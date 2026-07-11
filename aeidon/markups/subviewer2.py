@@ -21,8 +21,6 @@ import aeidon
 
 from .subrip import SubRip
 
-__all__ = ("SubViewer2",)
-
 class SubViewer2(SubRip):
 
     """

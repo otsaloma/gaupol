@@ -20,8 +20,6 @@
 import os
 import sys
 
-__all__ = ("CONFIG_HOME_DIR", "DATA_DIR", "DATA_HOME_DIR", "LOCALE_DIR",)
-
 def get_config_home_directory():
     """Return path to the user's configuration directory."""
     if sys.platform == "win32":
