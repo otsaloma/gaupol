@@ -20,8 +20,6 @@
 import aeidon
 import gaupol
 
-from gi.repository import Gdk
-
 
 class UpdateAgent(aeidon.Delegate):
 
@@ -33,15 +31,9 @@ class UpdateAgent(aeidon.Delegate):
         self.show_message(None)
 
     @aeidon.deco.export
-    def flash_message(self, message, duration=6):
-        """Show `message` in statuslabel for `duration` seconds."""
-        self.statuslabel.flash_text(message, duration=duration)
-        self.statuslabel.register_hide_event(self.window, "button-press-event")
-        self.statuslabel.register_hide_event(self.window, "key-press-event")
-        self.statuslabel.register_hide_event(self.window, "scroll-event")
-        with aeidon.util.silent(AttributeError):
-            self.statuslabel.register_hide_event(
-                self.get_current_page().view, "button-press-event")
+    def flash_message(self, message):
+        """Show `message` in the toast."""
+        self.toast.flash_text(message)
 
     @aeidon.deco.export
     def _on_activate_next_project_activate(self, *args):
@@ -52,28 +44,6 @@ class UpdateAgent(aeidon.Delegate):
     def _on_activate_previous_project_activate(self, *args):
         """Activate the project in the previous tab."""
         self.notebook.prev_page()
-
-    @aeidon.deco.export
-    def _on_conf_application_window_notify_toolbar_style(self, *args):
-        """Change the style of the main toolbar."""
-        style = gaupol.conf.application_window.toolbar_style
-        self.main_toolbar.set_style(style.value)
-
-    @aeidon.deco.export
-    def _on_move_tab_left_activate(self, *args):
-        """Move the current tab to the left."""
-        page = self.get_current_page()
-        scroller = page.view.get_parent()
-        index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index-1)
-
-    @aeidon.deco.export
-    def _on_move_tab_right_activate(self, *args):
-        """Move the current tab to the right."""
-        page = self.get_current_page()
-        scroller = page.view.get_parent()
-        index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index + 1)
 
     @aeidon.deco.export
     def _on_notebook_page_reordered(self, notebook, scroller, index):
@@ -105,16 +75,15 @@ class UpdateAgent(aeidon.Delegate):
         self.update_gui()
 
     @aeidon.deco.export
-    def _on_window_window_state_event(self, window, event):
+    def _on_window_notify_maximized(self, window, param):
         """Save window maximization."""
-        state = event.new_window_state
-        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
+        maximized = window.is_maximized()
         gaupol.conf.application_window.maximized = maximized
 
     @aeidon.deco.export
     def show_message(self, message):
-        """Show `message` in the statuslabel or hide label with `None`."""
-        self.statuslabel.set_text(message)
+        """Show `message` in the toast or hide label with `None`."""
+        self.toast.set_text(message)
 
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""

@@ -17,7 +17,6 @@
 
 """Entry for time data in format ``[-]HH:MM:SS.SSS``."""
 
-import aeidon
 import functools
 import gaupol
 import re
@@ -30,16 +29,46 @@ __all__ = ("TimeEntry",)
 
 
 def _blocked(function):
-    """Decorator for methods to be run blocked to avoid recursion."""
+    """Decorator for methods to be run with buffer edits allowed."""
     @functools.wraps(function)
     def wrapper(entry, *args, **kwargs):
-        entry.handler_block(entry._delete_handler)
-        entry.handler_block(entry._insert_handler)
-        value = function(entry, *args, **kwargs)
-        entry.handler_unblock(entry._insert_handler)
-        entry.handler_unblock(entry._delete_handler)
-        return value
+        entry.get_buffer().allow_edit = True
+        try:
+            return function(entry, *args, **kwargs)
+        finally:
+            entry.get_buffer().allow_edit = False
     return wrapper
+
+
+class _TimeBuffer(Gtk.EntryBuffer):
+
+    """
+    Entry buffer that blocks all edits not explicitly allowed.
+
+    Blocked insertions are routed to the entry's validating
+    :meth:`TimeEntry._insert_text` instead; blocked deletions
+    only move the cursor to the start of the range.
+    """
+
+    def __init__(self, entry):
+        """Initialize a :class:`_TimeBuffer` instance."""
+        GObject.GObject.__init__(self)
+        self.allow_edit = False
+        self._entry = entry
+
+    def do_delete_text(self, position, n_chars):
+        """Delete text if allowed, otherwise just move the cursor."""
+        if self.allow_edit:
+            return Gtk.EntryBuffer.do_delete_text(self, position, n_chars)
+        gaupol.util.idle_add(self._entry.set_position, position)
+        return 0
+
+    def do_insert_text(self, position, chars, n_chars):
+        """Insert text if allowed, otherwise route to validation."""
+        if self.allow_edit:
+            return Gtk.EntryBuffer.do_insert_text(self, position, chars, n_chars)
+        gaupol.util.idle_add(self._entry._insert_text, chars)
+        return 0
 
 
 class TimeEntry(Gtk.Entry):
@@ -47,11 +76,8 @@ class TimeEntry(Gtk.Entry):
     """
     Entry for time data in format ``[-]HH:MM:SS.SSS``.
 
-    :ivar _delete_handler: Handler for "delete-text" signal
-    :ivar _insert_handler: Handler for "insert-text" signal
-
     This widget uses :func:`GLib.idle_add` a lot, which means that clients may
-    need to call :func:`Gtk.main_iteration` to ensure proper updating.
+    need to call :func:`gaupol.util.iterate_main` to ensure proper updating.
     """
     _re_digit = re.compile(r"\d")
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
@@ -59,19 +85,20 @@ class TimeEntry(Gtk.Entry):
     def __init__(self):
         """Initialize a :class:`TimeEntry` instance."""
         GObject.GObject.__init__(self)
-        self._delete_handler = None
-        self._insert_handler = None
+        self.set_buffer(_TimeBuffer(self))
         self.set_width_chars(13)
         self.set_max_length(13)
         self._init_signal_handlers()
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-        aeidon.util.connect(self, self, "cut-clipboard")
-        aeidon.util.connect(self, self, "key-press-event")
-        aeidon.util.connect(self, self, "toggle-overwrite")
-        self._delete_handler = aeidon.util.connect(self, self, "delete-text")
-        self._insert_handler = aeidon.util.connect(self, self, "insert-text")
+        text_widget = self.get_delegate()
+        text_widget.connect("cut-clipboard", self._on_cut_clipboard)
+        text_widget.connect("toggle-overwrite", self._on_toggle_overwrite)
+        controller = Gtk.EventControllerKey()
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        controller.connect("key-pressed", self._on_key_pressed)
+        self.add_controller(controller)
 
     @_blocked
     def _insert_text(self, value):
@@ -91,36 +118,26 @@ class TimeEntry(Gtk.Entry):
         if len(text) > pos + 1 and text[pos+1] in (":", "."):
             self.set_position(pos + 2)
 
-    def _on_cut_clipboard(self, entry):
+    def _on_cut_clipboard(self, text_widget):
         """Change "cut-clipboard" signal to "copy-clipboard"."""
-        self.stop_emission_by_name("cut-clipboard")
-        self.emit("copy-clipboard")
+        text_widget.stop_emission_by_name("cut-clipboard")
+        text_widget.emit("copy-clipboard")
 
-    def _on_delete_text(self, entry, start_pos, end_pos):
-        """Do not allow deleting text."""
-        self.stop_emission_by_name("delete-text")
-        self.set_position(start_pos)
-
-    def _on_key_press_event(self, entry, event):
+    def _on_key_pressed(self, controller, keyval, keycode, state):
         """Change numbers to zero if Backspace or Delete pressed."""
         keys = (Gdk.KEY_BackSpace, Gdk.KEY_Delete)
-        if not event.keyval in keys: return
-        self.stop_emission_by_name("key-press-event")
+        if not keyval in keys: return False
         if self.get_selection_bounds():
             gaupol.util.idle_add(self._zero_selection)
-        elif event.keyval == Gdk.KEY_BackSpace:
+        elif keyval == Gdk.KEY_BackSpace:
             gaupol.util.idle_add(self._zero_previous)
-        elif event.keyval == Gdk.KEY_Delete:
+        elif keyval == Gdk.KEY_Delete:
             gaupol.util.idle_add(self._zero_next)
+        return True
 
-    def _on_insert_text(self, entry, text, length, pos):
-        """Insert `text` after validation."""
-        self.stop_emission_by_name("insert-text")
-        gaupol.util.idle_add(self._insert_text, text)
-
-    def _on_toggle_overwrite(self, entry):
+    def _on_toggle_overwrite(self, text_widget):
         """Do not allow toggling overwrite."""
-        self.stop_emission_by_name("toggle-overwrite")
+        text_widget.stop_emission_by_name("toggle-overwrite")
 
     @_blocked
     def _zero_next(self):

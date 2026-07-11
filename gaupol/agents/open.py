@@ -22,6 +22,8 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import Gtk
 
 
@@ -37,27 +39,26 @@ class OpenAgent(aeidon.Delegate):
         page.project.connect("action-done", self._on_project_action_done)
         page.project.connect("action-redone", self._on_project_action_redone)
         page.project.connect("action-undone", self._on_project_action_undone)
-        callback = self._on_tab_widget_button_press_event
-        page.tab_widget.connect("button-press-event", callback, page)
         self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
         scroller = Gtk.ScrolledWindow()
         policy = Gtk.PolicyType.AUTOMATIC
         scroller.set_policy(policy, policy)
-        scroller.add(page.view)
+        scroller.set_child(page.view)
         self.notebook.append_page(scroller, page.tab_widget)
         self.notebook.set_tab_reorderable(scroller, True)
-        self.notebook.child_set_property(scroller, "tab-expand", True)
-        self.notebook.child_set_property(scroller, "tab-fill", True)
-        self.notebook.show_all()
+        notebook_page = self.notebook.get_page(scroller)
+        notebook_page.props.tab_expand = True
+        notebook_page.props.tab_fill = True
         self.set_current_page(page)
         self.emit("page-added", page)
 
     @aeidon.deco.export
     def add_to_recent_files(self, path, format, doc):
         """Add `path` to recent files managed by the recent manager."""
-        # XXX: The group field is not available for Python,
-        # we cannot differentiate between main and translation files.
+        # XXX: The groups field is a char** and PyGObject cannot set char**
+        # struct fields, so we cannot differentiate main and translation
+        # files. WONTFIX in pygobject, kept on the read-only GNOME Bugzilla:
         # https://bugzilla.gnome.org/show_bug.cgi?id=695970
         uri = aeidon.util.path_to_uri(path)
         recent = Gtk.RecentData()
@@ -130,7 +131,10 @@ class OpenAgent(aeidon.Delegate):
         """Connect to signals emitted by `view`."""
         view.connect_selection_changed(self._on_view_selection_changed)
         view.connect_after("move-cursor", self._on_view_move_cursor)
-        view.connect("button-press-event", self._on_view_button_press_event)
+        gesture = Gtk.GestureClick()
+        gesture.set_button(Gdk.BUTTON_SECONDARY)
+        gesture.connect("pressed", self._on_view_pressed)
+        view.add_controller(gesture)
         for column in view.get_columns():
             renderer = column.get_cells()[0]
             callback = self._on_view_renderer_edited
@@ -140,8 +144,10 @@ class OpenAgent(aeidon.Delegate):
             callback = self._on_view_renderer_editing_canceled
             renderer.connect("editing-canceled", callback, column)
             button = column.get_widget().get_ancestor(Gtk.Button)
-            callback = self._on_view_header_button_press_event
-            button.connect("button-press-event", callback)
+            gesture = Gtk.GestureClick()
+            gesture.set_button(Gdk.BUTTON_SECONDARY)
+            gesture.connect("pressed", self._on_view_header_pressed)
+            button.add_controller(gesture)
 
     def _get_encodings(self, first=None):
         """Return a sequence of encodings to try when opening files."""
@@ -165,7 +171,8 @@ class OpenAgent(aeidon.Delegate):
         dialog = gaupol.AppendDialog(self.window)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        paths = dialog.get_filenames()
+        paths = [x.get_path() for x in dialog.get_files()]
+        paths = list(filter(None, paths))
         encoding = dialog.get_encoding()
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
@@ -183,17 +190,16 @@ class OpenAgent(aeidon.Delegate):
         self.add_page(page)
 
     @aeidon.deco.export
-    def _on_notebook_drag_data_received(self, notebook, context, x, y,
-                                        selection_data, info, time):
-
-        """Open main files from dragged URIs."""
-        uris = selection_data.get_uris()
-        paths = list(map(aeidon.util.uri_to_path, uris))
+    def _on_notebook_drop(self, target, value, x, y):
+        """Open main files from dropped files."""
+        paths = [f.get_path() for f in value.get_files()]
+        paths = list(filter(None, paths))
         videos = list(filter(aeidon.util.is_video_file, paths))
         subtitles = list(set(paths) - set(videos))
         self.open_main(subtitles)
         if self.get_current_page() and len(videos) == 1:
             self.load_video(videos[0])
+        return True
 
     @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
@@ -223,18 +229,24 @@ class OpenAgent(aeidon.Delegate):
         title = _("Select Video")
         label = _("_Select")
         dialog = gaupol.VideoDialog(self.window, title, label)
-        if page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
+        # Set the location with exactly one call: a second folder load
+        # would cancel the first one mid-flight and GTK pops up that
+        # cancellation as a modal "Operation was cancelled" error dialog.
         if page.project.video_path is not None:
-            dialog.set_filename(page.project.video_path)
+            dialog.set_file(Gio.File.new_for_path(page.project.video_path))
+        elif page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(Gio.File.new_for_path(directory))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        path = dialog.get_filename()
+        file = dialog.get_file()
+        path = file.get_path() if file is not None else None
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
         self.update_gui()
+        self.flash_message(_('Selected video "{}"')
+                           .format(os.path.basename(path)))
 
     @aeidon.deco.export
     def _on_split_project_activate(self, *args):
@@ -306,14 +318,15 @@ class OpenAgent(aeidon.Delegate):
     def _select_files(self, title, doc):
         """Show a :class:`gaupol.OpenDialog` to select files."""
         gaupol.util.set_cursor_busy(self.window)
-        dialog = gaupol.OpenDialog(self.window, title, doc)
+        directory = None
         page = self.get_current_page()
         if page is not None and page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
+        dialog = gaupol.OpenDialog(self.window, title, doc, directory)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        paths = dialog.get_filenames()
+        paths = [x.get_path() for x in dialog.get_files()]
+        paths = list(filter(None, paths))
         encoding = dialog.get_encoding()
         dialog.destroy()
         gaupol.util.raise_default(response != Gtk.ResponseType.OK)

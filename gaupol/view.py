@@ -24,6 +24,8 @@ import re
 from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
+from gi.repository import Graphene
+from gi.repository import Gsk
 from gi.repository import Gtk
 
 __all__ = ("View",)
@@ -47,10 +49,34 @@ class View(Gtk.TreeView):
         GObject.GObject.__init__(self)
         self._active_col_name = ""
         self._calc = aeidon.Calculator()
+        self._cell_editor = None
         self.columns = aeidon.Enumeration()
         self._selection_changed_handlers = {}
         self._init_signal_handlers()
         self._init_props(edit_mode)
+
+    def do_size_allocate(self, width, height, baseline):
+        """Fix the placement of the cell editor after default allocation."""
+        Gtk.TreeView.do_size_allocate(self, width, height, baseline)
+        # GTK-4 (seen on 4.22) allocates cell editors in bin window
+        # coordinates, which lack the column header offset: editing
+        # started with the keyboard lands one header height too high,
+        # while editing started with the mouse is accidentally correct
+        # (the editor rectangle GTK stores from a click has the offset
+        # baked in). Skip those inconsistencies and re-allocate the
+        # editor at the edited cell's actual coordinates.
+        if self._cell_editor is None: return
+        editor, path, column = self._cell_editor
+        if editor.get_parent() is not self:
+            self._cell_editor = None
+            return
+        area = self.get_cell_area(path, column)
+        x, y = self.convert_bin_window_to_widget_coords(area.x, area.y)
+        point = Graphene.Point()
+        point.x = x
+        point.y = y
+        transform = Gsk.Transform().translate(point)
+        editor.allocate(area.width, area.height, -1, transform)
 
     def connect_selection_changed(self, callback):
         """
@@ -92,16 +118,13 @@ class View(Gtk.TreeView):
         # sufficient width for usual expected data.
         if field == gaupol.fields.NUMBER:
             size_label = Gtk.Label(label="8888")
-            size_label.show()
-            width = size_label.get_preferred_width()[1]
+            width = size_label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
             label.set_size_request(width, -1)
         if field == gaupol.fields.DURATION:
             size_label = Gtk.Label(label="88.888")
-            size_label.show()
-            width = size_label.get_preferred_width()[1]
+            width = size_label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
             label.set_size_request(width, -1)
         label.set_halign(Gtk.Align.START)
-        label.show()
         return label
 
     def _get_renderer(self, field, edit_mode):
@@ -158,6 +181,7 @@ class View(Gtk.TreeView):
             renderer = self._get_renderer(field, edit_mode)
             column = Gtk.TreeViewColumn(field.label, renderer, text=field)
             column.gaupol_id = field.name.lower()
+            renderer.connect("editing-started", self._on_renderer_editing_started, column)
             self.append_column(column)
             column.set_clickable(True)
             column.set_resizable(True)
@@ -195,7 +219,10 @@ class View(Gtk.TreeView):
         """Initialize signal handlers."""
         aeidon.util.connect(self, self, "columns-changed")
         aeidon.util.connect(self, self, "cursor-changed")
-        aeidon.util.connect(self, self, "key-press-event")
+        controller = Gtk.EventControllerKey()
+        controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        controller.connect("key-pressed", self._on_key_pressed)
+        self.add_controller(controller)
         gaupol.conf.connect_notify("editor", "custom_font", self)
         gaupol.conf.connect_notify("editor", "length_unit", self)
         gaupol.conf.connect_notify("editor", "show_lengths_cell", self)
@@ -258,18 +285,25 @@ class View(Gtk.TreeView):
         """Update the column header labels to reflect changed focus."""
         self.update_headers()
 
-    def _on_key_press_event(self, widget, event):
+    def _on_key_pressed(self, controller, keyval, keycode, state):
         """Handle various special-case key combinations."""
         # Disable Ctrl+PageUp/PageDown to allow them to be
         # used solely for navigation between notebook tabs.
-        if event.get_state() & Gdk.ModifierType.CONTROL_MASK:
-            if event.keyval in (Gdk.KEY_Page_Up, Gdk.KEY_Page_Down):
-                return widget.stop_emission("key-press-event")
+        if state & Gdk.ModifierType.CONTROL_MASK:
+            if keyval in (Gdk.KEY_Page_Up, Gdk.KEY_Page_Down):
+                return True
         # Use interactive search for a subtitle number or time
         # only if valid string keys have been pressed.
-        self.set_enable_search(event.string.isdigit() or
-                               event.string == ":" or
-                               event.string == ".")
+        string = chr(Gdk.keyval_to_unicode(keyval) or 0)
+        self.set_enable_search(string.isdigit() or
+                               string == ":" or
+                               string == ".")
+        return False
+
+    def _on_renderer_editing_started(self, renderer, editor, path, column):
+        """Keep track of the cell being edited for `do_size_allocate`."""
+        path = Gtk.TreePath.new_from_string(path)
+        self._cell_editor = (editor, path, column)
 
     def _on_renderer_set_background(self, column, renderer, store, itr, data):
         """Set zerba-striped backgrounds for all columns."""

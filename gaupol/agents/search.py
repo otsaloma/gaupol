@@ -32,7 +32,7 @@ class SearchAgent(aeidon.Delegate):
 
     def _on_search_dialog_response(self, *args):
         """Hide the search dialog."""
-        self._search_dialog.hide()
+        self._search_dialog.set_visible(False)
 
     @aeidon.deco.export
     def _on_find_and_replace_activate(self, *args):
@@ -42,8 +42,8 @@ class SearchAgent(aeidon.Delegate):
         self._search_dialog = gaupol.SearchDialog(self.window, self)
         aeidon.util.connect(self, "_search_dialog", "response")
         # Do not destroy the dialog, but rather hide based on response.
-        self._search_dialog.connect("delete-event", lambda *args: True)
-        self._search_dialog.show()
+        self._search_dialog.set_hide_on_close(True)
+        self._search_dialog.present()
 
     @aeidon.deco.export
     def _on_find_next_activate(self, *args):

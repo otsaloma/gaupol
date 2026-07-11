@@ -208,8 +208,6 @@ class FrameTransformDialog(PositionTransformDialog):
         self._output_spin_2.set_range(0, 999999)
         gaupol.util.pack_start_expand(self._correction_hbox_1, self._output_spin_1)
         gaupol.util.pack_start_expand(self._correction_hbox_2, self._output_spin_2)
-        self._correction_hbox_1.show_all()
-        self._correction_hbox_2.show_all()
         self._correction_label_1.set_mnemonic_widget(self._output_spin_1)
         self._correction_label_2.set_mnemonic_widget(self._output_spin_2)
 
@@ -277,8 +275,6 @@ class TimeTransformDialog(PositionTransformDialog):
         self._input_entry_2.set_width_chars(13)
         gaupol.util.pack_start_expand(self._correction_hbox_1, self._output_entry_1)
         gaupol.util.pack_start_expand(self._correction_hbox_2, self._output_entry_2)
-        self._correction_hbox_1.show_all()
-        self._correction_hbox_2.show_all()
         self._correction_label_1.set_mnemonic_widget(self._output_entry_1)
         self._correction_label_2.set_mnemonic_widget(self._output_entry_2)
 

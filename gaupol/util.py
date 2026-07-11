@@ -26,6 +26,7 @@ import traceback
 import webbrowser
 
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
 
@@ -35,8 +36,7 @@ def char_to_px(nchar, font=None):
     if nchar < 0: return nchar
     label = Gtk.Label(label="etaoin shrdlu")
     gaupol.style.use_font(label, font)
-    label.show()
-    width = label.get_preferred_width()[1]
+    width = label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
     return int(round(nchar * width/len(label.props.label)))
 
 def delay_add(delay, function, *args, **kwargs):
@@ -57,7 +57,7 @@ def document_to_text_field(doc):
 
 def flash_dialog(dialog):
     """Run `dialog`, destroy it and return response."""
-    response = dialog.run()
+    response = run_dialog(dialog)
     dialog.destroy()
     return response
 
@@ -82,16 +82,6 @@ def get_font():
             gaupol.conf.editor.use_custom_font and
             gaupol.conf.editor.custom_font else "")
 
-def get_gspell_version():
-    """Return :mod:`Gspell` version number as string or ``None``."""
-    try:
-        # XXX: The full version number is not available.
-        # https://gitlab.gnome.org/GNOME/gspell/issues/8
-        from gi.repository import Gspell
-        return str(Gspell._version)
-    except Exception:
-        return None
-
 def get_gst_version():
     """Return :mod:`Gst` version number as string or ``None``."""
     try:
@@ -100,12 +90,13 @@ def get_gst_version():
     except Exception:
         return None
 
-def get_icon_image(name, fallback, size):
-    """Return icon image from `name` or `fallback` in theme."""
-    theme = Gtk.IconTheme.get_default()
-    if theme.has_icon(name):
-        return Gtk.Image(icon_name=name, icon_size=size)
-    return Gtk.Image(icon_name=fallback, icon_size=size)
+def get_libspelling_version():
+    """Return libspelling version number as string or ``None``."""
+    try:
+        from gi.repository import Spelling
+        return str(Spelling._version)
+    except Exception:
+        return None
 
 def get_preview_command():
     """Return command to use for lauching video player."""
@@ -122,19 +113,18 @@ def get_text_view_size(text_view, font=None):
     text = text_buffer.get_text(start, end, False)
     label = Gtk.Label(label=text)
     gaupol.style.use_font(label, font)
-    label.show()
-    return (label.get_preferred_width()[1]
+    return (label.measure(Gtk.Orientation.HORIZONTAL, -1).natural
             + text_view.get_left_margin()
             + text_view.get_right_margin(),
-            label.get_preferred_height()[1])
+            label.measure(Gtk.Orientation.VERTICAL, -1).natural)
 
 def get_tree_view_size(tree_view, font=None):
     """Return the width and height desired by `tree_view`."""
     scroller = tree_view.get_parent()
     policy = scroller.get_policy()
     scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER)
-    width = scroller.get_preferred_width()[1]
-    height = scroller.get_preferred_height()[1]
+    width = scroller.measure(Gtk.Orientation.HORIZONTAL, -1).natural
+    height = scroller.measure(Gtk.Orientation.VERTICAL, -1).natural
     scroller.set_policy(*policy)
     return width, height
 
@@ -143,16 +133,14 @@ def get_zebra_color(tree_view):
     """Return background color to use for tree view zebra-stripes."""
     # XXX: Zebra stripes would be faster and cleaner done with CSS
     # selectors :nth-child(odd) and :nth-child(even), but they don't
-    # seem to work, might even be deliberately broken.
+    # work: GtkTreeView has no per-row CSS nodes, the selectors match
+    # the tree view widget itself among its siblings (tested 7/2026).
     # https://bugzilla.gnome.org/show_bug.cgi?id=709617#c1
-    style = tree_view.get_style_context()
-    fg = style.get_color(Gtk.StateFlags.NORMAL)
-    bg = style.get_background_color(Gtk.StateFlags.NORMAL)
-    color = Gdk.RGBA()
-    color.red   = 0.92 * bg.red   + 0.08 * fg.red
-    color.green = 0.92 * bg.green + 0.08 * fg.green
-    color.blue  = 0.92 * bg.blue  + 0.08 * fg.blue
-    return(color)
+    # Foreground color at low alpha composited over the background
+    # gives a subtle stripe on any theme, light or dark.
+    color = tree_view.get_color()
+    color.alpha = 0.05
+    return color
 
 @aeidon.deco.once
 def gst_available():
@@ -176,9 +164,9 @@ def gst_available():
               "Try installing gst-plugins-base.",
               file=sys.stderr)
         return False
-    if not Gst.ElementFactory.find("gtksink"):
-        print("GStreamer found, but gtksink missing.",
-              "Try installing gst-plugins-good.",
+    if not Gst.ElementFactory.find("gtk4paintablesink"):
+        print("GStreamer found, but gtk4paintablesink missing.",
+              "Try installing gst-plugins-rs.",
               file=sys.stderr)
         return False
     if Gst.ElementFactory.find("vaapisink"):
@@ -214,9 +202,10 @@ def install_module(name, obj):
     gaupol.__dict__[name] = inspect.getmodule(obj)
 
 def iterate_main():
-    """Iterate the GTK main loop while events are pending."""
-    while Gtk.events_pending():
-        Gtk.main_iteration()
+    """Iterate the GLib main loop while events are pending."""
+    context = GLib.MainContext.default()
+    while context.pending():
+        context.iteration(False)
 
 def lines_to_px(nlines, font=None):
     """Convert lines to pixels."""
@@ -224,8 +213,7 @@ def lines_to_px(nlines, font=None):
     text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     label = Gtk.Label(label=text)
     gaupol.style.use_font(label, font)
-    label.show()
-    height = label.get_preferred_height()[1]
+    height = label.measure(Gtk.Orientation.VERTICAL, -1).natural
     return int(round(nlines * height))
 
 def load_module_from_file(name, path):
@@ -246,26 +234,17 @@ def new_vbox(spacing):
     return Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                    spacing=spacing)
 
-def pack_start(box, widget, padding=0):
-    """Pack widget to box without fill or expand."""
-    box.pack_start(widget,
-                   expand=False,
-                   fill=False,
-                   padding=padding)
+def pack_start(box, widget):
+    """Pack widget to box without expand."""
+    box.append(widget)
 
-def pack_start_expand(box, widget, padding=0):
-    """Pack widget to box with fill and expand."""
-    box.pack_start(widget,
-                   expand=True,
-                   fill=True,
-                   padding=padding)
-
-def pack_start_fill(box, widget, padding=0):
-    """Pack widget to box with fill, but no expand."""
-    box.pack_start(widget,
-                   expand=False,
-                   fill=True,
-                   padding=padding)
+def pack_start_expand(box, widget):
+    """Pack widget to box with expand."""
+    if box.get_orientation() == Gtk.Orientation.HORIZONTAL:
+        widget.set_hexpand(True)
+    else:
+        widget.set_vexpand(True)
+    box.append(widget)
 
 def prepare_text_view(text_view):
     """Set spell-check, line-length margin and font properties."""
@@ -282,18 +261,7 @@ def prepare_text_view(text_view):
         return gaupol.ruler.disconnect_text_view(text_view)
     connect("notify::show_lengths_edit", update_margin, text_view)
     update_margin(None, None, text_view)
-    def update_font(section, value, text_view):
-        text_view.reset_style()
     gaupol.style.use_font(text_view, "custom")
-    connect("notify::use_custom_font", update_font, text_view)
-    connect("notify::custom_font", update_font, text_view)
-    update_font(None, None, text_view)
-    def update_spacing(section, value, text_view):
-        if gaupol.conf.editor.show_lengths_cell:
-            return text_view.set_pixels_above_lines(2)
-        return text_view.set_pixels_above_lines(0)
-    connect("notify::show_lengths_cell", update_spacing, text_view)
-    update_spacing(None, None, text_view)
 
 def raise_default(expression):
     """Raise :exc:`gaupol.Default` if `expression` evaluates to ``True``."""
@@ -309,8 +277,31 @@ def rgba_to_hex(color):
     )
 
 def run_dialog(dialog):
-    """Run `dialog` and return response."""
-    return dialog.run()
+    """
+    Run `dialog` in a nested main loop and return response.
+
+    A stand-in for ``Gtk.Dialog.run``, which was removed in GTK-4. Blocks in a
+    nested main loop until the "response" signal, keeping callers simple,
+    synchronous code. Closing the dialog window emits response
+    ``Gtk.ResponseType.DELETE_EVENT``.
+    """
+    response = Gtk.ResponseType.NONE
+    loop = GLib.MainLoop()
+    def on_response(dialog, response_id):
+        nonlocal response
+        response = response_id
+        loop.quit()
+    def on_unrealize(dialog):
+        # Don't hang if dialog is destroyed without a response.
+        loop.quit()
+    response_id = dialog.connect("response", on_response)
+    unrealize_id = dialog.connect("unrealize", on_unrealize)
+    dialog.present()
+    loop.run()
+    for handler in [response_id, unrealize_id]:
+        if dialog.handler_is_connected(handler):
+            dialog.disconnect(handler)
+    return response
 
 def scale_to_content(widget, min_nchar=0,  max_nchar=32768,
                      min_nlines=0, max_nlines=32768, font=None):
@@ -342,15 +333,20 @@ def separate_combo(store, itr, data=None):
 
 def set_cursor_busy(window):
     """Set mouse pointer busy when above window."""
-    cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), "wait")
-    window.get_window().set_cursor(cursor)
+    window.set_cursor_from_name("wait")
     iterate_main()
 
 def set_cursor_normal(window):
     """Set mouse pointer normal when above window."""
-    cursor = Gdk.Cursor.new_from_name(Gdk.Display.get_default(), "default")
-    window.get_window().set_cursor(cursor)
+    window.set_cursor_from_name("default")
     iterate_main()
+
+def set_widget_margins(widget, margin):
+    """Set equal margins on all sides of `widget`."""
+    widget.set_margin_top(margin)
+    widget.set_margin_bottom(margin)
+    widget.set_margin_start(margin)
+    widget.set_margin_end(margin)
 
 def show_exception(exctype, value, tb):
     """A :class:`gaupol.DebugDialog` :attr`sys.excepthook`."""
@@ -359,8 +355,7 @@ def show_exception(exctype, value, tb):
     try: # to avoid recursion.
         dialog = gaupol.DebugDialog()
         dialog.set_text(exctype, value, tb)
-        response = dialog.run()
-        dialog.destroy()
+        response = flash_dialog(dialog)
         if response == Gtk.ResponseType.NO:
             raise SystemExit(1)
     except Exception:
@@ -369,11 +364,11 @@ def show_exception(exctype, value, tb):
 def show_uri(uri):
     """Open `uri` in default application."""
     try:
-        return Gtk.show_uri(None, uri, Gdk.CURRENT_TIME)
+        return Gio.AppInfo.launch_default_for_uri(uri)
     except Exception:
-        # Gtk.show_uri fails on Windows and some misconfigured installations.
+        # Launching fails on Windows and some misconfigured installations.
         # GError: No application is registered as handling this file
-        # Gtk.show_uri: Operation not supported
+        # Operation not supported
         if uri.startswith(("http://", "https://")):
             return webbrowser.open(uri)
         raise # Exception

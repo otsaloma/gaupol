@@ -23,14 +23,14 @@ from gi.repository import Gtk
 class TestFramerateConversionDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
         self.application = self.new_application()
         self.dialog = gaupol.FramerateConvertDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog._input_combo.set_active(0)

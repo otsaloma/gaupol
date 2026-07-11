@@ -24,7 +24,6 @@ import os
 import re
 
 from aeidon.i18n   import _, n_
-from gi.repository import Gdk
 from gi.repository import Gtk
 
 __all__ = ("SearchDialog",)
@@ -32,12 +31,17 @@ __all__ = ("SearchDialog",)
 
 def page_changing(function):
     """Decorator for :class:`SearchDialog` methods that edit data."""
+    # Save and restore the previous value so that nested calls
+    # (e.g. the text view's focus-leave handler dispatched from
+    # iterate_main during replace) don't re-enable handling early.
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
+        previous = args[0]._handle_page_changes
         args[0]._handle_page_changes = False
-        value = function(*args, **kwargs)
-        args[0]._handle_page_changes = True
-        return value
+        try:
+            return function(*args, **kwargs)
+        finally:
+            args[0]._handle_page_changes = previous
     return wrapper
 
 
@@ -53,7 +57,7 @@ class SearchDialog(gaupol.BuilderDialog):
     :ivar _match_span: Start, end position of the last match
     :ivar patterns: List of patterns previously searched for
     :ivar replacements: List of replacements previously used
-    :ivar _statuslabel: Instance of :class:`gaupol.FloatingLabel` used
+    :ivar _toast: Instance of :class:`gaupol.Toast` used
     :ivar _was_next: ``True`` if the last search was "next", else ``False``
     """
 
@@ -89,7 +93,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self.patterns = []
         self._replacement_entry = None
         self.replacements = []
-        self._statuslabel = gaupol.FloatingLabel()
+        self._toast = gaupol.Toast()
         self._was_next = None
         self._read_history("patterns")
         self._read_history("replacements")
@@ -101,9 +105,8 @@ class SearchDialog(gaupol.BuilderDialog):
         self._init_values()
         self._init_signal_handlers()
         self._init_sensitivities()
-        self._overlay.add_overlay(self._statuslabel)
-        self._overlay.show_all()
-        self._statuslabel.set_text(None)
+        self._overlay.add_overlay(self._toast)
+        self._toast.set_text(None)
 
     def _add_pattern_to_history(self):
         """Add current pattern to the pattern combo box."""
@@ -193,13 +196,12 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _init_keys(self):
         """Initialize keyboard shortcuts."""
-        accel_group = Gtk.AccelGroup()
-        accel_group.connect(Gdk.KEY_f,
-                            Gdk.ModifierType.CONTROL_MASK,
-                            Gtk.AccelFlags.MASK,
-                            self._on_find_key_pressed)
-
-        self.add_accel_group(accel_group)
+        controller = Gtk.ShortcutController()
+        controller.set_scope(Gtk.ShortcutScope.GLOBAL)
+        controller.add_shortcut(Gtk.Shortcut.new(
+            Gtk.ShortcutTrigger.parse_string("<Control>f"),
+            Gtk.CallbackAction.new(self._on_find_key_pressed)))
+        self.add_controller(controller)
 
     def _init_pattern_combo(self):
         """Initialize the pattern combo box."""
@@ -241,10 +243,8 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _init_text_view(self):
         """Initialize the text view."""
-        with aeidon.util.silent(AttributeError):
-            # Top and bottom margins available since GTK 3.18.
-            self._text_view.set_top_margin(6)
-            self._text_view.set_bottom_margin(6)
+        self._text_view.set_top_margin(6)
+        self._text_view.set_bottom_margin(6)
         gaupol.util.prepare_text_view(self._text_view)
         gaupol.util.scale_to_size(self._text_view,
                                   nchar=55,
@@ -253,6 +253,9 @@ class SearchDialog(gaupol.BuilderDialog):
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.connect("changed", self._on_text_buffer_changed)
+        controller = Gtk.EventControllerFocus()
+        controller.connect("leave", self._on_text_view_focus_leave)
+        self._text_view.add_controller(controller)
 
     def _init_values(self):
         """Initialize default values for widgets."""
@@ -295,7 +298,11 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_all_radio_toggled(self, radio_button):
         """Save search target."""
-        gaupol.conf.search.target = self._get_target()
+        # In GTK-4, activating a group sibling deactivates the current
+        # button before activating the new one, so this fires once with
+        # neither button active; only act when this button became active.
+        if radio_button.get_active():
+            gaupol.conf.search.target = self._get_target()
 
     def _on_application_page_changed(self, application, page):
         """Invalidate the current search if underlying data has changed."""
@@ -311,11 +318,14 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_current_radio_toggled(self, radio_button):
         """Save search target."""
-        gaupol.conf.search.target = self._get_target()
+        # See the note in _on_all_radio_toggled.
+        if radio_button.get_active():
+            gaupol.conf.search.target = self._get_target()
 
     def _on_find_key_pressed(self, *args):
         """Move focus to the pattern entry."""
         self._pattern_entry.grab_focus()
+        return True
 
     def _on_ignore_case_check_toggled(self, check_button):
         """Save ignore case setting."""
@@ -328,7 +338,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_next_button_clicked(self, *args):
         """Find the next match of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._next_button.grab_focus()
         self.next()
 
@@ -341,7 +351,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_previous_button_clicked(self, *args):
         """Find the previous match of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._previous_button.grab_focus()
         self.previous()
 
@@ -353,7 +363,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_replace_all_button_clicked(self, *args):
         """Replace all matches of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._replace_all_button.grab_focus()
         gaupol.util.set_cursor_busy(self._dialog)
         self.replace_all()
@@ -361,7 +371,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _on_replace_button_clicked(self, *args):
         """Replace the current match of pattern."""
-        # Make sure the text view experiences a focus-out-event.
+        # Make sure the text view loses focus to save changes.
         self._replace_button.grab_focus()
         self._replace_button.set_sensitive(False)
         self.replace()
@@ -382,15 +392,15 @@ class SearchDialog(gaupol.BuilderDialog):
         self._replace_button.set_sensitive(False)
 
     @page_changing
-    def _on_text_view_focus_out_event(self, text_view, event):
-        """Save changes made in `text_view`."""
+    def _on_text_view_focus_leave(self, *args):
+        """Save changes made in the text view."""
         if self._match_page is None: return
         if self._match_row  is None: return
         if self._match_doc  is None: return
         if not self._text_view.get_sensitive(): return
         page = self.application.get_current_page()
         if page is not self._match_page: return
-        text_buffer = text_view.get_buffer()
+        text_buffer = self._text_view.get_buffer()
         start, end = text_buffer.get_bounds()
         text = text_buffer.get_text(start, end, False)
         page.project.set_text(self._match_row, self._match_doc, text)
@@ -467,7 +477,7 @@ class SearchDialog(gaupol.BuilderDialog):
                 self._show_regex_error_dialog_replacement(str(error))
                 break
         self._reset_properties()
-        self._statuslabel.flash_text(n_(
+        self._toast.flash_text(n_(
             "Found and replaced {:d} occurence",
             "Found and replaced {:d} occurences",
             count).format(count))
@@ -486,7 +496,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self._reset_properties()
         pattern = self._pattern_entry.get_text()
         message = _('"{}" not found').format(pattern)
-        self._statuslabel.flash_text(message)
+        self._toast.flash_text(message)
 
     def _set_pattern(self, page):
         """
@@ -550,7 +560,7 @@ class SearchDialog(gaupol.BuilderDialog):
             ins = text_buffer.get_iter_at_offset(match_span[0])
             bound = text_buffer.get_iter_at_offset(match_span[1])
             text_buffer.select_range(ins, bound)
-        # Some calls fail to select unless idle_add used (GTK 3.24).
+        # Some calls fail to select unless idle_add used (GTK-3.24).
         gaupol.util.idle_add(select_text, text_buffer, match_span)
 
     def _show_regex_error_dialog_pattern(self, message):

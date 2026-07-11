@@ -20,7 +20,8 @@
 import aeidon
 
 with aeidon.util.silent(Exception):
-    from gi.repository import Gspell
+    from gi.repository import GtkSource
+    from gi.repository import Spelling
 
 __all__ = ("SpellChecker",)
 
@@ -31,9 +32,13 @@ class SpellChecker(aeidon.SpellChecker):
 
     def attach(self, text_view):
         """Attach inline spell-check to `text_view`."""
-        text_buffer = text_view.get_buffer()
-        gspell_buffer = Gspell.TextBuffer.get_from_gtk_text_buffer(text_buffer)
-        gspell_buffer.set_spell_checker(self.checker)
-        gspell_view = Gspell.TextView.get_from_gtk_text_view(text_view)
-        gspell_view.set_inline_spell_checking(True)
-        return gspell_view
+        # Spelling.TextBufferAdapter requires a GtkSource.Buffer,
+        # replace the text view's blank default buffer with one.
+        text_buffer = GtkSource.Buffer()
+        text_buffer.set_highlight_matching_brackets(False)
+        text_view.set_buffer(text_buffer)
+        adapter = Spelling.TextBufferAdapter.new(text_buffer, self.checker)
+        text_view.set_extra_menu(adapter.get_menu_model())
+        text_view.insert_action_group("spelling", adapter)
+        adapter.set_enabled(True)
+        return adapter

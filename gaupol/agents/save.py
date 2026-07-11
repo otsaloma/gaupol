@@ -163,9 +163,9 @@ class SaveAgent(aeidon.Delegate):
         """Select a file to save or raise :exc:`gaupol.Default`."""
         gaupol.util.set_cursor_busy(self.window)
         mode = page.project.get_mode()
-        dialog = gaupol.SaveDialog(self.window, title, mode)
+        dialog = gaupol.SaveDialog(
+            self.window, title, mode, file.path if file is not None else None)
         if file is not None:
-            dialog.set_name(file.path)
             dialog.set_format(file.format)
             dialog.set_encoding(file.encoding)
             dialog.set_newline(file.newline)
@@ -173,7 +173,8 @@ class SaveAgent(aeidon.Delegate):
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         format = dialog.get_format()
-        path = dialog.get_filename()
+        file = dialog.get_file()
+        path = file.get_path() if file is not None else None
         encoding = dialog.get_encoding()
         newline = dialog.get_newline()
         framerate = dialog.get_framerate()

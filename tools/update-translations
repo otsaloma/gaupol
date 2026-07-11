@@ -12,6 +12,6 @@ for PO in po/*.po; do
     read -p "Keep? [Y/n] "
     [ "$REPLY" = "n" ] && rm -fv $PO
 done
-# rm -f po/LINGUAS
-# ls po/*.po | cut -d/ -f2 | cut -d. -f1 > po/LINGUAS
+rm -f po/LINGUAS
+ls po/*.po | cut -d/ -f2 | cut -d. -f1 > po/LINGUAS
 git status

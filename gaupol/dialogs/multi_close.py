@@ -65,8 +65,8 @@ class MultiCloseDialog(Gtk.MessageDialog):
             store.append((page, True, page.get_main_basename()))
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
-        scroller.add(self._main_tree_view)
+        scroller.set_has_frame(True)
+        scroller.set_child(self._main_tree_view)
         label = Gtk.Label(label=_("Select the _main documents you want to save:"))
         label.props.xalign = 0
         label.set_use_underline(True)
@@ -76,7 +76,6 @@ class MultiCloseDialog(Gtk.MessageDialog):
         gaupol.util.pack_start_expand(self.get_message_area(), self._main_vbox)
         self._main_vbox.set_visible(len(store) > 0)
         if len(store) > 0:
-            self._main_vbox.show_all()
             gaupol.util.scale_to_content(self._main_tree_view,
                                          min_nchar=30,
                                          max_nchar=60,
@@ -90,8 +89,8 @@ class MultiCloseDialog(Gtk.MessageDialog):
             store.append((page, True, page.get_translation_basename()))
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
-        scroller.add(self._tran_tree_view)
+        scroller.set_has_frame(True)
+        scroller.set_child(self._tran_tree_view)
         label = Gtk.Label(label=_("Select the _translation documents you want to save:"))
         label.props.xalign = 0
         label.set_use_underline(True)
@@ -101,7 +100,6 @@ class MultiCloseDialog(Gtk.MessageDialog):
         gaupol.util.pack_start_expand(self.get_message_area(), self._tran_vbox)
         self._tran_vbox.set_visible(len(store) > 0)
         if len(store) > 0:
-            self._tran_vbox.show_all()
             gaupol.util.scale_to_content(self._tran_tree_view,
                                          min_nchar=30,
                                          max_nchar=60,

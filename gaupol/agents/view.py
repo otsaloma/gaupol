@@ -38,17 +38,16 @@ class ViewAgent(aeidon.Delegate):
         focus_row, focus_col = page.view.get_focus()
         selected_rows = page.view.get_selected_rows()
         scroller = page.view.get_parent()
-        scroller.remove(page.view)
         page.view = gaupol.View(edit_mode)
         self.connect_view_signals(page.view)
-        scroller.add(page.view)
-        scroller.show_all()
+        scroller.set_child(page.view)
         page.reload_view_all()
         if focus_row is not None:
             page.view.set_focus(focus_row, focus_col)
             page.view.scroll_to_row(focus_row)
         page.view.select_rows(selected_rows)
-        page.view.props.has_focus = has_focus
+        if has_focus:
+            page.view.grab_focus()
         self.update_gui()
         gaupol.util.set_cursor_normal(self.window)
         page.emit("view-created", page.view)
@@ -96,15 +95,6 @@ class ViewAgent(aeidon.Delegate):
     def _on_toggle_main_text_column_activate(self, *args):
         """Show or hide the main text column."""
         self._toggle_column(gaupol.fields.MAIN_TEXT)
-
-    @aeidon.deco.export
-    def _on_toggle_main_toolbar_activate(self, *args):
-        """Show or hide the main toolbar."""
-        visible = self.main_toolbar.get_visible()
-        self.main_toolbar.set_visible(not visible)
-        self.notebook_separator.set_visible(not visible)
-        gaupol.conf.application_window.show_main_toolbar = not visible
-        self.get_action("toggle-main-toolbar").set_state(not visible)
 
     @aeidon.deco.export
     def _on_toggle_number_column_activate(self, *args):

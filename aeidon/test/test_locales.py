@@ -53,3 +53,12 @@ class TestModule(aeidon.TestCase):
     def test_get_system_modifier__none(self):
         importlib.reload(aeidon.locales)
         assert aeidon.locales.get_system_modifier() is None
+
+    def test_is_valid(self):
+        assert aeidon.locales.is_valid("en")
+        assert aeidon.locales.is_valid("en_US")
+        assert aeidon.locales.is_valid("sr@Latn")
+        assert aeidon.locales.is_valid("sr_RS@Latn")
+        assert not aeidon.locales.is_valid("en-variant_0")
+        assert not aeidon.locales.is_valid("en-w_accents")
+        assert not aeidon.locales.is_valid("EN_us")

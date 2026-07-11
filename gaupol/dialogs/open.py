@@ -22,6 +22,7 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -32,9 +33,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting subtitle files to open."""
 
-    _widgets = ["align_combo", "align_label", "encoding_combo"]
-
-    def __init__(self, parent, title, doc):
+    def __init__(self, parent, title, doc, directory=None):
         """Initialize an :class:`OpenDialog` instance."""
         GObject.GObject.__init__(self)
         self._use_autodetection = aeidon.util.chardet_available()
@@ -43,7 +42,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._init_filters()
         self._init_encoding_combo()
         self._init_align_combo()
-        self._init_values(doc)
+        self._init_values(doc, directory)
 
     def _init_align_combo(self):
         """Initialize the align method combo box."""
@@ -64,32 +63,51 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.add_button(_("_Open"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
+        self.set_modal(True)
         self.set_title(title)
         self.connect("response", self._on_response)
         self.set_action(Gtk.FileChooserAction.OPEN)
 
     def _init_extra_widget(self):
-        """Initialize the extra widget from UI definition file."""
-        ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", "open-dialog.ui")
-        builder = Gtk.Builder()
-        builder.set_translation_domain("gaupol")
-        builder.add_from_file(ui_file_path)
-        builder.connect_signals(self)
-        for name in self._widgets:
-            widget = builder.get_object(name)
-            setattr(self, "_{}".format(name), widget)
-        vbox = gaupol.util.new_vbox(spacing=0)
-        main_vbox = builder.get_object("main_vbox")
-        main_vbox.get_parent().remove(main_vbox)
-        vbox.add(main_vbox)
-        vbox.show_all()
-        self.set_extra_widget(vbox)
+        """Initialize the extra widget with encoding and align combos."""
+        self._encoding_combo = Gtk.ComboBox(hexpand=True)
+        self._encoding_combo.connect(
+            "changed", self._on_encoding_combo_changed)
+        encoding_label = Gtk.Label(label=_("_Encoding:"),
+                                   halign=Gtk.Align.START,
+                                   use_underline=True)
 
-    def _init_values(self, doc):
+        encoding_label.set_mnemonic_widget(self._encoding_combo)
+        self._align_combo = Gtk.ComboBox(hexpand=True)
+        self._align_label = Gtk.Label(label=_("Align _method:"),
+                                      halign=Gtk.Align.START,
+                                      use_underline=True)
+
+        self._align_label.set_mnemonic_widget(self._align_combo)
+        grid = Gtk.Grid(row_spacing=6,
+                        column_spacing=12,
+                        margin_top=12,
+                        margin_bottom=12,
+                        margin_start=12,
+                        margin_end=12)
+
+        grid.attach(encoding_label, 0, 0, 1, 1)
+        grid.attach(self._encoding_combo, 1, 0, 1, 1)
+        grid.attach(self._align_label, 0, 1, 1, 1)
+        grid.attach(self._align_combo, 1, 1, 1, 1)
+        # GTK-4 file choosers don't support an extra widget,
+        # add to the content area below the file chooser widget.
+        self.get_content_area().append(grid)
+
+    def _init_values(self, doc, directory):
         """Initialize default values for widgets."""
         self.set_select_multiple(doc == aeidon.documents.MAIN)
-        if os.path.isdir(gaupol.conf.file.directory):
-            self.set_current_folder(gaupol.conf.file.directory)
+        # Set the location with exactly one call: a second folder load
+        # would cancel the first one mid-flight and GTK pops up that
+        # cancellation as a modal "Operation was cancelled" error dialog.
+        directory = directory or gaupol.conf.file.directory
+        if os.path.isdir(directory):
+            self.set_current_folder(Gio.File.new_for_path(directory))
         self.set_encoding(gaupol.conf.file.encoding)
         self._align_combo.set_active(gaupol.conf.file.align_method)
         self._align_combo.set_visible(doc == aeidon.documents.TRAN)
@@ -99,7 +117,7 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Save default values for widgets."""
         gaupol.conf.file.encoding = self.get_encoding()
         directory = self.get_current_folder()
-        if directory is not None:
-            gaupol.conf.file.directory = directory
+        if directory is not None and directory.get_path() is not None:
+            gaupol.conf.file.directory = directory.get_path()
         index = self._align_combo.get_active()
         gaupol.conf.file.align_method = aeidon.align_methods[index]

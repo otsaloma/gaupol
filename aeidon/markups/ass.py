@@ -30,7 +30,7 @@ class AdvSubStationAlpha(aeidon.markups.SubStationAlpha):
     In addition to the markup in Sub Station Alpha, Advanced Sub Station Alpha
     contains a whole lof of markup tags of which the following are of interest
     to us. The further complicated color tags that define numbered (?) colors
-    and alpha channels are ignored. The reset tag is allowed a style definiton,
+    and alpha channels are ignored. The reset tag is allowed a style definition,
     e.g. ``{\\rDefault}`` to revert to style "Default".
 
      * ``{\\bWEIGHT}...{\\b0}``

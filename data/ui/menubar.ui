@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
+  <requires lib="gtk" version="4.0"/>
   <menu id="menubar">
     <submenu>
       <attribute name="label" translatable="yes">_File</attribute>
@@ -20,13 +21,11 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes">Open _Recent</attribute>
-          <section id="open-recent-main-placeholder">
-          </section>
+          <section id="open-recent-main-placeholder"/>
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes">Open R_ecent Translation</attribute>
-          <section id="open-recent-translation-placeholder">
-          </section>
+          <section id="open-recent-translation-placeholder"/>
         </submenu>
       </section>
       <section>
@@ -183,10 +182,6 @@
       <attribute name="label" translatable="yes">_View</attribute>
       <section>
         <item>
-          <attribute name="label" translatable="yes">Tool_bar</attribute>
-          <attribute name="action">win.toggle-main-toolbar</attribute>
-        </item>
-        <item>
           <attribute name="label" translatable="yes">_Video Player</attribute>
           <attribute name="action">win.toggle-player</attribute>
         </item>
@@ -265,8 +260,7 @@
               <attribute name="target">FPS_60_000</attribute>
             </item>
           </section>
-          <section id="custom-framerates-placeholder">
-          </section>
+          <section id="custom-framerates-placeholder"/>
         </submenu>
         <submenu>
           <attribute name="label" translatable="yes">_Columns</attribute>
@@ -421,8 +415,7 @@
       <section>
         <submenu>
           <attribute name="label" translatable="yes">_Language</attribute>
-          <section id="audio-languages-placeholder">
-          </section>
+          <section id="audio-languages-placeholder"/>
         </submenu>
       </section>
       <section>
@@ -517,8 +510,7 @@
           <attribute name="action">win.activate-next-project</attribute>
         </item>
       </section>
-      <section id="projects-placeholder">
-      </section>
+      <section id="projects-placeholder"/>
     </submenu>
     <submenu>
       <attribute name="label" translatable="yes">_Help</attribute>

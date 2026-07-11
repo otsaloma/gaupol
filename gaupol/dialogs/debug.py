@@ -65,21 +65,18 @@ class DebugDialog(Gtk.MessageDialog):
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
-        with aeidon.util.silent(AttributeError):
-            # Top and bottom margins available since GTK 3.18.
-            self._text_view.set_top_margin(6)
-            self._text_view.set_bottom_margin(6)
+        self._text_view.set_top_margin(6)
+        self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("monospace", family="monospace")
         text_buffer.create_tag("bold", weight=Pango.Weight.BOLD)
         text_buffer.create_tag("large", scale=1.1)
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_shadow_type(Gtk.ShadowType.ETCHED_IN)
-        scroller.add(self._text_view)
+        scroller.set_has_frame(True)
+        scroller.set_child(self._text_view)
         box = self.get_message_area()
         gaupol.util.pack_start_expand(box, scroller)
-        box.show_all()
 
     def _insert_environment(self):
         """Insert information about user's platform and environment."""
@@ -97,8 +94,8 @@ class DebugDialog(Gtk.MessageDialog):
         """Insert version numbers of selected dependencies."""
         dotjoin = lambda x: ".".join(map(str, x))
         chardet_version = aeidon.util.get_chardet_version()
-        gspell_version = gaupol.util.get_gspell_version()
         gst_version = gaupol.util.get_gst_version()
+        libspelling_version = gaupol.util.get_libspelling_version()
         gtk_version = dotjoin((
             Gtk.get_major_version(),
             Gtk.get_minor_version(),
@@ -109,9 +106,9 @@ class DebugDialog(Gtk.MessageDialog):
         self._insert_text("aeidon: {}\n".format(aeidon.__version__))
         self._insert_text("charset-normalizer: {}\n".format(chardet_version))
         self._insert_text("gaupol: {}\n".format(gaupol.__version__))
-        self._insert_text("gspell: {}\n".format(gspell_version))
         self._insert_text("gstreamer: {}\n".format(gst_version))
         self._insert_text("gtk+: {}\n".format(gtk_version))
+        self._insert_text("libspelling: {}\n".format(libspelling_version))
         self._insert_text("pygobject: {}\n".format(pygobject_version))
         self._insert_text("python: {}\n".format(python_version))
 

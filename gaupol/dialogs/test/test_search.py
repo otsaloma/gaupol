@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class TestSearchDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def run__show_regex_error_dialog_pattern(self):
@@ -36,7 +36,7 @@ class TestSearchDialog(gaupol.TestCase):
         self.application = self.new_application()
         self.dialog = gaupol.SearchDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test_next(self):
         self.dialog._regex_check.set_active(True)

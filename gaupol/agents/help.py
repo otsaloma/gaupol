@@ -25,6 +25,11 @@ class HelpAgent(aeidon.Delegate):
 
     """Help and information."""
 
+    def __init__(self, master):
+        """Initialize a :class:`HelpAgent` instance."""
+        aeidon.Delegate.__init__(self, master)
+        self._about_dialog = None
+
     @aeidon.deco.export
     def _on_browse_documentation_activate(self, *args):
         """Open web browser to view documentation."""
@@ -38,4 +43,9 @@ class HelpAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_view_about_dialog_activate(self, *args):
         """Show information about Gaupol."""
-        gaupol.util.flash_dialog(gaupol.AboutDialog(self.window))
+        if self._about_dialog is not None:
+            return self._about_dialog.present()
+        self._about_dialog = gaupol.AboutDialog(self.window)
+        # Do not destroy the dialog, but rather hide on close.
+        self._about_dialog.set_hide_on_close(True)
+        self._about_dialog.present()

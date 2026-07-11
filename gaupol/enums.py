@@ -27,7 +27,6 @@ __all__ = [
     "length_units",
     "orientation",
     "targets",
-    "toolbar_styles",
 ]
 
 
@@ -110,22 +109,3 @@ targets.SELECTED = TargetSelected()
 targets.SELECTED_TO_END = TargetSelectedToEnd()
 targets.CURRENT = TargetCurrent()
 targets.ALL = TargetAll()
-
-
-class ToolbarStyleBoth(aeidon.EnumerationItem):
-    value = Gtk.ToolbarStyle.BOTH
-
-class ToolbarStyleBothHoriz(aeidon.EnumerationItem):
-    value = Gtk.ToolbarStyle.BOTH_HORIZ
-
-class ToolbarStyleIcons(aeidon.EnumerationItem):
-    value = Gtk.ToolbarStyle.ICONS
-
-class ToolbarStyleText(aeidon.EnumerationItem):
-    value = Gtk.ToolbarStyle.TEXT
-
-toolbar_styles = aeidon.Enumeration()
-toolbar_styles.ICONS = ToolbarStyleIcons()
-toolbar_styles.TEXT = ToolbarStyleText()
-toolbar_styles.BOTH = ToolbarStyleBoth()
-toolbar_styles.BOTH_HORIZ = ToolbarStyleBothHoriz()

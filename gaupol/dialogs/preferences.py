@@ -142,7 +142,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         self.application = application
         self.manager = self.application.extension_manager
         self._init_tree_view()
-        self._init_toolbar()
         self._init_values()
         self._init_sensitivities()
 
@@ -158,12 +157,6 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         self._about_button.set_sensitive(False)
         self._help_button.set_sensitive(False)
         self._preferences_button.set_sensitive(False)
-
-    def _init_toolbar(self):
-        """Initialize the tree view inline toolbar."""
-        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
-        style = self._toolbar.get_style_context()
-        style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
@@ -218,7 +211,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             dialog.set_website_label(label)
         if metadata.has_field("Authors"):
             dialog.set_authors(metadata.get_field_list("Authors"))
-        gaupol.util.flash_dialog(dialog)
+        dialog.present()
 
     def _on_help_button_clicked(self, *args):
         """Show extension's own documentation."""
@@ -282,7 +275,6 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         self._set_attributes(self._widgets, "file_")
         self.application = application
         self._init_tree_view()
-        self._init_toolbar()
         self._init_values()
 
     def _get_selected_row(self):
@@ -292,25 +284,6 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         if itr is None: return None
         path = store.get_path(itr)
         return gaupol.util.tree_path_to_row(path)
-
-    def _init_toolbar(self):
-        """Initialize the tree view inline toolbar."""
-        self._toolbar.set_icon_size(Gtk.IconSize.MENU)
-        style = self._toolbar.get_style_context()
-        style.add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)
-        theme = Gtk.IconTheme.get_default()
-        # Tool buttons in the UI file are specified as symbolic icons
-        # by name, found in adwaita-icon-theme. If missing in another
-        # theme fall back to non-symbolic icons.
-        if not all((theme.has_icon(self._add_button.get_icon_name()),
-                    theme.has_icon(self._remove_button.get_icon_name()),
-                    theme.has_icon(self._up_button.get_icon_name()),
-                    theme.has_icon(self._down_button.get_icon_name()))):
-
-            self._add_button.set_icon_name("list-add")
-            self._remove_button.set_icon_name("list-remove")
-            self._up_button.set_icon_name("go-up")
-            self._down_button.set_icon_name("go-down")
 
     def _init_tree_view(self):
         """Initialize the fallback encoding tree view."""
@@ -559,17 +532,31 @@ class PreferencesDialog(gaupol.BuilderDialog):
 
     def __init__(self, parent, application):
         """Initialize a :class:`PreferencesDialog` instance."""
-        gaupol.BuilderDialog.__init__(self,
-                                      "preferences-dialog.ui",
-                                      connect_signals=False)
-
+        # The signal handlers, which live on the page instances created
+        # below, are resolved against self already when the UI definition
+        # file is parsed. __getattr__ resolves them to placeholders that
+        # look up the actual handler from _callbacks only when called.
+        self._callbacks = {}
+        gaupol.BuilderDialog.__init__(self, "preferences-dialog.ui")
         self._editor_page = EditorPage(self, application)
         self._extension_page = ExtensionPage(self, application)
         self._file_page = FilePage(self, application)
         self._preview_page = PreviewPage(self, application)
         self._video_page = VideoPage(self, application)
-        self._builder.connect_signals(self._get_callbacks())
+        self._callbacks.update(self._get_callbacks())
         self._init_dialog(parent)
+
+    def __getattr__(self, name):
+        """Return signal handler placeholder or attribute from dialog."""
+        if name.startswith("_on_"):
+            # Setting initial widget values in the page constructors emits
+            # signals before _callbacks is populated. Those just echo values
+            # already in the configuration, so they can be safely dropped.
+            def placeholder(*args):
+                if name in self._callbacks:
+                    return self._callbacks[name](*args)
+            return placeholder
+        return super().__getattr__(name)
 
     def _get_callbacks(self):
         """Return a dictionary mapping names to callback methods."""

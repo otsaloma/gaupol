@@ -92,8 +92,8 @@ class LanguageDialog(gaupol.BuilderDialog):
     def _init_visibilities(self, show_target):
         """Initialize visibilities of target widgets."""
         if not show_target:
-            self._language_title_label.hide()
-            self._target_vbox.hide()
+            self._language_title_label.set_visible(False)
+            self._target_vbox.set_visible(False)
             self._dialog.set_title(_("Set Language"))
 
     def _on_current_radio_toggled(self, radio_button):

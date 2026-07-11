@@ -23,16 +23,16 @@ from gi.repository import Gtk
 class TestEncodingDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
         self.dialog = gaupol.EncodingDialog(Gtk.Window())
-        self.dialog.show()
+        self.dialog.present()
 
 
 class TestMenuEncodingDialog(TestEncodingDialog):
 
     def setup_method(self, method):
         self.dialog = gaupol.MenuEncodingDialog(Gtk.Window())
-        self.dialog.show()
+        self.dialog.present()

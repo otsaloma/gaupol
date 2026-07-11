@@ -23,18 +23,18 @@ from gi.repository import Gtk
 class TestSplitDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
         self.application = self.new_application()
         self.dialog = gaupol.SplitDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         npages = len(self.application.pages)
-        self.dialog.show()
+        self.dialog.present()
         self.dialog._subtitle_spin.set_value(5)
         self.dialog.response(Gtk.ResponseType.OK)
         assert len(self.application.pages) == npages + 1

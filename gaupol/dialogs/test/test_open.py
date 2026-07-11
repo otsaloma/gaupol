@@ -29,19 +29,19 @@ class TestOpenDialog(_TestFileDialog):
         gaupol.conf.file.directory = os.getcwd()
         doc = aeidon.documents.MAIN
         self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
 
     def run_dialog__translation(self):
         gaupol.conf.file.directory = os.getcwd()
         doc = aeidon.documents.TRAN
         self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
 
     def setup_method(self, method):
         gaupol.conf.file.directory = os.getcwd()
         doc = aeidon.documents.MAIN
         self.dialog = gaupol.OpenDialog(Gtk.Window(), "test", doc)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.CANCEL)

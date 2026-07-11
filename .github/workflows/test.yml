@@ -1,20 +1,23 @@
 name: Test
-on: [push]
+on:
+  push:
+    branches: [master]
+  pull_request:
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - run: python -c "import sys; print(sys.version)"
       - run: >
           sudo apt-get update && sudo apt-get install -y
           flake8
           gettext
-          gir1.2-gspell-1
           gir1.2-gst-plugins-base-1.0
           gir1.2-gstreamer-1.0
-          gir1.2-gtk-3.0
-          gstreamer1.0-gtk3
+          gir1.2-gtk-4.0
+          gir1.2-spelling-1
+          gstreamer1.0-gtk4
           gstreamer1.0-libav
           gstreamer1.0-plugins-bad
           gstreamer1.0-plugins-good
@@ -26,11 +29,12 @@ jobs:
           python3-gi
           python3-gi-cairo
           python3-pytest
+          python3-setuptools
           xvfb
-      - run: flake8 .
-      - run: py.test-3 aeidon
-      - run: xvfb-run py.test-3 gaupol
-      - run: xvfb-run py.test-3 data/extensions
+      - run: make check
+      - run: pytest aeidon
+      - run: xvfb-run pytest gaupol
+      - run: xvfb-run pytest data/extensions
       - run: python3 setup.py install --prefix=/tmp/local
       - run: python3 setup.py install --root=/tmp/pkg
       - run: python3 setup.py clean

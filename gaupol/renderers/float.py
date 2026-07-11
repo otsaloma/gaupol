@@ -51,10 +51,13 @@ class FloatCellRenderer(Gtk.CellRendererText):
     def _on_editing_started(self, renderer, editor, path):
         """Set `editor` to use same font as `self`."""
         gaupol.style.use_font(editor, "custom")
+        # Match the renderer's yalign=0 when the cell
+        # is taller than one line of text.
+        editor.set_valign(Gtk.Align.START)
 
     def _on_notify_text(self, *args):
         """Cut decimals to fixed precision."""
-        # Since GTK 3.6, the notify::text signal seems to get
+        # Since GTK-3.6, the notify::text signal seems to get
         # emitted insanely often even if text hasn't changed at
         # all. Let's try to keep this callback as fast as possible.
         self.props.markup = self._text_to_markup(self.props.text)

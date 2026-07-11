@@ -32,12 +32,10 @@ class TestMultilineCellRenderer(gaupol.TestCase):
         column = Gtk.TreeViewColumn("", self.renderer, text=0)
         tree_view.append_column(column)
         window = Gtk.Window()
-        window.connect("delete-event", Gtk.main_quit)
-        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(240, 70)
-        window.add(tree_view)
-        window.show_all()
-        Gtk.main()
+        window.set_child(tree_view)
+        window.present()
+        self.main_loop(window)
 
     def setup_method(self, method):
         self.renderer = gaupol.MultilineCellRenderer()
@@ -55,12 +53,10 @@ class TestMultilineDiffCellRenderer(gaupol.TestCase):
         column = Gtk.TreeViewColumn("", self.renderer, text=1, ref_text=0)
         tree_view.append_column(column)
         window = Gtk.Window()
-        window.connect("delete-event", Gtk.main_quit)
-        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(240, 70)
-        window.add(tree_view)
-        window.show_all()
-        Gtk.main()
+        window.set_child(tree_view)
+        window.present()
+        self.main_loop(window)
 
     def setup_method(self, method):
         self.renderer = gaupol.MultilineDiffCellRenderer()

@@ -72,7 +72,7 @@ class ToolsAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         assistant = gaupol.TextAssistant(self.window, self)
         gaupol.util.set_cursor_normal(self.window)
-        assistant.show()
+        assistant.present()
 
     @aeidon.deco.export
     def _on_shift_positions_activate(self, *args):

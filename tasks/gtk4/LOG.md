@@ -1,0 +1,1035 @@
+# Log
+
+- Run the GUI as `timeout --signal=TERM 8 bin/gaupol
+  data/samples/subrip.srt` so it self-terminates (exit 124) instead of
+  blocking; the console output is then captured for inspection.
+
+- To see all warnings, set `G_ENABLE_DIAGNOSTIC=1` (forces GTK to emit
+  deprecation warnings) and read stderr (`2>&1`); GTK/GLib warnings go
+  through the GLib log system, not Python `warnings`, so `pytest` needs
+  `-s` to show them. Use `G_DEBUG=fatal-warnings` to turn a warning into
+  a fatal error (with traceback) when tracking down its source.
+
+- Run standalone verification scripts with the repository on
+  `PYTHONPATH`: Python puts the script's directory, not the working
+  directory, on `sys.path`, so a script run by path outside the repo
+  imports the GTK-3 gaupol 1.16 installed under `/usr/local` and
+  "verifies" the wrong code (it can even hang, since the GTK-3 app
+  blocks in main loops that ignore SIGTERM). The repo version is bumped
+  to 1.99, so `assert gaupol.__version__ == "1.99"` catches any mixup.
+  `python3 -c` and `pytest` run from the repo root resolve correctly, as
+  they put the working directory on `sys.path`.
+
+- To screenshot the app, run a standalone script (with `PYTHONPATH` as
+  above) that creates `gaupol.Application()` and calls
+  `application.open_main(paths)` — the same calls `applicationman.py`
+  makes — then in a `GLib.timeout_add` callback (~1500 ms, inside a
+  `GLib.MainLoop`) renders the window to PNG:
+
+  ```python
+  paintable = Gtk.WidgetPaintable(widget=window)
+  snapshot = Gtk.Snapshot()
+  paintable.snapshot(snapshot, paintable.get_intrinsic_width(), paintable.get_intrinsic_height())
+  texture = window.get_native().get_renderer().render_texture(snapshot.to_node())
+  texture.save_to_png(path)
+  ```
+
+  This captures the window content regardless of the Wayland compositor.
+  Caveat: the menubar doesn't render, since the script has no
+  `Gtk.Application` (`gaupol.appman`) to provide the menubar model. The
+  same recipe works for dialogs (snapshot the dialog widget instead),
+  e.g. built via the dialog test classes' `setup_method`.
+
+- Retested CSS `:nth-child` zebra stripes (the XXX comment in
+  `gaupol/util.py` `get_zebra_color`): still not viable, GtkTreeView has
+  no per-row CSS nodes, the selector matches the whole widget. Real
+  per-row CSS only comes with the GtkListView family.
+
+- `get_zebra_color` now uses `lookup_color("theme_base_color")`; if a
+  theme doesn't define that color, it returns None and zebra stripes are
+  simply not drawn. `lookup_color` and `get_color` exist in GTK-4 but
+  are deprecated since 4.10 — revisit with the TreeView question.
+
+- `show_uri` now uses `Gio.AppInfo.launch_default_for_uri` instead of
+  any of the churning `Gtk.show_uri*` variants; no GTK API involved
+  anymore, portal-aware under Flatpak.
+
+- Removed deprecated `rules_hint` from the `.ui` files: dialog tree
+  views (preferences, spell-check, language, text assistant) lose
+  theme-drawn zebra stripes already under GTK-3. `margin_left` →
+  `margin_start` in the same files, no visual change.
+
+- The `PyGIDeprecationWarning: GLib.unix_signal_add_full` warning at
+  import is internal to PyGObject 3.56 (it registers the alias as
+  deprecated twice in `gi/overrides/GLib.py`); nothing to fix on our
+  side, ignore it.
+
+- Converted all 26 `.ui` files to GTK-4 format with `gtk4-builder-tool
+  simplify --3to4` plus manual fixes for what the tool only warns about;
+  all files now pass `gtk4-builder-tool validate`. The app and the
+  dialog tests are broken (segfault, even) under GTK-3 until the GTK-4
+  switch. Notable changes beyond the mechanical ones:
+
+  - Dropped `border_width` (12px) from all dialogs and assistant pages:
+    dialog content padding is lost. See Deferred for restoring it.
+
+  - `GtkButtonBox` → `GtkBox`: buttons in a box are no longer
+    homogeneous in size by default (spell-check dialog's button column
+    is the most visible case); set homogeneous if it looks off. Also
+    deleted the empty leftover `action_area` boxes.
+
+  - The two `GtkArrow`s in the position transform dialog are now
+    `GtkImage`s with `go-next-symbolic` (also flips in RTL, unlike
+    GtkArrow's fixed direction).
+
+  - The preferences dialog `GtkToolbar` became a `GtkBox` with the
+    `toolbar` CSS class, `GtkToolButton`s became `GtkButton`s (all done
+    by the tool).
+
+  - `translatable="yes"` became `translatable="1"`: verified OK for
+    string extraction, the gettext GtkBuilder ITS rules accept both.
+
+- Switched `gi.require_version` to Gdk/Gtk 4.0. GStreamer namespaces
+  stay at 1.0 (the only GIR version there is). `import aeidon` works;
+  `import gaupol` still fails on removed GTK-3 APIs used at module level
+  (first hit: `Gtk.ToolbarStyle` in `gaupol/enums.py`) — that's the next
+  step, migrating removed APIs one by one.
+
+- Disabled Gspell entirely: it's GTK-3-only and merely importing its
+  typelib loads Gtk 3.0 into the process, which conflicts with GTK-4
+  (`import aeidon` before requiring Gtk 4.0 would make the whole app
+  fail to start). Imports commented out in `aeidon/spell.py`,
+  `gaupol/spell.py` and `aeidon/__init__.py`; `SpellChecker.available()`
+  now returns False so all spell-check UI disables itself gracefully.
+
+- Updated README and CI workflow packages: `gir1.2-gtk-3.0` →
+  `gir1.2-gtk-4.0`, `gstreamer1.0-gtk3` → `gstreamer1.0-gtk4`, dropped
+  `gir1.2-gspell-1`, GTK requirement now ≥ 4.0 (tighten later to
+  whatever 4.x version we end up needing symbols from).
+
+- Bumped README dependency floors: Python ≥ 3.10, PyGObject ≥ 3.38
+  (first release with GTK-4 support) and GStreamer ≥ 1.18 (contemporary
+  of GTK 4.0, September vs. December 2020). If the final GTK floor ends
+  up ≥ 4.14, raise GStreamer to its contemporary 1.24.
+
+- Migrated all `GtkWidget` event signals to event controllers and
+  gestures. Notable details:
+
+  - Main window and text assistant now save maximization via
+    `notify::maximized` instead of `window-state-event`; the main
+    window's `delete-event` quit hook is now `close-request`; the search
+    dialog uses `Gtk.Window.set_hide_on_close` instead of a
+    `delete-event` handler returning True.
+
+  - The right-click popup menus (view, tab, column header) had to be
+    converted from `Gtk.Menu` to `Gtk.PopoverMenu` in the same go,
+    because the `Gtk.Menu.popup` calls depended on the event object. The
+    popover is created per click, parented to the clicked widget and
+    unparented (idle) on close. This covers part of the "GtkMenu is
+    gone" migration item; the rest of `menu.py` (undo/redo button menus,
+    recent menus, and their `enter/leave-notify-event` handlers on
+    `Gtk.MenuItem`s) was deliberately left untouched for that item, as
+    it all gets rewritten together.
+
+  - The `populate-popup` signal is gone (GTK-4 uses `extra-menu` models
+    on `Gtk.Text`/`Gtk.TextView`). Removed the "Italic" context menu
+    item of the text cell editor and the `_in_editor_menu` guards that
+    kept focus-out from ending cell editing while a context menu was
+    open. See Deferred.
+
+  - Key controllers were added in the capture phase where the old
+    handlers relied on running before the widget's own handling (cell
+    editors' Enter/Escape, TimeEntry's Backspace/Delete, view's
+    Ctrl+PageUp/Down block). See Deferred for a runtime check.
+
+  - `gaupol.View` uses `Gdk.keyval_to_unicode(keyval)` in place of the
+    removed `event.string` for toggling interactive search.
+
+  - `FloatingLabel.register_hide_event(widget, event)` now takes
+    "button-press", "key-press" or "scroll" and adds a capture-phase
+    controller; controllers are removed again when the label hides.
+
+  - Reconnected the search dialog text view's focus-out saving of edits
+    (dropped earlier with the `.ui` conversion) via
+    `Gtk.EventControllerFocus`; clears the earlier Deferred item.
+
+- Migrated away from the `Gtk.main*` family: `gaupol.util.iterate_main`
+  now iterates `GLib.MainContext.default()` (non-blocking), and
+  `gaupol.TestCase` got an nfoview-style `main_loop(window)` helper that
+  iterates the default main context while the window is visible. The
+  interactive `run_*` test helpers (view, entries, spell, floatlabel,
+  assistants, renderers) now use it instead of `Gtk.main()` +
+  `delete-event`/`main_quit`. Since those helpers were rewritten anyway,
+  they were converted fully to GTK-4 (`set_child`, `show`, dropped
+  `Gtk.WindowPosition` — also from `test_floatlabel.py`'s
+  `setup_method`); the `run_dialog`-based helpers in dialog tests remain
+  for the blocking-dialogs item. `TestSpellChecker` base class changed
+  from `aeidon.TestCase` to `gaupol.TestCase` to get `main_loop`.
+  `TextAssistant`'s run helper relies on the assistant destroying itself
+  on apply/cancel to end the loop.
+
+- GdkScreen: only one use, `gaupol/style.py` `load_css` now calls
+  `add_provider_for_display(Gdk.Display.get_default(), ...)` (in GTK
+  since 4.0), following nfoview. Noticed in the same function:
+  `_get_editor_font_css` picks its font-size unit with
+  `Gtk.check_version(3, 22, 0)`, which under GTK-4 makes the unit
+  silently flip from "pt" to "px"; sort that out with the GtkCssProvider
+  migration item.
+
+- Fixed `gaupol/style.py` `_update_css` being a no-op since commit
+  75df44d3: `load_css` now installs a single module-level provider for
+  the display once and `_update_css` reloads it on font conf changes, so
+  open text views again update live (reloading an installed provider
+  invalidates styles by itself). The `reset_style` calls in
+  `prepare_text_view` relied on `_update_css` working and `reset_style`
+  is gone in GTK-4, so those callbacks were removed. Verify live font
+  change at runtime once the app starts.
+
+- GdkWindow: only two uses, both trivial. `gaupol/util.py` cursor
+  helpers now use `Gtk.Widget.set_cursor_from_name` (in GTK since 4.0),
+  which also completes the "cursor API changes" item (no other mouse
+  pointer code exists). `gaupol/agents/video.py` paned sizing now uses
+  `Gtk.Widget.get_width/get_height` directly; note these return the
+  widget's content size rather than the GdkWindow size, an irrelevant
+  difference for picking the initial 50% paned position.
+
+- GdkEvent: no direct event field access remains, the event controllers
+  migration already moved everything to controller callback arguments;
+  the remaining `event` parameters (cell renderers' `do_start_editing`,
+  menu.py's deferred `enter/leave-notify-event` handlers) are never
+  dereferenced. The "iconified" item was a no-op too, nothing touches
+  iconification. One leftover found: the save dialog connects to the
+  generic `"event"` signal, deferred to the FileChooser item (see
+  Deferred).
+
+- GtkClipboard → GdkClipboard: `x_clipboard` is now
+  `Gdk.Display.get_clipboard()` (in GDK since 4.0). Notable details:
+
+  - GdkClipboard has no synchronous read, so pasting is now
+    asynchronous: `_on_paste_texts_activate` calls `read_text_async` and
+    the actual paste logic moved to a `_paste_texts` callback.
+    `test__on_paste_texts_activate` iterates the main context after
+    activating so the callback still gets exercised.
+
+  - GdkClipboard has no `set_can_store` equivalent; whether copied text
+    persists in the desktop clipboard after quitting Gaupol is now up to
+    the session's clipboard manager. Minor, acceptable regression.
+
+  - `Gdk.Clipboard.set_text` is not introspectable; from Python use
+    `set(str)` (PyGObject marshals the value). Verified the
+    set/read-text roundtrip works in a test script under Wayland.
+
+  - Found more GdkWindow API missed by commit e6b075ef (grep pattern
+    missed `get_bin_window`): the paste handler's
+    `freeze_updates`/`thaw_updates` around the tree view update. GTK-4's
+    frame-based rendering has no update freezing, so they're simply
+    dropped; the focus/scroll restoration logic remains.
+
+  - `entries.py`'s `cut-clipboard`/`copy-clipboard` keybinding signal
+    connections on TimeEntry are not GtkClipboard API, but they moved
+    from GtkEntry to GtkText in GTK-4; left for the GtkEntry item.
+
+- GtkBuilder: `connect_signals` is gone; PyGObject's GTK-4 override
+  `Gtk.Builder(scope_object_or_map)` (added in PyGObject 3.40, README
+  floor bumped from 3.38) installs a `BuilderScope` that resolves
+  handler names on any plain Python object — but eagerly, at
+  `add_from_file` parse time. Notable details:
+
+  - `BuilderDialog` passes `self` as scope; the `connect_signals`
+    parameter was dropped. Since handlers are now resolved before
+    `self._dialog` is assigned, a missing handler would have made
+    `__getattr__`'s delegation recurse infinitely; it now raises
+    `AttributeError` for `_dialog`, so PyGObject instead prints a clear
+    "Handler X not found" traceback and leaves that signal unconnected
+    (GTK-3 `connect_signals` warned similarly; not a hard error in
+    either case).
+
+  - `PreferencesDialog` connected a callbacks map collected from its
+    page objects after loading, which is impossible now (scope precedes
+    parsing, pages need the loaded builder). Its `__getattr__` now
+    resolves `_on_*` names to placeholder lambdas that look up the real
+    handler from a `_callbacks` dict, filled once the pages exist.
+    Verified with a standalone script against the real
+    preferences-dialog.ui: parse succeeds and signals dispatch to
+    late-filled callbacks.
+
+- Focus handling changes: a near no-op. The `.ui` files already got
+  `can-focus` → `focusable` in the builder-tool conversion, and nothing
+  uses `set_can_focus` or the removed focus adjustments. The one real
+  fix: `_on_set_edit_mode_activate` restored view focus by writing
+  `props.has_focus`, which is read-only in GTK-4; it now calls
+  `grab_focus()` instead.
+
+- Keyboard shortcuts: the only `GtkAccelGroup` use was the search
+  dialog's Ctrl+F (focus the pattern entry); it's now a
+  `Gtk.ShortcutController` with `Gtk.ShortcutScope.GLOBAL` and a
+  `Gtk.CallbackAction` (all in GTK since 4.0). The action accelerators
+  in `gaupol/actions/*` go through
+  `Gtk.Application.set_accels_for_action`, which is unchanged in GTK-4;
+  no `GtkBindingSet`/`GtkAccelMap` usage existed. Verify Ctrl+F in the
+  search dialog at runtime once the app starts.
+
+- GtkEventBox: both uses were vestigial wrappers, since all widgets
+  receive events in GTK-4. `FloatingLabel` now packs its label directly;
+  `Page.tab_widget` is now the plain `Gtk.Box` holding the tab label and
+  close button (the tab popup's click gesture already attaches to
+  `tab_widget` itself, so it keeps working). The tab widget's
+  `show_all()` call went away with the event box; children default to
+  visible in GTK-4.
+
+- GtkBox: the `gaupol.util` pack helpers now use `Gtk.Box.append` (in
+  GTK since 4.0); `pack_start_expand` sets `hexpand`/`vexpand` on the
+  child by box orientation. The unused `padding` parameter was dropped
+  and `pack_start_fill` was removed as identical to `pack_start` in
+  GTK-4 (children default to fill via `halign`/`valign`; fill only ever
+  differed with expand). Caveat from the migration guide: unlike the
+  GTK-3 expand child property, `hexpand`/`vexpand` propagate up the
+  widget hierarchy, so check for layout surprises at runtime. The raw
+  `pack_start` in `gaupol/player.py` is left for the deferred
+  gtk4paintablesink switch. The `pack_start(renderer, expand=True)`
+  calls elsewhere are Gtk.CellLayout API on combo boxes, not GtkBox;
+  they still exist in GTK-4 (deprecated since 4.10, TreeView family).
+
+- GtkWindow: window-size persistence (main window in `close.py`, text
+  assistant, spell-check dialog) moved from `resize`/`get_size` to
+  `set_default_size`/`get_default_size` (both since 4.0); in GTK-4 the
+  default-size properties track user resizes and are the documented
+  save-state mechanism. They report the unmaximized size when maximized,
+  which all three save sites already guard for anyway. The text
+  assistant's `set_position(CENTER_ON_PARENT)` was dropped without
+  replacement: `GtkWindowPosition` is gone and placement of a modal
+  transient window is up to the compositor. Verify saved sizes restore
+  sensibly at runtime (GTK-4 sizes exclude window shadows, so old saved
+  conf values may restore slightly differently once).
+
+- GtkStack/GtkAssistant/GtkNotebook: a near no-op. The search dialog's
+  `.ui` already got explicit `GtkStackPage` objects in the builder-tool
+  conversion, and all the Notebook/Assistant methods we call
+  (`append_page`, `set_tab_reorderable`, `reorder_child`,
+  `set_page_type`, `set_page_complete`) still exist in GTK-4. The one
+  real change: the notebook `tab-expand`/`tab-fill` child properties in
+  `gaupol/agents/open.py` are now set on the `Gtk.NotebookPage` meta
+  object via `Gtk.Notebook.get_page` (in GTK since 4.0), as
+  `child_set_property` went away with GtkContainer.
+
+- GtkContainer removal: generic `add`/`remove` replaced with the
+  class-specific API (all in GTK since 4.0): `set_child` on
+  Window/Button/ScrolledWindow/Overlay, `append` on Box, and
+  `set_start_child`/`set_end_child` on Paned. Notable details:
+
+  - GTK-3 `Paned.add1` implied `resize=False` for the start child while
+    GTK-4 defaults both children to resizing, so `video.py` now calls
+    `set_resize_start_child(False)` to keep window resizes stretching
+    the subtitle view rather than the video player.
+
+  - The edit-mode switch in `agents/view.py` now replaces the view with
+    a single `scroller.set_child(new_view)` — GTK-4 setters unparent the
+    old child themselves, no separate `remove` needed.
+
+  - `ruler.py` dropped `text_view.get_border_width()` from the margin x
+    coordinate: container border width is gone in GTK-4 and nothing ever
+    set it on text views, so it was always 0.
+
+  - `test_assistants.py` setups converted like the earlier run helpers
+    (`set_child`, `show`, dropped the 12px `set_border_width`).
+
+  - Left for their own items: `Gtk.ToolItem.add` in `agents/video.py`
+    (GtkToolbar), `menu.get_children`/`menu.remove` in `agents/menu.py`
+    (GtkMenu), and all `show_all` calls (widgets visible by default).
+
+- gtk_widget_destroy removal: a no-op. Every `.destroy()` call in the
+  codebase is on a toplevel window (dialogs, main window, TextAssistant,
+  the text-assistant pages' throwaway wrapper window) and
+  `Gtk.Window.destroy` exists in GTK-4 (since 4.0); nothing destroys
+  non-window widgets. The `destroy_with_parent` window property is
+  unchanged too.
+
+- GtkStyleContext: `get_style_context().add_class(...)` with our custom
+  CSS classes replaced by `Gtk.Widget.add_css_class` (in GTK since 4.0)
+  in player, page, floatlabel and `style.py` `use_font`;
+  `get_zebra_color` drops the state argument from `get_color()` (gone in
+  GTK-4). The `Gtk.STYLE_CLASS_*` constants are gone: the
+  `add_class(Gtk.STYLE_CLASS_INLINE_TOOLBAR)` lines in the preferences
+  dialogs (gaupol + custom-framerates extension) were dropped entirely —
+  those toolbars are already GtkBoxes with the "toolbar" CSS class from
+  the `.ui` conversion, and GTK-4 has no "inline-toolbar" styling (minor
+  visual change: standard toolbar look instead of GTK-3's
+  attached-to-tree-view inline look). Left for their own items:
+  `application.py` `_init_main_toolbar`'s STYLE_CLASS_PRIMARY_TOOLBAR
+  (GtkToolbar item, whole method gets rewritten) and `ruler.py`'s
+  `Gtk.render_layout(style, ...)` (GtkWidget::draw item).
+  `Gtk.StyleContext.add_provider_for_display` in `style.py` stays: it
+  exists since 4.0 and is not deprecated (only the instance API is).
+
+- GtkCssProvider: `style.py` now uses `load_from_string` (in GTK since
+  4.12 — the first symbol pushing our GTK floor above 4.0, README
+  updated to ≥ 4.12; `load_from_data` exists since 4.0 but with a
+  changed signature and deprecated since 4.12). Also resolved the
+  `_get_editor_font_css` font-size unit hack flagged earlier:
+  `Gtk.check_version(3, 22, 0)` is non-None under GTK-4 (major
+  mismatch), so the unit had silently flipped to "px"; now hardcoded to
+  "pt". Verified empirically that "pt" is correct: GTK-4 CSS resolves pt
+  using gtk-xft-dpi (13pt → 13 × dpi/72 px), the same way Pango resolves
+  the point sizes that font choosers produce, so pt tracks the desktop
+  text-scaling-factor while px would ignore it; libadwaita does the
+  same, emitting `--document-font-size: %dpt` when converting the GNOME
+  font settings to CSS. Verified provider load + reload with the
+  generated CSS in a standalone script.
+
+- GtkShadowType/GtkRelief: scrolled windows' `set_shadow_type` became
+  `set_has_frame` (in GTK since 4.0): ETCHED_IN → True, and the NONE
+  calls (encoding, text-edit dialogs) were dropped since GTK-4
+  ScrolledWindow defaults to no frame. The tab close button's
+  `set_relief(NONE)` became `set_has_frame(False)` — needed explicitly,
+  GTK-4 buttons default to has-frame True. Any GTK-3 vs. GTK-4 frame
+  drawing differences (ETCHED_IN vs. flat border) are up to the theme.
+  Also fixed two `scroller.add()` calls (preview-error and text-edit
+  dialogs) that the GtkContainer migration in commit a9e46e22 missed;
+  now `set_child`.
+
+- Size requests: all `get_preferred_width/height()[1]` calls (util,
+  view, ruler, page) became `measure(orientation, -1).natural` (in GTK
+  since 4.0), following nfoview. All call sites wanted the natural size
+  of an unrooted throwaway label (or the tab image / tree view
+  scroller), so semantics are unchanged; verified the measure-based
+  sizing returns sensible values in a standalone script. Nothing used
+  the removed `::size-allocate` signal or baseline API.
+
+- Visible by default: dropped all `show_all` calls (removed in GTK-4)
+  and the redundant `show()` calls on non-toplevels (measurement labels,
+  header labels, cell editors). Everything that must start or turn
+  hidden was already handled by explicit `set_visible`/`hide` calls that
+  run regardless (e.g. the floating status label is hidden by
+  `show_message(None)`/`set_text(None)` right after the GTK-3 `show_all`
+  sites), and the search dialog's `.ui` has explicit `visible=0` where
+  needed, so no new hiding was added. Left as-is: `menu.py` `show_all`
+  (GtkMenu item), `dialogs/open.py`/`save.py` `show_all` (their
+  `_init_extra_widget` is built on the removed `set_extra_widget` and
+  gets rewritten wholesale in the GtkFileChooser item — same goes for
+  their `vbox.add`/`get_parent().remove` GtkContainer leftovers), and
+  toplevel/dynamic `show()`/`hide()` calls, which exist in GTK-4 and are
+  only deprecated since 4.10 (evaluate in the later deprecations pass).
+
+- GtkWidget::draw + GtkTextView border windows (both removed in GTK-4,
+  both used only by `ruler.py`): the line-length margin is now a
+  `Gtk.Widget` subclass that draws in `do_snapshot` and is placed with
+  `Gtk.TextView.set_gutter(RIGHT)` (in GTK since 4.0; Graphene added to
+  the `gi.require_version` calls for `Gtk.Snapshot.translate`). Notable
+  details:
+
+  - GTK-4 caches the gutter's render node and does not redraw it on
+    scrolling or typing (verified empirically), so the margin widget
+    queues its own redraws on buffer "changed" and vadjustment
+    "value-changed"; the adjustment is tracked via `notify::vadjustment`
+    because the cell editor's text view has no scrolled window and the
+    text edit dialog gets its scroller only after `prepare_text_view`.
+
+  - Each length number is now positioned from its buffer line's real
+    coordinates (`get_iter_location` + `buffer_to_window_coords`),
+    replacing the old single joined layout and its "XXX: Lines overlap
+    if we don't set a spacing!?" hack; numbers stay aligned regardless
+    of line spacing and wrapping. Text color comes from
+    `Gtk.Widget.get_color` (since 4.10, under our 4.12 floor). Verified
+    visually with a standalone demo script; `test_ruler.py` can't run
+    until `import gaupol` works again (blocked on the GtkToolbar item).
+
+- Zebra stripes: `get_zebra_color` now returns the tree view's
+  foreground color at 8% alpha (`Gtk.Widget.get_color`, since 4.10) and
+  lets rendering composite it over the actual row background, instead of
+  arithmetically blending 8% foreground into
+  `lookup_color("theme_base_color")`. This drops the deprecated
+  GtkStyleContext color API (clears the "revisit" note from the
+  GtkStyleContext item) and stripes now work also on themes that don't
+  define `theme_base_color`; the function no longer returns None.
+  Verified visually in a standalone demo that `cell-background-rgba`
+  respects alpha, on both light and dark themes.
+
+- Icon sizes: the tab close button image now uses `Gtk.IconSize.NORMAL`
+  (GTK-4 only has INHERIT/NORMAL/LARGE; NORMAL is the text-like size
+  that MENU effectively was). The `set_icon_size(MENU)` calls on the
+  preferences-dialog and custom-framerates inline toolbars were dropped:
+  those "toolbars" are plain GtkBoxes since the `.ui` conversion and
+  their symbolic button icons default to NORMAL anyway (ExtensionPage's
+  `_init_toolbar` became empty and was removed). The two remaining
+  `set_icon_size` calls (main toolbar, player toolbar) are real
+  GtkToolbar API on win32-only paths and go away with the GtkToolbar
+  rewrite item.
+
+- GtkEntry/GtkSpinButton: only `TimeEntry` needed work. Its edit
+  blocking moved from stopping the GtkEditable `insert-text`/
+  `delete-text` signals to a `Gtk.EntryBuffer` subclass whose
+  `do_insert_text`/`do_delete_text` vfuncs reject anything not
+  explicitly allowed: the signals still exist and are stoppable in
+  GTK-4, but PyGObject cannot marshal their in-out position argument,
+  which would have printed the `g_value_get_int` assertion warning on
+  every keystroke (this also clears the old TimeEntry warning from
+  Deferred). The `cut-clipboard`/`toggle-overwrite` keybinding signals
+  moved from GtkEntry to its GtkText delegate
+  (`Gtk.Editable.get_delegate`, since 4.0). All TimeEntry behaviors
+  (validation, overwrite typing, separator skip, digit zeroing, blocked
+  delete, cut→copy redirect) verified in a standalone GTK-4 script;
+  `pytest` remains blocked on `import gaupol` (GtkToolbar item). The
+  SpinButton API we use is unchanged in GTK-4 and GtkSearchEntry is not
+  used at all.
+
+- Menubar + main toolbar: the menubar needed no code changes — GTK-4's
+  `GtkApplicationWindow` renders the `Gtk.Application.set_menubar` model
+  as a `GtkPopoverMenuBar` automatically when `show-menubar` is set, so
+  the existing `menubar.ui` + `GMenu` section updates all keep working.
+  The main toolbar (GtkToolbar, removed in GTK-4) was replaced with a
+  GNOME HIG style `GtkHeaderBar` set as the window titlebar, with the
+  menubar below it. Notable details:
+
+  - Header bar contents: an Open split button (folder icon + arrow
+    MenuButton whose menu is the *same* `GMenu` section object as File →
+    Open Recent), a save button, a linked undo/redo pair, the default
+    title widget (shows the window title, which `update.py` already
+    maintains as filename/"Gaupol"), and find-and-replace + preview icon
+    buttons on the right; window controls come automatically. Cut from
+    the old toolbar: Insert, Remove and Video toggle — all still in the
+    menubar.
+
+  - The undo/redo history dropdowns are gone (the hover-highlight
+    multi-undo UI can't be done with popover menus); undo/redo now flash
+    "Undo: <action description>" via the FloatingLabel so it's clear
+    what was reverted. All the `Gtk.Menu`/`Gtk.MenuItem` code in
+    `agents/menu.py` went away with them.
+
+  - Recent files are now listed by querying `Gtk.RecentManager` directly
+    (filter by application + format mime types, MRU by modified time,
+    honor `recent.show_not_found`, limit 10), replacing
+    `GtkRecentChooserMenu` for both the split button and the two menubar
+    sections. This also clears the "GtkRecentChooserMenu is gone" item.
+
+  - A header bar can't be hidden like the toolbar could, so the View →
+    Toolbar menu item, `toggle-main-toolbar` action, conf options
+    `show_main_toolbar` and `toolbar_style`, and the `toolbar_styles`
+    enum (built on removed `Gtk.ToolbarStyle`) were all removed. Stale
+    keys in old config files are discarded on the next write; an old
+    `toolbar_style` line prints a harmless one-time parse warning. The
+    notebook separator, whose visibility was tied to the toolbar, was
+    dropped too.
+
+  - Verified visually (screenshot via `Gtk.WidgetPaintable` with the
+    still-unmigrated notebook DnD calls stubbed out): header bar, linked
+    groups, title and menubar all render correctly. Full runtime
+    verification blocked on the remaining items (DnD, GtkIconTheme). The
+    player toolbar in `agents/video.py` is still GtkToolbar — it's the
+    remaining half of the "GtkToolbar has been removed" item.
+
+- Player toolbar: now a `GtkBox` with the "toolbar" CSS class (the
+  migration guide's replacement; an OSD overlay was considered and
+  rejected — auto-hiding controls suit immersive playback, not editing,
+  and would cover the subtitle overlay at the bottom of the video). Same
+  buttons and order, separators dropped (the "toolbar" class spacing
+  suffices), seekbar expands via `hexpand`. Completes the GtkToolbar
+  item. Notable details:
+
+  - Icon names switched to `-symbolic` variants out of necessity, not
+    just style: current adwaita-icon-theme ships only symbolic icons and
+    GTK-4 does *not* fall back from a plain name to its symbolic variant
+    (verified: "media-playback-start" resolves to image-missing). The
+    media icon base names are all freedesktop naming spec names and
+    Adwaita has `-rtl` variants, so seek/skip icons flip automatically
+    in RTL. See Deferred for auditing the remaining non-symbolic icon
+    names elsewhere.
+
+  - `volume_button.props.use_symbolic = False` dropped: broken for the
+    same no-fullcolor-icons reason, and the property is deprecated since
+    4.10 (GTK-4 default is True).
+
+  - Verified visually with a standalone script that calls the real
+    `_init_player_toolbar` on a stub master; in-app verification blocked
+    on the deferred gtksink → gtk4paintablesink switch.
+
+- Drag-and-drop: the notebook's URI drop (open dragged files) is now a
+  `Gtk.DropTarget` (since 4.0) receiving `Gdk.FileList` (since 4.6,
+  under our 4.12 floor); GTK deserializes `text/uri-list` drags into it,
+  so drops from file managers keep working. The handler gets `Gio.File`s
+  and uses `get_path()`, filtering out non-local files (the old code
+  would have produced garbage paths for those anyway). This was the only
+  DnD in the codebase (notebook tab reordering is internal to
+  GtkNotebook). `import gaupol` works again as of this commit's
+  predecessor state; runtime drop verification blocked on the next item
+  (`Gtk.IconTheme.get_default` crashes app startup).
+
+- GtkIconTheme: no `Gtk.IconTheme.get_for_display` port was needed — all
+  three `get_default()` sites existed only to fall back from symbolic to
+  non-symbolic icon names, which is backwards in GTK-4 (current Adwaita
+  ships only symbolic icons; plain names are the broken ones and themes
+  inherit Adwaita anyway). `gaupol/util.py` `get_icon_image` was removed
+  and the tab close button creates its symbolic `Gtk.Image` directly;
+  the `_init_toolbar` has_icon-fallback methods in
+  `dialogs/preferences.py` and the custom-framerates extension were
+  deleted, keeping the symbolic names from the `.ui` files. This clears
+  the Python half of the deferred non-symbolic icon audit. Milestone:
+  `bin/gaupol FILE` now starts and runs with zero console errors or
+  warnings.
+
+- GtkFileChooser API changes: moved to the GFile-based API —
+  `set_current_folder`/`set_file` take a `Gio.File`, and the agents read
+  `get_file()`/`get_files()`, converting with `get_path()` (non-local
+  files filtered out where multiple can be selected). Notable details:
+
+  - Decision: no `Gtk.FileChooserNative` (or 4.10's `Gtk.FileDialog`)
+    anywhere. The open/save dialogs need real extra widgets (encoding/
+    format combos with change handlers), which neither supports
+    (`add_choice` is string-only with no signals), and FileChooserNative
+    was seen broken in nfoview on GTK 4.10. For consistency, all file
+    choosers stay `Gtk.FileChooserDialog` subclasses.
+
+  - `set_extra_widget` is gone: the open/save dialogs' combo grids are
+    appended to the dialog's content area, below the file chooser widget
+    (verified visually). The throwaway `GtkWindow` wrappers in
+    `open-dialog.ui`/`save-dialog.ui` were dropped — `main_vbox` is now
+    a top-level builder object carrying its own 12px margins, which
+    settles these dialogs' borders (part of the deferred border item).
+
+  - Overwrite confirmation is automatic in GTK-4. The save dialog's
+    hack of adding a missing filename extension before confirmation
+    moved from the removed generic "event" signal on the save button
+    (which crashed dialog init, see the cleared Deferred item) to a
+    capture-phase `Gtk.GestureClick` on the same button. The Enter-key
+    path adds the extension only in the response handler, after GTK's
+    confirmation has checked the extensionless name — the same loophole
+    existed in GTK-3, whose `stop_emission` + re-`response` dance also
+    bypassed re-confirmation; that dance was dropped.
+
+  - In SAVE mode, GTK-4's file chooser dialog automatically creates a
+    header bar holding the name entry and moves the response buttons
+    into it. Just a look change, everything keeps working, including
+    `get_widget_for_response`.
+
+  - `SaveDialog.set_name` with a path to a nonexistent file now sets
+    only the basename; GTK-3 `set_current_name` received the full path
+    and displayed it verbatim in the name entry.
+
+  - Construction, extra-widget rendering and the set_name → format
+    change → extension-adding → `get_file` flow verified with a
+    standalone script (dialogs render correctly, screenshots checked);
+    the full response flow through the agents is still blocked on
+    `Gtk.Dialog.run` (the next, blocking-dialogs item). All dialog and
+    agent unit tests pass. The whole GtkFileChooser family is deprecated
+    since 4.10 in favor of `Gtk.FileDialog`; that's a case for the later
+    deprecations pass, hampered by the extra widget need.
+
+- Follow-up to the GtkFileChooser item: `open-dialog.ui` and
+  `save-dialog.ui` were dropped and the extra widgets are now built in
+  code in `_init_extra_widget`. The files contained only a static grid
+  of labels and empty combos (all combo contents were already built in
+  Python), and loading a fragment with a second `Gtk.Builder` into a
+  foreign dialog was an odd pattern. Label strings are identical, so
+  existing translations keep matching (`tools/extract-translations`
+  globs both `.py` and `.ui`, no file lists to update). Rendering
+  verified identical via screenshots; dialog tests pass.
+
+- Blocking dialogs: `Gtk.Dialog.run` is gone; rather than rewriting all
+  ~50 synchronous call sites (and the `gaupol.Default` exception
+  unwinding built on their return values) into "response"-callback
+  style, `gaupol.util.run_dialog` now blocks in a nested `GLib.MainLoop`
+  until the "response" signal, preserving GTK-3 `run()` semantics. The
+  async rewrite was rejected as an application-wide architecture change
+  — and moot, since GtkDialog is deprecated since 4.10 and the dialog
+  story gets revisited in the deprecations pass anyway. Notable details:
+
+  - GTK-4 GtkDialog emits response `DELETE_EVENT` when the window is
+    closed (verified empirically), so cancel-on-close keeps working. An
+    "unrealize" handler also quits the loop, so it cannot hang if a
+    dialog is destroyed mid-run without a response (the "destroy" signal
+    is useless for this: it only fires once Python drops its reference).
+    Handlers are disconnected after each run, so re-running the same
+    dialog (open.py's retry loops) doesn't accumulate them.
+
+  - `BuilderDialog.run` was removed; everything, including the ~24
+    interactive `run_dialog` test helpers that called `dialog.run()`
+    directly (mechanically converted), now goes through
+    `gaupol.util.run_dialog`. `show_exception` now uses `flash_dialog`.
+
+  - `flash_dialog(AboutDialog)` remains broken: GTK-4 GtkAboutDialog is
+    not a GtkDialog and has no "response" signal — that's the next item,
+    "Adapt to GtkAboutDialog API changes".
+
+  - Verified with scripts: response/close/destroy semantics standalone,
+    a BuilderDialog run twice through the shim, and the real in-app
+    close-confirmation flow (MultiCloseDialog inside
+    `application.close`: CANCEL keeps the page via `gaupol.Default`, NO
+    closes it). App starts and runs with a clean console. This also
+    clears the deferred item on the `run_dialog`-based test helpers.
+
+- GtkAboutDialog: derives from GtkWindow in GTK-4, so it can't go
+  through `flash_dialog`/`run_dialog` (no "response" signal). The help
+  agent now keeps a single AboutDialog instance and `present`s it, with
+  `set_hide_on_close(True)` — the same pattern as the search dialog and
+  nfoview. All the `set_*` calls in `AboutDialog.__init__` exist
+  unchanged in GTK-4; the init was just reordered to match nfoview.
+  Verified the present/close-hides/re-present flow in-app with a script
+  (after first testing the wrong code, see the `PYTHONPATH` note at the
+  top of this file).
+
+- MessageDialog: `format_secondary_text` is gone in GTK-4 (a removal not
+  covered by the guide, found because every confirmation flow builds on
+  the message dialogs); the four message dialog base classes now set the
+  `secondary-text` property instead. This unbroke all
+  Error/Info/Question/WarningDialog construction and their tests.
+
+- GtkFileChooserButton: the multi-save dialog's folder selector is now
+  the plain `GtkButton` left behind by the `.ui` conversion, renamed
+  `directory_button` and made functional: its label shows the selected
+  folder's basename and clicking opens a `Gtk.FileChooserDialog` in
+  SELECT_FOLDER mode (per the earlier decision, no
+  FileChooserNative/FileDialog) through `gaupol.util.run_dialog`, with
+  the selected path kept in a `_directory` attribute. Minor look change:
+  a regular centered button label instead of GtkFileChooserButton's
+  icon + left-aligned text. Verified the click → select → label update
+  and cancel-keeps-selection flows plus rendering (screenshot) with
+  standalone scripts; dialog tests pass.
+
+- Fixed a flaky `ValueError` in the search dialog's `replace()` (seen as
+  an intermittent `test_replace` failure): the `page_changing` decorator
+  set `_handle_page_changes` back to True unconditionally on exit, so
+  when the text view's focus-leave handler (also decorated) ran nested
+  inside `replace()` — dispatched from `iterate_main` in page.py's
+  main-texts-changed handler — it re-enabled page-change handling early
+  and the subsequent "page-changed" emission reset the match state
+  mid-replace. GTK-4's `EventControllerFocus` delivers leave events via
+  the main context (GTK-3 focus-out was synchronous at `grab_focus`
+  time), which is what made the nesting possible. The decorator now
+  saves and restores the previous flag value with try/finally.
+
+- Fixed the test suite segfaulting under Wayland (GTK 4.22.4):
+  destroying a window whose focus is in a `GtkText`, with no other
+  window left in the process, and then showing a new window crashes in
+  GTK's Wayland text-input code when a late input-method event arrives
+  for the freed widget (first seen as `test_assistants.py` crashing in
+  teardown after `TestLineBreakOptionsPage`, whose spin button entry
+  holds focus). A new root `conftest.py` sets
+  `GTK_IM_MODULE=gtk-im-context-simple` for tests, bypassing the Wayland
+  text-input protocol. The app itself is not affected — its main window
+  outlives all dialogs (verified: destroying a dialog with a focused
+  entry while the main window persists is fine). Arguably a GTK bug,
+  worth reporting upstream with the minimal reproduction.
+
+- Milestone: full `pytest` run is stable and green apart from the
+  spell-check failures covered by the Deferred item (4 failures + 26
+  errors, all assume a working `SpellChecker`); `bin/gaupol` with one or
+  several files runs with zero console output even under
+  `G_ENABLE_DIAGNOSTIC=1`.
+
+- Fixed notebook tabs never showing with multiple files open: the tab
+  visibility logic reads `player_box.get_visible()`, and the player box
+  — created detached and only added to the paned when a video loads — is
+  visible by default in GTK-4 (in GTK-3 it stayed hidden until the
+  `show_all` dropped in commit 3afc02c2). The box now starts with
+  `set_visible(False)` and is set visible in `_init_player_widgets`,
+  preserving the toggle-player flip semantics. Verified with in-app
+  screenshots (tabs render with close buttons) and a clean console from
+  `bin/gaupol data/samples/*.srt`.
+
+- Restored dialog borders lost in the `.ui` conversion (clears the
+  Deferred item). Every dialog's content area holds exactly one child,
+  so 18px HIG margins (`margin_start`/`end`/`top`/`bottom`) went on that
+  child in each `.ui` file. Notable details:
+
+  - The notebook/stack dialogs get the border on the inner content, not
+    around the tabs: the preferences dialog's five per-tab boxes and the
+    search dialog's two stack-page boxes carry the 18px (replacing the
+    12px `border_width` they lost). Two preferences pages had a stray
+    `margin_bottom=12` the builder tool had kept separately; folded into
+    the uniform 18px.
+
+  - Code-built dialogs: `gaupol.util.set_widget_margins(widget,
+    margin=18)` sets all four margins in one call. Only the plain
+    `Gtk.Dialog` (encoding) needed it — margins go on its tree-view
+    scroller. The two `GtkMessageDialog`s (multi-close, debug) were left
+    as-is despite the earlier note: their message area already provides
+    HIG insets, and margining the appended scroller would push it inward
+    and misalign it with the primary/secondary text (verified by
+    screenshot).
+
+  - Verified 18px borders render correctly via screenshots of the
+    encoding, preferences (notebook page) and search (stack page)
+    dialogs; all `.ui` files pass `gtk4-builder-tool validate` and the
+    dialog/util tests pass.
+
+- Spell-check reimplemented with libspelling (`Spelling` 1, docs in
+  `/usr/share/doc/libspelling-1`, HTML readable via `pandoc -t plain`).
+  The word-checker API maps nearly 1:1 to Gspell in `aeidon/spell.py`
+  (`check_word`, `list_corrections`, `add_word` for the personal list)
+  and inline spell-check in `gaupol/spell.py` uses
+  `Spelling.TextBufferAdapter`. Full `pytest` is now green. Notable
+  details:
+
+  - For an unsupported language, `Spelling.Checker.new` does not fail:
+    it returns a checker with `language=None` that reports *every* word
+    as correct. `aeidon.SpellChecker.__init__` validates with
+    `Provider.supports_language` and raises `aeidon.Error` itself.
+
+  - `Spelling.Checker.ignore_word` applies to a dictionary shared
+    between all checkers of the same language (found as session-ignored
+    words leaking between unit tests), so `add_to_session` keeps a
+    per-checker word set instead, preserving Gspell semantics.
+
+  - `list_languages` filters out Enchant's non-locale entries like
+    "en-variant_0" and "en-w_accents" with the new
+    `aeidon.locales.is_valid`; Gspell filtered these internally,
+    libspelling reports them verbatim.
+
+  - `Spelling.TextBufferAdapter` requires a `GtkSource.Buffer`, so
+    `attach()` replaces the text view's blank default buffer with one
+    (verified empirically that the misspelled-word tag then works in a
+    plain `Gtk.TextView`; GtkSource.View is not needed). All three
+    `prepare_text_view` call sites fetch the buffer only after `attach`,
+    so the swap is safe. The adapter also provides a corrections context
+    menu (`set_extra_menu` + the "spelling" action group); verify it at
+    runtime with the cell-editor context menu Deferred item.
+
+  - libspelling has no runtime version API, so `get_libspelling_version`
+    reports the namespace version ("1") in the debug dialog, like Gspell
+    before it.
+
+  - README/CI dependency re-added as `gir1.2-spelling-1`, floor
+    libspelling ≥ 0.2 (what Ubuntu 24.04 CI has, as 0.2.0). Although
+    0.3.0 renamed `SpellingLanguage` → `SpellingDictionary` and
+    `SpellingLanguageInfo` → `SpellingLanguage`, and `list_languages`
+    changed from GPtrArray to GListModel, our code is compatible with
+    both: every function we call exists identically in 0.2.0 and the
+    list items have `get_code()` under either name. Verified against the
+    0.2.0/0.2.1 headers and GIR annotations upstream, not empirically
+    (only 0.4.10 available here); local testing was against 0.4.10.
+
+- Video sink: switched `gaupol/player.py` from `gtksink` (which exposed
+  a ready-made `props.widget`, GTK-3-only) to `gtk4paintablesink` +
+  `Gtk.Picture`, the migration guide's replacement and the only GTK-4
+  path. The sink's `paintable` (a `GstGtk4Paintable`, readable at
+  element creation) is set on a `Gtk.Picture` packed into the existing
+  `gaupol-video-background` box; the `pack_start` deferred in the GtkBox
+  item is gone. Picture defaults (`content-fit=contain`) keep aspect
+  ratio and letterbox against the black box. The timeoverlay/textoverlay
+  bin is unchanged — only the terminal sink swapped — so the subtitle
+  and time overlays still render. `gaupol.util.gst_available` now probes
+  for `gtk4paintablesink` (upstream module `gst-plugins-rs`, matching
+  the distro-independent module names used for the other plugins)
+  instead of `gtksink`. Also ported `tools/play` (the standalone player
+  harness) to GTK-4 — it was still `window.add`/`show_all`/`Gtk.main`;
+  now `set_child` + `present` + a `GLib.MainLoop` quit on
+  `close-request`. Verified end-to-end with a generated test video:
+  frames, time overlay and subtitle overlay all render in the Picture
+  (screenshot checked) and `tools/play` runs it with a clean console
+  under `G_ENABLE_DIAGNOSTIC=1`. The gst-vaapi workaround comment in
+  `__init__.py` was reworded off `gtksink`; the workaround itself kept
+  as-is (unverified against the new sink).
+
+- Non-symbolic icons: the last plain icon names were the three
+  extensions
+  toolbar buttons in `preferences-dialog.ui`. GTK-4 doesn't fall back
+  from a plain name to its symbolic variant and current Adwaita ships
+  only symbolic icons, so these would render as image-missing.
+  `help-contents`/`help-about` have exact `-symbolic` twins;
+  `preferences-desktop` has none, so the preferences button now uses the
+  conventional `emblem-system-symbolic` configure gear. Verified all
+  three render (screenshot of the Extensions page); no other
+  non-symbolic icon names remain in the codebase.
+
+- Renamed `FloatingLabel` to `Toast` (`floatlabel.py` → `toast.py`,
+  `test_floatlabel.py` → `test_toast.py`) and restyled it as a GNOME HIG
+  toast (without libadwaita): a dark rounded pill floating at
+  bottom-center, holding the message label and a `window-close-symbolic`
+  button, with a drop shadow (`.gaupol-toast` CSS). The toast now
+  dismisses only via that close button or the auto-dismiss timeout, so
+  the whole hide-on-interaction machinery was dropped:
+  `register_hide_event`, the `EventControllerMotion` pointer-enter hide,
+  and the `register_hide_event` calls in `update.py`'s `flash_message`.
+  The application/search instance variables `statuslabel`/`_statuslabel`
+  were renamed to `toast`/`_toast`. Durations were unified on
+  `flash_text`'s 3 s default: `flash_message` no longer takes or
+  forwards a `duration` (was hardcoding 6 s), and no `flash_text` call
+  passes one. Verified the look via screenshot (dark pill, centered at
+  bottom, close button legible) and
+  `test_toast`/`test_update`/`test_search` pass.
+
+- Ran all 73 action cases through `harness.py` (one at a time, each in
+  its own short-lived process, to avoid cumulative main-loop starvation
+  on the live compositor). All pass with clean stderr. Notable details:
+
+  - Fixed a real crash in `agents/video.py` `_update_languages_menu`: it
+    called `menu.remove_all()` without guarding `menu is None`, unlike
+    the three `_update_*_menu` methods in `agents/menu.py`, which all
+    skip when `get_menubar_section` returns None (no `gaupol.appman`,
+    i.e. no `Gtk.Application` — the case for both unit tests and the
+    harness). Loading a video thus crashed every video case; now guarded
+    to match.
+
+  - Three cases checked `application._pref_dialog`/`_search_dialog`/
+    `_about_dialog`, but those live on the agent instances, not the
+    Application (only exported *methods* are delegated). The cases now
+    reach the agent via its delegated activate callback's `__self__`.
+
+  - `toggle-player` emits a pair of transient `Gtk-WARNING`s "Trying to
+    measure GtkOverlay for height of 25/0, but it needs at least 85".
+    This was first mistaken for a harness offscreen-snapshot artifact,
+    but it happens in the normally-mapped app too (every toggle prints
+    both lines). It's a benign `GtkPaned` relayout quirk: when the
+    player box (the paned's start child) is shown or hidden, the paned
+    runs an opposite-orientation pass that measures the notebook+toast
+    overlay (end child) *width* while handing it transient *height*
+    slices (25, then 0) below the overlay's 85px minimum — a minimum
+    driven by the `Gtk.Notebook`, not the hidden toast. GTK clamps to
+    the minimum and returns a valid width, so the final layout is
+    correct; only the console noise remains. Not worth suppressing
+    (would mean restructuring the paned/overlay layout for a cosmetic
+    message).
+
+- New GTK-4 deprecations pass: surveyed the "deprecated since 4.10"
+  warnings emitted under `G_ENABLE_DIAGNOSTIC=1` (97 distinct after this
+  change). The bulk are big widget-family deprecations left for the
+  final review step: the TreeView family (`Gtk.TreeView` /
+  `TreeViewColumn` / `TreeModel` / `ListStore` / `TreeSelection` /
+  `CellLayout` / `ComboBox`, etc., superseded by `GtkColumnView` +
+  `GListModel` + `GtkDropDown`, explicitly out of scope per TASK) and
+  the dialog family (`Gtk.Dialog` / `MessageDialog`/ `Assistant` /
+  `FileChooser` / `ColorChooser` / `FontChooser`, superseded by
+  `GtkAlertDialog`/`FileDialog`/etc., which were consciously kept during
+  the migration — the `run_dialog` shim and `FileChooserDialog` extra
+  widgets). `GLib.unix_signal_add_full` is PyGObject-internal, ignored.
+  Migrated only the small self-contained wins:
+
+  - `Gtk.Widget.show`/`hide` (deprecated 4.10) → `set_visible(True/False)`
+    for child widgets (toast, save/language dialogs' inner widgets) and
+    `present()` for toplevels (main window, preferences/search dialogs,
+    text assistant, and all the test helper windows/dialogs/assistants).
+
+  - `GObject.source_remove` → `GLib.source_remove` in `toast.py` (the
+    one stale non-`GLib` call; `video.py` already used the `GLib` form).
+
+  All 805 tests still pass; the three targeted warnings no longer appear.
+
+- Final whole-migration review: the port is complete and consistent. All
+  36 guide migrations plus the 3 uncovered removals in `MIGRATIONS.md`
+  are `[x]`, the Deferred list is empty, `make check` and the 805-test
+  `pytest` are green, every `.ui` file passes `gtk4-builder-tool
+  validate`, and there is no leftover GTK-3 residue: no
+  `show`/`hide`/`show_all` calls, no `Gtk.check_version` guards, no
+  commented-out Gspell imports, and no references to the removed
+  `toolbar_style`/`show_main_toolbar` conf keys or `ToolbarStyle` enum.
+  Reviewed each partial-by-design decision recorded above (the
+  `run_dialog` nested-loop shim, the `FileChooserDialog` extra widgets,
+  the per-checker session word set, the disabled clipboard persistence,
+  the dropped undo/redo history dropdowns) and confirmed each is a
+  deliberate, self-consistent tradeoff rather than an unfinished edge.
+  The only deprecation warnings remaining under `G_ENABLE_DIAGNOSTIC=1`
+  are the TreeView family (out of scope per TASK) and the dialog/chooser
+  family (consciously kept), plus PyGObject-internal
+  `GLib.unix_signal_add_full`; nothing small remains to migrate.
+
+  Opportunities noted for later, none pursued now (all large, none
+  blocking): (1) the TreeView → `GtkColumnView`/`GListModel` rewrite,
+  which would also retire the zebra-stripe hack and the `ComboBox`
+  cell-layout usage — the single biggest deprecation surface, explicitly
+  deferred by TASK; (2) libadwaita adoption, which would replace several
+  hand-rolled pieces (the custom `Toast`, the header-bar layout, the
+  `run_dialog` shim via `Adw.AlertDialog`, preferences via
+  `Adw.PreferencesWindow`) with platform widgets, at the cost of a new
+  hard dependency and a GNOME-specific look; (3) migrating the message
+  dialogs alone to `Gtk.AlertDialog` (feasible independently of the file
+  choosers, which stay `FileChooserDialog` for their extra widgets).
+
+- Post-migration fix from manual testing: the file chooser dialogs
+  appeared to freeze the app (open dialog ignoring clicks until Escape;
+  after closing it, the main window dead). The real culprit was a
+  *hidden* modal GTK error dialog — "The folder contents could not be
+  displayed", "Operation was cancelled" — stacked behind the visible
+  windows. GtkFileChooserWidget starts an async folder enumeration for
+  each `set_current_folder`/`set_file` call; a second call cancels the
+  first mid-flight and GTK 4 (seen on 4.22) pops up that
+  `G_IO_ERROR_CANCELLED` as a modal MessageDialog. Being modal, it
+  blocked input to every other window, and the grab/stacking order kept
+  it invisible; Escape closed it, which looked like "unfreezing". The
+  same message in nfoview's `open.py` XXX comment is this same bug, not
+  a FileChooserNative problem. Worth reporting upstream (minimal repro:
+  two `set_current_folder` calls on a fresh chooser). Notable details:
+
+  - Rule now followed everywhere: exactly one location call per file
+    chooser (`set_current_name` is string-only, not a load).
+    `OpenDialog` takes a `directory` and `SaveDialog` a `path`
+    constructor argument instead of post-construction location calls
+    (`SaveDialog.set_name` removed — it was the second load in Save As
+    on an existing file), and the select-video flow prefers `set_file`
+    over `set_current_folder`. The multi-save folder button was already
+    fine (single `set_current_folder`, verified SELECT_FOLDER mode too).
+
+  - Also gave the file chooser dialogs (open/save/video) the
+    `set_modal(True)` every other dialog already had: GTK-3
+    `Gtk.Dialog.run` made dialogs modal implicitly for its duration,
+    GTK-4 with the `run_dialog` shim does not, so they never blocked (or
+    received priority input over) the main window.
+
+  - The action-case harness couldn't have caught this: it responds to
+    dialogs programmatically via `emit("response")`, which bypasses the
+    compositor input routing that modality breaks. The stray error
+    dialog itself is detectable, though: enumerate
+    `Gtk.Window.get_toplevels()` for unexpected visible MessageDialogs
+    after opening a chooser.
+
+- Post-migration fix from manual testing: the in-cell editor (Enter on a
+  subtitle) appeared displaced up and left of the cell it edits. A GTK-4
+  bug (seen on 4.22, reproduced with a stock `Gtk.TreeView` +
+  `Gtk.CellRendererText`): the tree view allocates cell editors at the
+  cell's *bin window* coordinates, which lack the column header offset,
+  so the editor lands one header-height too high (GTK-3 placed editors
+  on the bin window, which was itself offset below the headers; GTK-4
+  has no bin window and never translates). Worth reporting upstream.
+  Only the keyboard path is affected: per gtktreeview.c, editing started
+  by mouse click passes a cell area already converted to widget
+  coordinates, whose difference to `get_cell_area` gets baked into the
+  stored child border, accidentally correcting the final allocation (a
+  first workaround here shifted all editors down unconditionally, which
+  broke the double-click case). Worked around in
+  `gaupol.View.do_size_allocate`: the renderers' "editing-started"
+  signals track the current editor with its path and column, and after
+  chaining up, the editor is re-allocated at `get_cell_area(path,
+  column)` converted to widget coordinates — identical regardless of how
+  editing started. Verified numerically (keyboard-started editing exact;
+  editor snaps back onto the cell from a deliberately wrong position,
+  proving start-path independence) and by screenshot; full `pytest`
+  green.
+
+- More cell editor fixes from manual testing:
+
+  - The editor text sat 2px below the cell text: `prepare_text_view` set
+    `pixels_above_lines(2)` to match the cell's line height back when
+    line lengths were normal-size `<sup>` superscripts (commit 44591263,
+    2010), which raised the cell lines by 2px. They've long been
+    `<small>[N]</small>`, which doesn't affect line height, so the hack
+    now did the exact opposite; removed. Editor and cell text verified
+    pixel-identical (0px shift both axes) by comparing in-app
+    screenshots programmatically.
+
+  - The time/frame/duration editors showed their text vertically
+    centered while the cells render top-aligned (`yalign=0`), visible on
+    rows with multi-line text: the tree view allocates the editor the
+    full cell height and a single-line entry centers its text. Fixed
+    with `editor.set_valign(Gtk.Align.START)` (the widget itself applies
+    valign within the allocation the tree view gives).
+
+  - Found a pre-existing freeze: cancelling a time/frame cell edit by
+    focusing another widget (e.g. clicking elsewhere) hung the app in an
+    infinite `gtk_widget_get_parent` critical flood inside `grab_focus`.
+    The `EventControllerFocus` "leave" handlers called
+    `editor.remove_widget()` in the middle of the focus change,
+    destroying the focused widget while GTK walks the focus chain (safe
+    in GTK-3, whose focus-out-event arrived after the change). Both
+    renderers' leave handlers now defer ending the edit to an idle
+    callback, skipping if the editor was already unparented by the
+    Enter/Escape path.
+
+  - The one-time `gtk_css_node_insert_after` critical when a cell edit
+    starts is GTK-internal: it's emitted inside
+    `gtk_cell_area_activate_cell` when the tree view inserts the
+    editor's CSS node, and reproduces with a stock `Gtk.TreeView` +
+    `Gtk.CellRendererText`. Harmless (worst case a CSS sibling selector
+    mismatch); include it in the upstream report with the
+    editor-placement bug.
+
+## Deferred
+
+(none)

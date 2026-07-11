@@ -93,16 +93,6 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
 
-class ToggleMainToolbarAction(gaupol.ToggleAction):
-    def __new__(cls):
-        action = gaupol.ToggleAction.new("toggle-main-toolbar")
-        action.__class__ = cls
-        return action
-    def __init__(self):
-        gaupol.ToggleAction.__init__(self, "toggle-main-toolbar")
-        self.action_group = "safe"
-        self.set_state(gaupol.conf.application_window.show_main_toolbar)
-
 class ToggleNumberColumnAction(gaupol.ToggleAction):
     def __new__(cls):
         action = gaupol.ToggleAction.new("toggle-number-column")

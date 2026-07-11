@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class _TestPositionTransformDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def test__on_response(self):
@@ -36,7 +36,7 @@ class TestFrameTransformDialog(_TestPositionTransformDialog):
         self.application = self.new_application()
         self.dialog = gaupol.FrameTransformDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
 
 class TestTimeTransformDialog(_TestPositionTransformDialog):
@@ -45,4 +45,4 @@ class TestTimeTransformDialog(_TestPositionTransformDialog):
         self.application = self.new_application()
         self.dialog = gaupol.TimeTransformDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()

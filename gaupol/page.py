@@ -115,17 +115,15 @@ class Page(aeidon.Observable):
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
         button = Gtk.Button()
-        style = button.get_style_context()
-        style.add_class("gaupol-tab-close-button")
-        image = gaupol.util.get_icon_image("window-close-symbolic",
-                                           "window-close",
-                                           Gtk.IconSize.MENU)
+        button.add_css_class("gaupol-tab-close-button")
+        image = Gtk.Image(icon_name="window-close-symbolic",
+                          icon_size=Gtk.IconSize.NORMAL)
 
-        button.add(image)
-        button.set_relief(Gtk.ReliefStyle.NONE)
+        button.set_child(image)
+        button.set_has_frame(False)
         button.set_focus_on_click(False)
-        width = image.get_preferred_width()[1]
-        height = image.get_preferred_height()[1]
+        width = image.measure(Gtk.Orientation.HORIZONTAL, -1).natural
+        height = image.measure(Gtk.Orientation.VERTICAL, -1).natural
         padding = 6 if sys.platform == "win32" else 2
         button.set_size_request(width + padding, height + padding)
         request_close = lambda x, self: self.emit("close-request")
@@ -189,11 +187,7 @@ class Page(aeidon.Observable):
         box = gaupol.util.new_hbox(spacing=4)
         gaupol.util.pack_start_expand(box, self.tab_label)
         gaupol.util.pack_start(box, button)
-        box.gaupol_button = button
-        self.tab_widget = Gtk.EventBox()
-        self.tab_widget.add(box)
-        self.tab_widget.set_visible_window(False)
-        self.tab_widget.show_all()
+        self.tab_widget = box
 
     def _on_project_main_file_opened(self, *args):
         """Reload the entire view."""

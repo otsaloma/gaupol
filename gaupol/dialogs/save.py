@@ -22,6 +22,7 @@ import gaupol
 import os
 
 from aeidon.i18n   import _
+from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
 
@@ -32,15 +33,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
-    _widgets = [
-        "encoding_combo",
-        "format_combo",
-        "framerate_combo",
-        "framerate_label",
-        "newline_combo",
-    ]
-
-    def __init__(self, parent, title, mode):
+    def __init__(self, parent, title, mode, path=None):
         """Initialize a :class:`SaveDialog` instance."""
         GObject.GObject.__init__(self)
         self._mode = mode
@@ -51,7 +44,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._init_encoding_combo()
         self._init_newline_combo()
         self._init_framerate_combo()
-        self._init_values()
+        self._init_values(path)
 
     def get_format(self):
         """Return the selected format."""
@@ -74,29 +67,65 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
+        self.set_modal(True)
         self.set_title(title)
         self.connect("response", self._on_response)
+        # Add a possibly missing filename extension before GTK's
+        # overwrite confirmation runs on save button click.
         save_button = self.get_widget_for_response(Gtk.ResponseType.OK)
-        save_button.connect("event", self._on_save_button_event)
+        gesture = Gtk.GestureClick()
+        gesture.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        gesture.connect("pressed", self._on_save_button_pressed)
+        save_button.add_controller(gesture)
         self.set_action(Gtk.FileChooserAction.SAVE)
-        self.set_do_overwrite_confirmation(True)
 
     def _init_extra_widget(self):
-        """Initialize the extra widget from UI definition file."""
-        ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", "save-dialog.ui")
-        builder = Gtk.Builder()
-        builder.set_translation_domain("gaupol")
-        builder.add_from_file(ui_file_path)
-        builder.connect_signals(self)
-        for name in self._widgets:
-            widget = builder.get_object(name)
-            setattr(self, "_{}".format(name), widget)
-        vbox = gaupol.util.new_vbox(spacing=0)
-        main_vbox = builder.get_object("main_vbox")
-        main_vbox.get_parent().remove(main_vbox)
-        vbox.add(main_vbox)
-        vbox.show_all()
-        self.set_extra_widget(vbox)
+        """Initialize the extra widget with format etc. combos."""
+        self._format_combo = Gtk.ComboBox(hexpand=True)
+        self._format_combo.connect("changed", self._on_format_combo_changed)
+        format_label = Gtk.Label(label=_("For_mat:"),
+                                 halign=Gtk.Align.START,
+                                 use_underline=True)
+
+        format_label.set_mnemonic_widget(self._format_combo)
+        self._encoding_combo = Gtk.ComboBox(hexpand=True)
+        self._encoding_combo.connect(
+            "changed", self._on_encoding_combo_changed)
+        encoding_label = Gtk.Label(label=_("_Encoding:"),
+                                   halign=Gtk.Align.START,
+                                   use_underline=True)
+
+        encoding_label.set_mnemonic_widget(self._encoding_combo)
+        self._newline_combo = Gtk.ComboBox(hexpand=True)
+        newline_label = Gtk.Label(label=_("Ne_wlines:"),
+                                  halign=Gtk.Align.START,
+                                  use_underline=True)
+
+        newline_label.set_mnemonic_widget(self._newline_combo)
+        self._framerate_combo = Gtk.ComboBox(hexpand=True)
+        self._framerate_label = Gtk.Label(label=_("F_ramerate:"),
+                                          halign=Gtk.Align.START,
+                                          use_underline=True)
+
+        self._framerate_label.set_mnemonic_widget(self._framerate_combo)
+        grid = Gtk.Grid(row_spacing=6,
+                        column_spacing=12,
+                        margin_top=12,
+                        margin_bottom=12,
+                        margin_start=12,
+                        margin_end=12)
+
+        grid.attach(format_label, 0, 0, 1, 1)
+        grid.attach(self._format_combo, 1, 0, 1, 1)
+        grid.attach(encoding_label, 0, 1, 1, 1)
+        grid.attach(self._encoding_combo, 1, 1, 1, 1)
+        grid.attach(newline_label, 0, 2, 1, 1)
+        grid.attach(self._newline_combo, 1, 2, 1, 1)
+        grid.attach(self._framerate_label, 0, 3, 1, 1)
+        grid.attach(self._framerate_combo, 1, 3, 1, 1)
+        # GTK-4 file choosers don't support an extra widget,
+        # add to the content area below the file chooser widget.
+        self.get_content_area().append(grid)
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
@@ -142,30 +171,34 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._newline_combo.pack_start(renderer, expand=True)
         self._newline_combo.add_attribute(renderer, "text", 0)
 
-    def _init_values(self):
+    def _init_values(self, path):
         """Initialize default values for widgets."""
-        if os.path.isdir(gaupol.conf.file.directory):
-            self.set_current_folder(gaupol.conf.file.directory)
+        # Set the location with exactly one load: a second one (set_file
+        # or set_current_folder) would cancel the first one mid-flight
+        # and GTK pops up that cancellation as a modal "Operation was
+        # cancelled" error dialog. set_current_name is not a load.
+        if path is not None and os.path.isfile(path):
+            self.set_file(Gio.File.new_for_path(path))
+        else:
+            if path is not None:
+                self.set_current_name(os.path.basename(path))
+            if os.path.isdir(gaupol.conf.file.directory):
+                directory = Gio.File.new_for_path(gaupol.conf.file.directory)
+                self.set_current_folder(directory)
         self.set_encoding(gaupol.conf.file.encoding)
         self.set_format(gaupol.conf.file.format)
         self.set_newline(gaupol.conf.file.newline)
         self.set_framerate(gaupol.conf.editor.framerate)
-        self._framerate_combo.hide()
-        self._framerate_label.hide()
+        self._framerate_combo.set_visible(False)
+        self._framerate_label.set_visible(False)
 
     def _on_format_combo_changed(self, *args):
         """Change the extension of the current filename."""
         format = self.get_format()
-        path = self.get_filename()
-        if path is not None:
-            dirname = os.path.dirname(path)
-            basename = os.path.basename(path)
-            if not path.endswith(format.extension):
-                basename = aeidon.util.replace_extension(basename, format)
-                path = os.path.join(dirname, basename)
-                self.unselect_filename(path)
-                self.set_current_name(basename)
-                self.set_filename(path)
+        basename = self.get_current_name()
+        if basename and not basename.endswith(format.extension):
+            basename = aeidon.util.replace_extension(basename, format)
+            self.set_current_name(basename)
         visible = (format.mode != self._mode)
         self._framerate_combo.set_visible(visible)
         self._framerate_label.set_visible(visible)
@@ -173,29 +206,23 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
         directory = self.get_current_folder()
-        if directory is not None:
-            gaupol.conf.file.directory = directory
+        if directory is not None and directory.get_path() is not None:
+            gaupol.conf.file.directory = directory.get_path()
         gaupol.conf.file.encoding = self.get_encoding()
         gaupol.conf.file.format = self.get_format()
         gaupol.conf.file.newline = self.get_newline()
         gaupol.conf.editor.framerate = self.get_framerate()
-        if (response == Gtk.ResponseType.OK and
-            not self.get_filename().endswith(self.get_format().extension)):
-            # If the filename is lacking the extension, add it, stop this
-            # response and emit a new one so that overwrite confirmation gets
-            # called with the full filename. The filename extension might have
-            # already been added in self._on_save_button_event, but not
+        if response == Gtk.ResponseType.OK:
+            # If the filename is lacking the extension, add it. This already
+            # happened in self._on_save_button_pressed, before overwrite
+            # confirmation, if the save button was clicked, but not
             # necessarily if the user hit Enter on the keyboard.
             self._format_combo.emit("changed")
-            gaupol.util.iterate_main()
-            self.stop_emission("response")
-            return self.response(Gtk.ResponseType.OK)
 
-    def _on_save_button_event(self, button, event):
+    def _on_save_button_pressed(self, gesture, n_press, x, y):
         """Ensure that the filename contains an extension."""
         # Add possibly lacking extension to the filename.
         self._format_combo.emit("changed")
-        gaupol.util.iterate_main()
 
     def set_format(self, format):
         """Set the selected format."""
@@ -206,12 +233,6 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Set the selected framerate."""
         if framerate is None: return
         self._framerate_combo.set_active(framerate)
-
-    def set_name(self, path):
-        """Set the selected filename."""
-        if os.path.isfile(path):
-            return self.set_filename(path)
-        return self.set_current_name(path)
 
     def set_newline(self, newline):
         """Set the selected newline."""

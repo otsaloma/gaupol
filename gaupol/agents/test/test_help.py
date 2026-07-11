@@ -17,9 +17,6 @@
 
 import gaupol
 
-from gi.repository import Gtk
-from unittest.mock import patch
-
 
 class TestHelpAgent(gaupol.TestCase):
 
@@ -32,6 +29,5 @@ class TestHelpAgent(gaupol.TestCase):
     def test__on_report_a_bug_activate(self):
         self.application.get_action("report-a-bug").activate()
 
-    @patch("gaupol.util.flash_dialog", lambda *args: Gtk.ResponseType.DELETE_EVENT)
     def test__on_view_about_dialog_activate(self):
         self.application.get_action("view-about-dialog").activate()

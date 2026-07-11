@@ -24,7 +24,7 @@ from gi.repository import Gtk
 class TestSpellCheckDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
@@ -41,7 +41,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
                 subtitle.tran_text = subtitle.tran_text.replace("a", "x")
             page.reload_view_all()
         self.dialog = gaupol.SpellCheckDialog(self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_add_button_clicked(self):
         self.dialog._add_button.emit("clicked")

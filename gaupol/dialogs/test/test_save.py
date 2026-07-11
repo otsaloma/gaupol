@@ -26,7 +26,7 @@ from gaupol.dialogs.test.test_file import _TestFileDialog
 class TestSaveDialog(_TestFileDialog):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
@@ -35,7 +35,7 @@ class TestSaveDialog(_TestFileDialog):
                                         title="test",
                                         mode=aeidon.modes.TIME)
 
-        self.dialog.show()
+        self.dialog.present()
 
     def test_get_format(self):
         self.dialog.set_format(aeidon.formats.SUBRIP)
@@ -65,11 +65,21 @@ class TestSaveDialog(_TestFileDialog):
         value = self.dialog.get_framerate()
         assert value == aeidon.framerates.FPS_25_000
 
-    def test_set_name__name__basename(self):
-        self.dialog.set_name("test")
+    def test___init____path__basename(self):
+        dialog = gaupol.SaveDialog(parent=Gtk.Window(),
+                                   title="test",
+                                   mode=aeidon.modes.TIME,
+                                   path="test")
 
-    def test_set_name__name__path(self):
-        self.dialog.set_name(self.new_subrip_file())
+        dialog.destroy()
+
+    def test___init____path__file(self):
+        dialog = gaupol.SaveDialog(parent=Gtk.Window(),
+                                   title="test",
+                                   mode=aeidon.modes.TIME,
+                                   path=self.new_subrip_file())
+
+        dialog.destroy()
 
     def test_set_newline(self):
         self.dialog.set_newline(aeidon.newlines.WINDOWS)

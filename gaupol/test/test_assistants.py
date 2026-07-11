@@ -37,19 +37,17 @@ OK = lambda *args: Gtk.ResponseType.OK
 class _TestBuilderPage(gaupol.TestCase):
 
     def run_page(self):
-        self.window.connect("delete-event", Gtk.main_quit)
-        Gtk.main()
+        self.main_loop(self.window)
 
 
 class TestIntroductionPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = IntroductionPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class _TestLocalePage(_TestBuilderPage):
@@ -64,33 +62,30 @@ class TestCapitalizationPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = CapitalizationPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class TestCommonErrorPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = CommonErrorPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class TestHearingImpairedPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = HearingImpairedPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class TestJoinSplitWordsPage(_TestBuilderPage):
@@ -100,12 +95,11 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.project = self.new_project()
         self.page = JoinSplitWordsPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
     @patch("gaupol.util.flash_dialog", OK)
     def test_correct_texts(self):
@@ -120,59 +114,52 @@ class TestLineBreakPage(_TestLocalePage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = LineBreakPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class TestLineBreakOptionsPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = LineBreakOptionsPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class TestProgressPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = ProgressPage(self.window)
         self.page.reset(100)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class TestConfirmationPage(_TestBuilderPage):
 
     def setup_method(self, method):
         self.window = Gtk.Window()
-        self.window.set_border_width(12)
         self.window.set_default_size(800, 500)
         self.page = ConfirmationPage(self.window)
-        self.window.add(self.page)
-        self.window.show_all()
+        self.window.set_child(self.page)
+        self.window.present()
 
 
 class TestTextAssistant(gaupol.TestCase):
 
     def run_assistant(self):
-        self.assistant.show()
-        self.assistant.connect("apply", Gtk.main_quit)
-        self.assistant.connect("cancel", Gtk.main_quit)
-        self.assistant.connect("delete-event", Gtk.main_quit)
-        Gtk.main()
+        self.assistant.present()
+        self.main_loop(self.assistant)
 
     def setup_method(self, method):
         gaupol.conf.text_assistant.pages = ["common-error"]
         self.application = self.new_application()
         self.assistant = gaupol.TextAssistant(
             self.application.window, self.application)
-        self.assistant.show()
+        self.assistant.present()

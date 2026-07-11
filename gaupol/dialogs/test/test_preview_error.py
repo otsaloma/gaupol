@@ -24,10 +24,10 @@ from gi.repository import Gtk
 class TestPreviewErrorDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
         output = self.get_sample_text(aeidon.formats.SUBRIP)
         self.dialog = gaupol.PreviewErrorDialog(Gtk.Window(), output)
-        self.dialog.show()
+        self.dialog.present()

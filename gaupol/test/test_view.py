@@ -27,22 +27,18 @@ class TestView(gaupol.TestCase):
     def run_view_frame(self):
         self.setup_frame()
         window = Gtk.Window()
-        window.connect("delete-event", Gtk.main_quit)
-        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(200, 200)
-        window.add(self.view)
-        window.show_all()
-        Gtk.main()
+        window.set_child(self.view)
+        window.present()
+        self.main_loop(window)
 
     def run_view_time(self):
         self.setup_time()
         window = Gtk.Window()
-        window.connect("delete-event", Gtk.main_quit)
-        window.set_position(Gtk.WindowPosition.CENTER)
         window.set_default_size(200, 200)
-        window.add(self.view)
-        window.show_all()
-        Gtk.main()
+        window.set_child(self.view)
+        window.present()
+        self.main_loop(window)
 
     def setup_frame(self):
         self.view = gaupol.View(aeidon.modes.FRAME)

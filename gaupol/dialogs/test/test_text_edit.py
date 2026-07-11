@@ -23,10 +23,10 @@ from gi.repository import Gtk
 class TestTextEditDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
         text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu"
         self.dialog = gaupol.TextEditDialog(Gtk.Window(), text)
-        self.dialog.show()
+        self.dialog.present()

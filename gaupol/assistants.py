@@ -22,7 +22,6 @@ import gaupol
 import os
 
 from aeidon.i18n   import _, n_
-from gi.repository import Gdk
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gtk
@@ -66,16 +65,15 @@ class BuilderPage(TextAssistantPage):
     def __init__(self, assistant, basename):
         """Initialize a :class:`BuilderPage` instance."""
         TextAssistantPage.__init__(self, assistant)
-        self._builder = Gtk.Builder()
+        self._builder = Gtk.Builder(self)
         self._builder.set_translation_domain("gaupol")
         self._builder.add_from_file(os.path.join(
             aeidon.DATA_DIR, "ui", "text-assistant", basename))
-        self._builder.connect_signals(self)
         self._set_attributes(self._widgets)
         container = self._builder.get_object("main_container")
         window = container.get_parent()
-        window.remove(container)
-        self.add(container)
+        window.set_child(None)
+        self.append(container)
         gaupol.util.idle_add(window.destroy)
 
     def _set_attributes(self, widgets):
@@ -979,16 +977,14 @@ class TextAssistant(Gtk.Assistant):
         self.application = application
         self._init_properties()
         self._init_signal_handlers()
-        self.resize(*gaupol.conf.text_assistant.size)
+        self.set_default_size(*gaupol.conf.text_assistant.size)
         if gaupol.conf.text_assistant.maximized:
             self.maximize()
         self.set_modal(True)
-        self.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         self.set_transient_for(parent)
 
     def add_page(self, page):
         """Add `page` and configure its properties."""
-        page.show_all()
         self.append_page(page)
         self.set_page_type(page, page.page_type)
         self.set_page_title(page, page.page_title)
@@ -1063,7 +1059,7 @@ class TextAssistant(Gtk.Assistant):
         aeidon.util.connect(self, self, "cancel")
         aeidon.util.connect(self, self, "close")
         aeidon.util.connect(self, self, "prepare")
-        aeidon.util.connect(self, self, "window-state-event")
+        aeidon.util.connect(self, self, "notify::maximized")
 
     def _on_apply(self, *args):
         """Apply accepted changes to projects."""
@@ -1114,10 +1110,9 @@ class TextAssistant(Gtk.Assistant):
             if previous_page is not self._confirmation_page:
                 return self._prepare_progress_page(pages)
 
-    def _on_window_state_event(self, window, event):
+    def _on_notify_maximized(self, assistant, param):
         """Save window maximization."""
-        state = event.new_window_state
-        maximized = bool(state & Gdk.WindowState.MAXIMIZED)
+        maximized = self.is_maximized()
         gaupol.conf.text_assistant.maximized = maximized
 
     def _prepare_confirmation_page(self, doc, changes):
@@ -1152,4 +1147,4 @@ class TextAssistant(Gtk.Assistant):
     def _save_window_geometry(self):
         """Save the geometry of the assistant window."""
         if not gaupol.conf.text_assistant.maximized:
-            gaupol.conf.text_assistant.size = list(self.get_size())
+            gaupol.conf.text_assistant.size = list(self.get_default_size())

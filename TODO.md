@@ -1,0 +1,35 @@
+# TODO
+
+- Drop the whole extension system
+  - Add some more framerates to the default enums?
+  - Add config file entry for custom framerates?
+- Dismantle the delegate system?
+- Do we need aeidon.util.install_module?
+- Check aeidon/i18n.py
+- Update encoding list in aeidon/encodings.py
+- Simplify aeidon/paths.py
+- Reduce import * in __init__.py files and get rid of __all__
+- Use pytest.mark.parametrize for test loops e.g. aeidon/agents/test/test_save.py
+- Use fstrings where applicable
+- Use pathlib instead of os.path
+- Use pathlib to read and write instead of one-line with bodies
+- All dialogs
+  - Modernize layout, spacing and labels
+- Preferences dialog
+  - Use stack + switcher in the header
+  - Use ListBox
+- Check em length calculation
+- Check preview commands all work
+- Language dialog
+  - Use ListBox
+- Spell-check dialog
+  - Use ListBox
+- Text correction assistant
+  - Use ListBox
+- Use stack + switcher in application window?
+- Check bin/gaupol
+- Update iso-codes
+- Move gaupol.css one level up
+- Check data/io.otsaloma.gaupol.appdata.xml.in
+- New installation mechanism
+- Update Flatpak to GTK-4 etc.

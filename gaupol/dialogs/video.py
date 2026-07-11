@@ -42,6 +42,7 @@ class VideoDialog(Gtk.FileChooserDialog):
         self.add_button(button_label, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
         self.set_transient_for(parent)
+        self.set_modal(True)
         self.set_title(title)
         self.set_action(Gtk.FileChooserAction.OPEN)
 

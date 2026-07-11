@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class _TestPositionShiftDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
@@ -41,7 +41,7 @@ class TestFrameShiftDialog(_TestPositionShiftDialog):
         self.application = self.new_application()
         self.dialog = gaupol.FrameShiftDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()
 
 
 class TestTimeShiftDialog(_TestPositionShiftDialog):
@@ -50,4 +50,4 @@ class TestTimeShiftDialog(_TestPositionShiftDialog):
         self.application = self.new_application()
         self.dialog = gaupol.TimeShiftDialog(
             self.application.window, self.application)
-        self.dialog.show()
+        self.dialog.present()

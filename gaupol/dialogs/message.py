@@ -37,7 +37,7 @@ class ErrorDialog(Gtk.MessageDialog):
                                    text=title)
 
         if message is not None:
-            self.format_secondary_text(message)
+            self.props.secondary_text = message
 
 
 class InfoDialog(Gtk.MessageDialog):
@@ -55,7 +55,7 @@ class InfoDialog(Gtk.MessageDialog):
                                    text=title)
 
         if message is not None:
-            self.format_secondary_text(message)
+            self.props.secondary_text = message
 
 
 class QuestionDialog(Gtk.MessageDialog):
@@ -73,7 +73,7 @@ class QuestionDialog(Gtk.MessageDialog):
                                    text=title)
 
         if message is not None:
-            self.format_secondary_text(message)
+            self.props.secondary_text = message
 
 
 class WarningDialog(Gtk.MessageDialog):
@@ -91,4 +91,4 @@ class WarningDialog(Gtk.MessageDialog):
                                    text=title)
 
         if message is not None:
-            self.format_secondary_text(message)
+            self.props.secondary_text = message

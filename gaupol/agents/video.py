@@ -20,9 +20,9 @@
 import aeidon
 import gaupol
 import os
-import sys
 
 from aeidon.i18n   import _
+from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
 
@@ -58,56 +58,43 @@ class VideoAgent(aeidon.Delegate):
 
     def _init_player_toolbar(self):
         """Initialize the video player toolbar."""
-        self.player_toolbar = Gtk.Toolbar()
-        self.player_toolbar.set_style(Gtk.ToolbarStyle.ICONS)
-        if sys.platform == "win32":
-            self.player_toolbar.set_icon_size(Gtk.IconSize.MENU)
+        self.player_toolbar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        self.player_toolbar.add_css_class("toolbar")
         # win.play-pause
-        button = Gtk.ToolButton(
-            label=_("_Play/Pause"), icon_name="media-playback-start")
+        button = Gtk.Button(icon_name="media-playback-start-symbolic")
         button.set_action_name("win.play-pause")
         button.set_tooltip_text(_("Play or pause video"))
-        self.player_toolbar.insert(button, -1)
-        self.player_toolbar.insert(Gtk.SeparatorToolItem(), -1)
+        self.player_toolbar.append(button)
         self.play_button = button
         # win.seek-previous
-        button = Gtk.ToolButton(
-            label=_("Seek _Previous"), icon_name="media-skip-backward")
+        button = Gtk.Button(icon_name="media-skip-backward-symbolic")
         button.set_action_name("win.seek-previous")
         button.set_tooltip_text(_("Seek to the start of the previous subtitle"))
-        self.player_toolbar.insert(button, -1)
+        self.player_toolbar.append(button)
         # win.seek-next
-        button = Gtk.ToolButton(
-            label=_("Seek _Next"), icon_name="media-skip-forward")
+        button = Gtk.Button(icon_name="media-skip-forward-symbolic")
         button.set_action_name("win.seek-next")
         button.set_tooltip_text(_("Seek to the start of the next subtitle"))
-        self.player_toolbar.insert(button, -1)
-        self.player_toolbar.insert(Gtk.SeparatorToolItem(), -1)
+        self.player_toolbar.append(button)
         # win.seek-backward
-        button = Gtk.ToolButton(
-            label=_("Seek _Backward"), icon_name="media-seek-backward")
+        button = Gtk.Button(icon_name="media-seek-backward-symbolic")
         button.set_action_name("win.seek-backward")
         button.set_tooltip_text(_("Seek backward"))
-        self.player_toolbar.insert(button, -1)
+        self.player_toolbar.append(button)
         # win.seek-forward
-        button = Gtk.ToolButton(
-            label=_("Seek _Forward"), icon_name="media-seek-forward")
+        button = Gtk.Button(icon_name="media-seek-forward-symbolic")
         button.set_action_name("win.seek-forward")
         button.set_tooltip_text(_("Seek forward"))
-        self.player_toolbar.insert(button, -1)
-        self.player_toolbar.insert(Gtk.SeparatorToolItem(), -1)
+        self.player_toolbar.append(button)
         # Volume button
         self.volume_button = Gtk.VolumeButton()
-        self.volume_button.props.use_symbolic = False
         adjustment = self.volume_button.get_adjustment()
         adjustment.set_lower(0)
         adjustment.set_upper(1)
         adjustment.set_value(self.player.volume)
+        self.volume_button.set_tooltip_text(_("Volume"))
         aeidon.util.connect(self, "volume_button", "value-changed")
-        item = Gtk.ToolItem()
-        item.add(self.volume_button)
-        item.set_tooltip_text(_("Volume"))
-        self.player_toolbar.insert(item, -1)
+        self.player_toolbar.append(self.volume_button)
         # Seekbar
         self.seekbar = Gtk.Scale(
             orientation=Gtk.Orientation.HORIZONTAL,
@@ -119,11 +106,9 @@ class VideoAgent(aeidon.Delegate):
                                       page_size=0.05))
 
         self.seekbar.set_draw_value(False)
+        self.seekbar.set_hexpand(True)
         self.seekbar.connect("change-value", self._on_seekbar_change_value)
-        item = Gtk.ToolItem()
-        item.set_expand(True)
-        item.add(self.seekbar)
-        self.player_toolbar.insert(item, -1)
+        self.player_toolbar.append(self.seekbar)
 
     def _init_player_widgets(self):
         """Initialize the video player and related widgets."""
@@ -132,15 +117,18 @@ class VideoAgent(aeidon.Delegate):
         aeidon.util.connect(self, "player", "state-changed")
         gaupol.util.pack_start_expand(vbox, self.player.widget)
         self._init_player_toolbar()
-        gaupol.util.pack_start_fill(vbox, self.player_toolbar)
+        gaupol.util.pack_start(vbox, self.player_toolbar)
         gaupol.util.pack_start_expand(self.player_box, vbox)
-        self.player_box.show_all()
-        self.paned.add1(self.player_box)
+        self.player_box.set_visible(True)
+        self.paned.set_start_child(self.player_box)
+        # Keep GTK-3 add1 behavior: window resizes stretch the subtitle
+        # view (the end child), not the video player.
+        self.paned.set_resize_start_child(False)
         orientation = self.paned.get_orientation()
         size = (
-            self.notebook.get_window().get_width()
+            self.notebook.get_width()
             if orientation == Gtk.Orientation.HORIZONTAL
-            else self.notebook.get_window().get_height())
+            else self.notebook.get_height())
         self.paned.set_position(int(size / 2))
         self.get_action("toggle-player").set_state(True)
 
@@ -187,14 +175,18 @@ class VideoAgent(aeidon.Delegate):
         page = self.get_current_page()
         dialog = gaupol.VideoDialog(
             self.window, title=_("Load Video"), button_label=_("_Load"))
-        if page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(directory)
+        # Only one location call, or the second cancels the first's async
+        # folder load and GTK pops up a hidden modal error dialog. Prefer
+        # set_file, which selects the video and navigates to its folder.
         if page.project.video_path is not None:
-            dialog.set_filename(page.project.video_path)
+            dialog.set_file(Gio.File.new_for_path(page.project.video_path))
+        elif page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(Gio.File.new_for_path(directory))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        path = dialog.get_filename()
+        file = dialog.get_file()
+        path = file.get_path() if file is not None else None
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         self.load_video(path)
@@ -220,9 +212,9 @@ class VideoAgent(aeidon.Delegate):
     def _on_player_state_changed(self, player, state):
         """Update UI to match `state` of `player`."""
         self.play_button.set_icon_name(
-            "media-playback-pause"
+            "media-playback-pause-symbolic"
             if state == Gst.State.PLAYING
-            else "media-playback-start")
+            else "media-playback-start-symbolic")
 
     def _on_player_update_seekbar(self, data=None):
         """Update seekbar from video position."""
@@ -343,6 +335,7 @@ class VideoAgent(aeidon.Delegate):
         """Decrease volume."""
         self.player.volume = self.player.volume - 0.05
         self.volume_button.set_value(self.player.volume)
+        self.flash_message(_("Volume: {}%").format(round(self.player.volume * 100)))
         self.update_gui()
 
     @aeidon.deco.export
@@ -350,11 +343,14 @@ class VideoAgent(aeidon.Delegate):
         """Increase volume."""
         self.player.volume = self.player.volume + 0.05
         self.volume_button.set_value(self.player.volume)
+        self.flash_message(_("Volume: {}%").format(round(self.player.volume * 100)))
         self.update_gui()
 
     def _update_languages_menu(self):
         """Update the audio language selection menu."""
         menu = self.get_menubar_section("audio-languages-placeholder")
+        # Menubar not available when running unit tests.
+        if menu is None: return
         menu.remove_all()
         tracks = self.player.get_audio_infos()
         for i, track in enumerate(tracks):

@@ -23,7 +23,7 @@ from gi.repository import Gtk
 class TestMultiCloseDialog(gaupol.TestCase):
 
     def run_dialog(self):
-        self.dialog.run()
+        gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
 
     def setup_method(self, method):
@@ -34,7 +34,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
                                               self.application,
                                               self.application.pages)
 
-        self.dialog.show()
+        self.dialog.present()
 
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.YES)

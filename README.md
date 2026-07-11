@@ -38,14 +38,14 @@ and gettext to build the Flatpak.
 
 #### Source
 
-Gaupol requires Python ≥ 3.5, PyGObject ≥ 3.12 and GTK ≥ 3.12.
+Gaupol requires Python ≥ 3.10, PyGObject ≥ 3.40 and GTK ≥ 4.12.
 Additionally, during installation you need gettext. Optional, but
 strongly recommended dependencies include:
 
 | Dependency | Version | Required for |
 | :--------- | :------ | :----------- |
-| [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.6 | integrated video player |
-| [gspell](https://wiki.gnome.org/Projects/gspell) | ≥ 1.0.0 | spell-check |
+| [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.18 | integrated video player |
+| [libspelling](https://gitlab.gnome.org/GNOME/libspelling) | ≥ 0.2 | spell-check |
 | [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
 | [charset-normalizer](https://github.com/jawah/charset_normalizer) | ≥ 2.0 | character encoding auto-detection |
 
@@ -57,11 +57,11 @@ On Debian/Ubuntu you can install the dependencies with the following
 command.
 
     sudo apt install gettext \
-                     gir1.2-gspell-1 \
                      gir1.2-gst-plugins-base-1.0 \
                      gir1.2-gstreamer-1.0 \
-                     gir1.2-gtk-3.0 \
-                     gstreamer1.0-gtk3 \
+                     gir1.2-gtk-4.0 \
+                     gir1.2-spelling-1 \
+                     gstreamer1.0-gtk4 \
                      gstreamer1.0-libav \
                      gstreamer1.0-plugins-bad \
                      gstreamer1.0-plugins-good \
