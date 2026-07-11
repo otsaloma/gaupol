@@ -1,7 +1,7 @@
 # TODO
 
-- Do we need aeidon.util.install_module?
-- Check aeidon/i18n.py
+- Use contextlib.suppress?
+- Use https://www.gnu.org/licenses/
 - Update encoding list in aeidon/encodings.py
 - Simplify aeidon/paths.py
 - Reduce import * in __init__.py files and get rid of __all__

@@ -23,13 +23,12 @@ import locale
 
 _translation = gettext.NullTranslations()
 
-
 # Wrapper class for marking lazy translations
 class __(str): pass
 
-
 def bind(localedir=aeidon.LOCALE_DIR):
     """Bind translation domains and initialize gettext."""
+    global _translation
     with aeidon.util.silent(Exception):
         # Set locale to the user's default setting.
         # Might fail on misconfigured systems.
@@ -42,8 +41,7 @@ def bind(localedir=aeidon.LOCALE_DIR):
         # Not available on all platforms.
         locale.bindtextdomain("gaupol", localedir)
         locale.textdomain("gaupol")
-    globals()["_translation"] = gettext.translation(
-        "gaupol", localedir=localedir, fallback=True)
+    _translation = gettext.translation("gaupol", localedir, fallback=True)
 
 def _(message):
     """Return the localized translation of `message`."""
