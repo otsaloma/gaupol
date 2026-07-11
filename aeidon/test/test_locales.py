@@ -21,7 +21,6 @@ import importlib
 from aeidon.i18n   import _, d_
 from unittest.mock import patch
 
-
 class TestModule(aeidon.TestCase):
 
     def test_code_to_country(self):

@@ -23,7 +23,6 @@ from .ssa import SubStationAlpha
 
 __all__ = ("AdvSubStationAlpha",)
 
-
 class AdvSubStationAlpha(SubStationAlpha):
 
     """

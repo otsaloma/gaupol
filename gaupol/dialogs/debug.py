@@ -32,7 +32,6 @@ from gi.repository import Pango
 
 __all__ = ("DebugDialog",)
 
-
 class DebugDialog(Gtk.MessageDialog):
 
     """Dialog for displaying a traceback in case of an unhandled exception."""

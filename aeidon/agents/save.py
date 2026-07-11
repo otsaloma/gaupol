@@ -19,7 +19,6 @@
 
 import aeidon
 
-
 class SaveAgent(aeidon.Delegate):
 
     """Writing subtitle data to file."""

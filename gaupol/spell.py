@@ -26,7 +26,6 @@ with contextlib.suppress(Exception):
 
 __all__ = ("SpellChecker",)
 
-
 class SpellChecker(aeidon.SpellChecker):
 
     """Checking the spelling of an individual word."""

@@ -24,7 +24,6 @@ from gi.repository import Gtk
 
 __all__ = ("DurationAdjustDialog",)
 
-
 class DurationAdjustDialog(gaupol.BuilderDialog):
 
     """Dialog for lengthening or shortening durations."""

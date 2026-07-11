@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class _TestPositionShiftDialog(gaupol.TestCase):
 
     def run_dialog(self):
@@ -34,7 +33,6 @@ class _TestPositionShiftDialog(gaupol.TestCase):
         self.dialog._amount_spin.spin(Gtk.SpinType.STEP_FORWARD, 1)
         self.dialog.response(Gtk.ResponseType.OK)
 
-
 class TestFrameShiftDialog(_TestPositionShiftDialog):
 
     def setup_method(self, method):
@@ -42,7 +40,6 @@ class TestFrameShiftDialog(_TestPositionShiftDialog):
         self.dialog = gaupol.FrameShiftDialog(
             self.application.window, self.application)
         self.dialog.present()
-
 
 class TestTimeShiftDialog(_TestPositionShiftDialog):
 

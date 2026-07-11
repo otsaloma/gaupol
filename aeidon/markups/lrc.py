@@ -21,7 +21,6 @@ import aeidon
 
 __all__ = ("LRC",)
 
-
 class LRC(aeidon.Markup):
 
     """

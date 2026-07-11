@@ -21,7 +21,6 @@ import random
 
 from gi.repository import Gtk
 
-
 class TestView(gaupol.TestCase):
 
     def run_view_frame(self):

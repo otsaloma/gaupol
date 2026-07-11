@@ -26,7 +26,6 @@ from gi.repository import Gtk
 
 __all__ = ("LanguageDialog",)
 
-
 class LanguageDialog(gaupol.BuilderDialog):
 
     """Dialog for configuring spell-check."""

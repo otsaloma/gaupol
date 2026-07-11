@@ -22,7 +22,6 @@ import re
 
 __all__ = ("MicroDVD",)
 
-
 class MicroDVD(aeidon.SubtitleFile):
 
     """MicroDVD file."""

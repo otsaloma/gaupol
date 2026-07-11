@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestSearchAgent(gaupol.TestCase):
 
     def setup_method(self, method):

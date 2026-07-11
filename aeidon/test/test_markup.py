@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestMarkup(aeidon.TestCase):
 
     text = "All things weird are normal\nin this whore of cities."

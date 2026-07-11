@@ -24,7 +24,6 @@ import os
 from aeidon.i18n   import _
 from gi.repository import Gtk
 
-
 class CloseAgent(aeidon.Delegate):
 
     """Closing pages and quitting Gaupol."""

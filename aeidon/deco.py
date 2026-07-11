@@ -35,7 +35,6 @@ import pickle
 # [1] https://pypi.python.org/pypi/decorator/
 # [2] https://decorator.readthedocs.io/en/latest/tests.documentation.html#dealing-with-third-party-decorators
 
-
 def decorator_apply(dec, fun):
     """Rewrap `dec` to preserve function signature."""
     import decorator

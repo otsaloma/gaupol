@@ -18,7 +18,6 @@
 import aeidon
 import copy
 
-
 class PuppetMaster:
 
     def __init__(self):
@@ -26,7 +25,6 @@ class PuppetMaster:
 
     def notify(self, name):
         self.count += 1
-
 
 class _TestObservable(aeidon.TestCase):
 
@@ -57,7 +55,6 @@ class _TestObservable(aeidon.TestCase):
         assert obs_copy != self.obs
         assert obs_copy.master is self.obs.master
 
-
 class TestObservableDict(_TestObservable):
 
     def edit_obs(self):
@@ -87,7 +84,6 @@ class TestObservableDict(_TestObservable):
 
     def test_update(self):
         self.obs.update({1:2, 3:3})
-
 
 class TestObservableList(_TestObservable):
 
@@ -130,7 +126,6 @@ class TestObservableList(_TestObservable):
 
     def test_sort(self):
         self.obs.sort()
-
 
 class TestObservableSet(_TestObservable):
 

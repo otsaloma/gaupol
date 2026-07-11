@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 
-
 class ViewAgent(aeidon.Delegate):
 
     """Changing the visual appearance of application and its documents."""

@@ -30,7 +30,6 @@ __all__ = (
     "ToggleAction",
 )
 
-
 class Action(Gio.SimpleAction):
 
     """Baseclass for user-activatable actions."""
@@ -53,7 +52,6 @@ class Action(Gio.SimpleAction):
         except aeidon.AffirmationError:
             self.set_enabled(False)
 
-
 class OpenRecentTranslationFileAction(Action):
 
     """Baseclass for a dynamic menu of recent translation files to open."""
@@ -61,7 +59,6 @@ class OpenRecentTranslationFileAction(Action):
     def _affirm_doable(self, application, page, selected_rows):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
-
 
 class RadioAction(Action):
 
@@ -89,7 +86,6 @@ class RadioAction(Action):
     def set_state(self, value):
         """Set a new string state."""
         Action.set_state(self, GLib.Variant("s", value))
-
 
 class ToggleAction(Action):
 

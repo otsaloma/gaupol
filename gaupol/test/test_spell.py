@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestSpellChecker(gaupol.TestCase):
 
     def run_checker(self):

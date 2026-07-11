@@ -29,7 +29,6 @@ from gi.repository import Pango
 
 __all__ = ("TextAssistant", "TextAssistantPage")
 
-
 class TextAssistantPage(Gtk.Box):
 
     """
@@ -54,7 +53,6 @@ class TextAssistantPage(Gtk.Box):
         self.page_title = None
         self.page_type = None
         self.title = None
-
 
 class BuilderPage(TextAssistantPage):
 
@@ -81,7 +79,6 @@ class BuilderPage(TextAssistantPage):
         for name in widgets:
             widget = self._builder.get_object(name)
             setattr(self, "_{}".format(name), widget)
-
 
 class IntroductionPage(BuilderPage):
 
@@ -197,7 +194,6 @@ class IntroductionPage(BuilderPage):
             page.set_visible(page.handle in pages)
             store.append((page, page.handle in pages, markup))
         self._tree_view.get_selection().unselect_all()
-
 
 class LocalePage(BuilderPage):
 
@@ -414,7 +410,6 @@ class LocalePage(BuilderPage):
             store.append((pattern, visible, pattern.enabled, markup))
         self._tree_view.get_selection().unselect_all()
 
-
 class CapitalizationPage(LocalePage):
 
     """Page for capitalizing texts in subtitles."""
@@ -441,7 +436,6 @@ class CapitalizationPage(LocalePage):
         self.page_title = _("Capitalization Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Capitalize texts")
-
 
 class CommonErrorPage(LocalePage):
 
@@ -501,7 +495,6 @@ class CommonErrorPage(LocalePage):
             self.conf.classes.remove("OCR")
         self._populate_tree_view()
 
-
 class HearingImpairedPage(LocalePage):
 
     """Page for removing hearing impaired parts from subtitles."""
@@ -528,7 +521,6 @@ class HearingImpairedPage(LocalePage):
         self.page_title = _("Hearing Impaired Patterns")
         self.page_type = Gtk.AssistantPageType.CONTENT
         self.title = _("Remove hearing impaired texts")
-
 
 class JoinSplitWordsPage(BuilderPage):
 
@@ -600,7 +592,6 @@ class JoinSplitWordsPage(BuilderPage):
         dialog.set_default_response(Gtk.ResponseType.OK)
         gaupol.util.flash_dialog(dialog)
 
-
 class LineBreakPage(LocalePage):
 
     """Page for breaking text into lines."""
@@ -651,7 +642,6 @@ class LineBreakPage(LocalePage):
         if self.conf.use_skip_max_lines:
             return self.conf.skip_max_lines
         return 32768
-
 
 class LineBreakOptionsPage(BuilderPage):
 
@@ -744,7 +734,6 @@ class LineBreakOptionsPage(BuilderPage):
         self.conf.length_unit = length_unit
         self._skip_unit_combo.set_active(index)
 
-
 class ProgressPage(BuilderPage):
 
     """Page for showing progress of text corrections."""
@@ -805,7 +794,6 @@ class ProgressPage(BuilderPage):
         text = _("Task: {}").format(name)
         self._task_label.set_text(text)
         gaupol.util.iterate_main()
-
 
 class ConfirmationPage(BuilderPage):
 
@@ -961,7 +949,6 @@ class ConfirmationPage(BuilderPage):
         for page, index, orig, new in changes:
             store.append((page, index, True, orig, new))
         self._tree_view.get_selection().unselect_all()
-
 
 class TextAssistant(Gtk.Assistant):
 

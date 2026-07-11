@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestEnumerationItem(aeidon.TestCase):
 
     def setup_method(self, method):
@@ -43,7 +42,6 @@ class TestEnumerationItem(aeidon.TestCase):
         assert str(self.item_0) == "a"
         assert str(self.item_1) == "b"
         assert str(self.item_2) == "c"
-
 
 class TestEnumeration(aeidon.TestCase):
 

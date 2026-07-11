@@ -18,7 +18,6 @@
 import aeidon
 import re
 
-
 class TestLiner(aeidon.TestCase):
 
     def setup_method(self, method):

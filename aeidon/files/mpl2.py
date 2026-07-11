@@ -22,7 +22,6 @@ import re
 
 __all__ = ("MPL2",)
 
-
 class MPL2(aeidon.SubtitleFile):
 
     """MPL2 file."""

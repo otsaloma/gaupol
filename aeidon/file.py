@@ -24,7 +24,6 @@ import re
 
 __all__ = ("SubtitleFile",)
 
-
 class SubtitleFile:
 
     """

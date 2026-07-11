@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestEditAgent(aeidon.TestCase):
 
     def setup_method(self, method):

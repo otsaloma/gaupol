@@ -33,12 +33,10 @@ from gaupol.assistants import ProgressPage
 
 OK = lambda *args: Gtk.ResponseType.OK
 
-
 class _TestBuilderPage(gaupol.TestCase):
 
     def run_page(self):
         self.main_loop(self.window)
-
 
 class TestIntroductionPage(_TestBuilderPage):
 
@@ -49,14 +47,12 @@ class TestIntroductionPage(_TestBuilderPage):
         self.window.set_child(self.page)
         self.window.present()
 
-
 class _TestLocalePage(_TestBuilderPage):
 
     def test_correct_texts(self):
         self.page.correct_texts(self.new_project(),
                                 None,
                                 aeidon.documents.MAIN)
-
 
 class TestCapitalizationPage(_TestLocalePage):
 
@@ -67,7 +63,6 @@ class TestCapitalizationPage(_TestLocalePage):
         self.window.set_child(self.page)
         self.window.present()
 
-
 class TestCommonErrorPage(_TestLocalePage):
 
     def setup_method(self, method):
@@ -77,7 +72,6 @@ class TestCommonErrorPage(_TestLocalePage):
         self.window.set_child(self.page)
         self.window.present()
 
-
 class TestHearingImpairedPage(_TestLocalePage):
 
     def setup_method(self, method):
@@ -86,7 +80,6 @@ class TestHearingImpairedPage(_TestLocalePage):
         self.page = HearingImpairedPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
-
 
 class TestJoinSplitWordsPage(_TestBuilderPage):
 
@@ -109,7 +102,6 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
                                 None,
                                 aeidon.documents.MAIN)
 
-
 class TestLineBreakPage(_TestLocalePage):
 
     def setup_method(self, method):
@@ -119,7 +111,6 @@ class TestLineBreakPage(_TestLocalePage):
         self.window.set_child(self.page)
         self.window.present()
 
-
 class TestLineBreakOptionsPage(_TestBuilderPage):
 
     def setup_method(self, method):
@@ -128,7 +119,6 @@ class TestLineBreakOptionsPage(_TestBuilderPage):
         self.page = LineBreakOptionsPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
-
 
 class TestProgressPage(_TestBuilderPage):
 
@@ -140,7 +130,6 @@ class TestProgressPage(_TestBuilderPage):
         self.window.set_child(self.page)
         self.window.present()
 
-
 class TestConfirmationPage(_TestBuilderPage):
 
     def setup_method(self, method):
@@ -149,7 +138,6 @@ class TestConfirmationPage(_TestBuilderPage):
         self.page = ConfirmationPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
-
 
 class TestTextAssistant(gaupol.TestCase):
 

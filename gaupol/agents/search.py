@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 
-
 class SearchAgent(aeidon.Delegate):
 
     """Searching for and replacing text."""

@@ -22,7 +22,6 @@ import copy
 
 __all__ = ("Subtitle",)
 
-
 class Subtitle:
 
     """

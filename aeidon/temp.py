@@ -24,7 +24,6 @@ import tempfile
 
 _paths = []
 
-
 def create(suffix=""):
     """Create a new temporary file and return its path."""
     handle, path = tempfile.mkstemp(suffix, "gaupol-")

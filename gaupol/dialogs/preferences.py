@@ -26,7 +26,6 @@ from gi.repository import Pango
 
 __all__ = ("PreferencesDialog",)
 
-
 class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Editor preferences page."""
@@ -121,7 +120,6 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
     def _on_spell_check_check_toggled(self, check_button):
         """Save inline spell-check use on text views."""
         gaupol.conf.spell_check.inline = check_button.get_active()
-
 
 class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
 
@@ -241,7 +239,6 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         self._up_button.set_sensitive(row > 0)
         self._down_button.set_sensitive(0 <= row < len(store) - 1)
 
-
 class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Preview preferences page."""
@@ -312,7 +309,6 @@ class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
     def _on_offset_spin_value_changed(self, spin_button):
         """Save start position offset."""
         gaupol.conf.preview.offset = spin_button.get_value()
-
 
 class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
 
@@ -391,7 +387,6 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
     def _on_time_font_button_font_set(self, font_button):
         """Save time font."""
         self.conf.time_font = font_button.get_font_name()
-
 
 class PreferencesDialog(gaupol.BuilderDialog):
 

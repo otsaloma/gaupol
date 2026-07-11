@@ -21,7 +21,6 @@ import re
 
 __all__ = ("Finder",)
 
-
 class Finder:
 
     """

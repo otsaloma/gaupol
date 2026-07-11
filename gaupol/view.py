@@ -30,7 +30,6 @@ from gi.repository import Gtk
 
 __all__ = ("View",)
 
-
 class View(Gtk.TreeView):
 
     """

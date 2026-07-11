@@ -47,7 +47,6 @@ from distutils.command.install_data import install_data
 from distutils.command.install_lib import install_lib
 from distutils.dist import Distribution as distribution
 
-
 distribution.global_options.extend([
     ("mandir=", None, "relative installation directory for man pages (defaults to 'share/man')"),
     ("with-aeidon", None, "install the aeidon package"),
@@ -63,7 +62,6 @@ distribution.negative_opt.update({
     "without-gaupol": "with-gaupol",
     "without-iso-codes": "with-iso-codes",
 })
-
 
 def get_aeidon_version():
     path = os.path.join("aeidon", "__init__.py")
@@ -86,7 +84,6 @@ def run_or_warn(cmd):
     if os.system(cmd) == 0: return
     log.warning("command {!r} failed".format(cmd))
 
-
 class Clean(clean):
 
     def run(self):
@@ -101,7 +98,6 @@ class Clean(clean):
                     log.info("removing {}".format(target))
                     if not self.dry_run:
                         os.remove(target)
-
 
 class Distribution(distribution):
 
@@ -187,7 +183,6 @@ class Distribution(distribution):
                 setattr(self, option, strtobool(value))
         return value
 
-
 class Install(install):
 
     def run(self):
@@ -201,7 +196,6 @@ class Install(install):
         directory = os.path.join(data_dir, "share", "applications")
         log.info("updating desktop database in {}".format(directory))
         run_or_warn('update-desktop-database "{}"'.format(directory))
-
 
 class InstallData(install_data):
 
@@ -276,7 +270,6 @@ class InstallData(install_data):
             self.data_files.append(self.__get_desktop_file())
         install_data.run(self)
 
-
 class InstallLib(install_lib):
 
     def install(self):
@@ -306,7 +299,6 @@ class InstallLib(install_lib):
         with open(path, "w", encoding="utf_8") as f:
             f.write(text)
         return install_lib.install(self)
-
 
 setup_kwargs = {
     "name": "gaupol",

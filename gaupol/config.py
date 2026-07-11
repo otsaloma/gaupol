@@ -26,7 +26,6 @@ import sys
 
 __all__ = ("ConfigurationStore",)
 
-
 CONFIG_DEFAULTS = {
     "application_window": {
         "layout": gaupol.orientation.VERTICAL,
@@ -239,7 +238,6 @@ CONFIG_ENUMS = {
     },
 }
 
-
 class EnumDecoder(json.JSONDecoder):
 
     """JSON decoder for enumerations of :mod:`aeidon` and :mod:`gaupol`."""
@@ -265,7 +263,6 @@ class EnumDecoder(json.JSONDecoder):
                     for x in string[1:-1].split(",")]
         return getattr(self.enum, string)
 
-
 class EnumEncoder(json.JSONEncoder):
 
     """JSON encoder for enumerations of :mod:`aeidon` and :mod:`gaupol`."""
@@ -278,7 +275,6 @@ class EnumEncoder(json.JSONEncoder):
             if isinstance(obj[0], aeidon.EnumerationItem):
                 return "[{}]".format(", ".join(map(str, obj)))
         return json.JSONEncoder.encode(self, obj)
-
 
 class ConfigurationStore(gaupol.AttributeDictionary):
 

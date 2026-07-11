@@ -27,7 +27,6 @@ from gi.repository import Gtk
 
 __all__ = ("Application",)
 
-
 class ApplicationMeta(type):
 
     """
@@ -54,7 +53,6 @@ class ApplicationMeta(type):
             for attr_name in attr_names:
                 new_dict[attr_name] = getattr(agent_class, attr_name)
         return type.__new__(meta, class_name, bases, new_dict)
-
 
 class Application(aeidon.Observable, metaclass=ApplicationMeta):
 

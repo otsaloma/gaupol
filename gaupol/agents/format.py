@@ -19,7 +19,6 @@
 
 import aeidon
 
-
 class FormatAgent(aeidon.Delegate):
 
     """Formatting text."""

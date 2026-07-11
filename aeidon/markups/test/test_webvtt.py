@@ -19,7 +19,6 @@ import aeidon
 
 from aeidon.markups.test.test_subrip import TestSubRip
 
-
 class TestWebVTT(TestSubRip):
 
     text = ("All things weird are normal\n"

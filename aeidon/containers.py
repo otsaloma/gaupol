@@ -17,7 +17,6 @@
 
 """Containers for additional format-specific subtitle attributes."""
 
-
 class SubRip:
 
     """
@@ -33,7 +32,6 @@ class SubRip:
     y1 = 0
     x2 = 0
     y2 = 0
-
 
 class SubStationAlpha:
 
@@ -59,7 +57,6 @@ class SubStationAlpha:
     margin_v = 0
     effect = ""
 
-
 class WebVTT:
 
     """
@@ -77,7 +74,6 @@ class WebVTT:
     id = ""
     settings = ""
     style = ""
-
 
 def new(name):
     """Return a new container instance given the container's `name`."""

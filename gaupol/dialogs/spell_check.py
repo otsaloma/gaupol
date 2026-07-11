@@ -26,7 +26,6 @@ from gi.repository import Pango
 
 __all__ = ("SpellCheckDialog",)
 
-
 class SpellCheckDialog(gaupol.BuilderDialog):
 
     """

@@ -29,7 +29,6 @@ import re
 
 from aeidon.i18n import _
 
-
 def code_to_country(code):
     """Convert locale `code` to localized country name or ``None``."""
     if len(code) < 5: return None

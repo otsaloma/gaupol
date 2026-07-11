@@ -17,7 +17,6 @@
 
 import gaupol
 
-
 class TestViewAgent(gaupol.TestCase):
 
     def setup_method(self, method):

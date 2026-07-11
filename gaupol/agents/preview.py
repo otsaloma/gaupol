@@ -26,7 +26,6 @@ from aeidon.i18n   import _
 from gi.repository import GLib
 from gi.repository import Gtk
 
-
 class PreviewAgent(aeidon.Delegate):
 
     """Previewing subtitles with a video player."""

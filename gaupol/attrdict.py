@@ -21,7 +21,6 @@ import aeidon
 
 __all__ = ("AttributeDictionary",)
 
-
 class AttributeDictionary(aeidon.Observable):
 
     """

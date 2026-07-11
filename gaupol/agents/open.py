@@ -27,7 +27,6 @@ from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import Gtk
 
-
 class OpenAgent(aeidon.Delegate):
 
     """Opening subtitle files and creating new projects."""

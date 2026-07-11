@@ -35,7 +35,6 @@ __all__ = [
     "registers",
 ]
 
-
 class AlignMethodNumber(aeidon.EnumerationItem):
     label = __("Subtitle number")
 
@@ -46,14 +45,12 @@ align_methods = aeidon.Enumeration()
 align_methods.NUMBER = AlignMethodNumber()
 align_methods.POSITION = AlignMethodPosition()
 
-
 class DocumentMain(aeidon.EnumerationItem): pass
 class DocumentTranslation(aeidon.EnumerationItem): pass
 
 documents = aeidon.Enumeration()
 documents.MAIN = DocumentMain()
 documents.TRAN = DocumentTranslation()
-
 
 class Framerate23976(aeidon.EnumerationItem):
     label = __("23.976 fps")
@@ -97,7 +94,6 @@ framerates.FPS_50_000 = Framerate50000()
 framerates.FPS_59_940 = Framerate59940()
 framerates.FPS_60_000 = Framerate60000()
 
-
 class ModeTime(aeidon.EnumerationItem): pass
 class ModeFrame(aeidon.EnumerationItem): pass
 class ModeSeconds(aeidon.EnumerationItem): pass
@@ -106,7 +102,6 @@ modes = aeidon.Enumeration()
 modes.TIME = ModeTime()
 modes.FRAME = ModeFrame()
 modes.SECONDS = ModeSeconds()
-
 
 class NewlinesMac(aeidon.EnumerationItem):
     label = __("Mac (classic)")
@@ -124,7 +119,6 @@ newlines = aeidon.Enumeration()
 newlines.MAC = NewlinesMac()
 newlines.UNIX = NewlinesUnix()
 newlines.WINDOWS = NewlinesWindows()
-
 
 def _get_mplayer_executable():
     if sys.platform == "win32":
@@ -227,7 +221,6 @@ players.MPLAYER = PlayerMPlayer()
 players.MPV = PlayerMPV()
 players.VLC = PlayerVLC()
 
-
 class RegisterDo(aeidon.EnumerationItem):
     shift = 1
     signal = "action-done"
@@ -244,7 +237,6 @@ registers = aeidon.Enumeration()
 registers.DO = RegisterDo()
 registers.UNDO = RegisterUndo()
 registers.REDO = RegisterRedo()
-
 
 class FormatAdvSubStationAlpha(aeidon.EnumerationItem):
     container = "ssa"

@@ -21,7 +21,6 @@ import aeidon
 
 __all__ = ("Project",)
 
-
 class ProjectMeta(type):
 
     """
@@ -48,7 +47,6 @@ class ProjectMeta(type):
             for attr_name in attr_names:
                 new_dict[attr_name] = getattr(agent_class, attr_name)
         return type.__new__(meta, class_name, bases, new_dict)
-
 
 class Project(aeidon.Observable, metaclass=ProjectMeta):
 

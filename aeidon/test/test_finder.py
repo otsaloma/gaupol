@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestFinder(aeidon.TestCase):
 
     ####### 00000000001111111111222222 222233333333334444444444555555

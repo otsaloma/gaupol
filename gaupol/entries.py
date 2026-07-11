@@ -27,7 +27,6 @@ from gi.repository import Gtk
 
 __all__ = ("TimeEntry",)
 
-
 def _blocked(function):
     """Decorator for methods to be run with buffer edits allowed."""
     @functools.wraps(function)
@@ -38,7 +37,6 @@ def _blocked(function):
         finally:
             entry.get_buffer().allow_edit = False
     return wrapper
-
 
 class _TimeBuffer(Gtk.EntryBuffer):
 
@@ -69,7 +67,6 @@ class _TimeBuffer(Gtk.EntryBuffer):
             return Gtk.EntryBuffer.do_insert_text(self, position, chars, n_chars)
         gaupol.util.idle_add(self._entry._insert_text, chars)
         return 0
-
 
 class TimeEntry(Gtk.Entry):
 

@@ -29,7 +29,6 @@ with contextlib.suppress(Exception):
 
 __all__ = ("SpellChecker", "SpellCheckNavigator", "SpellCheckTokenizer")
 
-
 class SpellChecker:
 
     """Checking the spelling of an individual word."""
@@ -157,7 +156,6 @@ class SpellChecker:
         except OSError:
             traceback.print_exc()
 
-
 class SpellCheckNavigator:
 
     """Iterating over spelling errors in a piece of text."""
@@ -254,7 +252,6 @@ class SpellCheckNavigator:
     def trailing_context(self, n):
         """Return `n` characters after the current word."""
         return self.text[self.endpos:][:n]
-
 
 class SpellCheckTokenizer:
 

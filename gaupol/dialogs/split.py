@@ -25,7 +25,6 @@ from gi.repository import Gtk
 
 __all__ = ("SplitDialog",)
 
-
 class SplitDialog(gaupol.BuilderDialog):
 
     """Dialog for splitting a project in two."""

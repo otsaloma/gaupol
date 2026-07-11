@@ -22,7 +22,6 @@ import os
 
 __all__ = ("TestCase",)
 
-
 class TestCase:
 
     """Base class for unit test cases."""

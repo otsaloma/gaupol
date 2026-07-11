@@ -21,7 +21,6 @@ import aeidon
 
 __all__ = ("TMPlayer",)
 
-
 class TMPlayer(aeidon.Markup):
 
     """

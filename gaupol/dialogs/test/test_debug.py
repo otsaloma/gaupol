@@ -18,7 +18,6 @@
 import gaupol
 import sys
 
-
 class TestDebugDialog(gaupol.TestCase):
 
     def run_dialog(self):

@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestWebVTT(aeidon.TestCase):
 
     format = aeidon.formats.WEBVTT

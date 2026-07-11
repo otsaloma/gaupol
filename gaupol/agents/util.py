@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 
-
 class UtilityAgent(aeidon.Delegate):
 
     """Miscellaneous helper methods."""

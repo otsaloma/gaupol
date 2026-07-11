@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestSubViewer2(aeidon.TestCase):
 
     format = aeidon.formats.SUBVIEWER2

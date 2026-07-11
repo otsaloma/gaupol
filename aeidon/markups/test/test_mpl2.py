@@ -19,7 +19,6 @@ import aeidon
 
 from aeidon.markups.test.test_microdvd import TestMicroDVD
 
-
 class TestMPL2(TestMicroDVD):
 
     text = ("All things weird are normal\n"

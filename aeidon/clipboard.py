@@ -19,7 +19,6 @@
 
 __all__ = ("Clipboard",)
 
-
 class Clipboard:
 
     """Internal text clipboard."""

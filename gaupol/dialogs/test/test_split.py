@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestSplitDialog(gaupol.TestCase):
 
     def run_dialog(self):

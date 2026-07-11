@@ -22,7 +22,6 @@ import os
 from gi.repository import Gtk
 from gaupol.dialogs.test.test_file import _TestFileDialog
 
-
 class TestSaveDialog(_TestFileDialog):
 
     def run_dialog(self):

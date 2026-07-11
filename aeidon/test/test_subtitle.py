@@ -23,7 +23,6 @@ TRAN  = aeidon.documents.TRAN
 FRAME = aeidon.modes.FRAME
 TIME  = aeidon.modes.TIME
 
-
 class TestSubtitle(aeidon.TestCase):
 
     def setup_method(self, method):

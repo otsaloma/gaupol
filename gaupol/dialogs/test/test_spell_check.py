@@ -20,7 +20,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestSpellCheckDialog(gaupol.TestCase):
 
     def run_dialog(self):

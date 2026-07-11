@@ -122,7 +122,6 @@ ENCODINGS = [
     "utf_8_sig",
 ]
 
-
 class TestModule(aeidon.TestCase):
 
     def test_all_found(self):

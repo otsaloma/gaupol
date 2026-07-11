@@ -17,7 +17,6 @@
 
 import gaupol
 
-
 class _TestFileDialog(gaupol.TestCase):
 
     def test_get_encoding(self):

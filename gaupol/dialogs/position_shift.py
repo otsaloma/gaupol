@@ -25,7 +25,6 @@ from gi.repository import Gtk
 
 __all__ = ("FrameShiftDialog", "TimeShiftDialog")
 
-
 class PositionShiftDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for shifting positions."""
@@ -131,7 +130,6 @@ class PositionShiftDialog(gaupol.BuilderDialog):
             page.project.shift_positions(rows, amount)
         gaupol.util.set_cursor_normal(self)
 
-
 class FrameShiftDialog(PositionShiftDialog):
 
     """Dialog for shifting frames."""
@@ -148,7 +146,6 @@ class FrameShiftDialog(PositionShiftDialog):
         self._amount_spin.set_range(-9999999, 9999999)
         self._amount_spin.set_value(0)
         self._unit_label.set_text(_("frames"))
-
 
 class TimeShiftDialog(PositionShiftDialog):
 

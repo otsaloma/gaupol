@@ -28,7 +28,6 @@ import re
 
 from aeidon.i18n import _
 
-
 # Tuples of code, name and description for each supported character encoding.
 # Codes are the official names used by Python. Names are mostly taken from
 # IANA. Descriptions are mostly copied from gedit.
@@ -139,7 +138,6 @@ CODE, NAME, DESC = range(3)
 
 # Illegal characters in encoding codes.
 _re_illegal = re.compile(r"[^a-z0-9_]")
-
 
 def code_to_description(code):
     """Convert encoding `code` to localized description."""

@@ -20,7 +20,6 @@ import aeidon
 MAIN = aeidon.documents.MAIN
 TRAN = aeidon.documents.TRAN
 
-
 class TestRegisterAgent(aeidon.TestCase):
 
     def setup_method(self, method):

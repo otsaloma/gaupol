@@ -25,7 +25,6 @@ from gi.repository import Gtk
 
 __all__ = ("TimeCellRenderer",)
 
-
 class TimeCellRenderer(Gtk.CellRendererText):
 
     """Cell renderer for time data in format ``[-]HH:MM:SS.SSS``."""

@@ -44,7 +44,6 @@ VIDEO_FILE_EXTENSIONS = [
     ".webm",
 ]
 
-
 def affirm(value):
     """Raise :exc:`aeidon.AffirmationError` if value evaluates to ``False``."""
     if not value:

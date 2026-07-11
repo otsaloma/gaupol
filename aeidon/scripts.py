@@ -26,7 +26,6 @@ from aeidon.i18n import d_
 
 _scripts = {}
 
-
 def _init_scripts():
     """Initialize the dictionary mapping codes to names."""
     # Prefer globally installed, fall back on possibly bundled.

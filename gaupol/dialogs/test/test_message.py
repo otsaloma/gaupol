@@ -19,13 +19,11 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class _TestMessageDialog(gaupol.TestCase):
 
     def run_dialog(self):
         gaupol.util.run_dialog(self.dialog)
         self.dialog.destroy()
-
 
 class TestErrorDialog(_TestMessageDialog):
 
@@ -35,7 +33,6 @@ class TestErrorDialog(_TestMessageDialog):
         self.dialog.set_default_response(Gtk.ResponseType.OK)
         self.dialog.present()
 
-
 class TestInfoDialog(_TestMessageDialog):
 
     def setup_method(self, method):
@@ -43,7 +40,6 @@ class TestInfoDialog(_TestMessageDialog):
         self.dialog.add_button("_OK", Gtk.ResponseType.OK)
         self.dialog.set_default_response(Gtk.ResponseType.OK)
         self.dialog.present()
-
 
 class TestQuestionDialog(_TestMessageDialog):
 
@@ -53,7 +49,6 @@ class TestQuestionDialog(_TestMessageDialog):
         self.dialog.add_button("_Yes", Gtk.ResponseType.YES)
         self.dialog.set_default_response(Gtk.ResponseType.YES)
         self.dialog.present()
-
 
 class TestWarningDialog(_TestMessageDialog):
 

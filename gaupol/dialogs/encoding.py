@@ -26,7 +26,6 @@ from gi.repository import Gtk
 
 __all__ = ("EncodingDialog", "MenuEncodingDialog")
 
-
 class EncodingDialog(Gtk.Dialog):
 
     """Dialog for selecting a character encoding."""
@@ -93,7 +92,6 @@ class EncodingDialog(Gtk.Dialog):
     def _on_tree_view_row_activated(self, *args):
         """Send response to select activated character encoding."""
         self.response(Gtk.ResponseType.OK)
-
 
 class MenuEncodingDialog(EncodingDialog):
 

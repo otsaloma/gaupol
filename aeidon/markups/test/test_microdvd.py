@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestMicroDVD(aeidon.TestCase):
 
     text = ("All things weird are normal\n"

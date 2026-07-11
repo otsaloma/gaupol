@@ -19,7 +19,6 @@ import aeidon
 
 from unittest.mock import patch
 
-
 class TestMetadataItem(aeidon.TestCase):
 
     def assert_name_in_locale(self, code, modifier):

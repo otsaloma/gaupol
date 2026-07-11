@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestIntegerCellRenderer(gaupol.TestCase):
 
     def run_renderer(self):

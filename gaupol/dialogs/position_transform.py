@@ -27,7 +27,6 @@ from gi.repository import Pango
 
 __all__ = ("FrameTransformDialog", "TimeTransformDialog")
 
-
 class PositionTransformDialog(gaupol.BuilderDialog):
 
     """Base class for dialogs for transforming positions."""
@@ -173,7 +172,6 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         point_2 = self._get_second_point()
         page.project.transform_positions(rows, point_1, point_2)
 
-
 class FrameTransformDialog(PositionTransformDialog):
 
     """Dialog for applying a linear tranfromation to frames."""
@@ -245,7 +243,6 @@ class FrameTransformDialog(PositionTransformDialog):
         out_1 = aeidon.as_frame(self._output_spin_1.get_value_as_int())
         out_2 = aeidon.as_frame(self._output_spin_2.get_value_as_int())
         return (out_1 != in_1 or out_2 != in_2)
-
 
 class TimeTransformDialog(PositionTransformDialog):
 

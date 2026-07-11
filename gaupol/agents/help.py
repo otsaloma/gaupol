@@ -20,7 +20,6 @@
 import aeidon
 import gaupol
 
-
 class HelpAgent(aeidon.Delegate):
 
     """Help and information."""

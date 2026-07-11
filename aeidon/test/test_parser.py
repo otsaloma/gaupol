@@ -18,7 +18,6 @@
 import aeidon
 import re
 
-
 class TestParser(aeidon.TestCase):
 
     def setup_method(self, method):

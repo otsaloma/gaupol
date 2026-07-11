@@ -18,7 +18,6 @@
 import aeidon
 import os
 
-
 class TestModule(aeidon.TestCase):
 
     def test_create(self):

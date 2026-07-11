@@ -30,7 +30,6 @@ from gi.repository import Gtk
 
 __all__ = ("MultilineCellRenderer", "MultilineDiffCellRenderer")
 
-
 class CellTextView(Gtk.TextView, Gtk.CellEditable):
 
     """A :class:`Gtk.TextView` suitable for cell renderer use."""
@@ -121,7 +120,6 @@ class CellTextView(Gtk.TextView, Gtk.CellEditable):
     def set_text(self, text):
         """Set text."""
         self.get_buffer().set_text(text)
-
 
 class MultilineCellRenderer(Gtk.CellRendererText):
 
@@ -224,7 +222,6 @@ class MultilineCellRenderer(Gtk.CellRendererText):
                           .format(lines[i], lengths[i])
                           if lines[i] else lines[i]
                           for i in range(len(lines))))
-
 
 class MultilineDiffCellRenderer(MultilineCellRenderer):
 

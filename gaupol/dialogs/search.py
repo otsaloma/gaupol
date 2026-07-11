@@ -29,7 +29,6 @@ from gi.repository import Gtk
 
 __all__ = ("SearchDialog",)
 
-
 def page_changing(function):
     """Decorator for :class:`SearchDialog` methods that edit data."""
     # Save and restore the previous value so that nested calls
@@ -44,7 +43,6 @@ def page_changing(function):
         finally:
             args[0]._handle_page_changes = previous
     return wrapper
-
 
 class SearchDialog(gaupol.BuilderDialog):
 

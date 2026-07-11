@@ -17,7 +17,6 @@
 
 import gaupol
 
-
 class TestFormatAgent(gaupol.TestCase):
 
     def setup_method(self, method):

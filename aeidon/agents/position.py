@@ -21,7 +21,6 @@ import aeidon
 
 from aeidon.i18n import _
 
-
 class PositionAgent(aeidon.Delegate):
 
     """Manipulating times and frames."""

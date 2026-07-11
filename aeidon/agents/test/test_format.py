@@ -20,7 +20,6 @@ import aeidon
 MAIN = aeidon.documents.MAIN
 TRAN = aeidon.documents.TRAN
 
-
 class TestFormatAgent(aeidon.TestCase):
 
     def setup_method(self, method):

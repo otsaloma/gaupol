@@ -19,7 +19,6 @@ import aeidon
 
 from aeidon.markups.test.test_ssa import TestSubStationAlpha
 
-
 class TestAdvSubStationAlpha(TestSubStationAlpha):
 
     text = ("All things weird are normal\n"

@@ -25,13 +25,11 @@ __all__ = (
     "ProcessError",
 )
 
-
 class Error(Exception):
 
     """Base class for all :mod:`aeidon` errors."""
 
     pass
-
 
 class AffirmationError(Error):
 
@@ -46,13 +44,11 @@ class AffirmationError(Error):
 
     pass
 
-
 class FormatError(Error):
 
     """Unrecognized subtitle file format."""
 
     pass
-
 
 class ParseError(Error):
 
@@ -64,7 +60,6 @@ class ParseError(Error):
     """
 
     pass
-
 
 class ProcessError(Error):
 

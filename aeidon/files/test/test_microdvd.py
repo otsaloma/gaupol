@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestMicroDVD(aeidon.TestCase):
 
     format = aeidon.formats.MICRODVD

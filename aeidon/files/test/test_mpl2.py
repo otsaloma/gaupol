@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestMPL2(aeidon.TestCase):
 
     format = aeidon.formats.MPL2

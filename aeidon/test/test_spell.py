@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestSpellChecker(aeidon.TestCase):
 
     def setup_method(self, method):
@@ -46,7 +45,6 @@ class TestSpellChecker(aeidon.TestCase):
 
     def test_suggest(self):
         assert self.checker.suggest("substitle")
-
 
 class TestSpellCheckNavigator(aeidon.TestCase):
 
@@ -123,7 +121,6 @@ class TestSpellCheckNavigator(aeidon.TestCase):
         error = next(self.navigator)
         assert error == (37, "Panzr")
         assert self.navigator.trailing_context(3) == " Ku"
-
 
 class TestSpellCheckTokenizer(aeidon.TestCase):
 

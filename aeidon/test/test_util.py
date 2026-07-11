@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestModule(aeidon.TestCase):
 
     def test_atomic_open__existing_file(self):

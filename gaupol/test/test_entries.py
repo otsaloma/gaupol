@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestTimeEntry(gaupol.TestCase):
 
     def run_entry(self):

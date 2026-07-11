@@ -23,7 +23,6 @@ import re
 
 from aeidon.i18n import _
 
-
 class SearchAgent(aeidon.Delegate):
 
     """

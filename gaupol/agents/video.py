@@ -31,8 +31,6 @@ with contextlib.suppress(Exception):
     from gi.repository import Gst
     from gi.repository import GstTag
 
-
-
 class VideoAgent(aeidon.Delegate):
 
     """Loading and interacting with video."""

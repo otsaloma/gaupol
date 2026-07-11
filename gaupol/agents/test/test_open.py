@@ -21,7 +21,6 @@ import gaupol
 from gi.repository import Gtk
 from unittest.mock import patch
 
-
 class TestOpenAgent(gaupol.TestCase):
 
     def run__show_encoding_error_dialog(self):

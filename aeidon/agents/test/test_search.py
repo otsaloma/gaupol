@@ -20,7 +20,6 @@ import aeidon
 MAIN = aeidon.documents.MAIN
 TRAN = aeidon.documents.TRAN
 
-
 class TestSearchAgent(aeidon.TestCase):
 
     ######### 0000000000111111111122222222223333333333444444444

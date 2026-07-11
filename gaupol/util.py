@@ -29,7 +29,6 @@ from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
 
-
 def char_to_px(nchar, font=None):
     """Convert characters to pixels."""
     if nchar < 0: return nchar

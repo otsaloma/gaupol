@@ -29,7 +29,6 @@ __all__ = [
     "targets",
 ]
 
-
 class FieldNumber(aeidon.EnumerationItem):
     is_position = False
     is_text = False
@@ -76,7 +75,6 @@ fields.DURATION = FieldDuration()
 fields.MAIN_TEXT = FieldMainText()
 fields.TRAN_TEXT = FieldTranslationText()
 
-
 class LengthUnitChar(aeidon.EnumerationItem):
     label = __("characters")
 
@@ -87,7 +85,6 @@ length_units = aeidon.Enumeration()
 length_units.CHAR = LengthUnitChar()
 length_units.EM = LengthUnitEm()
 
-
 class OrientationHorizontal(aeidon.EnumerationItem):
     value = Gtk.Orientation.HORIZONTAL
 
@@ -97,7 +94,6 @@ class OrientationVertical(aeidon.EnumerationItem):
 orientation = aeidon.Enumeration()
 orientation.HORIZONTAL = OrientationHorizontal()
 orientation.VERTICAL = OrientationVertical()
-
 
 class TargetSelected(aeidon.EnumerationItem): pass
 class TargetSelectedToEnd(aeidon.EnumerationItem): pass

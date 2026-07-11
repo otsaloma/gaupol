@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestModule(gaupol.TestCase):
 
     def test_connect_text_view(self):

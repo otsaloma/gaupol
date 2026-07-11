@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestTMPlayerOneDigitHour(aeidon.TestCase):
 
     format = aeidon.formats.TMPLAYER
@@ -35,7 +34,6 @@ class TestTMPlayerOneDigitHour(aeidon.TestCase):
         with open(self.file.path, "r") as f:
             text = f.read().strip()
         assert text == self.get_sample_text(self.format, self.name)
-
 
 class TestTMPlayerTwoDigitHour(TestTMPlayerOneDigitHour):
 

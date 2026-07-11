@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class PuppetObservable(aeidon.Observable):
 
     signals = ("do",)
@@ -25,7 +24,6 @@ class PuppetObservable(aeidon.Observable):
     def __init__(self):
         aeidon.Observable.__init__(self)
         self.x = 0
-
 
 class TestObservable(aeidon.TestCase):
 

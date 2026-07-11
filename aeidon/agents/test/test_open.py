@@ -18,7 +18,6 @@
 import aeidon
 import codecs
 
-
 class TestOpenAgent(aeidon.TestCase):
 
     def setup_method(self, method):

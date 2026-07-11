@@ -17,7 +17,6 @@
 
 import gaupol
 
-
 class TestPreferencesDialog(gaupol.TestCase):
 
     def run_dialog(self):

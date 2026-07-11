@@ -20,7 +20,6 @@
 import aeidon
 import bisect
 
-
 class OpenAgent(aeidon.Delegate):
 
     """Reading and parsing data from subtitle files."""

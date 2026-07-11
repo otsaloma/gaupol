@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestSubStationAlpha(aeidon.TestCase):
 
     text = ("All things weird are normal\n"

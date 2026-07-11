@@ -20,7 +20,6 @@ import gaupol
 from gi.repository import Gtk
 from unittest.mock import patch
 
-
 class TestEditAgent(gaupol.TestCase):
 
     def setup_method(self, method):

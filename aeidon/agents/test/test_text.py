@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestTextAgent(aeidon.TestCase):
 
     def setup_method(self, method):

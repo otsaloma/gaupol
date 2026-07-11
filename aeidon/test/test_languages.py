@@ -19,7 +19,6 @@ import aeidon
 
 from aeidon.i18n import d_
 
-
 class TestModule(aeidon.TestCase):
 
     def test_code_to_name(self):

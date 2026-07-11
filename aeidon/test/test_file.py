@@ -18,12 +18,10 @@
 import aeidon
 import codecs
 
-
 class PuppetSubtitleFile(aeidon.SubtitleFile):
 
     format = aeidon.formats.SUBVIEWER2
     mode = aeidon.modes.TIME
-
 
 class TestSubtitleFile(aeidon.TestCase):
 

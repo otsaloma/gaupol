@@ -21,7 +21,6 @@ import aeidon
 import contextlib
 import gaupol
 
-
 class UpdateAgent(aeidon.Delegate):
 
     """Updating the application GUI."""

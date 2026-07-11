@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestLanguageDialog(gaupol.TestCase):
 
     def run_dialog__hide_target(self):

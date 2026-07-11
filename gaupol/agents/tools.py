@@ -23,7 +23,6 @@ import gaupol
 from aeidon.i18n import _
 from gi.repository import Gtk
 
-
 class ToolsAgent(aeidon.Delegate):
 
     """Tools to edit positions and texts."""

@@ -22,7 +22,6 @@ import re
 
 from aeidon.i18n import _
 
-
 class FormatAgent(aeidon.Delegate):
 
     """Changing the appearance of texts."""

@@ -17,7 +17,6 @@
 
 import gaupol
 
-
 class TestSaveAgent(gaupol.TestCase):
 
     def run__show_encoding_error_dialog(self):

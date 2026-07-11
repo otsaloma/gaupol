@@ -44,7 +44,6 @@ This way it will not be in any way processed by the undo/redo system.
 
 import aeidon
 
-
 class RegisterAgent(aeidon.Delegate):
 
     """

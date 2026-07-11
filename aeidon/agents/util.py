@@ -19,7 +19,6 @@
 
 import aeidon
 
-
 class UtilityAgent(aeidon.Delegate):
 
     """Miscellaneous helper methods."""

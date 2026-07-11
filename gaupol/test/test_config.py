@@ -20,7 +20,6 @@ import gaupol
 import os
 import shutil
 
-
 class TestConfigurationStore(gaupol.TestCase):
 
     def setup_method(self, method):

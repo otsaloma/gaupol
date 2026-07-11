@@ -25,7 +25,6 @@ from gi.repository import Graphene
 from gi.repository import Gtk
 from gi.repository import Pango
 
-
 class _Ruler:
 
     """Measurer of line lengths in various units."""
@@ -58,9 +57,7 @@ class _Ruler:
         # https://bugzilla.gnome.org/show_bug.cgi?id=763589
         self._em_length = width / (0.55 * len(text))
 
-
 _ruler = _Ruler()
-
 
 class _Margin(Gtk.Widget):
 
@@ -137,7 +134,6 @@ class _Margin(Gtk.Widget):
         layout = Pango.Layout(self._text_view.get_pango_context())
         layout.set_text(str(max(get_lengths(text))), -1)
         self.set_size_request(layout.get_pixel_size()[0] + 6, -1)
-
 
 def connect_text_view(text_view):
     """Connect `text_view` to show line lengths in its margin."""

@@ -21,7 +21,6 @@ import aeidon
 
 __all__ = ("MicroDVD",)
 
-
 class MicroDVD(aeidon.Markup):
 
     """

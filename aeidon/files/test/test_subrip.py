@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestSubRip(aeidon.TestCase):
 
     format = aeidon.formats.SUBRIP
@@ -35,7 +34,6 @@ class TestSubRip(aeidon.TestCase):
         with open(self.file.path, "r") as f:
             text = f.read().strip()
         assert text == self.get_sample_text(self.format, self.name)
-
 
 class TestSubRipExtended(TestSubRip):
 

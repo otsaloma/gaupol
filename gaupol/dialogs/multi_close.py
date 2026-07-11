@@ -26,7 +26,6 @@ from gi.repository import Gtk
 
 __all__ = ("MultiCloseDialog",)
 
-
 class MultiCloseDialog(Gtk.MessageDialog):
 
     """Dialog for warning when closing multiple documents."""

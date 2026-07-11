@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestSubStationAlpha(aeidon.TestCase):
 
     format = aeidon.formats.SSA

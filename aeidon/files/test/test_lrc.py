@@ -17,7 +17,6 @@
 
 import aeidon
 
-
 class TestLRC(aeidon.TestCase):
 
     format = aeidon.formats.LRC

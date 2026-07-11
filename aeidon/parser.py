@@ -21,7 +21,6 @@ import aeidon
 
 __all__ = ("Parser",)
 
-
 class Parser(aeidon.Finder):
 
     """

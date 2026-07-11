@@ -33,7 +33,6 @@ with contextlib.suppress(Exception):
 
 __all__ = ("VideoPlayer",)
 
-
 class VideoPlayer(aeidon.Observable):
 
     """

@@ -22,7 +22,6 @@ import re
 
 from aeidon.i18n import _
 
-
 class TextAgent(aeidon.Delegate):
 
     """Automatic correcting of texts."""

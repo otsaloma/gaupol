@@ -21,7 +21,6 @@ import aeidon
 
 __all__ = ("RevertableAction", "RevertableActionGroup",)
 
-
 class RevertableAction:
 
     """
@@ -67,7 +66,6 @@ class RevertableAction:
         kwargs = self.revert_kwargs.copy()
         kwargs["register"] = self._get_reversion_register()
         return self.revert_function(*self.revert_args, **kwargs)
-
 
 class RevertableActionGroup:
 

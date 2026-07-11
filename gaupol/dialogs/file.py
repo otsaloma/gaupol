@@ -25,7 +25,6 @@ from gi.repository import Gtk
 
 __all__ = ("FileDialog",)
 
-
 class FileDialog:
 
     """Base class for dialogs for selecting subtitle files."""

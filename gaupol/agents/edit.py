@@ -25,7 +25,6 @@ import gaupol
 from aeidon.i18n import _, n_
 from gi.repository import GLib
 
-
 class EditAgent(aeidon.Delegate):
 
     """Editing subtitle data."""

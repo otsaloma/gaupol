@@ -17,11 +17,9 @@
 
 import aeidon
 
-
 class PuppetSingleton(aeidon.Singleton):
 
     pass
-
 
 class TestSingleton(aeidon.TestCase):
 

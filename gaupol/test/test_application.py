@@ -18,7 +18,6 @@
 import aeidon
 import gaupol
 
-
 class TestApplication(gaupol.TestCase):
 
     def test_custom_framerates(self):

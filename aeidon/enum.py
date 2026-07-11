@@ -28,7 +28,6 @@ from aeidon.i18n import __
 
 __all__ = ("EnumerationItem", "Enumeration",)
 
-
 class EnumerationItem(int):
 
     """
@@ -58,7 +57,6 @@ class EnumerationItem(int):
     def __str__(self):
         """Return name as the string representation."""
         return self.name
-
 
 class Enumeration(list):
 

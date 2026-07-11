@@ -23,7 +23,6 @@ import sys
 
 __all__ = ("Liner",)
 
-
 class Liner(aeidon.Parser):
 
     """

@@ -21,7 +21,6 @@ import aeidon
 import os
 import string
 
-
 class PreviewAgent(aeidon.Delegate):
 
     """Previewing subtitles with a video player."""

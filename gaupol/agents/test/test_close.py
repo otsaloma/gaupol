@@ -22,7 +22,6 @@ import gaupol
 from gi.repository import Gtk
 from unittest.mock import patch
 
-
 class TestCloseAgent(gaupol.TestCase):
 
     def run__confirm_close_both(self):

@@ -22,7 +22,6 @@ import bisect
 
 from aeidon.i18n import _
 
-
 class SetAgent(aeidon.Delegate):
 
     """Setting values of single subtitle fields."""

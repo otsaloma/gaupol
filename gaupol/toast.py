@@ -25,7 +25,6 @@ from gi.repository import Gtk
 
 __all__ = ("Toast",)
 
-
 class Toast(Gtk.Box):
 
     """Toast notification that can be overlaid on another widget."""

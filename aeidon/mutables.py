@@ -22,7 +22,6 @@ import functools
 
 __all__ = ("ObservableDict", "ObservableList", "ObservableSet",)
 
-
 def _mutation(function):
     """Decorator for sending a notification after mutating object."""
     @functools.wraps(function)
@@ -31,7 +30,6 @@ def _mutation(function):
         args[0].master.notify(args[0].name)
         return value
     return wrapper
-
 
 class ObservableDict(dict):
 
@@ -82,7 +80,6 @@ class ObservableDict(dict):
     @_mutation
     def update(self, *args, **kwargs):
         return dict.update(self, *args, **kwargs)
-
 
 class ObservableList(list):
 
@@ -149,7 +146,6 @@ class ObservableList(list):
     @_mutation
     def sort(self, *args, **kwargs):
         return list.sort(self, *args, **kwargs)
-
 
 class ObservableSet(set):
 

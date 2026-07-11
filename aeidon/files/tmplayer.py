@@ -22,7 +22,6 @@ import re
 
 __all__ = ("TMPlayer",)
 
-
 class TMPlayer(aeidon.SubtitleFile):
 
     """TMPlayer file."""

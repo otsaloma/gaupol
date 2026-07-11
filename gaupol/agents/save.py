@@ -25,7 +25,6 @@ import os
 from aeidon.i18n   import _
 from gi.repository import Gtk
 
-
 class SaveAgent(aeidon.Delegate):
 
     """Saving documents."""

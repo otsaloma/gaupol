@@ -24,7 +24,6 @@ from unittest.mock import patch
 OK = lambda *args: Gtk.ResponseType.OK
 CANCEL = lambda *args: Gtk.ResponseType.CANCEL
 
-
 class TestToolsAgent(gaupol.TestCase):
 
     def setup_method(self, method):

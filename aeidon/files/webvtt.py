@@ -22,7 +22,6 @@ import re
 
 __all__ = ("WebVTT",)
 
-
 class WebVTT(aeidon.SubtitleFile):
 
     """

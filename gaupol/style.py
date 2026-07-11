@@ -78,6 +78,5 @@ def use_font(widget, font):
         "monospace": "monospace",
     }[font])
 
-
 gaupol.conf.editor.connect("notify::custom_font", _update_css)
 gaupol.conf.editor.connect("notify::use_custom_font", _update_css)

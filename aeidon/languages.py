@@ -26,7 +26,6 @@ from aeidon.i18n import d_
 
 _languages = {}
 
-
 def _init_languages():
     """Initialize the dictionary mapping codes to names."""
     # Prefer globally installed, fall back on possibly bundled.

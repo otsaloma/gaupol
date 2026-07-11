@@ -21,7 +21,6 @@ from gi.repository import Gtk
 
 __all__ = ("ErrorDialog", "InfoDialog", "QuestionDialog", "WarningDialog")
 
-
 class ErrorDialog(Gtk.MessageDialog):
 
     """Base class for error dialogs."""
@@ -38,7 +37,6 @@ class ErrorDialog(Gtk.MessageDialog):
 
         if message is not None:
             self.props.secondary_text = message
-
 
 class InfoDialog(Gtk.MessageDialog):
 
@@ -57,7 +55,6 @@ class InfoDialog(Gtk.MessageDialog):
         if message is not None:
             self.props.secondary_text = message
 
-
 class QuestionDialog(Gtk.MessageDialog):
 
     """Base class for question dialogs."""
@@ -74,7 +71,6 @@ class QuestionDialog(Gtk.MessageDialog):
 
         if message is not None:
             self.props.secondary_text = message
-
 
 class WarningDialog(Gtk.MessageDialog):
 

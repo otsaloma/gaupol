@@ -23,7 +23,6 @@ from aeidon.i18n   import _
 from gi.repository import GObject
 from gi.repository import Gtk
 
-
 class TextEditDialog(Gtk.Dialog):
 
     """Dialog for editing text of a single subtitle."""

@@ -23,7 +23,6 @@ from aeidon.i18n   import _
 from gi.repository import GObject
 from gi.repository import Gtk
 
-
 class PreviewErrorDialog(Gtk.MessageDialog):
 
     """Dialog for informing that preview failed."""

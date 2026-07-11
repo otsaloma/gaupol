@@ -28,7 +28,6 @@ from gi.repository import Pango
 
 __all__ = ("Page",)
 
-
 class Page(aeidon.Observable):
 
     """

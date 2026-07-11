@@ -17,12 +17,10 @@
 
 import aeidon
 
-
 class PuppetMaster:
 
     def __init__(self):
         self.name = "master"
-
 
 class TestDelegate(aeidon.TestCase):
 

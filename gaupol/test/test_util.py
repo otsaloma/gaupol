@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gdk
 
-
 class TestModule(gaupol.TestCase):
 
     def test_char_to_px(self):

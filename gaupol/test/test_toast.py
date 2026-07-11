@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestToast(gaupol.TestCase):
 
     def run(self):

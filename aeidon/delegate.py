@@ -19,7 +19,6 @@
 
 __all__ = ("Delegate",)
 
-
 class Delegate:
 
     """

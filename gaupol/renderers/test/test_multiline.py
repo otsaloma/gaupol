@@ -19,7 +19,6 @@ import gaupol
 
 from gi.repository import Gtk
 
-
 class TestMultilineCellRenderer(gaupol.TestCase):
 
     def run_renderer(self):
@@ -39,7 +38,6 @@ class TestMultilineCellRenderer(gaupol.TestCase):
 
     def setup_method(self, method):
         self.renderer = gaupol.MultilineCellRenderer()
-
 
 class TestMultilineDiffCellRenderer(gaupol.TestCase):
 
