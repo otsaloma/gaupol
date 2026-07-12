@@ -359,8 +359,8 @@ class VideoAgent(aeidon.Delegate):
                 lang = GstTag.tag_get_language_name(track.language_code)
             if lang is None:
                 lang = track.language_name
-            name = title if lang is None else "{} - [{}]".format(title, lang.title())
-            action = "win.set-audio-language::{:d}".format(i)
+            name = title if lang is None else f"{title} - [{lang.title()}]"
+            action = f"win.set-audio-language::{i:d}"
             menu.append(name, action)
             if i == self.player.audio_track:
                 action = self.get_action("set-audio-language")

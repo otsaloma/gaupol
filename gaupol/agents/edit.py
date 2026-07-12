@@ -153,7 +153,7 @@ class EditAgent(aeidon.Delegate):
         subtitle = page.project.new_subtitle()
         subtitle.start_seconds = pos
         subtitle.end_seconds = pos + 3.0
-        subtitle.main_text = "[{:d}]".format(index + 1)
+        subtitle.main_text = f"[{index + 1:d}]"
         page.project.insert_subtitles((index,), (subtitle,))
 
     @aeidon.deco.export

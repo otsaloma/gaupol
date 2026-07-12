@@ -51,5 +51,4 @@ def new(format, path, encoding, newline=None):
     for cls in classes:
         if cls.format == format:
             return cls(path, encoding, newline)
-    raise ValueError("Format {!r} not found"
-                     .format(format))
+    raise ValueError(f"Format {format!r} not found")

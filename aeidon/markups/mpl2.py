@@ -79,7 +79,7 @@ class MPL2(MicroDVD):
             if match is None: continue
             lines[i] = match.group(2)
             for tag in reversed(OrderedDict.fromkeys(match.group(1))):
-                lines[i] = "<{}>{}</{}>".format(tag, lines[i], tag)
+                lines[i] = f"<{tag}>{lines[i]}</{tag}>"
         return "\n".join(lines)
 
     def _style_mpl2(self, text, tag, bounds=None):
@@ -92,7 +92,7 @@ class MPL2(MicroDVD):
         # subtitle and thus cannot be marked without side-effects.
         if re_alpha.search(prefix): return text
         if re_alpha.search(suffix): return text
-        styled_text = text[a:z].replace("\n", "\n{}".format(tag))
+        styled_text = text[a:z].replace("\n", f"\n{tag}")
         return "".join((text[:a], tag, styled_text, text[z:]))
 
     @property

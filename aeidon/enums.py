@@ -144,7 +144,7 @@ class PlayerMPlayer(aeidon.EnumerationItem):
         # Required for mplayer to work if gaupol was started
         # as a background process (&) from a terminal window.
         # http://www.mplayerhq.hu/DOCS/HTML/en/faq.html#idm5930
-        command = "{} < /dev/null".format(command)
+        command = f"{command} < /dev/null"
 
     command_utf_8 = " ".join((_get_mplayer_executable(),
                               "-quiet",
@@ -159,7 +159,7 @@ class PlayerMPlayer(aeidon.EnumerationItem):
         # Required for mplayer to work if gaupol was started
         # as a background process (&) from a terminal window.
         # http://www.mplayerhq.hu/DOCS/HTML/en/faq.html#idm5930
-        command_utf_8 = "{} < /dev/null".format(command_utf_8)
+        command_utf_8 = f"{command_utf_8} < /dev/null"
 
     executable = _get_mplayer_executable()
     found = shutil.which(_get_mplayer_executable()) is not None

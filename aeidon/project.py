@@ -146,8 +146,7 @@ class Project(aeidon.Observable, metaclass=ProjectMeta):
             for attr_name in attr_names:
                 attr_value = getattr(agent, attr_name)
                 if attr_name in self._delegations:
-                    raise ValueError("Multiple definitions of {!r}"
-                                     .format(attr_name))
+                    raise ValueError(f"Multiple definitions of {attr_name!r}")
 
                 self._delegations[attr_name] = attr_value
                 # Remove class-level function added by ProjectMeta.

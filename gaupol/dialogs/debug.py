@@ -83,9 +83,9 @@ class DebugDialog(Gtk.MessageDialog):
             os.getenv("XDG_SESSION_TYPE", "") == "wayland" or
             os.getenv("WAYLAND_DISPLAY", "")
         ) else "no"
-        self._insert_text("Platform: {}\n".format(platform.platform(True)))
-        self._insert_text("Locale: {}.{}\n".format(locale, encoding))
-        self._insert_text("Wayland: {}\n\n".format(wayland))
+        self._insert_text(f"Platform: {platform.platform(True)}\n")
+        self._insert_text(f"Locale: {locale}.{encoding}\n")
+        self._insert_text(f"Wayland: {wayland}\n\n")
 
     def _insert_dependencies(self):
         """Insert version numbers of selected dependencies."""
@@ -100,14 +100,14 @@ class DebugDialog(Gtk.MessageDialog):
         ))
         pygobject_version = dotjoin(GObject.pygobject_version)
         python_version = dotjoin(sys.version_info[:3])
-        self._insert_text("aeidon: {}\n".format(aeidon.__version__))
-        self._insert_text("charset-normalizer: {}\n".format(chardet_version))
-        self._insert_text("gaupol: {}\n".format(gaupol.__version__))
-        self._insert_text("gstreamer: {}\n".format(gst_version))
-        self._insert_text("gtk+: {}\n".format(gtk_version))
-        self._insert_text("libspelling: {}\n".format(libspelling_version))
-        self._insert_text("pygobject: {}\n".format(pygobject_version))
-        self._insert_text("python: {}\n".format(python_version))
+        self._insert_text(f"aeidon: {aeidon.__version__}\n")
+        self._insert_text(f"charset-normalizer: {chardet_version}\n")
+        self._insert_text(f"gaupol: {gaupol.__version__}\n")
+        self._insert_text(f"gstreamer: {gst_version}\n")
+        self._insert_text(f"gtk+: {gtk_version}\n")
+        self._insert_text(f"libspelling: {libspelling_version}\n")
+        self._insert_text(f"pygobject: {pygobject_version}\n")
+        self._insert_text(f"python: {python_version}\n")
 
     def _insert_text(self, text, *tags):
         """Insert `text` with `tags` to the text view."""
@@ -131,15 +131,15 @@ class DebugDialog(Gtk.MessageDialog):
             path = tb.tb_frame.f_code.co_filename
             name = tb.tb_frame.f_code.co_name
             line = linecache.getline(path, tb.tb_lineno).strip()
-            self._insert_text("File: {}\n".format(path))
-            self._insert_text("Line: {}\n".format(tb.tb_lineno))
-            self._insert_text("In: {}\n\n".format(name))
-            self._insert_text("    {}\n\n".format(line))
+            self._insert_text(f"File: {path}\n")
+            self._insert_text(f"Line: {tb.tb_lineno}\n")
+            self._insert_text(f"In: {name}\n\n")
+            self._insert_text(f"    {line}\n\n")
             tb = tb.tb_next
         exception = traceback.format_exception_only(exctype, value)[0]
         exception, space, message = exception.partition(" ")
         self._insert_text(exception, "bold")
-        self._insert_text("{}{}\n".format(space, message))
+        self._insert_text(f"{space}{message}\n")
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""

@@ -139,12 +139,12 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Initialize user-activatable actions."""
         for action_class in gaupol.actions.classes:
             action = action_class()
-            name = "win.{}".format(action.props.name)
+            name = f"win.{action.props.name}"
             if hasattr(gaupol, "appman"):
                 gaupol.appman.set_accels_for_action(
                     name, action.accelerators)
-            callback = "_on_{}_activate".format(
-                action.props.name.replace("-", "_"))
+            stub = action.props.name.replace("-", "_")
+            callback = f"_on_{stub}_activate"
             action.connect("activate", getattr(self, callback))
             self.window.add_action(action)
 
@@ -152,7 +152,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
         """Add framerates from ``conf.editor.custom_framerates``."""
         menu = self.get_menubar_section("custom-framerates-placeholder")
         for value in sorted(gaupol.conf.editor.custom_framerates):
-            name = "FPS_{:.3f}".format(value).replace(".", "_")
+            name = f"FPS_{value:.3f}".replace(".", "_")
             if hasattr(aeidon.framerates, name): continue
             setattr(aeidon.framerates, name, aeidon.EnumerationItem())
             framerate = getattr(aeidon.framerates, name)
@@ -160,7 +160,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             framerate.value = float(value)
             if menu is not None:
                 # Menubar not available when running unit tests.
-                action = "win.set-framerate::{}".format(name)
+                action = f"win.set-framerate::{name}"
                 menu.append(framerate.label, action)
 
     def _init_delegations(self):
@@ -177,8 +177,7 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             for attr_name in attr_names:
                 attr_value = getattr(agent, attr_name)
                 if attr_name in self._delegations:
-                    raise ValueError("Multiple definitions of {!r}"
-                                     .format(attr_name))
+                    raise ValueError(f"Multiple definitions of {attr_name!r}")
 
                 self._delegations[attr_name] = attr_value
                 # Remove class-level function added by ApplicationMeta.

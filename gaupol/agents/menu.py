@@ -133,7 +133,7 @@ class MenuAgent(aeidon.Delegate):
             label = page.get_main_basename()
             if len(label) > 100:
                 label = label[:100] + "…"
-            action = "win.activate-project::{:d}".format(i)
+            action = f"win.activate-project::{i:d}"
             menu.append(label, action)
             if page is current:
                 action = self.get_action("activate-project")
@@ -149,7 +149,7 @@ class MenuAgent(aeidon.Delegate):
             label = os.path.basename(path)
             if len(label) > 100:
                 label = label[:100] + "…"
-            action = "win.open-recent-main-file-{:d}".format(i)
+            action = f"win.open-recent-main-file-{i:d}"
             menu.append(label, action)
             action = action.replace("win.", "")
             if self.get_action(action):
@@ -182,7 +182,7 @@ class MenuAgent(aeidon.Delegate):
             label = os.path.basename(path)
             if len(label) > 100:
                 label = label[:100] + "…"
-            action = "win.open-recent-translation-file-{:d}".format(i)
+            action = f"win.open-recent-translation-file-{i:d}"
             menu.append(label, action)
             action = action.replace("win.", "")
             if not self.get_action(action):

@@ -111,7 +111,7 @@ class ApplicationManager(Gtk.Application):
         parser.add_argument(
             "--version",
             action="version",
-            version="gaupol {}".format(gaupol.__version__))
+            version=f"gaupol {gaupol.__version__}")
 
         parser.add_argument(
             "-e", "--encoding",

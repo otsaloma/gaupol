@@ -270,7 +270,8 @@ class EnumEncoder(json.JSONEncoder):
             return str(obj)
         if isinstance(obj, (list, tuple)) and obj:
             if isinstance(obj[0], aeidon.EnumerationItem):
-                return "[{}]".format(", ".join(map(str, obj)))
+                items = ", ".join(map(str, obj))
+                return f"[{items}]"
         return json.JSONEncoder.encode(self, obj)
 
 class ConfigurationStore(gaupol.AttributeDictionary):
@@ -305,7 +306,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         container = self
         for section in sections:
             container = getattr(container, section)
-        signal = "notify::{}".format(option)
+        signal = f"notify::{option}"
         method_name = "_on_conf_{}_{}".format(
             "_".join(sections),
             signal.replace("::", "_"))
@@ -321,7 +322,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         container = self
         for section in sections:
             container = getattr(container, section)
-        signal = "notify::{}".format(option)
+        signal = f"notify::{option}"
         method_name = "_on_conf_{}_{}".format(
             "_".join(sections),
             signal.replace("::", "_"))
@@ -388,8 +389,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         try:
             self._read_from_file()
         except Exception as error:
-            print("Failed to read configuration file {}: {!s}"
-                  .format(self.path, error),
+            print(f"Failed to read configuration file {self.path}: {error!s}",
                   file=sys.stderr)
 
     def _read_option_line(self, line, sections, container, enums):
@@ -399,16 +399,16 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         try:
             value = json.loads(value, cls=EnumDecoder, enum=enum)
         except (AttributeError, ValueError):
-            return print("Failed to parse value '{}' of option '{}.{}' from configuration file '{}'."
-                         .format(value, "::".join(sections), option, self.path),
+            section = "::".join(sections)
+            return print(f"Failed to parse value '{value}' of option '{section}.{option}' from configuration file '{self.path}'.",
                          file=sys.stderr)
 
         if hasattr(container, option) and value is None:
             # Discard None-values. They are not used for any options,
             # but might accidentally bet set in some corner or error
             # cases. By discarding them here, we ensure a clean start.
-            return print("Discarding value '{}' of option '{}.{}' from configuration file '{}'."
-                         .format(value, "::".join(sections), option, self.path),
+            section = "::".join(sections)
+            return print(f"Discarding value '{value}' of option '{section}.{option}' from configuration file '{self.path}'.",
                          file=sys.stderr)
 
         if not hasattr(container, option):
@@ -447,7 +447,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
             root = self._flatten(self._root)
             defaults = self._flatten(self._defaults)
             for section in sorted(root):
-                f.write("\n[{}]\n".format(section))
+                f.write(f"\n[{section}]\n")
                 for option in sorted(root[section]):
                     value = root[section][option]
                     json_value = json.dumps(
@@ -461,13 +461,12 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                         and option in defaults[section]
                         and value == defaults[section][option]):
                         f.write("# ")
-                    f.write("{} = {}\n".format(option, json_value))
+                    f.write(f"{option} = {json_value}\n")
 
     def write_to_file(self):
         """Write values of configuration options to file."""
         try:
             self._write_to_file()
         except Exception as error:
-            print("Failed to write configuration file {}: {!s}"
-                  .format(self.path, error),
+            print(f"Failed to write configuration file {self.path}: {error!s}",
                   file=sys.stderr)

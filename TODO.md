@@ -1,6 +1,5 @@
 # TODO
 
-- Use fstrings where applicable
 - Use pathlib instead of os.path
 - Use pathlib to read and write instead of one-line with bodies
 - All dialogs

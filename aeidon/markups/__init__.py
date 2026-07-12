@@ -51,5 +51,4 @@ def new(format):
     for cls in classes:
         if cls.format == format:
             return cls()
-    raise ValueError("Format {!r} not found"
-                     .format(format))
+    raise ValueError(f"Format {format!r} not found")

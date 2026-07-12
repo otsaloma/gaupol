@@ -90,8 +90,7 @@ class SaveAgent(aeidon.Delegate):
             return self.save_main(page)
         if doc == aeidon.documents.TRAN:
             return self.save_translation(page)
-        raise ValueError("Invalid document: {!r}"
-                         .format(doc))
+        raise ValueError(f"Invalid document: {doc!r}")
 
     def _save_document(self, page, doc, file=None):
         """Save document to `file` or raise :exc:`gaupol.Default`."""

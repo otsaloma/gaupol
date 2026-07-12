@@ -47,7 +47,7 @@ VIDEO_FILE_EXTENSIONS = [
 def affirm(value):
     """Raise :exc:`aeidon.AffirmationError` if value evaluates to ``False``."""
     if not value:
-        raise aeidon.AffirmationError("Not True: {!r}".format(value))
+        raise aeidon.AffirmationError(f"Not True: {value!r}")
 
 @contextlib.contextmanager
 def atomic_open(path, mode="w", *args, **kwargs):
@@ -67,7 +67,7 @@ def atomic_open(path, mode="w", *args, **kwargs):
         # Let's use a hidden temporary file to avoid a file
         # flickering in a possibly open file browser window.
         suffix = "".join(random.sample(chars, 8))
-        temp_basename = ".{}.tmp{}".format(basename, suffix)
+        temp_basename = f".{basename}.tmp{suffix}"
         temp_path = os.path.join(directory, temp_basename)
         if not os.path.isfile(temp_path): break
     try:
@@ -139,7 +139,7 @@ def connect(observer, observable, signal, *args):
     method_name = signal.replace("-", "_").replace("::", "_")
     if observer is not observable:
         method_name = "_".join((observable, method_name))
-    method_name = "_on_{}".format(method_name).replace("__", "_")
+    method_name = f"_on_{method_name}".replace("__", "_")
     if not hasattr(observer, method_name):
         method_name = method_name[1:]
     method = getattr(observer, method_name)
@@ -162,8 +162,7 @@ def detect_format(path, encoding):
             for format, re_id in re_ids:
                 if re_id.search(line) is not None:
                     return format
-    raise aeidon.FormatError("Failed to detect format of file {!r}"
-                             .format(path))
+    raise aeidon.FormatError(f"Failed to detect format of file {path!r}")
 
 def detect_newlines(path):
     """Detect and return the newline type of file at `path` or ``None``."""
@@ -302,8 +301,7 @@ def makedirs(directory):
     try:
         os.makedirs(directory)
     except OSError as error:
-        print("Failed to create directory {!r}: {!s}"
-              .format(directory, error),
+        print(f"Failed to create directory {directory!r}: {error!s}",
               file=sys.stderr)
         raise # OSError
     return directory
@@ -316,33 +314,32 @@ def normalize_newlines(text):
 def path_to_uri(path):
     """Convert local filepath to URI."""
     if sys.platform == "win32":
-        path = "/{}".format(path.replace("\\", "/"))
-    return "file://{}".format(urllib.parse.quote(path))
+        path = "/" + path.replace("\\", "/")
+    path = urllib.parse.quote(path)
+    return f"file://{path}"
 
 def print_read_io(exc_info, path):
     """Print :exc:`IOError` message to standard error."""
-    print("Failed to read file '{}': {}"
-          .format(path, exc_info[1].args[1]),
+    message = exc_info[1].args[1]
+    print(f"Failed to read file '{path}': {message}",
           file=sys.stderr)
 
 def print_read_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard error."""
     encoding = encoding or get_default_encoding()
-    print("Failed to decode file '{}' with codec '{}'"
-          .format(path, encoding),
+    print(f"Failed to decode file '{path}' with codec '{encoding}'",
           file=sys.stderr)
 
 def print_write_io(exc_info, path):
     """Print :exc:`IOError` message to standard error."""
-    print("Failed to write file '{}': {}"
-          .format(path, exc_info[1].args[1]),
+    message = exc_info[1].args[1]
+    print(f"Failed to write file '{path}': {message}",
           file=sys.stderr)
 
 def print_write_unicode(exc_info, path, encoding):
     """Print :exc:`UnicodeError` message to standard error."""
     encoding = encoding or get_default_encoding()
-    print("Failed to encode file '{}' with codec '{}'"
-          .format(path, encoding),
+    print(f"Failed to encode file '{path}' with codec '{encoding}'",
           file=sys.stderr)
 
 def read(path, encoding=None, fallback="utf_8", quiet=False):
@@ -394,7 +391,7 @@ def shell_quote(path):
         # directory separators and cannot contain double quotes.
         path = path.replace("\\", "\\\\")
         path = path.replace('"', '\\"')
-    return '"{}"'.format(path)
+    return f'"{path}"'
 
 def start_process(command, **kwargs):
     """

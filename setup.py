@@ -77,12 +77,12 @@ def get_gaupol_version():
 
 def run_or_exit(cmd):
     if os.system(cmd) == 0: return
-    log.error("command {!r} failed".format(cmd))
+    log.error(f"command {cmd!r} failed")
     raise SystemExit(1)
 
 def run_or_warn(cmd):
     if os.system(cmd) == 0: return
-    log.warning("command {!r} failed".format(cmd))
+    log.warning(f"command {cmd!r} failed")
 
 class Clean(clean):
 
@@ -91,11 +91,11 @@ class Clean(clean):
         with open(os.path.join("manifests", "clean.manifest"), "r") as f:
             for targets in [glob.glob(x.strip()) for x in f]:
                 for target in filter(os.path.isdir, targets):
-                    log.info("removing {}".format(target))
+                    log.info(f"removing {target}")
                     if not self.dry_run:
                         shutil.rmtree(target)
                 for target in filter(os.path.isfile, targets):
-                    log.info("removing {}".format(target))
+                    log.info(f"removing {target}")
                     if not self.dry_run:
                         os.remove(target)
 
@@ -115,7 +115,7 @@ class Distribution(distribution):
 
     def __find_data_files(self, name):
         fok = lambda x: not x.endswith((".in", ".pyc"))
-        basename = "{}.manifest".format(name)
+        basename = f"{name}.manifest"
         with open(os.path.join("manifests", basename), "r") as f:
             for line in [x.strip() for x in f]:
                 if not line: continue
@@ -131,7 +131,7 @@ class Distribution(distribution):
         mandir = self.mandir
         while mandir.endswith("/"):
             mandir = mandir[:-1]
-        dest = "{}/man1".format(mandir)
+        dest = f"{mandir}/man1"
         self.data_files.append((dest, ["data/gaupol.1"]))
 
     def __find_packages(self, name):
@@ -194,8 +194,8 @@ class Install(install):
         # Assume we're actually installing if --root was not given.
         if (root is not None) or (data_dir is None): return
         directory = os.path.join(data_dir, "share", "applications")
-        log.info("updating desktop database in {}".format(directory))
-        run_or_warn('update-desktop-database "{}"'.format(directory))
+        log.info(f"updating desktop database in {directory}")
+        run_or_warn(f'update-desktop-database "{directory}"')
 
 class InstallData(install_data):
 
@@ -212,7 +212,7 @@ class InstallData(install_data):
         if not os.path.isfile(path):
             # The above can fail with an old version of gettext,
             # fall back on copying the file without translations.
-            shutil.copy("{}.in".format(path), path)
+            shutil.copy(f"{path}.in", path)
         return ("share/metainfo", [path])
 
     def __get_desktop_file(self):
@@ -222,16 +222,16 @@ class InstallData(install_data):
         if not os.path.isfile(path):
             # The above can fail with an old version of gettext,
             # fall back on copying the file without translations.
-            shutil.copy("{}.in".format(path), path)
+            shutil.copy(f"{path}.in", path)
         return ("share/applications", [path])
 
     def __get_mo_file(self, po_file):
         locale = os.path.basename(po_file[:-3])
         mo_dir = os.path.join("locale", locale, "LC_MESSAGES")
         mo_file = os.path.join(mo_dir, "gaupol.mo")
-        log.info("compiling {}".format(mo_file))
+        log.info(f"compiling {mo_file}")
         os.makedirs(mo_dir, exist_ok=True)
-        run_or_exit("msgfmt {} -o {}".format(po_file, mo_file))
+        run_or_exit(f"msgfmt {po_file} -o {mo_file}")
         dest_dir = os.path.join("share", mo_dir)
         return (dest_dir, [mo_file])
 
@@ -253,7 +253,7 @@ class InstallData(install_data):
         if not os.path.isfile(path):
             # The above can fail with an old version of gettext,
             # fall back on copying the file without translations.
-            shutil.copy("{}.in".format(path), path)
+            shutil.copy(f"{path}.in", path)
         return ("share/gaupol/patterns", [path])
 
     def __get_pattern_files(self):
@@ -289,11 +289,11 @@ class InstallLib(install_lib):
         with open(path, "r", encoding="utf_8") as f:
             text = f.read()
         patt = r"^DATA_DIR = .*$"
-        repl = "DATA_DIR = {!r}".format(data_dir)
+        repl = f"DATA_DIR = {data_dir!r}"
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
         assert text.count(repl) == 1
         patt = r"^LOCALE_DIR = .*$"
-        repl = "LOCALE_DIR = {!r}".format(locale_dir)
+        repl = f"LOCALE_DIR = {locale_dir!r}"
         text = re.sub(patt, repl, text, flags=re.MULTILINE)
         assert text.count(repl) == 1
         with open(path, "w", encoding="utf_8") as f:

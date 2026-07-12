@@ -151,7 +151,7 @@ class VideoPlayer(aeidon.Observable):
             return self.calc.to_time(duration)
         if mode == aeidon.modes.FRAME:
             return self.calc.to_frame(duration)
-        raise ValueError("Invalid mode: {!r}".format(mode))
+        raise ValueError(f"Invalid mode: {mode!r}")
 
     def get_position(self, mode=None):
         """Return current position in video stream or ``None``."""
@@ -172,7 +172,7 @@ class VideoPlayer(aeidon.Observable):
             return self.calc.to_time(pos)
         if mode == aeidon.modes.FRAME:
             return self.calc.to_frame(pos)
-        raise ValueError("Invalid mode: {!r}".format(mode))
+        raise ValueError(f"Invalid mode: {mode!r}")
 
     def _init_bus(self):
         """Initialize the GStreamer message bus."""
@@ -283,7 +283,7 @@ class VideoPlayer(aeidon.Observable):
         self._text_overlay.props.valignment = conf.subtitle_position_vertical
         self._text_overlay.props.line_alignment = conf.line_alignment
         self._text_overlay.props.shaded_background = conf.subtitle_background
-        alpha = "{:02x}".format(int(conf.subtitle_alpha * 255))
+        alpha = f"{int(conf.subtitle_alpha * 255):02x}"
         color = conf.subtitle_color.replace("#", "")
         color = int(float.fromhex("".join((alpha, color))))
         self._text_overlay.props.color = color
@@ -295,7 +295,7 @@ class VideoPlayer(aeidon.Observable):
         self._time_overlay.props.halignment = conf.time_position_horizontal
         self._time_overlay.props.valignment = conf.time_position_vertical
         self._time_overlay.props.shaded_background = conf.time_background
-        alpha = "{:02x}".format(int(conf.time_alpha * 255))
+        alpha = f"{int(conf.time_alpha * 255):02x}"
         color = conf.time_color.replace("#", "")
         color = int(float.fromhex("".join((alpha, color))))
         self._time_overlay.props.color = color

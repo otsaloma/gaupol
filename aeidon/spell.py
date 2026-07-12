@@ -35,7 +35,7 @@ class SpellChecker:
         """Initialize a :class:`SpellChecker` instance."""
         provider = Spelling.Provider.get_default()
         if not provider.supports_language(language):
-            raise aeidon.Error('Language "{}" not supported'.format(language))
+            raise aeidon.Error(f'Language "{language}" not supported')
         self.checker = Spelling.Checker.new(provider, language)
         self.language = language
         self.replacements = []
@@ -125,7 +125,7 @@ class SpellChecker:
     def replacement_file(self):
         """Return path to the replacement file."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
-        return os.path.join(directory, "{}.repl".format(self.language))
+        return os.path.join(directory, f"{self.language}.repl")
 
     def suggest(self, word):
         """Return a list of suggestions for `word`."""

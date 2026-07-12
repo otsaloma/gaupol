@@ -126,7 +126,8 @@ class WebVTT(aeidon.SubtitleFile):
             # than an hour, else the usual HH:MM:SS.SSS.
             start = subtitle.start_time[first:]
             end = subtitle.end_time[first:]
-            f.write("{} --> {}".format(start, end))
+            f.write(f"{start} --> {end}")
             if subtitle.webvtt.settings:
-                f.write(" {}".format(subtitle.webvtt.settings.strip()))
-            f.write("\n{}\n".format(subtitle.get_text(doc)))
+                settings = subtitle.webvtt.settings.strip()
+                f.write(f" {settings}")
+            f.write(f"\n{subtitle.get_text(doc)}\n")

@@ -435,7 +435,7 @@ class SearchDialog(gaupol.BuilderDialog):
     def _read_history(self, name):
         """Read history from file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
-        path = os.path.join(directory, "{}.history".format(name))
+        path = os.path.join(directory, f"{name}.history")
         if not os.path.isfile(path): return
         history = aeidon.util.readlines(path)
         setattr(self, name, history)
@@ -589,7 +589,7 @@ class SearchDialog(gaupol.BuilderDialog):
         """Write history to file of type `name`."""
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "search")
         try:
-            path = os.path.join(directory, "{}.history".format(name))
+            path = os.path.join(directory, f"{name}.history")
             history = getattr(self, name)
             text = "\n".join(history) + "\n"
             aeidon.util.write(path, text)

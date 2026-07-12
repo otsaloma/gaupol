@@ -90,4 +90,4 @@ class TMPlayer(aeidon.SubtitleFile):
                            else start[1:-4]))
 
             text = subtitle.get_text(doc).replace("\n", "|")
-            f.write("{}:{}\n".format(start, text))
+            f.write(f"{start}:{text}\n")

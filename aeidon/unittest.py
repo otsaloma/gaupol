@@ -30,9 +30,7 @@ class TestCase:
             function(*args, **kwargs)
         except exception:
             return
-        raise AssertionError(
-            "{!r} failed to raise {!r}"
-            .format(function, exception))
+        raise AssertionError(f"{function!r} failed to raise {exception!r}")
 
     def get_sample_text(self, format, name=None):
         """
@@ -54,7 +52,7 @@ class TestCase:
         for candidate in aeidon.SpellChecker.list_languages():
             if candidate.startswith(language):
                 return candidate
-        raise Exception("Spell-check dictionary {}* not found".format(language))
+        raise Exception(f"Spell-check dictionary {language}* not found")
 
     def new_microdvd_file(self):
         """Return path to a new temporary MicroDVD file."""

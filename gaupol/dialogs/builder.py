@@ -62,4 +62,4 @@ class BuilderDialog:
             widget = self._builder.get_object(name)
             if prefix and name.startswith(prefix):
                 name = name.replace(prefix, "")
-            setattr(self, "_{}".format(name), widget)
+            setattr(self, f"_{name}", widget)

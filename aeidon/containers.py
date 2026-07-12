@@ -83,5 +83,4 @@ def new(name):
         return SubRip()
     if name == "webvtt":
         return WebVTT()
-    raise ValueError("Invalid name: {!r}"
-                     .format(name))
+    raise ValueError(f"Invalid name: {name!r}")

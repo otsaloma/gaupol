@@ -42,7 +42,7 @@ class PreviewAgent(aeidon.Delegate):
         with open(fout.name, "r", errors="replace") as f:
             output = f.read().splitlines()
         output = "\n".join(output[:100])
-        print("\nPREVIEW: {}\n{}".format(command, output))
+        print(f"\nPREVIEW: {command}\n{output}")
         aeidon.temp.remove(fout.name)
         if process.returncode == 0: return
         dialog = gaupol.PreviewErrorDialog(self.window, output)

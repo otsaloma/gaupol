@@ -61,7 +61,7 @@ class FileDialog:
         for format in aeidon.formats:
             pattern = "*."
             for x in format.extension[1:]:
-                pattern += "[{}{}]".format(x.upper(), x.lower())
+                pattern += f"[{x.upper()}{x.lower()}]"
             file_filter.add_pattern(pattern)
         self.add_filter(file_filter)
         self.set_filter(file_filter)
@@ -69,7 +69,7 @@ class FileDialog:
             extension = format.extension
             pattern = "*."
             for x in extension[1:]:
-                pattern += "[{}{}]".format(x.upper(), x.lower())
+                pattern += f"[{x.upper()}{x.lower()}]"
             format = format.label
             name = _("{format} (*{extension})").format(**locals())
             file_filter = Gtk.FileFilter()

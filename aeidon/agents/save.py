@@ -62,7 +62,7 @@ class SaveAgent(aeidon.Delegate):
             return self.save_main(file, keep_changes)
         if doc == aeidon.documents.TRAN:
             return self.save_translation(file, keep_changes)
-        raise ValueError("Invalid document: {!r}".format(doc))
+        raise ValueError(f"Invalid document: {doc!r}")
 
     @aeidon.deco.export
     def save_main(self, file=None, keep_changes=True):

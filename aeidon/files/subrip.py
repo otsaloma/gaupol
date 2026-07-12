@@ -84,10 +84,10 @@ class SubRip(aeidon.SubtitleFile):
         Raise :exc:`UnicodeError` if encoding fails.
         """
         for i, subtitle in enumerate(subtitles):
-            f.write("{:d}\n".format(i + 1))
+            f.write(f"{i + 1:d}\n")
             start = subtitle.start_time.replace(".", ",")
             end = subtitle.end_time.replace(".", ",")
-            f.write("{} --> {}".format(start, end))
+            f.write(f"{start} --> {end}")
             # Write Extended SubRip coordinates only if the container
             # has been initialized and the coordinates make some sense.
             if subtitle.has_container("subrip"):
@@ -96,7 +96,7 @@ class SubRip(aeidon.SubtitleFile):
                 y1 = subtitle.subrip.y1
                 y2 = subtitle.subrip.y2
                 if not x1 == x2 == y1 == y2 == 0:
-                    f.write("  X1:{:03d} X2:{:03d}".format(x1, x2))
-                    f.write( " Y1:{:03d} Y2:{:03d}".format(y1, y2))
-            f.write("\n{}\n".format(subtitle.get_text(doc)))
+                    f.write(f"  X1:{x1:03d} X2:{x2:03d}")
+                    f.write(f" Y1:{y1:03d} Y2:{y2:03d}")
+            f.write(f"\n{subtitle.get_text(doc)}\n")
             f.write("\n")

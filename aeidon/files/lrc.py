@@ -73,4 +73,4 @@ class LRC(aeidon.SubtitleFile):
             first = 4 if start.startswith("-") else 3
             start = sign + start[first:-1]
             text = subtitle.get_text(doc).replace("\n", " ")
-            f.write("[{}]{}\n".format(start, text))
+            f.write(f"[{start}]{text}\n")

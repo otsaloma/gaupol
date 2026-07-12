@@ -76,7 +76,7 @@ class BuilderPage(TextAssistantPage):
         """Assign all names in `widgets` as attributes of `self`."""
         for name in widgets:
             widget = self._builder.get_object(name)
-            setattr(self, "_{}".format(name), widget)
+            setattr(self, f"_{name}", widget)
 
 class IntroductionPage(BuilderPage):
 
@@ -188,7 +188,7 @@ class IntroductionPage(BuilderPage):
         for page in content_pages:
             title = GLib.markup_escape_text(page.title)
             description = GLib.markup_escape_text(page.description)
-            markup = "<b>{}</b>\n{}".format(title, description)
+            markup = f"<b>{title}</b>\n{description}"
             page.set_visible(page.handle in pages)
             store.append((page, page.handle in pages, markup))
         self._tree_view.get_selection().unselect_all()
@@ -404,7 +404,7 @@ class LocalePage(BuilderPage):
             name = GLib.markup_escape_text(name)
             description = pattern.get_description()
             description = GLib.markup_escape_text(description)
-            markup = "<b>{}</b>\n{}".format(name, description)
+            markup = f"<b>{name}</b>\n{description}"
             store.append((pattern, visible, pattern.enabled, markup))
         self._tree_view.get_selection().unselect_all()
 

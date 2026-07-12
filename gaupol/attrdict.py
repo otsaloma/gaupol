@@ -45,7 +45,7 @@ class AttributeDictionary(aeidon.Observable):
         if isinstance(value, dict):
             value = AttributeDictionary(value)
         setattr(self, name, value)
-        self.connect("notify::{}".format(name), self._on_notify, name)
+        self.connect(f"notify::{name}", self._on_notify, name)
 
     def extend(self, root):
         """Add new values from another root dictionary."""

@@ -73,15 +73,15 @@ class PatternManager:
         if not None in (script,):
             codes.append(script)
         if not None in (script, language):
-            codes.append("{}-{}".format(script, language))
+            codes.append(f"{script}-{language}")
         if not None in (script, language, country):
-            codes.append("{}-{}-{}".format(script, language, country))
+            codes.append(f"{script}-{language}-{country}")
         return tuple(codes)
 
     def get_countries(self, script, language):
         """Return a sequence of countries for which patterns exist."""
         codes = list(self._patterns.keys())
-        start = "{}-{}-".format(script, language)
+        start = f"{script}-{language}-"
         codes = [x for x in codes if x.startswith(start)]
         countries = [x.split("-")[2] for x in codes]
         return tuple(aeidon.util.get_unique(countries))
@@ -89,7 +89,7 @@ class PatternManager:
     def get_languages(self, script):
         """Return a sequence of languages for which patterns exist."""
         codes = list(self._patterns.keys())
-        start = "{}-".format(script)
+        start = f"{script}-"
         codes = [x for x in codes if x.startswith(start)]
         languages = [x.split("-")[1] for x in codes]
         return tuple(aeidon.util.get_unique(languages))
@@ -118,7 +118,7 @@ class PatternManager:
     def _read_config_from_directory(self, directory, encoding):
         """Read configurations from files in `directory`."""
         if not os.path.isdir(directory): return
-        extension = ".{}.conf".format(self.pattern_type)
+        extension = f".{self.pattern_type}.conf"
         files = os.listdir(directory)
         for name in (x for x in files if x.endswith(extension)):
             path = os.path.join(directory, name)
@@ -128,7 +128,7 @@ class PatternManager:
         """Read configurations from file at `path`."""
         if not os.path.isfile(path): return
         basename = os.path.basename(path)
-        extension = ".{}.conf".format(self.pattern_type)
+        extension = f".{self.pattern_type}.conf"
         code = basename.replace(extension, "")
         if not code in self._patterns: return
         patterns = self._patterns[code]
@@ -155,8 +155,8 @@ class PatternManager:
     def _read_patterns_from_directory(self, directory, encoding):
         """Read all patterns from files in `directory`."""
         if not os.path.isdir(directory): return
-        extension = ".{}".format(self.pattern_type)
-        extensions = (extension, "{}.in".format(extension))
+        extension = f".{self.pattern_type}"
+        extensions = (extension, f"{extension}.in")
         files = [x for x in os.listdir(directory)
                  if x.endswith(extensions)]
 
@@ -173,9 +173,9 @@ class PatternManager:
         """Read all patterns from file at `path`."""
         if not os.path.isfile(path): return
         basename = os.path.basename(path)
-        extension = ".{}".format(self.pattern_type)
+        extension = f".{self.pattern_type}"
         if basename.endswith(".in"):
-            extension = ".{}.in".format(self.pattern_type)
+            extension = f".{self.pattern_type}.in"
         code = basename.replace(extension, "")
         local = path.startswith(aeidon.DATA_HOME_DIR)
         patterns = self._patterns.setdefault(code, [])
@@ -208,7 +208,7 @@ class PatternManager:
     def _write_config_to_file(self, code, encoding):
         """Write configurations of all patterns to file."""
         local_dir = os.path.join(aeidon.CONFIG_HOME_DIR, "patterns")
-        basename = "{}.{}.conf".format(code, self.pattern_type)
+        basename = f"{code}.{self.pattern_type}.conf"
         path = os.path.join(local_dir, basename)
         lines = ['<?xml version="1.0" encoding="utf-8"?>']
         lines.append('<patterns>')
@@ -220,8 +220,7 @@ class PatternManager:
             name = name.replace("&", "&amp;")
             name = name.replace('"', "&quot;")
             enabled = "true" if pattern.enabled else "false"
-            lines.append('  <pattern name="{}" enabled="{}"/>'
-                         .format(name, enabled))
+            lines.append(f'  <pattern name="{name}" enabled="{enabled}"/>')
 
         lines.append('</patterns>')
         aeidon.util.writelines(path, lines, encoding)

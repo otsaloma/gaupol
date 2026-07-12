@@ -142,7 +142,7 @@ class Markup(aeidon.Singleton):
         orig_text = text
         match = regex.search(text)
         if match is None: return text
-        text = regex.sub(r"\{}".format(target), text, 1)
+        text = regex.sub(rf"\{target}", text, 1)
         a = match.start()
         z = a + len(match.group(target))
         args = (text, (a, z))

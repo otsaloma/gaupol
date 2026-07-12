@@ -216,8 +216,7 @@ class MultilineCellRenderer(Gtk.CellRendererText):
         if not show_lengths: return markup
         lines = markup.split("\n")
         lengths = gaupol.ruler.get_lengths(text)
-        return "\n".join(("{} <small>[{:d}]</small>"
-                          .format(lines[i], lengths[i])
+        return "\n".join((f"{lines[i]} <small>[{lengths[i]:d}]</small>"
                           if lines[i] else lines[i]
                           for i in range(len(lines))))
 
@@ -258,7 +257,7 @@ class MultilineDiffCellRenderer(MultilineCellRenderer):
         """Return `text` as markup highlighting changes of type `tag`."""
         if tag == "equal": return text
         color = self._get_diff_color(tag)
-        return '<span background="{}">{}</span>'.format(color, text)
+        return f'<span background="{color}">{text}</span>'
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
@@ -287,7 +286,6 @@ class MultilineDiffCellRenderer(MultilineCellRenderer):
         if not show_lengths: return text
         lines = text.split("\n")
         lengths = gaupol.ruler.get_lengths(text)
-        return "\n".join(("{} <small>[{:d}]</small>"
-                          .format(lines[i], lengths[i])
+        return "\n".join((f"{lines[i]} <small>[{lengths[i]:d}]</small>"
                           if lines[i] else lines[i]
                           for i in range(len(lines))))

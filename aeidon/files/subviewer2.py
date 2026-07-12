@@ -66,4 +66,4 @@ class SubViewer2(aeidon.SubtitleFile):
             start = subtitle.calc.round(subtitle.start_time, 2)[:-1]
             end = subtitle.calc.round(subtitle.end_time, 2)[:-1]
             text = subtitle.get_text(doc).replace("\n", "[br]")
-            f.write("\n{},{}\n{}\n".format(start, end, text))
+            f.write(f"\n{start},{end}\n{text}\n")

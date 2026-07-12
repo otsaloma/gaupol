@@ -62,8 +62,7 @@ class MetadataItem:
             return True
         if value == "False":
             return False
-        raise ValueError("Invalid boolean value: {!r}"
-                         .format(value))
+        raise ValueError(f"Invalid boolean value: {value!r}")
 
     def get_field_list(self, name, fallback=None):
         """Return the list of strings value of field or `fallback`."""
@@ -81,25 +80,25 @@ class MetadataItem:
             return self.get_field(name)
         # 'xx_YY@Zzzz', fall back to 'xx@Zzzz'.
         if ("_" in locale) and (modifier is not None):
-            key = "{}[{}@{}]".format(name, locale, modifier)
+            key = f"{name}[{locale}@{modifier}]"
             if key in self.fields:
                 return self.get_field(key)
             locale = locale[0:2]
         # 'xx_YY', fall back to 'xx'.
         if ("_" in locale) and (modifier is None):
-            key = "{}[{}]".format(name, locale)
+            key = f"{name}[{locale}]"
             if key in self.fields:
                 return self.get_field(key)
             locale = locale[0:2]
         # 'xx@Zzzz', fall back to unlocalized.
         if (not "_" in locale) and (modifier is not None):
-            key = "{}[{}@{}]".format(name, locale, modifier)
+            key = f"{name}[{locale}@{modifier}]"
             if key in self.fields:
                 return self.get_field(key)
             return self.get_field(name)
         # 'xx', fall back to unlocalized.
         if (not "_" in locale) and (modifier is None):
-            key = "{}[{}]".format(name, locale)
+            key = f"{name}[{locale}]"
             if key in self.fields:
                 return self.get_field(key)
             return self.get_field(name)

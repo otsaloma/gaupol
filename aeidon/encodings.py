@@ -144,8 +144,7 @@ def code_to_description(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[DESC]
-    raise ValueError("Code {!r} not found"
-                     .format(code))
+    raise ValueError(f"Code {code!r} not found")
 
 def code_to_long_name(code):
     """Convert encoding `code` to localized long name."""
@@ -155,16 +154,14 @@ def code_to_long_name(code):
                     .format(name=item[NAME],
                             description=item[DESC]))
 
-    raise ValueError("Code {!r} not found"
-                     .format(code))
+    raise ValueError(f"Code {code!r} not found")
 
 def code_to_name(code):
     """Convert encoding `code` to name."""
     for item in _encodings:
         if item[CODE] == code:
             return item[NAME]
-    raise ValueError("Code {!r} not found"
-                     .format(code))
+    raise ValueError(f"Code {code!r} not found")
 
 def detect(path):
     """
@@ -240,8 +237,7 @@ def name_to_code(name):
     for item in _encodings:
         if item[NAME] == name:
             return item[CODE]
-    raise ValueError("Name {!r} not found"
-                     .format(name))
+    raise ValueError(f"Name {name!r} not found")
 
 def translate_code(code):
     """Return normalized encoding `code`."""
@@ -250,5 +246,4 @@ def translate_code(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[CODE]
-    raise ValueError("Code {!r} not found"
-                     .format(code))
+    raise ValueError(f"Code {code!r} not found")

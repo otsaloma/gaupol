@@ -48,7 +48,7 @@ class MicroDVD(aeidon.Markup):
     def colorize(self, text, color, bounds=None):
         """Return `text` colorized to hexadecimal value."""
         # Reverse the color value from RRGGBB to BBGGRR.
-        color = "${}{}{}".format(color[4:], color[2:4], color[:2])
+        color = f"${color[4:]}{color[2:4]}{color[:2]}"
         return self._style(text, "C", "c", color, bounds)
 
     def fontify(self, text, font, bounds=None):
@@ -95,7 +95,7 @@ class MicroDVD(aeidon.Markup):
         replacement = ""
         for m in ("b", "i", "u"):
             if m in match.group(2):
-                replacement += "{{{}:{}}}".format(y, m)
+                replacement += f"{{{y}:{m}}}"
         text = regex.sub(replacement, text, 1)
         return self._pre_decode_break(text)
 
@@ -111,13 +111,15 @@ class MicroDVD(aeidon.Markup):
         for i, line in enumerate(lines):
             matches = [x for x in re_tag.finditer(line)]
             for j in reversed(range(len(matches))):
-                lines[i] += "{{/{}}}".format(matches[j].group(1))
+                tag = matches[j].group(1)
+                lines[i] += f"{{/{tag}}}"
         text = "\n".join(lines)
         # Add upper case closing tags to the end of the text.
         re_tag = self._get_regex(r"\{([CFSY]:.*?)\}")
         matches = [x for x in re_tag.finditer(text)]
         for j in reversed(range(len(matches))):
-            text += "{{/{}}}".format(matches[j].group(1))
+            tag = matches[j].group(1)
+            text += f"{{/{tag}}}"
         return text
 
     def _pre_decode_color(self, text):
@@ -130,8 +132,8 @@ class MicroDVD(aeidon.Markup):
         match = regex.search(text)
         if match is None: return text
         color = match.group(2)
-        color = "{}{}{}".format(color[4:], color[2:4], color[:2])
-        text = regex.sub(r"{{\1#{}}}".format(color), text, 1)
+        color = f"{color[4:]}{color[2:4]}{color[:2]}"
+        text = regex.sub(rf"{{\1#{color}}}", text, 1)
         return self._pre_decode_color(text)
 
     def scale(self, text, size, bounds=None):
@@ -149,10 +151,10 @@ class MicroDVD(aeidon.Markup):
         if re_alpha.search(prefix): return text
         if re_alpha.search(suffix): return text
         if (not "\n" in text) or ("\n" in text[a:z]):
-            tag = "{{{}:{}}}".format(upper, value)
+            tag = f"{{{upper}:{value}}}"
         else:
-            tag = "{{{}:{}}}".format(lower, value)
-        return "".join((text[:a], "{}{}".format(tag, text[a:])))
+            tag = f"{{{lower}:{value}}}"
+        return "".join((text[:a], f"{tag}{text[a:]}"))
 
     @property
     def tag(self):

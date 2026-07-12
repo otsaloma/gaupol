@@ -68,8 +68,7 @@ class Page(aeidon.Observable):
             return self.view.columns.MAIN_TEXT
         if doc == aeidon.documents.TRAN:
             return self.view.columns.TRAN_TEXT
-        raise ValueError("Invalid document: {!r}"
-                         .format(doc))
+        raise ValueError(f"Invalid document: {doc!r}")
 
     def get_basename(self, doc):
         """Return basename of `doc`."""
@@ -77,8 +76,7 @@ class Page(aeidon.Observable):
             return self.get_main_basename()
         if doc == aeidon.documents.TRAN:
             return self.get_translation_basename()
-        raise ValueError("Invalid document: {!r}"
-                         .format(doc))
+        raise ValueError(f"Invalid document: {doc!r}")
 
     def get_main_basename(self):
         """Return basename of the main document."""
@@ -99,15 +97,13 @@ class Page(aeidon.Observable):
                 return subtitle.duration_seconds
             if mode == aeidon.modes.FRAME:
                 return subtitle.duration_frame
-            raise ValueError("Invalid mode: {!r}"
-                             .format(mode))
+            raise ValueError(f"Invalid mode: {mode!r}")
 
         if field == gaupol.fields.MAIN_TEXT:
             return subtitle.main_text
         if field == gaupol.fields.TRAN_TEXT:
             return subtitle.tran_text
-        raise ValueError("Invalid field: {!r}"
-                         .format(field))
+        raise ValueError(f"Invalid field: {field!r}")
 
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
@@ -329,14 +325,13 @@ class Page(aeidon.Observable):
             return aeidon.documents.MAIN
         if col == self.view.columns.TRAN_TEXT:
             return aeidon.documents.TRAN
-        raise ValueError("Invalid column: {!r}"
-                         .format(col))
+        raise ValueError(f"Invalid column: {col!r}")
 
     def update_tab_label(self):
         """Update the notebook tab label and return title."""
         title = self.get_main_basename()
         if self.project.main_changed or self.project.tran_changed:
-            title = "*{}".format(title)
+            title = f"*{title}"
         # Adwaita theme uses bold notebook tab labels since 3.12.
-        self.tab_label.set_markup("<b>{}</b>".format(title))
+        self.tab_label.set_markup(f"<b>{title}</b>")
         return title

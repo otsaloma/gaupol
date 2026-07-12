@@ -67,7 +67,7 @@ class Observable:
         if (name in self.__slots__) or name.startswith("_"):
             return object.__setattr__(self, name, value)
         value = self._validate(name, value)
-        signal = "notify::{}".format(name)
+        signal = f"notify::{name}"
         if not signal in self._signal_handlers:
             self._add_signal(signal)
             return object.__setattr__(self, name, value)
@@ -138,7 +138,7 @@ class Observable:
 
     def notify(self, name):
         """Emit notification signal for variable."""
-        return self.emit("notify::{}".format(name))
+        return self.emit(f"notify::{name}")
 
     def thaw_notify(self, do=True):
         """

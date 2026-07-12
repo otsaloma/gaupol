@@ -55,21 +55,21 @@ class SubStationAlpha(aeidon.Markup):
     def bolden(self, text, bounds=None):
         """Return bolded `text`."""
         a, z = bounds or (0, len(text))
-        target = "{{\\b1}}{}{{\\b0}}".format(text[a:z])
+        target = f"{{\\b1}}{text[a:z]}{{\\b0}}"
         return "".join((text[:a], target, text[z:]))
 
     def colorize(self, text, color, bounds=None):
         """Return `text` colorized to hexadecimal value."""
         a, z = bounds or (0, len(text))
         # Reverse the color value from RRGGBB to BBGGRR.
-        color = "{}{}{}".format(color[4:], color[2:4], color[:2])
-        target = "{{\\c&H{}&}}{}".format(color, text[a:z])
+        color = f"{color[4:]}{color[2:4]}{color[:2]}"
+        target = f"{{\\c&H{color}&}}{text[a:z]}"
         return "".join((text[:a], target, text[z:]))
 
     def fontify(self, text, font, bounds=None):
         """Return `text` changed to `font`."""
         a, z = bounds or (0, len(text))
-        target = "{{\\fn{}}}{}".format(font, text[a:z])
+        target = f"{{\\fn{font}}}{text[a:z]}"
         return "".join((text[:a], target, text[z:]))
 
     @property
@@ -80,7 +80,7 @@ class SubStationAlpha(aeidon.Markup):
     def italicize(self, text, bounds=None):
         """Return italicized `text`."""
         a, z = bounds or (0, len(text))
-        target = "{{\\i1}}{}{{\\i0}}".format(text[a:z])
+        target = f"{{\\i1}}{text[a:z]}{{\\i0}}"
         return "".join((text[:a], target, text[z:]))
 
     def _main_decode(self, text):
@@ -130,9 +130,9 @@ class SubStationAlpha(aeidon.Markup):
         regex = self._get_regex(pattern)
         match = regex.search(text)
         if match is None: return text
-        color = ("{:0>6s}".format(match.group(1))).replace(" ", "0")
-        color = "{}{}{}".format(color[4:], color[2:4], color[:2])
-        text = regex.sub(r"{{\\c#{}}}".format(color), text, 1)
+        color = f"{match.group(1):0>6s}".replace(" ", "0")
+        color = f"{color[4:]}{color[2:4]}{color[:2]}"
+        text = regex.sub(rf"{{\\c#{color}}}", text, 1)
         return self._pre_decode_color(text)
 
     def _pre_decode_reset(self, text):
@@ -159,13 +159,14 @@ class SubStationAlpha(aeidon.Markup):
                         break
             # Add artificial closing tags to close remaining tags.
             for j in reversed(range(len(opening_matches))):
-                parts[i] += "{{\\{}\\}}".format(opening_matches[j].group(1))
+                core = opening_matches[j].group(1)
+                parts[i] += f"{{\\{core}\\}}"
         return "".join(parts)
 
     def scale(self, text, size, bounds=None):
         """Return `text` scaled to `size`."""
         a, z = bounds or (0, len(text))
-        target = "{{\\fs{}}}{}".format(str(size), text[a:z])
+        target = f"{{\\fs{size}}}{text[a:z]}"
         return "".join((text[:a], target, text[z:]))
 
     @property

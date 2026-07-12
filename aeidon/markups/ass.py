@@ -52,5 +52,5 @@ class AdvSubStationAlpha(SubStationAlpha):
     def underline(self, text, bounds=None):
         """Return underlined `text`."""
         a, z = bounds or (0, len(text))
-        target = "{{\\u1}}{}{{\\u0}}".format(text[a:z])
+        target = f"{{\\u1}}{text[a:z]}{{\\u0}}"
         return "".join((text[:a], target, text[z:]))
