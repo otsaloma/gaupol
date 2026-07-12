@@ -23,88 +23,41 @@ import sys
 def get_config_home_directory():
     """Return path to the user's configuration directory."""
     if sys.platform == "win32":
-        return get_config_home_directory_windows()
-    return get_config_home_directory_xdg()
-
-def get_config_home_directory_windows():
-    """Return path to the user's configuration directory on Windows."""
-    directory = os.path.expanduser("~")
-    directory = os.environ.get("APPDATA", directory)
-    directory = os.path.join(directory, "Gaupol")
-    return os.path.abspath(directory)
-
-def get_config_home_directory_xdg():
-    """Return path to the user's XDG configuration directory."""
-    directory = os.path.join(os.path.expanduser("~"), ".config")
-    directory = os.environ.get("XDG_CONFIG_HOME", directory)
-    directory = os.path.join(directory, "gaupol")
-    return os.path.abspath(directory)
+        directory = os.environ.get("APPDATA") or os.path.expanduser("~")
+        return os.path.abspath(os.path.join(directory, "Gaupol"))
+    default = os.path.join(os.path.expanduser("~"), ".config")
+    directory = os.environ.get("XDG_CONFIG_HOME") or default
+    return os.path.abspath(os.path.join(directory, "gaupol"))
 
 def get_data_directory():
     """Return path to the global data directory."""
     if hasattr(sys, "frozen"):
-        return get_data_directory_frozen()
-    if os.path.isdir(get_data_directory_package()):
-        return get_data_directory_package()
-    return get_data_directory_source()
-
-def get_data_directory_frozen():
-    """Return path to the global data directory on ``frozen``."""
-    directory = os.path.dirname(sys.argv[0])
-    directory = os.path.join(directory, "share", "gaupol")
-    return os.path.abspath(directory)
-
-def get_data_directory_package():
-    """Return path to the global data directory when data in the package."""
+        # Windows bundled exe
+        directory = os.path.dirname(sys.argv[0])
+        return os.path.abspath(os.path.join(directory, "share", "gaupol"))
     directory = os.path.dirname(os.path.abspath(__file__))
-    directory = os.path.join(directory, "data")
-    return os.path.abspath(directory)
-
-def get_data_directory_source():
-    """Return path to the global data directory when running from source."""
-    directory = os.path.dirname(os.path.abspath(__file__))
-    directory = os.path.abspath(os.path.join(directory, ".."))
-    directory = os.path.join(directory, "data")
-    return os.path.abspath(directory)
+    if os.path.isdir(os.path.join(directory, "data")):
+        # Data files installed as part of the package.
+        return os.path.join(directory, "data")
+    # Running from the source directory.
+    return os.path.abspath(os.path.join(directory, "..", "data"))
 
 def get_data_home_directory():
     """Return path to the user's data directory."""
     if sys.platform == "win32":
-        return get_data_home_directory_windows()
-    return get_data_home_directory_xdg()
-
-def get_data_home_directory_windows():
-    """Return path to the user's data directory on Windows."""
-    directory = os.path.expanduser("~")
-    directory = os.environ.get("APPDATA", directory)
-    directory = os.path.join(directory, "Gaupol")
-    return os.path.abspath(directory)
-
-def get_data_home_directory_xdg():
-    """Return path to the user's XDG data directory."""
-    directory = os.path.expanduser("~/.local/share")
-    directory = os.environ.get("XDG_DATA_HOME", directory)
-    directory = os.path.join(directory, "gaupol")
-    return os.path.abspath(directory)
+        directory = os.environ.get("APPDATA") or os.path.expanduser("~")
+        return os.path.abspath(os.path.join(directory, "Gaupol"))
+    default = os.path.expanduser("~/.local/share")
+    directory = os.environ.get("XDG_DATA_HOME") or default
+    return os.path.abspath(os.path.join(directory, "gaupol"))
 
 def get_locale_directory():
     """Return path to the locale directory."""
     if hasattr(sys, "frozen"):
-        return get_locale_directory_frozen()
-    return get_locale_directory_source()
-
-def get_locale_directory_frozen():
-    """Return path to the locale directory on ``frozen``."""
-    directory = os.path.dirname(sys.argv[0])
-    directory = os.path.join(directory, "share", "locale")
-    return os.path.abspath(directory)
-
-def get_locale_directory_source():
-    """Return path to the locale directory when running from source."""
+        directory = os.path.dirname(sys.argv[0])
+        return os.path.abspath(os.path.join(directory, "share", "locale"))
     directory = os.path.dirname(os.path.abspath(__file__))
-    directory = os.path.abspath(os.path.join(directory, ".."))
-    directory = os.path.join(directory, "locale")
-    return os.path.abspath(directory)
+    return os.path.abspath(os.path.join(directory, "..", "locale"))
 
 CONFIG_HOME_DIR = get_config_home_directory()
 DATA_DIR = get_data_directory()
