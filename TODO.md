@@ -1,6 +1,5 @@
 # TODO
 
-- Simplify aeidon/paths.py
 - Use fstrings where applicable
 - Use pathlib instead of os.path
 - Use pathlib to read and write instead of one-line with bodies
@@ -19,7 +18,6 @@
   - Use ListBox
 - Use stack + switcher in application window?
 - Check bin/gaupol
-- Update iso-codes
 - Move gaupol.css one level up
 - Check data/io.otsaloma.gaupol.appdata.xml.in
 - New installation mechanism

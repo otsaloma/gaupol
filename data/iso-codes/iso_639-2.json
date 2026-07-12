@@ -214,7 +214,6 @@
       "name": "Bhojpuri"
     },
     {
-      "alpha_2": "bh",
       "alpha_3": "bih",
       "name": "Bihari languages"
     },
@@ -237,7 +236,7 @@
     },
     {
       "alpha_3": "bnt",
-      "name": "Bantu (Other)"
+      "name": "Bantu languages"
     },
     {
       "alpha_2": "bo",
@@ -465,7 +464,7 @@
     },
     {
       "alpha_3": "dgr",
-      "name": "Dogrib"
+      "name": "Tlicho; Dogrib"
     },
     {
       "alpha_3": "din",
@@ -1343,12 +1342,12 @@
     {
       "alpha_2": "nr",
       "alpha_3": "nbl",
-      "name": "Ndebele, South; South Ndebele"
+      "name": "South Ndebele"
     },
     {
       "alpha_2": "nd",
       "alpha_3": "nde",
-      "name": "Ndebele, North; North Ndebele"
+      "name": "North Ndebele"
     },
     {
       "alpha_2": "ng",
@@ -1366,7 +1365,7 @@
     },
     {
       "alpha_3": "new",
-      "name": "Nepal Bhasa; Newari"
+      "name": "Nepal Bhasa; Newar; Newari"
     },
     {
       "alpha_3": "nia",
@@ -1389,12 +1388,12 @@
     {
       "alpha_2": "nn",
       "alpha_3": "nno",
-      "name": "Norwegian Nynorsk; Nynorsk, Norwegian"
+      "name": "Norwegian Nynorsk"
     },
     {
       "alpha_2": "nb",
       "alpha_3": "nob",
-      "name": "Bokmål, Norwegian; Norwegian Bokmål"
+      "name": "Norwegian Bokmål"
     },
     {
       "alpha_3": "nog",
@@ -1449,7 +1448,7 @@
     {
       "alpha_2": "oc",
       "alpha_3": "oci",
-      "name": "Occitan (post 1500); Provençal"
+      "name": "Occitan (post 1500)"
     },
     {
       "alpha_2": "oj",
@@ -1549,7 +1548,7 @@
     },
     {
       "alpha_3": "pro",
-      "name": "Provençal, Old (to 1500)"
+      "name": "Provençal, Old (to 1500); Occitan, Old (to 1500)"
     },
     {
       "alpha_2": "ps",
@@ -1625,7 +1624,7 @@
     },
     {
       "alpha_3": "sai",
-      "name": "South American Indian (Other)"
+      "name": "South American Indian languages"
     },
     {
       "alpha_3": "sal",
@@ -2050,7 +2049,7 @@
     },
     {
       "alpha_3": "wal",
-      "name": "Walamo"
+      "name": "Wolaitta; Wolaytta"
     },
     {
       "alpha_3": "war",
