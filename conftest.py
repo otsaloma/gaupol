@@ -10,3 +10,9 @@ import os
 # main window alive and is not affected. The simple input method
 # bypasses the Wayland text-input protocol entirely.
 os.environ["GTK_IM_MODULE"] = "gtk-im-context-simple"
+
+def pytest_configure(config):
+    # Silence the shitload of warnings about GTK deprecations.
+    # We'll probably clear these only once bumping the major GTK version.
+    config.addinivalue_line("filterwarnings", r"ignore:Gtk\..* is deprecated:DeprecationWarning")
+    config.addinivalue_line("filterwarnings", r"ignore::gi.PyGIDeprecationWarning")
