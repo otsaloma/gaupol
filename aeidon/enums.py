@@ -136,7 +136,6 @@ class PlayerMPlayer(aeidon.EnumerationItem):
                         "-identify",
                         "-osdlevel 2",
                         "-ss $SECONDS",
-                        "-slang",
                         "-noautosub",
                         "-sub $SUBFILE",
                         "$VIDEOFILE",))
@@ -151,7 +150,6 @@ class PlayerMPlayer(aeidon.EnumerationItem):
                               "-quiet",
                               "-osdlevel 2",
                               "-ss $SECONDS",
-                              "-slang",
                               "-noautosub",
                               "-sub $SUBFILE",
                               "-utf8",
