@@ -1,7 +1,6 @@
 # TODO
 
 - Simplify aeidon/paths.py
-- Use pytest.mark.parametrize for test loops e.g. aeidon/agents/test/test_save.py
 - Use fstrings where applicable
 - Use pathlib instead of os.path
 - Use pathlib to read and write instead of one-line with bodies

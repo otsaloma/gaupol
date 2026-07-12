@@ -16,29 +16,30 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import aeidon
+import pytest
 
 class TestSaveAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
 
-    def test_save_main(self):
-        for format in aeidon.formats:
-            self.project.clear_texts((0,), aeidon.documents.MAIN)
-            path = self.project.main_file.path
-            file = aeidon.files.new(format, path, "ascii")
-            self.project.save_main(file, keep_changes=False)
-            assert self.project.main_changed == 1
-            file = aeidon.files.new(format, path, "ascii")
-            self.project.save_main(file, keep_changes=True)
-            assert self.project.main_changed == 0
+    @pytest.mark.parametrize("format", aeidon.formats)
+    def test_save_main(self, format):
+        self.project.clear_texts((0,), aeidon.documents.MAIN)
+        path = self.project.main_file.path
+        file = aeidon.files.new(format, path, "ascii")
+        self.project.save_main(file, keep_changes=False)
+        assert self.project.main_changed == 1
+        file = aeidon.files.new(format, path, "ascii")
+        self.project.save_main(file, keep_changes=True)
+        assert self.project.main_changed == 0
 
-    def test_save_translation(self):
-        for format in aeidon.formats:
-            self.project.clear_texts((0,), aeidon.documents.TRAN)
-            path = self.project.tran_file.path
-            file = aeidon.files.new(format, path, "ascii")
-            self.project.save_translation(file, keep_changes=False)
-            assert self.project.tran_changed == 1
-            self.project.save_translation(file, keep_changes=True)
-            assert self.project.tran_changed == 0
+    @pytest.mark.parametrize("format", aeidon.formats)
+    def test_save_translation(self, format):
+        self.project.clear_texts((0,), aeidon.documents.TRAN)
+        path = self.project.tran_file.path
+        file = aeidon.files.new(format, path, "ascii")
+        self.project.save_translation(file, keep_changes=False)
+        assert self.project.tran_changed == 1
+        self.project.save_translation(file, keep_changes=True)
+        assert self.project.tran_changed == 0

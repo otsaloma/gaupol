@@ -17,6 +17,7 @@
 
 import aeidon
 import codecs
+import pytest
 
 from aeidon.i18n   import _
 from unittest.mock import patch
@@ -124,14 +125,13 @@ ENCODINGS = [
 
 class TestModule(aeidon.TestCase):
 
-    def test_all_found(self):
-        for code in ENCODINGS:
-            # Skip if code not included in the Python version
-            # that we're currently running.
-            if not aeidon.encodings.is_valid_code(code): continue
-            code = aeidon.encodings.translate_code(code)
-            assert aeidon.encodings.code_to_name(code)
-            assert aeidon.encodings.code_to_description(code)
+    @pytest.mark.parametrize("code", ENCODINGS)
+    def test_all_found(self, code):
+        if not aeidon.encodings.is_valid_code(code):
+            pytest.skip("Not included in this Python version")
+        code = aeidon.encodings.translate_code(code)
+        assert aeidon.encodings.code_to_name(code)
+        assert aeidon.encodings.code_to_description(code)
 
     def test_code_to_description(self):
         code_to_description = aeidon.encodings.code_to_description

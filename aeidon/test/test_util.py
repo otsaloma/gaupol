@@ -16,6 +16,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import aeidon
+import pytest
 
 class TestModule(aeidon.TestCase):
 
@@ -42,10 +43,10 @@ class TestModule(aeidon.TestCase):
         assert aeidon.util.compare_versions("0.4"  , "0.4.1") == -1
         assert aeidon.util.compare_versions("0.4"  , "0.5"  ) == -1
 
-    def test_detect_format(self):
-        for format in aeidon.formats:
-            path = self.new_temp_file(format)
-            assert aeidon.util.detect_format(path, "ascii") == format
+    @pytest.mark.parametrize("format", aeidon.formats)
+    def test_detect_format(self, format):
+        path = self.new_temp_file(format)
+        assert aeidon.util.detect_format(path, "ascii") == format
 
     def test_detect_newlines__mac(self):
         path = aeidon.temp.create()

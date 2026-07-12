@@ -17,17 +17,18 @@
 
 import aeidon
 import codecs
+import pytest
 
 class TestOpenAgent(aeidon.TestCase):
 
     def setup_method(self, method):
         self.project = self.new_project()
 
-    def test_open_main(self):
-        for format in aeidon.formats:
-            path = self.new_temp_file(format)
-            self.project.open_main(path, "ascii")
-            assert self.project.subtitles
+    @pytest.mark.parametrize("format", aeidon.formats)
+    def test_open_main(self, format):
+        path = self.new_temp_file(format)
+        self.project.open_main(path, "ascii")
+        assert self.project.subtitles
 
     def test_open_main__bom(self):
         path = self.new_subrip_file()
@@ -48,17 +49,17 @@ class TestOpenAgent(aeidon.TestCase):
         sort_count = self.project.open_main(path, "ascii")
         assert sort_count == 1
 
-    def test_open_translation__align_number(self):
-        for format in aeidon.formats:
-            path = self.new_temp_file(format)
-            method = aeidon.align_methods.NUMBER
-            self.project.open_translation(path, "ascii", method)
+    @pytest.mark.parametrize("format", aeidon.formats)
+    def test_open_translation__align_number(self, format):
+        path = self.new_temp_file(format)
+        method = aeidon.align_methods.NUMBER
+        self.project.open_translation(path, "ascii", method)
 
-    def test_open_translation__align_position(self):
-        for format in aeidon.formats:
-            path = self.new_temp_file(format)
-            method = aeidon.align_methods.POSITION
-            self.project.open_translation(path, "ascii", method)
+    @pytest.mark.parametrize("format", aeidon.formats)
+    def test_open_translation__align_position(self, format):
+        path = self.new_temp_file(format)
+        method = aeidon.align_methods.POSITION
+        self.project.open_translation(path, "ascii", method)
 
     def test_open_translation__bom(self):
         path = self.new_subrip_file()
