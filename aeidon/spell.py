@@ -19,7 +19,6 @@
 
 import aeidon
 import contextlib
-import os
 import re
 import traceback
 
@@ -112,7 +111,7 @@ class SpellChecker:
 
     def read_replacements(self):
         """Read list of replacements from file."""
-        if not os.path.isfile(self.replacement_file): return
+        if not self.replacement_file.is_file(): return
         try:
             lines = aeidon.util.readlines(self.replacement_file)
             lines = aeidon.util.get_unique(lines)
@@ -124,8 +123,8 @@ class SpellChecker:
     @property
     def replacement_file(self):
         """Return path to the replacement file."""
-        directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
-        return os.path.join(directory, f"{self.language}.repl")
+        directory = aeidon.CONFIG_HOME_DIR / "spell-check"
+        return directory / f"{self.language}.repl"
 
     def suggest(self, word):
         """Return a list of suggestions for `word`."""

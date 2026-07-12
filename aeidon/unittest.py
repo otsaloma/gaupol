@@ -18,7 +18,6 @@
 """Base class for unit test cases."""
 
 import aeidon
-import os
 
 class TestCase:
 
@@ -41,7 +40,7 @@ class TestCase:
         """
         name = name or format.name.lower()
         basename = "".join((name, format.extension))
-        path = os.path.join(aeidon.DATA_DIR, "samples", basename)
+        path = aeidon.DATA_DIR / "samples" / basename
         with open(path, "r", encoding="ascii") as f:
             return f.read().strip()
 

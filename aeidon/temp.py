@@ -22,6 +22,8 @@ import contextlib
 import os
 import tempfile
 
+from pathlib import Path
+
 _paths = []
 
 def create(suffix=""):
@@ -31,25 +33,27 @@ def create(suffix=""):
     # the handle and returning only the path which will
     # be opened and closed separately.
     os.close(handle)
+    path = Path(path)
     _paths.append(path)
     return path
 
 def create_directory(suffix=""):
     """Create a new temporary directory and return its path."""
-    path = tempfile.mkdtemp(suffix, "gaupol-")
+    path = Path(tempfile.mkdtemp(suffix, "gaupol-"))
     _paths.append(path)
     return path
 
 def remove(path):
     """Remove temporary file or directory at `path`."""
-    if os.path.isfile(path):
+    path = Path(path)
+    if path.is_file():
         with contextlib.suppress(OSError):
-            os.remove(path)
-    if os.path.isdir(path):
-        for name in os.listdir(path):
-            remove(os.path.join(path, name))
+            path.unlink()
+    if path.is_dir():
+        for child in path.iterdir():
+            remove(child)
         with contextlib.suppress(OSError):
-            os.rmdir(path)
+            path.rmdir()
 
 def remove_all():
     """Remove all temporary files and directories."""

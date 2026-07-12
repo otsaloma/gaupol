@@ -20,12 +20,12 @@
 import aeidon
 import contextlib
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import Gtk
+from pathlib import Path
 
 class OpenAgent(aeidon.Delegate):
 
@@ -100,31 +100,31 @@ class OpenAgent(aeidon.Delegate):
 
     def _check_file_exists(self, path):
         """Raise :exc:`gaupol.Default` if no file at `path`."""
-        gaupol.util.raise_default(not os.path.isfile(path))
+        gaupol.util.raise_default(not Path(path).is_file())
 
     def _check_file_not_open(self, path):
         """Raise :exc:`gaupol.Default` if file at `path` already open."""
+        path = Path(path).resolve()
         for page in self.pages:
             files = [page.project.main_file, page.project.tran_file]
             paths = [x.path for x in files if x]
             if not path in paths: continue
             self.set_current_page(page)
             message = _('File "{}" is already open')
-            self.flash_message(message.format(os.path.basename(path)))
+            self.flash_message(message.format(path.name))
             raise gaupol.Default
 
     def _check_file_size(self, path):
         """Raise :exc:`gaupol.Default` if size of file at `path` too large."""
-        size_mb = os.stat(path).st_size / 1048576
+        path = Path(path)
+        size_mb = path.stat().st_size / 1048576
         if size_mb <= 1: return
-        basename = os.path.basename(path)
-        self._show_size_warning_dialog(basename, size_mb)
+        self._show_size_warning_dialog(path.name, size_mb)
 
     def _check_sort_count(self, path, sort_count):
         """Raise :exc:`gaupol.Default` if `sort_count` too large."""
         if sort_count <= 0: return
-        basename = os.path.basename(path)
-        self._show_sort_warning_dialog(basename, sort_count)
+        self._show_sort_warning_dialog(Path(path).name, sort_count)
 
     @aeidon.deco.export
     def connect_view_signals(self, view):
@@ -233,20 +233,19 @@ class OpenAgent(aeidon.Delegate):
         # would cancel the first one mid-flight and GTK pops up that
         # cancellation as a modal "Operation was cancelled" error dialog.
         if page.project.video_path is not None:
-            dialog.set_file(Gio.File.new_for_path(page.project.video_path))
+            dialog.set_file(Gio.File.new_for_path(str(page.project.video_path)))
         elif page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(Gio.File.new_for_path(directory))
+            directory = page.project.main_file.path.parent
+            dialog.set_current_folder(Gio.File.new_for_path(str(directory)))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         file = dialog.get_file()
-        path = file.get_path() if file is not None else None
+        path = Path(file.get_path()) if file is not None else None
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         page.project.video_path = path
         self.update_gui()
-        self.flash_message(_('Selected video "{}"')
-                           .format(os.path.basename(path)))
+        self.flash_message(_('Selected video "{}"').format(path.name))
 
     @aeidon.deco.export
     def _on_split_project_activate(self, *args):
@@ -259,7 +258,7 @@ class OpenAgent(aeidon.Delegate):
         if check_open:
             self._check_file_not_open(path)
         self._check_file_size(path)
-        basename = os.path.basename(path)
+        basename = Path(path).name
         page = (gaupol.Page() if doc == aeidon.documents.MAIN
                 else self.get_current_page())
         for encoding in encodings:
@@ -321,7 +320,7 @@ class OpenAgent(aeidon.Delegate):
         directory = None
         page = self.get_current_page()
         if page is not None and page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
+            directory = page.project.main_file.path.parent
         dialog = gaupol.OpenDialog(self.window, title, doc, directory)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
@@ -411,7 +410,7 @@ class OpenAgent(aeidon.Delegate):
             encoding = aeidon.encodings.detect(path)
             if encoding is None: raise UnicodeError
         kwargs["align_method"] = gaupol.conf.file.align_method
-        basename = os.path.basename(path)
+        basename = Path(path).name
         try:
             return page.project.open(doc, path, encoding, **kwargs)
         except aeidon.FormatError:

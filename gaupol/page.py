@@ -19,7 +19,6 @@
 
 import aeidon
 import gaupol
-import os
 import sys
 
 from aeidon.i18n   import _
@@ -81,7 +80,7 @@ class Page(aeidon.Observable):
     def get_main_basename(self):
         """Return basename of the main document."""
         if self.project.main_file is not None:
-            return os.path.basename(self.project.main_file.path)
+            return self.project.main_file.path.name
         return self.untitle
 
     def _get_subtitle_value(self, row, field):
@@ -127,7 +126,7 @@ class Page(aeidon.Observable):
     def get_translation_basename(self):
         """Return basename of the translation document."""
         if self.project.tran_file is not None:
-            return os.path.basename(self.project.tran_file.path)
+            return self.project.tran_file.path.name
         basename = self.get_main_basename()
         if self.project.main_file is not None:
             extension = self.project.main_file.format.extension

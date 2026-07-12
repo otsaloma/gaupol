@@ -20,44 +20,43 @@
 import os
 import sys
 
+from pathlib import Path
+
 def get_config_home_directory():
     """Return path to the user's configuration directory."""
     if sys.platform == "win32":
-        directory = os.environ.get("APPDATA") or os.path.expanduser("~")
-        return os.path.abspath(os.path.join(directory, "Gaupol"))
-    default = os.path.join(os.path.expanduser("~"), ".config")
-    directory = os.environ.get("XDG_CONFIG_HOME") or default
-    return os.path.abspath(os.path.join(directory, "gaupol"))
+        directory = os.environ.get("APPDATA") or Path.home()
+        return (Path(directory) / "Gaupol").resolve()
+    directory = os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config"
+    return (Path(directory) / "gaupol").resolve()
 
 def get_data_directory():
     """Return path to the global data directory."""
     if hasattr(sys, "frozen"):
         # Windows bundled exe
-        directory = os.path.dirname(sys.argv[0])
-        return os.path.abspath(os.path.join(directory, "share", "gaupol"))
-    directory = os.path.dirname(os.path.abspath(__file__))
-    if os.path.isdir(os.path.join(directory, "data")):
+        return (Path(sys.argv[0]).parent / "share" / "gaupol").resolve()
+    directory = Path(__file__).resolve().parent
+    if (directory / "data").is_dir():
         # Data files installed as part of the package.
-        return os.path.join(directory, "data")
+        return directory / "data"
     # Running from the source directory.
-    return os.path.abspath(os.path.join(directory, "..", "data"))
+    return (directory / ".." / "data").resolve()
 
 def get_data_home_directory():
     """Return path to the user's data directory."""
     if sys.platform == "win32":
-        directory = os.environ.get("APPDATA") or os.path.expanduser("~")
-        return os.path.abspath(os.path.join(directory, "Gaupol"))
-    default = os.path.expanduser("~/.local/share")
+        directory = os.environ.get("APPDATA") or Path.home()
+        return (Path(directory) / "Gaupol").resolve()
+    default = Path.home() / ".local" / "share"
     directory = os.environ.get("XDG_DATA_HOME") or default
-    return os.path.abspath(os.path.join(directory, "gaupol"))
+    return (Path(directory) / "gaupol").resolve()
 
 def get_locale_directory():
     """Return path to the locale directory."""
     if hasattr(sys, "frozen"):
-        directory = os.path.dirname(sys.argv[0])
-        return os.path.abspath(os.path.join(directory, "share", "locale"))
-    directory = os.path.dirname(os.path.abspath(__file__))
-    return os.path.abspath(os.path.join(directory, "..", "locale"))
+        return (Path(sys.argv[0]).parent / "share" / "locale").resolve()
+    directory = Path(__file__).resolve().parent
+    return (directory / ".." / "locale").resolve()
 
 CONFIG_HOME_DIR = get_config_home_directory()
 DATA_DIR = get_data_directory()

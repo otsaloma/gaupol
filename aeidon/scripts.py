@@ -20,20 +20,20 @@
 import aeidon
 import contextlib
 import json
-import os
 
 from aeidon.i18n import d_
+from pathlib import Path
 
 _scripts = {}
 
 def _init_scripts():
     """Initialize the dictionary mapping codes to names."""
     # Prefer globally installed, fall back on possibly bundled.
-    path = "/usr/share/iso-codes/json/iso_15924.json"
-    if os.path.isfile(path):
+    path = Path("/usr/share/iso-codes/json/iso_15924.json")
+    if path.is_file():
         return _init_scripts_json(path)
-    path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_15924.json")
-    if os.path.isfile(path):
+    path = aeidon.DATA_DIR / "iso-codes" / "iso_15924.json"
+    if path.is_file():
         return _init_scripts_json(path)
 
 def _init_scripts_json(path):

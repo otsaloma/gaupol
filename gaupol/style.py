@@ -19,13 +19,12 @@
 
 import aeidon
 import gaupol
-import os
 
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import Pango
 
-CSS_FILE = os.path.join(aeidon.DATA_DIR, "ui", "gaupol.css")
+CSS_FILE = aeidon.DATA_DIR / "ui" / "gaupol.css"
 with open(CSS_FILE, "r") as f:
     CSS = f.read()
 

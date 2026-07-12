@@ -18,7 +18,6 @@
 """Previewing subtitles with a video player."""
 
 import aeidon
-import os
 import string
 
 class PreviewAgent(aeidon.Delegate):
@@ -41,12 +40,9 @@ class PreviewAgent(aeidon.Delegate):
         e.g. 'movie.avi' for 'movie.en.srt'.
         """
         if self.main_file is None: return None
-        dirname = os.path.dirname(self.main_file.path)
-        subname = os.path.basename(self.main_file.path)
-        for name in os.listdir(dirname):
-            path = os.path.join(dirname, name)
-            root = os.path.splitext(name)[0]
-            if not subname.startswith(root): continue
+        subname = self.main_file.path.name
+        for path in self.main_file.path.parent.iterdir():
+            if not subname.startswith(path.stem): continue
             if aeidon.util.is_video_file(path):
                 self.video_path = path
                 return self.video_path

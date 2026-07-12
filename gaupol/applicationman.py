@@ -33,6 +33,7 @@ from aeidon.i18n   import _
 from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
+from pathlib import Path
 
 class ApplicationManager(Gtk.Application):
 
@@ -50,17 +51,17 @@ class ApplicationManager(Gtk.Application):
     def _init_application(self, opts, args):
         """Initialize application and open files from `args`."""
         application = gaupol.Application()
-        paths = list(map(os.path.abspath, args))
+        paths = [Path(x).resolve() for x in args]
         application.open_main(paths, opts.encoding)
         page = application.get_current_page()
         if page is None: return
         if opts.translation_file is not None:
-            path = os.path.abspath(opts.translation_file)
+            path = Path(opts.translation_file).resolve()
             method = opts.align_method.upper()
             method = getattr(aeidon.align_methods, method)
             application.open_translation(path, opts.encoding, method)
         if opts.video_file is not None:
-            path = os.path.abspath(opts.video_file)
+            path = Path(opts.video_file).resolve()
             page.project.video_path = path
             application.update_gui()
             application.load_video(path)
@@ -70,8 +71,7 @@ class ApplicationManager(Gtk.Application):
 
     def _init_configuration(self):
         """Read configuration values from file."""
-        gaupol.conf.path = os.path.join(
-            aeidon.CONFIG_HOME_DIR, "gaupol.conf")
+        gaupol.conf.path = aeidon.CONFIG_HOME_DIR / "gaupol.conf"
         gaupol.conf.read_from_file()
         if (gaupol.conf.general.dark_theme or
             os.getenv("GTK_THEME", "").endswith(":dark")):
@@ -80,8 +80,8 @@ class ApplicationManager(Gtk.Application):
 
     def _init_menubar(self):
         """Initialize the window menubar."""
-        path = os.path.join(aeidon.DATA_DIR, "ui", "menubar.ui")
-        self.menubar_builder = Gtk.Builder.new_from_file(path)
+        path = aeidon.DATA_DIR / "ui" / "menubar.ui"
+        self.menubar_builder = Gtk.Builder.new_from_file(str(path))
         self.set_menubar(self.menubar_builder.get_object("menubar"))
 
     def _on_activate(self, manager, args):

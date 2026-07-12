@@ -17,7 +17,6 @@
 
 import aeidon
 import gaupol
-import os
 import shutil
 
 class TestConfigurationStore(gaupol.TestCase):
@@ -25,7 +24,7 @@ class TestConfigurationStore(gaupol.TestCase):
     def setup_method(self, method):
         self.conf = gaupol.ConfigurationStore()
         self.directory = aeidon.temp.create_directory()
-        self.conf.path = os.path.join(self.directory, "test")
+        self.conf.path = self.directory / "test"
 
     def teardown_method(self, method):
         shutil.rmtree(self.directory)

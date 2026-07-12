@@ -19,7 +19,6 @@
 
 import aeidon
 import gaupol
-import os
 
 from aeidon.i18n   import _, n_
 from gi.repository import GLib
@@ -63,8 +62,8 @@ class BuilderPage(TextAssistantPage):
         TextAssistantPage.__init__(self, assistant)
         self._builder = Gtk.Builder(self)
         self._builder.set_translation_domain("gaupol")
-        self._builder.add_from_file(os.path.join(
-            aeidon.DATA_DIR, "ui", "text-assistant", basename))
+        self._builder.add_from_file(
+            str(aeidon.DATA_DIR / "ui" / "text-assistant" / basename))
         self._set_attributes(self._widgets)
         container = self._builder.get_object("main_container")
         window = container.get_parent()

@@ -19,7 +19,6 @@
 
 import aeidon
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gtk
@@ -89,12 +88,12 @@ class CloseAgent(aeidon.Delegate):
         if page.project.main_changed:
             docs.append(aeidon.documents.MAIN)
         elif page.project.main_file is not None:
-            if not os.path.isfile(page.project.main_file.path):
+            if not page.project.main_file.path.is_file():
                 docs.append(aeidon.documents.MAIN)
         if page.project.tran_changed:
             docs.append(aeidon.documents.TRAN)
         elif page.project.tran_file is not None:
-            if not os.path.isfile(page.project.tran_file.path):
+            if not page.project.tran_file.path.is_file():
                 docs.append(aeidon.documents.TRAN)
         return tuple(docs)
 

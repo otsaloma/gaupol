@@ -19,8 +19,9 @@
 
 import aeidon
 import codecs
-import os
 import re
+
+from pathlib import Path
 
 class SubtitleFile:
 
@@ -51,7 +52,7 @@ class SubtitleFile:
                        if self.format.has_header else "")
 
         self.newline = newline or aeidon.util.get_default_newline()
-        self.path = os.path.abspath(path)
+        self.path = Path(path).resolve()
 
     def copy_from(self, other):
         """Copy generic properties from `other`."""

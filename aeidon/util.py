@@ -31,6 +31,8 @@ import subprocess
 import sys
 import urllib.parse
 
+from pathlib import Path
+
 VIDEO_FILE_EXTENSIONS = [
     ".avi",
     ".flv",
@@ -59,54 +61,43 @@ def atomic_open(path, mode="w", *args, **kwargs):
     (probably) be atomic on any Unix system. On Windows, it should (probably)
     be atomic if using Python 3.3 or greater.
     """
-    path = os.path.realpath(path)
+    path = Path(path).resolve()
     chars = list("abcdefghijklmnopqrstuvwxyz0123456789")
-    directory = os.path.dirname(path)
-    basename = os.path.basename(path)
     while True:
         # Let's use a hidden temporary file to avoid a file
         # flickering in a possibly open file browser window.
         suffix = "".join(random.sample(chars, 8))
-        temp_basename = f".{basename}.tmp{suffix}"
-        temp_path = os.path.join(directory, temp_basename)
-        if not os.path.isfile(temp_path): break
+        temp_path = path.parent / f".{path.name}.tmp{suffix}"
+        if not temp_path.is_file(): break
     try:
-        if os.path.isfile(path):
+        if path.is_file():
             # If the file exists, use the same permissions.
             # Note that all other file metadata, including
             # owner and group, is not preserved.
-            with open(temp_path, "w") as f: pass
-            st = os.stat(path)
-            os.chmod(temp_path, stat.S_IMODE(st.st_mode))
+            temp_path.touch()
+            st = path.stat()
+            temp_path.chmod(stat.S_IMODE(st.st_mode))
         with open(temp_path, mode, *args, **kwargs) as f:
             yield f
             f.flush()
             os.fsync(f.fileno())
         try:
-            if hasattr(os, "replace"):
-                # os.replace was added in Python 3.3.
-                # This should be atomic on Windows too.
-                os.replace(temp_path, path)
-            else:
-                # os.rename is atomic on Unix, but fails
-                # on Windows if the file exists.
-                os.rename(temp_path, path)
-            # os.rename and os.replace will fail if path
-            # and temp_path are not on the same device,
-            # for instance they can be on two separate
-            # branches of a union mount. Atomicity is not
-            # possible in this case.
+            # This should be atomic on Windows too.
+            # Path.replace will fail if path and temp_path
+            # are not on the same device, for instance they
+            # can be on two separate branches of a union
+            # mount. Atomicity is not possible in this case.
+            temp_path.replace(path)
         except OSError:
             # Fall back to a non-atomic operation using
             # shutil.move. On Windows this requires that
             # the destination file does not exist.
             if sys.platform == "win32":
-                if os.path.isfile(path):
-                    os.remove(path)
+                path.unlink(missing_ok=True)
             shutil.move(temp_path, path)
     finally:
         with contextlib.suppress(Exception):
-            os.remove(temp_path)
+            temp_path.unlink()
 
 @aeidon.deco.once
 def chardet_available():
@@ -256,13 +247,11 @@ def get_template_header(format):
     Raise :exc:`IOError` if reading global header file fails.
     Raise :exc:`UnicodeError` if decoding global header file fails.
     """
-    directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
-    path = os.path.join(directory, format.name.lower())
+    path = aeidon.DATA_HOME_DIR / "headers" / format.name.lower()
     with contextlib.suppress(Exception):
         header = read(path, encoding=None, quiet=True).rstrip()
         return normalize_newlines(header)
-    directory = os.path.join(aeidon.DATA_DIR, "headers")
-    path = os.path.join(directory, format.name.lower())
+    path = aeidon.DATA_DIR / "headers" / format.name.lower()
     header = read(path, "ascii").rstrip()
     return normalize_newlines(header)
 
@@ -275,13 +264,14 @@ def get_unique(lst, keep_last=False):
 
 def is_video_file(path):
     """Return ``True`` if `path` is a video file."""
-    if not os.path.isfile(path):
+    path = Path(path)
+    if not path.is_file():
         return False
     # The mimetypes module doesn't work well on Windows,
     # fall back on a custom list of video file extensions.
     type, encoding = mimetypes.guess_type(path)
     return ((type and type.startswith("video/")) or
-            path.lower().endswith(tuple(VIDEO_FILE_EXTENSIONS)))
+            path.suffix.lower() in VIDEO_FILE_EXTENSIONS)
 
 def last(iterator):
     """Return the last value from `iterator` or ``None``."""
@@ -295,11 +285,11 @@ def makedirs(directory):
 
     Raise :exc:`OSError` if unsuccessful.
     """
-    directory = os.path.abspath(directory)
-    if os.path.isdir(directory):
+    directory = Path(directory).resolve()
+    if directory.is_dir():
         return directory
     try:
-        os.makedirs(directory)
+        directory.mkdir(parents=True)
     except OSError as error:
         print(f"Failed to create directory {directory!r}: {error!s}",
               file=sys.stderr)
@@ -313,6 +303,7 @@ def normalize_newlines(text):
 
 def path_to_uri(path):
     """Convert local filepath to URI."""
+    path = str(path)
     if sys.platform == "win32":
         path = "/" + path.replace("\\", "/")
     path = urllib.parse.quote(path)
@@ -379,13 +370,15 @@ def readlines(path, encoding=None, fallback="utf_8", quiet=False):
 
 def replace_extension(path, format):
     """Replace possible extension in `path` with that of `format`."""
+    path = Path(path)
     extensions = [x.extension for x in aeidon.formats]
-    if path.endswith(tuple(extensions)):
-        path = path[:path.rfind(".")]
-    return "".join((path, format.extension))
+    if path.suffix in extensions:
+        path = path.with_suffix("")
+    return path.with_name(path.name + format.extension)
 
 def shell_quote(path):
     """Quote and escape `path` for shell use."""
+    path = str(path)
     if sys.platform != "win32":
         # Windows filenames can contain backslashes only as
         # directory separators and cannot contain double quotes.
@@ -429,10 +422,8 @@ def uri_to_path(uri):
     uri = urllib.parse.unquote(uri)
     if sys.platform == "win32":
         path = urllib.parse.urlsplit(uri)[2]
-        while path.startswith("/"):
-            path = path[1:]
-        return path.replace("/", "\\")
-    return urllib.parse.urlsplit(uri)[2]
+        return Path(path.lstrip("/").replace("/", "\\"))
+    return Path(urllib.parse.urlsplit(uri)[2])
 
 def write(path, text, encoding=None, fallback="utf_8", quiet=False):
     """
@@ -442,8 +433,7 @@ def write(path, text, encoding=None, fallback="utf_8", quiet=False):
     Raise :exc:`IOError` if writing fails.
     Raise :exc:`UnicodeError` if encoding fails.
     """
-    if not os.path.isdir(os.path.dirname(path)):
-        makedirs(os.path.dirname(path))
+    makedirs(Path(path).parent)
     encoding = encoding or get_default_encoding()
     try:
         with open(path, "w", encoding=encoding) as f:

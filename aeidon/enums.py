@@ -23,6 +23,7 @@ import shutil
 import sys
 
 from aeidon.i18n import __
+from pathlib import Path
 
 class AlignMethodNumber(aeidon.EnumerationItem):
     label = __("Subtitle number")
@@ -112,21 +113,21 @@ newlines.WINDOWS = NewlinesWindows()
 def _get_mplayer_executable():
     if sys.platform == "win32":
         directory = os.environ.get("PROGRAMFILES", "C:\\Program Files")
-        path = os.path.join(directory, "MPlayer", "mplayer.exe")
+        path = Path(directory) / "MPlayer" / "mplayer.exe"
         return aeidon.util.shell_quote(path)
     return "mplayer"
 
 def _get_mpv_executable():
     if sys.platform == "win32":
         directory = os.environ.get("PROGRAMFILES", "C:\\Program Files")
-        path = os.path.join(directory, "MPV", "mpv.exe")
+        path = Path(directory) / "MPV" / "mpv.exe"
         return aeidon.util.shell_quote(path)
     return "mpv"
 
 def _get_vlc_executable():
     if sys.platform == "win32":
         directory = os.environ.get("PROGRAMFILES", "C:\\Program Files")
-        path = os.path.join(directory, "VideoLAN", "VLC", "vlc.exe")
+        path = Path(directory) / "VideoLAN" / "VLC" / "vlc.exe"
         return aeidon.util.shell_quote(path)
     return "vlc"
 

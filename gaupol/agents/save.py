@@ -20,7 +20,6 @@
 import aeidon
 import contextlib
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gtk
@@ -100,12 +99,10 @@ class SaveAgent(aeidon.Delegate):
             return page.project.save(doc, file)
         except IOError as error:
             gaupol.util.set_cursor_normal(self.window)
-            basename = os.path.basename(file.path)
-            self._show_io_error_dialog(basename, str(error))
+            self._show_io_error_dialog(file.path.name, str(error))
         except UnicodeError:
             gaupol.util.set_cursor_normal(self.window)
-            basename = os.path.basename(file.path)
-            self._show_encoding_error_dialog(basename, file.encoding)
+            self._show_encoding_error_dialog(file.path.name, file.encoding)
         finally:
             gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default
@@ -132,7 +129,7 @@ class SaveAgent(aeidon.Delegate):
         format = page.project.main_file.format
         self.add_to_recent_files(path, format, aeidon.documents.MAIN)
         self.flash_message(_('Saved main document as "{}"')
-                           .format(os.path.basename(path)))
+                           .format(path.name))
 
     @aeidon.deco.export
     def save_translation(self, page):
@@ -156,7 +153,7 @@ class SaveAgent(aeidon.Delegate):
         format = page.project.tran_file.format
         self.add_to_recent_files(path, format, aeidon.documents.TRAN)
         self.flash_message(_('Saved translation document as "{}"')
-                           .format(os.path.basename(path)))
+                           .format(path.name))
 
     def _select_file(self, title, page, file=None):
         """Select a file to save or raise :exc:`gaupol.Default`."""

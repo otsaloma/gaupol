@@ -20,7 +20,6 @@
 import aeidon
 import contextlib
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
@@ -71,14 +70,14 @@ class MenuAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_open_recent_main_file_activate(self, action, *args):
         """Open recent file as main document."""
-        if not os.path.isfile(action.gaupol_path):
+        if not action.gaupol_path.is_file():
             return self.flash_message(_("File not found"))
         self.open_main(action.gaupol_path)
 
     @aeidon.deco.export
     def _on_open_recent_translation_file_activate(self, action, *args):
         """Open recent file as translation document."""
-        if not os.path.isfile(action.gaupol_path):
+        if not action.gaupol_path.is_file():
             return self.flash_message(_("File not found"))
         self.open_translation(action.gaupol_path)
 
@@ -95,8 +94,8 @@ class MenuAgent(aeidon.Delegate):
             view.set_cursor(path, column)
             view.update_headers()
         if self._view_popup is None:
-            path = os.path.join(aeidon.DATA_DIR, "ui", "view-popup.ui")
-            builder = Gtk.Builder.new_from_file(path)
+            path = aeidon.DATA_DIR / "ui" / "view-popup.ui"
+            builder = Gtk.Builder.new_from_file(str(path))
             self._view_popup = builder.get_object("view-popup")
         self._show_popover_menu(gesture, x, y, self._view_popup)
 
@@ -104,8 +103,8 @@ class MenuAgent(aeidon.Delegate):
     def _on_view_header_pressed(self, gesture, n_press, x, y):
         """Display a column visibility pop-up menu."""
         if self._columns_popup is None:
-            path = os.path.join(aeidon.DATA_DIR, "ui", "columns-popup.ui")
-            builder = Gtk.Builder.new_from_file(path)
+            path = aeidon.DATA_DIR / "ui" / "columns-popup.ui"
+            builder = Gtk.Builder.new_from_file(str(path))
             self._columns_popup = builder.get_object("columns-popup")
         self._show_popover_menu(gesture, x, y, self._columns_popup)
 
@@ -146,7 +145,7 @@ class MenuAgent(aeidon.Delegate):
         if menu is None: return
         menu.remove_all()
         for i, path in enumerate(self._get_recent_paths()):
-            label = os.path.basename(path)
+            label = path.name
             if len(label) > 100:
                 label = label[:100] + "…"
             action = f"win.open-recent-main-file-{i:d}"
@@ -179,7 +178,7 @@ class MenuAgent(aeidon.Delegate):
         if menu is None: return
         menu.remove_all()
         for i, path in enumerate(self._get_recent_paths()):
-            label = os.path.basename(path)
+            label = path.name
             if len(label) > 100:
                 label = label[:100] + "…"
             action = f"win.open-recent-translation-file-{i:d}"

@@ -19,12 +19,12 @@
 
 import aeidon
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
+from pathlib import Path
 
 class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
@@ -103,8 +103,8 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         # would cancel the first one mid-flight and GTK pops up that
         # cancellation as a modal "Operation was cancelled" error dialog.
         directory = directory or gaupol.conf.file.directory
-        if os.path.isdir(directory):
-            self.set_current_folder(Gio.File.new_for_path(directory))
+        if directory and Path(directory).is_dir():
+            self.set_current_folder(Gio.File.new_for_path(str(directory)))
         self.set_encoding(gaupol.conf.file.encoding)
         self._align_combo.set_active(gaupol.conf.file.align_method)
         self._align_combo.set_visible(doc == aeidon.documents.TRAN)

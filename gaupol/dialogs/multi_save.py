@@ -19,11 +19,11 @@
 
 import aeidon
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gio
 from gi.repository import Gtk
+from pathlib import Path
 
 class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
 
@@ -133,7 +133,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         # those from the first page to consider.
         pages = self._get_pages()
         file = pages[0].project.main_file
-        self.set_directory(os.path.dirname(file.path))
+        self.set_directory(file.path.parent)
         self.set_format(file.format)
         self.set_encoding(file.encoding)
         self.set_newline(file.newline)
@@ -153,10 +153,10 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         dialog.add_button(_("_Select"), Gtk.ResponseType.OK)
         dialog.set_default_response(Gtk.ResponseType.OK)
         if self._directory is not None:
-            dialog.set_current_folder(Gio.File.new_for_path(self._directory))
+            dialog.set_current_folder(Gio.File.new_for_path(str(self._directory)))
         response = gaupol.util.run_dialog(dialog)
         file = dialog.get_file()
-        path = file.get_path() if file is not None else None
+        path = Path(file.get_path()) if file is not None else None
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         if path is None: return
@@ -193,23 +193,23 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
                 self.application.set_current_page(page)
                 action = self.application.get_action("set-framerate")
                 action.activate(str(framerate))
-            path = os.path.basename(page.project.main_file.path)
+            path = page.project.main_file.path.name
             path = aeidon.util.replace_extension(path, self.get_format())
-            path = os.path.join(self.get_directory(), path)
+            path = self.get_directory() / path
             files[i] = aeidon.files.new(self.get_format(),
                                         path,
                                         self.get_encoding(),
                                         self.get_newline())
 
-        if sum(os.path.isfile(x.path) for x in files) > 0:
+        if sum(x.path.is_file() for x in files) > 0:
             self._show_overwrite_question_dialog(files, self.get_directory())
         for i, page in enumerate(pages):
             self.application.save_main_as(page, files[i])
 
     def set_directory(self, path):
         """Set the selected directory."""
-        self._directory = path
-        self._directory_button.set_label(os.path.basename(path) or path)
+        self._directory = Path(path)
+        self._directory_button.set_label(self._directory.name or str(self._directory))
 
     def set_format(self, format):
         """Set the selected format."""
@@ -228,7 +228,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
 
     def _show_overwrite_question_dialog(self, files, path):
         """Show a question dialog if about to overwrite files."""
-        n = sum(os.path.isfile(x.path) for x in files)
+        n = sum(x.path.is_file() for x in files)
         title = _("{:d} of the files to be saved already exist. Do you want to replace them?").format(n)
         message = _('The files already exist in "{}". Replacing them will overwrite their contents.').format(path)
         dialog = gaupol.QuestionDialog(self._dialog, title, message)

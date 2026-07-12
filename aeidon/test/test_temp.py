@@ -16,7 +16,6 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import aeidon
-import os
 
 class TestModule(aeidon.TestCase):
 
@@ -30,24 +29,22 @@ class TestModule(aeidon.TestCase):
 
     def test_remove__directory(self):
         path = aeidon.temp.create_directory()
-        with open(os.path.join(path, "a"), "w") as f:
-            f.write("a")
-        with open(os.path.join(path, "b"), "w") as f:
-            f.write("b")
-        os.makedirs(os.path.join(path, "c"))
+        (path / "a").write_text("a")
+        (path / "b").write_text("b")
+        (path / "c").mkdir()
         aeidon.temp.remove(path)
-        assert not os.path.isdir(path)
+        assert not path.is_dir()
         aeidon.temp.remove(path)
 
     def test_remove__file(self):
         path = aeidon.temp.create()
         aeidon.temp.remove(path)
-        assert not os.path.isfile(path)
+        assert not path.is_file()
         aeidon.temp.remove(path)
 
     def test_remove_all(self):
         path_1 = aeidon.temp.create()
         path_2 = aeidon.temp.create()
         aeidon.temp.remove_all()
-        assert not os.path.isfile(path_1)
-        assert not os.path.isfile(path_2)
+        assert not path_1.is_file()
+        assert not path_2.is_file()

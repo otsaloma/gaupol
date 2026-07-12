@@ -19,12 +19,12 @@
 
 import aeidon
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gio
 from gi.repository import GObject
 from gi.repository import Gtk
+from pathlib import Path
 
 class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
 
@@ -174,12 +174,13 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         # or set_current_folder) would cancel the first one mid-flight
         # and GTK pops up that cancellation as a modal "Operation was
         # cancelled" error dialog. set_current_name is not a load.
-        if path is not None and os.path.isfile(path):
-            self.set_file(Gio.File.new_for_path(path))
+        if path is not None and Path(path).is_file():
+            self.set_file(Gio.File.new_for_path(str(path)))
         else:
             if path is not None:
-                self.set_current_name(os.path.basename(path))
-            if os.path.isdir(gaupol.conf.file.directory):
+                self.set_current_name(Path(path).name)
+            if (gaupol.conf.file.directory and
+                Path(gaupol.conf.file.directory).is_dir()):
                 directory = Gio.File.new_for_path(gaupol.conf.file.directory)
                 self.set_current_folder(directory)
         self.set_encoding(gaupol.conf.file.encoding)
@@ -195,7 +196,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         basename = self.get_current_name()
         if basename and not basename.endswith(format.extension):
             basename = aeidon.util.replace_extension(basename, format)
-            self.set_current_name(basename)
+            self.set_current_name(str(basename))
         visible = (format.mode != self._mode)
         self._framerate_combo.set_visible(visible)
         self._framerate_label.set_visible(visible)

@@ -20,12 +20,12 @@
 import aeidon
 import contextlib
 import gaupol
-import os
 
 from aeidon.i18n   import _
 from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
+from pathlib import Path
 
 with contextlib.suppress(Exception):
     from gi.repository import Gst
@@ -178,14 +178,14 @@ class VideoAgent(aeidon.Delegate):
         # folder load and GTK pops up a hidden modal error dialog. Prefer
         # set_file, which selects the video and navigates to its folder.
         if page.project.video_path is not None:
-            dialog.set_file(Gio.File.new_for_path(page.project.video_path))
+            dialog.set_file(Gio.File.new_for_path(str(page.project.video_path)))
         elif page.project.main_file is not None:
-            directory = os.path.dirname(page.project.main_file.path)
-            dialog.set_current_folder(Gio.File.new_for_path(directory))
+            directory = page.project.main_file.path.parent
+            dialog.set_current_folder(Gio.File.new_for_path(str(directory)))
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
         file = dialog.get_file()
-        path = file.get_path() if file is not None else None
+        path = Path(file.get_path()) if file is not None else None
         dialog.destroy()
         if response != Gtk.ResponseType.OK: return
         self.load_video(path)

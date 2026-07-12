@@ -21,7 +21,6 @@ import aeidon
 import copy
 import gaupol
 import json
-import os
 import sys
 
 CONFIG_DEFAULTS = {
@@ -367,7 +366,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
     def _read_from_file(self):
         """Read values of configuration options from file."""
         if self.path is None: return
-        if not os.path.isfile(self.path): return
+        if not self.path.is_file(): return
         encoding = aeidon.util.get_default_encoding()
         # Ignore possible encoding errors, which are only related to
         # saved file and directory names and not in any way critical.
@@ -439,7 +438,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         """Write values of configuration options to file."""
         if self.path is None: return
         self.general.version = gaupol.__version__
-        aeidon.util.makedirs(os.path.dirname(self.path))
+        aeidon.util.makedirs(self.path.parent)
         encoding = aeidon.util.get_default_encoding()
         # Ignore possible encoding errors, which are only related to
         # saved file and directory names and not in any way critical.
