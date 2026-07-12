@@ -38,8 +38,7 @@ def _init_languages():
 
 def _init_languages_json(path):
     """Initialize the dictionary mapping codes to names."""
-    with open(path, "r", encoding="utf_8") as f:
-        iso = json.load(f)
+    iso = json.loads(path.read_text(encoding="utf_8"))
     for language in iso["639-2"]:
         code = language.get("alpha_2", None)
         name = language.get("name", None)

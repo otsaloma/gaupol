@@ -1,6 +1,5 @@
 # TODO
 
-- Use pathlib to read and write instead of one-line with bodies
 - All dialogs
   - Modernize layout, spacing and labels
 - Preferences dialog

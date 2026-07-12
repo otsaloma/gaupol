@@ -25,8 +25,7 @@ from gi.repository import Gtk
 from gi.repository import Pango
 
 CSS_FILE = aeidon.DATA_DIR / "ui" / "gaupol.css"
-with open(CSS_FILE, "r") as f:
-    CSS = f.read()
+CSS = CSS_FILE.read_text()
 
 css_provider = None
 

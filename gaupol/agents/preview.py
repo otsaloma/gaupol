@@ -25,6 +25,7 @@ import tempfile
 from aeidon.i18n   import _
 from gi.repository import GLib
 from gi.repository import Gtk
+from pathlib import Path
 
 class PreviewAgent(aeidon.Delegate):
 
@@ -39,8 +40,7 @@ class PreviewAgent(aeidon.Delegate):
     def _handle_output(self, process, fout, command):
         """Handle output of finished `process`."""
         fout.close()
-        with open(fout.name, "r", errors="replace") as f:
-            output = f.read().splitlines()
+        output = Path(fout.name).read_text(errors="replace").splitlines()
         output = "\n".join(output[:100])
         print(f"\nPREVIEW: {command}\n{output}")
         aeidon.temp.remove(fout.name)

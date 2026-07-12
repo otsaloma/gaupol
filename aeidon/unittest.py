@@ -41,8 +41,7 @@ class TestCase:
         name = name or format.name.lower()
         basename = "".join((name, format.extension))
         path = aeidon.DATA_DIR / "samples" / basename
-        with open(path, "r", encoding="ascii") as f:
-            return f.read().strip()
+        return path.read_text(encoding="ascii").strip()
 
     def get_spell_check_language(self, language):
         """Return spell-check language to use in unit tests."""
@@ -72,8 +71,7 @@ class TestCase:
         """Return path to a new temporary subtitle file."""
         text = self.get_sample_text(format, name)
         path = aeidon.temp.create(format.extension)
-        with open(path, "w", encoding="ascii") as f:
-            f.write(text)
+        path.write_text(text, encoding="ascii")
         return path
 
     def setUp(self):

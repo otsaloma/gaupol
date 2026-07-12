@@ -370,9 +370,8 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         encoding = aeidon.util.get_default_encoding()
         # Ignore possible encoding errors, which are only related to
         # saved file and directory names and not in any way critical.
-        with open(self.path, "r", encoding=encoding, errors="replace") as f:
-            lines = f.readlines()
-        lines = [x.strip() for x in lines]
+        lines = self.path.read_text(encoding=encoding, errors="replace")
+        lines = [x.strip() for x in lines.split("\n")]
         lines = [x for x in lines if x and not x.startswith("#")]
         sections, container, enums = None, None, None
         for line in lines:

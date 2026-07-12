@@ -343,8 +343,7 @@ def read(path, encoding=None, fallback="utf_8", quiet=False):
     """
     encoding = encoding or get_default_encoding()
     try:
-        with open(path, "r", encoding=encoding) as f:
-            return f.read().strip()
+        return Path(path).read_text(encoding=encoding).strip()
     except IOError:
         if not quiet:
             print_read_io(sys.exc_info(), path)
@@ -436,8 +435,7 @@ def write(path, text, encoding=None, fallback="utf_8", quiet=False):
     makedirs(Path(path).parent)
     encoding = encoding or get_default_encoding()
     try:
-        with open(path, "w", encoding=encoding) as f:
-            return f.write(text)
+        return Path(path).write_text(text, encoding=encoding)
     except IOError:
         if not quiet:
             print_write_io(sys.exc_info(), path)
