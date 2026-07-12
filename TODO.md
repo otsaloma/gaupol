@@ -8,8 +8,6 @@
 - Preferences dialog
   - Use stack + switcher in the header
   - Use ListBox
-- Check em length calculation
-- Check preview commands all work
 - Language dialog
   - Use ListBox
 - Spell-check dialog

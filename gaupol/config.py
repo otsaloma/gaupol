@@ -135,8 +135,7 @@ CONFIG_DEFAULTS = {
     "preview": {
         "custom_command": "",
         "force_utf_8": True,
-        # mpv is the only player that supports precise seek, others need a longer offset.
-        "offset": 1.0 if gaupol.util.get_default_player() == aeidon.players.MPV else 5.0,
+        "offset": 1.0,
         "player": gaupol.util.get_default_player(),
         "use_custom_command": False,
     },
