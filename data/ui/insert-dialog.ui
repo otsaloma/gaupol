@@ -19,58 +19,42 @@
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkGrid" id="grid1">
+          <object class="GtkBox" id="content_box">
             <property name="margin_start">18</property>
             <property name="margin_end">18</property>
             <property name="margin_top">18</property>
             <property name="margin_bottom">18</property>
-            <property name="row_spacing">6</property>
-            <property name="column_spacing">12</property>
-            <child>
-              <object class="GtkLabel" id="label3">
-                <property name="halign">end</property>
-                <property name="label" translatable="1">_Amount:</property>
-                <property name="use_underline">1</property>
-                <property name="mnemonic_widget">amount_spin</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="position_label">
-                <property name="halign">end</property>
-                <property name="label" translatable="1">_Position:</property>
-                <property name="use_underline">1</property>
-                <property name="mnemonic_widget">position_combo</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">1</property>
-                </layout>
-              </object>
-            </child>
+            <property name="spacing">12</property>
             <child>
               <object class="GtkSpinButton" id="amount_spin">
                 <property name="focusable">1</property>
-                <property name="hexpand">1</property>
                 <property name="activates_default">1</property>
                 <property name="adjustment">adjustment1</property>
                 <property name="climb_rate">1</property>
                 <property name="numeric">1</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">0</property>
-                </layout>
               </object>
             </child>
             <child>
-              <object class="GtkComboBox" id="position_combo">
-                <property name="hexpand">1</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">1</property>
-                </layout>
+              <object class="GtkBox" id="position_box">
+                <style>
+                  <class name="linked"/>
+                </style>
+                <child>
+                  <object class="GtkToggleButton" id="above_button">
+                    <property name="focusable">1</property>
+                    <property name="label" translatable="1">A_bove</property>
+                    <property name="use_underline">1</property>
+                    <property name="active">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="below_button">
+                    <property name="focusable">1</property>
+                    <property name="label" translatable="1">B_elow</property>
+                    <property name="use_underline">1</property>
+                    <property name="group">above_button</property>
+                  </object>
+                </child>
               </object>
             </child>
           </object>

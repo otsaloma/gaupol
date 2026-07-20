@@ -5,6 +5,13 @@
 Follow the GNOME Settings style: sections as cards, built with
 `GtkListBox` using the `rich-list` style class.
 
+Some of our dialogs are excessive in providing keyboard accelerator
+labels, explanatory labels etc. As part of modernization, simplify
+where we can: drop caption labels, mnemonics and other chrome that
+don't pull their weight when the controls are self-explanatory in
+context (see the insert dialog: just a spin button and an Above/Below
+toggle pair, no labels).
+
 ### Sections
 
 - A section is a bold title label plus a `GtkFrame` whose child is a
@@ -100,7 +107,7 @@ Follow the GNOME Settings style: sections as cards, built with
 - [ ] gaupol/dialogs/encoding.py
 - [ ] gaupol/dialogs/file.py
 - [x] gaupol/dialogs/framerate_convert.py
-- [ ] gaupol/dialogs/insert.py
+- [x] gaupol/dialogs/insert.py
 - [x] gaupol/dialogs/language.py
 - [ ] gaupol/dialogs/message.py
 - [ ] gaupol/dialogs/multi_close.py

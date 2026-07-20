@@ -26,14 +26,13 @@ class InsertDialog(gaupol.BuilderDialog):
 
     """Dialog for inserting new subtitles."""
 
-    _widgets = ["amount_spin", "position_combo", "position_label"]
+    _widgets = ["above_button", "amount_spin", "below_button"]
 
     def __init__(self, parent, application):
         """Initialize an :class:`InsertDialog` instance."""
         gaupol.BuilderDialog.__init__(self, "insert-dialog.ui")
         self.application = application
         self._init_dialog(parent)
-        self._init_position_combo()
         self._init_values()
 
     def _init_dialog(self, parent):
@@ -44,25 +43,17 @@ class InsertDialog(gaupol.BuilderDialog):
         self.set_transient_for(parent)
         self.set_modal(True)
 
-    def _init_position_combo(self):
-        """Initialize the position combo box."""
-        store = Gtk.ListStore(str)
-        self._position_combo.set_model(store)
-        store.append((_("Above selection"),))
-        store.append((_("Below selection"),))
-        renderer = Gtk.CellRendererText()
-        self._position_combo.pack_start(renderer, expand=True)
-        self._position_combo.add_attribute(renderer, "text", 0)
-
     def _init_values(self):
         """Initialize default values for widgets."""
         self._amount_spin.set_value(1)
-        index = 0 if gaupol.conf.subtitle_insert.above else 1
-        self._position_combo.set_active(index)
+        if gaupol.conf.subtitle_insert.above:
+            self._above_button.set_active(True)
+        else:
+            self._below_button.set_active(True)
         page = self.application.get_current_page()
         sensitive = bool(page.project.subtitles)
-        self._position_combo.set_sensitive(sensitive)
-        self._position_label.set_sensitive(sensitive)
+        self._above_button.set_sensitive(sensitive)
+        self._below_button.set_sensitive(sensitive)
 
     def _insert_subtitles(self, amount, above):
         """Insert `amount` of subtitles to project."""
@@ -78,7 +69,7 @@ class InsertDialog(gaupol.BuilderDialog):
     def _on_response(self, dialog, response):
         """Save default values and insert subtitles."""
         amount = self._amount_spin.get_value_as_int()
-        above = (self._position_combo.get_active() == 0)
+        above = self._above_button.get_active()
         gaupol.conf.subtitle_insert.above = above
         if response == Gtk.ResponseType.OK:
             self._insert_subtitles(amount, above)
