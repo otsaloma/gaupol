@@ -78,6 +78,12 @@ Follow the GNOME Settings style: sections as cards, built with
   `gaupol.style.load_css(self.dialog)` in `setup_method` so that
   pytest-based visual inspection matches the real app.
 
+### Verification
+
+- The user handles visual inspection themselves. Only do
+  screenshot-based visual inspection if really necessary for the task
+  at hand, not categorically or just in case.
+
 ### Naming
 
 - Give descriptive ids to widgets referenced from Python (`content_box`,
@@ -86,6 +92,7 @@ Follow the GNOME Settings style: sections as cards, built with
 
 ## Progress
 
+- [ ] gaupol/assistants.py
 - [ ] gaupol/dialogs/about.py
 - [ ] gaupol/dialogs/append.py
 - [ ] gaupol/dialogs/debug.py
@@ -99,7 +106,7 @@ Follow the GNOME Settings style: sections as cards, built with
 - [ ] gaupol/dialogs/multi_close.py
 - [ ] gaupol/dialogs/multi_save.py
 - [ ] gaupol/dialogs/open.py
-- [ ] gaupol/dialogs/position_shift.py
+- [x] gaupol/dialogs/position_shift.py
 - [x] gaupol/dialogs/position_transform.py
 - [ ] gaupol/dialogs/preferences.py
 - [ ] gaupol/dialogs/preview_error.py

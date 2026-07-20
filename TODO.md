@@ -5,8 +5,6 @@
 - Preferences dialog
   - Use stack + switcher in the header
   - Use ListBox/ListView
-- Language dialog
-  - Use ListBox/ListView
 - Spell-check dialog
   - Use ListBox/ListView
 - Text correction assistant

@@ -29,12 +29,12 @@ class PositionShiftDialog(gaupol.BuilderDialog):
 
     _widgets = [
         "all_radio",
+        "amount_label",
         "amount_spin",
         "current_radio",
         "preview_button",
         "selected_radio",
         "to_end_radio",
-        "unit_label",
     ]
 
     def __init__(self, parent, application):
@@ -143,7 +143,7 @@ class FrameShiftDialog(PositionShiftDialog):
         self._amount_spin.set_increments(1, 10)
         self._amount_spin.set_range(-9999999, 9999999)
         self._amount_spin.set_value(0)
-        self._unit_label.set_text(_("frames"))
+        self._amount_label.set_label(_("_Frames"))
 
 class TimeShiftDialog(PositionShiftDialog):
 
@@ -160,4 +160,4 @@ class TimeShiftDialog(PositionShiftDialog):
         self._amount_spin.set_increments(0.1, 1)
         self._amount_spin.set_range(-99999, 99999)
         self._amount_spin.set_value(0.000)
-        self._unit_label.set_text(_("seconds"))
+        self._amount_label.set_label(_("Secon_ds"))
