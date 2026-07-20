@@ -4,13 +4,13 @@
   - Modernize layout, spacing and labels
 - Preferences dialog
   - Use stack + switcher in the header
-  - Use ListBox
+  - Use ListBox/ListView
 - Language dialog
-  - Use ListBox
+  - Use ListBox/ListView
 - Spell-check dialog
-  - Use ListBox
+  - Use ListBox/ListView
 - Text correction assistant
-  - Use ListBox
+  - Use ListBox/ListView
 - Use stack + switcher in application window?
 - Check bin/gaupol
 - Move gaupol.css one level up
