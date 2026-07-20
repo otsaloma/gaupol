@@ -102,7 +102,7 @@ toggle pair, no labels).
 - [ ] gaupol/assistants.py
 - [x] gaupol/dialogs/about.py
 - [x] gaupol/dialogs/append.py
-- [ ] gaupol/dialogs/debug.py
+- [x] gaupol/dialogs/debug.py
 - [x] gaupol/dialogs/duration_adjust.py
 - [x] gaupol/dialogs/encoding.py
 - [x] gaupol/dialogs/file.py

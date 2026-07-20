@@ -325,13 +325,13 @@ def set_widget_margins(widget, margin):
     widget.set_margin_start(margin)
     widget.set_margin_end(margin)
 
-def show_exception(exctype, value, tb):
+def show_exception(exctype, exc, tb):
     """A :class:`gaupol.DebugDialog` :attr`sys.excepthook`."""
-    traceback.print_exception(exctype, value, tb)
-    if not isinstance(value, Exception): return
+    traceback.print_exception(exctype, exc, tb)
+    if not isinstance(exc, Exception): return
     try: # to avoid recursion.
         dialog = gaupol.DebugDialog()
-        dialog.set_text(exctype, value, tb)
+        dialog.set_text(exctype, exc, tb)
         response = flash_dialog(dialog)
         if response == Gtk.ResponseType.NO:
             raise SystemExit(1)

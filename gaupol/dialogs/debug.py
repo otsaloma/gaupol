@@ -19,7 +19,6 @@
 
 import aeidon
 import gaupol
-import linecache
 import os
 import platform
 import sys
@@ -121,25 +120,14 @@ class DebugDialog(Gtk.MessageDialog):
         self._insert_text(text, "large", "bold")
         self._insert_text("\n\n")
 
-    def _insert_traceback(self, exctype, value, tb, limit=100):
+    def _insert_traceback(self, exc, tb, limit=100):
         """Insert up to `limit` stack trace entries from `tb`."""
-        # This function has been originally adapted from Gazpacho
-        # Copyright (C) 2005 by Async Open Source and Sicem S.L.,
-        # available under the GNU LGPL version 2 or later.
-        for i in range(limit):
-            if tb is None: break
-            path = tb.tb_frame.f_code.co_filename
-            name = tb.tb_frame.f_code.co_name
-            line = linecache.getline(path, tb.tb_lineno).strip()
-            self._insert_text(f"File: {path}\n")
-            self._insert_text(f"Line: {tb.tb_lineno}\n")
-            self._insert_text(f"In: {name}\n\n")
-            self._insert_text(f"    {line}\n\n")
-            tb = tb.tb_next
-        exception = traceback.format_exception_only(exctype, value)[0]
-        exception, space, message = exception.partition(" ")
-        self._insert_text(exception, "bold")
-        self._insert_text(f"{space}{message}\n")
+        for line in traceback.format_tb(tb, limit=limit):
+            self._insert_text(line)
+        self._insert_text("\n")
+        for line in traceback.format_exception_only(exc):
+            self._insert_text(line)
+        self._insert_text("\n")
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
@@ -147,10 +135,10 @@ class DebugDialog(Gtk.MessageDialog):
         gaupol.util.show_uri(gaupol.BUG_REPORT_URL)
         self.stop_emission("response")
 
-    def set_text(self, exctype, value, tb):
+    def set_text(self, exctype, exc, tb):
         """Set text from `tb` to the text view."""
         self._insert_title("Traceback")
-        self._insert_traceback(exctype, value, tb)
+        self._insert_traceback(exc, tb)
         self._insert_title("Environment")
         self._insert_environment()
         self._insert_title("Versions")
