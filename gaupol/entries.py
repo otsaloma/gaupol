@@ -82,7 +82,10 @@ class TimeEntry(Gtk.Entry):
         GObject.GObject.__init__(self)
         self.set_buffer(_TimeBuffer(self))
         self.set_width_chars(13)
-        self.set_max_length(13)
+        # Don't set max_length: the buffer clips insertions against it
+        # before do_insert_text is called, so a full 13-character text
+        # (any negative time) would block all typing. The buffer and
+        # the validation regexp keep the length fixed anyway.
         self._init_signal_handlers()
 
     def _init_signal_handlers(self):

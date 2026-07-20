@@ -110,6 +110,8 @@ class PositionTransformDialog(gaupol.BuilderDialog):
         last_subtitle = len(page.project.subtitles)
         self._subtitle_spin_1.set_range(1, last_subtitle)
         self._subtitle_spin_2.set_range(1, last_subtitle)
+        self._input_entry_1.set_alignment(0.5)
+        self._input_entry_2.set_alignment(0.5)
         with contextlib.suppress(AttributeError):
             self._text_label_1.props.xalign = 0
             self._text_label_2.props.xalign = 0
@@ -195,16 +197,20 @@ class FrameTransformDialog(PositionTransformDialog):
     def _init_widgets(self):
         """Initialize properties of widgets."""
         PositionTransformDialog._init_widgets(self)
+        # Without max_width_chars, natural width would be
+        # GTK's default of roughly 150 px, regardless of width_chars.
         self._input_entry_1.set_width_chars(6)
         self._input_entry_2.set_width_chars(6)
+        self._input_entry_1.set_max_width_chars(6)
+        self._input_entry_2.set_max_width_chars(6)
         self._output_spin_1.set_digits(0)
         self._output_spin_2.set_digits(0)
         self._output_spin_1.set_increments(1, 10)
         self._output_spin_2.set_increments(1, 10)
         self._output_spin_1.set_range(0, 999999)
         self._output_spin_2.set_range(0, 999999)
-        gaupol.util.pack_start_expand(self._correction_hbox_1, self._output_spin_1)
-        gaupol.util.pack_start_expand(self._correction_hbox_2, self._output_spin_2)
+        gaupol.util.pack_start(self._correction_hbox_1, self._output_spin_1)
+        gaupol.util.pack_start(self._correction_hbox_2, self._output_spin_2)
         self._correction_label_1.set_mnemonic_widget(self._output_spin_1)
         self._correction_label_2.set_mnemonic_widget(self._output_spin_2)
 
@@ -267,10 +273,18 @@ class TimeTransformDialog(PositionTransformDialog):
     def _init_widgets(self):
         """Initialize properties of widgets."""
         PositionTransformDialog._init_widgets(self)
+        # Without max_width_chars, natural width would be
+        # GTK's default of roughly 150 px, regardless of width_chars.
         self._input_entry_1.set_width_chars(13)
         self._input_entry_2.set_width_chars(13)
-        gaupol.util.pack_start_expand(self._correction_hbox_1, self._output_entry_1)
-        gaupol.util.pack_start_expand(self._correction_hbox_2, self._output_entry_2)
+        self._input_entry_1.set_max_width_chars(13)
+        self._input_entry_2.set_max_width_chars(13)
+        self._output_entry_1.set_max_width_chars(13)
+        self._output_entry_2.set_max_width_chars(13)
+        self._output_entry_1.set_alignment(0.5)
+        self._output_entry_2.set_alignment(0.5)
+        gaupol.util.pack_start(self._correction_hbox_1, self._output_entry_1)
+        gaupol.util.pack_start(self._correction_hbox_2, self._output_entry_2)
         self._correction_label_1.set_mnemonic_widget(self._output_entry_1)
         self._correction_label_2.set_mnemonic_widget(self._output_entry_2)
 

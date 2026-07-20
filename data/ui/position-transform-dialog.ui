@@ -26,7 +26,7 @@
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkBox" id="vbox2">
+          <object class="GtkBox" id="content_box">
             <property name="margin_start">18</property>
             <property name="margin_end">18</property>
             <property name="margin_top">18</property>
@@ -36,7 +36,7 @@
             <child>
               <object class="GtkBox" id="vbox3">
                 <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkLabel" id="label29">
                     <property name="valign">center</property>
@@ -48,116 +48,117 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox4">
-                    <property name="margin_start">12</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkGrid" id="grid_1">
-                        <property name="row_spacing">6</property>
-                        <property name="column_spacing">12</property>
+                  <object class="GtkFrame" id="frame1">
+                    <property name="child">
+                      <object class="GtkListBox" id="point_list_1">
+                        <property name="selection_mode">none</property>
+                        <property name="show_separators">1</property>
+                        <style>
+                          <class name="rich-list"/>
+                        </style>
                         <child>
-                          <object class="GtkLabel" id="label31">
-                            <property name="halign">start</property>
-                            <property name="label" translatable="1">_Subtitle:</property>
-                            <property name="use_underline">1</property>
-                            <property name="mnemonic_widget">subtitle_spin_1</property>
-                            <layout>
-                              <property name="column">0</property>
-                              <property name="row">0</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="correction_label_1">
-                            <property name="halign">start</property>
-                            <property name="label" translatable="1">C_orrection:</property>
-                            <property name="use_underline">1</property>
-                            <layout>
-                              <property name="column">0</property>
-                              <property name="row">1</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label34">
-                            <property name="halign">start</property>
-                            <property name="margin_top">4</property>
-                            <property name="label" translatable="1">Text:</property>
-                            <layout>
-                              <property name="column">0</property>
-                              <property name="row">2</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="subtitle_spin_1">
-                            <property name="focusable">1</property>
-                            <property name="hexpand">1</property>
-                            <property name="text">1</property>
-                            <property name="adjustment">adjustment1</property>
-                            <property name="climb_rate">1</property>
-                            <property name="numeric">1</property>
-                            <property name="value">1</property>
-                            <signal name="value-changed" handler="_on_subtitle_spin_1_value_changed" swapped="no"/>
-                            <layout>
-                              <property name="column">1</property>
-                              <property name="row">0</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkBox" id="correction_hbox_1">
-                            <property name="spacing">12</property>
-                            <layout>
-                              <property name="column">1</property>
-                              <property name="row">1</property>
-                            </layout>
-                            <child>
-                              <object class="GtkEntry" id="input_entry_1">
-                                <property name="sensitive">0</property>
-                                <property name="focusable">1</property>
-                                <property name="editable">0</property>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="label31">
+                                    <property name="halign">start</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="label" translatable="1">_Subtitle</property>
+                                    <property name="use_underline">1</property>
+                                    <property name="mnemonic_widget">subtitle_spin_1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkSpinButton" id="subtitle_spin_1">
+                                    <property name="focusable">1</property>
+                                    <property name="text">1</property>
+                                    <property name="adjustment">adjustment1</property>
+                                    <property name="climb_rate">1</property>
+                                    <property name="numeric">1</property>
+                                    <property name="value">1</property>
+                                    <signal name="value-changed" handler="_on_subtitle_spin_1_value_changed" swapped="no"/>
+                                  </object>
+                                </child>
                               </object>
-                            </child>
-                            <child>
-                              <object class="GtkImage" id="arrow1">
-                                <property name="icon_name">go-next-symbolic</property>
-                              </object>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
+                            </property>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="text_label_1">
-                            <property name="hexpand">1</property>
-                            <property name="ellipsize">end</property>
-                            <property name="single_line_mode">1</property>
-                            <property name="max_width_chars">3</property>
-                            <layout>
-                              <property name="column">1</property>
-                              <property name="row">2</property>
-                            </layout>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="correction_label_1">
+                                    <property name="halign">start</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="label" translatable="1">C_orrection</property>
+                                    <property name="use_underline">1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkBox" id="correction_hbox_1">
+                                    <property name="spacing">12</property>
+                                    <child>
+                                      <object class="GtkEntry" id="input_entry_1">
+                                        <property name="sensitive">0</property>
+                                        <property name="focusable">1</property>
+                                        <property name="editable">0</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkImage" id="arrow1">
+                                        <property name="icon_name">go-next-symbolic</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="label34">
+                                    <property name="halign">start</property>
+                                    <property name="label" translatable="1">Text</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="text_label_1">
+                                    <property name="hexpand">1</property>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                    <property name="ellipsize">end</property>
+                                    <property name="single_line_mode">1</property>
+                                    <property name="max_width_chars">3</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="preview_button_1">
+                                    <property name="icon_name">media-playback-start-symbolic</property>
+                                    <property name="tooltip_text" translatable="1">Preview Changes</property>
+                                    <property name="valign">center</property>
+                                    <property name="focusable">1</property>
+                                    <signal name="clicked" handler="_on_preview_button_1_clicked" swapped="no"/>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
                           </object>
                         </child>
                       </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="hbox18">
-                        <property name="valign">center</property>
-                        <child>
-                          <object class="GtkButton" id="preview_button_1">
-                            <property name="halign">center</property>
-                            <property name="label" translatable="1">_Preview Changes</property>
-                            <property name="focusable">1</property>
-                            <property name="use_underline">1</property>
-                            <signal name="clicked" handler="_on_preview_button_1_clicked" swapped="no"/>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
               </object>
@@ -165,7 +166,7 @@
             <child>
               <object class="GtkBox" id="vbox5">
                 <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkLabel" id="label36">
                     <property name="valign">center</property>
@@ -177,116 +178,117 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox6">
-                    <property name="margin_start">12</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkGrid" id="grid1">
-                        <property name="row_spacing">6</property>
-                        <property name="column_spacing">12</property>
+                  <object class="GtkFrame" id="frame2">
+                    <property name="child">
+                      <object class="GtkListBox" id="point_list_2">
+                        <property name="selection_mode">none</property>
+                        <property name="show_separators">1</property>
+                        <style>
+                          <class name="rich-list"/>
+                        </style>
                         <child>
-                          <object class="GtkLabel" id="label38">
-                            <property name="halign">start</property>
-                            <property name="label" translatable="1">Su_btitle:</property>
-                            <property name="use_underline">1</property>
-                            <property name="mnemonic_widget">subtitle_spin_2</property>
-                            <layout>
-                              <property name="column">0</property>
-                              <property name="row">0</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="correction_label_2">
-                            <property name="halign">start</property>
-                            <property name="label" translatable="1">Co_rrection:</property>
-                            <property name="use_underline">1</property>
-                            <layout>
-                              <property name="column">0</property>
-                              <property name="row">1</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label41">
-                            <property name="halign">start</property>
-                            <property name="margin_top">4</property>
-                            <property name="label" translatable="1">Text:</property>
-                            <layout>
-                              <property name="column">0</property>
-                              <property name="row">2</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="subtitle_spin_2">
-                            <property name="focusable">1</property>
-                            <property name="hexpand">1</property>
-                            <property name="text">1</property>
-                            <property name="adjustment">adjustment2</property>
-                            <property name="climb_rate">1</property>
-                            <property name="numeric">1</property>
-                            <property name="value">1</property>
-                            <signal name="value-changed" handler="_on_subtitle_spin_2_value_changed" swapped="no"/>
-                            <layout>
-                              <property name="column">1</property>
-                              <property name="row">0</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="text_label_2">
-                            <property name="hexpand">1</property>
-                            <property name="ellipsize">end</property>
-                            <property name="single_line_mode">1</property>
-                            <property name="max_width_chars">3</property>
-                            <layout>
-                              <property name="column">1</property>
-                              <property name="row">2</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkBox" id="correction_hbox_2">
-                            <property name="spacing">12</property>
-                            <layout>
-                              <property name="column">1</property>
-                              <property name="row">1</property>
-                            </layout>
-                            <child>
-                              <object class="GtkEntry" id="input_entry_2">
-                                <property name="sensitive">0</property>
-                                <property name="focusable">1</property>
-                                <property name="editable">0</property>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="label38">
+                                    <property name="halign">start</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="label" translatable="1">Su_btitle</property>
+                                    <property name="use_underline">1</property>
+                                    <property name="mnemonic_widget">subtitle_spin_2</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkSpinButton" id="subtitle_spin_2">
+                                    <property name="focusable">1</property>
+                                    <property name="text">1</property>
+                                    <property name="adjustment">adjustment2</property>
+                                    <property name="climb_rate">1</property>
+                                    <property name="numeric">1</property>
+                                    <property name="value">1</property>
+                                    <signal name="value-changed" handler="_on_subtitle_spin_2_value_changed" swapped="no"/>
+                                  </object>
+                                </child>
                               </object>
-                            </child>
-                            <child>
-                              <object class="GtkImage" id="arrow2">
-                                <property name="icon_name">go-next-symbolic</property>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="correction_label_2">
+                                    <property name="halign">start</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="label" translatable="1">Co_rrection</property>
+                                    <property name="use_underline">1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkBox" id="correction_hbox_2">
+                                    <property name="spacing">12</property>
+                                    <child>
+                                      <object class="GtkEntry" id="input_entry_2">
+                                        <property name="sensitive">0</property>
+                                        <property name="focusable">1</property>
+                                        <property name="editable">0</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkImage" id="arrow2">
+                                        <property name="icon_name">go-next-symbolic</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
                               </object>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="label41">
+                                    <property name="halign">start</property>
+                                    <property name="label" translatable="1">Text</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="text_label_2">
+                                    <property name="hexpand">1</property>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                    <property name="ellipsize">end</property>
+                                    <property name="single_line_mode">1</property>
+                                    <property name="max_width_chars">3</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="preview_button_2">
+                                    <property name="icon_name">media-playback-start-symbolic</property>
+                                    <property name="tooltip_text" translatable="1">Preview Changes</property>
+                                    <property name="valign">center</property>
+                                    <property name="focusable">1</property>
+                                    <signal name="clicked" handler="_on_preview_button_2_clicked" swapped="no"/>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
                           </object>
                         </child>
                       </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="hbox21">
-                        <property name="valign">center</property>
-                        <child>
-                          <object class="GtkButton" id="preview_button_2">
-                            <property name="halign">center</property>
-                            <property name="label" translatable="1">Pre_view Changes</property>
-                            <property name="focusable">1</property>
-                            <property name="use_underline">1</property>
-                            <signal name="clicked" handler="_on_preview_button_2_clicked" swapped="no"/>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
               </object>
@@ -294,7 +296,7 @@
             <child>
               <object class="GtkBox" id="vbox7">
                 <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkLabel" id="label43">
                     <property name="valign">center</property>
@@ -306,31 +308,47 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox8">
-                    <property name="margin_start">12</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkCheckButton" id="selected_radio">
-                        <property name="valign">center</property>
-                        <property name="label" translatable="1">Transform se_lected subtitles</property>
-                        <property name="focusable">1</property>
-                        <property name="halign">start</property>
-                        <property name="use_underline">1</property>
-                        <property name="active">1</property>
-                        <signal name="toggled" handler="_on_selected_radio_toggled" swapped="no"/>
+                  <object class="GtkFrame" id="frame3">
+                    <property name="child">
+                      <object class="GtkListBox" id="subtitle_list">
+                        <property name="selection_mode">none</property>
+                        <property name="show_separators">1</property>
+                        <style>
+                          <class name="rich-list"/>
+                        </style>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkCheckButton" id="selected_radio">
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="1">Transform se_lected subtitles</property>
+                                <property name="focusable">1</property>
+                                <property name="use_underline">1</property>
+                                <property name="active">1</property>
+                                <signal name="toggled" handler="_on_selected_radio_toggled" swapped="no"/>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkCheckButton" id="current_radio">
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="1">Transform c_urrent project</property>
+                                <property name="focusable">1</property>
+                                <property name="use_underline">1</property>
+                                <property name="group">selected_radio</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
                       </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="current_radio">
-                        <property name="valign">center</property>
-                        <property name="label" translatable="1">Transform c_urrent project</property>
-                        <property name="focusable">1</property>
-                        <property name="halign">start</property>
-                        <property name="use_underline">1</property>
-                        <property name="group">selected_radio</property>
-                      </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
               </object>
