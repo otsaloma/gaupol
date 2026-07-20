@@ -216,13 +216,12 @@ def get_locale_long_name():
     return _("Current locale ({})").format(name)
 
 @aeidon.deco.once
+@aeidon.deco.listify
 def get_valid():
     """Return a list of code, name, description of valid encodings."""
-    valid_encodings = []
-    for i, item in enumerate(_encodings):
+    for item in _encodings:
         if is_valid_code(item[CODE]):
-            valid_encodings.append(item)
-    return valid_encodings
+            yield item
 
 def is_valid_code(code):
     """Return ``True`` if encoding `code` is valid."""

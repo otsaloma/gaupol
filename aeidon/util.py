@@ -178,6 +178,7 @@ def detect_newlines(path):
         return aeidon.newlines.WINDOWS
     return None
 
+@aeidon.deco.listify
 def flatten(lst):
     """
     Return a shallow version of `lst`.
@@ -185,13 +186,11 @@ def flatten(lst):
     >>> aeidon.util.flatten([1, 2, 3, [4, 5, [6]]])
     [1, 2, 3, 4, 5, 6]
     """
-    flat_lst = []
     for item in lst:
         if isinstance(item, list):
-            flat_lst.extend(flatten(item))
+            yield from flatten(item)
         else: # Non-list item.
-            flat_lst.append(item)
-    return flat_lst
+            yield item
 
 def get_chardet_version():
     """Return :mod:`charset_normalizer` version number as string or ``None``."""
