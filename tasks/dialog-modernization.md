@@ -100,26 +100,26 @@ toggle pair, no labels).
 ## Progress
 
 - [ ] gaupol/assistants.py
-- [ ] gaupol/dialogs/about.py
-- [ ] gaupol/dialogs/append.py
+- [x] gaupol/dialogs/about.py
+- [x] gaupol/dialogs/append.py
 - [ ] gaupol/dialogs/debug.py
 - [x] gaupol/dialogs/duration_adjust.py
 - [x] gaupol/dialogs/encoding.py
-- [ ] gaupol/dialogs/file.py
+- [x] gaupol/dialogs/file.py
 - [x] gaupol/dialogs/framerate_convert.py
 - [x] gaupol/dialogs/insert.py
 - [x] gaupol/dialogs/language.py
-- [ ] gaupol/dialogs/message.py
+- [x] gaupol/dialogs/message.py
 - [ ] gaupol/dialogs/multi_close.py
 - [ ] gaupol/dialogs/multi_save.py
-- [ ] gaupol/dialogs/open.py
+- [x] gaupol/dialogs/open.py
 - [x] gaupol/dialogs/position_shift.py
 - [x] gaupol/dialogs/position_transform.py
 - [ ] gaupol/dialogs/preferences.py
 - [ ] gaupol/dialogs/preview_error.py
-- [ ] gaupol/dialogs/save.py
+- [x] gaupol/dialogs/save.py
 - [ ] gaupol/dialogs/search.py
 - [ ] gaupol/dialogs/spell_check.py
 - [ ] gaupol/dialogs/split.py
 - [ ] gaupol/dialogs/text_edit.py
-- [ ] gaupol/dialogs/video.py
+- [x] gaupol/dialogs/video.py

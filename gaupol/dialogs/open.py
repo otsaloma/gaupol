@@ -70,13 +70,13 @@ class OpenDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._encoding_combo = Gtk.ComboBox(hexpand=True)
         self._encoding_combo.connect(
             "changed", self._on_encoding_combo_changed)
-        encoding_label = Gtk.Label(label=_("_Encoding:"),
+        encoding_label = Gtk.Label(label=_("_Encoding"),
                                    halign=Gtk.Align.START,
                                    use_underline=True)
 
         encoding_label.set_mnemonic_widget(self._encoding_combo)
         self._align_combo = Gtk.ComboBox(hexpand=True)
-        self._align_label = Gtk.Label(label=_("Align _method:"),
+        self._align_label = Gtk.Label(label=_("Align _method"),
                                       halign=Gtk.Align.START,
                                       use_underline=True)
 

@@ -80,7 +80,7 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         """Initialize the extra widget with format etc. combos."""
         self._format_combo = Gtk.ComboBox(hexpand=True)
         self._format_combo.connect("changed", self._on_format_combo_changed)
-        format_label = Gtk.Label(label=_("For_mat:"),
+        format_label = Gtk.Label(label=_("For_mat"),
                                  halign=Gtk.Align.START,
                                  use_underline=True)
 
@@ -88,19 +88,19 @@ class SaveDialog(Gtk.FileChooserDialog, gaupol.FileDialog):
         self._encoding_combo = Gtk.ComboBox(hexpand=True)
         self._encoding_combo.connect(
             "changed", self._on_encoding_combo_changed)
-        encoding_label = Gtk.Label(label=_("_Encoding:"),
+        encoding_label = Gtk.Label(label=_("_Encoding"),
                                    halign=Gtk.Align.START,
                                    use_underline=True)
 
         encoding_label.set_mnemonic_widget(self._encoding_combo)
         self._newline_combo = Gtk.ComboBox(hexpand=True)
-        newline_label = Gtk.Label(label=_("Ne_wlines:"),
+        newline_label = Gtk.Label(label=_("Ne_wlines"),
                                   halign=Gtk.Align.START,
                                   use_underline=True)
 
         newline_label.set_mnemonic_widget(self._newline_combo)
         self._framerate_combo = Gtk.ComboBox(hexpand=True)
-        self._framerate_label = Gtk.Label(label=_("F_ramerate:"),
+        self._framerate_label = Gtk.Label(label=_("F_ramerate"),
                                           halign=Gtk.Align.START,
                                           use_underline=True)
 
