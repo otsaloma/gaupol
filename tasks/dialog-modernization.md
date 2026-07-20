@@ -104,7 +104,7 @@ toggle pair, no labels).
 - [ ] gaupol/dialogs/append.py
 - [ ] gaupol/dialogs/debug.py
 - [x] gaupol/dialogs/duration_adjust.py
-- [ ] gaupol/dialogs/encoding.py
+- [x] gaupol/dialogs/encoding.py
 - [ ] gaupol/dialogs/file.py
 - [x] gaupol/dialogs/framerate_convert.py
 - [x] gaupol/dialogs/insert.py

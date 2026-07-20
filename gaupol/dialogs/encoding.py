@@ -31,21 +31,14 @@ class EncodingDialog(Gtk.Dialog):
     def __init__(self, parent):
         """Initialize an :class:`EncodingDialog` instance."""
         GObject.GObject.__init__(self, use_header_bar=True)
-        self._tree_view = Gtk.TreeView()
+        self._encoding = None
+        self._encoding_list = Gtk.ListBox()
         self._init_dialog(parent)
-        self._init_tree_view()
-        gaupol.util.scale_to_content(self._tree_view,
-                                     min_nchar=50,
-                                     max_nchar=100,
-                                     min_nlines=10,
-                                     max_nlines=18)
+        self._init_encoding_list()
 
     def get_encoding(self):
         """Return the selected encoding or ``None``."""
-        selection = self._tree_view.get_selection()
-        store, itr = selection.get_selected()
-        if itr is None: return
-        return store.get_value(itr, 0)
+        return self._encoding
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
@@ -56,40 +49,47 @@ class EncodingDialog(Gtk.Dialog):
         self.set_modal(True)
         self.set_title(_("Character Encodings"))
 
-    def _init_tree_view(self):
-        """Initialize the character encoding tree view."""
-        scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_child(self._tree_view)
-        gaupol.util.set_widget_margins(scroller, 18)
-        box = self.get_content_area()
-        gaupol.util.pack_start_expand(box, scroller)
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        store = Gtk.ListStore(str, str, str)
-        for item in aeidon.encodings.get_valid():
-            store.append((item[0], item[2], item[1]))
-        store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
-        self._tree_view.set_model(store)
-        column = Gtk.TreeViewColumn(_("Description"),
-                                    Gtk.CellRendererText(),
-                                    text=1)
+    def _init_encoding_list(self):
+        """Initialize the character encoding list."""
+        self._encoding_list.set_selection_mode(Gtk.SelectionMode.NONE)
+        self._encoding_list.set_show_separators(True)
+        self._encoding_list.add_css_class("rich-list")
+        group = None
+        for code, name, description in sorted(
+                aeidon.encodings.get_valid(), key=lambda x: x[2]):
+            box = gaupol.util.new_hbox(spacing=12)
+            label = Gtk.Label(label=description)
+            label.add_css_class("dim-label")
+            box.append(label)
+            box.append(Gtk.Label(label=name))
+            radio = Gtk.CheckButton(hexpand=True, focusable=True, group=group)
+            radio.set_child(box)
+            radio.gaupol_code = code
+            radio.connect("toggled", self._on_encoding_radio_toggled)
+            group = group or radio
+            row = Gtk.ListBoxRow(activatable=False, selectable=False)
+            row.set_child(self._create_row_child(radio))
+            self._encoding_list.append(row)
+        frame = Gtk.Frame(child=self._encoding_list)
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        gaupol.util.set_widget_margins(content_box, 18)
+        content_box.append(frame)
+        scroller = Gtk.ScrolledWindow(
+            hscrollbar_policy=Gtk.PolicyType.NEVER,
+            propagate_natural_width=True,
+            propagate_natural_height=True)
+        scroller.set_max_content_height(gaupol.util.lines_to_px(25))
+        scroller.set_child(content_box)
+        gaupol.util.pack_start_expand(self.get_content_area(), scroller)
 
-        column.set_clickable(True)
-        column.set_sort_column_id(1)
-        self._tree_view.append_column(column)
-        column = Gtk.TreeViewColumn(_("Encoding"),
-                                    Gtk.CellRendererText(),
-                                    text=2)
+    def _create_row_child(self, radio):
+        """Return the widget to place in `radio`'s list box row."""
+        return radio
 
-        column.set_clickable(True)
-        column.set_sort_column_id(2)
-        self._tree_view.append_column(column)
-        aeidon.util.connect(self, "_tree_view", "row-activated")
-
-    def _on_tree_view_row_activated(self, *args):
-        """Send response to select activated character encoding."""
-        self.response(Gtk.ResponseType.OK)
+    def _on_encoding_radio_toggled(self, radio):
+        """Save the selected encoding."""
+        if radio.get_active():
+            self._encoding = radio.gaupol_code
 
 class MenuEncodingDialog(EncodingDialog):
 
@@ -97,50 +97,21 @@ class MenuEncodingDialog(EncodingDialog):
 
     def get_visible_encodings(self):
         """Return encodings chosen to be visible."""
-        store = self._tree_view.get_model()
-        return [store[i][0] for i in range(len(store)) if store[i][3]]
+        encodings = []
+        for i in range(len(aeidon.encodings.get_valid())):
+            if row := self._encoding_list.get_row_at_index(i):
+                toggle = row.get_child().get_last_child()
+                if toggle.get_active():
+                    encodings.append(toggle.gaupol_code)
+        return encodings
 
-    def _init_tree_view(self):
-        """Initialize the character encoding tree view."""
-        scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_child(self._tree_view)
-        gaupol.util.set_widget_margins(scroller, 18)
-        box = self.get_content_area()
-        gaupol.util.pack_start_expand(box, scroller)
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        store = Gtk.ListStore(str, str, str, bool)
-        visible = gaupol.conf.encoding.visible
-        for item in aeidon.encodings.get_valid():
-            store.append((item[0], item[2], item[1], item[0] in visible))
-        store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
-        self._tree_view.set_model(store)
-        column = Gtk.TreeViewColumn(_("Description"),
-                                    Gtk.CellRendererText(),
-                                    text=1)
-
-        column.set_clickable(True)
-        column.set_sort_column_id(1)
-        self._tree_view.append_column(column)
-        column = Gtk.TreeViewColumn(_("Encoding"),
-                                    Gtk.CellRendererText(),
-                                    text=2)
-
-        column.set_clickable(True)
-        column.set_sort_column_id(2)
-        self._tree_view.append_column(column)
-        renderer = Gtk.CellRendererToggle()
-        renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = Gtk.TreeViewColumn(_("Show in Menu"),
-                                    renderer,
-                                    active=3)
-
-        column.set_sort_column_id(3)
-        self._tree_view.append_column(column)
-        aeidon.util.connect(self, "_tree_view", "row-activated")
-
-    def _on_tree_view_cell_toggled(self, renderer, path):
-        """Toggle the value of the "Show in Menu" column."""
-        store = self._tree_view.get_model()
-        store[path][3] = not store[path][3]
+    def _create_row_child(self, radio):
+        """Return a row widget with an "In Menu" toggle added."""
+        toggle = Gtk.ToggleButton(label=_("In Menu"))
+        toggle.set_valign(Gtk.Align.CENTER)
+        toggle.set_active(radio.gaupol_code in gaupol.conf.encoding.visible)
+        toggle.gaupol_code = radio.gaupol_code
+        box = Gtk.Box()
+        box.append(radio)
+        box.append(toggle)
+        return box
