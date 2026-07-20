@@ -111,12 +111,12 @@ toggle pair, no labels).
 - [x] gaupol/dialogs/language.py
 - [x] gaupol/dialogs/message.py
 - [x] gaupol/dialogs/multi_close.py
-- [ ] gaupol/dialogs/multi_save.py
+- [x] gaupol/dialogs/multi_save.py
 - [x] gaupol/dialogs/open.py
 - [x] gaupol/dialogs/position_shift.py
 - [x] gaupol/dialogs/position_transform.py
 - [ ] gaupol/dialogs/preferences.py
-- [ ] gaupol/dialogs/preview_error.py
+- [x] gaupol/dialogs/preview_error.py
 - [x] gaupol/dialogs/save.py
 - [ ] gaupol/dialogs/search.py
 - [ ] gaupol/dialogs/spell_check.py

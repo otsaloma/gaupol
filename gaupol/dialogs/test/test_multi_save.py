@@ -41,6 +41,7 @@ class TestMultiSaveDialog(_TestFileDialog):
                                              application=self.application,
                                              modes=modes)
 
+        gaupol.style.load_css(self.dialog)
         self.dialog.present()
 
     def test__on_response(self):

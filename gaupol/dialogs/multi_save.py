@@ -34,7 +34,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         "encoding_combo",
         "format_combo",
         "framerate_combo",
-        "framerate_label",
+        "framerate_row",
         "newline_combo",
     ]
 
@@ -49,8 +49,6 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         self._init_encoding_combo()
         self._init_newline_combo()
         self._init_framerate_combo()
-        width = gaupol.util.char_to_px(60)
-        self._directory_button.set_size_request(width, -1)
         self._init_values()
 
     def get_directory(self):
@@ -139,8 +137,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         self.set_newline(file.newline)
         self.set_framerate(gaupol.conf.editor.framerate)
         visible = len(set(self._modes)) > 1
-        self._framerate_combo.set_visible(visible)
-        self._framerate_label.set_visible(visible)
+        self._framerate_row.set_visible(visible)
 
     def _on_directory_button_clicked(self, *args):
         """Show a dialog to select the directory to save in."""
@@ -167,8 +164,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         format = self.get_format()
         modes = list(self._modes) + [format.mode]
         visible = len(set(modes)) > 1
-        self._framerate_combo.set_visible(visible)
-        self._framerate_label.set_visible(visible)
+        self._framerate_row.set_visible(visible)
 
     def _on_response(self, dialog, response):
         """Save default values for widgets."""
@@ -187,7 +183,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         pages = self._get_pages()
         files = [None for x in pages]
         for i, page in enumerate(pages):
-            if self._framerate_combo.get_visible():
+            if self._framerate_row.get_visible():
                 # Set framerate to the selected one.
                 framerate = self.get_framerate()
                 self.application.set_current_page(page)
