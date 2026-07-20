@@ -12,7 +12,7 @@
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkBox" id="vbox2">
+          <object class="GtkBox" id="content_box">
             <property name="margin_start">18</property>
             <property name="margin_end">18</property>
             <property name="margin_top">18</property>
@@ -22,7 +22,7 @@
             <child>
               <object class="GtkBox" id="vbox3">
                 <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkLabel" id="label6">
                     <property name="valign">center</property>
@@ -34,55 +34,64 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkGrid" id="grid1">
-                    <property name="margin_start">12</property>
-                    <property name="row_spacing">6</property>
-                    <property name="column_spacing">12</property>
-                    <child>
-                      <object class="GtkLabel" id="label8">
-                        <property name="halign">start</property>
-                        <property name="label" translatable="1">_Input:</property>
-                        <property name="use_underline">1</property>
-                        <property name="justify">center</property>
-                        <property name="mnemonic_widget">input_combo</property>
-                        <layout>
-                          <property name="column">0</property>
-                          <property name="row">0</property>
-                        </layout>
+                  <object class="GtkFrame" id="frame1">
+                    <property name="child">
+                      <object class="GtkListBox" id="framerate_list">
+                        <property name="selection_mode">none</property>
+                        <property name="show_separators">1</property>
+                        <style>
+                          <class name="rich-list"/>
+                        </style>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="input_label">
+                                    <property name="halign">start</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="label" translatable="1">_Input</property>
+                                    <property name="use_underline">1</property>
+                                    <property name="mnemonic_widget">input_combo</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="input_combo">
+                                    <signal name="changed" handler="_on_input_combo_changed" swapped="no"/>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkBox">
+                                <child>
+                                  <object class="GtkLabel" id="output_label">
+                                    <property name="halign">start</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="label" translatable="1">_Output</property>
+                                    <property name="use_underline">1</property>
+                                    <property name="mnemonic_widget">output_combo</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="output_combo">
+                                    <signal name="changed" handler="_on_output_combo_changed" swapped="no"/>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
                       </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="label9">
-                        <property name="halign">start</property>
-                        <property name="label" translatable="1">_Output:</property>
-                        <property name="use_underline">1</property>
-                        <property name="mnemonic_widget">output_combo</property>
-                        <layout>
-                          <property name="column">0</property>
-                          <property name="row">1</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkComboBox" id="input_combo">
-                        <property name="hexpand">1</property>
-                        <signal name="changed" handler="_on_input_combo_changed" swapped="no"/>
-                        <layout>
-                          <property name="column">1</property>
-                          <property name="row">0</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkComboBox" id="output_combo">
-                        <property name="hexpand">1</property>
-                        <signal name="changed" handler="_on_output_combo_changed" swapped="no"/>
-                        <layout>
-                          <property name="column">1</property>
-                          <property name="row">1</property>
-                        </layout>
-                      </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
               </object>
@@ -90,7 +99,7 @@
             <child>
               <object class="GtkBox" id="vbox5">
                 <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
+                <property name="spacing">12</property>
                 <child>
                   <object class="GtkLabel" id="label10">
                     <property name="valign">center</property>
@@ -102,30 +111,46 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox6">
-                    <property name="margin_start">12</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkCheckButton" id="current_radio">
-                        <property name="valign">center</property>
-                        <property name="label" translatable="1">Convert c_urrent project</property>
-                        <property name="focusable">1</property>
-                        <property name="halign">start</property>
-                        <property name="use_underline">1</property>
-                        <property name="active">1</property>
+                  <object class="GtkFrame" id="frame2">
+                    <property name="child">
+                      <object class="GtkListBox" id="subtitle_list">
+                        <property name="selection_mode">none</property>
+                        <property name="show_separators">1</property>
+                        <style>
+                          <class name="rich-list"/>
+                        </style>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkCheckButton" id="current_radio">
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="1">Convert c_urrent project</property>
+                                <property name="focusable">1</property>
+                                <property name="use_underline">1</property>
+                                <property name="active">1</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkListBoxRow">
+                            <property name="activatable">0</property>
+                            <property name="selectable">0</property>
+                            <property name="child">
+                              <object class="GtkCheckButton" id="all_radio">
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="1">Convert _all open projects</property>
+                                <property name="focusable">1</property>
+                                <property name="use_underline">1</property>
+                                <property name="group">current_radio</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
                       </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="all_radio">
-                        <property name="valign">center</property>
-                        <property name="label" translatable="1">Convert _all open projects</property>
-                        <property name="focusable">1</property>
-                        <property name="halign">start</property>
-                        <property name="use_underline">1</property>
-                        <property name="group">current_radio</property>
-                      </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
               </object>
