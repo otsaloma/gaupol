@@ -9,140 +9,177 @@
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkBox" id="vbox2">
-            <property name="margin_start">18</property>
-            <property name="margin_end">18</property>
-            <property name="margin_top">18</property>
-            <property name="margin_bottom">18</property>
+          <object class="GtkScrolledWindow" id="scroller">
             <property name="vexpand">1</property>
-            <property name="orientation">vertical</property>
-            <property name="spacing">12</property>
-            <child>
-              <object class="GtkBox" id="hbox1">
-                <property name="vexpand">1</property>
+            <property name="hscrollbar_policy">never</property>
+            <property name="vscrollbar_policy">automatic</property>
+            <property name="propagate_natural_width">1</property>
+            <property name="propagate_natural_height">1</property>
+            <property name="child">
+              <object class="GtkBox" id="content_box">
+                <property name="margin_start">18</property>
+                <property name="margin_end">18</property>
+                <property name="margin_top">18</property>
+                <property name="margin_bottom">18</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">12</property>
                 <child>
-                  <object class="GtkBox" id="vbox3">
-                    <property name="hexpand">1</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkLabel" id="language_title_label">
-                        <property name="valign">center</property>
-                        <property name="halign">start</property>
-                        <property name="label" translatable="1">Language</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"></attribute>
-                        </attributes>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkScrolledWindow" id="language_scroller">
-                        <property name="has_frame">1</property>
-                        <property name="vexpand">1</property>
-                        <property name="focusable">1</property>
-                        <property name="child">
-                          <object class="GtkTreeView" id="tree_view">
-                            <property name="focusable">1</property>
-                            <property name="headers_visible">0</property>
-                            <child internal-child="selection">
-                              <object class="GtkTreeSelection" id="treeview-selection"/>
-                            </child>
-                          </object>
-                        </property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkBox" id="target_vbox">
-                    <property name="halign">center</property>
-                    <property name="orientation">vertical</property>
+                  <object class="GtkBox" id="hbox1">
+                    <property name="valign">start</property>
                     <property name="spacing">12</property>
                     <child>
-                      <object class="GtkBox" id="vbox8">
-                        <property name="valign">center</property>
+                      <object class="GtkBox" id="vbox3">
+                        <property name="hexpand">1</property>
                         <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
+                        <property name="spacing">12</property>
                         <child>
-                          <object class="GtkLabel" id="label7">
+                          <object class="GtkLabel" id="language_title_label">
                             <property name="valign">center</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="1">Columns</property>
+                            <property name="label" translatable="1">Language</property>
                             <attributes>
                               <attribute name="weight" value="bold"></attribute>
                             </attributes>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkBox" id="vbox4">
-                            <property name="margin_start">12</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
-                            <child>
-                              <object class="GtkCheckButton" id="main_radio">
-                                <property name="valign">center</property>
-                                <property name="label" translatable="1">Check _text column</property>
-                                <property name="focusable">1</property>
-                                <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <property name="active">1</property>
-                                <signal name="toggled" handler="_on_main_radio_toggled" swapped="no"/>
+                          <object class="GtkFrame" id="language_frame">
+                            <property name="child">
+                              <object class="GtkListBox" id="language_list">
+                                <property name="selection_mode">none</property>
+                                <property name="show_separators">1</property>
+                                <style>
+                                  <class name="rich-list"/>
+                                </style>
                               </object>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="tran_radio">
-                                <property name="valign">center</property>
-                                <property name="label" translatable="1">Check t_ranslation column</property>
-                                <property name="focusable">1</property>
-                                <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <property name="group">main_radio</property>
-                              </object>
-                            </child>
+                            </property>
                           </object>
                         </child>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="vbox6">
-                        <property name="valign">center</property>
+                      <object class="GtkBox" id="target_vbox">
+                        <property name="valign">start</property>
                         <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
+                        <property name="spacing">12</property>
                         <child>
-                          <object class="GtkLabel" id="label5">
+                          <object class="GtkBox" id="vbox8">
                             <property name="valign">center</property>
-                            <property name="halign">start</property>
-                            <property name="label" translatable="1">Subtitles</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"></attribute>
-                            </attributes>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkBox" id="vbox5">
-                            <property name="margin_start">12</property>
                             <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
+                            <property name="spacing">12</property>
                             <child>
-                              <object class="GtkCheckButton" id="current_radio">
+                              <object class="GtkLabel" id="label7">
                                 <property name="valign">center</property>
-                                <property name="label" translatable="1">Check c_urrent project</property>
-                                <property name="focusable">1</property>
                                 <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <property name="active">1</property>
-                                <signal name="toggled" handler="_on_current_radio_toggled" swapped="no"/>
+                                <property name="label" translatable="1">Columns</property>
+                                <attributes>
+                                  <attribute name="weight" value="bold"></attribute>
+                                </attributes>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="all_radio">
+                              <object class="GtkFrame" id="frame1">
+                                <property name="child">
+                                  <object class="GtkListBox" id="target_list">
+                                    <property name="selection_mode">none</property>
+                                    <property name="show_separators">1</property>
+                                    <style>
+                                      <class name="rich-list"/>
+                                    </style>
+                                    <child>
+                                      <object class="GtkListBoxRow">
+                                        <property name="activatable">0</property>
+                                        <property name="selectable">0</property>
+                                        <property name="child">
+                                          <object class="GtkCheckButton" id="main_radio">
+                                            <property name="hexpand">1</property>
+                                            <property name="label" translatable="1">Check _text column</property>
+                                            <property name="focusable">1</property>
+                                            <property name="use_underline">1</property>
+                                            <property name="active">1</property>
+                                            <signal name="toggled" handler="_on_main_radio_toggled" swapped="no"/>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkListBoxRow">
+                                        <property name="activatable">0</property>
+                                        <property name="selectable">0</property>
+                                        <property name="child">
+                                          <object class="GtkCheckButton" id="tran_radio">
+                                            <property name="hexpand">1</property>
+                                            <property name="label" translatable="1">Check t_ranslation column</property>
+                                            <property name="focusable">1</property>
+                                            <property name="use_underline">1</property>
+                                            <property name="group">main_radio</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="vbox6">
+                            <property name="valign">center</property>
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkLabel" id="label5">
                                 <property name="valign">center</property>
-                                <property name="label" translatable="1">Check _all open projects</property>
-                                <property name="focusable">1</property>
                                 <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <property name="group">current_radio</property>
+                                <property name="label" translatable="1">Subtitles</property>
+                                <attributes>
+                                  <attribute name="weight" value="bold"></attribute>
+                                </attributes>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkFrame" id="frame2">
+                                <property name="child">
+                                  <object class="GtkListBox" id="subtitle_list">
+                                    <property name="selection_mode">none</property>
+                                    <property name="show_separators">1</property>
+                                    <style>
+                                      <class name="rich-list"/>
+                                    </style>
+                                    <child>
+                                      <object class="GtkListBoxRow">
+                                        <property name="activatable">0</property>
+                                        <property name="selectable">0</property>
+                                        <property name="child">
+                                          <object class="GtkCheckButton" id="current_radio">
+                                            <property name="hexpand">1</property>
+                                            <property name="label" translatable="1">Check c_urrent project</property>
+                                            <property name="focusable">1</property>
+                                            <property name="use_underline">1</property>
+                                            <property name="active">1</property>
+                                            <signal name="toggled" handler="_on_current_radio_toggled" swapped="no"/>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkListBoxRow">
+                                        <property name="activatable">0</property>
+                                        <property name="selectable">0</property>
+                                        <property name="child">
+                                          <object class="GtkCheckButton" id="all_radio">
+                                            <property name="hexpand">1</property>
+                                            <property name="label" translatable="1">Check _all open projects</property>
+                                            <property name="focusable">1</property>
+                                            <property name="use_underline">1</property>
+                                            <property name="group">current_radio</property>
+                                          </object>
+                                        </property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </property>
                               </object>
                             </child>
                           </object>
@@ -152,7 +189,7 @@
                   </object>
                 </child>
               </object>
-            </child>
+            </property>
           </object>
         </child>
       </object>

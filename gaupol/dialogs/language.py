@@ -30,13 +30,14 @@ class LanguageDialog(gaupol.BuilderDialog):
 
     _widgets = [
         "all_radio",
+        "content_box",
         "current_radio",
-        "language_scroller",
+        "language_list",
         "language_title_label",
         "main_radio",
+        "scroller",
         "target_vbox",
         "tran_radio",
-        "tree_view",
     ]
 
     def __init__(self, parent, show_target=True):
@@ -44,13 +45,9 @@ class LanguageDialog(gaupol.BuilderDialog):
         gaupol.BuilderDialog.__init__(self, "language-dialog.ui")
         self._init_dialog(parent)
         self._init_visibilities(show_target)
-        self._init_tree_view()
+        self._init_language_list()
         self._init_values()
-        gaupol.util.scale_to_content(self._tree_view,
-                                     min_nchar=30,
-                                     max_nchar=60,
-                                     min_nlines=8,
-                                     max_nlines=20)
+        self._init_scroller(show_target)
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
@@ -58,30 +55,40 @@ class LanguageDialog(gaupol.BuilderDialog):
         self.set_transient_for(parent)
         self.set_modal(True)
 
-    def _init_tree_view(self):
-        """Initialize the tree view."""
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        selection.connect("changed", self._on_tree_view_selection_changed)
-        store = Gtk.ListStore(str, str)
-        self._populate_store(store)
-        store.set_sort_column_id(1, Gtk.SortType.ASCENDING)
-        self._tree_view.set_model(store)
-        renderer = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn("", renderer, text=1)
-        column.set_sort_column_id(1)
-        self._tree_view.append_column(column)
+    def _init_language_list(self):
+        """Initialize the list of languages."""
+        locales = []
+        with contextlib.suppress(Exception):
+            locales = aeidon.SpellChecker.list_languages()
+        group = None
+        for locale in locales:
+            name = locale
+            with contextlib.suppress(Exception):
+                name = aeidon.locales.code_to_name(locale)
+            radio = Gtk.CheckButton(label=name, hexpand=True, group=group)
+            radio.set_active(locale == gaupol.conf.spell_check.language)
+            radio.connect("toggled", self._on_language_radio_toggled)
+            radio.gaupol_locale = locale
+            group = group or radio
+            row = Gtk.ListBoxRow(activatable=False, selectable=False)
+            row.set_child(radio)
+            self._language_list.append(row)
+
+    def _init_scroller(self, show_target):
+        """Set the scroller height from the target column."""
+        if show_target:
+            height  = self._target_vbox.measure(Gtk.Orientation.VERTICAL, -1).natural
+            height += self._content_box.get_margin_top()
+            height += self._content_box.get_margin_bottom()
+            self._scroller.set_max_content_height(height)
+        else:
+            height = gaupol.util.lines_to_px(25)
+            self._scroller.set_max_content_height(height)
 
     def _init_values(self):
         """Initialize default values for widgets."""
-        language = gaupol.conf.spell_check.language
         field = gaupol.conf.spell_check.field
         target = gaupol.conf.spell_check.target
-        store = self._tree_view.get_model()
-        selection = self._tree_view.get_selection()
-        for i in range(len(store)):
-            if store[i][0] == language:
-                selection.select_path(i)
         self._main_radio.set_active(field == gaupol.fields.MAIN_TEXT)
         self._tran_radio.set_active(field == gaupol.fields.TRAN_TEXT)
         self._all_radio.set_active(target == gaupol.targets.ALL)
@@ -108,19 +115,7 @@ class LanguageDialog(gaupol.BuilderDialog):
             if radio_button.get_active()
             else gaupol.fields.TRAN_TEXT)
 
-    def _on_tree_view_selection_changed(self, selection):
+    def _on_language_radio_toggled(self, radio):
         """Save the selected language."""
-        store, itr = selection.get_selected()
-        if itr is None: return
-        value = store.get_value(itr, 0)
-        gaupol.conf.spell_check.language = value
-
-    def _populate_store(self, store):
-        """Add all available languages to `store`."""
-        locales = []
-        with contextlib.suppress(Exception):
-            locales = aeidon.SpellChecker.list_languages()
-        for locale in locales:
-            with contextlib.suppress(Exception):
-                name = aeidon.locales.code_to_name(locale)
-                store.append((locale, name))
+        if radio.get_active():
+            gaupol.conf.spell_check.language = radio.gaupol_locale

@@ -37,4 +37,5 @@ class TestLanguageDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         self.dialog = gaupol.LanguageDialog(Gtk.Window())
+        gaupol.style.load_css(self.dialog)
         self.dialog.present()
