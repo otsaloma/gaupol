@@ -120,6 +120,6 @@ toggle pair, no labels).
 - [x] gaupol/dialogs/save.py
 - [ ] gaupol/dialogs/search.py
 - [ ] gaupol/dialogs/spell_check.py
-- [ ] gaupol/dialogs/split.py
-- [ ] gaupol/dialogs/text_edit.py
+- [x] gaupol/dialogs/split.py
+- [x] gaupol/dialogs/text_edit.py
 - [x] gaupol/dialogs/video.py

@@ -28,7 +28,7 @@
             <child>
               <object class="GtkLabel" id="label1">
                 <property name="halign">center</property>
-                <property name="label" translatable="1">_First subtitle of new project:</property>
+                <property name="label" translatable="1">_First subtitle of new project</property>
                 <property name="use_underline">1</property>
                 <property name="mnemonic_widget">subtitle_spin</property>
               </object>
