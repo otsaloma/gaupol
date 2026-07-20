@@ -29,6 +29,7 @@ class TestDurationAdjustDialog(gaupol.TestCase):
         self.application = self.new_application()
         self.dialog = gaupol.DurationAdjustDialog(
             self.application.window, self.application)
+        gaupol.style.load_css(self.dialog)
         self.dialog.present()
 
     def test__on_response(self):

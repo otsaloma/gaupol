@@ -96,7 +96,7 @@ Follow the GNOME Settings style: sections as cards, built with
 - [ ] gaupol/dialogs/about.py
 - [ ] gaupol/dialogs/append.py
 - [ ] gaupol/dialogs/debug.py
-- [ ] gaupol/dialogs/duration_adjust.py
+- [x] gaupol/dialogs/duration_adjust.py
 - [ ] gaupol/dialogs/encoding.py
 - [ ] gaupol/dialogs/file.py
 - [ ] gaupol/dialogs/framerate_convert.py
