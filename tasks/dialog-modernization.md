@@ -110,7 +110,7 @@ toggle pair, no labels).
 - [x] gaupol/dialogs/insert.py
 - [x] gaupol/dialogs/language.py
 - [x] gaupol/dialogs/message.py
-- [ ] gaupol/dialogs/multi_close.py
+- [x] gaupol/dialogs/multi_close.py
 - [ ] gaupol/dialogs/multi_save.py
 - [x] gaupol/dialogs/open.py
 - [x] gaupol/dialogs/position_shift.py

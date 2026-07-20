@@ -95,15 +95,15 @@ class MenuEncodingDialog(EncodingDialog):
 
     """Dialog for selecting character encodings."""
 
+    @aeidon.deco.listify
     def get_visible_encodings(self):
         """Return encodings chosen to be visible."""
-        encodings = []
-        for i in range(len(aeidon.encodings.get_valid())):
-            if row := self._encoding_list.get_row_at_index(i):
-                toggle = row.get_child().get_last_child()
-                if toggle.get_active():
-                    encodings.append(toggle.gaupol_code)
-        return encodings
+        for i in range(1_000_000):
+            row = self._encoding_list.get_row_at_index(i)
+            if not row: break
+            toggle = row.get_child().get_last_child()
+            if toggle.get_active():
+                yield toggle.gaupol_code
 
     def _create_row_child(self, radio):
         """Return a row widget with an "In Menu" toggle added."""

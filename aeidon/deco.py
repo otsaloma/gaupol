@@ -74,6 +74,19 @@ def _is_method(function, args):
     except (IndexError, AttributeError):
         return False
 
+def listify(function):
+    """Decorator for generator functions to return a list."""
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        return list(function(*args, **kwargs))
+    return wrapper
+
+if aeidon.RUNNING_SPHINX:
+    _listify = listify
+    def listify(function):
+        return decorator_apply(_listify, function)
+    listify.__doc__ = _listify.__doc__
+
 def memoize(limit=100):
     """
     Decorator for functions that cache their return values.

@@ -33,6 +33,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
                                               self.application,
                                               self.application.pages)
 
+        gaupol.style.load_css(self.dialog)
         self.dialog.present()
 
     def test__on_response(self):

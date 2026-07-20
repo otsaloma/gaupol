@@ -31,19 +31,15 @@ class MultiCloseDialog(Gtk.MessageDialog):
     def __init__(self, parent, application, pages):
         """Initialize a :class:`MultiCloseDialog` instance."""
         GObject.GObject.__init__(self,
-                                 message_type=Gtk.MessageType.ERROR,
+                                 message_type=Gtk.MessageType.WARNING,
                                  text=_("Save changes to documents before closing?"),
                                  secondary_text=_("If you don't save, changes will be permanently lost."))
 
         self.application = application
-        self._main_tree_view = Gtk.TreeView()
-        self._main_vbox = gaupol.util.new_vbox(6)
         self.pages = tuple(pages)
-        self._tran_tree_view = Gtk.TreeView()
-        self._tran_vbox = gaupol.util.new_vbox(6)
+        self._document_list = Gtk.ListBox()
         self._init_dialog(parent)
-        self._init_main_tree_view()
-        self._init_tran_tree_view()
+        self._init_document_list()
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
@@ -55,71 +51,52 @@ class MultiCloseDialog(Gtk.MessageDialog):
         self.set_modal(True)
         aeidon.util.connect(self, self, "response")
 
-    def _init_main_tree_view(self):
-        """Initialize the main tree view."""
-        store = self._init_tree_view(self._main_tree_view)
-        for page in (x for x in self.pages if x.project.main_changed):
-            store.append((page, True, page.get_main_basename()))
-        scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_has_frame(True)
-        scroller.set_child(self._main_tree_view)
-        label = Gtk.Label(label=_("Select the _main documents you want to save:"))
-        label.props.xalign = 0
-        label.set_use_underline(True)
-        label.set_mnemonic_widget(self._main_tree_view)
-        gaupol.util.pack_start(self._main_vbox, label)
-        gaupol.util.pack_start_expand(self._main_vbox, scroller)
-        gaupol.util.pack_start_expand(self.get_message_area(), self._main_vbox)
-        self._main_vbox.set_visible(len(store) > 0)
-        if len(store) > 0:
-            gaupol.util.scale_to_content(self._main_tree_view,
-                                         min_nchar=30,
-                                         max_nchar=60,
-                                         min_nlines=2,
-                                         max_nlines=6)
+    def _init_document_list(self):
+        """Initialize the list of unsaved documents."""
+        self._document_list.set_selection_mode(Gtk.SelectionMode.NONE)
+        self._document_list.set_show_separators(True)
+        self._document_list.add_css_class("rich-list")
+        for page in self.pages:
+            if page.project.main_changed:
+                self._append_document(page, aeidon.documents.MAIN)
+            if page.project.tran_changed:
+                self._append_document(page, aeidon.documents.TRAN)
+        frame = Gtk.Frame(child=self._document_list)
+        scroller = Gtk.ScrolledWindow(
+            hscrollbar_policy=Gtk.PolicyType.NEVER,
+            propagate_natural_width=True,
+            propagate_natural_height=True)
+        scroller.set_max_content_height(gaupol.util.lines_to_px(12))
+        scroller.set_child(frame)
+        scroller.set_visible(bool(self._get_check_buttons()))
+        gaupol.util.pack_start_expand(self.get_message_area(), scroller)
 
-    def _init_tran_tree_view(self):
-        """Initialize the translation tree view."""
-        store = self._init_tree_view(self._tran_tree_view)
-        for page in (x for x in self.pages if x.project.tran_changed):
-            store.append((page, True, page.get_translation_basename()))
-        scroller = Gtk.ScrolledWindow()
-        scroller.set_policy(*((Gtk.PolicyType.AUTOMATIC,)*2))
-        scroller.set_has_frame(True)
-        scroller.set_child(self._tran_tree_view)
-        label = Gtk.Label(label=_("Select the _translation documents you want to save:"))
-        label.props.xalign = 0
-        label.set_use_underline(True)
-        label.set_mnemonic_widget(self._tran_tree_view)
-        gaupol.util.pack_start(self._tran_vbox, label)
-        gaupol.util.pack_start_expand(self._tran_vbox, scroller)
-        gaupol.util.pack_start_expand(self.get_message_area(), self._tran_vbox)
-        self._tran_vbox.set_visible(len(store) > 0)
-        if len(store) > 0:
-            gaupol.util.scale_to_content(self._tran_tree_view,
-                                         min_nchar=30,
-                                         max_nchar=60,
-                                         min_nlines=2,
-                                         max_nlines=6)
+    def _append_document(self, page, doc):
+        """Append a check button row for `doc` of `page`."""
+        check = Gtk.CheckButton(label=page.get_basename(doc),
+                                active=True,
+                                hexpand=True,
+                                focusable=True)
 
-    def _init_tree_view(self, tree_view):
-        """Initialize `tree_view` and return its model."""
-        tree_view.set_headers_visible(False)
-        tree_view.set_enable_search(False)
-        store = Gtk.ListStore(object, bool, str)
-        tree_view.set_model(store)
-        selection = tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        renderer = Gtk.CellRendererToggle()
-        renderer.props.activatable = True
-        renderer.connect("toggled", self._on_tree_view_cell_toggled, store)
-        column = Gtk.TreeViewColumn("", renderer, active=1)
-        tree_view.append_column(column)
-        renderer = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn("", renderer, text=2)
-        tree_view.append_column(column)
-        return store
+        check.connect("toggled", self._on_check_button_toggled)
+        check.gaupol_page = page
+        check.gaupol_document = doc
+        row = Gtk.ListBoxRow(activatable=False, selectable=False)
+        row.set_child(check)
+        self._document_list.append(row)
+
+    @aeidon.deco.listify
+    def _get_check_buttons(self):
+        """Return all check buttons in the document list."""
+        for i in range(1_000_000):
+            row = self._document_list.get_row_at_index(i)
+            if not row: break
+            yield row.get_child()
+
+    def _on_check_button_toggled(self, check_button):
+        """Update save button sensitivity."""
+        sensitive = any(x.get_active() for x in self._get_check_buttons())
+        self.set_response_sensitive(Gtk.ResponseType.YES, sensitive)
 
     def _on_response(self, dialog, response):
         """Save the selected documents and close pages."""
@@ -130,25 +107,10 @@ class MultiCloseDialog(Gtk.MessageDialog):
             for page in self.pages:
                 self.application.close(page, confirm=False)
 
-    def _on_tree_view_cell_toggled(self, renderer, path, store):
-        """Toggle save document check button value."""
-        store[path][1] = not store[path][1]
-        store = self._main_tree_view.get_model()
-        mains = [x for x in store if x[1]]
-        store = self._tran_tree_view.get_model()
-        trans = [x for x in store if x[1]]
-        sensitive = bool(mains or trans)
-        self.set_response_sensitive(Gtk.ResponseType.YES, sensitive)
-
     @aeidon.deco.silent(gaupol.Default)
     def _save_and_close_page(self, page):
         """Save the selected documents and close `page`."""
-        store = self._main_tree_view.get_model()
-        pages = [x for x in store if x[0] is page]
-        if pages and pages[0][1]:
-            self.application.save_main(page)
-        store = self._tran_tree_view.get_model()
-        pages = [x for x in store if x[0] is page]
-        if pages and pages[0][1]:
-            self.application.save_translation(page)
+        for check in self._get_check_buttons():
+            if check.gaupol_page is page and check.get_active():
+                self.application.save(page, check.gaupol_document)
         self.application.close(page, confirm=False)
