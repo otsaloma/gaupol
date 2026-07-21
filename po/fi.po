@@ -2,24 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Jiri Grönroos <jiri.gronroos@iki.fi>, 2022
-# Osmo Salomaa <otsaloma@iki.fi>, 2023
-#
+# Osmo Salomaa <otsaloma@iki.fi>, 2026
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 00:25+0300\n"
-"PO-Revision-Date: 2026-07-22 00:42+0300\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2023\n"
+"POT-Creation-Date: 2026-07-22 01:06+0300\n"
+"PO-Revision-Date: 2026-07-22 01:07+0300\n"
+"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2026\n"
 "Language-Team: Finnish (https://app.transifex.com/otsaloma/teams/64879/fi/)\n"
-"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: aeidon/agents/position.py:73
@@ -140,7 +140,8 @@ msgstr "tekstin muokkaaminen"
 
 #. TRANSLATORS: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
+#. files for a reference:
+#. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
 #: aeidon/encodings.py:39 aeidon/encodings.py:42 aeidon/encodings.py:45
 msgid "English"
 msgstr "Englanti"
@@ -410,8 +411,7 @@ msgstr "Tallennettiin käännösasiakirja nimellä \"{}\""
 #: gaupol/agents/save.py:191
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
-msgstr ""
-"Tiedoston \"{basename}\" koodaaminen koodekilla \"{codec}\" epäonnistui"
+msgstr "Tiedoston \"{basename}\" koodaaminen koodekilla \"{codec}\" epäonnistui"
 
 #: gaupol/agents/save.py:192
 msgid "Please try to save the file with a different character encoding."
@@ -569,8 +569,7 @@ msgstr "Valittiin video \"{}\""
 #: gaupol/agents/open.py:337
 #, python-brace-format
 msgid "Failed to decode file \"{}\" with all attempted codecs"
-msgstr ""
-"Tiedoston \"{}\" purkaminen epäonnistui kaikilla kokeilluilla koodekeilla"
+msgstr "Tiedoston \"{}\" purkaminen epäonnistui kaikilla kokeilluilla koodekeilla"
 
 #: gaupol/agents/open.py:338
 msgid "Please try to open the file with a different character encoding."
@@ -586,8 +585,8 @@ msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
-"Tarkista että tiedosto, jota yrität avata on tekstitystiedosto, jonka muotoa "
-"Gaupol tukee."
+"Tarkista että tiedosto, jota yrität avata on tekstitystiedosto, jonka muotoa"
+" Gaupol tukee."
 
 #: gaupol/agents/open.py:355
 #, python-brace-format
@@ -602,7 +601,8 @@ msgstr "Tiedoston \"{}\" tulkinta epäonnistui"
 #: gaupol/agents/open.py:364
 #, python-brace-format
 msgid "Please check that the file you are trying to open is a valid {} file."
-msgstr "Tarkista, että tiedosto, jota yrität avata on kelvollinen {} tiedosto."
+msgstr ""
+"Tarkista, että tiedosto, jota yrität avata on kelvollinen {} tiedosto."
 
 #: gaupol/agents/open.py:372
 #, python-brace-format
@@ -650,8 +650,7 @@ msgstr "_Avaa tallentamatta"
 #: gaupol/agents/preview.py:104
 #, python-brace-format
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
-msgstr ""
-"Tekstitystiedoston koodaaminen väliaikaishakemistoon \"{}\" epäonnistui"
+msgstr "Tekstitystiedoston koodaaminen väliaikaishakemistoon \"{}\" epäonnistui"
 
 #: gaupol/agents/preview.py:105
 msgid ""
@@ -666,8 +665,7 @@ msgstr ""
 #: gaupol/agents/preview.py:113
 #, python-brace-format
 msgid "Failed to save subtitle file to temporary directory \"{}\""
-msgstr ""
-"Tekstitystiedoston tallentaminen väliaikaishakemistoon \"{}\" epäonnistui"
+msgstr "Tekstitystiedoston tallentaminen väliaikaishakemistoon \"{}\" epäonnistui"
 
 #: gaupol/agents/preview.py:121
 msgid "Video player not found"
@@ -679,8 +677,8 @@ msgid ""
 "MPlayer or VLC. See the preferences dialog to choose the video player or to "
 "customize the command."
 msgstr ""
-"Asenna joku seuraavista videosoittimista: mpv (suositeltu), MPlayer tai VLC. "
-"Voit valita videosoittimen ja muokata esikatselukomentoa asetusikkunan "
+"Asenna joku seuraavista videosoittimista: mpv (suositeltu), MPlayer tai VLC."
+" Voit valita videosoittimen ja muokata esikatselukomentoa asetusikkunan "
 "kautta."
 
 #: gaupol/agents/preview.py:130
@@ -1406,7 +1404,8 @@ msgid "C_orrection"
 msgstr "K_orjaus"
 
 #: data/ui/position-transform-dialog.ui:150
-#: data/ui/position-transform-dialog.ui:280 data/ui/position-shift-dialog.ui:79
+#: data/ui/position-transform-dialog.ui:280
+#: data/ui/position-shift-dialog.ui:79
 msgid "Preview Changes"
 msgstr "Esikatsele muutoksia"
 
@@ -1689,7 +1688,7 @@ msgstr "_Edellinen videon kohdasta"
 
 #: data/ui/menubar.ui:168
 msgid "_Next From Video Position"
-msgstr "Seuraava videon kohdasta"
+msgstr "_Seuraava videon kohdasta"
 
 #: data/ui/menubar.ui:176
 msgid "_Preferences"
@@ -2211,7 +2210,8 @@ msgstr "Isolla kirjoitettu puhuja ennen kaksoispistettä"
 
 #: data/patterns/Latn-en.hearing-impaired.in:5
 msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
 msgstr ""
 "Korvaa kokonaan isolla kirjoitettu puhujan nimi ennen kaksoispistettä "
 "vuoropuheluviivalla"
@@ -2318,8 +2318,7 @@ msgid "Spelling of a.m. and p.m."
 msgstr "Aamu- ja iltapäivien kirjoitusasu"
 
 #: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
-msgid ""
-"Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "Muuta 12 tunnin jaksojen kirjoitusasu muotoon \"a.m.\" ja \"p.m.\""
 
 #: data/patterns/Latn.common-error.in:88 data/patterns/Latn.common-error.in:97
@@ -2568,7 +2567,8 @@ msgstr "Tekstitysmuokkain"
 msgid "Edit subtitle files"
 msgstr "Muokkaa tekstitystiedostoja"
 
-#. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. TRANSLATORS: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.otsaloma.gaupol.desktop.in:11
 msgid "video;subtitles;captions;"
 msgstr "video;tekstitys;"

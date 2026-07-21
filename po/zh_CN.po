@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 22:29+0300\n"
+"POT-Creation-Date: 2026-07-22 00:48+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: tzwasd 😃, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/otsaloma/teams/64879/zh_CN/)\n"
@@ -21,119 +21,119 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: aeidon/agents/position.py:74
+#: aeidon/agents/position.py:73
 msgid "Adjusting durations"
 msgstr "调整持续时间"
 
-#: aeidon/agents/position.py:96
+#: aeidon/agents/position.py:95
 msgid "Converting framerate"
 msgstr "转换帧率"
 
-#: aeidon/agents/position.py:146
+#: aeidon/agents/position.py:145
 msgid "Setting framerate"
 msgstr "设置帧率"
 
-#: aeidon/agents/position.py:168
+#: aeidon/agents/position.py:167
 msgid "Shifting positions"
 msgstr "移动位置"
 
-#: aeidon/agents/position.py:188
+#: aeidon/agents/position.py:187
 msgid "Transforming positions"
 msgstr "转变位置"
 
-#: aeidon/agents/edit.py:35
+#: aeidon/agents/edit.py:34
 msgid "Clearing texts"
 msgstr "清除文本"
 
-#: aeidon/agents/edit.py:61 aeidon/agents/edit.py:83
+#: aeidon/agents/edit.py:60 aeidon/agents/edit.py:82
 msgid "Inserting subtitles"
 msgstr "插入字幕"
 
-#: aeidon/agents/edit.py:103
+#: aeidon/agents/edit.py:102
 msgid "Merging subtitles"
 msgstr "合并字幕"
 
-#: aeidon/agents/edit.py:114
+#: aeidon/agents/edit.py:113
 msgid "Removing subtitles"
 msgstr "删除字幕"
 
-#: aeidon/agents/edit.py:131
+#: aeidon/agents/edit.py:130
 msgid "Replacing positions"
 msgstr "替换位置"
 
-#: aeidon/agents/edit.py:147
+#: aeidon/agents/edit.py:146
 msgid "Replacing texts"
 msgstr "替换文本"
 
-#: aeidon/agents/edit.py:171
+#: aeidon/agents/edit.py:170
 msgid "Splitting subtitle"
 msgstr "拆分字幕"
 
-#: aeidon/agents/format.py:49
+#: aeidon/agents/format.py:48
 msgid "Adding dialogue dashes"
 msgstr "添加对话破折号"
 
-#: aeidon/agents/format.py:68
+#: aeidon/agents/format.py:67
 msgid "Changing case"
 msgstr "改变大小写"
 
-#: aeidon/agents/format.py:92
+#: aeidon/agents/format.py:91
 msgid "Italicizing"
 msgstr "斜体"
 
-#: aeidon/agents/format.py:108
+#: aeidon/agents/format.py:107
 msgid "Removing dialogue dashes"
 msgstr "删除对话破折号"
 
-#: aeidon/agents/format.py:174
+#: aeidon/agents/format.py:173
 msgid "Unitalicizing"
 msgstr "取消斜体"
 
-#: aeidon/agents/search.py:227
+#: aeidon/agents/search.py:226
 msgid "Replacing"
 msgstr "替换"
 
-#: aeidon/agents/search.py:256 aeidon/agents/search.py:258
+#: aeidon/agents/search.py:255 aeidon/agents/search.py:257
 msgid "Replacing all"
 msgstr "全部替换"
 
-#: aeidon/agents/text.py:91
+#: aeidon/agents/text.py:90
 msgid "Breaking lines"
 msgstr "换行"
 
-#: aeidon/agents/text.py:128
+#: aeidon/agents/text.py:127
 msgid "Capitalizing texts"
 msgstr "文本大写"
 
-#: aeidon/agents/text.py:185
+#: aeidon/agents/text.py:184
 msgid "Correcting common errors"
 msgstr "更正常见错误"
 
-#: aeidon/agents/text.py:234
+#: aeidon/agents/text.py:233
 msgid "Removing hearing impaired texts"
 msgstr "删除听力障碍文本"
 
-#: aeidon/agents/text.py:315
+#: aeidon/agents/text.py:314
 msgid "Joining words by spell-check suggestions"
 msgstr "根据拼写检查的建议连接单词"
 
-#: aeidon/agents/text.py:354
+#: aeidon/agents/text.py:353
 msgid "Splitting words by spell-check suggestions"
 msgstr "根据拼写检查的建议拆分单词"
 
-#: aeidon/agents/clipboard.py:44
+#: aeidon/agents/clipboard.py:43
 msgid "Cutting texts"
 msgstr "剪切文本"
 
-#: aeidon/agents/clipboard.py:61
+#: aeidon/agents/clipboard.py:60
 msgid "Pasting texts"
 msgstr "复制文本"
 
-#: aeidon/agents/set.py:58 aeidon/agents/set.py:80 aeidon/agents/set.py:113
+#: aeidon/agents/set.py:57 aeidon/agents/set.py:79 aeidon/agents/set.py:112
 msgid "Editing position"
 msgstr "编辑位置"
 
-#: aeidon/agents/set.py:129
+#: aeidon/agents/set.py:128
 msgid "Editing text"
 msgstr "编辑文本"
 
@@ -141,192 +141,193 @@ msgstr "编辑文本"
 #. gedit, which is translated to very many languages. Check the gedit .po
 #. files for a reference:
 #. <https://gitlab.gnome.org/GNOME/gedit/tree/master/po>.
-#: aeidon/encodings.py:40 aeidon/encodings.py:43 aeidon/encodings.py:46
+#: aeidon/encodings.py:39 aeidon/encodings.py:42 aeidon/encodings.py:45
 msgid "English"
 msgstr "英语"
 
-#: aeidon/encodings.py:41 aeidon/encodings.py:42 aeidon/encodings.py:69
+#: aeidon/encodings.py:40 aeidon/encodings.py:41 aeidon/encodings.py:68
 msgid "Chinese traditional"
 msgstr "繁体中文"
 
-#: aeidon/encodings.py:44
+#: aeidon/encodings.py:43
 msgid "German"
 msgstr "德语"
 
-#: aeidon/encodings.py:45 aeidon/encodings.py:54 aeidon/encodings.py:59
-#: aeidon/encodings.py:79 aeidon/encodings.py:105
+#: aeidon/encodings.py:44 aeidon/encodings.py:53 aeidon/encodings.py:58
+#: aeidon/encodings.py:78 aeidon/encodings.py:104
 msgid "Hebrew"
 msgstr "希伯来语"
 
-#: aeidon/encodings.py:47 aeidon/encodings.py:51 aeidon/encodings.py:56
-#: aeidon/encodings.py:73 aeidon/encodings.py:76 aeidon/encodings.py:98
-#: aeidon/encodings.py:111 aeidon/encodings.py:122
+#: aeidon/encodings.py:46 aeidon/encodings.py:50 aeidon/encodings.py:55
+#: aeidon/encodings.py:72 aeidon/encodings.py:75 aeidon/encodings.py:97
+#: aeidon/encodings.py:110 aeidon/encodings.py:121
 msgid "Western"
 msgstr "西欧"
 
-#: aeidon/encodings.py:48 aeidon/encodings.py:61 aeidon/encodings.py:80
-#: aeidon/encodings.py:103
+#: aeidon/encodings.py:47 aeidon/encodings.py:60 aeidon/encodings.py:79
+#: aeidon/encodings.py:102
 msgid "Arabic"
 msgstr "阿拉伯语"
 
-#: aeidon/encodings.py:49 aeidon/encodings.py:64 aeidon/encodings.py:66
-#: aeidon/encodings.py:77 aeidon/encodings.py:104 aeidon/encodings.py:119
+#: aeidon/encodings.py:48 aeidon/encodings.py:63 aeidon/encodings.py:65
+#: aeidon/encodings.py:76 aeidon/encodings.py:103 aeidon/encodings.py:118
 msgid "Greek"
 msgstr "希腊语"
 
-#: aeidon/encodings.py:50 aeidon/encodings.py:81 aeidon/encodings.py:101
-#: aeidon/encodings.py:109
+#: aeidon/encodings.py:49 aeidon/encodings.py:80 aeidon/encodings.py:100
+#: aeidon/encodings.py:108
 msgid "Baltic"
 msgstr "波罗的语"
 
-#: aeidon/encodings.py:52 aeidon/encodings.py:74 aeidon/encodings.py:99
-#: aeidon/encodings.py:121
+#: aeidon/encodings.py:51 aeidon/encodings.py:73 aeidon/encodings.py:98
+#: aeidon/encodings.py:120
 msgid "Central European"
 msgstr "中欧"
 
-#: aeidon/encodings.py:53 aeidon/encodings.py:75 aeidon/encodings.py:102
-#: aeidon/encodings.py:118
+#: aeidon/encodings.py:52 aeidon/encodings.py:74 aeidon/encodings.py:101
+#: aeidon/encodings.py:117
 msgid "Cyrillic"
 msgstr "西里尔语"
 
-#: aeidon/encodings.py:55 aeidon/encodings.py:71 aeidon/encodings.py:78
-#: aeidon/encodings.py:106 aeidon/encodings.py:123
+#: aeidon/encodings.py:54 aeidon/encodings.py:70 aeidon/encodings.py:77
+#: aeidon/encodings.py:105 aeidon/encodings.py:122
 msgid "Turkish"
 msgstr "土耳其语"
 
-#: aeidon/encodings.py:57
+#: aeidon/encodings.py:56
 msgid "Portuguese"
 msgstr "葡萄牙语"
 
-#: aeidon/encodings.py:58 aeidon/encodings.py:120
+#: aeidon/encodings.py:57 aeidon/encodings.py:119
 msgid "Icelandic"
 msgstr "冰岛语"
 
-#: aeidon/encodings.py:60
+#: aeidon/encodings.py:59
 msgid "Canadian"
 msgstr "加拿大"
 
-#: aeidon/encodings.py:62 aeidon/encodings.py:107
+#: aeidon/encodings.py:61 aeidon/encodings.py:106
 msgid "Nordic"
 msgstr "北欧"
 
-#: aeidon/encodings.py:63 aeidon/encodings.py:114
+#: aeidon/encodings.py:62 aeidon/encodings.py:113
 msgid "Russian"
 msgstr "俄语"
 
-#: aeidon/encodings.py:65 aeidon/encodings.py:108
+#: aeidon/encodings.py:64 aeidon/encodings.py:107
 msgid "Thai"
 msgstr "泰语"
 
-#: aeidon/encodings.py:67 aeidon/encodings.py:83 aeidon/encodings.py:84
-#: aeidon/encodings.py:85 aeidon/encodings.py:91 aeidon/encodings.py:92
-#: aeidon/encodings.py:93 aeidon/encodings.py:94 aeidon/encodings.py:95
-#: aeidon/encodings.py:96 aeidon/encodings.py:125 aeidon/encodings.py:126
-#: aeidon/encodings.py:127
+#: aeidon/encodings.py:66 aeidon/encodings.py:82 aeidon/encodings.py:83
+#: aeidon/encodings.py:84 aeidon/encodings.py:90 aeidon/encodings.py:91
+#: aeidon/encodings.py:92 aeidon/encodings.py:93 aeidon/encodings.py:94
+#: aeidon/encodings.py:95 aeidon/encodings.py:124 aeidon/encodings.py:125
+#: aeidon/encodings.py:126
 msgid "Japanese"
 msgstr "日语"
 
-#: aeidon/encodings.py:68 aeidon/encodings.py:86 aeidon/encodings.py:97
-#: aeidon/encodings.py:113
+#: aeidon/encodings.py:67 aeidon/encodings.py:85 aeidon/encodings.py:96
+#: aeidon/encodings.py:112
 msgid "Korean"
 msgstr "韩语"
 
-#: aeidon/encodings.py:70
+#: aeidon/encodings.py:69
 msgid "Urdu"
 msgstr "乌尔都语"
 
-#: aeidon/encodings.py:72 aeidon/encodings.py:116
+#: aeidon/encodings.py:71 aeidon/encodings.py:115
 msgid "Ukrainian"
 msgstr "乌克兰语"
 
-#: aeidon/encodings.py:82
+#: aeidon/encodings.py:81
 msgid "Vietnamese"
 msgstr "越南语"
 
-#: aeidon/encodings.py:87 aeidon/encodings.py:90
+#: aeidon/encodings.py:86 aeidon/encodings.py:89
 msgid "Chinese simplified"
 msgstr "简体中文"
 
-#: aeidon/encodings.py:88 aeidon/encodings.py:89
+#: aeidon/encodings.py:87 aeidon/encodings.py:88
 msgid "Chinese unified"
 msgstr "中文"
 
-#: aeidon/encodings.py:100 aeidon/encodings.py:112
+#: aeidon/encodings.py:99 aeidon/encodings.py:111
 msgid "South European"
 msgstr "南欧"
 
-#: aeidon/encodings.py:110
+#: aeidon/encodings.py:109
 msgid "Celtic"
 msgstr "凯尔特语"
 
-#: aeidon/encodings.py:115
+#: aeidon/encodings.py:114
 msgid "Tajik"
 msgstr "塔吉克语"
 
-#: aeidon/encodings.py:117
+#: aeidon/encodings.py:116
 msgid "Kazakh"
 msgstr "哈萨克语"
 
-#: aeidon/encodings.py:124
+#: aeidon/encodings.py:123
 msgid "Cyrillic Asian"
 msgstr "亚洲西里尔语"
 
-#: aeidon/encodings.py:128 aeidon/encodings.py:129 aeidon/encodings.py:130
-#: aeidon/encodings.py:131 aeidon/encodings.py:132 aeidon/encodings.py:133
-#: aeidon/encodings.py:134 aeidon/encodings.py:135 aeidon/encodings.py:136
+#: aeidon/encodings.py:127 aeidon/encodings.py:128 aeidon/encodings.py:129
+#: aeidon/encodings.py:130 aeidon/encodings.py:131 aeidon/encodings.py:132
+#: aeidon/encodings.py:133 aeidon/encodings.py:134 aeidon/encodings.py:135
 msgid "Unicode"
 msgstr "Unicode"
 
-#: aeidon/encodings.py:156
+#: aeidon/encodings.py:153
 #, python-brace-format
 msgid "{description} ({name})"
 msgstr "{description} ({name})"
 
-#: aeidon/encodings.py:221
+#: aeidon/encodings.py:216
+#, python-brace-format
 msgid "Current locale ({})"
 msgstr "当前语言环境 ({})"
 
-#: aeidon/enums.py:40 gaupol/enums.py:38
+#: aeidon/enums.py:29 gaupol/enums.py:29
 msgid "Subtitle number"
 msgstr "字幕序号"
 
-#: aeidon/enums.py:43
+#: aeidon/enums.py:32
 msgid "Subtitle position"
 msgstr "字幕位置"
 
-#: aeidon/enums.py:59
+#: aeidon/enums.py:46
 msgid "23.976 fps"
 msgstr "23.976 fps"
 
-#: aeidon/enums.py:63
+#: aeidon/enums.py:50
 msgid "24.000 fps"
 msgstr "24.000 fps"
 
-#: aeidon/enums.py:67
+#: aeidon/enums.py:54
 msgid "25.000 fps"
 msgstr "25.000 fps"
 
-#: aeidon/enums.py:71
+#: aeidon/enums.py:58
 msgid "29.970 fps"
 msgstr "29.970 fps"
 
-#: aeidon/enums.py:75 data/ui/menubar.ui:248
+#: aeidon/enums.py:62 data/ui/menubar.ui:243
 msgid "30.000 fps"
 msgstr "30.000 fps"
 
-#: aeidon/enums.py:79 data/ui/menubar.ui:253
+#: aeidon/enums.py:66 data/ui/menubar.ui:248
 msgid "50.000 fps"
 msgstr "50.000 fps"
 
-#: aeidon/enums.py:83 data/ui/menubar.ui:258
+#: aeidon/enums.py:70 data/ui/menubar.ui:253
 msgid "59.940 fps"
 msgstr "59.940 fps"
 
-#: aeidon/enums.py:87 data/ui/menubar.ui:263
+#: aeidon/enums.py:74 data/ui/menubar.ui:258
 msgid "60.000 fps"
 msgstr "60.000 fps"
 
-#: aeidon/enums.py:112
+#: aeidon/enums.py:97
 msgid "Mac (classic)"
 msgstr "Mac (经典)"
 
@@ -335,470 +336,445 @@ msgstr "Mac (经典)"
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
-#: data/extensions/custom-framerates/custom-framerates.py:39
-#: gaupol/agents/close.py:71 gaupol/agents/open.py:363
-#: gaupol/agents/open.py:375 gaupol/agents/open.py:387
-#: gaupol/dialogs/multi_close.py:54 gaupol/dialogs/split.py:44
-#: gaupol/dialogs/encoding.py:55 gaupol/dialogs/save.py:73
-#: gaupol/dialogs/multi_save.py:83 gaupol/dialogs/multi_save.py:215
-#: gaupol/dialogs/framerate_convert.py:63 gaupol/dialogs/position_shift.py:71
-#: gaupol/dialogs/duration_adjust.py:86 gaupol/dialogs/video.py:41
-#: gaupol/dialogs/insert.py:44 gaupol/dialogs/open.py:63
-#: gaupol/dialogs/position_transform.py:69 gaupol/dialogs/text_edit.py:48
-msgid "_Cancel"
-msgstr "取消(_C)"
-
-#: data/extensions/custom-framerates/custom-framerates.py:40
-#: data/ui/spell-check-dialog.ui:152
-msgid "_Add"
-msgstr "添加(_A)"
-
-#: data/extensions/custom-framerates/custom-framerates.py:171
-msgid "{:.3f} fps"
-msgstr "{:.3f} fps"
-
-#: gaupol/player.py:263 gaupol/player.py:381 gaupol/agents/save.py:197
-#: gaupol/agents/save.py:205 gaupol/agents/tools.py:48
-#: gaupol/agents/open.py:328 gaupol/agents/open.py:337
-#: gaupol/agents/open.py:345 gaupol/agents/open.py:354
-#: gaupol/agents/preview.py:108 gaupol/agents/preview.py:116
-#: gaupol/agents/preview.py:125 gaupol/agents/preview.py:133
-#: gaupol/assistants.py:601 gaupol/dialogs/encoding.py:56
-#: gaupol/dialogs/search.py:560 gaupol/dialogs/search.py:568
-#: gaupol/dialogs/text_edit.py:49
+#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:194
+#: gaupol/agents/save.py:202 gaupol/agents/tools.py:47
+#: gaupol/agents/open.py:340 gaupol/agents/open.py:349
+#: gaupol/agents/open.py:357 gaupol/agents/open.py:366
+#: gaupol/agents/preview.py:107 gaupol/agents/preview.py:115
+#: gaupol/agents/preview.py:124 gaupol/agents/preview.py:132
+#: gaupol/assistants.py:568 gaupol/dialogs/encoding.py:46
+#: gaupol/dialogs/search.py:565 gaupol/dialogs/search.py:573
 msgid "_OK"
 msgstr "好的(_O)"
 
-#: gaupol/player.py:372
+#: gaupol/player.py:378
 msgid "No video streams found"
 msgstr "找不到视频流"
 
-#: gaupol/player.py:379
+#: gaupol/player.py:385
 msgid "Failed to initialize playback"
 msgstr "初始化播放失败"
 
-#: gaupol/page.py:60
+#: gaupol/page.py:56
+#, python-brace-format
 msgid "Untitled {:d}"
 msgstr "无标题 {:d}"
 
-#: gaupol/page.py:133
+#: gaupol/page.py:123
 msgid "Close project"
 msgstr "关闭项目"
 
-#: gaupol/page.py:145
+#: gaupol/page.py:135
+#, python-brace-format
 msgid "{} translation"
 msgstr "{} 翻译"
 
-#: gaupol/page.py:302
+#: gaupol/page.py:288
 msgid "Path:"
 msgstr "路径："
 
-#: gaupol/page.py:303
+#: gaupol/page.py:289
 msgid "Format:"
 msgstr "格式："
 
-#: gaupol/page.py:304
+#: gaupol/page.py:290
 msgid "Encoding:"
 msgstr "编码："
 
-#: gaupol/page.py:305
+#: gaupol/page.py:291
 msgid "Newlines:"
 msgstr "换行："
 
-#: gaupol/agents/menu.py:94 gaupol/agents/menu.py:103
-#: gaupol/agents/menu.py:110
+#: gaupol/agents/menu.py:74 gaupol/agents/menu.py:81
 msgid "File not found"
 msgstr "找不到文件"
 
-#: gaupol/agents/save.py:129
+#: gaupol/agents/save.py:125
 msgid "Save As"
 msgstr "另存为"
 
-#: gaupol/agents/save.py:135
+#: gaupol/agents/save.py:131
+#, python-brace-format
 msgid "Saved main document as \"{}\""
 msgstr "已将主文档保存为“{}”"
 
-#: gaupol/agents/save.py:153
+#: gaupol/agents/save.py:149
 msgid "Save Translation As"
 msgstr "另存为翻译"
 
-#: gaupol/agents/save.py:159
+#: gaupol/agents/save.py:155
+#, python-brace-format
 msgid "Saved translation document as \"{}\""
 msgstr "已将翻译文档保存为“{}”"
 
-#: gaupol/agents/save.py:194
+#: gaupol/agents/save.py:191
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "无法使用编解码器“{codec}”对文件“{basename}”进行编码"
 
-#: gaupol/agents/save.py:195
+#: gaupol/agents/save.py:192
 msgid "Please try to save the file with a different character encoding."
 msgstr "请使用另一种字符编码保存文件。"
 
-#: gaupol/agents/save.py:203
+#: gaupol/agents/save.py:200
+#, python-brace-format
 msgid "Failed to save file \"{}\""
 msgstr "无法保存文件“{}”"
 
-#: gaupol/agents/edit.py:101 gaupol/agents/edit.py:119
+#: gaupol/agents/edit.py:102 gaupol/agents/edit.py:120
 msgid "Stretching end position"
 msgstr "拉伸结束位置"
 
-#: gaupol/agents/edit.py:208
+#: gaupol/agents/edit.py:307 gaupol/agents/edit.py:325
+msgid "Stretching start position"
+msgstr "拉伸开始位置"
+
+#: gaupol/agents/edit.py:384
+msgid "Use Shift+Return for line-break"
+msgstr "使用 Shift+回车键 换行"
+
+#: gaupol/agents/edit.py:413
+#, python-brace-format
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] "已插入 {:d} 字幕以适合剪贴板内容"
 
-#: gaupol/agents/edit.py:334 gaupol/agents/edit.py:352
-msgid "Stretching start position"
-msgstr "拉伸开始位置"
+#: gaupol/agents/edit.py:432
+#, python-brace-format
+msgid "Redo: {}"
+msgstr ""
 
-#: gaupol/agents/edit.py:411
-msgid "Use Shift+Return for line-break"
-msgstr "使用 Shift+回车键 换行"
+#: gaupol/agents/edit.py:484
+#, python-brace-format
+msgid "Undo: {}"
+msgstr ""
 
-#: gaupol/agents/close.py:66
+#: gaupol/agents/close.py:64
+#, python-brace-format
 msgid "Save changes to document \"{}\" before closing?"
 msgstr "是否在关闭文档“{}”前保存更改？"
 
-#: gaupol/agents/close.py:68 gaupol/agents/open.py:384
-#: gaupol/dialogs/multi_close.py:39
+#: gaupol/agents/close.py:66 gaupol/agents/open.py:396
+#: gaupol/dialogs/multi_close.py:36
 msgid "If you don't save, changes will be permanently lost."
 msgstr "如果不保存，更改将永久丢失。"
 
-#: gaupol/agents/close.py:70 gaupol/dialogs/multi_close.py:53
+#: gaupol/agents/close.py:68 gaupol/dialogs/multi_close.py:46
 msgid "Close _Without Saving"
 msgstr "关闭并且不更改(_W)"
 
-#: gaupol/agents/close.py:72 gaupol/agents/open.py:388
-#: gaupol/dialogs/multi_close.py:55 gaupol/dialogs/save.py:74
-#: gaupol/dialogs/multi_save.py:84 data/ui/menubar.ui:34
+#: gaupol/agents/close.py:69 gaupol/agents/open.py:375
+#: gaupol/agents/open.py:387 gaupol/agents/open.py:399
+#: gaupol/dialogs/multi_close.py:47 gaupol/dialogs/split.py:41
+#: gaupol/dialogs/encoding.py:45 gaupol/dialogs/save.py:63
+#: gaupol/dialogs/multi_save.py:80 gaupol/dialogs/multi_save.py:149
+#: gaupol/dialogs/multi_save.py:231 gaupol/dialogs/framerate_convert.py:60
+#: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/duration_adjust.py:83
+#: gaupol/dialogs/video.py:38 gaupol/dialogs/insert.py:40
+#: gaupol/dialogs/open.py:59 gaupol/dialogs/position_transform.py:67
+msgid "_Cancel"
+msgstr "取消(_C)"
+
+#: gaupol/agents/close.py:70 gaupol/agents/open.py:400
+#: gaupol/dialogs/multi_close.py:48 gaupol/dialogs/save.py:64
+#: gaupol/dialogs/multi_save.py:81 data/ui/spell-check-dialog.ui:29
+#: data/ui/menubar.ui:33
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: gaupol/agents/video.py:67 data/ui/menubar.ui:380
-msgid "_Play/Pause"
-msgstr "播放/暂停(_P)"
-
-#: gaupol/agents/video.py:69
+#: gaupol/agents/video.py:65
 msgid "Play or pause video"
 msgstr "播放或暂停视频"
 
-#: gaupol/agents/video.py:75 data/ui/menubar.ui:390
-msgid "Seek _Previous"
-msgstr "跳到上一个(_P)"
-
-#: gaupol/agents/video.py:77
+#: gaupol/agents/video.py:71
 msgid "Seek to the start of the previous subtitle"
 msgstr "跳到到上一条字幕的开头"
 
-#: gaupol/agents/video.py:81 data/ui/menubar.ui:394
-msgid "Seek _Next"
-msgstr "跳到下一个(_N)"
-
-#: gaupol/agents/video.py:83
+#: gaupol/agents/video.py:76
 msgid "Seek to the start of the next subtitle"
 msgstr "跳到下一条字幕的开头"
 
-#: gaupol/agents/video.py:88 data/ui/menubar.ui:400
-msgid "Seek _Backward"
-msgstr "快退(_B)"
-
-#: gaupol/agents/video.py:90
+#: gaupol/agents/video.py:81
 msgid "Seek backward"
 msgstr "快退"
 
-#: gaupol/agents/video.py:94 data/ui/menubar.ui:404
-msgid "Seek _Forward"
-msgstr "快进(_F)"
-
-#: gaupol/agents/video.py:96
+#: gaupol/agents/video.py:86
 msgid "Seek forward"
 msgstr "快进"
 
-#: gaupol/agents/video.py:109
+#: gaupol/agents/video.py:94
 msgid "Volume"
 msgstr "音量"
 
-#: gaupol/agents/video.py:189
+#: gaupol/agents/video.py:176
 msgid "Load Video"
 msgstr "载入视频"
 
-#: gaupol/agents/video.py:189
+#: gaupol/agents/video.py:176
 msgid "_Load"
 msgstr "载入(_L)"
 
-#: gaupol/agents/video.py:361
+#: gaupol/agents/video.py:337 gaupol/agents/video.py:345
+#, python-brace-format
+msgid "Volume: {}%"
+msgstr ""
+
+#: gaupol/agents/video.py:356
+#, python-brace-format
 msgid "Track {:d}"
 msgstr "音轨 {:d}"
 
-#: gaupol/agents/tools.py:45 gaupol/assistants.py:599
+#: gaupol/agents/tools.py:44 gaupol/assistants.py:566
+#, python-brace-format
 msgid "Failed to load dictionary for language \"{}\""
 msgstr "无法加载语言“{}”的字典"
 
-#: gaupol/agents/open.py:85
+#: gaupol/agents/open.py:86
 #, python-brace-format
 msgid "Appended {amount:d} subtitles from \"{basename}\""
 msgstr "从“{basename}”中添加{amount:d}条字幕"
 
-#: gaupol/agents/open.py:96
+#: gaupol/agents/open.py:97
 msgid "Appending file"
 msgstr "追加文件"
 
-#: gaupol/agents/open.py:111
+#: gaupol/agents/open.py:113
+#, python-brace-format
 msgid "File \"{}\" is already open"
 msgstr "文件 “{}” 已打开"
 
-#: gaupol/agents/open.py:203 gaupol/application.py:219
+#: gaupol/agents/open.py:209
 msgid "Open"
 msgstr "打开"
 
-#: gaupol/agents/open.py:214
+#: gaupol/agents/open.py:220
 msgid "Open Translation"
 msgstr "打开翻译"
 
-#: gaupol/agents/open.py:223
+#: gaupol/agents/open.py:229
 msgid "Select Video"
 msgstr "选择视频"
 
-#: gaupol/agents/open.py:224
+#: gaupol/agents/open.py:230 gaupol/dialogs/multi_save.py:150
 msgid "_Select"
 msgstr "选择(_S)"
 
-#: gaupol/agents/open.py:325
+#: gaupol/agents/open.py:248
+#, python-brace-format
+msgid "Selected video \"{}\""
+msgstr ""
+
+#: gaupol/agents/open.py:337
+#, python-brace-format
 msgid "Failed to decode file \"{}\" with all attempted codecs"
 msgstr "无法使用任何编解码器打开文件 “{}”"
 
-#: gaupol/agents/open.py:326
+#: gaupol/agents/open.py:338
 msgid "Please try to open the file with a different character encoding."
 msgstr "请使用另一种字符编码打开文件。"
 
-#: gaupol/agents/open.py:334
+#: gaupol/agents/open.py:346
+#, python-brace-format
 msgid "Failed to recognize format of file \"{}\""
 msgstr "无法识别文件“{}”的格式"
 
-#: gaupol/agents/open.py:335
+#: gaupol/agents/open.py:347
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr "请检查您要打开的文件是否为 Gaupol 支持的格式的字幕文件。"
 
-#: gaupol/agents/open.py:343
+#: gaupol/agents/open.py:355
+#, python-brace-format
 msgid "Failed to open file \"{}\""
 msgstr "无法打开文件“{}”"
 
-#: gaupol/agents/open.py:351
+#: gaupol/agents/open.py:363
+#, python-brace-format
 msgid "Failed to parse file \"{}\""
 msgstr "无法解析文件“{}”"
 
-#: gaupol/agents/open.py:352
+#: gaupol/agents/open.py:364
+#, python-brace-format
 msgid "Please check that the file you are trying to open is a valid {} file."
 msgstr "请检查您要打开的文件是否为有效的 {} 文件。"
 
-#: gaupol/agents/open.py:360
+#: gaupol/agents/open.py:372
+#, python-brace-format
 msgid "Open abnormally large file \"{}\"?"
 msgstr "是否打开异常偏大的文件“{}”？"
 
-#: gaupol/agents/open.py:361
+#: gaupol/agents/open.py:373
+#, python-brace-format
 msgid ""
 "Size of the file is {:.1f} MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr "该文件的大小为 {:.1f} MB，对于一个基于文本的字幕文件而言过于偏大。请检查您是否在打开一个二进制文件。"
 
-#: gaupol/agents/open.py:364 gaupol/agents/open.py:376
-#: gaupol/dialogs/open.py:64
+#: gaupol/agents/open.py:376 gaupol/agents/open.py:388
+#: gaupol/dialogs/open.py:60
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: gaupol/agents/open.py:371
+#: gaupol/agents/open.py:383
+#, python-brace-format
 msgid "Open unsorted file \"{}\"?"
 msgstr "是否打开未排序的文件“{}”？"
 
-#: gaupol/agents/open.py:372
+#: gaupol/agents/open.py:384
+#, python-brace-format
 msgid ""
 "The order of {:d} subtitles needs to be changed. If {:d} sounds like a lot, "
 "the file may be erroneously composed."
 msgstr "有 {:d} 条字幕需要调整。如果 {:d} 看上去很多，该文件可能存在合成错误。"
 
-#: gaupol/agents/open.py:383
+#: gaupol/agents/open.py:395
+#, python-brace-format
 msgid "Save changes to translation document \"{}\" before opening a new one?"
 msgstr "是否在打开新的翻译文档前保存对“{}”的更改？"
 
-#: gaupol/agents/open.py:386
+#: gaupol/agents/open.py:398
 msgid "Open _Without Saving"
 msgstr "打开并不保存(_W)"
 
-#: gaupol/agents/preview.py:105
+#: gaupol/agents/preview.py:104
+#, python-brace-format
 msgid "Failed to encode subtitle file to temporary directory \"{}\""
 msgstr "无法将字幕文件编码到临时目录“{}”"
 
-#: gaupol/agents/preview.py:106
+#: gaupol/agents/preview.py:105
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
 "different character encoding."
 msgstr "无法使用当前的字符编码将字幕数据编码到临时文件以供预览。请先使用另一种字符编码保存字幕文件。"
 
-#: gaupol/agents/preview.py:114
+#: gaupol/agents/preview.py:113
+#, python-brace-format
 msgid "Failed to save subtitle file to temporary directory \"{}\""
 msgstr "无法将字幕文件保存到临时目录“{}”"
 
-#: gaupol/agents/preview.py:122
+#: gaupol/agents/preview.py:121
 msgid "Video player not found"
 msgstr "找不到视频播放器"
 
-#: gaupol/agents/preview.py:123
+#: gaupol/agents/preview.py:122
 msgid ""
 "Please install one of the supported video players: mpv (recommended), "
 "MPlayer or VLC. See the preferences dialog to choose the video player or to "
 "customize the command."
 msgstr "请安装其中一种受支持的视频播放器：mpv（推荐）、MPlayer 或 VLC。请在首选项对话框中选择视频播放器或使用自定义命令。"
 
-#: gaupol/agents/preview.py:131
+#: gaupol/agents/preview.py:130
 msgid "Failed to launch video player"
 msgstr "无法启动视频播放器"
 
-#: gaupol/application.py:223
+#: gaupol/application.py:159
+#, python-brace-format
+msgid "{:.3f} fps"
+msgstr "{:.3f} fps"
+
+#: gaupol/application.py:209
 msgid "Open main files"
 msgstr "打开主文件"
 
-#: gaupol/application.py:230
-msgid "Save"
-msgstr "保存"
+#: gaupol/application.py:213
+msgid "Open a recently used main file"
+msgstr ""
 
-#: gaupol/application.py:233
+#: gaupol/application.py:219
 msgid "Save the current main document"
 msgstr "保存当前主文档"
 
-#: gaupol/application.py:238
-msgid "Undo"
-msgstr "撤销"
-
-#: gaupol/application.py:242
+#: gaupol/application.py:226
 msgid "Undo the last action"
 msgstr "撤销上一步"
 
-#: gaupol/application.py:249
-msgid "Redo"
-msgstr "重做"
-
-#: gaupol/application.py:252
+#: gaupol/application.py:230
 msgid "Redo the last undone action"
 msgstr "重做上次撤销的操作"
 
-#: gaupol/application.py:260
-msgid "Insert"
-msgstr "插入"
-
-#: gaupol/application.py:262
-msgid "Insert new subtitles"
-msgstr "插入新字幕"
-
-#: gaupol/application.py:266
-#: data/extensions/custom-framerates/preferences-dialog.ui:78
-msgid "Remove"
-msgstr "删除"
-
-#: gaupol/application.py:268
-msgid "Remove the selected subtitles"
-msgstr "删除选中的字幕"
-
-#: gaupol/application.py:273 data/ui/search-dialog.ui:283
-msgid "Find"
-msgstr "查找"
-
-#: gaupol/application.py:275
-msgid "Search for and replace text"
-msgstr "查找并替换文本"
-
-#: gaupol/application.py:279 data/ui/preferences-dialog.ui:942
-msgid "Video"
-msgstr "视频"
-
-#: gaupol/application.py:281
-msgid "Show or hide the video player"
-msgstr "显示/隐藏视频播放器"
-
-#: gaupol/application.py:285 data/ui/preferences-dialog.ui:1173
-msgid "Preview"
-msgstr "预览"
-
-#: gaupol/application.py:287
+#: gaupol/application.py:236
 msgid "Preview from selected position with a video player"
 msgstr "在播放器中从当前位置预览"
 
+#: gaupol/application.py:241
+msgid "Search for and replace text"
+msgstr "查找并替换文本"
+
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:99
+#: gaupol/assistants.py:117
 msgid "Tasks and Target"
 msgstr "任务和目标"
 
-#: gaupol/assistants.py:128
+#: gaupol/assistants.py:150
 msgid "Correct texts in the text column"
 msgstr "更正文本栏中的文本"
 
-#: gaupol/assistants.py:129
+#: gaupol/assistants.py:151
 msgid "Correct texts in the translation column"
 msgstr "更正翻译栏中的文本"
 
-#: gaupol/assistants.py:138
+#: gaupol/assistants.py:160
 msgid "Correct texts in selected subtitles"
 msgstr "更正所选字幕中的文本"
 
-#: gaupol/assistants.py:139
+#: gaupol/assistants.py:161
 msgid "Correct texts in current project"
 msgstr "更正当前项目中的文本"
 
-#: gaupol/assistants.py:140
+#: gaupol/assistants.py:162
 msgid "Correct texts in all open projects"
 msgstr "更正所有打开的项目中的文本"
 
-#: gaupol/assistants.py:363
+#: gaupol/assistants.py:336
 msgid "Other"
 msgstr "其他"
 
-#: gaupol/assistants.py:439
+#: gaupol/assistants.py:409
 msgid "Capitalize texts written in lower case"
 msgstr "将以小写字母书写的文本大写"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:443
+#: gaupol/assistants.py:413
 msgid "Capitalization Patterns"
 msgstr "大写模式"
 
-#: gaupol/assistants.py:445
+#: gaupol/assistants.py:415
 msgid "Capitalize texts"
 msgstr "大写文本"
 
-#: gaupol/assistants.py:468
+#: gaupol/assistants.py:437
 msgid "Correct common errors made by humans or image recognition software"
 msgstr "更正人为或图像识别软件所犯的常见错误"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:472
+#: gaupol/assistants.py:441
 msgid "Common Error Patterns"
 msgstr "常见错误模式"
 
-#: gaupol/assistants.py:474
+#: gaupol/assistants.py:443
 msgid "Correct common errors"
 msgstr "更正常见错误"
 
-#: gaupol/assistants.py:526
+#: gaupol/assistants.py:494
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr "删除针对听力障碍人士的解释性文字"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:530
+#: gaupol/assistants.py:498
 msgid "Hearing Impaired Patterns"
 msgstr "听力障碍模式"
 
-#: gaupol/assistants.py:532
+#: gaupol/assistants.py:500
 msgid "Remove hearing impaired texts"
 msgstr "删除听力障碍文本"
 
-#: gaupol/assistants.py:544
+#: gaupol/assistants.py:511
 msgid ""
 "Use spell-check suggestions to fix whitespace detection errors of image "
 "recognition software"
@@ -806,368 +782,366 @@ msgstr "使用拼写检查的建议修复图像识别软件的空白检测错误
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:548
+#: gaupol/assistants.py:515
 msgid "Joining and Splitting Words"
 msgstr "连接和拆分单词"
 
-#: gaupol/assistants.py:550
+#: gaupol/assistants.py:517
 msgid "Join or Split Words"
 msgstr "连接或拆分单词"
 
-#: gaupol/assistants.py:635
+#: gaupol/assistants.py:601
 msgid "Break text into lines of defined length"
 msgstr "将文本分成定义长度的行"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:639
+#: gaupol/assistants.py:605
 msgid "Line-Break Patterns"
 msgstr "换行模式"
 
-#: gaupol/assistants.py:641
+#: gaupol/assistants.py:607
 msgid "Break lines"
 msgstr "换行"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:679
+#: gaupol/assistants.py:644
 msgid "Line-Break Options"
 msgstr "换行选项"
 
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:763
+#: gaupol/assistants.py:727
 msgid "Correcting Texts"
 msgstr "更正文本"
 
-#: gaupol/assistants.py:769
-msgid "Each task is now being run on each project."
-msgstr "所有项目中的所有任务都在运行。"
-
-#: gaupol/assistants.py:793
-#, python-brace-format
-msgid "{current:d} of {total:d} tasks complete"
-msgstr "已完成{current:d}任务中的{total:d}个"
-
-#: gaupol/assistants.py:801
-msgid "Project: {}"
-msgstr "项目：{}"
-
-#: gaupol/assistants.py:807
-msgid "Task: {}"
-msgstr "任务：{}"
-
 #. TRANSLATORS: Keep these page titles short, since they
 #. affect the width of the text correction assistant sidebar.
-#: gaupol/assistants.py:832
+#: gaupol/assistants.py:787
 msgid "Confirm Changes"
 msgstr "确认更改"
 
-#: gaupol/assistants.py:892
+#: gaupol/assistants.py:847
 msgid "Accept"
 msgstr "接受"
 
-#: gaupol/assistants.py:898
+#: gaupol/assistants.py:853
 msgid "Original Text"
 msgstr "原文"
 
-#: gaupol/assistants.py:899
+#: gaupol/assistants.py:854
 msgid "Corrected Text"
 msgstr "更正后的文本"
 
-#: gaupol/assistants.py:1048
+#: gaupol/assistants.py:1000
 msgid "Correct Texts"
 msgstr "更正文本"
 
-#: gaupol/assistants.py:1076
+#: gaupol/assistants.py:1028
 msgid "Correcting texts"
 msgstr "更正文本"
 
-#: gaupol/assistants.py:1092
+#: gaupol/assistants.py:1044
 #, python-brace-format
 msgid "Edited {edits:d} and removed {removals:d} subtitles"
 msgstr "已编辑{edits:d}条字幕，已删除{removals:d}条字幕"
 
-#: gaupol/assistants.py:1126
+#: gaupol/assistants.py:1077
+#, python-brace-format
 msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "确认{:d}项更改"
 
-#: gaupol/applicationman.py:105
+#: gaupol/applicationman.py:102
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [选项...] [文件...] [+[数字]]"
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:106
 msgid "FILE..."
 msgstr "文件..."
 
-#: gaupol/applicationman.py:112
+#: gaupol/applicationman.py:109
 msgid "subtitle files to open"
 msgstr "要打开的字幕文件"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:119
 msgid "ENCODING"
 msgstr "编码"
 
-#: gaupol/applicationman.py:125
+#: gaupol/applicationman.py:122
 msgid "set the character encoding used to open files"
 msgstr "设置打开文件的字符编码"
 
-#: gaupol/applicationman.py:132
+#: gaupol/applicationman.py:129
 msgid "list all available character encodings"
 msgstr "列出所有可用的字符编码"
 
-#: gaupol/applicationman.py:137 gaupol/applicationman.py:154
+#: gaupol/applicationman.py:134 gaupol/applicationman.py:151
 msgid "FILE"
 msgstr "文件"
 
-#: gaupol/applicationman.py:140
+#: gaupol/applicationman.py:137
 msgid "open translation file"
 msgstr "打开翻译文件"
 
-#: gaupol/applicationman.py:145
+#: gaupol/applicationman.py:142
 msgid "METHOD"
 msgstr "方法"
 
-#: gaupol/applicationman.py:149
+#: gaupol/applicationman.py:146
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr "用于对齐翻译字幕的方法：“序号”或“位置”"
 
-#: gaupol/applicationman.py:157
+#: gaupol/applicationman.py:154
 msgid "select video file"
 msgstr "选择视频文件"
 
-#: gaupol/enums.py:37
+#: gaupol/enums.py:28
 msgid "No."
 msgstr "序号"
 
-#: gaupol/enums.py:43
+#: gaupol/enums.py:34
 msgid "Start"
 msgstr "开始"
 
-#: gaupol/enums.py:44
+#: gaupol/enums.py:35
 msgid "Start position"
 msgstr "开始位置"
 
-#: gaupol/enums.py:49
+#: gaupol/enums.py:40
 msgid "End"
 msgstr "结束"
 
-#: gaupol/enums.py:50
+#: gaupol/enums.py:41
 msgid "End position"
 msgstr "结束位置"
 
 #. TRANSLATORS: 'Dur.' is short for duration. It is used in the header
 #. of a column that contains numbers five digits wide.
-#: gaupol/enums.py:57
+#: gaupol/enums.py:48
 msgid "Dur."
 msgstr "时长"
 
-#: gaupol/enums.py:58
+#: gaupol/enums.py:49
 msgid "Duration"
 msgstr "持续时间"
 
-#: gaupol/enums.py:63 gaupol/enums.py:64
+#: gaupol/enums.py:54 gaupol/enums.py:55
+#: data/ui/position-transform-dialog.ui:133
+#: data/ui/position-transform-dialog.ui:263
 msgid "Text"
 msgstr "文本"
 
-#: gaupol/enums.py:69 gaupol/enums.py:70
+#: gaupol/enums.py:60 gaupol/enums.py:61
 msgid "Translation"
 msgstr "翻译"
 
-#: gaupol/enums.py:82
+#: gaupol/enums.py:72
 msgid "characters"
 msgstr "字符"
 
-#: gaupol/enums.py:85
+#: gaupol/enums.py:75
 msgid "ems"
 msgstr "ems"
 
-#: gaupol/dialogs/debug.py:44
+#: gaupol/dialogs/debug.py:40
 msgid "Something went wrong"
 msgstr "出错了"
 
-#: gaupol/dialogs/debug.py:45
+#: gaupol/dialogs/debug.py:41
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr "您可能发现了一个错误。请通过提供以下信息并描述您的操作以报告它。"
 
-#: gaupol/dialogs/debug.py:53
+#: gaupol/dialogs/debug.py:49
 msgid "_Report Bug"
 msgstr "报告错误(_R)"
 
-#: gaupol/dialogs/debug.py:54 data/ui/menubar.ui:56
+#: gaupol/dialogs/debug.py:50 data/ui/menubar.ui:55
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: gaupol/dialogs/debug.py:55 gaupol/dialogs/preview_error.py:45
-#: data/ui/tab-popup.ui:16 data/ui/menubar.ui:52
+#: gaupol/dialogs/debug.py:51 gaupol/dialogs/preview_error.py:43
+#: data/ui/menubar.ui:51
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: gaupol/dialogs/multi_close.py:38
+#: gaupol/dialogs/multi_close.py:35
 msgid "Save changes to documents before closing?"
 msgstr "是否在关闭前保存对文档的更改？"
 
-#: gaupol/dialogs/multi_close.py:70
-msgid "Select the _main documents you want to save:"
-msgstr "选择要保存的主文档：(_M)"
-
-#: gaupol/dialogs/multi_close.py:95
-msgid "Select the _translation documents you want to save:"
-msgstr "选择要保存的翻译文档：(_T)"
-
-#: gaupol/dialogs/split.py:45
+#: gaupol/dialogs/split.py:42
 msgid "_Split"
 msgstr "拆分(_S)"
 
-#: gaupol/dialogs/split.py:76
+#: gaupol/dialogs/split.py:73
 msgid "Splitting project"
 msgstr "拆分项目"
 
-#: gaupol/dialogs/split.py:97
+#: gaupol/dialogs/split.py:94
 #, python-brace-format
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "拆分{amount:d}条字幕到“{name}”"
 
-#: gaupol/dialogs/encoding.py:60 data/ui/preferences-dialog.ui:70
+#: gaupol/dialogs/encoding.py:50 data/ui/preferences-dialog.ui:50
 msgid "Character Encodings"
 msgstr "字符编码"
 
-#: gaupol/dialogs/encoding.py:78 gaupol/dialogs/encoding.py:125
-msgid "Description"
-msgstr "描述"
+#: gaupol/dialogs/encoding.py:110
+msgid "In Menu"
+msgstr ""
 
-#: gaupol/dialogs/encoding.py:85 gaupol/dialogs/encoding.py:132
-msgid "Encoding"
-msgstr "编码"
-
-#: gaupol/dialogs/encoding.py:141
-msgid "Show in Menu"
-msgstr "在菜单中显示"
-
-#: gaupol/dialogs/spell_check.py:269
+#: gaupol/dialogs/spell_check.py:274
 msgid "Spell-checking"
 msgstr "拼写检查"
 
-#: gaupol/dialogs/save.py:110 gaupol/dialogs/multi_save.py:98
+#: gaupol/dialogs/save.py:83 data/ui/multi-save-dialog.ui:66
+msgid "For_mat"
+msgstr ""
+
+#: gaupol/dialogs/save.py:91 gaupol/dialogs/open.py:73
+#: data/ui/multi-save-dialog.ui:90
+msgid "_Encoding"
+msgstr ""
+
+#: gaupol/dialogs/save.py:97 data/ui/multi-save-dialog.ui:114
+msgid "Ne_wlines"
+msgstr ""
+
+#: gaupol/dialogs/save.py:103 data/ui/menubar.ui:220
+#: data/ui/multi-save-dialog.ui:136
+msgid "F_ramerate"
+msgstr "帧率(_R)"
+
+#: gaupol/dialogs/save.py:136 gaupol/dialogs/multi_save.py:95
+#, python-brace-format
 msgid "{} (recommended)"
 msgstr "{} (建议)"
 
-#: gaupol/dialogs/file.py:59 gaupol/dialogs/video.py:52
+#: gaupol/dialogs/file.py:56 gaupol/dialogs/video.py:50
 msgid "All files"
 msgstr "所有文件"
 
-#: gaupol/dialogs/file.py:63
+#: gaupol/dialogs/file.py:60
 msgid "All supported files"
 msgstr "所有支持的文件"
 
-#: gaupol/dialogs/file.py:77
+#: gaupol/dialogs/file.py:74
 #, python-brace-format
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: gaupol/dialogs/file.py:120
+#: gaupol/dialogs/file.py:117
 msgid "Auto-detected"
 msgstr "自动检测"
 
-#: gaupol/dialogs/file.py:122
+#: gaupol/dialogs/file.py:119
 msgid "Other…"
 msgstr "其它…"
 
-#: gaupol/dialogs/multi_save.py:212
+#: gaupol/dialogs/multi_save.py:145
+msgid "Select A Folder"
+msgstr "选择一个文件夹"
+
+#: gaupol/dialogs/multi_save.py:228
+#, python-brace-format
 msgid ""
 "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr "将要保存{:d}个已存在的文件。您确定要替换它们吗？"
 
-#: gaupol/dialogs/multi_save.py:213
+#: gaupol/dialogs/multi_save.py:229
+#, python-brace-format
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
 "contents."
 msgstr "这些文件已存在于“{}”。替换它们将覆盖它们的内容。"
 
-#: gaupol/dialogs/multi_save.py:216 data/ui/spell-check-dialog.ui:122
-#: data/ui/search-dialog.ui:192
+#: gaupol/dialogs/multi_save.py:232 data/ui/spell-check-dialog.ui:96
+#: data/ui/search-dialog.ui:142
 msgid "_Replace"
 msgstr "替换(_R)"
 
-#: gaupol/dialogs/language.py:97
+#: gaupol/dialogs/language.py:102
 msgid "Set Language"
 msgstr "设置语言"
 
-#: gaupol/dialogs/search.py:189 data/ui/menubar.ui:524
+#: gaupol/dialogs/search.py:188 data/ui/menubar.ui:516
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: gaupol/dialogs/search.py:471
+#: gaupol/dialogs/search.py:476
+#, python-brace-format
 msgid "Found and replaced {:d} occurence"
 msgid_plural "Found and replaced {:d} occurences"
 msgstr[0] "找到并替换{:d}项"
 
-#: gaupol/dialogs/search.py:488
+#: gaupol/dialogs/search.py:493
+#, python-brace-format
 msgid "\"{}\" not found"
 msgstr "找不到“{}”"
 
-#: gaupol/dialogs/search.py:558
+#: gaupol/dialogs/search.py:563
 msgid "Error in regular expression pattern"
 msgstr "正则表达式规则错误"
 
-#: gaupol/dialogs/search.py:566
+#: gaupol/dialogs/search.py:571
 msgid "Error in regular expression replacement"
 msgstr "正则表达式替换错误"
 
-#: gaupol/dialogs/framerate_convert.py:64
+#: gaupol/dialogs/framerate_convert.py:61
 msgid "Co_nvert"
 msgstr "转换(_N)"
 
-#: gaupol/dialogs/preview_error.py:36
+#: gaupol/dialogs/preview_error.py:34
 msgid "Preview in video player failed"
 msgstr "在视频播放器中预览失败"
 
-#: gaupol/dialogs/preview_error.py:37
+#: gaupol/dialogs/preview_error.py:35
 msgid ""
 "There is probably a problem with either the video file or the video player. "
 "See the preferences dialog to choose the video player or to customize the "
 "command."
 msgstr "视频文件或视频播放器可能有问题。请在首选项对话框中选择视频播放器或使用自定义命令。"
 
-#: gaupol/dialogs/preferences.py:217
-msgid "{} Extension Website"
-msgstr "{} 扩展网站"
-
-#: gaupol/dialogs/preferences.py:429
+#: gaupol/dialogs/preferences.py:261
 msgid "Custom"
 msgstr "自定义"
 
-#: gaupol/dialogs/position_shift.py:72
+#: gaupol/dialogs/position_shift.py:69
 msgid "_Shift"
 msgstr "移动(_S)"
 
-#: gaupol/dialogs/position_shift.py:150
-msgid "frames"
-msgstr "帧"
+#: gaupol/dialogs/position_shift.py:146 data/ui/menubar.ui:213
+msgid "_Frames"
+msgstr "帧数(_F)"
 
-#: gaupol/dialogs/position_shift.py:168 data/ui/preferences-dialog.ui:911
-msgid "seconds"
-msgstr "秒"
+#: gaupol/dialogs/position_shift.py:163
+msgid "Secon_ds"
+msgstr ""
 
-#: gaupol/dialogs/duration_adjust.py:70
+#: gaupol/dialogs/duration_adjust.py:67
+#, python-brace-format
 msgid "Adjusted duration of {:d} subtitle"
 msgid_plural "Adjusted durations of {:d} subtitles"
 msgstr[0] "已调整{:d}条字幕的持续时间"
 
-#: gaupol/dialogs/duration_adjust.py:87
+#: gaupol/dialogs/duration_adjust.py:84
 msgid "_Adjust"
 msgstr "调整(_A)"
 
-#: gaupol/dialogs/about.py:36
+#: gaupol/dialogs/about.py:35
+msgid "Subtitle editor"
+msgstr "字幕编辑器"
+
+#: gaupol/dialogs/about.py:40
 msgid "About Gaupol"
 msgstr "关于 Gaupol"
 
-#: gaupol/dialogs/about.py:40
-msgid "Subtitle editor"
-msgstr "字幕编辑器"
+#: gaupol/dialogs/about.py:44
+msgid "Gaupol Website"
+msgstr "Gaupol 的网站"
 
 #. TRANSLATORS: This is a special message that shouldn't be translated
 #. literally. It is used in the about dialog to give credits to the
@@ -1175,495 +1149,413 @@ msgstr "字幕编辑器"
 #. address. You can also include other translators who have contributed
 #. to this translation; in that case, please write them on separate
 #. lines seperated by newlines (\n).
-#: gaupol/dialogs/about.py:51
+#: gaupol/dialogs/about.py:53
 msgid "translator-credits"
 msgstr "tzwasd <tzwjkl@gmail.com>"
 
-#: gaupol/dialogs/about.py:54
-msgid "Gaupol Website"
-msgstr "Gaupol 的网站"
-
-#: gaupol/dialogs/video.py:56
+#: gaupol/dialogs/video.py:54
 msgid "Video files"
 msgstr "视频文件"
 
-#: gaupol/dialogs/insert.py:45
+#: gaupol/dialogs/insert.py:41
 msgid "_Insert"
 msgstr "插入(_I)"
 
-#: gaupol/dialogs/insert.py:54
-msgid "Above selection"
-msgstr "选中上方"
+#: gaupol/dialogs/open.py:79
+msgid "Align _method"
+msgstr ""
 
-#: gaupol/dialogs/insert.py:55
-msgid "Below selection"
-msgstr "选中下方"
-
-#: gaupol/dialogs/append.py:35
+#: gaupol/dialogs/append.py:32
 msgid "Append File"
 msgstr "追加文件"
 
-#: gaupol/dialogs/position_transform.py:70
+#: gaupol/dialogs/position_transform.py:68
 msgid "_Transform"
 msgstr "转变(_T)"
 
-#: gaupol/dialogs/text_edit.py:53
-msgid "Edit Text"
-msgstr "编辑文本"
-
-#: gaupol/renderers/multiline.py:86
-msgid "Italic"
-msgstr "斜体"
-
-#: data/extensions/custom-framerates/preferences-dialog.ui:8
-msgid "Framerates"
-msgstr "帧率"
-
-#: data/extensions/custom-framerates/preferences-dialog.ui:64
-msgid "Add"
-msgstr "添加"
-
-#: data/extensions/custom-framerates/add-framerate-dialog.ui:13
-msgid "Add Framerate"
-msgstr "添加帧率"
-
-#: data/extensions/custom-framerates/add-framerate-dialog.ui:44
-msgid "_Framerate:"
-msgstr "帧率：(_F)"
-
-#: data/extensions/custom-framerates/add-framerate-dialog.ui:73
-msgid "fps"
-msgstr "fps"
-
-#: data/ui/open-dialog.ui:25 data/ui/save-dialog.ui:39
-#: data/ui/multi-save-dialog.ui:74
-msgid "_Encoding:"
-msgstr "编码：(_E)"
-
-#: data/ui/open-dialog.ui:39
-msgid "Align _method:"
-msgstr "对齐方式：(_M)"
-
-#: data/ui/view-popup.ui:6 data/ui/menubar.ui:118
+#: data/ui/view-popup.ui:7 data/ui/menubar.ui:117
 msgid "_Split Subtitle"
 msgstr "拆分字幕(_S)"
 
-#: data/ui/view-popup.ui:10 data/ui/menubar.ui:122
+#: data/ui/view-popup.ui:11 data/ui/menubar.ui:121
 msgid "_Merge Subtitles"
 msgstr "合并字幕(_M)"
 
-#: data/ui/view-popup.ui:16 data/ui/menubar.ui:128
+#: data/ui/view-popup.ui:17 data/ui/menubar.ui:127
 msgid "_Insert Subtitles…"
 msgstr "插入字幕…(_I)"
 
-#: data/ui/view-popup.ui:20 data/ui/menubar.ui:136
+#: data/ui/view-popup.ui:21 data/ui/menubar.ui:135
 msgid "Rem_ove Subtitles"
 msgstr "移除字幕(_O)"
 
-#: data/ui/view-popup.ui:26 data/ui/menubar.ui:384
+#: data/ui/view-popup.ui:27 data/ui/menubar.ui:378
 msgid "Play _Selection"
 msgstr "播放选中(_S)"
 
-#: data/ui/view-popup.ui:30 data/ui/menubar.ui:410
+#: data/ui/view-popup.ui:31 data/ui/menubar.ui:404
 msgid "S_eek Selection Start"
 msgstr "跳到选中的开始(_E)"
 
-#: data/ui/view-popup.ui:36 data/ui/menubar.ui:443
-#: data/ui/text-assistant/confirmation-page.ui:97
+#: data/ui/view-popup.ui:37 data/ui/menubar.ui:436
+#: data/ui/text-assistant/confirmation-page.ui:57
 msgid "_Preview"
 msgstr "预览(_P)"
 
-#: data/ui/preferences-dialog.ui:18
+#: data/ui/preferences-dialog.ui:16
 msgid "Preferences"
 msgstr "首选项"
 
-#: data/ui/preferences-dialog.ui:93
-msgid "When opening files, try encodings in the following order:"
-msgstr "当打开文件时，按以下顺序尝试编码："
-
-#: data/ui/preferences-dialog.ui:104
-msgid "Curr_ent locale encoding"
-msgstr "当前语言环境编码(_E)"
-
-#: data/ui/preferences-dialog.ui:130
-msgid "_Fallback encodings:"
-msgstr "备用编码：(_F)"
-
-#: data/ui/preferences-dialog.ui:246
-msgid "Aut_o-detection"
-msgstr "自动检测(_O)"
-
-#: data/ui/preferences-dialog.ui:266
-msgid "Encoding specified in the open dialog will always be tried first."
-msgstr "始终在打开的对话框中首先尝试指定的编码。"
-
-#: data/ui/preferences-dialog.ui:296
+#: data/ui/preferences-dialog.ui:30
 msgid "File"
 msgstr "文件"
 
-#: data/ui/preferences-dialog.ui:324
-msgid "Font"
-msgstr "字体"
+#: data/ui/preferences-dialog.ui:72
+msgid "Try current _locale encoding first"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:344
-msgid "Use _default theme fixed width font"
-msgstr "使用默认主题中的等宽字体(_D)"
+#: data/ui/preferences-dialog.ui:87
+msgid "Try _auto-detection last"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:368
-msgid "_Editor font:"
-msgstr "编辑器字体：(_E)"
+#: data/ui/preferences-dialog.ui:109
+msgid "Fallback Encodings"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:425
-msgid "Line Lengths"
-msgstr "行长"
+#: data/ui/preferences-dialog.ui:143
+msgid "Add"
+msgstr "添加"
 
-#: data/ui/preferences-dialog.ui:445
-msgid "_Show line lengths in list cells"
-msgstr "在列单元中显示行长(_S)"
+#: data/ui/preferences-dialog.ui:150
+msgid "Remove"
+msgstr "删除"
 
-#: data/ui/preferences-dialog.ui:462
-msgid "S_how line lengths in editable text fields"
-msgstr "在可编辑的文本字段中显示行长(_H)"
+#: data/ui/preferences-dialog.ui:157
+msgid "Move up"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:486
-msgid "_Length unit:"
-msgstr "长度单位：(_L)"
+#: data/ui/preferences-dialog.ui:164
+msgid "Move down"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:540
-msgid "Spell-Check"
-msgstr "拼写检查"
-
-#: data/ui/preferences-dialog.ui:560
-msgid "Chec_k spelling as you type"
-msgstr "输入时检查拼写(_K)"
-
-#: data/ui/preferences-dialog.ui:598
+#: data/ui/preferences-dialog.ui:183
 msgid "Editor"
 msgstr "编辑器"
 
-#: data/ui/preferences-dialog.ui:626
+#: data/ui/preferences-dialog.ui:203
+msgid "Font"
+msgstr "字体"
+
+#: data/ui/preferences-dialog.ui:227
+msgid "_Custom font"
+msgstr ""
+
+#: data/ui/preferences-dialog.ui:259
+msgid "Line Lengths"
+msgstr "行长"
+
+#: data/ui/preferences-dialog.ui:281
+msgid "_Show line lengths in list cells"
+msgstr "在列单元中显示行长(_S)"
+
+#: data/ui/preferences-dialog.ui:296
+msgid "S_how line lengths in editable text fields"
+msgstr "在可编辑的文本字段中显示行长(_H)"
+
+#: data/ui/preferences-dialog.ui:314
+msgid "_Length unit"
+msgstr ""
+
+#: data/ui/preferences-dialog.ui:342
+msgid "Spell-Check"
+msgstr "拼写检查"
+
+#: data/ui/preferences-dialog.ui:364
+msgid "Chec_k spelling as you type"
+msgstr "输入时检查拼写(_K)"
+
+#: data/ui/preferences-dialog.ui:385
+msgid "Video"
+msgstr "视频"
+
+#: data/ui/preferences-dialog.ui:404
 msgid "Fonts"
 msgstr "字体"
 
-#: data/ui/preferences-dialog.ui:649
-msgid "_Subtitles:"
-msgstr "字幕：(_S)"
+#: data/ui/preferences-dialog.ui:429
+msgid "_Subtitles"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:679
-msgid "_Time:"
-msgstr "时间：(_T)"
+#: data/ui/preferences-dialog.ui:456
+msgid "_Time"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:729
+#: data/ui/preferences-dialog.ui:487
 msgid "Colors"
 msgstr "颜色"
 
-#: data/ui/preferences-dialog.ui:752
-msgid "Su_btitles:"
-msgstr "字幕：(_B)"
+#: data/ui/preferences-dialog.ui:512
+msgid "Su_btitles"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:777
-msgid "_Use a background behind text"
-msgstr "在文本后使用背景色(_U)"
+#: data/ui/preferences-dialog.ui:525 data/ui/preferences-dialog.ui:557
+msgid "Background"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:797
-msgid "Ti_me:"
-msgstr "时间：(_M)"
+#: data/ui/preferences-dialog.ui:544
+msgid "Ti_me"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:822
-msgid "Us_e a background behind text"
-msgstr "在文本后使用背景色(_E)"
-
-#: data/ui/preferences-dialog.ui:862
+#: data/ui/preferences-dialog.ui:580
 msgid "Seek"
 msgstr "跳跃"
 
-#: data/ui/preferences-dialog.ui:883
-msgid "_Length:"
-msgstr "长度：(_L)"
+#: data/ui/preferences-dialog.ui:605
+msgid "_Seconds"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:971
+#: data/ui/preferences-dialog.ui:635
+msgid "Preview"
+msgstr "预览"
+
+#: data/ui/preferences-dialog.ui:655
 msgid "Video Player"
 msgstr "视频播放器"
 
-#: data/ui/preferences-dialog.ui:994
-msgid "_Application:"
-msgstr "应用：(_A)"
+#: data/ui/preferences-dialog.ui:680
+msgid "_Application"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:1008
-msgid "Co_mmand:"
-msgstr "命令：(_M)"
+#: data/ui/preferences-dialog.ui:704
+msgid "Co_mmand"
+msgstr ""
 
 #. Translators: Only the title is to be translated, field names not.
-#: data/ui/preferences-dialog.ui:1033
+#: data/ui/preferences-dialog.ui:712
 msgid ""
 "Fields:\n"
-"                            $MILLISECONDS\n"
-"                            $SECONDS\n"
-"                            $SUBFILE\n"
-"                            $VIDEOFILE"
+"$MILLISECONDS\n"
+"$SECONDS\n"
+"$SUBFILE\n"
+"$VIDEOFILE"
 msgstr ""
-"字段:\n"
-"                            $MILLISECONDS\n"
-"                            $SECONDS\n"
-"                            $SUBFILE\n"
-"                            $VIDEOFILE"
 
-#: data/ui/preferences-dialog.ui:1048
+#: data/ui/preferences-dialog.ui:733
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "始终使用 UTF-8 字符编码(_W)"
 
-#: data/ui/preferences-dialog.ui:1089
+#: data/ui/preferences-dialog.ui:755
 msgid "Start Position"
 msgstr "开始位置"
 
-#: data/ui/preferences-dialog.ui:1111
-msgid "_Offset:"
-msgstr "偏移：(_O)"
+#: data/ui/preferences-dialog.ui:780
+msgid "_Offset (seconds before selection)"
+msgstr ""
 
-#: data/ui/preferences-dialog.ui:1142
-msgid "seconds before selection"
-msgstr "秒在选择前的"
-
-#: data/ui/preferences-dialog.ui:1281
-msgid "Extensions"
-msgstr "扩展"
-
-#: data/ui/position-transform-dialog.ui:22
+#: data/ui/position-transform-dialog.ui:19
 msgid "Transform Positions"
 msgstr "转变位置"
 
-#: data/ui/position-transform-dialog.ui:62
+#: data/ui/position-transform-dialog.ui:44
 msgid "First Point"
 msgstr "第一点"
 
-#: data/ui/position-transform-dialog.ui:91
-msgid "_Subtitle:"
-msgstr "字幕：(_S)"
+#: data/ui/position-transform-dialog.ui:69
+msgid "_Subtitle"
+msgstr ""
 
-#: data/ui/position-transform-dialog.ui:105
-msgid "C_orrection:"
-msgstr "更正：(_O)"
+#: data/ui/position-transform-dialog.ui:99
+msgid "C_orrection"
+msgstr ""
 
-#: data/ui/position-transform-dialog.ui:119
-#: data/ui/position-transform-dialog.ui:310
-msgid "Text:"
-msgstr "文本："
+#: data/ui/position-transform-dialog.ui:150
+#: data/ui/position-transform-dialog.ui:280
+#: data/ui/position-shift-dialog.ui:79
+msgid "Preview Changes"
+msgstr ""
 
-#: data/ui/position-transform-dialog.ui:208
-#: data/ui/position-shift-dialog.ui:135
-msgid "_Preview Changes"
-msgstr "预览更改(_P)"
-
-#: data/ui/position-transform-dialog.ui:253
+#: data/ui/position-transform-dialog.ui:174
 msgid "Second Point"
 msgstr "第二点"
 
-#: data/ui/position-transform-dialog.ui:282
-msgid "Su_btitle:"
-msgstr "字幕：(_B)"
+#: data/ui/position-transform-dialog.ui:199
+msgid "Su_btitle"
+msgstr ""
 
-#: data/ui/position-transform-dialog.ui:296
-msgid "Co_rrection:"
-msgstr "更正：(_R)"
+#: data/ui/position-transform-dialog.ui:229
+msgid "Co_rrection"
+msgstr ""
 
-#: data/ui/position-transform-dialog.ui:399
-msgid "Pre_view Changes"
-msgstr "预览更改(_V)"
-
-#: data/ui/position-transform-dialog.ui:444
-#: data/ui/framerate-convert-dialog.ui:144 data/ui/language-dialog.ui:186
-#: data/ui/duration-adjust-dialog.ui:388
-#: data/ui/text-assistant/line-break-options-page.ui:178
-#: data/ui/position-shift-dialog.ui:180 data/ui/search-dialog.ui:381
+#: data/ui/position-transform-dialog.ui:304
+#: data/ui/framerate-convert-dialog.ui:107 data/ui/language-dialog.ui:135
+#: data/ui/duration-adjust-dialog.ui:263
+#: data/ui/text-assistant/line-break-options-page.ui:142
+#: data/ui/position-shift-dialog.ui:103 data/ui/search-dialog.ui:267
 msgid "Subtitles"
 msgstr "字幕"
 
-#: data/ui/position-transform-dialog.ui:464
+#: data/ui/position-transform-dialog.ui:326
 msgid "Transform se_lected subtitles"
 msgstr "转变选中的字幕(_L)"
 
-#: data/ui/position-transform-dialog.ui:482
+#: data/ui/position-transform-dialog.ui:342
 msgid "Transform c_urrent project"
 msgstr "转变当前项目(_U)"
 
-#: data/ui/spell-check-dialog.ui:8
+#: data/ui/spell-check-dialog.ui:5
 msgid "Check Spelling"
 msgstr "检查拼写"
 
-#: data/ui/spell-check-dialog.ui:47
+#: data/ui/spell-check-dialog.ui:44
 msgid "Join _Back"
 msgstr "向后加入(_B)"
 
-#: data/ui/spell-check-dialog.ui:62
+#: data/ui/spell-check-dialog.ui:53
 msgid "Join _Forward"
 msgstr "向前加入(_F)"
 
-#: data/ui/spell-check-dialog.ui:77 data/ui/menubar.ui:62
-msgid "_Edit"
-msgstr "编辑(_E)"
-
-#: data/ui/spell-check-dialog.ui:92
+#: data/ui/spell-check-dialog.ui:70
 msgid "_Ignore"
 msgstr "忽略(_I)"
 
-#: data/ui/spell-check-dialog.ui:107
+#: data/ui/spell-check-dialog.ui:79
 msgid "Ig_nore All"
 msgstr "全部忽略(_N)"
 
-#: data/ui/spell-check-dialog.ui:137
+#: data/ui/spell-check-dialog.ui:105
 msgid "Rep_lace All"
 msgstr "全部替换(_L)"
 
-#: data/ui/spell-check-dialog.ui:179
-msgid "_Suggestions:"
-msgstr "建议：(_S)"
+#: data/ui/spell-check-dialog.ui:116
+msgid "_Add"
+msgstr "添加(_A)"
 
-#: data/ui/spell-check-dialog.ui:193 data/ui/search-dialog.ui:103
-msgid "Replace _with:"
-msgstr "替换为：(_W)"
+#: data/ui/spell-check-dialog.ui:135
+msgid "S_uggestions"
+msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:8
+#: data/ui/spell-check-dialog.ui:147 data/ui/search-dialog.ui:75
+msgid "Replace _with"
+msgstr ""
+
+#: data/ui/framerate-convert-dialog.ui:5
 msgid "Convert Framerate"
 msgstr "转换帧率"
 
-#: data/ui/framerate-convert-dialog.ui:48
+#: data/ui/framerate-convert-dialog.ui:30
 msgid "Framerate"
 msgstr "帧率"
 
-#: data/ui/framerate-convert-dialog.ui:71
-msgid "_Input:"
-msgstr "输入：(_I)"
+#: data/ui/framerate-convert-dialog.ui:55
+msgid "_Input"
+msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:86
-msgid "_Output:"
-msgstr "输出：(_O)"
+#: data/ui/framerate-convert-dialog.ui:79
+msgid "_Output"
+msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:164
+#: data/ui/framerate-convert-dialog.ui:129
 msgid "Convert c_urrent project"
 msgstr "转换当前项目(_U)"
 
-#: data/ui/framerate-convert-dialog.ui:181
+#: data/ui/framerate-convert-dialog.ui:144
 msgid "Convert _all open projects"
 msgstr "转换所有打开的项目(_A)"
 
-#: data/ui/tab-popup.ui:6
-msgid "Move Tab _Left"
-msgstr "向左移动选项卡(_L)"
-
-#: data/ui/tab-popup.ui:10
-msgid "Move Tab _Right"
-msgstr "向右移动选项卡(_R)"
-
-#: data/ui/language-dialog.ui:8
+#: data/ui/language-dialog.ui:5
 msgid "Configure Spell-Check"
 msgstr "配置拼写检查"
 
-#: data/ui/language-dialog.ui:50
+#: data/ui/language-dialog.ui:39
 msgid "Language"
 msgstr "语言"
 
-#: data/ui/language-dialog.ui:108 data/ui/search-dialog.ui:304
+#: data/ui/language-dialog.ui:74 data/ui/search-dialog.ui:209
 msgid "Columns"
 msgstr "列"
 
-#: data/ui/language-dialog.ui:128
+#: data/ui/language-dialog.ui:96
 msgid "Check _text column"
 msgstr "检查文本列(_T)"
 
-#: data/ui/language-dialog.ui:146
+#: data/ui/language-dialog.ui:112
 msgid "Check t_ranslation column"
 msgstr "检查翻译列(_C)"
 
-#: data/ui/language-dialog.ui:206
+#: data/ui/language-dialog.ui:157
 msgid "Check c_urrent project"
 msgstr "检查当前项目(_C)"
 
-#: data/ui/language-dialog.ui:224
+#: data/ui/language-dialog.ui:173
 msgid "Check _all open projects"
 msgstr "检查所有打开的项目(_A)"
 
-#: data/ui/duration-adjust-dialog.ui:33
+#: data/ui/duration-adjust-dialog.ui:30
 msgid "Adjust Durations"
 msgstr "调整持续时间"
 
-#: data/ui/duration-adjust-dialog.ui:73
+#: data/ui/duration-adjust-dialog.ui:55
 msgid "Theoretic Duration"
 msgstr "理论持续时间"
 
-#: data/ui/duration-adjust-dialog.ui:101
-msgid "_Reading speed:"
-msgstr "阅读速度：(_R)"
+#: data/ui/duration-adjust-dialog.ui:80
+msgid "_Reading speed (char/s)"
+msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:133
-msgid "characters per second"
-msgstr "字每秒"
-
-#: data/ui/duration-adjust-dialog.ui:150
+#: data/ui/duration-adjust-dialog.ui:107
 msgid "_Lengthen duration to match reading speed"
 msgstr "延长持续时间以匹配阅读速度(_L)"
 
-#: data/ui/duration-adjust-dialog.ui:167
+#: data/ui/duration-adjust-dialog.ui:122
 msgid "_Shorten duration to match reading speed"
 msgstr "缩短持续时间以匹配阅读速度(_S)"
 
-#: data/ui/duration-adjust-dialog.ui:207
-#: data/ui/text-assistant/line-break-options-page.ui:56
+#: data/ui/duration-adjust-dialog.ui:144
+#: data/ui/text-assistant/line-break-options-page.ui:50
 msgid "Limits"
 msgstr "限制"
 
-#: data/ui/duration-adjust-dialog.ui:227
-msgid "_Minimum duration:"
-msgstr "最短持续时间：(_M)"
+#: data/ui/duration-adjust-dialog.ui:168
+msgid "_Minimum duration (s)"
+msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:243
-msgid "Ma_ximum duration:"
-msgstr "最长持续时间：(_X)"
+#: data/ui/duration-adjust-dialog.ui:198
+msgid "Ma_ximum duration (s)"
+msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:259
-msgid "_Gap between subtitles:"
-msgstr "字幕间距：(_G)"
+#: data/ui/duration-adjust-dialog.ui:228
+msgid "_Gap between subtitles (s)"
+msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:294
-msgid "s_econds"
-msgstr "秒(_E)"
-
-#: data/ui/duration-adjust-dialog.ui:324
-msgid "seco_nds"
-msgstr "秒(_N)"
-
-#: data/ui/duration-adjust-dialog.ui:354
-msgid "secon_ds"
-msgstr "秒(_D)"
-
-#: data/ui/duration-adjust-dialog.ui:408
+#: data/ui/duration-adjust-dialog.ui:285
 msgid "Adj_ust selected subtitles"
 msgstr "调整选中的字幕(_U)"
 
-#: data/ui/duration-adjust-dialog.ui:425
+#: data/ui/duration-adjust-dialog.ui:300
 msgid "Adjus_t current project"
 msgstr "调整当前的项目(_T)"
 
-#: data/ui/duration-adjust-dialog.ui:442
+#: data/ui/duration-adjust-dialog.ui:315
 msgid "Adjust all _open projects"
 msgstr "调整所有打开的项目(_O)"
 
-#: data/ui/menubar.ui:5
+#: data/ui/menubar.ui:6
 msgid "_File"
 msgstr "文件(_F)"
 
-#: data/ui/menubar.ui:8
+#: data/ui/menubar.ui:9
 msgid "_New"
 msgstr "新建(_N)"
 
-#: data/ui/menubar.ui:12
+#: data/ui/menubar.ui:13
 msgid "_Open…"
 msgstr "打开…(_O)"
 
-#: data/ui/menubar.ui:16
+#: data/ui/menubar.ui:17
 msgid "Open _Translation…"
 msgstr "打开翻译…(_T)"
 
-#: data/ui/menubar.ui:22
+#: data/ui/menubar.ui:23
 msgid "Open _Recent"
 msgstr "最近打开(_R)"
 
@@ -1671,567 +1563,531 @@ msgstr "最近打开(_R)"
 msgid "Open R_ecent Translation"
 msgstr "最近打开翻译(_E)"
 
-#: data/ui/menubar.ui:38
+#: data/ui/menubar.ui:37
 msgid "Save _As…"
 msgstr "另存为…(_A)"
 
-#: data/ui/menubar.ui:42
+#: data/ui/menubar.ui:41
 msgid "Save Trans_lation"
 msgstr "保存翻译(_L)"
 
-#: data/ui/menubar.ui:46
+#: data/ui/menubar.ui:45
 msgid "Save Translat_ion As…"
 msgstr "另存为翻译…(_I)"
 
-#: data/ui/menubar.ui:65
+#: data/ui/menubar.ui:61
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+#: data/ui/menubar.ui:64
 msgid "_Undo"
 msgstr "撤销(_U)"
 
-#: data/ui/menubar.ui:69
+#: data/ui/menubar.ui:68
 msgid "_Redo"
 msgstr "重做(_R)"
 
-#: data/ui/menubar.ui:75
+#: data/ui/menubar.ui:74
 msgid "_Edit Cell"
 msgstr "编辑单元(_E)"
 
-#: data/ui/menubar.ui:79
+#: data/ui/menubar.ui:78
 msgid "Edit _Next Cell"
 msgstr "编辑下一个单元(_N)"
 
-#: data/ui/menubar.ui:85
+#: data/ui/menubar.ui:84
 msgid "Stretc_h"
 msgstr "拉伸(_H)"
 
-#: data/ui/menubar.ui:88
+#: data/ui/menubar.ui:87
 msgid "_Start Earlier"
 msgstr "提前开始(_S)"
 
-#: data/ui/menubar.ui:92
+#: data/ui/menubar.ui:91
 msgid "S_tart Later"
 msgstr "延后开始(_T)"
 
-#: data/ui/menubar.ui:98
+#: data/ui/menubar.ui:97
 msgid "E_nd Earlier"
 msgstr "提前结束(_N)"
 
-#: data/ui/menubar.ui:102
+#: data/ui/menubar.ui:101
 msgid "En_d Later"
 msgstr "延后结束(_D)"
 
-#: data/ui/menubar.ui:108
+#: data/ui/menubar.ui:107
 msgid "Set St_art From Video Position"
 msgstr "将结束设置到视频位置(_A)"
 
-#: data/ui/menubar.ui:112
+#: data/ui/menubar.ui:111
 msgid "Set En_d From Video Position"
 msgstr "将开始设置到视频位置(_D)"
 
-#: data/ui/menubar.ui:132
+#: data/ui/menubar.ui:131
 msgid "Inser_t Subtitle At Video Position"
 msgstr "在视频位置处插入字幕(_T)"
 
-#: data/ui/menubar.ui:142
+#: data/ui/menubar.ui:141
 msgid "Sele_ction"
 msgstr "选择(_C)"
 
-#: data/ui/menubar.ui:145
+#: data/ui/menubar.ui:144
 msgid "Select _All"
 msgstr "全部选择(_A)"
 
-#: data/ui/menubar.ui:149
+#: data/ui/menubar.ui:148
 msgid "_Invert Selection"
 msgstr "反选(_I)"
 
-#: data/ui/menubar.ui:155
+#: data/ui/menubar.ui:154
 msgid "Extend To _Beginning"
 msgstr "延伸到开始(_B)"
 
-#: data/ui/menubar.ui:159
+#: data/ui/menubar.ui:158
 msgid "Extend To _End"
 msgstr "延伸到结束(_E)"
 
-#: data/ui/menubar.ui:165
+#: data/ui/menubar.ui:164
 msgid "_Previous From Video Position"
 msgstr "播放位置的上一个(_P)"
 
-#: data/ui/menubar.ui:169
+#: data/ui/menubar.ui:168
 msgid "_Next From Video Position"
 msgstr "播放位置的下一个(_N)"
 
-#: data/ui/menubar.ui:177
+#: data/ui/menubar.ui:176
 msgid "_Preferences"
 msgstr "首选项(_P)"
 
-#: data/ui/menubar.ui:183
+#: data/ui/menubar.ui:182
 msgid "_View"
 msgstr "视图(_V)"
 
-#: data/ui/menubar.ui:186
-msgid "Tool_bar"
-msgstr "工具栏(_B)"
-
-#: data/ui/menubar.ui:190
+#: data/ui/menubar.ui:185
 msgid "_Video Player"
 msgstr "视频播放器(_V)"
 
-#: data/ui/menubar.ui:196
+#: data/ui/menubar.ui:191
 msgid "_Layout"
 msgstr "布局(_L)"
 
-#: data/ui/menubar.ui:199
+#: data/ui/menubar.ui:194
 msgid "_Horizontal"
 msgstr "水平(_H)"
 
-#: data/ui/menubar.ui:204
+#: data/ui/menubar.ui:199
 msgid "_Vertical"
 msgstr "垂直(_V)"
 
-#: data/ui/menubar.ui:213
+#: data/ui/menubar.ui:208
 msgid "_Times"
 msgstr "时间(_T)"
 
-#: data/ui/menubar.ui:218
-msgid "_Frames"
-msgstr "帧数(_F)"
-
-#: data/ui/menubar.ui:225
-msgid "F_ramerate"
-msgstr "帧率(_R)"
-
-#: data/ui/menubar.ui:228
+#: data/ui/menubar.ui:223
 msgid "2_3.976 fps"
 msgstr "2_3.976 fps"
 
-#: data/ui/menubar.ui:233
+#: data/ui/menubar.ui:228
 msgid "2_4.000 fps"
 msgstr "2_4.000 fps"
 
-#: data/ui/menubar.ui:238
+#: data/ui/menubar.ui:233
 msgid "2_5.000 fps"
 msgstr "2_5.000 fps"
 
-#: data/ui/menubar.ui:243
+#: data/ui/menubar.ui:238
 msgid "2_9.970 fps"
 msgstr "2_9.970 fps"
 
-#: data/ui/menubar.ui:272
+#: data/ui/menubar.ui:266
 msgid "_Columns"
 msgstr "列(_C)"
 
-#: data/ui/menubar.ui:275 data/ui/columns-popup.ui:6
+#: data/ui/menubar.ui:269 data/ui/columns-popup.ui:7
 msgid "_No."
 msgstr "序号(_N)"
 
-#: data/ui/menubar.ui:279 data/ui/columns-popup.ui:10
+#: data/ui/menubar.ui:273 data/ui/columns-popup.ui:11
 msgid "_Start"
 msgstr "开始(_S)"
 
-#: data/ui/menubar.ui:283 data/ui/columns-popup.ui:14
+#: data/ui/menubar.ui:277 data/ui/columns-popup.ui:15
 msgid "_End"
 msgstr "结束(_E)"
 
-#: data/ui/menubar.ui:287 data/ui/columns-popup.ui:18
+#: data/ui/menubar.ui:281 data/ui/columns-popup.ui:19
 msgid "_Duration"
 msgstr "持续时间(_D)"
 
-#: data/ui/menubar.ui:291 data/ui/menubar.ui:303 data/ui/columns-popup.ui:22
+#: data/ui/menubar.ui:285 data/ui/menubar.ui:297 data/ui/columns-popup.ui:23
 msgid "_Text"
 msgstr "文本(_T)"
 
-#: data/ui/menubar.ui:295 data/ui/columns-popup.ui:26
+#: data/ui/menubar.ui:289 data/ui/columns-popup.ui:27
 msgid "T_ranslation"
 msgstr "翻译(_R)"
 
-#: data/ui/menubar.ui:306
+#: data/ui/menubar.ui:300
 msgid "Cu_t"
 msgstr "剪切(_T)"
 
-#: data/ui/menubar.ui:310
+#: data/ui/menubar.ui:304
 msgid "_Copy"
 msgstr "粘贴(_C)"
 
-#: data/ui/menubar.ui:314
+#: data/ui/menubar.ui:308
 msgid "_Paste"
 msgstr "复制(_P)"
 
-#: data/ui/menubar.ui:318
+#: data/ui/menubar.ui:312
 msgid "Cl_ear"
 msgstr "清除(_E)"
 
-#: data/ui/menubar.ui:324
+#: data/ui/menubar.ui:318
 msgid "_Find And Replace…"
 msgstr "查找和替换…(_F)"
 
-#: data/ui/menubar.ui:328 data/ui/search-dialog.ui:162
+#: data/ui/menubar.ui:322 data/ui/search-dialog.ui:118
 msgid "Find _Next"
 msgstr "查找下一个(_N)"
 
-#: data/ui/menubar.ui:332
+#: data/ui/menubar.ui:326
 msgid "Find Pre_vious"
 msgstr "查找上一个(_V)"
 
-#: data/ui/menubar.ui:338
+#: data/ui/menubar.ui:332
 msgid "_Italic"
 msgstr "斜体(_I)"
 
-#: data/ui/menubar.ui:342
+#: data/ui/menubar.ui:336
 msgid "_Dialogue"
 msgstr "对话(_D)"
 
-#: data/ui/menubar.ui:348
+#: data/ui/menubar.ui:342
 msgid "Ca_se"
 msgstr "大小写(_S)"
 
-#: data/ui/menubar.ui:351
+#: data/ui/menubar.ui:345
 msgid "_Title"
 msgstr "词首(_T)"
 
-#: data/ui/menubar.ui:355
+#: data/ui/menubar.ui:349
 msgid "_Sentence"
 msgstr "句首(_S)"
 
-#: data/ui/menubar.ui:359
+#: data/ui/menubar.ui:353
 msgid "_Upper"
 msgstr "大写(_U)"
 
-#: data/ui/menubar.ui:363
+#: data/ui/menubar.ui:357
 msgid "_Lower"
 msgstr "小写(_L)"
 
-#: data/ui/menubar.ui:371
+#: data/ui/menubar.ui:365
 msgid "Vi_deo"
 msgstr "视频(_D)"
 
-#: data/ui/menubar.ui:374
+#: data/ui/menubar.ui:368
 msgid "_Load Video…"
 msgstr "载入视频…(_L)"
 
-#: data/ui/menubar.ui:414
+#: data/ui/menubar.ui:374
+msgid "_Play/Pause"
+msgstr "播放/暂停(_P)"
+
+#: data/ui/menubar.ui:384
+msgid "Seek _Previous"
+msgstr "跳到上一个(_P)"
+
+#: data/ui/menubar.ui:388
+msgid "Seek _Next"
+msgstr "跳到下一个(_N)"
+
+#: data/ui/menubar.ui:394
+msgid "Seek _Backward"
+msgstr "快退(_B)"
+
+#: data/ui/menubar.ui:398
+msgid "Seek _Forward"
+msgstr "快进(_F)"
+
+#: data/ui/menubar.ui:408
 msgid "See_k Selection End"
 msgstr "跳到选中的结束(_K)"
 
-#: data/ui/menubar.ui:420
+#: data/ui/menubar.ui:414
 msgid "_Audio"
 msgstr "音频(_A)"
 
-#: data/ui/menubar.ui:423
+#: data/ui/menubar.ui:417 data/ui/text-assistant/line-break-page.ui:46
+#: data/ui/text-assistant/join-split-page.ui:47
+#: data/ui/text-assistant/capitalization-page.ui:46
+#: data/ui/text-assistant/hearing-impaired-page.ui:46
+#: data/ui/text-assistant/common-error-page.ui:46
 msgid "_Language"
 msgstr "语言(_L)"
 
-#: data/ui/menubar.ui:430
+#: data/ui/menubar.ui:423
 msgid "Volume _Down"
 msgstr "音量减小(_D)"
 
-#: data/ui/menubar.ui:434
+#: data/ui/menubar.ui:427
 msgid "Volume _Up"
 msgstr "音量增大(_U)"
 
-#: data/ui/menubar.ui:440
+#: data/ui/menubar.ui:433
 msgid "T_ools"
 msgstr "工具(_O)"
 
-#: data/ui/menubar.ui:447
+#: data/ui/menubar.ui:440
 msgid "Select _Video…"
 msgstr "选择视频…(_V)"
 
-#: data/ui/menubar.ui:453
+#: data/ui/menubar.ui:446
 msgid "_Check Spelling"
 msgstr "检查拼写(_C)"
 
-#: data/ui/menubar.ui:457
-msgid "Co_nfigure Spell-check…"
-msgstr "配置拼写检查…(_N)"
+#: data/ui/menubar.ui:450
+msgid "Co_nfigure Spell-Check…"
+msgstr ""
 
-#: data/ui/menubar.ui:461
+#: data/ui/menubar.ui:454
 msgid "C_orrect Texts…"
 msgstr "更正文本…(_O)"
 
-#: data/ui/menubar.ui:467
+#: data/ui/menubar.ui:460
 msgid "_Shift Positions…"
 msgstr "移动位置…(_S)"
 
-#: data/ui/menubar.ui:471
+#: data/ui/menubar.ui:464
 msgid "_Transform Positions…"
 msgstr "转变位置…(_T)"
 
-#: data/ui/menubar.ui:475
+#: data/ui/menubar.ui:468
 msgid "Adjust _Durations…"
 msgstr "调整持续时间…(_D)"
 
-#: data/ui/menubar.ui:479
+#: data/ui/menubar.ui:472
 msgid "Convert _Framerate…"
 msgstr "转换帧率…(_F)"
 
-#: data/ui/menubar.ui:485
+#: data/ui/menubar.ui:478
 msgid "_Append File…"
 msgstr "追加文件…(_A)"
 
-#: data/ui/menubar.ui:489
+#: data/ui/menubar.ui:482
 msgid "Spli_t Project…"
 msgstr "拆分项目…(_T)"
 
-#: data/ui/menubar.ui:495
+#: data/ui/menubar.ui:488
 msgid "_Projects"
 msgstr "项目(_P)"
 
-#: data/ui/menubar.ui:498
+#: data/ui/menubar.ui:491
 msgid "_Save All"
 msgstr "全部保存(_A)"
 
-#: data/ui/menubar.ui:502
+#: data/ui/menubar.ui:495
 msgid "Save _All As…"
 msgstr "全部另存为…(_A)"
 
-#: data/ui/menubar.ui:506
+#: data/ui/menubar.ui:499
 msgid "_Close All"
 msgstr "全部关闭(_A)"
 
-#: data/ui/menubar.ui:512
+#: data/ui/menubar.ui:505
 msgid "_Previous"
 msgstr "上一个(_P)"
 
-#: data/ui/menubar.ui:516
+#: data/ui/menubar.ui:509
 msgid "_Next"
 msgstr "下一个(_N)"
 
-#: data/ui/menubar.ui:527
+#: data/ui/menubar.ui:519
 msgid "_Documentation"
 msgstr "文档(_D)"
 
-#: data/ui/menubar.ui:531
+#: data/ui/menubar.ui:523
 msgid "_Report A Bug"
 msgstr "报告一个错误(_R)"
 
-#: data/ui/menubar.ui:535
+#: data/ui/menubar.ui:527
 msgid "_About"
 msgstr "关于(_A)"
 
-#: data/ui/save-dialog.ui:25 data/ui/multi-save-dialog.ui:60
-msgid "For_mat:"
-msgstr "格式：(_M)"
+#: data/ui/text-assistant/line-break-page.ui:34
+#: data/ui/text-assistant/capitalization-page.ui:34
+#: data/ui/text-assistant/hearing-impaired-page.ui:34
+#: data/ui/text-assistant/common-error-page.ui:34
+msgid "_Script"
+msgstr ""
 
-#: data/ui/save-dialog.ui:53 data/ui/multi-save-dialog.ui:88
-msgid "Ne_wlines:"
-msgstr "新行：(_W)"
+#: data/ui/text-assistant/line-break-page.ui:58
+#: data/ui/text-assistant/capitalization-page.ui:58
+#: data/ui/text-assistant/hearing-impaired-page.ui:58
+#: data/ui/text-assistant/common-error-page.ui:58
+msgid "Co_untry"
+msgstr ""
 
-#: data/ui/save-dialog.ui:102 data/ui/multi-save-dialog.ui:150
-msgid "F_ramerate:"
-msgstr "帧率：(_R)"
-
-#: data/ui/text-assistant/line-break-page.ui:22
-msgid "S_elect preferred line-break points:"
-msgstr "选择首选的换行点：(_E)"
-
-#: data/ui/text-assistant/line-break-page.ui:67
-#: data/ui/text-assistant/capitalization-page.ui:66
-#: data/ui/text-assistant/hearing-impaired-page.ui:67
-#: data/ui/text-assistant/common-error-page.ui:66
-msgid "_Script:"
-msgstr "脚本：(_S)"
-
-#: data/ui/text-assistant/line-break-page.ui:81
-#: data/ui/text-assistant/join-split-page.ui:49
-#: data/ui/text-assistant/capitalization-page.ui:80
-#: data/ui/text-assistant/hearing-impaired-page.ui:81
-#: data/ui/text-assistant/common-error-page.ui:80
-msgid "_Language:"
-msgstr "语言：(_L)"
-
-#: data/ui/text-assistant/line-break-page.ui:95
-#: data/ui/text-assistant/capitalization-page.ui:94
-#: data/ui/text-assistant/hearing-impaired-page.ui:95
-#: data/ui/text-assistant/common-error-page.ui:94
-msgid "Co_untry:"
-msgstr "国家：(_U)"
-
-#: data/ui/text-assistant/join-split-page.ui:28
+#: data/ui/text-assistant/join-split-page.ui:22
 msgid "Spell-Check Dictionary"
 msgstr "拼写检查字典"
 
-#: data/ui/text-assistant/join-split-page.ui:97
+#: data/ui/text-assistant/join-split-page.ui:77
 msgid "Corrections"
 msgstr "更正"
 
-#: data/ui/text-assistant/join-split-page.ui:117
+#: data/ui/text-assistant/join-split-page.ui:99
 msgid "_Join words not found in spell-check dictionary"
 msgstr "连接拼写检查词典中未找到的单词（_J)"
 
-#: data/ui/text-assistant/join-split-page.ui:134
+#: data/ui/text-assistant/join-split-page.ui:114
 msgid "_Split words not found in spell-check dictionary"
 msgstr "拆分拼写检查词典中未找到的单词（_S)"
 
-#: data/ui/text-assistant/capitalization-page.ui:22
-msgid "S_elect parts to capitalize:"
-msgstr "选择要大写的部分：(_E)"
+#: data/ui/text-assistant/introduction-page.ui:34
+msgid "Colu_mns"
+msgstr ""
 
-#: data/ui/text-assistant/hearing-impaired-page.ui:22
-msgid "S_elect parts to remove:"
-msgstr "选择要删除的部分：(_E)"
+#: data/ui/text-assistant/introduction-page.ui:46
+msgid "S_ubtitles"
+msgstr ""
 
-#: data/ui/text-assistant/introduction-page.ui:28
-msgid "_Select corrections to perform on texts:"
-msgstr "选择要对文本执行的更正：(_S)"
+#: data/ui/text-assistant/line-break-options-page.ui:75
+msgid "_Maximum line length"
+msgstr ""
 
-#: data/ui/text-assistant/introduction-page.ui:79
-msgid "Colu_mns:"
-msgstr "列：(_M)"
+#: data/ui/text-assistant/line-break-options-page.ui:110
+msgid "_Preferred maximum amount of lines"
+msgstr ""
 
-#: data/ui/text-assistant/introduction-page.ui:93
-msgid "S_ubtitles:"
-msgstr "字幕：(_U)"
+#: data/ui/text-assistant/line-break-options-page.ui:166
+msgid "_Skip subtitles with maximum line length of"
+msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:79
-msgid "_Maximum line length:"
-msgstr "最大行长：(_M)"
+#: data/ui/text-assistant/line-break-options-page.ui:201
+msgid "S_kip subtitles with maximum line amount of"
+msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:93
-msgid "_Preferred maximum amount of lines:"
-msgstr "首选最大行数：(_P)"
-
-#: data/ui/text-assistant/line-break-options-page.ui:198
-msgid "_Skip subtitles with maximum line length of:"
-msgstr "跳过最大行长为的字幕：(_S)"
-
-#: data/ui/text-assistant/line-break-options-page.ui:214
-msgid "S_kip subtitles with maximum line amount of:"
-msgstr "跳过最大行数为的字幕：(_K)"
-
-#: data/ui/text-assistant/confirmation-page.ui:22
-msgid "Acc_ept, discard or edit changes:"
-msgstr "接受、放弃或编辑更改：(_E)"
-
-#: data/ui/text-assistant/confirmation-page.ui:67
+#: data/ui/text-assistant/confirmation-page.ui:39
 msgid "_Mark All"
 msgstr "全部标记(_M)"
 
-#: data/ui/text-assistant/confirmation-page.ui:82
+#: data/ui/text-assistant/confirmation-page.ui:48
 msgid "_Unmark All"
 msgstr "全部取消标记(_U)"
 
-#: data/ui/text-assistant/confirmation-page.ui:119
+#: data/ui/text-assistant/confirmation-page.ui:67
 msgid "_Remove all blank subtitles"
 msgstr "删除所有空白字幕(_R)"
 
-#: data/ui/text-assistant/common-error-page.ui:22
-msgid "S_elect errors to correct:"
-msgstr "选择要更正的错误：(_E)"
+#: data/ui/text-assistant/common-error-page.ui:70
+msgid "Error types"
+msgstr ""
 
-#: data/ui/text-assistant/common-error-page.ui:108
-msgid "Error types:"
-msgstr "错误类型："
-
-#: data/ui/text-assistant/common-error-page.ui:158
+#: data/ui/text-assistant/common-error-page.ui:116
 msgid "_Human errors"
 msgstr "人为错误(_H)"
 
-#: data/ui/text-assistant/common-error-page.ui:175
+#: data/ui/text-assistant/common-error-page.ui:125
 msgid "_Image recognition errors"
 msgstr "图像识别错误(_I)"
 
-#: data/ui/position-shift-dialog.ui:14
+#: data/ui/position-shift-dialog.ui:11
 msgid "Shift Positions"
 msgstr "移动位置"
 
-#: data/ui/position-shift-dialog.ui:54
+#: data/ui/position-shift-dialog.ui:36
 msgid "Shift"
 msgstr "移动"
 
-#: data/ui/position-shift-dialog.ui:82 data/ui/insert-dialog.ui:48
-msgid "_Amount:"
-msgstr "数量：(_A)"
-
-#: data/ui/position-shift-dialog.ui:200
+#: data/ui/position-shift-dialog.ui:125
 msgid "Shift s_elected subtitles"
 msgstr "移动选中的字幕(_E)"
 
-#: data/ui/position-shift-dialog.ui:217
+#: data/ui/position-shift-dialog.ui:140
 msgid "Shift su_btitles from selection to end"
 msgstr "将字幕从选中位置移动到结尾(_B)"
 
-#: data/ui/position-shift-dialog.ui:234
+#: data/ui/position-shift-dialog.ui:155
 msgid "Shift c_urrent project"
 msgstr "移动当前项目(_U)"
 
-#: data/ui/position-shift-dialog.ui:251
+#: data/ui/position-shift-dialog.ui:170
 msgid "Shift all _open projects"
 msgstr "移动所有打开的项目(_O)"
 
-#: data/ui/multi-save-dialog.ui:8
+#: data/ui/multi-save-dialog.ui:5
 msgid "Save All As"
 msgstr "全部另存为"
 
-#: data/ui/multi-save-dialog.ui:46
-msgid "Save in _folder:"
-msgstr "保存到文件夹：(_F)"
+#: data/ui/multi-save-dialog.ui:40
+msgid "Save in _folder"
+msgstr ""
 
-#: data/ui/multi-save-dialog.ui:103
-msgid "Select A Folder"
-msgstr "选择一个文件夹"
-
-#: data/ui/insert-dialog.ui:15
+#: data/ui/insert-dialog.ui:12
 msgid "Insert Subtitles"
 msgstr "插入字幕"
 
-#: data/ui/insert-dialog.ui:62
-msgid "_Position:"
-msgstr "位置：(_P)"
+#: data/ui/insert-dialog.ui:45
+msgid "A_bove"
+msgstr ""
 
-#: data/ui/split-dialog.ui:15
+#: data/ui/insert-dialog.ui:53
+msgid "B_elow"
+msgstr ""
+
+#: data/ui/split-dialog.ui:12
 msgid "Split Project"
 msgstr "拆分项目"
 
-#: data/ui/split-dialog.ui:48
-msgid "_First subtitle of new project:"
-msgstr "新项目的第一条字幕：(_F)"
+#: data/ui/split-dialog.ui:31
+msgid "_First subtitle of new project"
+msgstr ""
 
-#: data/ui/search-dialog.ui:89
-msgid "_Search for:"
-msgstr "查找：(_S)"
+#: data/ui/search-dialog.ui:17
+msgid "Find"
+msgstr "查找"
 
-#: data/ui/search-dialog.ui:177
+#: data/ui/search-dialog.ui:63
+msgid "_Search for"
+msgstr ""
+
+#: data/ui/search-dialog.ui:126
 msgid "Find _Previous"
 msgstr "查找上一个(_P)"
 
-#: data/ui/search-dialog.ui:207
+#: data/ui/search-dialog.ui:150
 msgid "Replace _All"
 msgstr "全部替换(_A)"
 
-#: data/ui/search-dialog.ui:241
+#: data/ui/search-dialog.ui:168
 msgid "R_egular expression"
 msgstr "正则表达式(_E)"
 
-#: data/ui/search-dialog.ui:258
+#: data/ui/search-dialog.ui:177
 msgid "_Ignore case"
 msgstr "忽略大小写(_I)"
 
-#: data/ui/search-dialog.ui:324
-msgid "Find in _text column"
-msgstr "在文本列中查找(_T)"
-
-#: data/ui/search-dialog.ui:341
-msgid "Find in t_ranslation column"
-msgstr "在翻译列中查找(_R)"
-
-#: data/ui/search-dialog.ui:401
-msgid "Find in c_urrent project"
-msgstr "在当前项目中查找(_U)"
-
-#: data/ui/search-dialog.ui:419
-msgid "Find in _all open projects"
-msgstr "在所有打开的项目中查找(_A)"
-
-#: data/ui/search-dialog.ui:452
+#: data/ui/search-dialog.ui:193
 msgid "Target"
 msgstr "目标"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:6
-msgid "Custom Framerates"
-msgstr "自定义帧率"
+#: data/ui/search-dialog.ui:231
+msgid "Find in _text column"
+msgstr "在文本列中查找(_T)"
 
-#: data/extensions/custom-framerates/custom-framerates.extension.in:7
-msgid "Allow use of non-standard framerates"
-msgstr "允许使用非标准帧率"
+#: data/ui/search-dialog.ui:246
+msgid "Find in t_ranslation column"
+msgstr "在翻译列中查找(_R)"
+
+#: data/ui/search-dialog.ui:289
+msgid "Find in c_urrent project"
+msgstr "在当前项目中查找(_U)"
+
+#: data/ui/search-dialog.ui:305
+msgid "Find in _all open projects"
+msgstr "在所有打开的项目中查找(_A)"
 
 #: data/patterns/Latn-en-US.common-error.in:4
 msgid "Period after title"
@@ -2656,7 +2512,7 @@ msgid ""
 "texts and timing subtitles to match video."
 msgstr "Gaupol 是一个编辑基于文本的字幕编辑器。它支持多种字幕文件格式，并提供创建字幕、编辑文本和调整字幕时间轴以匹配视频等功能。"
 
-#: data/io.otsaloma.gaupol.appdata.xml.in:48
+#: data/io.otsaloma.gaupol.appdata.xml.in:49
 msgid "Main window"
 msgstr "主窗口"
 
