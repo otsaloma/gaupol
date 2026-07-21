@@ -1,5 +1,9 @@
 /* -*- coding: utf-8-unix -*- */
 
+.gaupol-focus-column {
+  color: @theme_selected_bg_color;
+}
+
 /* Avoid making the preferences dialog really wide
    (the default theme sets 100px minimum width). */
 .gaupol-preferences-switcher > button.text-button {

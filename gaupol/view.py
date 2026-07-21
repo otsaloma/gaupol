@@ -22,7 +22,6 @@ import gaupol
 import re
 
 from gi.repository import Gdk
-from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Graphene
 from gi.repository import Gsk
@@ -413,10 +412,8 @@ class View(Gtk.TreeView):
         self._active_col_name = ""
         if acol is not None:
             label = self.get_column(acol).get_widget()
-            text = GLib.markup_escape_text(label.get_text())
-            label.set_markup(text)
+            label.remove_css_class("gaupol-focus-column")
         if fcol is not None:
             label = self.get_column(fcol).get_widget()
-            text = GLib.markup_escape_text(label.get_text())
-            label.set_markup(f"<i>{text}</i>")
+            label.add_css_class("gaupol-focus-column")
             self._active_col_name = self.columns[fcol].name
