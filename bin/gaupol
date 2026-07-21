@@ -8,8 +8,8 @@ def prepare_paths():
     # If running from source, add root directory to sys.path.
     # '__file__' attribute missing implies a frozen installation.
     if not "__file__" in globals(): return
-    root = Path(__file__).resolve().parent.parent
-    if not (root / "data" / "io.otsaloma.gaupol.desktop.in").is_file(): return
+    root = Path(__file__).parent.parent.resolve()
+    if not root.joinpath("data", "io.otsaloma.gaupol.desktop.in").exists(): return
     sys.path.insert(0, str(root))
 
 prepare_paths()
