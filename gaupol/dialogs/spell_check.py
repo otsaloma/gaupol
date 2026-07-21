@@ -22,7 +22,6 @@ import gaupol
 
 from aeidon.i18n   import _
 from gi.repository import Gtk
-from gi.repository import Pango
 
 class SpellCheckDialog(gaupol.BuilderDialog):
 
@@ -43,7 +42,6 @@ class SpellCheckDialog(gaupol.BuilderDialog):
 
     _widgets = [
         "add_button",
-        "edit_button",
         "entry",
         "grid",
         "ignore_all_button",
@@ -52,6 +50,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         "join_forward_button",
         "replace_all_button",
         "replace_button",
+        "save_button",
         "suggestions_list",
         "suggestions_scroller",
         "text_view",
@@ -99,6 +98,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._join_forward_button.set_sensitive(False)
         self._replace_all_button.set_sensitive(False)
         self._replace_button.set_sensitive(False)
+        self._save_button.set_sensitive(False)
 
     def _init_widgets(self):
         """Initialize widget properties."""
@@ -108,7 +108,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._text_view.set_top_margin(6)
         self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()
-        text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
+        text_buffer.connect("changed", self._on_text_buffer_changed)
         scale = gaupol.util.scale_to_size
         scale(self._text_view, nchar=55, nlines=4, font="custom")
         scale(self._suggestions_scroller, nchar=20, nlines=6, font="custom")
@@ -117,17 +117,6 @@ class SpellCheckDialog(gaupol.BuilderDialog):
     def _on_add_button_clicked(self, *args):
         """Add the current word to personal word list."""
         self._navigator.add()
-        self._proceed()
-
-    def _on_edit_button_clicked(self, *args):
-        """Edit the current text in a separate dialog."""
-        text = self._navigator.text
-        dialog = gaupol.TextEditDialog(self._dialog, text)
-        response = gaupol.util.run_dialog(dialog)
-        text = dialog.get_text()
-        dialog.destroy()
-        if response != Gtk.ResponseType.OK: return
-        self._navigator.reset(text)
         self._proceed()
 
     def _on_entry_changed(self, entry):
@@ -179,6 +168,26 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         if row is None: return
         self._set_entry_text(row.get_child().get_text())
 
+    def _on_save_button_clicked(self, *args):
+        """Resume checking with text as edited in the text view."""
+        text_buffer = self._text_view.get_buffer()
+        start, end = text_buffer.get_bounds()
+        text = text_buffer.get_text(start, end, False)
+        self._navigator.reset(text)
+        self._proceed()
+
+    def _on_text_buffer_changed(self, *args):
+        """Allow saving and disable actions on the current word."""
+        self._save_button.set_sensitive(True)
+        self._save_button.add_css_class("suggested-action")
+        self._add_button.set_sensitive(False)
+        self._ignore_all_button.set_sensitive(False)
+        self._ignore_button.set_sensitive(False)
+        self._join_back_button.set_sensitive(False)
+        self._join_forward_button.set_sensitive(False)
+        self._replace_all_button.set_sensitive(False)
+        self._replace_button.set_sensitive(False)
+
     def _populate_suggestions(self, suggestions, select=True):
         """Populate the suggestions list with `suggestions`."""
         self._suggestions_list.remove_all()
@@ -228,9 +237,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._page.view.scroll_to_row(self._row)
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(self._navigator.text)
-        start = text_buffer.get_iter_at_offset(self._navigator.pos)
         end = text_buffer.get_iter_at_offset(self._navigator.endpos)
-        text_buffer.apply_tag_by_name("misspelled", start, end)
         mark = text_buffer.create_mark(None, end, True)
         self._text_view.scroll_to_mark(mark=mark,
                                        within_margin=0,
@@ -238,15 +245,25 @@ class SpellCheckDialog(gaupol.BuilderDialog):
                                        xalign=0.5,
                                        yalign=0.5)
 
+        self._text_view.grab_focus()
+        def select_word(text_buffer, pos, endpos):
+            ins = text_buffer.get_iter_at_offset(pos)
+            bound = text_buffer.get_iter_at_offset(endpos)
+            text_buffer.select_range(ins, bound)
+        # Some calls fail to select unless idle_add used (GTK-3.24).
+        gaupol.util.idle_add(select_word, text_buffer,
+                             self._navigator.pos, self._navigator.endpos)
+        self._save_button.set_sensitive(False)
+        self._save_button.remove_css_class("suggested-action")
+        self._add_button.set_sensitive(True)
+        self._ignore_all_button.set_sensitive(True)
+        self._ignore_button.set_sensitive(True)
         leading = self._navigator.leading_context(1)
         trailing = self._navigator.trailing_context(1)
         self._join_back_button.set_sensitive(leading.isspace())
         self._join_forward_button.set_sensitive(trailing.isspace())
         self._set_entry_text("")
         self._populate_suggestions(self._navigator.suggest())
-        row = self._suggestions_list.get_selected_row()
-        if row is not None:
-            row.grab_focus()
 
     def _register_changes(self):
         """Register changes to the current page."""
@@ -268,6 +285,8 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._text_view.get_buffer().set_text("")
         self._set_entry_text("")
         self._populate_suggestions([])
+        self._save_button.set_sensitive(False)
+        self._save_button.remove_css_class("suggested-action")
         self._grid.set_sensitive(False)
         self._navigator.checker.write_replacements()
 

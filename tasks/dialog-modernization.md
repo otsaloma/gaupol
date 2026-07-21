@@ -121,5 +121,4 @@ toggle pair, no labels).
 - [x] gaupol/dialogs/search.py
 - [x] gaupol/dialogs/spell_check.py
 - [x] gaupol/dialogs/split.py
-- [x] gaupol/dialogs/text_edit.py
 - [x] gaupol/dialogs/video.py

@@ -118,7 +118,6 @@ from gaupol.dialogs.position_shift import FrameShiftDialog
 from gaupol.dialogs.position_shift import TimeShiftDialog
 from gaupol.dialogs.spell_check import SpellCheckDialog
 from gaupol.dialogs.split import SplitDialog
-from gaupol.dialogs.text_edit import TextEditDialog
 from gaupol.dialogs.position_transform import FrameTransformDialog
 from gaupol.dialogs.position_transform import TimeTransformDialog
 from gaupol.assistants import TextAssistant
