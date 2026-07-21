@@ -4,6 +4,9 @@ data/icons/io.otsaloma.gaupol.svg
 [share/icons/hicolor/symbolic/apps]
 data/icons/io.otsaloma.gaupol-symbolic.svg
 
+[share/gaupol]
+data/gaupol.css
+
 [share/gaupol/ui]
 data/ui/*.*
 
