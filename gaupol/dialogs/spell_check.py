@@ -52,8 +52,9 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         "join_forward_button",
         "replace_all_button",
         "replace_button",
+        "suggestions_list",
+        "suggestions_scroller",
         "text_view",
-        "tree_view",
     ]
 
     def __init__(self, parent, application):
@@ -99,29 +100,18 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._replace_all_button.set_sensitive(False)
         self._replace_button.set_sensitive(False)
 
-    def _init_tree_view(self):
-        """Initialize the suggestion tree view."""
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        selection.connect("changed", self._on_tree_view_selection_changed)
-        store = Gtk.ListStore(str)
-        self._tree_view.set_model(store)
-        column = Gtk.TreeViewColumn("", Gtk.CellRendererText(), text=0)
-        self._tree_view.append_column(column)
-
     def _init_widgets(self):
         """Initialize widget properties."""
-        self._init_tree_view()
         gaupol.style.use_font(self._entry, "custom")
         gaupol.style.use_font(self._text_view, "custom")
-        gaupol.style.use_font(self._tree_view, "custom")
+        gaupol.style.use_font(self._suggestions_list, "custom")
         self._text_view.set_top_margin(6)
         self._text_view.set_bottom_margin(6)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=Pango.Weight.BOLD)
         scale = gaupol.util.scale_to_size
         scale(self._text_view, nchar=55, nlines=4, font="custom")
-        scale(self._tree_view, nchar=20, nlines=6, font="custom")
+        scale(self._suggestions_scroller, nchar=20, nlines=6, font="custom")
         self._entry_handler = self._entry.connect("changed", self._on_entry_changed)
 
     def _on_add_button_clicked(self, *args):
@@ -144,7 +134,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         """Populate suggestions based on text in `entry`."""
         word = entry.get_text()
         suggestions = self._navigator.checker.suggest(word) if word else []
-        self._populate_tree_view(suggestions, select=False)
+        self._populate_suggestions(suggestions, select=False)
         self._replace_button.set_sensitive(bool(word))
         self._replace_all_button.set_sensitive(bool(word))
 
@@ -184,26 +174,27 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._save_geometry()
         self._set_done()
 
-    def _on_tree_view_selection_changed(self, *args):
+    def _on_suggestions_list_row_selected(self, list_box, row):
         """Copy the selected suggestion into the entry."""
-        selection = self._tree_view.get_selection()
-        store, itr = selection.get_selected()
-        if itr is None: return
-        path = store.get_path(itr)
-        row = gaupol.util.tree_path_to_row(path)
-        self._set_entry_text(store[row][0])
+        if row is None: return
+        self._set_entry_text(row.get_child().get_text())
 
-    def _populate_tree_view(self, suggestions, select=True):
-        """Populate the tree view with `suggestions`."""
-        store = self._tree_view.get_model()
-        self._tree_view.set_model(None)
-        store.clear()
+    def _populate_suggestions(self, suggestions, select=True):
+        """Populate the suggestions list with `suggestions`."""
+        self._suggestions_list.remove_all()
         for suggestion in suggestions:
-            store.append((suggestion,))
-        self._tree_view.set_model(store)
-        if select and len(store) > 0:
-            self._tree_view.set_cursor(0)
-            self._tree_view.scroll_to_cell(0)
+            label = Gtk.Label(label=suggestion,
+                              xalign=0,
+                              margin_top=6,
+                              margin_bottom=6,
+                              margin_start=6,
+                              margin_end=6)
+
+            self._suggestions_list.append(label)
+        if select and suggestions:
+            row = self._suggestions_list.get_row_at_index(0)
+            self._suggestions_list.select_row(row)
+        self._suggestions_scroller.get_vadjustment().set_value(0)
 
     def _proceed(self):
         """Move on to the next spelling error."""
@@ -252,8 +243,10 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         self._join_back_button.set_sensitive(leading.isspace())
         self._join_forward_button.set_sensitive(trailing.isspace())
         self._set_entry_text("")
-        self._populate_tree_view(self._navigator.suggest())
-        self._tree_view.grab_focus()
+        self._populate_suggestions(self._navigator.suggest())
+        row = self._suggestions_list.get_selected_row()
+        if row is not None:
+            row.grab_focus()
 
     def _register_changes(self):
         """Register changes to the current page."""
@@ -274,7 +267,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         """Set state of widgets for finished spell-check."""
         self._text_view.get_buffer().set_text("")
         self._set_entry_text("")
-        self._populate_tree_view([])
+        self._populate_suggestions([])
         self._grid.set_sensitive(False)
         self._navigator.checker.write_replacements()
 
