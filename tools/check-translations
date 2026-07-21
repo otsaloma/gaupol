@@ -9,7 +9,7 @@ def print_error(title, entry):
 args = ["po/{}.po".format(x) for x in sys.argv[1:]]
 for name in args or sorted(glob.glob("po/*.po")):
     po = polib.pofile(name)
-    print("{}: {}% translated".format(name, po.percent_translated()))
+    print("{:11s} {:3d}% translated".format(name, po.percent_translated()))
     for entry in po.translated_entries():
         translations = (
             list(entry.msgstr_plural.values())

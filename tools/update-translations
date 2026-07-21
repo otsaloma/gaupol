@@ -6,12 +6,7 @@ tx push -s
 tx pull -af --minimum-perc=50
 emacs1 po/fi.po
 tx push -tf -l fi
-for PO in po/*.po; do
-    LANG=$(basename $PO .po)
-    tools/check-translations $LANG
-    read -p "Keep? [Y/n] "
-    [ "$REPLY" = "n" ] && rm -fv $PO
-done
+tools/check-translations | grep %
 rm -f po/LINGUAS
 ls po/*.po | cut -d/ -f2 | cut -d. -f1 > po/LINGUAS
 git status

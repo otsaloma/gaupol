@@ -23,18 +23,6 @@ xgettext \
     --from-code=UTF-8 \
     $(find data -name "*.ui")
 
-# Extension metadata files
-xgettext \
-    --output=po/gaupol.pot \
-    --join-existing \
-    --from-code=UTF-8 \
-    --language=Desktop \
-    --keyword= \
-    --keyword=Name \
-    --keyword=Description \
-    --add-comments=TRANSLATORS: \
-    data/extensions/*/*.extension.in
-
 # Pattern files
 xgettext \
     --output=po/gaupol.pot \
