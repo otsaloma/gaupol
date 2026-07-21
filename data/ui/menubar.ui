@@ -447,7 +447,7 @@
           <attribute name="action">win.check-spelling</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Co_nfigure Spell-check…</attribute>
+          <attribute name="label" translatable="yes">Co_nfigure Spell-Check…</attribute>
           <attribute name="action">win.configure-spell-check</attribute>
         </item>
         <item>
