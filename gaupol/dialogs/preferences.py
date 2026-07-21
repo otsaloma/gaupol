@@ -93,7 +93,7 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _on_font_button_font_set(self, font_button):
         """Save custom font."""
-        gaupol.conf.editor.custom_font = font_button.get_font_name()
+        gaupol.conf.editor.custom_font = font_button.get_font()
 
     def _on_length_cell_check_toggled(self, check_button):
         """Save line length display on cells."""
@@ -365,7 +365,7 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _on_subtitle_font_button_font_set(self, font_button):
         """Save subtitle font."""
-        self.conf.subtitle_font = font_button.get_font_name()
+        self.conf.subtitle_font = font_button.get_font()
 
     def _on_time_bg_toggle_toggled(self, toggle_button):
         """Save time background use."""
@@ -379,7 +379,7 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     def _on_time_font_button_font_set(self, font_button):
         """Save time font."""
-        self.conf.time_font = font_button.get_font_name()
+        self.conf.time_font = font_button.get_font()
 
 class PreferencesDialog(gaupol.BuilderDialog):
 
