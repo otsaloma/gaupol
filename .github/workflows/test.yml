@@ -31,7 +31,7 @@ jobs:
           python3-pytest
           python3-setuptools
           xvfb
-      - run: make check
+      - run: xvfb-run make check
       - run: pytest aeidon
       - run: xvfb-run pytest gaupol
       - run: python3 setup.py install --prefix=/tmp/local
