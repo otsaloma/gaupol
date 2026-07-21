@@ -282,6 +282,8 @@ class VideoPlayer(aeidon.Observable):
         self._text_overlay.props.halignment = conf.subtitle_position_horizontal
         self._text_overlay.props.valignment = conf.subtitle_position_vertical
         self._text_overlay.props.line_alignment = conf.line_alignment
+        # XXX: gtk4paintablesink's overlay-composition path does not support
+        # shaded backgrounds, so the corresponding preferences have no effect.
         self._text_overlay.props.shaded_background = conf.subtitle_background
         alpha = f"{int(conf.subtitle_alpha * 255):02x}"
         color = conf.subtitle_color.replace("#", "")
@@ -294,6 +296,8 @@ class VideoPlayer(aeidon.Observable):
         self._time_overlay.props.font_desc = conf.time_font
         self._time_overlay.props.halignment = conf.time_position_horizontal
         self._time_overlay.props.valignment = conf.time_position_vertical
+        # XXX: gtk4paintablesink's overlay-composition path does not support
+        # shaded backgrounds, so the corresponding preferences have no effect.
         self._time_overlay.props.shaded_background = conf.time_background
         alpha = f"{int(conf.time_alpha * 255):02x}"
         color = conf.time_color.replace("#", "")
