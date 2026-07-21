@@ -49,7 +49,7 @@
       <caption>Main window</caption>
     </screenshot>
   </screenshots>
-  <update_contact>otsaloma@iki.fi</update_contact>
   <translation type="gettext">gaupol</translation>
   <content_rating type="oars-1.1"/>
+  <update_contact>otsaloma@iki.fi</update_contact>
 </component>
