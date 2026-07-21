@@ -53,9 +53,10 @@ written for C. You'll need adapt what you see there, for example:
 ## Validation, Testing
 
 After making changes to Python code, always at minimum run `flake8 ...`
-and `pytest ...` against all changed files. After bigger changes, or if
-you suspect your changes affect other modules, use `make check` and
-`make test` to run the full validation and test suites.
+and `pytest ...` against all changed files. After making changes to
+GtkBuilder `.ui` files, run `gtk4-builder-tool validate ...`. After
+bigger changes, or if you suspect your changes affect other modules, use
+`make check` and `make test` to run the full validation and test suites.
 
 ## Running the GUI
 
