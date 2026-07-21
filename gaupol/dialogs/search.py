@@ -576,9 +576,7 @@ class SearchDialog(gaupol.BuilderDialog):
 
     def _update_search_targets(self):
         """Update search targets in all pages."""
-        docs = list(map(gaupol.util.text_field_to_document,
-                        gaupol.conf.search.fields))
-
+        docs = list(map(gaupol.util.text_field_to_document, gaupol.conf.search.fields))
         wrap = (gaupol.conf.search.target != gaupol.targets.ALL)
         for page in self.application.pages:
             page.project.set_search_target(None, docs, wrap)

@@ -118,7 +118,7 @@ toggle pair, no labels).
 - [ ] gaupol/dialogs/preferences.py
 - [x] gaupol/dialogs/preview_error.py
 - [x] gaupol/dialogs/save.py
-- [ ] gaupol/dialogs/search.py
+- [x] gaupol/dialogs/search.py
 - [ ] gaupol/dialogs/spell_check.py
 - [x] gaupol/dialogs/split.py
 - [x] gaupol/dialogs/text_edit.py

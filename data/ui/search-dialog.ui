@@ -60,7 +60,7 @@
                             <child>
                               <object class="GtkLabel" id="label9">
                                 <property name="halign">start</property>
-                                <property name="label" translatable="1">_Search for:</property>
+                                <property name="label" translatable="1">_Search for</property>
                                 <property name="use_underline">1</property>
                                 <property name="mnemonic_widget">pattern_combo</property>
                                 <layout>
@@ -72,7 +72,7 @@
                             <child>
                               <object class="GtkLabel" id="label21">
                                 <property name="halign">start</property>
-                                <property name="label" translatable="1">Replace _with:</property>
+                                <property name="label" translatable="1">Replace _with</property>
                                 <property name="use_underline">1</property>
                                 <property name="mnemonic_widget">replacement_combo</property>
                                 <layout>
@@ -104,39 +104,55 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkBox" id="buttonbox1">
+                          <object class="GtkBox" id="button_box">
                             <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
+                            <property name="spacing">12</property>
                             <child>
-                              <object class="GtkButton" id="next_button">
-                                <property name="label" translatable="1">Find _Next</property>
-                                <property name="focusable">1</property>
-                                <property name="use_underline">1</property>
-                                <signal name="clicked" handler="_on_next_button_clicked" swapped="no"/>
+                              <object class="GtkBox" id="find_button_box">
+                                <property name="orientation">vertical</property>
+                                <style>
+                                  <class name="linked"/>
+                                </style>
+                                <child>
+                                  <object class="GtkButton" id="next_button">
+                                    <property name="label" translatable="1">Find _Next</property>
+                                    <property name="focusable">1</property>
+                                    <property name="use_underline">1</property>
+                                    <signal name="clicked" handler="_on_next_button_clicked" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="previous_button">
+                                    <property name="label" translatable="1">Find _Previous</property>
+                                    <property name="focusable">1</property>
+                                    <property name="use_underline">1</property>
+                                    <signal name="clicked" handler="_on_previous_button_clicked" swapped="no"/>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkButton" id="previous_button">
-                                <property name="label" translatable="1">Find _Previous</property>
-                                <property name="focusable">1</property>
-                                <property name="use_underline">1</property>
-                                <signal name="clicked" handler="_on_previous_button_clicked" swapped="no"/>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="replace_button">
-                                <property name="label" translatable="1">_Replace</property>
-                                <property name="focusable">1</property>
-                                <property name="use_underline">1</property>
-                                <signal name="clicked" handler="_on_replace_button_clicked" swapped="no"/>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="replace_all_button">
-                                <property name="label" translatable="1">Replace _All</property>
-                                <property name="focusable">1</property>
-                                <property name="use_underline">1</property>
-                                <signal name="clicked" handler="_on_replace_all_button_clicked" swapped="no"/>
+                              <object class="GtkBox" id="replace_button_box">
+                                <property name="orientation">vertical</property>
+                                <style>
+                                  <class name="linked"/>
+                                </style>
+                                <child>
+                                  <object class="GtkButton" id="replace_button">
+                                    <property name="label" translatable="1">_Replace</property>
+                                    <property name="focusable">1</property>
+                                    <property name="use_underline">1</property>
+                                    <signal name="clicked" handler="_on_replace_button_clicked" swapped="no"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="replace_all_button">
+                                    <property name="label" translatable="1">Replace _All</property>
+                                    <property name="focusable">1</property>
+                                    <property name="use_underline">1</property>
+                                    <signal name="clicked" handler="_on_replace_all_button_clicked" swapped="no"/>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -176,20 +192,19 @@
                 <property name="name">page1</property>
                 <property name="title" translatable="1">Target</property>
                 <property name="child">
-                  <object class="GtkBox" id="vbox4">
+                  <object class="GtkBox" id="target_box">
                     <property name="margin_start">18</property>
                     <property name="margin_end">18</property>
                     <property name="margin_top">18</property>
                     <property name="margin_bottom">18</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">12</property>
+                    <property name="spacing">18</property>
+                    <property name="homogeneous">1</property>
                     <child>
-                      <object class="GtkBox" id="vbox7">
+                      <object class="GtkBox" id="column_box">
                         <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
+                        <property name="spacing">12</property>
                         <child>
-                          <object class="GtkLabel" id="label16">
-                            <property name="valign">center</property>
+                          <object class="GtkLabel" id="column_title">
                             <property name="halign">start</property>
                             <property name="label" translatable="1">Columns</property>
                             <attributes>
@@ -198,41 +213,56 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkBox" id="vbox8">
-                            <property name="margin_start">12</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
-                            <child>
-                              <object class="GtkCheckButton" id="main_check">
-                                <property name="valign">center</property>
-                                <property name="label" translatable="1">Find in _text column</property>
-                                <property name="focusable">1</property>
-                                <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <signal name="toggled" handler="_on_main_check_toggled" swapped="no"/>
+                          <object class="GtkFrame" id="column_frame">
+                            <property name="child">
+                              <object class="GtkListBox" id="column_list">
+                                <property name="selection_mode">none</property>
+                                <property name="show_separators">1</property>
+                                <style>
+                                  <class name="rich-list"/>
+                                </style>
+                                <child>
+                                  <object class="GtkListBoxRow">
+                                    <property name="activatable">0</property>
+                                    <property name="selectable">0</property>
+                                    <property name="child">
+                                      <object class="GtkCheckButton" id="main_check">
+                                        <property name="hexpand">1</property>
+                                        <property name="label" translatable="1">Find in _text column</property>
+                                        <property name="focusable">1</property>
+                                        <property name="use_underline">1</property>
+                                        <signal name="toggled" handler="_on_main_check_toggled" swapped="no"/>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkListBoxRow">
+                                    <property name="activatable">0</property>
+                                    <property name="selectable">0</property>
+                                    <property name="child">
+                                      <object class="GtkCheckButton" id="tran_check">
+                                        <property name="hexpand">1</property>
+                                        <property name="label" translatable="1">Find in t_ranslation column</property>
+                                        <property name="focusable">1</property>
+                                        <property name="use_underline">1</property>
+                                        <signal name="toggled" handler="_on_tran_check_toggled" swapped="no"/>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
                               </object>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="tran_check">
-                                <property name="valign">center</property>
-                                <property name="label" translatable="1">Find in t_ranslation column</property>
-                                <property name="focusable">1</property>
-                                <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <signal name="toggled" handler="_on_tran_check_toggled" swapped="no"/>
-                              </object>
-                            </child>
+                            </property>
                           </object>
                         </child>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox" id="vbox5">
+                      <object class="GtkBox" id="subtitle_box">
                         <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
+                        <property name="spacing">12</property>
                         <child>
-                          <object class="GtkLabel" id="label14">
-                            <property name="valign">center</property>
+                          <object class="GtkLabel" id="subtitle_title">
                             <property name="halign">start</property>
                             <property name="label" translatable="1">Subtitles</property>
                             <attributes>
@@ -241,32 +271,48 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkBox" id="vbox6">
-                            <property name="margin_start">12</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
-                            <child>
-                              <object class="GtkCheckButton" id="current_radio">
-                                <property name="valign">center</property>
-                                <property name="label" translatable="1">Find in c_urrent project</property>
-                                <property name="focusable">1</property>
-                                <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <property name="active">1</property>
-                                <signal name="toggled" handler="_on_current_radio_toggled" swapped="no"/>
+                          <object class="GtkFrame" id="subtitle_frame">
+                            <property name="child">
+                              <object class="GtkListBox" id="subtitle_list">
+                                <property name="selection_mode">none</property>
+                                <property name="show_separators">1</property>
+                                <style>
+                                  <class name="rich-list"/>
+                                </style>
+                                <child>
+                                  <object class="GtkListBoxRow">
+                                    <property name="activatable">0</property>
+                                    <property name="selectable">0</property>
+                                    <property name="child">
+                                      <object class="GtkCheckButton" id="current_radio">
+                                        <property name="hexpand">1</property>
+                                        <property name="label" translatable="1">Find in c_urrent project</property>
+                                        <property name="focusable">1</property>
+                                        <property name="use_underline">1</property>
+                                        <property name="active">1</property>
+                                        <signal name="toggled" handler="_on_current_radio_toggled" swapped="no"/>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkListBoxRow">
+                                    <property name="activatable">0</property>
+                                    <property name="selectable">0</property>
+                                    <property name="child">
+                                      <object class="GtkCheckButton" id="all_radio">
+                                        <property name="hexpand">1</property>
+                                        <property name="label" translatable="1">Find in _all open projects</property>
+                                        <property name="focusable">1</property>
+                                        <property name="use_underline">1</property>
+                                        <property name="group">current_radio</property>
+                                        <signal name="toggled" handler="_on_all_radio_toggled" swapped="no"/>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
                               </object>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="all_radio">
-                                <property name="valign">center</property>
-                                <property name="label" translatable="1">Find in _all open projects</property>
-                                <property name="focusable">1</property>
-                                <property name="halign">start</property>
-                                <property name="use_underline">1</property>
-                                <property name="group">current_radio</property>
-                                <signal name="toggled" handler="_on_all_radio_toggled" swapped="no"/>
-                              </object>
-                            </child>
+                            </property>
                           </object>
                         </child>
                       </object>
