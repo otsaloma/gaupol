@@ -115,7 +115,7 @@ toggle pair, no labels).
 - [x] gaupol/dialogs/open.py
 - [x] gaupol/dialogs/position_shift.py
 - [x] gaupol/dialogs/position_transform.py
-- [ ] gaupol/dialogs/preferences.py
+- [x] gaupol/dialogs/preferences.py
 - [x] gaupol/dialogs/preview_error.py
 - [x] gaupol/dialogs/save.py
 - [x] gaupol/dialogs/search.py

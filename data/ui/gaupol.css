@@ -1,16 +1,22 @@
 /* -*- coding: utf-8-unix -*- */
 
+/* Avoid making the preferences dialog really wide
+   (the default theme sets 100px minimum width). */
+.gaupol-preferences-switcher > button.text-button {
+  min-width: 50px;
+}
+
+.gaupol-tab-close-button {
+  margin: 0;
+  padding: 0;
+}
+
 .gaupol-toast {
   background-color: @theme_fg_color;
   border-radius: 99px;
   color: @theme_bg_color;
   margin: 12px;
   padding: 4px 4px 4px 18px;
-}
-
-.gaupol-tab-close-button {
-  margin: 0;
-  padding: 0;
 }
 
 .gaupol-video-background {

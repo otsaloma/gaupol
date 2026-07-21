@@ -2,11 +2,6 @@
 
 - All dialogs
   - Modernize layout, spacing and labels
-- Preferences dialog
-  - Use stack + switcher in the header
-  - Use ListBox/ListView
-- Spell-check dialog
-  - Use ListBox/ListView
 - Text correction assistant
   - Use ListBox/ListView
 - Use stack + switcher in application window?

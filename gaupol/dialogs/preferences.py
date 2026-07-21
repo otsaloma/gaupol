@@ -29,9 +29,8 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
     """Editor preferences page."""
 
     _widgets = [
-        "editor_default_font_check",
+        "editor_custom_font_check",
         "editor_font_button",
-        "editor_font_hbox",
         "editor_length_cell_check",
         "editor_length_combo",
         "editor_length_edit_check",
@@ -69,8 +68,8 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
     def _init_values(self):
         """Initialize default values for widgets."""
         use_custom = gaupol.conf.editor.use_custom_font
-        self._default_font_check.set_active(not use_custom)
-        self._font_hbox.set_sensitive(use_custom)
+        self._custom_font_check.set_active(use_custom)
+        self._font_button.set_sensitive(use_custom)
         self._font_button.set_font(self._get_custom_font())
         show_cell = gaupol.conf.editor.show_lengths_cell
         show_edit = gaupol.conf.editor.show_lengths_edit
@@ -86,11 +85,11 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
             self._spell_check_check.set_active(False)
             self._spell_check_check.set_sensitive(False)
 
-    def _on_default_font_check_toggled(self, check_button):
-        """Save default font usage."""
-        use_custom = not check_button.get_active()
+    def _on_custom_font_check_toggled(self, check_button):
+        """Save custom font usage."""
+        use_custom = check_button.get_active()
         gaupol.conf.editor.use_custom_font = use_custom
-        self._font_hbox.set_sensitive(use_custom)
+        self._font_button.set_sensitive(use_custom)
 
     def _on_font_button_font_set(self, font_button):
         """Save custom font."""
@@ -127,10 +126,10 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         "file_add_button",
         "file_auto_check",
         "file_down_button",
+        "file_encoding_list",
+        "file_encoding_scroller",
         "file_locale_check",
         "file_remove_button",
-        "file_toolbar",
-        "file_tree_view",
         "file_up_button",
     ]
 
@@ -139,35 +138,21 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         aeidon.Delegate.__init__(self, master)
         self._set_attributes(self._widgets, "file_")
         self.application = application
-        self._init_tree_view()
+        max_height = gaupol.util.lines_to_px(15)
+        self._encoding_scroller.set_max_content_height(max_height)
         self._init_values()
 
     def _get_selected_row(self):
-        """Return the selected row in the tree view or ``None``."""
-        selection = self._tree_view.get_selection()
-        store, itr = selection.get_selected()
-        if itr is None: return None
-        path = store.get_path(itr)
-        return gaupol.util.tree_path_to_row(path)
-
-    def _init_tree_view(self):
-        """Initialize the fallback encoding tree view."""
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        update = lambda x, self: self._set_sensitivities()
-        selection.connect("changed", update, self)
-        store = Gtk.ListStore(str)
-        self._tree_view.set_model(store)
-        renderer = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn("", renderer, text=0)
-        self._tree_view.append_column(column)
+        """Return the index of the selected row or ``None``."""
+        row = self._encoding_list.get_selected_row()
+        return row.get_index() if row else None
 
     def _init_values(self):
         """Initialize default values for widgets."""
         self._auto_check.set_active(gaupol.conf.encoding.try_auto)
         self._auto_check.set_sensitive(aeidon.util.chardet_available())
         self._locale_check.set_active(gaupol.conf.encoding.try_locale)
-        self._reload_tree_view()
+        self._reload_encoding_list()
 
     def _on_add_button_clicked(self, *args):
         """Add a new fallback encoding."""
@@ -179,10 +164,8 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         if encoding is None: return
         if encoding in gaupol.conf.encoding.fallback: return
         gaupol.conf.encoding.fallback.append(encoding)
-        self._reload_tree_view()
-        self._tree_view.grab_focus()
-        store = self._tree_view.get_model()
-        self._tree_view.set_cursor(len(store) - 1)
+        self._reload_encoding_list()
+        self._select_row(len(gaupol.conf.encoding.fallback) - 1)
 
     def _on_auto_check_toggled(self, check_button):
         """Save encoding auto-detection usage."""
@@ -193,9 +176,12 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         row = self._get_selected_row()
         encodings = gaupol.conf.encoding.fallback
         encodings.insert(row + 1, encodings.pop(row))
-        self._reload_tree_view()
-        self._tree_view.grab_focus()
-        self._tree_view.set_cursor(row + 1)
+        self._reload_encoding_list()
+        self._select_row(row + 1)
+
+    def _on_encoding_list_row_selected(self, list_box, row):
+        """Set the fallback list button sensitivities."""
+        self._set_sensitivities()
 
     def _on_locale_check_toggled(self, check_button):
         """Save locale encoding usage."""
@@ -205,37 +191,46 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         """Remove the selected fallback encoding."""
         row = self._get_selected_row()
         gaupol.conf.encoding.fallback.pop(row)
-        self._reload_tree_view()
-        self._tree_view.grab_focus()
-        store = self._tree_view.get_model()
-        if len(store) <= 0: return
-        self._tree_view.set_cursor(max(row-1, 0))
+        self._reload_encoding_list()
+        if not gaupol.conf.encoding.fallback: return
+        self._select_row(max(row - 1, 0))
 
     def _on_up_button_clicked(self, *args):
         """Move the selected fallback encoding up."""
         row = self._get_selected_row()
         encodings = gaupol.conf.encoding.fallback
-        encodings.insert(row-1, encodings.pop(row))
-        self._reload_tree_view()
-        self._tree_view.grab_focus()
-        self._tree_view.set_cursor(row-1)
+        encodings.insert(row - 1, encodings.pop(row))
+        self._reload_encoding_list()
+        self._select_row(row - 1)
 
-    def _reload_tree_view(self):
-        """Reload the fallback encoding tree view."""
-        store = self._tree_view.get_model()
-        store.clear()
+    def _reload_encoding_list(self):
+        """Reload the fallback encoding list."""
+        self._encoding_list.remove_all()
         for encoding in gaupol.conf.encoding.fallback:
-            store.append((aeidon.encodings.code_to_long_name(encoding),))
+            box = gaupol.util.new_hbox(spacing=12)
+            label = Gtk.Label(
+                label=aeidon.encodings.code_to_description(encoding))
+            label.add_css_class("dim-label")
+            box.append(label)
+            box.append(Gtk.Label(
+                label=aeidon.encodings.code_to_name(encoding)))
+            self._encoding_list.append(box)
         self._set_sensitivities()
 
+    def _select_row(self, index):
+        """Select and focus the fallback encoding row at `index`."""
+        row = self._encoding_list.get_row_at_index(index)
+        self._encoding_list.select_row(row)
+        row.grab_focus()
+
     def _set_sensitivities(self):
-        """Set the fallback tree view button sensitivities."""
-        store = self._tree_view.get_model()
+        """Set the fallback list button sensitivities."""
         row = self._get_selected_row()
         row = -1 if row is None else row
+        count = len(gaupol.conf.encoding.fallback)
         self._remove_button.set_sensitive(row >= 0)
         self._up_button.set_sensitive(row > 0)
-        self._down_button.set_sensitive(0 <= row < len(store) - 1)
+        self._down_button.set_sensitive(0 <= row < count - 1)
 
 class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
 
@@ -314,10 +309,10 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     _widgets = [
         "video_seek_spin",
-        "video_subtitle_bg_check",
+        "video_subtitle_bg_toggle",
         "video_subtitle_color_button",
         "video_subtitle_font_button",
-        "video_time_bg_check",
+        "video_time_bg_toggle",
         "video_time_color_button",
         "video_time_font_button",
     ]
@@ -344,11 +339,11 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
         self._subtitle_font_button.set_font(font)
         font = self._get_custom_font(self.conf.time_font)
         self._time_font_button.set_font(font)
-        self._subtitle_bg_check.set_active(self.conf.subtitle_background)
+        self._subtitle_bg_toggle.set_active(self.conf.subtitle_background)
         color = gaupol.util.hex_to_rgba(self.conf.subtitle_color)
         color.alpha = self.conf.subtitle_alpha
         self._subtitle_color_button.set_rgba(color)
-        self._time_bg_check.set_active(self.conf.time_background)
+        self._time_bg_toggle.set_active(self.conf.time_background)
         color = gaupol.util.hex_to_rgba(self.conf.time_color)
         color.alpha = self.conf.time_alpha
         self._time_color_button.set_rgba(color)
@@ -358,9 +353,9 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
         """Save seek length."""
         self.conf.seek_length = spin_button.get_value()
 
-    def _on_subtitle_bg_check_toggled(self, check_button):
+    def _on_subtitle_bg_toggle_toggled(self, toggle_button):
         """Save subtitle background use."""
-        self.conf.subtitle_background = check_button.get_active()
+        self.conf.subtitle_background = toggle_button.get_active()
 
     def _on_subtitle_color_button_color_set(self, color_button):
         """Save subtitle color."""
@@ -372,9 +367,9 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
         """Save subtitle font."""
         self.conf.subtitle_font = font_button.get_font_name()
 
-    def _on_time_bg_check_toggled(self, check_button):
+    def _on_time_bg_toggle_toggled(self, toggle_button):
         """Save time background use."""
-        self.conf.time_background = check_button.get_active()
+        self.conf.time_background = toggle_button.get_active()
 
     def _on_time_color_button_color_set(self, color_button):
         """Save time color."""
@@ -389,8 +384,6 @@ class VideoPage(aeidon.Delegate, gaupol.BuilderDialog):
 class PreferencesDialog(gaupol.BuilderDialog):
 
     """Dialog for editing preferences."""
-
-    _widgets = ["notebook"]
 
     def __init__(self, parent, application):
         """Initialize a :class:`PreferencesDialog` instance."""
