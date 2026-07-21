@@ -284,12 +284,13 @@ class Page(aeidon.Observable):
         encoding = self.project.main_file.encoding
         encoding = aeidon.encodings.code_to_long_name(encoding)
         newline = self.project.main_file.newline
-        tooltip.set_markup("{}\n{}\n{}\n{}".format(
-            "<b>{}</b> {}".format(_("Path:"), path),
-            "<b>{}</b> {}".format(_("Format:"), format.label),
-            "<b>{}</b> {}".format(_("Encoding:"), encoding),
-            "<b>{}</b> {}".format(_("Newlines:"), newline.label)))
-
+        text = f"{path}\n{format.label} — {encoding} — {newline.label}"
+        label = Gtk.Label(label=text, halign=Gtk.Align.START)
+        gaupol.util.set_widget_margins(label, 6)
+        attributes = Pango.AttrList()
+        attributes.insert(Pango.attr_weight_new(Pango.Weight.BOLD))
+        label.set_attributes(attributes)
+        tooltip.set_custom(label)
         return True # to show the tooltip.
 
     def reload_view(self, rows, fields):
