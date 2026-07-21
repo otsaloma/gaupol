@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 00:48+0300\n"
+"POT-Creation-Date: 2026-07-22 01:25+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>, 2019\n"
 "Language-Team: Icelandic (https://app.transifex.com/otsaloma/teams/64879/is/)\n"
@@ -368,22 +368,6 @@ msgstr "Loka verkefni"
 #, python-brace-format
 msgid "{} translation"
 msgstr "{} þýðing"
-
-#: gaupol/page.py:288
-msgid "Path:"
-msgstr "Slóð:"
-
-#: gaupol/page.py:289
-msgid "Format:"
-msgstr "Snið:"
-
-#: gaupol/page.py:290
-msgid "Encoding:"
-msgstr "Stafatafla:"
-
-#: gaupol/page.py:291
-msgid "Newlines:"
-msgstr "Nýlínumerki:"
 
 #: gaupol/agents/menu.py:74 gaupol/agents/menu.py:81
 msgid "File not found"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 00:48+0300\n"
+"POT-Creation-Date: 2026-07-22 01:25+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: tzwasd 😃, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/otsaloma/teams/64879/zh_CN/)\n"
@@ -368,22 +368,6 @@ msgstr "关闭项目"
 #, python-brace-format
 msgid "{} translation"
 msgstr "{} 翻译"
-
-#: gaupol/page.py:288
-msgid "Path:"
-msgstr "路径："
-
-#: gaupol/page.py:289
-msgid "Format:"
-msgstr "格式："
-
-#: gaupol/page.py:290
-msgid "Encoding:"
-msgstr "编码："
-
-#: gaupol/page.py:291
-msgid "Newlines:"
-msgstr "换行："
 
 #: gaupol/agents/menu.py:74 gaupol/agents/menu.py:81
 msgid "File not found"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 01:06+0300\n"
+"POT-Creation-Date: 2026-07-22 01:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,22 +363,6 @@ msgstr ""
 #: gaupol/page.py:135
 #, python-brace-format
 msgid "{} translation"
-msgstr ""
-
-#: gaupol/page.py:288
-msgid "Path:"
-msgstr ""
-
-#: gaupol/page.py:289
-msgid "Format:"
-msgstr ""
-
-#: gaupol/page.py:290
-msgid "Encoding:"
-msgstr ""
-
-#: gaupol/page.py:291
-msgid "Newlines:"
 msgstr ""
 
 #: gaupol/agents/menu.py:74 gaupol/agents/menu.py:81

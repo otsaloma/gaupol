@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 00:48+0300\n"
+"POT-Creation-Date: 2026-07-22 01:25+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: b83946de5835331df42b9ffcc43e6a33_05e65cd <73a30e0a984b2291d4915f37112ad292_814039>, 2022\n"
 "Language-Team: Turkish (https://app.transifex.com/otsaloma/teams/64879/tr/)\n"
@@ -372,22 +372,6 @@ msgstr "Projeyi kapat"
 #, python-brace-format
 msgid "{} translation"
 msgstr "{} çevirisi"
-
-#: gaupol/page.py:288
-msgid "Path:"
-msgstr "Yol:"
-
-#: gaupol/page.py:289
-msgid "Format:"
-msgstr "Tip:"
-
-#: gaupol/page.py:290
-msgid "Encoding:"
-msgstr "Kodlama:"
-
-#: gaupol/page.py:291
-msgid "Newlines:"
-msgstr "Yeni satırlar:"
 
 #: gaupol/agents/menu.py:74 gaupol/agents/menu.py:81
 msgid "File not found"

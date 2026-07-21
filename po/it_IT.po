@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 00:48+0300\n"
+"POT-Creation-Date: 2026-07-22 01:25+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Ermete Melchiorre, 2024\n"
 "Language-Team: Italian (Italy) (https://app.transifex.com/otsaloma/teams/64879/it_IT/)\n"
@@ -369,22 +369,6 @@ msgstr "Chiudi progetto"
 #, python-brace-format
 msgid "{} translation"
 msgstr "{} traduzione"
-
-#: gaupol/page.py:288
-msgid "Path:"
-msgstr "Percorso:"
-
-#: gaupol/page.py:289
-msgid "Format:"
-msgstr "Formato:"
-
-#: gaupol/page.py:290
-msgid "Encoding:"
-msgstr "Codifica:"
-
-#: gaupol/page.py:291
-msgid "Newlines:"
-msgstr "Nuove righe:"
 
 #: gaupol/agents/menu.py:74 gaupol/agents/menu.py:81
 msgid "File not found"
