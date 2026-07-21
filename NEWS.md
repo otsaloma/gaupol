@@ -1,3 +1,21 @@
+PENDING: Gaupol 1.999/2.0
+=========================
+
+* Migrate to GTK-4
+* Modernize the look of dialogs
+* Make spell-check dialog text directly editable
+* Combine titlebar and toolbar into a header bar
+* Drop support for extensions
+* Replace custom-framerates extension with a config file option
+* Switch the integrated video player from gtksink to gtk4paintablesink
+* Use a one-second preview offset for all external video players
+* Fix MPlayer automatically loading subtitles matching the video filename
+* Raise Python dependency to ≥ 3.10
+* Raise PyGObject dependency to ≥ 3.40
+* Raise GTK dependency to ≥ 4.12
+* Raise GStreamer dependency to ≥ 1.18
+* Replace gspell dependency with libspelling ≥ 0.2
+
 2026-04-13: Gaupol 1.16
 =======================
 
