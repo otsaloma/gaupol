@@ -74,17 +74,9 @@ class TestCase:
         path.write_text(text, encoding="ascii")
         return path
 
-    def setUp(self):
-        """Compatibility alias for :meth:`setup_method`."""
-        self.setup_method(None)
-
     def setup_method(self, method):
         """Set state for executing tests in `method`."""
         pass
-
-    def tearDown(self):
-        """Compatibility alias for :meth:`teardown_method`."""
-        self.teardown_method(None)
 
     def teardown_method(self, method):
         """Remove state set for executing tests in `method`."""
