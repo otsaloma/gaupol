@@ -26,6 +26,7 @@ class TestDebugDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         self.dialog = gaupol.DebugDialog()
+        gaupol.style.load_css(self.dialog)
         try:
             self.dialog.foo()
         except AttributeError:

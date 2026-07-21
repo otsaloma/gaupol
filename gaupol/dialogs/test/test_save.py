@@ -34,6 +34,7 @@ class TestSaveDialog(_TestFileDialog):
                                         title="test",
                                         mode=aeidon.modes.TIME)
 
+        gaupol.style.load_css(self.dialog)
         self.dialog.present()
 
     def test_get_format(self):

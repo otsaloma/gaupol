@@ -30,4 +30,5 @@ class TestVideoDialog(gaupol.TestCase):
                                          title="Select Video",
                                          button_label="Select")
 
+        gaupol.style.load_css(self.dialog)
         self.dialog.present()

@@ -35,6 +35,7 @@ class TestSearchDialog(gaupol.TestCase):
         self.application = self.new_application()
         self.dialog = gaupol.SearchDialog(
             self.application.window, self.application)
+        gaupol.style.load_css(self.dialog)
         self.dialog.present()
 
     def test_next(self):

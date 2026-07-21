@@ -27,3 +27,4 @@ class TestAboutDialog(gaupol.TestCase):
 
     def setup_method(self, method):
         self.dialog = gaupol.AboutDialog(Gtk.Window())
+        gaupol.style.load_css(self.dialog)
