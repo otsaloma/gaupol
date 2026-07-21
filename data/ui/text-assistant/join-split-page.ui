@@ -13,9 +13,9 @@
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkBox" id="vbox2">
+          <object class="GtkBox" id="dictionary_box">
             <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
+            <property name="spacing">12</property>
             <child>
               <object class="GtkLabel" id="label1">
                 <property name="halign">start</property>
@@ -26,31 +26,51 @@
               </object>
             </child>
             <child>
-              <object class="GtkBox" id="hbox1">
-                <property name="margin_start">12</property>
-                <property name="spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="label2">
-                    <property name="label" translatable="1">_Language:</property>
-                    <property name="use_underline">1</property>
-                    <property name="mnemonic_widget">language_button</property>
+              <object class="GtkFrame" id="frame1">
+                <property name="child">
+                  <object class="GtkListBox" id="dictionary_list">
+                    <property name="selection_mode">none</property>
+                    <property name="show_separators">1</property>
+                    <style>
+                      <class name="rich-list"/>
+                    </style>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="activatable">0</property>
+                        <property name="selectable">0</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel" id="label2">
+                                <property name="halign">start</property>
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="1">_Language</property>
+                                <property name="use_underline">1</property>
+                                <property name="mnemonic_widget">language_button</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="language_button">
+                                <property name="focusable">1</property>
+                                <property name="receives_default">1</property>
+                                <property name="valign">center</property>
+                                <signal name="clicked" handler="_on_language_button_clicked" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
                   </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="language_button">
-                    <property name="focusable">1</property>
-                    <property name="receives_default">1</property>
-                    <signal name="clicked" handler="_on_language_button_clicked" swapped="no"/>
-                  </object>
-                </child>
+                </property>
               </object>
             </child>
           </object>
         </child>
         <child>
-          <object class="GtkBox" id="vbox3">
+          <object class="GtkBox" id="corrections_box">
             <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
+            <property name="spacing">12</property>
             <child>
               <object class="GtkLabel" id="label5">
                 <property name="halign">start</property>
@@ -61,28 +81,46 @@
               </object>
             </child>
             <child>
-              <object class="GtkBox" id="vbox1">
-                <property name="margin_start">12</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkCheckButton" id="join_check">
-                    <property name="label" translatable="1">_Join words not found in spell-check dictionary</property>
-                    <property name="focusable">1</property>
-                    <property name="halign">start</property>
-                    <property name="use_underline">1</property>
-                    <signal name="toggled" handler="_on_join_check_toggled" swapped="no"/>
+              <object class="GtkFrame" id="frame2">
+                <property name="child">
+                  <object class="GtkListBox" id="corrections_list">
+                    <property name="selection_mode">none</property>
+                    <property name="show_separators">1</property>
+                    <style>
+                      <class name="rich-list"/>
+                    </style>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="activatable">0</property>
+                        <property name="selectable">0</property>
+                        <property name="child">
+                          <object class="GtkCheckButton" id="join_check">
+                            <property name="hexpand">1</property>
+                            <property name="label" translatable="1">_Join words not found in spell-check dictionary</property>
+                            <property name="focusable">1</property>
+                            <property name="use_underline">1</property>
+                            <signal name="toggled" handler="_on_join_check_toggled" swapped="no"/>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="activatable">0</property>
+                        <property name="selectable">0</property>
+                        <property name="child">
+                          <object class="GtkCheckButton" id="split_check">
+                            <property name="hexpand">1</property>
+                            <property name="label" translatable="1">_Split words not found in spell-check dictionary</property>
+                            <property name="focusable">1</property>
+                            <property name="use_underline">1</property>
+                            <signal name="toggled" handler="_on_split_check_toggled" swapped="no"/>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
                   </object>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="split_check">
-                    <property name="label" translatable="1">_Split words not found in spell-check dictionary</property>
-                    <property name="focusable">1</property>
-                    <property name="halign">start</property>
-                    <property name="use_underline">1</property>
-                    <signal name="toggled" handler="_on_split_check_toggled" swapped="no"/>
-                  </object>
-                </child>
+                </property>
               </object>
             </child>
           </object>

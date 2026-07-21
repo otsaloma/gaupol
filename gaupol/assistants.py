@@ -26,6 +26,32 @@ from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Pango
 
+def _new_check_row(title, description):
+    """Return a new list box row with a two-line check button."""
+    title_label = Gtk.Label(label=title, xalign=0)
+    title_label.set_ellipsize(Pango.EllipsizeMode.END)
+    description_label = Gtk.Label(xalign=0)
+    description = GLib.markup_escape_text(description)
+    description_label.set_markup(f"<small>{description}</small>")
+    description_label.set_ellipsize(Pango.EllipsizeMode.END)
+    description_label.add_css_class("dim-label")
+    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    box.set_margin_start(6)
+    box.append(title_label)
+    box.append(description_label)
+    check = Gtk.CheckButton()
+    check.set_child(box)
+    check.set_hexpand(True)
+    check.set_margin_top(3)
+    check.set_margin_bottom(3)
+    check.set_margin_start(6)
+    check.set_margin_end(6)
+    row = Gtk.ListBoxRow()
+    row.set_activatable(False)
+    row.set_selectable(False)
+    row.set_child(check)
+    return row, check
+
 class TextAssistantPage(Gtk.Box):
 
     """
@@ -81,7 +107,7 @@ class IntroductionPage(BuilderPage):
 
     """Page for listing all text correction tasks."""
 
-    _widgets = ["columns_combo", "subtitles_combo", "tree_view"]
+    _widgets = ["columns_combo", "subtitles_combo", "task_list"]
 
     def __init__(self, assistant):
         """Initialize a :class:`IntroductionPage` instance."""
@@ -92,7 +118,6 @@ class IntroductionPage(BuilderPage):
         self.page_type = Gtk.AssistantPageType.INTRO
         self._init_columns_combo()
         self._init_subtitles_combo()
-        self._init_tree_view()
         self._init_values()
 
     def get_field(self):
@@ -101,10 +126,15 @@ class IntroductionPage(BuilderPage):
         return [gaupol.fields.MAIN_TEXT,
                 gaupol.fields.TRAN_TEXT][index]
 
+    @aeidon.deco.listify
     def get_selected_pages(self):
         """Return selected content pages."""
-        store = self._tree_view.get_model()
-        return [x[0] for x in store if x[1]]
+        for i in range(1_000_000):
+            row = self._task_list.get_row_at_index(i)
+            if not row: break
+            check = row.get_child()
+            if check.get_active():
+                yield check.gaupol_page
 
     def get_target(self):
         """Return the selected target."""
@@ -134,23 +164,6 @@ class IntroductionPage(BuilderPage):
         self._subtitles_combo.pack_start(renderer, expand=True)
         self._subtitles_combo.add_attribute(renderer, "text", 0)
 
-    def _init_tree_view(self):
-        """Initialize the tree view of tasks."""
-        store = Gtk.ListStore(object, bool, str)
-        self._tree_view.set_model(store)
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        renderer = Gtk.CellRendererToggle()
-        renderer.props.activatable = True
-        renderer.props.xpad = 6
-        renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = Gtk.TreeViewColumn("", renderer, active=1)
-        self._tree_view.append_column(column)
-        renderer = Gtk.CellRendererText()
-        renderer.props.ellipsize = Pango.EllipsizeMode.END
-        column = Gtk.TreeViewColumn("", renderer, markup=2)
-        self._tree_view.append_column(column)
-
     def _init_values(self):
         """Initialize default values for widgets."""
         self._columns_combo.set_active({
@@ -171,26 +184,23 @@ class IntroductionPage(BuilderPage):
         """Save the selected target."""
         gaupol.conf.text_assistant.target = self.get_target()
 
-    def _on_tree_view_cell_toggled(self, renderer, path):
+    def _on_task_check_toggled(self, check_button):
         """Toggle and save task check button value."""
-        store = self._tree_view.get_model()
-        store[path][1] = not store[path][1]
-        store[path][0].set_visible(store[path][1])
+        check_button.gaupol_page.set_visible(check_button.get_active())
         pages = [x.handle for x in self.get_selected_pages()]
         gaupol.conf.text_assistant.pages = pages
 
-    def populate_tree_view(self, content_pages):
-        """Populate the tree view with tasks from `content_pages`."""
-        self._tree_view.get_model().clear()
-        store = self._tree_view.get_model()
+    def populate_task_list(self, content_pages):
+        """Populate the task list with tasks from `content_pages`."""
+        self._task_list.remove_all()
         pages = gaupol.conf.text_assistant.pages
         for page in content_pages:
-            title = GLib.markup_escape_text(page.title)
-            description = GLib.markup_escape_text(page.description)
-            markup = f"<b>{title}</b>\n{description}"
             page.set_visible(page.handle in pages)
-            store.append((page, page.handle in pages, markup))
-        self._tree_view.get_selection().unselect_all()
+            row, check = _new_check_row(page.title, page.description)
+            check.set_active(page.handle in pages)
+            check.gaupol_page = page
+            check.connect("toggled", self._on_task_check_toggled)
+            self._task_list.append(row)
 
 class LocalePage(BuilderPage):
 
@@ -203,9 +213,9 @@ class LocalePage(BuilderPage):
         "country_label",
         "language_combo",
         "language_label",
+        "pattern_list",
         "script_combo",
         "script_label",
-        "tree_view",
     ]
 
     def __init__(self, assistant):
@@ -213,7 +223,6 @@ class LocalePage(BuilderPage):
         BuilderPage.__init__(self, assistant, self._ui_file_basename)
         self.conf = None
         self._init_attributes()
-        self._init_tree_view()
         self._init_combo_boxes()
         self._init_values()
 
@@ -275,46 +284,33 @@ class LocalePage(BuilderPage):
         self._populate_language_combo()
         self._populate_country_combo()
 
-    def _init_tree_view(self):
-        """Initialize the tree view of individual corrections."""
-        store = Gtk.ListStore(object, bool, bool, str)
-        store_filter = store.filter_new()
-        store_filter.set_visible_column(1)
-        self._tree_view.set_model(store_filter)
-        selection = self._tree_view.get_selection()
-        selection.set_mode(Gtk.SelectionMode.SINGLE)
-        renderer = Gtk.CellRendererToggle()
-        renderer.props.activatable = True
-        renderer.props.xpad = 6
-        renderer.connect("toggled", self._on_tree_view_cell_toggled)
-        column = Gtk.TreeViewColumn("", renderer, active=2)
-        self._tree_view.append_column(column)
-        renderer = Gtk.CellRendererText()
-        renderer.props.ellipsize = Pango.EllipsizeMode.END
-        column = Gtk.TreeViewColumn("", renderer, markup=3)
-        self._tree_view.append_column(column)
-
     def _init_values(self):
         """Initialize default values for widgets."""
         pass
 
     def _on_country_combo_changed(self, combo_box):
-        """Populate the tree view with a subset patterns."""
+        """Populate the pattern list with a subset of patterns."""
         self.conf.country = self._get_country() or ""
-        self._populate_tree_view()
+        self._populate_pattern_list()
 
     def _on_language_combo_changed(self, combo_box):
-        """Populate the tree view with a subset patterns."""
+        """Populate the pattern list with a subset of patterns."""
         language = self._get_language()
         sensitive = language is not None
         self._populate_country_combo()
         self._country_combo.set_sensitive(sensitive)
         self._country_label.set_sensitive(sensitive)
         self.conf.language = language or ""
-        self._populate_tree_view()
+        self._populate_pattern_list()
+
+    def _on_pattern_check_toggled(self, check_button):
+        """Toggle all patterns behind `check_button`."""
+        enabled = check_button.get_active()
+        for pattern in check_button.gaupol_patterns:
+            pattern.enabled = enabled
 
     def _on_script_combo_changed(self, combo_box):
-        """Populate the tree view with a subset patterns."""
+        """Populate the pattern list with a subset of patterns."""
         script = self._get_script()
         sensitive = script is not None
         self._populate_language_combo()
@@ -326,21 +322,7 @@ class LocalePage(BuilderPage):
         self._country_combo.set_sensitive(sensitive)
         self._country_label.set_sensitive(sensitive)
         self.conf.script = script or ""
-        self._populate_tree_view()
-
-    def _on_tree_view_cell_toggled(self, renderer, path):
-        """Toggle the check button value."""
-        store_filter = self._tree_view.get_model()
-        store = store_filter.get_model()
-        path = Gtk.TreePath.new_from_string(path)
-        path = store_filter.convert_path_to_child_path(path)
-        name = store[path][0].get_name(False)
-        enabled = not store[path][2]
-        for i in range(len(store)):
-            # Toggle all patterns with the same name.
-            if store[i][0].get_name(False) == name:
-                store[i][0].enabled = enabled
-                store[i][2] = enabled
+        self._populate_pattern_list()
 
     def _populate_combo(self, combo_box, items, active):
         """Populate `combo_box` with `items`."""
@@ -377,6 +359,26 @@ class LocalePage(BuilderPage):
         items.sort(key=lambda x: x[1])
         self._populate_combo(self._language_combo, items, self.conf.language)
 
+    def _populate_pattern_list(self):
+        """Populate the pattern list with a subset of patterns."""
+        self._pattern_list.remove_all()
+        script = self._get_script()
+        language = self._get_language()
+        country = self._get_country()
+        patterns = self._manager.get_patterns(script, language, country)
+        patterns = self._filter_patterns(patterns)
+        groups = {}
+        for pattern in patterns:
+            # Group all patterns with the same name behind
+            # a single check button.
+            groups.setdefault(pattern.get_name(), []).append(pattern)
+        for name, group in groups.items():
+            row, check = _new_check_row(name, group[0].get_description())
+            check.set_active(group[0].enabled)
+            check.gaupol_patterns = group
+            check.connect("toggled", self._on_pattern_check_toggled)
+            self._pattern_list.append(row)
+
     def _populate_script_combo(self):
         """Populate the script combo box."""
         codes = self._manager.get_scripts()
@@ -384,28 +386,6 @@ class LocalePage(BuilderPage):
         items = [(codes[i], names[i]) for i in range(len(codes))]
         items.sort(key=lambda x: x[1])
         self._populate_combo(self._script_combo, items, self.conf.script)
-
-    def _populate_tree_view(self):
-        """Populate the tree view with a subset patterns."""
-        store_filter = self._tree_view.get_model()
-        store = store_filter.get_model()
-        store.clear()
-        script = self._get_script()
-        language = self._get_language()
-        country = self._get_country()
-        patterns = self._manager.get_patterns(script, language, country)
-        patterns = self._filter_patterns(patterns)
-        names_entered = set(())
-        for pattern in patterns:
-            name = pattern.get_name()
-            visible = not name in names_entered
-            names_entered.add(name)
-            name = GLib.markup_escape_text(name)
-            description = pattern.get_description()
-            description = GLib.markup_escape_text(description)
-            markup = f"<b>{name}</b>\n{description}"
-            store.append((pattern, visible, pattern.enabled, markup))
-        self._tree_view.get_selection().unselect_all()
 
 class CapitalizationPage(LocalePage):
 
@@ -475,22 +455,22 @@ class CommonErrorPage(LocalePage):
         self._ocr_check.set_active("OCR" in self.conf.classes)
 
     def _on_human_check_toggled(self, check_button):
-        """Populate the tree view with a subset patterns."""
+        """Populate the pattern list with a subset of patterns."""
         if check_button.get_active():
             self.conf.classes.append("Human")
             self.conf.classes = sorted(set(self.conf.classes))
         elif "Human" in self.conf.classes:
             self.conf.classes.remove("Human")
-        self._populate_tree_view()
+        self._populate_pattern_list()
 
     def _on_ocr_check_toggled(self, check_button):
-        """Populate the tree view with a subset patterns."""
+        """Populate the pattern list with a subset of patterns."""
         if check_button.get_active():
             self.conf.classes.append("OCR")
             self.conf.classes = sorted(set(self.conf.classes))
         elif "OCR" in self.conf.classes:
             self.conf.classes.remove("OCR")
-        self._populate_tree_view()
+        self._populate_pattern_list()
 
 class HearingImpairedPage(LocalePage):
 
@@ -735,7 +715,7 @@ class ProgressPage(BuilderPage):
 
     """Page for showing progress of text corrections."""
 
-    _widgets = ["message_label", "progress_bar", "status_label", "task_label"]
+    _widgets = ["progress_bar", "status_label", "task_label"]
 
     def __init__(self, assistant):
         """Initialize a :class:`ProgressPage` instance."""
@@ -750,23 +730,19 @@ class ProgressPage(BuilderPage):
 
     def _init_values(self):
         """Initalize default values for widgets."""
-        message = _("Each task is now being run on each project.")
-        self._message_label.set_text(message)
         self.reset(100)
 
     def bump_progress(self, n=1):
         """Bump the current progress by `n`."""
         self.set_progress(self._current_task + n)
 
-    def reset(self, total, clear_text=False):
+    def reset(self, total):
         """Set `total` as the amount of tasks to be run."""
         self._current_task = 0
         self._total_tasks = total
         self.set_progress(0, total)
         self.set_project_name("")
         self.set_task_name("")
-        if clear_text:
-            self._progress_bar.set_text("")
         gaupol.util.iterate_main()
 
     def set_progress(self, current, total=None):
@@ -774,22 +750,18 @@ class ProgressPage(BuilderPage):
         total = total or self._total_tasks
         fraction = current / total if total > 0 else 0
         self._progress_bar.set_fraction(fraction)
-        text = _("{current:d} of {total:d} tasks complete")
-        self._progress_bar.set_text(text.format(**locals()))
         self._current_task = current
         self._total_tasks = total
         gaupol.util.iterate_main()
 
     def set_project_name(self, name):
         """Set `name` as the currently checked project."""
-        text = _("Project: {}").format(name)
-        self._status_label.set_text(text)
+        self._status_label.set_text(name)
         gaupol.util.iterate_main()
 
     def set_task_name(self, name):
         """Set `name` as the currently performed task."""
-        text = _("Task: {}").format(name)
-        self._task_label.set_text(text)
+        self._task_label.set_text(name)
         gaupol.util.iterate_main()
 
 class ConfirmationPage(BuilderPage):
@@ -1120,11 +1092,11 @@ class TextAssistant(Gtk.Assistant):
         pages.remove(self._progress_page)
         pages.remove(self._confirmation_page)
         pages = [x for x in pages if hasattr(x, "correct_texts")]
-        self._introduction_page.populate_tree_view(pages)
+        self._introduction_page.populate_task_list(pages)
 
     def _prepare_progress_page(self, pages):
         """Prepare progress page for `pages`."""
-        self._progress_page.reset(0, True)
+        self._progress_page.reset(0)
         self.set_page_complete(self._progress_page, False)
         gaupol.util.delay_add(10, self._correct_texts, pages)
 

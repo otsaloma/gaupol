@@ -99,7 +99,7 @@ toggle pair, no labels).
 
 ## Progress
 
-- [ ] gaupol/assistants.py
+- [x] gaupol/assistants.py
 - [x] gaupol/dialogs/about.py
 - [x] gaupol/dialogs/append.py
 - [x] gaupol/dialogs/debug.py

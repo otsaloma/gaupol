@@ -13,34 +13,15 @@
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkBox" id="vbox2">
+          <object class="GtkScrolledWindow" id="task_scroller">
+            <property name="has_frame">1</property>
             <property name="vexpand">1</property>
-            <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
-            <child>
-              <object class="GtkLabel" id="label2">
-                <property name="halign">start</property>
-                <property name="label" translatable="1">_Select corrections to perform on texts:</property>
-                <property name="use_underline">1</property>
-                <property name="mnemonic_widget">tree_view</property>
+            <property name="focusable">1</property>
+            <property name="child">
+              <object class="GtkListBox" id="task_list">
+                <property name="selection_mode">none</property>
               </object>
-            </child>
-            <child>
-              <object class="GtkScrolledWindow" id="scrolledwindow1">
-                <property name="has_frame">1</property>
-                <property name="vexpand">1</property>
-                <property name="focusable">1</property>
-                <property name="child">
-                  <object class="GtkTreeView" id="tree_view">
-                    <property name="focusable">1</property>
-                    <property name="headers_visible">0</property>
-                    <child internal-child="selection">
-                      <object class="GtkTreeSelection" id="treeview-selection"/>
-                    </child>
-                  </object>
-                </property>
-              </object>
-            </child>
+            </property>
           </object>
         </child>
         <child>
@@ -50,7 +31,7 @@
             <child>
               <object class="GtkLabel" id="label">
                 <property name="halign">start</property>
-                <property name="label" translatable="1">Colu_mns:</property>
+                <property name="label" translatable="1">Colu_mns</property>
                 <property name="use_underline">1</property>
                 <property name="mnemonic_widget">columns_combo</property>
                 <layout>
@@ -62,7 +43,7 @@
             <child>
               <object class="GtkLabel" id="label3">
                 <property name="halign">start</property>
-                <property name="label" translatable="1">S_ubtitles:</property>
+                <property name="label" translatable="1">S_ubtitles</property>
                 <property name="use_underline">1</property>
                 <property name="mnemonic_widget">subtitles_combo</property>
                 <layout>

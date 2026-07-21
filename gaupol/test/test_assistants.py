@@ -43,6 +43,7 @@ class TestIntroductionPage(_TestBuilderPage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = IntroductionPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
@@ -59,6 +60,7 @@ class TestCapitalizationPage(_TestLocalePage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = CapitalizationPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
@@ -68,6 +70,7 @@ class TestCommonErrorPage(_TestLocalePage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = CommonErrorPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
@@ -77,6 +80,7 @@ class TestHearingImpairedPage(_TestLocalePage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = HearingImpairedPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
@@ -89,6 +93,7 @@ class TestJoinSplitWordsPage(_TestBuilderPage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.project = self.new_project()
         self.page = JoinSplitWordsPage(self.window)
         self.window.set_child(self.page)
@@ -107,6 +112,7 @@ class TestLineBreakPage(_TestLocalePage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = LineBreakPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
@@ -116,6 +122,7 @@ class TestLineBreakOptionsPage(_TestBuilderPage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = LineBreakOptionsPage(self.window)
         self.window.set_child(self.page)
         self.window.present()
@@ -125,6 +132,7 @@ class TestProgressPage(_TestBuilderPage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = ProgressPage(self.window)
         self.page.reset(100)
         self.window.set_child(self.page)
@@ -135,6 +143,7 @@ class TestConfirmationPage(_TestBuilderPage):
     def setup_method(self, method):
         self.window = Gtk.Window()
         self.window.set_default_size(800, 500)
+        gaupol.style.load_css(self.window)
         self.page = ConfirmationPage(self.window)
         self.window.set_child(self.page)
         self.window.present()

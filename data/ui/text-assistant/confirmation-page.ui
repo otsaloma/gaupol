@@ -11,15 +11,7 @@
         <property name="hexpand">1</property>
         <property name="vexpand">1</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
-        <child>
-          <object class="GtkLabel" id="label1">
-            <property name="halign">start</property>
-            <property name="label" translatable="1">Acc_ept, discard or edit changes:</property>
-            <property name="use_underline">1</property>
-            <property name="mnemonic_widget">tree_view</property>
-          </object>
-        </child>
+        <property name="spacing">12</property>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
             <property name="has_frame">1</property>

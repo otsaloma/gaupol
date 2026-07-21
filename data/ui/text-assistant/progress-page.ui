@@ -13,12 +13,6 @@
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkLabel" id="message_label">
-            <property name="halign">start</property>
-            <property name="wrap">1</property>
-          </object>
-        </child>
-        <child>
           <object class="GtkProgressBar" id="progress_bar"/>
         </child>
         <child>
