@@ -206,6 +206,7 @@ class MultiSaveDialog(gaupol.BuilderDialog, gaupol.FileDialog):
         """Set the selected directory."""
         self._directory = Path(path)
         self._directory_button.set_label(self._directory.name or str(self._directory))
+        self._directory_button.set_tooltip_text(str(self._directory))
 
     def set_format(self, format):
         """Set the selected format."""
