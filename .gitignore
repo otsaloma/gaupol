@@ -5,7 +5,6 @@
 .pytest_cache
 __pycache__
 build
-data/extensions/*/*.extension
 data/io.otsaloma.gaupol.appdata.xml
 data/io.otsaloma.gaupol.desktop
 data/patterns/*.capitalization
