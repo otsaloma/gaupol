@@ -18,8 +18,10 @@
 """GTK user interface controller for :class:`aeidon.Project`."""
 
 import aeidon
+import contextlib
 import gaupol
 import itertools
+import sys
 
 from aeidon.i18n   import _
 from gi.repository import Gdk
@@ -143,9 +145,11 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
             if hasattr(gaupol, "appman"):
                 gaupol.appman.set_accels_for_action(
                     name, action.accelerators)
+            # Route all activations through a common handler that
+            # re-checks doability, keeping the real callback aside.
             stub = action.props.name.replace("-", "_")
-            callback = f"_on_{stub}_activate"
-            action.connect("activate", getattr(self, callback))
+            action.callback = getattr(self, f"_on_{stub}_activate")
+            action.connect("activate", self._on_action_activate)
             self.window.add_action(action)
 
     def _init_custom_framerates(self):
@@ -299,3 +303,17 @@ class Application(aeidon.Observable, metaclass=ApplicationMeta):
     def _init_x_clipboard(self):
         """Initialize the desktop-wide clipboard."""
         self.x_clipboard = Gdk.Display.get_default().get_clipboard()
+
+    def _on_action_activate(self, action, *args):
+        """Run `action`'s callback if it is currently doable."""
+        # Action sensitivity can in rare corner cases go stale.
+        # Re-check the action is doable before running the callback.
+        page = self.get_current_page()
+        rows = []
+        with contextlib.suppress(AttributeError):
+            rows = page.view.get_selected_rows()
+        if action.update_enabled(self, page, rows):
+            return action.callback(action, *args)
+        else:
+            print(f"{action.props.name} is no longer doable", file=sys.stderr)
+            return None

@@ -32,18 +32,21 @@ class Action(Gio.SimpleAction):
         GObject.GObject.__init__(self, name=name)
         self.accelerators = []
         self.action_group = "unsafe"
+        self.callback = None
 
     def _affirm_doable(self, application, page, selected_rows):
         """Raise :exc:`gaupol.AffirmationError` if action cannot be done."""
         pass
 
     def update_enabled(self, application, page, selected_rows):
-        """Update the "enabled" property to match `application`."""
+        """Update the "enabled" property and return whether doable."""
         try:
             self._affirm_doable(application, page, selected_rows)
             self.set_enabled(True)
+            return True
         except aeidon.AffirmationError:
             self.set_enabled(False)
+            return False
 
 class OpenRecentTranslationFileAction(Action):
 
