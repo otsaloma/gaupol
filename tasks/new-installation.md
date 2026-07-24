@@ -110,17 +110,30 @@ A catapult-style Makefile using only mkdir/cp/sed/msgfmt:
 - `make build` compiles translations (mo files, desktop, appdata),
   generates the launcher from a `bin/gaupol.in` template (sed
   `%LIBDIR%`) and patches `LOCALE_DIR` into a build copy of the paths
-  module — everything into `build/`. As in catapult, install
-  destinations and the paths patched into files are separate variables
-  (`LOCALEDIR` vs `LOCALEDIR_FINAL`), which is how DESTDIR is handled
-  without setup.py's abspath-stripping hack.
+  module — everything into `build/`.
+
+  Directory variables are DESTDIR-free and name final paths (`LOCALEDIR
+  = $(PREFIX)/share/locale`), with `$(DESTDIR)` prepended only at the
+  install sites (`$(DESTDIR)$(LOCALEDIR)`). That's the GNU coding
+  standards convention packagers expect, it's what gets patched into
+  files as-is, and it avoids both setup.py's abspath-stripping hack and
+  catapult's `LOCALEDIR`/`LOCALEDIR_FINAL` pair, where overriding only
+  one of the two would silently embed the default path. Same treatment
+  for `BINDIR`, `DATADIR` and `MANDIR`, and for the `%LIBDIR%` value
+  patched into the launcher.
+
+  Note that paths are embedded at build time, so build and install must
+  be run with the same variables — `make LOCALEDIR=... build install`,
+  not `make build && make LOCALEDIR=... install`. Document this in
+  `PACKAGING.md`.
 
   `LOCALEDIR` is overridable like `MANDIR`: there is no spec placing
   gettext catalogs at `$PREFIX/share/locale`, only the GNU gettext
   default and FHS convention, so a distro with a house rule must be able
-  to say `make LOCALEDIR=... install`. This is why the path is patched
-  in rather than derived at runtime from the package location, which
-  would silently fall back to untranslated whenever the two disagree.
+  to say `make LOCALEDIR=... build install`. This is why the path is
+  patched in rather than derived at runtime from the package location,
+  which would silently fall back to untranslated whenever the two
+  disagree.
 
 - `make install` copies the aeidon and gaupol package trees to
   `$(DESTDIR)$(PREFIX)/share/gaupol/`, the launcher to bin, icons,
