@@ -105,9 +105,14 @@ A catapult-style Makefile using only mkdir/cp/sed/msgfmt:
   paths module — everything into `build/`.
 
 - `make install` copies the aeidon and gaupol package trees to
-  `$(DESTDIR)$(PREFIX)/share/gaupol/`, the launcher to bin, and icons,
-  desktop, appdata, man page and locale files to their standard
-  directories.
+  `$(DESTDIR)$(PREFIX)/share/gaupol/`, the launcher to bin, icons,
+  desktop, appdata and locale files to their standard directories and
+  the man page to `$(MANDIR)` (default `share/man`, overridable — kept
+  for NetBSD). As a last best-effort step, run update-desktop-database
+  when DESTDIR is unset (distro triggers handle it for `/usr`; without
+  it a `/usr/local` install has no mimeinfo.cache and Gaupol wouldn't
+  show under "Open With" for subtitle files). No icon cache step: GTK
+  scans the theme directory when no cache file exists.
 
 - Use case 1 is `sudo make build install` (PREFIX=/usr/local by
   default). Use case 2 is `make DESTDIR=... PREFIX=/usr build install`.
@@ -119,23 +124,67 @@ distros that split the packages, `make INCLUDE_AEIDON=no install`
 installs only the gaupol half and the launcher falls back to importing
 aeidon from site-packages, provided by a python3-aeidon distro package
 built from the same pyproject.toml as PyPI, using the distro's standard
-Python packaging tooling.
+Python packaging tooling. Similarly, `make INCLUDE_ISO_CODES=no install`
+skips the bundled iso-codes JSON fallback for distros that ship
+iso-codes as its own package.
 
 ### aeidon on PyPI (Use Case 3)
 
 A minimal pyproject.toml with hatchling as the build backend, dynamic
 version from `aeidon/__init__.py`, dependency on charset-normalizer.
 With data files inside the package, they are ordinary package data and
-the copytree hack dies with `setup-aeidon-pypi.py`. Built with `python3
--m build`, uploaded with twine via `make publish-aeidon`.
+the copytree hack dies with `setup-aeidon-pypi.py`. The iso-codes JSON
+files ship in the wheel (fixes today's omission; needed on Windows and
+Mac where `/usr/share/iso-codes` doesn't exist). Built with `python3 -m
+build`, uploaded with twine via `make publish-aeidon`.
+
+A custom hatchling build hook (`hatch_build.py`) runs msgfmt to
+translate the pattern files into the wheel build staging area; the sdist
+must therefore include `po/` and the hook file. gettext is needed only
+by wheel builders (us and distro packagers, all on Linux) — pip users
+get the prebuilt wheel from PyPI with translated patterns baked in.
+
+Distros building python3-aeidon that don't want the bundled iso-codes
+JSONs strip `aeidon/data/iso-codes` when packaging: a per-build option
+in pyproject.toml isn't possible since the file is static config and
+hatchling doesn't forward PEP 517 `--config-setting` to build hooks
+(pypa/hatch#1072). If stripping proves unacceptable, an
+environment-variable-controlled exclusion in the custom hook can be
+attempted. Document this in `PACKAGING.md`.
+
+The PyPI long description is plain `readme = "README.aeidon.md"` in
+pyproject.toml — static config, no dynamic metadata, content type
+inferred from the `.md` suffix. Rendering can be checked with `twine
+check dist/*`.
 
 ### Removals and Updates
 
 `setup.py`, `setup-aeidon-pypi.py` and `manifests/` are deleted; the
-clean target becomes plain shell commands in the Makefile. The flatpak
-manifest, CI workflow (`.github/workflows/test.yml`), `README.md` and
-`README.aeidon.md` (rewritten distro-packaging instructions) are updated
-to the new commands.
+clean target becomes plain shell commands in the Makefile. The CI
+workflow (`.github/workflows/test.yml`) is updated to the new commands.
+
+### Documentation
+
+The installation documentation is split by audience:
+
+- `README.md` covers use case 1 only: installation by individuals from
+  source, i.e. `sudo make build install`. The current `setup.py` command
+  and the `python3-setuptools` dependency go away and make is listed
+  instead. It points to `PACKAGING.md` for the other use cases.
+
+- `README.aeidon.md` stays, but only as a description of what aeidon is,
+  which is also what the aeidon PyPI page shows. Its content is replaced
+  with a Markdown version of the `aeidon` package docstring in
+  `aeidon/__init__.py` (the intro and the two usage examples, lines
+  19–41), i.e. duplicated by hand and no longer packaging docs. Nothing
+  of the old content is worth keeping.
+
+- `PACKAGING.md` is a new file covering use cases 2 and 3: distro
+  packaging of gaupol (DESTDIR + PREFIX, the `INCLUDE_AEIDON=no` and
+  `INCLUDE_ISO_CODES=no` toggles, which dependencies belong to which
+  package) and building aeidon from pyproject.toml, including that
+  distros wanting to drop the bundled iso-codes JSONs strip
+  `aeidon/data/iso-codes`.
 
 ## Progress
 
@@ -147,24 +196,83 @@ to the new commands.
 - [ ] Write the new Makefile build and install targets and the
       `bin/gaupol.in` launcher template; delete `setup.py` and
       `manifests/`
-- [ ] Add `pyproject.toml` for aeidon, delete `setup-aeidon-pypi.py`,
+- [ ] Add `pyproject.toml` for aeidon and the `hatch_build.py` hook that
+      runs msgfmt for pattern files, delete `setup-aeidon-pypi.py`,
       update the publish-aeidon target
-- [ ] Update `README.md` and `README.aeidon.md` installation and
-      packaging instructions
+- [ ] Add a startup warning to stderr if the aeidon and gaupol versions
+      differ
+- [ ] Update `README.md` to cover use case 1 with the new commands and
+      point to `PACKAGING.md`; rewrite `README.aeidon.md` as just a
+      description of aeidon; add `PACKAGING.md` covering use cases 2 and
+      3
 - [ ] Update the CI workflow
 - [ ] Verify all three use cases: install to a scratch prefix and run,
       DESTDIR + PREFIX install and inspect paths, build wheel and
-      install into a venv and import
+      install into a venv and import. Write a permanent test shell
+      script `tools/test-install.sh` that tests the different install
+      cases, checks that files are in place (`test -f`, `test -x` etc.)
+      and that the correct packages are imported, such as
+      `PYTHONPATH=... python3 -c ...`
 
 ## Out of Scope
 
 - `flatpak/io.otsaloma.gaupol.yml` (updated separately later)
 
+## Open Questions
+
+None at the moment.
+
 ## Resolved Questions
 
-...
+- The `--mandir` option existed for non-standard man page locations.
+  Keep a MANDIR variable or hardcode `share/man`? => This was requested
+  by NetBSD, if I remember correctly, so keep it.
 
-## Open Questions
+- Post-install hooks: setup.py runs update-desktop-database for non-root
+  installs. Keep as a best-effort step in `make install` (skipped when
+  DESTDIR is set)? Also icon cache? => Keep update-desktop-database as a
+  best-effort step in `make install`, skipped when DESTDIR is set
+  (distro triggers handle it for `/usr`). Without it a `/usr/local`
+  install has no mimeinfo.cache and Gaupol wouldn't show under "Open
+  With" for subtitle files. No icon cache step needed: GTK scans the
+  theme directory when no cache file exists.
+
+- Windows/frozen leftovers: `sys.platform == "win32"` and `sys.frozen`
+  branches in `aeidon/paths.py` and elsewhere — drop them in 2.0 now
+  that we target only Linux? => Keep these in case we get back to
+  creating Windows installers.
+
+- iso-codes: the bundled JSON files are a fallback when
+  `/usr/share/iso-codes` is absent. Keep a `INCLUDE_ISO_CODES=no`
+  Makefile toggle for distros? Should the PyPI wheel include them (today
+  it doesn't)? => Yeah, we need that toggle. Distros don't want
+  duplicate files in packages (they are crazy strict about that). The
+  aeidon package does need them, seems a bug in the current packaging.
+  Imagine someone on Windows or Mac installing the aeidon package; it
+  needs to work.
+
+- `LOCALE_DIR`: sed-patch to `PREFIX/share/locale` at build time
+  (catapult-style, standard location), or install app-private under
+  `PREFIX/share/gaupol/locale` and find it relative to `__file__` with
+  no patching at all? => App-private locale is a strong no-no. We need
+  to follow distro conventions, so tools like Debian's localepurge work.
+  `PREFIX/share/locale` is correct and that should in 99% of cases be
+  `/usr/share/locale` or `/usr/local/share/locale`.
+
+- Translations for standalone aeidon: aeidon strings live in the gaupol
+  gettext domain and the wheel ships no mo files, so PyPI users get
+  untranslated messages. Accept as status quo? => A stand-alone aeidon
+  is used as a package in a way that the strings don't surface to the
+  user and no translations are needed. As a package, aeidon is mostly
+  just used to read and write subtitle files. The translatable strings
+  are defined in aeidon, but only needed for the gaupol GUI, so it's
+  fine to use the "gaupol" gettext domain, i.e. only have translations
+  if gaupol too is installed.
+
+- Version coupling: when aeidon and gaupol are packaged separately,
+  matching versions are assumed. Leave to distro dependency declarations
+  as now, or should gaupol check at startup? => Let's add a check, but
+  only a warning to stderr, no hard fail.
 
 - Pattern file translation: pattern names and descriptions are
   translated at build time with msgfmt from the `.in` files. Where do
@@ -173,33 +281,7 @@ to the new commands.
   standalone aeidon wheel ship — today PyPI effectively gets
   untranslated patterns; options include running msgfmt in a hatchling
   build hook (adds gettext to wheel builds), shipping untranslated, or
-  translating at runtime via gettext.
-
-- iso-codes: the bundled JSON files are a fallback when
-  `/usr/share/iso-codes` is absent. Keep a `INCLUDE_ISO_CODES=no`
-  Makefile toggle for distros? Should the PyPI wheel include them (today
-  it doesn't)?
-
-- Translations for standalone aeidon: aeidon strings live in the gaupol
-  gettext domain and the wheel ships no mo files, so PyPI users get
-  untranslated messages. Accept as status quo?
-
-- `LOCALE_DIR`: sed-patch to `PREFIX/share/locale` at build time
-  (catapult-style, standard location), or install app-private under
-  `PREFIX/share/gaupol/locale` and find it relative to `__file__` with
-  no patching at all?
-
-- Windows/frozen leftovers: `sys.platform == "win32"` and `sys.frozen`
-  branches in `aeidon/paths.py` and elsewhere — drop them in 2.0 now
-  that we target only Linux?
-
-- Post-install hooks: setup.py runs update-desktop-database for non-root
-  installs. Keep as a best-effort step in `make install` (skipped when
-  DESTDIR is set)? Also icon cache?
-
-- The `--mandir` option existed for non-standard man page locations.
-  Keep a MANDIR variable or hardcode `share/man`?
-
-- Version coupling: when aeidon and gaupol are packaged separately,
-  matching versions are assumed. Leave to distro dependency declarations
-  as now, or should gaupol check at startup?
+  translating at runtime via gettext. => Run msgfmt in a hatchling build
+  hook unless there's something difficult about that. Confirmed:
+  generated files go only to `build/` (Make) or the wheel build staging
+  area (hook), never into the source tree.
