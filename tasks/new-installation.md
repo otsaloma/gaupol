@@ -124,9 +124,13 @@ distros that split the packages, `make INCLUDE_AEIDON=no install`
 installs only the gaupol half and the launcher falls back to importing
 aeidon from site-packages, provided by a python3-aeidon distro package
 built from the same pyproject.toml as PyPI, using the distro's standard
-Python packaging tooling. Similarly, `make INCLUDE_ISO_CODES=no install`
-skips the bundled iso-codes JSON fallback for distros that ship
-iso-codes as its own package.
+Python packaging tooling.
+
+There is deliberately no Make variable for the bundled iso-codes JSON
+fallback. Stripping those is only a concern for rigorous packagers, who
+are the ones doing the split above anyway, and it happens in the aeidon
+package they build — leaving one way to do it instead of a different one
+for an aeidon-only install and for the full app.
 
 ### aeidon on PyPI (Use Case 3)
 
@@ -143,10 +147,11 @@ the sdist, since pattern files are translated at runtime (see below) and
 everything in the wheel is plain package data.
 
 Distros building python3-aeidon that don't want the bundled iso-codes
-JSONs strip `aeidon/data/iso-codes` when packaging: a per-build option
-in pyproject.toml isn't possible since the file is static config and
-hatchling doesn't forward PEP 517 `--config-setting` to build hooks
-(pypa/hatch#1072). Document this in `PACKAGING.md`.
+JSONs strip `aeidon/data/iso-codes` when packaging, this being the only
+place where that's done. A per-build option in pyproject.toml isn't
+possible anyway, since the file is static config and hatchling doesn't
+forward PEP 517 `--config-setting` to build hooks (pypa/hatch#1072).
+Document this in `PACKAGING.md`.
 
 The PyPI long description is plain `readme = "README.aeidon.md"` in
 pyproject.toml — static config, no dynamic metadata, content type
@@ -217,11 +222,10 @@ The installation documentation is split by audience:
   of the old content is worth keeping.
 
 - `PACKAGING.md` is a new file covering use cases 2 and 3: distro
-  packaging of gaupol (DESTDIR + PREFIX, the `INCLUDE_AEIDON=no` and
-  `INCLUDE_ISO_CODES=no` toggles, which dependencies belong to which
-  package) and building aeidon from pyproject.toml, including that
-  distros wanting to drop the bundled iso-codes JSONs strip
-  `aeidon/data/iso-codes`.
+  packaging of gaupol (DESTDIR + PREFIX, the `INCLUDE_AEIDON=no` toggle,
+  which dependencies belong to which package) and building aeidon from
+  pyproject.toml, including that distros wanting to drop the bundled
+  iso-codes JSONs strip `aeidon/data/iso-codes`.
 
 ## Progress
 
@@ -290,7 +294,11 @@ None at the moment.
   duplicate files in packages (they are crazy strict about that). The
   aeidon package does need them, seems a bug in the current packaging.
   Imagine someone on Windows or Mac installing the aeidon package; it
-  needs to work.
+  needs to work. => Refined: no Make variable after all. Only rigorous
+  packagers care, they do the split aeidon + gaupol anyway, and we don't
+  want one way to strip iso-codes in an aeidon-only install and another
+  in the full app. Stripping happens only when building the aeidon
+  package.
 
 - `LOCALE_DIR`: sed-patch to `PREFIX/share/locale` at build time
   (catapult-style, standard location), or install app-private under
