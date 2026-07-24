@@ -15,15 +15,16 @@ need to continue to be supported.
 
 1. Installation by individuals from source. This should install Gaupol
    to a "prefix", `/usr/local` by default. This should ideally be just a
-   single command to run at a shell, such as `sudo make build install`.
-   Any needed installation time dependencies should be kept to an
-   absolute minimum.
+   single command to run at a shell, such as `sudo make build install`
+   (although fine to split as `make build` + `sudo make install` to
+   avoid root-owned files under the build dir). Any needed installation
+   time dependencies should be kept to an absolute minimum.
 
-2. Packaging by Linux distros. This should be a combination of "root" +
-   "prefix", so installed to a temporary local directory with full paths
-   inside and that is then packaged, such as DEB or RPM. Many distros
-   package aeidon and gaupol separately, see `README.aeidon.md` for how
-   that currently works.
+2. Packaging by Linux distros. This should be a combination of
+   "destdir" + "prefix", so installed to a temporary local directory
+   with full paths inside and that is then packaged, such as DEB or RPM.
+   Many distros package aeidon and gaupol separately, see
+   `README.aeidon.md` for how that currently works.
 
 3. The aeidon package is published on PyPI and needs to be installable
    and packageable stand-alone (no gaupol, no GUI). This is currently
@@ -91,6 +92,13 @@ rewriting for data files and no PyPI-vs-app conflict. The single shared
 own data dir constant in the gaupol package for its ui and css files,
 which also improves the aeidon/gaupol separation.
 
+`LOCALE_DIR` moves from aeidon to gaupol for the same reason, and
+because it has to: it is used only as the default argument of
+`aeidon.i18n.bind`, which is called only from `gaupol/__init__.py`, and
+in a split install aeidon comes from the wheel and is never touched by
+our Makefile, so a patched value there wouldn't exist. gaupol calls
+`aeidon.i18n.bind(gaupol.LOCALE_DIR)` instead.
+
 Left in `data/`: files installed to standard system locations — icons,
 desktop file, appdata, man page — plus samples and anything else not
 read by the app at runtime.
@@ -102,7 +110,17 @@ A catapult-style Makefile using only mkdir/cp/sed/msgfmt:
 - `make build` compiles translations (mo files, desktop, appdata),
   generates the launcher from a `bin/gaupol.in` template (sed
   `%LIBDIR%`) and patches `LOCALE_DIR` into a build copy of the paths
-  module — everything into `build/`.
+  module — everything into `build/`. As in catapult, install
+  destinations and the paths patched into files are separate variables
+  (`LOCALEDIR` vs `LOCALEDIR_FINAL`), which is how DESTDIR is handled
+  without setup.py's abspath-stripping hack.
+
+  `LOCALEDIR` is overridable like `MANDIR`: there is no spec placing
+  gettext catalogs at `$PREFIX/share/locale`, only the GNU gettext
+  default and FHS convention, so a distro with a house rule must be able
+  to say `make LOCALEDIR=... install`. This is why the path is patched
+  in rather than derived at runtime from the package location, which
+  would silently fall back to untranslated whenever the two disagree.
 
 - `make install` copies the aeidon and gaupol package trees to
   `$(DESTDIR)$(PREFIX)/share/gaupol/`, the launcher to bin, icons,
@@ -233,7 +251,8 @@ The installation documentation is split by audience:
       `aeidon/data/`, revise `aeidon/paths.py` to find them relative to
       `__file__`
 - [ ] Move gaupol data files (ui, gaupol.css) into `gaupol/data/`, add a
-      gaupol-side data dir constant, update references
+      gaupol-side data dir constant, update references; move
+      `LOCALE_DIR` to gaupol and pass it to `aeidon.i18n.bind`
 - [ ] Write the new Makefile build and install targets and the
       `bin/gaupol.in` launcher template; delete `setup.py` and
       `manifests/`
@@ -254,7 +273,7 @@ The installation documentation is split by audience:
 - [ ] Verify all three use cases: install to a scratch prefix and run,
       DESTDIR + PREFIX install and inspect paths, build wheel and
       install into a venv and import. Write a permanent test shell
-      script `tools/test-install.sh` that tests the different install
+      script `tools/test-install` that tests the different install
       cases, checks that files are in place (`test -f`, `test -x` etc.)
       and that the correct packages are imported, such as
       `PYTHONPATH=... python3 -c ...`
@@ -273,14 +292,14 @@ None at the moment.
   Keep a MANDIR variable or hardcode `share/man`? => This was requested
   by NetBSD, if I remember correctly, so keep it.
 
-- Post-install hooks: setup.py runs update-desktop-database for non-root
-  installs. Keep as a best-effort step in `make install` (skipped when
-  DESTDIR is set)? Also icon cache? => Keep update-desktop-database as a
-  best-effort step in `make install`, skipped when DESTDIR is set
-  (distro triggers handle it for `/usr`). Without it a `/usr/local`
-  install has no mimeinfo.cache and Gaupol wouldn't show under "Open
-  With" for subtitle files. No icon cache step needed: GTK scans the
-  theme directory when no cache file exists.
+- Post-install hooks: setup.py runs update-desktop-database for
+  non-destdir installs. Keep as a best-effort step in `make install`
+  (skipped when DESTDIR is set)? Also icon cache? => Keep
+  update-desktop-database as a best-effort step in `make install`,
+  skipped when DESTDIR is set (distro triggers handle it for `/usr`).
+  Without it a `/usr/local` install has no mimeinfo.cache and Gaupol
+  wouldn't show under "Open With" for subtitle files. No icon cache step
+  needed: GTK scans the theme directory when no cache file exists.
 
 - Windows/frozen leftovers: `sys.platform == "win32"` and `sys.frozen`
   branches in `aeidon/paths.py` and elsewhere — drop them in 2.0 now
