@@ -99,10 +99,10 @@ read by the app at runtime.
 
 A catapult-style Makefile using only mkdir/cp/sed/msgfmt:
 
-- `make build` compiles translations (mo files, desktop, appdata,
-  pattern files), generates the launcher from a `bin/gaupol.in` template
-  (sed `%LIBDIR%`) and patches `LOCALE_DIR` into a build copy of the
-  paths module — everything into `build/`.
+- `make build` compiles translations (mo files, desktop, appdata),
+  generates the launcher from a `bin/gaupol.in` template (sed
+  `%LIBDIR%`) and patches `LOCALE_DIR` into a build copy of the paths
+  module — everything into `build/`.
 
 - `make install` copies the aeidon and gaupol package trees to
   `$(DESTDIR)$(PREFIX)/share/gaupol/`, the launcher to bin, icons,
@@ -138,24 +138,61 @@ files ship in the wheel (fixes today's omission; needed on Windows and
 Mac where `/usr/share/iso-codes` doesn't exist). Built with `python3 -m
 build`, uploaded with twine via `make publish-aeidon`.
 
-A custom hatchling build hook (`hatch_build.py`) runs msgfmt to
-translate the pattern files into the wheel build staging area; the sdist
-must therefore include `po/` and the hook file. gettext is needed only
-by wheel builders (us and distro packagers, all on Linux) — pip users
-get the prebuilt wheel from PyPI with translated patterns baked in.
+No build hooks are needed and nothing but the package itself goes into
+the sdist, since pattern files are translated at runtime (see below) and
+everything in the wheel is plain package data.
 
 Distros building python3-aeidon that don't want the bundled iso-codes
 JSONs strip `aeidon/data/iso-codes` when packaging: a per-build option
 in pyproject.toml isn't possible since the file is static config and
 hatchling doesn't forward PEP 517 `--config-setting` to build hooks
-(pypa/hatch#1072). If stripping proves unacceptable, an
-environment-variable-controlled exclusion in the custom hook can be
-attempted. Document this in `PACKAGING.md`.
+(pypa/hatch#1072). Document this in `PACKAGING.md`.
 
 The PyPI long description is plain `readme = "README.aeidon.md"` in
 pyproject.toml — static config, no dynamic metadata, content type
 inferred from the `.md` suffix. Rendering can be checked with `twine
 check dist/*`.
+
+### Pattern File Translations
+
+Pattern files stay English-only and are translated at runtime from the
+"gaupol" gettext domain instead of having translations merged in at
+build time with msgfmt. We don't need to follow desktop file conventions
+here, these files are ours alone.
+
+`aeidon.i18n._` already uses the "gaupol" domain and defaults to
+`NullTranslations`, so standalone aeidon simply returns the English
+strings — which is what we decided we want. Extraction is unaffected:
+`tools/extract-translations` keeps reading the pattern files with
+`--language=Desktop --keyword=Name --keyword=Description`, the msgids
+are the same English strings as before and existing translations in the
+po files stay valid.
+
+This removes, in addition to the build steps:
+
+- The `.in` extension and template nature of the pattern files, which
+  are renamed to plain `Latn-en.hearing-impaired` etc., and with that
+  the logic in `_read_patterns_from_directory` that prefers a translated
+  file over an `.in` file when both exist.
+
+- `MetadataItem._get_localized_field` and the `Name[xx_YY@Zzzz]`
+  fallback chain it implements. `get_name` and `get_description` run the
+  field through gettext instead. `MetadataItem` has no other users
+  besides `Pattern`.
+
+Two details to get right:
+
+- `gettext` translates the empty string to the mo file's header
+  metadata, so translate only non-empty strings.
+
+- `_filter_patterns` compares an unlocalized `get_name(False)` against a
+  localized `get_name()`, so the `Replace` policy silently never matches
+  under a non-English locale. This is an existing bug, but worth fixing
+  here since we're rewriting the surrounding code; both should be
+  unlocalized, the English name being the identifier.
+
+A minor break: local user pattern files with hand-written `Name[xx]`
+lines lose those translations. Acceptable for 2.0.
 
 ### Removals and Updates
 
@@ -196,8 +233,12 @@ The installation documentation is split by audience:
 - [ ] Write the new Makefile build and install targets and the
       `bin/gaupol.in` launcher template; delete `setup.py` and
       `manifests/`
-- [ ] Add `pyproject.toml` for aeidon and the `hatch_build.py` hook that
-      runs msgfmt for pattern files, delete `setup-aeidon-pypi.py`,
+- [ ] Translate pattern files at runtime from the "gaupol" domain: drop
+      the `.in` extension, translate in `get_name` and `get_description`
+      and remove `_get_localized_field`, fix the `_filter_patterns`
+      localized/unlocalized comparison, update
+      `tools/extract-translations`
+- [ ] Add `pyproject.toml` for aeidon, delete `setup-aeidon-pypi.py`,
       update the publish-aeidon target
 - [ ] Add a startup warning to stderr if the aeidon and gaupol versions
       differ
@@ -281,7 +322,8 @@ None at the moment.
   standalone aeidon wheel ship — today PyPI effectively gets
   untranslated patterns; options include running msgfmt in a hatchling
   build hook (adds gettext to wheel builds), shipping untranslated, or
-  translating at runtime via gettext. => Run msgfmt in a hatchling build
-  hook unless there's something difficult about that. Confirmed:
-  generated files go only to `build/` (Make) or the wheel build staging
-  area (hook), never into the source tree.
+  translating at runtime via gettext. => Superseded: keep the files
+  English-only and translate at runtime from the "gaupol" domain. We
+  don't need to follow desktop file conventions here. This drops the
+  build step entirely, in both the Makefile and pyproject.toml, so no
+  build hook is needed at all.
