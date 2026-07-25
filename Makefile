@@ -44,7 +44,7 @@ build:
 	msgfmt --xml -d po \
 	--template data/io.otsaloma.gaupol.appdata.xml.in \
 	-o build/io.otsaloma.gaupol.appdata.xml
-	touch build/.complete
+	printf '%s\n%s\n' "$(LIBDIR)" "$(LOCALEDIR)" > build/.complete
 
 check:
 	flake8 bin/gaupol
@@ -68,6 +68,8 @@ clean:
 
 install:
 	test -f build/.complete
+	printf '%s\n%s\n' "$(LIBDIR)" "$(LOCALEDIR)" | cmp -s - build/.complete || \
+	{ echo "ERROR: build was run with different variables, run build again"; exit 1; }
 	@echo "INSTALLING PYTHON PACKAGES..."
 	mkdir -p $(DESTDIR)$(LIBDIR)
 	test "$(INCLUDE_AEIDON)" = no || cp -r build/aeidon $(DESTDIR)$(LIBDIR)
