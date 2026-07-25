@@ -293,7 +293,7 @@ the intermediate steps.
       description of aeidon; add `PACKAGING.md` covering use cases 2 and
       3
 - [x] Update the CI workflow
-- [ ] Verify all three use cases: install to a scratch prefix and run,
+- [x] Verify all three use cases: install to a scratch prefix and run,
       DESTDIR + PREFIX install and inspect paths, build wheel and
       install into a venv and import. Write a permanent test shell
       script `tools/test-install` that tests the different install
