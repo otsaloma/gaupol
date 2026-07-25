@@ -1,4 +1,3 @@
-*.egg-info
 *~
 .cache
 .claude/settings.local.json
