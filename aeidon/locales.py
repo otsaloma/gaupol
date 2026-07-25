@@ -24,7 +24,6 @@ Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
 """
 
 import aeidon
-import os
 import re
 
 from aeidon.i18n import _
@@ -52,17 +51,6 @@ def get_system_code():
     """Return the locale code preferred by system or ``None``."""
     import locale
     return locale.getlocale()[0]
-
-@aeidon.deco.once
-def get_system_modifier():
-    """Return the system default script modifier or ``None``."""
-    for name in ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"):
-        value = os.environ.get(name, None)
-        if value and value.count("@") == 1:
-            i = value.index("@")
-            return value[i+1:i+5]
-    # No script modifier found implies the language default script.
-    return None
 
 def is_valid(code):
     """Return ``True`` if `code` is a valid locale code."""

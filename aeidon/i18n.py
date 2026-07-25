@@ -45,6 +45,8 @@ def bind(localedir):
 
 def _(message):
     """Return the localized translation of `message`."""
+    # gettext translates the empty string to mo file metadata.
+    if not message: return message
     return _translation.gettext(message)
 
 def d_(domain, message):

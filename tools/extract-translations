@@ -33,7 +33,7 @@ xgettext \
     --keyword=Name \
     --keyword=Description \
     --add-comments=TRANSLATORS: \
-    aeidon/data/patterns/*.in
+    $(find aeidon/data/patterns -type f ! -name "*.conf")
 
 # AppData XML file
 xgettext \

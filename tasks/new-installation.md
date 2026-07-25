@@ -276,7 +276,7 @@ the intermediate steps.
 - [x] Write the new Makefile build and install targets and the
       `bin/gaupol.in` launcher template; delete `setup.py` and
       `manifests/`
-- [ ] Translate pattern files at runtime from the "gaupol" domain: drop
+- [x] Translate pattern files at runtime from the "gaupol" domain: drop
       the `.in` extension, translate in `get_name` and `get_description`
       and remove `_get_localized_field`, fix the `_filter_patterns`
       localized/unlocalized comparison, update
