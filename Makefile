@@ -1,20 +1,101 @@
 # -*- coding: utf-8-unix -*-
 
+# Installation directories without DESTDIR. Some of these are patched
+# into files at build time. This means that build and install both must
+# be run with the same variable values.
+PREFIX    = /usr/local
+BINDIR    = $(PREFIX)/bin
+DATADIR   = $(PREFIX)/share
+LIBDIR    = $(DATADIR)/gaupol
+LOCALEDIR = $(DATADIR)/locale
+MANDIR    = $(DATADIR)/man
+
+# Set to 'no' to install gaupol only and have
+# the launcher import aeidon from site-packages.
+INCLUDE_AEIDON = yes
+
 # EDITOR must wait!
 EDITOR = nano
 
+build:
+	@echo "BUILDING PYTHON PACKAGES..."
+	mkdir -p build
+	rm -rf build/aeidon build/gaupol
+	cp -r aeidon gaupol build
+	find build -type d -name __pycache__ -prune -exec rm -rf {} +
+	find build -type d -name test -prune -exec rm -rf {} +
+	sed -i "s|^LOCALE_DIR = .*$$|LOCALE_DIR = Path('$(LOCALEDIR)')|" build/gaupol/paths.py
+	grep -qF "$(LOCALEDIR)" build/gaupol/paths.py
+	@echo "BUILDING LAUNCHER..."
+	mkdir -p build/bin
+	sed "s|%LIBDIR%|$(LIBDIR)|" bin/gaupol.in > build/bin/gaupol
+	grep -qF "$(LIBDIR)" build/bin/gaupol
+	chmod +x build/bin/gaupol
+	@echo "BUILDING TRANSLATIONS..."
+	rm -f po/LINGUAS
+	ls po/*.po | cut -d/ -f2 | cut -d. -f1 > po/LINGUAS
+	mkdir -p build/mo
+	for LOCALE in `cat po/LINGUAS`; do msgfmt po/$$LOCALE.po -o build/mo/$$LOCALE.mo; done
+	@echo "BUILDING DESKTOP FILE..."
+	msgfmt --desktop -d po \
+	--template data/io.otsaloma.gaupol.desktop.in \
+	-o build/io.otsaloma.gaupol.desktop
+	@echo "BUILDING APPDATA FILE..."
+	msgfmt --xml -d po \
+	--template data/io.otsaloma.gaupol.appdata.xml.in \
+	-o build/io.otsaloma.gaupol.appdata.xml
+	touch build/.complete
+
 check:
 	flake8 bin/gaupol
+	flake8 bin/gaupol.in
 	flake8 aeidon
 	flake8 gaupol
 	flake8 *.py
 	for X in gaupol/data/ui/*.ui; do echo $$X; gtk4-builder-tool validate $$X; done
 
 clean:
-	./setup.py clean
+	rm -rf build
+	rm -rf dist
+	rm -rf *.egg-info
+	rm -rf flatpak/.flatpak-builder
+	rm -rf flatpak/build
+	rm -f po/LINGUAS
+	rm -f po/*~
+	find . -type d -name __pycache__ -prune -exec rm -rf {} +
+	find . -type d -name .pytest_cache -prune -exec rm -rf {} +
 
 install:
-	./setup.py install
+	test -f build/.complete
+	@echo "INSTALLING PYTHON PACKAGES..."
+	mkdir -p $(DESTDIR)$(LIBDIR)
+	test "$(INCLUDE_AEIDON)" = no || cp -r build/aeidon $(DESTDIR)$(LIBDIR)
+	cp -r build/gaupol $(DESTDIR)$(LIBDIR)
+	@echo "INSTALLING LAUNCHER..."
+	mkdir -p $(DESTDIR)$(BINDIR)
+	cp -f build/bin/gaupol $(DESTDIR)$(BINDIR)
+	@echo "INSTALLING ICONS..."
+	mkdir -p $(DESTDIR)$(DATADIR)/icons/hicolor/scalable/apps
+	mkdir -p $(DESTDIR)$(DATADIR)/icons/hicolor/symbolic/apps
+	cp -f data/io.otsaloma.gaupol.svg $(DESTDIR)$(DATADIR)/icons/hicolor/scalable/apps
+	cp -f data/io.otsaloma.gaupol-symbolic.svg $(DESTDIR)$(DATADIR)/icons/hicolor/symbolic/apps
+	@echo "INSTALLING TRANSLATIONS..."
+	for MO in build/mo/*.mo; do \
+	LOCALE=`basename $$MO .mo`; \
+	mkdir -p $(DESTDIR)$(LOCALEDIR)/$$LOCALE/LC_MESSAGES; \
+	cp -f $$MO $(DESTDIR)$(LOCALEDIR)/$$LOCALE/LC_MESSAGES/gaupol.mo; \
+	done
+	@echo "INSTALLING DESKTOP FILE..."
+	mkdir -p $(DESTDIR)$(DATADIR)/applications
+	cp -f build/io.otsaloma.gaupol.desktop $(DESTDIR)$(DATADIR)/applications
+	@echo "INSTALLING APPDATA FILE..."
+	mkdir -p $(DESTDIR)$(DATADIR)/metainfo
+	cp -f build/io.otsaloma.gaupol.appdata.xml $(DESTDIR)$(DATADIR)/metainfo
+	@echo "INSTALLING MAN PAGE..."
+	mkdir -p $(DESTDIR)$(MANDIR)/man1
+	cp -f data/gaupol.1 $(DESTDIR)$(MANDIR)/man1
+	@echo "UPDATING DESKTOP DATABASE..."
+	test -z "$(DESTDIR)" && update-desktop-database "$(DATADIR)/applications" || true
 
 publish-aeidon:
 	$(MAKE) check test clean
@@ -39,7 +120,7 @@ release:
 	$(EDITOR) NEWS.md
 	$(EDITOR) data/io.otsaloma.gaupol.appdata.xml.in
 	appstream-util validate-relax --nonet data/io.otsaloma.gaupol.appdata.xml.in
-	sudo ./setup.py install --prefix=/usr/local clean
+	sudo $(MAKE) PREFIX=/usr/local build install clean
 	/usr/local/bin/gaupol
 	tools/release
 	@echo "REMEMBER TO make publish-aeidon"
@@ -56,4 +137,4 @@ translations:
 warnings:
 	python3 -Wd bin/gaupol
 
-.PHONY: check clean install publish-aeidon release test translations warnings
+.PHONY: build check clean install publish-aeidon release test translations warnings

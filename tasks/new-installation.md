@@ -273,7 +273,7 @@ the intermediate steps.
 - [x] Move gaupol data files (ui, gaupol.css) into `gaupol/data/`, add a
       gaupol-side data dir constant, update references; move
       `LOCALE_DIR` to gaupol and pass it to `aeidon.i18n.bind`
-- [ ] Write the new Makefile build and install targets and the
+- [x] Write the new Makefile build and install targets and the
       `bin/gaupol.in` launcher template; delete `setup.py` and
       `manifests/`
 - [ ] Translate pattern files at runtime from the "gaupol" domain: drop

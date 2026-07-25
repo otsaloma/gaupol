@@ -5,10 +5,7 @@
 .pytest_cache
 __pycache__
 build
-data/io.otsaloma.gaupol.appdata.xml
-data/io.otsaloma.gaupol.desktop
 dist
 flatpak/.flatpak-builder
 flatpak/build
-locale
 po/LINGUAS
