@@ -1,7 +1,5 @@
-Gaupol
-======
+# Gaupol
 
-[![Test](https://github.com/otsaloma/gaupol/workflows/Test/badge.svg)](https://github.com/otsaloma/gaupol/actions)
 [![Packages](https://repology.org/badge/tiny-repos/gaupol.svg)](https://repology.org/metapackage/gaupol)
 [![Flathub](https://img.shields.io/badge/download-flathub-blue.svg)](https://flathub.org/apps/details/io.otsaloma.gaupol)
 
@@ -9,7 +7,7 @@ Gaupol is an editor for text-based subtitle files. It supports multiple
 subtitle file formats and provides means of creating, editing and
 translating subtitles and timing subtitles to match video.
 
-Gaupol also includes `aeidon`, a separately installable general-purpose
+Gaupol also includes aeidon, a separately installable general-purpose
 Python package for reading, writing and manipulating text-based subtitle
 files. See [`README.aeidon.md`](README.aeidon.md) for details.
 
@@ -38,20 +36,20 @@ and gettext to build the Flatpak.
 
 #### Source
 
-Gaupol requires Python ≥ 3.10, PyGObject ≥ 3.40 and GTK ≥ 4.12.
-Additionally, during installation you need gettext. Optional, but
-strongly recommended dependencies include:
+Gaupol requires Python ≥3.10, PyGObject ≥3.40 and GTK ≥4.12.
+Additionally, during installation you need make and gettext. Optional,
+but strongly recommended dependencies include:
 
 | Dependency | Version | Required for |
 | :--------- | :------ | :----------- |
-| [GStreamer](https://gstreamer.freedesktop.org/) | ≥ 1.18 | integrated video player |
-| [libspelling](https://gitlab.gnome.org/GNOME/libspelling) | ≥ 0.2 | spell-check |
-| [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥ 3.67 | translations |
-| [charset-normalizer](https://github.com/jawah/charset_normalizer) | ≥ 2.0 | character encoding auto-detection |
+| [GStreamer](https://gstreamer.freedesktop.org/) | ≥1.18 | integrated video player |
+| [libspelling](https://gitlab.gnome.org/GNOME/libspelling) | ≥0.2 | spell-check |
+| [iso-codes](https://salsa.debian.org/iso-codes-team/iso-codes) | ≥3.67 | translations |
+| [charset-normalizer](https://github.com/jawah/charset_normalizer) | ≥2.0 | character encoding auto-detection |
 
 From GStreamer you need at least the core, gst-plugins-base,
 gst-plugins-good and gst-plugins-bad; and for good container and codec
-support preferrably both of gst-plugins-ugly and gst-libav.
+support preferably both of gst-plugins-ugly and gst-libav.
 
 On Debian/Ubuntu you can install the dependencies with the following
 command.
@@ -67,16 +65,18 @@ command.
                      gstreamer1.0-plugins-good \
                      gstreamer1.0-plugins-ugly \
                      iso-codes \
+                     make \
                      python3 \
                      python3-charset-normalizer \
-                     python3-dev \
                      python3-gi \
-                     python3-gi-cairo \
-                     python3-setuptools
+                     python3-gi-cairo
 
-Then, to install Gaupol, run command
+Then, to install Gaupol, run commands
 
-    sudo python3 setup.py install --prefix=/usr/local
+    make PREFIX=/usr/local build
+    sudo make PREFIX=/usr/local install
+
+Distro packagers, see [`PACKAGING.md`](PACKAGING.md).
 
 ### Windows
 

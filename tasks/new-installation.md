@@ -288,7 +288,7 @@ the intermediate steps.
       update the publish-aeidon target
 - [x] Add a startup warning to stderr if the aeidon and gaupol versions
       differ
-- [ ] Update `README.md` to cover use case 1 with the new commands and
+- [x] Update `README.md` to cover use case 1 with the new commands and
       point to `PACKAGING.md`; rewrite `README.aeidon.md` as just a
       description of aeidon; add `PACKAGING.md` covering use cases 2 and
       3
