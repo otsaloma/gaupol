@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aeidon"
+dynamic = ["version"]
+description = "Reading, writing and manipulating text-based subtitle files"
+readme = "README.aeidon.md"
+license = "GPL-3.0-or-later"
+license-files = ["COPYING"]
+requires-python = ">=3.10.0"
+authors = [{ name = "Osmo Salomaa", email = "otsaloma@iki.fi" }]
+dependencies = ["charset-normalizer>2.0"]
+
+[project.urls]
+Homepage = "https://github.com/otsaloma/gaupol"
+
+[tool.hatch.version]
+path = "aeidon/__init__.py"
+
+[tool.hatch.build]
+exclude = ["/aeidon/**/test"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/aeidon"]

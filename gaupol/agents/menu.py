@@ -94,7 +94,7 @@ class MenuAgent(aeidon.Delegate):
             view.set_cursor(path, column)
             view.update_headers()
         if self._view_popup is None:
-            path = aeidon.DATA_DIR / "ui" / "view-popup.ui"
+            path = gaupol.DATA_DIR / "ui" / "view-popup.ui"
             builder = Gtk.Builder.new_from_file(str(path))
             self._view_popup = builder.get_object("view-popup")
         self._show_popover_menu(gesture, x, y, self._view_popup)
@@ -103,7 +103,7 @@ class MenuAgent(aeidon.Delegate):
     def _on_view_header_pressed(self, gesture, n_press, x, y):
         """Display a column visibility pop-up menu."""
         if self._columns_popup is None:
-            path = aeidon.DATA_DIR / "ui" / "columns-popup.ui"
+            path = gaupol.DATA_DIR / "ui" / "columns-popup.ui"
             builder = Gtk.Builder.new_from_file(str(path))
             self._columns_popup = builder.get_object("columns-popup")
         self._show_popover_menu(gesture, x, y, self._columns_popup)

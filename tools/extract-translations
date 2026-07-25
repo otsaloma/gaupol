@@ -21,7 +21,7 @@ xgettext \
     --output=po/gaupol.pot \
     --join-existing \
     --from-code=UTF-8 \
-    $(find data -name "*.ui")
+    $(find gaupol/data -name "*.ui")
 
 # Pattern files
 xgettext \
@@ -33,7 +33,7 @@ xgettext \
     --keyword=Name \
     --keyword=Description \
     --add-comments=TRANSLATORS: \
-    data/patterns/*.in
+    $(find aeidon/data/patterns -type f ! -name "*.conf")
 
 # AppData XML file
 xgettext \

@@ -17,7 +17,6 @@
 
 """Internationalization functions."""
 
-import aeidon
 import contextlib
 import gettext
 import locale
@@ -27,7 +26,7 @@ _translation = gettext.NullTranslations()
 # Wrapper class for marking lazy translations
 class __(str): pass
 
-def bind(localedir=aeidon.LOCALE_DIR):
+def bind(localedir):
     """Bind translation domains and initialize gettext."""
     global _translation
     with contextlib.suppress(Exception):
@@ -46,6 +45,8 @@ def bind(localedir=aeidon.LOCALE_DIR):
 
 def _(message):
     """Return the localized translation of `message`."""
+    # gettext translates the empty string to mo file metadata.
+    if not message: return message
     return _translation.gettext(message)
 
 def d_(domain, message):

@@ -1,5 +1,4 @@
-Python Package aeidon for Subtitles
-===================================
+# Python Package aeidon for Subtitles
 
 [![PyPI](https://img.shields.io/pypi/v/aeidon.svg)](https://pypi.org/project/aeidon/)
 [![Downloads](https://pepy.tech/badge/aeidon/month)](https://pepy.tech/project/aeidon)
@@ -9,9 +8,29 @@ dealing with text-based subtitle files of many different formats.
 Functions exist for reading and writing subtitle files as well as
 manipulating subtitle data, i.e. positions (times or frames) and texts.
 
-## Installation
+## Examples
 
-The latest stable release is available via PyPI.
+Converting a file from the SubRip format to the MicroDVD format:
+
+```python
+project = aeidon.Project()
+project.open_main("/path/to/file.srt", "utf_8")
+project.set_framerate(aeidon.framerates.FPS_23_976)
+project.save_main(aeidon.files.new(aeidon.formats.MICRODVD,
+                                   "/path/to/file.sub",
+                                   "utf_8"))
+```
+
+Making all subtitles in a file appear two seconds earlier:
+
+```python
+project = aeidon.Project()
+project.open_main("/path/to/file.srt", "utf_8")
+project.shift_positions(None, aeidon.as_seconds(-2))
+project.save_main()
+```
+
+## Installation
 
 ```bash
 pip install -U aeidon
@@ -21,29 +40,13 @@ pip install -U aeidon
 
 https://otsaloma.io/gaupol/doc/api/aeidon.html
 
-## Distro-Packaging
-
-When packaging both aeidon and gaupol in a Linux distro, it's best to
-use the switches in the main `setup.py` for a consistent whole.
-
-    sudo python3 setup.py --without-gaupol install --prefix=/usr/local
-    sudo python3 setup.py --without-aeidon install --prefix=/usr/local
-
-Note that the `--with-*` and `--without-*` are global options and must
-be placed before any commands.
-
-Of the dependencies listed in the [`README.md`](README.md) file,
-iso-codes and charset-normalizer are to be associated with aeidon. If
-aeidon is installed using the `--without-iso-codes` switch, then
-iso-codes is required instead of optional. gaupol should depend on the
-remaining dependencies as well as aeidon of the same version.
+The API documentation is for an older version, but it applies 99% to the
+latest version as well. There's currently no build mechanism for
+up-to-date API documentation. Restoring that is a known low-priority
+issue.
 
 ## History
 
-The aeidon package is part of the Gaupol subtitle editor, where the
-other package, gaupol, provides the GTK user interface.
-
-Separating a user interface independent general-purpose subtitle editing
-package from Gaupol has been an afterthought and thus not well designed
-to be a reusable component, but on the other hand is proven, working and
-maintained code.
+aeidon is part of the [Gaupol](https://github.com/otsaloma/gaupol)
+subtitle editor, where the other package, gaupol, provides the GTK user
+interface.

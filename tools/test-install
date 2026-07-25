@@ -1,0 +1,35 @@
+#!/bin/sh
+set -ex
+cd "$(dirname "$0")/.."
+ROOT=$(mktemp -d)
+
+# Installation from source to a PREFIX.
+make PREFIX=$ROOT/prefix build install
+test -x $ROOT/prefix/bin/gaupol
+grep -qF "$ROOT/prefix/share/gaupol" $ROOT/prefix/bin/gaupol
+grep -qF "$ROOT/prefix/share/locale" $ROOT/prefix/share/gaupol/gaupol/paths.py
+env -C / PYTHONPATH=$ROOT/prefix/share/gaupol python3 -c "import gaupol"
+
+# Distro packaging with DESTDIR and PREFIX.
+make DESTDIR=$ROOT/destdir PREFIX=/usr build install
+test -x $ROOT/destdir/usr/bin/gaupol
+grep -qF "/usr/share/gaupol" $ROOT/destdir/usr/bin/gaupol
+grep -qF "/usr/share/locale" $ROOT/destdir/usr/share/gaupol/gaupol/paths.py
+env -C / PYTHONPATH=$ROOT/destdir/usr/share/gaupol python3 -c "import aeidon"
+env -C / PYTHONPATH=$ROOT/destdir/usr/share/gaupol python3 -c "import gaupol"
+
+# Packaging gaupol without aeidon.
+make INCLUDE_AEIDON=no PREFIX=$ROOT/split build install
+test ! -d $ROOT/split/share/gaupol/aeidon
+
+# Aeidon as a stand-alone Python package.
+make clean
+python3 -m build
+python3 -m venv --system-site-packages $ROOT/venv
+$ROOT/venv/bin/pip install --quiet --no-deps dist/aeidon-*.whl
+env -C / $ROOT/venv/bin/python3 -c "import aeidon"
+
+rm -rf $ROOT
+make clean
+set +x
+echo "ALL OK"

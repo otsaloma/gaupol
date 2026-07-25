@@ -19,6 +19,8 @@
 
 import aeidon
 
+from pathlib import Path
+
 class TestCase:
 
     """Base class for unit test cases."""
@@ -40,7 +42,9 @@ class TestCase:
         """
         name = name or format.name.lower()
         basename = "".join((name, format.extension))
-        path = aeidon.DATA_DIR / "samples" / basename
+        # Sample files are not installed, tests are run from source.
+        data_dir = Path(__file__).resolve().parent.parent / "data"
+        path = data_dir / "samples" / basename
         return path.read_text(encoding="ascii").strip()
 
     def get_spell_check_language(self, language):

@@ -17,17 +17,7 @@
 
 import aeidon
 
-from unittest.mock import patch
-
 class TestMetadataItem(aeidon.TestCase):
-
-    def assert_name_in_locale(self, code, modifier):
-        with patch("aeidon.locales.get_system_code", lambda: code):
-            with patch("aeidon.locales.get_system_modifier", lambda: modifier):
-                self.item.set_field("Name", "system")
-                key = f"{code}@{modifier}" if modifier else code
-                self.item.set_field(f"Name[{key}]", "local")
-                assert self.item.get_name(localize=True) == "local"
 
     def setup_method(self, method):
         self.item = aeidon.MetadataItem()
@@ -57,16 +47,9 @@ class TestMetadataItem(aeidon.TestCase):
         assert self.item.get_name(localize=False) == "test"
         assert self.item.get_name(localize=True) == "test"
 
-    def test_get_name__localize(self):
-        self.assert_name_in_locale("en_US", "Latn")
-        self.assert_name_in_locale("en_US", None)
-        self.assert_name_in_locale("en", "Latn")
-        self.assert_name_in_locale("en", None)
-
-    @patch("aeidon.locales.get_system_code", lambda: None)
-    def test_get_name__no_locale(self):
-        self.item.set_field("Name", "system")
-        assert self.item.get_name() == "system"
+    def test_get_name__missing(self):
+        assert self.item.get_name(localize=False) is None
+        assert self.item.get_name(localize=True) is None
 
     def test_has_field(self):
         assert not self.item.has_field("Test")

@@ -53,11 +53,12 @@ class PatternManager:
         """
         filtered_patterns = []
         for pattern in patterns:
-            name = pattern.get_name(False)
+            # Compare untranslated names, the English name being the identifier.
+            name = pattern.get_name(localize=False)
             policy = pattern.get_field("Policy")
             last_index = len(filtered_patterns) - 1
             for j, filtered_pattern in enumerate(filtered_patterns):
-                if filtered_pattern.get_name() == name:
+                if filtered_pattern.get_name(localize=False) == name:
                     last_index = j
                     if policy == "Replace":
                         filtered_patterns[j] = None
@@ -153,24 +154,14 @@ class PatternManager:
         """Read all patterns from files in `directory`."""
         if not directory.is_dir(): return
         extension = f".{self.pattern_type}"
-        extensions = (extension, f"{extension}.in")
-        files = [x for x in directory.iterdir()
-                 if x.name.endswith(extensions)]
-
-        for path in [x for x in files if x.suffix == ".in"]:
-            # If both untranslated and translated pattern files are found,
-            # load patterns only from the translated one.
-            if path.with_suffix("") in files:
-                files.remove(path)
-        for path in files:
-            self._read_patterns_from_file(path, encoding)
+        for path in directory.iterdir():
+            if path.name.endswith(extension):
+                self._read_patterns_from_file(path, encoding)
 
     def _read_patterns_from_file(self, path, encoding):
         """Read all patterns from file at `path`."""
         if not path.is_file(): return
         extension = f".{self.pattern_type}"
-        if path.suffix == ".in":
-            extension = f".{self.pattern_type}.in"
         code = path.name.replace(extension, "")
         local = path.is_relative_to(aeidon.DATA_HOME_DIR)
         patterns = self._patterns.setdefault(code, [])

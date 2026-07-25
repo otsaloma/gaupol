@@ -80,7 +80,7 @@ class ApplicationManager(Gtk.Application):
 
     def _init_menubar(self):
         """Initialize the window menubar."""
-        path = aeidon.DATA_DIR / "ui" / "menubar.ui"
+        path = gaupol.DATA_DIR / "ui" / "menubar.ui"
         self.menubar_builder = Gtk.Builder.new_from_file(str(path))
         self.set_menubar(self.menubar_builder.get_object("menubar"))
 

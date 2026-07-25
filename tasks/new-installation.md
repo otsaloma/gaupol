@@ -187,7 +187,10 @@ Document this in `PACKAGING.md`.
 The PyPI long description is plain `readme = "README.aeidon.md"` in
 pyproject.toml — static config, no dynamic metadata, content type
 inferred from the `.md` suffix. Rendering can be checked with `twine
-check dist/*`.
+check dist/*`, which `make publish-aeidon` does. `make check` runs
+`validate-pyproject`, which validates the file against the PEP
+517/518/621 schemas and catches typos, misplaced keys and bad SPDX
+license expressions.
 
 ### Pattern File Translations
 
@@ -260,30 +263,37 @@ The installation documentation is split by audience:
 
 ## Progress
 
-- [ ] Move aeidon data files (headers, patterns, iso-codes) into
+The below items are to be done one-by-one, one commit per item.
+
+This work happens on a branch that is only merged once all the items are
+done, so files that are going to be deleted along the way — `setup.py`,
+`setup-aeidon-pypi.py` and `manifests/` — are not kept up to date with
+the intermediate steps.
+
+- [x] Move aeidon data files (headers, patterns, iso-codes) into
       `aeidon/data/`, revise `aeidon/paths.py` to find them relative to
       `__file__`
-- [ ] Move gaupol data files (ui, gaupol.css) into `gaupol/data/`, add a
+- [x] Move gaupol data files (ui, gaupol.css) into `gaupol/data/`, add a
       gaupol-side data dir constant, update references; move
       `LOCALE_DIR` to gaupol and pass it to `aeidon.i18n.bind`
-- [ ] Write the new Makefile build and install targets and the
+- [x] Write the new Makefile build and install targets and the
       `bin/gaupol.in` launcher template; delete `setup.py` and
       `manifests/`
-- [ ] Translate pattern files at runtime from the "gaupol" domain: drop
+- [x] Translate pattern files at runtime from the "gaupol" domain: drop
       the `.in` extension, translate in `get_name` and `get_description`
       and remove `_get_localized_field`, fix the `_filter_patterns`
       localized/unlocalized comparison, update
       `tools/extract-translations`
-- [ ] Add `pyproject.toml` for aeidon, delete `setup-aeidon-pypi.py`,
+- [x] Add `pyproject.toml` for aeidon, delete `setup-aeidon-pypi.py`,
       update the publish-aeidon target
-- [ ] Add a startup warning to stderr if the aeidon and gaupol versions
+- [x] Add a startup warning to stderr if the aeidon and gaupol versions
       differ
-- [ ] Update `README.md` to cover use case 1 with the new commands and
+- [x] Update `README.md` to cover use case 1 with the new commands and
       point to `PACKAGING.md`; rewrite `README.aeidon.md` as just a
       description of aeidon; add `PACKAGING.md` covering use cases 2 and
       3
-- [ ] Update the CI workflow
-- [ ] Verify all three use cases: install to a scratch prefix and run,
+- [x] Update the CI workflow
+- [x] Verify all three use cases: install to a scratch prefix and run,
       DESTDIR + PREFIX install and inspect paths, build wheel and
       install into a venv and import. Write a permanent test shell
       script `tools/test-install` that tests the different install
@@ -331,6 +341,21 @@ None at the moment.
   want one way to strip iso-codes in an aeidon-only install and another
   in the full app. Stripping happens only when building the aeidon
   package.
+
+- Build backend: hatchling, or something else? => Keep hatchling.
+  Verified that flit_core and pyproject-only setuptools produce an
+  identical wheel for aeidon, flit_core with the least configuration and
+  no dependencies of its own. But hatchling is the most popular backend
+  among those deliberately chosen (flit ~3%), it's a PyPA project and
+  actively released, so it's the safest long-run bet. The backend is a
+  build-time dependency only, so this affects nobody but us and whoever
+  builds the aeidon package from source.
+
+  Note `requires = ["hatchling>=1.27"]` is a floor, not an exact pin:
+  distros build with `--no-build-isolation` and would fail an exact pin.
+  1.27 is what PEP 639 (`license` as an SPDX string plus
+  `license-files`) needs; dropping back to the deprecated `license = {
+  text = ... }` would lower the floor a lot if that ever matters.
 
 - `LOCALE_DIR`: sed-patch to `PREFIX/share/locale` at build time
   (catapult-style, standard location), or install app-private under
