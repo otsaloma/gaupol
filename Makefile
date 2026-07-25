@@ -8,7 +8,7 @@ check:
 	flake8 aeidon
 	flake8 gaupol
 	flake8 *.py
-	for X in data/ui/*.ui; do echo $$X; gtk4-builder-tool validate $$X; done
+	for X in gaupol/data/ui/*.ui; do echo $$X; gtk4-builder-tool validate $$X; done
 
 clean:
 	./setup.py clean

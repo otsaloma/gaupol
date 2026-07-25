@@ -66,6 +66,7 @@ with contextlib.suppress(Exception):
     Gst.init(None)
 
 from gaupol.paths import DATA_DIR
+from gaupol.paths import LOCALE_DIR
 from gaupol.urls import BUG_REPORT_URL
 from gaupol.urls import DOCUMENTATION_URL
 from gaupol.urls import HOMEPAGE_URL
@@ -136,6 +137,6 @@ from gaupol.unittest import TestCase
 def main(args):
     """Initialize application."""
     global appman
-    aeidon.i18n.bind()
+    aeidon.i18n.bind(LOCALE_DIR)
     appman = ApplicationManager(args)
     raise SystemExit(appman.run())

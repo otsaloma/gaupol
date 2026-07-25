@@ -58,7 +58,6 @@ accessing the subtitles directly (via :attr:`aeidon.Project.subtitles`).
 :var CONFIG_HOME_DIR: Path to the user's local configuration directory
 :var DATA_DIR: Path to the aeidon data directory
 :var DATA_HOME_DIR: Path to the user's local data directory
-:var LOCALE_DIR: Path to the global locale directory
 :var RE_ANY_TAG: Regular expression for markup tags of any format
 
 :var align_methods: Enumerations for subtitle align methods
@@ -90,7 +89,6 @@ except Exception:
 from aeidon.paths import CONFIG_HOME_DIR
 from aeidon.paths import DATA_DIR
 from aeidon.paths import DATA_HOME_DIR
-from aeidon.paths import LOCALE_DIR
 from aeidon.position import as_frame
 from aeidon.position import as_seconds
 from aeidon.position import as_time

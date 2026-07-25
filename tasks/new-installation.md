@@ -270,7 +270,7 @@ the intermediate steps.
 - [x] Move aeidon data files (headers, patterns, iso-codes) into
       `aeidon/data/`, revise `aeidon/paths.py` to find them relative to
       `__file__`
-- [ ] Move gaupol data files (ui, gaupol.css) into `gaupol/data/`, add a
+- [x] Move gaupol data files (ui, gaupol.css) into `gaupol/data/`, add a
       gaupol-side data dir constant, update references; move
       `LOCALE_DIR` to gaupol and pass it to `aeidon.i18n.bind`
 - [ ] Write the new Makefile build and install targets and the

@@ -45,14 +45,6 @@ def get_data_home_directory():
     directory = os.environ.get("XDG_DATA_HOME") or default
     return (Path(directory) / "gaupol").resolve()
 
-def get_locale_directory():
-    """Return path to the locale directory."""
-    if hasattr(sys, "frozen"):
-        return (Path(sys.argv[0]).parent / "share" / "locale").resolve()
-    directory = Path(__file__).resolve().parent
-    return (directory / ".." / "locale").resolve()
-
 CONFIG_HOME_DIR = get_config_home_directory()
 DATA_DIR = get_data_directory()
 DATA_HOME_DIR = get_data_home_directory()
-LOCALE_DIR = get_locale_directory()

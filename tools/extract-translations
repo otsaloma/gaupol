@@ -21,7 +21,7 @@ xgettext \
     --output=po/gaupol.pot \
     --join-existing \
     --from-code=UTF-8 \
-    $(find data -name "*.ui")
+    $(find gaupol/data -name "*.ui")
 
 # Pattern files
 xgettext \
