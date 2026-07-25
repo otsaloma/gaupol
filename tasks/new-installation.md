@@ -187,7 +187,10 @@ Document this in `PACKAGING.md`.
 The PyPI long description is plain `readme = "README.aeidon.md"` in
 pyproject.toml — static config, no dynamic metadata, content type
 inferred from the `.md` suffix. Rendering can be checked with `twine
-check dist/*`.
+check dist/*`, which `make publish-aeidon` does. `make check` runs
+`validate-pyproject`, which validates the file against the PEP
+517/518/621 schemas and catches typos, misplaced keys and bad SPDX
+license expressions.
 
 ### Pattern File Translations
 
@@ -281,7 +284,7 @@ the intermediate steps.
       and remove `_get_localized_field`, fix the `_filter_patterns`
       localized/unlocalized comparison, update
       `tools/extract-translations`
-- [ ] Add `pyproject.toml` for aeidon, delete `setup-aeidon-pypi.py`,
+- [x] Add `pyproject.toml` for aeidon, delete `setup-aeidon-pypi.py`,
       update the publish-aeidon target
 - [ ] Add a startup warning to stderr if the aeidon and gaupol versions
       differ
@@ -338,6 +341,21 @@ None at the moment.
   want one way to strip iso-codes in an aeidon-only install and another
   in the full app. Stripping happens only when building the aeidon
   package.
+
+- Build backend: hatchling, or something else? => Keep hatchling.
+  Verified that flit_core and pyproject-only setuptools produce an
+  identical wheel for aeidon, flit_core with the least configuration and
+  no dependencies of its own. But hatchling is the most popular backend
+  among those deliberately chosen (flit ~3%), it's a PyPA project and
+  actively released, so it's the safest long-run bet. The backend is a
+  build-time dependency only, so this affects nobody but us and whoever
+  builds the aeidon package from source.
+
+  Note `requires = ["hatchling>=1.27"]` is a floor, not an exact pin:
+  distros build with `--no-build-isolation` and would fail an exact pin.
+  1.27 is what PEP 639 (`license` as an SPDX string plus
+  `license-files`) needs; dropping back to the deprecated `license = {
+  text = ... }` would lower the floor a lot if that ever matters.
 
 - `LOCALE_DIR`: sed-patch to `PREFIX/share/locale` at build time
   (catapult-style, standard location), or install app-private under

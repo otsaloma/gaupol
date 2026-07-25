@@ -52,6 +52,7 @@ check:
 	flake8 aeidon
 	flake8 gaupol
 	flake8 *.py
+	validate-pyproject pyproject.toml
 	for X in gaupol/data/ui/*.ui; do echo $$X; gtk4-builder-tool validate $$X; done
 
 clean:
@@ -99,16 +100,13 @@ install:
 
 publish-aeidon:
 	$(MAKE) check test clean
-	./setup-aeidon-pypi.py sdist bdist_wheel
+	python3 -m build
 	test -s dist/aeidon-*-py3-none-any.whl
 	test -s dist/aeidon-*.tar.gz
+	twine check dist/*
 	ls -l dist
 	printf "Press Enter to upload or Ctrl+C to abort: "; read _
 	twine upload dist/*
-	sudo pip3 uninstall -y aeidon || true
-	sudo pip3 uninstall -y aeidon || true
-	sudo pip3 install -U aeidon
-	cd && python3 -c "import aeidon; print(aeidon.__file__, aeidon.__version__)"
 
 # Interactive!
 release:
