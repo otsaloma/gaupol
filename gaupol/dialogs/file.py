@@ -81,6 +81,9 @@ class FileDialog:
         """Show the encoding selection dialog."""
         encoding = self.get_encoding()
         if encoding != "other": return
+        # GTK pops down the combo box only after emitting "changed",
+        # which would leave the popup on top of the dialog below.
+        self._encoding_combo.popdown()
         dialog = gaupol.MenuEncodingDialog(self)
         response = gaupol.util.run_dialog(dialog)
         encoding = dialog.get_encoding()
