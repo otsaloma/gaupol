@@ -37,4 +37,4 @@ jobs:
       - run: xvfb-run make check
       - run: pytest aeidon
       - run: xvfb-run pytest gaupol
-      - run: tools/test-install
+      - run: xvfb-run tools/test-install
