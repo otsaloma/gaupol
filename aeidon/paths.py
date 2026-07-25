@@ -31,16 +31,10 @@ def get_config_home_directory():
     return (Path(directory) / "gaupol").resolve()
 
 def get_data_directory():
-    """Return path to the global data directory."""
-    if hasattr(sys, "frozen"):
-        # Windows bundled exe
-        return (Path(sys.argv[0]).parent / "share" / "gaupol").resolve()
-    directory = Path(__file__).resolve().parent
-    if (directory / "data").is_dir():
-        # Data files installed as part of the package.
-        return directory / "data"
-    # Running from the source directory.
-    return (directory / ".." / "data").resolve()
+    """Return path to the aeidon data directory."""
+    # Data files are shipped inside the Python package,
+    # which works the same in all contexts.
+    return Path(__file__).resolve().parent / "data"
 
 def get_data_home_directory():
     """Return path to the user's data directory."""

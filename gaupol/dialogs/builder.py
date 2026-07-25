@@ -17,7 +17,7 @@
 
 """Baseclass and wrapper for :class:`Gtk.Builder` constructed dialogs."""
 
-import aeidon
+import gaupol
 
 from gi.repository import Gtk
 from pathlib import Path
@@ -42,7 +42,7 @@ class BuilderDialog:
         """Initialize a :class:`BuilderDialog` instance from `ui_file_path`."""
         ui_file_path = Path(ui_file_path)
         if not ui_file_path.is_absolute():
-            ui_file_path = aeidon.DATA_DIR / "ui" / ui_file_path
+            ui_file_path = gaupol.DATA_DIR / "ui" / ui_file_path
         # Signal handlers are resolved against self already when
         # the UI definition file is parsed, i.e. before _dialog is set.
         self._builder = Gtk.Builder(self)

@@ -65,6 +65,7 @@ with contextlib.suppress(Exception):
     from gi.repository import Gst
     Gst.init(None)
 
+from gaupol.paths import DATA_DIR
 from gaupol.urls import BUG_REPORT_URL
 from gaupol.urls import DOCUMENTATION_URL
 from gaupol.urls import HOMEPAGE_URL

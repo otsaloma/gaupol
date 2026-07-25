@@ -260,7 +260,14 @@ The installation documentation is split by audience:
 
 ## Progress
 
-- [ ] Move aeidon data files (headers, patterns, iso-codes) into
+The below items are to be done one-by-one, one commit per item.
+
+This work happens on a branch that is only merged once all the items are
+done, so files that are going to be deleted along the way — `setup.py`,
+`setup-aeidon-pypi.py` and `manifests/` — are not kept up to date with
+the intermediate steps.
+
+- [x] Move aeidon data files (headers, patterns, iso-codes) into
       `aeidon/data/`, revise `aeidon/paths.py` to find them relative to
       `__file__`
 - [ ] Move gaupol data files (ui, gaupol.css) into `gaupol/data/`, add a

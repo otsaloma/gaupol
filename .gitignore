@@ -7,10 +7,6 @@ __pycache__
 build
 data/io.otsaloma.gaupol.appdata.xml
 data/io.otsaloma.gaupol.desktop
-data/patterns/*.capitalization
-data/patterns/*.common-error
-data/patterns/*.hearing-impaired
-data/patterns/*.line-break
 dist
 flatpak/.flatpak-builder
 flatpak/build

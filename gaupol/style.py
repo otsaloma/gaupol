@@ -17,14 +17,13 @@
 
 """CSS styles and helper functions for styling."""
 
-import aeidon
 import gaupol
 
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import Pango
 
-CSS_FILE = aeidon.DATA_DIR / "gaupol.css"
+CSS_FILE = gaupol.DATA_DIR / "gaupol.css"
 CSS = CSS_FILE.read_text()
 
 css_provider = None

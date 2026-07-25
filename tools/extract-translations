@@ -33,7 +33,7 @@ xgettext \
     --keyword=Name \
     --keyword=Description \
     --add-comments=TRANSLATORS: \
-    data/patterns/*.in
+    aeidon/data/patterns/*.in
 
 # AppData XML file
 xgettext \
