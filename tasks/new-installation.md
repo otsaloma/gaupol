@@ -292,7 +292,7 @@ the intermediate steps.
       point to `PACKAGING.md`; rewrite `README.aeidon.md` as just a
       description of aeidon; add `PACKAGING.md` covering use cases 2 and
       3
-- [ ] Update the CI workflow
+- [x] Update the CI workflow
 - [ ] Verify all three use cases: install to a scratch prefix and run,
       DESTDIR + PREFIX install and inspect paths, build wheel and
       install into a venv and import. Write a permanent test shell
