@@ -137,6 +137,14 @@ from gaupol.unittest import TestCase
 def main(args):
     """Initialize application."""
     global appman
+    # aeidon can be installed separately from gaupol, e.g. from a distro
+    # package or PyPI, in which case the versions can be out of sync.
+    if aeidon.__version__ != __version__:
+        print("\n".join((
+            f"Warning: aeidon and gaupol version mismatch:", # noqa
+            f"{aeidon.__version__} {aeidon.__file__}",
+            f"{__version__} {__file__}",
+        )), file=sys.stderr)
     aeidon.i18n.bind(LOCALE_DIR)
     appman = ApplicationManager(args)
     raise SystemExit(appman.run())

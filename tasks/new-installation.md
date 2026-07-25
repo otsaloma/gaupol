@@ -286,7 +286,7 @@ the intermediate steps.
       `tools/extract-translations`
 - [x] Add `pyproject.toml` for aeidon, delete `setup-aeidon-pypi.py`,
       update the publish-aeidon target
-- [ ] Add a startup warning to stderr if the aeidon and gaupol versions
+- [x] Add a startup warning to stderr if the aeidon and gaupol versions
       differ
 - [ ] Update `README.md` to cover use case 1 with the new commands and
       point to `PACKAGING.md`; rewrite `README.aeidon.md` as just a
