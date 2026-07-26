@@ -1,5 +1,4 @@
-Documentation
-=============
+# Documentation
 
 ## For Users
 

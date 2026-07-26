@@ -14,9 +14,9 @@ be packaged separately. In terms of packaging, you have two options:
 2. Build just one package called gaupol. Both aeidon and gaupol install
    as private packages, typically under `/usr/share/gaupol`.
 
-Of these option 1 is recommended for distros to make aeidon available
-for other applications that use it. Option 2 is recommended for
-individual users and it's what the commands in `README.md` produce.
+Option 1 is recommended for distros to make aeidon available for other
+applications that use it. Option 2 is recommended for individual users
+and it's what the commands in `README.md` produce.
 
 ## Gaupol
 
@@ -26,19 +26,19 @@ individual users and it's what the commands in `README.md` produce.
 Build dependencies: make, coreutils, gettext. Runtime dependencies are
 listed in `README.md`.
 
-Paths are patched into files at build time, so `build` and `install`
-must be run with the same variables. `make build && make DESTDIR=...
-PREFIX=... install` does not work.
+Some resource paths are patched into files at build time, so `build` and
+`install` must be run with the same variables. `make build && make
+DESTDIR=... PREFIX=... install` does not work.
 
 Available Make variables:
 
 - `DESTDIR`: prepended to paths at install time only (default empty)
 - `PREFIX`: base of all below directories (default `/usr/local`)
-- `BINDIR`: launch script (default `$(PREFIX)/bin`)
-- `DATADIR`: icons, desktop file, appdata (default `$(PREFIX)/share`)
-- `LIBDIR`: Python packages (default `$(DATADIR)/gaupol`)
-- `LOCALEDIR`: translations (default `$(DATADIR)/locale`)
-- `MANDIR`: man page (default `$(DATADIR)/man`)
+- `BINDIR`: for launch script (default `$(PREFIX)/bin`)
+- `DATADIR`: for icons, desktop file, appdata (default `$(PREFIX)/share`)
+- `LIBDIR`: for private Python packages (default `$(DATADIR)/gaupol`)
+- `LOCALEDIR`: for translations (default `$(DATADIR)/locale`)
+- `MANDIR`: for man page (default `$(DATADIR)/man`)
 - `INCLUDE_AEIDON`: set to `no` to leave out aeidon (default `yes`)
 
 The Python packages are installed privately under `$(LIBDIR)`, not to
@@ -48,7 +48,7 @@ site-packages. The launcher adds that directory to `sys.path`.
 
 `make INCLUDE_AEIDON=no build install` installs gaupol only and the
 launcher then imports aeidon from site-packages. Build that aeidon from
-`pyproject.toml` (below) and have gaupol depend on the same version.
+`pyproject.toml` and have gaupol depend on the same version.
 
 Of the dependencies listed in `README.md`, iso-codes and
 charset-normalizer belong to aeidon, the rest to gaupol.

@@ -1,9 +1,8 @@
-Creating Subtitles from Scratch
-===============================
+# Creating Subtitles from Scratch
 
 Gaupol's built-in video player should allow you create subtitles from
 scratch for a given video and the various tools provided should help if
-some batch processing is needed. There are many possible work-flows for
+some batch processing is needed. There are many possible workflows for
 subtitling – here's one simple approach that can get you started. All
 the keys referred to below correspond to actions that you can find via
 the menubar as well, but using the keyboard is necessary to be

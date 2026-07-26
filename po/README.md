@@ -1,5 +1,4 @@
-Translating Gaupol
-==================
+# Translating Gaupol
 
 Translations are available at [Transifex][]. Please use that to add and
 update translations.

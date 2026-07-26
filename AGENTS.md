@@ -12,9 +12,11 @@ try to find the right place for any new code.
 
 See `README.md` for which versions of Python, GTK, etc. we're currently
 targeting. Regarding operating systems, we currently target only Linux,
-but try to avoid any OS-specific code. On Linux, we want to support all
-relevant desktops and display servers, but GNOME + Wayland is whose
-conventions we want to follow closest.
+but try to avoid any OS-specific code. We want to keep any existing
+Windows conditionals, but we don't want to worry about Windows when
+adding new features. On Linux, we want to support all relevant desktops
+and display servers, but GNOME + Wayland is whose conventions we want to
+follow closest.
 
 ## Subtitle File Formats
 
@@ -35,9 +37,9 @@ under `/usr/share/gir-1.0`. Grep those for any symbols you need.
 - `/usr/share/gir-1.0/Gtk-4.0.gir`
 
 A GTK-3 to GTK-4 migration guide is available in Markdown format. We
-have done the migration, but noting this guide because we might have
-some regressions left over from it and some deprecated (not removed)
-widgets remain unmigrated.
+have already done the migration, but noting this guide because we might
+have some regressions left over from it and some deprecated (not
+removed) widgets remain unmigrated.
 
 - `tasks/gtk4/migrating-3to4.md`
 
@@ -60,7 +62,7 @@ bigger changes, or if you suspect your changes affect other modules, use
 
 ## Running the GUI
 
-You can run the GUI as `timeout --signal=TERM 8 bin/gaupol
+You can run the GUI as `timeout --signal=TERM 5 bin/gaupol
 data/samples/subrip.srt` so it self-terminates (exit 124) instead of
 blocking; the console output is then captured for inspection.
 
@@ -71,9 +73,12 @@ through the GLib log system, not Python `warnings`, so `pytest` needs
 fatal error (with traceback) when tracking down its source.
 
 Note that some previous version of gaupol might be installed under a
-system directory, such as `/usr/local`. When running a standalone
-verification script, make sure your `PYTHONPATH` or `sys.path` points to
-the source repo. Check `gaupol.__file__` in code if unsure.
+system directory, such as `/usr/local` or aeidon under a Python
+site-packages directory. When running a standalone verification script,
+make sure your `PYTHONPATH` or `sys.path` points to the source repo.
+Check `aeidon.__file__` and `gaupol.__file__` in code if unsure.
+
+## Screenshots
 
 To screenshot the app, run a standalone script that creates
 `gaupol.Application()` and calls `application.open_main(paths)` (the
