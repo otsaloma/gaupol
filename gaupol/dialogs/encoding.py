@@ -54,6 +54,7 @@ class EncodingDialog(Gtk.Dialog):
         self._encoding_list.set_selection_mode(Gtk.SelectionMode.NONE)
         self._encoding_list.set_show_separators(True)
         self._encoding_list.add_css_class("rich-list")
+        self._encoding_list.connect("row-activated", self._on_encoding_list_row_activated)
         group = None
         for code, name, description in sorted(
                 aeidon.encodings.get_valid(), key=lambda x: x[2]):
@@ -62,13 +63,17 @@ class EncodingDialog(Gtk.Dialog):
             label.add_css_class("dim-label")
             box.append(label)
             box.append(Gtk.Label(label=name))
-            radio = Gtk.CheckButton(hexpand=True, focusable=True, group=group)
+            # Arrow keys in a list box move focus between rows, not between
+            # radio buttons, so keep the radio buttons out of the focus chain
+            # and let the rows handle keyboard focus and activation.
+            radio = Gtk.CheckButton(hexpand=True, can_focus=False, group=group)
             radio.set_child(box)
             radio.gaupol_code = code
             radio.connect("toggled", self._on_encoding_radio_toggled)
             group = group or radio
-            row = Gtk.ListBoxRow(activatable=False, selectable=False)
+            row = Gtk.ListBoxRow(activatable=True, selectable=False)
             row.set_child(self._create_row_child(radio))
+            row.gaupol_radio = radio
             self._encoding_list.append(row)
         frame = Gtk.Frame(child=self._encoding_list)
         content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -85,6 +90,10 @@ class EncodingDialog(Gtk.Dialog):
     def _create_row_child(self, radio):
         """Return the widget to place in `radio`'s list box row."""
         return radio
+
+    def _on_encoding_list_row_activated(self, list_box, row):
+        """Select the encoding of the activated row."""
+        row.gaupol_radio.set_active(True)
 
     def _on_encoding_radio_toggled(self, radio):
         """Save the selected encoding."""
