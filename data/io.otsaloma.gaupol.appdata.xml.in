@@ -45,8 +45,16 @@
   </developer>
   <screenshots>
     <screenshot type="default">
-      <image>https://otsaloma.io/gaupol/screenshot-appdata.png</image>
-      <caption>Main window</caption>
+      <image>https://otsaloma.io/gaupol/screenshot-1.png</image>
+      <caption>Editing subtitles with video</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://otsaloma.io/gaupol/screenshot-2.png</image>
+      <caption>Translating subtitles side-by-side</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://otsaloma.io/gaupol/screenshot-3.png</image>
+      <caption>Multiple files open as tabbed documents</caption>
     </screenshot>
   </screenshots>
   <translation type="gettext">gaupol</translation>
