@@ -8,12 +8,11 @@ finish-args:
   - --filesystem=home
   - --filesystem=xdg-videos
   - --share=ipc
+  - --socket=fallback-x11
   - --socket=pulseaudio
   - --socket=wayland
-  - --socket=x11
 cleanup:
   - /include
-  - /lib/girepository-1.0
   - /share/bash-completion
   - /share/doc
   - /share/fish
@@ -27,12 +26,16 @@ modules:
 
   # Spell-check
 
-  - name: gspell
-    buildsystem: autotools
+  - name: libspelling
+    buildsystem: meson
+    config-opts:
+      - -Ddocs=false
+      - -Dsysprof=false
+      - -Dvapi=false
     sources:
       - type: archive
-        url: https://download.gnome.org/sources/gspell/1.9/gspell-1.9.1.tar.xz
-        sha256: dcbb769dfdde8e3c0a8ed3102ce7e661abbf7ddf85df08b29915e92cd723abdd
+        url: https://download.gnome.org/sources/libspelling/0.4/libspelling-0.4.10.tar.xz
+        sha256: 56e3f01a3a18b575beea4c34349f99cdaba316e1f7c271b1231f7bcf5d9af73b
 
   # Character encoding auto-detection
 
@@ -44,25 +47,18 @@ modules:
         --prefix=${FLATPAK_DEST} "charset-normalizer" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/e7/a1/67fe25fac3c7642725500a3f6cfe5821ad557c3abb11c9d20d12c7008d3e/charset_normalizer-3.4.7.tar.gz
-        sha256: ae89db9e5f98a11a4bf50407d4363e7b09b31e55bc117b4f7d80aab97ba009e5
+        url: https://files.pythonhosted.org/packages/bd/2a/23f34ec9d04624958e137efdc394888716353190e75f25dd22c7a2c7a8aa/charset_normalizer-3.4.9.tar.gz
+        sha256: 673611bbd43f0810bec0b0f028ddeaaa501190339cac411f347ac76917c3ae7b
 
   # External video player: mpv
-
-  - name: fribidi
-    buildsystem: meson
-    sources:
-      - type: archive
-        url: https://github.com/fribidi/fribidi/releases/download/v1.0.16/fribidi-1.0.16.tar.xz
-        sha256: 1b1cde5b235d40479e91be2f0e88a309e3214c8ab470ec8a2744d82a5a9ea05c
 
   - name: libass
     buildsystem: meson
     cleanup: ["*"]
     sources:
       - type: archive
-        url: https://github.com/libass/libass/releases/download/0.17.4/libass-0.17.4.tar.gz
-        sha256: a886b3b80867f437bc55cff3280a652bfa0d37b43d2aff39ddf3c4f288b8c5a8
+        url: https://github.com/libass/libass/releases/download/0.17.5/libass-0.17.5.tar.gz
+        sha256: caab4b993dd7be6187c55623b789ed75dddefea6e65938af134637c732fe094a
 
   - name: libplacebo
     buildsystem: meson
@@ -100,8 +96,8 @@ modules:
   - name: gaupol
     buildsystem: simple
     build-commands:
-      - python3 setup.py install --prefix=/app
-      - sed -i 's|#!python|#!/usr/bin/env python3|' /app/bin/gaupol
+      - make PREFIX=/app build
+      - make PREFIX=/app install
     sources:
       - type: git
         url: https://github.com/otsaloma/gaupol.git
