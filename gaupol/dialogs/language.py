@@ -57,6 +57,7 @@ class LanguageDialog(gaupol.BuilderDialog):
 
     def _init_language_list(self):
         """Initialize the list of languages."""
+        self._language_list.connect("row-activated", self._on_language_list_row_activated)
         locales = []
         with contextlib.suppress(Exception):
             locales = aeidon.SpellChecker.list_languages()
@@ -65,13 +66,17 @@ class LanguageDialog(gaupol.BuilderDialog):
             name = locale
             with contextlib.suppress(Exception):
                 name = aeidon.locales.code_to_name(locale)
-            radio = Gtk.CheckButton(label=name, hexpand=True, group=group)
+            # Arrow keys in a list box move focus between rows, not between
+            # radio buttons, so keep the radio buttons out of the focus chain
+            # and let the rows handle keyboard focus and activation.
+            radio = Gtk.CheckButton(label=name, hexpand=True, can_focus=False, group=group)
             radio.set_active(locale == gaupol.conf.spell_check.language)
             radio.connect("toggled", self._on_language_radio_toggled)
             radio.gaupol_locale = locale
             group = group or radio
-            row = Gtk.ListBoxRow(activatable=False, selectable=False)
+            row = Gtk.ListBoxRow(activatable=True, selectable=False)
             row.set_child(radio)
+            row.gaupol_radio = radio
             self._language_list.append(row)
 
     def _init_scroller(self, show_target):
@@ -114,6 +119,10 @@ class LanguageDialog(gaupol.BuilderDialog):
             gaupol.fields.MAIN_TEXT
             if radio_button.get_active()
             else gaupol.fields.TRAN_TEXT)
+
+    def _on_language_list_row_activated(self, list_box, row):
+        """Select the language of the activated row."""
+        row.gaupol_radio.set_active(True)
 
     def _on_language_radio_toggled(self, radio):
         """Save the selected language."""
