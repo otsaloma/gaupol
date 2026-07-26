@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 01:25+0300\n"
+"POT-Creation-Date: 2026-07-26 17:17+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: b83946de5835331df42b9ffcc43e6a33_05e65cd <73a30e0a984b2291d4915f37112ad292_814039>, 2022\n"
 "Language-Team: Turkish (https://app.transifex.com/otsaloma/teams/64879/tr/)\n"
@@ -315,19 +315,19 @@ msgstr "25.000 fps"
 msgid "29.970 fps"
 msgstr "29.970 fps"
 
-#: aeidon/enums.py:62 data/ui/menubar.ui:243
+#: aeidon/enums.py:62 gaupol/data/ui/menubar.ui:243
 msgid "30.000 fps"
 msgstr "30.000 fps"
 
-#: aeidon/enums.py:66 data/ui/menubar.ui:248
+#: aeidon/enums.py:66 gaupol/data/ui/menubar.ui:248
 msgid "50.000 fps"
 msgstr "50.000 fps"
 
-#: aeidon/enums.py:70 data/ui/menubar.ui:253
+#: aeidon/enums.py:70 gaupol/data/ui/menubar.ui:253
 msgid "59.940 fps"
 msgstr "59.940 fps"
 
-#: aeidon/enums.py:74 data/ui/menubar.ui:258
+#: aeidon/enums.py:74 gaupol/data/ui/menubar.ui:258
 msgid "60.000 fps"
 msgstr "60.000 fps"
 
@@ -335,7 +335,7 @@ msgstr "60.000 fps"
 msgid "Mac (classic)"
 msgstr "Mac (klasik)"
 
-#: aeidon/locales.py:46
+#: aeidon/locales.py:45
 #, python-brace-format
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
@@ -417,23 +417,19 @@ msgstr "Genişletme bitiş konumu"
 msgid "Stretching start position"
 msgstr "Genişletme başlangıç konumu"
 
-#: gaupol/agents/edit.py:384
-msgid "Use Shift+Return for line-break"
-msgstr "Satır arası bırakmak için Shift+Enter kullanın"
-
-#: gaupol/agents/edit.py:413
+#: gaupol/agents/edit.py:408
 #, python-brace-format
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
 msgstr[0] "Pano içeriğine uyacak şekilde {:d}altyazı eklendi"
 msgstr[1] "Pano içeriğine uyacak şekilde {:d}altyazı eklendi"
 
-#: gaupol/agents/edit.py:432
+#: gaupol/agents/edit.py:427
 #, python-brace-format
 msgid "Redo: {}"
 msgstr ""
 
-#: gaupol/agents/edit.py:484
+#: gaupol/agents/edit.py:479
 #, python-brace-format
 msgid "Undo: {}"
 msgstr ""
@@ -457,7 +453,7 @@ msgstr "Kaydetmeden kapat"
 #: gaupol/dialogs/multi_close.py:47 gaupol/dialogs/split.py:41
 #: gaupol/dialogs/encoding.py:45 gaupol/dialogs/save.py:63
 #: gaupol/dialogs/multi_save.py:80 gaupol/dialogs/multi_save.py:149
-#: gaupol/dialogs/multi_save.py:231 gaupol/dialogs/framerate_convert.py:60
+#: gaupol/dialogs/multi_save.py:232 gaupol/dialogs/framerate_convert.py:60
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/duration_adjust.py:83
 #: gaupol/dialogs/video.py:38 gaupol/dialogs/insert.py:40
 #: gaupol/dialogs/open.py:59 gaupol/dialogs/position_transform.py:67
@@ -466,8 +462,8 @@ msgstr "_İptal"
 
 #: gaupol/agents/close.py:70 gaupol/agents/open.py:400
 #: gaupol/dialogs/multi_close.py:48 gaupol/dialogs/save.py:64
-#: gaupol/dialogs/multi_save.py:81 data/ui/spell-check-dialog.ui:29
-#: data/ui/menubar.ui:33
+#: gaupol/dialogs/multi_save.py:81 gaupol/data/ui/spell-check-dialog.ui:29
+#: gaupol/data/ui/menubar.ui:33
 msgid "_Save"
 msgstr "_Kaydet"
 
@@ -671,36 +667,36 @@ msgstr ""
 msgid "Failed to launch video player"
 msgstr "Video oynatıcısı oynatılamadı"
 
-#: gaupol/application.py:159
+#: gaupol/application.py:163
 #, python-brace-format
 msgid "{:.3f} fps"
 msgstr "{:.3f} fps"
 
-#: gaupol/application.py:209
+#: gaupol/application.py:213
 msgid "Open main files"
 msgstr "Ana dosya aç"
 
-#: gaupol/application.py:213
+#: gaupol/application.py:217
 msgid "Open a recently used main file"
 msgstr ""
 
-#: gaupol/application.py:219
+#: gaupol/application.py:223
 msgid "Save the current main document"
 msgstr "Şimdiki ana dökümanı kaydet"
 
-#: gaupol/application.py:226
+#: gaupol/application.py:230
 msgid "Undo the last action"
 msgstr "Son yapılanı geri al"
 
-#: gaupol/application.py:230
+#: gaupol/application.py:234
 msgid "Redo the last undone action"
 msgstr "Son geri almayı iptal et"
 
-#: gaupol/application.py:236
+#: gaupol/application.py:240
 msgid "Preview from selected position with a video player"
 msgstr "Seçili durumdan itibaren video oynayıcısında önizle"
 
-#: gaupol/application.py:241
+#: gaupol/application.py:245
 msgid "Search for and replace text"
 msgstr "Bul ve değiştir"
 
@@ -936,8 +932,8 @@ msgid "Duration"
 msgstr "Süre"
 
 #: gaupol/enums.py:54 gaupol/enums.py:55
-#: data/ui/position-transform-dialog.ui:133
-#: data/ui/position-transform-dialog.ui:263
+#: gaupol/data/ui/position-transform-dialog.ui:133
+#: gaupol/data/ui/position-transform-dialog.ui:263
 msgid "Text"
 msgstr "Metin"
 
@@ -969,12 +965,12 @@ msgstr ""
 msgid "_Report Bug"
 msgstr "_Hatayı Raporla"
 
-#: gaupol/dialogs/debug.py:50 data/ui/menubar.ui:55
+#: gaupol/dialogs/debug.py:50 gaupol/data/ui/menubar.ui:55
 msgid "_Quit"
 msgstr "_Çık"
 
 #: gaupol/dialogs/debug.py:51 gaupol/dialogs/preview_error.py:43
-#: data/ui/menubar.ui:51
+#: gaupol/data/ui/menubar.ui:51
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -995,11 +991,11 @@ msgstr "Projeyi böl"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Alt yazıların {amount:d} 'i, \"{name}\" olarak bölündü."
 
-#: gaupol/dialogs/encoding.py:50 data/ui/preferences-dialog.ui:50
+#: gaupol/dialogs/encoding.py:50 gaupol/data/ui/preferences-dialog.ui:50
 msgid "Character Encodings"
 msgstr "Karakter Kodlaması"
 
-#: gaupol/dialogs/encoding.py:110
+#: gaupol/dialogs/encoding.py:119
 msgid "In Menu"
 msgstr ""
 
@@ -1007,21 +1003,21 @@ msgstr ""
 msgid "Spell-checking"
 msgstr "Yazım kontrolü"
 
-#: gaupol/dialogs/save.py:83 data/ui/multi-save-dialog.ui:66
+#: gaupol/dialogs/save.py:83 gaupol/data/ui/multi-save-dialog.ui:66
 msgid "For_mat"
 msgstr ""
 
 #: gaupol/dialogs/save.py:91 gaupol/dialogs/open.py:73
-#: data/ui/multi-save-dialog.ui:90
+#: gaupol/data/ui/multi-save-dialog.ui:90
 msgid "_Encoding"
 msgstr ""
 
-#: gaupol/dialogs/save.py:97 data/ui/multi-save-dialog.ui:114
+#: gaupol/dialogs/save.py:97 gaupol/data/ui/multi-save-dialog.ui:114
 msgid "Ne_wlines"
 msgstr ""
 
-#: gaupol/dialogs/save.py:103 data/ui/menubar.ui:220
-#: data/ui/multi-save-dialog.ui:136
+#: gaupol/dialogs/save.py:103 gaupol/data/ui/menubar.ui:220
+#: gaupol/data/ui/multi-save-dialog.ui:136
 msgid "F_ramerate"
 msgstr "Kare _Hızı"
 
@@ -1043,11 +1039,11 @@ msgstr "Bütün desteklenen dosyalar"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: gaupol/dialogs/file.py:117
+#: gaupol/dialogs/file.py:120
 msgid "Auto-detected"
 msgstr "Otomatik algıla"
 
-#: gaupol/dialogs/file.py:119
+#: gaupol/dialogs/file.py:122
 msgid "Other…"
 msgstr "Diğer…"
 
@@ -1055,14 +1051,14 @@ msgstr "Diğer…"
 msgid "Select A Folder"
 msgstr "Bir klasör seçin"
 
-#: gaupol/dialogs/multi_save.py:228
+#: gaupol/dialogs/multi_save.py:229
 #, python-brace-format
 msgid ""
 "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr ""
 "Kaydedilecek olan {:d} dosya zaten var. Üzerine yazmak istiyor musunuz?"
 
-#: gaupol/dialogs/multi_save.py:229
+#: gaupol/dialogs/multi_save.py:230
 #, python-brace-format
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
@@ -1070,16 +1066,16 @@ msgid ""
 msgstr ""
 "\"{}\" isimli zaten bir dosya var. Bu dosyanın üzerine yazmak istermisiniz?"
 
-#: gaupol/dialogs/multi_save.py:232 data/ui/spell-check-dialog.ui:96
-#: data/ui/search-dialog.ui:142
+#: gaupol/dialogs/multi_save.py:233 gaupol/data/ui/spell-check-dialog.ui:96
+#: gaupol/data/ui/search-dialog.ui:142
 msgid "_Replace"
 msgstr "_Değiştir"
 
-#: gaupol/dialogs/language.py:102
+#: gaupol/dialogs/language.py:107
 msgid "Set Language"
 msgstr "Dili ayarla"
 
-#: gaupol/dialogs/search.py:188 data/ui/menubar.ui:516
+#: gaupol/dialogs/search.py:188 gaupol/data/ui/menubar.ui:516
 msgid "_Help"
 msgstr "_Yardım"
 
@@ -1129,7 +1125,7 @@ msgstr "Kişisel"
 msgid "_Shift"
 msgstr "_Kaydır"
 
-#: gaupol/dialogs/position_shift.py:146 data/ui/menubar.ui:213
+#: gaupol/dialogs/position_shift.py:146 gaupol/data/ui/menubar.ui:213
 msgid "_Frames"
 msgstr "_Kare"
 
@@ -1192,165 +1188,166 @@ msgstr "Dosyaya ilave et"
 msgid "_Transform"
 msgstr "Dönüştür"
 
-#: data/ui/view-popup.ui:7 data/ui/menubar.ui:117
+#: gaupol/data/ui/view-popup.ui:7 gaupol/data/ui/menubar.ui:117
 msgid "_Split Subtitle"
 msgstr "Alt Yazıyı B_öl"
 
-#: data/ui/view-popup.ui:11 data/ui/menubar.ui:121
+#: gaupol/data/ui/view-popup.ui:11 gaupol/data/ui/menubar.ui:121
 msgid "_Merge Subtitles"
 msgstr "Alt Yazıları _Birleştir"
 
-#: data/ui/view-popup.ui:17 data/ui/menubar.ui:127
+#: gaupol/data/ui/view-popup.ui:17 gaupol/data/ui/menubar.ui:127
 msgid "_Insert Subtitles…"
 msgstr "Yeni atl yazı _Ekle"
 
-#: data/ui/view-popup.ui:21 data/ui/menubar.ui:135
+#: gaupol/data/ui/view-popup.ui:21 gaupol/data/ui/menubar.ui:135
 msgid "Rem_ove Subtitles"
 msgstr "Alt yazıları _Sil"
 
-#: data/ui/view-popup.ui:27 data/ui/menubar.ui:378
+#: gaupol/data/ui/view-popup.ui:27 gaupol/data/ui/menubar.ui:378
 msgid "Play _Selection"
 msgstr "_Seçimi Oynat"
 
-#: data/ui/view-popup.ui:31 data/ui/menubar.ui:404
+#: gaupol/data/ui/view-popup.ui:31 gaupol/data/ui/menubar.ui:404
 msgid "S_eek Selection Start"
 msgstr "Seçim _Başlangıcına Git"
 
-#: data/ui/view-popup.ui:37 data/ui/menubar.ui:436
-#: data/ui/text-assistant/confirmation-page.ui:57
+#: gaupol/data/ui/view-popup.ui:37 gaupol/data/ui/menubar.ui:436
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:57
 msgid "_Preview"
 msgstr "İ_zleyerek dene"
 
-#: data/ui/preferences-dialog.ui:16
+#: gaupol/data/ui/preferences-dialog.ui:16
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: data/ui/preferences-dialog.ui:30
+#: gaupol/data/ui/preferences-dialog.ui:30
 msgid "File"
 msgstr "Dosya"
 
-#: data/ui/preferences-dialog.ui:72
+#: gaupol/data/ui/preferences-dialog.ui:72
 msgid "Try current _locale encoding first"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:87
+#: gaupol/data/ui/preferences-dialog.ui:87
 msgid "Try _auto-detection last"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:109
+#: gaupol/data/ui/preferences-dialog.ui:109
 msgid "Fallback Encodings"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:143
+#: gaupol/data/ui/preferences-dialog.ui:143
 msgid "Add"
 msgstr "Ekle"
 
-#: data/ui/preferences-dialog.ui:150
+#: gaupol/data/ui/preferences-dialog.ui:150
 msgid "Remove"
 msgstr "Sil"
 
-#: data/ui/preferences-dialog.ui:157
+#: gaupol/data/ui/preferences-dialog.ui:157
 msgid "Move up"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:164
+#: gaupol/data/ui/preferences-dialog.ui:164
 msgid "Move down"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:183
+#: gaupol/data/ui/preferences-dialog.ui:183
 msgid "Editor"
 msgstr "Editör"
 
-#: data/ui/preferences-dialog.ui:203
+#: gaupol/data/ui/preferences-dialog.ui:203
 msgid "Font"
 msgstr "Yazı tipi"
 
-#: data/ui/preferences-dialog.ui:227
+#: gaupol/data/ui/preferences-dialog.ui:227
 msgid "_Custom font"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:259
+#: gaupol/data/ui/preferences-dialog.ui:259
 msgid "Line Lengths"
 msgstr "Satır uzunluğu"
 
-#: data/ui/preferences-dialog.ui:281
+#: gaupol/data/ui/preferences-dialog.ui:281
 msgid "_Show line lengths in list cells"
 msgstr "Liste _görünümünde satır uzunluğu göster"
 
-#: data/ui/preferences-dialog.ui:296
+#: gaupol/data/ui/preferences-dialog.ui:296
 msgid "S_how line lengths in editable text fields"
 msgstr "Metin alanlarında satır uzunluğunu göster"
 
-#: data/ui/preferences-dialog.ui:314
+#: gaupol/data/ui/preferences-dialog.ui:314
 msgid "_Length unit"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:342
+#: gaupol/data/ui/preferences-dialog.ui:342
 msgid "Spell-Check"
 msgstr "İmla denetimi"
 
-#: data/ui/preferences-dialog.ui:364
+#: gaupol/data/ui/preferences-dialog.ui:364
 msgid "Chec_k spelling as you type"
 msgstr "Yazarken imla denet_le"
 
-#: data/ui/preferences-dialog.ui:385
+#: gaupol/data/ui/preferences-dialog.ui:385
 msgid "Video"
 msgstr "Video"
 
-#: data/ui/preferences-dialog.ui:404
+#: gaupol/data/ui/preferences-dialog.ui:404
 msgid "Fonts"
 msgstr "Yazıtipleri"
 
-#: data/ui/preferences-dialog.ui:429
+#: gaupol/data/ui/preferences-dialog.ui:429
 msgid "_Subtitles"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:456
+#: gaupol/data/ui/preferences-dialog.ui:456
 msgid "_Time"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:487
+#: gaupol/data/ui/preferences-dialog.ui:487
 msgid "Colors"
 msgstr "Renkler"
 
-#: data/ui/preferences-dialog.ui:512
+#: gaupol/data/ui/preferences-dialog.ui:512
 msgid "Su_btitles"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:525 data/ui/preferences-dialog.ui:557
+#: gaupol/data/ui/preferences-dialog.ui:525
+#: gaupol/data/ui/preferences-dialog.ui:557
 msgid "Background"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:544
+#: gaupol/data/ui/preferences-dialog.ui:544
 msgid "Ti_me"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:580
+#: gaupol/data/ui/preferences-dialog.ui:580
 msgid "Seek"
 msgstr "Git"
 
-#: data/ui/preferences-dialog.ui:605
+#: gaupol/data/ui/preferences-dialog.ui:605
 msgid "_Seconds"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:635
+#: gaupol/data/ui/preferences-dialog.ui:635
 msgid "Preview"
 msgstr "İzleyerek dene"
 
-#: data/ui/preferences-dialog.ui:655
+#: gaupol/data/ui/preferences-dialog.ui:655
 msgid "Video Player"
 msgstr "Video oynatıcı"
 
-#: data/ui/preferences-dialog.ui:680
+#: gaupol/data/ui/preferences-dialog.ui:680
 msgid "_Application"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:704
+#: gaupol/data/ui/preferences-dialog.ui:704
 msgid "Co_mmand"
 msgstr ""
 
 #. Translators: Only the title is to be translated, field names not.
-#: data/ui/preferences-dialog.ui:712
+#: gaupol/data/ui/preferences-dialog.ui:712
 msgid ""
 "Fields:\n"
 "$MILLISECONDS\n"
@@ -1359,840 +1356,954 @@ msgid ""
 "$VIDEOFILE"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:733
+#: gaupol/data/ui/preferences-dialog.ui:733
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "Mutlaka UTF-8 karakter kodlaması kullan"
 
-#: data/ui/preferences-dialog.ui:755
+#: gaupol/data/ui/preferences-dialog.ui:755
 msgid "Start Position"
 msgstr "Başlangıç pozisyonu"
 
-#: data/ui/preferences-dialog.ui:780
+#: gaupol/data/ui/preferences-dialog.ui:780
 msgid "_Offset (seconds before selection)"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:19
+#: gaupol/data/ui/position-transform-dialog.ui:19
 msgid "Transform Positions"
 msgstr "Pozisyonları dönüştür"
 
-#: data/ui/position-transform-dialog.ui:44
+#: gaupol/data/ui/position-transform-dialog.ui:44
 msgid "First Point"
 msgstr "Başlangıç Noktası"
 
-#: data/ui/position-transform-dialog.ui:69
+#: gaupol/data/ui/position-transform-dialog.ui:69
 msgid "_Subtitle"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:99
+#: gaupol/data/ui/position-transform-dialog.ui:99
 msgid "C_orrection"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:150
-#: data/ui/position-transform-dialog.ui:280
-#: data/ui/position-shift-dialog.ui:79
+#: gaupol/data/ui/position-transform-dialog.ui:150
+#: gaupol/data/ui/position-transform-dialog.ui:280
+#: gaupol/data/ui/position-shift-dialog.ui:79
 msgid "Preview Changes"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:174
+#: gaupol/data/ui/position-transform-dialog.ui:174
 msgid "Second Point"
 msgstr "İkinci Nokta"
 
-#: data/ui/position-transform-dialog.ui:199
+#: gaupol/data/ui/position-transform-dialog.ui:199
 msgid "Su_btitle"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:229
+#: gaupol/data/ui/position-transform-dialog.ui:229
 msgid "Co_rrection"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:304
-#: data/ui/framerate-convert-dialog.ui:107 data/ui/language-dialog.ui:135
-#: data/ui/duration-adjust-dialog.ui:263
-#: data/ui/text-assistant/line-break-options-page.ui:142
-#: data/ui/position-shift-dialog.ui:103 data/ui/search-dialog.ui:267
+#: gaupol/data/ui/position-transform-dialog.ui:304
+#: gaupol/data/ui/framerate-convert-dialog.ui:107
+#: gaupol/data/ui/language-dialog.ui:135
+#: gaupol/data/ui/duration-adjust-dialog.ui:263
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:142
+#: gaupol/data/ui/position-shift-dialog.ui:103
+#: gaupol/data/ui/search-dialog.ui:267
 msgid "Subtitles"
 msgstr "Altyazılar"
 
-#: data/ui/position-transform-dialog.ui:326
+#: gaupol/data/ui/position-transform-dialog.ui:326
 msgid "Transform se_lected subtitles"
 msgstr "S_eçili altyazıları dönüştür"
 
-#: data/ui/position-transform-dialog.ui:342
+#: gaupol/data/ui/position-transform-dialog.ui:342
 msgid "Transform c_urrent project"
 msgstr "Bu proje _için pozisyonları dönüştür"
 
-#: data/ui/spell-check-dialog.ui:5
+#: gaupol/data/ui/spell-check-dialog.ui:5
 msgid "Check Spelling"
 msgstr "İmla denetimi"
 
-#: data/ui/spell-check-dialog.ui:44
+#: gaupol/data/ui/spell-check-dialog.ui:44
 msgid "Join _Back"
 msgstr "Ön_cekiyle birleştir"
 
-#: data/ui/spell-check-dialog.ui:53
+#: gaupol/data/ui/spell-check-dialog.ui:53
 msgid "Join _Forward"
 msgstr "S_onrakiyle birleştir"
 
-#: data/ui/spell-check-dialog.ui:70
+#: gaupol/data/ui/spell-check-dialog.ui:70
 msgid "_Ignore"
 msgstr "A_tla"
 
-#: data/ui/spell-check-dialog.ui:79
+#: gaupol/data/ui/spell-check-dialog.ui:79
 msgid "Ig_nore All"
 msgstr "He_psini atla"
 
-#: data/ui/spell-check-dialog.ui:105
+#: gaupol/data/ui/spell-check-dialog.ui:105
 msgid "Rep_lace All"
 msgstr "_Hepsini Değiştir"
 
-#: data/ui/spell-check-dialog.ui:116
+#: gaupol/data/ui/spell-check-dialog.ui:116
 msgid "_Add"
 msgstr "_Ekle"
 
-#: data/ui/spell-check-dialog.ui:135
+#: gaupol/data/ui/spell-check-dialog.ui:135
 msgid "S_uggestions"
 msgstr ""
 
-#: data/ui/spell-check-dialog.ui:147 data/ui/search-dialog.ui:75
+#: gaupol/data/ui/spell-check-dialog.ui:147 gaupol/data/ui/search-dialog.ui:75
 msgid "Replace _with"
 msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:5
+#: gaupol/data/ui/framerate-convert-dialog.ui:5
 msgid "Convert Framerate"
 msgstr "Kare hızını (framerate) dönüştür"
 
-#: data/ui/framerate-convert-dialog.ui:30
+#: gaupol/data/ui/framerate-convert-dialog.ui:30
 msgid "Framerate"
 msgstr "Kare hızı (framerate)"
 
-#: data/ui/framerate-convert-dialog.ui:55
+#: gaupol/data/ui/framerate-convert-dialog.ui:55
 msgid "_Input"
 msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:79
+#: gaupol/data/ui/framerate-convert-dialog.ui:79
 msgid "_Output"
 msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:129
+#: gaupol/data/ui/framerate-convert-dialog.ui:129
 msgid "Convert c_urrent project"
 msgstr "Sade_ce bu projeyi dönüştür"
 
-#: data/ui/framerate-convert-dialog.ui:144
+#: gaupol/data/ui/framerate-convert-dialog.ui:144
 msgid "Convert _all open projects"
 msgstr "_Tüm açık projeleri dönüştür"
 
-#: data/ui/language-dialog.ui:5
+#: gaupol/data/ui/language-dialog.ui:5
 msgid "Configure Spell-Check"
 msgstr "İmla denetimini yapılandır"
 
-#: data/ui/language-dialog.ui:39
+#: gaupol/data/ui/language-dialog.ui:39
 msgid "Language"
 msgstr "Dil"
 
-#: data/ui/language-dialog.ui:74 data/ui/search-dialog.ui:209
+#: gaupol/data/ui/language-dialog.ui:74 gaupol/data/ui/search-dialog.ui:209
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: data/ui/language-dialog.ui:96
+#: gaupol/data/ui/language-dialog.ui:96
 msgid "Check _text column"
 msgstr "_Metin sütununu denetle"
 
-#: data/ui/language-dialog.ui:112
+#: gaupol/data/ui/language-dialog.ui:112
 msgid "Check t_ranslation column"
 msgstr "_Çeviri sütununu denetle"
 
-#: data/ui/language-dialog.ui:157
+#: gaupol/data/ui/language-dialog.ui:157
 msgid "Check c_urrent project"
 msgstr "Bu pro_jeyi kontrol et"
 
-#: data/ui/language-dialog.ui:173
+#: gaupol/data/ui/language-dialog.ui:173
 msgid "Check _all open projects"
 msgstr "Tüm açık projeleri ko_ntrol et"
 
-#: data/ui/duration-adjust-dialog.ui:30
+#: gaupol/data/ui/duration-adjust-dialog.ui:30
 msgid "Adjust Durations"
 msgstr "Süreyi ayarla"
 
-#: data/ui/duration-adjust-dialog.ui:55
+#: gaupol/data/ui/duration-adjust-dialog.ui:55
 msgid "Theoretic Duration"
 msgstr "Varsayılan Süre"
 
-#: data/ui/duration-adjust-dialog.ui:80
+#: gaupol/data/ui/duration-adjust-dialog.ui:80
 msgid "_Reading speed (char/s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:107
+#: gaupol/data/ui/duration-adjust-dialog.ui:107
 msgid "_Lengthen duration to match reading speed"
 msgstr "Süre_yi okuma hızına uydurmak için uzat"
 
-#: data/ui/duration-adjust-dialog.ui:122
+#: gaupol/data/ui/duration-adjust-dialog.ui:122
 msgid "_Shorten duration to match reading speed"
 msgstr "Süre_yi okuma hızına uydurmak için kısalt"
 
-#: data/ui/duration-adjust-dialog.ui:144
-#: data/ui/text-assistant/line-break-options-page.ui:50
+#: gaupol/data/ui/duration-adjust-dialog.ui:144
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:50
 msgid "Limits"
 msgstr "Sınır"
 
-#: data/ui/duration-adjust-dialog.ui:168
+#: gaupol/data/ui/duration-adjust-dialog.ui:168
 msgid "_Minimum duration (s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:198
+#: gaupol/data/ui/duration-adjust-dialog.ui:198
 msgid "Ma_ximum duration (s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:228
+#: gaupol/data/ui/duration-adjust-dialog.ui:228
 msgid "_Gap between subtitles (s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:285
+#: gaupol/data/ui/duration-adjust-dialog.ui:285
 msgid "Adj_ust selected subtitles"
 msgstr "Seçili altyazıyı a_yarla"
 
-#: data/ui/duration-adjust-dialog.ui:300
+#: gaupol/data/ui/duration-adjust-dialog.ui:300
 msgid "Adjus_t current project"
 msgstr "Bu projeyi _ayarla"
 
-#: data/ui/duration-adjust-dialog.ui:315
+#: gaupol/data/ui/duration-adjust-dialog.ui:315
 msgid "Adjust all _open projects"
 msgstr "Açık tü_m projeleri ayarla"
 
-#: data/ui/menubar.ui:6
+#: gaupol/data/ui/menubar.ui:6
 msgid "_File"
 msgstr "_Dosya"
 
-#: data/ui/menubar.ui:9
+#: gaupol/data/ui/menubar.ui:9
 msgid "_New"
 msgstr "_Yeni"
 
-#: data/ui/menubar.ui:13
+#: gaupol/data/ui/menubar.ui:13
 msgid "_Open…"
 msgstr "_Aç…"
 
-#: data/ui/menubar.ui:17
+#: gaupol/data/ui/menubar.ui:17
 msgid "Open _Translation…"
 msgstr "Çeviri Aç…"
 
-#: data/ui/menubar.ui:23
+#: gaupol/data/ui/menubar.ui:23
 msgid "Open _Recent"
 msgstr "_Geçmişi Aç"
 
-#: data/ui/menubar.ui:27
+#: gaupol/data/ui/menubar.ui:27
 msgid "Open R_ecent Translation"
 msgstr "Geç_miş Çevirleri Aç"
 
-#: data/ui/menubar.ui:37
+#: gaupol/data/ui/menubar.ui:37
 msgid "Save _As…"
 msgstr "_Farklı Kaydet"
 
-#: data/ui/menubar.ui:41
+#: gaupol/data/ui/menubar.ui:41
 msgid "Save Trans_lation"
 msgstr "Çeviriyi Kayde_t"
 
-#: data/ui/menubar.ui:45
+#: gaupol/data/ui/menubar.ui:45
 msgid "Save Translat_ion As…"
 msgstr "Çev_iriyi farklı kaydet…"
 
-#: data/ui/menubar.ui:61
+#: gaupol/data/ui/menubar.ui:61
 msgid "_Edit"
 msgstr "_Düzenle"
 
-#: data/ui/menubar.ui:64
+#: gaupol/data/ui/menubar.ui:64
 msgid "_Undo"
 msgstr "_Geri Al"
 
-#: data/ui/menubar.ui:68
+#: gaupol/data/ui/menubar.ui:68
 msgid "_Redo"
 msgstr "_İleri al"
 
-#: data/ui/menubar.ui:74
+#: gaupol/data/ui/menubar.ui:74
 msgid "_Edit Cell"
 msgstr "Hücreyi _Düzenle"
 
-#: data/ui/menubar.ui:78
+#: gaupol/data/ui/menubar.ui:78
 msgid "Edit _Next Cell"
 msgstr "_Sonraki Hücreyi Düzenle"
 
-#: data/ui/menubar.ui:84
+#: gaupol/data/ui/menubar.ui:84
 msgid "Stretc_h"
 msgstr "_Genişlet"
 
-#: data/ui/menubar.ui:87
+#: gaupol/data/ui/menubar.ui:87
 msgid "_Start Earlier"
 msgstr "Daha _Erken Başlat"
 
-#: data/ui/menubar.ui:91
+#: gaupol/data/ui/menubar.ui:91
 msgid "S_tart Later"
 msgstr "Daha _Geç Başlat"
 
-#: data/ui/menubar.ui:97
+#: gaupol/data/ui/menubar.ui:97
 msgid "E_nd Earlier"
 msgstr "Erken _Bitir"
 
-#: data/ui/menubar.ui:101
+#: gaupol/data/ui/menubar.ui:101
 msgid "En_d Later"
 msgstr "_Geç Bitir"
 
-#: data/ui/menubar.ui:107
+#: gaupol/data/ui/menubar.ui:107
 msgid "Set St_art From Video Position"
 msgstr "Video Konumundan _Başlamayı Ayarla"
 
-#: data/ui/menubar.ui:111
+#: gaupol/data/ui/menubar.ui:111
 msgid "Set En_d From Video Position"
 msgstr "Video Konumundan _Sonrayı Ayarla"
 
-#: data/ui/menubar.ui:131
+#: gaupol/data/ui/menubar.ui:131
 msgid "Inser_t Subtitle At Video Position"
 msgstr "Video Konumuna _Altyazı Ekle"
 
-#: data/ui/menubar.ui:141
+#: gaupol/data/ui/menubar.ui:141
 msgid "Sele_ction"
 msgstr "Seçi_m"
 
-#: data/ui/menubar.ui:144
+#: gaupol/data/ui/menubar.ui:144
 msgid "Select _All"
 msgstr "_Hepsini Seç"
 
-#: data/ui/menubar.ui:148
+#: gaupol/data/ui/menubar.ui:148
 msgid "_Invert Selection"
 msgstr "_Ters Çevir"
 
-#: data/ui/menubar.ui:154
+#: gaupol/data/ui/menubar.ui:154
 msgid "Extend To _Beginning"
 msgstr "_Başlangıca Uzat"
 
-#: data/ui/menubar.ui:158
+#: gaupol/data/ui/menubar.ui:158
 msgid "Extend To _End"
 msgstr "_Sona Uzat"
 
-#: data/ui/menubar.ui:164
+#: gaupol/data/ui/menubar.ui:164
 msgid "_Previous From Video Position"
 msgstr "_Önceki Video Konumundan"
 
-#: data/ui/menubar.ui:168
+#: gaupol/data/ui/menubar.ui:168
 msgid "_Next From Video Position"
 msgstr "_Sonraki Video Konumundan"
 
-#: data/ui/menubar.ui:176
+#: gaupol/data/ui/menubar.ui:176
 msgid "_Preferences"
 msgstr "_Tercihler"
 
-#: data/ui/menubar.ui:182
+#: gaupol/data/ui/menubar.ui:182
 msgid "_View"
 msgstr "_Görünüş"
 
-#: data/ui/menubar.ui:185
+#: gaupol/data/ui/menubar.ui:185
 msgid "_Video Player"
 msgstr "_Video Oynatıcı"
 
-#: data/ui/menubar.ui:191
+#: gaupol/data/ui/menubar.ui:191
 msgid "_Layout"
 msgstr "_Yerleşim"
 
-#: data/ui/menubar.ui:194
+#: gaupol/data/ui/menubar.ui:194
 msgid "_Horizontal"
 msgstr "_Yatay"
 
-#: data/ui/menubar.ui:199
+#: gaupol/data/ui/menubar.ui:199
 msgid "_Vertical"
 msgstr "_Dikey"
 
-#: data/ui/menubar.ui:208
+#: gaupol/data/ui/menubar.ui:208
 msgid "_Times"
 msgstr "_Tekrar"
 
-#: data/ui/menubar.ui:223
+#: gaupol/data/ui/menubar.ui:223
 msgid "2_3.976 fps"
 msgstr "2_3.976 fps"
 
-#: data/ui/menubar.ui:228
+#: gaupol/data/ui/menubar.ui:228
 msgid "2_4.000 fps"
 msgstr "2_4.000 fps"
 
-#: data/ui/menubar.ui:233
+#: gaupol/data/ui/menubar.ui:233
 msgid "2_5.000 fps"
 msgstr "2_5.000 fps"
 
-#: data/ui/menubar.ui:238
+#: gaupol/data/ui/menubar.ui:238
 msgid "2_9.970 fps"
 msgstr "2_9.970 fps"
 
-#: data/ui/menubar.ui:266
+#: gaupol/data/ui/menubar.ui:266
 msgid "_Columns"
 msgstr "_Sütunlar"
 
-#: data/ui/menubar.ui:269 data/ui/columns-popup.ui:7
+#: gaupol/data/ui/menubar.ui:269 gaupol/data/ui/columns-popup.ui:7
 msgid "_No."
 msgstr "_No."
 
-#: data/ui/menubar.ui:273 data/ui/columns-popup.ui:11
+#: gaupol/data/ui/menubar.ui:273 gaupol/data/ui/columns-popup.ui:11
 msgid "_Start"
 msgstr "_Başlangıç"
 
-#: data/ui/menubar.ui:277 data/ui/columns-popup.ui:15
+#: gaupol/data/ui/menubar.ui:277 gaupol/data/ui/columns-popup.ui:15
 msgid "_End"
 msgstr "Bi_tiş"
 
-#: data/ui/menubar.ui:281 data/ui/columns-popup.ui:19
+#: gaupol/data/ui/menubar.ui:281 gaupol/data/ui/columns-popup.ui:19
 msgid "_Duration"
 msgstr "_Süreç"
 
-#: data/ui/menubar.ui:285 data/ui/menubar.ui:297 data/ui/columns-popup.ui:23
+#: gaupol/data/ui/menubar.ui:285 gaupol/data/ui/menubar.ui:297
+#: gaupol/data/ui/columns-popup.ui:23
 msgid "_Text"
 msgstr "_Yazı"
 
-#: data/ui/menubar.ui:289 data/ui/columns-popup.ui:27
+#: gaupol/data/ui/menubar.ui:289 gaupol/data/ui/columns-popup.ui:27
 msgid "T_ranslation"
 msgstr "_Çeviri"
 
-#: data/ui/menubar.ui:300
+#: gaupol/data/ui/menubar.ui:300
 msgid "Cu_t"
 msgstr "Ke_s"
 
-#: data/ui/menubar.ui:304
+#: gaupol/data/ui/menubar.ui:304
 msgid "_Copy"
 msgstr "K_opyala"
 
-#: data/ui/menubar.ui:308
+#: gaupol/data/ui/menubar.ui:308
 msgid "_Paste"
 msgstr "_Yapıştır"
 
-#: data/ui/menubar.ui:312
+#: gaupol/data/ui/menubar.ui:312
 msgid "Cl_ear"
 msgstr "T_emizle"
 
-#: data/ui/menubar.ui:318
+#: gaupol/data/ui/menubar.ui:318
 msgid "_Find And Replace…"
 msgstr "Bul ve Değiştir…"
 
-#: data/ui/menubar.ui:322 data/ui/search-dialog.ui:118
+#: gaupol/data/ui/menubar.ui:322 gaupol/data/ui/search-dialog.ui:118
 msgid "Find _Next"
 msgstr "S_onrakini bul"
 
-#: data/ui/menubar.ui:326
+#: gaupol/data/ui/menubar.ui:326
 msgid "Find Pre_vious"
 msgstr "Sonrakini _Bul"
 
-#: data/ui/menubar.ui:332
+#: gaupol/data/ui/menubar.ui:332
 msgid "_Italic"
 msgstr "_Italik"
 
-#: data/ui/menubar.ui:336
+#: gaupol/data/ui/menubar.ui:336
 msgid "_Dialogue"
 msgstr "_Diyalog"
 
-#: data/ui/menubar.ui:342
+#: gaupol/data/ui/menubar.ui:342
 msgid "Ca_se"
 msgstr "Büyük/Küçük Harf"
 
-#: data/ui/menubar.ui:345
+#: gaupol/data/ui/menubar.ui:345
 msgid "_Title"
 msgstr "_Başlık"
 
-#: data/ui/menubar.ui:349
+#: gaupol/data/ui/menubar.ui:349
 msgid "_Sentence"
 msgstr "_Cümle"
 
-#: data/ui/menubar.ui:353
+#: gaupol/data/ui/menubar.ui:353
 msgid "_Upper"
 msgstr "Harfleri _Büyüt"
 
-#: data/ui/menubar.ui:357
+#: gaupol/data/ui/menubar.ui:357
 msgid "_Lower"
 msgstr "Harfleri _Küçült"
 
-#: data/ui/menubar.ui:365
+#: gaupol/data/ui/menubar.ui:365
 msgid "Vi_deo"
 msgstr "Vi_deo"
 
-#: data/ui/menubar.ui:368
+#: gaupol/data/ui/menubar.ui:368
 msgid "_Load Video…"
 msgstr "_Video Yükle…"
 
-#: data/ui/menubar.ui:374
+#: gaupol/data/ui/menubar.ui:374
 msgid "_Play/Pause"
 msgstr "_Oynat/Duraklat"
 
-#: data/ui/menubar.ui:384
+#: gaupol/data/ui/menubar.ui:384
 msgid "Seek _Previous"
 msgstr "_Öncekine Git"
 
-#: data/ui/menubar.ui:388
+#: gaupol/data/ui/menubar.ui:388
 msgid "Seek _Next"
 msgstr "_Sonrakine Git"
 
-#: data/ui/menubar.ui:394
+#: gaupol/data/ui/menubar.ui:394
 msgid "Seek _Backward"
 msgstr "_Geri Git"
 
-#: data/ui/menubar.ui:398
+#: gaupol/data/ui/menubar.ui:398
 msgid "Seek _Forward"
 msgstr "_İleri Git"
 
-#: data/ui/menubar.ui:408
+#: gaupol/data/ui/menubar.ui:408
 msgid "See_k Selection End"
 msgstr "Seçim _Sonuna Git"
 
-#: data/ui/menubar.ui:414
+#: gaupol/data/ui/menubar.ui:414
 msgid "_Audio"
 msgstr "_Ses"
 
-#: data/ui/menubar.ui:417 data/ui/text-assistant/line-break-page.ui:46
-#: data/ui/text-assistant/join-split-page.ui:47
-#: data/ui/text-assistant/capitalization-page.ui:46
-#: data/ui/text-assistant/hearing-impaired-page.ui:46
-#: data/ui/text-assistant/common-error-page.ui:46
+#: gaupol/data/ui/menubar.ui:417
+#: gaupol/data/ui/text-assistant/line-break-page.ui:46
+#: gaupol/data/ui/text-assistant/join-split-page.ui:47
+#: gaupol/data/ui/text-assistant/capitalization-page.ui:46
+#: gaupol/data/ui/text-assistant/hearing-impaired-page.ui:46
+#: gaupol/data/ui/text-assistant/common-error-page.ui:46
 msgid "_Language"
 msgstr "_Dil"
 
-#: data/ui/menubar.ui:423
+#: gaupol/data/ui/menubar.ui:423
 msgid "Volume _Down"
 msgstr "Sesi _Azalt"
 
-#: data/ui/menubar.ui:427
+#: gaupol/data/ui/menubar.ui:427
 msgid "Volume _Up"
 msgstr "Sesi _Arttır"
 
-#: data/ui/menubar.ui:433
+#: gaupol/data/ui/menubar.ui:433
 msgid "T_ools"
 msgstr "_Araçlar"
 
-#: data/ui/menubar.ui:440
+#: gaupol/data/ui/menubar.ui:440
 msgid "Select _Video…"
 msgstr "_Video Seç…"
 
-#: data/ui/menubar.ui:446
+#: gaupol/data/ui/menubar.ui:446
 msgid "_Check Spelling"
 msgstr "Yazım _Kontrolu Yap"
 
-#: data/ui/menubar.ui:450
+#: gaupol/data/ui/menubar.ui:450
 msgid "Co_nfigure Spell-Check…"
 msgstr ""
 
-#: data/ui/menubar.ui:454
+#: gaupol/data/ui/menubar.ui:454
 msgid "C_orrect Texts…"
 msgstr "Yazıyı Düzelt…"
 
-#: data/ui/menubar.ui:460
+#: gaupol/data/ui/menubar.ui:460
 msgid "_Shift Positions…"
 msgstr "Durumu Ka_ydır"
 
-#: data/ui/menubar.ui:464
+#: gaupol/data/ui/menubar.ui:464
 msgid "_Transform Positions…"
 msgstr "Durumları Dönüş_tür…"
 
-#: data/ui/menubar.ui:468
+#: gaupol/data/ui/menubar.ui:468
 msgid "Adjust _Durations…"
 msgstr "Süreçleri Ayarla…"
 
-#: data/ui/menubar.ui:472
+#: gaupol/data/ui/menubar.ui:472
 msgid "Convert _Framerate…"
 msgstr "_Kare Hızını Çevir…"
 
-#: data/ui/menubar.ui:478
+#: gaupol/data/ui/menubar.ui:478
 msgid "_Append File…"
 msgstr "Dosya _Ekle..."
 
-#: data/ui/menubar.ui:482
+#: gaupol/data/ui/menubar.ui:482
 msgid "Spli_t Project…"
 msgstr "Projeyi B_öl…"
 
-#: data/ui/menubar.ui:488
+#: gaupol/data/ui/menubar.ui:488
 msgid "_Projects"
 msgstr "_Proje"
 
-#: data/ui/menubar.ui:491
+#: gaupol/data/ui/menubar.ui:491
 msgid "_Save All"
 msgstr "_Hepsini Kaydet"
 
-#: data/ui/menubar.ui:495
+#: gaupol/data/ui/menubar.ui:495
 msgid "Save _All As…"
 msgstr "Hepsini F_arklı Kaydet..."
 
-#: data/ui/menubar.ui:499
+#: gaupol/data/ui/menubar.ui:499
 msgid "_Close All"
 msgstr "Hepsini Kapa_t"
 
-#: data/ui/menubar.ui:505
+#: gaupol/data/ui/menubar.ui:505
 msgid "_Previous"
 msgstr "_Önceki"
 
-#: data/ui/menubar.ui:509
+#: gaupol/data/ui/menubar.ui:509
 msgid "_Next"
 msgstr "_Sonraki"
 
-#: data/ui/menubar.ui:519
+#: gaupol/data/ui/menubar.ui:519
 msgid "_Documentation"
 msgstr "_Belgelendirme"
 
-#: data/ui/menubar.ui:523
+#: gaupol/data/ui/menubar.ui:523
 msgid "_Report A Bug"
 msgstr "Ha_ta Bildir"
 
-#: data/ui/menubar.ui:527
+#: gaupol/data/ui/menubar.ui:527
 msgid "_About"
 msgstr "Ha_kkında"
 
-#: data/ui/text-assistant/line-break-page.ui:34
-#: data/ui/text-assistant/capitalization-page.ui:34
-#: data/ui/text-assistant/hearing-impaired-page.ui:34
-#: data/ui/text-assistant/common-error-page.ui:34
+#: gaupol/data/ui/text-assistant/line-break-page.ui:34
+#: gaupol/data/ui/text-assistant/capitalization-page.ui:34
+#: gaupol/data/ui/text-assistant/hearing-impaired-page.ui:34
+#: gaupol/data/ui/text-assistant/common-error-page.ui:34
 msgid "_Script"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-page.ui:58
-#: data/ui/text-assistant/capitalization-page.ui:58
-#: data/ui/text-assistant/hearing-impaired-page.ui:58
-#: data/ui/text-assistant/common-error-page.ui:58
+#: gaupol/data/ui/text-assistant/line-break-page.ui:58
+#: gaupol/data/ui/text-assistant/capitalization-page.ui:58
+#: gaupol/data/ui/text-assistant/hearing-impaired-page.ui:58
+#: gaupol/data/ui/text-assistant/common-error-page.ui:58
 msgid "Co_untry"
 msgstr ""
 
-#: data/ui/text-assistant/join-split-page.ui:22
+#: gaupol/data/ui/text-assistant/join-split-page.ui:22
 msgid "Spell-Check Dictionary"
 msgstr "İmla Denetimi Sözlüğü"
 
-#: data/ui/text-assistant/join-split-page.ui:77
+#: gaupol/data/ui/text-assistant/join-split-page.ui:77
 msgid "Corrections"
 msgstr "Düzeltmeler"
 
-#: data/ui/text-assistant/join-split-page.ui:99
+#: gaupol/data/ui/text-assistant/join-split-page.ui:99
 msgid "_Join words not found in spell-check dictionary"
 msgstr "İmla denetimi sözlüğünde olmayan sözcükleri _birleştir"
 
-#: data/ui/text-assistant/join-split-page.ui:114
+#: gaupol/data/ui/text-assistant/join-split-page.ui:114
 msgid "_Split words not found in spell-check dictionary"
 msgstr "İmla denetimi sözlüğünde bulunamayan sözcükleri _ayır"
 
-#: data/ui/text-assistant/introduction-page.ui:34
+#: gaupol/data/ui/text-assistant/introduction-page.ui:34
 msgid "Colu_mns"
 msgstr ""
 
-#: data/ui/text-assistant/introduction-page.ui:46
+#: gaupol/data/ui/text-assistant/introduction-page.ui:46
 msgid "S_ubtitles"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:75
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:75
 msgid "_Maximum line length"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:110
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:110
 msgid "_Preferred maximum amount of lines"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:166
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:166
 msgid "_Skip subtitles with maximum line length of"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:201
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:201
 msgid "S_kip subtitles with maximum line amount of"
 msgstr ""
 
-#: data/ui/text-assistant/confirmation-page.ui:39
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:39
 msgid "_Mark All"
 msgstr "Hepsini _seç"
 
-#: data/ui/text-assistant/confirmation-page.ui:48
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:48
 msgid "_Unmark All"
 msgstr "Tüm seçimleri _kaldır"
 
-#: data/ui/text-assistant/confirmation-page.ui:67
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:67
 msgid "_Remove all blank subtitles"
 msgstr "Boş altyazıların tümünü _sil"
 
-#: data/ui/text-assistant/common-error-page.ui:70
+#: gaupol/data/ui/text-assistant/common-error-page.ui:70
 msgid "Error types"
 msgstr ""
 
-#: data/ui/text-assistant/common-error-page.ui:116
+#: gaupol/data/ui/text-assistant/common-error-page.ui:116
 msgid "_Human errors"
 msgstr "İ_nsan hatası"
 
-#: data/ui/text-assistant/common-error-page.ui:125
+#: gaupol/data/ui/text-assistant/common-error-page.ui:125
 msgid "_Image recognition errors"
 msgstr "_Resim tanıma hataları"
 
-#: data/ui/position-shift-dialog.ui:11
+#: gaupol/data/ui/position-shift-dialog.ui:11
 msgid "Shift Positions"
 msgstr "Pozisyonları kaydır"
 
-#: data/ui/position-shift-dialog.ui:36
+#: gaupol/data/ui/position-shift-dialog.ui:36
 msgid "Shift"
 msgstr "Kaydır"
 
-#: data/ui/position-shift-dialog.ui:125
+#: gaupol/data/ui/position-shift-dialog.ui:125
 msgid "Shift s_elected subtitles"
 msgstr "S_eçili altyazıyı kaydır"
 
-#: data/ui/position-shift-dialog.ui:140
+#: gaupol/data/ui/position-shift-dialog.ui:140
 msgid "Shift su_btitles from selection to end"
 msgstr "Altyazıları _seçimden sona kaydır"
 
-#: data/ui/position-shift-dialog.ui:155
+#: gaupol/data/ui/position-shift-dialog.ui:155
 msgid "Shift c_urrent project"
 msgstr "B_u projeyi kaydır"
 
-#: data/ui/position-shift-dialog.ui:170
+#: gaupol/data/ui/position-shift-dialog.ui:170
 msgid "Shift all _open projects"
 msgstr "_Tüm açık projeleri kaydır"
 
-#: data/ui/multi-save-dialog.ui:5
+#: gaupol/data/ui/multi-save-dialog.ui:5
 msgid "Save All As"
 msgstr "Tümünü farklı kaydet"
 
-#: data/ui/multi-save-dialog.ui:40
+#: gaupol/data/ui/multi-save-dialog.ui:40
 msgid "Save in _folder"
 msgstr ""
 
-#: data/ui/insert-dialog.ui:12
+#: gaupol/data/ui/insert-dialog.ui:12
 msgid "Insert Subtitles"
 msgstr "Altyazı ekle"
 
-#: data/ui/insert-dialog.ui:45
+#: gaupol/data/ui/insert-dialog.ui:45
 msgid "A_bove"
 msgstr ""
 
-#: data/ui/insert-dialog.ui:53
+#: gaupol/data/ui/insert-dialog.ui:53
 msgid "B_elow"
 msgstr ""
 
-#: data/ui/split-dialog.ui:12
+#: gaupol/data/ui/split-dialog.ui:12
 msgid "Split Project"
 msgstr "Projeyi Böl"
 
-#: data/ui/split-dialog.ui:31
+#: gaupol/data/ui/split-dialog.ui:31
 msgid "_First subtitle of new project"
 msgstr ""
 
-#: data/ui/search-dialog.ui:17
+#: gaupol/data/ui/search-dialog.ui:17
 msgid "Find"
 msgstr "Ara"
 
-#: data/ui/search-dialog.ui:63
+#: gaupol/data/ui/search-dialog.ui:63
 msgid "_Search for"
 msgstr ""
 
-#: data/ui/search-dialog.ui:126
+#: gaupol/data/ui/search-dialog.ui:126
 msgid "Find _Previous"
 msgstr "Ö_ncekini bul"
 
-#: data/ui/search-dialog.ui:150
+#: gaupol/data/ui/search-dialog.ui:150
 msgid "Replace _All"
 msgstr "_Hepsini değiştir"
 
-#: data/ui/search-dialog.ui:168
+#: gaupol/data/ui/search-dialog.ui:168
 msgid "R_egular expression"
 msgstr "_Düzenli ifade"
 
-#: data/ui/search-dialog.ui:177
+#: gaupol/data/ui/search-dialog.ui:177
 msgid "_Ignore case"
 msgstr "Küçük/büyük harf _fark etmez"
 
-#: data/ui/search-dialog.ui:193
+#: gaupol/data/ui/search-dialog.ui:193
 msgid "Target"
 msgstr "Hedef"
 
-#: data/ui/search-dialog.ui:231
+#: gaupol/data/ui/search-dialog.ui:231
 msgid "Find in _text column"
 msgstr "_Metin sütununda bul"
 
-#: data/ui/search-dialog.ui:246
+#: gaupol/data/ui/search-dialog.ui:246
 msgid "Find in t_ranslation column"
 msgstr "Ç_eviri sütununda bul"
 
-#: data/ui/search-dialog.ui:289
+#: gaupol/data/ui/search-dialog.ui:289
 msgid "Find in c_urrent project"
 msgstr "B_u projede ara"
 
-#: data/ui/search-dialog.ui:305
+#: gaupol/data/ui/search-dialog.ui:305
 msgid "Find in _all open projects"
 msgstr "Açık _tüm projelerde ara"
 
-#: data/patterns/Latn-en-US.common-error.in:4
+#: aeidon/data/patterns/Latn-en-US.common-error:4
 msgid "Period after title"
 msgstr "Hitap sonu süresi"
 
-#: data/patterns/Latn-en-US.common-error.in:5
+#: aeidon/data/patterns/Latn-en-US.common-error:5
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
 msgstr "\"Dr\" ya da \"Bay\" gibi kısa bir hitaptan sonra süre ekle"
 
-#: data/patterns/Latn-en.capitalization.in:4
-msgid "First person pronoun"
-msgstr "İngilizce birinci tekil şahıs zamiri"
+#: aeidon/data/patterns/Latn.hearing-impaired:4
+msgid "Sound in brackets"
+msgstr "Parantez içinde sesler"
 
-#: data/patterns/Latn-en.capitalization.in:5
-msgid "Capitalize the first person pronoun \"I\""
-msgstr "I şeklindeki İngilizce birinci tekil zamirini büyük harf yap"
+#: aeidon/data/patterns/Latn.hearing-impaired:5
+msgid "Remove description of a sound between square brackets"
+msgstr "Köşeli parantez arasındaki ses açıklamalarını sil"
 
-#: data/patterns/Latn-en.common-error.in:4
-#: data/patterns/Latn-en.common-error.in:13
-#: data/patterns/Latn-en.common-error.in:22
+#: aeidon/data/patterns/Latn.hearing-impaired:11
+msgid "Sound in parentheses"
+msgstr ""
+
+#: aeidon/data/patterns/Latn.hearing-impaired:12
+msgid "Remove description of a sound between parentheses"
+msgstr ""
+
+#: aeidon/data/patterns/Latn.hearing-impaired:18
+msgid "Song lyrics between number signs"
+msgstr "Numara işaretleri arası şarkı sözleri"
+
+#: aeidon/data/patterns/Latn.hearing-impaired:19
+msgid "Remove song lyrics starting with or between number signs"
+msgstr "Numara işaterleri arasınaki şarkı sözlerini sil"
+
+#: aeidon/data/patterns/Latn.hearing-impaired:26
+msgid "One-line song lyrics between number signs"
+msgstr "Numara işaterleri arasınaki tek satırlık şarkı sözleri"
+
+#: aeidon/data/patterns/Latn.hearing-impaired:27
+msgid "Remove one-line song lyrics starting with or between number signs"
+msgstr "Numara işaterleri arasınaki tek satırlı şarkı sözlerini sil"
+
+#: aeidon/data/patterns/Latn.hearing-impaired:34
+msgid "Speaker before a colon"
+msgstr "Konuşandan sonra iki nokta üst üste"
+
+#: aeidon/data/patterns/Latn.hearing-impaired:35
+msgid "Replace the name of the speaker before a colon with a dialogue dash"
+msgstr "Konuşmacı adını ve iki nokta üst üsteyi konuşma çizgisiyle değiştir"
+
+#: aeidon/data/patterns/Latn.line-break:4
+#: aeidon/data/patterns/Latn.line-break:12
+msgid "Dialogue"
+msgstr "Konuşma"
+
+#: aeidon/data/patterns/Latn.line-break:5
+#: aeidon/data/patterns/Latn.line-break:13
+msgid "Break according to dialogue separated by dashes"
+msgstr "Konuşmayı konuşma çizgisiyle böl"
+
+#: aeidon/data/patterns/Latn.line-break:20
+#: aeidon/data/patterns/Latn.line-break:29
+msgid "Clause"
+msgstr "Kural"
+
+#: aeidon/data/patterns/Latn.line-break:21
+#: aeidon/data/patterns/Latn.line-break:30
+msgid "Break according to clauses terminated by a punctuation mark"
+msgstr "Noktalama işareti kurala göre satır başına engel olunca"
+
+#: aeidon/data/patterns/Latn.line-break:37
+msgid "Number and unit"
+msgstr "Sayı ve birim"
+
+#: aeidon/data/patterns/Latn.line-break:38
+msgid "Do not break between a number and associated unit"
+msgstr "Sayı ve ilişkili birim arasını heceleme"
+
+#: aeidon/data/patterns/Latn-en.common-error:4
+#: aeidon/data/patterns/Latn-en.common-error:13
+#: aeidon/data/patterns/Latn-en.common-error:22
 msgid "Letter \"I\" in a lower case word"
 msgstr "\"I\" harfi küçük harfle yazılan sözcük içinde"
 
-#: data/patterns/Latn-en.common-error.in:5
-#: data/patterns/Latn-en.common-error.in:14
-#: data/patterns/Latn-en.common-error.in:23
+#: aeidon/data/patterns/Latn-en.common-error:5
+#: aeidon/data/patterns/Latn-en.common-error:14
+#: aeidon/data/patterns/Latn-en.common-error:23
 msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
 msgstr "\"I\" harfini küçük harfli sözcüklerde \"l\" ile değiştir"
 
-#: data/patterns/Latn-en.common-error.in:31
-#: data/patterns/Latn-en.common-error.in:40
-#: data/patterns/Latn-en.common-error.in:49
-#: data/patterns/Latn-en.common-error.in:61
+#: aeidon/data/patterns/Latn-en.common-error:31
+#: aeidon/data/patterns/Latn-en.common-error:40
+#: aeidon/data/patterns/Latn-en.common-error:49
+#: aeidon/data/patterns/Latn-en.common-error:61
 msgid "Letter \"l\" in an upper case word"
 msgstr "\"I\" harfi büyük harfle yazılan sözcük içinde"
 
-#: data/patterns/Latn-en.common-error.in:32
-#: data/patterns/Latn-en.common-error.in:41
-#: data/patterns/Latn-en.common-error.in:50
-#: data/patterns/Latn-en.common-error.in:62
+#: aeidon/data/patterns/Latn-en.common-error:32
+#: aeidon/data/patterns/Latn-en.common-error:41
+#: aeidon/data/patterns/Latn-en.common-error:50
+#: aeidon/data/patterns/Latn-en.common-error:62
 msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
 msgstr "\"l\" harfini büyük harfli sözcüklerde \"I\" ile değiştir"
 
-#: data/patterns/Latn-en.common-error.in:72
-#: data/patterns/Latn-en.common-error.in:81
+#: aeidon/data/patterns/Latn-en.common-error:72
+#: aeidon/data/patterns/Latn-en.common-error:81
 msgid "Zero in an upper case word"
 msgstr "Büyük harfle yazımda sıfır"
 
-#: data/patterns/Latn-en.common-error.in:73
-#: data/patterns/Latn-en.common-error.in:82
+#: aeidon/data/patterns/Latn-en.common-error:73
+#: aeidon/data/patterns/Latn-en.common-error:82
 msgid "Replace zero with letter \"O\" in an upper case word"
 msgstr "Büyük harfli yazımda sıfır yerine \"O\" kullan"
 
-#: data/patterns/Latn-en.common-error.in:90
-#: data/patterns/Latn.common-error.in:107
+#: aeidon/data/patterns/Latn-en.common-error:90
+#: aeidon/data/patterns/Latn.common-error:107
 msgid "Space between number and unit"
 msgstr "Rakam ve birim arasındaki boşluk"
 
-#: data/patterns/Latn-en.common-error.in:91
-#: data/patterns/Latn.common-error.in:108
+#: aeidon/data/patterns/Latn-en.common-error:91
+#: aeidon/data/patterns/Latn.common-error:108
 msgid "Add or remove space between a number and the associated unit"
 msgstr "Rakamla ilgili karakter arasındaki boşluğu ekle ya da kaldır"
 
-#: data/patterns/Latn-en.common-error.in:99
+#: aeidon/data/patterns/Latn-en.common-error:99
 msgid "Spaces around an apostrophe"
 msgstr "Kesme işareti çevresinde boşluk"
 
-#: data/patterns/Latn-en.common-error.in:100
+#: aeidon/data/patterns/Latn-en.common-error:100
 msgid "Remove spaces around an apostrophe"
 msgstr "Kesme işaretinin önünde sonunda boşluk kalmasın"
 
-#: data/patterns/Latn-en.common-error.in:108
-#: data/patterns/Latn-en.common-error.in:117
+#: aeidon/data/patterns/Latn-en.common-error:108
+#: aeidon/data/patterns/Latn-en.common-error:117
 msgid "Okay"
 msgstr "Okay"
 
-#: data/patterns/Latn-en.common-error.in:109
-#: data/patterns/Latn-en.common-error.in:118
+#: aeidon/data/patterns/Latn-en.common-error:109
+#: aeidon/data/patterns/Latn-en.common-error:118
 msgid "Spell two-letter forms of \"okay\" in all upper case"
 msgstr "Tamamı büyük harflerle iki harfli \"OK\" formlarını hecele"
 
-#: data/patterns/Latn-en.hearing-impaired.in:4
+#: aeidon/data/patterns/Latn-en.line-break:4
+msgid "Title"
+msgstr "Başlık"
+
+#: aeidon/data/patterns/Latn-en.line-break:5
+msgid "Do not break after a title, e.g. \" Dr.\""
+msgstr "Ünvan sonrası kırma, örn. \" Dr.\""
+
+#: aeidon/data/patterns/Latn-en.line-break:12
+msgid "Article"
+msgstr "Belirteç"
+
+#: aeidon/data/patterns/Latn-en.line-break:13
+msgid "Do not break after an article"
+msgstr "Belirteçten sonra heceleme"
+
+#: aeidon/data/patterns/Latn-en.line-break:20
+msgid "Preposition"
+msgstr "Edat"
+
+#: aeidon/data/patterns/Latn-en.line-break:21
+msgid "Do not break after a preposition"
+msgstr "Edat sonrası kırma"
+
+#: aeidon/data/patterns/Latn-en.line-break:29
+msgid "Possessive determiner"
+msgstr "İyelik belirteyici"
+
+#: aeidon/data/patterns/Latn-en.line-break:30
+msgid "Do not break after a possessive determiner, e.g. \"my\""
+msgstr "İyelik belirleyici sonrası kırma, örn. \"my\""
+
+#: aeidon/data/patterns/Latn-fi.common-error:4
+#: aeidon/data/patterns/Latn.common-error:181
+msgid "Space after punctuation marks"
+msgstr "Noktalama işraretlerinden sonraki boşluk"
+
+#: aeidon/data/patterns/Latn-fi.common-error:5
+#: aeidon/data/patterns/Latn.common-error:182
+msgid "Add space after various punctuation marks"
+msgstr "Noktalama işaretlerinden sonra boşluk koy"
+
+#: aeidon/data/patterns/Latn-en.capitalization:4
+msgid "First person pronoun"
+msgstr "İngilizce birinci tekil şahıs zamiri"
+
+#: aeidon/data/patterns/Latn-en.capitalization:5
+msgid "Capitalize the first person pronoun \"I\""
+msgstr "I şeklindeki İngilizce birinci tekil zamirini büyük harf yap"
+
+#: aeidon/data/patterns/Latn-en.hearing-impaired:4
 msgid "Uppercase speaker before a colon"
 msgstr "İki nokta öncesinde büyük harfli isim"
 
-#: data/patterns/Latn-en.hearing-impaired.in:5
+#: aeidon/data/patterns/Latn-en.hearing-impaired:5
 msgid ""
 "Replace the uppercase name of the speaker before a colon with a dialogue "
 "dash"
@@ -2200,327 +2311,237 @@ msgstr ""
 "Diyalog işaretli cümlede iki nokta varsa konuşmacı ismindeki büyük harfi "
 "düzelt"
 
-#: data/patterns/Latn-en.line-break.in:4
-msgid "Title"
-msgstr "Başlık"
-
-#: data/patterns/Latn-en.line-break.in:5
-msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr "Ünvan sonrası kırma, örn. \" Dr.\""
-
-#: data/patterns/Latn-en.line-break.in:12
-msgid "Article"
-msgstr "Belirteç"
-
-#: data/patterns/Latn-en.line-break.in:13
-msgid "Do not break after an article"
-msgstr "Belirteçten sonra heceleme"
-
-#: data/patterns/Latn-en.line-break.in:20
-msgid "Preposition"
-msgstr "Edat"
-
-#: data/patterns/Latn-en.line-break.in:21
-msgid "Do not break after a preposition"
-msgstr "Edat sonrası kırma"
-
-#: data/patterns/Latn-en.line-break.in:29
-msgid "Possessive determiner"
-msgstr "İyelik belirteyici"
-
-#: data/patterns/Latn-en.line-break.in:30
-msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr "İyelik belirleyici sonrası kırma, örn. \"my\""
-
-#: data/patterns/Latn-fi.common-error.in:4
-#: data/patterns/Latn.common-error.in:181
-msgid "Space after punctuation marks"
-msgstr "Noktalama işraretlerinden sonraki boşluk"
-
-#: data/patterns/Latn-fi.common-error.in:5
-#: data/patterns/Latn.common-error.in:182
-msgid "Add space after various punctuation marks"
-msgstr "Noktalama işaretlerinden sonra boşluk koy"
-
-#: data/patterns/Latn-fr.common-error.in:4
-#: data/patterns/Latn-fr.common-error.in:13
-#: data/patterns/Latn-fr.common-error.in:22
-#: data/patterns/Latn-fr.common-error.in:31
-msgid "Spaces around guillemets"
-msgstr "Guillemetler etrafındaki boşluk"
-
-#: data/patterns/Latn-fr.common-error.in:5
-#: data/patterns/Latn-fr.common-error.in:14
-#: data/patterns/Latn-fr.common-error.in:23
-#: data/patterns/Latn-fr.common-error.in:32
-msgid "Add spaces around guillemets"
-msgstr "Guillemetler etrafına boşluk ekle"
-
-#: data/patterns/Latn-fr.common-error.in:40
-#: data/patterns/Latn-fr.common-error.in:51
-#: data/patterns/Latn.common-error.in:170
-msgid "Space before punctuation marks"
-msgstr "Noktalama işraretlerinden önceki boşluk"
-
-#: data/patterns/Latn-fr.common-error.in:41
-#: data/patterns/Latn-fr.common-error.in:52
-msgid "Add or remove space before various punctuation marks"
-msgstr "Çeşitli noktalama işaretlerinden önce boşluk ekle veya kaldır"
-
-#: data/patterns/Latn.capitalization.in:4
+#: aeidon/data/patterns/Latn.capitalization:4
 msgid "Sentence"
 msgstr "Cümle"
 
-#: data/patterns/Latn.capitalization.in:5
+#: aeidon/data/patterns/Latn.capitalization:5
 msgid "Capitalize the first word of a sentence"
 msgstr "Cümlenin ilk harfini büyüt"
 
-#: data/patterns/Latn.capitalization.in:11
+#: aeidon/data/patterns/Latn.capitalization:11
 msgid "Ellipsis"
 msgstr "Üç nokta"
 
-#: data/patterns/Latn.capitalization.in:12
+#: aeidon/data/patterns/Latn.capitalization:12
 msgid "Capitalize after an ellipsis"
 msgstr "Üç nokta sonrası büyük harf"
 
-#: data/patterns/Latn.common-error.in:7 data/patterns/Latn.common-error.in:16
-#: data/patterns/Latn.common-error.in:25 data/patterns/Latn.common-error.in:34
-#: data/patterns/Latn.common-error.in:43 data/patterns/Latn.common-error.in:52
-#: data/patterns/Latn.common-error.in:61
+#: aeidon/data/patterns/Zyyy.common-error:4
+#: aeidon/data/patterns/Zyyy.common-error:13
+msgid "Leading and trailing spaces"
+msgstr "Baş ve son boşluklar"
+
+#: aeidon/data/patterns/Zyyy.common-error:5
+#: aeidon/data/patterns/Zyyy.common-error:14
+msgid "Remove spaces from the beginning and end of lines"
+msgstr "Satır başındaki ve sonundaki boşlukları sil"
+
+#: aeidon/data/patterns/Zyyy.common-error:22
+msgid "Multiple consecutive spaces"
+msgstr "Çoklu ardışık boşluklar"
+
+#: aeidon/data/patterns/Zyyy.common-error:23
+msgid "Replace multiple consecutive spaces with only one"
+msgstr "Birden çok boşluğu teke indir"
+
+#: aeidon/data/patterns/Zyyy.common-error:31
+#: aeidon/data/patterns/Zyyy.common-error:44
+#: aeidon/data/patterns/Zyyy.common-error:54
+#: aeidon/data/patterns/Zyyy.common-error:64
+msgid "Space between digits"
+msgstr "Rakamlar arasında boşluk"
+
+#: aeidon/data/patterns/Zyyy.common-error:32
+#: aeidon/data/patterns/Zyyy.common-error:45
+#: aeidon/data/patterns/Zyyy.common-error:55
+#: aeidon/data/patterns/Zyyy.common-error:65
+msgid "Remove space between digits of a number"
+msgstr "Rakamlar arasındaki boşlukları sil"
+
+#: aeidon/data/patterns/Zyyy.common-error:77
+msgid "Ellipses"
+msgstr ""
+
+#: aeidon/data/patterns/Zyyy.common-error:78
+msgid "Replace Unicode ellipses with three separate dots"
+msgstr ""
+
+#: aeidon/data/patterns/Zyyy.common-error:89
+msgid "Musical notes"
+msgstr "Müzikal notalar"
+
+#: aeidon/data/patterns/Zyyy.common-error:90
+msgid "Replace Unicode musical note characters with number signs"
+msgstr "Unicode müzikal nota karakterlerini rakamlarla değiştir"
+
+#: aeidon/data/patterns/Latn-fr.common-error:4
+#: aeidon/data/patterns/Latn-fr.common-error:13
+#: aeidon/data/patterns/Latn-fr.common-error:22
+#: aeidon/data/patterns/Latn-fr.common-error:31
+msgid "Spaces around guillemets"
+msgstr "Guillemetler etrafındaki boşluk"
+
+#: aeidon/data/patterns/Latn-fr.common-error:5
+#: aeidon/data/patterns/Latn-fr.common-error:14
+#: aeidon/data/patterns/Latn-fr.common-error:23
+#: aeidon/data/patterns/Latn-fr.common-error:32
+msgid "Add spaces around guillemets"
+msgstr "Guillemetler etrafına boşluk ekle"
+
+#: aeidon/data/patterns/Latn-fr.common-error:40
+#: aeidon/data/patterns/Latn-fr.common-error:51
+#: aeidon/data/patterns/Latn.common-error:170
+msgid "Space before punctuation marks"
+msgstr "Noktalama işraretlerinden önceki boşluk"
+
+#: aeidon/data/patterns/Latn-fr.common-error:41
+#: aeidon/data/patterns/Latn-fr.common-error:52
+msgid "Add or remove space before various punctuation marks"
+msgstr "Çeşitli noktalama işaretlerinden önce boşluk ekle veya kaldır"
+
+#: aeidon/data/patterns/Latn.common-error:7
+#: aeidon/data/patterns/Latn.common-error:16
+#: aeidon/data/patterns/Latn.common-error:25
+#: aeidon/data/patterns/Latn.common-error:34
+#: aeidon/data/patterns/Latn.common-error:43
+#: aeidon/data/patterns/Latn.common-error:52
+#: aeidon/data/patterns/Latn.common-error:61
 msgid "Ligatures"
 msgstr "Bitişik harfler"
 
-#: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
-#: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
-#: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
-#: data/patterns/Latn.common-error.in:62
+#: aeidon/data/patterns/Latn.common-error:8
+#: aeidon/data/patterns/Latn.common-error:17
+#: aeidon/data/patterns/Latn.common-error:26
+#: aeidon/data/patterns/Latn.common-error:35
+#: aeidon/data/patterns/Latn.common-error:44
+#: aeidon/data/patterns/Latn.common-error:53
+#: aeidon/data/patterns/Latn.common-error:62
 msgid "Unpack ligatures to individual characters"
 msgstr "Bitişik harfleri bağımsız karakterlere ayır"
 
-#: data/patterns/Latn.common-error.in:70 data/patterns/Latn.common-error.in:79
+#: aeidon/data/patterns/Latn.common-error:70
+#: aeidon/data/patterns/Latn.common-error:79
 msgid "Spelling of a.m. and p.m."
 msgstr "\"ö.ö.\" ve \"ö.s.\" yazılımı"
 
-#: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
+#: aeidon/data/patterns/Latn.common-error:71
+#: aeidon/data/patterns/Latn.common-error:80
 msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
 msgstr "12 saat esasına göre yazıları \"a.m.\" ve \"p.m.\" formatında düzenle"
 
-#: data/patterns/Latn.common-error.in:88 data/patterns/Latn.common-error.in:97
+#: aeidon/data/patterns/Latn.common-error:88
+#: aeidon/data/patterns/Latn.common-error:97
 msgid "Letter \"O\" in a number"
 msgstr "Rakam için \"O\" karakteri"
 
-#: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
+#: aeidon/data/patterns/Latn.common-error:89
+#: aeidon/data/patterns/Latn.common-error:98
 msgid "Replace letter \"O\" with a zero in a number"
 msgstr "\"O\" harfini, sıfır sayısı ile değiştir"
 
-#: data/patterns/Latn.common-error.in:116
+#: aeidon/data/patterns/Latn.common-error:116
 msgid "Double apostrophe"
 msgstr "Çift tırnak"
 
-#: data/patterns/Latn.common-error.in:117
+#: aeidon/data/patterns/Latn.common-error:117
 msgid "Replace a double apostrophe with a quotation mark"
 msgstr "İki tırnak yerine çift tırnak karakterini kullan"
 
-#: data/patterns/Latn.common-error.in:125
-#: data/patterns/Latn.common-error.in:134
-#: data/patterns/Latn.common-error.in:143
-#: data/patterns/Latn.common-error.in:152
+#: aeidon/data/patterns/Latn.common-error:125
+#: aeidon/data/patterns/Latn.common-error:134
+#: aeidon/data/patterns/Latn.common-error:143
+#: aeidon/data/patterns/Latn.common-error:152
 msgid "Spaces around brackets"
 msgstr "Parantez etrafındaki boşluklar"
 
-#: data/patterns/Latn.common-error.in:126
-#: data/patterns/Latn.common-error.in:135
-#: data/patterns/Latn.common-error.in:144
-#: data/patterns/Latn.common-error.in:153
+#: aeidon/data/patterns/Latn.common-error:126
+#: aeidon/data/patterns/Latn.common-error:135
+#: aeidon/data/patterns/Latn.common-error:144
+#: aeidon/data/patterns/Latn.common-error:153
 msgid "Add or remove spaces around parentheses and square brackets"
 msgstr ""
 
-#: data/patterns/Latn.common-error.in:161
+#: aeidon/data/patterns/Latn.common-error:161
 msgid "Space after a dialogue dash"
 msgstr "Konuşma çizgisinden sonra boşluk bırak"
 
-#: data/patterns/Latn.common-error.in:162
+#: aeidon/data/patterns/Latn.common-error:162
 msgid "Add space after a dialogue dash"
 msgstr "Diyalog kesmesinden önce boşluk ekle"
 
-#: data/patterns/Latn.common-error.in:171
+#: aeidon/data/patterns/Latn.common-error:171
 msgid "Remove space before various punctuation marks"
 msgstr "Noktalama işaretlerinden önceki boşluğu kaldır"
 
-#: data/patterns/Latn.common-error.in:191
+#: aeidon/data/patterns/Latn.common-error:191
 msgid "Space after an ellipsis"
 msgstr "Üç noktadan sonra boşluk"
 
-#: data/patterns/Latn.common-error.in:192
+#: aeidon/data/patterns/Latn.common-error:192
 msgid "Add space after an ellipsis"
 msgstr "Üç noktadan sonra boşluk ekle"
 
-#: data/patterns/Latn.common-error.in:200
+#: aeidon/data/patterns/Latn.common-error:200
 msgid "Space after a starting ellipsis"
 msgstr "Üç noktayla başlangıçtan sonra boşluk bırak"
 
-#: data/patterns/Latn.common-error.in:201
+#: aeidon/data/patterns/Latn.common-error:201
 msgid "Remove space after an ellipsis that starts a line"
 msgstr "Cümle başındaki üç noktadan sonra boşluk koyma"
 
-#: data/patterns/Latn.common-error.in:209
-#: data/patterns/Latn.common-error.in:220
-#: data/patterns/Latn.common-error.in:231
-#: data/patterns/Latn.common-error.in:241
+#: aeidon/data/patterns/Latn.common-error:209
+#: aeidon/data/patterns/Latn.common-error:220
+#: aeidon/data/patterns/Latn.common-error:231
+#: aeidon/data/patterns/Latn.common-error:241
 msgid "Spaces around a quotation mark"
 msgstr "Tırnak işrareti etrafındaki boşluklar"
 
-#: data/patterns/Latn.common-error.in:210
-#: data/patterns/Latn.common-error.in:221
-#: data/patterns/Latn.common-error.in:232
-#: data/patterns/Latn.common-error.in:242
+#: aeidon/data/patterns/Latn.common-error:210
+#: aeidon/data/patterns/Latn.common-error:221
+#: aeidon/data/patterns/Latn.common-error:232
+#: aeidon/data/patterns/Latn.common-error:242
 msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr "Tırnaktan sonra ve kapanıştan önce boşlukları kaldır"
 
-#: data/patterns/Latn.common-error.in:251
-#: data/patterns/Latn.common-error.in:260
+#: aeidon/data/patterns/Latn.common-error:251
+#: aeidon/data/patterns/Latn.common-error:260
 msgid "Spaces around musical notes"
 msgstr "Müzik notaları çevresinde boşluk"
 
-#: data/patterns/Latn.common-error.in:252
-#: data/patterns/Latn.common-error.in:261
+#: aeidon/data/patterns/Latn.common-error:252
+#: aeidon/data/patterns/Latn.common-error:261
 msgid "Add spaces between musical note characters and lyrics"
 msgstr "Nota karakterleri ve şarkı sözleri arasına boşluk ekle"
 
-#: data/patterns/Latn.common-error.in:269
-#: data/patterns/Latn.common-error.in:278
+#: aeidon/data/patterns/Latn.common-error:269
+#: aeidon/data/patterns/Latn.common-error:278
 msgid "Multiple question- and exclamation marks"
 msgstr "Birden fazla soru işareti ve ünlem"
 
-#: data/patterns/Latn.common-error.in:270
-#: data/patterns/Latn.common-error.in:279
+#: aeidon/data/patterns/Latn.common-error:270
+#: aeidon/data/patterns/Latn.common-error:279
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr "Arka arkaya olan çoklu soru ve ünlem işaretini teke indir"
 
-#: data/patterns/Latn.common-error.in:287
-#: data/patterns/Latn.common-error.in:297
+#: aeidon/data/patterns/Latn.common-error:287
+#: aeidon/data/patterns/Latn.common-error:297
 msgid "Periods around a punctuation mark"
 msgstr "Noktalama işaretiyle birlikte nokta kullanımı"
 
-#: data/patterns/Latn.common-error.in:288
-#: data/patterns/Latn.common-error.in:298
+#: aeidon/data/patterns/Latn.common-error:288
+#: aeidon/data/patterns/Latn.common-error:298
 msgid "Remove period before or after various punctuation marks"
 msgstr "Noktalama işaretlerinin önünde sonunda nokta koyma"
 
-#: data/patterns/Latn.common-error.in:307
+#: aeidon/data/patterns/Latn.common-error:307
 msgid "Terminating double-dashes"
 msgstr "İkili konuşma çizgileri sonlandırılıyor"
 
-#: data/patterns/Latn.common-error.in:308
+#: aeidon/data/patterns/Latn.common-error:308
 msgid "Replace a single clause-terminating dash with two dashes"
 msgstr "Kesik cümle bitirmesindeki tek tireyi, çift tire yap"
-
-#: data/patterns/Latn.hearing-impaired.in:4
-msgid "Sound in brackets"
-msgstr "Parantez içinde sesler"
-
-#: data/patterns/Latn.hearing-impaired.in:5
-msgid "Remove description of a sound between square brackets"
-msgstr "Köşeli parantez arasındaki ses açıklamalarını sil"
-
-#: data/patterns/Latn.hearing-impaired.in:11
-msgid "Sound in parentheses"
-msgstr ""
-
-#: data/patterns/Latn.hearing-impaired.in:12
-msgid "Remove description of a sound between parentheses"
-msgstr ""
-
-#: data/patterns/Latn.hearing-impaired.in:18
-msgid "Song lyrics between number signs"
-msgstr "Numara işaretleri arası şarkı sözleri"
-
-#: data/patterns/Latn.hearing-impaired.in:19
-msgid "Remove song lyrics starting with or between number signs"
-msgstr "Numara işaterleri arasınaki şarkı sözlerini sil"
-
-#: data/patterns/Latn.hearing-impaired.in:26
-msgid "One-line song lyrics between number signs"
-msgstr "Numara işaterleri arasınaki tek satırlık şarkı sözleri"
-
-#: data/patterns/Latn.hearing-impaired.in:27
-msgid "Remove one-line song lyrics starting with or between number signs"
-msgstr "Numara işaterleri arasınaki tek satırlı şarkı sözlerini sil"
-
-#: data/patterns/Latn.hearing-impaired.in:34
-msgid "Speaker before a colon"
-msgstr "Konuşandan sonra iki nokta üst üste"
-
-#: data/patterns/Latn.hearing-impaired.in:35
-msgid "Replace the name of the speaker before a colon with a dialogue dash"
-msgstr "Konuşmacı adını ve iki nokta üst üsteyi konuşma çizgisiyle değiştir"
-
-#: data/patterns/Latn.line-break.in:4 data/patterns/Latn.line-break.in:12
-msgid "Dialogue"
-msgstr "Konuşma"
-
-#: data/patterns/Latn.line-break.in:5 data/patterns/Latn.line-break.in:13
-msgid "Break according to dialogue separated by dashes"
-msgstr "Konuşmayı konuşma çizgisiyle böl"
-
-#: data/patterns/Latn.line-break.in:20 data/patterns/Latn.line-break.in:29
-msgid "Clause"
-msgstr "Kural"
-
-#: data/patterns/Latn.line-break.in:21 data/patterns/Latn.line-break.in:30
-msgid "Break according to clauses terminated by a punctuation mark"
-msgstr "Noktalama işareti kurala göre satır başına engel olunca"
-
-#: data/patterns/Latn.line-break.in:37
-msgid "Number and unit"
-msgstr "Sayı ve birim"
-
-#: data/patterns/Latn.line-break.in:38
-msgid "Do not break between a number and associated unit"
-msgstr "Sayı ve ilişkili birim arasını heceleme"
-
-#: data/patterns/Zyyy.common-error.in:4 data/patterns/Zyyy.common-error.in:13
-msgid "Leading and trailing spaces"
-msgstr "Baş ve son boşluklar"
-
-#: data/patterns/Zyyy.common-error.in:5 data/patterns/Zyyy.common-error.in:14
-msgid "Remove spaces from the beginning and end of lines"
-msgstr "Satır başındaki ve sonundaki boşlukları sil"
-
-#: data/patterns/Zyyy.common-error.in:22
-msgid "Multiple consecutive spaces"
-msgstr "Çoklu ardışık boşluklar"
-
-#: data/patterns/Zyyy.common-error.in:23
-msgid "Replace multiple consecutive spaces with only one"
-msgstr "Birden çok boşluğu teke indir"
-
-#: data/patterns/Zyyy.common-error.in:31 data/patterns/Zyyy.common-error.in:44
-#: data/patterns/Zyyy.common-error.in:54 data/patterns/Zyyy.common-error.in:64
-msgid "Space between digits"
-msgstr "Rakamlar arasında boşluk"
-
-#: data/patterns/Zyyy.common-error.in:32 data/patterns/Zyyy.common-error.in:45
-#: data/patterns/Zyyy.common-error.in:55 data/patterns/Zyyy.common-error.in:65
-msgid "Remove space between digits of a number"
-msgstr "Rakamlar arasındaki boşlukları sil"
-
-#: data/patterns/Zyyy.common-error.in:77
-msgid "Ellipses"
-msgstr ""
-
-#: data/patterns/Zyyy.common-error.in:78
-msgid "Replace Unicode ellipses with three separate dots"
-msgstr ""
-
-#: data/patterns/Zyyy.common-error.in:89
-msgid "Musical notes"
-msgstr "Müzikal notalar"
-
-#: data/patterns/Zyyy.common-error.in:90
-msgid "Replace Unicode musical note characters with number signs"
-msgstr "Unicode müzikal nota karakterlerini rakamlarla değiştir"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"

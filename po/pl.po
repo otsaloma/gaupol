@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 01:25+0300\n"
+"POT-Creation-Date: 2026-07-26 17:17+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: edasmax <edasmax@gmail.com>, 2023\n"
 "Language-Team: Polish (https://app.transifex.com/otsaloma/teams/64879/pl/)\n"
@@ -313,19 +313,19 @@ msgstr "25.000 fps"
 msgid "29.970 fps"
 msgstr "29.970 fps"
 
-#: aeidon/enums.py:62 data/ui/menubar.ui:243
+#: aeidon/enums.py:62 gaupol/data/ui/menubar.ui:243
 msgid "30.000 fps"
 msgstr "30.000 fps"
 
-#: aeidon/enums.py:66 data/ui/menubar.ui:248
+#: aeidon/enums.py:66 gaupol/data/ui/menubar.ui:248
 msgid "50.000 fps"
 msgstr "50.000 fps"
 
-#: aeidon/enums.py:70 data/ui/menubar.ui:253
+#: aeidon/enums.py:70 gaupol/data/ui/menubar.ui:253
 msgid "59.940 fps"
 msgstr "59.940 fps"
 
-#: aeidon/enums.py:74 data/ui/menubar.ui:258
+#: aeidon/enums.py:74 gaupol/data/ui/menubar.ui:258
 msgid "60.000 fps"
 msgstr "60.000 fps"
 
@@ -333,7 +333,7 @@ msgstr "60.000 fps"
 msgid "Mac (classic)"
 msgstr "Mac (klasyczny)"
 
-#: aeidon/locales.py:46
+#: aeidon/locales.py:45
 #, python-brace-format
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
@@ -415,11 +415,7 @@ msgstr "Rozciąganie pozycji końcowej"
 msgid "Stretching start position"
 msgstr "Rozciąganie pozycji początkowej"
 
-#: gaupol/agents/edit.py:384
-msgid "Use Shift+Return for line-break"
-msgstr "Użyj Shift+Enter aby przejść do następnej linii"
-
-#: gaupol/agents/edit.py:413
+#: gaupol/agents/edit.py:408
 #, python-brace-format
 msgid "Inserted {:d} subtitle to fit clipboard contents"
 msgid_plural "Inserted {:d} subtitles to fit clipboard contents"
@@ -428,12 +424,12 @@ msgstr[1] "Wstawiono {:d} napisów na podstawie schowka"
 msgstr[2] "Wstawiono {:d} napisów na podstawie schowka"
 msgstr[3] "Wstawiono {:d} napisów na podstawie schowka"
 
-#: gaupol/agents/edit.py:432
+#: gaupol/agents/edit.py:427
 #, python-brace-format
 msgid "Redo: {}"
 msgstr ""
 
-#: gaupol/agents/edit.py:484
+#: gaupol/agents/edit.py:479
 #, python-brace-format
 msgid "Undo: {}"
 msgstr ""
@@ -457,7 +453,7 @@ msgstr "Zamknij _bez zapisywania"
 #: gaupol/dialogs/multi_close.py:47 gaupol/dialogs/split.py:41
 #: gaupol/dialogs/encoding.py:45 gaupol/dialogs/save.py:63
 #: gaupol/dialogs/multi_save.py:80 gaupol/dialogs/multi_save.py:149
-#: gaupol/dialogs/multi_save.py:231 gaupol/dialogs/framerate_convert.py:60
+#: gaupol/dialogs/multi_save.py:232 gaupol/dialogs/framerate_convert.py:60
 #: gaupol/dialogs/position_shift.py:68 gaupol/dialogs/duration_adjust.py:83
 #: gaupol/dialogs/video.py:38 gaupol/dialogs/insert.py:40
 #: gaupol/dialogs/open.py:59 gaupol/dialogs/position_transform.py:67
@@ -466,8 +462,8 @@ msgstr "_Anuluj"
 
 #: gaupol/agents/close.py:70 gaupol/agents/open.py:400
 #: gaupol/dialogs/multi_close.py:48 gaupol/dialogs/save.py:64
-#: gaupol/dialogs/multi_save.py:81 data/ui/spell-check-dialog.ui:29
-#: data/ui/menubar.ui:33
+#: gaupol/dialogs/multi_save.py:81 gaupol/data/ui/spell-check-dialog.ui:29
+#: gaupol/data/ui/menubar.ui:33
 msgid "_Save"
 msgstr "_Zapisz"
 
@@ -671,36 +667,36 @@ msgstr ""
 msgid "Failed to launch video player"
 msgstr "Nie można uruchomić odtwarzacza wideo"
 
-#: gaupol/application.py:159
+#: gaupol/application.py:163
 #, python-brace-format
 msgid "{:.3f} fps"
 msgstr "{:.3f} fps"
 
-#: gaupol/application.py:209
+#: gaupol/application.py:213
 msgid "Open main files"
 msgstr "Otwiera główne pliki"
 
-#: gaupol/application.py:213
+#: gaupol/application.py:217
 msgid "Open a recently used main file"
 msgstr ""
 
-#: gaupol/application.py:219
+#: gaupol/application.py:223
 msgid "Save the current main document"
 msgstr "Zapisuje bieżący plik"
 
-#: gaupol/application.py:226
+#: gaupol/application.py:230
 msgid "Undo the last action"
 msgstr "Cofa ostatnią akcję"
 
-#: gaupol/application.py:230
+#: gaupol/application.py:234
 msgid "Redo the last undone action"
 msgstr "Ponów ostatnio cofniętą akcję"
 
-#: gaupol/application.py:236
+#: gaupol/application.py:240
 msgid "Preview from selected position with a video player"
 msgstr "Podejrzyj w odtwarzaczu filmów od wybranego miejsca"
 
-#: gaupol/application.py:241
+#: gaupol/application.py:245
 msgid "Search for and replace text"
 msgstr "Wyszukaj i zamień tekst"
 
@@ -939,8 +935,8 @@ msgid "Duration"
 msgstr "Czas trwania"
 
 #: gaupol/enums.py:54 gaupol/enums.py:55
-#: data/ui/position-transform-dialog.ui:133
-#: data/ui/position-transform-dialog.ui:263
+#: gaupol/data/ui/position-transform-dialog.ui:133
+#: gaupol/data/ui/position-transform-dialog.ui:263
 msgid "Text"
 msgstr "Tekst"
 
@@ -972,12 +968,12 @@ msgstr ""
 msgid "_Report Bug"
 msgstr "_Zgłoś błąd"
 
-#: gaupol/dialogs/debug.py:50 data/ui/menubar.ui:55
+#: gaupol/dialogs/debug.py:50 gaupol/data/ui/menubar.ui:55
 msgid "_Quit"
 msgstr "_Zakończ"
 
 #: gaupol/dialogs/debug.py:51 gaupol/dialogs/preview_error.py:43
-#: data/ui/menubar.ui:51
+#: gaupol/data/ui/menubar.ui:51
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -998,11 +994,11 @@ msgstr "Dzielenie projektu"
 msgid "Split {amount:d} subtitles to project \"{name}\""
 msgstr "Wydziel {amount:d} linii do projektu \"{name}\""
 
-#: gaupol/dialogs/encoding.py:50 data/ui/preferences-dialog.ui:50
+#: gaupol/dialogs/encoding.py:50 gaupol/data/ui/preferences-dialog.ui:50
 msgid "Character Encodings"
 msgstr "Kodowanie znaków"
 
-#: gaupol/dialogs/encoding.py:110
+#: gaupol/dialogs/encoding.py:119
 msgid "In Menu"
 msgstr ""
 
@@ -1010,21 +1006,21 @@ msgstr ""
 msgid "Spell-checking"
 msgstr "Sprawdzanie pisowni"
 
-#: gaupol/dialogs/save.py:83 data/ui/multi-save-dialog.ui:66
+#: gaupol/dialogs/save.py:83 gaupol/data/ui/multi-save-dialog.ui:66
 msgid "For_mat"
 msgstr ""
 
 #: gaupol/dialogs/save.py:91 gaupol/dialogs/open.py:73
-#: data/ui/multi-save-dialog.ui:90
+#: gaupol/data/ui/multi-save-dialog.ui:90
 msgid "_Encoding"
 msgstr ""
 
-#: gaupol/dialogs/save.py:97 data/ui/multi-save-dialog.ui:114
+#: gaupol/dialogs/save.py:97 gaupol/data/ui/multi-save-dialog.ui:114
 msgid "Ne_wlines"
 msgstr ""
 
-#: gaupol/dialogs/save.py:103 data/ui/menubar.ui:220
-#: data/ui/multi-save-dialog.ui:136
+#: gaupol/dialogs/save.py:103 gaupol/data/ui/menubar.ui:220
+#: gaupol/data/ui/multi-save-dialog.ui:136
 msgid "F_ramerate"
 msgstr "Ilość klatek"
 
@@ -1046,11 +1042,11 @@ msgstr "Wszystkie obsługiwane pliki"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: gaupol/dialogs/file.py:117
+#: gaupol/dialogs/file.py:120
 msgid "Auto-detected"
 msgstr "Automatyczne wykrywanie"
 
-#: gaupol/dialogs/file.py:119
+#: gaupol/dialogs/file.py:122
 msgid "Other…"
 msgstr "Inny…"
 
@@ -1058,13 +1054,13 @@ msgstr "Inny…"
 msgid "Select A Folder"
 msgstr "Wybierz folder"
 
-#: gaupol/dialogs/multi_save.py:228
+#: gaupol/dialogs/multi_save.py:229
 #, python-brace-format
 msgid ""
 "{:d} of the files to be saved already exist. Do you want to replace them?"
 msgstr "{:d} plik/ów, które mają zostać zapisane, już istnieje. Czy zastąpić?"
 
-#: gaupol/dialogs/multi_save.py:229
+#: gaupol/dialogs/multi_save.py:230
 #, python-brace-format
 msgid ""
 "The files already exist in \"{}\". Replacing them will overwrite their "
@@ -1073,16 +1069,16 @@ msgstr ""
 "Pliki już istnieją w \"{}\". Zastąpienie ich spowoduje nadpisanie ich "
 "zawartości."
 
-#: gaupol/dialogs/multi_save.py:232 data/ui/spell-check-dialog.ui:96
-#: data/ui/search-dialog.ui:142
+#: gaupol/dialogs/multi_save.py:233 gaupol/data/ui/spell-check-dialog.ui:96
+#: gaupol/data/ui/search-dialog.ui:142
 msgid "_Replace"
 msgstr "_Zastąp"
 
-#: gaupol/dialogs/language.py:102
+#: gaupol/dialogs/language.py:107
 msgid "Set Language"
 msgstr "Ustaw język"
 
-#: gaupol/dialogs/search.py:188 data/ui/menubar.ui:516
+#: gaupol/dialogs/search.py:188 gaupol/data/ui/menubar.ui:516
 msgid "_Help"
 msgstr "_Pomoc"
 
@@ -1134,7 +1130,7 @@ msgstr "Dostosuj"
 msgid "_Shift"
 msgstr "_Przesuń"
 
-#: gaupol/dialogs/position_shift.py:146 data/ui/menubar.ui:213
+#: gaupol/dialogs/position_shift.py:146 gaupol/data/ui/menubar.ui:213
 msgid "_Frames"
 msgstr "Klatki"
 
@@ -1197,165 +1193,166 @@ msgstr "Dołącz plik"
 msgid "_Transform"
 msgstr "_Przekształcać"
 
-#: data/ui/view-popup.ui:7 data/ui/menubar.ui:117
+#: gaupol/data/ui/view-popup.ui:7 gaupol/data/ui/menubar.ui:117
 msgid "_Split Subtitle"
 msgstr "Podziel napi_sy"
 
-#: data/ui/view-popup.ui:11 data/ui/menubar.ui:121
+#: gaupol/data/ui/view-popup.ui:11 gaupol/data/ui/menubar.ui:121
 msgid "_Merge Subtitles"
 msgstr "_Połącz napisy"
 
-#: data/ui/view-popup.ui:17 data/ui/menubar.ui:127
+#: gaupol/data/ui/view-popup.ui:17 gaupol/data/ui/menubar.ui:127
 msgid "_Insert Subtitles…"
 msgstr "Wstaw napisy..."
 
-#: data/ui/view-popup.ui:21 data/ui/menubar.ui:135
+#: gaupol/data/ui/view-popup.ui:21 gaupol/data/ui/menubar.ui:135
 msgid "Rem_ove Subtitles"
 msgstr "_Usuń napisy"
 
-#: data/ui/view-popup.ui:27 data/ui/menubar.ui:378
+#: gaupol/data/ui/view-popup.ui:27 gaupol/data/ui/menubar.ui:378
 msgid "Play _Selection"
 msgstr "Odtwórz zaznaczenie"
 
-#: data/ui/view-popup.ui:31 data/ui/menubar.ui:404
+#: gaupol/data/ui/view-popup.ui:31 gaupol/data/ui/menubar.ui:404
 msgid "S_eek Selection Start"
 msgstr "idź na początek zaznaczenia"
 
-#: data/ui/view-popup.ui:37 data/ui/menubar.ui:436
-#: data/ui/text-assistant/confirmation-page.ui:57
+#: gaupol/data/ui/view-popup.ui:37 gaupol/data/ui/menubar.ui:436
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:57
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: data/ui/preferences-dialog.ui:16
+#: gaupol/data/ui/preferences-dialog.ui:16
 msgid "Preferences"
 msgstr "Preferencje"
 
-#: data/ui/preferences-dialog.ui:30
+#: gaupol/data/ui/preferences-dialog.ui:30
 msgid "File"
 msgstr "Plik"
 
-#: data/ui/preferences-dialog.ui:72
+#: gaupol/data/ui/preferences-dialog.ui:72
 msgid "Try current _locale encoding first"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:87
+#: gaupol/data/ui/preferences-dialog.ui:87
 msgid "Try _auto-detection last"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:109
+#: gaupol/data/ui/preferences-dialog.ui:109
 msgid "Fallback Encodings"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:143
+#: gaupol/data/ui/preferences-dialog.ui:143
 msgid "Add"
 msgstr "Dodaj"
 
-#: data/ui/preferences-dialog.ui:150
+#: gaupol/data/ui/preferences-dialog.ui:150
 msgid "Remove"
 msgstr "Usuń"
 
-#: data/ui/preferences-dialog.ui:157
+#: gaupol/data/ui/preferences-dialog.ui:157
 msgid "Move up"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:164
+#: gaupol/data/ui/preferences-dialog.ui:164
 msgid "Move down"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:183
+#: gaupol/data/ui/preferences-dialog.ui:183
 msgid "Editor"
 msgstr "Edytor"
 
-#: data/ui/preferences-dialog.ui:203
+#: gaupol/data/ui/preferences-dialog.ui:203
 msgid "Font"
 msgstr "Czcionka"
 
-#: data/ui/preferences-dialog.ui:227
+#: gaupol/data/ui/preferences-dialog.ui:227
 msgid "_Custom font"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:259
+#: gaupol/data/ui/preferences-dialog.ui:259
 msgid "Line Lengths"
 msgstr "Długości linii"
 
-#: data/ui/preferences-dialog.ui:281
+#: gaupol/data/ui/preferences-dialog.ui:281
 msgid "_Show line lengths in list cells"
 msgstr "Pokaż długości linii w komórkach listy"
 
-#: data/ui/preferences-dialog.ui:296
+#: gaupol/data/ui/preferences-dialog.ui:296
 msgid "S_how line lengths in editable text fields"
 msgstr "Pokaż długości linii w edytowalnych polach tekstowych"
 
-#: data/ui/preferences-dialog.ui:314
+#: gaupol/data/ui/preferences-dialog.ui:314
 msgid "_Length unit"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:342
+#: gaupol/data/ui/preferences-dialog.ui:342
 msgid "Spell-Check"
 msgstr "Sprawdzanie pisowni"
 
-#: data/ui/preferences-dialog.ui:364
+#: gaupol/data/ui/preferences-dialog.ui:364
 msgid "Chec_k spelling as you type"
 msgstr "Sprawdź pisownię podczas pisania"
 
-#: data/ui/preferences-dialog.ui:385
+#: gaupol/data/ui/preferences-dialog.ui:385
 msgid "Video"
 msgstr "Wideo"
 
-#: data/ui/preferences-dialog.ui:404
+#: gaupol/data/ui/preferences-dialog.ui:404
 msgid "Fonts"
 msgstr "Czcionki"
 
-#: data/ui/preferences-dialog.ui:429
+#: gaupol/data/ui/preferences-dialog.ui:429
 msgid "_Subtitles"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:456
+#: gaupol/data/ui/preferences-dialog.ui:456
 msgid "_Time"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:487
+#: gaupol/data/ui/preferences-dialog.ui:487
 msgid "Colors"
 msgstr "Kolory"
 
-#: data/ui/preferences-dialog.ui:512
+#: gaupol/data/ui/preferences-dialog.ui:512
 msgid "Su_btitles"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:525 data/ui/preferences-dialog.ui:557
+#: gaupol/data/ui/preferences-dialog.ui:525
+#: gaupol/data/ui/preferences-dialog.ui:557
 msgid "Background"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:544
+#: gaupol/data/ui/preferences-dialog.ui:544
 msgid "Ti_me"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:580
+#: gaupol/data/ui/preferences-dialog.ui:580
 msgid "Seek"
 msgstr "Skocz"
 
-#: data/ui/preferences-dialog.ui:605
+#: gaupol/data/ui/preferences-dialog.ui:605
 msgid "_Seconds"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:635
+#: gaupol/data/ui/preferences-dialog.ui:635
 msgid "Preview"
 msgstr "Podgląd"
 
-#: data/ui/preferences-dialog.ui:655
+#: gaupol/data/ui/preferences-dialog.ui:655
 msgid "Video Player"
 msgstr "Odtwarzacz wideo"
 
-#: data/ui/preferences-dialog.ui:680
+#: gaupol/data/ui/preferences-dialog.ui:680
 msgid "_Application"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:704
+#: gaupol/data/ui/preferences-dialog.ui:704
 msgid "Co_mmand"
 msgstr ""
 
 #. Translators: Only the title is to be translated, field names not.
-#: data/ui/preferences-dialog.ui:712
+#: gaupol/data/ui/preferences-dialog.ui:712
 msgid ""
 "Fields:\n"
 "$MILLISECONDS\n"
@@ -1364,1168 +1361,1192 @@ msgid ""
 "$VIDEOFILE"
 msgstr ""
 
-#: data/ui/preferences-dialog.ui:733
+#: gaupol/data/ui/preferences-dialog.ui:733
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "Zawsze używaj kodowania znaków UTF-8"
 
-#: data/ui/preferences-dialog.ui:755
+#: gaupol/data/ui/preferences-dialog.ui:755
 msgid "Start Position"
 msgstr "Pozycja początkowa"
 
-#: data/ui/preferences-dialog.ui:780
+#: gaupol/data/ui/preferences-dialog.ui:780
 msgid "_Offset (seconds before selection)"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:19
+#: gaupol/data/ui/position-transform-dialog.ui:19
 msgid "Transform Positions"
 msgstr "Przekształć pozycje"
 
-#: data/ui/position-transform-dialog.ui:44
+#: gaupol/data/ui/position-transform-dialog.ui:44
 msgid "First Point"
 msgstr "Pierwszy punkt"
 
-#: data/ui/position-transform-dialog.ui:69
+#: gaupol/data/ui/position-transform-dialog.ui:69
 msgid "_Subtitle"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:99
+#: gaupol/data/ui/position-transform-dialog.ui:99
 msgid "C_orrection"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:150
-#: data/ui/position-transform-dialog.ui:280
-#: data/ui/position-shift-dialog.ui:79
+#: gaupol/data/ui/position-transform-dialog.ui:150
+#: gaupol/data/ui/position-transform-dialog.ui:280
+#: gaupol/data/ui/position-shift-dialog.ui:79
 msgid "Preview Changes"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:174
+#: gaupol/data/ui/position-transform-dialog.ui:174
 msgid "Second Point"
 msgstr "Drugi punkt"
 
-#: data/ui/position-transform-dialog.ui:199
+#: gaupol/data/ui/position-transform-dialog.ui:199
 msgid "Su_btitle"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:229
+#: gaupol/data/ui/position-transform-dialog.ui:229
 msgid "Co_rrection"
 msgstr ""
 
-#: data/ui/position-transform-dialog.ui:304
-#: data/ui/framerate-convert-dialog.ui:107 data/ui/language-dialog.ui:135
-#: data/ui/duration-adjust-dialog.ui:263
-#: data/ui/text-assistant/line-break-options-page.ui:142
-#: data/ui/position-shift-dialog.ui:103 data/ui/search-dialog.ui:267
+#: gaupol/data/ui/position-transform-dialog.ui:304
+#: gaupol/data/ui/framerate-convert-dialog.ui:107
+#: gaupol/data/ui/language-dialog.ui:135
+#: gaupol/data/ui/duration-adjust-dialog.ui:263
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:142
+#: gaupol/data/ui/position-shift-dialog.ui:103
+#: gaupol/data/ui/search-dialog.ui:267
 msgid "Subtitles"
 msgstr "Napisy"
 
-#: data/ui/position-transform-dialog.ui:326
+#: gaupol/data/ui/position-transform-dialog.ui:326
 msgid "Transform se_lected subtitles"
 msgstr "Przekształć wybrane napisy"
 
-#: data/ui/position-transform-dialog.ui:342
+#: gaupol/data/ui/position-transform-dialog.ui:342
 msgid "Transform c_urrent project"
 msgstr "Przekształć bieżący projekt"
 
-#: data/ui/spell-check-dialog.ui:5
+#: gaupol/data/ui/spell-check-dialog.ui:5
 msgid "Check Spelling"
 msgstr "Sprawdź pisownię"
 
-#: data/ui/spell-check-dialog.ui:44
+#: gaupol/data/ui/spell-check-dialog.ui:44
 msgid "Join _Back"
 msgstr "Połącz w _tył"
 
-#: data/ui/spell-check-dialog.ui:53
+#: gaupol/data/ui/spell-check-dialog.ui:53
 msgid "Join _Forward"
 msgstr "Połącz w _przód"
 
-#: data/ui/spell-check-dialog.ui:70
+#: gaupol/data/ui/spell-check-dialog.ui:70
 msgid "_Ignore"
 msgstr "_Ignoruj"
 
-#: data/ui/spell-check-dialog.ui:79
+#: gaupol/data/ui/spell-check-dialog.ui:79
 msgid "Ig_nore All"
 msgstr "Ignoruj wszystko"
 
-#: data/ui/spell-check-dialog.ui:105
+#: gaupol/data/ui/spell-check-dialog.ui:105
 msgid "Rep_lace All"
 msgstr "Zastąp wszystko"
 
-#: data/ui/spell-check-dialog.ui:116
+#: gaupol/data/ui/spell-check-dialog.ui:116
 msgid "_Add"
 msgstr "_Dodaj"
 
-#: data/ui/spell-check-dialog.ui:135
+#: gaupol/data/ui/spell-check-dialog.ui:135
 msgid "S_uggestions"
 msgstr ""
 
-#: data/ui/spell-check-dialog.ui:147 data/ui/search-dialog.ui:75
+#: gaupol/data/ui/spell-check-dialog.ui:147 gaupol/data/ui/search-dialog.ui:75
 msgid "Replace _with"
 msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:5
+#: gaupol/data/ui/framerate-convert-dialog.ui:5
 msgid "Convert Framerate"
 msgstr "Konwertuj liczbę klatek"
 
-#: data/ui/framerate-convert-dialog.ui:30
+#: gaupol/data/ui/framerate-convert-dialog.ui:30
 msgid "Framerate"
 msgstr "Liczba klatek"
 
-#: data/ui/framerate-convert-dialog.ui:55
+#: gaupol/data/ui/framerate-convert-dialog.ui:55
 msgid "_Input"
 msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:79
+#: gaupol/data/ui/framerate-convert-dialog.ui:79
 msgid "_Output"
 msgstr ""
 
-#: data/ui/framerate-convert-dialog.ui:129
+#: gaupol/data/ui/framerate-convert-dialog.ui:129
 msgid "Convert c_urrent project"
 msgstr "Konwert_uj bieżący projekt"
 
-#: data/ui/framerate-convert-dialog.ui:144
+#: gaupol/data/ui/framerate-convert-dialog.ui:144
 msgid "Convert _all open projects"
 msgstr "Konwertuj _wszystkie otwarte projekty"
 
-#: data/ui/language-dialog.ui:5
+#: gaupol/data/ui/language-dialog.ui:5
 msgid "Configure Spell-Check"
 msgstr "Konfiguruj sprawdzanie pisowni"
 
-#: data/ui/language-dialog.ui:39
+#: gaupol/data/ui/language-dialog.ui:39
 msgid "Language"
 msgstr "Język"
 
-#: data/ui/language-dialog.ui:74 data/ui/search-dialog.ui:209
+#: gaupol/data/ui/language-dialog.ui:74 gaupol/data/ui/search-dialog.ui:209
 msgid "Columns"
 msgstr "Kolumny"
 
-#: data/ui/language-dialog.ui:96
+#: gaupol/data/ui/language-dialog.ui:96
 msgid "Check _text column"
 msgstr "Sprawdź kolumnę tekst"
 
-#: data/ui/language-dialog.ui:112
+#: gaupol/data/ui/language-dialog.ui:112
 msgid "Check t_ranslation column"
 msgstr "Sprawdź kolumnę tłumaczenie"
 
-#: data/ui/language-dialog.ui:157
+#: gaupol/data/ui/language-dialog.ui:157
 msgid "Check c_urrent project"
 msgstr "Sprawdź _bieżący projekt"
 
-#: data/ui/language-dialog.ui:173
+#: gaupol/data/ui/language-dialog.ui:173
 msgid "Check _all open projects"
 msgstr "Sprawdź _wszystkie otwarte projekty"
 
-#: data/ui/duration-adjust-dialog.ui:30
+#: gaupol/data/ui/duration-adjust-dialog.ui:30
 msgid "Adjust Durations"
 msgstr "Dopasuj czasy trwania"
 
-#: data/ui/duration-adjust-dialog.ui:55
+#: gaupol/data/ui/duration-adjust-dialog.ui:55
 msgid "Theoretic Duration"
 msgstr "Teoretyczny czas trwania"
 
-#: data/ui/duration-adjust-dialog.ui:80
+#: gaupol/data/ui/duration-adjust-dialog.ui:80
 msgid "_Reading speed (char/s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:107
+#: gaupol/data/ui/duration-adjust-dialog.ui:107
 msgid "_Lengthen duration to match reading speed"
 msgstr "Wydłuż czas trwania, aby dopasować szybkości czytania"
 
-#: data/ui/duration-adjust-dialog.ui:122
+#: gaupol/data/ui/duration-adjust-dialog.ui:122
 msgid "_Shorten duration to match reading speed"
 msgstr "Skróć czas trwania, aby dopasować do szybkości czytania"
 
-#: data/ui/duration-adjust-dialog.ui:144
-#: data/ui/text-assistant/line-break-options-page.ui:50
+#: gaupol/data/ui/duration-adjust-dialog.ui:144
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:50
 msgid "Limits"
 msgstr "Limity"
 
-#: data/ui/duration-adjust-dialog.ui:168
+#: gaupol/data/ui/duration-adjust-dialog.ui:168
 msgid "_Minimum duration (s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:198
+#: gaupol/data/ui/duration-adjust-dialog.ui:198
 msgid "Ma_ximum duration (s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:228
+#: gaupol/data/ui/duration-adjust-dialog.ui:228
 msgid "_Gap between subtitles (s)"
 msgstr ""
 
-#: data/ui/duration-adjust-dialog.ui:285
+#: gaupol/data/ui/duration-adjust-dialog.ui:285
 msgid "Adj_ust selected subtitles"
 msgstr "Dostosuj wybrane napisy"
 
-#: data/ui/duration-adjust-dialog.ui:300
+#: gaupol/data/ui/duration-adjust-dialog.ui:300
 msgid "Adjus_t current project"
 msgstr "Dostosuj bieżący projekt"
 
-#: data/ui/duration-adjust-dialog.ui:315
+#: gaupol/data/ui/duration-adjust-dialog.ui:315
 msgid "Adjust all _open projects"
 msgstr "Dostosuj wszystkie otwarte projekty"
 
-#: data/ui/menubar.ui:6
+#: gaupol/data/ui/menubar.ui:6
 msgid "_File"
 msgstr "_Plik"
 
-#: data/ui/menubar.ui:9
+#: gaupol/data/ui/menubar.ui:9
 msgid "_New"
 msgstr "_Nowy"
 
-#: data/ui/menubar.ui:13
+#: gaupol/data/ui/menubar.ui:13
 msgid "_Open…"
 msgstr "_Otwórz…"
 
-#: data/ui/menubar.ui:17
+#: gaupol/data/ui/menubar.ui:17
 msgid "Open _Translation…"
 msgstr "_Otwórz tłumaczenie…"
 
-#: data/ui/menubar.ui:23
+#: gaupol/data/ui/menubar.ui:23
 msgid "Open _Recent"
 msgstr "Otwó_rz ostatnie"
 
-#: data/ui/menubar.ui:27
+#: gaupol/data/ui/menubar.ui:27
 msgid "Open R_ecent Translation"
 msgstr "Otwó_rz ostatnie tłumaczenie"
 
-#: data/ui/menubar.ui:37
+#: gaupol/data/ui/menubar.ui:37
 msgid "Save _As…"
 msgstr "Z_apisz jako…"
 
-#: data/ui/menubar.ui:41
+#: gaupol/data/ui/menubar.ui:41
 msgid "Save Trans_lation"
 msgstr "Zapisz tłumaczenie"
 
-#: data/ui/menubar.ui:45
+#: gaupol/data/ui/menubar.ui:45
 msgid "Save Translat_ion As…"
 msgstr "Zapisz tłumaczen_ie jako..."
 
-#: data/ui/menubar.ui:61
+#: gaupol/data/ui/menubar.ui:61
 msgid "_Edit"
 msgstr "_Edycja"
 
-#: data/ui/menubar.ui:64
+#: gaupol/data/ui/menubar.ui:64
 msgid "_Undo"
 msgstr "Cof_nij"
 
-#: data/ui/menubar.ui:68
+#: gaupol/data/ui/menubar.ui:68
 msgid "_Redo"
 msgstr "P_onów"
 
-#: data/ui/menubar.ui:74
+#: gaupol/data/ui/menubar.ui:74
 msgid "_Edit Cell"
 msgstr "_Edytuj komórkę"
 
-#: data/ui/menubar.ui:78
+#: gaupol/data/ui/menubar.ui:78
 msgid "Edit _Next Cell"
 msgstr "Edytuj _następną komórkę"
 
-#: data/ui/menubar.ui:84
+#: gaupol/data/ui/menubar.ui:84
 msgid "Stretc_h"
 msgstr "Rozciągnij"
 
-#: data/ui/menubar.ui:87
+#: gaupol/data/ui/menubar.ui:87
 msgid "_Start Earlier"
 msgstr "Zacznij wcześniej"
 
-#: data/ui/menubar.ui:91
+#: gaupol/data/ui/menubar.ui:91
 msgid "S_tart Later"
 msgstr "Zacznij później"
 
-#: data/ui/menubar.ui:97
+#: gaupol/data/ui/menubar.ui:97
 msgid "E_nd Earlier"
 msgstr "Skończ wcześniej"
 
-#: data/ui/menubar.ui:101
+#: gaupol/data/ui/menubar.ui:101
 msgid "En_d Later"
 msgstr "Skończ później"
 
-#: data/ui/menubar.ui:107
+#: gaupol/data/ui/menubar.ui:107
 msgid "Set St_art From Video Position"
 msgstr "Ustaw St_art z pozycji wideo"
 
-#: data/ui/menubar.ui:111
+#: gaupol/data/ui/menubar.ui:111
 msgid "Set En_d From Video Position"
 msgstr "Ustaw koniec z pozycji wideo"
 
-#: data/ui/menubar.ui:131
+#: gaupol/data/ui/menubar.ui:131
 msgid "Inser_t Subtitle At Video Position"
 msgstr "Wstaw napisy do pozycji wideo..."
 
-#: data/ui/menubar.ui:141
+#: gaupol/data/ui/menubar.ui:141
 msgid "Sele_ction"
 msgstr "Zaznaczenie"
 
-#: data/ui/menubar.ui:144
+#: gaupol/data/ui/menubar.ui:144
 msgid "Select _All"
 msgstr "Z_aznacz wszystko"
 
-#: data/ui/menubar.ui:148
+#: gaupol/data/ui/menubar.ui:148
 msgid "_Invert Selection"
 msgstr "Odwróć zaznaczenie"
 
-#: data/ui/menubar.ui:154
+#: gaupol/data/ui/menubar.ui:154
 msgid "Extend To _Beginning"
 msgstr "Rozszerz do początku"
 
-#: data/ui/menubar.ui:158
+#: gaupol/data/ui/menubar.ui:158
 msgid "Extend To _End"
 msgstr "Rozszerz do końca"
 
-#: data/ui/menubar.ui:164
+#: gaupol/data/ui/menubar.ui:164
 msgid "_Previous From Video Position"
 msgstr "_Poprzedni z pozycji wideo"
 
-#: data/ui/menubar.ui:168
+#: gaupol/data/ui/menubar.ui:168
 msgid "_Next From Video Position"
 msgstr "_Następny z pozycji wideo"
 
-#: data/ui/menubar.ui:176
+#: gaupol/data/ui/menubar.ui:176
 msgid "_Preferences"
 msgstr "Ustawienia"
 
-#: data/ui/menubar.ui:182
+#: gaupol/data/ui/menubar.ui:182
 msgid "_View"
 msgstr "_Widok"
 
-#: data/ui/menubar.ui:185
+#: gaupol/data/ui/menubar.ui:185
 msgid "_Video Player"
 msgstr "Odtwarzacz wideo"
 
-#: data/ui/menubar.ui:191
+#: gaupol/data/ui/menubar.ui:191
 msgid "_Layout"
 msgstr "Układ"
 
-#: data/ui/menubar.ui:194
+#: gaupol/data/ui/menubar.ui:194
 msgid "_Horizontal"
 msgstr "Poziomy"
 
-#: data/ui/menubar.ui:199
+#: gaupol/data/ui/menubar.ui:199
 msgid "_Vertical"
 msgstr "Pionowy"
 
-#: data/ui/menubar.ui:208
+#: gaupol/data/ui/menubar.ui:208
 msgid "_Times"
 msgstr "Czasy"
 
-#: data/ui/menubar.ui:223
+#: gaupol/data/ui/menubar.ui:223
 msgid "2_3.976 fps"
 msgstr "2_3.976 fps"
 
-#: data/ui/menubar.ui:228
+#: gaupol/data/ui/menubar.ui:228
 msgid "2_4.000 fps"
 msgstr "2_4.000 fps"
 
-#: data/ui/menubar.ui:233
+#: gaupol/data/ui/menubar.ui:233
 msgid "2_5.000 fps"
 msgstr "2_5.000 fps"
 
-#: data/ui/menubar.ui:238
+#: gaupol/data/ui/menubar.ui:238
 msgid "2_9.970 fps"
 msgstr "2_9.970 fps"
 
-#: data/ui/menubar.ui:266
+#: gaupol/data/ui/menubar.ui:266
 msgid "_Columns"
 msgstr "_Kolumny"
 
-#: data/ui/menubar.ui:269 data/ui/columns-popup.ui:7
+#: gaupol/data/ui/menubar.ui:269 gaupol/data/ui/columns-popup.ui:7
 msgid "_No."
 msgstr "_Nr"
 
-#: data/ui/menubar.ui:273 data/ui/columns-popup.ui:11
+#: gaupol/data/ui/menubar.ui:273 gaupol/data/ui/columns-popup.ui:11
 msgid "_Start"
 msgstr "_Początek"
 
-#: data/ui/menubar.ui:277 data/ui/columns-popup.ui:15
+#: gaupol/data/ui/menubar.ui:277 gaupol/data/ui/columns-popup.ui:15
 msgid "_End"
 msgstr "_Koniec"
 
-#: data/ui/menubar.ui:281 data/ui/columns-popup.ui:19
+#: gaupol/data/ui/menubar.ui:281 gaupol/data/ui/columns-popup.ui:19
 msgid "_Duration"
 msgstr "_Czas trwania"
 
-#: data/ui/menubar.ui:285 data/ui/menubar.ui:297 data/ui/columns-popup.ui:23
+#: gaupol/data/ui/menubar.ui:285 gaupol/data/ui/menubar.ui:297
+#: gaupol/data/ui/columns-popup.ui:23
 msgid "_Text"
 msgstr "_Tekst"
 
-#: data/ui/menubar.ui:289 data/ui/columns-popup.ui:27
+#: gaupol/data/ui/menubar.ui:289 gaupol/data/ui/columns-popup.ui:27
 msgid "T_ranslation"
 msgstr "Tłumaczenie"
 
-#: data/ui/menubar.ui:300
+#: gaupol/data/ui/menubar.ui:300
 msgid "Cu_t"
 msgstr "Wytnij"
 
-#: data/ui/menubar.ui:304
+#: gaupol/data/ui/menubar.ui:304
 msgid "_Copy"
 msgstr "S_kopiuj"
 
-#: data/ui/menubar.ui:308
+#: gaupol/data/ui/menubar.ui:308
 msgid "_Paste"
 msgstr "_Wklej"
 
-#: data/ui/menubar.ui:312
+#: gaupol/data/ui/menubar.ui:312
 msgid "Cl_ear"
 msgstr "Wyczyść"
 
-#: data/ui/menubar.ui:318
+#: gaupol/data/ui/menubar.ui:318
 msgid "_Find And Replace…"
 msgstr "Znajdź i zamień..."
 
-#: data/ui/menubar.ui:322 data/ui/search-dialog.ui:118
+#: gaupol/data/ui/menubar.ui:322 gaupol/data/ui/search-dialog.ui:118
 msgid "Find _Next"
 msgstr "Znajdź _następny"
 
-#: data/ui/menubar.ui:326
+#: gaupol/data/ui/menubar.ui:326
 msgid "Find Pre_vious"
 msgstr "Znajdź poprzedni"
 
-#: data/ui/menubar.ui:332
+#: gaupol/data/ui/menubar.ui:332
 msgid "_Italic"
 msgstr "_Pochylenie"
 
-#: data/ui/menubar.ui:336
+#: gaupol/data/ui/menubar.ui:336
 msgid "_Dialogue"
 msgstr "_Dialog"
 
-#: data/ui/menubar.ui:342
+#: gaupol/data/ui/menubar.ui:342
 msgid "Ca_se"
 msgstr "_Rozmiar"
 
-#: data/ui/menubar.ui:345
+#: gaupol/data/ui/menubar.ui:345
 msgid "_Title"
 msgstr "_Tytuł"
 
-#: data/ui/menubar.ui:349
+#: gaupol/data/ui/menubar.ui:349
 msgid "_Sentence"
 msgstr "_Zdanie"
 
-#: data/ui/menubar.ui:353
+#: gaupol/data/ui/menubar.ui:353
 msgid "_Upper"
 msgstr "D_uże litery"
 
-#: data/ui/menubar.ui:357
+#: gaupol/data/ui/menubar.ui:357
 msgid "_Lower"
 msgstr "Małe _litery"
 
-#: data/ui/menubar.ui:365
+#: gaupol/data/ui/menubar.ui:365
 msgid "Vi_deo"
 msgstr "Wideo"
 
-#: data/ui/menubar.ui:368
+#: gaupol/data/ui/menubar.ui:368
 msgid "_Load Video…"
 msgstr "Załaduj wideo ..."
 
-#: data/ui/menubar.ui:374
+#: gaupol/data/ui/menubar.ui:374
 msgid "_Play/Pause"
 msgstr "_Odtwarzaj/Wstrzymaj"
 
-#: data/ui/menubar.ui:384
+#: gaupol/data/ui/menubar.ui:384
 msgid "Seek _Previous"
 msgstr "Szukaj _Poprzednich"
 
-#: data/ui/menubar.ui:388
+#: gaupol/data/ui/menubar.ui:388
 msgid "Seek _Next"
 msgstr "Szukaj _Dalej"
 
-#: data/ui/menubar.ui:394
+#: gaupol/data/ui/menubar.ui:394
 msgid "Seek _Backward"
 msgstr "Szukaj _Wstecz"
 
-#: data/ui/menubar.ui:398
+#: gaupol/data/ui/menubar.ui:398
 msgid "Seek _Forward"
 msgstr "Szukaj _Dalej"
 
-#: data/ui/menubar.ui:408
+#: gaupol/data/ui/menubar.ui:408
 msgid "See_k Selection End"
 msgstr "idź na koniec zaznaczenia"
 
-#: data/ui/menubar.ui:414
+#: gaupol/data/ui/menubar.ui:414
 msgid "_Audio"
 msgstr "_Audio"
 
-#: data/ui/menubar.ui:417 data/ui/text-assistant/line-break-page.ui:46
-#: data/ui/text-assistant/join-split-page.ui:47
-#: data/ui/text-assistant/capitalization-page.ui:46
-#: data/ui/text-assistant/hearing-impaired-page.ui:46
-#: data/ui/text-assistant/common-error-page.ui:46
+#: gaupol/data/ui/menubar.ui:417
+#: gaupol/data/ui/text-assistant/line-break-page.ui:46
+#: gaupol/data/ui/text-assistant/join-split-page.ui:47
+#: gaupol/data/ui/text-assistant/capitalization-page.ui:46
+#: gaupol/data/ui/text-assistant/hearing-impaired-page.ui:46
+#: gaupol/data/ui/text-assistant/common-error-page.ui:46
 msgid "_Language"
 msgstr "Język"
 
-#: data/ui/menubar.ui:423
+#: gaupol/data/ui/menubar.ui:423
 msgid "Volume _Down"
 msgstr "Ścisz"
 
-#: data/ui/menubar.ui:427
+#: gaupol/data/ui/menubar.ui:427
 msgid "Volume _Up"
 msgstr "Zwiększ głośność"
 
-#: data/ui/menubar.ui:433
+#: gaupol/data/ui/menubar.ui:433
 msgid "T_ools"
 msgstr "Narzędzia"
 
-#: data/ui/menubar.ui:440
+#: gaupol/data/ui/menubar.ui:440
 msgid "Select _Video…"
 msgstr "Wybierz wideo ..."
 
-#: data/ui/menubar.ui:446
+#: gaupol/data/ui/menubar.ui:446
 msgid "_Check Spelling"
 msgstr "_Sprawdź pisownię"
 
-#: data/ui/menubar.ui:450
+#: gaupol/data/ui/menubar.ui:450
 msgid "Co_nfigure Spell-Check…"
 msgstr ""
 
-#: data/ui/menubar.ui:454
+#: gaupol/data/ui/menubar.ui:454
 msgid "C_orrect Texts…"
 msgstr "Popraw teksty ..."
 
-#: data/ui/menubar.ui:460
+#: gaupol/data/ui/menubar.ui:460
 msgid "_Shift Positions…"
 msgstr "Przesuń pozycje..."
 
-#: data/ui/menubar.ui:464
+#: gaupol/data/ui/menubar.ui:464
 msgid "_Transform Positions…"
 msgstr "Przekształć pozycje..."
 
-#: data/ui/menubar.ui:468
+#: gaupol/data/ui/menubar.ui:468
 msgid "Adjust _Durations…"
 msgstr "Dostosuj czas trwania..."
 
-#: data/ui/menubar.ui:472
+#: gaupol/data/ui/menubar.ui:472
 msgid "Convert _Framerate…"
 msgstr "Konwersja ilości klatek..."
 
-#: data/ui/menubar.ui:478
+#: gaupol/data/ui/menubar.ui:478
 msgid "_Append File…"
 msgstr "Dołącz plik..."
 
-#: data/ui/menubar.ui:482
+#: gaupol/data/ui/menubar.ui:482
 msgid "Spli_t Project…"
 msgstr "Podziel projekt..."
 
-#: data/ui/menubar.ui:488
+#: gaupol/data/ui/menubar.ui:488
 msgid "_Projects"
 msgstr "_Projekty"
 
-#: data/ui/menubar.ui:491
+#: gaupol/data/ui/menubar.ui:491
 msgid "_Save All"
 msgstr "_Zapisz wszystko"
 
-#: data/ui/menubar.ui:495
+#: gaupol/data/ui/menubar.ui:495
 msgid "Save _All As…"
 msgstr "_Zapisz wszystko jako..."
 
-#: data/ui/menubar.ui:499
+#: gaupol/data/ui/menubar.ui:499
 msgid "_Close All"
 msgstr "Za_mknij wszystko"
 
-#: data/ui/menubar.ui:505
+#: gaupol/data/ui/menubar.ui:505
 msgid "_Previous"
 msgstr "_Poprzedni"
 
-#: data/ui/menubar.ui:509
+#: gaupol/data/ui/menubar.ui:509
 msgid "_Next"
 msgstr "_Następny"
 
-#: data/ui/menubar.ui:519
+#: gaupol/data/ui/menubar.ui:519
 msgid "_Documentation"
 msgstr "_Dokumentacja"
 
-#: data/ui/menubar.ui:523
+#: gaupol/data/ui/menubar.ui:523
 msgid "_Report A Bug"
 msgstr "Zgłoś _błąd"
 
-#: data/ui/menubar.ui:527
+#: gaupol/data/ui/menubar.ui:527
 msgid "_About"
 msgstr "_O programie"
 
-#: data/ui/text-assistant/line-break-page.ui:34
-#: data/ui/text-assistant/capitalization-page.ui:34
-#: data/ui/text-assistant/hearing-impaired-page.ui:34
-#: data/ui/text-assistant/common-error-page.ui:34
+#: gaupol/data/ui/text-assistant/line-break-page.ui:34
+#: gaupol/data/ui/text-assistant/capitalization-page.ui:34
+#: gaupol/data/ui/text-assistant/hearing-impaired-page.ui:34
+#: gaupol/data/ui/text-assistant/common-error-page.ui:34
 msgid "_Script"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-page.ui:58
-#: data/ui/text-assistant/capitalization-page.ui:58
-#: data/ui/text-assistant/hearing-impaired-page.ui:58
-#: data/ui/text-assistant/common-error-page.ui:58
+#: gaupol/data/ui/text-assistant/line-break-page.ui:58
+#: gaupol/data/ui/text-assistant/capitalization-page.ui:58
+#: gaupol/data/ui/text-assistant/hearing-impaired-page.ui:58
+#: gaupol/data/ui/text-assistant/common-error-page.ui:58
 msgid "Co_untry"
 msgstr ""
 
-#: data/ui/text-assistant/join-split-page.ui:22
+#: gaupol/data/ui/text-assistant/join-split-page.ui:22
 msgid "Spell-Check Dictionary"
 msgstr "Słownik sprawdzania pisowni"
 
-#: data/ui/text-assistant/join-split-page.ui:77
+#: gaupol/data/ui/text-assistant/join-split-page.ui:77
 msgid "Corrections"
 msgstr "Poprawki"
 
-#: data/ui/text-assistant/join-split-page.ui:99
+#: gaupol/data/ui/text-assistant/join-split-page.ui:99
 msgid "_Join words not found in spell-check dictionary"
 msgstr "Dołącz do słowa nie odnalezione w słowniku sprawdzania pisowni"
 
-#: data/ui/text-assistant/join-split-page.ui:114
+#: gaupol/data/ui/text-assistant/join-split-page.ui:114
 msgid "_Split words not found in spell-check dictionary"
 msgstr "Podziel słowa nie odnalezione w słowniku sprawdzania pisowni"
 
-#: data/ui/text-assistant/introduction-page.ui:34
+#: gaupol/data/ui/text-assistant/introduction-page.ui:34
 msgid "Colu_mns"
 msgstr ""
 
-#: data/ui/text-assistant/introduction-page.ui:46
+#: gaupol/data/ui/text-assistant/introduction-page.ui:46
 msgid "S_ubtitles"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:75
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:75
 msgid "_Maximum line length"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:110
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:110
 msgid "_Preferred maximum amount of lines"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:166
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:166
 msgid "_Skip subtitles with maximum line length of"
 msgstr ""
 
-#: data/ui/text-assistant/line-break-options-page.ui:201
+#: gaupol/data/ui/text-assistant/line-break-options-page.ui:201
 msgid "S_kip subtitles with maximum line amount of"
 msgstr ""
 
-#: data/ui/text-assistant/confirmation-page.ui:39
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:39
 msgid "_Mark All"
 msgstr "Zaznacz wszystko"
 
-#: data/ui/text-assistant/confirmation-page.ui:48
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:48
 msgid "_Unmark All"
 msgstr "Odznacz wszystko"
 
-#: data/ui/text-assistant/confirmation-page.ui:67
+#: gaupol/data/ui/text-assistant/confirmation-page.ui:67
 msgid "_Remove all blank subtitles"
 msgstr "Usuń wszystkie puste napisy"
 
-#: data/ui/text-assistant/common-error-page.ui:70
+#: gaupol/data/ui/text-assistant/common-error-page.ui:70
 msgid "Error types"
 msgstr ""
 
-#: data/ui/text-assistant/common-error-page.ui:116
+#: gaupol/data/ui/text-assistant/common-error-page.ui:116
 msgid "_Human errors"
 msgstr "Błędy ludzkie "
 
-#: data/ui/text-assistant/common-error-page.ui:125
+#: gaupol/data/ui/text-assistant/common-error-page.ui:125
 msgid "_Image recognition errors"
 msgstr "Błędy rozpoznawania obrazu"
 
-#: data/ui/position-shift-dialog.ui:11
+#: gaupol/data/ui/position-shift-dialog.ui:11
 msgid "Shift Positions"
 msgstr "Przesuń pozycje"
 
-#: data/ui/position-shift-dialog.ui:36
+#: gaupol/data/ui/position-shift-dialog.ui:36
 msgid "Shift"
 msgstr "Przesuń"
 
-#: data/ui/position-shift-dialog.ui:125
+#: gaupol/data/ui/position-shift-dialog.ui:125
 msgid "Shift s_elected subtitles"
 msgstr "Przesuń _zaznaczone napisy"
 
-#: data/ui/position-shift-dialog.ui:140
+#: gaupol/data/ui/position-shift-dialog.ui:140
 msgid "Shift su_btitles from selection to end"
 msgstr "Przesuń napisy od zaznaczenia do końca"
 
-#: data/ui/position-shift-dialog.ui:155
+#: gaupol/data/ui/position-shift-dialog.ui:155
 msgid "Shift c_urrent project"
 msgstr "Przesuń w b_ierzącym projekcie"
 
-#: data/ui/position-shift-dialog.ui:170
+#: gaupol/data/ui/position-shift-dialog.ui:170
 msgid "Shift all _open projects"
 msgstr "Przesuń wszystkie _otwarte projekty"
 
-#: data/ui/multi-save-dialog.ui:5
+#: gaupol/data/ui/multi-save-dialog.ui:5
 msgid "Save All As"
 msgstr "Zapisz wszystkie jako"
 
-#: data/ui/multi-save-dialog.ui:40
+#: gaupol/data/ui/multi-save-dialog.ui:40
 msgid "Save in _folder"
 msgstr ""
 
-#: data/ui/insert-dialog.ui:12
+#: gaupol/data/ui/insert-dialog.ui:12
 msgid "Insert Subtitles"
 msgstr "Wstaw napisy"
 
-#: data/ui/insert-dialog.ui:45
+#: gaupol/data/ui/insert-dialog.ui:45
 msgid "A_bove"
 msgstr ""
 
-#: data/ui/insert-dialog.ui:53
+#: gaupol/data/ui/insert-dialog.ui:53
 msgid "B_elow"
 msgstr ""
 
-#: data/ui/split-dialog.ui:12
+#: gaupol/data/ui/split-dialog.ui:12
 msgid "Split Project"
 msgstr "Podziel projekt"
 
-#: data/ui/split-dialog.ui:31
+#: gaupol/data/ui/split-dialog.ui:31
 msgid "_First subtitle of new project"
 msgstr ""
 
-#: data/ui/search-dialog.ui:17
+#: gaupol/data/ui/search-dialog.ui:17
 msgid "Find"
 msgstr "Znajdź"
 
-#: data/ui/search-dialog.ui:63
+#: gaupol/data/ui/search-dialog.ui:63
 msgid "_Search for"
 msgstr ""
 
-#: data/ui/search-dialog.ui:126
+#: gaupol/data/ui/search-dialog.ui:126
 msgid "Find _Previous"
 msgstr "Znajdź _poprzedni"
 
-#: data/ui/search-dialog.ui:150
+#: gaupol/data/ui/search-dialog.ui:150
 msgid "Replace _All"
 msgstr "Zastąp _wszystko"
 
-#: data/ui/search-dialog.ui:168
+#: gaupol/data/ui/search-dialog.ui:168
 msgid "R_egular expression"
 msgstr "Wyraż_enie regularne"
 
-#: data/ui/search-dialog.ui:177
+#: gaupol/data/ui/search-dialog.ui:177
 msgid "_Ignore case"
 msgstr "_Ignoruj wielkość znaków"
 
-#: data/ui/search-dialog.ui:193
+#: gaupol/data/ui/search-dialog.ui:193
 msgid "Target"
 msgstr "Cel"
 
-#: data/ui/search-dialog.ui:231
+#: gaupol/data/ui/search-dialog.ui:231
 msgid "Find in _text column"
 msgstr "Znajdź w kolumnie _tekst"
 
-#: data/ui/search-dialog.ui:246
+#: gaupol/data/ui/search-dialog.ui:246
 msgid "Find in t_ranslation column"
 msgstr "Znajdź w kolumnie tłumaczenie"
 
-#: data/ui/search-dialog.ui:289
+#: gaupol/data/ui/search-dialog.ui:289
 msgid "Find in c_urrent project"
 msgstr "Szukaj w _bieżącym projekcie"
 
-#: data/ui/search-dialog.ui:305
+#: gaupol/data/ui/search-dialog.ui:305
 msgid "Find in _all open projects"
 msgstr "Szukaj we _wszystkich otwartych projektach"
 
-#: data/patterns/Latn-en-US.common-error.in:4
+#: aeidon/data/patterns/Latn-en-US.common-error:4
 msgid "Period after title"
 msgstr "Okres po tytule"
 
-#: data/patterns/Latn-en-US.common-error.in:5
+#: aeidon/data/patterns/Latn-en-US.common-error:5
 msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
 msgstr "Dodaj okres po skróconym tytule, np. \"Mr\" i \"Dr\""
 
-#: data/patterns/Latn-en.capitalization.in:4
-msgid "First person pronoun"
-msgstr "Zaimek pierwszej osoby"
-
-#: data/patterns/Latn-en.capitalization.in:5
-msgid "Capitalize the first person pronoun \"I\""
-msgstr "Kapitalizuj zaimek pierwszej osoby \"I\""
-
-#: data/patterns/Latn-en.common-error.in:4
-#: data/patterns/Latn-en.common-error.in:13
-#: data/patterns/Latn-en.common-error.in:22
-msgid "Letter \"I\" in a lower case word"
-msgstr "Litera \"I\" w słowie pisanym małymi literami"
-
-#: data/patterns/Latn-en.common-error.in:5
-#: data/patterns/Latn-en.common-error.in:14
-#: data/patterns/Latn-en.common-error.in:23
-msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
-msgstr "Zastąp literę \"I\" literą \"l\" w słowie pisanym małymi literami"
-
-#: data/patterns/Latn-en.common-error.in:31
-#: data/patterns/Latn-en.common-error.in:40
-#: data/patterns/Latn-en.common-error.in:49
-#: data/patterns/Latn-en.common-error.in:61
-msgid "Letter \"l\" in an upper case word"
-msgstr "Litera \"l\" w słowie pisanym wielkimi literami"
-
-#: data/patterns/Latn-en.common-error.in:32
-#: data/patterns/Latn-en.common-error.in:41
-#: data/patterns/Latn-en.common-error.in:50
-#: data/patterns/Latn-en.common-error.in:62
-msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
-msgstr "Zastąp literę \"l\" literą \"I\" w słowie pisanym wielkimi literami"
-
-#: data/patterns/Latn-en.common-error.in:72
-#: data/patterns/Latn-en.common-error.in:81
-msgid "Zero in an upper case word"
-msgstr "Zero w wyrazie pisanym wielkimi literami"
-
-#: data/patterns/Latn-en.common-error.in:73
-#: data/patterns/Latn-en.common-error.in:82
-msgid "Replace zero with letter \"O\" in an upper case word"
-msgstr "Zastąpić zero literą \"O\" w słowie pisanym wielkimi literami"
-
-#: data/patterns/Latn-en.common-error.in:90
-#: data/patterns/Latn.common-error.in:107
-msgid "Space between number and unit"
-msgstr "Odstęp między liczbą a jednostką"
-
-#: data/patterns/Latn-en.common-error.in:91
-#: data/patterns/Latn.common-error.in:108
-msgid "Add or remove space between a number and the associated unit"
-msgstr "Dodaj lub usuń spację między liczbą a powiązaną jednostką"
-
-#: data/patterns/Latn-en.common-error.in:99
-msgid "Spaces around an apostrophe"
-msgstr "Spacje wokół apostrofu"
-
-#: data/patterns/Latn-en.common-error.in:100
-msgid "Remove spaces around an apostrophe"
-msgstr "Usuń spacje wokół apostrofu"
-
-#: data/patterns/Latn-en.common-error.in:108
-#: data/patterns/Latn-en.common-error.in:117
-msgid "Okay"
-msgstr "Okay"
-
-#: data/patterns/Latn-en.common-error.in:109
-#: data/patterns/Latn-en.common-error.in:118
-msgid "Spell two-letter forms of \"okay\" in all upper case"
-msgstr "Przetłumacz dwuliterowe formy \"okay\" we wszystkich wielkich literach"
-
-#: data/patterns/Latn-en.hearing-impaired.in:4
-msgid "Uppercase speaker before a colon"
-msgstr "Wielkie dźwięki przed dwukropkiem"
-
-#: data/patterns/Latn-en.hearing-impaired.in:5
-msgid ""
-"Replace the uppercase name of the speaker before a colon with a dialogue "
-"dash"
-msgstr "Zastąp wielką nazwę dźwięku przed dwukropkiem za pomocą myślnika"
-
-#: data/patterns/Latn-en.line-break.in:4
-msgid "Title"
-msgstr "Tytuł"
-
-#: data/patterns/Latn-en.line-break.in:5
-msgid "Do not break after a title, e.g. \" Dr.\""
-msgstr "Nie dziel po tytule, np. \" Dr.\""
-
-#: data/patterns/Latn-en.line-break.in:12
-msgid "Article"
-msgstr "Artykuł"
-
-#: data/patterns/Latn-en.line-break.in:13
-msgid "Do not break after an article"
-msgstr "Nie dziel po artykule"
-
-#: data/patterns/Latn-en.line-break.in:20
-msgid "Preposition"
-msgstr "Przyimek"
-
-#: data/patterns/Latn-en.line-break.in:21
-msgid "Do not break after a preposition"
-msgstr "Nie dziel po przyimku"
-
-#: data/patterns/Latn-en.line-break.in:29
-msgid "Possessive determiner"
-msgstr "Zaimek dzierżawczy"
-
-#: data/patterns/Latn-en.line-break.in:30
-msgid "Do not break after a possessive determiner, e.g. \"my\""
-msgstr "Nie dziel po zaimku dzierżawczym, np. \"my\""
-
-#: data/patterns/Latn-fi.common-error.in:4
-#: data/patterns/Latn.common-error.in:181
-msgid "Space after punctuation marks"
-msgstr "Spacja po znakach interpunkcyjnych"
-
-#: data/patterns/Latn-fi.common-error.in:5
-#: data/patterns/Latn.common-error.in:182
-msgid "Add space after various punctuation marks"
-msgstr "Dodaj spację po różnych znakach interpunkcyjnych"
-
-#: data/patterns/Latn-fr.common-error.in:4
-#: data/patterns/Latn-fr.common-error.in:13
-#: data/patterns/Latn-fr.common-error.in:22
-#: data/patterns/Latn-fr.common-error.in:31
-msgid "Spaces around guillemets"
-msgstr "Spacje wokół cytatów"
-
-#: data/patterns/Latn-fr.common-error.in:5
-#: data/patterns/Latn-fr.common-error.in:14
-#: data/patterns/Latn-fr.common-error.in:23
-#: data/patterns/Latn-fr.common-error.in:32
-msgid "Add spaces around guillemets"
-msgstr "Dodaj spacje wokół cytatów"
-
-#: data/patterns/Latn-fr.common-error.in:40
-#: data/patterns/Latn-fr.common-error.in:51
-#: data/patterns/Latn.common-error.in:170
-msgid "Space before punctuation marks"
-msgstr "Spacja przed znakami interpunkcyjnymi"
-
-#: data/patterns/Latn-fr.common-error.in:41
-#: data/patterns/Latn-fr.common-error.in:52
-msgid "Add or remove space before various punctuation marks"
-msgstr "Dodaj lub usuń spacje przed różnymi znakami interpunkcyjnymi"
-
-#: data/patterns/Latn.capitalization.in:4
-msgid "Sentence"
-msgstr "Zdanie"
-
-#: data/patterns/Latn.capitalization.in:5
-msgid "Capitalize the first word of a sentence"
-msgstr "Pierwsze słowo zdania wielką literą"
-
-#: data/patterns/Latn.capitalization.in:11
-msgid "Ellipsis"
-msgstr "Wielokropki"
-
-#: data/patterns/Latn.capitalization.in:12
-msgid "Capitalize after an ellipsis"
-msgstr "Wielka litera po wielokropku"
-
-#: data/patterns/Latn.common-error.in:7 data/patterns/Latn.common-error.in:16
-#: data/patterns/Latn.common-error.in:25 data/patterns/Latn.common-error.in:34
-#: data/patterns/Latn.common-error.in:43 data/patterns/Latn.common-error.in:52
-#: data/patterns/Latn.common-error.in:61
-msgid "Ligatures"
-msgstr "Ligatury"
-
-#: data/patterns/Latn.common-error.in:8 data/patterns/Latn.common-error.in:17
-#: data/patterns/Latn.common-error.in:26 data/patterns/Latn.common-error.in:35
-#: data/patterns/Latn.common-error.in:44 data/patterns/Latn.common-error.in:53
-#: data/patterns/Latn.common-error.in:62
-msgid "Unpack ligatures to individual characters"
-msgstr "Rozpakuj ligatury do poszczególnych znaków"
-
-#: data/patterns/Latn.common-error.in:70 data/patterns/Latn.common-error.in:79
-msgid "Spelling of a.m. and p.m."
-msgstr "Pisownia a.m. i p.m."
-
-#: data/patterns/Latn.common-error.in:71 data/patterns/Latn.common-error.in:80
-msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
-msgstr "Zmieniaj pisownię z 12-godzinnych okresów na \"a.m.\" i \"p.m.\""
-
-#: data/patterns/Latn.common-error.in:88 data/patterns/Latn.common-error.in:97
-msgid "Letter \"O\" in a number"
-msgstr "Litera \"O\" w liczbie"
-
-#: data/patterns/Latn.common-error.in:89 data/patterns/Latn.common-error.in:98
-msgid "Replace letter \"O\" with a zero in a number"
-msgstr "Zamień literę \"O\" na zero w liczbie"
-
-#: data/patterns/Latn.common-error.in:116
-msgid "Double apostrophe"
-msgstr "Podwójny apostrof"
-
-#: data/patterns/Latn.common-error.in:117
-msgid "Replace a double apostrophe with a quotation mark"
-msgstr "Zastąp podwójny apostrof cudzysłowem"
-
-#: data/patterns/Latn.common-error.in:125
-#: data/patterns/Latn.common-error.in:134
-#: data/patterns/Latn.common-error.in:143
-#: data/patterns/Latn.common-error.in:152
-msgid "Spaces around brackets"
-msgstr "Spacje w nawiasach"
-
-#: data/patterns/Latn.common-error.in:126
-#: data/patterns/Latn.common-error.in:135
-#: data/patterns/Latn.common-error.in:144
-#: data/patterns/Latn.common-error.in:153
-msgid "Add or remove spaces around parentheses and square brackets"
-msgstr ""
-
-#: data/patterns/Latn.common-error.in:161
-msgid "Space after a dialogue dash"
-msgstr "Spacja po myślniku"
-
-#: data/patterns/Latn.common-error.in:162
-msgid "Add space after a dialogue dash"
-msgstr "Dodaj spację po myślniku"
-
-#: data/patterns/Latn.common-error.in:171
-msgid "Remove space before various punctuation marks"
-msgstr "Usuń spacje przed różnymi znakami interpunkcyjnymi"
-
-#: data/patterns/Latn.common-error.in:191
-msgid "Space after an ellipsis"
-msgstr "Spacje po wielokropkach"
-
-#: data/patterns/Latn.common-error.in:192
-msgid "Add space after an ellipsis"
-msgstr "Dodaj spację po wielokropkach"
-
-#: data/patterns/Latn.common-error.in:200
-msgid "Space after a starting ellipsis"
-msgstr "Spacje po rozpoczęciu wielokropków"
-
-#: data/patterns/Latn.common-error.in:201
-msgid "Remove space after an ellipsis that starts a line"
-msgstr "Usuń spację po wielokropku, który rozpoczyna linię"
-
-#: data/patterns/Latn.common-error.in:209
-#: data/patterns/Latn.common-error.in:220
-#: data/patterns/Latn.common-error.in:231
-#: data/patterns/Latn.common-error.in:241
-msgid "Spaces around a quotation mark"
-msgstr "Spacje wokół znaku cudzysłowu"
-
-#: data/patterns/Latn.common-error.in:210
-#: data/patterns/Latn.common-error.in:221
-#: data/patterns/Latn.common-error.in:232
-#: data/patterns/Latn.common-error.in:242
-msgid "Remove space after a starting- and before an ending quotation mark"
-msgstr "Usuń spację po początkowym i przed końcowym cudzysłowem"
-
-#: data/patterns/Latn.common-error.in:251
-#: data/patterns/Latn.common-error.in:260
-msgid "Spaces around musical notes"
-msgstr "Spacje wokół nut"
-
-#: data/patterns/Latn.common-error.in:252
-#: data/patterns/Latn.common-error.in:261
-msgid "Add spaces between musical note characters and lyrics"
-msgstr "Dodaj spacje między nutami i tekstem"
-
-#: data/patterns/Latn.common-error.in:269
-#: data/patterns/Latn.common-error.in:278
-msgid "Multiple question- and exclamation marks"
-msgstr "Wiele pytajników i znaków wykrzyknika"
-
-#: data/patterns/Latn.common-error.in:270
-#: data/patterns/Latn.common-error.in:279
-msgid ""
-"Replace multiple consequtive question- and exclamation marks with only one"
-msgstr "Zastąp wiele kolejnych pytajników i wykrzykników tylko jednym"
-
-#: data/patterns/Latn.common-error.in:287
-#: data/patterns/Latn.common-error.in:297
-msgid "Periods around a punctuation mark"
-msgstr "Kropki wokół znaku interpunkcyjnego"
-
-#: data/patterns/Latn.common-error.in:288
-#: data/patterns/Latn.common-error.in:298
-msgid "Remove period before or after various punctuation marks"
-msgstr "Usuń kropki przed lub po różnych znakach interpunkcyjnych"
-
-#: data/patterns/Latn.common-error.in:307
-msgid "Terminating double-dashes"
-msgstr "Kończenie podwójnych myślników"
-
-#: data/patterns/Latn.common-error.in:308
-msgid "Replace a single clause-terminating dash with two dashes"
-msgstr "Zastąp pojedynczą kreskę kończącą dwoma kreskami"
-
-#: data/patterns/Latn.hearing-impaired.in:4
+#: aeidon/data/patterns/Latn.hearing-impaired:4
 msgid "Sound in brackets"
 msgstr "Dźwięk w nawiasach"
 
-#: data/patterns/Latn.hearing-impaired.in:5
+#: aeidon/data/patterns/Latn.hearing-impaired:5
 msgid "Remove description of a sound between square brackets"
 msgstr "Usuń opis dźwięku między nawiasami kwadratowymi"
 
-#: data/patterns/Latn.hearing-impaired.in:11
+#: aeidon/data/patterns/Latn.hearing-impaired:11
 msgid "Sound in parentheses"
 msgstr ""
 
-#: data/patterns/Latn.hearing-impaired.in:12
+#: aeidon/data/patterns/Latn.hearing-impaired:12
 msgid "Remove description of a sound between parentheses"
 msgstr ""
 
-#: data/patterns/Latn.hearing-impaired.in:18
+#: aeidon/data/patterns/Latn.hearing-impaired:18
 msgid "Song lyrics between number signs"
 msgstr "Teksty piosenek między znakami liczb"
 
-#: data/patterns/Latn.hearing-impaired.in:19
+#: aeidon/data/patterns/Latn.hearing-impaired:19
 msgid "Remove song lyrics starting with or between number signs"
 msgstr "Usuń teksty piosenek zaczynające się od lub między znakami liczb"
 
-#: data/patterns/Latn.hearing-impaired.in:26
+#: aeidon/data/patterns/Latn.hearing-impaired:26
 msgid "One-line song lyrics between number signs"
 msgstr "Jedno liniowe teksty piosenek między znakami liczb"
 
-#: data/patterns/Latn.hearing-impaired.in:27
+#: aeidon/data/patterns/Latn.hearing-impaired:27
 msgid "Remove one-line song lyrics starting with or between number signs"
 msgstr ""
 "Usuń jedno linijkowe teksty piosenek zaczynające się od lub między znakami "
 "liczbowymi"
 
-#: data/patterns/Latn.hearing-impaired.in:34
+#: aeidon/data/patterns/Latn.hearing-impaired:34
 msgid "Speaker before a colon"
 msgstr "Dźwięk przed dwukropkiem"
 
-#: data/patterns/Latn.hearing-impaired.in:35
+#: aeidon/data/patterns/Latn.hearing-impaired:35
 msgid "Replace the name of the speaker before a colon with a dialogue dash"
 msgstr "Zastąp nazwę dźwięku przed dwukropkiem za pomocą myślnika"
 
-#: data/patterns/Latn.line-break.in:4 data/patterns/Latn.line-break.in:12
+#: aeidon/data/patterns/Latn.line-break:4
+#: aeidon/data/patterns/Latn.line-break:12
 msgid "Dialogue"
 msgstr "Dialog"
 
-#: data/patterns/Latn.line-break.in:5 data/patterns/Latn.line-break.in:13
+#: aeidon/data/patterns/Latn.line-break:5
+#: aeidon/data/patterns/Latn.line-break:13
 msgid "Break according to dialogue separated by dashes"
 msgstr "Podziel zgodnie z dialogami oddzielonymi myślnikami"
 
-#: data/patterns/Latn.line-break.in:20 data/patterns/Latn.line-break.in:29
+#: aeidon/data/patterns/Latn.line-break:20
+#: aeidon/data/patterns/Latn.line-break:29
 msgid "Clause"
 msgstr "Klauzula"
 
-#: data/patterns/Latn.line-break.in:21 data/patterns/Latn.line-break.in:30
+#: aeidon/data/patterns/Latn.line-break:21
+#: aeidon/data/patterns/Latn.line-break:30
 msgid "Break according to clauses terminated by a punctuation mark"
 msgstr "podziel zgodnie z klauzulami zakończonymi znakiem interpunkcyjnym"
 
-#: data/patterns/Latn.line-break.in:37
+#: aeidon/data/patterns/Latn.line-break:37
 msgid "Number and unit"
 msgstr "Liczba i jednostka"
 
-#: data/patterns/Latn.line-break.in:38
+#: aeidon/data/patterns/Latn.line-break:38
 msgid "Do not break between a number and associated unit"
 msgstr "Nie dziel między liczbą a powiązaną jednostką"
 
-#: data/patterns/Zyyy.common-error.in:4 data/patterns/Zyyy.common-error.in:13
+#: aeidon/data/patterns/Latn-en.common-error:4
+#: aeidon/data/patterns/Latn-en.common-error:13
+#: aeidon/data/patterns/Latn-en.common-error:22
+msgid "Letter \"I\" in a lower case word"
+msgstr "Litera \"I\" w słowie pisanym małymi literami"
+
+#: aeidon/data/patterns/Latn-en.common-error:5
+#: aeidon/data/patterns/Latn-en.common-error:14
+#: aeidon/data/patterns/Latn-en.common-error:23
+msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
+msgstr "Zastąp literę \"I\" literą \"l\" w słowie pisanym małymi literami"
+
+#: aeidon/data/patterns/Latn-en.common-error:31
+#: aeidon/data/patterns/Latn-en.common-error:40
+#: aeidon/data/patterns/Latn-en.common-error:49
+#: aeidon/data/patterns/Latn-en.common-error:61
+msgid "Letter \"l\" in an upper case word"
+msgstr "Litera \"l\" w słowie pisanym wielkimi literami"
+
+#: aeidon/data/patterns/Latn-en.common-error:32
+#: aeidon/data/patterns/Latn-en.common-error:41
+#: aeidon/data/patterns/Latn-en.common-error:50
+#: aeidon/data/patterns/Latn-en.common-error:62
+msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
+msgstr "Zastąp literę \"l\" literą \"I\" w słowie pisanym wielkimi literami"
+
+#: aeidon/data/patterns/Latn-en.common-error:72
+#: aeidon/data/patterns/Latn-en.common-error:81
+msgid "Zero in an upper case word"
+msgstr "Zero w wyrazie pisanym wielkimi literami"
+
+#: aeidon/data/patterns/Latn-en.common-error:73
+#: aeidon/data/patterns/Latn-en.common-error:82
+msgid "Replace zero with letter \"O\" in an upper case word"
+msgstr "Zastąpić zero literą \"O\" w słowie pisanym wielkimi literami"
+
+#: aeidon/data/patterns/Latn-en.common-error:90
+#: aeidon/data/patterns/Latn.common-error:107
+msgid "Space between number and unit"
+msgstr "Odstęp między liczbą a jednostką"
+
+#: aeidon/data/patterns/Latn-en.common-error:91
+#: aeidon/data/patterns/Latn.common-error:108
+msgid "Add or remove space between a number and the associated unit"
+msgstr "Dodaj lub usuń spację między liczbą a powiązaną jednostką"
+
+#: aeidon/data/patterns/Latn-en.common-error:99
+msgid "Spaces around an apostrophe"
+msgstr "Spacje wokół apostrofu"
+
+#: aeidon/data/patterns/Latn-en.common-error:100
+msgid "Remove spaces around an apostrophe"
+msgstr "Usuń spacje wokół apostrofu"
+
+#: aeidon/data/patterns/Latn-en.common-error:108
+#: aeidon/data/patterns/Latn-en.common-error:117
+msgid "Okay"
+msgstr "Okay"
+
+#: aeidon/data/patterns/Latn-en.common-error:109
+#: aeidon/data/patterns/Latn-en.common-error:118
+msgid "Spell two-letter forms of \"okay\" in all upper case"
+msgstr "Przetłumacz dwuliterowe formy \"okay\" we wszystkich wielkich literach"
+
+#: aeidon/data/patterns/Latn-en.line-break:4
+msgid "Title"
+msgstr "Tytuł"
+
+#: aeidon/data/patterns/Latn-en.line-break:5
+msgid "Do not break after a title, e.g. \" Dr.\""
+msgstr "Nie dziel po tytule, np. \" Dr.\""
+
+#: aeidon/data/patterns/Latn-en.line-break:12
+msgid "Article"
+msgstr "Artykuł"
+
+#: aeidon/data/patterns/Latn-en.line-break:13
+msgid "Do not break after an article"
+msgstr "Nie dziel po artykule"
+
+#: aeidon/data/patterns/Latn-en.line-break:20
+msgid "Preposition"
+msgstr "Przyimek"
+
+#: aeidon/data/patterns/Latn-en.line-break:21
+msgid "Do not break after a preposition"
+msgstr "Nie dziel po przyimku"
+
+#: aeidon/data/patterns/Latn-en.line-break:29
+msgid "Possessive determiner"
+msgstr "Zaimek dzierżawczy"
+
+#: aeidon/data/patterns/Latn-en.line-break:30
+msgid "Do not break after a possessive determiner, e.g. \"my\""
+msgstr "Nie dziel po zaimku dzierżawczym, np. \"my\""
+
+#: aeidon/data/patterns/Latn-fi.common-error:4
+#: aeidon/data/patterns/Latn.common-error:181
+msgid "Space after punctuation marks"
+msgstr "Spacja po znakach interpunkcyjnych"
+
+#: aeidon/data/patterns/Latn-fi.common-error:5
+#: aeidon/data/patterns/Latn.common-error:182
+msgid "Add space after various punctuation marks"
+msgstr "Dodaj spację po różnych znakach interpunkcyjnych"
+
+#: aeidon/data/patterns/Latn-en.capitalization:4
+msgid "First person pronoun"
+msgstr "Zaimek pierwszej osoby"
+
+#: aeidon/data/patterns/Latn-en.capitalization:5
+msgid "Capitalize the first person pronoun \"I\""
+msgstr "Kapitalizuj zaimek pierwszej osoby \"I\""
+
+#: aeidon/data/patterns/Latn-en.hearing-impaired:4
+msgid "Uppercase speaker before a colon"
+msgstr "Wielkie dźwięki przed dwukropkiem"
+
+#: aeidon/data/patterns/Latn-en.hearing-impaired:5
+msgid ""
+"Replace the uppercase name of the speaker before a colon with a dialogue "
+"dash"
+msgstr "Zastąp wielką nazwę dźwięku przed dwukropkiem za pomocą myślnika"
+
+#: aeidon/data/patterns/Latn.capitalization:4
+msgid "Sentence"
+msgstr "Zdanie"
+
+#: aeidon/data/patterns/Latn.capitalization:5
+msgid "Capitalize the first word of a sentence"
+msgstr "Pierwsze słowo zdania wielką literą"
+
+#: aeidon/data/patterns/Latn.capitalization:11
+msgid "Ellipsis"
+msgstr "Wielokropki"
+
+#: aeidon/data/patterns/Latn.capitalization:12
+msgid "Capitalize after an ellipsis"
+msgstr "Wielka litera po wielokropku"
+
+#: aeidon/data/patterns/Zyyy.common-error:4
+#: aeidon/data/patterns/Zyyy.common-error:13
 msgid "Leading and trailing spaces"
 msgstr "Spacje początkowe i końcowe"
 
-#: data/patterns/Zyyy.common-error.in:5 data/patterns/Zyyy.common-error.in:14
+#: aeidon/data/patterns/Zyyy.common-error:5
+#: aeidon/data/patterns/Zyyy.common-error:14
 msgid "Remove spaces from the beginning and end of lines"
 msgstr "Usuń spacje z początku i końca linii"
 
-#: data/patterns/Zyyy.common-error.in:22
+#: aeidon/data/patterns/Zyyy.common-error:22
 msgid "Multiple consecutive spaces"
 msgstr "Wiele kolejnych spacji"
 
-#: data/patterns/Zyyy.common-error.in:23
+#: aeidon/data/patterns/Zyyy.common-error:23
 msgid "Replace multiple consecutive spaces with only one"
 msgstr "Zastąp kilka kolejnych spacji tylko jedną"
 
-#: data/patterns/Zyyy.common-error.in:31 data/patterns/Zyyy.common-error.in:44
-#: data/patterns/Zyyy.common-error.in:54 data/patterns/Zyyy.common-error.in:64
+#: aeidon/data/patterns/Zyyy.common-error:31
+#: aeidon/data/patterns/Zyyy.common-error:44
+#: aeidon/data/patterns/Zyyy.common-error:54
+#: aeidon/data/patterns/Zyyy.common-error:64
 msgid "Space between digits"
 msgstr "Odstęp między cyframi"
 
-#: data/patterns/Zyyy.common-error.in:32 data/patterns/Zyyy.common-error.in:45
-#: data/patterns/Zyyy.common-error.in:55 data/patterns/Zyyy.common-error.in:65
+#: aeidon/data/patterns/Zyyy.common-error:32
+#: aeidon/data/patterns/Zyyy.common-error:45
+#: aeidon/data/patterns/Zyyy.common-error:55
+#: aeidon/data/patterns/Zyyy.common-error:65
 msgid "Remove space between digits of a number"
 msgstr "Usuń spacje między cyframi numeru"
 
-#: data/patterns/Zyyy.common-error.in:77
+#: aeidon/data/patterns/Zyyy.common-error:77
 msgid "Ellipses"
 msgstr "Wielokropki"
 
-#: data/patterns/Zyyy.common-error.in:78
+#: aeidon/data/patterns/Zyyy.common-error:78
 msgid "Replace Unicode ellipses with three separate dots"
 msgstr "Zastąp wielokropki Unicode trzema oddzielnymi kropkami"
 
-#: data/patterns/Zyyy.common-error.in:89
+#: aeidon/data/patterns/Zyyy.common-error:89
 msgid "Musical notes"
 msgstr "Nuty"
 
-#: data/patterns/Zyyy.common-error.in:90
+#: aeidon/data/patterns/Zyyy.common-error:90
 msgid "Replace Unicode musical note characters with number signs"
 msgstr "Zastąp znaki nutowe Unicode znakami numerycznymi"
+
+#: aeidon/data/patterns/Latn-fr.common-error:4
+#: aeidon/data/patterns/Latn-fr.common-error:13
+#: aeidon/data/patterns/Latn-fr.common-error:22
+#: aeidon/data/patterns/Latn-fr.common-error:31
+msgid "Spaces around guillemets"
+msgstr "Spacje wokół cytatów"
+
+#: aeidon/data/patterns/Latn-fr.common-error:5
+#: aeidon/data/patterns/Latn-fr.common-error:14
+#: aeidon/data/patterns/Latn-fr.common-error:23
+#: aeidon/data/patterns/Latn-fr.common-error:32
+msgid "Add spaces around guillemets"
+msgstr "Dodaj spacje wokół cytatów"
+
+#: aeidon/data/patterns/Latn-fr.common-error:40
+#: aeidon/data/patterns/Latn-fr.common-error:51
+#: aeidon/data/patterns/Latn.common-error:170
+msgid "Space before punctuation marks"
+msgstr "Spacja przed znakami interpunkcyjnymi"
+
+#: aeidon/data/patterns/Latn-fr.common-error:41
+#: aeidon/data/patterns/Latn-fr.common-error:52
+msgid "Add or remove space before various punctuation marks"
+msgstr "Dodaj lub usuń spacje przed różnymi znakami interpunkcyjnymi"
+
+#: aeidon/data/patterns/Latn.common-error:7
+#: aeidon/data/patterns/Latn.common-error:16
+#: aeidon/data/patterns/Latn.common-error:25
+#: aeidon/data/patterns/Latn.common-error:34
+#: aeidon/data/patterns/Latn.common-error:43
+#: aeidon/data/patterns/Latn.common-error:52
+#: aeidon/data/patterns/Latn.common-error:61
+msgid "Ligatures"
+msgstr "Ligatury"
+
+#: aeidon/data/patterns/Latn.common-error:8
+#: aeidon/data/patterns/Latn.common-error:17
+#: aeidon/data/patterns/Latn.common-error:26
+#: aeidon/data/patterns/Latn.common-error:35
+#: aeidon/data/patterns/Latn.common-error:44
+#: aeidon/data/patterns/Latn.common-error:53
+#: aeidon/data/patterns/Latn.common-error:62
+msgid "Unpack ligatures to individual characters"
+msgstr "Rozpakuj ligatury do poszczególnych znaków"
+
+#: aeidon/data/patterns/Latn.common-error:70
+#: aeidon/data/patterns/Latn.common-error:79
+msgid "Spelling of a.m. and p.m."
+msgstr "Pisownia a.m. i p.m."
+
+#: aeidon/data/patterns/Latn.common-error:71
+#: aeidon/data/patterns/Latn.common-error:80
+msgid "Change the various spellings of 12-hour periods to \"a.m.\" and \"p.m.\""
+msgstr "Zmieniaj pisownię z 12-godzinnych okresów na \"a.m.\" i \"p.m.\""
+
+#: aeidon/data/patterns/Latn.common-error:88
+#: aeidon/data/patterns/Latn.common-error:97
+msgid "Letter \"O\" in a number"
+msgstr "Litera \"O\" w liczbie"
+
+#: aeidon/data/patterns/Latn.common-error:89
+#: aeidon/data/patterns/Latn.common-error:98
+msgid "Replace letter \"O\" with a zero in a number"
+msgstr "Zamień literę \"O\" na zero w liczbie"
+
+#: aeidon/data/patterns/Latn.common-error:116
+msgid "Double apostrophe"
+msgstr "Podwójny apostrof"
+
+#: aeidon/data/patterns/Latn.common-error:117
+msgid "Replace a double apostrophe with a quotation mark"
+msgstr "Zastąp podwójny apostrof cudzysłowem"
+
+#: aeidon/data/patterns/Latn.common-error:125
+#: aeidon/data/patterns/Latn.common-error:134
+#: aeidon/data/patterns/Latn.common-error:143
+#: aeidon/data/patterns/Latn.common-error:152
+msgid "Spaces around brackets"
+msgstr "Spacje w nawiasach"
+
+#: aeidon/data/patterns/Latn.common-error:126
+#: aeidon/data/patterns/Latn.common-error:135
+#: aeidon/data/patterns/Latn.common-error:144
+#: aeidon/data/patterns/Latn.common-error:153
+msgid "Add or remove spaces around parentheses and square brackets"
+msgstr ""
+
+#: aeidon/data/patterns/Latn.common-error:161
+msgid "Space after a dialogue dash"
+msgstr "Spacja po myślniku"
+
+#: aeidon/data/patterns/Latn.common-error:162
+msgid "Add space after a dialogue dash"
+msgstr "Dodaj spację po myślniku"
+
+#: aeidon/data/patterns/Latn.common-error:171
+msgid "Remove space before various punctuation marks"
+msgstr "Usuń spacje przed różnymi znakami interpunkcyjnymi"
+
+#: aeidon/data/patterns/Latn.common-error:191
+msgid "Space after an ellipsis"
+msgstr "Spacje po wielokropkach"
+
+#: aeidon/data/patterns/Latn.common-error:192
+msgid "Add space after an ellipsis"
+msgstr "Dodaj spację po wielokropkach"
+
+#: aeidon/data/patterns/Latn.common-error:200
+msgid "Space after a starting ellipsis"
+msgstr "Spacje po rozpoczęciu wielokropków"
+
+#: aeidon/data/patterns/Latn.common-error:201
+msgid "Remove space after an ellipsis that starts a line"
+msgstr "Usuń spację po wielokropku, który rozpoczyna linię"
+
+#: aeidon/data/patterns/Latn.common-error:209
+#: aeidon/data/patterns/Latn.common-error:220
+#: aeidon/data/patterns/Latn.common-error:231
+#: aeidon/data/patterns/Latn.common-error:241
+msgid "Spaces around a quotation mark"
+msgstr "Spacje wokół znaku cudzysłowu"
+
+#: aeidon/data/patterns/Latn.common-error:210
+#: aeidon/data/patterns/Latn.common-error:221
+#: aeidon/data/patterns/Latn.common-error:232
+#: aeidon/data/patterns/Latn.common-error:242
+msgid "Remove space after a starting- and before an ending quotation mark"
+msgstr "Usuń spację po początkowym i przed końcowym cudzysłowem"
+
+#: aeidon/data/patterns/Latn.common-error:251
+#: aeidon/data/patterns/Latn.common-error:260
+msgid "Spaces around musical notes"
+msgstr "Spacje wokół nut"
+
+#: aeidon/data/patterns/Latn.common-error:252
+#: aeidon/data/patterns/Latn.common-error:261
+msgid "Add spaces between musical note characters and lyrics"
+msgstr "Dodaj spacje między nutami i tekstem"
+
+#: aeidon/data/patterns/Latn.common-error:269
+#: aeidon/data/patterns/Latn.common-error:278
+msgid "Multiple question- and exclamation marks"
+msgstr "Wiele pytajników i znaków wykrzyknika"
+
+#: aeidon/data/patterns/Latn.common-error:270
+#: aeidon/data/patterns/Latn.common-error:279
+msgid ""
+"Replace multiple consequtive question- and exclamation marks with only one"
+msgstr "Zastąp wiele kolejnych pytajników i wykrzykników tylko jednym"
+
+#: aeidon/data/patterns/Latn.common-error:287
+#: aeidon/data/patterns/Latn.common-error:297
+msgid "Periods around a punctuation mark"
+msgstr "Kropki wokół znaku interpunkcyjnego"
+
+#: aeidon/data/patterns/Latn.common-error:288
+#: aeidon/data/patterns/Latn.common-error:298
+msgid "Remove period before or after various punctuation marks"
+msgstr "Usuń kropki przed lub po różnych znakach interpunkcyjnych"
+
+#: aeidon/data/patterns/Latn.common-error:307
+msgid "Terminating double-dashes"
+msgstr "Kończenie podwójnych myślników"
+
+#: aeidon/data/patterns/Latn.common-error:308
+msgid "Replace a single clause-terminating dash with two dashes"
+msgstr "Zastąp pojedynczą kreskę kończącą dwoma kreskami"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:7
 msgid "Editor for text-based subtitles"
