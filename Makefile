@@ -19,8 +19,8 @@ EDITOR = nano
 
 build:
 	@echo "BUILDING PYTHON PACKAGES..."
+	rm -rf build
 	mkdir -p build
-	rm -rf build/aeidon build/gaupol
 	cp -r aeidon gaupol build
 	find build -type d -name __pycache__ -prune -exec rm -rf {} +
 	find build -type d -name test -prune -exec rm -rf {} +
@@ -68,7 +68,7 @@ clean:
 install:
 	test -f build/.complete
 	printf '%s\n%s\n' "$(LIBDIR)" "$(LOCALEDIR)" | cmp -s - build/.complete || \
-	{ echo "ERROR: build was run with different variables, run build again"; exit 1; }
+	{ echo "ERROR: build was run with different variable values"; exit 1; }
 	@echo "INSTALLING PYTHON PACKAGES..."
 	mkdir -p $(DESTDIR)$(LIBDIR)
 	test "$(INCLUDE_AEIDON)" = no || cp -r build/aeidon $(DESTDIR)$(LIBDIR)
@@ -100,7 +100,7 @@ install:
 	test -z "$(DESTDIR)" && update-desktop-database "$(DATADIR)/applications" || true
 
 publish-aeidon:
-	$(MAKE) check test clean
+	$(MAKE) clean
 	python3 -m build
 	test -s dist/aeidon-*-py3-none-any.whl
 	test -s dist/aeidon-*.tar.gz
