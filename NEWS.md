@@ -4,6 +4,9 @@
 - Modernize the look of dialogs
 - Make spell-check dialog text directly editable
 - Combine window titlebar and toolbar into a header bar
+- Follow the system-wide dark theme preference (GTK ≥ 4.20), overridable
+  with the `general.theme` config file option, which replaces the
+  previous `general.dark_theme` option
 - Drop support for extensions
 - Replace custom-framerates extension with a config file option
 - Switch the integrated video player from gtksink to gtk4paintablesink

@@ -25,7 +25,6 @@
 import aeidon
 import argparse
 import gaupol
-import os
 import re
 import sys
 
@@ -73,10 +72,6 @@ class ApplicationManager(Gtk.Application):
         """Read configuration values from file."""
         gaupol.conf.path = aeidon.CONFIG_HOME_DIR / "gaupol.conf"
         gaupol.conf.read_from_file()
-        if (gaupol.conf.general.dark_theme or
-            os.getenv("GTK_THEME", "").endswith(":dark")):
-            Gtk.Settings.get_default().set_property(
-                "gtk-application-prefer-dark_theme", True)
 
     def _init_menubar(self):
         """Initialize the window menubar."""
@@ -84,11 +79,20 @@ class ApplicationManager(Gtk.Application):
         self.menubar_builder = Gtk.Builder.new_from_file(str(path))
         self.set_menubar(self.menubar_builder.get_object("menubar"))
 
+    def _init_theme(self):
+        """Set the light or dark theme variant to use."""
+        settings = Gtk.Settings.get_default()
+        if Gtk.check_version(4, 20, 0) is None:
+            settings.connect("notify::gtk-interface-color-scheme",
+                             self._update_theme)
+        self._update_theme()
+
     def _on_activate(self, manager, args):
         """Initialize application and open files from `args`."""
         opts, args = self._parse_args(args)
         sys.excepthook = gaupol.util.show_exception
         self._init_configuration()
+        self._init_theme()
         self._init_menubar()
         self._init_application(opts, args)
 
@@ -172,3 +176,18 @@ class ApplicationManager(Gtk.Application):
             encodings.insert(0, "auto")
         print(", ".join(encodings))
         raise SystemExit(0)
+
+    def _update_theme(self, *args):
+        """Apply the light or dark theme variant to use."""
+        settings = Gtk.Settings.get_default()
+        theme = gaupol.conf.general.theme
+        if theme == gaupol.themes.SYSTEM:
+            # GTK 4.20 and later only communicate the system-wide
+            # color scheme preference, applying it is up to us.
+            if Gtk.check_version(4, 20, 0) is not None: return
+            theme = (gaupol.themes.DARK
+                     if (settings.props.gtk_interface_color_scheme ==
+                         Gtk.InterfaceColorScheme.DARK)
+                     else gaupol.themes.LIGHT)
+        settings.set_property("gtk-application-prefer-dark-theme",
+                              theme == gaupol.themes.DARK)

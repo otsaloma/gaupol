@@ -98,3 +98,12 @@ targets.SELECTED = TargetSelected()
 targets.SELECTED_TO_END = TargetSelectedToEnd()
 targets.CURRENT = TargetCurrent()
 targets.ALL = TargetAll()
+
+class ThemeSystem(aeidon.EnumerationItem): pass
+class ThemeLight(aeidon.EnumerationItem): pass
+class ThemeDark(aeidon.EnumerationItem): pass
+
+themes = aeidon.Enumeration()
+themes.SYSTEM = ThemeSystem()
+themes.LIGHT = ThemeLight()
+themes.DARK = ThemeDark()

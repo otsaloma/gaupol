@@ -53,10 +53,10 @@ CONFIG_DEFAULTS = {
         "use_maximum": False,
     },
     "general": {
-        "dark_theme": False,
         "diff_color_change": "#ffff0033",
         "diff_color_delete": "#ff555533",
         "diff_color_insert": "#00ff0033",
+        "theme": gaupol.themes.SYSTEM,
         "version": None,
     },
     "editor": {
@@ -207,6 +207,9 @@ CONFIG_ENUMS = {
     },
     "framerate_convert": {
         "target": gaupol.targets,
+    },
+    "general": {
+        "theme": gaupol.themes,
     },
     "line_break": {
         "length_unit": gaupol.length_units,

@@ -76,6 +76,7 @@ from gaupol.enums import fields
 from gaupol.enums import length_units
 from gaupol.enums import orientation
 from gaupol.enums import targets
+from gaupol.enums import themes
 from gaupol.errors import Default
 from gaupol.attrdict import AttributeDictionary
 from gaupol.config import ConfigurationStore
