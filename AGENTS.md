@@ -34,23 +34,23 @@ under `/usr/share/gir-1.0`. Grep those for any symbols you need.
 - `/usr/share/gir-1.0/Gio-2.0.gir`
 - `/usr/share/gir-1.0/GLibUnix-2.0.gir`
 - `/usr/share/gir-1.0/GObject-2.0.gir`
-- `/usr/share/gir-1.0/Gtk-4.0.gir`
+- `/usr/share/gir-1.0/Gtk-4.0.gir` etc.
 
-A GTK-3 to GTK-4 migration guide is available in Markdown format. We
-have already done the migration, but noting this guide because we might
-have some regressions left over from it and some deprecated (not
-removed) widgets remain unmigrated.
-
-- `tasks/gtk4/migrating-3to4.md`
-
-Make sure you can access all these documentation in full; abort if not.
-Never guess how the API works, always check from the documentation. Keep
-in mind that we use Python and some of the documentation has been
-written for C. You'll need adapt what you see there, for example:
+Make sure you can access that GIR documentation; abort if not. Never
+guess how the API works, always check from the documentation. Keep in
+mind that we use Python and some of the documentation has been written
+for C. You'll need adapt what you see there, for example:
 
 - `GTK_ALIGN_CENTER` → `Gtk.Align.CENTER`
 - `gtk_box_new(...)` → `Gtk.Box(...)`
 - `gtk_widget_show(widget)` → `widget.show()`
+
+A GTK-3 to GTK-4 migration guide is available in Markdown format. We
+have already done the migration, but noting this guide because we might
+have some regressions left over from it and some deprecated (not
+removed) widgets remain unmigrated. Read it only when you need it.
+
+- `tasks/gtk4/migrating-3to4.md`
 
 ## Validation, Testing
 
@@ -67,7 +67,7 @@ data/samples/subrip.srt` so it self-terminates (exit 124) instead of
 blocking; the console output is then captured for inspection.
 
 To see all warnings, set `G_ENABLE_DIAGNOSTIC=1` (forces GTK to emit
-deprecation warnings) and read stderr (`2>&1`); GTK/GLib warnings go
+deprecation warnings) and read stderr (`2>&1`). GTK/GLib warnings go
 through the GLib log system, not Python `warnings`, so `pytest` needs
 `-s` to show them. Use `G_DEBUG=fatal-warnings` to turn a warning into a
 fatal error (with traceback) when tracking down its source.
@@ -76,7 +76,7 @@ Note that some previous version of gaupol might be installed under a
 system directory, such as `/usr/local` or aeidon under a Python
 site-packages directory. When running a standalone verification script,
 make sure your `PYTHONPATH` or `sys.path` points to the source repo.
-Check `aeidon.__file__` and `gaupol.__file__` in code if unsure.
+Check `aeidon.__file__` and `gaupol.__file__` in the script if unsure.
 
 ## Screenshots
 

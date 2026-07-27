@@ -1,4 +1,4 @@
-# Python Package aeidon for Subtitles
+# Python Package Aeidon for Subtitles
 
 [![PyPI](https://img.shields.io/pypi/v/aeidon.svg)](https://pypi.org/project/aeidon/)
 [![Downloads](https://pepy.tech/badge/aeidon/month)](https://pepy.tech/project/aeidon)

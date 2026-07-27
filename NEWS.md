@@ -8,11 +8,10 @@
 - Follow the system-wide dark theme preference (GTK ≥ 4.20), overridable
   with the `general.theme` config file option, which replaces the
   previous `general.dark_theme` option
-- Drop support for extensions
-- Replace custom-framerates extension with a config file option
+- Drop support for extensions; replace the custom-framerates extension
+  with config file option `editor.custom_framerates`
 - Switch the integrated video player from gtksink to gtk4paintablesink
 - Use a one-second preview offset for all external video players
-- Fix MPlayer automatically loading subtitles matching the video filename
 - Raise Python dependency to ≥ 3.10
 - Raise PyGObject dependency to ≥ 3.40
 - Raise GTK dependency to ≥ 4.12

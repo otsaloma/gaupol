@@ -21,7 +21,7 @@ and it's what the commands in `README.md` produce.
 ## Gaupol
 
     make build
-    make DESTDIR=/path/to/pkgroot PREFIX=/usr install
+    make DESTDIR=/path/to/pkg PREFIX=/usr install
 
 Build dependencies: make, coreutils, gettext. Runtime dependencies are
 listed in `README.md`. On *BSD, use gmake if you encounter issues.
@@ -31,25 +31,18 @@ produces the same output regardless of where you install it. The two
 targets can also be given in one command: `make DESTDIR=... PREFIX=...
 build install`.
 
-Available Make variables:
+In addition to `DESTDIR` and `PREFIX`, you might want to use
+`INCLUDE_AEIDON=no` to leave out aeidon (default is `yes`). See top of
+the `Makefile` for all variables you can set.
 
-- `DESTDIR`: prepended to paths at install time only (default empty)
-- `PREFIX`: base of all below directories (default `/usr/local`)
-- `BINDIR`: for launch script (default `$(PREFIX)/bin`)
-- `DATADIR`: for icons, desktop file, appdata (default `$(PREFIX)/share`)
-- `LIBDIR`: for private Python packages (default `$(DATADIR)/gaupol`)
-- `LOCALEDIR`: for translations (default `$(DATADIR)/locale`)
-- `MANDIR`: for man page (default `$(DATADIR)/man`)
-- `INCLUDE_AEIDON`: set to `no` to leave out aeidon (default `yes`)
-
-The Python packages are installed privately under `$(LIBDIR)`, not to
+The Python packages are installed privately under `LIBDIR`, not to
 site-packages. The launcher adds that directory to `sys.path`.
 
 ## Aeidon
 
-`make build && make INCLUDE_AEIDON=no install` installs gaupol only and
-the launcher then imports aeidon from site-packages. Build that aeidon
-from `pyproject.toml` and have gaupol depend on the same version.
+`make INCLUDE_AEIDON=no install` installs gaupol only and the launcher
+then imports aeidon from site-packages. Build that aeidon from
+`pyproject.toml` and have gaupol depend on the same version.
 
 Of the dependencies listed in `README.md`, iso-codes and
 charset-normalizer belong to aeidon, the rest to gaupol.
