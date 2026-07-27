@@ -32,8 +32,8 @@ targets can also be given in one command: `make DESTDIR=... PREFIX=...
 build install`.
 
 In addition to `DESTDIR` and `PREFIX`, you might want to use
-`INCLUDE_AEIDON=no` to leave out aeidon (default is `yes`). See top of
-the `Makefile` for all variables you can set.
+`INCLUDE_AEIDON=no` to leave out aeidon. See top of the `Makefile` for
+all variables you can set.
 
 The Python packages are installed privately under `LIBDIR`, not to
 site-packages. The launcher adds that directory to `sys.path`.
