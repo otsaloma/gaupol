@@ -24,7 +24,7 @@ and it's what the commands in `README.md` produce.
     make DESTDIR=/path/to/pkgroot PREFIX=/usr install
 
 Build dependencies: make, coreutils, gettext. Runtime dependencies are
-listed in `README.md`.
+listed in `README.md`. On *BSD, use gmake if you encounter issues.
 
 All Make variables are install-time only, `build` takes none and
 produces the same output regardless of where you install it. The two

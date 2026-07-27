@@ -20,7 +20,7 @@ build:
 	@echo "BUILDING PYTHON PACKAGES..."
 	rm -rf build
 	mkdir -p build
-	cp -r aeidon gaupol build
+	cp -R aeidon gaupol build
 	find build -type d -name __pycache__ -prune -exec rm -rf {} +
 	find build -type d -name test -prune -exec rm -rf {} +
 	@echo "BUILDING TRANSLATIONS..."
@@ -61,8 +61,8 @@ install:
 	test -f build/.complete
 	@echo "INSTALLING PYTHON PACKAGES..."
 	mkdir -p $(DESTDIR)$(LIBDIR)
-	test "$(INCLUDE_AEIDON)" = no || cp -r build/aeidon $(DESTDIR)$(LIBDIR)
-	cp -r build/gaupol $(DESTDIR)$(LIBDIR)
+	test "$(INCLUDE_AEIDON)" = no || cp -R build/aeidon $(DESTDIR)$(LIBDIR)
+	cp -R build/gaupol $(DESTDIR)$(LIBDIR)
 	sed "s|^LOCALE_DIR = .*$$|LOCALE_DIR = Path('$(LOCALEDIR)')|" build/gaupol/paths.py > $(DESTDIR)$(LIBDIR)/gaupol/paths.py
 	grep -qF "$(LOCALEDIR)" $(DESTDIR)$(LIBDIR)/gaupol/paths.py
 	@echo "INSTALLING LAUNCHER..."
@@ -121,7 +121,7 @@ release:
 	@echo "REMEMBER TO UPDATE WEBSITE"
 
 test:
-	py.test -xs aeidon gaupol
+	pytest -xs aeidon gaupol
 
 # Interactive!
 translations:
