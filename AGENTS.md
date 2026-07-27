@@ -11,12 +11,12 @@ try to find the right place for any new code.
 ## Environment
 
 See `README.md` for which versions of Python, GTK, etc. we're currently
-targeting. Regarding operating systems, we currently target only Linux,
-but try to avoid any OS-specific code. We want to keep any existing
-Windows conditionals, but we don't want to worry about Windows when
-adding new features. On Linux, we want to support all relevant desktops
-and display servers, but GNOME + Wayland is whose conventions we want to
-follow closest.
+targeting. Regarding operating systems, we currently target only Linux
+and *BSD, but try to avoid any OS-specific code. We want to keep any
+existing Windows conditionals, but we don't want to worry about Windows
+when adding new features. On Linux, we want to support all relevant
+desktops and display servers, but GNOME + Wayland is whose conventions
+we want to follow closest.
 
 ## Subtitle File Formats
 

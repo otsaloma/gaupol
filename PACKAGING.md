@@ -20,15 +20,16 @@ and it's what the commands in `README.md` produce.
 
 ## Gaupol
 
-    make DESTDIR=/path/to/pkgroot PREFIX=/usr build
+    make build
     make DESTDIR=/path/to/pkgroot PREFIX=/usr install
 
 Build dependencies: make, coreutils, gettext. Runtime dependencies are
 listed in `README.md`.
 
-Some resource paths are patched into files at build time, so `build` and
-`install` must be run with the same variables. `make build && make
-DESTDIR=... PREFIX=... install` does not work.
+All Make variables are install-time only, `build` takes none and
+produces the same output regardless of where you install it. The two
+targets can also be given in one command: `make DESTDIR=... PREFIX=...
+build install`.
 
 Available Make variables:
 
@@ -46,9 +47,9 @@ site-packages. The launcher adds that directory to `sys.path`.
 
 ## Aeidon
 
-`make INCLUDE_AEIDON=no build install` installs gaupol only and the
-launcher then imports aeidon from site-packages. Build that aeidon from
-`pyproject.toml` and have gaupol depend on the same version.
+`make build && make INCLUDE_AEIDON=no install` installs gaupol only and
+the launcher then imports aeidon from site-packages. Build that aeidon
+from `pyproject.toml` and have gaupol depend on the same version.
 
 Of the dependencies listed in `README.md`, iso-codes and
 charset-normalizer belong to aeidon, the rest to gaupol.

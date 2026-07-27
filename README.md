@@ -73,7 +73,7 @@ command.
 
 Then, to install Gaupol, run commands
 
-    make PREFIX=/usr/local build
+    make build
     sudo make PREFIX=/usr/local install
 
 Distro packagers, see [`PACKAGING.md`](PACKAGING.md).

@@ -1,8 +1,7 @@
 # -*- coding: utf-8-unix -*-
 
-# Installation directories without DESTDIR. Some of these are patched
-# into files at build time. This means that build and install both must
-# be run with the same variable values.
+# Installation directories without DESTDIR.
+# Only used by install, build uses no variables at all.
 PREFIX    = /usr/local
 BINDIR    = $(PREFIX)/bin
 DATADIR   = $(PREFIX)/share
@@ -24,13 +23,6 @@ build:
 	cp -r aeidon gaupol build
 	find build -type d -name __pycache__ -prune -exec rm -rf {} +
 	find build -type d -name test -prune -exec rm -rf {} +
-	sed -i "s|^LOCALE_DIR = .*$$|LOCALE_DIR = Path('$(LOCALEDIR)')|" build/gaupol/paths.py
-	grep -qF "$(LOCALEDIR)" build/gaupol/paths.py
-	@echo "BUILDING LAUNCHER..."
-	mkdir -p build/bin
-	sed "s|%LIBDIR%|$(LIBDIR)|" bin/gaupol.in > build/bin/gaupol
-	grep -qF "$(LIBDIR)" build/bin/gaupol
-	chmod +x build/bin/gaupol
 	@echo "BUILDING TRANSLATIONS..."
 	rm -f po/LINGUAS
 	ls po/*.po | cut -d/ -f2 | cut -d. -f1 > po/LINGUAS
@@ -44,7 +36,7 @@ build:
 	msgfmt --xml -d po \
 	--template data/io.otsaloma.gaupol.appdata.xml.in \
 	-o build/io.otsaloma.gaupol.appdata.xml
-	printf '%s\n%s\n' "$(LIBDIR)" "$(LOCALEDIR)" > build/.complete
+	touch build/.complete
 
 check:
 	flake8 bin/gaupol
@@ -67,15 +59,17 @@ clean:
 
 install:
 	test -f build/.complete
-	printf '%s\n%s\n' "$(LIBDIR)" "$(LOCALEDIR)" | cmp -s - build/.complete || \
-	{ echo "ERROR: build was run with different variable values"; exit 1; }
 	@echo "INSTALLING PYTHON PACKAGES..."
 	mkdir -p $(DESTDIR)$(LIBDIR)
 	test "$(INCLUDE_AEIDON)" = no || cp -r build/aeidon $(DESTDIR)$(LIBDIR)
 	cp -r build/gaupol $(DESTDIR)$(LIBDIR)
+	sed "s|^LOCALE_DIR = .*$$|LOCALE_DIR = Path('$(LOCALEDIR)')|" build/gaupol/paths.py > $(DESTDIR)$(LIBDIR)/gaupol/paths.py
+	grep -qF "$(LOCALEDIR)" $(DESTDIR)$(LIBDIR)/gaupol/paths.py
 	@echo "INSTALLING LAUNCHER..."
 	mkdir -p $(DESTDIR)$(BINDIR)
-	cp -f build/bin/gaupol $(DESTDIR)$(BINDIR)
+	sed "s|%LIBDIR%|$(LIBDIR)|" bin/gaupol.in > $(DESTDIR)$(BINDIR)/gaupol
+	grep -qF "$(LIBDIR)" $(DESTDIR)$(BINDIR)/gaupol
+	chmod +x $(DESTDIR)$(BINDIR)/gaupol
 	@echo "INSTALLING ICONS..."
 	mkdir -p $(DESTDIR)$(DATADIR)/icons/hicolor/scalable/apps
 	mkdir -p $(DESTDIR)$(DATADIR)/icons/hicolor/symbolic/apps
@@ -119,7 +113,7 @@ release:
 	$(EDITOR) NEWS.md
 	$(EDITOR) data/io.otsaloma.gaupol.appdata.xml.in
 	appstream-util validate-relax --nonet data/io.otsaloma.gaupol.appdata.xml.in
-	sudo $(MAKE) PREFIX=/usr/local build install clean
+	sudo $(MAKE) build install clean
 	/usr/local/bin/gaupol
 	tools/release
 	@echo "REMEMBER TO make publish-aeidon"
