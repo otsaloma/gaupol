@@ -94,7 +94,17 @@ class SaveAgent(aeidon.Delegate):
     def _save_document(self, page, doc, file=None):
         """Save document to `file` or raise :exc:`gaupol.Default`."""
         try:
-            file = file or page.project.get_file(doc)
+            # A file argument is given when saving as, in which case the
+            # user has explicitly chosen the encoding and newlines to
+            # use. If not given, we're plainly saving, and thus reusing
+            # the file the document was opened from, but converting its
+            # encoding and newlines to those forced by config, if any.
+            if file is None:
+                file = page.project.get_file(doc)
+                if encoding := gaupol.conf.file.force_encoding:
+                    file.encoding = encoding
+                if newline := gaupol.conf.file.force_newline:
+                    file.newline = newline
             gaupol.util.set_cursor_busy(self.window)
             return page.project.save(doc, file)
         except IOError as error:

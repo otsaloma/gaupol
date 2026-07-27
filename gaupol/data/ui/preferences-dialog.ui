@@ -173,6 +173,83 @@
                         </child>
                       </object>
                     </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="valign">center</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="1">Always Convert To When Saving</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"></attribute>
+                            </attributes>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkFrame">
+                            <property name="child">
+                              <object class="GtkListBox">
+                                <property name="selection_mode">none</property>
+                                <property name="show_separators">1</property>
+                                <style>
+                                  <class name="rich-list"/>
+                                </style>
+                                <child>
+                                  <object class="GtkListBoxRow">
+                                    <property name="activatable">0</property>
+                                    <property name="selectable">0</property>
+                                    <property name="child">
+                                      <object class="GtkBox">
+                                        <child>
+                                          <object class="GtkCheckButton" id="file_force_encoding_check">
+                                            <property name="hexpand">1</property>
+                                            <property name="label" translatable="1">_Encoding</property>
+                                            <property name="focusable">1</property>
+                                            <property name="use_underline">1</property>
+                                            <signal name="toggled" handler="_on_force_encoding_check_toggled" swapped="no"/>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkComboBox" id="file_force_encoding_combo">
+                                            <signal name="changed" handler="_on_force_encoding_combo_changed" swapped="no"/>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkListBoxRow">
+                                    <property name="activatable">0</property>
+                                    <property name="selectable">0</property>
+                                    <property name="child">
+                                      <object class="GtkBox">
+                                        <child>
+                                          <object class="GtkCheckButton" id="file_force_newline_check">
+                                            <property name="hexpand">1</property>
+                                            <property name="label" translatable="1">Ne_wlines</property>
+                                            <property name="focusable">1</property>
+                                            <property name="use_underline">1</property>
+                                            <signal name="toggled" handler="_on_force_newline_check_toggled" swapped="no"/>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkComboBox" id="file_force_newline_combo">
+                                            <signal name="changed" handler="_on_force_newline_combo_changed" swapped="no"/>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>

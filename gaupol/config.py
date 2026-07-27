@@ -98,6 +98,8 @@ CONFIG_DEFAULTS = {
         "align_method": aeidon.align_methods.POSITION,
         "directory": "",
         "encoding": "utf_8",
+        "force_encoding": "",
+        "force_newline": None,
         "format": aeidon.formats.SUBRIP,
         "newline": aeidon.util.get_default_newline(),
     },
@@ -202,6 +204,7 @@ CONFIG_ENUMS = {
     },
     "file": {
         "align_method": aeidon.align_methods,
+        "force_newline": aeidon.newlines,
         "format": aeidon.formats,
         "newline": aeidon.newlines,
     },

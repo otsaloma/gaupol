@@ -84,7 +84,8 @@ class FileDialog:
         # GTK pops down the combo box only after emitting "changed",
         # which would leave the popup on top of the dialog below.
         self._encoding_combo.popdown()
-        dialog = gaupol.MenuEncodingDialog(self)
+        # Support both BuilderDialog and actual Gtk.Window.
+        dialog = gaupol.MenuEncodingDialog(getattr(self, "_dialog", self))
         response = gaupol.util.run_dialog(dialog)
         encoding = dialog.get_encoding()
         visible = dialog.get_visible_encodings()

@@ -118,7 +118,7 @@ class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
         """Save inline spell-check use on text views."""
         gaupol.conf.spell_check.inline = check_button.get_active()
 
-class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
+class FilePage(aeidon.Delegate, gaupol.BuilderDialog, gaupol.FileDialog):
 
     """File preferences page."""
 
@@ -128,6 +128,10 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         "file_down_button",
         "file_encoding_list",
         "file_encoding_scroller",
+        "file_force_encoding_check",
+        "file_force_encoding_combo",
+        "file_force_newline_check",
+        "file_force_newline_combo",
         "file_locale_check",
         "file_remove_button",
         "file_up_button",
@@ -137,9 +141,14 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         """Initialize a :class:`FilePage` instance."""
         aeidon.Delegate.__init__(self, master)
         self._set_attributes(self._widgets, "file_")
+        # The encoding combo handling inherited from FileDialog,
+        # which populates and reads it, operates on _encoding_combo.
+        self._encoding_combo = self._force_encoding_combo
         self.application = application
         max_height = gaupol.util.lines_to_px(15)
         self._encoding_scroller.set_max_content_height(max_height)
+        self._init_encoding_combo()
+        self._init_force_newline_combo()
         self._init_values()
 
     def _get_selected_row(self):
@@ -147,12 +156,33 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
         row = self._encoding_list.get_selected_row()
         return row.get_index() if row else None
 
+    def _init_force_newline_combo(self):
+        """Initialize the newline combo box."""
+        store = Gtk.ListStore(str)
+        self._force_newline_combo.set_model(store)
+        for name in (x.label for x in aeidon.newlines):
+            store.append((name,))
+        view = self._force_newline_combo.get_child()
+        view.set_displayed_row(gaupol.util.tree_row_to_path(0))
+        renderer = Gtk.CellRendererText()
+        self._force_newline_combo.pack_start(renderer, expand=True)
+        self._force_newline_combo.add_attribute(renderer, "text", 0)
+
     def _init_values(self):
         """Initialize default values for widgets."""
         self._auto_check.set_active(gaupol.conf.encoding.try_auto)
         self._auto_check.set_sensitive(aeidon.util.chardet_available())
         self._locale_check.set_active(gaupol.conf.encoding.try_locale)
         self._reload_encoding_list()
+        encoding = gaupol.conf.file.force_encoding
+        self._force_encoding_check.set_active(bool(encoding))
+        self._force_encoding_combo.set_sensitive(bool(encoding))
+        self.set_encoding(encoding)
+        newline = gaupol.conf.file.force_newline
+        self._force_newline_check.set_active(bool(newline))
+        self._force_newline_combo.set_sensitive(bool(newline))
+        self._force_newline_combo.set_active(
+            newline or aeidon.util.get_default_newline())
 
     def _on_add_button_clicked(self, *args):
         """Add a new fallback encoding."""
@@ -182,6 +212,32 @@ class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
     def _on_encoding_list_row_selected(self, list_box, row):
         """Set the fallback list button sensitivities."""
         self._set_sensitivities()
+
+    def _on_force_encoding_check_toggled(self, check_button):
+        """Save the encoding to always convert to when saving."""
+        force = check_button.get_active()
+        self._force_encoding_combo.set_sensitive(force)
+        gaupol.conf.file.force_encoding = (
+            self.get_encoding() or "" if force else "")
+
+    def _on_force_encoding_combo_changed(self, *args):
+        """Save the encoding to always convert to when saving."""
+        gaupol.FileDialog._on_encoding_combo_changed(self, *args)
+        encoding = self.get_encoding()
+        if encoding in (None, "other"): return
+        gaupol.conf.file.force_encoding = encoding
+
+    def _on_force_newline_check_toggled(self, check_button):
+        """Save the newlines to always convert to when saving."""
+        force = check_button.get_active()
+        self._force_newline_combo.set_sensitive(force)
+        gaupol.conf.file.force_newline = (
+            aeidon.newlines[self._force_newline_combo.get_active()]
+            if force else None)
+
+    def _on_force_newline_combo_changed(self, combo_box):
+        """Save the newlines to always convert to when saving."""
+        gaupol.conf.file.force_newline = aeidon.newlines[combo_box.get_active()]
 
     def _on_locale_check_toggled(self, check_button):
         """Save locale encoding usage."""
