@@ -39,11 +39,11 @@ build:
 	touch build/.complete
 
 check:
+	flake8 aeidon
 	flake8 bin/gaupol
 	flake8 bin/gaupol.in
-	flake8 aeidon
 	flake8 gaupol
-	flake8 *.py
+	flake8 conftest.py
 	validate-pyproject pyproject.toml
 	for X in gaupol/data/ui/*.ui; do echo $$X; gtk4-builder-tool validate $$X; done
 
@@ -128,6 +128,6 @@ translations:
 	tools/update-translations
 
 warnings:
-	python3 -Wd bin/gaupol
+	G_ENABLE_DIAGNOSTIC=1 python3 -Wd bin/gaupol data/samples/subrip.srt
 
 .PHONY: build check clean install publish-aeidon release test translations warnings
