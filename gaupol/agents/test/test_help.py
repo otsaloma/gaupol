@@ -17,14 +17,18 @@
 
 import gaupol
 
+from unittest.mock import patch
+
 class TestHelpAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
 
+    @patch("gaupol.util.show_uri", lambda x: None)
     def test__on_browse_documentation_activate(self):
         self.application.get_action("browse-documentation").activate()
 
+    @patch("gaupol.util.show_uri", lambda x: None)
     def test__on_report_a_bug_activate(self):
         self.application.get_action("report-a-bug").activate()
 

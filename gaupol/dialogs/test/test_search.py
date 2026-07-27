@@ -18,6 +18,7 @@
 import gaupol
 
 from gi.repository import Gtk
+from unittest.mock import patch
 
 class TestSearchDialog(gaupol.TestCase):
 
@@ -55,6 +56,7 @@ class TestSearchDialog(gaupol.TestCase):
         assert not self.dialog._text_view.get_sensitive()
         assert not self.dialog._replace_button.get_sensitive()
 
+    @patch("gaupol.util.show_uri", lambda x: None)
     def test__on_response(self):
         self.dialog.response(Gtk.ResponseType.HELP)
 
