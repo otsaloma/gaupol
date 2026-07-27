@@ -4,6 +4,7 @@
 - Modernize the look of dialogs
 - Make spell-check dialog text directly editable
 - Combine window titlebar and toolbar into a header bar
+- Allow overriding encoding and newlines when saving (#137)
 - Follow the system-wide dark theme preference (GTK ≥ 4.20), overridable
   with the `general.theme` config file option, which replaces the
   previous `general.dark_theme` option
