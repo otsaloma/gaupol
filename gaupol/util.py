@@ -330,7 +330,9 @@ def show_exception(exctype, exc, tb):
     traceback.print_exception(exctype, exc, tb)
     if not isinstance(exc, Exception): return
     try: # to avoid recursion.
-        dialog = gaupol.DebugDialog()
+        manager = getattr(gaupol, "appman", None)
+        parent = manager.get_active_window() if manager else None
+        dialog = gaupol.DebugDialog(parent)
         dialog.set_text(exctype, exc, tb)
         response = flash_dialog(dialog)
         if response == Gtk.ResponseType.NO:

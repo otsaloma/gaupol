@@ -18,6 +18,8 @@
 import gaupol
 import sys
 
+from gi.repository import Gtk
+
 class TestDebugDialog(gaupol.TestCase):
 
     def run_dialog(self):
@@ -25,7 +27,7 @@ class TestDebugDialog(gaupol.TestCase):
         self.dialog.destroy()
 
     def setup_method(self, method):
-        self.dialog = gaupol.DebugDialog()
+        self.dialog = gaupol.DebugDialog(Gtk.Window())
         gaupol.style.load_css(self.dialog)
         try:
             self.dialog.foo()

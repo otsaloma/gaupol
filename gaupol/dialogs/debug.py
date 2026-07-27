@@ -33,10 +33,11 @@ class DebugDialog(Gtk.MessageDialog):
 
     """Dialog for displaying a traceback in case of an unhandled exception."""
 
-    def __init__(self):
+    def __init__(self, parent=None):
         """Initialize a :class:`DebugDialog` instance."""
         GObject.GObject.__init__(self,
                                  message_type=Gtk.MessageType.ERROR,
+                                 transient_for=parent,
                                  text=_("Something went wrong"),
                                  secondary_text=_("You have probably discovered a bug. Please report it by providing the below information and a description of what you were doing."))
 
