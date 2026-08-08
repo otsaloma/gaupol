@@ -90,7 +90,6 @@ install:
 	@echo "INSTALLING MAN PAGE..."
 	mkdir -p $(DESTDIR)$(MANDIR)/man1
 	cp -f data/gaupol.1 $(DESTDIR)$(MANDIR)/man1
-	@echo "UPDATING DESKTOP DATABASE..."
 	test -z "$(DESTDIR)" && update-desktop-database "$(DATADIR)/applications" || true
 
 publish-aeidon:
