@@ -111,7 +111,7 @@ release:
 	@echo "ADD RELEASE NOTES"
 	$(EDITOR) NEWS.md
 	$(EDITOR) data/io.otsaloma.gaupol.appdata.xml.in
-	appstream-util validate-relax --nonet data/io.otsaloma.gaupol.appdata.xml.in
+	appstreamcli validate --no-net data/io.otsaloma.gaupol.appdata.xml.in
 	sudo $(MAKE) build install clean
 	/usr/local/bin/gaupol
 	tools/release
