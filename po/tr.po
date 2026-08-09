@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-26 17:17+0300\n"
+"POT-Creation-Date: 2026-08-09 18:38+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: b83946de5835331df42b9ffcc43e6a33_05e65cd <73a30e0a984b2291d4915f37112ad292_814039>, 2022\n"
 "Language-Team: Turkish (https://app.transifex.com/otsaloma/teams/64879/tr/)\n"
@@ -340,8 +340,8 @@ msgstr "Mac (klasik)"
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
-#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:194
-#: gaupol/agents/save.py:202 gaupol/agents/tools.py:47
+#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:204
+#: gaupol/agents/save.py:212 gaupol/agents/tools.py:47
 #: gaupol/agents/open.py:340 gaupol/agents/open.py:349
 #: gaupol/agents/open.py:357 gaupol/agents/open.py:366
 #: gaupol/agents/preview.py:107 gaupol/agents/preview.py:115
@@ -377,34 +377,34 @@ msgstr "{} çevirisi"
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
-#: gaupol/agents/save.py:125
+#: gaupol/agents/save.py:135
 msgid "Save As"
 msgstr "Farklı Kaydet"
 
-#: gaupol/agents/save.py:131
+#: gaupol/agents/save.py:141
 #, python-brace-format
 msgid "Saved main document as \"{}\""
 msgstr "Ana döküman \"{}\" olarak kaydedildi"
 
-#: gaupol/agents/save.py:149
+#: gaupol/agents/save.py:159
 msgid "Save Translation As"
 msgstr "Çeviriyi farklı kaydet"
 
-#: gaupol/agents/save.py:155
+#: gaupol/agents/save.py:165
 #, python-brace-format
 msgid "Saved translation document as \"{}\""
 msgstr "Çeviri dosyası \"{}\" olarak kaydedildi"
 
-#: gaupol/agents/save.py:191
+#: gaupol/agents/save.py:201
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "\"{codec}\" kodeğini kullanarak \"{basename}\" dosyası kodlanamadı"
 
-#: gaupol/agents/save.py:192
+#: gaupol/agents/save.py:202
 msgid "Please try to save the file with a different character encoding."
 msgstr "Lütfen farklı karakter kodlama ile kaydetmeyi deneyin."
 
-#: gaupol/agents/save.py:200
+#: gaupol/agents/save.py:210
 #, python-brace-format
 msgid "Failed to save file \"{}\""
 msgstr "\"{}\" kaydedilemedi"
@@ -855,49 +855,49 @@ msgid_plural "Confirm {:d} Changes"
 msgstr[0] "{:d} Değişikliği Doğrula"
 msgstr[1] "{:d} Değişikliği Doğrula"
 
-#: gaupol/applicationman.py:102
+#: gaupol/applicationman.py:106
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [SEÇENEK...] [DOSYA...] [+[NUM]]"
 
-#: gaupol/applicationman.py:106
+#: gaupol/applicationman.py:110
 msgid "FILE..."
 msgstr "DOSYA..."
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:113
 msgid "subtitle files to open"
 msgstr "açılacak altyazı dosyaları"
 
-#: gaupol/applicationman.py:119
+#: gaupol/applicationman.py:123
 msgid "ENCODING"
 msgstr "KARAKTER KODLAMA"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:126
 msgid "set the character encoding used to open files"
 msgstr "Açık olan dosya için karakter kodlamayı uygula"
 
-#: gaupol/applicationman.py:129
+#: gaupol/applicationman.py:133
 msgid "list all available character encodings"
 msgstr "Ulaşılabilir bütün karakter kodlamalarını listele"
 
-#: gaupol/applicationman.py:134 gaupol/applicationman.py:151
+#: gaupol/applicationman.py:138 gaupol/applicationman.py:155
 msgid "FILE"
 msgstr "DOSYA"
 
-#: gaupol/applicationman.py:137
+#: gaupol/applicationman.py:141
 msgid "open translation file"
 msgstr "Açık çeviri dosyası"
 
-#: gaupol/applicationman.py:142
+#: gaupol/applicationman.py:146
 msgid "METHOD"
 msgstr "YÖNTEM"
 
-#: gaupol/applicationman.py:146
+#: gaupol/applicationman.py:150
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "Çeviri alt yazılarını hizaya sokmak için 'numara' ya da 'durum' yöntemini "
 "kullanın."
 
-#: gaupol/applicationman.py:154
+#: gaupol/applicationman.py:158
 msgid "select video file"
 msgstr "Video dosyası seçiniz"
 
@@ -949,11 +949,11 @@ msgstr "karakterler"
 msgid "ems"
 msgstr "ems"
 
-#: gaupol/dialogs/debug.py:40
+#: gaupol/dialogs/debug.py:41
 msgid "Something went wrong"
 msgstr "Birşeyler ters gitti"
 
-#: gaupol/dialogs/debug.py:41
+#: gaupol/dialogs/debug.py:42
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
@@ -961,15 +961,15 @@ msgstr ""
 "Muhtemelen bir yazılım hatası ile karşılaştınız. Lütfen aşağıdaki alana "
 "gerekli bilgileri ve yaptığınız işlemin detaylı açıklamasını giriniz."
 
-#: gaupol/dialogs/debug.py:49
+#: gaupol/dialogs/debug.py:50
 msgid "_Report Bug"
 msgstr "_Hatayı Raporla"
 
-#: gaupol/dialogs/debug.py:50 gaupol/data/ui/menubar.ui:55
+#: gaupol/dialogs/debug.py:51 gaupol/data/ui/menubar.ui:55
 msgid "_Quit"
 msgstr "_Çık"
 
-#: gaupol/dialogs/debug.py:51 gaupol/dialogs/preview_error.py:43
+#: gaupol/dialogs/debug.py:52 gaupol/dialogs/preview_error.py:43
 #: gaupol/data/ui/menubar.ui:51
 msgid "_Close"
 msgstr "_Kapat"
@@ -1008,11 +1008,13 @@ msgid "For_mat"
 msgstr ""
 
 #: gaupol/dialogs/save.py:91 gaupol/dialogs/open.py:73
+#: gaupol/data/ui/preferences-dialog.ui:208
 #: gaupol/data/ui/multi-save-dialog.ui:90
 msgid "_Encoding"
 msgstr ""
 
-#: gaupol/dialogs/save.py:97 gaupol/data/ui/multi-save-dialog.ui:114
+#: gaupol/dialogs/save.py:97 gaupol/data/ui/preferences-dialog.ui:232
+#: gaupol/data/ui/multi-save-dialog.ui:114
 msgid "Ne_wlines"
 msgstr ""
 
@@ -1039,11 +1041,11 @@ msgstr "Bütün desteklenen dosyalar"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: gaupol/dialogs/file.py:120
+#: gaupol/dialogs/file.py:121
 msgid "Auto-detected"
 msgstr "Otomatik algıla"
 
-#: gaupol/dialogs/file.py:122
+#: gaupol/dialogs/file.py:123
 msgid "Other…"
 msgstr "Diğer…"
 
@@ -1117,7 +1119,7 @@ msgstr ""
 "oynatıcı seçimi yapmak ya da komutu özelleştirmek için Tercihler sekmesine "
 "bakınız."
 
-#: gaupol/dialogs/preferences.py:261
+#: gaupol/dialogs/preferences.py:317
 msgid "Custom"
 msgstr "Kişisel"
 
@@ -1253,101 +1255,105 @@ msgstr ""
 msgid "Move down"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:183
+#: gaupol/data/ui/preferences-dialog.ui:184
+msgid "Always Convert To When Saving"
+msgstr ""
+
+#: gaupol/data/ui/preferences-dialog.ui:260
 msgid "Editor"
 msgstr "Editör"
 
-#: gaupol/data/ui/preferences-dialog.ui:203
+#: gaupol/data/ui/preferences-dialog.ui:280
 msgid "Font"
 msgstr "Yazı tipi"
 
-#: gaupol/data/ui/preferences-dialog.ui:227
+#: gaupol/data/ui/preferences-dialog.ui:304
 msgid "_Custom font"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:259
+#: gaupol/data/ui/preferences-dialog.ui:336
 msgid "Line Lengths"
 msgstr "Satır uzunluğu"
 
-#: gaupol/data/ui/preferences-dialog.ui:281
+#: gaupol/data/ui/preferences-dialog.ui:358
 msgid "_Show line lengths in list cells"
 msgstr "Liste _görünümünde satır uzunluğu göster"
 
-#: gaupol/data/ui/preferences-dialog.ui:296
+#: gaupol/data/ui/preferences-dialog.ui:373
 msgid "S_how line lengths in editable text fields"
 msgstr "Metin alanlarında satır uzunluğunu göster"
 
-#: gaupol/data/ui/preferences-dialog.ui:314
+#: gaupol/data/ui/preferences-dialog.ui:391
 msgid "_Length unit"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:342
+#: gaupol/data/ui/preferences-dialog.ui:419
 msgid "Spell-Check"
 msgstr "İmla denetimi"
 
-#: gaupol/data/ui/preferences-dialog.ui:364
+#: gaupol/data/ui/preferences-dialog.ui:441
 msgid "Chec_k spelling as you type"
 msgstr "Yazarken imla denet_le"
 
-#: gaupol/data/ui/preferences-dialog.ui:385
+#: gaupol/data/ui/preferences-dialog.ui:462
 msgid "Video"
 msgstr "Video"
 
-#: gaupol/data/ui/preferences-dialog.ui:404
+#: gaupol/data/ui/preferences-dialog.ui:481
 msgid "Fonts"
 msgstr "Yazıtipleri"
 
-#: gaupol/data/ui/preferences-dialog.ui:429
+#: gaupol/data/ui/preferences-dialog.ui:506
 msgid "_Subtitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:456
+#: gaupol/data/ui/preferences-dialog.ui:533
 msgid "_Time"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:487
+#: gaupol/data/ui/preferences-dialog.ui:564
 msgid "Colors"
 msgstr "Renkler"
 
-#: gaupol/data/ui/preferences-dialog.ui:512
+#: gaupol/data/ui/preferences-dialog.ui:589
 msgid "Su_btitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:525
-#: gaupol/data/ui/preferences-dialog.ui:557
+#: gaupol/data/ui/preferences-dialog.ui:602
+#: gaupol/data/ui/preferences-dialog.ui:634
 msgid "Background"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:544
+#: gaupol/data/ui/preferences-dialog.ui:621
 msgid "Ti_me"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:580
+#: gaupol/data/ui/preferences-dialog.ui:657
 msgid "Seek"
 msgstr "Git"
 
-#: gaupol/data/ui/preferences-dialog.ui:605
+#: gaupol/data/ui/preferences-dialog.ui:682
 msgid "_Seconds"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:635
+#: gaupol/data/ui/preferences-dialog.ui:712
 msgid "Preview"
 msgstr "İzleyerek dene"
 
-#: gaupol/data/ui/preferences-dialog.ui:655
+#: gaupol/data/ui/preferences-dialog.ui:732
 msgid "Video Player"
 msgstr "Video oynatıcı"
 
-#: gaupol/data/ui/preferences-dialog.ui:680
+#: gaupol/data/ui/preferences-dialog.ui:757
 msgid "_Application"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:704
+#: gaupol/data/ui/preferences-dialog.ui:781
 msgid "Co_mmand"
 msgstr ""
 
 #. Translators: Only the title is to be translated, field names not.
-#: gaupol/data/ui/preferences-dialog.ui:712
+#: gaupol/data/ui/preferences-dialog.ui:789
 msgid ""
 "Fields:\n"
 "$MILLISECONDS\n"
@@ -1356,15 +1362,15 @@ msgid ""
 "$VIDEOFILE"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:733
+#: gaupol/data/ui/preferences-dialog.ui:810
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "Mutlaka UTF-8 karakter kodlaması kullan"
 
-#: gaupol/data/ui/preferences-dialog.ui:755
+#: gaupol/data/ui/preferences-dialog.ui:832
 msgid "Start Position"
 msgstr "Başlangıç pozisyonu"
 
-#: gaupol/data/ui/preferences-dialog.ui:780
+#: gaupol/data/ui/preferences-dialog.ui:857
 msgid "_Offset (seconds before selection)"
 msgstr ""
 
@@ -2558,8 +2564,16 @@ msgstr ""
 "oluşturma, metinleri düzenleme ve altyazıları zamanlama araçları sağlar."
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:49
-msgid "Main window"
-msgstr "Ana pencere"
+msgid "Editing subtitles with video"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:53
+msgid "Translating subtitles side-by-side"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:57
+msgid "Multiple files open as tabbed documents"
+msgstr ""
 
 #: data/io.otsaloma.gaupol.desktop.in:4
 msgid "Subtitle Editor"

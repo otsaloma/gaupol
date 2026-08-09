@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-26 17:17+0300\n"
+"POT-Creation-Date: 2026-08-09 18:38+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>, 2016\n"
 "Language-Team: Hungarian (https://app.transifex.com/otsaloma/teams/64879/hu/)\n"
@@ -336,8 +336,8 @@ msgstr "Mac (klasszikus)"
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
-#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:194
-#: gaupol/agents/save.py:202 gaupol/agents/tools.py:47
+#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:204
+#: gaupol/agents/save.py:212 gaupol/agents/tools.py:47
 #: gaupol/agents/open.py:340 gaupol/agents/open.py:349
 #: gaupol/agents/open.py:357 gaupol/agents/open.py:366
 #: gaupol/agents/preview.py:107 gaupol/agents/preview.py:115
@@ -373,34 +373,34 @@ msgstr "{} fordítás"
 msgid "File not found"
 msgstr ""
 
-#: gaupol/agents/save.py:125
+#: gaupol/agents/save.py:135
 msgid "Save As"
 msgstr "Mentés másként"
 
-#: gaupol/agents/save.py:131
+#: gaupol/agents/save.py:141
 #, python-brace-format
 msgid "Saved main document as \"{}\""
 msgstr "A dokumentum mentve \"{}\" néven"
 
-#: gaupol/agents/save.py:149
+#: gaupol/agents/save.py:159
 msgid "Save Translation As"
 msgstr "Fordítás mentése más néven"
 
-#: gaupol/agents/save.py:155
+#: gaupol/agents/save.py:165
 #, python-brace-format
 msgid "Saved translation document as \"{}\""
 msgstr "A fordítási dokumentum mentve \"{}\" néven"
 
-#: gaupol/agents/save.py:191
+#: gaupol/agents/save.py:201
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "A(z) \"{basename}\" fájl átkódolása a(z) \"{codec}\" kodekkel nem sikerült"
 
-#: gaupol/agents/save.py:192
+#: gaupol/agents/save.py:202
 msgid "Please try to save the file with a different character encoding."
 msgstr "Próbálja más karakterkódolással menteni a fájlt!"
 
-#: gaupol/agents/save.py:200
+#: gaupol/agents/save.py:210
 #, python-brace-format
 msgid "Failed to save file \"{}\""
 msgstr "A(z) \"{}\" fájl mentése sikertelen"
@@ -845,47 +845,47 @@ msgid_plural "Confirm {:d} Changes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/applicationman.py:102
+#: gaupol/applicationman.py:106
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPCIÓK...] [FÁJL...] [+[SZÁM]]"
 
-#: gaupol/applicationman.py:106
+#: gaupol/applicationman.py:110
 msgid "FILE..."
 msgstr ""
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:113
 msgid "subtitle files to open"
 msgstr ""
 
-#: gaupol/applicationman.py:119
+#: gaupol/applicationman.py:123
 msgid "ENCODING"
 msgstr "KÓDOLÁS"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:126
 msgid "set the character encoding used to open files"
 msgstr "Karakterkódolás beállítása a fájlok megnyitásához"
 
-#: gaupol/applicationman.py:129
+#: gaupol/applicationman.py:133
 msgid "list all available character encodings"
 msgstr "összes elérhető karakterkódolás megjelenítése"
 
-#: gaupol/applicationman.py:134 gaupol/applicationman.py:151
+#: gaupol/applicationman.py:138 gaupol/applicationman.py:155
 msgid "FILE"
 msgstr "FÁJL"
 
-#: gaupol/applicationman.py:137
+#: gaupol/applicationman.py:141
 msgid "open translation file"
 msgstr "fordítási fájl megnyitása"
 
-#: gaupol/applicationman.py:142
+#: gaupol/applicationman.py:146
 msgid "METHOD"
 msgstr "MÓDSZER"
 
-#: gaupol/applicationman.py:146
+#: gaupol/applicationman.py:150
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr "Igazítás módszere a fordítási szövegben: \"Szám\" vagy \"Pozíció\""
 
-#: gaupol/applicationman.py:154
+#: gaupol/applicationman.py:158
 msgid "select video file"
 msgstr "Videófájl kiválasztása"
 
@@ -937,25 +937,25 @@ msgstr "karakter"
 msgid "ems"
 msgstr "ems"
 
-#: gaupol/dialogs/debug.py:40
+#: gaupol/dialogs/debug.py:41
 msgid "Something went wrong"
 msgstr "Valami gond van"
 
-#: gaupol/dialogs/debug.py:41
+#: gaupol/dialogs/debug.py:42
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr ""
 
-#: gaupol/dialogs/debug.py:49
+#: gaupol/dialogs/debug.py:50
 msgid "_Report Bug"
 msgstr ""
 
-#: gaupol/dialogs/debug.py:50 gaupol/data/ui/menubar.ui:55
+#: gaupol/dialogs/debug.py:51 gaupol/data/ui/menubar.ui:55
 msgid "_Quit"
 msgstr "_Kilépés"
 
-#: gaupol/dialogs/debug.py:51 gaupol/dialogs/preview_error.py:43
+#: gaupol/dialogs/debug.py:52 gaupol/dialogs/preview_error.py:43
 #: gaupol/data/ui/menubar.ui:51
 msgid "_Close"
 msgstr "Be_zárás"
@@ -994,11 +994,13 @@ msgid "For_mat"
 msgstr ""
 
 #: gaupol/dialogs/save.py:91 gaupol/dialogs/open.py:73
+#: gaupol/data/ui/preferences-dialog.ui:208
 #: gaupol/data/ui/multi-save-dialog.ui:90
 msgid "_Encoding"
 msgstr ""
 
-#: gaupol/dialogs/save.py:97 gaupol/data/ui/multi-save-dialog.ui:114
+#: gaupol/dialogs/save.py:97 gaupol/data/ui/preferences-dialog.ui:232
+#: gaupol/data/ui/multi-save-dialog.ui:114
 msgid "Ne_wlines"
 msgstr ""
 
@@ -1025,11 +1027,11 @@ msgstr "Összes támogatott fájl"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: gaupol/dialogs/file.py:120
+#: gaupol/dialogs/file.py:121
 msgid "Auto-detected"
 msgstr "Automatikus felismerés"
 
-#: gaupol/dialogs/file.py:122
+#: gaupol/dialogs/file.py:123
 msgid "Other…"
 msgstr "Egyéb…"
 
@@ -1098,7 +1100,7 @@ msgid ""
 "command."
 msgstr ""
 
-#: gaupol/dialogs/preferences.py:261
+#: gaupol/dialogs/preferences.py:317
 msgid "Custom"
 msgstr "Egyéni"
 
@@ -1232,101 +1234,105 @@ msgstr ""
 msgid "Move down"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:183
+#: gaupol/data/ui/preferences-dialog.ui:184
+msgid "Always Convert To When Saving"
+msgstr ""
+
+#: gaupol/data/ui/preferences-dialog.ui:260
 msgid "Editor"
 msgstr "Szerkesztő"
 
-#: gaupol/data/ui/preferences-dialog.ui:203
+#: gaupol/data/ui/preferences-dialog.ui:280
 msgid "Font"
 msgstr "Betűtípus"
 
-#: gaupol/data/ui/preferences-dialog.ui:227
+#: gaupol/data/ui/preferences-dialog.ui:304
 msgid "_Custom font"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:259
+#: gaupol/data/ui/preferences-dialog.ui:336
 msgid "Line Lengths"
 msgstr "Sorhossz"
 
-#: gaupol/data/ui/preferences-dialog.ui:281
+#: gaupol/data/ui/preferences-dialog.ui:358
 msgid "_Show line lengths in list cells"
 msgstr "_Sorhossz megjelenítése a mezőkben"
 
-#: gaupol/data/ui/preferences-dialog.ui:296
+#: gaupol/data/ui/preferences-dialog.ui:373
 msgid "S_how line lengths in editable text fields"
 msgstr "Sor_hossz megjelenítése a szerkeszthető szövegmezőkben"
 
-#: gaupol/data/ui/preferences-dialog.ui:314
+#: gaupol/data/ui/preferences-dialog.ui:391
 msgid "_Length unit"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:342
+#: gaupol/data/ui/preferences-dialog.ui:419
 msgid "Spell-Check"
 msgstr "Helyesírás-ellenőrzés"
 
-#: gaupol/data/ui/preferences-dialog.ui:364
+#: gaupol/data/ui/preferences-dialog.ui:441
 msgid "Chec_k spelling as you type"
 msgstr "He_lyesírás-ellenőrzés beíráskor"
 
-#: gaupol/data/ui/preferences-dialog.ui:385
+#: gaupol/data/ui/preferences-dialog.ui:462
 msgid "Video"
 msgstr "Videó"
 
-#: gaupol/data/ui/preferences-dialog.ui:404
+#: gaupol/data/ui/preferences-dialog.ui:481
 msgid "Fonts"
 msgstr "Betűtípusok"
 
-#: gaupol/data/ui/preferences-dialog.ui:429
+#: gaupol/data/ui/preferences-dialog.ui:506
 msgid "_Subtitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:456
+#: gaupol/data/ui/preferences-dialog.ui:533
 msgid "_Time"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:487
+#: gaupol/data/ui/preferences-dialog.ui:564
 msgid "Colors"
 msgstr "Színek"
 
-#: gaupol/data/ui/preferences-dialog.ui:512
+#: gaupol/data/ui/preferences-dialog.ui:589
 msgid "Su_btitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:525
-#: gaupol/data/ui/preferences-dialog.ui:557
+#: gaupol/data/ui/preferences-dialog.ui:602
+#: gaupol/data/ui/preferences-dialog.ui:634
 msgid "Background"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:544
+#: gaupol/data/ui/preferences-dialog.ui:621
 msgid "Ti_me"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:580
+#: gaupol/data/ui/preferences-dialog.ui:657
 msgid "Seek"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:605
+#: gaupol/data/ui/preferences-dialog.ui:682
 msgid "_Seconds"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:635
+#: gaupol/data/ui/preferences-dialog.ui:712
 msgid "Preview"
 msgstr "Előnézet"
 
-#: gaupol/data/ui/preferences-dialog.ui:655
+#: gaupol/data/ui/preferences-dialog.ui:732
 msgid "Video Player"
 msgstr "Videólejátszó"
 
-#: gaupol/data/ui/preferences-dialog.ui:680
+#: gaupol/data/ui/preferences-dialog.ui:757
 msgid "_Application"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:704
+#: gaupol/data/ui/preferences-dialog.ui:781
 msgid "Co_mmand"
 msgstr ""
 
 #. Translators: Only the title is to be translated, field names not.
-#: gaupol/data/ui/preferences-dialog.ui:712
+#: gaupol/data/ui/preferences-dialog.ui:789
 msgid ""
 "Fields:\n"
 "$MILLISECONDS\n"
@@ -1335,15 +1341,15 @@ msgid ""
 "$VIDEOFILE"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:733
+#: gaupol/data/ui/preferences-dialog.ui:810
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "Mi_ndig UTF-8 karakterkódolást használjon"
 
-#: gaupol/data/ui/preferences-dialog.ui:755
+#: gaupol/data/ui/preferences-dialog.ui:832
 msgid "Start Position"
 msgstr "Kezdőpozíció"
 
-#: gaupol/data/ui/preferences-dialog.ui:780
+#: gaupol/data/ui/preferences-dialog.ui:857
 msgid "_Offset (seconds before selection)"
 msgstr ""
 
@@ -2540,7 +2546,15 @@ msgid ""
 msgstr ""
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:49
-msgid "Main window"
+msgid "Editing subtitles with video"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:53
+msgid "Translating subtitles side-by-side"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:57
+msgid "Multiple files open as tabbed documents"
 msgstr ""
 
 #: data/io.otsaloma.gaupol.desktop.in:4

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-26 17:17+0300\n"
+"POT-Creation-Date: 2026-08-09 18:38+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: tzwasd 😃, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/otsaloma/teams/64879/zh_CN/)\n"
@@ -336,8 +336,8 @@ msgstr "Mac (经典)"
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
-#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:194
-#: gaupol/agents/save.py:202 gaupol/agents/tools.py:47
+#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:204
+#: gaupol/agents/save.py:212 gaupol/agents/tools.py:47
 #: gaupol/agents/open.py:340 gaupol/agents/open.py:349
 #: gaupol/agents/open.py:357 gaupol/agents/open.py:366
 #: gaupol/agents/preview.py:107 gaupol/agents/preview.py:115
@@ -373,34 +373,34 @@ msgstr "{} 翻译"
 msgid "File not found"
 msgstr "找不到文件"
 
-#: gaupol/agents/save.py:125
+#: gaupol/agents/save.py:135
 msgid "Save As"
 msgstr "另存为"
 
-#: gaupol/agents/save.py:131
+#: gaupol/agents/save.py:141
 #, python-brace-format
 msgid "Saved main document as \"{}\""
 msgstr "已将主文档保存为“{}”"
 
-#: gaupol/agents/save.py:149
+#: gaupol/agents/save.py:159
 msgid "Save Translation As"
 msgstr "另存为翻译"
 
-#: gaupol/agents/save.py:155
+#: gaupol/agents/save.py:165
 #, python-brace-format
 msgid "Saved translation document as \"{}\""
 msgstr "已将翻译文档保存为“{}”"
 
-#: gaupol/agents/save.py:191
+#: gaupol/agents/save.py:201
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "无法使用编解码器“{codec}”对文件“{basename}”进行编码"
 
-#: gaupol/agents/save.py:192
+#: gaupol/agents/save.py:202
 msgid "Please try to save the file with a different character encoding."
 msgstr "请使用另一种字符编码保存文件。"
 
-#: gaupol/agents/save.py:200
+#: gaupol/agents/save.py:210
 #, python-brace-format
 msgid "Failed to save file \"{}\""
 msgstr "无法保存文件“{}”"
@@ -833,47 +833,47 @@ msgid "Confirm {:d} Change"
 msgid_plural "Confirm {:d} Changes"
 msgstr[0] "确认{:d}项更改"
 
-#: gaupol/applicationman.py:102
+#: gaupol/applicationman.py:106
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [选项...] [文件...] [+[数字]]"
 
-#: gaupol/applicationman.py:106
+#: gaupol/applicationman.py:110
 msgid "FILE..."
 msgstr "文件..."
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:113
 msgid "subtitle files to open"
 msgstr "要打开的字幕文件"
 
-#: gaupol/applicationman.py:119
+#: gaupol/applicationman.py:123
 msgid "ENCODING"
 msgstr "编码"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:126
 msgid "set the character encoding used to open files"
 msgstr "设置打开文件的字符编码"
 
-#: gaupol/applicationman.py:129
+#: gaupol/applicationman.py:133
 msgid "list all available character encodings"
 msgstr "列出所有可用的字符编码"
 
-#: gaupol/applicationman.py:134 gaupol/applicationman.py:151
+#: gaupol/applicationman.py:138 gaupol/applicationman.py:155
 msgid "FILE"
 msgstr "文件"
 
-#: gaupol/applicationman.py:137
+#: gaupol/applicationman.py:141
 msgid "open translation file"
 msgstr "打开翻译文件"
 
-#: gaupol/applicationman.py:142
+#: gaupol/applicationman.py:146
 msgid "METHOD"
 msgstr "方法"
 
-#: gaupol/applicationman.py:146
+#: gaupol/applicationman.py:150
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr "用于对齐翻译字幕的方法：“序号”或“位置”"
 
-#: gaupol/applicationman.py:154
+#: gaupol/applicationman.py:158
 msgid "select video file"
 msgstr "选择视频文件"
 
@@ -925,25 +925,25 @@ msgstr "字符"
 msgid "ems"
 msgstr "ems"
 
-#: gaupol/dialogs/debug.py:40
+#: gaupol/dialogs/debug.py:41
 msgid "Something went wrong"
 msgstr "出错了"
 
-#: gaupol/dialogs/debug.py:41
+#: gaupol/dialogs/debug.py:42
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
 msgstr "您可能发现了一个错误。请通过提供以下信息并描述您的操作以报告它。"
 
-#: gaupol/dialogs/debug.py:49
+#: gaupol/dialogs/debug.py:50
 msgid "_Report Bug"
 msgstr "报告错误(_R)"
 
-#: gaupol/dialogs/debug.py:50 gaupol/data/ui/menubar.ui:55
+#: gaupol/dialogs/debug.py:51 gaupol/data/ui/menubar.ui:55
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: gaupol/dialogs/debug.py:51 gaupol/dialogs/preview_error.py:43
+#: gaupol/dialogs/debug.py:52 gaupol/dialogs/preview_error.py:43
 #: gaupol/data/ui/menubar.ui:51
 msgid "_Close"
 msgstr "关闭(_C)"
@@ -982,11 +982,13 @@ msgid "For_mat"
 msgstr ""
 
 #: gaupol/dialogs/save.py:91 gaupol/dialogs/open.py:73
+#: gaupol/data/ui/preferences-dialog.ui:208
 #: gaupol/data/ui/multi-save-dialog.ui:90
 msgid "_Encoding"
 msgstr ""
 
-#: gaupol/dialogs/save.py:97 gaupol/data/ui/multi-save-dialog.ui:114
+#: gaupol/dialogs/save.py:97 gaupol/data/ui/preferences-dialog.ui:232
+#: gaupol/data/ui/multi-save-dialog.ui:114
 msgid "Ne_wlines"
 msgstr ""
 
@@ -1013,11 +1015,11 @@ msgstr "所有支持的文件"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: gaupol/dialogs/file.py:120
+#: gaupol/dialogs/file.py:121
 msgid "Auto-detected"
 msgstr "自动检测"
 
-#: gaupol/dialogs/file.py:122
+#: gaupol/dialogs/file.py:123
 msgid "Other…"
 msgstr "其它…"
 
@@ -1085,7 +1087,7 @@ msgid ""
 "command."
 msgstr "视频文件或视频播放器可能有问题。请在首选项对话框中选择视频播放器或使用自定义命令。"
 
-#: gaupol/dialogs/preferences.py:261
+#: gaupol/dialogs/preferences.py:317
 msgid "Custom"
 msgstr "自定义"
 
@@ -1218,101 +1220,105 @@ msgstr ""
 msgid "Move down"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:183
+#: gaupol/data/ui/preferences-dialog.ui:184
+msgid "Always Convert To When Saving"
+msgstr ""
+
+#: gaupol/data/ui/preferences-dialog.ui:260
 msgid "Editor"
 msgstr "编辑器"
 
-#: gaupol/data/ui/preferences-dialog.ui:203
+#: gaupol/data/ui/preferences-dialog.ui:280
 msgid "Font"
 msgstr "字体"
 
-#: gaupol/data/ui/preferences-dialog.ui:227
+#: gaupol/data/ui/preferences-dialog.ui:304
 msgid "_Custom font"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:259
+#: gaupol/data/ui/preferences-dialog.ui:336
 msgid "Line Lengths"
 msgstr "行长"
 
-#: gaupol/data/ui/preferences-dialog.ui:281
+#: gaupol/data/ui/preferences-dialog.ui:358
 msgid "_Show line lengths in list cells"
 msgstr "在列单元中显示行长(_S)"
 
-#: gaupol/data/ui/preferences-dialog.ui:296
+#: gaupol/data/ui/preferences-dialog.ui:373
 msgid "S_how line lengths in editable text fields"
 msgstr "在可编辑的文本字段中显示行长(_H)"
 
-#: gaupol/data/ui/preferences-dialog.ui:314
+#: gaupol/data/ui/preferences-dialog.ui:391
 msgid "_Length unit"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:342
+#: gaupol/data/ui/preferences-dialog.ui:419
 msgid "Spell-Check"
 msgstr "拼写检查"
 
-#: gaupol/data/ui/preferences-dialog.ui:364
+#: gaupol/data/ui/preferences-dialog.ui:441
 msgid "Chec_k spelling as you type"
 msgstr "输入时检查拼写(_K)"
 
-#: gaupol/data/ui/preferences-dialog.ui:385
+#: gaupol/data/ui/preferences-dialog.ui:462
 msgid "Video"
 msgstr "视频"
 
-#: gaupol/data/ui/preferences-dialog.ui:404
+#: gaupol/data/ui/preferences-dialog.ui:481
 msgid "Fonts"
 msgstr "字体"
 
-#: gaupol/data/ui/preferences-dialog.ui:429
+#: gaupol/data/ui/preferences-dialog.ui:506
 msgid "_Subtitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:456
+#: gaupol/data/ui/preferences-dialog.ui:533
 msgid "_Time"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:487
+#: gaupol/data/ui/preferences-dialog.ui:564
 msgid "Colors"
 msgstr "颜色"
 
-#: gaupol/data/ui/preferences-dialog.ui:512
+#: gaupol/data/ui/preferences-dialog.ui:589
 msgid "Su_btitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:525
-#: gaupol/data/ui/preferences-dialog.ui:557
+#: gaupol/data/ui/preferences-dialog.ui:602
+#: gaupol/data/ui/preferences-dialog.ui:634
 msgid "Background"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:544
+#: gaupol/data/ui/preferences-dialog.ui:621
 msgid "Ti_me"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:580
+#: gaupol/data/ui/preferences-dialog.ui:657
 msgid "Seek"
 msgstr "跳跃"
 
-#: gaupol/data/ui/preferences-dialog.ui:605
+#: gaupol/data/ui/preferences-dialog.ui:682
 msgid "_Seconds"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:635
+#: gaupol/data/ui/preferences-dialog.ui:712
 msgid "Preview"
 msgstr "预览"
 
-#: gaupol/data/ui/preferences-dialog.ui:655
+#: gaupol/data/ui/preferences-dialog.ui:732
 msgid "Video Player"
 msgstr "视频播放器"
 
-#: gaupol/data/ui/preferences-dialog.ui:680
+#: gaupol/data/ui/preferences-dialog.ui:757
 msgid "_Application"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:704
+#: gaupol/data/ui/preferences-dialog.ui:781
 msgid "Co_mmand"
 msgstr ""
 
 #. Translators: Only the title is to be translated, field names not.
-#: gaupol/data/ui/preferences-dialog.ui:712
+#: gaupol/data/ui/preferences-dialog.ui:789
 msgid ""
 "Fields:\n"
 "$MILLISECONDS\n"
@@ -1321,15 +1327,15 @@ msgid ""
 "$VIDEOFILE"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:733
+#: gaupol/data/ui/preferences-dialog.ui:810
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "始终使用 UTF-8 字符编码(_W)"
 
-#: gaupol/data/ui/preferences-dialog.ui:755
+#: gaupol/data/ui/preferences-dialog.ui:832
 msgid "Start Position"
 msgstr "开始位置"
 
-#: gaupol/data/ui/preferences-dialog.ui:780
+#: gaupol/data/ui/preferences-dialog.ui:857
 msgid "_Offset (seconds before selection)"
 msgstr ""
 
@@ -2518,8 +2524,16 @@ msgid ""
 msgstr "Gaupol 是一个编辑基于文本的字幕编辑器。它支持多种字幕文件格式，并提供创建字幕、编辑文本和调整字幕时间轴以匹配视频等功能。"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:49
-msgid "Main window"
-msgstr "主窗口"
+msgid "Editing subtitles with video"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:53
+msgid "Translating subtitles side-by-side"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:57
+msgid "Multiple files open as tabbed documents"
+msgstr ""
 
 #: data/io.otsaloma.gaupol.desktop.in:4
 msgid "Subtitle Editor"

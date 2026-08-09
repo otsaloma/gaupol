@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-26 17:17+0300\n"
+"POT-Creation-Date: 2026-08-09 18:38+0300\n"
 "PO-Revision-Date: 2016-07-07 00:55+0000\n"
 "Last-Translator: edasmax <edasmax@gmail.com>, 2023\n"
 "Language-Team: Polish (https://app.transifex.com/otsaloma/teams/64879/pl/)\n"
@@ -338,8 +338,8 @@ msgstr "Mac (klasyczny)"
 msgid "{language} ({country})"
 msgstr "{language} ({country})"
 
-#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:194
-#: gaupol/agents/save.py:202 gaupol/agents/tools.py:47
+#: gaupol/player.py:265 gaupol/player.py:387 gaupol/agents/save.py:204
+#: gaupol/agents/save.py:212 gaupol/agents/tools.py:47
 #: gaupol/agents/open.py:340 gaupol/agents/open.py:349
 #: gaupol/agents/open.py:357 gaupol/agents/open.py:366
 #: gaupol/agents/preview.py:107 gaupol/agents/preview.py:115
@@ -375,34 +375,34 @@ msgstr "{} tłumaczenie"
 msgid "File not found"
 msgstr "Nie znaleziono pliku"
 
-#: gaupol/agents/save.py:125
+#: gaupol/agents/save.py:135
 msgid "Save As"
 msgstr "Zapisz jako"
 
-#: gaupol/agents/save.py:131
+#: gaupol/agents/save.py:141
 #, python-brace-format
 msgid "Saved main document as \"{}\""
 msgstr "Zapisano główny plik jako \"{}\""
 
-#: gaupol/agents/save.py:149
+#: gaupol/agents/save.py:159
 msgid "Save Translation As"
 msgstr "Zapisz tłumaczenie jako"
 
-#: gaupol/agents/save.py:155
+#: gaupol/agents/save.py:165
 #, python-brace-format
 msgid "Saved translation document as \"{}\""
 msgstr "Zapisano plik tłumaczenia jako \"{}\""
 
-#: gaupol/agents/save.py:191
+#: gaupol/agents/save.py:201
 #, python-brace-format
 msgid "Failed to encode file \"{basename}\" with codec \"{codec}\""
 msgstr "Nie można zakodować pliku \"{basename}\" przy użyciu kodeku \"{codec}\""
 
-#: gaupol/agents/save.py:192
+#: gaupol/agents/save.py:202
 msgid "Please try to save the file with a different character encoding."
 msgstr "Proszę spróbuj zapisać plik z innym kodowaniem znaków."
 
-#: gaupol/agents/save.py:200
+#: gaupol/agents/save.py:210
 #, python-brace-format
 msgid "Failed to save file \"{}\""
 msgstr "Nieudane zapisywanie pliku \"{}\""
@@ -858,49 +858,49 @@ msgstr[1] "Potwierdź {:d} zmiany"
 msgstr[2] "Potwierdź {:d} zmiany"
 msgstr[3] "Potwierdź {:d} zmiany"
 
-#: gaupol/applicationman.py:102
+#: gaupol/applicationman.py:106
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr "gaupol [OPTION...] [FILE...] [+[NUM]]"
 
-#: gaupol/applicationman.py:106
+#: gaupol/applicationman.py:110
 msgid "FILE..."
 msgstr "PLIK..."
 
-#: gaupol/applicationman.py:109
+#: gaupol/applicationman.py:113
 msgid "subtitle files to open"
 msgstr "pliki napisów do otwarcia"
 
-#: gaupol/applicationman.py:119
+#: gaupol/applicationman.py:123
 msgid "ENCODING"
 msgstr "KODOWANIE"
 
-#: gaupol/applicationman.py:122
+#: gaupol/applicationman.py:126
 msgid "set the character encoding used to open files"
 msgstr "ustaw kodowanie znaków używane do otwierania plików"
 
-#: gaupol/applicationman.py:129
+#: gaupol/applicationman.py:133
 msgid "list all available character encodings"
 msgstr "wymień wszystkie dostępne kodowania znaków"
 
-#: gaupol/applicationman.py:134 gaupol/applicationman.py:151
+#: gaupol/applicationman.py:138 gaupol/applicationman.py:155
 msgid "FILE"
 msgstr "PLIK"
 
-#: gaupol/applicationman.py:137
+#: gaupol/applicationman.py:141
 msgid "open translation file"
 msgstr "otwórz plik tłumaczenia"
 
-#: gaupol/applicationman.py:142
+#: gaupol/applicationman.py:146
 msgid "METHOD"
 msgstr "METODA"
 
-#: gaupol/applicationman.py:146
+#: gaupol/applicationman.py:150
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 "metoda używana do wyrównania napisów do tłumaczenia: \"liczba\" lub "
 "\"pozycja\""
 
-#: gaupol/applicationman.py:154
+#: gaupol/applicationman.py:158
 msgid "select video file"
 msgstr "wybierz plik wideo"
 
@@ -952,11 +952,11 @@ msgstr "Znaki"
 msgid "ems"
 msgstr "ems"
 
-#: gaupol/dialogs/debug.py:40
+#: gaupol/dialogs/debug.py:41
 msgid "Something went wrong"
 msgstr "Coś poszło nie tak"
 
-#: gaupol/dialogs/debug.py:41
+#: gaupol/dialogs/debug.py:42
 msgid ""
 "You have probably discovered a bug. Please report it by providing the below "
 "information and a description of what you were doing."
@@ -964,15 +964,15 @@ msgstr ""
 "Prawdopodobnie odkryłeś błąd. Zgłoś go, podając poniższe informacje i opis "
 "tego, co robiłeś."
 
-#: gaupol/dialogs/debug.py:49
+#: gaupol/dialogs/debug.py:50
 msgid "_Report Bug"
 msgstr "_Zgłoś błąd"
 
-#: gaupol/dialogs/debug.py:50 gaupol/data/ui/menubar.ui:55
+#: gaupol/dialogs/debug.py:51 gaupol/data/ui/menubar.ui:55
 msgid "_Quit"
 msgstr "_Zakończ"
 
-#: gaupol/dialogs/debug.py:51 gaupol/dialogs/preview_error.py:43
+#: gaupol/dialogs/debug.py:52 gaupol/dialogs/preview_error.py:43
 #: gaupol/data/ui/menubar.ui:51
 msgid "_Close"
 msgstr "Za_mknij"
@@ -1011,11 +1011,13 @@ msgid "For_mat"
 msgstr ""
 
 #: gaupol/dialogs/save.py:91 gaupol/dialogs/open.py:73
+#: gaupol/data/ui/preferences-dialog.ui:208
 #: gaupol/data/ui/multi-save-dialog.ui:90
 msgid "_Encoding"
 msgstr ""
 
-#: gaupol/dialogs/save.py:97 gaupol/data/ui/multi-save-dialog.ui:114
+#: gaupol/dialogs/save.py:97 gaupol/data/ui/preferences-dialog.ui:232
+#: gaupol/data/ui/multi-save-dialog.ui:114
 msgid "Ne_wlines"
 msgstr ""
 
@@ -1042,11 +1044,11 @@ msgstr "Wszystkie obsługiwane pliki"
 msgid "{format} (*{extension})"
 msgstr "{format} (*{extension})"
 
-#: gaupol/dialogs/file.py:120
+#: gaupol/dialogs/file.py:121
 msgid "Auto-detected"
 msgstr "Automatyczne wykrywanie"
 
-#: gaupol/dialogs/file.py:122
+#: gaupol/dialogs/file.py:123
 msgid "Other…"
 msgstr "Inny…"
 
@@ -1122,7 +1124,7 @@ msgstr ""
 "Zobacz okno dialogowe preferencji, aby wybrać odtwarzacz wideo lub "
 "dostosować polecenie."
 
-#: gaupol/dialogs/preferences.py:261
+#: gaupol/dialogs/preferences.py:317
 msgid "Custom"
 msgstr "Dostosuj"
 
@@ -1258,101 +1260,105 @@ msgstr ""
 msgid "Move down"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:183
+#: gaupol/data/ui/preferences-dialog.ui:184
+msgid "Always Convert To When Saving"
+msgstr ""
+
+#: gaupol/data/ui/preferences-dialog.ui:260
 msgid "Editor"
 msgstr "Edytor"
 
-#: gaupol/data/ui/preferences-dialog.ui:203
+#: gaupol/data/ui/preferences-dialog.ui:280
 msgid "Font"
 msgstr "Czcionka"
 
-#: gaupol/data/ui/preferences-dialog.ui:227
+#: gaupol/data/ui/preferences-dialog.ui:304
 msgid "_Custom font"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:259
+#: gaupol/data/ui/preferences-dialog.ui:336
 msgid "Line Lengths"
 msgstr "Długości linii"
 
-#: gaupol/data/ui/preferences-dialog.ui:281
+#: gaupol/data/ui/preferences-dialog.ui:358
 msgid "_Show line lengths in list cells"
 msgstr "Pokaż długości linii w komórkach listy"
 
-#: gaupol/data/ui/preferences-dialog.ui:296
+#: gaupol/data/ui/preferences-dialog.ui:373
 msgid "S_how line lengths in editable text fields"
 msgstr "Pokaż długości linii w edytowalnych polach tekstowych"
 
-#: gaupol/data/ui/preferences-dialog.ui:314
+#: gaupol/data/ui/preferences-dialog.ui:391
 msgid "_Length unit"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:342
+#: gaupol/data/ui/preferences-dialog.ui:419
 msgid "Spell-Check"
 msgstr "Sprawdzanie pisowni"
 
-#: gaupol/data/ui/preferences-dialog.ui:364
+#: gaupol/data/ui/preferences-dialog.ui:441
 msgid "Chec_k spelling as you type"
 msgstr "Sprawdź pisownię podczas pisania"
 
-#: gaupol/data/ui/preferences-dialog.ui:385
+#: gaupol/data/ui/preferences-dialog.ui:462
 msgid "Video"
 msgstr "Wideo"
 
-#: gaupol/data/ui/preferences-dialog.ui:404
+#: gaupol/data/ui/preferences-dialog.ui:481
 msgid "Fonts"
 msgstr "Czcionki"
 
-#: gaupol/data/ui/preferences-dialog.ui:429
+#: gaupol/data/ui/preferences-dialog.ui:506
 msgid "_Subtitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:456
+#: gaupol/data/ui/preferences-dialog.ui:533
 msgid "_Time"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:487
+#: gaupol/data/ui/preferences-dialog.ui:564
 msgid "Colors"
 msgstr "Kolory"
 
-#: gaupol/data/ui/preferences-dialog.ui:512
+#: gaupol/data/ui/preferences-dialog.ui:589
 msgid "Su_btitles"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:525
-#: gaupol/data/ui/preferences-dialog.ui:557
+#: gaupol/data/ui/preferences-dialog.ui:602
+#: gaupol/data/ui/preferences-dialog.ui:634
 msgid "Background"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:544
+#: gaupol/data/ui/preferences-dialog.ui:621
 msgid "Ti_me"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:580
+#: gaupol/data/ui/preferences-dialog.ui:657
 msgid "Seek"
 msgstr "Skocz"
 
-#: gaupol/data/ui/preferences-dialog.ui:605
+#: gaupol/data/ui/preferences-dialog.ui:682
 msgid "_Seconds"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:635
+#: gaupol/data/ui/preferences-dialog.ui:712
 msgid "Preview"
 msgstr "Podgląd"
 
-#: gaupol/data/ui/preferences-dialog.ui:655
+#: gaupol/data/ui/preferences-dialog.ui:732
 msgid "Video Player"
 msgstr "Odtwarzacz wideo"
 
-#: gaupol/data/ui/preferences-dialog.ui:680
+#: gaupol/data/ui/preferences-dialog.ui:757
 msgid "_Application"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:704
+#: gaupol/data/ui/preferences-dialog.ui:781
 msgid "Co_mmand"
 msgstr ""
 
 #. Translators: Only the title is to be translated, field names not.
-#: gaupol/data/ui/preferences-dialog.ui:712
+#: gaupol/data/ui/preferences-dialog.ui:789
 msgid ""
 "Fields:\n"
 "$MILLISECONDS\n"
@@ -1361,15 +1367,15 @@ msgid ""
 "$VIDEOFILE"
 msgstr ""
 
-#: gaupol/data/ui/preferences-dialog.ui:733
+#: gaupol/data/ui/preferences-dialog.ui:810
 msgid "Al_ways use UTF-8 character encoding"
 msgstr "Zawsze używaj kodowania znaków UTF-8"
 
-#: gaupol/data/ui/preferences-dialog.ui:755
+#: gaupol/data/ui/preferences-dialog.ui:832
 msgid "Start Position"
 msgstr "Pozycja początkowa"
 
-#: gaupol/data/ui/preferences-dialog.ui:780
+#: gaupol/data/ui/preferences-dialog.ui:857
 msgid "_Offset (seconds before selection)"
 msgstr ""
 
@@ -2563,8 +2569,16 @@ msgstr ""
 "synchronizacji napisów w celu dopasowania do wideo."
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:49
-msgid "Main window"
-msgstr "Okno główne"
+msgid "Editing subtitles with video"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:53
+msgid "Translating subtitles side-by-side"
+msgstr ""
+
+#: data/io.otsaloma.gaupol.appdata.xml.in:57
+msgid "Multiple files open as tabbed documents"
+msgstr ""
 
 #: data/io.otsaloma.gaupol.desktop.in:4
 msgid "Subtitle Editor"
