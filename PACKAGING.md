@@ -40,7 +40,7 @@ site-packages. The launcher adds that directory to `sys.path`.
 
 ## Aeidon
 
-`make INCLUDE_AEIDON=no install` installs gaupol only and the launcher
+Using `INCLUDE_AEIDON=no` above installs gaupol only and the launcher
 then imports aeidon from site-packages. Build that aeidon from
 `pyproject.toml` and have gaupol depend on the same version.
 
@@ -55,6 +55,6 @@ Build dependencies: python3-build (or another PEP 517 front-end) and
 hatchling ≥1.27.
 
 aeidon bundles copies of iso-codes JSON files under
-`aeidon/data/iso-codes`, used at runtime only if `/usr/share/iso-codes`
-is missing. To avoid duplicate files, remove that directory before
-building and make the package depend on iso-codes.
+`aeidon/data/iso-codes`, used at runtime only if not found under
+`/usr/share/iso-codes`. To avoid duplicate files, remove that directory
+before building and make the package depend on iso-codes.
