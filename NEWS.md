@@ -1,4 +1,4 @@
-# PENDING: Gaupol 2.0
+# 2026-08-09: Gaupol 2.0
 
 - Migrate to GTK-4
 - Modernize the look of dialogs
