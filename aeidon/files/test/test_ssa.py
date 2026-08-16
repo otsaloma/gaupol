@@ -30,6 +30,18 @@ class TestSubStationAlpha(aeidon.TestCase):
         assert self.file.read()
         assert self.file.header
 
+    def test_read_without_format_line(self):
+        # A file without a "Format:" line, an "[Events]" section, or any
+        # content used to crash read() with UnboundLocalError or IndexError.
+        for text in ("",
+                     "[Script Info]\nScriptType: v4.00\n",
+                     "[Script Info]\n\n[Events]\n"
+                     "Dialogue: Marked=0,0:00:01.00,0:00:04.00,Def,,0,0,0,,x\n"):
+            path = aeidon.temp.create(self.format.extension)
+            path.write_text(text, encoding="ascii")
+            file = aeidon.files.new(self.format, path, "ascii")
+            self.assert_raises(aeidon.ParseError, file.read)
+
     def test_write(self):
         self.file.write(self.file.read(), aeidon.documents.MAIN)
         text = self.file.path.read_text().strip()

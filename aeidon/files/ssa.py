@@ -101,12 +101,15 @@ class SubStationAlpha(aeidon.SubtitleFile):
         subtitles = []
         lines = self._read_lines()
         self._read_header(lines)
+        fields = None
         for line in lines:
             if not line.startswith("Format:"): continue
             line = line.replace("Format:", "").strip()
             fields = self._re_separator.split(line)
             indices = dict((x, fields.index(x)) for x in fields)
             max_split = len(fields) - 1
+        if fields is None:
+            raise aeidon.ParseError("No 'Format:' line found in the '[Events]' section")
         for line in lines:
             if not line.startswith("Dialogue:"): continue
             line = line.replace("Dialogue:", "").lstrip()
@@ -121,7 +124,7 @@ class SubStationAlpha(aeidon.SubtitleFile):
     def _read_header(self, lines):
         """Read header and remove its lines."""
         self.header = ""
-        while not lines[0].startswith("[Events]"):
+        while lines and not lines[0].startswith("[Events]"):
             self.header += "\n"
             self.header += lines.pop(0)
         self.header = self.header.strip()
