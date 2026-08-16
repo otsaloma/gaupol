@@ -47,6 +47,10 @@ class SubRip(aeidon.SubtitleFile):
         for line in self._read_lines():
             match = self._re_time_line.match(line)
             if match is None:
+                if not subtitles:
+                    # Text before the first time line does not belong to any
+                    # subtitle; skip it rather than raising an IndexError.
+                    continue
                 if subtitles[-1].main_text:
                     subtitles[-1].main_text += "\n"
                 subtitles[-1].main_text += line

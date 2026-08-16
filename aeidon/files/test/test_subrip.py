@@ -29,6 +29,19 @@ class TestSubRip(aeidon.TestCase):
     def test_read(self):
         assert self.file.read()
 
+    def test_read_text_before_first_time_line(self):
+        # Text appearing before the first time line used to crash read() with
+        # an IndexError; such orphan text should just be skipped.
+        path = aeidon.temp.create(self.format.extension)
+        path.write_text(
+            "orphan text\n"
+            "00:00:01,000 --> 00:00:04,000\n"
+            "Hello\n",
+            encoding="ascii")
+        subtitles = aeidon.files.new(self.format, path, "ascii").read()
+        assert len(subtitles) == 1
+        assert subtitles[0].main_text == "Hello"
+
     def test_write(self):
         self.file.write(self.file.read(), aeidon.documents.MAIN)
         text = self.file.path.read_text().strip()
