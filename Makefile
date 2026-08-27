@@ -16,6 +16,9 @@ INCLUDE_AEIDON = yes
 # EDITOR must wait!
 EDITOR = nano
 
+# Packagers tend to just run 'make'.
+.DEFAULT_GOAL = build
+
 build:
 	@echo "BUILDING PYTHON PACKAGES..."
 	rm -rf build
