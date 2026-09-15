@@ -17,7 +17,7 @@
 
 """GTK user interface for the Gaupol subtitle editor."""
 
-__version__ = "2.0"
+__version__ = "2.0.1"
 COMBO_SEPARATOR = "<separator/>"
 
 import contextlib

@@ -1,4 +1,4 @@
-# PENDING: Gaupol 2.0.1
+# 2026-09-15: Gaupol 2.0.1
 
 - Fix theming related hang on startup with GTK ≥ 4.23.1 (#249)
 - Drop support for the `general.theme` config file option with GTK < 4.20
