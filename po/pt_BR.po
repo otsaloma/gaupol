@@ -1263,7 +1263,7 @@ msgstr "Mover para baixo"
 
 #: gaupol/data/ui/preferences-dialog.ui:184
 msgid "Always Convert To When Saving"
-msgstr ""
+msgstr "Sempre converter ao salvar"
 
 #: gaupol/data/ui/preferences-dialog.ui:260
 msgid "Editor"
@@ -2582,15 +2582,15 @@ msgstr ""
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:49
 msgid "Editing subtitles with video"
-msgstr ""
+msgstr "Editar legendas com vídeo"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:53
 msgid "Translating subtitles side-by-side"
-msgstr ""
+msgstr "Traduzir legendas lado a lado"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:57
 msgid "Multiple files open as tabbed documents"
-msgstr ""
+msgstr "Múltiplos arquivos abertos como documentos em abas"
 
 #: data/io.otsaloma.gaupol.desktop.in:4
 msgid "Subtitle Editor"

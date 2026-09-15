@@ -1261,7 +1261,7 @@ msgstr "Omlaag"
 
 #: gaupol/data/ui/preferences-dialog.ui:184
 msgid "Always Convert To When Saving"
-msgstr ""
+msgstr "Altijd converteren tijdens opslaan"
 
 #: gaupol/data/ui/preferences-dialog.ui:260
 msgid "Editor"
@@ -2576,15 +2576,15 @@ msgstr ""
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:49
 msgid "Editing subtitles with video"
-msgstr ""
+msgstr "Ondertiteling aan de hand van de video aanpassen"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:53
 msgid "Translating subtitles side-by-side"
-msgstr ""
+msgstr "Ondertiteling zij-aan-zij aanpassen"
 
 #: data/io.otsaloma.gaupol.appdata.xml.in:57
 msgid "Multiple files open as tabbed documents"
-msgstr ""
+msgstr "Meerdere bestanden geopend als documenten op tabbladen"
 
 #: data/io.otsaloma.gaupol.desktop.in:4
 msgid "Subtitle Editor"
