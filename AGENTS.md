@@ -10,13 +10,10 @@ try to find the right place for any new code.
 
 ## Environment
 
-See `README.md` for which versions of Python, GTK, etc. we're currently
-targeting. Regarding operating systems, we currently target only Linux
-and *BSD, but try to avoid any OS-specific code. We want to keep any
-existing Windows conditionals, but we don't want to worry about Windows
-when adding new features. On Linux, we want to support all relevant
-desktops and display servers, but GNOME + Wayland is whose conventions
-we want to follow closest.
+See `README.md` for dependency versions. Target Linux and *BSD; avoid
+OS-specific code. Preserve existing Windows conditionals, but don't
+account for Windows in new features. Support relevant Linux desktops and
+display servers, following GNOME + Wayland conventions most closely.
 
 ## Subtitle File Formats
 
@@ -28,29 +25,15 @@ formats are fine to be just partially supported.
 ## GTK Documentation
 
 Documentation for GTK and associated libraries is available as GIR files
-under `/usr/share/gir-1.0`. Grep those for any symbols you need.
-
-- `/usr/share/gir-1.0/Gdk-4.0.gir`
-- `/usr/share/gir-1.0/Gio-2.0.gir`
-- `/usr/share/gir-1.0/GLibUnix-2.0.gir`
-- `/usr/share/gir-1.0/GObject-2.0.gir`
-- `/usr/share/gir-1.0/Gtk-4.0.gir` etc.
-
-Make sure you can access that GIR documentation; abort if not. Never
-guess how the API works, always check from the documentation. Keep in
-mind that we use Python and some of the documentation has been written
-for C. You'll need adapt what you see there, for example:
+under `/usr/share/gir-1.0`. Grep those for any symbols you need. Make
+sure you can access that GIR documentation; abort if not. Never guess
+how the API works, always check from the documentation. Keep in mind
+that we use Python and some of the documentation has been written for C.
+You'll need adapt what you see there, for example:
 
 - `GTK_ALIGN_CENTER` → `Gtk.Align.CENTER`
 - `gtk_box_new(...)` → `Gtk.Box(...)`
 - `gtk_widget_show(widget)` → `widget.show()`
-
-A GTK-3 to GTK-4 migration guide is available in Markdown format. We
-have already done the migration, but noting this guide because we might
-have some regressions left over from it and some deprecated (not
-removed) widgets remain unmigrated. Read it only when you need it.
-
-- `tasks/gtk4/migrating-3to4.md`
 
 ## Validation, Testing
 
@@ -62,39 +45,22 @@ bigger changes, or if you suspect your changes affect other modules, use
 
 ## Running the GUI
 
-You can run the GUI as `timeout --signal=TERM 5 bin/gaupol
-data/samples/subrip.srt` so it self-terminates (exit 124) instead of
-blocking; the console output is then captured for inspection.
+Run a brief GUI check with diagnostics enabled: `G_ENABLE_DIAGNOSTIC=1
+timeout 5 bin/gaupol data/samples/subrip.srt 2>&1`. Exit 124 is expected
+on timeout. Use `pytest -s` to expose GTK/GLib warnings in tests, and
+`G_DEBUG=fatal-warnings` to stop on warnings when debugging.
 
-To see all warnings, set `G_ENABLE_DIAGNOSTIC=1` (forces GTK to emit
-deprecation warnings) and read stderr (`2>&1`). GTK/GLib warnings go
-through the GLib log system, not Python `warnings`, so `pytest` needs
-`-s` to show them. Use `G_DEBUG=fatal-warnings` to turn a warning into a
-fatal error (with traceback) when tracking down its source.
-
-Note that some previous version of gaupol might be installed under a
-system directory, such as `/usr/local` or aeidon under a Python
-site-packages directory. When running a standalone verification script,
-make sure your `PYTHONPATH` or `sys.path` points to the source repo.
-Check `aeidon.__file__` and `gaupol.__file__` in the script if unsure.
+Standalone scripts must import aeidon and gaupol from this checkout, not
+an installed copy. Set `PYTHONPATH` or `sys.path` accordingly; verify
+`aeidon.__file__` and `gaupol.__file__` if unsure.
 
 ## Screenshots
 
-To screenshot the app, run a standalone script that creates
-`gaupol.Application()` and calls `application.open_main(paths)` (the
-same calls `applicationman.py` makes), then in a `GLib.timeout_add`
-callback (~1500 ms, inside a `GLib.MainLoop`) render the window to PNG:
+For unattended screenshots, render the app's own widgets to PNG using
+`Gtk.WidgetPaintable`, `Gtk.Snapshot` and the widget's native renderer
+(`render_texture`, then `save_to_png`). This avoids Wayland screenshot
+permissions.
 
-```python
-paintable = Gtk.WidgetPaintable(widget=window)
-snapshot = Gtk.Snapshot()
-paintable.snapshot(snapshot, paintable.get_intrinsic_width(), paintable.get_intrinsic_height())
-texture = window.get_native().get_renderer().render_texture(snapshot.to_node())
-texture.save_to_png(path)
-```
-
-This captures the window content regardless of the Wayland compositor.
-Caveat: the menubar doesn't render, since the script has no
-`Gtk.Application` (`gaupol.appman`) to provide the menubar model. The
-same recipe works for dialogs (snapshot the dialog widget instead), such
-as built via the dialog test classes' `setup_method`.
+Use a standalone script running the app and its GTK main loop; capture
+after the target window is visible and has rendered. Capture dialogs
+separately; existing dialog test setup methods can help construct them.
