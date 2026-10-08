@@ -91,10 +91,6 @@ class ApplicationManager(Gtk.Application):
                               if theme == gaupol.themes.DARK
                               else Gtk.InterfaceColorScheme.LIGHT)
 
-        # Themes with separate dark stylesheets
-        # are only reloaded when the theme name changes.
-        settings.notify("gtk-theme-name")
-
     def _on_activate(self, manager, args):
         """Initialize application and open files from `args`."""
         opts, args = self._parse_args(args)
